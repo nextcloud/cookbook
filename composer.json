@@ -1,0 +1,15 @@
+{
+    "name": "Cookbook",
+    "description": "An integrated cookbook using YAML files as recipes",
+    "type": "project",
+    "license": "AGPL",
+    "authors": [
+        {
+            "name": "Jeppe Zapp"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^5.4"
+    }
+}

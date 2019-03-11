@@ -1,0 +1,38 @@
+header {
+    flex-basis: 100%;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+    header figure {
+        position: relative;
+        overflow: hidden;
+        height: 0;
+        padding-bottom: 40%;
+        margin-bottom: 2rem;
+    }
+            header figure img {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                width: 100%;
+                transform: translate(-50%, -50%);
+            }
+
+aside {
+    flex-basis: 20rem;
+}
+    aside ul {
+        list-style-type: disc;
+    }
+        aside ul li {
+            margin-left: 1em;
+        }
+
+main ul li {
+    margin-bottom: 1em;
+}
+
+#app-content-wrapper {
+    flex-wrap: wrap;
+    padding: 2rem;
+}
