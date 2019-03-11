@@ -7,7 +7,7 @@
     <header>
         <?php if(isset($recipe['image']) && $recipe['image']) { ?>
             <figure>
-                <img src="/index.php/apps/cookbook/image?url=<?php echo base64_encode($recipe['image']); ?>">
+                <img src="/index.php/apps/cookbook/image?recipe=<?php echo $_['current_node']->getId(); ?>&size=full">
             </figure>
         <?php } ?>
 
