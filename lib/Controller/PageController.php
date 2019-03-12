@@ -2,6 +2,7 @@
 namespace OCA\Cookbook\Controller;
 
 use OCP\IRequest;
+use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
 use OCP\AppFramework\Http\TemplateResponse;
@@ -12,11 +13,11 @@ class PageController extends Controller {
 	private $userId;
     private $service;
 
-	public function __construct($AppName, IRootFolder $root, IRequest $request, $UserId){
+	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId){
 		parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
-        $this->service = new RecipeService($root, $UserId);
+        $this->service = new RecipeService($root, $UserId, $db);
 	}
 
 	/**

@@ -3,14 +3,19 @@ namespace OCA\Cookbook\Service;
 
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
+use OCP\IDBConnection;
+
+use OCA\Cookbook\Db\RecipeDb;
 
 class RecipeService {
     private $root;
     private $userId;
-    
-    public function __construct($root, $userId) {
+    private $db;
+
+    public function __construct($root, $userId, IDBConnection $db) {
         $this->userId = $userId;
         $this->root = $root;
+        $this->db = new RecipeDb($db);
 	}
 
     /**
@@ -30,7 +35,7 @@ class RecipeService {
 	 * Get recipe files in given directory
 	 * @return array
 	 */
-    public function getRecipeFiles () {
+    public function getRecipeFiles() {
         $folder = $this->getFolderForUser();
 
         $nodes = $folder->getDirectoryListing();
@@ -43,6 +48,26 @@ class RecipeService {
         }
 
         return $recipes;
+    }
+
+    /**
+     * Gets all recipes from the index
+     * @return array
+     */
+    public function getAllRecipesInSearchIndex() {
+        return $this->db->findAllRecipes(); 
+    }
+
+    /**
+     * Searches for recipes by ingredients and keywords
+     *
+     * @param string $ingredients
+     * @param string $keywords
+     *
+     * @return array
+     */
+    public function findRecipesInSearchIndex($ingredients, $keywords, $limit = null, $offset = null) {
+        return $this->db->findRecipes(explode(',', $ingredients), explode(',', $keywords), $limit, $offset);
     }
 
     /**
@@ -79,6 +104,25 @@ class RecipeService {
     }
 
     /**
+     * Gets the recipe contents as an array
+     *
+     * @param \OCP\Files\File
+     *
+     * @return Array
+     */
+    public function parseRecipeFile($file) {
+        if(!$file) { return null; }
+
+        $json = json_decode($file->getContent(), true);
+
+        if(!$json) { return null; }
+
+        $json['id'] = $file->getId();
+
+        return $json;
+    } 
+
+    /**
      * Gets the image file for a recipe
      *
      * @param int $id
@@ -103,13 +147,7 @@ class RecipeService {
 
         if($file && $this->isImage($file)) { return $file; }
 
-        $recipe_node = $this->getRecipeFileById($id); 
-
-        if(!$recipe_node) { return null; }
-
-        $recipe_json = json_decode($recipe_node->getContent(), true);
-
-        if(!$recipe_json) { return null; }
+        $recipe_json = $this->parseRecipeFile($this->getRecipeFileById($id));
 
         if(!isset($recipe_json['image']) || !$recipe_json['image']) { return null; }  
     
