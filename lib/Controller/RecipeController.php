@@ -37,9 +37,24 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function find() {
-        $data = [];
+        $data = $this->service->findRecipesInSearchIndex(
+            isset($_GET['ingredients']) ? $_GET['ingredients'] : '',
+            isset($_GET['keywords']) ? $_GET['keywords'] : '',
+            isset($_GET['limit']) ? $_GET['limit'] : null,
+            isset($_GET['offset']) ? $_GET['offset'] : null
+        );
 
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
+        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+    }
+
+    /**
+	 * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function reindex() {
+        $this->service->rebuildSearchIndex();
+        
+        return new DataResponse('Search index rebuilt successfully', Http::STATUS_OK);
     }
 
     /**

@@ -51,6 +51,15 @@ class RecipeService {
     }
 
     /**
+     * Rebuilds the search index
+     */
+    public function rebuildSearchIndex() {
+        foreach($this->getRecipeFiles() as $file) {
+            $this->db->indexRecipeFile($file);
+        }
+    }
+
+    /**
      * Gets all recipes from the index
      * @return array
      */

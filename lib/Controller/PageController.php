@@ -31,13 +31,13 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
     public function index() {
-        $all_nodes = $this->service->getRecipeFiles();
+        $all_recipes = $this->service->getAllRecipesInSearchIndex();
         $current_node = null;
 
         if(isset($_GET['recipe'])) {
             $current_node = $this->service->getRecipeFileById($_GET['recipe']);
         }
 
-        return new TemplateResponse('cookbook', 'index', [ 'all_nodes' => $all_nodes, 'current_node' => $current_node ]);  // templates/index.php
+        return new TemplateResponse('cookbook', 'index', [ 'all_recipes' => $all_recipes, 'current_node' => $current_node ]);  // templates/index.php
     }    
 }

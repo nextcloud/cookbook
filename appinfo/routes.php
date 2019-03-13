@@ -13,5 +13,6 @@ return [
 	   ['name' => 'recipe#all', 'url' => '/all', 'verb' => 'GET'],
 	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
 	   ['name' => 'recipe#image', 'url' => '/image', 'verb' => 'GET'],
+	   ['name' => 'recipe#reindex', 'url' => '/reindex', 'verb' => 'POST'],
     ]
 ];

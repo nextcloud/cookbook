@@ -1,8 +1,10 @@
+<button id="reindex-recipes">Reindex</button>
+
 <ul>
-    <?php foreach($_['all_nodes'] as $node) { ?>
+    <?php foreach($_['all_recipes'] as $recipe) { ?>
         <li>
-            <img src="/index.php/apps/cookbook/image?recipe=<? echo $node->getId(); ?>&size=thumb">
-            <a href="?recipe=<?php echo $node->getId(); ?>"><?php echo basename($node->getName(), '.json'); ?></a>
+            <img src="/apps/cookbook/image?recipe=<? echo $recipe['recipe_id']; ?>&size=thumb">
+            <a href="?recipe=<?php echo $recipe['recipe_id']; ?>"><?php echo $recipe['name']; ?></a>
         </li>
     <?php } ?>
 </ul>
