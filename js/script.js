@@ -3,10 +3,6 @@
 
 $(document).ready(function () {
 
-var translations = {
-    newRecipe: $('#new-recipe-string').text()
-};
-
 var Cookbook = function (baseUrl) {
     this._baseUrl = baseUrl;
     this._recipes = [];
@@ -25,8 +21,7 @@ Cookbook.prototype = {
         }).fail(function () {
             deferred.reject();
         });
-        return deferred.promise()
-        .then(this.loadAll);
+        return deferred.promise();
     },
     find: function (keywords) {
         var deferred = $.Deferred();
@@ -69,49 +64,17 @@ Cookbook.prototype = {
     getActive: function () {
         return this._activeRecipe;
     },
-    removeActive: function () {
-        var index;
-        var deferred = $.Deferred();
-        var id = this._activeRecipe.id;
-        this._recipes.forEach(function (recipe, counter) {
-            if (recipe.recipe_id === id) {
-                index = counter;
-            }
-        });
-
-        if (index !== undefined) {
-            // delete cached active recipe if necessary
-            if (this._activeRecipe === this._recipes[index]) {
-                delete this._activeRecipe;
-            }
-
-            this._recipes.splice(index, 1);
-
-            $.ajax({
-                url: this._baseUrl + '/' + id,
-                method: 'DELETE'
-            }).done(function () {
-                deferred.resolve();
-            }).fail(function () {
-                deferred.reject();
-            });
-        } else {
-            deferred.reject();
-        }
-        return deferred.promise();
-    },
-    create: function (recipe) {
+    add: function (url) {
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl,
+            url: this._baseUrl + '/add',
             method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(recipe)
+            data: 'url=' + url
         }).done(function (recipe) {
             self._recipes.push(recipe);
             self._activeRecipe = recipe;
-            self.load(recipe.id);
+            self.load(recipe.recipe_id);
             deferred.resolve();
         }).fail(function () {
             deferred.reject();
@@ -130,19 +93,22 @@ Cookbook.prototype = {
         }).fail(function () {
             deferred.reject();
         });
+        
         return deferred.promise();
     },
-    updateActive: function (title, content) {
-        var recipe = this.getActive();
-        recipe.title = title;
-        recipe.content = content;
+    updateActive: function() {
+        var self = this;       
+        var activeId = location.hash.replace('#', '');
 
-        return $.ajax({
-            url: this._baseUrl + '/' + recipe.id,
-            method: 'PUT',
-            contentType: 'application/json',
-            data: JSON.stringify(recipe)
-        });
+        if(activeId) {
+            this._recipes.forEach(function(recipe) {
+                if(recipe.recipe_id == activeId) {
+                    self._activeRecipe = recipe;
+                }
+            });
+        } else {
+            this._activeRecipe = undefined;
+        }
     }
 };
 
@@ -177,19 +143,17 @@ View.prototype = {
 
         $('#app-navigation ul').html(html);
        
-        // create a new recipe
+        // add a new recipe
         var self = this;
-        $('#new-recipe').click(function () {
-            var recipe = {
-                title: translations.newRecipe,
-                content: ''
-            };
+        $('#add-recipe').submit(function (e) {
+            e.preventDefault();
+            
+            var url = e.currentTarget.url.value;
 
-            self._cookbook.create(recipe).done(function() {
+            self._cookbook.add(url).done(function() {
                 self.render();
-                $('#editor textarea').focus();
             }).fail(function () {
-                alert('Could not create recipe');
+                alert('Could not add recipe');
             });
         });
 
@@ -207,27 +171,11 @@ View.prototype = {
         // reindex recipes
         $('#reindex-recipes').click(function () {
             self._cookbook.reindex().done(function () {
-                self.render();
+                self._cookbook.loadAll().done(function() {
+                    self.render();
+                });
             }).fail(function (e) {
                 alert('Could not rebuild recipe index.');
-            });
-        });
-
-        // show app menu
-        $('#app-navigation .app-navigation-entry-utils-menu-button').click(function () {
-            var entry = $(this).closest('.recipe');
-            entry.find('.app-navigation-entry-menu').toggleClass('open');
-        });
-
-        // delete a recipe
-        $('#app-navigation .recipe .delete').click(function () {
-            var entry = $(this).closest('.recipe');
-            entry.find('.app-navigation-entry-menu').removeClass('open');
-
-            self._cookbook.removeActive().done(function () {
-                self.render();
-            }).fail(function () {
-                alert('Could not delete recipe, not found');
             });
         });
 
@@ -247,6 +195,7 @@ View.prototype = {
 var cookbook = new Cookbook(OC.generateUrl('/apps/cookbook'));
 var view = new View(cookbook);
 cookbook.loadAll().done(function () {
+    cookbook.updateActive();
     view.render();
 }).fail(function () {
     alert('Could not load recipes');

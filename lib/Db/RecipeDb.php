@@ -86,6 +86,18 @@ class RecipeDb {
 
         return $result;
     }
+    
+    public function emptySearchIndex() {
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->delete('cookbook_recipes');
+        
+        $qb->execute();
+        
+        $qb->delete('cookbook_keywords');
+        
+        $qb->execute();
+    }
 
     public function indexRecipeFile($file) {
         $json = json_decode($file->getContent(), true);

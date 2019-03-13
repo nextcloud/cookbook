@@ -25,10 +25,64 @@ class RecipeService {
     public function getRecipeFileById ($id) {
         $folder = $this->getFolderForUser();
         $file = $folder->getById($id);
-        if(count($file) <= 0 || !$this->isRecipe($file[0])) {
+        if(count($file) <= 0 || !$this->isRecipeFile($file[0])) {
             return null;
         }
         return $file[0];
+    }
+    
+    /**
+     * @param string $url
+     * @return \OCP\Files\File
+     */
+    public function downloadRecipe($url) {
+        $host = parse_url($url);
+
+        if(!$host) { throw new \Exception('Could not parse URL'); }
+        
+        $html = file_get_contents($url);
+
+        if(!$html) { throw new \Exception('Could not fetch site'); }
+
+        $html = str_replace(["\r", "\n"], '', $html);
+        
+        $regex_matches = [];
+        preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $html, $regex_matches, PREG_SET_ORDER);
+
+        foreach($regex_matches as $regex_match) {
+            if(!$regex_match || !isset($regex_match[1])) { continue; }
+
+            $string = $regex_match[1];
+            
+            if(!$string) { continue; }
+                
+            $json = json_decode($string, true);
+
+            if(!$json || $json['@type'] !== 'Recipe') { continue; }
+
+            $recipe = [
+                '@context' => 'http://schema.org',
+                '@type' => 'Recipe',
+                'name' => isset($json['name']) ? $json['name'] : 'No name',
+                'image' => $this->parseRecipeImage($json),
+                'recipeYield' => $this->parseRecipeYield($json),
+                'keywords' => $this->parseRecipeKeywords($json),
+                'recipeIngredient' => $this->parseRecipeIngredients($json),
+                'recipeInstructions' => $this->parseRecipeInstructions($json),
+            ];
+
+            $folder = $this->getFolderForUser();
+            
+            $folder->newFile($recipe['name'] . '.json');
+            $file = $folder->get($recipe['name'] . '.json');
+            $file->putContent(json_encode($recipe));
+
+            $this->db->indexRecipeFile($file);
+            
+            return $file;
+        }
+
+        throw new Exception('No recipe data found');
     }
     
     /**
@@ -42,7 +96,7 @@ class RecipeService {
         $recipes = [];
 
         foreach($nodes as $node) {
-			if($this->isRecipe($node)) {
+			if($this->isRecipeFile($node)) {
 				$recipes[] = $node;
 			}
         }
@@ -54,6 +108,8 @@ class RecipeService {
      * Rebuilds the search index
      */
     public function rebuildSearchIndex() {
+        $this->db->emptySearchIndex();
+        
         foreach($this->getRecipeFiles() as $file) {
             $this->db->indexRecipeFile($file);
         }
@@ -133,7 +189,7 @@ class RecipeService {
 
         if(!$json) { return null; }
 
-        $json['id'] = $file->getId();
+        $json['recipe_id'] = $file->getId();
 
         return $json;
     } 
@@ -202,7 +258,7 @@ class RecipeService {
      * @param \OCP\Files\File $file
      * @return bool
      */
-    private function isRecipe($file) {
+    private function isRecipeFile($file) {
         $allowedExtensions = ['json'];
         if($file->getType() !== 'file') return false;
         $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
@@ -211,5 +267,105 @@ class RecipeService {
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param array $json
+     * @return string
+     */
+    private function parseRecipeKeywords($json) {
+        if(!isset($json['keywords'])) { return ''; }
+
+        $keywords = $json['keywords'];
+        $keywords = strip_tags($keywords);
+        $keywords = str_replace(' and', '', $keywords);
+        $keywords = str_replace(' ', ',', $keywords);
+        $keywords = str_replace(',,', ',', $keywords);
+
+        return $keywords;
+    }
+
+    /**
+     * @param array $json
+     * @return array
+     */  
+    private function parseRecipeIngredients($json) {
+        if(!isset($json['recipeIngredient']) || !is_array($json['recipeIngredient'])) { return []; }
+
+        $ingredients = [];
+
+        foreach($json['recipeIngredient'] as $i => $ingredient) {
+            $ingredient = strip_tags($ingredient);
+            $ingredient = str_replace(["\r", "\n", "\t", "\\"], '', $ingredient);
+
+            if(!$ingredient) { continue; }
+
+            array_push($ingredients, $ingredient);
+        }
+
+        return $ingredients;
+    }
+
+    /**
+     * @param array $json
+     * @return array
+     */
+    private function parseRecipeInstructions($json) {
+        if(!isset($json['recipeInstructions'])) { return []; }
+
+        $instructions = $json['recipeInstructions'];
+
+        if(is_array($instructions)) { return $instructions; }
+
+        $regex_matches = [];
+        preg_match_all('/<p>(.*?)<\/p>/', htmlspecialchars_decode($instructions), $regex_matches, PREG_SET_ORDER); 
+
+        $instructions = [];
+
+        foreach($regex_matches as $regex_match) {
+            if(!$regex_match || !isset($regex_match[1])) { continue; }
+
+            $string = $regex_match[1];
+            $string = strip_tags($string);
+            $string = str_replace(["\r", "\n", "\t"], '', $string);
+                
+            if(!$string) { continue; }
+
+            array_push($instructions, [ '@type' => 'HowToStep', 'text' => $string ]);
+        }
+
+        return $instructions;
+    }
+    
+    /**
+     * @param array json
+     * @return int
+     */
+    private function parseRecipeYield($json) {
+        if(!isset($json['recipeYield'])) { return 1; }
+        
+        $yield = filter_var($json['recipeYield'], FILTER_SANITIZE_NUMBER_INT);
+
+        if(!$yield) { return 1; }
+
+        return (int) $yield;
+    }
+
+    /**
+     * @param array json
+     * @return string
+     */
+    private function parseRecipeImage($json) {
+        if(!isset($json['image'])) { return ''; }
+
+        $image = $json['image'];
+
+        if(!$image) { return ''; }
+        if(is_string($image)) { return $image; }
+        if(isset($image['url'])) { return $image['url']; }
+        if(isset($image[0]['url'])) { return $image[0]['url']; }
+        if(isset($image[0])) { return $image[0]; }
+
+        return '';
     }
 }

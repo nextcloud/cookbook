@@ -53,6 +53,19 @@ class RecipeController extends Controller {
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
+    
+    /**
+	 * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function add() {
+        if(!isset($_POST['url'])) { throw new \Exception('Field "url" is required'); }
+
+        $recipe_file = $this->service->downloadRecipe($_POST['url']);
+        $recipe_json = $this->service->parseRecipeFile($recipe_file);
+
+        return new DataResponse($recipe_json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+    }
 
     /**
 	 * @NoAdminRequired

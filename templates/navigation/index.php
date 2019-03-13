@@ -1,13 +1,20 @@
-<button id="reindex-recipes">Reindex</button>
+<div class="app-navigation-new">
+    <button class="icon-history" id="reindex-recipes">Rescan library</button>
+</div>
 
-<form id="find-recipes">
+<form id="add-recipe" class="app-navigation-new">
+    <input name="url" placeholder="Recipe URL">
+    <button class="icon-download" type="submit" title="Download recipe"></button>
+</form>
+
+<form id="find-recipes" class="app-navigation-new">
     <input list="list-keywords" name="keywords" placeholder="Search" multiple>
     <datalist id="list-keywords">
         <?php foreach($_['all_keywords'] as $keyword) { ?>
             <option value="<?php echo $keyword['name']; ?>">
         <?php } ?>
     </datalist>
-    <input type="submit" value="Search">
+    <button class="icon-category-search" type="submit"></button>
 </form>
 
 <ul></ul>

@@ -12,6 +12,7 @@ return [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	   ['name' => 'page#recipe', 'url' => '/recipe', 'verb' => 'GET'],
 	   ['name' => 'recipe#all', 'url' => '/all', 'verb' => 'GET'],
+	   ['name' => 'recipe#add', 'url' => '/add', 'verb' => 'POST'],
 	   ['name' => 'recipe#keywords', 'url' => '/keywords', 'verb' => 'GET'],
 	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
 	   ['name' => 'recipe#image', 'url' => '/image', 'verb' => 'GET'],

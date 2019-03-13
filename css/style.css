@@ -1,6 +1,14 @@
+#app-navigation .app-navigation-new button:empty {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    padding: 0;
+    background-position: 50% 50%;
+}
+
 header {
     flex-basis: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     line-height: 1.5;
 }
     header figure {
@@ -20,6 +28,7 @@ header {
 
 aside {
     flex-basis: 20rem;
+    padding-right: 2rem;
 }
     aside ul {
         list-style-type: disc;
@@ -37,9 +46,16 @@ aside {
                 vertical-align: middle;
             }
 
-main ul li {
-    margin-bottom: 1em;
+main {
+    flex-basis: calc(100% - 22rem);
 }
+    @media(max-width:1199px) { main {
+        flex-basis: 100%;
+    } }
+
+    main ul li {
+        margin-bottom: 1em;
+    }
 
 #app-content-wrapper {
     flex-wrap: wrap;
