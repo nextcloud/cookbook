@@ -25,12 +25,40 @@ Cookbook.prototype = {
         }).fail(function () {
             deferred.reject();
         });
+        return deferred.promise()
+        .then(this.loadAll);
+    },
+    find: function (keywords) {
+        var deferred = $.Deferred();
+        var self = this;
+        $.ajax({
+            url: this._baseUrl + '/find?keywords=' + keywords,
+            method: 'GET',
+        }).done(function (recipes) {
+            self._recipes = recipes;
+            deferred.resolve();
+        }).fail(function () {
+            deferred.reject();
+        });
+        return deferred.promise();
+    },
+    loadHtml: function (id) {
+        var deferred = $.Deferred();
+        var self = this;
+        $.ajax({
+            url: this._baseUrl + '/recipe?id=' + id,
+            method: 'GET',
+        }).done(function (html) {
+            deferred.resolve(html);
+        }).fail(function () {
+            deferred.reject();
+        });
         return deferred.promise();
     },
     load: function (id) {
         var self = this;
         this._recipes.forEach(function (recipe) {
-            if (recipe.id === id) {
+            if (recipe.recipe_id === id) {
                 recipe.active = true;
                 self._activeRecipe = recipe;
             } else {
@@ -46,7 +74,7 @@ Cookbook.prototype = {
         var deferred = $.Deferred();
         var id = this._activeRecipe.id;
         this._recipes.forEach(function (recipe, counter) {
-            if (recipe.id === id) {
+            if (recipe.recipe_id === id) {
                 index = counter;
             }
         });
@@ -97,7 +125,6 @@ Cookbook.prototype = {
         var deferred = $.Deferred();
         var self = this;
         $.get(this._baseUrl + '/all').done(function (recipes) {
-            self._activeRecipe = undefined;
             self._recipes = recipes;
             deferred.resolve();
         }).fail(function () {
@@ -126,33 +153,30 @@ var View = function (cookbook) {
 
 View.prototype = {
     renderContent: function () {
-        var source = $('#content-tpl').html();
-        var template = Handlebars.compile(source);
-        var html = template({recipe: this._cookbook.getActive()});
+        var recipe = this._cookbook.getActive();
 
-        $('#editor').html(html);
-
-        // handle saves
-        var textarea = $('#app-content textarea');
-        var self = this;
-        $('#app-content button').click(function () {
-            var content = textarea.val();
-            var title = content.split('\n')[0]; // first line is the title
-
-            self._cookbook.updateActive(title, content).done(function () {
-                self.render();
-            }).fail(function () {
-                alert('Could not update recipe, not found');
+        if(!recipe) {
+            $('#app-content-wrapper').html('Please pick a recipe');
+        } else {
+            this._cookbook.loadHtml(recipe.recipe_id)
+            .then(function(html) {
+                $('#app-content-wrapper').html(html);
             });
-        });
+        }
+
     },
     renderNavigation: function () {
-        //var source = $('#navigation-tpl').html();
-        //var template = Handlebars.compile(source);
-        //var html = template({recipes: this._cookbook.getAll()});
-
-        //$('#app-navigation ul').html(html);
+        var source = $('#navigation-tpl').html();
+        var html = '';
         
+        this._cookbook.getAll().forEach(function(recipe) {
+            html += source
+                .replace(/{{recipe_id}}/g, recipe.recipe_id)
+                .replace(/{{name}}/g, recipe.name);
+        });
+
+        $('#app-navigation ul').html(html);
+       
         // create a new recipe
         var self = this;
         $('#new-recipe').click(function () {
@@ -166,6 +190,17 @@ View.prototype = {
                 $('#editor textarea').focus();
             }).fail(function () {
                 alert('Could not create recipe');
+            });
+        });
+
+        // find recipes
+        $('#find-recipes').submit(function (e) {
+            e.preventDefault();
+
+            self._cookbook.find(e.currentTarget.keywords.value).done(function () {
+                self.render();
+            }).fail(function (e) {
+                alert('Could not search for recipes.');
             });
         });
 
@@ -197,16 +232,15 @@ View.prototype = {
         });
 
         // load a recipe
-        $('#app-navigation .recipe > a').click(function () {
-            var id = parseInt($(this).parent().data('id'), 10);
+        $('#app-navigation ul a').click(function (e) {
+            var id = parseInt($(this).data('id'));
             self._cookbook.load(id);
             self.render();
-            $('#editor textarea').focus();
         });
     },
     render: function () {
         this.renderNavigation();
-        //this.renderContent();
+        this.renderContent();
     }
 };
 

@@ -36,12 +36,19 @@ class RecipeController extends Controller {
 	 * @NoAdminRequired
      * @NoCSRFRequired
      */
+    public function keywords() {
+        $data = $this->service->getAllKeywordsInSearchIndex();
+
+        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+    }
+    
+    /**
+	 * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function find() {
         $data = $this->service->findRecipesInSearchIndex(
-            isset($_GET['ingredients']) ? $_GET['ingredients'] : '',
-            isset($_GET['keywords']) ? $_GET['keywords'] : '',
-            isset($_GET['limit']) ? $_GET['limit'] : null,
-            isset($_GET['offset']) ? $_GET['offset'] : null
+            isset($_GET['keywords']) ? $_GET['keywords'] : ''
         );
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);

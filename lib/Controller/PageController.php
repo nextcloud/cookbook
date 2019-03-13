@@ -5,7 +5,9 @@ use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 
@@ -31,13 +33,28 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
     public function index() {
-        $all_recipes = $this->service->getAllRecipesInSearchIndex();
-        $current_node = null;
+        $view_data = [
+            'all_recipes' => $this->service->getAllRecipesInSearchIndex(),
+            'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
+            'current_node' => isset($_GET['recipe']) ? $this->service->getRecipeFileById($_GET['recipe']) : null
+        ];
 
-        if(isset($_GET['recipe'])) {
-            $current_node = $this->service->getRecipeFileById($_GET['recipe']);
-        }
+        return new TemplateResponse('cookbook', 'index', $view_data);  // templates/index.php
+    }    
+    
+    /**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+    public function recipe() {
+        $view_data = [
+            'current_node' => isset($_GET['id']) ? $this->service->getRecipeFileById($_GET['id']) : null
+        ];
 
-        return new TemplateResponse('cookbook', 'index', [ 'all_recipes' => $all_recipes, 'current_node' => $current_node ]);  // templates/index.php
+        $response = new TemplateResponse('cookbook', 'recipe', $view_data);  // templates/recipe.php
+
+        $response->renderAs('blank');
+
+        return $response;
     }    
 }

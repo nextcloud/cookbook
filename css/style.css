@@ -27,6 +27,15 @@ aside {
         aside ul li {
             margin-left: 1em;
         }
+            aside ul li span, aside ul li input[type="checkbox"] {
+                line-height: 1rem;
+                margin: 0 0.5rem 0 0;
+                padding: 0;
+                height: auto;
+                width: 1rem;
+                display: inline-block;
+                vertical-align: middle;
+            }
 
 main ul li {
     margin-bottom: 1em;

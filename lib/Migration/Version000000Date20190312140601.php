@@ -43,17 +43,6 @@ class Version000000Date20190312140601 extends SimpleMigrationStep {
             ]);
         }
         
-        if (!$schema->hasTable('cookbook_ingredients')) {
-            $table = $schema->createTable('cookbook_ingredients');
-            $table->addColumn('recipe_id', 'integer', [
-                'notnull' => true,
-            ]);
-            $table->addColumn('name', 'string', [
-                'notnull' => true,
-                'length' => 64,
-            ]);
-        }
-
         return $schema;
     }
 }

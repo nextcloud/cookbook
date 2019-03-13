@@ -58,6 +58,14 @@ class RecipeService {
             $this->db->indexRecipeFile($file);
         }
     }
+    
+    /**
+     * Gets all keywords from the index
+     * @return array
+     */
+    public function getAllKeywordsInSearchIndex() {
+        return $this->db->findAllKeywords(); 
+    }
 
     /**
      * Gets all recipes from the index
@@ -68,15 +76,14 @@ class RecipeService {
     }
 
     /**
-     * Searches for recipes by ingredients and keywords
+     * Searches for recipes by keywords
      *
-     * @param string $ingredients
      * @param string $keywords
      *
      * @return array
      */
-    public function findRecipesInSearchIndex($ingredients, $keywords, $limit = null, $offset = null) {
-        return $this->db->findRecipes(explode(',', $ingredients), explode(',', $keywords), $limit, $offset);
+    public function findRecipesInSearchIndex($keywords) {
+        return $this->db->findRecipes(explode(',', $keywords));
     }
 
     /**

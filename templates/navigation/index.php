@@ -1,10 +1,22 @@
 <button id="reindex-recipes">Reindex</button>
 
-<ul>
-    <?php foreach($_['all_recipes'] as $recipe) { ?>
-        <li>
-            <img src="/apps/cookbook/image?recipe=<? echo $recipe['recipe_id']; ?>&size=thumb">
-            <a href="?recipe=<?php echo $recipe['recipe_id']; ?>"><?php echo $recipe['name']; ?></a>
-        </li>
-    <?php } ?>
-</ul>
+<form id="find-recipes">
+    <input list="list-keywords" name="keywords" placeholder="Search" multiple>
+    <datalist id="list-keywords">
+        <?php foreach($_['all_keywords'] as $keyword) { ?>
+            <option value="<?php echo $keyword['name']; ?>">
+        <?php } ?>
+    </datalist>
+    <input type="submit" value="Search">
+</form>
+
+<ul></ul>
+
+<script id="navigation-tpl" type="text/template">
+    <li>
+        <a href="#{{recipe_id}}" data-id="{{recipe_id}}">
+            <img src="/apps/cookbook/image?recipe={{recipe_id}}&size=thumb">
+            {{name}}
+        </a>
+    </li>
+</script>
