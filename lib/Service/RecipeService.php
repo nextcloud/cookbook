@@ -72,13 +72,25 @@ class RecipeService {
             ];
 
             $folder = $this->getFolderForUser();
-            
-            $folder->newFile($recipe['name'] . '.json');
-            $file = $folder->get($recipe['name'] . '.json');
+            $file = null;
+
+            try {
+                $file = $folder->get($recipe['name'] . '.json');
+            } catch(\OCP\Files\NotFoundException $e) {
+                $folder->newFile($recipe['name'] . '.json');
+                $file = $folder->get($recipe['name'] . '.json');
+            }
+
             $file->putContent(json_encode($recipe));
 
             $this->db->indexRecipeFile($file);
             
+            $cache_folder = $this->getFolderForCache($file->getId());
+
+            if($cache_folder) {
+                $cache_folder->delete();
+            }
+
             return $file;
         }
 
@@ -363,9 +375,19 @@ class RecipeService {
         if(!$image) { return ''; }
         if(is_string($image)) { return $image; }
         if(isset($image['url'])) { return $image['url']; }
-        if(isset($image[0]['url'])) { return $image[0]['url']; }
-        if(isset($image[0])) { return $image[0]; }
 
-        return '';
+        $result = '';
+
+        foreach($image as $img) {
+            if(is_array($img) && isset($img['url'])) {
+                $img = $img['url'];
+            }
+            
+            if(!$result || strlen($img) < strlen($result)) {
+                $result = $img;
+            }
+        }
+
+        return $result;
     }
 }

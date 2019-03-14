@@ -52,7 +52,9 @@
         <h3>Instructions</h3>
 
         <?php foreach($recipe['recipeInstructions'] as $step) {  ?>
-            <li><?php echo $step['text']; ?></li>   
+            <?php if(is_array($step) && isset($step['text'])) { $step = $step['text']; } ?>
+
+            <li><?php echo $step; ?></li>   
         <?php } ?>
     </ul>
 </main>
