@@ -152,7 +152,7 @@ View.prototype = {
 
             self._cookbook.add(url).done(function() {
                 self.render();
-            }).fail(function () {
+            }).fail(function (msg) {
                 alert('Could not add recipe');
             });
         });

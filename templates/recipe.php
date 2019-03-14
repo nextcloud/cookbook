@@ -9,7 +9,7 @@
 
     <h2><?php echo $recipe['name']; ?></h2>
     
-    <p><?php echo $recipe['recipeYield']; ?> servings</p>
+    <p><?php echo $recipe['recipeYield']; ?> serving<?php if($recipe['recipeYield'] > 1) { echo 's'; } ?></p>
     
     <?php if(isset($recipe['dailyDozen'])) { ?>
         <?php 

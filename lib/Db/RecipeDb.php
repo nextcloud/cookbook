@@ -62,8 +62,6 @@ class RecipeDb {
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
      */
     public function findRecipes($keywords) {
-        $result = [];
-
         $has_keywords = $keywords && is_array($keywords) && sizeof($keywords) > 0 && $keywords[0];
 
         if(!$has_keywords) { return $this->findAllRecipes(); }
@@ -78,10 +76,10 @@ class RecipeDb {
             $qb->orWhere('k.name = \'' . $keywords[$i] . '\'');
         }
         
-        $qb->join('k', 'cookbook_recipes', 'rk', 'k.recipe_id = rk.recipe_id'); 
+        $qb->join('k', 'cookbook_recipes', 'r', 'k.recipe_id = r.recipe_id'); 
 
         $cursor = $qb->execute();
-        $result = array_merge($result, $cursor->fetchAll());
+        $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
         return $result;

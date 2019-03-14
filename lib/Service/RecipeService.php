@@ -30,21 +30,15 @@ class RecipeService {
         }
         return $file[0];
     }
-    
+
     /**
-     * @param string $url
-     * @return \OCP\Files\File
+     * @param string $html
+     * @return array 
      */
-    public function downloadRecipe($url) {
-        $host = parse_url($url);
-
-        if(!$host) { throw new \Exception('Could not parse URL'); }
+    private function parseRecipeHtml($html) {
+        if(!$html) { return null; }
         
-        $html = file_get_contents($url);
-
-        if(!$html) { throw new \Exception('Could not fetch site'); }
-
-        $html = str_replace(["\r", "\n"], '', $html);
+        $html = str_replace(["\r", "\n", "\t"], '', $html);
         
         $regex_matches = [];
         preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $html, $regex_matches, PREG_SET_ORDER);
@@ -71,30 +65,50 @@ class RecipeService {
                 'recipeInstructions' => $this->parseRecipeInstructions($json),
             ];
 
-            $folder = $this->getFolderForUser();
-            $file = null;
-
-            try {
-                $file = $folder->get($recipe['name'] . '.json');
-            } catch(\OCP\Files\NotFoundException $e) {
-                $folder->newFile($recipe['name'] . '.json');
-                $file = $folder->get($recipe['name'] . '.json');
-            }
-
-            $file->putContent(json_encode($recipe));
-
-            $this->db->indexRecipeFile($file);
-            
-            $cache_folder = $this->getFolderForCache($file->getId());
-
-            if($cache_folder) {
-                $cache_folder->delete();
-            }
-
-            return $file;
+            return $recipe;
         }
 
-        throw new Exception('No recipe data found');
+        return null;
+    }
+
+    /**
+     * @param string $url
+     * @return \OCP\Files\File
+     */
+    public function downloadRecipe($url) {
+        $host = parse_url($url);
+
+        if(!$host) { throw new \Exception('Could not parse URL'); }
+        
+        $html = file_get_contents($url);
+
+        if(!$html) { throw new \Exception('Could not fetch site ' . $url); }
+
+        $json = $this->parseRecipeHtml($html); 
+
+        if(!$json) { throw new \Exception('No recipe data found'); }
+
+        $folder = $this->getFolderForUser();
+        $file = null;
+
+        try {
+            $file = $folder->get($recipe['name'] . '.json');
+        } catch(\OCP\Files\NotFoundException $e) {
+            $folder->newFile($recipe['name'] . '.json');
+            $file = $folder->get($recipe['name'] . '.json');
+        }
+
+        $file->putContent(json_encode($json));
+
+        $this->db->indexRecipeFile($file);
+        
+        $cache_folder = $this->getFolderForCache($file->getId());
+
+        if($cache_folder) {
+            $cache_folder->delete();
+        }
+
+        return $file;
     }
     
     /**
@@ -293,6 +307,9 @@ class RecipeService {
         $keywords = str_replace(' and', '', $keywords);
         $keywords = str_replace(' ', ',', $keywords);
         $keywords = str_replace(',,', ',', $keywords);
+        $keywords = explode(',', $keywords);
+        $keywords = array_unique($keywords);
+        $keywords = implode(',', $keywords);
 
         return $keywords;
     }

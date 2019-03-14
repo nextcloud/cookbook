@@ -59,12 +59,15 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function add() {
-        if(!isset($_POST['url'])) { throw new \Exception('Field "url" is required'); }
+        if(!isset($_POST['url'])) { return new DataResponse('Field "url" is required', 400); }
 
-        $recipe_file = $this->service->downloadRecipe($_POST['url']);
-        $recipe_json = $this->service->parseRecipeFile($recipe_file);
-
-        return new DataResponse($recipe_json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        try {
+            $recipe_file = $this->service->downloadRecipe($_POST['url']);
+            $recipe_json = $this->service->parseRecipeFile($recipe_file);
+            return new DataResponse($recipe_json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        } catch(\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
     }
 
     /**
@@ -82,12 +85,17 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function image() {
-        if(!isset($_GET['recipe'])) { return null; }
+        if(!isset($_GET['recipe'])) {
+            return new DataResponse('Not found', Http::STATUS_NOT_FOUND);
+        }
 
         $size = isset($_GET['size']) ? $_GET['size'] : null;
+        $file = $this->service->getRecipeImageFileById($_GET['recipe'], $size);
 
-        $file = $this->service->getRecipeImageFileById($_GET['recipe']);
-
+        if(!$file) {
+            return new DataResponse('Not found', Http::STATUS_NOT_FOUND);
+        }
+        
         return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
     }
 }
