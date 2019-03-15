@@ -137,6 +137,9 @@ class RecipeService {
      * Rebuilds the search index
      */
     public function rebuildSearchIndex() {
+        $cache_folder = $this->getFolderForCache();
+        $cache_folder->delete();
+
         $this->db->emptySearchIndex();
         
         foreach($this->getRecipeFiles() as $file) {
@@ -203,8 +206,12 @@ class RecipeService {
      * @param int $id
      * @return Folder
      */
-    public function getFolderForCache($id) {
-        $path = '/cookbook/cache/' . $id;
+    public function getFolderForCache($id = '') {
+        $path = '/cookbook/cache';
+        
+        if($id) {
+            $path .= '/' . $id;
+        }
         
         return $this->getOrCreateFolder($path);
     }
@@ -258,9 +265,10 @@ class RecipeService {
 
         $folder = $this->getFolderForCache($id);
         $file = null;
+        $filename = $size . '.jpg';
 
         try {
-            $file = $folder->get($size . '.jpg');
+            $file = $folder->get($filename);
         } catch(\OCP\Files\NotFoundException $e) {
             $file = null;
         }
@@ -269,15 +277,21 @@ class RecipeService {
 
         $recipe_json = $this->parseRecipeFile($this->getRecipeFileById($id));
 
-        if(!isset($recipe_json['image']) || !$recipe_json['image']) { return null; }  
+        if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
     
         $recipe_image_data = file_get_contents($recipe_json['image']);
 
-        if(!$recipe_image_data) { return null; }
+        if(!$recipe_image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 
-        // TODO: Resize image
-        $folder->newFile($size . '.jpg');
-        $file = $folder->get($size . '.jpg');
+        /*if($size === 'thumb') {
+            $img = new \OC_Image();
+            $img->loadFromData($recipe_image_data);
+            $img->fitIn(64, 64);
+            $recipe_image_data = $img->resource();
+        }*/
+
+        $folder->newFile($filename);
+        $file = $folder->get($filename);
         $file->putContent($recipe_image_data);
 
         return $file;

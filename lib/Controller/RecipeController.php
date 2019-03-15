@@ -37,6 +37,14 @@ class RecipeController extends Controller {
 	 * @NoAdminRequired
      * @NoCSRFRequired
      */
+    public function test() {
+        return new DataResponse('OK', Http::STATUS_OK);
+    }
+    
+    /**
+	 * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function keywords() {
         $data = $this->service->getAllKeywordsInSearchIndex();
 
@@ -104,12 +112,14 @@ class RecipeController extends Controller {
         }
 
         $size = isset($_GET['size']) ? $_GET['size'] : null;
-        $file = $this->service->getRecipeImageFileById($_GET['recipe'], $size);
 
-        if(!$file) {
-            return new DataResponse('Not found', Http::STATUS_NOT_FOUND);
+        try {
+            $file = $this->service->getRecipeImageFileById($_GET['recipe'], $size);
+
+            return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
+        } catch(\Exception $e) {
+            return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
         }
         
-        return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
     }
 }
