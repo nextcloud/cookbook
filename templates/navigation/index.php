@@ -1,7 +1,3 @@
-<div class="app-navigation-new">
-    <button class="icon-history" id="reindex-recipes">Rescan library</button>
-</div>
-
 <form id="add-recipe" class="app-navigation-new">
     <input name="url" placeholder="Recipe URL">
     <button class="icon-download" type="submit" title="Download recipe"></button>
@@ -17,7 +13,7 @@
     <button class="icon-category-search" type="submit"></button>
 </form>
 
-<ul></ul>
+<ul id="recipes"></ul>
 
 <script id="navigation-tpl" type="text/template">
     <li>

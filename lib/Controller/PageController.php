@@ -1,6 +1,7 @@
 <?php
 namespace OCA\Cookbook\Controller;
 
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
@@ -15,11 +16,11 @@ class PageController extends Controller {
 	private $userId;
     private $service;
 
-	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId){
+	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config){
 		parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
-        $this->service = new RecipeService($root, $UserId, $db);
+        $this->service = new RecipeService($root, $UserId, $db, $config);
 	}
 
 	/**
@@ -36,6 +37,7 @@ class PageController extends Controller {
         $view_data = [
             'all_recipes' => $this->service->getAllRecipesInSearchIndex(),
             'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
+            'folder' => $this->service->getUserFolderPath(),
             'current_node' => isset($_GET['recipe']) ? $this->service->getRecipeFileById($_GET['recipe']) : null
         ];
 

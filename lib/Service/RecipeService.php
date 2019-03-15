@@ -1,6 +1,7 @@
 <?php
 namespace OCA\Cookbook\Service;
 
+use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
 use OCP\IDBConnection;
@@ -11,11 +12,13 @@ class RecipeService {
     private $root;
     private $userId;
     private $db;
+    private $config;
 
-    public function __construct($root, $userId, IDBConnection $db) {
+    public function __construct($root, $userId, IDBConnection $db, IConfig $config) {
         $this->userId = $userId;
         $this->root = $root;
         $this->db = new RecipeDb($db);
+        $this->config = $config;
 	}
 
     /**
@@ -169,11 +172,30 @@ class RecipeService {
     }
 
     /**
+     * @param string $folder
+     */
+    public function setUserFolderPath($path) {
+        $this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
+    }
+    
+    /**
+     * @return string
+     */
+    public function getUserFolderPath() {
+        $path = $this->config->getUserValue($this->userId, 'cookbook', 'folder');
+
+        if(!$path) { $path = '/Recipes'; }
+
+        return $path;
+    }
+
+    /**
      * @return Folder
      */
     public function getFolderForUser() {
-        $path = '/' . $this->userId . '/files/' . 'YipHan/Recipes';//$this->settings->get($userId, 'notesPath');
-        
+        $path = '/' . $this->userId . '/files/' . $this->getUserFolderPath();
+        $path = str_replace('//', '/', $path);
+
         return $this->getOrCreateFolder($path);
     }
     

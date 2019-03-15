@@ -55,6 +55,8 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
+        $result = array_unique($result);
+
         return $result;
     }
     
@@ -133,7 +135,8 @@ class RecipeDb {
         if(isset($json['keywords'])) {
             foreach(explode(',', $json['keywords']) as $keyword) {
                 $keyword = trim($keyword);   
-                
+                $keyword = strtolower($keyword);
+
                 $qb->insert('cookbook_keywords')
                     ->values([
                         'recipe_id' => $id,

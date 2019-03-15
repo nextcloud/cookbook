@@ -60,6 +60,12 @@ Cookbook.prototype = {
                 recipe.active = false;
             }
         });
+
+        if(self._activeRecipe) {
+            location.hash = self._activeRecipe.recipe_id;
+        } else {
+            location.hash = '';
+        }
     },
     getActive: function () {
         return this._activeRecipe;
@@ -109,6 +115,34 @@ Cookbook.prototype = {
         } else {
             this._activeRecipe = undefined;
         }
+    },
+    setFolder: function(cb) {
+        var self = this;
+
+        OC.dialogs.filepicker(
+            'Path to your recipe collection',
+            function (path) {
+                $.ajax({
+                    url: self._baseUrl + '/config',
+                    method: 'POST',
+                    data: { 'folder': path },
+                }).done(function () {
+                    self.loadAll()
+                    .then(function() {
+                        self._activeRecipe = null;
+                        location.hash = '';
+
+                        cb(path);
+                    });
+                }).fail(function () {
+                    alert('Could not set recipe folder to ' + path);
+                    cb(null);
+                });
+            },
+            false,
+            'httpd/unix-directory',
+            true
+        );
     }
 };
 
@@ -132,6 +166,7 @@ View.prototype = {
 
     },
     renderNavigation: function () {
+        var self = this;
         var source = $('#navigation-tpl').html();
         var html = '';
         
@@ -141,10 +176,18 @@ View.prototype = {
                 .replace(/{{name}}/g, recipe.name);
         });
 
-        $('#app-navigation ul').html(html);
-       
+        $('#app-navigation ul#recipes').html(html);
+     
+        // change recipe folder
+        $('#recipe-folder').click(function(e) {
+            self._cookbook.setFolder(function(path) {
+                e.currentTarget.value = path;
+                
+                self.render();
+            });
+        });
+
         // add a new recipe
-        var self = this;
         $('#add-recipe').submit(function (e) {
             e.preventDefault();
             

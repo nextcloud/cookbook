@@ -1,6 +1,7 @@
 <?php
 namespace OCA\Cookbook\Controller;
 
+use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
@@ -15,11 +16,11 @@ use OCA\Cookbook\Service\RecipeService;
 class RecipeController extends Controller {
 	private $userId;
 
-	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId){
+	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId){
 		parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
-        $this->service = new RecipeService($root, $UserId, $db);
+        $this->service = new RecipeService($root, $UserId, $db, $config);
 	}
     
     /**
@@ -41,7 +42,20 @@ class RecipeController extends Controller {
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
-    
+
+    /**
+	 * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function config() {
+        if(isset($_POST['folder'])) {
+            $this->service->setUserFolderPath($_POST['folder']);
+            $this->service->rebuildSearchIndex();
+        }
+            
+        return new DataResponse('OK', Http::STATUS_OK);
+    }
+
     /**
 	 * @NoAdminRequired
      * @NoCSRFRequired

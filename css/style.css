@@ -1,24 +1,57 @@
-#app-navigation .app-navigation-new button:empty {
-    height: 40px;
-    width: 40px;
-    display: inline-block;
-    padding: 0;
-    background-position: 50% 50%;
-}
-
-header {
-    flex-basis: 100%;
-    margin-bottom: 1rem;
-    line-height: 1.5;
-}
-    header figure {
-        position: relative;
-        overflow: hidden;
-        height: 0;
-        padding-bottom: 40%;
-        margin-bottom: 2rem;
+#app-navigation {}
+    #app-navigation .app-navigation-new {
+        display: flex;
     }
-            header figure img {
+        #app-navigation .app-navigation-new:not(:first-child) {
+            padding-top: 0;
+        }
+        
+        #app-navigation .app-navigation-new input {
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            line-height: 40px;
+            height: 40px;
+            margin: 0;
+            flex-grow: 1;
+            border-right-width: 0;
+        }
+        
+        #app-navigation .app-navigation-new button {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            background-position: 50% 50%;
+        }
+
+#app-settings {}
+    #app-settings .button {
+        width: 93%;
+        padding: 6px 12px;
+        padding-left: 12px;
+        padding-left: 34px;
+        margin: 0 0 1em 0;
+        border-radius: var(--border-radius);
+        background-position: left 9px center;
+        z-index: 2;
+    }
+
+#app-content-wrapper {
+    flex-wrap: wrap;
+    padding: 2rem;
+}
+    #app-content-wrapper header {
+        flex-basis: 100%;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+        #app-content-wrapper header figure {
+            position: relative;
+            overflow: hidden;
+            height: 0;
+            padding-bottom: 30%;
+            margin-bottom: 2rem;
+        }
+            #app-content-wrapper header figure img {
                 position: absolute;
                 left: 50%;
                 top: 50%;
@@ -26,38 +59,34 @@ header {
                 transform: translate(-50%, -50%);
             }
 
-aside {
-    flex-basis: 20rem;
-    padding-right: 2rem;
-}
-    aside ul {
-        list-style-type: disc;
+    #app-content-wrapper aside {
+        flex-basis: 20rem;
+        padding-right: 2rem;
     }
-        aside ul li {
-            margin-left: 1em;
+        #app-content-wrapper aside ul {
+            list-style-type: disc;
         }
-            aside ul li span, aside ul li input[type="checkbox"] {
-                line-height: 1rem;
-                margin: 0 0.5rem 0 0;
-                padding: 0;
-                height: auto;
-                width: 1rem;
-                display: inline-block;
-                vertical-align: middle;
+            #app-content-wrapper aside ul li {
+                margin-left: 1em;
             }
+                #app-content-wrapper aside ul li span,
+                #app-content-wrapper aside ul li input[type="checkbox"] {
+                    line-height: 1rem;
+                    margin: 0 0.5rem 0 0;
+                    padding: 0;
+                    height: auto;
+                    width: 1rem;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
 
-main {
-    flex-basis: calc(100% - 22rem);
-}
-    @media(max-width:1199px) { main {
-        flex-basis: 100%;
-    } }
-
-    main ul li {
-        margin-bottom: 1em;
+    #app-content-wrapper main {
+        flex-basis: calc(100% - 22rem);
     }
+        @media(max-width:1199px) { #app-content-wrapper main {
+            flex-basis: 100%;
+        } }
 
-#app-content-wrapper {
-    flex-wrap: wrap;
-    padding: 2rem;
-}
+        #app-content-wrapper main ul li {
+            margin-bottom: 1em;
+        }

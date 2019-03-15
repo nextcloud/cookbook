@@ -17,5 +17,6 @@ return [
 	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
 	   ['name' => 'recipe#image', 'url' => '/image', 'verb' => 'GET'],
 	   ['name' => 'recipe#reindex', 'url' => '/reindex', 'verb' => 'POST'],
+	   ['name' => 'recipe#config', 'url' => '/config', 'verb' => 'POST'],
     ]
 ];
