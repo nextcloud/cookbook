@@ -283,12 +283,12 @@ class RecipeService {
 
         if(!$recipe_image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 
-        /*if($size === 'thumb') {
+        if($size === 'thumb') {
             $img = new \OC_Image();
             $img->loadFromData($recipe_image_data);
-            $img->fitIn(64, 64);
-            $recipe_image_data = $img->resource();
-        }*/
+            $img->resize(64);
+            $recipe_image_data = $img->data();
+        }
 
         $folder->newFile($filename);
         $file = $folder->get($filename);
