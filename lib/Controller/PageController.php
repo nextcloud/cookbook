@@ -59,4 +59,20 @@ class PageController extends Controller {
 
         return $response;
     }    
+    
+    /**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+    public function edit() {
+        $view_data = [
+            'current_node' => isset($_GET['id']) ? $this->service->getRecipeFileById($_GET['id']) : null
+        ];
+
+        $response = new TemplateResponse('cookbook', 'editor', $view_data);  // templates/recipe.php
+
+        $response->renderAs('blank');
+
+        return $response;
+    }    
 }

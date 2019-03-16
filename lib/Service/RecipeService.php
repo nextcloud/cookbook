@@ -43,9 +43,11 @@ class RecipeService {
         
         $html = str_replace(["\r", "\n", "\t"], '', $html);
         
+        $recipe = null;
+
+        // Check for JSON
         $regex_matches = [];
         preg_match_all('/<script type="application\/ld\+json">(.*?)<\/script>/s', $html, $regex_matches, PREG_SET_ORDER);
-
         foreach($regex_matches as $regex_match) {
             if(!$regex_match || !isset($regex_match[1])) { continue; }
 
@@ -60,18 +62,108 @@ class RecipeService {
             $recipe = [
                 '@context' => 'http://schema.org',
                 '@type' => 'Recipe',
-                'name' => isset($json['name']) ? $json['name'] : 'No name',
+                'name' => isset($json['name']) ? $json['name'] : '',
                 'image' => $this->parseRecipeImage($json),
                 'recipeYield' => $this->parseRecipeYield($json),
                 'keywords' => $this->parseRecipeKeywords($json),
                 'recipeIngredient' => $this->parseRecipeIngredients($json),
                 'recipeInstructions' => $this->parseRecipeInstructions($json),
             ];
-
-            return $recipe;
+            break;
         }
 
-        return null;
+        // Check HTML
+        foreach(['name', 'image', 'recipeYield', 'keywords', 'recipeIngredient', 'ingredients', 'recipeInstructions'] as $key) {
+            $regex_matches = [];
+            preg_match_all('/itemprop="' . $key . '"[^>]*>(.*?)</', $html, $regex_matches, PREG_SET_ORDER);
+
+            foreach($regex_matches as $regex_match) {
+                if(!$regex_match || !isset($regex_match[1])) { continue; }
+
+                $value = $regex_match[1];
+
+                if(!$recipe) {
+                    $recipe = [
+                        '@context' => 'http://schema.org',
+                        '@type' => 'Recipe',
+                    ];
+                }
+
+                switch($key) {
+                    case 'image':
+                        $src_matches = [];
+                        preg_match('/="http([^"]+)"/', $regex_match[0], $src_matches);
+
+                        if(!isset($src_matches[1])) { break; } 
+
+                        $src = 'http' . $src_matches[1];
+
+                        if(isset($recipe[$key]) && strlen($recipe[$key]) < strlen($src)) { break; }
+
+                        $recipe[$key] = $src;
+                        break;
+
+                    case 'recipeYield':
+                        $recipe[$key] = $this->parseRecipeYield($value);
+                        break;
+
+                    case 'keywords':
+                        $recipe[$key] = $this->parseRecipeKeywords($value);
+                        break;
+
+                    case 'recipeIngredient': case 'ingredients':
+                        $key = 'recipeIngredient';
+                        if(!$recipe[$key]) { $recipe[$key] = []; }
+                        
+                        array_push($recipe[$key], $this->cleanUpString($value));
+                        break;
+
+                    case 'recipeInstructions':
+                        if(!$recipe[$key]) { $recipe[$key] = []; }
+                        
+                        array_push($recipe[$key], $this->cleanUpString($value));
+                        break;
+
+                    default:
+                        $recipe[$key] = $value;
+                }
+            }
+        }
+
+        if($recipe && !isset($recipe['name']) || !$recipe['name']) { throw new \Exception('Recipe name not found'); }
+
+        return $recipe;
+    }
+    
+    /**
+     * @param array $json
+     * @return \OCP\Files\File
+     */
+    public function addRecipe($json) {
+        if(!$json || !isset($json['name']) || !$json['name']) { throw new \Exception('Recipe name not found'); }
+
+        $folder = $this->getFolderForUser();
+        $file = null;
+        $filename = $json['name'] . '.json';
+
+        try {
+            $file = $folder->get($filename);
+        } catch(\OCP\Files\NotFoundException $e) {
+            $folder->newFile($filename);
+            $file = $folder->get($filename);
+        }
+
+        $file->putContent(json_encode($json));
+
+        $this->db->indexRecipeFile($file);
+        
+        $cache_folder = $this->getFolderForCache($file->getId());
+
+        if($cache_folder) {
+            $cache_folder->delete();
+        }
+
+        return $file;
     }
 
     /**
@@ -91,27 +183,7 @@ class RecipeService {
 
         if(!$json) { throw new \Exception('No recipe data found'); }
 
-        $folder = $this->getFolderForUser();
-        $file = null;
-
-        try {
-            $file = $folder->get($recipe['name'] . '.json');
-        } catch(\OCP\Files\NotFoundException $e) {
-            $folder->newFile($recipe['name'] . '.json');
-            $file = $folder->get($recipe['name'] . '.json');
-        }
-
-        $file->putContent(json_encode($json));
-
-        $this->db->indexRecipeFile($file);
-        
-        $cache_folder = $this->getFolderForCache($file->getId());
-
-        if($cache_folder) {
-            $cache_folder->delete();
-        }
-
-        return $file;
+        return $this->addRecipe($json);
     }
     
     /**
@@ -170,8 +242,16 @@ class RecipeService {
      *
      * @return array
      */
-    public function findRecipesInSearchIndex($keywords) {
-        return $this->db->findRecipes(explode(',', $keywords));
+    public function findRecipesInSearchIndex($keywords_string) {
+        $keywords_string = strtolower($keywords_string);
+        $keywords_array = [];
+        preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
+
+        if(sizeof($keywords_array) > 0) {
+            $keywords_array = $keywords_array[0];
+        }
+
+        return $this->db->findRecipes($keywords_array);
     }
 
     /**
@@ -361,8 +441,7 @@ class RecipeService {
         $ingredients = [];
 
         foreach($json['recipeIngredient'] as $i => $ingredient) {
-            $ingredient = strip_tags($ingredient);
-            $ingredient = str_replace(["\r", "\n", "\t", "\\"], '', $ingredient);
+            $ingredient = $this->cleanUpString($ingredient);
 
             if(!$ingredient) { continue; }
 
@@ -370,6 +449,19 @@ class RecipeService {
         }
 
         return $ingredients;
+    }
+    
+    /**
+     * @param string $str
+     * @return string
+     */  
+    private function cleanUpString($str) {
+        if(!$str) { return ''; }
+        
+        $str = strip_tags($str);
+        $str = str_replace(["\r", "\n", "\t", "\\"], '', $str);
+
+        return $str;
     }
 
     /**
@@ -391,9 +483,7 @@ class RecipeService {
         foreach($regex_matches as $regex_match) {
             if(!$regex_match || !isset($regex_match[1])) { continue; }
 
-            $string = $regex_match[1];
-            $string = strip_tags($string);
-            $string = str_replace(["\r", "\n", "\t"], '', $string);
+            $string = $this->cleanUpString(regex_match[1]);
                 
             if(!$string) { continue; }
 

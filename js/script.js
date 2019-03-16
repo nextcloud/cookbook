@@ -15,7 +15,21 @@ Cookbook.prototype = {
         var self = this;
         $.ajax({
             url: this._baseUrl + '/reindex',
+            method: 'POST'
+        }).done(function () {
+            deferred.resolve();
+        }).fail(function () {
+            deferred.reject();
+        });
+        return deferred.promise();
+    },
+    update: function(json) {
+        var deferred = $.Deferred();
+        var self = this;
+        $.ajax({
+            url: this._baseUrl + '/update',
             method: 'POST',
+            data: json
         }).done(function () {
             deferred.resolve();
         }).fail(function () {
@@ -41,7 +55,7 @@ Cookbook.prototype = {
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/recipe?id=' + id,
+            url: this._baseUrl + '/' + ( location.hash.indexOf('|edit') > -1 ? 'edit' : 'recipe' ) + '?id=' + id,
             method: 'GET',
         }).done(function (html) {
             deferred.resolve(html);
@@ -104,7 +118,7 @@ Cookbook.prototype = {
     },
     updateActive: function() {
         var self = this;       
-        var activeId = location.hash.replace('#', '');
+        var activeId = location.hash.replace( /[^0-9]/g, '');
 
         if(activeId) {
             this._recipes.forEach(function(recipe) {
@@ -153,6 +167,7 @@ var View = function (cookbook) {
 
 View.prototype = {
     renderContent: function () {
+        var self = this;
         var recipe = this._cookbook.getActive();
 
         if(!recipe) {
@@ -161,6 +176,32 @@ View.prototype = {
             this._cookbook.loadHtml(recipe.recipe_id)
             .then(function(html) {
                 $('#app-content-wrapper').html(html);
+                
+                $('#app-content-wrapper form .icon-delete').off('click');
+                $('#app-content-wrapper form .icon-delete').click(function(e) {
+                    e.preventDefault();
+
+                    e.currentTarget.parentElement.parentElement.removeChild(e.currentTarget.parentElement);
+                });
+                
+                $('#app-content-wrapper form').off('submit');
+                $('#app-content-wrapper form').submit(function(e) {
+                    e.preventDefault();
+
+                    var data = $(e.currentTarget).serialize();
+
+                    self._cookbook.update(data)
+                    .then(function() {
+                        location.hash = location.hash.replace(/[^0-9]+/g, '');
+
+                        self._cookbook.updateActive();
+                        self.render();
+                    })
+                    .catch(function(e) {
+                        alert('Could not update recipe. Reason: ' + e.message);
+                        throw e;
+                    });
+                });
             });
         }
 
@@ -188,6 +229,7 @@ View.prototype = {
         });
 
         // add a new recipe
+        $('#add-recipe').off('submit');
         $('#add-recipe').submit(function (e) {
             e.preventDefault();
             
@@ -201,17 +243,19 @@ View.prototype = {
         });
 
         // find recipes
+        $('#find-recipes').off('submit');
         $('#find-recipes').submit(function (e) {
             e.preventDefault();
 
             self._cookbook.find(e.currentTarget.keywords.value).done(function () {
-                self.render();
+                self.renderNavigation();
             }).fail(function (e) {
                 alert('Could not search for recipes.');
             });
         });
 
         // reindex recipes
+        $('#reindex-recipes').off('click');
         $('#reindex-recipes').click(function () {
             self._cookbook.reindex().done(function () {
                 self._cookbook.loadAll().done(function() {
@@ -223,6 +267,7 @@ View.prototype = {
         });
 
         // load a recipe
+        $('#app-navigation #recipes a').off('click');
         $('#app-navigation #recipes a').click(function (e) {
             var id = parseInt($(this).data('id'));
             self._cookbook.load(id);

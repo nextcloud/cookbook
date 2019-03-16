@@ -35,7 +35,8 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
-            ->from('cookbook_recipes');
+            ->from('cookbook_recipes', 'r')
+            ->orderBy('r.name');
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
@@ -70,7 +71,7 @@ class RecipeDb {
 
         $qb = $this->db->getQueryBuilder();
 
-        $qb->select('*')
+        $qb->select(['r.recipe_id', 'r.name'])
             ->from('cookbook_keywords', 'k')
             ->where('k.name = \'' . $keywords[0] . '\'');
 
@@ -79,6 +80,9 @@ class RecipeDb {
         }
         
         $qb->join('k', 'cookbook_recipes', 'r', 'k.recipe_id = r.recipe_id'); 
+
+        $qb->groupBy('r.recipe_id');
+        $qb->orderBy('r.name');
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
@@ -99,11 +103,14 @@ class RecipeDb {
         $qb->execute();
     }
 
+    private function isRecipeEmpty($json) {
+    }
+
     public function indexRecipeFile($file) {
         $json = json_decode($file->getContent(), true);
 
-        if(!$json || !isset($json['name'])) { return; }
-        
+        if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
+
         $id = $file->getId();
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
