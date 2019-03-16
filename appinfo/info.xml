@@ -18,6 +18,7 @@
         <navigation>
             <name>Cookbook</name>
             <route>cookbook.page.index</route>
+            <icon>app.svg</icon>
         </navigation>
     </navigations>
 </info>

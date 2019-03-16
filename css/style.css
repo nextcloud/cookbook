@@ -23,6 +23,13 @@
             background-position: 50% 50%;
         }
 
+        /* For some reason, some images would disappear below 30px width if they were displayed inline */
+        #app-navigation > ul > li > a:first-child img {
+            display: block;
+            float: left;
+            margin-top: 12px;
+        }
+
 #app-settings {}
     #app-settings .button {
         width: 93%;

@@ -176,7 +176,7 @@ View.prototype = {
                 .replace(/{{name}}/g, recipe.name);
         });
 
-        $('#app-navigation ul#recipes').html(html);
+        $('#app-navigation #recipes').html(html);
      
         // change recipe folder
         $('#recipe-folder').click(function(e) {
@@ -223,7 +223,7 @@ View.prototype = {
         });
 
         // load a recipe
-        $('#app-navigation ul a').click(function (e) {
+        $('#app-navigation #recipes a').click(function (e) {
             var id = parseInt($(this).data('id'));
             self._cookbook.load(id);
             self.render();

@@ -286,7 +286,8 @@ class RecipeService {
         if($size === 'thumb') {
             $img = new \OC_Image();
             $img->loadFromData($recipe_image_data);
-            $img->resize(64);
+            $img->resize(128);
+            $img->centerCrop();
             $recipe_image_data = $img->data();
         }
 
