@@ -47,10 +47,11 @@
 
             <?php foreach($recipe['recipeIngredient'] as $i => $ingredient) {  ?>
                 <li>
-                    <input type="text" name="recipeIngredient[<?php echo $i; ?>]" value="<?php echo $ingredient; ?>">
+                    <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
                     <button class="icon-delete"></button>
                 </li>   
             <?php } ?>
+            <button class="icon-add"></button>
         </ul>    
     </aside>
 
@@ -62,11 +63,11 @@
                 <?php if(is_array($step) && isset($step['text'])) { $step = $step['text']; } ?>
 
                 <li>
-                    <input type="hidden" name="recipeInstructions[<?php echo $i; ?>][@type]" value="HowToStep">
-                    <textarea name="recipeInstructions[<?php echo $i; ?>][text]"><?php echo $step; ?></textarea>
+                    <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
                     <button class="icon-delete"></button>
                 </li>   
             <?php } ?>
+            <button class="icon-add"></button>
         </ul>
     </main>
 

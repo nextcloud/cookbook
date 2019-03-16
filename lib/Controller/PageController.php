@@ -53,7 +53,7 @@ class PageController extends Controller {
             'current_node' => isset($_GET['id']) ? $this->service->getRecipeFileById($_GET['id']) : null
         ];
 
-        $response = new TemplateResponse('cookbook', 'recipe', $view_data);  // templates/recipe.php
+        $response = new TemplateResponse('cookbook', 'content/recipe', $view_data);  // templates/content/recipe.php
 
         $response->renderAs('blank');
 
@@ -69,7 +69,23 @@ class PageController extends Controller {
             'current_node' => isset($_GET['id']) ? $this->service->getRecipeFileById($_GET['id']) : null
         ];
 
-        $response = new TemplateResponse('cookbook', 'editor', $view_data);  // templates/recipe.php
+        $response = new TemplateResponse('cookbook', 'content/edit', $view_data);  // templates/content/edit.php
+
+        $response->renderAs('blank');
+
+        return $response;
+    }    
+    
+    /**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+    public function recipes() {
+        $view_data = [
+            'recipes' => $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '')
+        ];
+
+        $response = new TemplateResponse('cookbook', 'navigation/recipes', $view_data);  // templates/navigation/recipes.php
 
         $response->renderAs('blank');
 

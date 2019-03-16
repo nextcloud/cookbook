@@ -69,9 +69,7 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function find() {
-        $data = $this->service->findRecipesInSearchIndex(
-            isset($_GET['keywords']) ? $_GET['keywords'] : ''
-        );
+        $data = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
@@ -106,6 +104,21 @@ class RecipeController extends Controller {
         $this->service->addRecipe($json);
 
         return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+    }
+    
+    /**
+	 * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function delete() {
+        if(!isset($_GET['id'])) { return new DataResponse('Parameter "id" is required', 400); }
+
+        try {
+            $this->service->deleteRecipe($_GET['id']);
+            return new DataResponse('Recipe ' . $_GET['id'] . ' deleted successfully', Http::STATUS_OK);
+        } catch(\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
     }
 
     /**

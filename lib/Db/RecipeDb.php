@@ -31,6 +31,24 @@ class RecipeDb {
         return $row;
     }
     
+    public function deleteRecipeById(int $id) {
+        $qb = $this->db->getQueryBuilder();
+
+        $qb->delete('cookbook_recipes')
+            ->where(
+               $qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
+            );
+        
+        $qb->execute();
+        
+        $qb->delete('cookbook_keywords')
+            ->where(
+               $qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
+            );
+
+        $qb->execute();
+    }
+    
     public function findAllRecipes() {
         $qb = $this->db->getQueryBuilder();
 

@@ -14,12 +14,3 @@
 </form>
 
 <ul id="recipes"></ul>
-
-<script id="navigation-tpl" type="text/template">
-    <li>
-        <a href="#{{recipe_id}}" data-id="{{recipe_id}}">
-            <img src="/index.php/apps/cookbook/image?recipe={{recipe_id}}&size=thumb">
-            {{name}}
-        </a>
-    </li>
-</script>

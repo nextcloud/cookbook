@@ -136,6 +136,27 @@ class RecipeService {
     }
     
     /**
+     * @param int $id
+     */
+    public function deleteRecipe(int $id) {
+        $file_folder = $this->getFolderForUser();
+
+        $file = $file_folder->getById($id);
+
+        if($file && sizeof($file) > 0) {
+            $file[0]->delete();
+        }
+        
+        $this->db->deleteRecipeById($id);
+
+        $cache_folder = $this->getFolderForCache($id);
+
+        if($cache_folder) {
+            $cache_folder->delete();
+        }
+    }
+    
+    /**
      * @param array $json
      * @return \OCP\Files\File
      */
@@ -488,6 +509,13 @@ class RecipeService {
             if(!$string) { continue; }
 
             array_push($instructions, [ '@type' => 'HowToStep', 'text' => $string ]);
+        }
+
+        if(sizeof($instructions) < 1) {
+            array_push($instructions, [
+                '@type' => 'HowToStep',
+                'text' => $json['recipeInstructions'],
+            ]);
         }
 
         return $instructions;
