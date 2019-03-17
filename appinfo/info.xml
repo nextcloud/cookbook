@@ -3,9 +3,9 @@
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>cookbook</id>
     <name>Cookbook</name>
-    <summary>An integrated cookbook using YAML files as recipes</summary>
-    <description><![CDATA[This app reads YAML files following a simple recipe format and presents them in an easily readable fashion. If a source link is included in the recipe, it will try to pull a header image from the linked source.]]></description>
-    <version>0.0.4</version>
+    <summary>An integrated cookbook using schema.org JSON files files as recipes</summary>
+    <description><![CDATA[A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.]]></description>
+    <version>0.1.0</version>
     <licence>agpl</licence>
     <author mail="contact@jeppezapp.com" >Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
