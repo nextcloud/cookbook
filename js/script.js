@@ -47,14 +47,24 @@ Cookbook.prototype = {
     add: function (url) {
         var deferred = $.Deferred();
         var self = this;
+
+        $('#add-recipe .icon-download').hide();
+        $('#add-recipe .icon-loading').show();
+
         $.ajax({
             url: this._baseUrl + '/add',
             method: 'POST',
             data: 'url=' + url
         }).done(function (recipe) {
-            location.hash = recipe.recipe_id;
+            $('#add-recipe .icon-download').show();
+            $('#add-recipe .icon-loading').hide();
+            
+            location.hash = recipe.id;
             deferred.resolve();
         }).fail(function () {
+            $('#add-recipe .icon-download').show();
+            $('#add-recipe .icon-loading').hide();
+            
             deferred.reject();
         });
         return deferred.promise();

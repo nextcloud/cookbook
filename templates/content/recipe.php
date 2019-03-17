@@ -1,36 +1,34 @@
-<?php $recipe = json_decode($_['current_node']->getContent(), true); ?>
-
 <header>
-    <?php if(isset($recipe['image']) && $recipe['image']) { ?>
+    <?php if(isset($_['image']) && $_['image']) { ?>
         <figure>
-            <img src="/index.php/apps/cookbook/image?recipe=<?php echo $_['current_node']->getId(); ?>&size=full">
+            <img src="/index.php/apps/cookbook/image?recipe=<?php echo $_['id']; ?>&size=full">
         </figure>
     <?php } ?>
 
-    <h2><?php echo $recipe['name']; ?></h2>
+    <h2><?php echo $_['name']; ?></h2>
     
-    <p><?php echo $recipe['recipeYield']; ?> serving<?php if($recipe['recipeYield'] > 1) { echo 's'; } ?></p>
+    <p><?php echo $_['recipeYield']; ?> serving<?php if($_['recipeYield'] > 1) { echo 's'; } ?></p>
     
-    <?php if(isset($recipe['dailyDozen'])) { ?>
+    <?php if(isset($_['dailyDozen'])) { ?>
         <?php 
 
         $daily_dozen = [
-            'beans' => [ 'icon' => '🥛', 'name' => 'Beans and legumes' ],
+            'beansAndLegumes' => [ 'icon' => '🥛', 'name' => 'Beans and legumes' ],
             'berries' => [ 'icon' => '🍓', 'name' => 'Berries' ],
-            'cruficerous_vegetables' => [ 'icon' => '🥦', 'name' => 'Cruciferous vegetables' ],
+            'cruciferousVegetables' => [ 'icon' => '🥦', 'name' => 'Cruciferous vegetables' ],
             'flaxseeds' => [ 'icon' => '🌱', 'name' => 'Flaxseeds' ],
             'greens' => [ 'icon' => '🥬', 'name' => 'Greens' ],
-            'nuts' => [ 'icon' => '🌰', 'name' => 'Nuts and seeds' ],
-            'other_fruits' => [ 'icon' => '🍌', 'name' => 'Other fruits' ],
-            'other_vegetables' => [ 'icon' => '🥑', 'name' => 'Other vegetables' ],
-            'spices' => [ 'icon' => '🌿', 'name' => 'Herbs and spices' ],
-            'whole_grains' => [ 'icon' => '🍞', 'name' => 'Whole grains' ],
+            'nutsAndSeeds' => [ 'icon' => '🌰', 'name' => 'Nuts and seeds' ],
+            'otherFruits' => [ 'icon' => '🍌', 'name' => 'Other fruits' ],
+            'otherVegetables' => [ 'icon' => '🥑', 'name' => 'Other vegetables' ],
+            'herbsAndSpices' => [ 'icon' => '🌿', 'name' => 'Herbs and spices' ],
+            'wholeGrains' => [ 'icon' => '🍞', 'name' => 'Whole grains' ],
         ];
     
         ?>
 
         <?php foreach($daily_dozen as $id => $ingredient) { ?>
-            <?php if(strpos($recipe['dailyDozen'], $id) === false) { continue; } ?>
+            <?php if(strpos($_['dailyDozen'], $id) === false) { continue; } ?>
             
             <span title="<?php echo $ingredient['name']; ?>"><?php echo $ingredient['icon']; ?></span>
         <?php } ?>
@@ -41,7 +39,7 @@
     <ul>
         <h3>Ingredients</h3>
 
-        <?php foreach($recipe['recipeIngredient'] as $ingredient) {  ?>
+        <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>
             <li><?php echo $ingredient; ?></li>   
         <?php } ?>
     </ul>    
@@ -51,9 +49,7 @@
     <ul>
         <h3>Instructions</h3>
 
-        <?php foreach($recipe['recipeInstructions'] as $step) {  ?>
-            <?php if(is_array($step) && isset($step['text'])) { $step = $step['text']; } ?>
-
+        <?php foreach($_['recipeInstructions'] as $step) {  ?>
             <li><?php echo $step; ?></li>   
         <?php } ?>
     </ul>

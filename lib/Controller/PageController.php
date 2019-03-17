@@ -49,15 +49,19 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
     public function recipe() {
-        $view_data = [
-            'current_node' => isset($_GET['id']) ? $this->service->getRecipeFileById($_GET['id']) : null
-        ];
+        if(!isset($_GET['id'])) {
+            return new DataResponse('Paramater "id" is required', 400);
+        }
 
-        $response = new TemplateResponse('cookbook', 'content/recipe', $view_data);  // templates/content/recipe.php
+        try {
+            $recipe = $this->service->getRecipeById($_GET['id']);
+            $response = new TemplateResponse('cookbook', 'content/recipe', $recipe);
+            $response->renderAs('blank');
 
-        $response->renderAs('blank');
-
-        return $response;
+            return $response;
+        } catch(\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
     }    
     
     /**
@@ -65,15 +69,19 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
     public function edit() {
-        $view_data = [
-            'current_node' => isset($_GET['id']) ? $this->service->getRecipeFileById($_GET['id']) : null
-        ];
+        if(!isset($_GET['id'])) {
+            return new DataResponse('Paramater "id" is required', 400);
+        }
 
-        $response = new TemplateResponse('cookbook', 'content/edit', $view_data);  // templates/content/edit.php
+        try {
+            $recipe = $this->service->getRecipeById($_GET['id']);
+            $response = new TemplateResponse('cookbook', 'content/edit', $recipe);
+            $response->renderAs('blank');
 
-        $response->renderAs('blank');
-
-        return $response;
+            return $response;
+        } catch(\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
     }    
     
     /**

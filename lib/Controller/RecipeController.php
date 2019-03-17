@@ -97,10 +97,6 @@ class RecipeController extends Controller {
     public function update() {
         $json = $_POST;
 
-        if(isset($json['dailyDozen'])) {
-            $json['dailyDozen'] = implode(',', array_keys($json['dailyDozen']));
-        }
-
         $this->service->addRecipe($json);
 
         return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);

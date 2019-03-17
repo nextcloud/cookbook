@@ -1,6 +1,9 @@
 <form id="add-recipe" class="app-navigation-new">
     <input name="url" placeholder="Recipe URL">
-    <button class="icon-download" type="submit" title="Download recipe"></button>
+    <button type="submit" title="Download recipe">
+        <div class="icon-download"></div>
+        <div class="icon-loading float-spinner"></div>
+    </button>
 </form>
 
 <form id="find-recipes" class="app-navigation-new">
