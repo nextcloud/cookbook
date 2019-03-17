@@ -11,7 +11,7 @@
     
     <fieldset>
         <label>Keywords (comma-separated)</label>
-        <input type="text" name="image" value="<?php echo $_['keywords']; ?>">
+        <input type="text" name="keywords" value="<?php echo $_['keywords']; ?>">
     </fieldset>
 
     <fieldset>

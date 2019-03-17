@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Service;
 
+use OCP\Image;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
@@ -86,8 +87,8 @@ class RecipeService {
                 if(isset($json['image']['url'])) {
                     $json['image'] = $json['image']['url'];
                 } else {
-                    $json['image'] = '';
-                    foreach($image as $img) {
+                    $images = $json['image'];
+                    foreach($images as $img) {
                         if(is_array($img) && isset($img['url'])) {
                             $img = $img['url'];
                         }
@@ -205,7 +206,7 @@ class RecipeService {
         $json_matches = [];
         
         // Parse JSON
-        preg_match_all('/<script type="application\/ld\+json">([\s\S]*?)<\/script>/s', $html, $regex_matches, PREG_SET_ORDER);
+        preg_match_all('/<script type="application\/ld\+json">([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
         foreach($json_matches as $json_match) {
             if(!$json_match || !isset($json_match[1])) { continue; }
 
@@ -580,7 +581,7 @@ class RecipeService {
         if(!$recipe_image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 
         if($size === 'thumb') {
-            $img = new \OC_Image();
+            $img = new Image();
             $img->loadFromData($recipe_image_data);
             $img->resize(128);
             $img->centerCrop();
