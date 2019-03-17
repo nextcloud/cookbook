@@ -1,3 +1,13 @@
+/**
+ * Main
+ */
+#app {
+    width: 100%;
+}
+
+/**
+ * Navigation
+ */
 #app-navigation {}
     #app-navigation .app-navigation-new {
         display: flex;
@@ -30,6 +40,9 @@
             margin-top: 12px;
         }
 
+/**
+ * Settings
+ */
 #app-settings {}
     #app-settings .button {
         width: 93%;
@@ -42,9 +55,16 @@
         z-index: 2;
     }
 
+/**
+ * Content
+ */
+#app-content {
+    min-width: calc(100% - 300px);
+}
+
 #app-content-wrapper {
     flex-wrap: wrap;
-    padding: 2rem;
+    padding: 2em;
 }
     #app-content-wrapper header {
         flex-basis: 100%;
@@ -96,4 +116,60 @@
 
         #app-content-wrapper main ul li {
             margin-bottom: 1em;
+        }
+
+    /* Editor */
+    #app-content-wrapper form {
+        width: 100%;
+    }
+        #app-content-wrapper form fieldset {
+            margin-bottom: 1em;
+            width: 100%;
+        }
+        
+        #app-content-wrapper form fieldset > input {
+            width: calc(100% - 11em);
+            margin: 0;
+        }
+
+        #app-content-wrapper form fieldset > label {
+            display: inline-block;
+            width: 10em;
+            line-height: 18px;
+            font-weight: bold;
+        }
+       
+        #app-content-wrapper form fieldset ul label input[type="checkbox"] {
+            margin-left: 1em;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        #app-content-wrapper form fieldset > ul {
+            margin-top: 1em;
+            padding-left: 1em;
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > input {
+            width: calc(100% - 3em);
+            margin: 0 0 1em 0;
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > textarea {
+            width: calc(100% - 3em);
+            margin: 0;
+            height: 10em;
+            resize: none;
+        }
+        
+        #app-content-wrapper form fieldset > ul button {
+            border: 0;
+            background-color: transparent;
+            position: relative;
+            top: -2px;
+        }
+        
+        #app-content-wrapper form button[type="submit"] {
+            margin-left: auto;
+            display: block;
         }
