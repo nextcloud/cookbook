@@ -10,7 +10,7 @@
     <author mail="contact@jeppezapp.com" >Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
     <category>organization</category>
-    <bugs>https://gitlab.com/mrzapp/nextcloud-cookbook/issues</bugs>
+    <bugs>https://github.com/mrzapp/nextcloud-cookbook/issues</bugs>
     <dependencies>
         <nextcloud min-version="14" max-version="17"/>
     </dependencies>
