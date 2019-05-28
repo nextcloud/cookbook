@@ -137,14 +137,13 @@ var Content = function (cookbook) {
             .done(function (html) {
                 $('#app-content-wrapper').html(html);
                 
-                $('#app-content-wrapper form .icon-delete').off('click');
-                $('#app-content-wrapper form .icon-delete').click(self.onDeleteListItem);
-               
                 $('#app-content-wrapper form .icon-add').off('click');
                 $('#app-content-wrapper form .icon-add').click(self.onAddListItem);
 
                 $('#app-content-wrapper form').off('submit');
                 $('#app-content-wrapper form').submit(self.onUpdateRecipe);
+
+                self.updateListItems();
             })
             .fail(function (e) {
                 alert('Could not load recipe');
@@ -153,6 +152,14 @@ var Content = function (cookbook) {
             });
         }
     };
+
+    /**
+     * Updates all lists items with click events
+     */
+    self.updateListItems = function(e) {
+        $('#app-content-wrapper form .icon-delete').off('click');
+        $('#app-content-wrapper form .icon-delete').click(self.onDeleteListItem);
+    }
 
     /**
      * Event: Click delete list element
@@ -169,10 +176,11 @@ var Content = function (cookbook) {
     self.onAddListItem = function(e) {
         e.preventDefault();
 
-        $(e.currentTarget)
-            .prev()
-            .clone(true, true)
-            .insertBefore($(e.currentTarget));
+        var html = $(e.currentTarget).parents('ul').find('template').html();
+
+        $(html).insertBefore($(e.currentTarget));
+
+        self.updateListItems();
     };
 
     /**

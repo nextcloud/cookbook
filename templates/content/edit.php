@@ -39,8 +39,6 @@
     <fieldset>
         <label>Daily dozen</label>
 
-        <?php echo 'DUDE: ' . $_['dailyDozen']; ?>
-
         <ul>
             <?php foreach($daily_dozen as $id => $ingredient) { ?>
                 <?php $has_ingredient = strpos($_['dailyDozen'], $id) !== false; ?>
@@ -59,6 +57,12 @@
         <label>Ingredients</label>
 
         <ul>
+            <template>
+                <li>
+                    <input type="text" name="recipeIngredient[]" value="">
+                    <button class="icon-delete"></button>
+                </li>   
+            </template>
             <?php foreach($_['recipeIngredient'] as $i => $ingredient) {  ?>
                 <li>
                     <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
@@ -73,7 +77,13 @@
         <label>Instructions</label>
 
         <ul>
-           <?php foreach($_['recipeInstructions'] as $i => $step) {  ?>
+            <template>
+                <li>
+                    <textarea name="recipeInstructions[]"></textarea>
+                    <button class="icon-delete"></button>
+                </li>   
+            </template>
+            <?php foreach($_['recipeInstructions'] as $i => $step) {  ?>
                 <li>
                     <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
                     <button class="icon-delete"></button>
