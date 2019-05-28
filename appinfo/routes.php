@@ -17,6 +17,7 @@ return [
 	   ['name' => 'recipe#add', 'url' => '/add', 'verb' => 'POST'],
 	   ['name' => 'recipe#delete', 'url' => '/delete', 'verb' => 'DELETE'],
 	   ['name' => 'recipe#update', 'url' => '/update', 'verb' => 'POST'],
+	   ['name' => 'recipe#get', 'url' => '/get', 'verb' => 'GET'],
 	   ['name' => 'recipe#keywords', 'url' => '/keywords', 'verb' => 'GET'],
 	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
 	   ['name' => 'recipe#test', 'url' => '/test', 'verb' => 'GET'],

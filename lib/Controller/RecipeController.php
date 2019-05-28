@@ -14,17 +14,17 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 
 class RecipeController extends Controller {
-	private $userId;
+    private $userId;
 
-	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId){
-		parent::__construct($AppName, $request);
+    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId){
+        parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
         $this->service = new RecipeService($root, $UserId, $db, $config);
-	}
-    
+    }
+
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function all() {
@@ -32,17 +32,17 @@ class RecipeController extends Controller {
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
-    
+
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function test() {
         return new DataResponse('OK', Http::STATUS_OK);
     }
-    
+
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function keywords() {
@@ -52,7 +52,7 @@ class RecipeController extends Controller {
     }
 
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function config() {
@@ -60,12 +60,12 @@ class RecipeController extends Controller {
             $this->service->setUserFolderPath($_POST['folder']);
             $this->service->rebuildSearchIndex();
         }
-            
+
         return new DataResponse('OK', Http::STATUS_OK);
     }
 
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function find() {
@@ -73,9 +73,9 @@ class RecipeController extends Controller {
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
-    
+
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function add() {
@@ -89,21 +89,33 @@ class RecipeController extends Controller {
             return new DataResponse($e->getMessage(), 502);
         }
     }
-    
+
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function get() {
+        $id = $_GET['id'];
+
+        $json = $this->service->getRecipeById($id);
+
+        return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+    }
+
+    /**
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function update() {
         $json = $_POST;
 
-        $this->service->addRecipe($json);
+        $file = $this->service->addRecipe($json);
 
-        return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        return new DataResponse($file->getContent(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
-    
+
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function delete() {
@@ -118,17 +130,17 @@ class RecipeController extends Controller {
     }
 
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function reindex() {
         $this->service->rebuildSearchIndex();
-        
+
         return new DataResponse('Search index rebuilt successfully', Http::STATUS_OK);
     }
 
     /**
-	 * @NoAdminRequired
+     * @NoAdminRequired
      * @NoCSRFRequired
      */
     public function image() {
@@ -145,6 +157,6 @@ class RecipeController extends Controller {
         } catch(\Exception $e) {
             return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
         }
-        
+
     }
 }

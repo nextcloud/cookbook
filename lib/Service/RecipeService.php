@@ -59,7 +59,7 @@ class RecipeService {
      *
      * @return array
      */
-    private function checkRecipe($json) {
+    public function checkRecipe($json) {
         if(!$json) { throw new \Exception('Recipe array was null'); }
         if(!isset($json['name']) || !$json['name']) { throw new \Exception('Field "name" is required'); }
 
@@ -73,14 +73,18 @@ class RecipeService {
         // Make sure that "dailyDozen" is a comma-separated string
         if(isset($json['dailyDozen'])) {
             if(is_array($json['dailyDozen'])) {
-                $json['dailyDozen'] = implode(',', array_keys($json['dailyDozen']));
+                if(!isset($json['dailyDozen'][0])) {
+                    $json['dailyDozen'] = array_keys($json['dailyDozen']);
+                }
+
+                $json['dailyDozen'] = implode(',', $json['dailyDozen']);
             } else if(!is_string($json['dailyDozen'])) {
-                $json['dailyDozen'] = [];
+                $json['dailyDozen'] = '';
             } else {
-                $json['dailyDozen'] = str_replace('/[^a-zA-Z,]/', '');
+                $json['dailyDozen'] = preg_replace('/[^a-zA-Z,]/', '', $json['dailyDozen']);
             }
         } else {
-            $json['dailyDozen'] = [];
+            $json['dailyDozen'] = '';
         }
 
         // Make sure that "image" is a string of the highest resolution image available
@@ -151,7 +155,7 @@ class RecipeService {
             $json['recipeIngredient'] = [];
         }
 
-        $json['recipeIngredients'] = array_filter($json['recipeIngredients']);
+        $json['recipeIngredient'] = array_filter($json['recipeIngredient']);
 
         // Make sure that "recipeInstructions" is an array of strings
         if(isset($json['recipeInstructions'])) {
@@ -359,7 +363,7 @@ class RecipeService {
         if(!$json || !isset($json['name']) || !$json['name']) { throw new \Exception('Recipe name not found'); }
 
         $json = $this->checkRecipe($json);
-
+        
         $folder = $this->getFolderForUser();
         $file = null;
         $filename = $json['name'] . '.json';

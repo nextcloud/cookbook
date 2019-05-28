@@ -39,6 +39,8 @@
     <fieldset>
         <label>Daily dozen</label>
 
+        <?php echo 'DUDE: ' . $_['dailyDozen']; ?>
+
         <ul>
             <?php foreach($daily_dozen as $id => $ingredient) { ?>
                 <?php $has_ingredient = strpos($_['dailyDozen'], $id) !== false; ?>

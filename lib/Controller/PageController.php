@@ -13,26 +13,26 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 
 class PageController extends Controller {
-	private $userId;
+    private $userId;
     private $service;
 
-	public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config){
-		parent::__construct($AppName, $request);
+    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config){
+        parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
         $this->service = new RecipeService($root, $UserId, $db, $config);
-	}
+    }
 
-	/**
-	 * CAUTION: the @Stuff turns off security checks; for this page no admin is
-	 *          required and no CSRF check. If you don't know what CSRF is, read
-	 *          it up in the docs or you might create a security hole. This is
-	 *          basically the only required method to add this exemption, don't
-	 *          add it to any other method if you don't exactly know what it does
-	 *
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
+    /**
+     * CAUTION: the @Stuff turns off security checks; for this page no admin is
+     *          required and no CSRF check. If you don't know what CSRF is, read
+     *          it up in the docs or you might create a security hole. This is
+     *          basically the only required method to add this exemption, don't
+     *          add it to any other method if you don't exactly know what it does
+     *
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function index() {
         $view_data = [
             'all_recipes' => $this->service->getAllRecipesInSearchIndex(),
@@ -43,11 +43,11 @@ class PageController extends Controller {
 
         return new TemplateResponse('cookbook', 'index', $view_data);  // templates/index.php
     }    
-    
+
     /**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function recipe() {
         if(!isset($_GET['id'])) {
             return new DataResponse('Paramater "id" is required', 400);
@@ -63,11 +63,11 @@ class PageController extends Controller {
             return new DataResponse($e->getMessage(), 502);
         }
     }    
-    
+
     /**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function edit() {
         if(!isset($_GET['id'])) {
             return new DataResponse('Paramater "id" is required', 400);
@@ -83,11 +83,11 @@ class PageController extends Controller {
             return new DataResponse($e->getMessage(), 502);
         }
     }    
-    
+
     /**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 */
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function recipes() {
         $view_data = [
             'recipes' => $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '')
