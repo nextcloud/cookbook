@@ -190,6 +190,8 @@ class RecipeService {
 
                 if(sizeof($instructions) > 0) {
                     $json['recipeInstructions'] = $instructions;
+                } else {
+                    $json['recipeInstructions'] = explode(PHP_EOL, $json['recipeInstructions']);
                 }
             } else {
                 $json['recipeInstructions'] = [];
