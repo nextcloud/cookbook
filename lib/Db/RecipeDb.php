@@ -91,10 +91,15 @@ class RecipeDb {
 
         $qb->select(['r.recipe_id', 'r.name'])
             ->from('cookbook_keywords', 'k')
-            ->where('k.name = \'' . $keywords[0] . '\'');
+            ->where('LOWER(k.name) LIKE \'%' . strtolower($keywords[0]) . '%\'');
 
         for($i = 1; $i < sizeof($keywords); $i++) {
-            $qb->orWhere('k.name = \'' . $keywords[$i] . '\'');
+            $qb->orWhere('LOWER(k.name) LIKE \'%' . strtolower($keywords[$i]) . '%\'');
+        }
+        
+        foreach($keywords as $keyword) {
+            $lowerKW = strtolower($keyword);
+            $qb->orWhere("LOWER(r.name) LIKE '%$lowerKW%'");
         }
         
         $qb->join('k', 'cookbook_recipes', 'r', 'k.recipe_id = r.recipe_id'); 
