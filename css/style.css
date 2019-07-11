@@ -9,6 +9,21 @@
  * Navigation
  */
 #app-navigation {}
+    #app-navigation .app-navigation-create {
+        padding: 10px;
+    }
+        
+        #app-navigation .app-navigation-create .button {
+            width: 100%;
+            padding: 6px 12px;
+            padding-left: 12px;
+            padding-left: 34px;
+            margin: 0;
+            border-radius: var(--border-radius);
+            background-position: left 9px center;
+            z-index: 2;
+        }
+
     #app-navigation .app-navigation-new {
         display: flex;
     }

@@ -31,8 +31,8 @@ Cookbook.prototype = {
             url: this._baseUrl + '/update',
             method: 'POST',
             data: json
-        }).done(function () {
-            deferred.resolve();
+        }).done(function (response) {
+            deferred.resolve(response);
         }).fail(function () {
             deferred.reject();
         });
@@ -125,13 +125,13 @@ var Content = function (cookbook) {
      */
     self.render = function () {
         var recipeId = cookbook.getActiveId();
-        var isEditor = location.hash.indexOf('|edit') > -1;
+        var isEditor = location.hash.indexOf('|edit') > -1 || location.hash === '#new';
 
-        if(!recipeId) {
+        if(!recipeId && !isEditor) {
             $('#app-content-wrapper').html('Please pick a recipe');
         } else {
             $.ajax({
-                url: cookbook._baseUrl + '/' + (isEditor ? 'edit' : 'recipe') + '?id=' + recipeId,
+                url: cookbook._baseUrl + '/' + (isEditor ? 'edit' : 'recipe') + (isEditor && !recipeId ? '?new' : '?id=' + recipeId),
                 method: 'GET',
             })
             .done(function (html) {
@@ -192,12 +192,13 @@ var Content = function (cookbook) {
         var data = $(e.currentTarget).serialize();
 
         cookbook.update(data)
-        .then(function() {
-            location.hash = location.hash.replace(/[^0-9]+/g, '');
+        .then(function(id) {
+            location.hash = id;
 
             self.render();
+            nav.render();
         })
-        .catch(function(e) {
+        .fail(function(e) {
             alert('Could not update recipe');
             
             if(e && e instanceof Error) { throw e; }
@@ -221,7 +222,16 @@ var Nav = function (cookbook) {
             self.render();
         });
     };
-    
+   
+    /**
+     * Event: Create new recipe
+     */
+    self.onCreateNewRecipe = function(e) {
+        e.preventDefault();
+
+        location.hash = 'new';
+    }
+
     /**
      * Event: Submit new recipe
      */
@@ -313,7 +323,7 @@ var Nav = function (cookbook) {
         })
         .done(function(html) {
             $('#app-navigation #recipes').html(html);
-
+            
             $('#app-navigation #recipes .button-edit button').click(self.onEditRecipe);
             
             $('#app-navigation #recipes .button-delete button').click(self.onDeleteRecipe);
@@ -327,6 +337,10 @@ var Nav = function (cookbook) {
         // Change recipe folder
         $('#recipe-folder').off('click');
         $('#recipe-folder').click(self.onChangeRecipeFolder);
+        
+        // Create a new recipe
+        $('#create-recipe').off('submit');
+        $('#create-recipe').submit(self.onCreateNewRecipe);
 
         // Add a new recipe
         $('#add-recipe').off('submit');

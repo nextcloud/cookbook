@@ -69,12 +69,17 @@ class PageController extends Controller {
      * @NoCSRFRequired
      */
     public function edit() {
-        if(!isset($_GET['id'])) {
-            return new DataResponse('Paramater "id" is required', 400);
+        if(!isset($_GET['id']) && !isset($_GET['new'])) {
+            return new DataResponse('Paramater "id" or "new" is required', 400);
         }
 
         try {
-            $recipe = $this->service->getRecipeById($_GET['id']);
+            $recipe = [];
+
+            if(isset($_GET['id'])) {
+                $recipe = $this->service->getRecipeById($_GET['id']);
+            }
+
             $response = new TemplateResponse('cookbook', 'content/edit', $recipe);
             $response->renderAs('blank');
 

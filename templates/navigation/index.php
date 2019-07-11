@@ -1,3 +1,7 @@
+<form id="create-recipe" class="app-navigation-create">
+    <button type="submit" title="Create recipe" class="button icon-add">Create recipe</button>
+</form>
+
 <form id="add-recipe" class="app-navigation-new">
     <input name="url" placeholder="Recipe URL">
     <button type="submit" title="Download recipe">

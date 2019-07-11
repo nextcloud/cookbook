@@ -111,7 +111,7 @@ class RecipeController extends Controller {
 
         $file = $this->service->addRecipe($json);
 
-        return new DataResponse($file->getContent(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        return new DataResponse($file->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**
