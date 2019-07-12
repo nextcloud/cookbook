@@ -4,6 +4,7 @@ namespace OCA\Cookbook\Controller;
 use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IDBConnection;
+use OCP\IURLGenerator;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
 use OCP\AppFramework\Http;
@@ -15,12 +16,14 @@ use OCA\Cookbook\Service\RecipeService;
 class PageController extends Controller {
     private $userId;
     private $service;
+    private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config){
+    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config, IURLGenerator $urlGenerator){
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
         $this->service = new RecipeService($root, $UserId, $db, $config);
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -55,6 +58,7 @@ class PageController extends Controller {
 
         try {
             $recipe = $this->service->getRecipeById($_GET['id']);
+            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $_GET['id'], 'size' => 'full' ]);
             $response = new TemplateResponse('cookbook', 'content/recipe', $recipe);
             $response->renderAs('blank');
 
@@ -94,8 +98,14 @@ class PageController extends Controller {
      * @NoCSRFRequired
      */
     public function recipes() {
+        $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
+
+        foreach($recipes as $i => $recipe) {
+            $recipes[$i]['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $recipe['recipe_id'], 'size' => 'thumb' ]);
+        }
+
         $view_data = [
-            'recipes' => $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '')
+            'recipes' => $recipes
         ];
 
         $response = new TemplateResponse('cookbook', 'navigation/recipes', $view_data);  // templates/navigation/recipes.php

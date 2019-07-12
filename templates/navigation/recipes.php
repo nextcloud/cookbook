@@ -1,7 +1,7 @@
 <?php foreach($_['recipes'] as $recipe) { ?>
     <li>
         <a href="#<?php echo $recipe['recipe_id']; ?>">
-            <img src="/index.php/apps/cookbook/image?recipe=<?php echo $recipe['recipe_id']; ?>&size=thumb">
+            <img src="<?php echo $recipe['imageURL']; ?>">
             <?php echo $recipe['name']; ?>
         </a>
         <div class="app-navigation-entry-utils">

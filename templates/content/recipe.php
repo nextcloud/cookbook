@@ -1,7 +1,7 @@
 <header>
     <?php if(isset($_['image']) && $_['image']) { ?>
         <figure>
-            <img src="/index.php/apps/cookbook/image?recipe=<?php echo $_['id']; ?>&size=full">
+            <img src="<?php echo $_['imageURL']; ?>">
         </figure>
     <?php } ?>
 
