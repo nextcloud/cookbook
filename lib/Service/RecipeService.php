@@ -111,6 +111,9 @@ class RecipeService {
             $json['image'] = '';
         }
 
+        // Clean up the image URL string
+        $json['image'] = stripslashes($json['image']);
+
         // Make sure that "recipeYield" is an integer which is at least 1 
         if(isset($json['recipeYield']) && $json['recipeYield']) {
             $yield = filter_var($json['recipeYield'], FILTER_SANITIZE_NUMBER_INT);
