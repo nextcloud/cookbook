@@ -10,6 +10,7 @@
     <author mail="em@il.jeppez.app" >Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
     <category>organization</category>
+    <screenshot small-thumbnail="https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/master/img/screenshot-small.jpg">https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/master/img/screenshot.jpg</screenshot>
     <bugs>https://github.com/mrzapp/nextcloud-cookbook/issues</bugs>
     <dependencies>
         <nextcloud min-version="14" max-version="18"/>
