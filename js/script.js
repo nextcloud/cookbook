@@ -139,6 +139,9 @@ var Content = function (cookbook) {
                 
                 $('#app-content-wrapper form .icon-add').off('click');
                 $('#app-content-wrapper form .icon-add').click(self.onAddListItem);
+               
+                $('#app-content-wrapper form ul li input[type="text"]').off('keypress');
+                $('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
 
                 $('#app-content-wrapper form').off('submit');
                 $('#app-content-wrapper form').submit(self.onUpdateRecipe);
@@ -159,6 +162,9 @@ var Content = function (cookbook) {
     self.updateListItems = function(e) {
         $('#app-content-wrapper form .icon-delete').off('click');
         $('#app-content-wrapper form .icon-delete').click(self.onDeleteListItem);
+        
+        $('#app-content-wrapper form ul li input[type="text"]').off('keypress');
+        $('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
     }
 
     /**
@@ -169,6 +175,26 @@ var Content = function (cookbook) {
 
         e.currentTarget.parentElement.parentElement.removeChild(e.currentTarget.parentElement);
     };
+    
+    /**
+     * Event: Keydown on a list itme input
+     */
+    self.onListInputKeyDown = function(e) {
+        if(e.keyCode === 13 || e.keyCode === 10) {
+            e.preventDefault();
+
+            var $li = $(e.currentTarget).parents('li');
+            var $ul = $li.parents('ul');
+
+            if($li.index() >= $ul.children('li').length) {
+                self.onAddListItem(e);
+            
+            } else {
+                $ul.children('li').eq($li.index()).find('input').focus();
+
+            }
+        }
+    };
 
     /**
      * Event: Click add list item
@@ -176,9 +202,13 @@ var Content = function (cookbook) {
     self.onAddListItem = function(e) {
         e.preventDefault();
 
-        var html = $(e.currentTarget).parents('ul').find('template').html();
+        var $ul = $(e.currentTarget).parents('ul');
+        var $add = $ul.find('.icon-add');
+        var template = $ul.find('template').html();
 
-        $(html).insertBefore($(e.currentTarget));
+        var $item = $(template).insertBefore($add);
+
+        $item.find('input').focus();
 
         self.updateListItems();
     };
@@ -353,6 +383,7 @@ var Nav = function (cookbook) {
         // Reindex recipes
         $('#reindex-recipes').off('click');
         $('#reindex-recipes').click(self.onReindexRecipes);
+
     };
 }
 
