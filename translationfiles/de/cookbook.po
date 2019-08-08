@@ -55,7 +55,7 @@ msgstr "Löschen des Rezepts ist fehlgeschlagen"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:362
 msgid "Failed to fetch recipes"
-msgstr "Laden des Rezepts ist fehlgeschlagen"
+msgstr "Laden der Rezepte ist fehlgeschlagen"
 
 #: /srv/http/nc/apps/cookbook/specialAppInfoFakeDummyForL10nScript.php:2
 msgid "Cookbook"
