@@ -42,9 +42,7 @@ class RecipeDb {
         $qb->execute();
         
         $qb->delete('cookbook_keywords')
-            ->where(
-               $qb->expr()->eq('recipe_id', ':id')
-            );
+            ->where('recipe_id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
         $qb->execute();
