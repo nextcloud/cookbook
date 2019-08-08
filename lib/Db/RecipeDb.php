@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\Db;
 
 use OCP\DB\QueryBuilder\IQueryBuilder;
+use Doctrine\DBAL\Types\Type;
 use OCP\IDBConnection;
 
 class RecipeDb {
@@ -14,15 +15,15 @@ class RecipeDb {
 
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
+     * @deprecated
      */
     public function findRecipeById(int $id) {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
             ->from('cookbook_recipes')
-            ->where(
-                $qb->expr()->eq('id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
-            );
+            ->where('id = :id');
+        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
         $cursor = $qb->execute();
         $row = $cursor->fetch();
@@ -35,16 +36,16 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->delete('cookbook_recipes')
-            ->where(
-               $qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
-            );
+            ->where('recipe_id = :id');
+        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         
         $qb->execute();
         
         $qb->delete('cookbook_keywords')
             ->where(
-               $qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
+               $qb->expr()->eq('recipe_id', ':id')
             );
+        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
         $qb->execute();
     }
@@ -90,17 +91,26 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select(['r.recipe_id', 'r.name'])
-            ->from('cookbook_keywords', 'k')
-            ->where('LOWER(k.name) LIKE \'%' . strtolower($keywords[0]) . '%\'');
-
-        for($i = 1; $i < sizeof($keywords); $i++) {
-            $qb->orWhere('LOWER(k.name) LIKE \'%' . strtolower($keywords[$i]) . '%\'');
+            ->from('cookbook_keywords', 'k');
+        
+        $paramIdx = 1;
+        $params = array();
+        $types = array();
+        
+        foreach ($keywords as $keyword)
+        {
+            $lowerKeyword = strtolower($keyword);
+            
+            $qb->orWhere("LOWER(k.name) LIKE :keyword$paramIdx");
+            $qb->orWhere("LOWER(r.name) LIKE :keyword$paramIdx");
+            
+            $params["keyword$paramIdx"] = "%$lowerKeyword%";
+            $types["keyword$paramIdx"] = Type::STRING;
+            $paramIdx ++;
+            
         }
         
-        foreach($keywords as $keyword) {
-            $lowerKW = strtolower($keyword);
-            $qb->orWhere("LOWER(r.name) LIKE '%$lowerKW%'");
-        }
+        $qb->setParameters($params, $types);
         
         $qb->join('k', 'cookbook_recipes', 'r', 'k.recipe_id = r.recipe_id'); 
 
@@ -134,32 +144,30 @@ class RecipeDb {
 
         if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
 
-        $id = $file->getId();
+        $id = (int) $file->getId();
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
 
         // Insert recipe 
         $qb->delete('cookbook_recipes')
-            ->where(
-               $qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
-            );
+            ->where('recipe_id = :id');
+        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         
         $qb->execute();
 
         $qb->insert('cookbook_recipes')
             ->values([
-                'recipe_id' => $id,
-                'name' => '\'' . $json['name'] . '\'',
+                'recipe_id' => ':id',
+                'name' => ':name',
             ]);
-        
+        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
+        $qb->setParameter('name', $json['name'], Type::STRING);
         $qb->execute();
 
         // Insert keywords 
         $qb->delete('cookbook_keywords')
-            ->where(
-               $qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT))
-            );
-        
+            ->where('recipe_id = :id');
+        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         $qb->execute();
         
         if(isset($json['keywords'])) {
@@ -169,10 +177,11 @@ class RecipeDb {
 
                 $qb->insert('cookbook_keywords')
                     ->values([
-                        'recipe_id' => $id,
-                        'name' => '\'' . $keyword . '\'',
+                        'recipe_id' => ':id',
+                        'name' => ':keyword',
                     ]);
-                
+                $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
+                $qb->setParameter('keyword', $keyword, Type::STRING);
                 $qb->execute();
             }
         }
