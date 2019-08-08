@@ -91,7 +91,7 @@ msgstr "Bild-URL"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:13
 msgid "Keywords (comma-separated)"
-msgstr "Schlagworte (mit Kommata abgetrennt)"
+msgstr "Schlagworte (durch Kommas getrennt)"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:18
 msgid "Servings"
