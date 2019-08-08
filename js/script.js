@@ -1,6 +1,8 @@
 (function (OC, window, $, undefined) {
 'use strict';
 
+var appName = 'cookbook';
+
 $(document).ready(function () {
 
 /**
@@ -88,7 +90,7 @@ Cookbook.prototype = {
         var self = this;
 
         OC.dialogs.filepicker(
-            'Path to your recipe collection',
+            t(appName, 'Path to your recipe collection'),
             function (path) {
                 $.ajax({
                     url: self._baseUrl + '/config',
@@ -103,7 +105,7 @@ Cookbook.prototype = {
                         cb(path);
                     });
                 }).fail(function () {
-                    alert('Could not set recipe folder to ' + path);
+                    alert(t(appName, 'Could not set recipe folder to {path}', {path: path}));
                     cb(null);
                 });
             },
@@ -128,7 +130,7 @@ var Content = function (cookbook) {
         var isEditor = location.hash.indexOf('|edit') > -1 || location.hash === '#new';
 
         if(!recipeId && !isEditor) {
-            $('#app-content-wrapper').html('Please pick a recipe');
+            $('#app-content-wrapper').html(t(appName, 'Please pick a recipe'));
         } else {
             $.ajax({
                 url: cookbook._baseUrl + '/' + (isEditor ? 'edit' : 'recipe') + (isEditor && !recipeId ? '?new' : '?id=' + recipeId),
@@ -149,7 +151,7 @@ var Content = function (cookbook) {
                 self.updateListItems();
             })
             .fail(function (e) {
-                alert('Could not load recipe');
+                alert(t(appName, 'Could not load recipe'));
 
                 if(e && e instanceof Error) { throw e; }
             });
@@ -229,7 +231,7 @@ var Content = function (cookbook) {
             nav.render();
         })
         .fail(function(e) {
-            alert('Could not update recipe');
+            alert(t(appName, 'Could not update recipe'));
             
             if(e && e instanceof Error) { throw e; }
         });
@@ -275,7 +277,7 @@ var Nav = function (cookbook) {
             self.render();
         })
         .fail(function () {
-            alert('Could not add recipe');
+            alert(t(appName, 'Could not add recipe'));
         });
     };
 
@@ -297,7 +299,7 @@ var Nav = function (cookbook) {
             self.render();
         })
         .fail(function (e) {
-            alert('Could not rebuild recipe index.');
+            alert(t(appName, 'Could not rebuild recipe index.'));
         });
     };
 
@@ -312,7 +314,7 @@ var Nav = function (cookbook) {
      * Event: Delete recipe
      */
     self.onDeleteRecipe = function(e) {
-        if(!confirm('Are you sure you want to delete this recipe?')) { return; }
+        if(!confirm(t(appName, 'Are you sure you want to delete this recipe?'))) { return; }
 
         var id = e.currentTarget.dataset.id;
         
@@ -328,7 +330,7 @@ var Nav = function (cookbook) {
             self.render();
         })
         .fail(function(e) {
-            alert('Failed to delete recipe');
+            alert(t(appName, 'Failed to delete recipe'));
 
             if(e && e instanceof Error) { throw e; }
         });
@@ -359,7 +361,7 @@ var Nav = function (cookbook) {
             $('#app-navigation #recipes .button-delete button').click(self.onDeleteRecipe);
         })
         .fail(function(e) {
-            alert('Failed to fetch recipes');
+            alert(t(appName, 'Failed to fetch recipes'));
 
             if(e && e instanceof Error) { throw e; }
         });
