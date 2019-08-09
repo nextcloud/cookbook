@@ -26,11 +26,11 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    update: function(json) {
+    update: function(id, json) {
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/update',
+            url: this._baseUrl + '/update?id=' + id,
             method: 'POST',
             data: json
         }).done(function (response) {
@@ -221,9 +221,10 @@ var Content = function (cookbook) {
     self.onUpdateRecipe = function(e) {
         e.preventDefault();
 
+        var id = cookbook.getActiveId();
         var data = $(e.currentTarget).serialize();
 
-        cookbook.update(data)
+        cookbook.update(id, data)
         .then(function(id) {
             location.hash = id;
 

@@ -107,7 +107,12 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function update() {
+        if(!isset($_GET['id'])) { return new DataResponse('Parameter "id" is required', 400); }
+        
         $json = $_POST;
+        $id = $_GET['id'];
+
+        $this->service->deleteRecipe($id); 
 
         $file = $this->service->addRecipe($json);
 
