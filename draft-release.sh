@@ -6,7 +6,7 @@ echo ""
 
 wget https://github.com/nextcloud/docker-ci/blob/master/translations/translationtool/translationtool.phar?raw=true -O translationtool.phar 
 
-mkdir l10n
+mkdir -p l10n
 
 php translationtool.phar convert-po-files
 
