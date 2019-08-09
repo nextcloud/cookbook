@@ -8,21 +8,22 @@
     <h2><?php echo $_['name']; ?></h2>
     
     <p><?php echo $_['recipeYield']; ?> serving<?php if($_['recipeYield'] > 1) { echo 's'; } ?></p>
+    <p><?php p($l->n('One serving', '%n servings', $_['recipeYield'])); ?></p>
     
     <?php if(isset($_['dailyDozen'])) { ?>
         <?php 
 
         $daily_dozen = [
-            'beansAndLegumes' => [ 'icon' => '🥛', 'name' => 'Beans and legumes' ],
-            'berries' => [ 'icon' => '🍓', 'name' => 'Berries' ],
-            'cruciferousVegetables' => [ 'icon' => '🥦', 'name' => 'Cruciferous vegetables' ],
-            'flaxseeds' => [ 'icon' => '🌱', 'name' => 'Flaxseeds' ],
-            'greens' => [ 'icon' => '🥬', 'name' => 'Greens' ],
-            'nutsAndSeeds' => [ 'icon' => '🌰', 'name' => 'Nuts and seeds' ],
-            'otherFruits' => [ 'icon' => '🍌', 'name' => 'Other fruits' ],
-            'otherVegetables' => [ 'icon' => '🥑', 'name' => 'Other vegetables' ],
-            'herbsAndSpices' => [ 'icon' => '🌿', 'name' => 'Herbs and spices' ],
-            'wholeGrains' => [ 'icon' => '🍞', 'name' => 'Whole grains' ],
+            'beansAndLegumes' => [ 'icon' => '🥛', 'name' => $l->t('Beans and legumes') ],
+            'berries' => [ 'icon' => '🍓', 'name' => $l->t('Berries') ],
+            'cruciferousVegetables' => [ 'icon' => '🥦', 'name' => $l->t('Cruciferous vegetables') ],
+            'flaxseeds' => [ 'icon' => '🌱', 'name' => $l->t('Flaxseeds') ],
+            'greens' => [ 'icon' => '🥬', 'name' => $l->t('Greens') ],
+            'nutsAndSeeds' => [ 'icon' => '🌰', 'name' => $l->t('Nuts and seeds') ],
+            'otherFruits' => [ 'icon' => '🍌', 'name' => $l->t('Other fruits') ],
+            'otherVegetables' => [ 'icon' => '🥑', 'name' => $l->t('Other vegetables') ],
+            'herbsAndSpices' => [ 'icon' => '🌿', 'name' => $l->t('Herbs and spices') ],
+            'wholeGrains' => [ 'icon' => '🍞', 'name' => $l->t('Whole grains') ],
         ];
     
         ?>
@@ -37,7 +38,7 @@
 
 <aside>
     <ul>
-        <h3>Ingredients</h3>
+        <h3><?php p($l->t('Ingredients')); ?></h3>
 
         <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>
             <li><?php echo $ingredient; ?></li>   
@@ -47,7 +48,7 @@
 
 <main>
     <ul>
-        <h3>Instructions</h3>
+        <h3><?php p($l->t('Instructions')); ?></h3>
 
         <?php foreach($_['recipeInstructions'] as $step) {  ?>
             <li><?php echo $step; ?></li>   
