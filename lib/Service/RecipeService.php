@@ -403,7 +403,15 @@ class RecipeService {
 
         if(!$host) { throw new \Exception('Could not parse URL'); }
 
-        $html = file_get_contents($url);
+        $opts = [
+    		"http" => [
+        		"method" => "GET",
+        		"header" => "User-Agent: Nextcloud Cookbook App"
+    		]
+		];
+		$context = stream_context_create($opts);
+
+        $html = file_get_contents($url, false, $context);
 
         if(!$html) { throw new \Exception('Could not fetch site ' . $url); }
 
