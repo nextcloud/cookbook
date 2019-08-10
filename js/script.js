@@ -30,7 +30,7 @@ Cookbook.prototype = {
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/update?id=' + id,
+            url: this._baseUrl + '/update' + (id ? '?id=' + id : ''),
             method: 'POST',
             data: json
         }).done(function (response) {
@@ -44,7 +44,7 @@ Cookbook.prototype = {
         location.hash = id;
     },
     getActiveId: function () {
-        return parseInt(location.hash.replace( /[^0-9]/g, ''));
+        return parseInt(location.hash.replace( /[^0-9]/g, '')) || null;
     },
     add: function (url) {
         var deferred = $.Deferred();
