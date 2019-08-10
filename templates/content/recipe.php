@@ -7,7 +7,6 @@
 
     <h2><?php echo $_['name']; ?></h2>
     
-    <p><?php echo $_['recipeYield']; ?> serving<?php if($_['recipeYield'] > 1) { echo 's'; } ?></p>
     <p><?php p($l->n('One serving', '%n servings', $_['recipeYield'])); ?></p>
     
     <?php if(isset($_['dailyDozen'])) { ?>
