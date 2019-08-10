@@ -5,11 +5,8 @@ echo "Compiling translations..."
 echo ""
 
 wget https://github.com/nextcloud/docker-ci/blob/master/translations/translationtool/translationtool.phar?raw=true -O translationtool.phar 
-
 mkdir -p l10n
-
 php translationtool.phar convert-po-files
-
 rm translationtool.phar
 
 echo ""
