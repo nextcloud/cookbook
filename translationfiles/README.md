@@ -35,12 +35,12 @@ git checkout <SSH-based repo URL> cookbook
 This will generate a folder cookbook in the current folder.
 Enter this new folder.
 
-Then, create a new local branch
+Then, create a new local branch:
 
 ```
 git checkout -b <branchname>
 ```
-Replace `<branchname>` with something useful like `translation/de`
+Replace `<branchname>` with something useful like `translation/de`.
 
 Go into the folder `translationfiles`.
 Create a new folder with the corresponding language code (e.g. `de`).
