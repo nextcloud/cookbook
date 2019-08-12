@@ -1,6 +1,6 @@
 # Translations for the cookbook app
 
-This is a quick instruction how to generate ne translations for the nextcoud app `cookbook`.
+This is a quick instruction how to generate translations for the nextcoud app `cookbook`.
 
 
 ## TL;DR
@@ -22,7 +22,7 @@ The needed steps will be described in the following sections in detail.
 
 ## Steps to generate a new translation
 
-The new translation must be but in a folder `translationfiles/<lang>` and have the name `cookbook.po`.
+The new translation must be put in the folder `translationfiles/<lang>` and have the name `cookbook.po`.
 The `<lang>` is the [language code](http://www.lingoes.net/en/translator/langcode.htm) of the desired translation.
 
 To start a new translation you need first to create a fork of the git repository. 
@@ -35,25 +35,24 @@ git checkout <SSH-based repo URL> cookbook
 This will generate a folder cookbook in the current folder.
 Enter this new folder.
 
-First create a new local branch by
+Then, create a new local branch
 
 ```
 git checkout -b <branchname>
 ```
-Replace `<branchname>` by something useful like `translation/de` or so.
+Replace `<branchname>` with something useful like `translation/de`
 
 Go into the folder `translationfiles`.
-Create a new folder with the correspondind language code (e.g. `de`).
+Create a new folder with the corresponding language code (e.g. `de`).
 Copy the template file from `template/cookcook.pot` to the file `cookbook.po` (without the `t` at the end) in your newly created folder.
 
 Congratulations!
 Now you are done creating a new translation.
 Go to the next section to make the translations themselves as if you would simply change an existing translation.
 
-
 ## Steps to modify an existing translation
 
-If not already done start with the setps from the previous section (Generate a new translation) to checkout and create a local branch.
+If not already done, start with the setps from the previous section (Generate a new translation) to checkout and create a local branch.
 Then go to the folder `translationfiles` in your repo.
 Within it there should be a folder named with the desired language code (e.g. `de`).
 Enter this folder.
@@ -71,6 +70,7 @@ To do so simply issue
 git add cookbook.po
 git commit
 ```
+
 You will be asked for a commit message.
 Write something useful there.
 Finally you can push the changes to your forked repoo by
@@ -78,7 +78,8 @@ Finally you can push the changes to your forked repoo by
 ```
 git push -u <remote> <branch>
 ```
-You must replace `<remote>` by the remote you used (or `origin` if you do not know what this means) and `<branch>` by the name of the local branch you created ealier (`translation/de` above).
+
+You must replace `<remote>` with the remote you used (or `origin` if you do not know what this means) and `<branch>` by the name of the local branch you created ealier (`translation/de` above).
 
 This will push the changed to your fork of the repo on github.
 To notify the developer of the changes, you need to open a pull request.
@@ -93,7 +94,6 @@ To see the changes in the app online, you need to update the files in the folder
 These files are used by the app to quickly translate any text in the app.
 
 These steps here are just to see the effect of the changes and are not necessary for creating a pull request or helping with translations directly.
-
 
 You first need to download the translation tool.
 Using the commans line this can be done e.g. by
