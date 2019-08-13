@@ -6,9 +6,11 @@
     <?php } ?>
 
     <h2><?php echo $_['name']; ?></h2>
-    
+
+    <p><?php echo $_['description']; ?></p>
+
     <p><?php p($l->n('One serving', '%n servings', $_['recipeYield'])); ?></p>
-    
+
     <?php if(isset($_['dailyDozen'])) { ?>
         <?php 
 

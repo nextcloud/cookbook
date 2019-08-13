@@ -205,6 +205,13 @@ class RecipeService {
 
         $json['recipeInstructions'] = array_filter($json['recipeInstructions']);
 
+	// Make sure the 'description' is a string
+	if(isset($json['description']) && is_string($json['description'])) {
+		$json['description'] = $this->cleanUpString($json['description']);
+	} else {
+		$json['description'] = "";
+	}
+
         return $json;
     }
 

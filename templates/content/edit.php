@@ -5,6 +5,11 @@
     </fieldset>
 
     <fieldset>
+        <label><?php /* TRANSLATORS The description of the recipe */echo p($l->t('Description')); ?></label>
+        <input required type="text" name="description" value="<?php echo $_['description']; ?>"></h2>
+    </fieldset>
+
+    <fieldset>
         <label><?php p($l->t('Image URL')); ?></label>
         <input type="text" name="image" value="<?php echo $_['image']; ?>">
     </fieldset>
