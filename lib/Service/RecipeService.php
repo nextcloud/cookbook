@@ -212,6 +212,17 @@ class RecipeService {
 		$json['description'] = "";
 	}
 
+	// Make sure the 'url' is a URL, or blank
+        if(isset($json['url']) && $json['url']) {
+            $url = filter_var($json['url'], FILTER_SANITIZE_URL);
+            if (filter_var($url, FILTER_VALIDATE_URL) == false) {
+                $url = "";
+            }
+            $json['url'] = $url;
+        } else {
+            $json['url'] = "";
+        }
+
         return $json;
     }
 
@@ -425,6 +436,8 @@ class RecipeService {
         $json = $this->parseRecipeHtml($html); 
 
         if(!$json) { throw new \Exception('No recipe data found'); }
+
+        $json['url'] = $url;
 
         return $this->addRecipe($json);
     }

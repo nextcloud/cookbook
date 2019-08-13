@@ -6,7 +6,12 @@
 
     <fieldset>
         <label><?php /* TRANSLATORS The description of the recipe */echo p($l->t('Description')); ?></label>
-        <input required type="text" name="description" value="<?php echo $_['description']; ?>"></h2>
+        <input type="text" name="description" value="<?php echo $_['description']; ?>">
+    </fieldset>
+
+    <fieldset>
+        <label><?php p($l->t('Source URL')); ?></label>
+        <input type="text" name="url" value="<?php echo $_['url']; ?>">
     </fieldset>
 
     <fieldset>

@@ -56,3 +56,9 @@
         <?php } ?>
     </ul>
 </main>
+
+
+<?php if(isset($_['url']) && $_['url']) { ?>
+    <p><a href="<?php echo $_['url']; ?>">Original Source</a></p>
+<?php } ?>
+
