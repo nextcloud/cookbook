@@ -205,14 +205,14 @@ class RecipeService {
 
         $json['recipeInstructions'] = array_filter($json['recipeInstructions']);
 
-	// Make sure the 'description' is a string
-	if(isset($json['description']) && is_string($json['description'])) {
-		$json['description'] = $this->cleanUpString($json['description']);
-	} else {
-		$json['description'] = "";
-	}
+      	// Make sure the 'description' is a string
+      	if(isset($json['description']) && is_string($json['description'])) {
+      		$json['description'] = $this->cleanUpString($json['description']);
+      	} else {
+      		$json['description'] = "";
+      	}
 
-	// Make sure the 'url' is a URL, or blank
+      	// Make sure the 'url' is a URL, or blank
         if(isset($json['url']) && $json['url']) {
             $url = filter_var($json['url'], FILTER_SANITIZE_URL);
             if (filter_var($url, FILTER_VALIDATE_URL) == false) {
@@ -222,6 +222,32 @@ class RecipeService {
         } else {
             $json['url'] = "";
         }
+        // Make sure 'prepTime' is a string and valid DateInterval
+        // regex validation from here: https://stackoverflow.com/a/32045167
+        $interval_regex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
+        if(isset($json['prepTime']) && is_string($json['prepTime'])) {
+            $prep_string = $this->cleanUpString($json['prepTime']);
+            if(preg_match_all($interval_regex, $prep_string)) {
+                $json['prepTime'] = $prep_string;
+            } else {
+                $json['prepTime'] = "PT99M";
+            }
+        } else {
+            $json['prepTime'] = "";
+        }
+
+        // Make sure 'cookTime' is a string and valid DateInterval
+        if(isset($json['cookTime']) && is_string($json['cookTime'])) {
+            $cook_string = $this->cleanUpString($json['cookTime']);
+            if(preg_match_all($interval_regex, $cook_string)) {
+                $json['cookTime'] = $cook_string;
+            } else {
+                $json['cookTime'] = "";
+            }
+        } else {
+            $json['cookTime'] = "";
+        }
+
 
         return $json;
     }

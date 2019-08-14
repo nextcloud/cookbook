@@ -11,7 +11,7 @@
 
     <fieldset>
         <label><?php p($l->t('Source URL')); ?></label>
-        <input type="text" name="url" value="<?php echo $_['url']; ?>">
+        <input type="url" name="url" value="<?php echo $_['url']; ?>">
     </fieldset>
 
     <fieldset>
@@ -19,6 +19,16 @@
         <input type="text" name="image" value="<?php echo $_['image']; ?>">
     </fieldset>
     
+    <fieldset>
+        <label><?php p($l->t('Prep Time')); ?></label>
+        <input type="text" name="prepTime" value="<?php echo $_['prepTime']; ?>" placeholder="PT0H15M">
+    </fieldset>
+
+    <fieldset>
+        <label><?php p($l->t('Cook Time')); ?></label>
+        <input type="text" name="cookTime" value="<?php echo $_['cookTime']; ?>" placeholder="PT1H30M">
+    </fieldset>
+
     <fieldset>
         <label><?php p($l->t('Keywords (comma-separated)')); ?></label>
         <input type="text" name="keywords" value="<?php echo $_['keywords']; ?>">
