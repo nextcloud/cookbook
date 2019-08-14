@@ -230,7 +230,7 @@ class RecipeService {
             if(preg_match_all($interval_regex, $prep_string)) {
                 $json['prepTime'] = $prep_string;
             } else {
-                $json['prepTime'] = "PT99M";
+                $json['prepTime'] = "";
             }
         } else {
             $json['prepTime'] = "";
