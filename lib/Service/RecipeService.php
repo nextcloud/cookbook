@@ -165,9 +165,9 @@ class RecipeService {
             if(is_array($json['recipeInstructions'])) {
                 foreach($json['recipeInstructions'] as $i => $step) {
                     if(is_string($step)) {
-                        $json['recipeInstructions'][$i] = $this->cleanUpString($step);
+                        $json['recipeInstructions'][$i] = $this->cleanUpString($step, true);
                     } else if(is_array($step) && isset($step['text'])) {
-                        $json['recipeInstructions'][$i] = $this->cleanUpString($step['text']);
+                        $json['recipeInstructions'][$i] = $this->cleanUpString($step['text'], true);
                     } else {
                         $json['recipeInstructions'][$i] = '';
                     }
@@ -704,11 +704,17 @@ class RecipeService {
      *
      * @return string
      */  
-    private function cleanUpString($str) {
+    private function cleanUpString($str, $preserve_newlines = false) {
         if(!$str) { return ''; }
 
         $str = strip_tags($str);
-        $str = str_replace(["\r", "\n", "\t", "\\"], '', $str);
+
+        if(!$preserve_newlines) {
+            $str = str_replace(["\r", "\n"], '', $str);
+        }
+        
+        $str = str_replace(["\t", "\\"], '', $str);
+
         $str = html_entity_decode($str);
 
         return $str;
