@@ -1,0 +1,214 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Nextcloud package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Nextcloud 3.14159\n"
+"Report-Msgid-Bugs-To: translations\\@example.com\n"
+"POT-Creation-Date: 2019-08-09 08:24+0200\n"
+"PO-Revision-Date: 2019-08-25 22:20+0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n"
+"%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 2.2.3\n"
+"Last-Translator: \n"
+"Language: pl_PL\n"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:93
+msgid "Path to your recipe collection"
+msgstr "Ścieżka do Twojej kolekcji przepisów"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:108
+msgid "Could not set recipe folder to {path}"
+msgstr "Nie można ustawić folderu przepisów na {path}"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:133
+msgid "Please pick a recipe"
+msgstr "Proszę wybrać przepis"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:154
+msgid "Could not load recipe"
+msgstr "Nie można załadować przepisu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:234
+msgid "Could not update recipe"
+msgstr "Nie można zaktualizować przepisu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:280
+msgid "Could not add recipe"
+msgstr "Nie można dodać przepisu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:302
+msgid "Could not rebuild recipe index."
+msgstr "Nie można odbudować indeksu przepisów."
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:317
+msgid "Are you sure you want to delete this recipe?"
+msgstr "Czy na pewno chcesz usunąć ten przepis?"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:333
+msgid "Failed to delete recipe"
+msgstr "Nie udało się usunąć przepisu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:364
+msgid "Failed to fetch recipes"
+msgstr "Nie udało się pobrać przepisów"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:2
+msgid "Cookbook"
+msgstr "Książka kucharska"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:3
+msgid "An integrated cookbook using schema.org JSON files as recipes"
+msgstr ""
+"Zintegrowana książka kucharska wykorzystująca pliki JSON schema.org jako "
+"przepisy kulinarne"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:4
+msgid ""
+"A library for all your recipes. It uses JSON files following the schema.org "
+"recipe format. To add a recipe to the collection, you can paste in the URL "
+"of the recipe, and the provided web page will be parsed and downloaded to "
+"whichever folder you specify in the app settings."
+msgstr ""
+"Biblioteka dla wszystkich twoich przepisów. Wykorzystuje pliki JSON zgodne "
+"z formatem schema.org. Aby dodać przepis do kolekcji, możesz wkleić adres "
+"URL przepisu, a podana strona internetowa zostanie przeanalizowana i "
+"pobrana do dowolnego folderu określonego w ustawieniach aplikacji."
+
+#. TRANSLATORS The name of the recipe
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:3
+msgid "Name"
+msgstr "Nazwa"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:8
+msgid "Image URL"
+msgstr "Adres URL obrazu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:13
+msgid "Keywords (comma-separated)"
+msgstr "Słowa kluczowe (oddzielone przecinkami)"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:18
+msgid "Servings"
+msgstr "Porcje"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:25
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:17
+msgid "Beans and legumes"
+msgstr "Fasola i rośliny strączkowe"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:26
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:18
+msgid "Berries"
+msgstr "Jagody"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:27
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:19
+msgid "Cruciferous vegetables"
+msgstr "Warzywa kapustne"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:28
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:20
+msgid "Flaxseeds"
+msgstr "Nasiona lnu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:29
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:21
+msgid "Greens"
+msgstr "Zielenina"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:30
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:22
+msgid "Nuts and seeds"
+msgstr "Orzechy i nasiona"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:31
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:23
+msgid "Other fruits"
+msgstr "Pozostałe owoce"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:32
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:24
+msgid "Other vegetables"
+msgstr "Pozostałe warzywa"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:33
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:25
+msgid "Herbs and spices"
+msgstr "Zioła i przyprawy"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:34
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:26
+msgid "Whole grains"
+msgstr "Pełnoziarniste"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:40
+msgid "Daily dozen"
+msgstr "Codziennie kilkanaście"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:57
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:41
+msgid "Ingredients"
+msgstr "Składniki"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:77
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:51
+msgid "Instructions"
+msgstr "Instrukcje"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:96
+msgid "Save"
+msgstr "Zapisz"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:11
+msgid "One serving"
+msgid_plural "%n servings"
+msgstr[0] "Jedna porcja"
+msgstr[1] ""
+msgstr[2] ""
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:2
+msgid "Create recipe"
+msgstr "Stwórz przepis"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:6
+msgid "Recipe URL"
+msgstr "Adres URL przepisu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:7
+msgid "Download recipe"
+msgstr "Pobierz przepis"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:14
+msgid "Search"
+msgstr "Szukaj"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/recipes.php:10
+msgid "Edit recipe"
+msgstr "Edytuj przepis"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/recipes.php:13
+msgid "Delete recipe"
+msgstr "Usuń przepis"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:3
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:9
+msgid "Rescan library"
+msgstr "Skanowanie biblioteki"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:12
+msgid "Recipe folder"
+msgstr "Folder przepisu"
+
+#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:13
+msgid "Please pick a folder"
+msgstr "Proszę wybierać folder"
