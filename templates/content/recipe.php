@@ -4,6 +4,11 @@
             <img src="<?php echo $_['imageURL']; ?>">
         </figure>
     <?php } ?>
+    
+    <div class="recipe-toolbar">
+        <a href="#<?php echo $_['id']; ?>|edit" class="button svg action icon-rename" title="<?php p($l->t('Edit recipe')); ?>"></a>
+        <button class="button svg action icon-delete" data-id="<?php echo $_['id']; ?>" title="<?php p($l->t('Delete recipe')); ?>"></button>
+    </div>
 
     <h2><?php echo $_['name']; ?></h2>
     

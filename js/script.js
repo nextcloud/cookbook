@@ -131,6 +131,7 @@ var Content = function (cookbook) {
 
         if(!recipeId && !isEditor) {
             $('#app-content-wrapper').html(t(appName, 'Please pick a recipe'));
+
         } else {
             $.ajax({
                 url: cookbook._baseUrl + '/' + (isEditor ? 'edit' : 'recipe') + (isEditor && !recipeId ? '?new' : '?id=' + recipeId),
@@ -147,16 +148,50 @@ var Content = function (cookbook) {
 
                 $('#app-content-wrapper form').off('submit');
                 $('#app-content-wrapper form').submit(self.onUpdateRecipe);
+            
+                $('#app-content-wrapper .icon-delete').click(self.onDeleteRecipe);
 
                 self.updateListItems();
+
+                nav.highlightActive();
             })
             .fail(function (e) {
                 alert(t(appName, 'Could not load recipe'));
 
+                nav.highlightActive();
+                
                 if(e && e instanceof Error) { throw e; }
             });
         }
     };
+    
+    /**
+     * Event: Delete recipe
+     */
+    self.onDeleteRecipe = function(e) {
+        if(!confirm(t(appName, 'Are you sure you want to delete this recipe?'))) { return; }
+
+        var id = e.currentTarget.dataset.id;
+        
+        $.ajax({
+            url: cookbook._baseUrl + '/delete?id=' + id,
+            method: 'DELETE',
+        })
+        .done(function(html) {
+            if(cookbook.getActiveId() == id) {
+                location.hash = '';        
+            }
+
+            self.render();
+            nav.render();
+        })
+        .fail(function(e) {
+            alert(t(appName, 'Failed to delete recipe'));
+
+            if(e && e instanceof Error) { throw e; }
+        });
+    };
+
 
     /**
      * Updates all lists items with click events
@@ -305,37 +340,15 @@ var Nav = function (cookbook) {
     };
 
     /**
-     * Event: Edit recipe
+     * Event: Clear recipe search
      */
-    self.onEditRecipe = function(e) {
-        location.hash = e.currentTarget.dataset.id + '|edit';
-    };
-
-    /**
-     * Event: Delete recipe
-     */
-    self.onDeleteRecipe = function(e) {
-        if(!confirm(t(appName, 'Are you sure you want to delete this recipe?'))) { return; }
-
-        var id = e.currentTarget.dataset.id;
+    self.onClearRecipeSearch = function(e) {
+        e.preventDefault();
         
-        $.ajax({
-            url: cookbook._baseUrl + '/delete?id=' + id,
-            method: 'DELETE',
-        })
-        .done(function(html) {
-            if(cookbook.getActiveId() == id) {
-                location.hash = '';        
-            }
+        $('#find-recipes input').val('');
 
-            self.render();
-        })
-        .fail(function(e) {
-            alert(t(appName, 'Failed to delete recipe'));
-
-            if(e && e instanceof Error) { throw e; }
-        });
-    };
+        self.onFindRecipes(e);
+    }
 
     /**
      * Get the current input keywords
@@ -344,6 +357,15 @@ var Nav = function (cookbook) {
      */
     self.getKeywords = function() {
         return $('#find-recipes input').val();
+    }
+
+    /**
+     * Highlight the active item
+     */
+    self.highlightActive = function() {
+        $('#app-navigation #recipes a').each(function() {
+            $(this).toggleClass('active', $(this).attr('href') === '#' + cookbook.getActiveId());
+        });
     }
 
     /**
@@ -356,10 +378,8 @@ var Nav = function (cookbook) {
         })
         .done(function(html) {
             $('#app-navigation #recipes').html(html);
-            
-            $('#app-navigation #recipes .button-edit button').click(self.onEditRecipe);
-            
-            $('#app-navigation #recipes .button-delete button').click(self.onDeleteRecipe);
+
+            self.highlightActive();
         })
         .fail(function(e) {
             alert(t(appName, 'Failed to fetch recipes'));
@@ -382,6 +402,10 @@ var Nav = function (cookbook) {
         // Find recipes
         $('#find-recipes').off('submit');
         $('#find-recipes').submit(self.onFindRecipes);
+        
+        // Clear recipe search
+        $('#clear-recipe-search').off('click');
+        $('#clear-recipe-search').click(self.onClearRecipeSearch);
 
         // Reindex recipes
         $('#reindex-recipes').off('click');

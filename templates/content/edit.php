@@ -1,3 +1,9 @@
+<header>
+    <div class="recipe-toolbar">
+        <a href="#<?php echo $_['id']; ?>" class="svg action icon-close"></a>
+    </div>
+</header>
+
 <form action="/index.php/apps/cookbook/update" method="POST">
     <fieldset>
         <label><?php /* TRANSLATORS The name of the recipe */echo p($l->t('Name')); ?></label>
