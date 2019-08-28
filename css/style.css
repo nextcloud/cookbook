@@ -12,7 +12,17 @@
     #app-navigation .app-navigation-create {
         padding: 10px;
     }
-        
+        #app-navigation #clear-recipe-search {
+            border-top: 1px solid var(--color-border-dark);
+            border-bottom: 1px solid var(--color-border-dark);
+            padding: 0 15px;
+        }
+
+        #app-navigation input:hover ~ #clear-recipe-search,
+        #app-navigation input:focus ~ #clear-recipe-search {
+            border-color: var(--color-primary-element);
+        }
+            
         #app-navigation .app-navigation-create .button {
             width: 100%;
             padding: 6px 12px;

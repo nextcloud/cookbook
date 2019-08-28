@@ -17,7 +17,7 @@
             <option value="<?php echo $keyword['name']; ?>">
         <?php } ?>
     </datalist>
-    <button id="clear-recipe-search" class="icon-close"></button>
+    <a id="clear-recipe-search" class="icon-close"></a>
     <button class="icon-category-search" type="submit"></button>
 </form>
 
