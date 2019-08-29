@@ -149,7 +149,8 @@ var Content = function (cookbook) {
                 $('#app-content-wrapper form').off('submit');
                 $('#app-content-wrapper form').submit(self.onUpdateRecipe);
             
-                $('#app-content-wrapper .icon-delete').click(self.onDeleteRecipe);
+                $('#print-recipe').click(self.onPrintRecipe);
+                $('#delete-recipe').click(self.onDeleteRecipe);
 
                 self.updateListItems();
 
@@ -192,6 +193,12 @@ var Content = function (cookbook) {
         });
     };
 
+    /**
+     * Event: Print recipe
+     */
+    self.onPrintRecipe = function(e) {
+        window.print();
+    };
 
     /**
      * Updates all lists items with click events

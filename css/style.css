@@ -210,3 +210,30 @@
             margin-left: auto;
             display: block;
         }
+
+/**
+ * Print
+ */
+@media print {
+    #header,
+    #app-navigation,
+    .recipe-toolbar {
+        display: none !important;
+    }
+
+    #content,
+    #app-content-wrapper {
+        display: block !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    #app-content {
+        margin-left: 0 !important;
+    }
+
+    a:link:after,
+    a:visited:after {
+        content:" [" attr(href) "] ";
+    }
+}
