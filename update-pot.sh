@@ -25,5 +25,7 @@ do
 	msgcat --use-first -o "$f/cookbook.po"  "$temp" translationfiles/templates/cookbook.pot
 done
 
+rm "$temp"
+
 rm translationtool.phar
 
