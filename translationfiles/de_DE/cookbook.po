@@ -89,11 +89,27 @@ msgstr "Name"
 msgid "Image URL"
 msgstr "Bild-URL"
 
-#: /srv/http/nc/apps/cookbook/templates/content/edit.php:13
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:14
+msgid "Description"
+msgstr "Beschreibung"
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:19
+msgid "Source URL"
+msgstr "Quell-URL"
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:29
+msgid "Prep Time"
+msgstr "Vorbereitungszeit"
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:34
+msgid "Cook Time"
+msgstr "Kochzeit"
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:39
 msgid "Keywords (comma-separated)"
 msgstr "Schlagworte (durch Kommas getrennt)"
 
-#: /srv/http/nc/apps/cookbook/templates/content/edit.php:18
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:44
 msgid "Servings"
 msgstr "Portionen"
 
@@ -167,11 +183,27 @@ msgstr "Anweisungen"
 msgid "Save"
 msgstr "Speichern"
 
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:10
+msgid "Print recipe"
+msgstr "Rezept drucken"
+
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:11
 msgid "One serving"
 msgid_plural "%n servings"
 msgstr[0] "Eine Portion"
 msgstr[1] "%n Portionen"
+
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:18
+msgid "Source"
+msgstr "Quelle"
+
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:28
+msgid "Preparation time"
+msgstr "Vorbereitungszeit"
+
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:36
+msgid "Cooking time"
+msgstr "Kochzeit"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:2
 msgid "Create recipe"
