@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nextcloud 3.14159\n"
 "Report-Msgid-Bugs-To: translations\\@example.com\n"
-"POT-Creation-Date: 2019-08-09 08:24+0200\n"
+"POT-Creation-Date: 2019-09-04 19:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,57 +16,56 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:93
+#: /tmp/nextcloud-cookbook/js/script.js:93
 msgid "Path to your recipe collection"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:108
+#: /tmp/nextcloud-cookbook/js/script.js:108
 msgid "Could not set recipe folder to {path}"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:133
+#: /tmp/nextcloud-cookbook/js/script.js:133
 msgid "Please pick a recipe"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:154
+#: /tmp/nextcloud-cookbook/js/script.js:160
 msgid "Could not load recipe"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:234
-msgid "Could not update recipe"
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:280
-msgid "Could not add recipe"
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:302
-msgid "Could not rebuild recipe index."
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:317
+#: /tmp/nextcloud-cookbook/js/script.js:173
 msgid "Are you sure you want to delete this recipe?"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:333
+#: /tmp/nextcloud-cookbook/js/script.js:190
 msgid "Failed to delete recipe"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:364
+#: /tmp/nextcloud-cookbook/js/script.js:277
+msgid "Could not update recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/js/script.js:323
+msgid "Could not add recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/js/script.js:345
+msgid "Could not rebuild recipe index."
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/js/script.js:392
 msgid "Failed to fetch recipes"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:2
+#: /tmp/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:2
 msgid "Cookbook"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:3
+#: /tmp/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:3
 msgid "An integrated cookbook using schema.org JSON files as recipes"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:4
+#: /tmp/nextcloud-cookbook/specialAppInfoFakeDummyForL10nScript.php:4
 msgid ""
 "A library for all your recipes. It uses JSON files following the schema.org "
 "recipe format. To add a recipe to the collection, you can paste in the URL "
@@ -75,132 +74,160 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS The name of the recipe
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:3
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:9
 msgid "Name"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:8
+#. TRANSLATORS The description of the recipe
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:14
+msgid "Description"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:19
+msgid "Source URL"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:24
 msgid "Image URL"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:13
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:29
+msgid "Prep Time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:34
+msgid "Cook Time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:39
 msgid "Keywords (comma-separated)"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:18
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:44
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:39
 msgid "Servings"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:25
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:17
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:51
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:46
 msgid "Beans and legumes"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:26
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:18
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:52
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:47
 msgid "Berries"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:27
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:19
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:53
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:48
 msgid "Cruciferous vegetables"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:28
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:20
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:54
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:49
 msgid "Flaxseeds"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:29
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:21
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:55
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:50
 msgid "Greens"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:30
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:22
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:56
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:51
 msgid "Nuts and seeds"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:31
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:23
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:57
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:52
 msgid "Other fruits"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:32
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:24
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:58
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:53
 msgid "Other vegetables"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:33
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:25
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:59
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:54
 msgid "Herbs and spices"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:34
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:26
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:60
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:55
 msgid "Whole grains"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:40
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:66
 msgid "Daily dozen"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:57
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:41
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:83
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:70
 msgid "Ingredients"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:77
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:51
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:103
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:80
 msgid "Instructions"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:96
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:122
 msgid "Save"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/recipe.php:11
-msgid "One serving"
-msgid_plural "%n servings"
-msgstr[0] ""
-msgstr[1] ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:2
-msgid "Create recipe"
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:6
-msgid "Recipe URL"
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:7
-msgid "Download recipe"
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/index.php:14
-msgid "Search"
-msgstr ""
-
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/recipes.php:10
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:9
 msgid "Edit recipe"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/navigation/recipes.php:13
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
+msgid "Print recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:11
 msgid "Delete recipe"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:3
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:18
+msgid "Source"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:28
+msgid "Preparation time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:36
+msgid "Cooking time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/navigation/index.php:2
+msgid "Create recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/navigation/index.php:6
+msgid "Recipe URL"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/navigation/index.php:7
+msgid "Download recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/navigation/index.php:14
+msgid "Search"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:3
 msgid "Settings"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:9
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:9
 msgid "Rescan library"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:12
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:12
 msgid "Recipe folder"
 msgstr ""
 
-#: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:13
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:13
 msgid "Please pick a folder"
 msgstr ""
