@@ -63,7 +63,8 @@ msgstr "Recetario"
 
 #: /srv/http/nc/apps/cookbook/specialAppInfoFakeDummyForL10nScript.php:3
 msgid "An integrated cookbook using schema.org JSON files as recipes"
-msgstr "Recetario que utiliza archivos JSON para recetas según el estándar schema.org"
+msgstr ""
+"Recetario que utiliza archivos JSON para recetas según el estándar schema.org"
 
 #: /srv/http/nc/apps/cookbook/specialAppInfoFakeDummyForL10nScript.php:4
 msgid ""
@@ -73,9 +74,10 @@ msgid ""
 "whichever folder you specify in the app settings."
 msgstr ""
 "Una biblioteca para todas tus recetas. Utiliza archivos en formato JSON, "
-"según el estándar schema.org. Para añadir una receta a la colección puedes copiar "
-" y pegar el URL de la receta, de manera que la página web es analizada y descargada "
-"en la carpeta especificada en la configuración de la aplicación."
+"según el estándar schema.org. Para añadir una receta a la colección puedes "
+"copiar  y pegar el URL de la receta, de manera que la página web es "
+"analizada y descargada en la carpeta especificada en la configuración de la "
+"aplicación."
 
 #. TRANSLATORS The name of the recipe
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:3
@@ -115,8 +117,8 @@ msgid "Flaxseeds"
 msgstr "Semillas de lino"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:29
-#, fuzzy
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:21
+#, fuzzy
 msgid "Greens"
 msgstr "Hortalizas"
 
@@ -210,3 +212,35 @@ msgstr "Carpeta de recetas"
 msgid "Please pick a folder"
 msgstr "Seleccionar una carpeta"
 
+#. TRANSLATORS The description of the recipe
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:14
+msgid "Description"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:19
+msgid "Source URL"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:29
+msgid "Prep Time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:34
+msgid "Cook Time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
+msgid "Print recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:18
+msgid "Source"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:28
+msgid "Preparation time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:36
+msgid "Cooking time"
+msgstr ""
