@@ -2,7 +2,7 @@
 
 A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.
 
-## Upgrading to v0.4.0
+## Upgrading to v0.4.x
 
 Since the database tables are now user specific, you have to rescan the library (Settings > Rescan library) for every user to see your recipes again.
 
