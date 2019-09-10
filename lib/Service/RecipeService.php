@@ -264,7 +264,7 @@ class RecipeService {
         $json_matches = [];
 
         // Parse JSON
-        preg_match_all('/<script type="application\/ld\+json">([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
+        preg_match_all('/<script type=["|\']application\/ld\+json["|\'][^>]*>([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
         foreach($json_matches as $json_match) {
             if(!$json_match || !isset($json_match[1])) { continue; }
 
@@ -274,7 +274,17 @@ class RecipeService {
 
             $json = json_decode($string, true);
 
-            if(!$json || $json['@type'] !== 'Recipe') { continue; }
+            // Look through @graph field for recipe
+            if($json && isset($json['@graph']) && is_array($json['@graph'])) {
+                foreach($json['@graph'] as $graph_item) {
+                    if(!isset($graph_item['@type']) || $graph_item['@type'] !== 'Recipe') { continue; }
+
+                    $json = $graph_item;
+                    break;        
+                }
+            }
+
+            if(!$json || !isset($json['@type']) || $json['@type'] !== 'Recipe') { continue; }
 
             return $this->checkRecipe($json);
         }
@@ -426,7 +436,7 @@ class RecipeService {
 
         $file->putContent(json_encode($json));
 
-        $this->db->indexRecipeFile($file);
+        $this->db->indexRecipeFile($file, $this->userId);
 
         $cache_folder = $this->getFolderForCache($file->getId());
 
@@ -493,10 +503,10 @@ class RecipeService {
         $cache_folder = $this->getFolderForCache();
         $cache_folder->delete();
 
-        $this->db->emptySearchIndex();
+        $this->db->emptySearchIndex($this->userId);
 
         foreach($this->getRecipeFiles() as $file) {
-            $this->db->indexRecipeFile($file);
+            $this->db->indexRecipeFile($file, $this->userId);
         }
     }
 
@@ -506,7 +516,7 @@ class RecipeService {
      * @return array
      */
     public function getAllKeywordsInSearchIndex() {
-        return $this->db->findAllKeywords(); 
+        return $this->db->findAllKeywords($this->userId); 
     }
 
     /**
@@ -515,7 +525,7 @@ class RecipeService {
      * @return array
      */
     public function getAllRecipesInSearchIndex() {
-        return $this->db->findAllRecipes(); 
+        return $this->db->findAllRecipes($this->userId); 
     }
 
     /**
@@ -534,7 +544,7 @@ class RecipeService {
             $keywords_array = $keywords_array[0];
         }
 
-        return $this->db->findRecipes($keywords_array);
+        return $this->db->findRecipes($keywords_array, $this->userId);
     }
 
     /**

@@ -107,7 +107,6 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function update() {
-        
         $json = $_POST;
         
         if(isset($_GET['id'])) {
