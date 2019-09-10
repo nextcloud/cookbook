@@ -2,7 +2,14 @@
 
 A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.
 
+## Upgrading to v0.4.0
+
+Since the database tables are now user specific, you have to rescan the library (Settings > Rescan library) for every user to see your recipes again.
+
 ## F.A.Q.
+
+#### I can't see my recipes
+They probably haven't been indexed. Try clicking the Settings > Rescan library button.
 
 #### "Could not load recipe" when trying to download recipes?
 A lot of websites are unfortunately not following the schema.org/Recipe standard, which makes their recipes impossible to read by this app.
