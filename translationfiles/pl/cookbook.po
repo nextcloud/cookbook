@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n"
-"%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 "
+"|| n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 2.2.3\n"
 "Last-Translator: \n"
 "Language: pl_PL\n"
@@ -76,10 +76,10 @@ msgid ""
 "of the recipe, and the provided web page will be parsed and downloaded to "
 "whichever folder you specify in the app settings."
 msgstr ""
-"Biblioteka dla wszystkich twoich przepisów. Wykorzystuje pliki JSON zgodne "
-"z formatem schema.org. Aby dodać przepis do kolekcji, możesz wkleić adres "
-"URL przepisu, a podana strona internetowa zostanie przeanalizowana i "
-"pobrana do dowolnego folderu określonego w ustawieniach aplikacji."
+"Biblioteka dla wszystkich twoich przepisów. Wykorzystuje pliki JSON zgodne z "
+"formatem schema.org. Aby dodać przepis do kolekcji, możesz wkleić adres URL "
+"przepisu, a podana strona internetowa zostanie przeanalizowana i pobrana do "
+"dowolnego folderu określonego w ustawieniach aplikacji."
 
 #. TRANSLATORS The name of the recipe
 #: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/content/edit.php:3
@@ -212,3 +212,36 @@ msgstr "Folder przepisu"
 #: /home/jeppezapp/Development/Web/nextcloud-cookbook/templates/settings/index.php:13
 msgid "Please pick a folder"
 msgstr "Proszę wybierać folder"
+
+#. TRANSLATORS The description of the recipe
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:14
+msgid "Description"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:19
+msgid "Source URL"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:29
+msgid "Prep Time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:34
+msgid "Cook Time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
+msgid "Print recipe"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:18
+msgid "Source"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:28
+msgid "Preparation time"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:36
+msgid "Cooking time"
+msgstr ""

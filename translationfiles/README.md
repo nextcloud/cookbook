@@ -112,3 +112,12 @@ php /tmp/translationtool.phar convert-po-files
 This will update the files in the `l10n` folder.
 You can copy these files to your nextcloud installation to test the effect (backup the previous content!).
 If you managed to check out the git repo directly in the nextcloud tree, it works instantly.
+
+
+# Updating the localization files in case of new tranlation entries
+
+In case the app gets extended and new strings are introduced these need to be covered by the translations.
+This section covers this problem.
+
+Just navigate to the the root folder of the nextcloud app and call the `update-pot.sh` file.
+This will update the template `.pot` file and all existing translation files `.po` so far to the current state of source.
