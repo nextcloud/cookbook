@@ -21,7 +21,7 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
-            ->from('cookbook_recipes')
+            ->from('cookbook_recipe')
             ->where('id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
@@ -35,7 +35,7 @@ class RecipeDb {
     public function deleteRecipeById(int $id) {
         $qb = $this->db->getQueryBuilder();
 
-        $qb->delete('cookbook_recipes')
+        $qb->delete('cookbook_names')
             ->where('recipe_id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         
@@ -52,7 +52,7 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
-            ->from('cookbook_recipes', 'r')
+            ->from('cookbook_names', 'r')
             ->where('user_id = :user')
             ->orderBy('r.name');
         $qb->setParameter('user', $userId, TYPE::STRING);
@@ -77,7 +77,7 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
-        $result = array_unique($result);
+        $result = array_unique($result, SORT_REGULAR);
 
         return $result;
     }
@@ -117,7 +117,7 @@ class RecipeDb {
         $qb->setParameters($params, $types);
         $qb->setParameter('user', $userId, TYPE::STRING);
         
-        $qb->join('k', 'cookbook_recipes', 'r', 'k.recipe_id = r.recipe_id'); 
+        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id'); 
 
         $qb->groupBy('r.recipe_id');
         $qb->orderBy('r.name');
@@ -132,7 +132,7 @@ class RecipeDb {
     public function emptySearchIndex(string $userId) {
         $qb = $this->db->getQueryBuilder();
         
-        $qb->delete('cookbook_recipes')
+        $qb->delete('cookbook_names')
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
         $qb->setParameter('user', $userId, TYPE::STRING);
@@ -161,7 +161,7 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         // Insert recipe 
-        $qb->delete('cookbook_recipes')
+        $qb->delete('cookbook_names')
             ->where('recipe_id = :id')
             ->andWhere('user_id = :user');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
@@ -169,7 +169,7 @@ class RecipeDb {
         
         $qb->execute();
 
-        $qb->insert('cookbook_recipes')
+        $qb->insert('cookbook_names')
             ->values([
                 'recipe_id' => ':id',
                 'name' => ':name',
