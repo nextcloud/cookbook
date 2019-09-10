@@ -4,6 +4,9 @@ A library for all your recipes. It uses JSON files following the schema.org reci
 
 ## F.A.Q.
 
+#### I can't see my recipes
+They probably haven't been indexed. Try clicking the Settings > Rescan library button.
+
 #### "Could not load recipe" when trying to download recipes?
 A lot of websites are unfortunately not following the schema.org/Recipe standard, which makes their recipes impossible to read by this app.
 
