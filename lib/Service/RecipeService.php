@@ -505,9 +505,37 @@ class RecipeService {
 
         $this->db->emptySearchIndex($this->userId);
 
+        $this->updateSearchIndex();
+    }
+
+    /**
+     * Updates the search index
+     */
+    public function updateSearchIndex() {
         foreach($this->getRecipeFiles() as $file) {
             $this->db->indexRecipeFile($file, $this->userId);
         }
+        
+        $this->config->setUserValue($this->userId, 'cookbook', 'last_index_update', time());
+    }
+
+    /**
+     * Checks if a search index update is needed and performs it
+     */
+    private function checkSearchIndexUpdate() {
+        $last_index_update = $this->getSearchIndexLastUpdateTime();
+        $interval = $this->getSearchIndexUpdateInterval();
+
+        if($last_index_update < 1 || time() > $last_index_update + ($interval * 60)) {
+            $this->updateSearchIndex();
+        }
+    }
+
+    /**
+     * Gets the last time the search index was updated
+     */
+    public function getSearchIndexLastUpdateTime() {
+        return (int) $this->config->getUserValue($this->userId, 'cookbook', 'last_index_update');
     }
 
     /**
@@ -516,6 +544,8 @@ class RecipeService {
      * @return array
      */
     public function getAllKeywordsInSearchIndex() {
+        $this->checkSearchIndexUpdate();
+
         return $this->db->findAllKeywords($this->userId); 
     }
 
@@ -525,6 +555,8 @@ class RecipeService {
      * @return array
      */
     public function getAllRecipesInSearchIndex() {
+        $this->checkSearchIndexUpdate();
+
         return $this->db->findAllRecipes($this->userId); 
     }
 
@@ -536,6 +568,8 @@ class RecipeService {
      * @return array
      */
     public function findRecipesInSearchIndex($keywords_string) {
+        $this->checkSearchIndexUpdate();
+
         $keywords_string = strtolower($keywords_string);
         $keywords_array = [];
         preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -550,7 +584,7 @@ class RecipeService {
     /**
      * @param string $path
      */
-    public function setUserFolderPath($path) {
+    public function setUserFolderPath(string $path) {
         $this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
     }
 
@@ -563,6 +597,24 @@ class RecipeService {
         if(!$path) { $path = '/Recipes'; }
 
         return $path;
+    }
+    
+    /**
+     * @param int $interval
+     */
+    public function setSearchIndexUpdateInterval(int $interval) {
+        $this->config->setUserValue($this->userId, 'cookbook', 'update_interval', $interval);
+    }
+    
+    /**
+     * @return int
+     */
+    public function getSearchIndexUpdateInterval() {
+        $interval = (int) $this->config->getUserValue($this->userId, 'cookbook', 'update_interval');
+
+        if($interval < 1) { $interval = 5; }
+
+        return $interval;
     }
 
     /**

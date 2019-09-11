@@ -86,6 +86,17 @@ Cookbook.prototype = {
         
         return deferred.promise();
     },
+    setUpdateInterval: function(interval) {
+        var self = this;
+
+        $.ajax({
+            url: self._baseUrl + '/config',
+            method: 'POST',
+            data: { 'update_interval': interval }
+        }).fail(function () {
+            alert(t(appName, 'Could not set recipe update interval to {interval}', {interval: interval}));
+        });
+    },
     setFolder: function(cb) {
         var self = this;
 
@@ -297,6 +308,13 @@ var Nav = function (cookbook) {
             self.render();
         });
     };
+    
+    /**
+     * Event: Change recipe update interval
+     */
+    self.onChangeRecipeUpdateInterval = function(e) {
+        cookbook.setUpdateInterval(e.currentTarget.value);
+    };
    
     /**
      * Event: Create new recipe
@@ -393,10 +411,14 @@ var Nav = function (cookbook) {
 
             if(e && e instanceof Error) { throw e; }
         });
+        
+        // Change cache update interval
+        $('#recipe-update-interval').off('change');
+        $('#recipe-update-interval').change(self.onChangeRecipeUpdateInterval);
 
         // Change recipe folder
-        $('#recipe-folder').off('click');
-        $('#recipe-folder').click(self.onChangeRecipeFolder);
+        $('#recipe-folder').off('change');
+        $('#recipe-folder').change(self.onChangeRecipeFolder);
         
         // Create a new recipe
         $('#create-recipe').off('submit');

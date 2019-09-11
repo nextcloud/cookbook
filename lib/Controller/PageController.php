@@ -41,6 +41,8 @@ class PageController extends Controller {
             'all_recipes' => $this->service->getAllRecipesInSearchIndex(),
             'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
             'folder' => $this->service->getUserFolderPath(),
+            'update_interval' => $this->service->getSearchIndexUpdateInterval(),
+            'last_update' => $this->service->getSearchIndexLastUpdateTime(),
             'current_node' => isset($_GET['recipe']) ? $this->service->getRecipeFileById($_GET['recipe']) : null
         ];
 

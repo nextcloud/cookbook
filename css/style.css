@@ -70,7 +70,6 @@
  */
 #app-settings {}
     #app-settings .button {
-        width: 93%;
         padding: 6px 12px;
         padding-left: 12px;
         padding-left: 34px;
@@ -78,6 +77,13 @@
         border-radius: var(--border-radius);
         background-position: left 9px center;
         z-index: 2;
+    }
+    
+    #app-settings input[type="text"],
+    #app-settings input[type="number"],
+    #app-settings .button {
+        width: 100%;
+        display: block;
     }
 
 /**

@@ -60,6 +60,10 @@ class RecipeController extends Controller {
             $this->service->setUserFolderPath($_POST['folder']);
             $this->service->rebuildSearchIndex();
         }
+        
+        if(isset($_POST['update_interval'])) {
+            $this->service->setSearchIndexUpdateInterval($_POST['update_interval']);
+        }
 
         return new DataResponse('OK', Http::STATUS_OK);
     }
