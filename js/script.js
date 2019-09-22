@@ -77,7 +77,7 @@ Cookbook.prototype = {
     loadAll: function () {
         var deferred = $.Deferred();
         var self = this;
-        $.get(this._baseUrl + '/all').done(function (recipes) {
+        $.get(this._baseUrl + '/recipes').done(function (recipes) {
             self._recipes = recipes;
             deferred.resolve();
         }).fail(function () {
@@ -398,7 +398,7 @@ var Nav = function (cookbook) {
      */
     self.render = function () {
         $.ajax({
-            url: cookbook._baseUrl + '/recipes?keywords=' + self.getKeywords(),
+            url: cookbook._baseUrl + '/tmpl/recipes?keywords=' + self.getKeywords(),
             method: 'GET',
         })
         .done(function(html) {

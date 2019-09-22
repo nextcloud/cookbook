@@ -27,7 +27,7 @@ class RecipeController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function all() {
+    public function index() {
         $data = $this->service->getAllRecipesInSearchIndex();
 
         return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
