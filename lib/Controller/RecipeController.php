@@ -5,7 +5,6 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
-use OCP\Files\FileInfo;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;

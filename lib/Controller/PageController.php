@@ -6,8 +6,6 @@ use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\IURLGenerator;
 use OCP\Files\IRootFolder;
-use OCP\Files\FileInfo;
-use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
