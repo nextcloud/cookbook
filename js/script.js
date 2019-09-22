@@ -186,7 +186,7 @@ var Content = function (cookbook) {
         var id = e.currentTarget.dataset.id;
         
         $.ajax({
-            url: cookbook._baseUrl + '/delete?id=' + id,
+            url: cookbook._baseUrl + '/recipes/' + id,
             method: 'DELETE',
         })
         .done(function(html) {

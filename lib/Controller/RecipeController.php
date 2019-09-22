@@ -96,10 +96,10 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param int $id
+     * @return DataResponse
      */
-    public function get() {
-        $id = $_GET['id'];
-
+    public function get($id) {
         $json = $this->service->getRecipeById($id);
 
         return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
@@ -124,12 +124,12 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param int $id
+     * @return DataResponse
      */
-    public function delete() {
-        if(!isset($_GET['id'])) { return new DataResponse('Parameter "id" is required', 400); }
-
+    public function delete($id) {
         try {
-            $this->service->deleteRecipe($_GET['id']);
+            $this->service->deleteRecipe($id);
             return new DataResponse('Recipe ' . $_GET['id'] . ' deleted successfully', Http::STATUS_OK);
         } catch(\Exception $e) {
             return new DataResponse($e->getMessage(), 502);
