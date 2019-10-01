@@ -14,6 +14,10 @@ use OCA\Cookbook\Service\RecipeService;
 
 class RecipeController extends Controller {
     private $userId;
+    /**
+     * @var RecipeService
+     */
+    private $service;
 
     public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId){
         parent::__construct($AppName, $request);
