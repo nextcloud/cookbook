@@ -106,6 +106,9 @@ class RecipeController extends Controller {
     public function get($id) {
         $json = $this->service->getRecipeById($id);
 
+        if(null === $json){
+            return new DataResponse($id, Http::STATUS_NOT_FOUND, [ 'Content-Type' => 'application/json' ] );
+        }
         return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
