@@ -26,13 +26,13 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    update: function(id, json) {
+    update: function(id, recipeDate) {
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/update' + (id ? '?id=' + id : ''),
-            method: 'POST',
-            data: json
+            url: this._baseUrl + '/recipes/' + (id ? id : ''),
+            method: 'PUT',
+            data: recipeDate
         }).done(function (response) {
             deferred.resolve(response);
         }).fail(function () {

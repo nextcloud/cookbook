@@ -115,15 +115,19 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
+     * @param $id
+     *
+     * @return DataResponse
      */
-    public function update() {
-        $json = $_POST;
-        
+    public function update($id) {
+        $recipeDate = array();
+        parse_str(file_get_contents("php://input"),$recipeDate);
         if(isset($_GET['id'])) {
             $this->service->deleteRecipe($_GET['id']);
         }
 
-        $file = $this->service->addRecipe($json);
+        $file = $this->service->addRecipe($recipeDate);
 
         return new DataResponse($file->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
