@@ -12,7 +12,6 @@ return [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 	   ['name' => 'page#recipe', 'url' => '/recipe', 'verb' => 'GET'],
 	   ['name' => 'page#edit', 'url' => '/edit', 'verb' => 'GET'],
-	   ['name' => 'page#recipes', 'url' => '/tmpl/recipes', 'verb' => 'GET'],
 	   ['name' => 'recipe#index', 'url' => '/recipes', 'verb' => 'GET'],
 	   ['name' => 'recipe#add', 'url' => '/add', 'verb' => 'POST'],
 	   ['name' => 'recipe#delete', 'url' => '/recipes/{id}', 'verb' => 'DELETE'],

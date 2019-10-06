@@ -11,12 +11,14 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 
-class PageController extends Controller {
+class PageController extends Controller
+{
     private $userId;
     private $service;
     private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config, IURLGenerator $urlGenerator){
+    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config, IURLGenerator $urlGenerator)
+    {
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
@@ -34,7 +36,8 @@ class PageController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function index() {
+    public function index()
+    {
         $view_data = [
             'all_recipes' => $this->service->getAllRecipesInSearchIndex(),
             'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
@@ -45,42 +48,44 @@ class PageController extends Controller {
         ];
 
         return new TemplateResponse('cookbook', 'index', $view_data);  // templates/index.php
-    }    
+    }
 
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function recipe() {
-        if(!isset($_GET['id'])) {
+    public function recipe()
+    {
+        if (!isset($_GET['id'])) {
             return new DataResponse('Paramater "id" is required', 400);
         }
 
         try {
             $recipe = $this->service->getRecipeById($_GET['id']);
-            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $_GET['id'], 'size' => 'full' ]);
+            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['recipe' => $_GET['id'], 'size' => 'full']);
             $response = new TemplateResponse('cookbook', 'content/recipe', $recipe);
             $response->renderAs('blank');
 
             return $response;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return new DataResponse($e->getMessage(), 502);
         }
-    }    
+    }
 
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function edit() {
-        if(!isset($_GET['id']) && !isset($_GET['new'])) {
+    public function edit()
+    {
+        if (!isset($_GET['id']) && !isset($_GET['new'])) {
             return new DataResponse('Paramater "id" or "new" is required', 400);
         }
 
         try {
             $recipe = [];
 
-            if(isset($_GET['id'])) {
+            if (isset($_GET['id'])) {
                 $recipe = $this->service->getRecipeById($_GET['id']);
             }
 
@@ -88,30 +93,8 @@ class PageController extends Controller {
             $response->renderAs('blank');
 
             return $response;
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return new DataResponse($e->getMessage(), 502);
         }
-    }    
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function recipes() {
-        $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
-
-        foreach($recipes as $i => $recipe) {
-            $recipes[$i]['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $recipe['recipe_id'], 'size' => 'thumb' ]);
-        }
-
-        $view_data = [
-            'recipes' => $recipes
-        ];
-
-        $response = new TemplateResponse('cookbook', 'navigation/recipes', $view_data);  // templates/navigation/recipes.php
-
-        $response->renderAs('blank');
-
-        return $response;
-    }    
+    }
 }
