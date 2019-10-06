@@ -17,11 +17,11 @@ return [
 	   ['name' => 'recipe#delete', 'url' => '/recipes/{id}', 'verb' => 'DELETE'],
 	   ['name' => 'recipe#update', 'url' => '/recipes/{id}', 'verb' => 'PUT'],
 	   ['name' => 'recipe#get', 'url' => '/recipes/{id}', 'verb' => 'GET'],
-	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
-	   ['name' => 'recipe#image', 'url' => '/image', 'verb' => 'GET'],
+	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET'],
 	   ['name' => 'recipe#reindex', 'url' => '/reindex', 'verb' => 'POST'],
 	   ['name' => 'recipe#config', 'url' => '/config', 'verb' => 'POST'],
         //TODO: Note: I don't know what these are doing...
+	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
 	   ['name' => 'recipe#test', 'url' => '/test', 'verb' => 'GET'],
 	   ['name' => 'recipe#keywords', 'url' => '/keywords', 'verb' => 'GET'],
     ]

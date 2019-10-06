@@ -43,7 +43,7 @@ class RecipeController extends Controller {
             $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
         }
         foreach($recipes as $i => $recipe) {
-            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $recipe['recipe_id'], 'size' => 'thumb' ]);
+            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'id' => $recipe['recipe_id'], 'size' => 'thumb' ]);
         }
         return new DataResponse($recipes, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
@@ -172,16 +172,15 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param $id
+     * @return DataResponse|FileDisplayResponse
      */
-    public function image() {
-        if(!isset($_GET['recipe'])) {
-            return new DataResponse('Not found', Http::STATUS_NOT_FOUND);
-        }
+    public function image($id) {
 
         $size = isset($_GET['size']) ? $_GET['size'] : null;
 
         try {
-            $file = $this->service->getRecipeImageFileById($_GET['recipe'], $size);
+            $file = $this->service->getRecipeImageFileById($id, $size);
 
             return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
         } catch(\Exception $e) {

@@ -62,7 +62,7 @@ class PageController extends Controller
 
         try {
             $recipe = $this->service->getRecipeById($_GET['id']);
-            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['recipe' => $_GET['id'], 'size' => 'full']);
+            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $_GET['id'], 'size' => 'full']);
             $response = new TemplateResponse('cookbook', 'content/recipe', $recipe);
             $response->renderAs('blank');
 
