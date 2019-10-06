@@ -37,7 +37,11 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function index() {
-        $recipes = $this->service->getAllRecipesInSearchIndex();
+        if(empty($_GET['keywords'])){
+            $recipes = $this->service->getAllRecipesInSearchIndex();
+        }else{
+            $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
+        }
         foreach($recipes as $i => $recipe) {
             $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $recipe['recipe_id'], 'size' => 'thumb' ]);
         }
