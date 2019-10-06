@@ -11,6 +11,7 @@ use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Controller;
 
 use OCA\Cookbook\Service\RecipeService;
+use OCP\IURLGenerator;
 
 class RecipeController extends Controller {
     private $userId;
@@ -18,12 +19,17 @@ class RecipeController extends Controller {
      * @var RecipeService
      */
     private $service;
+    /**
+     * @var IURLGenerator
+     */
+    private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId){
+    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId,  IURLGenerator $urlGenerator){
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
         $this->service = new RecipeService($root, $UserId, $db, $config);
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -31,9 +37,11 @@ class RecipeController extends Controller {
      * @NoCSRFRequired
      */
     public function index() {
-        $data = $this->service->getAllRecipesInSearchIndex();
-
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        $recipes = $this->service->getAllRecipesInSearchIndex();
+        foreach($recipes as $i => $recipe) {
+            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'recipe' => $recipe['recipe_id'], 'size' => 'thumb' ]);
+        }
+        return new DataResponse($recipes, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**

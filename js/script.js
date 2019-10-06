@@ -398,10 +398,20 @@ var Nav = function (cookbook) {
      */
     self.render = function () {
         $.ajax({
-            url: cookbook._baseUrl + '/tmpl/recipes?keywords=' + self.getKeywords(),
+            url: cookbook._baseUrl + '/recipes?keywords=' + self.getKeywords(),
             method: 'GET',
         })
-        .done(function(html) {
+        .done(function(json) {
+            var html = json.map(function (recipeData) {
+                var recipeEntry = '<li>';
+                recipeEntry += '<a href="#'+recipeData.recipe_id+'">';
+                recipeEntry += '<img src="'+recipeData.image_url+'&size=thumb">';
+                recipeEntry += recipeData.name;
+                recipeEntry += '</a></li>';
+                return recipeEntry;
+
+            }).join("\n");
+
             $('#app-navigation #recipes').html(html);
 
             self.highlightActive();
