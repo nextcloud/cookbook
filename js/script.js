@@ -405,7 +405,7 @@ var Nav = function (cookbook) {
             var html = json.map(function (recipeData) {
                 var recipeEntry = '<li>';
                 recipeEntry += '<a href="#'+recipeData.recipe_id+'">';
-                recipeEntry += '<img src="'+recipeData.image_url+'&size=thumb">';
+                recipeEntry += '<img src="'+recipeData.image_url+'">';
                 recipeEntry += recipeData.name;
                 recipeEntry += '</a></li>';
                 return recipeEntry;
