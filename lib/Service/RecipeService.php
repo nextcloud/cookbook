@@ -705,8 +705,8 @@ class RecipeService {
         $recipe_json = $this->parseRecipeFile($this->getRecipeFileById($id));
 
         if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
-
-        $recipe_image_data = file_get_contents($recipe_json['image']);
+	
+	$recipe_image_data = file_get_contents(str_replace(' ', '%20', $recipe_json['image']));
 
         if(!$recipe_image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 
