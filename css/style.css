@@ -42,12 +42,16 @@
     }
 
     #app-navigation .app-navigation-new {
-        display: flex;
+        display: flex !important;
     }
         #app-navigation .app-navigation-new:not(:first-child) {
             padding-top: 0;
         }
-        
+       
+        #app-navigation #create-recipe > button {
+            height: 40px !important;
+        }
+
         #app-navigation .app-navigation-new input {
             border-radius: var(--border-radius) 0 0 var(--border-radius);
             line-height: 40px;
@@ -55,13 +59,14 @@
             margin: 0;
             flex-grow: 1;
             border-right-width: 0;
+            flex-basis: 0;
         }
         
         #app-navigation .app-navigation-new button {
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            padding: 0;
-            width: 40px;
-            height: 40px;
+            padding: 0 !important;
+            width: 40px !important;
+            height: 40px !important;
             background-position: 50% 50%;
         }
 
