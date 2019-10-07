@@ -1,8 +1,6 @@
 <header>
     <?php if(isset($_['image']) && $_['image']) { ?>
-        <figure>
-            <img src="<?php echo $_['imageURL']; ?>&t=<?php echo time(); ?>">
-        </figure>
+        <img src="<?php echo $_['imageURL']; ?>&t=<?php echo time(); ?>">
     <?php } ?>
     
     <div class="recipe-toolbar">

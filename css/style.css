@@ -114,20 +114,12 @@
                 text-align: center;
             }
             
-        #app-content-wrapper header figure {
-            position: relative;
-            overflow: hidden;
-            height: 0;
-            padding-bottom: 30%;
-            margin-bottom: 2rem;
+        #app-content-wrapper header img {
+            max-width: 100%;
+            max-height: 40vh;
+            display: block;
+            margin: 0 auto 1rem auto;
         }
-            #app-content-wrapper header figure img {
-                position: absolute;
-                left: 50%;
-                top: 50%;
-                width: 100%;
-                transform: translate(-50%, -50%);
-            }
 
     #app-content-wrapper aside {
         flex-basis: 20rem;

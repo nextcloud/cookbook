@@ -92,7 +92,7 @@ class RecipeService {
                             $img = $img['url'];
                         }
 
-                        if(!$result || strlen($img) < strlen($json['image'])) {
+                        if(strlen($img) < strlen($json['image'])) {
                             $json['image'] = $img;
                         }
                     }
@@ -429,10 +429,11 @@ class RecipeService {
 
         try {
             $recipe_folder->get('full.jpg')->delete();
+        } catch(\OCP\Files\NotFoundException $e) {}
+        
+        try {
             $recipe_folder->get('thumb.jpg')->delete();
-        } catch(\OCP\Files\NotFoundException $e) {
-            // Never mind
-        }
+        } catch(\OCP\Files\NotFoundException $e) {}
 
         $this->db->deleteRecipeById($recipe_folder->getId());
         $this->db->indexRecipeFile($recipe_file, $this->userId);
