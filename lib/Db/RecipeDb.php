@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Db;
 
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use Doctrine\DBAL\Types\Type;
+use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\IDBConnection;
 
 class RecipeDb {
@@ -151,12 +153,12 @@ class RecipeDb {
 
     private function isRecipeEmpty($json) {}
 
-    public function indexRecipeFile($file, string $userId) {
+    public function indexRecipeFile(File $file, string $userId) {
         $json = json_decode($file->getContent(), true);
 
         if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
 
-        $id = (int) $file->getId();
+        $id = (int) $file->getParent()->getId();
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
 

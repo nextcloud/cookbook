@@ -157,7 +157,7 @@
             flex-basis: 100%;
         } }
 
-        #app-content-wrapper main ul li {
+        #app-content-wrapper main ol li {
             margin-bottom: 1em;
         }
 

@@ -113,13 +113,9 @@ class RecipeController extends Controller {
     public function update() {
         $json = $_POST;
         
-        if(isset($_GET['id'])) {
-            $this->service->deleteRecipe($_GET['id']);
-        }
-
         $file = $this->service->addRecipe($json);
 
-        return new DataResponse($file->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**
@@ -159,7 +155,7 @@ class RecipeController extends Controller {
         $size = isset($_GET['size']) ? $_GET['size'] : null;
 
         try {
-            $file = $this->service->getRecipeImageFileById($_GET['recipe'], $size);
+            $file = $this->service->getRecipeImageFileByFolderId($_GET['recipe'], $size);
 
             return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
         } catch(\Exception $e) {
