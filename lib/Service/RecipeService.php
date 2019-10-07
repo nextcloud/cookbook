@@ -106,6 +106,7 @@ class RecipeService {
 
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
+        $json['image'] = str_replace(' ', '%20', $json['image']);
 
         // Make sure that "recipeYield" is an integer which is at least 1 
         if(isset($json['recipeYield']) && $json['recipeYield']) {
@@ -712,7 +713,7 @@ class RecipeService {
 
         if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
 
-        $image_data = file_get_contents($recipe_json['image']);
+	    $image_data = file_get_contents($recipe_json['image']);
 
         if(!$image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 
