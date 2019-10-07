@@ -435,7 +435,6 @@ class RecipeService {
             $recipe_folder->get('thumb.jpg')->delete();
         } catch(\OCP\Files\NotFoundException $e) {}
 
-        $this->db->deleteRecipeById($recipe_folder->getId());
         $this->db->indexRecipeFile($recipe_file, $this->userId);
 
         return $recipe_file;
