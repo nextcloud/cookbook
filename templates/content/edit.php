@@ -16,13 +16,13 @@
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Source URL')); ?></label>
+        <label><?php p($l->t('URL')); ?></label>
         <input type="url" name="url" value="<?php echo $_['url']; ?>">
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Image URL')); ?></label>
-        <input type="text" name="image" value="<?php echo $_['image']; ?>">
+        <label><?php p($l->t('Image')); ?></label>
+        <input type="text" name="image" value="<?php echo $_['image']; ?>"><button id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
     </fieldset>
     
     <fieldset>

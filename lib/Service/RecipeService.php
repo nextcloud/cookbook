@@ -106,7 +106,6 @@ class RecipeService {
 
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
-        $json['image'] = str_replace(' ', '%20', $json['image']);
 
         // Make sure that "recipeYield" is an integer which is at least 1 
         if(isset($json['recipeYield']) && $json['recipeYield']) {
@@ -428,6 +427,13 @@ class RecipeService {
 
         $recipe_file->putContent(json_encode($json));
 
+        try {
+            $recipe_folder->get('full.jpg')->delete();
+            $recipe_folder->get('thumb.jpg')->delete();
+        } catch(\OCP\Files\NotFoundException $e) {
+            // Never mind
+        }
+
         $this->db->deleteRecipeById($recipe_folder->getId());
         $this->db->indexRecipeFile($recipe_file, $this->userId);
 
@@ -713,7 +719,17 @@ class RecipeService {
 
         if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
 
-	    $image_data = file_get_contents($recipe_json['image']);
+        try {
+            if(strpos($recipe_json['image'], 'http') === 0) {
+                $recipe_json['image'] = str_replace(' ', '%20', $recipe_json['image']);
+                $image_data = file_get_contents($recipe_json['image']);
+            } else {
+                $image_file = $this->root->get('/' . $this->userId . '/files' . $recipe_json['image']);
+                $image_data = $image_file->getContent();
+            }
+        } catch(\OCP\Files\NotFoundException $e) {
+            throw new \Exception($e->getMessage());
+        }
 
         if(!$image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 

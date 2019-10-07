@@ -151,6 +151,9 @@ var Content = function (cookbook) {
             .done(function (html) {
                 $('#app-content-wrapper').html(html);
                 
+                $('#pick-image').off('click');
+                $('#pick-image').click(self.onPickImage);
+                
                 $('#app-content-wrapper form .icon-add').off('click');
                 $('#app-content-wrapper form .icon-add').click(self.onAddListItem);
                
@@ -176,7 +179,25 @@ var Content = function (cookbook) {
             });
         }
     };
-    
+   
+    /**
+     * Event: Pick image
+     */
+    self.onPickImage = function(e) {
+        e.preventDefault();
+
+        OC.dialogs.filepicker(
+            t(appName, 'Path to your recipe collection'),
+            function (path) {
+                $('input[name="image"]').val(path);
+            },
+            false,
+            'image/jpeg',
+            true,
+            OC.dialogs.FILEPICKER_TYPE_CHOOSE
+        );
+    }
+
     /**
      * Event: Delete recipe
      */

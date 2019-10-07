@@ -175,13 +175,33 @@
             margin: 0;
         }
 
+        #app-content-wrapper form fieldset > input[name="image"] {
+            width: calc(100% - 14em);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: 0;
+        }
+        
+        #app-content-wrapper form fieldset > input[name="image"] + button {
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            width: 3em;
+            margin: 0;
+        }
+        
+        #app-content-wrapper form fieldset > input[name="image"] + button > * {
+            pointer-events: none;
+        }
+
         #app-content-wrapper form fieldset > label {
             display: inline-block;
             width: 10em;
             line-height: 18px;
             font-weight: bold;
         }
-       
+      
         #app-content-wrapper form fieldset ul label input[type="checkbox"] {
             margin-left: 1em;
             vertical-align: middle;

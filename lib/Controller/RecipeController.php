@@ -161,6 +161,5 @@ class RecipeController extends Controller {
         } catch(\Exception $e) {
             return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
         }
-
     }
 }
