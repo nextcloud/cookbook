@@ -362,12 +362,25 @@ var Nav = function (cookbook) {
             alert(t(appName, 'Could not add recipe'));
         });
     };
+    
+    /**
+     * Event: Pick a tag
+     */
+    self.onCategorizeRecipes = function(e) {
+        e.preventDefault();
 
+        $('#find-recipes input').val('');
+
+        self.render();
+    };
+    
     /**
      * Event: Submit new search query
      */
     self.onFindRecipes = function(e) {
         e.preventDefault();
+        
+        $('#categorize-recipes select').val(null);
 
         self.render();
     };
@@ -402,7 +415,7 @@ var Nav = function (cookbook) {
      * @return {String} Keywords
      */
     self.getKeywords = function() {
-        return $('#find-recipes input').val();
+        return [$('#categorize-recipes select').val(), $('#find-recipes input').val()].join(',');
     }
 
     /**
@@ -448,6 +461,10 @@ var Nav = function (cookbook) {
         // Add a new recipe
         $('#add-recipe').off('submit');
         $('#add-recipe').submit(self.onAddNewRecipe);
+        
+        // Categorise recipes
+        $('#categorize-recipes select').off('change');
+        $('#categorize-recipes select').on('change', self.onCategorizeRecipes);
 
         // Find recipes
         $('#find-recipes').off('submit');

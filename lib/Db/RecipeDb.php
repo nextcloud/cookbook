@@ -121,7 +121,7 @@ class RecipeDb {
         
         $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id'); 
 
-        $qb->groupBy('r.recipe_id');
+        $qb->groupBy(['r.name', 'r.recipe_id']);
         $qb->orderBy('r.name');
 
         $cursor = $qb->execute();

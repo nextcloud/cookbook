@@ -21,4 +21,14 @@
     <button class="icon-category-search" type="submit"></button>
 </form>
 
+<form id="categorize-recipes" class="app-navigation-new">
+    <select name="keywords">
+        <option selected value=""><?php p($l->t('All')); ?></option>
+
+        <?php foreach($_['all_keywords'] as $keyword) { ?>
+            <option value="<?php echo $keyword['name']; ?>"><?php echo $keyword['name']; ?></option>
+        <?php } ?>
+    </select>
+</form>
+
 <ul id="recipes"></ul>

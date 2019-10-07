@@ -83,16 +83,31 @@ class RecipeService {
         // Make sure that "image" is a string of the highest resolution image available
         if(isset($json['image']) && $json['image']) {
             if(is_array($json['image'])) {
+                // Get the image from a subproperty "url"
                 if(isset($json['image']['url'])) {
                     $json['image'] = $json['image']['url'];
+
+                // Try to get the image with the highest resolution by adding together all numbers in the url
                 } else {
                     $images = $json['image'];
+                    $image_size = 0;
+
                     foreach($images as $img) {
                         if(is_array($img) && isset($img['url'])) {
                             $img = $img['url'];
                         }
 
-                        if(strlen($img) < strlen($json['image'])) {
+                        $image_matches = [];
+
+                        preg_match_all('!\d+!', $img, $image_matches);
+
+                        $this_image_size = 0;
+
+                        foreach($image_matches as $image_match) {
+                            $this_image_size += (int) $image_match; 
+                        }
+
+                        if($image_size === 0 || $this_image_size > $image_size) {
                             $json['image'] = $img;
                         }
                     }
@@ -196,7 +211,9 @@ class RecipeService {
             $json['recipeInstructions'] = []; 
         }
 
-        $json['recipeInstructions'] = array_filter($json['recipeInstructions']);
+        $json['recipeInstructions'] = array_filter($json['recipeInstructions'], function($v) {
+            return !empty($v) && $v !== "\n" && $v !== "\r";
+        });
 
       	// Make sure the 'description' is a string
       	if(isset($json['description']) && is_string($json['description'])) {
@@ -679,7 +696,7 @@ class RecipeService {
 
         if(!$json) { return null; }
 
-        $json['id'] = $file->getId();
+        $json['id'] = $file->getParent()->getId();
 
         return $this->checkRecipe($json);
     } 
