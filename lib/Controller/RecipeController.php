@@ -52,24 +52,6 @@ class RecipeController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function test() {
-        return new DataResponse('OK', Http::STATUS_OK);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function keywords() {
-        $data = $this->service->getAllKeywordsInSearchIndex();
-
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
     public function config() {
         if(isset($_POST['folder'])) {
             $this->service->setUserFolderPath($_POST['folder']);
@@ -81,16 +63,6 @@ class RecipeController extends Controller {
         }
 
         return new DataResponse('OK', Http::STATUS_OK);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function find() {
-        $data = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
-
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**

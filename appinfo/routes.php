@@ -20,9 +20,5 @@ return [
 	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET'],
 	   ['name' => 'recipe#reindex', 'url' => '/reindex', 'verb' => 'POST'],
 	   ['name' => 'recipe#config', 'url' => '/config', 'verb' => 'POST'],
-        //TODO: Note: I don't know what these are doing...
-	   ['name' => 'recipe#find', 'url' => '/find', 'verb' => 'GET'],
-	   ['name' => 'recipe#test', 'url' => '/test', 'verb' => 'GET'],
-	   ['name' => 'recipe#keywords', 'url' => '/keywords', 'verb' => 'GET'],
     ]
 ];
