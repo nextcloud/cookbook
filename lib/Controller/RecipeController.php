@@ -106,6 +106,8 @@ class RecipeController extends Controller
     }
 
     /**
+     * Update an existing recipe.
+     *
      * @NoAdminRequired
      * @NoCSRFRequired
      *
@@ -115,9 +117,27 @@ class RecipeController extends Controller
      */
     public function update($id)
     {
-        $recipeData = array();
+        $recipeData = [];
         parse_str(file_get_contents("php://input"), $recipeData);
-        $this->service->deleteRecipe($_GET['id']);
+        $this->service->deleteRecipe($id);
+        $file = $this->service->addRecipe($recipeData);
+
+        return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
+    }
+
+    /**
+     * Create a new recipe.
+     *
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     *
+     * @param $id
+     *
+     * @return DataResponse
+     */
+    public function create()
+    {
+        $recipeData = $_POST;
         $file = $this->service->addRecipe($recipeData);
 
         return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);

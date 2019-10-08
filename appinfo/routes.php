@@ -16,6 +16,7 @@ return [
 	   ['name' => 'recipe#add', 'url' => '/add', 'verb' => 'POST'],
 	   ['name' => 'recipe#delete', 'url' => '/recipes/{id}', 'verb' => 'DELETE'],
 	   ['name' => 'recipe#update', 'url' => '/recipes/{id}', 'verb' => 'PUT'],
+	   ['name' => 'recipe#create', 'url' => '/recipes', 'verb' => 'POST'],
 	   ['name' => 'recipe#get', 'url' => '/recipes/{id}', 'verb' => 'GET'],
 	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET'],
 	   ['name' => 'recipe#reindex', 'url' => '/reindex', 'verb' => 'POST'],
