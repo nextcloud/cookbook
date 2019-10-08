@@ -28,7 +28,6 @@ Cookbook.prototype = {
     },
     update: function(id, recipeData) {
         var deferred = $.Deferred();
-        var self = this;
         $.ajax({
             url: this._baseUrl + '/recipes/' + (id ? id : ''),
             method: 'PUT',
