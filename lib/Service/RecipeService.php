@@ -431,7 +431,18 @@ class RecipeService {
         $recipe_file = null;
 
         try {
-            $recipe_folder = $user_folder->get($json['name']);
+            if(isset($json['id']) && $json['id']) {
+                $recipe_folder = $user_folder->getById($json['id'])[0];
+
+                $path = $recipe_folder->getPath();
+                $path = dirname($path) . '/' . $json['name'];   
+
+                $recipe_folder->move($path);
+
+            } else {
+                $recipe_folder = $user_folder->get($json['name']);
+            }
+
         } catch(\OCP\Files\NotFoundException $e) {
             $recipe_folder = $user_folder->newFolder($json['name']);
         }
