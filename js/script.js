@@ -27,14 +27,10 @@ Cookbook.prototype = {
         return deferred.promise();
     },
     update: function(id, recipeData) {
-        if(recipeData && id) {
-            recipeData += '&id=' + id;
-        }
-        
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/recipes',
+            url: this._baseUrl + '/recipes/' + (id ? id : ''),
             method: 'PUT',
             data: recipeData
         }).done(function (response) {
