@@ -4,14 +4,16 @@
     </div>
 </header>
 
-<form action="/index.php/apps/cookbook/update" method="POST">
+<form id="editRecipeForm" action="#" method="POST">
     <fieldset>
-        <label><?php /* TRANSLATORS The name of the recipe */echo p($l->t('Name')); ?></label>
+        <label><?php /* TRANSLATORS The name of the recipe */
+            echo p($l->t('Name')); ?></label>
         <input required type="text" name="name" value="<?php echo $_['name']; ?>"></h2>
     </fieldset>
 
     <fieldset>
-        <label><?php /* TRANSLATORS The description of the recipe */echo p($l->t('Description')); ?></label>
+        <label><?php /* TRANSLATORS The description of the recipe */
+            echo p($l->t('Description')); ?></label>
         <input type="text" name="description" value="<?php echo $_['description']; ?>">
     </fieldset>
 
@@ -24,7 +26,7 @@
         <label><?php p($l->t('Image')); ?></label>
         <input type="text" name="image" value="<?php echo $_['image']; ?>"><button id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
     </fieldset>
-    
+
     <fieldset>
         <label><?php p($l->t('Prep Time')); ?></label>
         <input type="text" name="prepTime" value="<?php echo $_['prepTime']; ?>" placeholder="PT0H15M">
@@ -53,16 +55,16 @@
                 <li>
                     <input type="text" name="recipeIngredient[]" value="">
                     <button class="icon-delete"></button>
-                </li>   
+                </li>
             </template>
-            <?php foreach($_['recipeIngredient'] as $i => $ingredient) {  ?>
+            <?php foreach ($_['recipeIngredient'] as $i => $ingredient) { ?>
                 <li>
                     <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
                     <button class="icon-delete"></button>
-                </li>   
+                </li>
             <?php } ?>
             <button class="icon-add"></button>
-        </ul>    
+        </ul>
     </fieldset>
 
     <fieldset>
@@ -73,13 +75,13 @@
                 <li>
                     <textarea name="recipeInstructions[]"></textarea>
                     <button class="icon-delete"></button>
-                </li>   
+                </li>
             </template>
-            <?php foreach($_['recipeInstructions'] as $i => $step) {  ?>
+            <?php foreach ($_['recipeInstructions'] as $i => $step) { ?>
                 <li>
                     <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
                     <button class="icon-delete"></button>
-                </li>   
+                </li>
             <?php } ?>
             <button class="icon-add"></button>
         </ul>

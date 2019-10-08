@@ -26,13 +26,13 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    update: function(id, json) {
+    update: function(id, recipeDate) {
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/update' + (id ? '?id=' + id : ''),
-            method: 'POST',
-            data: json
+            url: this._baseUrl + '/recipes/' + (id ? id : ''),
+            method: 'PUT',
+            data: recipeDate
         }).done(function (response) {
             deferred.resolve(response);
         }).fail(function () {
@@ -77,7 +77,7 @@ Cookbook.prototype = {
     loadAll: function () {
         var deferred = $.Deferred();
         var self = this;
-        $.get(this._baseUrl + '/all').done(function (recipes) {
+        $.get(this._baseUrl + '/recipes').done(function (recipes) {
             self._recipes = recipes;
             deferred.resolve();
         }).fail(function () {
@@ -207,7 +207,7 @@ var Content = function (cookbook) {
         var id = e.currentTarget.dataset.id;
         
         $.ajax({
-            url: cookbook._baseUrl + '/delete?id=' + id,
+            url: cookbook._baseUrl + '/recipes/' + id,
             method: 'DELETE',
         })
         .done(function(html) {
@@ -435,7 +435,17 @@ var Nav = function (cookbook) {
             url: cookbook._baseUrl + '/recipes?keywords=' + self.getKeywords(),
             method: 'GET',
         })
-        .done(function(html) {
+        .done(function(json) {
+            var html = json.map(function (recipeData) {
+                var recipeEntry = '<li>';
+                recipeEntry += '<a href="#'+recipeData.recipe_id+'">';
+                recipeEntry += '<img src="'+recipeData.image_url+'">';
+                recipeEntry += recipeData.name;
+                recipeEntry += '</a></li>';
+                return recipeEntry;
+
+            }).join("\n");
+
             $('#app-navigation #recipes').html(html);
 
             self.highlightActive();

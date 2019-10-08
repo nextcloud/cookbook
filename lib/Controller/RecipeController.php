@@ -5,32 +5,47 @@ use OCP\IConfig;
 use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
-use OCP\Files\FileInfo;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Controller;
 
 use OCA\Cookbook\Service\RecipeService;
+use OCP\IURLGenerator;
 
 class RecipeController extends Controller {
     private $userId;
+    /**
+     * @var RecipeService
+     */
+    private $service;
+    /**
+     * @var IURLGenerator
+     */
+    private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId){
+    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId,  IURLGenerator $urlGenerator){
         parent::__construct($AppName, $request);
         $this->userId = $UserId;
 
         $this->service = new RecipeService($root, $UserId, $db, $config);
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function all() {
-        $data = $this->service->getAllRecipesInSearchIndex();
-
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+    public function index() {
+        if(empty($_GET['keywords'])){
+            $recipes = $this->service->getAllRecipesInSearchIndex();
+        }else{
+            $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
+        }
+        foreach($recipes as $i => $recipe) {
+            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', [ 'id' => $recipe['recipe_id'], 'size' => 'thumb' ]);
+        }
+        return new DataResponse($recipes, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**
@@ -97,23 +112,31 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param int $id
+     * @return DataResponse
      */
-    public function get() {
-        $id = $_GET['id'];
-
+    public function get($id) {
         $json = $this->service->getRecipeById($id);
 
+        if(null === $json){
+            return new DataResponse($id, Http::STATUS_NOT_FOUND, [ 'Content-Type' => 'application/json' ] );
+        }
         return new DataResponse($json, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     *
+     * @param $id
+     *
+     * @return DataResponse
      */
-    public function update() {
-        $json = $_POST;
-        
-        $file = $this->service->addRecipe($json);
+    public function update($id) {
+        $recipeDate = array();
+        parse_str(file_get_contents("php://input"),$recipeDate);
+
+        $file = $this->service->addRecipe($recipeDate);
 
         return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
@@ -121,12 +144,12 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param int $id
+     * @return DataResponse
      */
-    public function delete() {
-        if(!isset($_GET['id'])) { return new DataResponse('Parameter "id" is required', 400); }
-
+    public function delete($id) {
         try {
-            $this->service->deleteRecipe($_GET['id']);
+            $this->service->deleteRecipe($id);
             return new DataResponse('Recipe ' . $_GET['id'] . ' deleted successfully', Http::STATUS_OK);
         } catch(\Exception $e) {
             return new DataResponse($e->getMessage(), 502);
@@ -146,16 +169,14 @@ class RecipeController extends Controller {
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
+     * @param $id
+     * @return DataResponse|FileDisplayResponse
      */
-    public function image() {
-        if(!isset($_GET['recipe'])) {
-            return new DataResponse('Not found', Http::STATUS_NOT_FOUND);
-        }
-
+    public function image($id) {
         $size = isset($_GET['size']) ? $_GET['size'] : null;
 
         try {
-            $file = $this->service->getRecipeImageFileByFolderId($_GET['recipe'], $size);
+            $file = $this->service->getRecipeImageFileByFolderId($id, $size);
 
             return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
         } catch(\Exception $e) {
