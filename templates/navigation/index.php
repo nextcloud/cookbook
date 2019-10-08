@@ -14,6 +14,8 @@
     <input list="list-keywords" name="keywords" placeholder="<?php p($l->t('Search')); ?>" multiple>
     <datalist id="list-keywords">
         <?php foreach($_['all_keywords'] as $keyword) { ?>
+            <?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
+            
             <option value="<?php echo $keyword['name']; ?>">
         <?php } ?>
     </datalist>
@@ -26,6 +28,8 @@
         <option selected value=""><?php p($l->t('All')); ?></option>
 
         <?php foreach($_['all_keywords'] as $keyword) { ?>
+            <?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
+
             <option value="<?php echo $keyword['name']; ?>"><?php echo $keyword['name']; ?></option>
         <?php } ?>
     </select>

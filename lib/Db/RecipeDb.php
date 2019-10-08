@@ -72,7 +72,8 @@ class RecipeDb {
         $qb->select('k.name')
             ->from('cookbook_keywords', 'k')
             ->where('user_id = :user')
-            ->groupBy('k.name');
+            ->groupBy('k.name')
+            ->orderBy('k.name');
         $qb->setParameter('user', $userId, TYPE::STRING);
 
         $cursor = $qb->execute();
@@ -80,6 +81,7 @@ class RecipeDb {
         $cursor->closeCursor();
 
         $result = array_unique($result, SORT_REGULAR);
+        $result = array_filter($result);
 
         return $result;
     }
