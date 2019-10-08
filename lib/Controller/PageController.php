@@ -44,7 +44,7 @@ class PageController extends Controller
             'folder' => $this->service->getUserFolderPath(),
             'update_interval' => $this->service->getSearchIndexUpdateInterval(),
             'last_update' => $this->service->getSearchIndexLastUpdateTime(),
-            'current_node' => isset($_GET['recipe']) ? $this->service->getRecipeFileById($_GET['recipe']) : null
+            'current_node' => isset($_GET['recipe']) ? $this->service->getRecipeFileByFolderId($_GET['recipe']) : null
         ];
 
         return new TemplateResponse('cookbook', 'index', $view_data);  // templates/index.php
@@ -63,6 +63,7 @@ class PageController extends Controller
         try {
             $recipe = $this->service->getRecipeById($_GET['id']);
             $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $_GET['id'], 'size' => 'full']);
+            $recipe['id'] = $_GET['id'];
             $response = new TemplateResponse('cookbook', 'content/recipe', $recipe);
             $response->renderAs('blank');
 
@@ -87,6 +88,10 @@ class PageController extends Controller
 
             if (isset($_GET['id'])) {
                 $recipe = $this->service->getRecipeById($_GET['id']);
+            
+                if(!$recipe) { throw new \Exception('Recipe ' . $_GET['id'] . ' not found'); }
+
+                $recipe['id'] = $_GET['id'];
             }
 
             $response = new TemplateResponse('cookbook', 'content/edit', $recipe);

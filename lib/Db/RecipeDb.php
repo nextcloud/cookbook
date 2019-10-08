@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Db;
 
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use Doctrine\DBAL\Types\Type;
+use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\IDBConnection;
 
 class RecipeDb {
@@ -70,7 +72,8 @@ class RecipeDb {
         $qb->select('k.name')
             ->from('cookbook_keywords', 'k')
             ->where('user_id = :user')
-            ->groupBy('k.name');
+            ->groupBy('k.name')
+            ->orderBy('k.name');
         $qb->setParameter('user', $userId, TYPE::STRING);
 
         $cursor = $qb->execute();
@@ -78,6 +81,7 @@ class RecipeDb {
         $cursor->closeCursor();
 
         $result = array_unique($result, SORT_REGULAR);
+        $result = array_filter($result);
 
         return $result;
     }
@@ -119,7 +123,7 @@ class RecipeDb {
         
         $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id'); 
 
-        $qb->groupBy('r.recipe_id');
+        $qb->groupBy(['r.name', 'r.recipe_id']);
         $qb->orderBy('r.name');
 
         $cursor = $qb->execute();
@@ -151,12 +155,12 @@ class RecipeDb {
 
     private function isRecipeEmpty($json) {}
 
-    public function indexRecipeFile($file, string $userId) {
+    public function indexRecipeFile(File $file, string $userId) {
         $json = json_decode($file->getContent(), true);
 
         if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
 
-        $id = (int) $file->getId();
+        $id = (int) $file->getParent()->getId();
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
 

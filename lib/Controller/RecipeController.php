@@ -52,24 +52,6 @@ class RecipeController extends Controller {
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function test() {
-        return new DataResponse('OK', Http::STATUS_OK);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function keywords() {
-        $data = $this->service->getAllKeywordsInSearchIndex();
-
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
     public function config() {
         if(isset($_POST['folder'])) {
             $this->service->setUserFolderPath($_POST['folder']);
@@ -81,16 +63,6 @@ class RecipeController extends Controller {
         }
 
         return new DataResponse('OK', Http::STATUS_OK);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function find() {
-        $data = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
-
-        return new DataResponse($data, Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**
@@ -132,16 +104,14 @@ class RecipeController extends Controller {
      *
      * @return DataResponse
      */
-    public function update($id) {
-        $recipeDate = array();
-        parse_str(file_get_contents("php://input"),$recipeDate);
-        if(isset($_GET['id'])) {
-            $this->service->deleteRecipe($_GET['id']);
-        }
+    public function update() {
+        $data = [];
+        
+        parse_str(file_get_contents('php://input'), $data);
+        
+        $file = $this->service->addRecipe($data);
 
-        $file = $this->service->addRecipe($recipeDate);
-
-        return new DataResponse($file->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
+        return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
 
     /**
@@ -176,16 +146,14 @@ class RecipeController extends Controller {
      * @return DataResponse|FileDisplayResponse
      */
     public function image($id) {
-
         $size = isset($_GET['size']) ? $_GET['size'] : null;
 
         try {
-            $file = $this->service->getRecipeImageFileById($id, $size);
+            $file = $this->service->getRecipeImageFileByFolderId($id, $size);
 
             return new FileDisplayResponse($file, Http::STATUS_OK, [ 'Content-Type' => 'image/jpeg' ]);
         } catch(\Exception $e) {
             return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
         }
-
     }
 }

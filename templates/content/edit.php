@@ -18,13 +18,13 @@
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Source URL')); ?></label>
+        <label><?php p($l->t('URL')); ?></label>
         <input type="url" name="url" value="<?php echo $_['url']; ?>">
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Image URL')); ?></label>
-        <input type="text" name="image" value="<?php echo $_['image']; ?>">
+        <label><?php p($l->t('Image')); ?></label>
+        <input type="text" name="image" value="<?php echo $_['image']; ?>"><button id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
     </fieldset>
 
     <fieldset>
@@ -46,43 +46,7 @@
         <label><?php p($l->t('Servings')); ?></label>
         <input type="number" name="recipeYield" value="<?php echo $_['recipeYield']; ?>">
     </fieldset>
-
-    <?php
-
-    $daily_dozen = [
-        'beansAndLegumes' => ['icon' => '🥛', 'name' => $l->t('Beans and legumes')],
-        'berries' => ['icon' => '🍓', 'name' => $l->t('Berries')],
-        'cruciferousVegetables' => ['icon' => '🥦', 'name' => $l->t('Cruciferous vegetables')],
-        'flaxseeds' => ['icon' => '🌱', 'name' => $l->t('Flaxseeds')],
-        'greens' => ['icon' => '🥬', 'name' => $l->t('Greens')],
-        'nutsAndSeeds' => ['icon' => '🌰', 'name' => $l->t('Nuts and seeds')],
-        'otherFruits' => ['icon' => '🍌', 'name' => $l->t('Other fruits')],
-        'otherVegetables' => ['icon' => '🥑', 'name' => $l->t('Other vegetables')],
-        'herbsAndSpices' => ['icon' => '🌿', 'name' => $l->t('Herbs and spices')],
-        'wholeGrains' => ['icon' => '🍞', 'name' => $l->t('Whole grains')],
-    ];
-
-    ?>
-
-    <fieldset>
-        <label><?php p($l->t('Daily dozen')); ?></label>
-
-        <ul>
-            <?php foreach ($daily_dozen as $id => $ingredient) { ?>
-                <?php $has_ingredient = strpos($_['dailyDozen'], $id) !== false; ?>
-
-                <li>
-                    <label title="<?php echo $ingredient['name']; ?>">
-                        <?php echo $ingredient['name'] . ' ' . $ingredient['icon']; ?>
-                        <input type="checkbox" name="dailyDozen[<?php echo $id; ?>]" <?php if ($has_ingredient) {
-                            echo 'checked';
-                        } ?>>
-                    </label>
-                </li>
-            <?php } ?>
-        </ul>
-    </fieldset>
-
+    
     <fieldset>
         <label><?php p($l->t('Ingredients')); ?></label>
 

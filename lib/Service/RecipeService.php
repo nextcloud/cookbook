@@ -6,6 +6,8 @@ use OCP\Image;
 use OCP\IConfig;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
+use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\IDBConnection;
 
 use OCA\Cookbook\Db\RecipeDb;
@@ -29,7 +31,7 @@ class RecipeService {
      * @return array
      */
     public function getRecipeById($id) {
-        $file = $this->getRecipeFileById($id);
+        $file = $this->getRecipeFileByFolderId($id);
 
         if(!$file) { return null; }
 
@@ -37,19 +39,27 @@ class RecipeService {
     }
 
     /**
+     * Returns a recipe file by folder id
+     *
      * @param int $id
      *
      * @return \OCP\Files\File
      */
-    public function getRecipeFileById($id) {
-        $folder = $this->getFolderForUser();
-        $file = $folder->getById($id);
+    public function getRecipeFileByFolderId($id) {
+        $user_folder = $this->getFolderForUser();
+        $recipe_folder = $user_folder->getById($id);
 
-        if(count($file) <= 0 || !$this->isRecipeFile($file[0])) {
-            return null;
+        if(count($recipe_folder) <= 0) { return null; }
+
+        $recipe_folder = $recipe_folder[0];
+
+        if($recipe_folder instanceof Folder === false) { return null; }
+
+        foreach($recipe_folder->getDirectoryListing() as $file) {
+            if($this->isRecipeFile($file)) { return $file; }
         }
 
-        return $file[0];
+        return null;
     }
 
     /**
@@ -70,36 +80,34 @@ class RecipeService {
         // Make sure that "name" doesn't have any funky characters in it
         $json['name'] = $this->cleanUpString($json['name']);
 
-        // Make sure that "dailyDozen" is a comma-separated string
-        if(isset($json['dailyDozen'])) {
-            if(is_array($json['dailyDozen'])) {
-                if(!isset($json['dailyDozen'][0])) {
-                    $json['dailyDozen'] = array_keys($json['dailyDozen']);
-                }
-
-                $json['dailyDozen'] = implode(',', $json['dailyDozen']);
-            } else if(!is_string($json['dailyDozen'])) {
-                $json['dailyDozen'] = '';
-            } else {
-                $json['dailyDozen'] = preg_replace('/[^a-zA-Z,]/', '', $json['dailyDozen']);
-            }
-        } else {
-            $json['dailyDozen'] = '';
-        }
-
         // Make sure that "image" is a string of the highest resolution image available
         if(isset($json['image']) && $json['image']) {
             if(is_array($json['image'])) {
+                // Get the image from a subproperty "url"
                 if(isset($json['image']['url'])) {
                     $json['image'] = $json['image']['url'];
+
+                // Try to get the image with the highest resolution by adding together all numbers in the url
                 } else {
                     $images = $json['image'];
+                    $image_size = 0;
+
                     foreach($images as $img) {
                         if(is_array($img) && isset($img['url'])) {
                             $img = $img['url'];
                         }
 
-                        if(!$result || strlen($img) < strlen($json['image'])) {
+                        $image_matches = [];
+
+                        preg_match_all('!\d+!', $img, $image_matches);
+
+                        $this_image_size = 0;
+
+                        foreach($image_matches as $image_match) {
+                            $this_image_size += (int) $image_match; 
+                        }
+
+                        if($image_size === 0 || $this_image_size > $image_size) {
                             $json['image'] = $img;
                         }
                     }
@@ -203,7 +211,9 @@ class RecipeService {
             $json['recipeInstructions'] = []; 
         }
 
-        $json['recipeInstructions'] = array_filter($json['recipeInstructions']);
+        $json['recipeInstructions'] = array_filter($json['recipeInstructions'], function($v) {
+            return !empty($v) && $v !== "\n" && $v !== "\r";
+        });
 
       	// Make sure the 'description' is a string
       	if(isset($json['description']) && is_string($json['description'])) {
@@ -396,21 +406,14 @@ class RecipeService {
      * @param int $id
      */
     public function deleteRecipe(int $id) {
-        $file_folder = $this->getFolderForUser();
+        $user_folder = $this->getFolderForUser();
+        $recipe_folder = $user_folder->getById($id);
 
-        $file = $file_folder->getById($id);
-
-        if($file && sizeof($file) > 0) {
-            $file[0]->delete();
+        if($recipe_folder && sizeof($recipe_folder) > 0) {
+            $recipe_folder[0]->delete();
         }
 
         $this->db->deleteRecipeById($id);
-
-        $cache_folder = $this->getFolderForCache($id);
-
-        if($cache_folder) {
-            $cache_folder->delete();
-        }
     }
 
     /**
@@ -423,28 +426,48 @@ class RecipeService {
 
         $json = $this->checkRecipe($json);
         
-        $folder = $this->getFolderForUser();
-        $file = null;
-        $filename = $json['name'] . '.json';
+        $user_folder = $this->getFolderForUser();
+        $recipe_folder = null;
+        $recipe_file = null;
 
         try {
-            $file = $folder->get($filename);
+            if(isset($json['id']) && $json['id']) {
+                $recipe_folder = $user_folder->getById($json['id'])[0];
+
+                $old_path = $recipe_folder->getPath();
+                $new_path = dirname($old_path) . '/' . $json['name'];   
+
+                if($old_path !== $new_path) {
+                    $recipe_folder->move($new_path);
+                }
+
+            } else {
+                $recipe_folder = $user_folder->get($json['name']);
+            }
+
         } catch(\OCP\Files\NotFoundException $e) {
-            $folder->newFile($filename);
-            $file = $folder->get($filename);
+            $recipe_folder = $user_folder->newFolder($json['name']);
+        }
+        
+        $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
+
+        if(!$recipe_file) {
+            $recipe_file = $recipe_folder->newFile($json['name'] . '.json');
         }
 
-        $file->putContent(json_encode($json));
+        $recipe_file->putContent(json_encode($json));
 
-        $this->db->indexRecipeFile($file, $this->userId);
+        try {
+            $recipe_folder->get('full.jpg')->delete();
+        } catch(\OCP\Files\NotFoundException $e) {}
+        
+        try {
+            $recipe_folder->get('thumb.jpg')->delete();
+        } catch(\OCP\Files\NotFoundException $e) {}
 
-        $cache_folder = $this->getFolderForCache($file->getId());
+        $this->db->indexRecipeFile($recipe_file, $this->userId);
 
-        if($cache_folder) {
-            $cache_folder->delete();
-        }
-
-        return $file;
+        return $recipe_file;
     }
 
     /**
@@ -482,29 +505,29 @@ class RecipeService {
      * @return array
      */
     public function getRecipeFiles() {
-        $folder = $this->getFolderForUser();
+        $user_folder = $this->getFolderForUser();
+        $recipe_folders = $user_folder->getDirectoryListing();
+        $recipe_files = [];
 
-        $nodes = $folder->getDirectoryListing();
-        $recipes = [];
-
-        foreach($nodes as $node) {
-            if($this->isRecipeFile($node)) {
-                $recipes[] = $node;
-            }
+        foreach($recipe_folders as $recipe_folder) {
+            $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
+            
+            if(!$recipe_file) { continue; }
+            
+            $recipe_files[] = $recipe_file;
         }
 
-        return $recipes;
+        return $recipe_files;
     }
 
     /**
      * Rebuilds the search index and removes cached images
      */
     public function rebuildSearchIndex() {
-        $cache_folder = $this->getFolderForCache();
-        $cache_folder->delete();
-
+        // Clear the database
         $this->db->emptySearchIndex($this->userId);
 
+        // Rebuild info
         $this->updateSearchIndex();
     }
 
@@ -512,10 +535,40 @@ class RecipeService {
      * Updates the search index
      */
     public function updateSearchIndex() {
+        // Remove old cache folder if needed
+        $legacy_cache_path = '/cookbook/cache';
+
+        if($this->root->nodeExists($legacy_cache_path)) {
+            $this->root->get($legacy_cache_path)->delete();
+        }
+
+        // Restructure files if needed
+        $user_folder = $this->getFolderForUser();
+
+        foreach($user_folder->getDirectoryListing() as $node) {
+            // Move JSON files from the user directory into its own folder
+            if($this->isRecipeFile($node)) {
+                $recipe_name = str_replace('.json', '', $node->getName());
+
+                $node->move($node->getPath() . '_tmp');
+                
+                $recipe_folder = $user_folder->newFolder($recipe_name);
+                
+                $node->move($recipe_folder->getPath() . '/' . $recipe_name . '.json');
+
+            // Rename folders with .json extensions (this was likely caused by a migration bug)
+            } else if($node instanceof Folder && strpos($node->getName(), '.json')) {
+                $node->move(str_replace('.json', '', $node->getPath()));
+            
+            }
+        }
+
+        // Re-index recipe files
         foreach($this->getRecipeFiles() as $file) {
             $this->db->indexRecipeFile($file, $this->userId);
         }
-        
+
+        // Cache the last index update
         $this->config->setUserValue($this->userId, 'cookbook', 'last_index_update', time());
     }
 
@@ -626,22 +679,7 @@ class RecipeService {
 
         return $this->getOrCreateFolder($path);
     }
-
-    /**
-     * @param int $id
-     *
-     * @return \OCP\Files\Folder
-     */
-    public function getFolderForCache($id = '') {
-        $path = '/cookbook/cache';
-
-        if($id) {
-            $path .= '/' . $id;
-        }
-
-        return $this->getOrCreateFolder($path);
-    }
-
+    
     /**
      * Finds a folder and creates it if non-existent
      * @param string $path path to the folder
@@ -671,7 +709,7 @@ class RecipeService {
 
         if(!$json) { return null; }
 
-        $json['id'] = $file->getId();
+        $json['id'] = $file->getParent()->getId();
 
         return $this->checkRecipe($json);
     } 
@@ -684,45 +722,59 @@ class RecipeService {
      *
      * @return \OCP\Files\File
      */
-    public function getRecipeImageFileById($id, $size = 'thumb') {
+    public function getRecipeImageFileByFolderId($id, $size = 'thumb') {
         if(!$size) { $size = 'thumb'; }
         if($size !== 'full' && $size !== 'thumb') { 
             throw new \Exception('Image size "' . $size . '" not recognised');
         }
 
-        $folder = $this->getFolderForCache($id);
-        $file = null;
-        $filename = $size . '.jpg';
+        $recipe_folder = $this->root->getById($id);
+
+        if(sizeof($recipe_folder) < 1) { throw new \Exception('Recipe ' . $id . ' not found'); }
+    
+        $recipe_folder = $recipe_folder[0];
+
+        $image_file = null;
+        $image_filename = $size . '.jpg';
 
         try {
-            $file = $folder->get($filename);
+            $image_file = $recipe_folder->get($image_filename);
         } catch(\OCP\Files\NotFoundException $e) {
-            $file = null;
+            $image_file = null;
         }
 
-        if($file && $this->isImage($file)) { return $file; }
+        if($image_file && $this->isImage($image_file)) { return $image_file; }
 
-        $recipe_json = $this->parseRecipeFile($this->getRecipeFileById($id));
+        $recipe_json = $this->getRecipeById($id);
 
         if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
 
-        $recipe_image_data = file_get_contents($recipe_json['image']);
+        try {
+            if(strpos($recipe_json['image'], 'http') === 0) {
+                $recipe_json['image'] = str_replace(' ', '%20', $recipe_json['image']);
+                $image_data = file_get_contents($recipe_json['image']);
+            } else {
+                $image_file = $this->root->get('/' . $this->userId . '/files' . $recipe_json['image']);
+                $image_data = $image_file->getContent();
+            }
+        } catch(\OCP\Files\NotFoundException $e) {
+            throw new \Exception($e->getMessage());
+        }
 
-        if(!$recipe_image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
+        if(!$image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
 
         if($size === 'thumb') {
             $img = new Image();
-            $img->loadFromData($recipe_image_data);
+            $img->loadFromData($image_data);
             $img->resize(128);
             $img->centerCrop();
-            $recipe_image_data = $img->data();
+            $image_data = $img->data();
         }
 
-        $folder->newFile($filename);
-        $file = $folder->get($filename);
-        $file->putContent($recipe_image_data);
+        $image_file = $recipe_folder->newFile($image_filename);
+        $image_file->putContent($image_data);
 
-        return $file;
+        return $image_file;
     }
 
     /**

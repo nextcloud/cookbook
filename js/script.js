@@ -26,13 +26,17 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    update: function(id, recipeDate) {
+    update: function(id, recipeData) {
+        if(recipeData && id) {
+            recipeData += '&id=' + id;
+        }
+        
         var deferred = $.Deferred();
         var self = this;
         $.ajax({
-            url: this._baseUrl + '/recipes/' + (id ? id : ''),
+            url: this._baseUrl + '/recipes',
             method: 'PUT',
-            data: recipeDate
+            data: recipeData
         }).done(function (response) {
             deferred.resolve(response);
         }).fail(function () {
@@ -151,6 +155,9 @@ var Content = function (cookbook) {
             .done(function (html) {
                 $('#app-content-wrapper').html(html);
                 
+                $('#pick-image').off('click');
+                $('#pick-image').click(self.onPickImage);
+                
                 $('#app-content-wrapper form .icon-add').off('click');
                 $('#app-content-wrapper form .icon-add').click(self.onAddListItem);
                
@@ -176,7 +183,25 @@ var Content = function (cookbook) {
             });
         }
     };
-    
+   
+    /**
+     * Event: Pick image
+     */
+    self.onPickImage = function(e) {
+        e.preventDefault();
+
+        OC.dialogs.filepicker(
+            t(appName, 'Path to your recipe collection'),
+            function (path) {
+                $('input[name="image"]').val(path);
+            },
+            false,
+            'image/jpeg',
+            true,
+            OC.dialogs.FILEPICKER_TYPE_CHOOSE
+        );
+    }
+
     /**
      * Event: Delete recipe
      */
@@ -341,12 +366,25 @@ var Nav = function (cookbook) {
             alert(t(appName, 'Could not add recipe'));
         });
     };
+    
+    /**
+     * Event: Pick a tag
+     */
+    self.onCategorizeRecipes = function(e) {
+        e.preventDefault();
 
+        $('#find-recipes input').val('');
+
+        self.render();
+    };
+    
     /**
      * Event: Submit new search query
      */
     self.onFindRecipes = function(e) {
         e.preventDefault();
+        
+        $('#categorize-recipes select').val(null);
 
         self.render();
     };
@@ -381,7 +419,7 @@ var Nav = function (cookbook) {
      * @return {String} Keywords
      */
     self.getKeywords = function() {
-        return $('#find-recipes input').val();
+        return [$('#categorize-recipes select').val(), $('#find-recipes input').val()].join(',');
     }
 
     /**
@@ -437,6 +475,10 @@ var Nav = function (cookbook) {
         // Add a new recipe
         $('#add-recipe').off('submit');
         $('#add-recipe').submit(self.onAddNewRecipe);
+        
+        // Categorise recipes
+        $('#categorize-recipes select').off('change');
+        $('#categorize-recipes select').on('change', self.onCategorizeRecipes);
 
         // Find recipes
         $('#find-recipes').off('submit');

@@ -1,8 +1,6 @@
 <header>
     <?php if(isset($_['image']) && $_['image']) { ?>
-        <figure>
-            <img src="<?php echo $_['imageURL']; ?>">
-        </figure>
+        <img src="<?php echo $_['imageURL']; ?>&t=<?php echo time(); ?>">
     <?php } ?>
     
     <div class="recipe-toolbar">
@@ -38,31 +36,6 @@
 
         <p><strong><?php p($l->t('Servings')); ?>: </strong><?php echo $_['recipeYield']; ?></p>
     </div>
-
-    <?php if(isset($_['dailyDozen'])) { ?>
-        <?php 
-
-        $daily_dozen = [
-            'beansAndLegumes' => [ 'icon' => '🥛', 'name' => $l->t('Beans and legumes') ],
-            'berries' => [ 'icon' => '🍓', 'name' => $l->t('Berries') ],
-            'cruciferousVegetables' => [ 'icon' => '🥦', 'name' => $l->t('Cruciferous vegetables') ],
-            'flaxseeds' => [ 'icon' => '🌱', 'name' => $l->t('Flaxseeds') ],
-            'greens' => [ 'icon' => '🥬', 'name' => $l->t('Greens') ],
-            'nutsAndSeeds' => [ 'icon' => '🌰', 'name' => $l->t('Nuts and seeds') ],
-            'otherFruits' => [ 'icon' => '🍌', 'name' => $l->t('Other fruits') ],
-            'otherVegetables' => [ 'icon' => '🥑', 'name' => $l->t('Other vegetables') ],
-            'herbsAndSpices' => [ 'icon' => '🌿', 'name' => $l->t('Herbs and spices') ],
-            'wholeGrains' => [ 'icon' => '🍞', 'name' => $l->t('Whole grains') ],
-        ];
-    
-        ?>
-
-        <?php foreach($daily_dozen as $id => $ingredient) { ?>
-            <?php if(strpos($_['dailyDozen'], $id) === false) { continue; } ?>
-            
-            <span title="<?php echo $ingredient['name']; ?>"><?php echo $ingredient['icon']; ?></span>
-        <?php } ?>
-    <?php } ?>
 </header>
 
 <aside>
@@ -76,12 +49,12 @@
 </aside>
 
 <main>
-    <ul>
+    <ol>
         <h3><?php p($l->t('Instructions')); ?></h3>
 
         <?php foreach($_['recipeInstructions'] as $step) {  ?>
             <li><?php echo nl2br($step); ?></li>   
         <?php } ?>
-    </ul>
+    </ol>
 </main>
 
