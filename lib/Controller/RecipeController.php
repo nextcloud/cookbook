@@ -104,11 +104,12 @@ class RecipeController extends Controller {
      *
      * @return DataResponse
      */
-    public function update($id) {
-        $recipeDate = array();
-        parse_str(file_get_contents("php://input"),$recipeDate);
-
-        $file = $this->service->addRecipe($recipeDate);
+    public function update() {
+        $data = [];
+        
+        parse_str(file_get_contents('php://input'), $data);
+        
+        $file = $this->service->addRecipe($data);
 
         return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, [ 'Content-Type' => 'application/json' ]);
     }
