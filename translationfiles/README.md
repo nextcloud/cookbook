@@ -8,7 +8,7 @@ This is a quick instruction how to generate translations for the nextcoud app `c
 1. Clone a user fork of the [cookbook app](https://github.com/mrzapp/nextcloud-cookbook)
 2. Create new branch and checkout
 3. Use the `translationfiles/template/cookbook.pot` template and generate/update the `translationfiles/<lang>/cookbook.po` file
-4. Commit and create pull request
+4. Commit and create pull request against the `develop` branch
 
 ## Introduction
 
@@ -85,6 +85,7 @@ This will push the changed to your fork of the repo on github.
 To notify the developer of the changes, you need to open a pull request.
 To do so, git already outputs during the `git push` command execution an URL to help crating suh a pull request.
 Open the link in a browser and fill in the fields (sort of comments).
+Make sure you are using `base: develop` of `mrzapp/nextcloud-cookbook` repository in the dropdown list.
 The developer will either merge the chenages into the main development branch or come back to you with further questions.
 
 ## Steps to generate the necessary files in order to test the translation
