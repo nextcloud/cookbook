@@ -195,7 +195,6 @@ class RecipeDb {
         if(isset($json['keywords'])) {
             foreach(explode(',', $json['keywords']) as $keyword) {
                 $keyword = trim($keyword);   
-                $keyword = strtolower($keyword);
 
                 $qb->insert('cookbook_keywords')
                     ->values([

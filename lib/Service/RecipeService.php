@@ -135,13 +135,10 @@ class RecipeService {
             $json['recipeYield'] = 1;
         }
 
-        // Make sure that "keywords" is an array of unique, lowercase strings
+        // Make sure that "keywords" is an array of unique strings
         if(isset($json['keywords']) && is_string($json['keywords'])) {
             $keywords = $json['keywords'];
-            $keywords = strtolower($keywords);
             $keywords = strip_tags($keywords);
-            $keywords = str_replace(' and', '', $keywords);
-            $keywords = str_replace(' ', ',', $keywords);
             $keywords = str_replace(',,', ',', $keywords);
             $keywords = explode(',', $keywords);
             $keywords = array_unique($keywords);
