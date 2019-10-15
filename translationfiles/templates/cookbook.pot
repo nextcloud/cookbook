@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Nextcloud 3.14159\n"
 "Report-Msgid-Bugs-To: translations\\@example.com\n"
-"POT-Creation-Date: 2019-09-04 19:05+0200\n"
+"POT-Creation-Date: 2019-10-15 13:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,43 +17,48 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /tmp/nextcloud-cookbook/js/script.js:93
+#: /tmp/nextcloud-cookbook/js/script.js:108
+msgid "Could not set recipe update interval to {interval}"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/js/script.js:115
+#: /tmp/nextcloud-cookbook/js/script.js:201
 msgid "Path to your recipe collection"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:108
+#: /tmp/nextcloud-cookbook/js/script.js:130
 msgid "Could not set recipe folder to {path}"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:133
+#: /tmp/nextcloud-cookbook/js/script.js:155
 msgid "Please pick a recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:160
+#: /tmp/nextcloud-cookbook/js/script.js:185
 msgid "Could not load recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:173
+#: /tmp/nextcloud-cookbook/js/script.js:216
 msgid "Are you sure you want to delete this recipe?"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:190
+#: /tmp/nextcloud-cookbook/js/script.js:233
 msgid "Failed to delete recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:277
+#: /tmp/nextcloud-cookbook/js/script.js:320
 msgid "Could not update recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:323
+#: /tmp/nextcloud-cookbook/js/script.js:373
 msgid "Could not add recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:345
+#: /tmp/nextcloud-cookbook/js/script.js:408
 msgid "Could not rebuild recipe index."
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/js/script.js:392
+#: /tmp/nextcloud-cookbook/js/script.js:465
 msgid "Failed to fetch recipes"
 msgstr ""
 
@@ -74,129 +79,79 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS The name of the recipe
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:9
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:10
 msgid "Name"
 msgstr ""
 
 #. TRANSLATORS The description of the recipe
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:14
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:16
 msgid "Description"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:19
-msgid "Source URL"
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:21
+msgid "URL"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:24
-msgid "Image URL"
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:26
+msgid "Image"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:29
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:27
+msgid "Pick a local image"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:31
 msgid "Prep Time"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:34
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:36
 msgid "Cook Time"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:39
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:41
 msgid "Keywords (comma-separated)"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:44
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:39
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:46
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:37
 msgid "Servings"
 msgstr ""
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:51
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:46
-msgid "Beans and legumes"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:52
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:47
-msgid "Berries"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:53
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:48
-msgid "Cruciferous vegetables"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:54
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:49
-msgid "Flaxseeds"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:55
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:50
-msgid "Greens"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:56
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:51
-msgid "Nuts and seeds"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:57
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:52
-msgid "Other fruits"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:58
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:53
-msgid "Other vegetables"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:59
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:54
-msgid "Herbs and spices"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:60
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:55
-msgid "Whole grains"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:66
-msgid "Daily dozen"
-msgstr ""
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:83
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:70
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:43
 msgid "Ingredients"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:103
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:80
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:71
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:53
 msgid "Instructions"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:122
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:90
 msgid "Save"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:9
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:7
 msgid "Edit recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:8
 msgid "Print recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:11
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:9
 msgid "Delete recipe"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:18
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:16
 msgid "Source"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:28
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:26
 msgid "Preparation time"
 msgstr ""
 
-#: /tmp/nextcloud-cookbook/templates/content/recipe.php:36
+#: /tmp/nextcloud-cookbook/templates/content/recipe.php:34
 msgid "Cooking time"
 msgstr ""
 
@@ -216,6 +171,10 @@ msgstr ""
 msgid "Search"
 msgstr ""
 
+#: /tmp/nextcloud-cookbook/templates/navigation/index.php:28
+msgid "All"
+msgstr ""
+
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:3
 msgid "Settings"
 msgstr ""
@@ -230,4 +189,12 @@ msgstr ""
 
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:13
 msgid "Please pick a folder"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:17
+msgid "Update interval in minutes"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:19
+msgid "Last update"
 msgstr ""

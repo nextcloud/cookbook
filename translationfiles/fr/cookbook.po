@@ -244,3 +244,31 @@ msgstr ""
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:36
 msgid "Cooking time"
 msgstr ""
+
+#: /tmp/nextcloud-cookbook/js/script.js:108
+msgid "Could not set recipe update interval to {interval}"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:21
+msgid "URL"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:26
+msgid "Image"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/content/edit.php:27
+msgid "Pick a local image"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/navigation/index.php:28
+msgid "All"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:17
+msgid "Update interval in minutes"
+msgstr ""
+
+#: /tmp/nextcloud-cookbook/templates/settings/index.php:19
+msgid "Last update"
+msgstr ""
