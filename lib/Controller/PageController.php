@@ -92,6 +92,7 @@ class PageController extends Controller
                 if(!$recipe) { throw new \Exception('Recipe ' . $_GET['id'] . ' not found'); }
 
                 $recipe['id'] = $_GET['id'];
+            
             }
 
             $response = new TemplateResponse('cookbook', 'content/edit', $recipe);
