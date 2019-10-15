@@ -187,6 +187,10 @@ msgstr "Rezept herunterladen"
 msgid "Search"
 msgstr "Suche"
 
+#: /srv/http/nc/apps/cookbook/templates/navigation/index.php:28
+msgid "All"
+msgstr "Alle"
+
 #: /srv/http/nc/apps/cookbook/templates/navigation/recipes.php:10
 msgid "Edit recipe"
 msgstr "Rezept bearbeiten"
