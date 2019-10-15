@@ -262,7 +262,7 @@ msgstr "Bild"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:27
 msgid "Pick a local image"
-msgstr "Wähle ein lokale Bilddatei aus"
+msgstr "Wähle eine lokale Bilddatei aus"
 
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:17
 msgid "Update interval in minutes"
