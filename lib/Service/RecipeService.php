@@ -104,7 +104,7 @@ class RecipeService {
                         $this_image_size = 0;
 
                         foreach($image_matches as $image_match) {
-                            $this_image_size += (int) $image_match;
+                            $this_image_size += (int) $image_match; 
                         }
 
                         if($image_size === 0 || $this_image_size > $image_size) {
@@ -122,7 +122,7 @@ class RecipeService {
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
 
-        // Make sure that "recipeYield" is an integer which is at least 1
+        // Make sure that "recipeYield" is an integer which is at least 1 
         if(isset($json['recipeYield']) && $json['recipeYield']) {
             $yield = filter_var($json['recipeYield'], FILTER_SANITIZE_NUMBER_INT);
 
@@ -186,7 +186,7 @@ class RecipeService {
                 $json['recipeInstructions'] = html_entity_decode($json['recipeInstructions']);
 
                 $regex_matches = [];
-                preg_match_all('/<(p|li)>(.*?)<\/(p|li)>/', $json['recipeInstructions'], $regex_matches, PREG_SET_ORDER);
+                preg_match_all('/<(p|li)>(.*?)<\/(p|li)>/', $json['recipeInstructions'], $regex_matches, PREG_SET_ORDER); 
 
                 $instructions = [];
 
@@ -209,7 +209,7 @@ class RecipeService {
                 $json['recipeInstructions'] = [];
             }
         } else {
-            $json['recipeInstructions'] = [];
+            $json['recipeInstructions'] = []; 
         }
 
         $json['recipeInstructions'] = array_filter($json['recipeInstructions'], function($v) {
@@ -266,7 +266,7 @@ class RecipeService {
     /**
      * @param string $html
      *
-     * @return array
+     * @return array 
      */
     private function parseRecipeHtml($html) {
         if(!$html) { return null; }
@@ -291,7 +291,7 @@ class RecipeService {
                     if(!isset($graph_item['@type']) || $graph_item['@type'] !== 'Recipe') { continue; }
 
                     $json = $graph_item;
-                    break;
+                    break;        
                 }
             }
 
@@ -336,7 +336,7 @@ class RecipeService {
                     $src_matches = [];
                     preg_match('/="http([^"]+)"/', $prop_match[0], $src_matches);
 
-                    if(!isset($src_matches[1])) { break; }
+                    if(!isset($src_matches[1])) { break; } 
 
                     $src = 'http' . $src_matches[1];
 
@@ -378,7 +378,7 @@ class RecipeService {
 
                 $value = $step_match[1];
 
-                array_push($json['recipeInstructions'], $value);
+                array_push($json['recipeInstructions'], $value); 
             }
         }
 
@@ -426,7 +426,7 @@ class RecipeService {
         if(!$json || !isset($json['name']) || !$json['name']) { throw new \Exception('Recipe name not found'); }
 
         $json = $this->checkRecipe($json);
-
+        
         $user_folder = $this->getFolderForUser();
         $recipe_folder = null;
         $recipe_file = null;
@@ -436,7 +436,7 @@ class RecipeService {
                 $recipe_folder = $user_folder->getById($json['id'])[0];
 
                 $old_path = $recipe_folder->getPath();
-                $new_path = dirname($old_path) . '/' . $json['name'];
+                $new_path = dirname($old_path) . '/' . $json['name'];   
 
                 if($old_path !== $new_path) {
                     $recipe_folder->move($new_path);
@@ -449,7 +449,7 @@ class RecipeService {
         } catch(\OCP\Files\NotFoundException $e) {
             $recipe_folder = $user_folder->newFolder($json['name']);
         }
-
+        
         $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
 
         if(!$recipe_file) {
@@ -461,7 +461,7 @@ class RecipeService {
         try {
             $recipe_folder->get('full.jpg')->delete();
         } catch(\OCP\Files\NotFoundException $e) {}
-
+        
         try {
             $recipe_folder->get('thumb.jpg')->delete();
         } catch(\OCP\Files\NotFoundException $e) {}
@@ -493,7 +493,7 @@ class RecipeService {
 
         if(!$html) { throw new \Exception('Could not fetch site ' . $url); }
 
-        $json = $this->parseRecipeHtml($html);
+        $json = $this->parseRecipeHtml($html); 
 
         if(!$json) { throw new \Exception('No recipe data found'); }
 
@@ -512,9 +512,9 @@ class RecipeService {
 
         foreach($recipe_folders as $recipe_folder) {
             $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
-
+            
             if(!$recipe_file) { continue; }
-
+            
             $recipe_files[] = $recipe_file;
         }
 
@@ -552,15 +552,15 @@ class RecipeService {
                 $recipe_name = str_replace('.json', '', $node->getName());
 
                 $node->move($node->getPath() . '_tmp');
-
+                
                 $recipe_folder = $user_folder->newFolder($recipe_name);
-
+                
                 $node->move($recipe_folder->getPath() . '/' . $recipe_name . '.json');
 
             // Rename folders with .json extensions (this was likely caused by a migration bug)
             } else if($node instanceof Folder && strpos($node->getName(), '.json')) {
                 $node->move(str_replace('.json', '', $node->getPath()));
-
+            
             }
         }
 
@@ -600,7 +600,7 @@ class RecipeService {
     public function getAllKeywordsInSearchIndex() {
         $this->checkSearchIndexUpdate();
 
-        return $this->db->findAllKeywords($this->userId);
+        return $this->db->findAllKeywords($this->userId); 
     }
 
     /**
@@ -611,7 +611,7 @@ class RecipeService {
     public function getAllRecipesInSearchIndex() {
         $this->checkSearchIndexUpdate();
 
-        return $this->db->findAllRecipes($this->userId);
+        return $this->db->findAllRecipes($this->userId); 
     }
 
     /**
@@ -652,14 +652,14 @@ class RecipeService {
 
         return $path;
     }
-
+    
     /**
      * @param int $interval
      */
     public function setSearchIndexUpdateInterval(int $interval) {
         $this->config->setUserValue($this->userId, 'cookbook', 'update_interval', $interval);
     }
-
+    
     /**
      * @return int
      */
@@ -680,7 +680,7 @@ class RecipeService {
 
         return $this->getOrCreateFolder($path);
     }
-
+    
     /**
      * Finds a folder and creates it if non-existent
      * @param string $path path to the folder
@@ -713,7 +713,7 @@ class RecipeService {
         $json['id'] = $file->getParent()->getId();
 
         return $this->checkRecipe($json);
-    }
+    } 
 
     /**
      * Gets the image file for a recipe
@@ -725,14 +725,14 @@ class RecipeService {
      */
     public function getRecipeImageFileByFolderId($id, $size = 'thumb') {
         if(!$size) { $size = 'thumb'; }
-        if($size !== 'full' && $size !== 'thumb') {
+        if($size !== 'full' && $size !== 'thumb') { 
             throw new \Exception('Image size "' . $size . '" not recognised');
         }
 
         $recipe_folder = $this->root->getById($id);
 
         if(sizeof($recipe_folder) < 1) { throw new \Exception('Recipe ' . $id . ' not found'); }
-
+    
         $recipe_folder = $recipe_folder[0];
 
         $image_file = null;
@@ -748,7 +748,7 @@ class RecipeService {
 
         $recipe_json = $this->getRecipeById($id);
 
-        if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }
+        if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
 
         try {
             if(strpos($recipe_json['image'], 'http') === 0) {
@@ -818,7 +818,7 @@ class RecipeService {
      * @param string $str
      *
      * @return string
-     */
+     */  
     private function cleanUpString($str, $preserve_newlines = false) {
         if(!$str) { return ''; }
 
@@ -827,7 +827,7 @@ class RecipeService {
         if(!$preserve_newlines) {
             $str = str_replace(["\r", "\n"], '', $str);
         }
-
+        
         $str = str_replace(["\t", "\\"], '', $str);
 
         $str = html_entity_decode($str);
