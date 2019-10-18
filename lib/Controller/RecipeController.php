@@ -185,7 +185,7 @@ class RecipeController extends Controller
 
             return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), Http::STATUS_NOT_FOUND);
+            return new DataResponse('Image not found: ' . $e->getMessage(), Http::STATUS_NOT_FOUND);
         }
     }
 }

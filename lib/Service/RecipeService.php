@@ -139,7 +139,7 @@ class RecipeService {
         if(isset($json['keywords']) && is_string($json['keywords'])) {
             $keywords = trim($json['keywords']);
             $keywords = trim($keywords, ',');
-            $keywords = trim($keywords)
+            $keywords = trim($keywords);
             $keywords = strip_tags($keywords);
             $keywords = preg_replace('/\s+/', ' ', $keywords);
             $keywords = str_replace(', ', ',', $keywords);
@@ -425,8 +425,10 @@ class RecipeService {
     public function addRecipe($json) {
         if(!$json || !isset($json['name']) || !$json['name']) { throw new \Exception('Recipe name not found'); }
 
+        // Sanity check
         $json = $this->checkRecipe($json);
-        
+
+        // Write JSON file to disk
         $user_folder = $this->getFolderForUser();
         $recipe_folder = null;
         $recipe_file = null;
@@ -458,15 +460,47 @@ class RecipeService {
 
         $recipe_file->putContent(json_encode($json));
 
-        try {
-            $recipe_folder->get('full.jpg')->delete();
-        } catch(\OCP\Files\NotFoundException $e) {}
-        
-        try {
-            $recipe_folder->get('thumb.jpg')->delete();
-        } catch(\OCP\Files\NotFoundException $e) {}
-
+        // Update database cache
         $this->db->indexRecipeFile($recipe_file, $this->userId);
+
+        // Download image and generate thumbnail
+        $full_image_data = null;
+        
+        if(isset($json['image']) && $json['image']) {
+            if(strpos($json['image'], 'http') === 0) {
+                $json['image'] = str_replace(' ', '%20', $json['image']);
+                $full_image_data = file_get_contents($json['image']);
+            } else {
+                $full_image_file = $this->root->get('/' . $this->userId . '/files' . $json['image']);
+                $full_image_data = $full_image_file->getContent();
+            }
+        }
+
+        // If image data was fetched, write it to disk
+        if($full_image_data) {
+            // Write the full image
+            try {
+                $full_image_file = $recipe_folder->get('full.jpg');
+            } catch(\OCP\Files\NotFoundException $e) {
+                $full_image_file = $recipe_folder->newFile('full.jpg');
+            }
+            
+            $full_image_file->putContent($full_image_data);
+
+            // Write the thumbnail
+            $thumb_image = new Image();
+            $thumb_image->loadFromData($full_image_data);
+            $thumb_image->resize(128);
+            $thumb_image->centerCrop();
+            
+            try {
+                $thumb_image_file = $recipe_folder->get('thumb.jpg');
+            } catch(\OCP\Files\NotFoundException $e) {
+                $thumb_image_file = $recipe_folder->newFile('thumb.jpg');
+            }
+            
+            $thumb_image_file->putContent($thumb_image->data());
+        }
 
         return $recipe_file;
     }
@@ -522,7 +556,7 @@ class RecipeService {
     }
 
     /**
-     * Rebuilds the search index and removes cached images
+     * Rebuilds the search index
      */
     public function rebuildSearchIndex() {
         // Clear the database
@@ -738,44 +772,11 @@ class RecipeService {
         $image_file = null;
         $image_filename = $size . '.jpg';
 
-        try {
-            $image_file = $recipe_folder->get($image_filename);
-        } catch(\OCP\Files\NotFoundException $e) {
-            $image_file = null;
-        }
+        $image_file = $recipe_folder->get($image_filename);
 
         if($image_file && $this->isImage($image_file)) { return $image_file; }
 
-        $recipe_json = $this->getRecipeById($id);
-
-        if(!isset($recipe_json['image']) || !$recipe_json['image']) { throw new \Exception('No image specified in recipe'); }  
-
-        try {
-            if(strpos($recipe_json['image'], 'http') === 0) {
-                $recipe_json['image'] = str_replace(' ', '%20', $recipe_json['image']);
-                $image_data = file_get_contents($recipe_json['image']);
-            } else {
-                $image_file = $this->root->get('/' . $this->userId . '/files' . $recipe_json['image']);
-                $image_data = $image_file->getContent();
-            }
-        } catch(\OCP\Files\NotFoundException $e) {
-            throw new \Exception($e->getMessage());
-        }
-
-        if(!$image_data) { throw new \Exception('Could not fetch image from ' . $recipe_json['image']); }
-
-        if($size === 'thumb') {
-            $img = new Image();
-            $img->loadFromData($image_data);
-            $img->resize(128);
-            $img->centerCrop();
-            $image_data = $img->data();
-        }
-
-        $image_file = $recipe_folder->newFile($image_filename);
-        $image_file->putContent($image_data);
-
-        return $image_file;
+        throw new \Exception('Image file not recognised');
     }
 
     /**
