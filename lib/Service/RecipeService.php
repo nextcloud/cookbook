@@ -137,13 +137,10 @@ class RecipeService {
 
         // Make sure that "keywords" is an array of unique strings
         if(isset($json['keywords']) && is_string($json['keywords'])) {
-          $keywords = trim($json['keywords']);
-          $keywords = trim($keywords, ',');
-          $keywords = trim($keywords)
+          $keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
           $keywords = strip_tags($keywords);
-          $keywords = preg_replace('/\s+/', ' ', $keywords);
-          $keywords = str_replace(', ', ',', $keywords);
-          $keywords = preg_replace('/,+/', ',', $keywords);
+          $keywords = preg_replace('/\s+/', ' ', $keywords); // Colapse whitespace
+          $keywords = preg_replace('/[,\s]+\s+', ',', $keywords); // Clean up separators
           $keywords = explode(',', $keywords);
           $keywords = array_unique($keywords);
           $keywords = implode(',', $keywords);
