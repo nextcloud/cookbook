@@ -140,7 +140,7 @@ class RecipeService {
           $keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
           $keywords = strip_tags($keywords);
           $keywords = preg_replace('/\s+/', ' ', $keywords); // Colapse whitespace
-          $keywords = preg_replace('/[,\s]+\s+/', ',', $keywords); // Clean up separators
+          $keywords = preg_replace('/(, | ,|,)+/', ',', $keywords); // Clean up separators
           $keywords = explode(',', $keywords);
           $keywords = array_unique($keywords);
           $keywords = implode(',', $keywords);
