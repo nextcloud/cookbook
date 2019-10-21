@@ -26,12 +26,11 @@ class RecipeController extends Controller
      */
     private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId, IURLGenerator $urlGenerator)
+    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService)
     {
         parent::__construct($AppName, $request);
-        $this->userId = $UserId;
 
-        $this->service = new RecipeService($root, $UserId, $db, $config);
+        $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
     }
 

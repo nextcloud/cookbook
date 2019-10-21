@@ -18,8 +18,8 @@ class RecipeService {
     private $db;
     private $config;
 
-    public function __construct($root, $userId, IDBConnection $db, IConfig $config) {
-        $this->userId = $userId;
+    public function __construct($UserId, IRootFolder $root, IDBConnection $db, IConfig $config) {
+        $this->userId = $UserId;
         $this->root = $root;
         $this->db = new RecipeDb($db);
         $this->config = $config;
