@@ -1,31 +1,40 @@
 <?php
-
 namespace OCA\Cookbook\Tests\Unit\Controller;
 
-use PHPUnit_Framework_TestCase;
-
+use OC\URLGenerator;
+use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\TemplateResponse;
-
 use OCA\Cookbook\Controller\PageController;
+use OCP\Files\IRootFolder;
+use OCP\IConfig;
+use OCP\IDBConnection;
+use OCP\IRequest;
+use Test\TestCase;
 
+class PageControllerTest extends TestCase
+{
+    private $controller;
+    private $mockedRecipeService;
 
-class PageControllerTest extends PHPUnit_Framework_TestCase {
-	private $controller;
-	private $userId = 'john';
+    public function setUp()
+    {
+        $request = $this->getMockBuilder(IRequest::class)->getMock();
+        $this->mockedRecipeService = $this->getMockBuilder(RecipeService::class)->disableOriginalConstructor()->getMock();
+        $urlGenerator = $this->getMockBuilder(URLGenerator::class)->disableOriginalConstructor()->getMock();
 
-	public function setUp() {
-		$request = $this->getMockBuilder('OCP\IRequest')->getMock();
+        $this->controller = new PageController(
+            'cookbook',
+            $request,
+            $this->mockedRecipeService,
+            $urlGenerator
+        );
+    }
 
-		$this->controller = new PageController(
-			'cookbook', $request, $this->userId
-		);
-	}
+    public function testIndex()
+    {
+        $result = $this->controller->index();
 
-	public function testIndex() {
-		$result = $this->controller->index();
-
-		$this->assertEquals('index', $result->getTemplateName());
-		$this->assertTrue($result instanceof TemplateResponse);
-	}
-
+        $this->assertEquals('index', $result->getTemplateName());
+        $this->assertTrue($result instanceof TemplateResponse);
+    }
 }
