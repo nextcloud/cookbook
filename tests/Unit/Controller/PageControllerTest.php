@@ -1,11 +1,9 @@
 <?php
-
 namespace OCA\Cookbook\Tests\Unit\Controller;
 
-
 use OC\URLGenerator;
+use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\TemplateResponse;
-
 use OCA\Cookbook\Controller\PageController;
 use OCP\Files\IRootFolder;
 use OCP\IConfig;
@@ -13,27 +11,21 @@ use OCP\IDBConnection;
 use OCP\IRequest;
 use Test\TestCase;
 
-
 class PageControllerTest extends TestCase
 {
     private $controller;
-    private $userId = 'john';
+    private $mockedRecipeService;
 
     public function setUp()
     {
         $request = $this->getMockBuilder(IRequest::class)->getMock();
-        $dbConnection = $this->getMockBuilder(IDBConnection::class)->getMock();
-        $rootFolder = $this->getMockBuilder(IRootFolder::class)->getMock();
-        $config = $this->getMockBuilder(IConfig::class)->getMock();
+        $this->mockedRecipeService = $this->getMockBuilder(RecipeService::class)->disableOriginalConstructor()->getMock();
         $urlGenerator = $this->getMockBuilder(URLGenerator::class)->disableOriginalConstructor()->getMock();
 
         $this->controller = new PageController(
             'cookbook',
-            $dbConnection,
-            $rootFolder,
             $request,
-            $this->userId,
-            $config,
+            $this->mockedRecipeService,
             $urlGenerator
         );
     }
@@ -45,5 +37,4 @@ class PageControllerTest extends TestCase
         $this->assertEquals('index', $result->getTemplateName());
         $this->assertTrue($result instanceof TemplateResponse);
     }
-
 }
