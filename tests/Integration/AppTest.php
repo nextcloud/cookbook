@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Tests\Integration\Controller;
 
+use OCP\App\IAppManager;
 use OCP\AppFramework\App;
 use Test\TestCase;
 
@@ -22,7 +23,7 @@ class AppTest extends TestCase {
     }
 
     public function testAppInstalled() {
-        $appManager = $this->container->query('OCP\App\IAppManager');
+        $appManager = $this->container->query(IAppManager::class);
         $this->assertTrue($appManager->isInstalled('cookbook'));
     }
 
