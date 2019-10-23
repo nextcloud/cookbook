@@ -716,6 +716,16 @@ class RecipeService {
     }
     
     /**
+     * @return \OCP\Files\Folder
+     */
+    public function getFolderForApp($subfolder = '') {
+        $path = '/cookbook' . $subfolder;
+        $path = str_replace('//', '/', $path);
+
+        return $this->getOrCreateFolder($path);
+    }
+    
+    /**
      * Finds a folder and creates it if non-existent
      * @param string $path path to the folder
      *
@@ -772,7 +782,11 @@ class RecipeService {
         $image_file = null;
         $image_filename = $size . '.jpg';
 
-        $image_file = $recipe_folder->get($image_filename);
+        if(!$recipe_folder->nodeExists) {
+            $image_file = $this->getFolderForApp('/img')->get('recipe-' . $size . '.jpg');
+        } else {
+            $image_file = $recipe_folder->get($image_filename);
+        }
 
         if($image_file && $this->isImage($image_file)) { return $image_file; }
 
