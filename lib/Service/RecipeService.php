@@ -837,5 +837,3 @@ class RecipeService {
         return $str;
     }
 }
-
-?>
