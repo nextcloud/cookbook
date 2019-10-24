@@ -38,6 +38,11 @@
     </fieldset>
 
     <fieldset>
+        <label><?php p($l->t('Total Time')); ?></label>
+        <input type="text" name="totalTime" value="<?php if(isset($_['totalTime'])) { echo $_['totalTime']; } ?>" placeholder="PT1H30M">
+    </fieldset>
+
+    <fieldset>
         <label><?php p($l->t('Keywords (comma-separated)')); ?></label>
         <input type="text" name="keywords" value="<?php if(isset($_['keywords'])) { echo $_['keywords']; } ?>">
     </fieldset>

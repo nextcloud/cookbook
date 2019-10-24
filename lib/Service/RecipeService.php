@@ -63,6 +63,29 @@ class RecipeService {
     }
 
     /**
+     * Validates that the json has a valid duration element in the given field,
+     * or nothing at all.
+     *
+     * @param array $json
+     * @param string $key
+     */
+    private function validateDuration($json, $key) {
+        // Make sure we have a string and valid DateInterval
+        // regex validation from here: https://stackoverflow.com/a/32045167
+        $interval_regex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
+        if(isset($json[$key]) && is_string($json[$key])) {
+            $time_string = $this->cleanUpString($json[$key]);
+            if(preg_match_all($interval_regex, $time_string)) {
+                $json[$key] = $time_string;
+            } else {
+                $json[$key] = "";
+            }
+        } else {
+            $json[$key] = "";
+        }
+    }
+
+    /**
      * Checks the fields of a recipe and standardises the format
      *
      * @param array $json
@@ -233,32 +256,10 @@ class RecipeService {
         } else {
             $json['url'] = "";
         }
-        // Make sure 'prepTime' is a string and valid DateInterval
-        // regex validation from here: https://stackoverflow.com/a/32045167
-        $interval_regex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
-        if(isset($json['prepTime']) && is_string($json['prepTime'])) {
-            $prep_string = $this->cleanUpString($json['prepTime']);
-            if(preg_match_all($interval_regex, $prep_string)) {
-                $json['prepTime'] = $prep_string;
-            } else {
-                $json['prepTime'] = "";
-            }
-        } else {
-            $json['prepTime'] = "";
-        }
 
-        // Make sure 'cookTime' is a string and valid DateInterval
-        if(isset($json['cookTime']) && is_string($json['cookTime'])) {
-            $cook_string = $this->cleanUpString($json['cookTime']);
-            if(preg_match_all($interval_regex, $cook_string)) {
-                $json['cookTime'] = $cook_string;
-            } else {
-                $json['cookTime'] = "";
-            }
-        } else {
-            $json['cookTime'] = "";
-        }
-
+        $this->validateDuration($json, 'prepTime');
+        $this->validateDuration($json, 'cookTime');
+        $this->validateDuration($json, 'totalTime');
 
         return $json;
     }
