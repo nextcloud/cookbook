@@ -34,6 +34,14 @@
             <p><strong><?php p($l->t('Cooking time')); ?>: </strong><?php echo $cook_hours . ':' . $cook_mins; ?></p>
         <?php } ?>
 
+        <?php if(isset($_['totalTime']) && $_['totalTime']) {
+            $total_interval = new DateInterval($_['totalTime']);
+            $total_mins = $total_interval->format('%i');
+            $total_hours = $total_interval->format('%h');
+        ?>
+            <p><strong><?php p($l->t('Total time')); ?>: </strong><?php echo $total_hours . ':' . $total_mins; ?></p>
+        <?php } ?>
+
         <p><strong><?php p($l->t('Servings')); ?>: </strong><?php echo $_['recipeYield']; ?></p>
     </div>
 </header>
