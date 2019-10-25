@@ -114,13 +114,15 @@ class RecipeService
      * @param array $json
      *
      * @return array
+     *
+     * @throws Exception
      */
-    public function checkRecipe($json)
+    public function checkRecipe(array $json): array
     {
         if (!$json) {
             throw new Exception('Recipe array was null');
         }
-        if (!isset($json['name']) || !$json['name']) {
+        if (empty($json['name'])) {
             throw new Exception('Field "name" is required');
         }
 
@@ -479,7 +481,7 @@ class RecipeService
         $user_folder = $this->getFolderForUser();
         $recipe_folder = $user_folder->getById($id);
 
-        if ($recipe_folder && sizeof($recipe_folder) > 0) {
+        if ($recipe_folder && count($recipe_folder) > 0) {
             $recipe_folder[0]->delete();
         }
 
