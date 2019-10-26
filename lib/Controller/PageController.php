@@ -13,28 +13,27 @@ use OCA\Cookbook\Service\RecipeService;
 
 class PageController extends Controller
 {
+    protected $appName;
+
     private $service;
     private $urlGenerator;
 
-    public function __construct($AppName, IRequest $request, RecipeService $recipeService, IURLGenerator $urlGenerator)
+    public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, IURLGenerator $urlGenerator)
     {
         parent::__construct($AppName, $request);
 
         $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
+        $this->appName = $AppName;
     }
 
     /**
-     * CAUTION: the @Stuff turns off security checks; for this page no admin is
-     *          required and no CSRF check. If you don't know what CSRF is, read
-     *          it up in the docs or you might create a security hole. This is
-     *          basically the only required method to add this exemption, don't
-     *          add it to any other method if you don't exactly know what it does
+     * Load the start page of the app.
      *
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function index()
+    public function index(): TemplateResponse
     {
         $view_data = [
             'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
@@ -43,7 +42,7 @@ class PageController extends Controller
             'last_update' => $this->service->getSearchIndexLastUpdateTime(),
         ];
 
-        return new TemplateResponse('cookbook', 'index', $view_data);  // templates/index.php
+        return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
     }
 
     /**
@@ -60,7 +59,7 @@ class PageController extends Controller
             $recipe = $this->service->getRecipeById($_GET['id']);
             $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $_GET['id'], 'size' => 'full']);
             $recipe['id'] = $_GET['id'];
-            $response = new TemplateResponse('cookbook', 'content/recipe', $recipe);
+            $response = new TemplateResponse($this->appName, 'content/recipe', $recipe);
             $response->renderAs('blank');
 
             return $response;
@@ -91,7 +90,7 @@ class PageController extends Controller
             
             }
 
-            $response = new TemplateResponse('cookbook', 'content/edit', $recipe);
+            $response = new TemplateResponse($this->appName, 'content/edit', $recipe);
             $response->renderAs('blank');
 
             return $response;
