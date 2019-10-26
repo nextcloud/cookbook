@@ -7,6 +7,7 @@ use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\Files\IRootFolder;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Controller;
@@ -26,12 +27,11 @@ class RecipeController extends Controller
      */
     private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, IConfig $config, $UserId, IURLGenerator $urlGenerator)
+    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService)
     {
         parent::__construct($AppName, $request);
-        $this->userId = $UserId;
 
-        $this->service = new RecipeService($root, $UserId, $db, $config);
+        $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -184,8 +184,11 @@ class RecipeController extends Controller
             $file = $this->service->getRecipeImageFileByFolderId($id, $size);
 
             return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
+        
         } catch (\Exception $e) {
-            return new DataResponse('Image not found: ' . $e->getMessage(), Http::STATUS_NOT_FOUND);
+            $file = file_get_contents(dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg');
+            
+            return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
         }
     }
 }

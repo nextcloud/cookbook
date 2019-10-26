@@ -13,16 +13,14 @@ use OCA\Cookbook\Service\RecipeService;
 
 class PageController extends Controller
 {
-    private $userId;
     private $service;
     private $urlGenerator;
 
-    public function __construct($AppName, IDBConnection $db, IRootFolder $root, IRequest $request, $UserId, IConfig $config, IURLGenerator $urlGenerator)
+    public function __construct($AppName, IRequest $request, RecipeService $recipeService, IURLGenerator $urlGenerator)
     {
         parent::__construct($AppName, $request);
-        $this->userId = $UserId;
 
-        $this->service = new RecipeService($root, $UserId, $db, $config);
+        $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -39,12 +37,10 @@ class PageController extends Controller
     public function index()
     {
         $view_data = [
-            'all_recipes' => $this->service->getAllRecipesInSearchIndex(),
             'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
             'folder' => $this->service->getUserFolderPath(),
             'update_interval' => $this->service->getSearchIndexUpdateInterval(),
             'last_update' => $this->service->getSearchIndexLastUpdateTime(),
-            'current_node' => isset($_GET['recipe']) ? $this->service->getRecipeFileByFolderId($_GET['recipe']) : null
         ];
 
         return new TemplateResponse('cookbook', 'index', $view_data);  // templates/index.php
