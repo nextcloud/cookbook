@@ -28,7 +28,7 @@ msgstr "Impossible de définir le répertoire de recette sur {path}"
 
 #: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:133
 msgid "Please pick a recipe"
-msgstr "S'il vous plaît choisissez une recette"
+msgstr "Veuillez choisir une recette"
 
 #: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:154
 msgid "Could not load recipe"
@@ -48,7 +48,7 @@ msgstr "Impossible de reconstruire l'index des recettes."
 
 #: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:317
 msgid "Are you sure you want to delete this recipe?"
-msgstr "Êtes-vous sur de vouloir effacer cette recette"
+msgstr "Êtes-vous sur de vouloir effacer cette recette ?"
 
 #: /home/jeppezapp/Development/Web/nextcloud-cookbook/js/script.js:333
 msgid "Failed to delete recipe"
@@ -75,10 +75,10 @@ msgid ""
 "of the recipe, and the provided web page will be parsed and downloaded to "
 "whichever folder you specify in the app settings."
 msgstr ""
-"Une bibliothèque pour toutes vos recettes. Il utilise des fichiers JSON "
-"suivant les modèles de recettes de shema.org. Pour ajouter une recette à la "
-"collection, vous pouvez coller l'URLde la recette, et la page Web fournie "
-"sera analysée et téléchargée dansn'importe quel dossier que vous spécifiez "
+"Une bibliothèque pour toutes vos recettes. Utilise des fichiers JSON "
+"suivant les modèles de recettes de schema.org. Pour ajouter une recette à la "
+"collection, vous pouvez coller l'URL de la recette, et la page Web fournie "
+"sera analysée et téléchargée dans n'importe quel dossier que vous spécifiez "
 "dans les paramètres de l'application."
 
 #. TRANSLATORS The name of the recipe
@@ -215,7 +215,7 @@ msgstr "Veuillez choisir un dossier"
 #. TRANSLATORS The description of the recipe
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:14
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:19
 msgid "Source URL"
