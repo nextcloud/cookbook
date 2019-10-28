@@ -74,11 +74,11 @@ Cookbook.prototype = {
 
             location.hash = recipe.id;
             deferred.resolve();
-        }).fail(function () {
+        }).fail(function (jqXHR, textStatus, errorThrown) {
             $('#add-recipe .icon-download').show();
             $('#add-recipe .icon-loading').hide();
 
-            deferred.reject();
+            deferred.reject(new Error(jqXHR.responseText));
         });
         return deferred.promise();
     },
@@ -104,7 +104,7 @@ Cookbook.prototype = {
             url: self._baseUrl + '/config',
             method: 'POST',
             data: { 'update_interval': interval }
-        }).fail(function () {
+        }).fail(function(e) {
             alert(t(appName, 'Could not set recipe update interval to {interval}', {interval: interval}));
         });
     },
@@ -126,7 +126,7 @@ Cookbook.prototype = {
 
                         cb(path);
                     });
-                }).fail(function () {
+                }).fail(function(e) {
                     alert(t(appName, 'Could not set recipe folder to {path}', {path: path}));
                     cb(null);
                 });
@@ -181,8 +181,8 @@ var Content = function (cookbook) {
 
                 nav.highlightActive();
             })
-            .fail(function (e) {
-                alert(t(appName, 'Could not load recipe'));
+            .fail(function(e) {
+                alert(t(appName, 'Could not load recipe') + (e instanceof Error ? ': ' + e.message : ''));
 
                 nav.highlightActive();
 
@@ -317,7 +317,7 @@ var Content = function (cookbook) {
             nav.render();
         })
         .fail(function(e) {
-            alert(t(appName, 'Could not update recipe'));
+            alert(t(appName, 'Could not update recipe') + (e instanceof Error ? ': ' + e.message : ''));
 
             if(e && e instanceof Error) { throw e; }
         });
@@ -369,8 +369,10 @@ var Nav = function (cookbook) {
         .done(function() {
             self.render();
         })
-        .fail(function () {
-            alert(t(appName, 'Could not add recipe'));
+        .fail(function(e) {
+            alert(t(appName, 'Could not add recipe') + (e instanceof Error ? ': ' + e.message : ''));
+
+            if(e && e instanceof Error) { throw e; }
         });
     };
 
@@ -404,8 +406,10 @@ var Nav = function (cookbook) {
         .done(function () {
             self.render();
         })
-        .fail(function (e) {
-            alert(t(appName, 'Could not rebuild recipe index.'));
+        .fail(function(e) {
+            alert(t(appName, 'Could not rebuild recipe index.') + (e instanceof Error ? ': ' + e.message : ''));
+
+            if(e && e instanceof Error) { throw e; }
         });
     };
 

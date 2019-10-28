@@ -119,12 +119,8 @@ class RecipeService
      */
     public function checkRecipe(array $json): array
     {
-        if (!$json) {
-            throw new Exception('Recipe array was null');
-        }
-        if (empty($json['name'])) {
-            throw new Exception('Field "name" is required');
-        }
+        if (!$json) { throw new Exception('Recipe array was null'); }
+        if (empty($json['name'])) { throw new Exception('Field "name" is required'); }
 
         // Make sure the schema.org fields are present
         $json['@context'] = 'http://schema.org';
@@ -140,7 +136,7 @@ class RecipeService
                 if (isset($json['image']['url'])) {
                     $json['image'] = $json['image']['url'];
 
-                    // Try to get the image with the highest resolution by adding together all numbers in the url
+                // Try to get the image with the highest resolution by adding together all numbers in the url
                 } else {
                     $images = $json['image'];
                     $image_size = 0;
@@ -150,6 +146,8 @@ class RecipeService
                             $img = $img['url'];
                         }
 
+                        if(empty($img)) { continue; }
+        
                         $image_matches = [];
 
                         preg_match_all('!\d+!', $img, $image_matches);
@@ -311,7 +309,6 @@ class RecipeService
             return null;
         }
 
-        //$html = str_replace(["\r", "\n", "\t"], '', $html);
         $json_matches = [];
 
         // Parse JSON
@@ -348,16 +345,15 @@ class RecipeService
             return $this->checkRecipe($json);
         }
 
-        // Parse HTML, if JSON couldn't be found
+        // Parse HTML if JSON couldn't be found
         $json = [];
-        $article_matches = [];
-        preg_match_all('/<article.*itemtype=".*Recipe".*>([\s\S]*?)<\/article>/', $html, $article_matches);
+        $document = new \DOMDocument();
+        $document->loadHTML($html);
+        $xpath = new \DOMXPath($document);
+        
+        $recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 
-        if (!isset($article_matches[1][0])) {
-            throw new Exception('Could not find article element');
-        }
-
-        $article_html = $article_matches[1][0];
+        if(!isset($recipes[0])) { throw new \Exception('Could not find recipe element'); }
 
         $props = [
             'name',
@@ -368,47 +364,30 @@ class RecipeService
             'recipeInstructions', 'instructions', 'steps', 'guide',
         ];
 
-        $prop_matches = [];
+        foreach($props as $prop) {
+            $prop_elements = $xpath->query("//*[@itemprop='" . $prop . "']");
 
-        foreach ($props as $prop) {
-            preg_match_all('/itemprop="' . $prop . '".*>(.*?)<\//', $article_html, $prop_matches, PREG_SET_ORDER);
-
-            foreach ($prop_matches as $prop_match) {
-                if (!$prop_match || !isset($prop_match[1])) {
-                    continue;
-                }
-
-                $value = $prop_match[1];
-
+            foreach ($prop_elements as $prop_element) {
                 switch ($prop) {
                     case 'image':
                     case 'images':
                     case 'thumbnail':
                         $prop = 'image';
-                        $src_matches = [];
-                        preg_match('/="http([^"]+)"/', $prop_match[0], $src_matches);
+                        
+                        if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        if (!isset($src_matches[1])) {
-                            break;
-                        }
+                        $src = $prop_element->getAttribute('src');
 
-                        $src = 'http' . $src_matches[1];
-
-                        if (isset($json[$prop]) && strlen($json[$prop]) < strlen($src)) {
-                            break;
-                        }
-
-                        $json[$prop] = $src;
+                        array_push($json[$prop], $src);
                         break;
 
                     case 'recipeIngredient':
                     case 'ingredients':
                         $prop = 'recipeIngredient';
-                        if (!$json[$prop]) {
-                            $json[$prop] = [];
-                        }
+                        
+                        if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        array_push($json[$prop], $value);
+                        array_push($json[$prop], $prop_element->nodeValue);
                         break;
 
                     case 'recipeInstructions':
@@ -416,60 +395,34 @@ class RecipeService
                     case 'steps':
                     case 'guide':
                         $prop = 'recipeInstructions';
-                        if (!$json[$prop]) {
-                            $json[$prop] = [];
-                        }
+                        
+                        if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        array_push($json[$prop], $value);
+                        array_push($json[$prop], $prop_element->nodeValue);
                         break;
 
                     default:
-                        if (isset($json[$prop]) && $json[$prop]) {
-                            break;
-                        }
+                        if (isset($json[$prop]) && $json[$prop]) { break; }
 
-                        $json[$prop] = $value;
+                        $json[$prop] = $prop_element->nodeValue;
+                        break;
                 }
             }
         }
-
+        
         // Make one final desparate attempt at getting the instructions
         if (!isset($json['recipeInstructions']) || !$json['recipeInstructions'] || sizeof($json['recipeInstructions']) < 1) {
-            $step_matches = [];
             $json['recipeInstructions'] = [];
-            preg_match_all('/<p.*>(.*?)<\/p>/', $article_html, $step_matches, PREG_SET_ORDER);
+            
+            $step_elements = $recipes[0]->getElementsByTagName('p');
 
-            foreach ($step_matches as $step_match) {
-                if (!$step_match || !isset($step_match[1])) {
-                    continue;
-                }
+            foreach ($step_elements as $step_element) {
+                if(!$step_element || !$step_element->nodeValue) { continue; }
 
-                $value = $step_match[1];
-
-                array_push($json['recipeInstructions'], $value);
+                array_push($json['recipeInstructions'], $step_element->nodeValue);
             }
         }
-
-        // If no keywords were found, use the ingredients
-        if (!isset($json['keywords']) || !$json['keywords']) {
-            $json['keywords'] = '';
-
-            if (isset($json['recipeIngredient'])) {
-                foreach ($json['recipeIngredient'] as $ingredient) {
-                    $keyword = strip_tags($ingredient);
-                    $keyword = strtolower($keyword);
-                    $parts = array_filter(explode(' ', $keyword));
-                    $keyword = array_pop($parts);
-
-                    if ($json['keywords']) {
-                        $json['keywords'] .= ',';
-                    }
-
-                    $json['keywords'] .= $keyword;
-                }
-            }
-        }
-
+        
         return $this->checkRecipe($json);
     }
 
