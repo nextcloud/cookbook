@@ -20,7 +20,7 @@
 
         <?php if(isset($_['prepTime']) && $_['prepTime']) {
             $prep_interval = new DateInterval($_['prepTime']);
-            $prep_mins = $prep_interval->format('%i');
+            $prep_mins = $prep_interval->format('%I');
             $prep_hours = $prep_interval->format('%h');
         ?>
             <p><strong><?php p($l->t('Preparation time')); ?>: </strong><?php echo $prep_hours . ':' . $prep_mins; ?></p>
@@ -28,7 +28,7 @@
 
         <?php if(isset($_['cookTime']) && $_['cookTime']) {
             $cook_interval = new DateInterval($_['cookTime']);
-            $cook_mins = $cook_interval->format('%i');
+            $cook_mins = $cook_interval->format('%I');
             $cook_hours = $cook_interval->format('%h');
         ?>
             <p><strong><?php p($l->t('Cooking time')); ?>: </strong><?php echo $cook_hours . ':' . $cook_mins; ?></p>
@@ -36,7 +36,7 @@
 
         <?php if(isset($_['totalTime']) && $_['totalTime']) {
             $total_interval = new DateInterval($_['totalTime']);
-            $total_mins = $total_interval->format('%i');
+            $total_mins = $total_interval->format('%I');
             $total_hours = $total_interval->format('%h');
         ?>
             <p><strong><?php p($l->t('Total time')); ?>: </strong><?php echo $total_hours . ':' . $total_mins; ?></p>
