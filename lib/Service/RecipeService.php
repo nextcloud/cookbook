@@ -91,7 +91,7 @@ class RecipeService
      * @param array $json
      * @param string $key
      */
-    private function validateDuration($json, $key)
+    private function validateDuration(&$json, $key)
     {
         // Make sure we have a string and valid DateInterval
         // regex validation from here: https://stackoverflow.com/a/32045167
