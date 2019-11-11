@@ -1,6 +1,6 @@
 # Translations for the cookbook app
 
-This is a quick instruction how to generate translations for the nextcoud app `cookbook`.
+This is a quick instruction how to generate translations for the Nextcloud app `cookbook`.
 
 
 ## TL;DR
@@ -13,7 +13,7 @@ This is a quick instruction how to generate translations for the nextcoud app `c
 ## Introduction
 
 The user must understand how the translations are handled in general:
-In a first step, all translable text must be extracted from the source code.
+In a first step, all translatable text must be extracted from the source code.
 Then this template can be copied and modified in order to translate these texts.
 However the file format is not suitable for automatic online translations.
 Thus a second step must be done in order to generate a better suited structure.
@@ -52,7 +52,7 @@ Go to the next section to make the translations themselves as if you would simpl
 
 ## Steps to modify an existing translation
 
-If not already done, start with the setps from the previous section (Generate a new translation) to checkout and create a local branch.
+If not already done, start with the steps from the previous section (Generate a new translation) to checkout and create a local branch.
 Then go to the folder `translationfiles` in your repo.
 Within it there should be a folder named with the desired language code (e.g. `de`).
 Enter this folder.
@@ -73,31 +73,31 @@ git commit
 
 You will be asked for a commit message.
 Write something useful there.
-Finally you can push the changes to your forked repoo by
+Finally you can push the changes to your forked repo by
 
 ```
 git push -u <remote> <branch>
 ```
 
-You must replace `<remote>` with the remote you used (or `origin` if you do not know what this means) and `<branch>` by the name of the local branch you created ealier (`translation/de` above).
+You must replace `<remote>` with the remote you used (or `origin` if you do not know what this means) and `<branch>` by the name of the local branch you created earlier (`translation/de` above).
 
-This will push the changed to your fork of the repo on github.
+This will push the changed to your fork of the repo on Github.
 To notify the developer of the changes, you need to open a pull request.
-To do so, git already outputs during the `git push` command execution an URL to help crating suh a pull request.
+To do so, git already outputs during the `git push` command execution an URL to help creating such a pull request.
 Open the link in a browser and fill in the fields (sort of comments).
 Make sure you are using `base: develop` of `mrzapp/nextcloud-cookbook` repository in the dropdown list.
-The developer will either merge the chenages into the main development branch or come back to you with further questions.
+The developer will either merge the changes into the main development branch or come back to you with further questions.
 
 ## Steps to generate the necessary files in order to test the translation
 
-The chenages to the `.po` files will not reflect in the nextcloud app without further modifications.
+The changes to the `.po` files will not reflect in the Nextcloud app without further modifications.
 To see the changes in the app online, you need to update the files in the folder `l10n` of the app.
 These files are used by the app to quickly translate any text in the app.
 
 These steps here are just to see the effect of the changes and are not necessary for creating a pull request or helping with translations directly.
 
 You first need to download the translation tool.
-Using the commans line this can be done e.g. by
+Using the commands line this can be done e.g. by
 
 ```
 wget https://github.com/nextcloud/docker-ci/blob/master/translations/translationtool/translationtool.phar?raw=true -O /tmp/translationtool.phar
@@ -111,14 +111,14 @@ Issue the command
 php /tmp/translationtool.phar convert-po-files
 ```
 This will update the files in the `l10n` folder.
-You can copy these files to your nextcloud installation to test the effect (backup the previous content!).
-If you managed to check out the git repo directly in the nextcloud tree, it works instantly.
+You can copy these files to your Nextcloud installation to test the effect (backup the previous content!).
+If you managed to check out the git repo directly in the Nextcloud tree, it works instantly.
 
 
-# Updating the localization files in case of new tranlation entries
+# Updating the localization files in case of new translation entries
 
 In case the app gets extended and new strings are introduced these need to be covered by the translations.
 This section covers this problem.
 
-Just navigate to the the root folder of the nextcloud app and call the `update-pot.sh` file.
+Just navigate to the root folder of the Nextcloud app and call the `update-pot.sh` file.
 This will update the template `.pot` file and all existing translation files `.po` so far to the current state of source.
