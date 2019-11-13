@@ -44,15 +44,29 @@ class ValidateDurationTest extends TestCase
         $this->reflectedValidateDurationMethod->setAccessible(true);
     }
 
-    public function testValidateCorrectTimeInterval()
+    /**
+     * @dataProvider intervalProvider
+     *
+     * @param string $interval
+     * @param bool $expectedResult
+     */
+    public function testValidateCorrectTimeInterval(string $interval, bool $expectedResult)
     {
-        $interval = 'P2Y4DT6H8M';
-        $this->assertTrue($this->reflectedValidateDurationMethod->invoke($this->recipeService, $interval));
+        if ($expectedResult) {
+            $this->assertTrue($this->reflectedValidateDurationMethod->invoke($this->recipeService, $interval));
+        } else {
+            $this->assertFalse($this->reflectedValidateDurationMethod->invoke($this->recipeService, $interval));
+        }
     }
 
-    public function testValidateIncorrectTimeInterval()
+    /**
+     * @return array
+     */
+    public function intervalProvider(): array
     {
-        $interval = 'P2IY4DT6H8M';
-        $this->assertFalse($this->reflectedValidateDurationMethod->invoke($this->recipeService, $interval));
+        return [
+            ['P2Y4DT6H8M', true],
+            ['P2IY4DT6H8M', false],
+        ];
     }
 }
