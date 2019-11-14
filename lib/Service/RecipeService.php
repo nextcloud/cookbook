@@ -88,24 +88,17 @@ class RecipeService
      * Validates that the json has a valid duration element in the given field,
      * or nothing at all.
      *
-     * @param array $json
-     * @param string $key
+     * @param string $duration
+     *
+     * @return bool
      */
-    private function validateDuration(&$json, $key)
+    private function validateDuration(string $duration): bool
     {
         // Make sure we have a string and valid DateInterval
         // regex validation from here: https://stackoverflow.com/a/32045167
-        $interval_regex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
-        if (isset($json[$key]) && is_string($json[$key])) {
-            $time_string = $this->cleanUpString($json[$key]);
-            if (preg_match_all($interval_regex, $time_string)) {
-                $json[$key] = $time_string;
-            } else {
-                $json[$key] = "";
-            }
-        } else {
-            $json[$key] = "";
-        }
+        $intervalRegex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
+
+        return preg_match($intervalRegex, $duration) === 1;
     }
 
     /**
@@ -288,9 +281,14 @@ class RecipeService
             $json['url'] = "";
         }
 
-        $this->validateDuration($json, 'prepTime');
-        $this->validateDuration($json, 'cookTime');
-        $this->validateDuration($json, 'totalTime');
+        $timeSpecifications = ['prepTime', 'cookTime', 'totalTime'];
+        foreach ($timeSpecifications as $timeSpecification) {
+            if (!isset($json[$timeSpecification]) || !$this->validateDuration($this->cleanUpString($json[$timeSpecification]))) {
+                $json[$timeSpecification] = '';
+            } else {
+                $json[$timeSpecification] = $this->cleanUpString($json[$timeSpecification]);
+            }
+        }
 
         return $json;
     }
