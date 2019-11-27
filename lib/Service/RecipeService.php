@@ -168,7 +168,12 @@ class RecipeService
 
         // Make sure that "recipeYield" is an integer which is at least 1 
         if (isset($json['recipeYield']) && $json['recipeYield']) {
-            $yield = filter_var($json['recipeYield'], FILTER_SANITIZE_NUMBER_INT);
+
+            $regex_matches = [];
+            preg_match('/^.*?(\d*)/', $json['recipeYield'], $regex_matches);
+            if (count($regex_matches) >= 1 ){
+                $yield = filter_var($regex_matches[0], FILTER_SANITIZE_NUMBER_INT);
+            }
 
             if ($yield && $yield > 0) {
                 $json['recipeYield'] = (int)$yield;
