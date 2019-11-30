@@ -24,7 +24,7 @@
 
     <fieldset>
         <label><?php p($l->t('Image')); ?></label>
-        <input type="text" name="image" value="<?php if(isset($_['image'])) { echo $_['image']; } ?>"><button id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
+        <input type="text" name="image" value="<?php if(isset($_['image'])) { echo $_['image']; } ?>"><button type="button" id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
     </fieldset>
 
     <fieldset>
