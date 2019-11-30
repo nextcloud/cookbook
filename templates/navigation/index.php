@@ -26,6 +26,7 @@
 <form id="categorize-recipes" class="app-navigation-new">
     <select name="keywords">
         <option selected value=""><?php p($l->t('All')); ?></option>
+        <option value="-1"><?php p($l->t('Uncategorized')); ?></option>
 
         <?php foreach($_['all_keywords'] as $keyword) { ?>
             <?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>

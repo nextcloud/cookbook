@@ -66,6 +66,25 @@ class RecipeDb {
         return $result;
     }
 
+    public function findAllUncategorizedRecipes(string $userId) {
+        $qb = $this->db->getQueryBuilder();
+
+        $qb->select('r.*')
+            ->from('cookbook_keywords', 'k')
+            ->where('k.user_id = :user')
+            ->andWhere('k.name = ""')
+            ->orderBy('k.name');
+        $qb->setParameter('user', $userId, TYPE::STRING);
+
+        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
+
+        $cursor = $qb->execute();
+        $result = $cursor->fetchAll();
+        $cursor->closeCursor();
+
+        return $result;
+    }
+
     public function findAllKeywords(string $userId) {
         $qb = $this->db->getQueryBuilder();
 
