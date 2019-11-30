@@ -692,6 +692,18 @@ class RecipeService
     }
 
     /**
+     * Gets all recipes from the index without a keyword
+     *
+     * @return array
+     */
+    public function getAllUncategorizedRecipesInSearchIndex()
+    {
+        $this->checkSearchIndexUpdate();
+
+        return $this->db->findAllUncategorizedRecipes($this->userId);
+    }
+
+    /**
      * Search for recipes by keywords
      *
      * @param string $keywords

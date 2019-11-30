@@ -43,6 +43,8 @@ class RecipeController extends Controller
     {
         if (empty($_GET['keywords'])) {
             $recipes = $this->service->getAllRecipesInSearchIndex();
+        } elseif ($_GET['keywords'] === '-1,') {
+            $recipes = $this->service->getAllUncategorizedRecipesInSearchIndex();
         } else {
             $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
         }
