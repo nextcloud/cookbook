@@ -51,6 +51,27 @@
         <label><?php p($l->t('Servings')); ?></label>
         <input type="number" name="recipeYield" value="<?php if(isset($_['recipeYield'])) { echo $_['recipeYield']; } ?>">
     </fieldset>
+
+    <fieldset>
+        <label><?php p($l->t('Tools')); ?></label>
+        <ul>
+            <template>
+                <li>
+                    <input type="text" name="tool[]" value="">
+                    <button class="icon-delete"></button>
+                </li>
+            </template>
+            <?php if(isset($_['tool']) && is_array($_['tool'])) { ?>
+                <?php foreach ($_['tool'] as $i => $tool) { ?>
+                    <li>
+                        <input type="text" name="tool[]" value="<?php echo $tool; ?>">
+                        <button class="icon-delete"></button>
+                    </li>
+                <?php } ?>
+            <?php } ?>
+            <button class="icon-add"></button>
+        </ul>
+    </fieldset>
     
     <fieldset>
         <label><?php p($l->t('Ingredients')); ?></label>
