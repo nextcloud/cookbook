@@ -121,7 +121,6 @@ class RecipeController extends Controller
     {
         $recipeData = [];
         parse_str(file_get_contents("php://input"), $recipeData);
-        $this->service->deleteRecipe($id);
         $file = $this->service->addRecipe($recipeData);
 
         return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
