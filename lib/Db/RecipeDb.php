@@ -72,7 +72,7 @@ class RecipeDb {
         $qb->select('r.*')
             ->from('cookbook_keywords', 'k')
             ->where('k.user_id = :user')
-            ->andWhere('k.name = ""')
+            ->andWhere("k.name = ''")
             ->orderBy('k.name');
         $qb->setParameter('user', $userId, TYPE::STRING);
 
