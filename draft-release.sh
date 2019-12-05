@@ -21,7 +21,7 @@ echo ""
 echo "Creating signing key..."
 echo ""
 
-openssl dgst -sha512 -sign ~/.nextcloud/certificates/cookbook.key cookbook.tar.gz | openssl base64
+openssl dgst -sha512 -sign ~/.config/nextcloud/certificates/cookbook.key cookbook.tar.gz | openssl base64
 
 echo ""
 echo "Done!"
