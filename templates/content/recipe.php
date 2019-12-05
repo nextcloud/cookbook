@@ -48,6 +48,13 @@
 
 <aside>
     <ul>
+        <h3><?php p($l->t('Tools')); ?></h3>
+
+        <?php foreach($_['tool'] as $tools) {  ?>
+            <li><?php echo $tools; ?></li>
+        <?php } ?>
+    </ul>
+    <ul>
         <h3><?php p($l->t('Ingredients')); ?></h3>
 
         <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>

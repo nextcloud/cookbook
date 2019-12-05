@@ -198,7 +198,7 @@ var Content = function (cookbook) {
         e.preventDefault();
 
         OC.dialogs.filepicker(
-            t(appName, 'Path to your recipe collection'),
+            t(appName, 'Path to your Recipe Image'),
             function (path) {
                 $('input[name="image"]').val(path);
             },

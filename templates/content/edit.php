@@ -24,7 +24,7 @@
 
     <fieldset>
         <label><?php p($l->t('Image')); ?></label>
-        <input type="text" name="image" value="<?php if(isset($_['image'])) { echo $_['image']; } ?>"><button id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
+        <input type="text" name="image" value="<?php if(isset($_['image'])) { echo $_['image']; } ?>"><button type="button" id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
     </fieldset>
 
     <fieldset>
@@ -50,6 +50,27 @@
     <fieldset>
         <label><?php p($l->t('Servings')); ?></label>
         <input type="number" name="recipeYield" value="<?php if(isset($_['recipeYield'])) { echo $_['recipeYield']; } ?>">
+    </fieldset>
+
+    <fieldset>
+        <label><?php p($l->t('Tools')); ?></label>
+        <ul>
+            <template>
+                <li>
+                    <input type="text" name="tool[]" value="">
+                    <button class="icon-delete"></button>
+                </li>
+            </template>
+            <?php if(isset($_['tool']) && is_array($_['tool'])) { ?>
+                <?php foreach ($_['tool'] as $i => $tool) { ?>
+                    <li>
+                        <input type="text" name="tool[]" value="<?php echo $tool; ?>">
+                        <button class="icon-delete"></button>
+                    </li>
+                <?php } ?>
+            <?php } ?>
+            <button class="icon-add"></button>
+        </ul>
     </fieldset>
     
     <fieldset>
