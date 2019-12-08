@@ -49,27 +49,27 @@
 <aside>
     <ul>
         <h3><?php p($l->t('Tools')); ?></h3>
-        <?php if(isset($_['tool']) && $_['tool']) { ?>
-        <?php foreach($_['tool'] as $tool) {  ?>
-            <li><?php echo $tool; ?></li>
-        <?php }} ?>
+
+        <?php foreach($_['tool'] as $tools) {  ?>
+            <li><?php echo $tools; ?></li>
+        <?php } ?>
     </ul>
     <ul>
         <h3><?php p($l->t('Ingredients')); ?></h3>
-        <?php if(isset($_['recipeIngredient']) && $_['recipeIngredient']) { ?>
+
         <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>
             <li><?php echo $ingredient; ?></li>   
-        <?php }} ?>
+        <?php } ?>
     </ul>    
 </aside>
 
 <main>
     <ol>
         <h3><?php p($l->t('Instructions')); ?></h3>
-        <?php if(isset($_['recipeInstructions']) && $_['recipeInstructions']) { ?>
+
         <?php foreach($_['recipeInstructions'] as $step) {  ?>
             <li><?php echo nl2br($step); ?></li>   
-        <?php }} ?>
+        <?php } ?>
     </ol>
 </main>
 
