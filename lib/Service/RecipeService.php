@@ -231,6 +231,8 @@ class RecipeService
 
                 array_push($ingredients, $ingredient);
             }
+
+            $json['recipeIngredient'] = $ingredients;
         } else {
             $json['recipeIngredient'] = [];
         }
