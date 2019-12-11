@@ -198,6 +198,26 @@ class RecipeService
             $json['keywords'] = '';
         }
 
+        // Make sure that "tool" is an array of strings
+        if (isset($json['tool']) && is_array($json['tool'])) {
+            $tools = [];
+
+            foreach ($json['tool'] as $i => $tool) {
+                $tool = $this->cleanUpString($tool);
+
+                if (!$tool) {
+                    continue;
+                }
+
+                array_push($tools, $tool);
+            }
+            $json['tool'] = $tools;
+        } else {
+            $json['tool'] = [];
+        }
+
+        $json['tool'] = array_filter($json['tool']);
+
         // Make sure that "recipeIngredient" is an array of strings
         if (isset($json['recipeIngredient']) && is_array($json['recipeIngredient'])) {
             $ingredients = [];
@@ -211,6 +231,8 @@ class RecipeService
 
                 array_push($ingredients, $ingredient);
             }
+
+            $json['recipeIngredient'] = $ingredients;
         } else {
             $json['recipeIngredient'] = [];
         }
