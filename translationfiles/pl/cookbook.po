@@ -213,63 +213,62 @@ msgstr "Folder przepisu"
 msgid "Please pick a folder"
 msgstr "Proszę wybierać folder"
 
-#. TRANSLATORS The description of the recipe
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:14
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:19
 msgid "Source URL"
-msgstr ""
+msgstr "Adres źródłowy URL"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:29
 msgid "Prep Time"
-msgstr ""
+msgstr "Czas przygotowania"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:34
 msgid "Cook Time"
-msgstr ""
+msgstr "Czas gotowania"
 
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
 msgid "Print recipe"
-msgstr ""
+msgstr "Wydrukuj przepis"
 
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:18
 msgid "Source"
-msgstr ""
+msgstr "Źródło"
 
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:28
 msgid "Preparation time"
-msgstr ""
+msgstr "Czas przygotowania"
 
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:36
 msgid "Cooking time"
-msgstr ""
+msgstr "Czas gotowania"
 
 #: /tmp/nextcloud-cookbook/js/script.js:108
 msgid "Could not set recipe update interval to {interval}"
-msgstr ""
+msgstr "Nie można ustawić interwału aktualizacji receptury na {Interval}"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:21
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:26
 msgid "Image"
-msgstr ""
+msgstr "Obraz"
 
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:27
 msgid "Pick a local image"
-msgstr ""
+msgstr "Wybierz obraz lokalny"
 
 #: /tmp/nextcloud-cookbook/templates/navigation/index.php:28
 msgid "All"
-msgstr ""
+msgstr "Wszystko"
 
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:17
 msgid "Update interval in minutes"
-msgstr ""
+msgstr "Interwał aktualizacji w minutach"
 
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:19
 msgid "Last update"
-msgstr ""
+msgstr "Ostatnia aktualizacja"
