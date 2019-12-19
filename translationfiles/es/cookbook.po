@@ -272,3 +272,21 @@ msgstr ""
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:19
 msgid "Last update"
 msgstr ""
+
+#: /srv/http/nc/apps/cookbook/js/script.js:201
+msgid "Path to your Recipe Image"
+msgstr ""
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:41
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:42
+msgid "Total time"
+msgstr ""
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:56
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:51
+msgid "Tools"
+msgstr ""
+
+#: /srv/http/nc/apps/cookbook/templates/navigation/index.php:29
+msgid "Uncategorized"
+msgstr ""
