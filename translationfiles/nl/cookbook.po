@@ -107,14 +107,6 @@ msgstr "Afbeelding"
 msgid "Pick a local image"
 msgstr "Kies een lokale afbeelding"
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:31
-msgid "Prep Time"
-msgstr "Bereidingstijd"
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:36
-msgid "Cook Time"
-msgstr "Kooktijd"
-
 #: /tmp/nextcloud-cookbook/templates/content/edit.php:41
 msgid "Keywords (comma-separated)"
 msgstr "Trefwoorden (gescheiden door een komma)"

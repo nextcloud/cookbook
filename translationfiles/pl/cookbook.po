@@ -221,14 +221,6 @@ msgstr "Opis"
 msgid "Source URL"
 msgstr "Adres źródłowy URL"
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:29
-msgid "Prep Time"
-msgstr "Czas przygotowania"
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:34
-msgid "Cook Time"
-msgstr "Czas gotowania"
-
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
 msgid "Print recipe"
 msgstr "Wydrukuj przepis"
