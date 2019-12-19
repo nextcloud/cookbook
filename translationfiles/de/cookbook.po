@@ -1,21 +1,21 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the Nextcloud package.
 #
-# Christian Wolf <christian.wolf@aut.uni-saarland.de>, 2019.
+# Christian Wolf <github@christianwolf.email>, 2019.
 msgid ""
 msgstr ""
 "Project-Id-Version: Nextcloud 3.14159\n"
 "Report-Msgid-Bugs-To: translations\\@example.com\n"
 "POT-Creation-Date: 2019-08-08 14:07+0200\n"
-"PO-Revision-Date: 2019-10-15 13:08+0200\n"
-"Last-Translator: Christian Wolf <christian.wolf@aut.uni-saarland.de>\n"
+"PO-Revision-Date: 2019-12-19 11:36+0100\n"
+"Last-Translator: Christian Wolf <github@christianwolf.email>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.08.1\n"
+"X-Generator: Lokalize 19.08.3\n"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:91
 msgid "Path to your recipe collection"
@@ -224,14 +224,6 @@ msgstr "Beschreibung"
 msgid "Source URL"
 msgstr "Quell-URL"
 
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:29
-msgid "Prep Time"
-msgstr "Vorbereitungsdauer"
-
-#: /tmp/nextcloud-cookbook/templates/content/edit.php:34
-msgid "Cook Time"
-msgstr "Kochdauer"
-
 #: /tmp/nextcloud-cookbook/templates/content/recipe.php:10
 msgid "Print recipe"
 msgstr "Rezept drucken"
@@ -271,3 +263,20 @@ msgstr "Aktualisierungsintervall in Minuten"
 #: /tmp/nextcloud-cookbook/templates/settings/index.php:19
 msgid "Last update"
 msgstr "Letzte Aktualisierung"
+
+#: /srv/http/nc/apps/cookbook/js/script.js:201
+msgid "Path to your Recipe Image"
+msgstr "Pfad zum Rezeptbild"
+
+#: /srv/http/nc/apps/cookbook/templates/content/edit.php:56
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:51
+msgid "Tools"
+msgstr "Utensilien"
+
+#: /srv/http/nc/apps/cookbook/templates/content/recipe.php:42
+msgid "Total time"
+msgstr "Gesamtzeit"
+
+#: /srv/http/nc/apps/cookbook/templates/navigation/index.php:29
+msgid "Uncategorized"
+msgstr "Ohne Kategorie"

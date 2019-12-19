@@ -28,17 +28,17 @@
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Prep Time')); ?></label>
+        <label><?php p($l->t('Preparation time')); ?></label>
         <input type="text" name="prepTime" value="<?php if(isset($_['prepTime'])) {echo $_['prepTime']; } ?>" placeholder="PT0H15M">
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Cook Time')); ?></label>
+        <label><?php p($l->t('Cooking time')); ?></label>
         <input type="text" name="cookTime" value="<?php if(isset($_['cookTime'])) { echo $_['cookTime']; } ?>" placeholder="PT1H30M">
     </fieldset>
 
     <fieldset>
-        <label><?php p($l->t('Total Time')); ?></label>
+        <label><?php p($l->t('Total time')); ?></label>
         <input type="text" name="totalTime" value="<?php if(isset($_['totalTime'])) { echo $_['totalTime']; } ?>" placeholder="PT1H30M">
     </fieldset>
 

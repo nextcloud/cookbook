@@ -7,8 +7,9 @@ This is a quick instruction how to generate translations for the Nextcloud app `
 
 1. Clone a user fork of the [cookbook app](https://github.com/mrzapp/nextcloud-cookbook)
 2. Create new branch and checkout
-3. Use the `translationfiles/template/cookbook.pot` template and generate/update the `translationfiles/<lang>/cookbook.po` file
-4. Commit and create pull request against the `develop` branch
+3. Update the translation template by calling `update-pot.sh` in the root folder
+4. Use the `translationfiles/template/cookbook.pot` template and generate/update the `translationfiles/<lang>/cookbook.po` file
+5. Commit and create pull request against the `develop` branch
 
 ## Introduction
 
@@ -42,6 +43,12 @@ git checkout -b <branchname>
 ```
 Replace `<branchname>` with something useful like `translation/de`.
 
+Ideally, you update the translation template to be up-to-date.
+Otherwise, newly added texts are not presented for translation.
+To do so, go to the root folder of your git repository.
+Call the command `update-pot.sh` there.
+You might need to install a _gettext_ package if the command `msgcat` is not found.
+
 Go into the folder `translationfiles`.
 Create a new folder with the corresponding language code (e.g. `de`).
 Copy the template file from `template/cookcook.pot` to the file `cookbook.po` (without the `t` at the end) in your newly created folder.
@@ -53,6 +60,8 @@ Go to the next section to make the translations themselves as if you would simpl
 ## Steps to modify an existing translation
 
 If not already done, start with the steps from the previous section (Generate a new translation) to checkout and create a local branch.
+Optionally, update the translation template to be up-to-date.
+Call `update-pot.sh` in the repo's root folder (see previous section) to do so.
 Then go to the folder `translationfiles` in your repo.
 Within it there should be a folder named with the desired language code (e.g. `de`).
 Enter this folder.
