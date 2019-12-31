@@ -267,18 +267,18 @@ msgstr "Dernière mise à jour"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:201
 msgid "Path to your Recipe Image"
-msgstr ""
+msgstr "Chemin vers votre image pour illustrer la recette"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:41
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:42
 msgid "Total time"
-msgstr ""
+msgstr "Temps total"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:56
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:51
 msgid "Tools"
-msgstr ""
+msgstr "Ustensiles"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:29
 msgid "Uncategorized"
-msgstr ""
+msgstr "Non classé"
