@@ -261,6 +261,10 @@
     #app-content {
         margin-left: 0 !important;
     }
+    
+    #app-content header img {
+        display: none !important;
+    }
 
     a:link:after,
     a:visited:after {
