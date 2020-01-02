@@ -19,59 +19,59 @@ msgstr ""
 
 #: /srv/http/nc/apps/cookbook/js/script.js:108
 msgid "Could not set recipe update interval to {interval}"
-msgstr ""
+msgstr "Kunde inte välja uppdateringsinterval till {interval}"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:115
 msgid "Path to your recipe collection"
-msgstr ""
+msgstr "Sökväg till din receptsamling"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:130
 msgid "Could not set recipe folder to {path}"
-msgstr ""
+msgstr "Kunde inte välja receptkatalog eller sökväg"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:155
 msgid "Please pick a recipe"
-msgstr ""
+msgstr "Välj ett recpt"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:185
 msgid "Could not load recipe"
-msgstr ""
+msgstr "Kan inte hämta recept"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:201
 msgid "Path to your Recipe Image"
-msgstr ""
+msgstr "Sökväg till din receptbild"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:216
 msgid "Are you sure you want to delete this recipe?"
-msgstr ""
+msgstr "Är du säker på att du vill ta bort detta recept?"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:233
 msgid "Failed to delete recipe"
-msgstr ""
+msgstr "Misslyckades med att ta bort recept"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:320
 msgid "Could not update recipe"
-msgstr ""
+msgstr "Kunde inte uppdatera recept"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:373
 msgid "Could not add recipe"
-msgstr ""
+msgstr "Kunde inte lägga till recept"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:410
 msgid "Could not rebuild recipe index."
-msgstr ""
+msgstr "Kunde inte bygga om receptindex"
 
 #: /srv/http/nc/apps/cookbook/js/script.js:469
 msgid "Failed to fetch recipes"
-msgstr ""
+msgstr "Hämtning av recept misslyckades"
 
 #: /srv/http/nc/apps/cookbook/specialAppInfoFakeDummyForL10nScript.php:2
 msgid "Cookbook"
-msgstr ""
+msgstr "Kokbok"
 
 #: /srv/http/nc/apps/cookbook/specialAppInfoFakeDummyForL10nScript.php:3
 msgid "An integrated cookbook using schema.org JSON files as recipes"
-msgstr ""
+msgstr "En integrerad kokbok som använder schema.org JSON filer som recept"
 
 #: /srv/http/nc/apps/cookbook/specialAppInfoFakeDummyForL10nScript.php:4
 msgid ""
@@ -80,16 +80,20 @@ msgid ""
 "of the recipe, and the provided web page will be parsed and downloaded to "
 "whichever folder you specify in the app settings."
 msgstr ""
+"Ett bibliotek för alla dina recept. Det använder JSON-filer som följer"
+"schema.org-formatet. För att lägga till ett recept i din samling, kopiera"
+"in URL-länken till receptet, så kommer webbsidan med receptet att analyseras"
+"och laddas ned till den mapp du valt i Inställningar."
 
 #. TRANSLATORS The name of the recipe
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:10
 msgid "Name"
-msgstr ""
+msgstr "Namn"
 
 #. TRANSLATORS The description of the recipe
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:16
 msgid "Description"
-msgstr ""
+msgstr "Beskrivning"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:21
 msgid "URL"
@@ -97,115 +101,115 @@ msgstr ""
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:26
 msgid "Image"
-msgstr ""
+msgstr "Bild"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:27
 msgid "Pick a local image"
-msgstr ""
+msgstr "Välj en bild"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:31
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:26
 msgid "Preparation time"
-msgstr ""
+msgstr "Förberedningstid"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:36
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:34
 msgid "Cooking time"
-msgstr ""
+msgstr "Tillagningstid"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:41
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:42
 msgid "Total time"
-msgstr ""
+msgstr "Total tid"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:46
 msgid "Keywords (comma-separated)"
-msgstr ""
+msgstr "Nyckelord (kommaseparerad)"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:51
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:45
 msgid "Servings"
-msgstr ""
+msgstr "Portioner"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:56
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:51
 msgid "Tools"
-msgstr ""
+msgstr "Verktyg"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:77
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:58
 msgid "Ingredients"
-msgstr ""
+msgstr "Ingredienser"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:99
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:68
 msgid "Instructions"
-msgstr ""
+msgstr "Instruktioner"
 
 #: /srv/http/nc/apps/cookbook/templates/content/edit.php:120
 msgid "Save"
-msgstr ""
+msgstr "Spara"
 
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:7
 msgid "Edit recipe"
-msgstr ""
+msgstr "Redigera recept"
 
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:8
 msgid "Print recipe"
-msgstr ""
+msgstr "Skriv ut recept"
 
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:9
 msgid "Delete recipe"
-msgstr ""
+msgstr "Ta bort recept"
 
 #: /srv/http/nc/apps/cookbook/templates/content/recipe.php:16
 msgid "Source"
-msgstr ""
+msgstr "Källa"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:2
 msgid "Create recipe"
-msgstr ""
+msgstr "Skapa recept"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:6
 msgid "Recipe URL"
-msgstr ""
+msgstr "Recept URL"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:7
 msgid "Download recipe"
-msgstr ""
+msgstr "Ladda ned recept"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:14
 msgid "Search"
-msgstr ""
+msgstr "Sök"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:28
 msgid "All"
-msgstr ""
+msgstr "Samtliga"
 
 #: /srv/http/nc/apps/cookbook/templates/navigation/index.php:29
 msgid "Uncategorized"
-msgstr ""
+msgstr "Okategoriserade"
 
 #: /srv/http/nc/apps/cookbook/templates/settings/index.php:3
 msgid "Settings"
-msgstr ""
+msgstr "Inställnigar"
 
 #: /srv/http/nc/apps/cookbook/templates/settings/index.php:9
 msgid "Rescan library"
-msgstr ""
+msgstr "Uppdatera bibliotek"
 
 #: /srv/http/nc/apps/cookbook/templates/settings/index.php:12
 msgid "Recipe folder"
-msgstr ""
+msgstr "Receptkatalog"
 
 #: /srv/http/nc/apps/cookbook/templates/settings/index.php:13
 msgid "Please pick a folder"
-msgstr ""
+msgstr "Välj katalog"
 
 #: /srv/http/nc/apps/cookbook/templates/settings/index.php:17
 msgid "Update interval in minutes"
-msgstr ""
+msgstr "Uppdateringsintervall"
 
 #: /srv/http/nc/apps/cookbook/templates/settings/index.php:19
 msgid "Last update"
-msgstr ""
+msgstr "Senaste uppdatering"
