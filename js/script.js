@@ -152,8 +152,7 @@ var Content = function (cookbook) {
         var isEditor = location.hash.indexOf('|edit') > -1 || location.hash === '#new';
 
         if(!recipeId && !isEditor) {
-            $('#app-content-wrapper').html(t(appName, 'Please pick a recipe'));
-
+            $('#app-content-wrapper').load(cookbook._baseUrl + '/home');
         } else {
             $.ajax({
                 url: cookbook._baseUrl + '/' + (isEditor ? 'edit' : 'recipe') + (isEditor && !recipeId ? '?new' : '?id=' + recipeId),
@@ -289,11 +288,11 @@ var Content = function (cookbook) {
     self.onAddListItem = function(e) {
         e.preventDefault();
 
-        var $ul = $(e.currentTarget).parents('ul');
-        var $add = $ul.find('.icon-add');
+        var $ul = $(e.currentTarget).closest('fieldset').children('ul');
         var template = $ul.find('template').html();
+        var $item = $(template);
 
-        var $item = $(template).insertBefore($add);
+        $ul.append($item);
 
         $item.find('input').focus();
 
@@ -329,6 +328,8 @@ var Content = function (cookbook) {
  */
 var Nav = function (cookbook) {
     var self = this;
+
+    self.query = null;
 
     /**
      * Event: Change recipe folder
@@ -382,16 +383,14 @@ var Nav = function (cookbook) {
     self.onCategorizeRecipes = function(e) {
         e.preventDefault();
 
-        $('#find-recipes input').val('');
-
         self.render();
     };
 
     /**
      * Event: Submit new search query
      */
-    self.onFindRecipes = function(e) {
-        e.preventDefault();
+    self.onFindRecipes = function(query) {
+        self.query = query;
 
         $('#categorize-recipes select').val(null);
 
@@ -416,12 +415,10 @@ var Nav = function (cookbook) {
     /**
      * Event: Clear recipe search
      */
-    self.onClearRecipeSearch = function(e) {
-        e.preventDefault();
+    self.onClearRecipeSearch = function() {
+        self.query = null;
 
-        $('#find-recipes input').val('');
-
-        self.onFindRecipes(e);
+        self.render();
     }
 
     /**
@@ -430,7 +427,7 @@ var Nav = function (cookbook) {
      * @return {String} Keywords
      */
     self.getKeywords = function() {
-        return [$('#categorize-recipes select').val(), $('#find-recipes input').val()].join(',');
+        return [$('#categorize-recipes select').val(), self.query].join(',');
     }
 
     /**
@@ -504,6 +501,8 @@ var Nav = function (cookbook) {
         $('#reindex-recipes').click(self.onReindexRecipes);
 
     };
+
+    this.search = new OCA.Search(self.onFindRecipes, self.onClearRecipeSearch);
 }
 
 var cookbook = new Cookbook(OC.generateUrl('/apps/cookbook'));

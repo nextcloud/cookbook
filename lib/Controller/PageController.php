@@ -49,6 +49,18 @@ class PageController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
+    public function home()
+    {
+        $response = new TemplateResponse($this->appName, 'navigation/home');
+        $response->renderAs('blank');
+
+        return $response;
+    }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function recipe()
     {
         if (!isset($_GET['id'])) {
@@ -83,11 +95,11 @@ class PageController extends Controller
 
             if (isset($_GET['id'])) {
                 $recipe = $this->service->getRecipeById($_GET['id']);
-            
+
                 if(!$recipe) { throw new \Exception('Recipe ' . $_GET['id'] . ' not found'); }
 
                 $recipe['id'] = $_GET['id'];
-            
+
             }
 
             $response = new TemplateResponse($this->appName, 'content/edit', $recipe);

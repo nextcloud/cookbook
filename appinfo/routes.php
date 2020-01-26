@@ -10,6 +10,7 @@
 return [
     'routes' => [
 	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
+	   ['name' => 'page#home', 'url' => '/home', 'verb' => 'GET'],
 	   ['name' => 'page#recipe', 'url' => '/recipe', 'verb' => 'GET'],
 	   ['name' => 'page#edit', 'url' => '/edit', 'verb' => 'GET'],
 	   ['name' => 'recipe#index', 'url' => '/recipes', 'verb' => 'GET'],

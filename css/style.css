@@ -12,26 +12,15 @@
     #app-navigation .app-navigation-create {
         padding: 10px;
     }
-        #app-navigation #clear-recipe-search {
-            border-top: 1px solid var(--color-border-dark);
-            border-bottom: 1px solid var(--color-border-dark);
-            padding: 0 15px;
-        }
 
-        #app-navigation input:hover ~ #clear-recipe-search,
-        #app-navigation input:focus ~ #clear-recipe-search {
-            border-color: var(--color-primary-element);
-        }
-            
         #app-navigation .app-navigation-create .button {
+            display: inline-block;
             width: 100%;
-            padding: 6px 12px;
-            padding-left: 12px;
+            padding: 10px;
             padding-left: 34px;
+            background-position: 10px center;
+            text-align: left;
             margin: 0;
-            border-radius: var(--border-radius);
-            background-position: left 9px center;
-            z-index: 2;
         }
 
     #app-navigation select {
@@ -47,7 +36,7 @@
         #app-navigation .app-navigation-new:not(:first-child) {
             padding-top: 0;
         }
-       
+
         #app-navigation #create-recipe > button {
             height: 40px !important;
         }
@@ -61,7 +50,7 @@
             border-right-width: 0;
             flex-basis: 0;
         }
-        
+
         #app-navigation .app-navigation-new button {
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             padding: 0 !important;
@@ -90,7 +79,7 @@
         background-position: left 9px center;
         z-index: 2;
     }
-    
+
     #app-settings input[type="text"],
     #app-settings input[type="number"],
     #app-settings .button {
@@ -107,25 +96,36 @@
 
 #app-content-wrapper {
     flex-wrap: wrap;
-    padding: 2em;
 }
+    .home {
+        padding: 1rem;
+    }
+
+        .home .feature {
+            background-position: left top;
+            min-height: 32px;
+            padding-left: 32px;
+            margin-top: 1em;
+        }
+
+    .loader {
+        text-align: center;
+        flex-basis: 100%;
+        padding-top: 50px;
+    }
+
+    #controls {
+        flex-basis: 100%;
+    }
+        #controls .pull-right {
+            display: inline-flex;
+            flex-grow: 100;
+            flex-direction: row-reverse;
+        }
+
     #app-content-wrapper header {
         flex-basis: 100%;
-        margin-bottom: 1rem;
-        line-height: 1.5;
     }
-        #app-content-wrapper header .recipe-toolbar {
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-            #app-content-wrapper header .recipe-toolbar .button {
-                width: 40px;
-                height: 40px;
-                line-height: 40px;
-                text-align: center;
-            }
-            
         #app-content-wrapper header img {
             max-width: 100%;
             max-height: 40vh;
@@ -154,6 +154,11 @@
                     vertical-align: middle;
                 }
 
+    #app-content-wrapper .recipe-content {
+        padding: 1rem;
+        flex-basis: 100%;
+    }
+
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);
     }
@@ -169,11 +174,14 @@
     #app-content-wrapper form {
         width: 100%;
     }
+        #app-content-wrapper form .recipe-edit {
+            padding: 1rem;
+        }
         #app-content-wrapper form fieldset {
             margin-bottom: 1em;
             width: 100%;
         }
-        
+
         #app-content-wrapper form fieldset > input {
             width: calc(100% - 11em);
             margin: 0;
@@ -185,7 +193,7 @@
             border-bottom-right-radius: 0;
             border-right: 0;
         }
-        
+
         #app-content-wrapper form fieldset > input[name="image"] + button {
             border-top-right-radius: var(--border-radius);
             border-bottom-right-radius: var(--border-radius);
@@ -194,7 +202,7 @@
             width: 3em;
             margin: 0;
         }
-        
+
         #app-content-wrapper form fieldset > input[name="image"] + button > * {
             pointer-events: none;
         }
@@ -205,7 +213,7 @@
             line-height: 18px;
             font-weight: bold;
         }
-      
+
         #app-content-wrapper form fieldset ul label input[type="checkbox"] {
             margin-left: 1em;
             vertical-align: middle;
@@ -216,26 +224,36 @@
             margin-top: 1em;
             padding-left: 1em;
         }
-        
+
         #app-content-wrapper form fieldset > ul > li > input {
-            width: calc(100% - 3em);
+            width: 100%;
             margin: 0 0 1em 0;
         }
-        
+
+        #app-content-wrapper form fieldset > ul > li > button {
+            position: absolute;
+            right: 10px;
+            margin-top: 8px;
+            margin-right: 9px;
+            z-index: 10;
+        }
+
         #app-content-wrapper form fieldset > ul > li > textarea {
             width: calc(100% - 3em);
             margin: 0;
             height: 10em;
             resize: none;
         }
-        
-        #app-content-wrapper form fieldset > ul button {
+
+        #app-content-wrapper form fieldset button {
             border: 0;
             background-color: transparent;
             position: relative;
-            top: -2px;
         }
-        
+        #app-content-wrapper form fieldset button.right {
+            float: right;
+        }
+
         #app-content-wrapper form button[type="submit"] {
             margin-left: auto;
             display: block;
@@ -261,7 +279,7 @@
     #app-content {
         margin-left: 0 !important;
     }
-    
+
     #app-content header img {
         display: none !important;
     }

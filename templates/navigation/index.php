@@ -10,19 +10,6 @@
     </button>
 </form>
 
-<form id="find-recipes" class="app-navigation-new">
-    <input list="list-keywords" name="keywords" placeholder="<?php p($l->t('Search')); ?>" multiple>
-    <datalist id="list-keywords">
-        <?php foreach($_['all_keywords'] as $keyword) { ?>
-            <?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
-            
-            <option value="<?php echo $keyword['name']; ?>">
-        <?php } ?>
-    </datalist>
-    <a id="clear-recipe-search" class="icon-close"></a>
-    <button class="icon-category-search" type="submit"></button>
-</form>
-
 <form id="categorize-recipes" class="app-navigation-new">
     <select name="keywords">
         <option selected value=""><?php p($l->t('All')); ?></option>
