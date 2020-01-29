@@ -202,7 +202,7 @@ var Content = function (cookbook) {
                 $('input[name="image"]').val(path);
             },
             false,
-            'image/jpeg',
+            ['image/jpeg', 'image/png'],
             true,
             OC.dialogs.FILEPICKER_TYPE_CHOOSE
         );
