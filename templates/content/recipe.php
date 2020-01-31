@@ -23,11 +23,11 @@
             <a href="#" class="icon-home"><?php p($l->t('Home')); ?></a>
         </div>
         <div class="crumb svg">
-            <a href="#<?php echo $_['id']; ?>"><?php echo $_['name']; ?></a>
+            <a href="#recipes/<?php echo $_['id']; ?>"><?php echo $_['name']; ?></a>
         </div>
     </div>
     <div class="actions">
-        <a id="edit-recipe" href="#<?php echo $_['id']; ?>|edit" class="button svg action" title="<?php p($l->t('Edit recipe')); ?>">
+        <a id="edit-recipe" href="#recipes/<?php echo $_['id']; ?>/edit" class="button svg action" title="<?php p($l->t('Edit recipe')); ?>">
             <span class="icon icon-rename"></span>
             <span class="hidden-visually"><?php p($l->t('Edit recipe')); ?></span>
         </a>
@@ -120,4 +120,3 @@
         </ol>
     </main>
 <?php } ?>
-

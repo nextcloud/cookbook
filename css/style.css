@@ -265,6 +265,7 @@
 @media print {
     #header,
     #app-navigation,
+    #controls,
     .recipe-toolbar {
         display: none !important;
     }

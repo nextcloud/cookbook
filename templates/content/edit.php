@@ -1,4 +1,4 @@
-<form id="editRecipeForm" action="#" method="POST">
+<form id="editRecipeForm" action="#" method="<?php echo $_['id'] ? 'PUT' : 'POST' ?>">
     <div id="controls">
         <div class="breadcrumb">
             <div class="crumb svg crumbmenu hidden">
@@ -35,7 +35,7 @@
         </div>
 
         <div class="actions pull-right">
-            <a id="edit-recipe" href="#<?php echo $_['id']; ?>" class="button svg action" title="<?php p($l->t('Cancel')); ?>">
+            <a id="edit-recipe" href="#recipes/<?php echo $_['id']; ?>" class="button svg action" title="<?php p($l->t('Cancel')); ?>">
                 <span class="icon icon-close"></span>
                 <span class="hidden-visually"><?php p($l->t('Cancel')); ?></span>
             </a>
