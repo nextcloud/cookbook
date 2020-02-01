@@ -53,6 +53,7 @@
 <?php } ?>
 
 <div class="recipe-content">
+	<h2><?php echo $_['name']; ?></h2>
     <div class="recipe-details">
         <?php if(isset($_['url']) && $_['url']) { ?>
             <p><strong><?php p($l->t('Source')); ?>: </strong><a target="_blank" href="<?php echo $_['url']; ?>"><?php echo $_['url']; ?></a></p>
