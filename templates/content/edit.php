@@ -97,14 +97,14 @@
                 <template>
                     <li>
                         <input type="text" name="tool[]" value="">
-                        <button class="icon-delete"></button>
+                        <button class="icon-delete right"></button>
                     </li>
                 </template>
                 <?php if(isset($_['tool']) && is_array($_['tool'])) { ?>
                     <?php foreach ($_['tool'] as $i => $tool) { ?>
                         <li>
                             <input type="text" name="tool[]" value="<?php echo $tool; ?>">
-                            <button class="icon-delete"></button>
+                            <button class="icon-delete right"></button>
                         </li>
                     <?php } ?>
                 <?php } ?>
@@ -118,14 +118,14 @@
                 <template>
                     <li>
                         <input type="text" name="recipeIngredient[]" value="">
-                        <button class="icon-delete"></button>
+                        <button class="icon-delete right"></button>
                     </li>
                 </template>
                 <?php if(isset($_['recipeIngredient']) && is_array($_['recipeIngredient'])) { ?>
                     <?php foreach ($_['recipeIngredient'] as $i => $ingredient) { ?>
                         <li>
                             <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
-                            <button class="icon-delete"></button>
+                            <button class="icon-delete right"></button>
                         </li>
                     <?php } ?>
                 <?php } ?>
@@ -139,14 +139,14 @@
                 <template>
                     <li>
                         <textarea name="recipeInstructions[]"></textarea>
-                        <button class="icon-delete"></button>
+                        <button class="icon-delete right"></button>
                     </li>
                 </template>
                 <?php if(isset($_['recipeInstructions']) && is_array($_['recipeInstructions'])) { ?>
                     <?php foreach ($_['recipeInstructions'] as $i => $step) { ?>
                         <li>
                             <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
-                            <button class="icon-delete"></button>
+                            <button class="icon-delete right"></button>
                         </li>
                     <?php } ?>
                 <?php } ?>

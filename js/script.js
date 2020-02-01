@@ -423,8 +423,8 @@ var Nav = function (cookbook) {
      * Highlight the active item
      */
     self.highlightActive = function() {
-        $('#app-navigation #recipes a').each(function() {
-            $(this).toggleClass('active', $(this).attr('href') === '#' + cookbook.getActiveId());
+        $('#app-navigation #categories a').each(function() {
+            $(this).toggleClass('active', $(this).attr('href') === location.hash);
         });
     }
 

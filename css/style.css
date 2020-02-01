@@ -185,7 +185,12 @@
         #app-content-wrapper form fieldset > input {
             width: calc(100% - 11em);
             margin: 0;
+			float: left;
         }
+		
+			@media(max-width:1199px) { #app-content-wrapper form fieldset > input {
+				width: 100%;
+			}}
 
         #app-content-wrapper form fieldset > input[name="image"] {
             width: calc(100% - 14em);
@@ -193,6 +198,9 @@
             border-bottom-right-radius: 0;
             border-right: 0;
         }
+			@media(max-width:1199px) { #app-content-wrapper form fieldset > input[name="image"] {
+				width: calc(100% - 3em);
+			}}
 
         #app-content-wrapper form fieldset > input[name="image"] + button {
             border-top-right-radius: var(--border-radius);
@@ -212,7 +220,12 @@
             width: 10em;
             line-height: 18px;
             font-weight: bold;
+			float: left;
         }
+			@media(max-width:1199px) { #app-content-wrapper form fieldset > label {
+				display: block;
+				float: none;
+			}}
 
         #app-content-wrapper form fieldset ul label input[type="checkbox"] {
             margin-left: 1em;
@@ -236,6 +249,8 @@
             margin-top: 8px;
             margin-right: 9px;
             z-index: 10;
+			border: 0;
+			background-color: transparent;
         }
 
         #app-content-wrapper form fieldset > ul > li > textarea {
@@ -245,13 +260,11 @@
             resize: none;
         }
 
-        #app-content-wrapper form fieldset button {
+        #app-content-wrapper form fieldset button:first-child {
             border: 0;
             background-color: transparent;
             position: relative;
-        }
-        #app-content-wrapper form fieldset button.right {
-            float: right;
+			float: right;
         }
 
         #app-content-wrapper form button[type="submit"] {
