@@ -176,6 +176,7 @@ var Content = function (cookbook) {
 				
 				$('#print-recipe').click(self.onPrintRecipe);
 				$('#delete-recipe').click(self.onDeleteRecipe);
+				$('main li').click(self.onInstructionClick);
 				
 				self.updateListItems();
 				
@@ -240,6 +241,13 @@ var Content = function (cookbook) {
     self.onPrintRecipe = function(e) {
         window.print();
     };
+
+    /**
+     * Updates all lists items with click events
+     */
+    self.onInstructionClick = function(e) {
+        $(e.target).toggleClass('done');
+    }
 
     /**
      * Updates all lists items with click events

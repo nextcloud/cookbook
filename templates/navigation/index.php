@@ -11,11 +11,11 @@
 </form>
 
 <ul id="categories">
-	<li><a href="#all"><?php echo p($l->t('All recipes')); ?></a></li>
+	<li class="icon-category-organization"><a href="#all"><?php echo p($l->t('All recipes')); ?></a></li>
 	
 	<?php foreach($_['all_keywords'] as $keyword) { ?>
 		<?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
 		
-		<li><a href="#tag/<?php echo urlencode($keyword['name']); ?>"><?php echo $keyword['name']; ?></a></li>
+		<li class="icon-category-files"><a href="#tag/<?php echo urlencode($keyword['name']); ?>"><?php echo $keyword['name']; ?></a></li>
 	<?php } ?>
 </ul>

@@ -11,7 +11,7 @@
                         </a>
                     </li>
                     <li class="crumblist in-breadcrumb">
-                        <a href="#<?php echo $_['id']; ?>">
+                        <a href="#recipes/<?php echo $_['id']; ?>">
                             <span class="icon-folder"></span>
                             <span><?php echo $_['name']; ?></span>
                         </a>
