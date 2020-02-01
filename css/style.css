@@ -158,6 +158,27 @@
         padding: 1rem;
         flex-basis: 100%;
     }
+		#app-content-wrapper .recipe-content ul,
+		#app-content-wrapper .recipe-content ol {
+			padding-left: 3ex;
+		}
+		
+		#app-content-wrapper .recipe-content aside section {
+			display: inline-block;
+			width: 50%;
+			float: left;
+		}
+		#app-content-wrapper .recipe-content aside:after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		@media(max-width:1199px) { #app-content-wrapper .recipe-content aside section {
+			display: block;
+			width: 100%;
+			float: none;
+		}}
+		
 
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);

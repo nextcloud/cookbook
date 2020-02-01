@@ -17,6 +17,7 @@ return [
 	   ['name' => 'page#error', 'url' => '/error', 'verb' => 'GET'],
 	   ['name' => 'page#create', 'url' => '/recipes/create', 'verb' => 'GET'],
 	   ['name' => 'page#new', 'url' => '/recipes/create', 'verb' => 'POST'],
+	   ['name' => 'page#import', 'url' => '/import', 'verb' => 'POST'],
 	   ['name' => 'page#edit', 'url' => '/recipes/{id}/edit', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
 	   ['name' => 'page#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
 	   ['name' => 'page#recipe', 'url' => '/recipes/{id}', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],

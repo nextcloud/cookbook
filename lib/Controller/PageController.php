@@ -192,6 +192,26 @@ class PageController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
+    public function import()
+    {
+        if (!isset($_POST['url'])) {
+            return new DataResponse('Field "url" is required', 400);
+        }
+
+        try {
+            $recipe_file = $this->service->downloadRecipe($_POST['url']);
+            $recipe_json = $this->service->parseRecipeFile($recipe_file);
+			
+			return new DataResponse('#recipes/' . $recipe_file->getParent()->getId() . '/edit');
+        } catch (\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
+    }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function edit($id)
     {
         try {

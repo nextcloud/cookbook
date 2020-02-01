@@ -27,9 +27,11 @@ Cookbook.prototype = {
         return deferred.promise();
     },
     sendForm: function(form) {
-        var url = location.hash.substr(1);
+		var action = form.getAttribute('action');
+		var url = action === '#' ? location.hash.substr(1) : action;
         var data = $(form).serialize();
         var deferred = $.Deferred();
+		
         $.ajax({
             url: this._baseUrl + '/' + url,
             method: form.getAttribute('method'),
@@ -59,9 +61,6 @@ Cookbook.prototype = {
     },
     getActiveId: function () {
         return parseInt(location.hash.replace( /[^0-9]/g, '')) || null;
-    },
-    getActiveRoute: function () {
-        return location.hash.substr(1).split('/');
     },
     add: function (url) {
         var deferred = $.Deferred();
@@ -169,7 +168,6 @@ var Content = function (cookbook) {
 				$('#pick-image').off('click');
 				$('#pick-image').click(self.onPickImage);
 				
-				$('#app-content form').on('submit', self.onSubmitForm);
 				$('#app-content-wrapper form .icon-add').off('click');
 				$('#app-content-wrapper form .icon-add').click(self.onAddListItem);
 				
@@ -305,10 +303,7 @@ var Content = function (cookbook) {
      */
     self.onSubmitForm = function(e) {
         e.preventDefault();
-
-        var route = cookbook.getActiveRoute();
-        var data = $(e.currentTarget).serialize();
-
+		
         cookbook.sendForm(e.currentTarget)
         .then(function(route) {
 			location.hash = route;
@@ -316,10 +311,11 @@ var Content = function (cookbook) {
             nav.render();
         })
         .fail(function(e) {
-            alert(t(appName, 'Could not update recipe') + (e instanceof Error ? ': ' + e.message : ''));
+            alert(t(appName, 'Form submission failed: {error}', {error: e instanceof Error ? e.message : t(appName, 'unknown error')}));
 
             if(e && e instanceof Error) { throw e; }
         });
+		return false;
     };
 };
 
@@ -492,6 +488,8 @@ content.render();
 
 // Render content view on hash change
 window.addEventListener('hashchange', content.render);
+
+$('#app').on('submit', 'form', content.onSubmitForm);
 
 });
 
