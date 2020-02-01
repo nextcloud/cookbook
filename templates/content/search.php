@@ -15,10 +15,17 @@
 			<em><?php p($l->t('No results')); ?></em>
 		</p>
 	<?php } else { ?>
-		<ul>
+		<ul id="search">
 			<?php foreach ($_['recipes'] as $i => $recipe) { ?>
 			    <li>
-			        <a href="#recipes/<?php echo $recipe['recipe_id']; ?>"><?php echo $recipe['name']; ?></a>
+			        <a href="#recipes/<?php echo $recipe['recipe_id']; ?>">
+						<?php if(isset($recipe['image_url']) && $recipe['image_url']) { ?>
+					        <img src="<?php echo $recipe['image_url']; ?>&t=<?php echo time(); ?>">
+						<?php } ?>
+						<span>
+							<?php echo $recipe['name']; ?>
+						</span>
+					</a>
 			    </li>
 			<?php } ?>
 		</ul>
