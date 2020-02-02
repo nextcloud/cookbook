@@ -111,12 +111,13 @@
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
+		margin: 0 -1rem;
 	}
 	
 		#search li {
 			width: 300px;
 			max-width: 100%;
-			margin: 1rem;
+			margin: 0 1rem 1rem;
 		}
 			#search li a {
 				display: block;
