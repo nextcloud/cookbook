@@ -91,7 +91,7 @@ class RecipeDb {
         $qb->select('k.name')
 			->selectAlias($qb->createFunction('COUNT(k.recipe_id)'), 'recipe_count')
             ->from('cookbook_keywords', 'k')
-            ->where('user_id = :user')
+            ->where('user_id = :user AND k.name != \'\'')
             ->groupBy('k.name')
             ->orderBy('k.name');
         $qb->setParameter('user', $userId, TYPE::STRING);

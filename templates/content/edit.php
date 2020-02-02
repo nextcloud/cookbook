@@ -1,31 +1,17 @@
 <form id="editRecipeForm" action="#" method="<?php echo $_['id'] ? 'PUT' : 'POST' ?>">
     <div id="controls">
         <div class="breadcrumb">
-            <div class="crumb svg crumbmenu hidden">
-                <a class="icon-more menutoggle" aria-expanded="false"></a>
-                <div class="popovermenu menu-center menu">
-                    <ul>
-                        <li class="crumblist ui-droppable in-breadcrumb">
-                            <a href="#">
-                                <span class="icon-folder"></span>
-                                <span><?php p($l->t('Home')); ?></span>
-                            </a>
-                        </li>
-                        <li class="crumblist in-breadcrumb">
-                            <a href="#<?php echo $_['id']; ?>">
-                                <span class="icon-folder"></span>
-                                <span><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="crumb svg crumbhome ui-droppable">
                 <a href="#" class="icon-home"><?php p($l->t('Home')); ?></a>
             </div>
             <div class="crumb svg">
-                <a href="#<?php echo $_['id']; ?>"><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></a>
+                <a href="#recipes/<?php echo $_['id']; ?>"><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></a>
             </div>
+			<?php if($_['id']) { ?>
+				<div class="crumb svg">
+					<a href="javascript:;"><?php echo p($l->t('Edit')); ?></a>
+				</div>
+			<?php } ?>
         </div>
         <div class="actions">
             <button type="submit">

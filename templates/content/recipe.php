@@ -1,24 +1,5 @@
 <div id="controls">
     <div class="breadcrumb">
-        <div class="crumb svg crumbmenu hidden">
-            <a class="icon-more menutoggle" aria-expanded="false"></a>
-            <div class="popovermenu menu-center menu">
-                <ul>
-                    <li class="crumblist ui-droppable in-breadcrumb">
-                        <a href="#">
-                            <span class="icon-folder"></span>
-                            <span><?php p($l->t('Home')); ?></span>
-                        </a>
-                    </li>
-                    <li class="crumblist in-breadcrumb">
-                        <a href="#recipes/<?php echo $_['id']; ?>">
-                            <span class="icon-folder"></span>
-                            <span><?php echo $_['name']; ?></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="crumb svg crumbhome ui-droppable">
             <a href="#" class="icon-home"><?php p($l->t('Home')); ?></a>
         </div>

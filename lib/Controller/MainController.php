@@ -11,7 +11,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 
-class PageController extends Controller
+class MainController extends Controller
 {
     protected $appName;
 
@@ -43,6 +43,16 @@ class PageController extends Controller
         ];
 
         return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
+    }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function tags()
+    {
+		$tags = $this->service->getAllKeywordsInSearchIndex();
+        return new DataResponse($tags, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -189,26 +199,6 @@ class PageController extends Controller
 			return new DataResponse($e->getMessage(), 502);
 		}
 	}
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function import()
-    {
-        if (!isset($_POST['url'])) {
-            return new DataResponse('Field "url" is required', 400);
-        }
-
-        try {
-            $recipe_file = $this->service->downloadRecipe($_POST['url']);
-            $recipe_json = $this->service->parseRecipeFile($recipe_file);
-			
-			return new DataResponse('#recipes/' . $recipe_file->getParent()->getId() . '/edit');
-        } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
-        }
-    }
 
     /**
      * @NoAdminRequired

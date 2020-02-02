@@ -240,7 +240,7 @@ var Content = function (cookbook) {
         var id = e.currentTarget.dataset.id;
 
         $.ajax({
-            url: cookbook._baseUrl + '/recipes/' + id,
+            url: cookbook._baseUrl + '/api/recipes/' + id,
             method: 'DELETE',
         })
         .done(function(html) {
@@ -490,26 +490,27 @@ var Nav = function (cookbook) {
      */
     self.render = function () {
         $.ajax({
-            url: cookbook._baseUrl + '/recipes?keywords=' + self.getKeywords(),
+            url: cookbook._baseUrl + '/tags',
             method: 'GET',
         })
         .done(function(json) {
-            var html = json.map(function (recipeData) {
-                var recipeEntry = '<li>';
-                recipeEntry += '<a href="#'+recipeData.recipe_id+'">';
-                recipeEntry += '<img src="'+recipeData.image_url+'">';
-                recipeEntry += recipeData.name;
-                recipeEntry += '</a></li>';
-                return recipeEntry;
-
+            var html = '<li class="icon-category-organization"><a href="#all">' + t(appName, 'All recipes') + '</a></li>';
+			
+			html += json.map(function(tag) {
+                var entry = '<li class="icon-category-files">';
+                entry += '<a href="#tag/' + encodeURIComponent(tag.name) + '">';
+                entry += '<span class="pull-right">' + tag.recipe_count + '</span>';
+                entry += tag.name;
+                entry += '</a></li>';
+                return entry;
             }).join("\n");
-
-            $('#app-navigation #recipes').html(html);
+			
+            $('#app-navigation #categories').html(html);
 
             self.highlightActive();
         })
         .fail(function(e) {
-            alert(t(appName, 'Failed to fetch recipes'));
+            alert(t(appName, 'Failed to fetch tags'));
 
             if(e && e instanceof Error) { throw e; }
         });
