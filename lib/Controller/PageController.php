@@ -75,6 +75,7 @@ class PageController extends Controller
      */
     public function search($query)
     {
+		$query = urldecode($query);
         try {
 			$recipes = $this->service->findRecipesInSearchIndex($query);
 			
@@ -119,6 +120,7 @@ class PageController extends Controller
      */
     public function tag($tag)
     {
+		$tag = urldecode($tag);
         try {
 			$recipes = $this->service->findRecipesInSearchIndex($tag);
 			

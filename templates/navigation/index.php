@@ -16,6 +16,11 @@
 	<?php foreach($_['all_keywords'] as $keyword) { ?>
 		<?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
 		
-		<li class="icon-category-files"><a href="#tag/<?php echo urlencode($keyword['name']); ?>"><?php echo $keyword['name']; ?></a></li>
+		<li class="icon-category-files">
+			<a href="#tag/<?php echo urlencode($keyword['name']); ?>">
+				<strong class="pull-right"><?php echo $keyword['recipe_count']; ?></strong>
+				<?php echo $keyword['name']; ?>
+			</a>
+		</li>
 	<?php } ?>
 </ul>

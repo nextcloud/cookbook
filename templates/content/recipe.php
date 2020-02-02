@@ -55,35 +55,45 @@
 <div class="recipe-content">
 	<h2><?php echo $_['name']; ?></h2>
     <div class="recipe-details">
-        <?php if(isset($_['url']) && $_['url']) { ?>
-            <p><strong><?php p($l->t('Source')); ?>: </strong><a target="_blank" href="<?php echo $_['url']; ?>"><?php echo $_['url']; ?></a></p>
-        <?php } ?>
 
         <p><?php echo $_['description']; ?></p>
+		
+		<div class="times">
+			<?php if(isset($_['prepTime']) && $_['prepTime']) {
+				$prep_interval = new DateInterval($_['prepTime']);
+				$prep_mins = $prep_interval->format('%I');
+				$prep_hours = $prep_interval->format('%h');
+			?>
+				<div class="time">
+		            <h4><?php p($l->t('Preparation time')); ?></h4>
+					<p><?php echo $prep_hours . ':' . $prep_mins; ?></p>
+				</div>
+	        <?php } ?>
 
-        <?php if(isset($_['prepTime']) && $_['prepTime']) {
-            $prep_interval = new DateInterval($_['prepTime']);
-            $prep_mins = $prep_interval->format('%I');
-            $prep_hours = $prep_interval->format('%h');
-        ?>
-            <p><strong><?php p($l->t('Preparation time')); ?>: </strong><?php echo $prep_hours . ':' . $prep_mins; ?></p>
-        <?php } ?>
-
-        <?php if(isset($_['cookTime']) && $_['cookTime']) {
-            $cook_interval = new DateInterval($_['cookTime']);
-            $cook_mins = $cook_interval->format('%I');
-            $cook_hours = $cook_interval->format('%h');
-        ?>
-            <p><strong><?php p($l->t('Cooking time')); ?>: </strong><?php echo $cook_hours . ':' . $cook_mins; ?></p>
-        <?php } ?>
-
-        <?php if(isset($_['totalTime']) && $_['totalTime']) {
-            $total_interval = new DateInterval($_['totalTime']);
-            $total_mins = $total_interval->format('%I');
-            $total_hours = $total_interval->format('%h');
-        ?>
-            <p><strong><?php p($l->t('Total time')); ?>: </strong><?php echo $total_hours . ':' . $total_mins; ?></p>
-        <?php } ?>
+			<?php if(isset($_['cookTime']) && $_['cookTime']) {
+				$cook_interval = new DateInterval($_['cookTime']);
+				$cook_mins = $cook_interval->format('%I');
+				$cook_hours = $cook_interval->format('%h');
+			?>
+				<div class="time">
+					<button type="button" class="icon-play" data-hours="<?php echo $cook_hours ?>" data-minutes="<?php echo $cook_mins ?>"></button>
+		            <h4><?php p($l->t('Cooking time')); ?></h4>
+					<p><?php echo $cook_hours . ':' . $cook_mins; ?></p>
+				</div>
+	        <?php } ?>
+			
+			<?php
+			if(isset($_['totalTime']) && $_['totalTime']) {
+				$total_interval = new DateInterval($_['totalTime']);
+				$total_mins = $total_interval->format('%I');
+				$total_hours = $total_interval->format('%h');
+			?>
+				<div class="time">
+		            <h4><?php p($l->t('Total time')); ?></h4>
+					<p><?php echo $total_hours . ':' . $total_mins; ?></p>
+				</div>
+	        <?php } ?>
+		</div>
 
         <p><strong><?php p($l->t('Servings')); ?>: </strong><?php echo $_['recipeYield']; ?></p>
     </div>
@@ -122,4 +132,8 @@
             <?php } ?>
         </ol>
     </main>
+<?php } ?>
+
+<?php if(isset($_['url']) && $_['url']) { ?>
+	<p><strong><?php p($l->t('Source')); ?>: </strong><a target="_blank" href="<?php echo $_['url']; ?>"><?php echo $_['url']; ?></a></p>
 <?php } ?>

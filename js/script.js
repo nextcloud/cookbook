@@ -176,7 +176,12 @@ var Content = function (cookbook) {
 				
 				$('#print-recipe').click(self.onPrintRecipe);
 				$('#delete-recipe').click(self.onDeleteRecipe);
+				
+				// Toggle instruction
 				$('main li').click(self.onInstructionClick);
+		        
+				// Timer
+				$('.time button').click(self.onTimerToggle);
 				
 				self.updateListItems();
 				
@@ -243,11 +248,40 @@ var Content = function (cookbook) {
     };
 
     /**
-     * Updates all lists items with click events
+     * Event: click on a recipe instruction
      */
     self.onInstructionClick = function(e) {
         $(e.target).toggleClass('done');
     }
+
+    /**
+     * Event: toggle timer
+     */
+    self.onTimerToggle = function(e) {
+		if($(e.target).hasClass('icon-play')) {
+			var hours = parseInt($(e.target).data('hours'));
+			var minutes = parseInt($(e.target).data('minutes'));
+			if((!self.hours || self.hours === hours) && (!self.minutes || self.minutes === minutes)) {
+				self.hours = hours;
+				self.minutes = minutes;
+			}
+			self.timer = window.setInterval(function() {
+				self.minutes--;
+				$(e.target).closest('.time').find('p').text(self.hours + ':' + self.minutes);
+				if(self.hours === 0 && self.minutes === 0) {
+					self.onTimerEnd(e.target);
+				}
+			}, 60 * 1000);
+		} else {
+			window.clearInterval(self.timer);
+		}
+		$(e.target).toggleClass('icon-play icon-pause');
+    }
+	
+	self.onTimerEnd = function(button) {
+		window.clearInterval(self.timer);
+		$(button).removeClass('icon-pause').addClass('icon-play');
+	}
 
     /**
      * Updates all lists items with click events
