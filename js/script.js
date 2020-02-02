@@ -140,7 +140,25 @@ Cookbook.prototype = {
             'httpd/unix-directory',
             true
         );
-    }
+    },
+	notify: function notify(title, options) {
+		if(!("Notification" in window)) {
+			return;
+		} else if(Notification.permission === "granted") {
+			var notification = new Notification(title, options);
+		} else if(Notification.permission !== 'denied') {
+			Notification.requestPermission(function(permission) {
+				if(!('permission' in Notification)) {
+					Notification.permission = permission;
+				}
+				if(permission === "granted") {
+					var notification = new Notification(title, options);
+				} else {
+					alert(title);
+				}
+			});
+		}
+	}
 };
 
 /**
@@ -281,6 +299,7 @@ var Content = function (cookbook) {
 	self.onTimerEnd = function(button) {
 		window.clearInterval(self.timer);
 		$(button).removeClass('icon-pause').addClass('icon-play');
+		cookbook.notify(t(appName, 'Cooking time is up!'));
 	}
 
     /**
