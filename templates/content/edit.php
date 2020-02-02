@@ -2,7 +2,7 @@
     <div id="controls">
         <div class="breadcrumb">
             <div class="crumb svg crumbhome ui-droppable">
-                <a href="#" class="icon-home"><?php p($l->t('Home')); ?></a>
+                <a href="#" class="icon-category-organization"></a>
             </div>
             <div class="crumb svg">
                 <a href="#recipes/<?php echo $_['id']; ?>"><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></a>

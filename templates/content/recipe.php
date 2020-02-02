@@ -1,7 +1,7 @@
 <div id="controls">
     <div class="breadcrumb">
         <div class="crumb svg crumbhome ui-droppable">
-            <a href="#" class="icon-home"><?php p($l->t('Home')); ?></a>
+            <a href="#" class="icon-category-organization"></a>
         </div>
         <div class="crumb svg">
             <a href="#recipes/<?php echo $_['id']; ?>"><?php echo $_['name']; ?></a>
@@ -80,40 +80,42 @@
     </div>
 </header>
 
-<aside>
-	<section>
-	    <?php if(!empty($_['recipeIngredient'])) { ?>
-		<h3><?php p($l->t('Ingredients')); ?></h3>
-	    <ul>
-	        <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>
-	            <li><?php echo $ingredient; ?></li>
-	        <?php } ?>
-	    </ul>
-	    <?php } ?>
-	</section>
-		
-	<section>
-		<?php if(!empty($_['tool'])) { ?>
-			<h3><?php p($l->t('Tools')); ?></h3>
-			<ul>
-				<?php foreach($_['tool'] as $tools) {  ?>
-					<li><?php echo $tools; ?></li>
-				<?php } ?>
-			</ul>
-		<?php } ?>
-	</section>
-</aside>
+<section>
+	<aside>
+		<section>
+		    <?php if(!empty($_['recipeIngredient'])) { ?>
+			<h3><?php p($l->t('Ingredients')); ?></h3>
+		    <ul>
+		        <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>
+		            <li><?php echo $ingredient; ?></li>
+		        <?php } ?>
+		    </ul>
+		    <?php } ?>
+		</section>
+			
+		<section>
+			<?php if(!empty($_['tool'])) { ?>
+				<h3><?php p($l->t('Tools')); ?></h3>
+				<ul>
+					<?php foreach($_['tool'] as $tools) {  ?>
+						<li><?php echo $tools; ?></li>
+					<?php } ?>
+				</ul>
+			<?php } ?>
+		</section>
+	</aside>
 
-<?php if(!empty($_['recipeInstructions'])) { ?>
-    <main>
-		<h3><?php p($l->t('Instructions')); ?></h3>
-        <ol>
-            <?php foreach($_['recipeInstructions'] as $step) {  ?>
-                <li><?php echo nl2br($step); ?></li>
-            <?php } ?>
-        </ol>
-    </main>
-<?php } ?>
+	<?php if(!empty($_['recipeInstructions'])) { ?>
+	    <main>
+			<h3><?php p($l->t('Instructions')); ?></h3>
+	        <ol>
+	            <?php foreach($_['recipeInstructions'] as $step) {  ?>
+	                <li><?php echo nl2br($step); ?></li>
+	            <?php } ?>
+	        </ol>
+	    </main>
+	<?php } ?>
+</section>
 
 <?php if(isset($_['url']) && $_['url']) { ?>
 	<p><strong><?php p($l->t('Source')); ?>: </strong><a target="_blank" href="<?php echo $_['url']; ?>"><?php echo $_['url']; ?></a></p>

@@ -213,6 +213,16 @@
 			text-align: justify;
 		}
 		
+		#app-content-wrapper section {
+			margin-bottom: 1rem;
+		}
+		
+		#app-content-wrapper section::after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		
 		@media(max-width:1199px) { #app-content-wrapper .recipe-content aside {
 			display: block;
 			width: 100%;
