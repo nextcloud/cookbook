@@ -61,10 +61,20 @@ class MainController extends Controller
      */
     public function home()
     {
-        $response = new TemplateResponse($this->appName, 'navigation/home');
-        $response->renderAs('blank');
+        try {
+			$recipes = $this->service->getAllRecipesInSearchIndex();
+			
+			foreach ($recipes as $i => $recipe) {
+				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+			}
+			
+			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
+            $response->renderAs('blank');
 
-        return $response;
+            return $response;
+        } catch (\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
     }
 
     /**
@@ -94,28 +104,6 @@ class MainController extends Controller
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['query' => $query, 'recipes' => $recipes]);
-            $response->renderAs('blank');
-
-            return $response;
-        } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
-        }
-    }
-	
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function all()
-    {
-        try {
-			$recipes = $this->service->getAllRecipesInSearchIndex();
-			
-			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
-			}
-			
-			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
             $response->renderAs('blank');
 
             return $response;

@@ -174,43 +174,42 @@ var Content = function (cookbook) {
 		var route = location.hash.substr(1);
 		
 		if(route.length === 0) {
-			$('#app-content-wrapper').load(cookbook._baseUrl + '/home');
-		} else {
-            $.ajax({
-                url: cookbook._baseUrl + '/' + route,
-                method: 'GET',
-            })
-            .done(function (html) {
-                $('#app-content-wrapper').html(html);
-				
-				$('#pick-image').off('click');
-				$('#pick-image').click(self.onPickImage);
-				
-				$('#app-content-wrapper form .icon-add').off('click');
-				$('#app-content-wrapper form .icon-add').click(self.onAddListItem);
-				
-				$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
-				$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
-				
-				$('#print-recipe').click(self.onPrintRecipe);
-				$('#delete-recipe').click(self.onDeleteRecipe);
-				
-				// Toggle instruction
-				$('main li').click(self.onInstructionClick);
-		        
-				// Timer
-				$('.time button').click(self.onTimerToggle);
-				
-				self.updateListItems();
-				
-                nav.highlightActive();
-            })
-            .fail(function(e) {
-				$('#app-content-wrapper').load(cookbook._baseUrl + '/error');
-				
-                if(e && e instanceof Error) { throw e; }
-            });
+			route = 'home';
 		}
+        $.ajax({
+            url: cookbook._baseUrl + '/' + route,
+            method: 'GET',
+        })
+        .done(function (html) {
+            $('#app-content-wrapper').html(html);
+			
+			$('#pick-image').off('click');
+			$('#pick-image').click(self.onPickImage);
+			
+			$('#app-content-wrapper form .icon-add').off('click');
+			$('#app-content-wrapper form .icon-add').click(self.onAddListItem);
+			
+			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
+			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
+			
+			$('#print-recipe').click(self.onPrintRecipe);
+			$('#delete-recipe').click(self.onDeleteRecipe);
+			
+			// Toggle instruction
+			$('main li').click(self.onInstructionClick);
+	        
+			// Timer
+			$('.time button').click(self.onTimerToggle);
+			
+			self.updateListItems();
+			
+            nav.highlightActive();
+        })
+        .fail(function(e) {
+			$('#app-content-wrapper').load(cookbook._baseUrl + '/error');
+			
+            if(e && e instanceof Error) { throw e; }
+        });
     };
 
     /**
@@ -481,7 +480,7 @@ var Nav = function (cookbook) {
      */
     self.highlightActive = function() {
         $('#app-navigation #categories a').each(function() {
-            $(this).toggleClass('active', $(this).attr('href') === location.hash);
+            $(this).toggleClass('active', $(this).attr('href').substr(1) === location.hash.substr(1));
         });
     }
 
@@ -494,7 +493,7 @@ var Nav = function (cookbook) {
             method: 'GET',
         })
         .done(function(json) {
-            var html = '<li class="icon-category-organization"><a href="#all">' + t(appName, 'All recipes') + '</a></li>';
+            var html = '<li class="icon-category-organization"><a href="#">' + t(appName, 'All recipes') + '</a></li>';
 			
 			html += json.map(function(tag) {
                 var entry = '<li class="icon-category-files">';

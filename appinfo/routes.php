@@ -14,7 +14,6 @@ return [
 	   ['name' => 'main#tags', 'url' => '/tags', 'verb' => 'GET'],
 	   ['name' => 'main#search', 'url' => '/search/{query}', 'verb' => 'GET'],
 	   ['name' => 'main#tag', 'url' => '/tag/{tag}', 'verb' => 'GET'],
-	   ['name' => 'main#all', 'url' => '/all', 'verb' => 'GET'],
 	   ['name' => 'main#error', 'url' => '/error', 'verb' => 'GET'],
 	   ['name' => 'main#create', 'url' => '/recipes/create', 'verb' => 'GET'],
 	   ['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
