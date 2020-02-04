@@ -246,7 +246,7 @@
 			#app-content-wrapper .times .time {
 				position: relative;
 				flex-grow: 1;
-				border: 1px solid #DDD;
+				border: 1px solid var(--color-border-dark);
 				border-radius: 3px;
 				margin: 1rem 2rem;
 				text-align: center;
@@ -262,8 +262,8 @@
 				}
 				#app-content-wrapper .times .time h4 {
 					font-weight: bold;
-					border-bottom: 1px solid #DDD;
-					background-color: #EEE;
+					border-bottom: 1px solid var(--color-border-dark);
+					background-color: var(--color-background-dark);
 					padding: 0.5rem;
 				}
 				
