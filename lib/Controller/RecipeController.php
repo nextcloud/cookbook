@@ -57,47 +57,10 @@ class RecipeController extends Controller
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
-     */
-    public function config()
-    {
-        if (isset($_POST['folder'])) {
-            $this->service->setUserFolderPath($_POST['folder']);
-            $this->service->rebuildSearchIndex();
-        }
-
-        if (isset($_POST['update_interval'])) {
-            $this->service->setSearchIndexUpdateInterval($_POST['update_interval']);
-        }
-
-        return new DataResponse('OK', Http::STATUS_OK);
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function add()
-    {
-        if (!isset($_POST['url'])) {
-            return new DataResponse('Field "url" is required', 400);
-        }
-
-        try {
-            $recipe_file = $this->service->downloadRecipe($_POST['url']);
-            $recipe_json = $this->service->parseRecipeFile($recipe_file);
-            return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
-        } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
-        }
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
      * @param int $id
      * @return DataResponse
      */
-    public function get($id)
+    public function show($id)
     {
         $json = $this->service->getRecipeById($id);
 
@@ -150,7 +113,7 @@ class RecipeController extends Controller
      * @param int $id
      * @return DataResponse
      */
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $this->service->deleteRecipe($id);
@@ -158,17 +121,6 @@ class RecipeController extends Controller
         } catch (\Exception $e) {
             return new DataResponse($e->getMessage(), 502);
         }
-    }
-
-    /**
-     * @NoAdminRequired
-     * @NoCSRFRequired
-     */
-    public function reindex()
-    {
-        $this->service->rebuildSearchIndex();
-
-        return new DataResponse('Search index rebuilt successfully', Http::STATUS_OK);
     }
 
     /**

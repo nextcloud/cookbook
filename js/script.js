@@ -26,30 +26,35 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    update: function(id, recipeData) {
+    sendForm: function(form) {
+		var action = form.getAttribute('action');
+		var url = action === '#' ? location.hash.substr(1) : action;
+        var data = $(form).serialize();
         var deferred = $.Deferred();
-        var method;
-        var url;
-        if(!id) {
-            method = 'POST';
-            url = this._baseUrl + '/recipes';
-        }else if($.isNumeric(id)){
-            method = 'PUT';
-            url =  this._baseUrl + '/recipes/' + id;
-        }else{
-            deferred.reject();
-            return deferred.promise();
-        }
+		
         $.ajax({
-            url: url,
-            method: method,
-            data: recipeData
+            url: this._baseUrl + '/' + url,
+            method: form.getAttribute('method'),
+            data: data
         }).done(function (response) {
             deferred.resolve(response);
         }).fail(function () {
             deferred.reject();
         });
         return deferred.promise();
+    },
+    put: function(url, data) {
+		var deferred = $.Deferred();
+		$.ajax({
+			url: this._baseUrl + url,
+			method: 'PUT',
+			data: data
+		}).done(function (response) {
+			deferred.resolve(response);
+		}).fail(function () {
+			deferred.reject();
+		});
+		return deferred.promise();
     },
     load: function (id) {
         location.hash = id;
@@ -135,7 +140,25 @@ Cookbook.prototype = {
             'httpd/unix-directory',
             true
         );
-    }
+    },
+	notify: function notify(title, options) {
+		if(!("Notification" in window)) {
+			return;
+		} else if(Notification.permission === "granted") {
+			var notification = new Notification(title, options);
+		} else if(Notification.permission !== 'denied') {
+			Notification.requestPermission(function(permission) {
+				if(!('permission' in Notification)) {
+					Notification.permission = permission;
+				}
+				if(permission === "granted") {
+					var notification = new Notification(title, options);
+				} else {
+					alert(title);
+				}
+			});
+		}
+	}
 };
 
 /**
@@ -148,46 +171,45 @@ var Content = function (cookbook) {
      * Render
      */
     self.render = function () {
-        var recipeId = cookbook.getActiveId();
-        var isEditor = location.hash.indexOf('|edit') > -1 || location.hash === '#new';
-
-        if(!recipeId && !isEditor) {
-            $('#app-content-wrapper').load(cookbook._baseUrl + '/home');
-        } else {
-            $.ajax({
-                url: cookbook._baseUrl + '/' + (isEditor ? 'edit' : 'recipe') + (isEditor && !recipeId ? '?new' : '?id=' + recipeId),
-                method: 'GET',
-            })
-            .done(function (html) {
-                $('#app-content-wrapper').html(html);
-
-                $('#pick-image').off('click');
-                $('#pick-image').click(self.onPickImage);
-
-                $('#app-content-wrapper form .icon-add').off('click');
-                $('#app-content-wrapper form .icon-add').click(self.onAddListItem);
-
-                $('#app-content-wrapper form ul li input[type="text"]').off('keypress');
-                $('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
-
-                $('#app-content-wrapper form').off('submit');
-                $('#app-content-wrapper form').submit(self.onUpdateRecipe);
-
-                $('#print-recipe').click(self.onPrintRecipe);
-                $('#delete-recipe').click(self.onDeleteRecipe);
-
-                self.updateListItems();
-
-                nav.highlightActive();
-            })
-            .fail(function(e) {
-                alert(t(appName, 'Could not load recipe') + (e instanceof Error ? ': ' + e.message : ''));
-
-                nav.highlightActive();
-
-                if(e && e instanceof Error) { throw e; }
-            });
-        }
+		var route = location.hash.substr(1);
+		
+		if(route.length === 0) {
+			route = 'home';
+		}
+        $.ajax({
+            url: cookbook._baseUrl + '/' + route,
+            method: 'GET',
+        })
+        .done(function (html) {
+            $('#app-content-wrapper').html(html);
+			
+			$('#pick-image').off('click');
+			$('#pick-image').click(self.onPickImage);
+			
+			$('#app-content-wrapper form .icon-add').off('click');
+			$('#app-content-wrapper form .icon-add').click(self.onAddListItem);
+			
+			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
+			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
+			
+			$('#print-recipe').click(self.onPrintRecipe);
+			$('#delete-recipe').click(self.onDeleteRecipe);
+			
+			// Toggle instruction
+			$('main li').click(self.onInstructionClick);
+	        
+			// Timer
+			$('.time button').click(self.onTimerToggle);
+			
+			self.updateListItems();
+			
+            nav.highlightActive();
+        })
+        .fail(function(e) {
+			$('#app-content-wrapper').load(cookbook._baseUrl + '/error');
+			
+            if(e && e instanceof Error) { throw e; }
+        });
     };
 
     /**
@@ -217,7 +239,7 @@ var Content = function (cookbook) {
         var id = e.currentTarget.dataset.id;
 
         $.ajax({
-            url: cookbook._baseUrl + '/recipes/' + id,
+            url: cookbook._baseUrl + '/api/recipes/' + id,
             method: 'DELETE',
         })
         .done(function(html) {
@@ -241,6 +263,43 @@ var Content = function (cookbook) {
     self.onPrintRecipe = function(e) {
         window.print();
     };
+
+    /**
+     * Event: click on a recipe instruction
+     */
+    self.onInstructionClick = function(e) {
+        $(e.target).toggleClass('done');
+    }
+
+    /**
+     * Event: toggle timer
+     */
+    self.onTimerToggle = function(e) {
+		if($(e.target).hasClass('icon-play')) {
+			var hours = parseInt($(e.target).data('hours'));
+			var minutes = parseInt($(e.target).data('minutes'));
+			if((!self.hours || self.hours === hours) && (!self.minutes || self.minutes === minutes)) {
+				self.hours = hours;
+				self.minutes = minutes;
+			}
+			self.timer = window.setInterval(function() {
+				self.minutes--;
+				$(e.target).closest('.time').find('p').text(self.hours + ':' + self.minutes);
+				if(self.hours === 0 && self.minutes === 0) {
+					self.onTimerEnd(e.target);
+				}
+			}, 60 * 1000);
+		} else {
+			window.clearInterval(self.timer);
+		}
+		$(e.target).toggleClass('icon-play icon-pause');
+    }
+	
+	self.onTimerEnd = function(button) {
+		window.clearInterval(self.timer);
+		$(button).removeClass('icon-pause').addClass('icon-play');
+		cookbook.notify(t(appName, 'Cooking time is up!'));
+	}
 
     /**
      * Updates all lists items with click events
@@ -302,24 +361,21 @@ var Content = function (cookbook) {
     /**
      * Event: Update recipe
      */
-    self.onUpdateRecipe = function(e) {
+    self.onSubmitForm = function(e) {
         e.preventDefault();
-
-        var id = cookbook.getActiveId();
-        var data = $(e.currentTarget).serialize();
-
-        cookbook.update(id, data)
-        .then(function(id) {
-            location.hash = id;
-
+		
+        cookbook.sendForm(e.currentTarget)
+        .then(function(route) {
+			location.hash = route;
             self.render();
             nav.render();
         })
         .fail(function(e) {
-            alert(t(appName, 'Could not update recipe') + (e instanceof Error ? ': ' + e.message : ''));
+            alert(t(appName, 'Form submission failed: {error}', {error: e instanceof Error ? e.message : t(appName, 'unknown error')}));
 
             if(e && e instanceof Error) { throw e; }
         });
+		return false;
     };
 };
 
@@ -328,8 +384,6 @@ var Content = function (cookbook) {
  */
 var Nav = function (cookbook) {
     var self = this;
-
-    self.query = null;
 
     /**
      * Event: Change recipe folder
@@ -348,15 +402,6 @@ var Nav = function (cookbook) {
     self.onChangeRecipeUpdateInterval = function(e) {
         cookbook.setUpdateInterval(e.currentTarget.value);
     };
-
-    /**
-     * Event: Create new recipe
-     */
-    self.onCreateNewRecipe = function(e) {
-        e.preventDefault();
-
-        location.hash = 'new';
-    }
 
     /**
      * Event: Submit new recipe
@@ -390,9 +435,11 @@ var Nav = function (cookbook) {
      * Event: Submit new search query
      */
     self.onFindRecipes = function(query) {
-        self.query = query;
-
-        $('#categorize-recipes select').val(null);
+		if(query) {
+	        location.hash = '#search/' + encodeURIComponent(query);
+		} else {
+			location.hash = '#';
+		}
 
         self.render();
     };
@@ -416,9 +463,7 @@ var Nav = function (cookbook) {
      * Event: Clear recipe search
      */
     self.onClearRecipeSearch = function() {
-        self.query = null;
-
-        self.render();
+        location.hash = '#';
     }
 
     /**
@@ -427,15 +472,15 @@ var Nav = function (cookbook) {
      * @return {String} Keywords
      */
     self.getKeywords = function() {
-        return [$('#categorize-recipes select').val(), self.query].join(',');
+        return [self.query].join(',');
     }
 
     /**
      * Highlight the active item
      */
     self.highlightActive = function() {
-        $('#app-navigation #recipes a').each(function() {
-            $(this).toggleClass('active', $(this).attr('href') === '#' + cookbook.getActiveId());
+        $('#app-navigation #categories a').each(function() {
+            $(this).toggleClass('active', $(this).attr('href').substr(1) === location.hash.substr(1));
         });
     }
 
@@ -444,26 +489,27 @@ var Nav = function (cookbook) {
      */
     self.render = function () {
         $.ajax({
-            url: cookbook._baseUrl + '/recipes?keywords=' + self.getKeywords(),
+            url: cookbook._baseUrl + '/tags',
             method: 'GET',
         })
         .done(function(json) {
-            var html = json.map(function (recipeData) {
-                var recipeEntry = '<li>';
-                recipeEntry += '<a href="#'+recipeData.recipe_id+'">';
-                recipeEntry += '<img src="'+recipeData.image_url+'">';
-                recipeEntry += recipeData.name;
-                recipeEntry += '</a></li>';
-                return recipeEntry;
-
+            var html = '<li class="icon-category-organization"><a href="#">' + t(appName, 'All recipes') + '</a></li>';
+			
+			html += json.map(function(tag) {
+                var entry = '<li class="icon-category-files">';
+                entry += '<a href="#tag/' + encodeURIComponent(tag.name) + '">';
+                entry += '<span class="pull-right">' + tag.recipe_count + '</span>';
+                entry += tag.name;
+                entry += '</a></li>';
+                return entry;
             }).join("\n");
-
-            $('#app-navigation #recipes').html(html);
+			
+            $('#app-navigation #categories').html(html);
 
             self.highlightActive();
         })
         .fail(function(e) {
-            alert(t(appName, 'Failed to fetch recipes'));
+            alert(t(appName, 'Failed to fetch tags'));
 
             if(e && e instanceof Error) { throw e; }
         });
@@ -473,24 +519,12 @@ var Nav = function (cookbook) {
         $('#recipe-update-interval').change(self.onChangeRecipeUpdateInterval);
 
         // Change recipe folder
-        $('#recipe-folder').off('change');
+        // $('#recipe-folder').off('change');
         $('#recipe-folder').change(self.onChangeRecipeFolder);
-
-        // Create a new recipe
-        $('#create-recipe').off('submit');
-        $('#create-recipe').submit(self.onCreateNewRecipe);
-
-        // Add a new recipe
-        $('#add-recipe').off('submit');
-        $('#add-recipe').submit(self.onAddNewRecipe);
 
         // Categorise recipes
         $('#categorize-recipes select').off('change');
         $('#categorize-recipes select').on('change', self.onCategorizeRecipes);
-
-        // Find recipes
-        $('#find-recipes').off('submit');
-        $('#find-recipes').submit(self.onFindRecipes);
 
         // Clear recipe search
         $('#clear-recipe-search').off('click');
@@ -515,6 +549,8 @@ content.render();
 
 // Render content view on hash change
 window.addEventListener('hashchange', content.render);
+
+$('#app').on('submit', 'form', content.onSubmitForm);
 
 });
 

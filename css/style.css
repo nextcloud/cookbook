@@ -22,13 +22,12 @@
             text-align: left;
             margin: 0;
         }
-
-    #app-navigation select {
-        margin: 0;
-        display: block;
-        width: 100%;
-        height: 40px;
-    }
+		
+        #app-navigation li {
+            background-position: 10px center;
+            text-align: left;
+            margin: 0;
+        }
 
     #app-navigation .app-navigation-new {
         display: flex !important;
@@ -107,7 +106,41 @@
             padding-left: 32px;
             margin-top: 1em;
         }
-
+	
+	#search {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		margin: 0 -1rem;
+	}
+	
+		#search li {
+			width: 300px;
+			max-width: 100%;
+			margin: 0 1rem 1rem;
+		}
+			#search li a {
+				display: block;
+				height: 105px;
+				box-shadow: 0 0 3px #AAA;
+				border-radius: 3px;
+			}
+			#search li a:hover {
+				box-shadow: 0 0 5px #888;
+			}
+		
+			#search li img {
+				float: left;
+				height: 105px;
+				border-radius: 3px 0 0 3px;
+			}
+			
+			#search li span {
+				display: block;
+				padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
+			}
+		
+	
     .loader {
         text-align: center;
         flex-basis: 100%;
@@ -125,12 +158,16 @@
 
     #app-content-wrapper header {
         flex-basis: 100%;
+		height: 40vh;
+		margin-bottom: 1rem;
+		overflow: hidden;
     }
         #app-content-wrapper header img {
             max-width: 100%;
-            max-height: 40vh;
+			margin: 0 auto;
+			margin-top: 20vh;
+			transform: translateY(-50%);
             display: block;
-            margin: 0 auto 1rem auto;
         }
 
     #app-content-wrapper aside {
@@ -158,6 +195,82 @@
         padding: 1rem;
         flex-basis: 100%;
     }
+		#app-content-wrapper .recipe-content ul,
+		#app-content-wrapper .recipe-content ol {
+			padding-left: 3ex;
+		}
+		
+		#app-content-wrapper .recipe-content aside {
+			display: inline-block;
+			width: 30%;
+			float: left;
+		}
+		
+		#app-content-wrapper main {
+			display: inline-block;
+			width: 70%;
+			float: left;
+			text-align: justify;
+		}
+		
+		#app-content-wrapper section {
+			margin-bottom: 1rem;
+		}
+		
+		#app-content-wrapper section::after {
+			content: '';
+			display: table;
+			clear: both;
+		}
+		
+		@media(max-width:1199px) { #app-content-wrapper .recipe-content aside {
+			display: block;
+			width: 100%;
+			float: none;
+		}}
+		
+		#app-content-wrapper main li {
+			cursor: pointer;
+		}
+		
+		#app-content-wrapper main li.done {
+			color: #AAA;
+			list-style-type: none;
+		}
+		
+		#app-content-wrapper .times {
+			display: flex;
+			margin-top: 10px;
+		}
+		
+			#app-content-wrapper .times .time {
+				position: relative;
+				flex-grow: 1;
+				border: 1px solid var(--color-border-dark);
+				border-radius: 3px;
+				margin: 1rem 2rem;
+				text-align: center;
+				font-size: 1.2rem;
+			}
+				#app-content-wrapper .times .time button {
+					position: absolute;
+					top: 0;
+					left: 0;
+					transform: translate(-50%, -50%);
+					height: 36px;
+					width: 36px;
+				}
+				#app-content-wrapper .times .time h4 {
+					font-weight: bold;
+					border-bottom: 1px solid var(--color-border-dark);
+					background-color: var(--color-background-dark);
+					padding: 0.5rem;
+				}
+				
+				#app-content-wrapper .times .time p {
+					padding: 0.5rem;
+				}
+		
 
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);
@@ -185,7 +298,12 @@
         #app-content-wrapper form fieldset > input {
             width: calc(100% - 11em);
             margin: 0;
+			float: left;
         }
+		
+			@media(max-width:1199px) { #app-content-wrapper form fieldset > input {
+				width: 100%;
+			}}
 
         #app-content-wrapper form fieldset > input[name="image"] {
             width: calc(100% - 14em);
@@ -193,6 +311,9 @@
             border-bottom-right-radius: 0;
             border-right: 0;
         }
+			@media(max-width:1199px) { #app-content-wrapper form fieldset > input[name="image"] {
+				width: calc(100% - 3em);
+			}}
 
         #app-content-wrapper form fieldset > input[name="image"] + button {
             border-top-right-radius: var(--border-radius);
@@ -212,7 +333,12 @@
             width: 10em;
             line-height: 18px;
             font-weight: bold;
+			float: left;
         }
+			@media(max-width:1199px) { #app-content-wrapper form fieldset > label {
+				display: block;
+				float: none;
+			}}
 
         #app-content-wrapper form fieldset ul label input[type="checkbox"] {
             margin-left: 1em;
@@ -236,6 +362,8 @@
             margin-top: 8px;
             margin-right: 9px;
             z-index: 10;
+			border: 0;
+			background-color: transparent;
         }
 
         #app-content-wrapper form fieldset > ul > li > textarea {
@@ -245,13 +373,11 @@
             resize: none;
         }
 
-        #app-content-wrapper form fieldset button {
+        #app-content-wrapper form fieldset button:first-child {
             border: 0;
             background-color: transparent;
             position: relative;
-        }
-        #app-content-wrapper form fieldset button.right {
-            float: right;
+			float: right;
         }
 
         #app-content-wrapper form button[type="submit"] {
@@ -265,6 +391,7 @@
 @media print {
     #header,
     #app-navigation,
+    #controls,
     .recipe-toolbar {
         display: none !important;
     }

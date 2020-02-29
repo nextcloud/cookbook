@@ -9,18 +9,23 @@
  */
 return [
     'routes' => [
-	   ['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'page#home', 'url' => '/home', 'verb' => 'GET'],
-	   ['name' => 'page#recipe', 'url' => '/recipe', 'verb' => 'GET'],
-	   ['name' => 'page#edit', 'url' => '/edit', 'verb' => 'GET'],
-	   ['name' => 'recipe#index', 'url' => '/recipes', 'verb' => 'GET'],
-	   ['name' => 'recipe#add', 'url' => '/add', 'verb' => 'POST'],
-	   ['name' => 'recipe#delete', 'url' => '/recipes/{id}', 'verb' => 'DELETE'],
-	   ['name' => 'recipe#update', 'url' => '/recipes/{id}', 'verb' => 'PUT'],
-	   ['name' => 'recipe#create', 'url' => '/recipes', 'verb' => 'POST'],
-	   ['name' => 'recipe#get', 'url' => '/recipes/{id}', 'verb' => 'GET'],
-	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET'],
-	   ['name' => 'recipe#reindex', 'url' => '/reindex', 'verb' => 'POST'],
-	   ['name' => 'recipe#config', 'url' => '/config', 'verb' => 'POST'],
-    ]
+	   ['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
+	   ['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
+	   ['name' => 'main#tags', 'url' => '/tags', 'verb' => 'GET'],
+	   ['name' => 'main#search', 'url' => '/search/{query}', 'verb' => 'GET'],
+	   ['name' => 'main#tag', 'url' => '/tag/{tag}', 'verb' => 'GET'],
+	   ['name' => 'main#error', 'url' => '/error', 'verb' => 'GET'],
+	   ['name' => 'main#create', 'url' => '/recipes/create', 'verb' => 'GET'],
+	   ['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
+	   ['name' => 'main#import', 'url' => '/import', 'verb' => 'POST'],
+	   ['name' => 'main#edit', 'url' => '/recipes/{id}/edit', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+	   ['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
+	   ['name' => 'main#recipe', 'url' => '/recipes/{id}', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+	   ['name' => 'config#reindex', 'url' => '/reindex', 'verb' => 'POST'],
+	   ['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
+   ],
+   'resources' => [
+	   	'recipe' => ['url' => '/api/recipes']
+   ]
 ];

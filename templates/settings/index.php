@@ -16,7 +16,7 @@
                     <label class="settings-input">
                         <?php p($l->t('Update interval in minutes')); ?>
                         <br>
-                        (<?php p($l->t('Last update')); ?>: <?php echo date('Y-m-d H:i:s', $_['last_update']); ?>)
+                        (<?php p($l->t('Last update')); ?>: <?php echo date('Y-m-d H:i', $_['last_update']); ?>)
                     </label>
                     <input id="recipe-update-interval" type="number" class="input settings-input" value="<?php echo $_['update_interval']; ?>" placeholder="<?php echo $_['update_interval']; ?>">
                 </li>

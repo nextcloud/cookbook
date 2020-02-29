@@ -1,31 +1,17 @@
-<form id="editRecipeForm" action="#" method="POST">
+<form id="editRecipeForm" action="#" method="<?php echo $_['id'] ? 'PUT' : 'POST' ?>">
     <div id="controls">
         <div class="breadcrumb">
-            <div class="crumb svg crumbmenu hidden">
-                <a class="icon-more menutoggle" aria-expanded="false"></a>
-                <div class="popovermenu menu-center menu">
-                    <ul>
-                        <li class="crumblist ui-droppable in-breadcrumb">
-                            <a href="#">
-                                <span class="icon-folder"></span>
-                                <span><?php p($l->t('Home')); ?></span>
-                            </a>
-                        </li>
-                        <li class="crumblist in-breadcrumb">
-                            <a href="#<?php echo $_['id']; ?>">
-                                <span class="icon-folder"></span>
-                                <span><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
             <div class="crumb svg crumbhome ui-droppable">
-                <a href="#" class="icon-home"><?php p($l->t('Home')); ?></a>
+                <a href="#" class="icon-category-organization"></a>
             </div>
             <div class="crumb svg">
-                <a href="#<?php echo $_['id']; ?>"><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></a>
+                <a href="#recipes/<?php echo $_['id']; ?>"><?php echo $_['id'] ? $_['name'] : p($l->t('New recipe')); ?></a>
             </div>
+			<?php if($_['id']) { ?>
+				<div class="crumb svg">
+					<a href="javascript:;"><?php echo p($l->t('Edit')); ?></a>
+				</div>
+			<?php } ?>
         </div>
         <div class="actions">
             <button type="submit">
@@ -35,7 +21,7 @@
         </div>
 
         <div class="actions pull-right">
-            <a id="edit-recipe" href="#<?php echo $_['id']; ?>" class="button svg action" title="<?php p($l->t('Cancel')); ?>">
+            <a id="edit-recipe" href="#recipes/<?php echo $_['id']; ?>" class="button svg action" title="<?php p($l->t('Cancel')); ?>">
                 <span class="icon icon-close"></span>
                 <span class="hidden-visually"><?php p($l->t('Cancel')); ?></span>
             </a>
@@ -97,14 +83,14 @@
                 <template>
                     <li>
                         <input type="text" name="tool[]" value="">
-                        <button class="icon-delete"></button>
+                        <button class="icon-delete right"></button>
                     </li>
                 </template>
                 <?php if(isset($_['tool']) && is_array($_['tool'])) { ?>
                     <?php foreach ($_['tool'] as $i => $tool) { ?>
                         <li>
                             <input type="text" name="tool[]" value="<?php echo $tool; ?>">
-                            <button class="icon-delete"></button>
+                            <button class="icon-delete right"></button>
                         </li>
                     <?php } ?>
                 <?php } ?>
@@ -118,14 +104,14 @@
                 <template>
                     <li>
                         <input type="text" name="recipeIngredient[]" value="">
-                        <button class="icon-delete"></button>
+                        <button class="icon-delete right"></button>
                     </li>
                 </template>
                 <?php if(isset($_['recipeIngredient']) && is_array($_['recipeIngredient'])) { ?>
                     <?php foreach ($_['recipeIngredient'] as $i => $ingredient) { ?>
                         <li>
                             <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
-                            <button class="icon-delete"></button>
+                            <button class="icon-delete right"></button>
                         </li>
                     <?php } ?>
                 <?php } ?>
@@ -139,14 +125,14 @@
                 <template>
                     <li>
                         <textarea name="recipeInstructions[]"></textarea>
-                        <button class="icon-delete"></button>
+                        <button class="icon-delete right"></button>
                     </li>
                 </template>
                 <?php if(isset($_['recipeInstructions']) && is_array($_['recipeInstructions'])) { ?>
                     <?php foreach ($_['recipeInstructions'] as $i => $step) { ?>
                         <li>
                             <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
-                            <button class="icon-delete"></button>
+                            <button class="icon-delete right"></button>
                         </li>
                     <?php } ?>
                 <?php } ?>

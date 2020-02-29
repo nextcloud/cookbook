@@ -89,8 +89,9 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('k.name')
+			->selectAlias($qb->createFunction('COUNT(k.recipe_id)'), 'recipe_count')
             ->from('cookbook_keywords', 'k')
-            ->where('user_id = :user')
+            ->where('user_id = :user AND k.name != \'\'')
             ->groupBy('k.name')
             ->orderBy('k.name');
         $qb->setParameter('user', $userId, TYPE::STRING);
@@ -98,10 +99,10 @@ class RecipeDb {
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
-
+		
         $result = array_unique($result, SORT_REGULAR);
         $result = array_filter($result);
-
+		
         return $result;
     }
     
@@ -140,7 +141,7 @@ class RecipeDb {
         $qb->setParameters($params, $types);
         $qb->setParameter('user', $userId, TYPE::STRING);
         
-        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id'); 
+        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
 
         $qb->groupBy(['r.name', 'r.recipe_id']);
         $qb->orderBy('r.name');
@@ -183,7 +184,7 @@ class RecipeDb {
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
 
-        // Insert recipe 
+        // Insert recipe
         $qb->delete('cookbook_names')
             ->where('recipe_id = :id')
             ->andWhere('user_id = :user');
@@ -203,7 +204,7 @@ class RecipeDb {
         $qb->setParameter('user', $userId, Type::STRING);
         $qb->execute();
 
-        // Insert keywords 
+        // Insert keywords
         $qb->delete('cookbook_keywords')
             ->where('recipe_id = :id')
             ->andWhere('user_id = :user');
@@ -213,7 +214,7 @@ class RecipeDb {
         
         if(isset($json['keywords'])) {
             foreach(explode(',', $json['keywords']) as $keyword) {
-                $keyword = trim($keyword);   
+                $keyword = trim($keyword);
 
                 $qb->insert('cookbook_keywords')
                     ->values([
