@@ -51,19 +51,25 @@
             <input type="text" name="image" value="<?php if(isset($_['image'])) { echo $_['image']; } ?>"><button type="button" id="pick-image" title="<?php p($l->t('Pick a local image')) ?>"><span class="icon-category-multimedia"></span></button>
         </fieldset>
 
-        <fieldset>
+        <fieldset class="duration">
             <label><?php p($l->t('Preparation time')); ?></label>
-            <input type="text" name="prepTime" value="<?php if(isset($_['prepTime'])) {echo $_['prepTime']; } ?>" placeholder="PT0H15M">
+            <input type="number" min="0" max="99" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
+            <span>:</span>
+            <input type="number" min="0" max="59" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
         </fieldset>
 
-        <fieldset>
+        <fieldset class="duration">
             <label><?php p($l->t('Cooking time')); ?></label>
-            <input type="text" name="cookTime" value="<?php if(isset($_['cookTime'])) { echo $_['cookTime']; } ?>" placeholder="PT1H30M">
+            <input type="number" min="0" max="99" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
+            <span>:</span>
+            <input type="number" min="0" max="59" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
         </fieldset>
 
-        <fieldset>
+        <fieldset class="duration">
             <label><?php p($l->t('Total time')); ?></label>
-            <input type="text" name="totalTime" value="<?php if(isset($_['totalTime'])) { echo $_['totalTime']; } ?>" placeholder="PT1H30M">
+            <input type="number" min="0" max="99" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
+            <span>:</span>
+            <input type="number" min="0" max="59" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
         </fieldset>
 
         <fieldset>
@@ -77,7 +83,6 @@
         </fieldset>
 
         <fieldset>
-            <button class="icon-add right"></button>
             <label><?php p($l->t('Tools')); ?></label>
             <ul>
                 <template>
@@ -95,10 +100,10 @@
                     <?php } ?>
                 <?php } ?>
             </ul>
+            <button class="button"><span class="icon-add"></span></button>
         </fieldset>
 
         <fieldset>
-            <button class="icon-add right"></button>
             <label><?php p($l->t('Ingredients')); ?></label>
             <ul>
                 <template>
@@ -116,10 +121,10 @@
                     <?php } ?>
                 <?php } ?>
             </ul>
+            <button class="button"><span class="icon-add"></span></button>
         </fieldset>
 
         <fieldset>
-            <button class="icon-add right"></button>
             <label><?php p($l->t('Instructions')); ?></label>
             <ul>
                 <template>
@@ -137,6 +142,7 @@
                     <?php } ?>
                 <?php } ?>
             </ul>
+            <button class="button"><span class="icon-add"></span></button>
         </fieldset>
     </div>
 </form>

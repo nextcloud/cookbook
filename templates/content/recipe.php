@@ -35,9 +35,15 @@
 
 <div class="recipe-content">
 	<h2><?php echo $_['name']; ?></h2>
+    
     <div class="recipe-details">
-
         <p><?php echo $_['description']; ?></p>
+
+        <?php if(isset($_['url']) && $_['url']) { ?>
+            <p><strong><?php p($l->t('Source')); ?>: </strong><a target="_blank" href="<?php echo $_['url']; ?>"><?php echo $_['url']; ?></a></p>
+        <?php } ?>
+
+        <p><strong><?php p($l->t('Servings')); ?>: </strong><?php echo $_['recipeYield']; ?></p>
 		
 		<div class="times">
 			<?php if(isset($_['prepTime']) && $_['prepTime']) {
@@ -45,7 +51,7 @@
 				$prep_mins = $prep_interval->format('%I');
 				$prep_hours = $prep_interval->format('%h');
 			?>
-				<div class="time">
+				<div class="time" data-raw="<?php echo $_['prepTime']; ?>">
 		            <h4><?php p($l->t('Preparation time')); ?></h4>
 					<p><?php echo $prep_hours . ':' . $prep_mins; ?></p>
 				</div>
@@ -56,7 +62,7 @@
 				$cook_mins = $cook_interval->format('%I');
 				$cook_hours = $cook_interval->format('%h');
 			?>
-				<div class="time">
+                <div class="time" data-raw="<?php echo $_['cookTime']; ?>">
 					<button type="button" class="icon-play" data-hours="<?php echo $cook_hours ?>" data-minutes="<?php echo $cook_mins ?>"></button>
 		            <h4><?php p($l->t('Cooking time')); ?></h4>
 					<p><?php echo $cook_hours . ':' . $cook_mins; ?></p>
@@ -69,14 +75,12 @@
 				$total_mins = $total_interval->format('%I');
 				$total_hours = $total_interval->format('%h');
 			?>
-				<div class="time">
+				<div class="time" data-raw="<?php echo $_['totalTime']; ?>">
 		            <h4><?php p($l->t('Total time')); ?></h4>
 					<p><?php echo $total_hours . ':' . $total_mins; ?></p>
 				</div>
 	        <?php } ?>
 		</div>
-
-        <p><strong><?php p($l->t('Servings')); ?>: </strong><?php echo $_['recipeYield']; ?></p>
     </div>
 </header>
 
@@ -108,15 +112,11 @@
 	<?php if(!empty($_['recipeInstructions'])) { ?>
 	    <main>
 			<h3><?php p($l->t('Instructions')); ?></h3>
-	        <ol>
+	        <ol class="instructions">
 	            <?php foreach($_['recipeInstructions'] as $step) {  ?>
-	                <li><?php echo nl2br($step); ?></li>
+	                <li class="instruction"><?php echo nl2br($step); ?></li>
 	            <?php } ?>
 	        </ol>
 	    </main>
 	<?php } ?>
 </section>
-
-<?php if(isset($_['url']) && $_['url']) { ?>
-	<p><strong><?php p($l->t('Source')); ?>: </strong><a target="_blank" href="<?php echo $_['url']; ?>"><?php echo $_['url']; ?></a></p>
-<?php } ?>

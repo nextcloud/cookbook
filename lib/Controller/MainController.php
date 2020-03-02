@@ -6,6 +6,7 @@ use OCP\IRequest;
 use OCP\IDBConnection;
 use OCP\IURLGenerator;
 use OCP\Files\IRootFolder;
+use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
@@ -171,6 +172,26 @@ class MainController extends Controller
             return new DataResponse($e->getMessage(), 502);
         }
 	}
+    
+    /**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function import()
+	{
+        if (!isset($_POST['url'])) {
+            return new DataResponse('Field "url" is required', 400);
+        }
+
+        try {
+            $recipe_file = $this->service->downloadRecipe($_POST['url']);
+            $recipe_json = $this->service->parseRecipeFile($recipe_file);
+
+            return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
+        } catch (\Exception $e) {
+            return new DataResponse($e->getMessage(), 502);
+        }
+    }
 
 	/**
 	 * @NoAdminRequired
@@ -179,8 +200,8 @@ class MainController extends Controller
 	public function new()
 	{
 		try {
-	        $recipeData = $_POST;
-			$file = $this->service->addRecipe($recipeData);
+	        $recipe_data = $_POST;
+			$file = $this->service->addRecipe($recipe_data);
 			
 			return new DataResponse('#recipes/' . $file->getParent()->getId());
 		} catch (\Exception $e) {
@@ -226,7 +247,7 @@ class MainController extends Controller
 			$recipeData['id'] = $id;
 	        $file = $this->service->addRecipe($recipeData);
 			
-			return new DataResponse('#recipes/' . $id);
+			return new DataResponse($id);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 502);
 		}

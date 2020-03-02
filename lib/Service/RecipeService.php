@@ -85,23 +85,6 @@ class RecipeService
     }
 
     /**
-     * Validates that the json has a valid duration element in the given field,
-     * or nothing at all.
-     *
-     * @param string $duration
-     *
-     * @return bool
-     */
-    private function validateDuration(string $duration): bool
-    {
-        // Make sure we have a string and valid DateInterval
-        // regex validation from here: https://stackoverflow.com/a/32045167
-        $intervalRegex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
-
-        return preg_match($intervalRegex, $duration) === 1;
-    }
-
-    /**
      * Checks the fields of a recipe and standardises the format
      *
      * @param array $json
@@ -159,6 +142,7 @@ class RecipeService
             } else if (!is_string($json['image'])) {
                 $json['image'] = '';
             }
+
         } else {
             $json['image'] = '';
         }
@@ -166,6 +150,21 @@ class RecipeService
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
 
+        // Last sanity check for URL
+        if(!empty($json['image'])) {
+            $image_url = parse_url($json['image']);
+
+            if(!isset($image_url['scheme'])) {
+                $image_url['scheme'] = 'http';
+            }
+
+            $json['image'] = $image_url['scheme'] . '://' . $image_url['host'] . $image_url['path'];
+
+            if(isset($image_url['query'])) {
+                $json['image'] .= '?' . $image_url['query'];
+            }
+        }
+        
         // Make sure that "recipeYield" is an integer which is at least 1 
         if (isset($json['recipeYield']) && $json['recipeYield']) {
 
@@ -308,13 +307,41 @@ class RecipeService
             $json['url'] = "";
         }
 
-        $timeSpecifications = ['prepTime', 'cookTime', 'totalTime'];
-        foreach ($timeSpecifications as $timeSpecification) {
-            if (!isset($json[$timeSpecification]) || !$this->validateDuration($this->cleanUpString($json[$timeSpecification]))) {
-                $json[$timeSpecification] = '';
+        $durations = ['prepTime', 'cookTime', 'totalTime'];
+        $duration_patterns = [
+            '/PT(\d+H)?(\d+M)?/',   // ISO 8601
+            '/(\d+):(\d+)/',        // Clock
+        ];
+
+        foreach($durations as $duration) {
+            if(!isset($json[$duration]) || empty($json[$duration])) { continue; }
+
+            $duration_hours = 0;
+            $duration_minutes = 0;
+            $duration_value = $json[$duration];
+
+            if(is_array($duration_value) && sizeof($duration_value) === 2) {
+                $duration_hours = $duration_value[0];
+                $duration_minutes = $duration_value[1];
+
             } else {
-                $json[$timeSpecification] = $this->cleanUpString($json[$timeSpecification]);
+                foreach($duration_patterns as $duration_pattern) {
+                    $duration_matches = [];
+                    preg_match_all($duration_pattern, $duration_value, $duration_matches);
+
+                    if(isset($duration_matches[1][0]) && !empty($duration_matches[1][0])) {
+                        $duration_hours = intval($duration_matches[1][0]);
+                    }
+                    
+                    if(isset($duration_matches[2][0]) && !empty($duration_matches[2][0])) {
+                        $duration_minutes = intval($duration_matches[2][0]);
+                    }
+                }
             }
+
+            $json[$duration . '_test'] = var_export($duration_value, true) . ' --- ' . $duration_hours . ':' . $duration_minutes;
+
+            $json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
         }
 
         return $json;
@@ -331,10 +358,14 @@ class RecipeService
             return null;
         }
 
-        $json_matches = [];
+        // Make sure we don't have any encoded entities in the HTML string
+        $html = html_entity_decode($html);
 
         // Parse JSON
+        $json_matches = [];
+        
         preg_match_all('/<script type=["|\']application\/ld\+json["|\'][^>]*>([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
+
         foreach ($json_matches as $json_match) {
             if (!$json_match || !isset($json_match[1])) {
                 continue;
@@ -370,12 +401,18 @@ class RecipeService
         // Parse HTML if JSON couldn't be found
         $json = [];
         $document = new \DOMDocument();
-        $document->loadHTML($html);
+
+        if(!$document->loadHTML($html)) {
+            throw new \Exception('Malformed HTML');
+        }
+        
         $xpath = new \DOMXPath($document);
         
         $recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 
-        if(!isset($recipes[0])) { throw new \Exception('Could not find recipe element'); }
+        if(!isset($recipes[0])) {
+            throw new \Exception('Could not find recipe element');
+        }
 
         $props = [
             'name',
@@ -573,6 +610,7 @@ class RecipeService
                 "header" => "User-Agent: Nextcloud Cookbook App"
             ]
         ];
+
         $context = stream_context_create($opts);
 
         $html = file_get_contents($url, false, $context);

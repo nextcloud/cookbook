@@ -13,6 +13,9 @@ var Cookbook = function (baseUrl) {
 };
 
 Cookbook.prototype = {
+    /**
+     * Reindexes all recipes
+     */
     reindex: function () {
         var deferred = $.Deferred();
         var self = this;
@@ -26,7 +29,11 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    sendForm: function(form) {
+
+    /**
+     * Updates a recipe with form data
+     */
+    update: function(form) {
 		var action = form.getAttribute('action');
 		var url = action === '#' ? location.hash.substr(1) : action;
         var data = $(form).serialize();
@@ -43,53 +50,68 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
-    put: function(url, data) {
-		var deferred = $.Deferred();
-		$.ajax({
-			url: this._baseUrl + url,
-			method: 'PUT',
-			data: data
-		}).done(function (response) {
-			deferred.resolve(response);
-		}).fail(function () {
-			deferred.reject();
-		});
-		return deferred.promise();
-    },
+    
+    /**
+     * Loads a recipe by id
+     *
+     * @param {String} id
+     */
     load: function (id) {
         location.hash = id;
     },
+
+    /**
+     * Gets the loaded recipe id
+     *
+     * @return {String} Id
+     */
     getActiveId: function () {
         return parseInt(location.hash.replace( /[^0-9]/g, '')) || null;
     },
-    add: function (url) {
+
+    /**
+     * Imports a recipe from a URL
+     *
+     * @param {String} url
+     */
+    import: function (url) {
         var deferred = $.Deferred();
         var self = this;
 
-        $('#add-recipe .icon-download').hide();
-        $('#add-recipe .icon-loading').show();
+        $('#import-recipe .icon-download').hide();
+        $('#import-recipe .icon-loading').show();
 
         $.ajax({
-            url: this._baseUrl + '/add',
+            url: this._baseUrl + '/import',
             method: 'POST',
             data: 'url=' + url
         }).done(function (recipe) {
-            $('#add-recipe .icon-download').show();
-            $('#add-recipe .icon-loading').hide();
+            $('#import-recipe .icon-download').show();
+            $('#import-recipe .icon-loading').hide();
 
-            location.hash = recipe.id;
+            location.hash = 'recipes/' + recipe.id;
             deferred.resolve();
         }).fail(function (jqXHR, textStatus, errorThrown) {
-            $('#add-recipe .icon-download').show();
-            $('#add-recipe .icon-loading').hide();
+            $('#import-recipe .icon-download').show();
+            $('#import-recipe .icon-loading').hide();
 
             deferred.reject(new Error(jqXHR.responseText));
         });
         return deferred.promise();
     },
+
+    /**
+     * Gets all recipes
+     *
+     * @return {Array} Recipes
+     */
     getAll: function () {
         return this._recipes;
     },
+
+    /**
+     * Loads all recipes for display
+     */
     loadAll: function () {
         var deferred = $.Deferred();
         var self = this;
@@ -102,6 +124,12 @@ Cookbook.prototype = {
 
         return deferred.promise();
     },
+
+    /**
+     * Sets the config update interval
+     *
+     * @param {Number} interval
+     */
     setUpdateInterval: function(interval) {
         var self = this;
 
@@ -113,6 +141,12 @@ Cookbook.prototype = {
             alert(t(appName, 'Could not set recipe update interval to {interval}', {interval: interval}));
         });
     },
+
+    /**
+     * Sets the recipe base directory using a callback
+     * 
+     * @param {Function} cb
+     */
     setFolder: function(cb) {
         var self = this;
 
@@ -141,8 +175,15 @@ Cookbook.prototype = {
             true
         );
     },
+
+    /**
+     * Shows a notification to the user
+     *
+     * @param {String} title
+     * @param {Object} options
+     */
 	notify: function notify(title, options) {
-		if(!("Notification" in window)) {
+		if(!('Notification' in window)) {
 			return;
 		} else if(Notification.permission === "granted") {
 			var notification = new Notification(title, options);
@@ -183,25 +224,28 @@ var Content = function (cookbook) {
         .done(function (html) {
             $('#app-content-wrapper').html(html);
 			
-			$('#pick-image').off('click');
+            // Common
+            $('#print-recipe').click(self.onPrintRecipe);
+			$('#delete-recipe').click(self.onDeleteRecipe);
+					
+            // Editor
+            $('#app-content-wrapper form').off('submit');
+            $('#app-content-wrapper form').submit(self.onUpdateRecipe);
+
+            $('#pick-image').off('click');
 			$('#pick-image').click(self.onPickImage);
 			
-			$('#app-content-wrapper form .icon-add').off('click');
-			$('#app-content-wrapper form .icon-add').click(self.onAddListItem);
+			$('#app-content-wrapper form ul + button').off('click');
+			$('#app-content-wrapper form ul + button').click(self.onAddListItem);
 			
 			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
 			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
 			
-			$('#print-recipe').click(self.onPrintRecipe);
-			$('#delete-recipe').click(self.onDeleteRecipe);
+            self.updateListItems();
 			
-			// Toggle instruction
-			$('main li').click(self.onInstructionClick);
-	        
-			// Timer
+            // View
+			$('main .instruction').click(self.onInstructionClick);
 			$('.time button').click(self.onTimerToggle);
-			
-			self.updateListItems();
 			
             nav.highlightActive();
         })
@@ -272,29 +316,62 @@ var Content = function (cookbook) {
     }
 
     /**
-     * Event: toggle timer
+     * Event: Toggle timer
      */
     self.onTimerToggle = function(e) {
 		if($(e.target).hasClass('icon-play')) {
 			var hours = parseInt($(e.target).data('hours'));
 			var minutes = parseInt($(e.target).data('minutes'));
-			if((!self.hours || self.hours === hours) && (!self.minutes || self.minutes === minutes)) {
+			var seconds = 0;
+
+			if(
+                (self.hours === undefined || self.hours === hours) &&
+                (self.minutes === undefined || self.minutes === minutes)
+            ) {
 				self.hours = hours;
 				self.minutes = minutes;
+                self.seconds = 0;
 			}
-			self.timer = window.setInterval(function() {
-				self.minutes--;
-				$(e.target).closest('.time').find('p').text(self.hours + ':' + self.minutes);
-				if(self.hours === 0 && self.minutes === 0) {
+			
+            self.timer = window.setInterval(function() {
+				self.seconds--;
+
+                if(self.seconds <= 0) {
+                    self.seconds = 59;
+                    self.minutes--;
+                }
+
+                if(self.minutes <= 0) {
+                    self.minutes = 59;
+                    self.hours--;
+                }
+
+                var text = '';
+
+                if(self.hours < 10) { text += '0'; }
+                text += self.hours + ':';
+                
+                if(self.minutes < 10) { text += '0'; }
+                text += self.minutes + ':';
+
+                if(self.seconds < 10) { text += '0'; }
+                text += self.seconds;
+				
+                $(e.target).closest('.time').find('p').text(text);
+
+				if(self.hours < 0 || self.minutes < 0) {
 					self.onTimerEnd(e.target);
 				}
-			}, 60 * 1000);
+			}, 1000);
 		} else {
 			window.clearInterval(self.timer);
 		}
 		$(e.target).toggleClass('icon-play icon-pause');
     }
-	
+
+    /**
+     * Event: Timer ended
+     */
 	self.onTimerEnd = function(button) {
 		window.clearInterval(self.timer);
 		$(button).removeClass('icon-pause').addClass('icon-play');
@@ -361,12 +438,12 @@ var Content = function (cookbook) {
     /**
      * Event: Update recipe
      */
-    self.onSubmitForm = function(e) {
+    self.onUpdateRecipe = function(e) {
         e.preventDefault();
 		
-        cookbook.sendForm(e.currentTarget)
-        .then(function(route) {
-			location.hash = route;
+        cookbook.update(e.currentTarget)
+        .then(function(id) {
+			location.hash = '/recipes/' + id;
             self.render();
             nav.render();
         })
@@ -404,14 +481,14 @@ var Nav = function (cookbook) {
     };
 
     /**
-     * Event: Submit new recipe
+     * Event: Import new recipe
      */
-    self.onAddNewRecipe = function(e) {
+    self.onImportRecipe = function(e) {
         e.preventDefault();
 
         var url = e.currentTarget.url.value;
 
-        cookbook.add(url)
+        cookbook.import(url)
         .done(function() {
             self.render();
         })
@@ -514,12 +591,16 @@ var Nav = function (cookbook) {
             if(e && e instanceof Error) { throw e; }
         });
 
+        // Add a new recipe
+        $('#import-recipe').off('submit');
+        $('#import-recipe').submit(self.onImportRecipe);
+
         // Change cache update interval
         $('#recipe-update-interval').off('change');
         $('#recipe-update-interval').change(self.onChangeRecipeUpdateInterval);
 
         // Change recipe folder
-        // $('#recipe-folder').off('change');
+        $('#recipe-folder').off('change');
         $('#recipe-folder').change(self.onChangeRecipeFolder);
 
         // Categorise recipes
@@ -549,8 +630,6 @@ content.render();
 
 // Render content view on hash change
 window.addEventListener('hashchange', content.render);
-
-$('#app').on('submit', 'form', content.onSubmitForm);
 
 });
 
