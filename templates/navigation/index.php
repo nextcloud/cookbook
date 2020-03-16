@@ -1,8 +1,8 @@
-<form id="create-recipe" class="app-navigation-create">
-    <button type="submit" title="<?php p($l->t('Create recipe')); ?>" class="button icon-add"><?php p($l->t('Create recipe')); ?></button>
-</form>
+<div class="app-navigation-create">
+	<a href="#recipes/create" title="<?php p($l->t('Create recipe')); ?>" class="button icon-add"><?php p($l->t('Create recipe')); ?></a>
+</div>
 
-<form id="add-recipe" class="app-navigation-new">
+<form id="import-recipe" class="app-navigation-new" method="POST">
     <input name="url" placeholder="<?php p($l->t('Recipe URL')); ?>">
     <button type="submit" title="<?php p($l->t('Download recipe')); ?>">
         <div class="icon-download"></div>
@@ -10,30 +10,6 @@
     </button>
 </form>
 
-<form id="find-recipes" class="app-navigation-new">
-    <input list="list-keywords" name="keywords" placeholder="<?php p($l->t('Search')); ?>" multiple>
-    <datalist id="list-keywords">
-        <?php foreach($_['all_keywords'] as $keyword) { ?>
-            <?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
-            
-            <option value="<?php echo $keyword['name']; ?>">
-        <?php } ?>
-    </datalist>
-    <a id="clear-recipe-search" class="icon-close"></a>
-    <button class="icon-category-search" type="submit"></button>
-</form>
+<ul id="categories">
 
-<form id="categorize-recipes" class="app-navigation-new">
-    <select name="keywords">
-        <option selected value=""><?php p($l->t('All')); ?></option>
-        <option value="-1"><?php p($l->t('Uncategorized')); ?></option>
-
-        <?php foreach($_['all_keywords'] as $keyword) { ?>
-            <?php if(!isset($keyword['name']) || empty($keyword['name'])) { continue; } ?>
-
-            <option value="<?php echo $keyword['name']; ?>"><?php echo $keyword['name']; ?></option>
-        <?php } ?>
-    </select>
-</form>
-
-<ul id="recipes"></ul>
+</ul>

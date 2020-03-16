@@ -23,13 +23,13 @@ use OCP\PreConditionNotMetException;
 class RecipeService
 {
     private $root;
-    private $userId;
+    private $user_id;
     private $db;
     private $config;
 
     public function __construct(string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config)
     {
-        $this->userId = $UserId;
+        $this->user_id = $UserId;
         $this->root = $root;
         $this->db = $db;
         $this->config = $config;
@@ -62,43 +62,26 @@ class RecipeService
      */
     public function getRecipeFileByFolderId(int $id)
     {
-        $userFolder = $this->getFolderForUser();
-        $recipeFolder = $userFolder->getById($id);
+        $user_folder = $this->getFolderForUser();
+        $recipe_folder = $user_folder->getById($id);
 
-        if (count($recipeFolder) <= 0) {
+        if (count($recipe_folder) <= 0) {
             return null;
         }
 
-        $recipeFolder = $recipeFolder[0];
+        $recipe_folder = $recipe_folder[0];
 
-        if ($recipeFolder instanceof Folder === false) {
+        if ($recipe_folder instanceof Folder === false) {
             return null;
         }
 
-        foreach ($recipeFolder->getDirectoryListing() as $file) {
+        foreach ($recipe_folder->getDirectoryListing() as $file) {
             if ($this->isRecipeFile($file)) {
                 return $file;
             }
         }
 
         return null;
-    }
-
-    /**
-     * Validates that the json has a valid duration element in the given field,
-     * or nothing at all.
-     *
-     * @param string $duration
-     *
-     * @return bool
-     */
-    private function validateDuration(string $duration): bool
-    {
-        // Make sure we have a string and valid DateInterval
-        // regex validation from here: https://stackoverflow.com/a/32045167
-        $intervalRegex = "/^P(?!$)(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+S)?)?$/";
-
-        return preg_match($intervalRegex, $duration) === 1;
     }
 
     /**
@@ -159,13 +142,40 @@ class RecipeService
             } else if (!is_string($json['image'])) {
                 $json['image'] = '';
             }
+
         } else {
             $json['image'] = '';
+        }
+
+        // Make sure that "recipeCategory" is a string
+        if(isset($json['recipeCategory'])) {
+            if(is_array($json['recipeCategory'])) {
+                $json['recipeCategory'] = reset($json['recipeCategory']);
+            } else if(!is_string($json['recipeCategory'])) {
+                $json['recipeCategory'] = '';
+            }
+        } else {
+            $json['recipeCategory'] = '';
         }
 
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
 
+        // Last sanity check for URL
+        if(!empty($json['image'])) {
+            $image_url = parse_url($json['image']);
+
+            if(!isset($image_url['scheme'])) {
+                $image_url['scheme'] = 'http';
+            }
+
+            $json['image'] = $image_url['scheme'] . '://' . $image_url['host'] . $image_url['path'];
+
+            if(isset($image_url['query'])) {
+                $json['image'] .= '?' . $image_url['query'];
+            }
+        }
+        
         // Make sure that "recipeYield" is an integer which is at least 1 
         if (isset($json['recipeYield']) && $json['recipeYield']) {
 
@@ -186,14 +196,14 @@ class RecipeService
 
         // Make sure that "keywords" is an array of unique strings
         if(isset($json['keywords']) && is_string($json['keywords'])) {
-          $keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
-          $keywords = strip_tags($keywords);
-          $keywords = preg_replace('/\s+/', ' ', $keywords); // Colapse whitespace
-          $keywords = preg_replace('/(, | ,|,)+/', ',', $keywords); // Clean up separators
-          $keywords = explode(',', $keywords);
-          $keywords = array_unique($keywords);
-          $keywords = implode(',', $keywords);
-          $json['keywords'] = $keywords;
+            $keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
+            $keywords = strip_tags($keywords);
+            $keywords = preg_replace('/\s+/', ' ', $keywords); // Colapse whitespace
+            $keywords = preg_replace('/(, | ,|,)+/', ',', $keywords); // Clean up separators
+            $keywords = explode(',', $keywords);
+            $keywords = array_unique($keywords);
+            $keywords = implode(',', $keywords);
+            $json['keywords'] = $keywords;
         } else {
             $json['keywords'] = '';
         }
@@ -308,13 +318,41 @@ class RecipeService
             $json['url'] = "";
         }
 
-        $timeSpecifications = ['prepTime', 'cookTime', 'totalTime'];
-        foreach ($timeSpecifications as $timeSpecification) {
-            if (!isset($json[$timeSpecification]) || !$this->validateDuration($this->cleanUpString($json[$timeSpecification]))) {
-                $json[$timeSpecification] = '';
+        $durations = ['prepTime', 'cookTime', 'totalTime'];
+        $duration_patterns = [
+            '/PT(\d+H)?(\d+M)?/',   // ISO 8601
+            '/(\d+):(\d+)/',        // Clock
+        ];
+
+        foreach($durations as $duration) {
+            if(!isset($json[$duration]) || empty($json[$duration])) { continue; }
+
+            $duration_hours = 0;
+            $duration_minutes = 0;
+            $duration_value = $json[$duration];
+
+            if(is_array($duration_value) && sizeof($duration_value) === 2) {
+                $duration_hours = $duration_value[0];
+                $duration_minutes = $duration_value[1];
+
             } else {
-                $json[$timeSpecification] = $this->cleanUpString($json[$timeSpecification]);
+                foreach($duration_patterns as $duration_pattern) {
+                    $duration_matches = [];
+                    preg_match_all($duration_pattern, $duration_value, $duration_matches);
+
+                    if(isset($duration_matches[1][0]) && !empty($duration_matches[1][0])) {
+                        $duration_hours = intval($duration_matches[1][0]);
+                    }
+                    
+                    if(isset($duration_matches[2][0]) && !empty($duration_matches[2][0])) {
+                        $duration_minutes = intval($duration_matches[2][0]);
+                    }
+                }
             }
+
+            $json[$duration . '_test'] = var_export($duration_value, true) . ' --- ' . $duration_hours . ':' . $duration_minutes;
+
+            $json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
         }
 
         return $json;
@@ -331,10 +369,14 @@ class RecipeService
             return null;
         }
 
-        $json_matches = [];
+        // Make sure we don't have any encoded entities in the HTML string
+        $html = html_entity_decode($html);
 
         // Parse JSON
+        $json_matches = [];
+        
         preg_match_all('/<script type=["|\']application\/ld\+json["|\'][^>]*>([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
+
         foreach ($json_matches as $json_match) {
             if (!$json_match || !isset($json_match[1])) {
                 continue;
@@ -370,12 +412,18 @@ class RecipeService
         // Parse HTML if JSON couldn't be found
         $json = [];
         $document = new \DOMDocument();
-        $document->loadHTML($html);
+
+        if(!$document->loadHTML($html)) {
+            throw new \Exception('Malformed HTML');
+        }
+        
         $xpath = new \DOMXPath($document);
         
         $recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 
-        if(!isset($recipes[0])) { throw new \Exception('Could not find recipe element'); }
+        if(!isset($recipes[0])) {
+            throw new \Exception('Could not find recipe element');
+        }
 
         $props = [
             'name',
@@ -477,30 +525,36 @@ class RecipeService
         // Sanity check
         $json = $this->checkRecipe($json);
 
-        // Write JSON file to disk
+        // Create/move recipe folder
         $user_folder = $this->getFolderForUser();
         $recipe_folder = null;
-        $recipe_file = null;
 
-        try {
-            if (isset($json['id']) && $json['id']) {
-                $recipe_folder = $user_folder->getById($json['id'])[0];
+        // Recipe already has an id, update it
+        if (isset($json['id']) && $json['id']) {
+            $recipe_folder = $user_folder->getById($json['id'])[0];
 
-                $old_path = $recipe_folder->getPath();
-                $new_path = dirname($old_path) . '/' . $json['name'];
+            $old_path = $recipe_folder->getPath();
+            $new_path = dirname($old_path) . '/' . $json['name'];
 
-                if ($old_path !== $new_path) {
-                    $recipe_folder->move($new_path);
+            // The recipe is being renamed, move the folder
+            if ($old_path !== $new_path) {
+                if($user_folder->nodeExists($json['name'])) {
+                    throw new Exception('Another recipe with that name already exists');
                 }
-
-            } else {
-                $recipe_folder = $user_folder->get($json['name']);
+                
+                $recipe_folder->move($new_path);
             }
 
-        } catch (NotFoundException $e) {
+        // This is a new recipe, create it
+        } else {
+            if($user_folder->nodeExists($json['name'])) {
+                throw new Exception('Another recipe with that name already exists');
+            }
+
             $recipe_folder = $user_folder->newFolder($json['name']);
         }
 
+        // Write JSON file to disk
         $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
 
         if (!$recipe_file) {
@@ -510,7 +564,7 @@ class RecipeService
         $recipe_file->putContent(json_encode($json));
 
         // Update database cache
-        $this->db->indexRecipeFile($recipe_file, $this->userId);
+        $this->db->indexRecipeFile($recipe_file, $this->user_id);
 
         // Download image and generate thumbnail
         $full_image_data = null;
@@ -520,7 +574,7 @@ class RecipeService
                 $json['image'] = str_replace(' ', '%20', $json['image']);
                 $full_image_data = file_get_contents($json['image']);
             } else {
-                $full_image_file = $this->root->get('/' . $this->userId . '/files' . $json['image']);
+                $full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
                 $full_image_data = $full_image_file->getContent();
             }
         }
@@ -573,6 +627,7 @@ class RecipeService
                 "header" => "User-Agent: Nextcloud Cookbook App"
             ]
         ];
+
         $context = stream_context_create($opts);
 
         $html = file_get_contents($url, false, $context);
@@ -620,7 +675,7 @@ class RecipeService
     public function rebuildSearchIndex()
     {
         // Clear the database
-        $this->db->emptySearchIndex($this->userId);
+        $this->db->emptySearchIndex($this->user_id);
 
         // Rebuild info
         $this->updateSearchIndex();
@@ -661,11 +716,11 @@ class RecipeService
 
         // Re-index recipe files
         foreach ($this->getRecipeFiles() as $file) {
-            $this->db->indexRecipeFile($file, $this->userId);
+            $this->db->indexRecipeFile($file, $this->user_id);
         }
 
         // Cache the last index update
-        $this->config->setUserValue($this->userId, 'cookbook', 'last_index_update', time());
+        $this->config->setUserValue($this->user_id, 'cookbook', 'last_index_update', time());
     }
 
     /**
@@ -686,7 +741,7 @@ class RecipeService
      */
     public function getSearchIndexLastUpdateTime()
     {
-        return (int)$this->config->getUserValue($this->userId, 'cookbook', 'last_index_update');
+        return (int)$this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
     }
 
     /**
@@ -698,7 +753,19 @@ class RecipeService
     {
         $this->checkSearchIndexUpdate();
 
-        return $this->db->findAllKeywords($this->userId);
+        return $this->db->findAllKeywords($this->user_id);
+    }
+    
+    /**
+     * Gets all categories from the index
+     *
+     * @return array
+     */
+    public function getAllCategoriesInSearchIndex()
+    {
+        $this->checkSearchIndexUpdate();
+
+        return $this->db->findAllCategories($this->user_id);
     }
 
     /**
@@ -710,7 +777,7 @@ class RecipeService
     {
         $this->checkSearchIndexUpdate();
 
-        return $this->db->findAllRecipes($this->userId);
+        return $this->db->findAllRecipes($this->user_id);
     }
 
     /**
@@ -722,7 +789,21 @@ class RecipeService
     {
         $this->checkSearchIndexUpdate();
 
-        return $this->db->findAllUncategorizedRecipes($this->userId);
+        return $this->db->findAllUncategorizedRecipes($this->user_id);
+    }
+    
+    /**
+     * Get all recipes of a certain category
+     *
+     * @param string $category
+     *
+     * @return array
+     */
+    public function getRecipesByCategory($category)
+    {
+        $this->checkSearchIndexUpdate();
+
+        return $this->db->getRecipesByCategory($category, $this->user_id);
     }
 
     /**
@@ -744,7 +825,7 @@ class RecipeService
             $keywords_array = $keywords_array[0];
         }
 
-        return $this->db->findRecipes($keywords_array, $this->userId);
+        return $this->db->findRecipes($keywords_array, $this->user_id);
     }
 
     /**
@@ -752,7 +833,7 @@ class RecipeService
      */
     public function setUserFolderPath(string $path)
     {
-        $this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
+        $this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
     }
 
     /**
@@ -760,7 +841,7 @@ class RecipeService
      */
     public function getUserFolderPath()
     {
-        $path = $this->config->getUserValue($this->userId, 'cookbook', 'folder');
+        $path = $this->config->getUserValue($this->user_id, 'cookbook', 'folder');
 
         if (!$path) {
             $path = '/Recipes';
@@ -775,7 +856,7 @@ class RecipeService
      */
     public function setSearchIndexUpdateInterval(int $interval)
     {
-        $this->config->setUserValue($this->userId, 'cookbook', 'update_interval', $interval);
+        $this->config->setUserValue($this->user_id, 'cookbook', 'update_interval', $interval);
     }
 
     /**
@@ -783,7 +864,7 @@ class RecipeService
      */
     public function getSearchIndexUpdateInterval(): int
     {
-        $interval = (int)$this->config->getUserValue($this->userId, 'cookbook', 'update_interval');
+        $interval = (int)$this->config->getUserValue($this->user_id, 'cookbook', 'update_interval');
 
         if ($interval < 1) {
             $interval = 5;
@@ -797,7 +878,7 @@ class RecipeService
      */
     public function getFolderForUser()
     {
-        $path = '/' . $this->userId . '/files/' . $this->getUserFolderPath();
+        $path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
         $path = str_replace('//', '/', $path);
 
         return $this->getOrCreateFolder($path);
