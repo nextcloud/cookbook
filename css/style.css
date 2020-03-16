@@ -383,7 +383,7 @@
         }
 
         #app-content-wrapper form fieldset > ul {
-            margin-top: 1em;
+            margin-top: 2rem;
             padding-left: 1em;
         }
         
@@ -393,10 +393,51 @@
             padding: 0;
             float: right;
         }
+        
+        #app-content-wrapper form fieldset > ul > li {
+            display: flex;
+            width: 100%;
+            margin: 0 0 1em 0;
+        }
 
         #app-content-wrapper form fieldset > ul > li > input {
             width: 100%;
-            margin: 0 0 1em 0;
+            margin: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        #app-content-wrapper form fieldset > ul > li > .list-item-tools {
+            display: flex;
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button {
+            padding: 0;
+            margin: 0;
+            flex-basis: 34px;
+            min-width: 34px;
+            max-height: 34px;
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button {
+            border-radius: 0;
+            border-left-width: 0;
+            border-right-width: 0;
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button:last-child {
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            border-right-width: 1px;
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > .list-item-tools .icon-arrow-up {
+            background-image: var(--icon-download-000);
+            transform: rotate(180deg);
+        }
+        
+        #app-content-wrapper form fieldset > ul > li > .list-item-tools .icon-arrow-down {
+            background-image: var(--icon-download-000);
         }
 
         #app-content-wrapper form fieldset > ul > li > button {
@@ -410,17 +451,11 @@
         }
 
         #app-content-wrapper form fieldset > ul > li > textarea {
-            width: calc(100% - 3em);
+            min-height: 10em;
+            resize: vertical;
+            width: 100%;
             margin: 0;
-            height: 10em;
-            resize: none;
-        }
-
-        #app-content-wrapper form fieldset button:first-child {
-            border: 0;
-            background-color: transparent;
-            position: relative;
-			float: right;
+            border-top-right-radius: 0;
         }
 
         #app-content-wrapper form button[type="submit"] {

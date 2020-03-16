@@ -24,8 +24,8 @@ Cookbook.prototype = {
             method: 'POST'
         }).done(function () {
             deferred.resolve();
-        }).fail(function () {
-            deferred.reject();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            deferred.reject(new Error(jqXHR.responseText));
         });
         return deferred.promise();
     },
@@ -45,9 +45,10 @@ Cookbook.prototype = {
             data: data
         }).done(function (response) {
             deferred.resolve(response);
-        }).fail(function () {
-            deferred.reject();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            deferred.reject(new Error(jqXHR.responseText));
         });
+    
         return deferred.promise();
     },
     
@@ -118,8 +119,8 @@ Cookbook.prototype = {
         $.get(this._baseUrl + '/recipes').done(function (recipes) {
             self._recipes = recipes;
             deferred.resolve();
-        }).fail(function () {
-            deferred.reject();
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            deferred.reject(new Error(jqXHR.responseText));
         });
 
         return deferred.promise();
@@ -235,8 +236,8 @@ var Content = function (cookbook) {
             $('#pick-image').off('click');
 			$('#pick-image').click(self.onPickImage);
 			
-			$('#app-content-wrapper form ul + button').off('click');
-			$('#app-content-wrapper form ul + button').click(self.onAddListItem);
+			$('#app-content-wrapper form ul + button.add-list-item').off('click');
+			$('#app-content-wrapper form ul + button.add-list-item').click(self.onAddListItem);
 			
 			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
 			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
@@ -382,8 +383,14 @@ var Content = function (cookbook) {
      * Updates all lists items with click events
      */
     self.updateListItems = function(e) {
-        $('#app-content-wrapper form .icon-delete').off('click');
-        $('#app-content-wrapper form .icon-delete').click(self.onDeleteListItem);
+        $('#app-content-wrapper form .remove-list-item').off('click');
+        $('#app-content-wrapper form .remove-list-item').click(self.onDeleteListItem);
+        
+        $('#app-content-wrapper form .move-list-item-up').off('click');
+        $('#app-content-wrapper form .move-list-item-up').click(self.onMoveListItemUp);
+        
+        $('#app-content-wrapper form .move-list-item-down').off('click');
+        $('#app-content-wrapper form .move-list-item-down').click(self.onMoveListItemDown);
 
         $('#app-content-wrapper form ul li input[type="text"]').off('keypress');
         $('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
@@ -395,7 +402,12 @@ var Content = function (cookbook) {
     self.onDeleteListItem = function(e) {
         e.preventDefault();
 
-        e.currentTarget.parentElement.parentElement.removeChild(e.currentTarget.parentElement);
+        var button = e.currentTarget;
+        var tools = button.parentElement;
+        var listItem = tools.parentElement;
+        var list = listItem.parentElement;
+
+        list.removeChild(listItem);
     };
 
     /**
@@ -434,6 +446,40 @@ var Content = function (cookbook) {
 
         self.updateListItems();
     };
+    
+    /**
+     * Event: Click move list item up
+     */
+    self.onMoveListItemUp = function(e) {
+        e.preventDefault();
+
+        var button = e.currentTarget;
+        var tools = button.parentElement;
+        var listItem = tools.parentElement;
+
+        if(!listItem.previousElementSibling) {
+            return;
+        }
+
+        $(listItem).insertBefore($(listItem.previousElementSibling));
+    };
+    
+    /**
+     * Event: Click move list item down
+     */
+    self.onMoveListItemDown = function(e) {
+        e.preventDefault();
+
+        var button = e.currentTarget;
+        var tools = button.parentElement;
+        var listItem = tools.parentElement;
+        
+        if(!listItem.nextElementSibling) {
+            return;
+        }
+
+        $(listItem).insertAfter($(listItem.nextElementSibling));
+    };
 
     /**
      * Event: Update recipe
@@ -448,7 +494,7 @@ var Content = function (cookbook) {
             nav.render();
         })
         .fail(function(e) {
-            alert(t(appName, 'Form submission failed: {error}', {error: e instanceof Error ? e.message : t(appName, 'unknown error')}));
+            alert(t(appName, 'Could not update recipe') + (e instanceof Error ? ': ' + e.message : ''));
 
             if(e && e instanceof Error) { throw e; }
         });
@@ -500,7 +546,7 @@ var Nav = function (cookbook) {
     };
 
     /**
-     * Event: Pick a tag
+     * Event: Pick a category
      */
     self.onCategorizeRecipes = function(e) {
         e.preventDefault();
@@ -566,17 +612,19 @@ var Nav = function (cookbook) {
      */
     self.render = function () {
         $.ajax({
-            url: cookbook._baseUrl + '/tags',
+            url: cookbook._baseUrl + '/categories',
             method: 'GET',
         })
         .done(function(json) {
+            json = json || [];
+
             var html = '<li class="icon-category-organization"><a href="#">' + t(appName, 'All recipes') + '</a></li>';
 			
-			html += json.map(function(tag) {
+			html += json.map(function(category) {
                 var entry = '<li class="icon-category-files">';
-                entry += '<a href="#tag/' + encodeURIComponent(tag.name) + '">';
-                entry += '<span class="pull-right">' + tag.recipe_count + '</span>';
-                entry += tag.name;
+                entry += '<a href="#category/' + encodeURIComponent(category.name) + '">';
+                entry += '<span class="pull-right">' + category.recipe_count + '</span>';
+                entry += category.name === '*' ? t(appName, 'No category') : category.name;
                 entry += '</a></li>';
                 return entry;
             }).join("\n");
@@ -586,7 +634,7 @@ var Nav = function (cookbook) {
             self.highlightActive();
         })
         .fail(function(e) {
-            alert(t(appName, 'Failed to fetch tags'));
+            alert(t(appName, 'Failed to fetch categories'));
 
             if(e && e instanceof Error) { throw e; }
         });

@@ -71,6 +71,11 @@
             <span>:</span>
             <input type="number" min="0" max="59" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
         </fieldset>
+        
+        <fieldset>
+            <label><?php p($l->t('Category')); ?></label>
+            <input type="text" name="recipeCategory" value="<?php if(isset($_['recipeCategory'])) { echo $_['recipeCategory']; } ?>">
+        </fieldset>
 
         <fieldset>
             <label><?php p($l->t('Keywords (comma-separated)')); ?></label>
@@ -88,19 +93,27 @@
                 <template>
                     <li>
                         <input type="text" name="tool[]" value="">
-                        <button class="icon-delete right"></button>
+                        <div class="list-item-tools">
+                            <button class="icon-arrow-up move-list-item-up"></button>
+                            <button class="icon-arrow-down move-list-item-down"></button>
+                            <button class="icon-delete right remove-list-item"></button>
+                        </div>
                     </li>
                 </template>
                 <?php if(isset($_['tool']) && is_array($_['tool'])) { ?>
                     <?php foreach ($_['tool'] as $i => $tool) { ?>
                         <li>
                             <input type="text" name="tool[]" value="<?php echo $tool; ?>">
-                            <button class="icon-delete right"></button>
+                            <div class="list-item-tools">
+                                <button class="icon-arrow-up move-list-item-up"></button>
+                                <button class="icon-arrow-down move-list-item-down"></button>
+                                <button class="icon-delete right remove-list-item"></button>
+                            </div>
                         </li>
                     <?php } ?>
                 <?php } ?>
             </ul>
-            <button class="button"><span class="icon-add"></span></button>
+            <button class="button add-list-item"><span class="icon-add"></span></button>
         </fieldset>
 
         <fieldset>
@@ -109,19 +122,27 @@
                 <template>
                     <li>
                         <input type="text" name="recipeIngredient[]" value="">
-                        <button class="icon-delete right"></button>
+                        <div class="list-item-tools">
+                            <button class="icon-arrow-up move-list-item-up"></button>
+                            <button class="icon-arrow-down move-list-item-down"></button>
+                            <button class="icon-delete right remove-list-item"></button>
+                        </div>
                     </li>
                 </template>
                 <?php if(isset($_['recipeIngredient']) && is_array($_['recipeIngredient'])) { ?>
                     <?php foreach ($_['recipeIngredient'] as $i => $ingredient) { ?>
                         <li>
                             <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
-                            <button class="icon-delete right"></button>
+                            <div class="list-item-tools">
+                                <button class="icon-arrow-up move-list-item-up"></button>
+                                <button class="icon-arrow-down move-list-item-down"></button>
+                                <button class="icon-delete right remove-list-item"></button>
+                            </div>
                         </li>
                     <?php } ?>
                 <?php } ?>
             </ul>
-            <button class="button"><span class="icon-add"></span></button>
+            <button class="button add-list-item"><span class="icon-add"></span></button>
         </fieldset>
 
         <fieldset>
@@ -130,19 +151,27 @@
                 <template>
                     <li>
                         <textarea name="recipeInstructions[]"></textarea>
-                        <button class="icon-delete right"></button>
+                        <div class="list-item-tools">
+                            <button class="icon-arrow-up move-list-item-up"></button>
+                            <button class="icon-arrow-down move-list-item-down"></button>
+                            <button class="icon-delete right remove-list-item"></button>
+                        </div>
                     </li>
                 </template>
                 <?php if(isset($_['recipeInstructions']) && is_array($_['recipeInstructions'])) { ?>
                     <?php foreach ($_['recipeInstructions'] as $i => $step) { ?>
                         <li>
                             <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
-                            <button class="icon-delete right"></button>
+                            <div class="list-item-tools">
+                                <button class="icon-arrow-up move-list-item-up"></button>
+                                <button class="icon-arrow-down move-list-item-down"></button>
+                                <button class="icon-delete right remove-list-item"></button>
+                            </div>
                         </li>
                     <?php } ?>
                 <?php } ?>
             </ul>
-            <button class="button"><span class="icon-add"></span></button>
+            <button class="button add-list-item"><span class="icon-add"></span></button>
         </fieldset>
     </div>
 </form>

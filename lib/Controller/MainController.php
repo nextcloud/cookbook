@@ -45,15 +45,25 @@ class MainController extends Controller
 
         return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
     }
+    
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
+    public function categories()
+    {
+		$categories = $this->service->getAllCategoriesInSearchIndex();
+        return new DataResponse($categories, 200, ['Content-Type' => 'application/json']);
+    }
 
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function tags()
+    public function keywords()
     {
-		$tags = $this->service->getAllKeywordsInSearchIndex();
-        return new DataResponse($tags, 200, ['Content-Type' => 'application/json']);
+		$keywords = $this->service->getAllKeywordsInSearchIndex();
+        return new DataResponse($keywords, 200, ['Content-Type' => 'application/json']);
     }
 
     /**
@@ -74,7 +84,7 @@ class MainController extends Controller
 
             return $response;
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
     }
 
@@ -109,7 +119,7 @@ class MainController extends Controller
 
             return $response;
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
     }
 	
@@ -117,11 +127,12 @@ class MainController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
-    public function tag($tag)
+    public function category($category)
     {
-		$tag = urldecode($tag);
+        $category = urldecode($category);
+
         try {
-			$recipes = $this->service->findRecipesInSearchIndex($tag);
+			$recipes = $this->service->getRecipesByCategory($category);
 			
 			foreach ($recipes as $i => $recipe) {
 				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
@@ -132,7 +143,7 @@ class MainController extends Controller
 
             return $response;
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
     }
 
@@ -151,7 +162,7 @@ class MainController extends Controller
 
             return $response;
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
     }
 
@@ -169,7 +180,7 @@ class MainController extends Controller
 
             return $response;
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
 	}
     
@@ -189,7 +200,7 @@ class MainController extends Controller
 
             return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
     }
 
@@ -205,7 +216,7 @@ class MainController extends Controller
 			
 			return new DataResponse('#recipes/' . $file->getParent()->getId());
 		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 502);
+			return new DataResponse($e->getMessage(), 500);
 		}
 	}
 
@@ -231,7 +242,7 @@ class MainController extends Controller
 
             return $response;
         } catch (\Exception $e) {
-            return new DataResponse($e->getMessage(), 502);
+            return new DataResponse($e->getMessage(), 500);
         }
     }
 
@@ -249,7 +260,7 @@ class MainController extends Controller
 			
 			return new DataResponse($id);
 		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 502);
+			return new DataResponse($e->getMessage(), 500);
 		}
     }
 }
