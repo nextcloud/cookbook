@@ -1,5 +1,13 @@
 # Translations for the cookbook app
 
+**Warning:
+This is an old and outdated information! This project has moved to [Transifex](https://www.transifex.com/nextcloud/nextcloud/cookbook/).**
+You can use this as a guide for developers to test translations but **do not** open pull requests regarding translation files.
+
+Thank you!
+
+---
+
 This is a quick instruction how to generate translations for the Nextcloud app `cookbook`.
 
 

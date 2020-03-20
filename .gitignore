@@ -1,8 +1,6 @@
 *.swp
 *.swo
 
-l10n/*
-
 cookbook.tar.gz
 
 .idea/
