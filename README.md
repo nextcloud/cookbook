@@ -18,4 +18,5 @@ A lot of websites are unfortunately not following the schema.org/Recipe standard
 The parser is far from perfect. If you can help out in any way, please [have a look at the parseRecipeHtml() method](https://github.com/mrzapp/nextcloud-cookbook/blob/develop/lib/Service/RecipeService.php) and create a pull request with your changes.
 
 #### All of the text is in English?
-If your language hasn't been added yet, your can help out by following [these](https://github.com/mrzapp/nextcloud-cookbook/tree/develop/translationfiles) instructions
+This app uses the [Transifex](https://www.transifex.com/nextcloud/nextcloud/cookbook/) translation system.
+You might want to register there to help translating the app to new languages or report errors in existing translations.
