@@ -320,7 +320,7 @@ class RecipeService
 
         $durations = ['prepTime', 'cookTime', 'totalTime'];
         $duration_patterns = [
-            '/PT(\d+H)?(\d+M)?/',   // ISO 8601
+            '/P.*T(\d+H)?(\d+M)?/',   // ISO 8601
             '/(\d+):(\d+)/',        // Clock
         ];
 
@@ -349,8 +349,6 @@ class RecipeService
                     }
                 }
             }
-
-            $json[$duration . '_test'] = var_export($duration_value, true) . ' --- ' . $duration_hours . ':' . $duration_minutes;
 
             $json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
         }
