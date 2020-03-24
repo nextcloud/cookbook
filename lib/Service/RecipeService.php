@@ -162,7 +162,7 @@ class RecipeService
         $json['image'] = stripslashes($json['image']);
 
         // Last sanity check for URL
-        if(!empty($json['image'])) {
+        if(!empty($json['image']) && $json['image'][0] !== '/') {
             $image_url = parse_url($json['image']);
 
             if(!isset($image_url['scheme'])) {
@@ -332,8 +332,8 @@ class RecipeService
             $duration_value = $json[$duration];
 
             if(is_array($duration_value) && sizeof($duration_value) === 2) {
-                $duration_hours = $duration_value[0];
-                $duration_minutes = $duration_value[1];
+                $duration_hours = $duration_value[0] ? $duration_value[0] : 0;
+                $duration_minutes = $duration_value[1] ? $duration_value[1] : 0;
 
             } else {
                 foreach($duration_patterns as $duration_pattern) {

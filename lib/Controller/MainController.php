@@ -214,7 +214,7 @@ class MainController extends Controller
 	        $recipe_data = $_POST;
 			$file = $this->service->addRecipe($recipe_data);
 			
-			return new DataResponse('#recipes/' . $file->getParent()->getId());
+			return new DataResponse($file->getParent()->getId());
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}
