@@ -388,7 +388,7 @@
         }
         
         #app-content-wrapper form fieldset > ul + button {
-            width: 36px; 
+            width: 36px;
             text-align: center;
             padding: 0;
             float: right;
@@ -470,7 +470,9 @@
     #header,
     #app-navigation,
     #controls,
-    .recipe-toolbar {
+    .recipe-toolbar,
+	#app-content header,
+	.times button {
         display: none !important;
     }
 
@@ -483,10 +485,6 @@
 
     #app-content {
         margin-left: 0 !important;
-    }
-
-    #app-content header img {
-        display: none !important;
     }
 
     a:link:after,
