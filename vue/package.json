@@ -1,0 +1,19 @@
+{
+  "name": "nextcloud-cookbook",
+  "version": "0.7.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrzapp/nextcloud-cookbook.git"
+  },
+  "author": "",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/mrzapp/nextcloud-cookbook/issues"
+  },
+  "homepage": "https://github.com/mrzapp/nextcloud-cookbook#readme"
+}

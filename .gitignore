@@ -4,3 +4,10 @@
 cookbook.tar.gz
 
 .idea/
+
+### NPM ###
+
+# Node modules
+vue/node_modules
+# Package lock
+vue/package-lock.json
