@@ -34,7 +34,7 @@ OC.L10N.register(
     "Servings" : "Portionen",
     "Tools" : "Utensilien",
     "Ingredients" : "Zutaten",
-    "Instructions" : "Anweisungen",
+    "Instructions" : "Zubereitung",
     "Edit recipe" : "Rezept bearbeiten",
     "Print recipe" : "Rezept drucken",
     "Delete recipe" : "Rezept löschen",
