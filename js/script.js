@@ -145,7 +145,7 @@ Cookbook.prototype = {
 
     /**
      * Sets the recipe base directory using a callback
-     * 
+     *
      * @param {Function} cb
      */
     setFolder: function(cb) {
@@ -245,6 +245,7 @@ var Content = function (cookbook) {
             self.updateListItems();
 			
             // View
+            $('header img').click(self.onImageClick);
 			$('main .instruction').click(self.onInstructionClick);
 			$('.time button').click(self.onTimerToggle);
 			
@@ -314,6 +315,13 @@ var Content = function (cookbook) {
      */
     self.onInstructionClick = function(e) {
         $(e.target).toggleClass('done');
+    }
+
+    /**
+     * Event: click the recipe's image
+     */
+    self.onImageClick = function(e) {
+        $(e.target).parent().toggleClass('collapsed');
     }
 
     /**

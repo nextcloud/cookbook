@@ -28,7 +28,7 @@
 </div>
 
 <?php if(isset($_['image']) && $_['image']) { ?>
-    <header>
+    <header class="collapsed">
         <img src="<?php echo $_['imageURL']; ?>&t=<?php echo time(); ?>">
     </header>
 <?php } ?>
