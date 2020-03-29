@@ -46,9 +46,26 @@ class RecipeController extends Controller
             $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
         }
         foreach ($recipes as $i => $recipe) {
-            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+            $mtime = $this->imageModificationTime($recipe['recipe_id'], 'thumb');
+            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb', 't' => $mtime]);
         }
         return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
+    }
+
+    public function imageModificationTime($id, $size)
+    {
+        $path_candidates = [
+            $this->service->getRecipeImageFileByFolderId($id, $size),
+            dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg'
+        ];
+
+        foreach($path_candidates as $path) {
+            if(file_exists($path)) {
+                return filemtime($path);
+            }
+        }
+
+        return -1;
     }
 
     /**
@@ -129,16 +146,20 @@ class RecipeController extends Controller
     public function image($id)
     {
         $size = isset($_GET['size']) ? $_GET['size'] : null;
+        $headers = [
+            'Content-Type' => 'image/jpeg',
+            'Cache-Control' => 'public, max-age=604800' // cache for one week
+        ];
 
         try {
             $file = $this->service->getRecipeImageFileByFolderId($id, $size);
 
-            return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
+            return new FileDisplayResponse($file, Http::STATUS_OK, $headers);
         
         } catch (\Exception $e) {
             $file = file_get_contents(dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg');
             
-            return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
+            return new DataDisplayResponse($file, Http::STATUS_OK, $headers);
         }
     }
 }

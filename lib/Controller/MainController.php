@@ -66,6 +66,22 @@ class MainController extends Controller
         return new DataResponse($keywords, 200, ['Content-Type' => 'application/json']);
     }
 
+    public function imageModificationTime($id, $size)
+    {
+        $path_candidates = [
+            $this->service->getRecipeImageFileByFolderId($id, $size),
+            dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg'
+        ];
+
+        foreach($path_candidates as $path) {
+            if(file_exists($path)) {
+                return filemtime($path);
+            }
+        }
+
+        return -1;
+    }
+
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
@@ -76,7 +92,8 @@ class MainController extends Controller
 			$recipes = $this->service->getAllRecipesInSearchIndex();
 			
 			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+				$mtime = $this->imageModificationTime($recipe['recipe_id'], 'thumb');
+				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb', 't' => $mtime]);
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
@@ -111,7 +128,8 @@ class MainController extends Controller
 			$recipes = $this->service->findRecipesInSearchIndex($query);
 			
 			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+				$mtime = $this->imageModificationTime($recipe['recipe_id'], 'thumb');
+				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb', 't' => $mtime]);
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['query' => $query, 'recipes' => $recipes]);
@@ -135,7 +153,8 @@ class MainController extends Controller
 			$recipes = $this->service->getRecipesByCategory($category);
 			
 			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+				$mtime = $this->imageModificationTime($recipe['recipe_id'], 'thumb');
+				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb', 't' => $mtime]);
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['tag' => $tag, 'recipes' => $recipes]);
@@ -155,7 +174,8 @@ class MainController extends Controller
     {
         try {
             $recipe = $this->service->getRecipeById($id);
-            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $id, 'size' => 'full']);
+            $mtime = $this->imageModificationTime($id, 'full');
+            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $id, 'size' => 'full', 't' => $mtime]);
             $recipe['id'] = $id;
             $response = new TemplateResponse($this->appName, 'content/recipe', $recipe);
             $response->renderAs('blank');
