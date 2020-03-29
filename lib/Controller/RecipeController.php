@@ -17,7 +17,6 @@ use OCP\IURLGenerator;
 
 class RecipeController extends Controller
 {
-    private $userId;
     /**
      * @var RecipeService
      */

@@ -54,23 +54,35 @@ class RecipeDb {
         $qb->execute();
     }
     
-    public function findAllRecipes(string $userId) {
+    public function findAllRecipes(string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
             ->from('cookbook_names', 'r')
             ->where('user_id = :user')
             ->orderBy('r.name');
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
-        return $result;
+        // NOTE: This post processing shouldn't be necessary
+        // When sharing recipes with other users, they are occasionally returned twice
+        // See issue #149 for details
+        $unique_result = [];
+
+        foreach($result as $recipe) {
+            if(!isset($recipe['recipe_id'])) { continue; }
+            if(isset($unique_result[$recipe['recipe_id']])) { continue; }
+
+            $unique_result[$recipe['recipe_id']] = $recipe;
+        }
+
+        return array_values($unique_result);
     }
 
-    public function findAllKeywords(string $userId) {
+    public function findAllKeywords(string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('k.name')
@@ -79,7 +91,7 @@ class RecipeDb {
             ->where('user_id = :user AND k.name != \'\'')
             ->groupBy('k.name')
             ->orderBy('k.name');
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
@@ -91,7 +103,7 @@ class RecipeDb {
         return $result;
     }
     
-    public function findAllCategories(string $userId) {
+    public function findAllCategories(string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('k.name')
@@ -100,7 +112,7 @@ class RecipeDb {
             ->where('user_id = :user AND k.name != \'\'')
             ->groupBy('k.name')
             ->orderBy('k.name');
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
@@ -115,7 +127,7 @@ class RecipeDb {
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
      */
-    public function getRecipesByCategory(string $category, string $userId) {
+    public function getRecipesByCategory(string $category, string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select(['r.recipe_id', 'r.name'])
@@ -123,7 +135,7 @@ class RecipeDb {
             ->where('k.name = :category')
             ->andWhere('k.user_id = :user')
             ->setParameter('category', $category, TYPE::STRING)
-            ->setParameter('user', $userId, TYPE::STRING);
+            ->setParameter('user', $user_id, TYPE::STRING);
         
         $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
 
@@ -140,10 +152,10 @@ class RecipeDb {
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
      */
-    public function findRecipes(array $keywords, string $userId) {
+    public function findRecipes(array $keywords, string $user_id) {
         $has_keywords = $keywords && is_array($keywords) && sizeof($keywords) > 0 && $keywords[0];
 
-        if(!$has_keywords) { return $this->findAllRecipes($userId); }
+        if(!$has_keywords) { return $this->findAllRecipes($user_id); }
 
         $qb = $this->db->getQueryBuilder();
 
@@ -170,7 +182,7 @@ class RecipeDb {
         $qb->andWhere('k.user_id = :user');
 
         $qb->setParameters($params, $types);
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
         
         $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
 
@@ -184,13 +196,13 @@ class RecipeDb {
         return $result;
     }
     
-    public function emptySearchIndex(string $userId) {
+    public function emptySearchIndex(string $user_id) {
         $qb = $this->db->getQueryBuilder();
         
         $qb->delete('cookbook_names')
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
         $qb->setParameter('empty', 'empty', TYPE::STRING);
         
         $qb->execute();
@@ -198,13 +210,13 @@ class RecipeDb {
         $qb->delete('cookbook_keywords')
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
         $qb->setParameter('empty', 'empty', TYPE::STRING);
         
         $qb->delete('cookbook_categories')
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
         $qb->setParameter('empty', 'empty', TYPE::STRING);
         
         $qb->execute();
@@ -212,7 +224,7 @@ class RecipeDb {
 
     private function isRecipeEmpty($json) {}
 
-    public function indexRecipeFile(File $file, string $userId) {
+    public function indexRecipeFile(File $file, string $user_id) {
         $json = json_decode($file->getContent(), true);
 
         if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
@@ -226,7 +238,7 @@ class RecipeDb {
             ->where('recipe_id = :id')
             ->andWhere('user_id = :user');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
 
         $qb->execute();
 
@@ -238,7 +250,7 @@ class RecipeDb {
             ]);
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         $qb->setParameter('name', $json['name'], Type::STRING);
-        $qb->setParameter('user', $userId, Type::STRING);
+        $qb->setParameter('user', $user_id, Type::STRING);
         
         $qb->execute();
 
@@ -247,7 +259,7 @@ class RecipeDb {
             ->where('recipe_id = :id')
             ->andWhere('user_id = :user');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
         
         $qb->execute();
         
@@ -263,7 +275,7 @@ class RecipeDb {
                     ]);
                 $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
                 $qb->setParameter('keyword', $keyword, Type::STRING);
-                $qb->setParameter('user', $userId, Type::STRING);
+                $qb->setParameter('user', $user_id, Type::STRING);
                 
                 $qb->execute();
             }
@@ -275,7 +287,7 @@ class RecipeDb {
             ->where('recipe_id = :id')
             ->andWhere('user_id = :user');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('user', $userId, TYPE::STRING);
+        $qb->setParameter('user', $user_id, TYPE::STRING);
                 
         $qb->execute();
         
@@ -294,7 +306,7 @@ class RecipeDb {
 
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         $qb->setParameter('category', $json['recipeCategory'], Type::STRING);
-        $qb->setParameter('user', $userId, Type::STRING);
+        $qb->setParameter('user', $user_id, Type::STRING);
         $qb->execute();
     }
 }
