@@ -133,7 +133,7 @@ class RecipeController extends Controller
         try {
             $file = $this->service->getRecipeImageFileByFolderId($id, $size);
 
-            return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
+            return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
         
         } catch (\Exception $e) {
             $file = file_get_contents(dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg');
