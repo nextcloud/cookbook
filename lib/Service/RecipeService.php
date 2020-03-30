@@ -146,23 +146,12 @@ class RecipeService
         } else {
             $json['image'] = '';
         }
-
-        // Make sure that "recipeCategory" is a string
-        if(isset($json['recipeCategory'])) {
-            if(is_array($json['recipeCategory'])) {
-                $json['recipeCategory'] = reset($json['recipeCategory']);
-            } else if(!is_string($json['recipeCategory'])) {
-                $json['recipeCategory'] = '';
-            }
-        } else {
-            $json['recipeCategory'] = '';
-        }
-
+        
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
 
         // Last sanity check for URL
-        if(!empty($json['image']) && $json['image'][0] !== '/') {
+        if(!empty($json['image']) && (substr($json['image'], 0, 2) === '//' || $json['image'][0] !== '/')) {
             $image_url = parse_url($json['image']);
 
             if(!isset($image_url['scheme'])) {
@@ -176,6 +165,18 @@ class RecipeService
             }
         }
         
+
+        // Make sure that "recipeCategory" is a string
+        if(isset($json['recipeCategory'])) {
+            if(is_array($json['recipeCategory'])) {
+                $json['recipeCategory'] = reset($json['recipeCategory']);
+            } else if(!is_string($json['recipeCategory'])) {
+                $json['recipeCategory'] = '';
+            }
+        } else {
+            $json['recipeCategory'] = '';
+        }
+
         // Make sure that "recipeYield" is an integer which is at least 1 
         if (isset($json['recipeYield']) && $json['recipeYield']) {
 
