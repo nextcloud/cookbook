@@ -67,6 +67,10 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
+        return $this->unique($result);
+    }
+
+    public function unique(array $result) {
         // NOTE: This post processing shouldn't be necessary
         // When sharing recipes with other users, they are occasionally returned twice
         // See issue #149 for details
@@ -78,7 +82,7 @@ class RecipeDb {
 
             $unique_result[$recipe['recipe_id']] = $recipe;
         }
-
+        
         return array_values($unique_result);
     }
 
@@ -146,7 +150,7 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
-        return $result;
+        return $this->unique($result);
     }
     
     /**
@@ -193,7 +197,7 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
-        return $result;
+        return $this->unique($result);
     }
     
     public function emptySearchIndex(string $user_id) {

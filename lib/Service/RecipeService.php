@@ -739,7 +739,7 @@ class RecipeService
      */
     public function getSearchIndexLastUpdateTime()
     {
-        return (int)$this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
+        return (int) $this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
     }
 
     /**
