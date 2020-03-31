@@ -52,6 +52,24 @@ class RecipeService
 
         return $this->parseRecipeFile($file);
     }
+    
+    /**
+     * Get a recipe's modification time by its folder id.
+     *
+     * @param int $id
+     *
+     * @return int
+     */
+    public function getRecipeMTime(int $id)
+    {
+        $file = $this->getRecipeFileByFolderId($id);
+
+        if (!$file) {
+            return null;
+        }
+
+        return $file->getMTime();
+    }
 
     /**
      * Returns a recipe file by folder id
@@ -910,6 +928,8 @@ class RecipeService
         }
 
         $json['id'] = $file->getParent()->getId();
+        $json['dateCreated'] = $file->getCreationTime();
+        $json['dateModified'] = $file->getMTime();
 
         return $this->checkRecipe($json);
     }
