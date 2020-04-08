@@ -7,6 +7,7 @@ OC.L10N.register(
     "Path to your Recipe Image" : "Путь к изображению рецепта",
     "Are you sure you want to delete this recipe?" : "Действительно удалить рецепт?",
     "Failed to delete recipe" : "Не удалось удалить рецепт",
+    "Cooking time is up!" : "Время приготовления истекло!",
     "Could not update recipe" : "Не удалось обновить рецепт",
     "Could not add recipe" : "Не удалось добавить рецепт",
     "Could not rebuild recipe index." : "Не удалось обновить индекс рецептов.",
