@@ -1,4 +1,52 @@
 /**
+ * Helpers
+ */
+
+.icon-arrow-up {
+    background-image: var(--icon-download-000);
+    transform: rotate(180deg);
+}
+
+.icon-arrow-down {
+    background-image: var(--icon-download-000);
+}
+
+.input-group {
+    display: flex;
+    width: 100%;
+}
+
+.input-group > input {
+    width: 100%;
+    margin: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+
+.input-group > .input-group-addon {
+    display: flex;
+}
+
+.input-group > .input-group-addon > button {
+    padding: 0;
+    margin: 0;
+    min-width: 34px;
+}
+
+.input-group > .input-group-addon > button {
+    border-radius: 0;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.input-group > .input-group-addon > button:last-child {
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    border-right-width: 1px;
+}
+
+/**
  * Main
  */
 #app {
@@ -414,39 +462,6 @@
             margin: 0;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-        }
-
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools {
-            display: flex;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button {
-            padding: 0;
-            margin: 0;
-            flex-basis: 34px;
-            min-width: 34px;
-            max-height: 34px;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button {
-            border-radius: 0;
-            border-left-width: 0;
-            border-right-width: 0;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            border-right-width: 1px;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools .icon-arrow-up {
-            background-image: var(--icon-download-000);
-            transform: rotate(180deg);
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools .icon-arrow-down {
-            background-image: var(--icon-download-000);
         }
 
         #app-content-wrapper form fieldset > ul > li > button {

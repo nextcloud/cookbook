@@ -242,6 +242,9 @@ var Content = function (cookbook) {
 			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
 			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
 			
+			$('#app-settings [title]').tooltip('destroy');
+			$('#app-settings [title]').tooltip();
+			
             self.updateListItems();
 			
             // View
