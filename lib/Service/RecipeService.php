@@ -474,7 +474,11 @@ class RecipeService
                         
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        array_push($json[$prop], $prop_element->nodeValue);
+                        if(null !== $prop_element->getAttributeNode('content')) {
+                            array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
+                        } else {
+                            array_push($json[$prop], $prop_element->nodeValue);
+                        }
                         break;
 
                     case 'recipeInstructions':
