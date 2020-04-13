@@ -53,21 +53,21 @@
 
         <fieldset class="duration">
             <label><?php p($l->t('Preparation time')); ?></label>
-            <input type="number" min="0" max="99" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
+            <input type="number" min="0" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
             <span>:</span>
             <input type="number" min="0" max="59" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
         </fieldset>
 
         <fieldset class="duration">
             <label><?php p($l->t('Cooking time')); ?></label>
-            <input type="number" min="0" max="99" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
+            <input type="number" min="0" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
             <span>:</span>
             <input type="number" min="0" max="59" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
         </fieldset>
 
         <fieldset class="duration">
             <label><?php p($l->t('Total time')); ?></label>
-            <input type="number" min="0" max="99" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
+            <input type="number" min="0" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
             <span>:</span>
             <input type="number" min="0" max="59" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
         </fieldset>
