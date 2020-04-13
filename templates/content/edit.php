@@ -149,24 +149,26 @@
             <label><?php p($l->t('Instructions')); ?></label>
             <ul>
                 <template>
-                    <li class="input-group">
-                        <textarea name="recipeInstructions[]"></textarea>
-                        <div class="input-group-addon">
+                    <li class="textarea-group">
+                        <div class="step-number"></div>
+                        <div class="textarea-group-addon">
                             <button class="icon-arrow-up move-list-item-up"></button>
                             <button class="icon-arrow-down move-list-item-down"></button>
                             <button class="icon-delete right remove-list-item"></button>
                         </div>
+                        <textarea name="recipeInstructions[]"></textarea>
                     </li>
                 </template>
                 <?php if(isset($_['recipeInstructions']) && is_array($_['recipeInstructions'])) { ?>
                     <?php foreach ($_['recipeInstructions'] as $i => $step) { ?>
-                        <li class="input-group">
-                            <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
-                            <div class="input-group-addon">
+                        <li class="textarea-group">
+                            <div class="step-number"><?php echo ($i + 1); ?>.</div>
+                            <div class="textarea-group-addon">
                                 <button class="icon-arrow-up move-list-item-up"></button>
                                 <button class="icon-arrow-down move-list-item-down"></button>
                                 <button class="icon-delete right remove-list-item"></button>
                             </div>
+                            <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
                         </li>
                     <?php } ?>
                 <?php } ?>

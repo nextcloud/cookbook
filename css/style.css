@@ -3,12 +3,11 @@
  */
 
 .icon-arrow-up {
-    background-image: var(--icon-download-000);
-    transform: rotate(180deg);
+    background-image: var(--icon-triangle-n-000);
 }
 
 .icon-arrow-down {
-    background-image: var(--icon-download-000);
+    background-image: var(--icon-triangle-s-000);
 }
 
 .input-group {
@@ -16,35 +15,67 @@
     width: 100%;
 }
 
-.input-group > input {
-    width: 100%;
-    margin: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
+    .input-group > input {
+        width: 100%;
+        margin: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 
+    .input-group > .input-group-addon {
+        display: flex;
+    }
 
-.input-group > .input-group-addon {
-    display: flex;
-}
+        .input-group > .input-group-addon > button {
+            padding: 0;
+            margin: 0;
+            min-width: 34px;
+            min-height: 34px;
+        }
 
-.input-group > .input-group-addon > button {
-    padding: 0;
-    margin: 0;
-    min-width: 34px;
-}
+        .input-group > .input-group-addon > button {
+            border-radius: 0;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
 
-.input-group > .input-group-addon > button {
-    border-radius: 0;
-    border-left-color: transparent;
-    border-right-color: transparent;
-}
+        .input-group > .input-group-addon > button:last-child {
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            border-right-width: 1px;
+        }
 
-.input-group > .input-group-addon > button:last-child {
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
-    border-right-width: 1px;
+.textarea-group {
+    
 }
+    .textarea-group-addon {
+        float: right;
+        display: flex;
+        position: relative;
+        top: 1px;
+        z-index: 1;
+    }
+        
+        .textarea-group-addon::after {
+            display: table;
+            content: '';
+            clear: both;
+        }
+        
+        .textarea-group-addon button {
+            min-width: 34px;
+            min-height: 34px;
+            border-radius: 0;
+            margin: 0;
+        }
+        
+        .textarea-group-addon button:first-child {
+            border-top-left-radius: var(--border-radius);
+        }
+        
+        .textarea-group-addon button:last-child {
+            border-top-right-radius: var(--border-radius);
+        }
 
 /**
  * Main
@@ -452,8 +483,6 @@
         }
         
         #app-content-wrapper form fieldset > ul > li {
-            display: flex;
-            width: 100%;
             margin: 0 0 1em 0;
         }
 
@@ -480,6 +509,11 @@
             width: 100%;
             margin: 0;
             border-top-right-radius: 0;
+        }
+
+        #app-content-wrapper form fieldset > ul > li .step-number {
+            padding: 6px;
+            float: left;
         }
 
         #app-content-wrapper form button[type="submit"] {

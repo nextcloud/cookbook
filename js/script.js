@@ -394,17 +394,35 @@ var Content = function (cookbook) {
      * Updates all lists items with click events
      */
     self.updateListItems = function(e) {
-        $('#app-content-wrapper form .remove-list-item').off('click');
-        $('#app-content-wrapper form .remove-list-item').click(self.onDeleteListItem);
+        $('#app-content-wrapper form .remove-list-item')
+            .off('click')
+            .click(self.onDeleteListItem);
         
-        $('#app-content-wrapper form .move-list-item-up').off('click');
-        $('#app-content-wrapper form .move-list-item-up').click(self.onMoveListItemUp);
+        $('#app-content-wrapper form .move-list-item-up')
+            .off('click')
+            .click(self.onMoveListItemUp)
+            .prop('disabled', false);
         
-        $('#app-content-wrapper form .move-list-item-down').off('click');
-        $('#app-content-wrapper form .move-list-item-down').click(self.onMoveListItemDown);
+        $('#app-content-wrapper form li:first-of-type .move-list-item-up').prop('disabled', true);
+        
+        $('#app-content-wrapper form .move-list-item-down')
+            .off('click')
+            .click(self.onMoveListItemDown)
+            .prop('disabled', false);
+        
+        $('#app-content-wrapper form li:last-of-type .move-list-item-down').prop('disabled', true);
 
-        $('#app-content-wrapper form ul li input[type="text"]').off('keypress');
-        $('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
+        $('#app-content-wrapper form ul li input[type="text"]')
+            .off('keypress')
+            .on('keypress', self.onListInputKeyDown);
+        
+        console.log('order');
+        $('#app-content-wrapper form ul').each(function() {
+            var stepNumber = 1;
+            $(this).find('.step-number').each(function() {
+                $(this).text(stepNumber++ + '.');
+            });
+        });
     }
 
     /**
@@ -419,6 +437,8 @@ var Content = function (cookbook) {
         var list = listItem.parentElement;
 
         list.removeChild(listItem);
+        
+        self.updateListItems();
     };
 
     /**
@@ -454,7 +474,7 @@ var Content = function (cookbook) {
         $ul.append($item);
 
         $item.find('input').focus();
-
+        
         self.updateListItems();
     };
     
@@ -473,6 +493,8 @@ var Content = function (cookbook) {
         }
 
         $(listItem).insertBefore($(listItem.previousElementSibling));
+        
+        self.updateListItems();
     };
     
     /**
@@ -490,6 +512,8 @@ var Content = function (cookbook) {
         }
 
         $(listItem).insertAfter($(listItem.nextElementSibling));
+        
+        self.updateListItems();
     };
 
     /**

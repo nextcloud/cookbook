@@ -19,7 +19,7 @@
                     <div class="input-group">
                         <input id="recipe-update-interval" type="number" class="input settings-input" value="<?php echo $_['update_interval']; ?>" placeholder="<?php echo $_['update_interval']; ?>">
                         <div class="input-group-addon">
-                            <button class="icon-info" disabled="disabled" title="<?php p($l->t('Last update')); ?>: <?php echo date('Y-m-d H:i', $_['last_update']); ?>"></button>
+                            <button class="icon-info" disabled="disabled" title="<?php p($l->t('Last update:')); ?> <?php echo date('Y-m-d H:i', $_['last_update']); ?>"></button>
                         </div>
                     </div>
                 </li>
