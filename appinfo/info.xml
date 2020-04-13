@@ -13,7 +13,7 @@
     <screenshot small-thumbnail="https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/stable/img/screenshot-small.jpg">https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/stable/img/screenshot.jpg</screenshot>
     <bugs>https://github.com/mrzapp/nextcloud-cookbook/issues</bugs>
     <dependencies>
-        <nextcloud min-version="14" max-version="18"/>
+        <nextcloud min-version="14" max-version="19"/>
     </dependencies>
     <navigations>
         <navigation>
