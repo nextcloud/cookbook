@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Ponovno preišči zbirko",
     "Recipe folder" : "Mapa receptov",
     "Please pick a folder" : "Izbrati je treba mapo",
-    "Update interval in minutes" : "Razmik posodobitev v minutah",
-    "Last update" : "Zadnja posodobitev"
+    "Update interval in minutes" : "Razmik posodobitev v minutah"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

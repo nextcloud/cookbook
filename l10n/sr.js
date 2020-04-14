@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Поновно скенирај библиотеку",
     "Recipe folder" : "Фасцикла са рецептима",
     "Please pick a folder" : "Одаберите фасциклу",
-    "Update interval in minutes" : "Време ажурирања у минутима",
-    "Last update" : "Последње ажурирање"
+    "Update interval in minutes" : "Време ажурирања у минутима"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

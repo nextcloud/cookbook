@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Bibliothek neu einlesen",
     "Recipe folder" : "Rezept-Ordner",
     "Please pick a folder" : "Bitte einen Ordner auswählen",
-    "Update interval in minutes" : "Aktualisierungsintervall in Minuten",
-    "Last update" : "Letzte Aktualisierung"
+    "Update interval in minutes" : "Aktualisierungsintervall in Minuten"
 },
 "nplurals=2; plural=(n != 1);");

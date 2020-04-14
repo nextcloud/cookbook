@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Kitaplığı yeniden tara",
     "Recipe folder" : "Yemek tarifi klasörü",
     "Please pick a folder" : "Lütfen bir klasör seçin",
-    "Update interval in minutes" : "Dakika cinsinden güncelleme sıklığı",
-    "Last update" : "Son güncelleme"
+    "Update interval in minutes" : "Dakika cinsinden güncelleme sıklığı"
 },
 "nplurals=2; plural=(n > 1);");

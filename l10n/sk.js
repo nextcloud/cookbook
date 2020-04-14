@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Znovu prehľadať knižnicu",
     "Recipe folder" : "Adresár receptu",
     "Please pick a folder" : "Vyberte priečinok",
-    "Update interval in minutes" : "Interval aktualizácie v minútach",
-    "Last update" : "Posledná aktualizácia"
+    "Update interval in minutes" : "Interval aktualizácie v minútach"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

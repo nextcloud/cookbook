@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Könyvtár felülvizsgálata",
     "Recipe folder" : "Recept mappa",
     "Please pick a folder" : "Kérem válassz mappát",
-    "Update interval in minutes" : "Frissítési időszak percben",
-    "Last update" : "Utolsó frissítés"
+    "Update interval in minutes" : "Frissítési időszak percben"
 },
 "nplurals=2; plural=(n != 1);");

@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Έλεγχος ξανά βιβλιοθήκης",
     "Recipe folder" : "Φάκελος συνταγής",
     "Please pick a folder" : "Παρακαλώ επιλέξτε φάκελο",
-    "Update interval in minutes" : "Εσωτερική ενημέρωση σε λεπτά",
-    "Last update" : "Τελευταία ενημέρωση"
+    "Update interval in minutes" : "Εσωτερική ενημέρωση σε λεπτά"
 },
 "nplurals=2; plural=(n != 1);");

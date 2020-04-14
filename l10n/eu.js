@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Bireskaneatu liburutegia",
     "Recipe folder" : "Errezeten karpeta",
     "Please pick a folder" : "Aukeratu karpeta bat",
-    "Update interval in minutes" : "Eguneratzeko tartea minututan",
-    "Last update" : "Azken eguneraketa"
+    "Update interval in minutes" : "Eguneratzeko tartea minututan"
 },
 "nplurals=2; plural=(n != 1);");

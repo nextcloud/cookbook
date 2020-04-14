@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Uppdatera bibliotek",
     "Recipe folder" : "Receptkatalog",
     "Please pick a folder" : "Välj katalog",
-    "Update interval in minutes" : "Uppdateringsintervall",
-    "Last update" : "Senaste uppdatering"
+    "Update interval in minutes" : "Uppdateringsintervall"
 },
 "nplurals=2; plural=(n != 1);");

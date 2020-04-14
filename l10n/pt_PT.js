@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Varrer novamente a biblioteca",
     "Recipe folder" : "Pasta de receitas",
     "Please pick a folder" : "Escolha uma pasta",
-    "Update interval in minutes" : "Intervalo de refrescamento em minutos",
-    "Last update" : "Último refrescamento"
+    "Update interval in minutes" : "Intervalo de refrescamento em minutos"
 },
 "nplurals=2; plural=(n != 1);");
