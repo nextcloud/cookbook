@@ -85,7 +85,7 @@
             <?php }} ?>
 		</div>
     </div>
-</header>
+</div>
 
 <section>
 	<aside>
