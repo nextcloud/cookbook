@@ -144,6 +144,23 @@ Cookbook.prototype = {
     },
 
     /**
+     * Sets the config to print recipe image
+     *
+     * @param {Boolean} interval
+     */
+    setPrintImage: function(printImage) {
+        var self = this;
+
+        $.ajax({
+            url: self._baseUrl + '/config',
+            method: 'POST',
+            data: { 'print_image': printImage ? 1 : 0 }
+        }).fail(function(e) {
+            alert(t(appName, 'Could not set preference for image printing'));
+        });
+    },
+
+    /**
      * Sets the recipe base directory using a callback
      *
      * @param {Function} cb
@@ -562,6 +579,13 @@ var Nav = function (cookbook) {
     };
 
     /**
+     * Event: Change recipe update interval
+     */
+    self.onChangePrintImage = function(e) {
+        cookbook.setPrintImage(e.currentTarget.checked);
+    };
+
+    /**
      * Event: Import new recipe
      */
     self.onImportRecipe = function(e) {
@@ -681,6 +705,10 @@ var Nav = function (cookbook) {
         // Change cache update interval
         $('#recipe-update-interval').off('change');
         $('#recipe-update-interval').change(self.onChangeRecipeUpdateInterval);
+        
+        // Change print image setting
+        $('#recipe-print-image').off('change');
+        $('#recipe-print-image').change(self.onChangePrintImage);
 
         // Change recipe folder
         $('#recipe-folder').off('change');

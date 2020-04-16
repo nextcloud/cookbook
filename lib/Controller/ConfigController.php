@@ -49,6 +49,10 @@ class ConfigController extends Controller
             $this->service->setSearchIndexUpdateInterval($_POST['update_interval']);
         }
 
+        if (isset($_POST['print_image'])) {
+            $this->service->setPrintImage((bool)$_POST['print_image']);
+        }
+
         return new DataResponse('OK', Http::STATUS_OK);
     }
 	

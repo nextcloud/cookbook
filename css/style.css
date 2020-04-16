@@ -529,7 +529,7 @@
     #app-navigation,
     #controls,
     .recipe-toolbar,
-	#app-content header,
+	#app-content header:not(.printable),
 	.times button {
         display: none !important;
     }
