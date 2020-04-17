@@ -23,6 +23,12 @@
                         </div>
                     </div>
                 </li>
+                <li class="settings-fieldset-interior-item">
+                    <input id="recipe-print-image" type="checkbox" class="checkbox"<?php if($_['print_image']) echo 'checked="checked"'; ?>>
+                    <label class="settings-input" for="recipe-print-image">
+                        <?php p($l->t('Print image with recipe')); ?>
+                    </label>
+                </li>
             </ul>
         </fieldset>
     </div>

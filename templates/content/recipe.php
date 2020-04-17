@@ -28,7 +28,7 @@
 </div>
 
 <?php if(isset($_['image']) && $_['image']) { ?>
-    <header class="collapsed">
+    <header class="collapsed<?php if($_['print_image']) echo ' printable'; ?>">
         <img src="<?php echo $_['image_url']; ?>">
     </header>
 <?php } ?>

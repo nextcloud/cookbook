@@ -195,7 +195,7 @@ class RecipeService
             $json['recipeCategory'] = '';
         }
 
-        // Make sure that "recipeYield" is an integer which is at least 1 
+        // Make sure that "recipeYield" is an integer which is at least 1
         if (isset($json['recipeYield']) && $json['recipeYield']) {
 
             $regex_matches = [];
@@ -891,6 +891,24 @@ class RecipeService
         $path = str_replace('//', '/', $path);
 
         return $this->getOrCreateFolder($path);
+    }
+
+    /**
+     * @param bppm $printImage
+     * @throws PreConditionNotMetException
+     */
+    public function setPrintImage(bool $printImage)
+    {
+        $this->config->setUserValue($this->user_id, 'cookbook', 'print_image', (int) $printImage);
+    }
+
+    /**
+     * Should image be printed with the recipe
+     * @return bool
+     */
+    public function getPrintImage()
+    {
+        return (bool) $this->config->getUserValue($this->user_id, 'cookbook', 'print_image');
     }
 
     /**

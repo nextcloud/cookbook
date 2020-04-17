@@ -41,6 +41,7 @@ class MainController extends Controller
             'folder' => $this->service->getUserFolderPath(),
             'update_interval' => $this->service->getSearchIndexUpdateInterval(),
             'last_update' => $this->service->getSearchIndexLastUpdateTime(),
+            'print_image' => $this->service->getPrintImage(),
         ];
 
         return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
@@ -185,6 +186,7 @@ class MainController extends Controller
                 ]
             );
             $recipe['id'] = $id;
+            $recipe['print_image'] = $this->service->getPrintImage();
             $response = new TemplateResponse($this->appName, 'content/recipe', $recipe);
             $response->renderAs('blank');
 
