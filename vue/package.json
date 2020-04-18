@@ -2,8 +2,10 @@
   "name": "nextcloud-cookbook",
   "version": "0.7.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config webpack.build.js",
+    "devel": "node node_modules/webpack/bin/webpack.js --progress --watch --config webpack.devel.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,27 @@
   "bugs": {
     "url": "https://github.com/mrzapp/nextcloud-cookbook/issues"
   },
-  "homepage": "https://github.com/mrzapp/nextcloud-cookbook#readme"
+  "homepage": "https://github.com/mrzapp/nextcloud-cookbook#readme",
+  "dependencies": {
+    "@nextcloud/vue": "^1.5.0",
+    "vue": "^2.6.11",
+    "vue-i18n": "^8.17.1",
+    "vue-router": "^3.1.6",
+    "vuex": "^3.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.2",
+    "file-loader": "^6.0.0",
+    "filemanager-webpack-plugin": "^2.0.5",
+    "url-loader": "^4.1.0",
+    "vue-loader": "^15.9.1",
+    "vue-style-loader": "^4.1.2",
+    "vue-template-compiler": "^2.6.11",
+    "vue-template-loader": "^1.1.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
+  }
 }
