@@ -45,7 +45,6 @@ OC.L10N.register(
     "Download recipe" : "下載食譜",
     "Settings" : "設定",
     "Recipe folder" : "食譜夾",
-    "Please pick a folder" : "請選取一個資料夾",
-    "Last update" : "上次更新"
+    "Please pick a folder" : "請選取一個資料夾"
 },
 "nplurals=1; plural=0;");

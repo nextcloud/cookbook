@@ -52,6 +52,24 @@ class RecipeService
 
         return $this->parseRecipeFile($file);
     }
+    
+    /**
+     * Get a recipe's modification time by its folder id.
+     *
+     * @param int $id
+     *
+     * @return int
+     */
+    public function getRecipeMTime(int $id)
+    {
+        $file = $this->getRecipeFileByFolderId($id);
+
+        if (!$file) {
+            return null;
+        }
+
+        return $file->getMTime();
+    }
 
     /**
      * Returns a recipe file by folder id
@@ -146,23 +164,12 @@ class RecipeService
         } else {
             $json['image'] = '';
         }
-
-        // Make sure that "recipeCategory" is a string
-        if(isset($json['recipeCategory'])) {
-            if(is_array($json['recipeCategory'])) {
-                $json['recipeCategory'] = reset($json['recipeCategory']);
-            } else if(!is_string($json['recipeCategory'])) {
-                $json['recipeCategory'] = '';
-            }
-        } else {
-            $json['recipeCategory'] = '';
-        }
-
+        
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
 
         // Last sanity check for URL
-        if(!empty($json['image']) && $json['image'][0] !== '/') {
+        if(!empty($json['image']) && (substr($json['image'], 0, 2) === '//' || $json['image'][0] !== '/')) {
             $image_url = parse_url($json['image']);
 
             if(!isset($image_url['scheme'])) {
@@ -176,7 +183,19 @@ class RecipeService
             }
         }
         
-        // Make sure that "recipeYield" is an integer which is at least 1 
+
+        // Make sure that "recipeCategory" is a string
+        if(isset($json['recipeCategory'])) {
+            if(is_array($json['recipeCategory'])) {
+                $json['recipeCategory'] = reset($json['recipeCategory']);
+            } else if(!is_string($json['recipeCategory'])) {
+                $json['recipeCategory'] = '';
+            }
+        } else {
+            $json['recipeCategory'] = '';
+        }
+
+        // Make sure that "recipeYield" is an integer which is at least 1
         if (isset($json['recipeYield']) && $json['recipeYield']) {
 
             $regex_matches = [];
@@ -455,7 +474,11 @@ class RecipeService
                         
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        array_push($json[$prop], $prop_element->nodeValue);
+                        if(null !== $prop_element->getAttributeNode('content')) {
+                            array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
+                        } else {
+                            array_push($json[$prop], $prop_element->nodeValue);
+                        }
                         break;
 
                     case 'recipeInstructions':
@@ -739,7 +762,7 @@ class RecipeService
      */
     public function getSearchIndexLastUpdateTime()
     {
-        return (int)$this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
+        return (int) $this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
     }
 
     /**
@@ -871,6 +894,24 @@ class RecipeService
     }
 
     /**
+     * @param bppm $printImage
+     * @throws PreConditionNotMetException
+     */
+    public function setPrintImage(bool $printImage)
+    {
+        $this->config->setUserValue($this->user_id, 'cookbook', 'print_image', (int) $printImage);
+    }
+
+    /**
+     * Should image be printed with the recipe
+     * @return bool
+     */
+    public function getPrintImage()
+    {
+        return (bool) $this->config->getUserValue($this->user_id, 'cookbook', 'print_image');
+    }
+
+    /**
      * Finds a folder and creates it if non-existent
      * @param string $path path to the folder
      *
@@ -909,6 +950,8 @@ class RecipeService
         }
 
         $json['id'] = $file->getParent()->getId();
+        $json['dateCreated'] = $file->getCreationTime();
+        $json['dateModified'] = $file->getMTime();
 
         return $this->checkRecipe($json);
     }

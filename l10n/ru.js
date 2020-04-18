@@ -7,6 +7,7 @@ OC.L10N.register(
     "Path to your Recipe Image" : "Путь к изображению рецепта",
     "Are you sure you want to delete this recipe?" : "Действительно удалить рецепт?",
     "Failed to delete recipe" : "Не удалось удалить рецепт",
+    "Cooking time is up!" : "Время приготовления истекло!",
     "Could not update recipe" : "Не удалось обновить рецепт",
     "Could not add recipe" : "Не удалось добавить рецепт",
     "Could not rebuild recipe index." : "Не удалось обновить индекс рецептов.",
@@ -50,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Сканировать библиотеку",
     "Recipe folder" : "Папка с рецептами",
     "Please pick a folder" : "Выберите папку",
-    "Update interval in minutes" : "Интервал обновления в минутах",
-    "Last update" : "Последнее обновление"
+    "Update interval in minutes" : "Интервал обновления в минутах"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

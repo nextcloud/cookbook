@@ -52,6 +52,6 @@ OC.L10N.register(
     "Recipe folder" : "Cartafol de receitas",
     "Please pick a folder" : "Escolla un cartafol",
     "Update interval in minutes" : "Intervalo de actualización en minutos",
-    "Last update" : "Última actualización"
+    "Last update:" : "Última actualización:"
 },
 "nplurals=2; plural=(n != 1);");

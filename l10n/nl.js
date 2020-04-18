@@ -51,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Bibliotheek opnieuw inladen",
     "Recipe folder" : "Receptenmap",
     "Please pick a folder" : "Gelieve een map te kiezen",
-    "Update interval in minutes" : "Update-interval in minuten",
-    "Last update" : "Laatste update"
+    "Update interval in minutes" : "Update-interval in minuten"
 },
 "nplurals=2; plural=(n != 1);");
