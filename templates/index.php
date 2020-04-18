@@ -1,5 +1,6 @@
 <?php
 script('cookbook', 'script');
+script('cookbook', 'vue');
 style('cookbook', 'style');
 ?>
 
@@ -17,4 +18,3 @@ style('cookbook', 'style');
         </div>
     </div>
 </div>
-

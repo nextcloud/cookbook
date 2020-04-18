@@ -85,41 +85,8 @@
             <?php }} ?>
 		</div>
     </div>
+
+	<div id="app-recipe-content"></div>
+	<div id="app-recipe-data" style="display:none"><?php echo str_replace("'", "\\'", json_encode($_)); ?></div>
+
 </div>
-
-<section>
-	<aside>
-		<section>
-		    <?php if(!empty($_['recipeIngredient'])) { ?>
-			<h3><?php p($l->t('Ingredients')); ?></h3>
-		    <ul>
-		        <?php foreach($_['recipeIngredient'] as $ingredient) {  ?>
-		            <li><?php echo $ingredient; ?></li>
-		        <?php } ?>
-		    </ul>
-		    <?php } ?>
-		</section>
-
-		<section>
-			<?php if(!empty($_['tool'])) { ?>
-				<h3><?php p($l->t('Tools')); ?></h3>
-				<ul>
-					<?php foreach($_['tool'] as $tools) {  ?>
-						<li><?php echo $tools; ?></li>
-					<?php } ?>
-				</ul>
-			<?php } ?>
-		</section>
-	</aside>
-
-	<?php if(!empty($_['recipeInstructions'])) { ?>
-	    <main>
-			<h3><?php p($l->t('Instructions')); ?></h3>
-	        <ol class="instructions">
-	            <?php foreach($_['recipeInstructions'] as $step) {  ?>
-	                <li class="instruction"><?php echo nl2br($step); ?></li>
-	            <?php } ?>
-	        </ol>
-	    </main>
-	<?php } ?>
-</section>

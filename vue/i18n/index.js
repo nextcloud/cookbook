@@ -6,12 +6,22 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
+Vue.use(VueI18n)
+
 const messages = {
     // Each localization has their own messages as an object
     en: {
         recipe: {
             view: {
-
+                ingredients: {
+                    header: "Ingredients",
+                },
+                instructions: {
+                    header: "Instructions",
+                },
+                tools: {
+                    header: "Tools",
+                },
             },
         },
     },

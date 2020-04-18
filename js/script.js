@@ -38,7 +38,7 @@ Cookbook.prototype = {
 		var url = action === '#' ? location.hash.substr(1) : action;
         var data = $(form).serialize();
         var deferred = $.Deferred();
-		
+
         $.ajax({
             url: this._baseUrl + '/' + url,
             method: form.getAttribute('method'),
@@ -48,10 +48,10 @@ Cookbook.prototype = {
         }).fail(function (jqXHR, textStatus, errorThrown) {
             deferred.reject(new Error(jqXHR.responseText));
         });
-    
+
         return deferred.promise();
     },
-    
+
     /**
      * Loads a recipe by id
      *
@@ -231,7 +231,7 @@ var Content = function (cookbook) {
      */
     self.render = function () {
 		var route = location.hash.substr(1);
-		
+
 		if(route.length === 0) {
 			route = 'home';
 		}
@@ -241,39 +241,39 @@ var Content = function (cookbook) {
         })
         .done(function (html) {
             $('#app-content-wrapper').html(html);
-			
+
             // Common
             $('#print-recipe').click(self.onPrintRecipe);
 			$('#delete-recipe').click(self.onDeleteRecipe);
-					
+
             // Editor
             $('#app-content-wrapper form').off('submit');
             $('#app-content-wrapper form').submit(self.onUpdateRecipe);
 
             $('#pick-image').off('click');
 			$('#pick-image').click(self.onPickImage);
-			
+
 			$('#app-content-wrapper form ul + button.add-list-item').off('click');
 			$('#app-content-wrapper form ul + button.add-list-item').click(self.onAddListItem);
-			
+
 			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
 			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
-			
+
 			$('#app-settings [title]').tooltip('destroy');
 			$('#app-settings [title]').tooltip();
-			
+
             self.updateListItems();
-			
+
             // View
             $('header img').click(self.onImageClick);
 			$('main .instruction').click(self.onInstructionClick);
 			$('.time button').click(self.onTimerToggle);
-			
+
             nav.highlightActive();
         })
         .fail(function(e) {
 			$('#app-content-wrapper').load(cookbook._baseUrl + '/error');
-			
+
             if(e && e instanceof Error) { throw e; }
         });
     };
@@ -332,10 +332,12 @@ var Content = function (cookbook) {
 
     /**
      * Event: click on a recipe instruction
+     * NOTE: This functionality is handled by the Vue component
+     *
+     * self.onInstructionClick = function(e) {
+     *     $(e.target).toggleClass('done');
+     * }
      */
-    self.onInstructionClick = function(e) {
-        $(e.target).toggleClass('done');
-    }
 
     /**
      * Event: click the recipe's image
@@ -361,7 +363,7 @@ var Content = function (cookbook) {
 				self.minutes = minutes;
                 self.seconds = 0;
 			}
-			
+
             self.timer = window.setInterval(function() {
 				self.seconds--;
 
@@ -379,13 +381,13 @@ var Content = function (cookbook) {
 
                 if(self.hours < 10) { text += '0'; }
                 text += self.hours + ':';
-                
+
                 if(self.minutes < 10) { text += '0'; }
                 text += self.minutes + ':';
 
                 if(self.seconds < 10) { text += '0'; }
                 text += self.seconds;
-				
+
                 $(e.target).closest('.time').find('p').text(text);
 
 				if(self.hours < 0 || self.minutes < 0) {
@@ -414,25 +416,25 @@ var Content = function (cookbook) {
         $('#app-content-wrapper form .remove-list-item')
             .off('click')
             .click(self.onDeleteListItem);
-        
+
         $('#app-content-wrapper form .move-list-item-up')
             .off('click')
             .click(self.onMoveListItemUp)
             .prop('disabled', false);
-        
+
         $('#app-content-wrapper form li:first-of-type .move-list-item-up').prop('disabled', true);
-        
+
         $('#app-content-wrapper form .move-list-item-down')
             .off('click')
             .click(self.onMoveListItemDown)
             .prop('disabled', false);
-        
+
         $('#app-content-wrapper form li:last-of-type .move-list-item-down').prop('disabled', true);
 
         $('#app-content-wrapper form ul li input[type="text"]')
             .off('keypress')
             .on('keypress', self.onListInputKeyDown);
-        
+
         console.log('order');
         $('#app-content-wrapper form ul').each(function() {
             var stepNumber = 1;
@@ -454,7 +456,7 @@ var Content = function (cookbook) {
         var list = listItem.parentElement;
 
         list.removeChild(listItem);
-        
+
         self.updateListItems();
     };
 
@@ -491,10 +493,10 @@ var Content = function (cookbook) {
         $ul.append($item);
 
         $item.find('input').focus();
-        
+
         self.updateListItems();
     };
-    
+
     /**
      * Event: Click move list item up
      */
@@ -510,10 +512,10 @@ var Content = function (cookbook) {
         }
 
         $(listItem).insertBefore($(listItem.previousElementSibling));
-        
+
         self.updateListItems();
     };
-    
+
     /**
      * Event: Click move list item down
      */
@@ -523,13 +525,13 @@ var Content = function (cookbook) {
         var button = e.currentTarget;
         var tools = button.parentElement;
         var listItem = tools.parentElement;
-        
+
         if(!listItem.nextElementSibling) {
             return;
         }
 
         $(listItem).insertAfter($(listItem.nextElementSibling));
-        
+
         self.updateListItems();
     };
 
@@ -538,7 +540,7 @@ var Content = function (cookbook) {
      */
     self.onUpdateRecipe = function(e) {
         e.preventDefault();
-		
+
         cookbook.update(e.currentTarget)
         .then(function(id) {
 			location.hash = '/recipes/' + id;
@@ -678,7 +680,7 @@ var Nav = function (cookbook) {
             json = json || [];
 
             var html = '<li class="icon-category-organization"><a href="#">' + t(appName, 'All recipes') + '</a></li>';
-			
+
 			html += json.map(function(category) {
                 var entry = '<li class="icon-category-files">';
                 entry += '<a href="#category/' + encodeURIComponent(category.name) + '">';
@@ -687,7 +689,7 @@ var Nav = function (cookbook) {
                 entry += '</a></li>';
                 return entry;
             }).join("\n");
-			
+
             $('#app-navigation #categories').html(html);
 
             self.highlightActive();
@@ -705,7 +707,7 @@ var Nav = function (cookbook) {
         // Change cache update interval
         $('#recipe-update-interval').off('change');
         $('#recipe-update-interval').change(self.onChangeRecipeUpdateInterval);
-        
+
         // Change print image setting
         $('#recipe-print-image').off('change');
         $('#recipe-print-image').change(self.onChangePrintImage);

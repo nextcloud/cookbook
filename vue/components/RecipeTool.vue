@@ -1,11 +1,11 @@
 <template>
-    <li>{{ ingredient }}</li>
+    <li>{{ tool }}</li>
 </template>
 
 <script>
 export default {
 
-    props: ['ingredient'],
+    props: ['tool'],
 
 }
 </script>

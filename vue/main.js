@@ -70,6 +70,10 @@ import RecipeView from './components/RecipeView'
             return value.toString().replace('.', ',')
         }
     }
+    // This will replace the PHP function nl2br in Vue components
+    window.nl2br = function(text) {
+        return text.replace(/\n/g, '<br />')
+    }
     // The following functions may seem a bit redundant, but I have needed them
     //  in previous projects to check or process the inputs, so they can be
     //  useful in the future.
@@ -90,11 +94,19 @@ import RecipeView from './components/RecipeView'
 
     // Start the app once document is done loading
     $(document).ready(function () {
+        // This is a shameful gimmick but needed at this point since
+        //  the recipe view is loaded asyncronously.
+        // It has to be kept running, otherwise the app doesn't rerender
+        //  for example after editing a recipe and returning to the view.
         const App = Vue.extend(RecipeView)
-        new App({
-            store,
-            router,
-            i18n
-        }).$mount("#app-recipe-view")
+        let waitForElem = window.setInterval(function() {
+            if ($("#app-recipe-content").length) {
+                new App({
+                    store,
+                    router,
+                    i18n
+                }).$mount("#app-recipe-content")
+            }
+        }, 250)
     })
 })(OC, window, jQuery)
