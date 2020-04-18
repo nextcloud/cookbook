@@ -28,8 +28,8 @@
 </div>
 
 <?php if(isset($_['image']) && $_['image']) { ?>
-    <header>
-        <img src="<?php echo $_['imageURL']; ?>&t=<?php echo time(); ?>">
+    <header class="collapsed<?php if($_['print_image']) echo ' printable'; ?>">
+        <img src="<?php echo $_['image_url']; ?>">
     </header>
 <?php } ?>
 
@@ -50,39 +50,42 @@
 				$prep_interval = new DateInterval($_['prepTime']);
 				$prep_mins = $prep_interval->format('%I');
 				$prep_hours = $prep_interval->format('%h');
+                if ($prep_hours > 0 || $prep_mins > 0) {
 			?>
 				<div class="time" data-raw="<?php echo $_['prepTime']; ?>">
 		            <h4><?php p($l->t('Preparation time')); ?></h4>
 					<p><?php echo $prep_hours . ':' . $prep_mins; ?></p>
 				</div>
-	        <?php } ?>
+            <?php }} ?>
 
 			<?php if(isset($_['cookTime']) && $_['cookTime']) {
 				$cook_interval = new DateInterval($_['cookTime']);
 				$cook_mins = $cook_interval->format('%I');
 				$cook_hours = $cook_interval->format('%h');
+                if ($cook_hours > 0 || $cook_mins > 0) {
 			?>
                 <div class="time" data-raw="<?php echo $_['cookTime']; ?>">
 					<button type="button" class="icon-play" data-hours="<?php echo $cook_hours ?>" data-minutes="<?php echo $cook_mins ?>"></button>
 		            <h4><?php p($l->t('Cooking time')); ?></h4>
 					<p><?php echo $cook_hours . ':' . $cook_mins; ?></p>
 				</div>
-	        <?php } ?>
+            <?php }} ?>
 			
 			<?php
 			if(isset($_['totalTime']) && $_['totalTime']) {
 				$total_interval = new DateInterval($_['totalTime']);
 				$total_mins = $total_interval->format('%I');
 				$total_hours = $total_interval->format('%h');
+                if ($total_hours > 0 || $total_mins > 0) {
 			?>
 				<div class="time" data-raw="<?php echo $_['totalTime']; ?>">
 		            <h4><?php p($l->t('Total time')); ?></h4>
 					<p><?php echo $total_hours . ':' . $total_mins; ?></p>
 				</div>
-	        <?php } ?>
+            <?php }} ?>
 		</div>
     </div>
-</header>
+</div>
 
 <section>
 	<aside>

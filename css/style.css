@@ -1,4 +1,83 @@
 /**
+ * Helpers
+ */
+
+.icon-arrow-up {
+    background-image: var(--icon-triangle-n-000);
+}
+
+.icon-arrow-down {
+    background-image: var(--icon-triangle-s-000);
+}
+
+.input-group {
+    display: flex;
+    width: 100%;
+}
+
+    .input-group > input {
+        width: 100%;
+        margin: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .input-group > .input-group-addon {
+        display: flex;
+    }
+
+        .input-group > .input-group-addon > button {
+            padding: 0;
+            margin: 0;
+            min-width: 34px;
+            min-height: 34px;
+        }
+
+        .input-group > .input-group-addon > button {
+            border-radius: 0;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+
+        .input-group > .input-group-addon > button:last-child {
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            border-right-width: 1px;
+        }
+
+.textarea-group {
+    
+}
+    .textarea-group-addon {
+        float: right;
+        display: flex;
+        position: relative;
+        top: 1px;
+        z-index: 1;
+    }
+        
+        .textarea-group-addon::after {
+            display: table;
+            content: '';
+            clear: both;
+        }
+        
+        .textarea-group-addon button {
+            min-width: 34px;
+            min-height: 34px;
+            border-radius: 0;
+            margin: 0;
+        }
+        
+        .textarea-group-addon button:first-child {
+            border-top-left-radius: var(--border-radius);
+        }
+        
+        .textarea-group-addon button:last-child {
+            border-top-right-radius: var(--border-radius);
+        }
+
+/**
  * Main
  */
 #app {
@@ -157,13 +236,22 @@
         }
 
     #app-content-wrapper header {
+        display: block;
+        width: 100%;
+		text-align: center;
+        margin-bottom: 1rem;
+    }
+        #app-content-wrapper header.collapsed img {
+            cursor: pointer;
+            max-width: 100%;
+        }
+
+    #app-content-wrapper header.collapsed {
         flex-basis: 100%;
 		height: 40vh;
-		margin-bottom: 1rem;
 		overflow: hidden;
     }
-        #app-content-wrapper header img {
-            max-width: 100%;
+        #app-content-wrapper header.collapsed img {
 			margin: 0 auto;
 			margin-top: 20vh;
 			transform: translateY(-50%);
@@ -395,8 +483,6 @@
         }
         
         #app-content-wrapper form fieldset > ul > li {
-            display: flex;
-            width: 100%;
             margin: 0 0 1em 0;
         }
 
@@ -405,39 +491,6 @@
             margin: 0;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
-        }
-
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools {
-            display: flex;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button {
-            padding: 0;
-            margin: 0;
-            flex-basis: 34px;
-            min-width: 34px;
-            max-height: 34px;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button {
-            border-radius: 0;
-            border-left-width: 0;
-            border-right-width: 0;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools > button:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            border-right-width: 1px;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools .icon-arrow-up {
-            background-image: var(--icon-download-000);
-            transform: rotate(180deg);
-        }
-        
-        #app-content-wrapper form fieldset > ul > li > .list-item-tools .icon-arrow-down {
-            background-image: var(--icon-download-000);
         }
 
         #app-content-wrapper form fieldset > ul > li > button {
@@ -458,6 +511,11 @@
             border-top-right-radius: 0;
         }
 
+        #app-content-wrapper form fieldset > ul > li .step-number {
+            padding: 6px;
+            float: left;
+        }
+
         #app-content-wrapper form button[type="submit"] {
             margin-left: auto;
             display: block;
@@ -471,7 +529,7 @@
     #app-navigation,
     #controls,
     .recipe-toolbar,
-	#app-content header,
+	#app-content header:not(.printable),
 	.times button {
         display: none !important;
     }

@@ -52,6 +52,6 @@ OC.L10N.register(
     "Recipe folder" : "Φάκελος συνταγής",
     "Please pick a folder" : "Παρακαλώ επιλέξτε φάκελο",
     "Update interval in minutes" : "Εσωτερική ενημέρωση σε λεπτά",
-    "Last update" : "Τελευταία ενημέρωση"
+    "Last update:" : "Τελευταία ενημέρωση:"
 },
 "nplurals=2; plural=(n != 1);");

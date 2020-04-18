@@ -52,6 +52,6 @@ OC.L10N.register(
     "Recipe folder" : "Rezept-Ordner",
     "Please pick a folder" : "Bitte einen Ordner auswählen",
     "Update interval in minutes" : "Aktualisierungsintervall in Minuten",
-    "Last update" : "Letzte Aktualisierung"
+    "Last update:" : "Letzte Aktualisierung:"
 },
 "nplurals=2; plural=(n != 1);");

@@ -7,6 +7,7 @@ OC.L10N.register(
     "Path to your Recipe Image" : "Pot do slike recepta",
     "Are you sure you want to delete this recipe?" : "Ali ste prepričani, da želite izbrisati recept?",
     "Failed to delete recipe" : "Brisanje recepta je spodletelo",
+    "Cooking time is up!" : "Čas kuhanja je končan!",
     "Could not update recipe" : "Recepta ni mogoče posodobiti",
     "Could not add recipe" : "Recepta ni mogoče dodati",
     "Could not rebuild recipe index." : "Ni mogoče naložiti kazala recepta",
@@ -50,7 +51,6 @@ OC.L10N.register(
     "Rescan library" : "Ponovno preišči zbirko",
     "Recipe folder" : "Mapa receptov",
     "Please pick a folder" : "Izbrati je treba mapo",
-    "Update interval in minutes" : "Razmik posodobitev v minutah",
-    "Last update" : "Zadnja posodobitev"
+    "Update interval in minutes" : "Razmik posodobitev v minutah"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

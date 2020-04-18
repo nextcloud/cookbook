@@ -20,7 +20,7 @@
 			    <li>
 			        <a href="#recipes/<?php echo $recipe['recipe_id']; ?>">
 						<?php if(isset($recipe['image_url']) && $recipe['image_url']) { ?>
-					        <img src="<?php echo $recipe['image_url']; ?>&t=<?php echo time(); ?>">
+                        <img src="<?php echo $recipe['image_url']; ?>">
 						<?php } ?>
 						<span>
 							<?php echo $recipe['name']; ?>

@@ -41,6 +41,7 @@ class MainController extends Controller
             'folder' => $this->service->getUserFolderPath(),
             'update_interval' => $this->service->getSearchIndexUpdateInterval(),
             'last_update' => $this->service->getSearchIndexLastUpdateTime(),
+            'print_image' => $this->service->getPrintImage(),
         ];
 
         return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
@@ -76,7 +77,14 @@ class MainController extends Controller
 			$recipes = $this->service->getAllRecipesInSearchIndex();
 			
 			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+                $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
+                    'cookbook.recipe.image',
+                    [
+                        'id' => $recipe['recipe_id'],
+                        'size' => 'thumb',
+                        't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+                    ]
+                );
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
@@ -111,7 +119,14 @@ class MainController extends Controller
 			$recipes = $this->service->findRecipesInSearchIndex($query);
 			
 			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+                $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
+                    'cookbook.recipe.image',
+                    [
+                        'id' => $recipe['recipe_id'],
+                        'size' => 'thumb',
+                        't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+                    ]
+                );
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['query' => $query, 'recipes' => $recipes]);
@@ -135,7 +150,14 @@ class MainController extends Controller
 			$recipes = $this->service->getRecipesByCategory($category);
 			
 			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+                $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
+                    'cookbook.recipe.image',
+                    [
+                        'id' => $recipe['recipe_id'],
+                        'size' => 'thumb',
+                        't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+                    ]
+                );
 			}
 			
 			$response = new TemplateResponse($this->appName, 'content/search', ['tag' => $tag, 'recipes' => $recipes]);
@@ -155,8 +177,16 @@ class MainController extends Controller
     {
         try {
             $recipe = $this->service->getRecipeById($id);
-            $recipe['imageURL'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $id, 'size' => 'full']);
+            $recipe['image_url'] = $this->urlGenerator->linkToRoute(
+                'cookbook.recipe.image',
+                [
+                    'id' => $id,
+                    'size' => 'full',
+                    't' => $recipe['dateModified']
+                ]
+            );
             $recipe['id'] = $id;
+            $recipe['print_image'] = $this->service->getPrintImage();
             $response = new TemplateResponse($this->appName, 'content/recipe', $recipe);
             $response->renderAs('blank');
 

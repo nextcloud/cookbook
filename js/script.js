@@ -144,8 +144,25 @@ Cookbook.prototype = {
     },
 
     /**
+     * Sets the config to print recipe image
+     *
+     * @param {Boolean} interval
+     */
+    setPrintImage: function(printImage) {
+        var self = this;
+
+        $.ajax({
+            url: self._baseUrl + '/config',
+            method: 'POST',
+            data: { 'print_image': printImage ? 1 : 0 }
+        }).fail(function(e) {
+            alert(t(appName, 'Could not set preference for image printing'));
+        });
+    },
+
+    /**
      * Sets the recipe base directory using a callback
-     * 
+     *
      * @param {Function} cb
      */
     setFolder: function(cb) {
@@ -242,9 +259,13 @@ var Content = function (cookbook) {
 			$('#app-content-wrapper form ul li input[type="text"]').off('keypress');
 			$('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
 			
+			$('#app-settings [title]').tooltip('destroy');
+			$('#app-settings [title]').tooltip();
+			
             self.updateListItems();
 			
             // View
+            $('header img').click(self.onImageClick);
 			$('main .instruction').click(self.onInstructionClick);
 			$('.time button').click(self.onTimerToggle);
 			
@@ -317,6 +338,13 @@ var Content = function (cookbook) {
     }
 
     /**
+     * Event: click the recipe's image
+     */
+    self.onImageClick = function(e) {
+        $(e.target).parent().toggleClass('collapsed');
+    }
+
+    /**
      * Event: Toggle timer
      */
     self.onTimerToggle = function(e) {
@@ -383,17 +411,35 @@ var Content = function (cookbook) {
      * Updates all lists items with click events
      */
     self.updateListItems = function(e) {
-        $('#app-content-wrapper form .remove-list-item').off('click');
-        $('#app-content-wrapper form .remove-list-item').click(self.onDeleteListItem);
+        $('#app-content-wrapper form .remove-list-item')
+            .off('click')
+            .click(self.onDeleteListItem);
         
-        $('#app-content-wrapper form .move-list-item-up').off('click');
-        $('#app-content-wrapper form .move-list-item-up').click(self.onMoveListItemUp);
+        $('#app-content-wrapper form .move-list-item-up')
+            .off('click')
+            .click(self.onMoveListItemUp)
+            .prop('disabled', false);
         
-        $('#app-content-wrapper form .move-list-item-down').off('click');
-        $('#app-content-wrapper form .move-list-item-down').click(self.onMoveListItemDown);
+        $('#app-content-wrapper form li:first-of-type .move-list-item-up').prop('disabled', true);
+        
+        $('#app-content-wrapper form .move-list-item-down')
+            .off('click')
+            .click(self.onMoveListItemDown)
+            .prop('disabled', false);
+        
+        $('#app-content-wrapper form li:last-of-type .move-list-item-down').prop('disabled', true);
 
-        $('#app-content-wrapper form ul li input[type="text"]').off('keypress');
-        $('#app-content-wrapper form ul li input[type="text"]').on('keypress', self.onListInputKeyDown);
+        $('#app-content-wrapper form ul li input[type="text"]')
+            .off('keypress')
+            .on('keypress', self.onListInputKeyDown);
+        
+        console.log('order');
+        $('#app-content-wrapper form ul').each(function() {
+            var stepNumber = 1;
+            $(this).find('.step-number').each(function() {
+                $(this).text(stepNumber++ + '.');
+            });
+        });
     }
 
     /**
@@ -408,6 +454,8 @@ var Content = function (cookbook) {
         var list = listItem.parentElement;
 
         list.removeChild(listItem);
+        
+        self.updateListItems();
     };
 
     /**
@@ -443,7 +491,7 @@ var Content = function (cookbook) {
         $ul.append($item);
 
         $item.find('input').focus();
-
+        
         self.updateListItems();
     };
     
@@ -462,6 +510,8 @@ var Content = function (cookbook) {
         }
 
         $(listItem).insertBefore($(listItem.previousElementSibling));
+        
+        self.updateListItems();
     };
     
     /**
@@ -479,6 +529,8 @@ var Content = function (cookbook) {
         }
 
         $(listItem).insertAfter($(listItem.nextElementSibling));
+        
+        self.updateListItems();
     };
 
     /**
@@ -524,6 +576,13 @@ var Nav = function (cookbook) {
      */
     self.onChangeRecipeUpdateInterval = function(e) {
         cookbook.setUpdateInterval(e.currentTarget.value);
+    };
+
+    /**
+     * Event: Change recipe update interval
+     */
+    self.onChangePrintImage = function(e) {
+        cookbook.setPrintImage(e.currentTarget.checked);
     };
 
     /**
@@ -646,6 +705,10 @@ var Nav = function (cookbook) {
         // Change cache update interval
         $('#recipe-update-interval').off('change');
         $('#recipe-update-interval').change(self.onChangeRecipeUpdateInterval);
+        
+        // Change print image setting
+        $('#recipe-print-image').off('change');
+        $('#recipe-print-image').change(self.onChangePrintImage);
 
         // Change recipe folder
         $('#recipe-folder').off('change');

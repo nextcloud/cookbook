@@ -53,21 +53,21 @@
 
         <fieldset class="duration">
             <label><?php p($l->t('Preparation time')); ?></label>
-            <input type="number" min="0" max="99" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
+            <input type="number" min="0" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
             <span>:</span>
             <input type="number" min="0" max="59" name="prepTime[]" value="<?php if(isset($_['prepTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['prepTime']); } ?>" placeholder="00">
         </fieldset>
 
         <fieldset class="duration">
             <label><?php p($l->t('Cooking time')); ?></label>
-            <input type="number" min="0" max="99" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
+            <input type="number" min="0" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
             <span>:</span>
             <input type="number" min="0" max="59" name="cookTime[]" value="<?php if(isset($_['cookTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['cookTime']); } ?>" placeholder="00">
         </fieldset>
 
         <fieldset class="duration">
             <label><?php p($l->t('Total time')); ?></label>
-            <input type="number" min="0" max="99" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
+            <input type="number" min="0" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT([0-9]+)H[0-9]+M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
             <span>:</span>
             <input type="number" min="0" max="59" name="totalTime[]" value="<?php if(isset($_['totalTime'])) { echo preg_replace_callback('/PT[0-9]+H([0-9]+)M/', function($m) { return $m[1]; }, $_['totalTime']); } ?>" placeholder="00">
         </fieldset>
@@ -91,9 +91,9 @@
             <label><?php p($l->t('Tools')); ?></label>
             <ul>
                 <template>
-                    <li>
+                    <li class="input-group">
                         <input type="text" name="tool[]" value="">
-                        <div class="list-item-tools">
+                        <div class="input-group-addon">
                             <button class="icon-arrow-up move-list-item-up"></button>
                             <button class="icon-arrow-down move-list-item-down"></button>
                             <button class="icon-delete right remove-list-item"></button>
@@ -102,9 +102,9 @@
                 </template>
                 <?php if(isset($_['tool']) && is_array($_['tool'])) { ?>
                     <?php foreach ($_['tool'] as $i => $tool) { ?>
-                        <li>
+                        <li class="input-group">
                             <input type="text" name="tool[]" value="<?php echo $tool; ?>">
-                            <div class="list-item-tools">
+                            <div class="input-group-addon">
                                 <button class="icon-arrow-up move-list-item-up"></button>
                                 <button class="icon-arrow-down move-list-item-down"></button>
                                 <button class="icon-delete right remove-list-item"></button>
@@ -120,9 +120,9 @@
             <label><?php p($l->t('Ingredients')); ?></label>
             <ul>
                 <template>
-                    <li>
+                    <li class="input-group">
                         <input type="text" name="recipeIngredient[]" value="">
-                        <div class="list-item-tools">
+                        <div class="input-group-addon">
                             <button class="icon-arrow-up move-list-item-up"></button>
                             <button class="icon-arrow-down move-list-item-down"></button>
                             <button class="icon-delete right remove-list-item"></button>
@@ -131,9 +131,9 @@
                 </template>
                 <?php if(isset($_['recipeIngredient']) && is_array($_['recipeIngredient'])) { ?>
                     <?php foreach ($_['recipeIngredient'] as $i => $ingredient) { ?>
-                        <li>
+                        <li class="input-group">
                             <input type="text" name="recipeIngredient[]" value="<?php echo $ingredient; ?>">
-                            <div class="list-item-tools">
+                            <div class="input-group-addon">
                                 <button class="icon-arrow-up move-list-item-up"></button>
                                 <button class="icon-arrow-down move-list-item-down"></button>
                                 <button class="icon-delete right remove-list-item"></button>
@@ -149,24 +149,26 @@
             <label><?php p($l->t('Instructions')); ?></label>
             <ul>
                 <template>
-                    <li>
-                        <textarea name="recipeInstructions[]"></textarea>
-                        <div class="list-item-tools">
+                    <li class="textarea-group">
+                        <div class="step-number"></div>
+                        <div class="textarea-group-addon">
                             <button class="icon-arrow-up move-list-item-up"></button>
                             <button class="icon-arrow-down move-list-item-down"></button>
                             <button class="icon-delete right remove-list-item"></button>
                         </div>
+                        <textarea name="recipeInstructions[]"></textarea>
                     </li>
                 </template>
                 <?php if(isset($_['recipeInstructions']) && is_array($_['recipeInstructions'])) { ?>
                     <?php foreach ($_['recipeInstructions'] as $i => $step) { ?>
-                        <li>
-                            <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
-                            <div class="list-item-tools">
+                        <li class="textarea-group">
+                            <div class="step-number"><?php echo ($i + 1); ?>.</div>
+                            <div class="textarea-group-addon">
                                 <button class="icon-arrow-up move-list-item-up"></button>
                                 <button class="icon-arrow-down move-list-item-down"></button>
                                 <button class="icon-delete right remove-list-item"></button>
                             </div>
+                            <textarea name="recipeInstructions[]"><?php echo $step; ?></textarea>
                         </li>
                     <?php } ?>
                 <?php } ?>
