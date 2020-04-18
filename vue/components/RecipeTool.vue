@@ -12,4 +12,8 @@ export default {
 
 <style scoped>
 
+li {
+    margin-left: 1.25em;
+}
+
 </style>

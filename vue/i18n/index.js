@@ -19,6 +19,12 @@ const messages = {
                 instructions: {
                     header: "Instructions",
                 },
+                timer: {
+                    cook: "Cook time",
+                    prep: "Preparation time",
+                    total: "Total time",
+                    up: "Cooking time is up!",
+                },
                 tools: {
                     header: "Tools",
                 },

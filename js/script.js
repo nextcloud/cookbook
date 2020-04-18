@@ -348,7 +348,8 @@ var Content = function (cookbook) {
 
     /**
      * Event: Toggle timer
-     */
+     * Timer methods are handled by the Vue component
+
     self.onTimerToggle = function(e) {
 		if($(e.target).hasClass('icon-play')) {
 			var hours = parseInt($(e.target).data('hours'));
@@ -402,12 +403,12 @@ var Content = function (cookbook) {
 
     /**
      * Event: Timer ended
-     */
 	self.onTimerEnd = function(button) {
 		window.clearInterval(self.timer);
 		$(button).removeClass('icon-pause').addClass('icon-play');
 		cookbook.notify(t(appName, 'Cooking time is up!'));
 	}
+     */
 
     /**
      * Updates all lists items with click events
