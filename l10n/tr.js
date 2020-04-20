@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Yemek tarifi güncelleme sıklığı {interval} olarak ayarlanamadı",
+    "Could not set preference for image printing" : "Görsel yazdırma ayarı yapılamadı",
     "Path to your recipe collection" : "Yemek tarifi derlemenizin yolu",
     "Could not set recipe folder to {path}" : "Yemek tarifi derleme klasörü {path} olarak ayarlanamadı",
     "Path to your Recipe Image" : "Yemek tarifi görselinizin yolu",
@@ -52,6 +53,7 @@ OC.L10N.register(
     "Recipe folder" : "Yemek tarifi klasörü",
     "Please pick a folder" : "Lütfen bir klasör seçin",
     "Update interval in minutes" : "Dakika cinsinden güncelleme sıklığı",
-    "Last update:" : "Son güncelleme:"
+    "Last update:" : "Son güncelleme:",
+    "Print image with recipe" : "Tarif ile görsel de yazdırılsın"
 },
 "nplurals=2; plural=(n > 1);");
