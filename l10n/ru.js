@@ -27,7 +27,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Изображение",
     "Pick a local image" : "Выберите изображение на компьютере",
-    "Preparation time" : "Время приготовления",
+    "Preparation time" : "Время на подготовку",
     "Cooking time" : "Время готовки",
     "Total time" : "Общее время",
     "Category" : "Категория",
