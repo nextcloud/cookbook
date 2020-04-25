@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Kunde inte välja uppdateringsinterval till {interval}",
+    "Could not set preference for image printing" : "Valen för bildutskrift gick inte att ställa in.",
     "Path to your recipe collection" : "Sökväg till din receptsamling",
     "Could not set recipe folder to {path}" : "Kunde inte ange receptkatalog till {path}",
     "Path to your Recipe Image" : "Sökväg till din receptbild",
@@ -51,6 +52,8 @@ OC.L10N.register(
     "Rescan library" : "Uppdatera bibliotek",
     "Recipe folder" : "Receptkatalog",
     "Please pick a folder" : "Välj katalog",
-    "Update interval in minutes" : "Uppdateringsintervall"
+    "Update interval in minutes" : "Uppdateringsintervall",
+    "Last update:" : "Senaste uppdatering:",
+    "Print image with recipe" : "Skriv ut bild med recept"
 },
 "nplurals=2; plural=(n != 1);");
