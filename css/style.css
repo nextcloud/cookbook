@@ -530,11 +530,12 @@
  */
 @media print {
     #header,
-    #app-navigation,
+    #app-navigation
+    /*
     #controls,
     .recipe-toolbar,
 	#app-content header:not(.printable),
-	.times button {
+	.times button */ {
         display: none !important;
     }
 

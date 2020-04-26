@@ -131,4 +131,10 @@ export default {
         padding: 0.5rem;
     }
 
+@media print {
+    button {
+        display: none !important;
+    }
+}
+
 </style>

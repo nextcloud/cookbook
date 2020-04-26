@@ -11,6 +11,15 @@ Vue.use(VueI18n)
 const messages = {
     // Each localization has their own messages as an object
     en: {
+        // First the general navigation and control bar translations
+        'Home': 'Home',
+        'New recipe': 'New recipe',
+        'Edit recipe': 'Edit recipe',
+        'Print recipe': 'Print recipe',
+        'Delete recipe': 'Delete recipe',
+        'Confirm delete': 'Are you sure you want to delete this recipe?',
+        'Delete failed': 'Failed to delete recipe',
+        'Save changes': 'Save changes',
         recipe: {
             view: {
                 ingredients: {
@@ -19,6 +28,8 @@ const messages = {
                 instructions: {
                     header: "Instructions",
                 },
+                servings: 'Servings',
+                source: 'Source',
                 timer: {
                     cook: "Cook time",
                     prep: "Preparation time",

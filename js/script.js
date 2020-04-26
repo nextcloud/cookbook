@@ -234,12 +234,13 @@ var Content = function (cookbook) {
 
 		if(route.length === 0) {
 			route = 'home';
-		}
+        }
         $.ajax({
             url: cookbook._baseUrl + '/' + route,
             method: 'GET',
         })
         .done(function (html) {
+
             $('#app-content-wrapper').html(html);
 
             // Common
@@ -298,7 +299,6 @@ var Content = function (cookbook) {
 
     /**
      * Event: Delete recipe
-     */
     self.onDeleteRecipe = function(e) {
         if(!confirm(t(appName, 'Are you sure you want to delete this recipe?'))) { return; }
 
@@ -322,13 +322,14 @@ var Content = function (cookbook) {
             if(e && e instanceof Error) { throw e; }
         });
     };
+     */
 
     /**
      * Event: Print recipe
-     */
     self.onPrintRecipe = function(e) {
         window.print();
     };
+     */
 
     /**
      * Event: click on a recipe instruction
@@ -342,9 +343,9 @@ var Content = function (cookbook) {
     /**
      * Event: click the recipe's image
      */
-    self.onImageClick = function(e) {
-        $(e.target).parent().toggleClass('collapsed');
-    }
+    //self.onImageClick = function(e) {
+    //    $(e.target).parent().toggleClass('collapsed');
+    //}
 
     /**
      * Event: Toggle timer
@@ -740,7 +741,9 @@ var content = new Content(cookbook);
 
 // Render the views
 nav.render();
-content.render();
+// $().html() causes a synchronous hmlhttprequest warning for me and index loading fails
+if (location.hash.length > 2)
+    content.render();
 
 // Render content view on hash change
 window.addEventListener('hashchange', content.render);

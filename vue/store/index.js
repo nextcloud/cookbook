@@ -27,11 +27,17 @@ export default new Vuex.Store({
         //  setting the appropriate navigation entry active.
         // Right now the app only handles the recipe view page.
         page: 'recipe',
+        // We'll save the recipe here, since the data is used by
+        //  several independent components
+        recipe: null,
     },
 
     mutations: {
         setPage(s, { p }) {
             s.page = p;
+        },
+        setRecipe(s, { r }) {
+            s.recipe = r
         },
         setUser(s, { u }) {
             s.user = u;
@@ -42,9 +48,12 @@ export default new Vuex.Store({
         setPage(c, { page }) {
             c.commit('setPage', { p: page });
         },
+        setRecipe(c, { recipe }) {
+            c.commit('setRecipe', { r: recipe });
+        },
         setUser(c, { user }) {
             c.commit('setUser', { u: user });
-        }
+        },
     }
 
 })
