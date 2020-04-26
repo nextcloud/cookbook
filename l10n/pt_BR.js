@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Não foi possível definir o intervalo de atualização da receita como {interval}",
+    "Could not set preference for image printing" : "Não foi possível definir a preferência para impressão de imagem",
     "Path to your recipe collection" : "Caminho para sua coleção de receitas",
     "Could not set recipe folder to {path}" : "Não foi possível definir a pasta de receitas para {path}",
     "Path to your Recipe Image" : "Caminho para sua Imagem de Receita",
@@ -52,6 +53,7 @@ OC.L10N.register(
     "Recipe folder" : "Pasta da receita",
     "Please pick a folder" : "Escolha uma pasta",
     "Update interval in minutes" : "Intervalo de atualização em minutos",
-    "Last update:" : "Última atualização:"
+    "Last update:" : "Última atualização:",
+    "Print image with recipe" : "Imprimir imagem com receita"
 },
 "nplurals=2; plural=(n > 1);");

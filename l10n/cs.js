@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",
+    "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
     "Path to your Recipe Image" : "Popis umístění obrázku receptu",
@@ -52,6 +53,7 @@ OC.L10N.register(
     "Recipe folder" : "Složka pro recepty",
     "Please pick a folder" : "Vyberte složku",
     "Update interval in minutes" : "Interval aktualizace (v minutách)",
-    "Last update:" : "Naposledy aktualizováno:"
+    "Last update:" : "Naposledy aktualizováno:",
+    "Print image with recipe" : "Vytisknout obrázek s receptem"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

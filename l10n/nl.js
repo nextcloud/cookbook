@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Kon het update-interval voor recepten niet instellen op {interval}",
+    "Could not set preference for image printing" : "Kon de voorkeuren voor afdrukken van afbeeldingen niet instellen",
     "Path to your recipe collection" : "Pad naar je receptencollectie",
     "Could not set recipe folder to {path}" : "Kan de receptenmap niet instellen op {path}",
     "Path to your Recipe Image" : "Pad naar foto van je recept",
@@ -51,6 +52,8 @@ OC.L10N.register(
     "Rescan library" : "Bibliotheek opnieuw inladen",
     "Recipe folder" : "Receptenmap",
     "Please pick a folder" : "Gelieve een map te kiezen",
-    "Update interval in minutes" : "Update-interval in minuten"
+    "Update interval in minutes" : "Update-interval in minuten",
+    "Last update:" : "Laatste update:",
+    "Print image with recipe" : "Afdrukken recept met afbeelding"
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Не удалось заменить интервал обновления рецептов на {interval}",
+    "Could not set preference for image printing" : "Не удалось настроить печать изображения",
     "Path to your recipe collection" : "Путь к коллекции рецептов",
     "Could not set recipe folder to {path}" : "Не удалось заменить папку с рецептами на {path}",
     "Path to your Recipe Image" : "Путь к изображению рецепта",
@@ -26,7 +27,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Изображение",
     "Pick a local image" : "Выберите изображение на компьютере",
-    "Preparation time" : "Время приготовления",
+    "Preparation time" : "Время на подготовку",
     "Cooking time" : "Время готовки",
     "Total time" : "Общее время",
     "Category" : "Категория",
@@ -51,6 +52,8 @@ OC.L10N.register(
     "Rescan library" : "Сканировать библиотеку",
     "Recipe folder" : "Папка с рецептами",
     "Please pick a folder" : "Выберите папку",
-    "Update interval in minutes" : "Интервал обновления в минутах"
+    "Update interval in minutes" : "Интервал обновления в минутах",
+    "Last update:" : "Последнее обновление:",
+    "Print image with recipe" : "Напечатать изображение с рецептом"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

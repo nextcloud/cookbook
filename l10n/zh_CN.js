@@ -4,6 +4,8 @@ OC.L10N.register(
     "Edit" : "编辑",
     "Cancel" : "取消",
     "Description" : "描述",
-    "Search" : "搜索"
+    "URL" : "URL",
+    "Search" : "搜索",
+    "Tag" : "Tag"
 },
 "nplurals=1; plural=0;");

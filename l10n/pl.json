@@ -1,5 +1,6 @@
 { "translations": {
     "Could not set recipe update interval to {interval}" : "Nie można ustawić interwału aktualizacji przepisu na {interval}",
+    "Could not set preference for image printing" : "Nie można ustawić preferencji drukowania obrazu",
     "Path to your recipe collection" : "Ścieżka do kolekcji przepisów",
     "Could not set recipe folder to {path}" : "Nie można ustawić folderu przepisów na {path}",
     "Path to your Recipe Image" : "Ścieżka do obrazu przepisu",
@@ -50,6 +51,7 @@
     "Recipe folder" : "Folder przepisu",
     "Please pick a folder" : "Proszę wybierać folder",
     "Update interval in minutes" : "Interwał aktualizacji w minutach",
-    "Last update:" : "Ostatnia aktualizacja:"
+    "Last update:" : "Ostatnia aktualizacja:",
+    "Print image with recipe" : "Wydrukuj zdjęcie z przepisem"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }
