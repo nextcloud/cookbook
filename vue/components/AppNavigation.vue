@@ -116,8 +116,4 @@ export default {
     min-height: 44px;
 }
 
-.recipe .app-navigation-entry-icon {
-    width: 0;
-}
-
 </style>
