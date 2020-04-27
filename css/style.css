@@ -1,4 +1,23 @@
 /**
+ * These first styles are the ones that will be retained in the Vue version
+ */
+
+.app-navigation-new button {
+    min-height: 44px !important;
+    background-image: var(--icon-add-000) !important;
+    background-repeat: no-repeat !important;
+}
+.app-navigation-entry.recipe .app-navigation-entry-icon {
+    /* Let's not waste space in front of the recipe name if we're not using an icon */
+    display: none !important;
+}
+
+
+ /**
+  * Following are the old (obsolete in the Vue version) styles
+  */
+
+/**
  * Helpers
  */
 
@@ -128,7 +147,7 @@
             border-right-width: 0;
             flex-basis: 0;
         }
-
+        /*
         #app-navigation .app-navigation-new button {
             border-radius: 0 var(--border-radius) var(--border-radius) 0;
             padding: 0 !important;
@@ -136,7 +155,7 @@
             height: 40px !important;
             background-position: 50% 50%;
         }
-
+        */
         /* For some reason, some images would disappear below 30px width if they were displayed inline */
         #app-navigation > ul > li > a:first-child img {
             display: block;

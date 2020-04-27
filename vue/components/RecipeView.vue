@@ -1,5 +1,6 @@
 <template>
     <div style="width:100%">
+
         <RecipeControls id="controls" />
 
         <RecipeImages v-if="$store.state.recipe" />

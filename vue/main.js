@@ -21,6 +21,7 @@ import store from './store'
 // The convention is to name the main Vue instance 'App', but since this will
 //  ultimately be a component of the main app, we'll use the naming convention
 //  for child components.
+import AppNavigation from './components/AppNavigation'
 import RecipeView from './components/RecipeView'
 
 // TODO: Nextcloud will remove support for jQuery in the next major version,
@@ -98,15 +99,23 @@ import RecipeView from './components/RecipeView'
         //  the recipe view is loaded asyncronously.
         // It has to be kept running, otherwise the app doesn't rerender
         //  for example after editing a recipe and returning to the view.
+
         const App = Vue.extend(RecipeView)
         let waitForElem = window.setInterval(function() {
             if ($("#app-recipe-content").length) {
                 new App({
                     store,
                     router,
-                    i18n
+                    i18n,
                 }).$mount("#app-recipe-content")
             }
         }, 250)
+
+        const Navi = Vue.extend(AppNavigation)
+        new Navi({
+            store,
+            router,
+            i18n,
+        }).$mount("#app-navigation")
     })
 })(OC, window, jQuery)

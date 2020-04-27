@@ -12,6 +12,10 @@ const messages = {
     // Each localization has their own messages as an object
     en: {
         // First the general navigation and control bar translations
+        'Cookbook': 'Cookbook',
+        'Create recipe': 'Create recipe',
+        'Recipe URL': 'Recipe URL',
+        'All recipes': 'All recipes',
         'Home': 'Home',
         'New recipe': 'New recipe',
         'Edit recipe': 'Edit recipe',
