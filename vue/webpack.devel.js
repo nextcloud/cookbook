@@ -8,7 +8,7 @@ module.exports = merge(common, {
     plugins: [
         new FileManager({
             onEnd: {
-                move: [
+                copy: [
                     { source: 'dist/script.js', destination: '../js/vue.js' }
                 ],
             },
