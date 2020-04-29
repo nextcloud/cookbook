@@ -37,6 +37,7 @@ import { Breadcrumbs } from '@nextcloud/vue'
 import { Breadcrumb } from '@nextcloud/vue'
 
 export default {
+    name: 'RecipeControls',
     components: {
         ActionButton, Breadcrumbs, Breadcrumb
     },

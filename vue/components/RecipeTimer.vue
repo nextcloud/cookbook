@@ -10,7 +10,7 @@
 
 <script>
 export default {
-
+    name: 'RecipeTimer',
     props: ['value', 'phase', 'timer'],
     data () {
         return {
