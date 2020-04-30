@@ -12,7 +12,7 @@
 <script>
 export default {
     name: "SearchResults",
-    props: ['query'],
+    props: ['query', 'value'],
     data () {
         return {
             results: [],

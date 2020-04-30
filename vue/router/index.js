@@ -7,9 +7,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import RecipeImages from '../components/RecipeImages'
-import RecipeIngredient from '../components/RecipeIngredient'
-import RecipeInstruction from '../components/RecipeInstruction'
+import Index from '../components/AppIndex'
+import Search from '../components/SearchResults'
+import RecipeView from '../components/AppRecipe'
+import RecipeEdit from '../components/RecipeEdit'
 
 Vue.use(VueRouter)
 
@@ -22,7 +23,16 @@ Vue.use(VueRouter)
 //  /section/component/:id
 //  /section/:id
 const routes = [
-    // At the moment there are no routes
+    // Defining props as true we can pass props to the components much more flexibly
+    { path: '/', component: Index },
+    // Search routes
+    { path: '/category/:value', component: Search, props: { query: 'cat' } },
+    { path: '/name/:value', component: Search, props: { query: 'name' } },
+    { path: '/tag/:value', component: Search, props: { query: 'tag' } },
+    // Recipe routes
+    { path: '/recipe/edit/:id', component: RecipeEdit, props: true },
+    { path: '/recipe/create', component: RecipeEdit, props: { id: 0 } },
+    { path: '/recipe/:id', component: RecipeView, props: { query: 'tag' } },
 ]
 export default new VueRouter({
     routes
