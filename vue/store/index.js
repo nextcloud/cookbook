@@ -30,29 +30,39 @@ export default new Vuex.Store({
         // We'll save the recipe here, since the data is used by
         //  several independent components
         recipe: null,
+        // Loading states to determine which loader icons to show
+        loadingRecipe: 0,
     },
 
     mutations: {
+        setLoadingRecipe(s, { r }) {
+            s.loadingRecipe = r
+        },
         setPage(s, { p }) {
-            s.page = p;
+            s.page = p
         },
         setRecipe(s, { r }) {
             s.recipe = r
         },
         setUser(s, { u }) {
-            s.user = u;
+            s.user = u
         }
     },
 
     actions: {
+        setLoadingRecipe(c, { recipe }) {
+            c.commit('setLoadingRecipe', { r: recipe })
+        },
         setPage(c, { page }) {
-            c.commit('setPage', { p: page });
+            c.commit('setPage', { p: page })
         },
         setRecipe(c, { recipe }) {
-            c.commit('setRecipe', { r: recipe });
+            c.commit('setRecipe', { r: recipe })
+            // Setting recipe also means that loading the recipe has finished
+            c.commit('setLoadingRecipe', { r: 0 })
         },
         setUser(c, { user }) {
-            c.commit('setUser', { u: user });
+            c.commit('setUser', { u: user })
         },
     }
 

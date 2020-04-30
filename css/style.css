@@ -7,9 +7,9 @@
     background-image: var(--icon-add-000) !important;
     background-repeat: no-repeat !important;
 }
-.app-navigation-entry.recipe .app-navigation-entry-icon {
-    /* Let's not waste space in front of the recipe name if we're not using an icon */
-    display: none !important;
+.app-navigation-entry.recipe {
+    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
+    padding-left: 0 !important;
 }
 
 

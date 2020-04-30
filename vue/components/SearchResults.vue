@@ -12,21 +12,24 @@
 <script>
 export default {
     name: "Search",
-    props: ['query', 'value'],
+    props: ['query'],
     data () {
         return {
             results: [],
         }
     },
     mounted () {
-        if (this.query.hasOwnProperty('name')) {
+        if (this.query === 'name') {
             // Search by name
+            console.log("Recipe name search for "+this.$route.params.value)
         }
-        if (this.query.hasOwnProperty('tag')) {
+        if (this.query === 'tag') {
             // Search by tag
+            console.log("Tag search for "+this.$route.params.value)
         }
-        if (this.query.hasOwnProperty('category')) {
+        if (this.query === 'cat') {
             // Search by category
+            console.log("Category search for "+this.$route.params.value)
         }
         // For testing
         this.results = [
@@ -46,6 +49,7 @@ ul {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    width: 100%;
 }
 
     ul li {

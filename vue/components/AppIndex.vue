@@ -41,6 +41,7 @@ ul {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    width: 100%;
 }
 
     ul li {

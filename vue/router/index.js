@@ -24,15 +24,15 @@ Vue.use(VueRouter)
 //  /section/:id
 const routes = [
     // Defining props as true we can pass props to the components much more flexibly
-    { path: '/', component: Index },
+    { path: '/', name:'index', component: Index },
     // Search routes
-    { path: '/category/:value', component: Search, props: { query: 'cat' } },
-    { path: '/name/:value', component: Search, props: { query: 'name' } },
-    { path: '/tag/:value', component: Search, props: { query: 'tag' } },
+    { path: '/category/:value', name: 'search-category', component: Search, props: { query: 'cat' } },
+    { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
+    { path: '/tag/:value', name: 'search-tag', component: Search, props: { query: 'tag' } },
     // Recipe routes
-    { path: '/recipe/edit/:id', component: RecipeEdit, props: true },
-    { path: '/recipe/create', component: RecipeEdit, props: { id: 0 } },
-    { path: '/recipe/:id', component: RecipeView, props: { query: 'tag' } },
+    { path: '/recipe/edit/:id', name: 'recipe-edit', component: RecipeEdit, props: true },
+    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit, props: { id: 0 } },
+    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView, props: true },
 ]
 export default new VueRouter({
     routes

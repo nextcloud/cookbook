@@ -1,7 +1,9 @@
 <template>
 <!-- This component should not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <AppNavigation>
-        <AppNavigationNew class="create" :text="$t('Create recipe')" @click="$window.goTo('/recipe/create')" />
+        <router-link :to="'/recipe/create'">
+            <AppNavigationNew class="create" :text="$t('Create recipe')" />
+        </router-link>
         <ul>
             <ActionInput class="download" @submit="downloadRecipe" icon="icon-download">{{ $t('Recipe URL') }}</ActionInput>
             <AppNavigationItem :title="$t('All recipes')" icon="icon-category-organization" :to="'/'">
@@ -19,6 +21,8 @@
                     <AppNavigationItem class="recipe" v-for="(rec,idy) in cat.recipes"
                         :key="idx+'-'+idy"
                         :title="rec.name"
+                        :icon="$store.state.loadingRecipe===rec.id"
+                        @click="setLoadingRecipe(rec.id)"
                         :to="'/recipe/'+rec.id"
                     />
                 </template>
@@ -103,6 +107,9 @@ export default {
         downloadRecipe: function(e) {
             console.log(e.target[1].value)
         },
+        setLoadingRecipe: function(id) {
+            this.$store.dispatch('setLoadingRecipe', { recipe: id })
+        }
     },
     mounted () {
         // Testing

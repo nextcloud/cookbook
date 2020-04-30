@@ -1,56 +1,47 @@
 <template>
 
-    <div>
-        <!-- INDEX PAGE -->
-        <Breadcrumbs class="breadcrumbs" v-if="$store.state.page==='index'" rootIcon="icon-category-organization">
-            <Breadcrumb :title="$t('All recipes')"></Breadcrumb>
-            <Breadcrumb class="no-arrow" title="">
+    <div class="wrapper">
+        <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
+        <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
+            <Breadcrumb :title="$t('Home')" :to="'/'" />
+            <!-- INDEX PAGE -->
+            <Breadcrumb v-if="isIndex" class="active" :title="$t('All recipes')"></Breadcrumb>
+            <Breadcrumb v-if="isIndex" class="no-arrow" title="">
                 <ActionButton icon="icon-search" class="action-button" :ariaLabel="$t('Search')" @click="$window.goTo('/search')" />
             </Breadcrumb>
-        </Breadcrumbs>
-        <!-- SEARCH PAGE -->
-        <Breadcrumbs class="breadcrumbs" v-if="$store.state.page==='search'" rootIcon="icon-category-organization">
-            <Breadcrumb
-                :title="searchTitle"
-            />
-            <Breadcrumb class="no-arrow" title="">
-            </Breadcrumb>
-        </Breadcrumbs>
-        <!-- RECIPE PAGES -->
-        <!-- Create new recipe -->
-        <Breadcrumbs class="breadcrumbs" v-if="$store.state.page==='create'" rootIcon="icon-category-organization">
-            <Breadcrumb :title="$t('New recipe')" />
-            <Breadcrumb class="no-arrow" title="">
+            <!-- SEARCH PAGE -->
+            <Breadcrumb v-if="isSearch" :title="searchTitle" />
+            <Breadcrumb v-if="isSearch" class="active" :title="$route.params.value" />
+            <!-- RECIPE PAGES -->
+            <!-- Create new recipe -->
+            <Breadcrumb v-if="isCreate" class="active" :title="$t('New recipe')" />
+            <Breadcrumb v-if="isCreate" class="no-arrow" title="">
                 <ActionButton icon="icon-checkmark" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
             </Breadcrumb>
-        </Breadcrumbs>
-        <!-- Edit recipe -->
-        <Breadcrumbs class="breadcrumbs" v-else-if="$store.state.page==='edit' && $store.state.recipe" rootIcon="icon-category-organization">
-            <Breadcrumb :title="$t('Edit recipe')" />
-            <Breadcrumb class="no-arrow" title="">
+            <!-- Edit recipe -->
+            <Breadcrumb v-if="isEdit" class="active" :title="$t('Edit recipe')" />
+            <Breadcrumb v-if="isEdit" class="no-arrow" title="">
                 <ActionButton icon="icon-checkmark" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
             </Breadcrumb>
-        </Breadcrumbs>
-        <!-- View recipe -->
-        <Breadcrumbs class="breadcrumbs" v-else-if="$store.state.page==='recipe' && $store.state.recipe" rootIcon="icon-category-organization">
-            <Breadcrumb :title="$t('Home')" :to="'/'" />
-            <Breadcrumb :title="$store.state.recipe.name" :to="'/recipe/'+$store.state.recipe.id" />
-            <Breadcrumb class="no-arrow" title="">
+            <!-- View recipe -->
+            <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :to="'/recipe/'+$store.state.recipe.id" />
+            <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
                 <ActionButton icon="icon-rename" class="action-button" :ariaLabel="$t('Edit recipe')" @click="$window.goTo('/recipe/'+$store.state.recipe.id+'/edit')" />
             </Breadcrumb>
-            <Breadcrumb class="no-arrow" title="">
+            <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
                 <ActionButton icon="icon-category-office" class="action-button" :ariaLabel="$t('Print recipe')" @click="printRecipe()" />
             </Breadcrumb>
-            <Breadcrumb class="no-arrow" title="">
+            <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
                 <ActionButton icon="icon-delete" class="action-button" :ariaLabel="$t('Delete recipe')" @click="deleteRecipe()" />
             </Breadcrumb>
+            <!-- No recipe found -->
+            <Breadcrumb v-if="isNotFound" class="active" :title="$t('Recipe not found')" />
         </Breadcrumbs>
     </div>
 
 </template>
 
 <script>
-// Tried loading individual components from dist first, couldn't make it work
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import Breadcrumbs from '@nextcloud/vue/dist/Components/Breadcrumbs'
 import Breadcrumb from '@nextcloud/vue/dist/Components/Breadcrumb'
@@ -66,12 +57,46 @@ export default {
         }
     },
     computed: {
+        isCreate () {
+            if (this.$store.state.page === 'create') {
+                return true
+            }
+        },
+        isEdit () {
+            // Editing requires that a recipe was found
+            if (this.$store.state.page === 'edit' && this.$store.state.recipe) {
+                return true
+            }
+        },
+        isIndex () {
+            if (this.$store.state.page === 'index') {
+                return true
+            }
+        },
+        isNotFound () {
+            // Editing or viewing recipe was attempted, but no recipe was found
+            if ((this.$store.state.page === 'edit' || this.$store.state.page === 'recipe')
+                && !this.$store.state.recipe) {
+                return true
+            }
+        },
+        isRecipe () {
+            // Viewing recipe requires that one was found
+            if (this.$store.state.page === 'recipe' && this.$store.state.recipe) {
+                return true
+            }
+        },
+        isSearch () {
+            if (this.$store.state.page === 'search') {
+                return true
+            }
+        },
         searchTitle () {
-            if (this.$route.param.query === 'cat') {
+            if (this.$route.name === 'search-category') {
                 return this.$i18n.t('Category')
-            } else if (this.$route.param.query === 'name') {
+            } else if (this.$route.name === 'search-name') {
                 return this.$i18n.t('Recipe name')
-            } else if (this.$route.param.query === 'tag') {
+            } else if (this.$route.name === 'search-tag') {
                 return this.$i18n.t('Tag')
             } else {
                 return this.$i18n.t('Search for recipes')
@@ -110,7 +135,11 @@ export default {
 
 <style scoped>
 
-div {
+.wrapper {
+    width: 100%;
+}
+
+.active {
     font-weight: bold;
 }
 
