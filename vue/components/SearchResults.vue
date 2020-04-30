@@ -1,17 +1,17 @@
 <template>
     <ul>
         <li v-for="result in results" :key="result.id">
-            <a :href="'/recipe/'+result.id">
+            <router-link :to="'/recipe/'+result.id">
                 <img v-if="result.imageUrl" :src="result.imageUrl">
                 <span>{{ result.name }}</span>
-            </a>
+            </router-link>
         </li>
     </ul>
 </template>
 
 <script>
 export default {
-    name: "SearchResults",
+    name: "Search",
     props: ['query', 'value'],
     data () {
         return {
@@ -40,19 +40,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 ul {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    margin: 0 -1rem;
 }
 
     ul li {
         width: 300px;
         max-width: 100%;
-        margin: 0 1rem 1rem;
+        margin: 0.5rem 1rem 1rem;
     }
         ul li a {
             display: block;

@@ -13,6 +13,7 @@ const messages = {
     en: {
         // First the general navigation and control bar translations
         'Cookbook': 'Cookbook',
+        'All recipes': 'All recipes',
         'Create recipe': 'Create recipe',
         'Recipe URL': 'Recipe URL',
         'All recipes': 'All recipes',

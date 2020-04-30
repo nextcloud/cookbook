@@ -1,8 +1,6 @@
 <template>
     <div style="width:100%">
 
-        <RecipeControls id="controls" />
-
         <RecipeImages v-if="$store.state.recipe" />
 
         <div v-if="$store.state.recipe" class="content">
@@ -50,7 +48,6 @@
 
 <script>
 
-import RecipeControls from './RecipeControls'
 import RecipeImages from './RecipeImages'
 import RecipeIngredient from './RecipeIngredient'
 import RecipeInstruction from './RecipeInstruction'
@@ -58,9 +55,8 @@ import RecipeTimer from './RecipeTimer'
 import RecipeTool from './RecipeTool'
 
 export default {
-    name: 'AppRecipe',
+    name: 'RecipeView',
     components: {
-        RecipeControls,
         RecipeImages,
         RecipeIngredient,
         RecipeInstruction,
@@ -81,24 +77,26 @@ export default {
     mounted () {
         // Have to use a gimmic to get the recipe data at this point
         // Store recipe data
-        this.$store.dispatch('setRecipe', { recipe: JSON.parse(document.getElementById("app-recipe-data").innerHTML) })
-        if (this.$store.state.recipe.recipeIngredient) {
-            this.ingredients = this.$store.state.recipe.recipeIngredient
-        }
-        if (this.$store.state.recipe.recipeInstructions) {
-            this.instructions = this.$store.state.recipe.recipeInstructions
-        }
-        if (this.$store.state.recipe.timeCook) {
-            this.timerCook = this.$store.state.recipe.timeCook
-        }
-        if (this.$store.state.recipe.timePrep) {
-            this.timerPrep = this.$store.state.recipe.timePrep
-        }
-        if (this.$store.state.recipe.timeTotal) {
-            this.timerTotal = this.$store.state.recipe.timeTotal
-        }
-        if (this.$store.state.recipe.tool) {
-            this.tools = this.$store.state.recipe.tool
+        if (document.getElementById("app-recipe-data")) {
+            this.$store.dispatch('setRecipe', { recipe: JSON.parse(document.getElementById("app-recipe-data").innerHTML) })
+            if (this.$store.state.recipe.recipeIngredient) {
+                this.ingredients = this.$store.state.recipe.recipeIngredient
+            }
+            if (this.$store.state.recipe.recipeInstructions) {
+                this.instructions = this.$store.state.recipe.recipeInstructions
+            }
+            if (this.$store.state.recipe.timeCook) {
+                this.timerCook = this.$store.state.recipe.timeCook
+            }
+            if (this.$store.state.recipe.timePrep) {
+                this.timerPrep = this.$store.state.recipe.timePrep
+            }
+            if (this.$store.state.recipe.timeTotal) {
+                this.timerTotal = this.$store.state.recipe.timeTotal
+            }
+            if (this.$store.state.recipe.tool) {
+                this.tools = this.$store.state.recipe.tool
+            }
         }
         // Always set the active page last!
         this.$store.dispatch('setPage', { page: 'recipe' })

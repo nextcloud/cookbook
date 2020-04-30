@@ -1,18 +1,37 @@
 <template>
 
     <div>
+        <!-- INDEX PAGE -->
+        <Breadcrumbs class="breadcrumbs" v-if="$store.state.page==='index'" rootIcon="icon-category-organization">
+            <Breadcrumb :title="$t('All recipes')"></Breadcrumb>
+            <Breadcrumb class="no-arrow" title="">
+                <ActionButton icon="icon-search" class="action-button" :ariaLabel="$t('Search')" @click="$window.goTo('/search')" />
+            </Breadcrumb>
+        </Breadcrumbs>
+        <!-- SEARCH PAGE -->
+        <Breadcrumbs class="breadcrumbs" v-if="$store.state.page==='search'" rootIcon="icon-category-organization">
+            <Breadcrumb
+                :title="searchTitle"
+            />
+            <Breadcrumb class="no-arrow" title="">
+            </Breadcrumb>
+        </Breadcrumbs>
+        <!-- RECIPE PAGES -->
+        <!-- Create new recipe -->
         <Breadcrumbs class="breadcrumbs" v-if="$store.state.page==='create'" rootIcon="icon-category-organization">
             <Breadcrumb :title="$t('New recipe')" />
             <Breadcrumb class="no-arrow" title="">
                 <ActionButton icon="icon-checkmark" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
             </Breadcrumb>
         </Breadcrumbs>
+        <!-- Edit recipe -->
         <Breadcrumbs class="breadcrumbs" v-else-if="$store.state.page==='edit' && $store.state.recipe" rootIcon="icon-category-organization">
             <Breadcrumb :title="$t('Edit recipe')" />
             <Breadcrumb class="no-arrow" title="">
                 <ActionButton icon="icon-checkmark" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
             </Breadcrumb>
         </Breadcrumbs>
+        <!-- View recipe -->
         <Breadcrumbs class="breadcrumbs" v-else-if="$store.state.page==='recipe' && $store.state.recipe" rootIcon="icon-category-organization">
             <Breadcrumb :title="$t('Home')" :to="'/'" />
             <Breadcrumb :title="$store.state.recipe.name" :to="'/recipe/'+$store.state.recipe.id" />
@@ -32,18 +51,31 @@
 
 <script>
 // Tried loading individual components from dist first, couldn't make it work
-import { ActionButton } from '@nextcloud/vue'
-import { Breadcrumbs } from '@nextcloud/vue'
-import { Breadcrumb } from '@nextcloud/vue'
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import Breadcrumbs from '@nextcloud/vue/dist/Components/Breadcrumbs'
+import Breadcrumb from '@nextcloud/vue/dist/Components/Breadcrumb'
 
 export default {
-    name: 'RecipeControls',
+    name: 'AppControls',
     components: {
         ActionButton, Breadcrumbs, Breadcrumb
     },
     data () {
         return {
 
+        }
+    },
+    computed: {
+        searchTitle () {
+            if (this.$route.param.query === 'cat') {
+                return this.$i18n.t('Category')
+            } else if (this.$route.param.query === 'name') {
+                return this.$i18n.t('Recipe name')
+            } else if (this.$route.param.query === 'tag') {
+                return this.$i18n.t('Tag')
+            } else {
+                return this.$i18n.t('Search for recipes')
+            }
         }
     },
     methods: {

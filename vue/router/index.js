@@ -9,7 +9,7 @@ import VueRouter from 'vue-router'
 
 import Index from '../components/AppIndex'
 import Search from '../components/SearchResults'
-import RecipeView from '../components/AppRecipe'
+import RecipeView from '../components/RecipeView'
 import RecipeEdit from '../components/RecipeEdit'
 
 Vue.use(VueRouter)
