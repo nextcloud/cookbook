@@ -10,6 +10,7 @@
     <author mail="mrzapp@users.noreply.github.com" >Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
     <category>organization</category>
+    <website>https://github.com/mrzapp/nextcloud-cookbook/</website>
     <screenshot small-thumbnail="https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/stable/img/screenshot-small.jpg">https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/stable/img/screenshot.jpg</screenshot>
     <bugs>https://github.com/mrzapp/nextcloud-cookbook/issues</bugs>
     <dependencies>
