@@ -8,9 +8,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Index from '../components/AppIndex'
-import Search from '../components/SearchResults'
+import NotFound from '../components/NotFound'
 import RecipeView from '../components/RecipeView'
 import RecipeEdit from '../components/RecipeEdit'
+import Search from '../components/SearchResults'
 
 Vue.use(VueRouter)
 
@@ -23,16 +24,18 @@ Vue.use(VueRouter)
 //  /section/component/:id
 //  /section/:id
 const routes = [
-    // Defining props as true we can pass props to the components much more flexibly
-    { path: '/', name:'index', component: Index },
     // Search routes
     { path: '/category/:value', name: 'search-category', component: Search, props: { query: 'cat' } },
     { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
     { path: '/tag/:value', name: 'search-tag', component: Search, props: { query: 'tag' } },
     // Recipe routes
-    { path: '/recipe/edit/:id', name: 'recipe-edit', component: RecipeEdit, props: true },
-    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit, props: { id: 0 } },
-    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView, props: true },
+    { path: '/recipe/edit/:id', name: 'recipe-edit', component: RecipeEdit },
+    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
+    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
+    // Index is the last defined route
+    { path: '/', name:'index', component: Index },
+    // Anything not matched goes to NotFound
+    { path: '*', name:'not-found', component: NotFound },
 ]
 export default new VueRouter({
     routes

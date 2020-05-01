@@ -21,7 +21,7 @@
                     <AppNavigationItem class="recipe" v-for="(rec,idy) in cat.recipes"
                         :key="idx+'-'+idy"
                         :title="rec.name"
-                        :icon="$store.state.loadingRecipe===rec.id"
+                        :icon="$store.state.loadingRecipe===rec.id ? 'icon-loading-small' : null"
                         @click="setLoadingRecipe(rec.id)"
                         :to="'/recipe/'+rec.id"
                     />
