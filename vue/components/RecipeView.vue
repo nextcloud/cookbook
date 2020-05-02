@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%">
+    <div class="wrapper">
 
         <RecipeImages v-if="$store.state.recipe" />
 
@@ -107,6 +107,10 @@ export default {
 
 <style scoped>
 
+.wrapper {
+    width: 100%;
+}
+
 aside {
     flex-basis: 20rem;
     padding-right: 2rem;
@@ -126,10 +130,16 @@ aside {
     }
 
     main {
+        flex-basis: calc(100% - 22rem);
         width: 70%;
         float: left;
         text-align: justify;
     }
+    @media(max-width:1199px) { main {
+        flex-basis: 100%;
+        width: 100%;
+    } }
+
         .description {
             font-style: italic;
         }

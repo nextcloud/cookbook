@@ -15,7 +15,6 @@ var Cookbook = function (baseUrl) {
 Cookbook.prototype = {
     /**
      * Reindexes all recipes
-     */
     reindex: function () {
         var deferred = $.Deferred();
         var self = this;
@@ -29,6 +28,7 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
+     */
 
     /**
      * Updates a recipe with form data
@@ -74,7 +74,6 @@ Cookbook.prototype = {
      * Imports a recipe from a URL
      *
      * @param {String} url
-     */
     import: function (url) {
         var deferred = $.Deferred();
         var self = this;
@@ -100,6 +99,7 @@ Cookbook.prototype = {
         });
         return deferred.promise();
     },
+     */
 
     /**
      * Gets all recipes
@@ -112,7 +112,6 @@ Cookbook.prototype = {
 
     /**
      * Loads all recipes for display
-     */
     loadAll: function () {
         var deferred = $.Deferred();
         var self = this;
@@ -125,12 +124,12 @@ Cookbook.prototype = {
 
         return deferred.promise();
     },
+     */
 
     /**
      * Sets the config update interval
      *
      * @param {Number} interval
-     */
     setUpdateInterval: function(interval) {
         var self = this;
 
@@ -142,12 +141,12 @@ Cookbook.prototype = {
             alert(t(appName, 'Could not set recipe update interval to {interval}', {interval: interval}));
         });
     },
+     */
 
     /**
      * Sets the config to print recipe image
      *
      * @param {Boolean} interval
-     */
     setPrintImage: function(printImage) {
         var self = this;
 
@@ -159,12 +158,12 @@ Cookbook.prototype = {
             alert(t(appName, 'Could not set preference for image printing'));
         });
     },
+     */
 
     /**
      * Sets the recipe base directory using a callback
      *
      * @param {Function} cb
-     */
     setFolder: function(cb) {
         var self = this;
 
@@ -193,13 +192,13 @@ Cookbook.prototype = {
             true
         );
     },
+     */
 
     /**
      * Shows a notification to the user
      *
      * @param {String} title
      * @param {Object} options
-     */
 	notify: function notify(title, options) {
 		if(!('Notification' in window)) {
 			return;
@@ -218,6 +217,7 @@ Cookbook.prototype = {
 			});
 		}
 	}
+     */
 };
 
 /**
@@ -281,7 +281,6 @@ var Content = function (cookbook) {
 
     /**
      * Event: Pick image
-     */
     self.onPickImage = function(e) {
         e.preventDefault();
 
@@ -297,6 +296,7 @@ var Content = function (cookbook) {
         );
     }
 
+     */
     /**
      * Event: Delete recipe
     self.onDeleteRecipe = function(e) {
@@ -448,7 +448,6 @@ var Content = function (cookbook) {
 
     /**
      * Event: Click delete list element
-     */
     self.onDeleteListItem = function(e) {
         e.preventDefault();
 
@@ -461,10 +460,10 @@ var Content = function (cookbook) {
 
         self.updateListItems();
     };
+     */
 
     /**
      * Event: Keydown on a list itme input
-     */
     self.onListInputKeyDown = function(e) {
         if(e.keyCode === 13 || e.keyCode === 10) {
             e.preventDefault();
@@ -481,10 +480,10 @@ var Content = function (cookbook) {
             }
         }
     };
+     */
 
     /**
      * Event: Click add list item
-     */
     self.onAddListItem = function(e) {
         e.preventDefault();
 
@@ -498,10 +497,10 @@ var Content = function (cookbook) {
 
         self.updateListItems();
     };
+     */
 
     /**
      * Event: Click move list item up
-     */
     self.onMoveListItemUp = function(e) {
         e.preventDefault();
 
@@ -517,10 +516,10 @@ var Content = function (cookbook) {
 
         self.updateListItems();
     };
+     */
 
     /**
      * Event: Click move list item down
-     */
     self.onMoveListItemDown = function(e) {
         e.preventDefault();
 
@@ -536,6 +535,7 @@ var Content = function (cookbook) {
 
         self.updateListItems();
     };
+     */
 
     /**
      * Event: Update recipe

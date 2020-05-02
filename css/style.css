@@ -19,7 +19,6 @@
 
 /**
  * Helpers
- */
 
 .icon-arrow-up {
     background-image: var(--icon-triangle-n-000);
@@ -63,7 +62,6 @@
             border-bottom-right-radius: var(--border-radius);
             border-right-width: 1px;
         }
-
 .textarea-group {
 
 }
@@ -95,6 +93,7 @@
         .textarea-group-addon button:last-child {
             border-top-right-radius: var(--border-radius);
         }
+*/
 
 /**
  * Main
@@ -406,8 +405,6 @@
 					padding: 0.5rem;
 				}
 
-*/
-
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);
     }
@@ -416,7 +413,7 @@
             width: 100%;
         } }
 
-    /* Editor */
+    /* Editor
     #app-content-wrapper form {
         width: 100%;
     }
@@ -474,6 +471,7 @@
             pointer-events: none;
         }
 
+
         #app-content-wrapper form fieldset > label {
             display: inline-block;
             width: 10em;
@@ -485,13 +483,14 @@
 				display: block;
 				float: none;
 			}}
+        */
 
         #app-content-wrapper form fieldset ul label input[type="checkbox"] {
             margin-left: 1em;
             vertical-align: middle;
             cursor: pointer;
         }
-
+/*
         #app-content-wrapper form fieldset > ul {
             margin-top: 2rem;
             padding-left: 1em;
@@ -507,7 +506,6 @@
         #app-content-wrapper form fieldset > ul > li {
             margin: 0 0 1em 0;
         }
-
         #app-content-wrapper form fieldset > ul > li > input {
             width: 100%;
             margin: 0;
@@ -542,6 +540,7 @@
             margin-left: auto;
             display: block;
         }
+*/
 
 /**
  * Print

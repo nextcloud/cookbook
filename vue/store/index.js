@@ -43,6 +43,8 @@ export default new Vuex.Store({
         },
         setRecipe(s, { r }) {
             s.recipe = r
+            // Setting recipe also means that loading the recipe has finished
+            s.loadingRecipe = 0
         },
         setUser(s, { u }) {
             s.user = u
@@ -58,8 +60,6 @@ export default new Vuex.Store({
         },
         setRecipe(c, { recipe }) {
             c.commit('setRecipe', { r: recipe })
-            // Setting recipe also means that loading the recipe has finished
-            c.commit('setLoadingRecipe', { r: 0 })
         },
         setUser(c, { user }) {
             c.commit('setUser', { u: user })

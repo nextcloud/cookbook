@@ -1,11 +1,17 @@
 <template>
-<!-- This component should not have a conflicting name with AppNavigation from the nextcloud/vue package -->
+<!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <AppNavigation>
         <router-link :to="'/recipe/create'">
             <AppNavigationNew class="create" :text="$t('Create recipe')" />
         </router-link>
         <ul>
-            <ActionInput class="download" @submit="downloadRecipe" icon="icon-download">{{ $t('Recipe URL') }}</ActionInput>
+            <ActionInput
+                class="download"
+                @submit="downloadRecipe"
+                :disabled="downloading ? 'disabled' : null"
+                :icon="downloading ? 'icon-loading-small' : 'icon-download'">
+                    {{ $t('Recipe URL') }}
+            </ActionInput>
             <AppNavigationItem :title="$t('All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
@@ -28,32 +34,29 @@
                 </template>
             </AppNavigationItem>
         </ul>
-        <!-- The Settings tab still immediately closes again after clicking -->
         <AppNavigationSettings :open="true">
-            <div id="app-settings-content">
-                <fieldset class="settings-fieldset">
-                    <ul class="settings-fieldset-interior">
-                        <li class="settings-fieldset-interior-item">
+            <div id="app-settings">
+                <fieldset>
+                    <ul>
+                        <li>
                             <button class="button icon-history" id="reindex-recipes">{{ $t('Rescan library') }}</button>
                         </li>
-                        <li class="settings-fieldset-interior-item">
+                        <li>
                             <label class="settings-input">{{ $t('Recipe folder') }}</label>
-                            <input id="recipe-folder" type="text" class="input settings-input" :value="recipeFolder" :placeholder="$t('Please pick a folder')">
+                            <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="$t('Please pick a folder')">
                         </li>
-                        <li class="settings-fieldset-interior-item">
+                        <li>
                             <label class="settings-input">
                                 {{ $t('Update interval in minutes') }}
                             </label>
-                            <div class="input-group">
-                                <input id="recipe-update-interval" type="number" class="input settings-input" :value="updateInterval" :placeholder="updateInterval">
-                                <div class="input-group-addon">
-                                    <button class="icon-info" disabled="disabled" :title="$t('Last update: $upd')"></button>
-                                </div>
+                            <div class="update">
+                                <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
+                                <button class="icon-info" disabled="disabled" :title="$t('Last update: ')"></button>
                             </div>
                         </li>
-                        <li v-if="$store.state.recipe" class="settings-fieldset-interior-item">
-                            <input id="recipe-print-image" type="checkbox" class="checkbox" :checked="{ 'checked': $store.state.recipe.printImage }">>
-                            <label class="settings-input" for="recipe-print-image">
+                        <li>
+                            <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
+                            <label for="recipe-print-image">
                                 {{ $t('Print image with recipe') }}
                             </label>
                         </li>
@@ -90,7 +93,14 @@ export default {
     data () {
         return {
             categories: [],
+            downloading: false,
+            printImage: false,
             recipeFolder: "",
+            recipes: [],
+            // By setting the reset value initially to true, it will skip one watch event
+            // (the one when config is loaded at page load)
+            resetInterval: true,
+            resetPrintImage: true,
             updateInterval: 0,
         }
     },
@@ -103,13 +113,133 @@ export default {
             return recCount
         }
     },
+    watch: {
+        printImage: function(newVal, oldVal) {
+            // Avoid infinite loop on page load and when reseting value after failed submit
+            if (this.resetPrintImage) {
+                this.resetPrintImage = false
+                return
+            }
+            var $this = this
+            $.ajax({
+                url: this.$window.baseUrl + '/config',
+                method: 'POST',
+                data: { 'print_image': newVal ? 1 : 0 }
+            }).done(function (response) {
+                // Should this check the response of the query? To catch some errors that redirect the page
+            }).fail(function(e) {
+                alert($this.$t('Could not set preference for image printing'));
+                $this.resetPrintImage = true
+                $this.printImage = oldVal
+            })
+        },
+        updateInterval: function(newVal, oldVal) {
+            // Avoid infinite loop on page load and when reseting value after failed submit
+            if (this.resetInterval) {
+                this.resetInterval = false
+                return
+            }
+            var $this = this
+            $.ajax({
+                url: $this.$window.baseUrl + '/config',
+                method: 'POST',
+                data: { 'update_interval': newVal }
+            }).done(function (response) {
+                // Should this check the response of the query? To catch some errors that redirect the page
+            }).fail(function(e) {
+                alert($this.$t('Could not set recipe update interval to {interval}', { interval: newVal }))
+                $this.resetInterval = true
+                $this.updateInterval = oldVal
+            })
+        },
+    },
     methods: {
+        /**
+         * Download and import the recipe at given URL
+         */
         downloadRecipe: function(e) {
             console.log(e.target[1].value)
+            let deferred = $.Deferred()
+            let $this = this
+            this.downloading = true
+            $.ajax({
+                url: this.$window.baseUrl + '/import',
+                method: 'POST',
+                data: 'url=' + e.target[1].value
+            }).done(function (recipe) {
+                $this.downloading = false
+                $this.$window.goTo('/recipe/' + recipe.id)
+                deferred.resolve()
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                $this.downloading = false
+                deferred.reject(new Error(jqXHR.responseText))
+            })
+            return deferred.promise()
         },
+        /**
+         * Load all recipes from the database
+         */
+        loadAll: function () {
+            var deferred = $.Deferred()
+            var $this = this
+            $.get(this.$window.baseUrl + '/recipes').done(function (recipes) {
+                $this.recipes = recipes
+                deferred.resolve()
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                deferred.reject(new Error(jqXHR.responseText))
+            })
+            return deferred.promise()
+        },
+        /**
+         * Select a recipe folder using the Nextcloud file picker
+         */
+        pickRecipeFolder: function(e) {
+            var $this = this;
+            OC.dialogs.filepicker(
+                this.$t('Path to your recipe collection'),
+                function (path) {
+                    $.ajax({
+                        url: $this.$window.baseUrl + '/config',
+                        method: 'POST',
+                        data: { 'folder': path },
+                    }).done(function () {
+                        $this.loadAll()
+                        .then(function() {
+                            $this.$store.dispatch('setRecipe', { recipe: null })
+                            $this.$window.goTo('/')
+                            $this.recipeFolder = path
+                        });
+                    }).fail(function(e) {
+                        alert($this.$t('Could not set recipe folder to {path}', { path: path }))
+                    });
+                },
+                false,
+                'httpd/unix-directory',
+                true
+            );
+        },
+        /**
+         * Reindex all recipes
+         */
+        reindex: function () {
+            var deferred = $.Deferred()
+            var $this = this
+            $.ajax({
+                url: this.$window.baseUrl + '/reindex',
+                method: 'POST'
+            }).done(function () {
+                deferred.resolve()
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                deferred.reject(new Error(jqXHR.responseText))
+            })
+            return deferred.promise()
+        },
+        /**
+         * Set loading recipe index to show the loading icon
+         */
         setLoadingRecipe: function(id) {
             this.$store.dispatch('setLoadingRecipe', { recipe: id })
-        }
+        },
     },
     mounted () {
         // Testing
@@ -143,5 +273,34 @@ export default {
 </script>
 
 <style scoped>
+
+#app-settings .button {
+    padding: 6px 12px;
+    padding-left: 12px;
+    padding-left: 34px;
+    margin: 0 0 1em 0;
+    border-radius: var(--border-radius);
+    background-position: left 9px center;
+    z-index: 2;
+}
+
+#app-settings input[type="text"],
+#app-settings input[type="number"],
+#app-settings .button {
+    width: 100%;
+    display: block;
+}
+
+.update > input {
+    width: calc(100% - 0.5rem - 34px) !important;
+    margin-right: 0.5rem;
+    float: left;
+}
+.update > button {
+    margin: 3px 0 !important;
+    width: 34px !important;
+    height: 34px !important;
+    float: left;
+}
 
 </style>

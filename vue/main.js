@@ -90,9 +90,33 @@ import AppMain from './components/AppMain'
     window.goTo = function(url) {
         router.push(url)
     }
+    // Notify the user if notifications are allowed
+	window.notify = function notify(title, options) {
+		if (!('Notification' in window)) {
+			return
+		} else if (Notification.permission === "granted") {
+			var notification = new Notification(title, options)
+		} else if (Notification.permission !== 'denied') {
+			Notification.requestPermission(function(permission) {
+				if (!('permission' in Notification)) {
+					Notification.permission = permission
+				}
+				if (permission === "granted") {
+					var notification = new Notification(title, options)
+				} else {
+					alert(title)
+				}
+			})
+		}
+	}
     // This line will also make the injections available in Vue components
     Vue.prototype.$window = window
-
+    Vue.prototype.OC = OC
+    // Make translations easier by automatically providing the app name
+    let tx = function(text) {
+        return window.t('cookbook', text)
+    }
+    Vue.prototype.t = tx
     // Start the app once document is done loading
     $(document).ready(function () {
         // This is a shameful gimmick but needed at this point since
