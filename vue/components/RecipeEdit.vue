@@ -80,7 +80,17 @@ export default {
             this.recipe[field].splice(index - 1, 0, entry)
         },
         test: function() {
-            console.log(this.recipe)
+            let $this = this
+            $.ajax({
+                url: this.$window.baseUrl + '/api/recipes',
+                method: 'POST',
+                data: this.recipe,
+            }).done(function (recipe) {
+                console.log(recipe)
+                $this.$window.goTo('/recipe/'+recipe.id)
+            }).fail(function(e) {
+                alert($this.$t('Recipe could not be saved'))
+            })
         }
     },
     mounted () {

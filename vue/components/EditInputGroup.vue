@@ -5,7 +5,7 @@
             <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
                 <div v-if="fieldName==='instructions'" class="step-number"></div>
                 <input v-if="fieldType==='text'" type="text" v-model="$parent.recipe[fieldName][idx]" @keyup="keyPressed" />
-                <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName][idx]" @change="checkFocus"></textarea>
+                <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName][idx]"></textarea>
                 <div class="controls">
                     <button class="icon-arrow-up" @click="moveUp(idx)"></button>
                     <button class="icon-arrow-down" @click="moveDown(idx)"></button>
@@ -50,16 +50,8 @@ export default {
             }, 100)
         },
         /**
-         * Check if the loaded field should get focus
+         * Delete an entry from the list
          */
-        checkFocus: function(e) {
-            let $li = $(e.currentTarget).parents('li')
-            console.log($li.index() + ' ' + this.nextFocus)
-            if ($li.index() === this.nextFocus) {
-                $li.find('input').focus()
-                this.nextFocus = -1
-            }
-        },
         deleteEntry: function(idx) {
             this.$parent.deleteEntry(this.fieldName, idx)
         },

@@ -77,29 +77,40 @@ export default {
     mounted () {
         // Have to use a gimmic to get the recipe data at this point
         // Store recipe data
-        if (document.getElementById("app-recipe-data")) {
-            this.$store.dispatch('setRecipe', { recipe: JSON.parse(document.getElementById("app-recipe-data").innerHTML) })
-            if (this.$store.state.recipe.recipeIngredient) {
-                this.ingredients = this.$store.state.recipe.recipeIngredient
+        let $this = this
+        $.ajax({
+            url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
+            method: 'GET',
+            data: null,
+        }).done(function (recipe) {
+            //console.log(recipe) // Testing
+            $this.$store.dispatch('setRecipe', { recipe: recipe })
+            if ($this.$store.state.recipe.ingredients) {
+                $this.ingredients = $this.$store.state.recipe.ingredients
             }
-            if (this.$store.state.recipe.recipeInstructions) {
-                this.instructions = this.$store.state.recipe.recipeInstructions
+            if ($this.$store.state.recipe.instructions) {
+                $this.instructions = $this.$store.state.recipe.instructions
             }
-            if (this.$store.state.recipe.timeCook) {
-                this.timerCook = this.$store.state.recipe.timeCook
+            if ($this.$store.state.recipe.cookTime) {
+                let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
+                $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
             }
-            if (this.$store.state.recipe.timePrep) {
-                this.timerPrep = this.$store.state.recipe.timePrep
+            if ($this.$store.state.recipe.prepTime) {
+                let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
+                $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
             }
-            if (this.$store.state.recipe.timeTotal) {
-                this.timerTotal = this.$store.state.recipe.timeTotal
+            if ($this.$store.state.recipe.totalTime) {
+                let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
+                $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
             }
-            if (this.$store.state.recipe.tool) {
-                this.tools = this.$store.state.recipe.tool
+            if ($this.$store.state.recipe.tools) {
+                $this.tools = $this.$store.state.recipe.tools
             }
-        }
-        // Always set the active page last!
-        this.$store.dispatch('setPage', { page: 'recipe' })
+            // Always set the active page last!
+            $this.$store.dispatch('setPage', { page: 'recipe' })
+        }).fail(function(e) {
+            alert($this.$t('Recipe was not found'))
+        })
     },
 
 }

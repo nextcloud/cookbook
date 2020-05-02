@@ -194,7 +194,7 @@ export default {
          * Select a recipe folder using the Nextcloud file picker
          */
         pickRecipeFolder: function(e) {
-            var $this = this;
+            let $this = this
             OC.dialogs.filepicker(
                 this.$t('Path to your recipe collection'),
                 function (path) {
@@ -208,15 +208,15 @@ export default {
                             $this.$store.dispatch('setRecipe', { recipe: null })
                             $this.$window.goTo('/')
                             $this.recipeFolder = path
-                        });
+                        })
                     }).fail(function(e) {
                         alert($this.$t('Could not set recipe folder to {path}', { path: path }))
-                    });
+                    })
                 },
                 false,
                 'httpd/unix-directory',
                 true
-            );
+            )
         },
         /**
          * Reindex all recipes
