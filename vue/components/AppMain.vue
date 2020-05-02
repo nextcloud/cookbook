@@ -19,6 +19,14 @@ export default {
         AppControls,
         AppNavi,
     },
+    watch: {
+        /*
+        '$route' (to, from) {
+            // Reset page before each route update
+            this.$store.dispatch('setPage', { page: null })
+        },
+        */
+    },
 }
 </script>
 

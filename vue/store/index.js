@@ -25,13 +25,13 @@ export default new Vuex.Store({
         user: null,
         // Page is for keeping track of the page the user is on and
         //  setting the appropriate navigation entry active.
-        // Right now the app only handles the recipe view page.
-        page: 'recipe',
+        page: null,
         // We'll save the recipe here, since the data is used by
         //  several independent components
         recipe: null,
-        // Loading states to determine which loader icons to show
+        // Loading and saving states to determine which loader icons to show
         loadingRecipe: 0,
+        savingRecipe: false,
     },
 
     mutations: {
@@ -45,6 +45,9 @@ export default new Vuex.Store({
             s.recipe = r
             // Setting recipe also means that loading the recipe has finished
             s.loadingRecipe = 0
+        },
+        setSavingRecipe(s, { b }) {
+            s.savingRecipe = b
         },
         setUser(s, { u }) {
             s.user = u
@@ -60,6 +63,9 @@ export default new Vuex.Store({
         },
         setRecipe(c, { recipe }) {
             c.commit('setRecipe', { r: recipe })
+        },
+        setSavingRecipe(c, { saving }) {
+            c.commit('setSavingRecipe', { b: saving })
         },
         setUser(c, { user }) {
             c.commit('setUser', { u: user })

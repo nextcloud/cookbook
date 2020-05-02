@@ -3,7 +3,7 @@
         <label>{{ fieldLabel }}</label>
         <input type="number" min="0" v-model="$parent[fieldName][0]" placeholder="00">
         <span>:</span>
-        <input type="number" min="0" max="59" :value="$parent[fieldName][1]" placeholder="00">
+        <input type="number" min="0" max="59" v-model="$parent[fieldName][1]" placeholder="00">
     </fieldset>
 </template>
 

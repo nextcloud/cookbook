@@ -18,8 +18,6 @@ export default {
         },
     },
     mounted () {
-
-            console.log(this.$store.state.recipe)
     }
 }
 </script>

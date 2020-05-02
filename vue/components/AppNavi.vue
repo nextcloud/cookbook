@@ -208,6 +208,9 @@ export default {
             let $this = this
             $.get(this.$window.baseUrl + '/categories').done(function(json) {
                 json = json || []
+                // Reset the old values
+                $this.uncatRecipes = 0
+                $this.categories = []
                 for (let i=0; i<json.length; i++) {
                     if (json[i].name === '*') {
                         $this.uncatRecipes = parseInt(json[i].recipe_count)
@@ -273,6 +276,7 @@ export default {
                 deferred.resolve()
                 $this.scanningLibrary = false
                 console.log("Library reindexing complete")
+                $this.getCategories()
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 deferred.reject(new Error(jqXHR.responseText))
                 $this.scanningLibrary = false

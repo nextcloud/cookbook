@@ -74,43 +74,68 @@ export default {
             tools: [],
         }
     },
+    methods: {
+        setup: function() {
+            if (!this.$store.state.recipe) {
+                // Make the control row show that a recipe is loading
+                this.$store.dispatch('setLoadingRecipe', { recipe: -1 })
+            }
+            let $this = this
+            $.ajax({
+                url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
+                method: 'GET',
+                data: null,
+            }).done(function (recipe) {
+                // Store recipe data in vuex
+                $this.$store.dispatch('setRecipe', { recipe: recipe })
+                if ($this.$store.state.recipe.recipeIngredient) {
+                    $this.ingredients = $this.$store.state.recipe.recipeIngredient
+                }
+                if ($this.$store.state.recipe.recipeInstructions) {
+                    $this.instructions = $this.$store.state.recipe.recipeInstructions
+                }
+                if ($this.$store.state.recipe.cookTime) {
+                    let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
+                    $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
+                }
+                if ($this.$store.state.recipe.prepTime) {
+                    let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
+                    $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
+                }
+                if ($this.$store.state.recipe.totalTime) {
+                    let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
+                    $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
+                }
+                if ($this.$store.state.recipe.tool) {
+                    $this.tools = $this.$store.state.recipe.tool
+                }
+                // Always set the active page last!
+                $this.$store.dispatch('setPage', { page: 'recipe' })
+            }).fail(function(e) {
+                if ($this.$store.state.loadingRecipe === -1) {
+                    // Reset loading recipe
+                    $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
+                }
+                $this.$store.dispatch('setPage', { page: 'recipe' })
+                alert($this.$t('Loading recipe failed'))
+            })
+        }
+    },
     mounted () {
-        let $this = this
-        $.ajax({
-            url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
-            method: 'GET',
-            data: null,
-        }).done(function (recipe) {
-            //console.log(recipe) // Testing
-            // Store recipe data in vuex
-            console.log(recipe)
-            $this.$store.dispatch('setRecipe', { recipe: recipe })
-            if ($this.$store.state.recipe.recipeIngredient) {
-                $this.ingredients = $this.$store.state.recipe.recipeIngredient
-            }
-            if ($this.$store.state.recipe.recipeInstructions) {
-                $this.instructions = $this.$store.state.recipe.recipeInstructions
-            }
-            if ($this.$store.state.recipe.cookTime) {
-                let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
-                $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
-            }
-            if ($this.$store.state.recipe.prepTime) {
-                let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
-                $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
-            }
-            if ($this.$store.state.recipe.totalTime) {
-                let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
-                $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
-            }
-            if ($this.$store.state.recipe.tool) {
-                $this.tools = $this.$store.state.recipe.tool
-            }
-            // Always set the active page last!
-            $this.$store.dispatch('setPage', { page: 'recipe' })
-        }).fail(function(e) {
-            alert($this.$t('Loading recipe failed'))
-        })
+        this.setup()
+    },
+    /**
+     * This is one tricky feature of Vue router. If different paths lead to
+     * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
+     * the view may not automatically reload. So we have to force it.
+     * This can also be used to confirm that the user wants to leave the page
+     * if there are unsaved changes.
+     */
+    beforeRouteUpdate (to, from, next) {
+        // Move to next route as expected
+        next()
+        // Reload view
+        this.setup()
     },
 
 }

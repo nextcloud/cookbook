@@ -1,7 +1,7 @@
 <template>
     <ul>
-        <li v-for="result in results" :key="result.id">
-            <router-link :to="'/recipe/'+result.id">
+        <li v-for="result in results" :key="result.recipe_id">
+            <router-link :to="'/recipe/'+result.recipe_id">
                 <img v-if="result.imageUrl" :src="result.imageUrl">
                 <span>{{ result.name }}</span>
             </router-link>
@@ -19,22 +19,43 @@ export default {
         }
     },
     methods: {
+        setup: function() {
+            if (this.query === 'name') {
+                // Search by name
+                console.log("Recipe name search for "+this.$route.params.value)
+            }
+            if (this.query === 'tag') {
+                // Search by tag
+                console.log("Tag search for "+this.$route.params.value)
+            }
+            if (this.query === 'cat') {
+                // Search by category
+                console.log("Category search for "+this.$route.params.value)
+                let $this = this
+                let cat = this.$route.params.value
+                $.get(this.$window.baseUrl + '/api/categories/'+cat).done(function(json) {
+                    $this.results = json
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    $this.results = []
+                    alert($this.$t('Failed to load category '+cat+' recipes'))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
+            } else {
+                // Something else?
+            }
+            this.$store.dispatch('setPage', { page: 'search' })
+        },
     },
     mounted () {
-        if (this.query === 'name') {
-            // Search by name
-            console.log("Recipe name search for "+this.$route.params.value)
-        }
-        if (this.query === 'tag') {
-            // Search by tag
-            console.log("Tag search for "+this.$route.params.value)
-        }
-        if (this.query === 'cat') {
-            // Search by category
-            console.log("Category search for "+this.$route.params.value)
-        } else {
-            // Something else?
-        }
+        this.setup()
+    },
+    beforeRouteUpdate (to, from, next) {
+        // Move to next route as expected
+        next()
+        // Reload view
+        this.setup()
     },
 }
 </script>

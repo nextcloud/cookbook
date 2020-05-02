@@ -13,15 +13,13 @@
             <Breadcrumb v-if="isSearch" :title="searchTitle" />
             <Breadcrumb v-if="isSearch" class="active" :title="$route.params.value" />
             <!-- RECIPE PAGES -->
-            <!-- Create new recipe -->
-            <Breadcrumb v-if="isCreate" class="active" :title="$t('New recipe')" />
-            <Breadcrumb v-if="isCreate" class="no-arrow" title="">
-                <ActionButton icon="icon-checkmark" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
-            </Breadcrumb>
             <!-- Edit recipe -->
-            <Breadcrumb v-if="isEdit" class="active" :title="$t('Edit recipe')" />
-            <Breadcrumb v-if="isEdit" class="no-arrow" title="">
-                <ActionButton icon="icon-checkmark" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
+            <Breadcrumb v-if="isEdit" :title="$t('Edit recipe')" />
+            <Breadcrumb v-if="isEdit" class="active" :title="$store.state.recipe.name" />
+            <!-- Create new recipe -->
+            <Breadcrumb v-else-if="isCreate" class="active" :title="$t('New recipe')" />
+            <Breadcrumb v-if="isEdit || isCreate" class="no-arrow" title="">
+                <ActionButton :icon="$store.state.savingRecipe ? 'icon-loading-small' : 'icon-checkmark'" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
             </Breadcrumb>
             <!-- View recipe -->
             <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :to="'/recipe/'+$store.state.recipe.id" />
@@ -34,8 +32,12 @@
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
                 <ActionButton icon="icon-delete" class="action-button" :ariaLabel="$t('Delete recipe')" @click="deleteRecipe()" />
             </Breadcrumb>
+            <!-- Is the page loading? -->
+            <Breadcrumb v-else-if="isLoading" class="active no-arrow" :title="$t('Page is loading')">
+                <ActionButton icon="icon-loading-small" :ariaLabel="$t('Loading...')" />
+            </Breadcrumb>
             <!-- No recipe found -->
-            <Breadcrumb v-if="isNotFound" class="active" :title="$t('Recipe not found')" />
+            <Breadcrumb v-else-if="isNotFound" class="active" :title="$t('Recipe not found')" />
         </Breadcrumbs>
     </div>
 
@@ -70,6 +72,12 @@ export default {
         },
         isIndex () {
             if (this.$store.state.page === 'index') {
+                return true
+            }
+        },
+        isLoading () {
+            //  A recipe is in the process of loading
+            if (this.$store.state.page === null) {
                 return true
             }
         },
@@ -128,7 +136,12 @@ export default {
         printRecipe: function() {
             window.print()
         },
-    }
+        saveChanges: function() {
+            this.$root.$emit('saveRecipe')
+        },
+    },
+    mounted () {
+    },
 }
 
 </script>
