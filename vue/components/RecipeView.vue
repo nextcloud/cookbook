@@ -83,12 +83,13 @@ export default {
         }).done(function (recipe) {
             //console.log(recipe) // Testing
             // Store recipe data in vuex
+            console.log(recipe)
             $this.$store.dispatch('setRecipe', { recipe: recipe })
-            if ($this.$store.state.recipe.ingredients) {
-                $this.ingredients = $this.$store.state.recipe.ingredients
+            if ($this.$store.state.recipe.recipeIngredient) {
+                $this.ingredients = $this.$store.state.recipe.recipeIngredient
             }
-            if ($this.$store.state.recipe.instructions) {
-                $this.instructions = $this.$store.state.recipe.instructions
+            if ($this.$store.state.recipe.recipeInstructions) {
+                $this.instructions = $this.$store.state.recipe.recipeInstructions
             }
             if ($this.$store.state.recipe.cookTime) {
                 let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
@@ -102,8 +103,8 @@ export default {
                 let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
                 $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
             }
-            if ($this.$store.state.recipe.tools) {
-                $this.tools = $this.$store.state.recipe.tools
+            if ($this.$store.state.recipe.tool) {
+                $this.tools = $this.$store.state.recipe.tool
             }
             // Always set the active page last!
             $this.$store.dispatch('setPage', { page: 'recipe' })

@@ -40,7 +40,13 @@
                 <fieldset>
                     <ul>
                         <li>
-                            <button class="button icon-history" id="reindex-recipes">{{ $t('Rescan library') }}</button>
+                            <ActionButton
+                                :ariaLabel="$t('Rescan library')"
+                                class="button"
+                                :icon="scanningLibrary ? 'icon-loading-small' : 'icon-history'"
+                                @click="reindex()"
+                                :title="$t('Rescan library')"
+                            />
                         </li>
                         <li>
                             <label class="settings-input">{{ $t('Recipe folder') }}</label>
@@ -70,6 +76,7 @@
 
 <script>
 
+import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
 import AppNavigationCaption from '@nextcloud/vue/dist/Components/AppNavigationCaption'
@@ -82,6 +89,7 @@ import AppNavigationSpacer from '@nextcloud/vue/dist/Components/AppNavigationSpa
 export default {
     name: 'AppNavi',
     components: {
+        ActionButton,
         ActionInput,
         AppNavigation,
         AppNavigationCaption,
@@ -97,6 +105,7 @@ export default {
             downloading: false,
             printImage: false,
             recipeFolder: "",
+            scanningLibrary: false,
             uncatRecipes: 0,
             // By setting the reset value initially to true, it will skip one watch event
             // (the one when config is loaded at page load)
@@ -250,6 +259,11 @@ export default {
          * Reindex all recipes
          */
         reindex: function () {
+            if (this.scanningLibrary) {
+                // No repeat clicks until we're done
+                return
+            }
+            this.scanningLibrary = true
             var deferred = $.Deferred()
             var $this = this
             $.ajax({
@@ -257,8 +271,12 @@ export default {
                 method: 'POST'
             }).done(function () {
                 deferred.resolve()
+                $this.scanningLibrary = false
+                console.log("Library reindexing complete")
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 deferred.reject(new Error(jqXHR.responseText))
+                $this.scanningLibrary = false
+                console.log("Library reindexing failed!")
             })
             return deferred.promise()
         },
@@ -280,12 +298,9 @@ export default {
 <style scoped>
 
 #app-settings .button {
-    padding: 6px 12px;
-    padding-left: 12px;
-    padding-left: 34px;
-    margin: 0 0 1em 0;
+    padding: 0;
+    height: 44px;
     border-radius: var(--border-radius);
-    background-position: left 9px center;
     z-index: 2;
 }
 

@@ -10,9 +10,9 @@
         <EditInputField :fieldName="'category'" :fieldType="'text'" :fieldLabel="$t('Category')" />
         <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="$t('Keywords (comma separated)')" />
         <EditInputField :fieldName="'servings'" :fieldType="'number'" :fieldLabel="$t('Servings')" />
-        <EditInputGroup :fieldName="'tools'" :fieldType="'text'" :fieldLabel="$t('Tools')" />
-        <EditInputGroup :fieldName="'ingredients'" :fieldType="'text'" :fieldLabel="$t('Ingredients')" />
-        <EditInputGroup :fieldName="'instructions'" :fieldType="'textarea'" :fieldLabel="$t('Instructions')" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="$t('Tools')" />
+        <EditInputGroup :fieldName="'recipeIngredients'" :fieldType="'text'" :fieldLabel="$t('Ingredients')" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="$t('Instructions')" />
         <button @click="test()">Test</button>
     </div>
 </template>
@@ -47,9 +47,9 @@ export default {
                 category: '',
                 keywords: '',
                 servings: '',
-                tools: [],
-                ingredients: [],
-                instructions: [],
+                tool: [],
+                recipeIngredient: [],
+                recipeInstructions: [],
             },
             // This will hold the above configuration after recipe is loaded, so we don't have to
             // keep it up to date in multiple places if it changes later
