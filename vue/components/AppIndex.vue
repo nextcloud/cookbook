@@ -1,7 +1,7 @@
 <template>
     <ul>
-        <li v-for="recipe in recipes" :key="recipe.id">
-            <router-link :to="'/recipe/'+recipe.id">
+        <li v-for="recipe in recipes" :key="recipe.recipe_id">
+            <router-link :to="'/recipe/'+recipe.recipe_id">
                 <img v-if="recipe.imageUrl" :src="recipe.imageUrl">
                 <span>{{ recipe.name }}</span>
             </router-link>
@@ -17,20 +17,28 @@ export default {
             recipes: []
         }
     },
+    methods: {
+        /**
+         * Load all recipes from the database
+         */
+        loadAll: function () {
+            var deferred = $.Deferred()
+            var $this = this
+            $.get(this.$window.baseUrl + '/api/recipes').done(function (recipes) {
+                $this.recipes = recipes
+                deferred.resolve()
+                // Always set page name last
+                $this.$store.dispatch('setPage', { page: 'index' })
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                deferred.reject(new Error(jqXHR.responseText))
+                // Always set page name last
+                $this.$store.dispatch('setPage', { page: 'index' })
+            })
+            return deferred.promise()
+        },
+    },
     mounted () {
-        this.recipes = [
-            { id: 1, name: "Test recipe 1", iamgeUrl: false },
-            { id: 2, name: "Test recipe 2", iamgeUrl: false },
-            { id: 3, name: "Test recipe 3", iamgeUrl: false },
-            { id: 4, name: "Test recipe 4", iamgeUrl: false },
-            { id: 5, name: "Test recipe 5", iamgeUrl: false },
-            { id: 6, name: "Test recipe 6", iamgeUrl: false },
-            { id: 7, name: "Test recipe 7", iamgeUrl: false },
-            { id: 8, name: "Test recipe 8", iamgeUrl: false },
-            { id: 9, name: "Test recipe 9", iamgeUrl: false },
-        ]
-        // Set page last!
-        this.$store.dispatch('setPage', { page: 'index' })
+        this.loadAll()
     },
 }
 </script>

@@ -75,8 +75,6 @@ export default {
         }
     },
     mounted () {
-        // Have to use a gimmic to get the recipe data at this point
-        // Store recipe data
         let $this = this
         $.ajax({
             url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
@@ -84,6 +82,7 @@ export default {
             data: null,
         }).done(function (recipe) {
             //console.log(recipe) // Testing
+            // Store recipe data in vuex
             $this.$store.dispatch('setRecipe', { recipe: recipe })
             if ($this.$store.state.recipe.ingredients) {
                 $this.ingredients = $this.$store.state.recipe.ingredients
@@ -109,7 +108,7 @@ export default {
             // Always set the active page last!
             $this.$store.dispatch('setPage', { page: 'recipe' })
         }).fail(function(e) {
-            alert($this.$t('Recipe was not found'))
+            alert($this.$t('Loading recipe failed'))
         })
     },
 

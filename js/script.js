@@ -32,7 +32,6 @@ Cookbook.prototype = {
 
     /**
      * Updates a recipe with form data
-     */
     update: function(form) {
 		var action = form.getAttribute('action');
 		var url = action === '#' ? location.hash.substr(1) : action;
@@ -51,6 +50,7 @@ Cookbook.prototype = {
 
         return deferred.promise();
     },
+     */
 
     /**
      * Loads a recipe by id
@@ -539,7 +539,6 @@ var Content = function (cookbook) {
 
     /**
      * Event: Update recipe
-     */
     self.onUpdateRecipe = function(e) {
         e.preventDefault();
 
@@ -556,6 +555,7 @@ var Content = function (cookbook) {
         });
 		return false;
     };
+     */
 };
 
 /**

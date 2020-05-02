@@ -18,6 +18,8 @@ export default {
             results: [],
         }
     },
+    methods: {
+    },
     mounted () {
         if (this.query === 'name') {
             // Search by name
@@ -30,15 +32,9 @@ export default {
         if (this.query === 'cat') {
             // Search by category
             console.log("Category search for "+this.$route.params.value)
+        } else {
+            // Something else?
         }
-        // For testing
-        this.results = [
-            { id: 1, name: "Results 1" },
-            { id: 2, name: "Results 2" },
-            { id: 3, name: "Results 3" },
-        ]
-        // Always set page name last
-        this.$store.dispatch('setPage', { page: 'search' })
     },
 }
 </script>

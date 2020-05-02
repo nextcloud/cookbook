@@ -1,6 +1,6 @@
 <template>
-    <header v-if="$store.state.recipe.image" :class="{ 'collapsed': collapsed, 'printable': $store.state.recipe.print_image }">
-        <img :src="$store.state.recipe.image_url" @click="toggleCollapsed()">
+    <header v-if="$store.state.recipe.image" :class="{ 'collapsed': collapsed, 'printable': $store.state.recipe.printImage }">
+        <img :src="$store.state.recipe.imageUrl" @click="toggleCollapsed()">
     </header>
 </template>
 
@@ -17,6 +17,10 @@ export default {
             this.collapsed = !this.collapsed
         },
     },
+    mounted () {
+
+            console.log(this.$store.state.recipe)
+    }
 }
 </script>
 

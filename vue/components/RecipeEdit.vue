@@ -34,8 +34,9 @@ export default {
     props: ['id'],
     data () {
         return {
-            // Initialize the recipe object, otherwise v-models in child components may not work
+            // Initialize the recipe schema, otherwise v-models in child components may not work
             recipe: {
+                id: 0,
                 name: null,
                 description: '',
                 url: '',
@@ -50,7 +51,31 @@ export default {
                 ingredients: [],
                 instructions: [],
             },
+            // This will hold the above configuration after recipe is loaded, so we don't have to
+            // keep it up to date in multiple places if it changes later
+            recipeInit: null,
+            // These are helper variables
+            prepTime: [0, 0],
+            cookTime: [0, 0],
+            totalTime: [0, 0],
         }
+    },
+    watch: {
+        prepTime () {
+            let hours = this.prepTime[0].toString().padStart(2, '0')
+            let mins = this.prepTime[1].toString().padStart(2, '0')
+            this.recipe.prepTime = 'PT' + hours + 'H' + mins + 'M'
+        },
+        cookTime () {
+            let hours = this.cookTime[0].toString().padStart(2, '0')
+            let mins = this.cookTime[1].toString().padStart(2, '0')
+            this.recipe.cookTime = 'PT' + hours + 'H' + mins + 'M'
+        },
+        totalTime () {
+            let hours = this.totalTime[0].toString().padStart(2, '0')
+            let mins = this.totalTime[1].toString().padStart(2, '0')
+            this.recipe.totalTime = 'PT' + hours + 'H' + mins + 'M'
+        },
     },
     methods: {
         addEntry: function(field) {
@@ -79,29 +104,91 @@ export default {
             let entry = this.recipe[field].splice(index, 1)
             this.recipe[field].splice(index - 1, 0, entry)
         },
+        setup: function() {
+            // Store the initial recipe configuration for possible later use
+            if (this.recipeInit === null) {
+                this.recipeInit = this.recipe
+            }
+            if (this.$route.params.id) {
+                let $this = this
+                $.ajax({
+                    url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
+                    method: 'GET',
+                    data: null,
+                }).done(function (recipe) {
+                    //console.log(recipe) // Testing
+                    // Parse time values
+                    let timeComps = recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
+                    if (timeComps) {
+                        $this.prepTime = [timeComps[1], timeComps[2]]
+                    }
+                    timeComps = recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
+                    if (timeComps) {
+                        $this.cookTime = [timeComps[1], timeComps[2]]
+                    }
+                    timeComps = recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
+                    if (timeComps) {
+                        $this.totalTime = [timeComps[1], timeComps[2]]
+                    }
+                    $this.recipe = recipe
+                    // Always set the active page last!
+                    $this.$store.dispatch('setPage', 'edit')
+                }).fail(function(e) {
+                    alert($this.$t('Loading recipe failed'))
+                    $this.$store.dispatch('setPage', 'edit')
+                })
+            } else {
+                this.recipe = this.recipeInit
+                this.prepTime = [0, 0]
+                this.cookTime = [0, 0]
+                this.totalTime = [0, 0]
+                this.$store.dispatch('setPage', 'create')
+            }
+        },
         test: function() {
             let $this = this
-            $.ajax({
-                url: this.$window.baseUrl + '/api/recipes',
-                method: 'POST',
-                data: this.recipe,
-            }).done(function (recipe) {
-                console.log(recipe)
-                $this.$window.goTo('/recipe/'+recipe.id)
-            }).fail(function(e) {
-                alert($this.$t('Recipe could not be saved'))
-            })
+            if (this.recipe.id) {
+                // Update existing recipe
+                $.ajax({
+                    url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
+                    method: 'PUT',
+                    data: this.recipe,
+                }).done(function (recipe) {
+                    $this.$window.goTo('/recipe/'+recipe)
+                }).fail(function(e) {
+                    alert($this.$t('Recipe could not be saved'))
+                })
+            } else {
+                // Create a new recipe
+                $.ajax({
+                    url: this.$window.baseUrl + '/api/recipes',
+                    method: 'POST',
+                    data: this.recipe,
+                }).done(function (recipe) {
+                    $this.$window.goTo('/recipe/'+recipe)
+                }).fail(function(e) {
+                    alert($this.$t('Recipe could not be saved'))
+                })
+            }
         }
     },
     mounted () {
-        // Testing
-        //this.recipe =  {}
-        if (this.id) {
-            this.$store.dispatch('setPage', 'edit')
-        } else {
-            this.$store.dispatch('setPage', 'create')
-        }
+        this.setup()
     },
+    /**
+     * This is one tricky feature of Vue router. If different paths lead to
+     * the same component (such as '/recipe/create' and '/recipe/xxx/edit)',
+     * the view may not automatically reload. So we have to force it.
+     * This can also be used to confirm that the user wants to leave the page
+     * if there are unsaved changes.
+     */
+    beforeRouteLeave (to, from, next) {
+        // Move to next route as expected
+        next()
+        // Reload view
+        this.setup()
+    },
+
 }
 </script>
 

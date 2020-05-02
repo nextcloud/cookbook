@@ -29,8 +29,8 @@ const routes = [
     { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
     { path: '/tag/:value', name: 'search-tag', component: Search, props: { query: 'tag' } },
     // Recipe routes
-    { path: '/recipe/edit/:id', name: 'recipe-edit', component: RecipeEdit },
     { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
+    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
     { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
     // Index is the last defined route
     { path: '/', name:'index', component: Index },

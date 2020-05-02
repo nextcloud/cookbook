@@ -21,15 +21,16 @@
                 icon="icon-category-files"
                 :allowCollapse="true"
                 :to="'/category/'+cat.name"
+                @update:open="categoryOpen(idx)"
             >
-                <AppNavigationCounter slot="counter">{{ cat.recipes.length }}</AppNavigationCounter>
+                <AppNavigationCounter slot="counter">{{ cat.recipeCount }}</AppNavigationCounter>
                 <template>
                     <AppNavigationItem class="recipe" v-for="(rec,idy) in cat.recipes"
                         :key="idx+'-'+idy"
                         :title="rec.name"
-                        :icon="$store.state.loadingRecipe===rec.id ? 'icon-loading-small' : null"
-                        @click="setLoadingRecipe(rec.id)"
-                        :to="'/recipe/'+rec.id"
+                        :icon="$store.state.loadingRecipe===rec.recipe_id || !rec.recipe_id ? 'icon-loading-small' : null"
+                        @click="setLoadingRecipe(rec.recipe_id)"
+                        :to="'/recipe/'+rec.recipe_id"
                     />
                 </template>
             </AppNavigationItem>
@@ -96,7 +97,7 @@ export default {
             downloading: false,
             printImage: false,
             recipeFolder: "",
-            recipes: [],
+            uncatRecipes: 0,
             // By setting the reset value initially to true, it will skip one watch event
             // (the one when config is loaded at page load)
             resetInterval: true,
@@ -106,11 +107,11 @@ export default {
     },
     computed: {
         totalRecipeCount () {
-            let recCount = 0
+            let total = this.uncatRecipes
             for (let i=0; i<this.categories.length; i++) {
-                recCount += this.categories[i].recipes.length
+                total += this.categories[i].recipeCount
             }
-            return recCount
+            return total
         }
     },
     watch: {
@@ -154,11 +155,26 @@ export default {
         },
     },
     methods: {
+        categoryOpen: function(idx) {
+            if (!this.categories[idx].recipes.length || this.categories[idx].recipes[0].id) {
+                // Recipes have already been loaded
+                return
+            }
+            let cat = this.categories[idx]
+            $.get(this.$window.baseUrl + '/api/categories/'+cat.name).done(function(json) {
+                cat.recipes = json
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                cat.recipes = []
+                alert($this.$t('Failed to load category '+cat.name+' recipes'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
+        },
         /**
          * Download and import the recipe at given URL
          */
         downloadRecipe: function(e) {
-            console.log(e.target[1].value)
             let deferred = $.Deferred()
             let $this = this
             this.downloading = true
@@ -177,18 +193,30 @@ export default {
             return deferred.promise()
         },
         /**
-         * Load all recipes from the database
+         * Fetch and display recipe categories
          */
-        loadAll: function () {
-            var deferred = $.Deferred()
-            var $this = this
-            $.get(this.$window.baseUrl + '/recipes').done(function (recipes) {
-                $this.recipes = recipes
-                deferred.resolve()
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                deferred.reject(new Error(jqXHR.responseText))
+        getCategories: function() {
+            let $this = this
+            $.get(this.$window.baseUrl + '/categories').done(function(json) {
+                json = json || []
+                for (let i=0; i<json.length; i++) {
+                    if (json[i].name === '*') {
+                        $this.uncatRecipes = parseInt(json[i].recipe_count)
+                    } else {
+                        $this.categories.push({
+                            name: json[i].name,
+                            recipeCount: parseInt(json[i].recipe_count),
+                            recipes: [{ id: 0, name: $this.$t('Loading category recipes...') }],
+                        })
+                    }
+                }
             })
-            return deferred.promise()
+            .fail(function(e) {
+                alert($this.$t('Failed to fetch categories'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
         },
         /**
          * Select a recipe folder using the Nextcloud file picker
@@ -243,30 +271,7 @@ export default {
     },
     mounted () {
         // Testing
-        this.categories = [
-            {
-                name: 'Test category 1',
-                recipes: [
-                    { id: 1, name: 'Test recipe 1' },
-                    { id: 2, name: 'Test recipe 2' },
-                ]
-            },
-            {
-                name: 'Test category 2',
-                recipes: [
-                    { id: 3, name: 'Test recipe 3' },
-                    { id: 4, name: 'Test recipe 4' },
-                    { id: 5, name: 'Test recipe 5' },
-                    { id: 6, name: 'Test recipe 6' },
-                ]
-            },
-            {
-                name: 'Test category 3',
-                recipes: [
-                    { id: 7, name: 'Test recipe 7' },
-                ]
-            },
-        ]
+        this.getCategories()
     },
 }
 
