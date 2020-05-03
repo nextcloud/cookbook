@@ -17,6 +17,7 @@
             </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
+                :ref="'app-navi-cat-'+idx"
                 :title="cat.name"
                 icon="icon-category-files"
                 :allowCollapse="true"
@@ -218,6 +219,16 @@ export default {
                             recipeCount: parseInt(json[i].recipe_count),
                             recipes: [{ id: 0, name: $this.t('Loading category recipes...') }],
                         })
+                    }
+                }
+                for (let i=0; i<$this.categories.length; i++) {
+                    // Reload recipes in open categories
+                    if (!$this.$refs['app-navi-cat-'+i]) {
+                        continue
+                    }
+                    if ($this.$refs['app-navi-cat-'+i][0].opened) {
+                        console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
+                        $this.categoryOpen(i)
                     }
                 }
             })
