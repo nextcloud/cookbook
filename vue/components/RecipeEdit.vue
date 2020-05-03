@@ -3,7 +3,7 @@
         <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('Name')" />
         <EditInputField :fieldName="'description'" :fieldType="'text'" :fieldLabel="t('Description')" />
         <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('URL')" />
-        <EditImageField :fieldName="'image'" :fieldLabel="t('Name')" />
+        <EditImageField :fieldName="'image'" :fieldLabel="('Image')" />
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('Total time')" />
@@ -263,7 +263,7 @@ export default {
 
 .wrapper {
     width: 100%;
-    padding: 0.5rem 1rem 1rem;
+    padding: 1rem;
 }
 
 </style>
