@@ -148,7 +148,7 @@ class MainController extends Controller
         try {
 			$recipes = $this->service->getRecipesByCategory($category);
 			foreach ($recipes as $i => $recipe) {
-                $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
+                $recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute(
                     'cookbook.recipe.image',
                     [
                         'id' => $recipe['recipe_id'],

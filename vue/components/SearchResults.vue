@@ -33,7 +33,7 @@ export default {
                 console.log("Category search for "+this.$route.params.value)
                 let $this = this
                 let cat = this.$route.params.value
-                $.get(this.$window.baseUrl + '/api/categories/'+cat).done(function(json) {
+                $.get(this.$window.baseUrl + '/category/'+cat).done(function(json) {
                     $this.results = json
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     $this.results = []

@@ -16,6 +16,9 @@
     opacity: 1 !important;
     box-shadow: inset 4px 0 var(--color-primary) !important;
 }
+.router-link-exact-active li.recipe {
+    box-shadow: inset 4px 0 rgba(255, 255, 255, 0.5) !important;
+}
 
 
  /**
