@@ -34,6 +34,8 @@ export default new Vuex.Store({
         // User loads the app at one of these locations and has to wait for an
         // asynchronous recipe loading.
         loadingRecipe: 0,
+        // This is used if when a recipe is reloaded in edit or view
+        reloadingRecipe: 0,
         // A recipe save is in progress
         savingRecipe: false,
     },
@@ -47,8 +49,12 @@ export default new Vuex.Store({
         },
         setRecipe(s, { r }) {
             s.recipe = r
-            // Setting recipe also means that loading the recipe has finished
+            // Setting recipe also means that loading/reloading the recipe has finished
             s.loadingRecipe = 0
+            s.reloadingRecipe = 0
+        },
+        setReloadingRecipe(s, { r }) {
+            s.reloadingRecipe = r
         },
         setSavingRecipe(s, { b }) {
             s.savingRecipe = b
@@ -60,13 +66,16 @@ export default new Vuex.Store({
 
     actions: {
         setLoadingRecipe(c, { recipe }) {
-            c.commit('setLoadingRecipe', { r: recipe })
+            c.commit('setLoadingRecipe', { r: parseInt(recipe) })
         },
         setPage(c, { page }) {
             c.commit('setPage', { p: page })
         },
         setRecipe(c, { recipe }) {
             c.commit('setRecipe', { r: recipe })
+        },
+        setReloadingRecipe(c, { recipe }) {
+            c.commit('setReloadingRecipe', { r: parseInt(recipe) })
         },
         setSavingRecipe(c, { saving }) {
             c.commit('setSavingRecipe', { b: saving })

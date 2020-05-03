@@ -15,16 +15,40 @@
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
             <Breadcrumb v-if="isEdit" class="not-link" :title="$t('Edit recipe')" :disableDrop="true" />
-            <Breadcrumb v-if="isEdit" class="active" :title="$store.state.recipe.name" :disableDrop="true" />
+            <Breadcrumb v-if="isEdit" class="active" :title="$store.state.recipe.name" :disableDrop="true">
+                <ActionButton
+                    :icon="$store.state.reloadingRecipe===parseInt($route.params.id) ? 'icon-loading-small' : 'icon-history'"
+                    class="action-button"
+                    :ariaLabel="$t('Reload recipe')"
+                    @click="reloadRecipe()"
+                />
+            </Breadcrumb>
             <!-- Create new recipe -->
             <Breadcrumb v-else-if="isCreate" class="active" :title="$t('New recipe')" :disableDrop="true" />
             <Breadcrumb v-if="isEdit || isCreate" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton :icon="$store.state.savingRecipe ? 'icon-loading-small' : 'icon-checkmark'" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
+                <ActionButton
+                    :icon="$store.state.savingRecipe ? 'icon-loading-small' : 'icon-checkmark'"
+                    class="action-button"
+                    :ariaLabel="$t('Save changes')"
+                    @click="saveChanges()"
+                />
             </Breadcrumb>
             <!-- View recipe -->
-            <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :disableDrop="true" />
+            <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :disableDrop="true">
+                <ActionButton
+                    :icon="$store.state.reloadingRecipe===parseInt($route.params.id) ? 'icon-loading-small' : 'icon-history'"
+                    class="action-button"
+                    :ariaLabel="$t('Reload recipe')"
+                    @click="reloadRecipe()"
+                />
+            </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-rename" class="action-button" :ariaLabel="$t('Edit recipe')" @click="$window.goTo('/recipe/'+$store.state.recipe.id+'/edit')" />
+                <ActionButton
+                    icon="icon-rename"
+                    class="action-button"
+                    :ariaLabel="$t('Edit recipe')"
+                    @click="$window.goTo('/recipe/'+$store.state.recipe.id+'/edit')"
+                />
             </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton icon="icon-category-office" class="action-button" :ariaLabel="$t('Print recipe')" @click="printRecipe()" />
@@ -151,6 +175,9 @@ export default {
         },
         printRecipe: function() {
             window.print()
+        },
+        reloadRecipe: function() {
+            this.$root.$emit('reloadRecipe')
         },
         saveChanges: function() {
             this.$root.$emit('saveRecipe')

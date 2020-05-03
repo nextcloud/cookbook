@@ -79,6 +79,11 @@ export default {
             if (!this.$store.state.recipe) {
                 // Make the control row show that a recipe is loading
                 this.$store.dispatch('setLoadingRecipe', { recipe: -1 })
+            } else if (this.$store.state.recipe.id === parseInt(this.$route.params.id)) {
+                // Make the control row show that the recipe is reloading
+                this.$store.dispatch('setReloadingRecipe', {
+                    recipe: this.$route.params.id
+                })
             }
             let $this = this
             $.ajax({
@@ -112,9 +117,13 @@ export default {
                 // Always set the active page last!
                 $this.$store.dispatch('setPage', { page: 'recipe' })
             }).fail(function(e) {
-                if ($this.$store.state.loadingRecipe === -1) {
+                if ($this.$store.state.loadingRecipe) {
                     // Reset loading recipe
                     $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
+                }
+                if ($this.$store.state.reloadingRecipe) {
+                    // Reset reloading recipe
+                    $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
                 }
                 $this.$store.dispatch('setPage', { page: 'recipe' })
                 alert($this.$t('Loading recipe failed'))
@@ -123,6 +132,10 @@ export default {
     },
     mounted () {
         this.setup()
+        // Register data load method hook for access from the controls components
+        this.$root.$on('reloadRecipe', () => {
+            this.setup()
+        })
     },
     /**
      * This is one tricky feature of Vue router. If different paths lead to

@@ -66,6 +66,32 @@ import AppMain from './components/AppMain'
         // but not identical -> reload view
         return true
     }
+    // Check if the two urls point to the same item instance
+    window.isSameItemInstance = function(url1, url2) {
+        if (url1 === url2) {
+            return true // Obviously true if the routes are the same
+        }
+        let comps1 = url1.split('/')
+        let comps2 = url2.split('/')
+        if (comps1.length < 2 || comps2.length < 2) {
+            return false // Just a failsafe, this should never happen
+        }
+        // If the items are different, then the item instance cannot be
+        // the same either
+        if (comps1[1] !== comps2[1]) {
+            return false
+        }
+        if (comps1.length < 3 || comps2.length < 3) {
+            // ID is the third url component, so can't be the same instance if
+            // either of the urls have less than three components
+            return false
+        }
+        if (comps1[2] !== comps2[2]) {
+            // Different IDs, not same instance
+            return false
+        }
+        return true
+    }
     // A simple function to sanitize HTML tags, although Vue does pretty good
     //  with preventing malicious HTML from getting rendered by itself. This
     //  is more of a legacy from my previous projects, may be removed if you want.
