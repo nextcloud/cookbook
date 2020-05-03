@@ -29,9 +29,17 @@ const routes = [
     { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
     { path: '/tag/:value', name: 'search-tag', component: Search, props: { query: 'tag' } },
     // Recipe routes
-    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
-    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
+    // Vue router has a strange way of determining when it renders a component again and when not.
+    // In essence, when two routes point to the same component, it usually will not be re-rendered
+    // automatically. If the contents change (e.g. between /recipe/xxx and /recipe/yyy) this must
+    // be checked for and the component re-rendered manually. In order to avoid the need to write
+    // separate checks for different item types, all items MUST follow this route convention:
+    // - View: /{item}/:id
+    // - Edit: /{item}/:id/edit
+    // - Create: /{item}/create
     { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
+    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
+    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
     // Index is the last defined route
     { path: '/', name:'index', component: Index },
     // Anything not matched goes to NotFound

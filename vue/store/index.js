@@ -29,8 +29,12 @@ export default new Vuex.Store({
         // We'll save the recipe here, since the data is used by
         //  several independent components
         recipe: null,
-        // Loading and saving states to determine which loader icons to show
+        // Loading and saving states to determine which loader icons to show.
+        // State of -1 is reserved for recipe and edit views to be set when the
+        // User loads the app at one of these locations and has to wait for an
+        // asynchronous recipe loading.
         loadingRecipe: 0,
+        // A recipe save is in progress
         savingRecipe: false,
     },
 

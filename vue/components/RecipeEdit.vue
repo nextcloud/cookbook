@@ -194,22 +194,31 @@ export default {
     },
     /**
      * This is one tricky feature of Vue router. If different paths lead to
-     * the same component (such as '/recipe/create' and '/recipe/xxx/edit)',
-     * the view may not automatically reload. So we have to force it.
+     * the same component (such as '/recipe/create' and '/recipe/xxx/edit
+     * or /recipe/xxx/edit and /recipe/yyy/edit)', the view will not automatically
+     * reload. So we have to check for these conditions and reload manually.
      * This can also be used to confirm that the user wants to leave the page
      * if there are unsaved changes.
      */
     beforeRouteLeave (to, from, next) {
-        // Move to next route as expected
+        // beforeRouteLeave is called when the static route changes.
+        // We have to check if the target component stays the same and reload.
+        // However, we should not reload if the component changes; otherwise
+        // reloaded data may overwrite the data loaded at the target component
+        // which will at the very least result in incorrect breadcrumb path!
         next()
-        // Reload view
-        this.setup()
+        // Check if we should reload the component content
+        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+            this.setup()
+        }
     },
     beforeRouteUpdate (to, from, next) {
-        // Move to next route as expected
+        // beforeRouteUpdate is called when the static route stays the same
         next()
-        // Reload view
-        this.setup()
+        // Check if we should reload the component content
+        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+            this.setup()
+        }
     },
 
 }

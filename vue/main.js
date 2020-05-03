@@ -35,6 +35,37 @@ import AppMain from './components/AppMain'
     //  window object. You may or may not like this approach, we can discuss
     //  it later if needed.
     window.baseUrl = OC.generateUrl('apps/cookbook')
+    // Check if two routes point to the same component but have different content
+    window.shouldReloadContent = function(url1, url2) {
+        if (url1 === url2) {
+            return false // Obviously should not if both routes are the same
+        }
+        let comps1 = url1.split('/')
+        let comps2 = url2.split('/')
+        if (comps1.length < 2 || comps2.length < 2) {
+            return false // Just a failsafe, this should never happen
+        }
+        // The route structure is as follows:
+        // - /{item}/:id        View
+        // - /{item}/:id/edit   Edit
+        // - /{item}/create     Create
+        // If the items are different, then the router automatically handles
+        // component loading: do not manually reload
+        if (comps1[1] !== comps2[1]) {
+            return false
+        }
+        // If one of the routes is edit and the other is not
+        if (comps1.length !== comps2.length) {
+            // Only reload if changing from edit to create
+            if (comps1.pop() === 'create' || comps2.pop() === 'create') {
+                return true
+            }
+            return false
+        }
+        // Only option left is that both of the routes are edit or view,
+        // but not identical -> reload view
+        return true
+    }
     // A simple function to sanitize HTML tags, although Vue does pretty good
     //  with preventing malicious HTML from getting rendered by itself. This
     //  is more of a legacy from my previous projects, may be removed if you want.

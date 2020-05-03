@@ -3,41 +3,45 @@
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
-            <Breadcrumb :title="$t('Home')" :to="'/'" />
+            <Breadcrumb :title="$t('Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
-            <Breadcrumb v-if="isIndex" class="active" :title="$t('All recipes')"></Breadcrumb>
-            <Breadcrumb v-if="isIndex" class="no-arrow" title="">
+            <Breadcrumb v-if="isIndex" class="active" :title="$t('All recipes')" :disableDrop="true"></Breadcrumb>
+            <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton icon="icon-search" class="action-button" :ariaLabel="$t('Search')" @click="$window.goTo('/search')" />
             </Breadcrumb>
             <!-- SEARCH PAGE -->
-            <Breadcrumb v-if="isSearch" :title="searchTitle" />
-            <Breadcrumb v-if="isSearch" class="active" :title="$route.params.value" />
+            <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
+            <Breadcrumb v-if="isSearch" class="active" :title="$route.params.value" :disableDrop="true" />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
-            <Breadcrumb v-if="isEdit" :title="$t('Edit recipe')" />
-            <Breadcrumb v-if="isEdit" class="active" :title="$store.state.recipe.name" />
+            <Breadcrumb v-if="isEdit" class="not-link" :title="$t('Edit recipe')" :disableDrop="true" />
+            <Breadcrumb v-if="isEdit" class="active" :title="$store.state.recipe.name" :disableDrop="true" />
             <!-- Create new recipe -->
-            <Breadcrumb v-else-if="isCreate" class="active" :title="$t('New recipe')" />
-            <Breadcrumb v-if="isEdit || isCreate" class="no-arrow" title="">
+            <Breadcrumb v-else-if="isCreate" class="active" :title="$t('New recipe')" :disableDrop="true" />
+            <Breadcrumb v-if="isEdit || isCreate" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton :icon="$store.state.savingRecipe ? 'icon-loading-small' : 'icon-checkmark'" class="action-button" :ariaLabel="$t('Save changes')" @click="saveChanges()" />
             </Breadcrumb>
             <!-- View recipe -->
-            <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :to="'/recipe/'+$store.state.recipe.id" />
-            <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
+            <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :disableDrop="true" />
+            <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton icon="icon-rename" class="action-button" :ariaLabel="$t('Edit recipe')" @click="$window.goTo('/recipe/'+$store.state.recipe.id+'/edit')" />
             </Breadcrumb>
-            <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
+            <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton icon="icon-category-office" class="action-button" :ariaLabel="$t('Print recipe')" @click="printRecipe()" />
             </Breadcrumb>
-            <Breadcrumb v-if="isRecipe" class="no-arrow" title="">
+            <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton icon="icon-delete" class="action-button" :ariaLabel="$t('Delete recipe')" @click="deleteRecipe()" />
             </Breadcrumb>
-            <!-- Is the page loading? -->
-            <Breadcrumb v-else-if="isLoading" class="active no-arrow" :title="$t('Page is loading')">
+            <!-- Is the app loading? -->
+            <Breadcrumb v-if="isLoading" class="active no-arrow" :title="$t('App is loading')" :disableDrop="true">
+                <ActionButton icon="icon-loading-small" :ariaLabel="$t('Loading...')" />
+            </Breadcrumb>
+            <!-- Is a recipe loading? -->
+            <Breadcrumb v-else-if="isLoadingRecipe" class="active no-arrow" :title="$t('Loading recipe')" :disableDrop="true">
                 <ActionButton icon="icon-loading-small" :ariaLabel="$t('Loading...')" />
             </Breadcrumb>
             <!-- No recipe found -->
-            <Breadcrumb v-else-if="isNotFound" class="active" :title="$t('Recipe not found')" />
+            <Breadcrumb v-else-if="isNotFound" class="active" :title="$t('Recipe not found')" :disableDrop="true" />
         </Breadcrumbs>
     </div>
 
@@ -65,6 +69,9 @@ export default {
             }
         },
         isEdit () {
+            if (this.isLoadingRecipe) {
+                return false // Do not show both at the same time
+            }
             // Editing requires that a recipe was found
             if (this.$store.state.page === 'edit' && this.$store.state.recipe) {
                 return true
@@ -76,19 +83,28 @@ export default {
             }
         },
         isLoading () {
-            //  A recipe is in the process of loading
+            //  The page is being loaded
             if (this.$store.state.page === null) {
+                return true
+            }
+        },
+        isLoadingRecipe () {
+            //  A recipe is being loaded
+            if (this.$route.params.id && this.$store.state.loadingRecipe) {
                 return true
             }
         },
         isNotFound () {
             // Editing or viewing recipe was attempted, but no recipe was found
-            if ((this.$store.state.page === 'edit' || this.$store.state.page === 'recipe')
+            if (['edit', 'recipe'].indexOf(this.$store.state.page) !== -1
                 && !this.$store.state.recipe) {
                 return true
             }
         },
         isRecipe () {
+            if (this.isLoadingRecipe) {
+                return false // Do not show both at the same time
+            }
             // Viewing recipe requires that one was found
             if (this.$store.state.page === 'recipe' && this.$store.state.recipe) {
                 return true
@@ -154,6 +170,7 @@ export default {
 
 .active {
     font-weight: bold;
+    cursor: default !important;
 }
 
 .breadcrumbs {

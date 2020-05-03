@@ -20,10 +20,9 @@ export default {
         AppNavi,
     },
     watch: {
-        /*
+        /* This is left here as an example in case the routes need to be debugged again
         '$route' (to, from) {
-            // Reset page before each route update
-            this.$store.dispatch('setPage', { page: null })
+            console.log(this.$window.isSameBaseRoute(from.fullPath, to.fullPath))
         },
         */
     },
