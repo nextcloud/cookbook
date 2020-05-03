@@ -84,6 +84,9 @@ export default {
                 this.$store.dispatch('setReloadingRecipe', {
                     recipe: this.$route.params.id
                 })
+            } else {
+                // Make the control row show that a new recipe is loading
+                this.$store.dispatch('setLoadingRecipe', { recipe: this.$route.params.id })
             }
             let $this = this
             $.ajax({

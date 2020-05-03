@@ -9,7 +9,7 @@
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('Total time')" />
         <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('Category')" />
         <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="t('Keywords (comma separated)')" />
-        <EditInputField :fieldName="'servings'" :fieldType="'number'" :fieldLabel="t('Servings')" />
+        <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('Servings')" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('Tools')" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('Ingredients')" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('Instructions')" />
@@ -45,7 +45,7 @@ export default {
                 totalTime: '',
                 recipeCategory: '',
                 keywords: '',
-                servings: '',
+                recipeYield: '',
                 tool: [],
                 recipeIngredient: [],
                 recipeInstructions: [],

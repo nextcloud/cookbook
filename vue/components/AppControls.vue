@@ -11,7 +11,7 @@
             </Breadcrumb>
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
-            <Breadcrumb v-if="isSearch" class="active" :title="$route.params.value" :disableDrop="true" />
+            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value" :disableDrop="true" />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
             <Breadcrumb v-if="isEdit" class="not-link" :title="t('Edit recipe')" :disableDrop="true" />
@@ -102,6 +102,9 @@ export default {
             }
         },
         isIndex () {
+            if (this.isLoadingRecipe) {
+                return false // Do not show both at the same time
+            }
             if (this.$store.state.page === 'index') {
                 return true
             }
@@ -114,7 +117,7 @@ export default {
         },
         isLoadingRecipe () {
             //  A recipe is being loaded
-            if (this.$route.params.id && this.$store.state.loadingRecipe) {
+            if (this.$store.state.loadingRecipe) {
                 return true
             }
         },

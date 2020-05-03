@@ -28,8 +28,8 @@
                     <AppNavigationItem class="recipe" v-for="(rec,idy) in cat.recipes"
                         :key="idx+'-'+idy"
                         :title="rec.name"
-                        :icon="$store.state.loadingRecipe===rec.recipe_id || !rec.recipe_id ? 'icon-loading-small' : null"
-                        :to="isSameRecipe(rec.recipe_id) ? null : '/recipe/'+rec.recipe_id"
+                        :to="'/recipe/'+rec.recipe_id"
+                        :icon="$store.state.loadingRecipe===parseInt(rec.recipe_id) || !rec.recipe_id ? 'icon-loading-small' : null"
                     />
                 </template>
             </AppNavigationItem>
@@ -227,16 +227,6 @@ export default {
                     throw e
                 }
             })
-        },
-        /**
-         * Check that the recipe is not already open
-         */
-        isSameRecipe: function(rid) {
-            if (this.$store.state.recipe && this.$store.state.page === 'recipe'
-                && this.$store.state.recipe.id === rid) {
-                return true
-            }
-            return false
         },
         /**
          * Select a recipe folder using the Nextcloud file picker
