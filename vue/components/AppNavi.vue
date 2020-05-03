@@ -169,7 +169,7 @@ export default {
                 return
             }
             let cat = this.categories[idx]
-            $.get(this.$window.baseUrl + '/api/categories/'+cat.name).done(function(json) {
+            $.get(this.$window.baseUrl + '/category/'+cat.name).done(function(json) {
                 cat.recipes = json
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 cat.recipes = []
@@ -301,7 +301,12 @@ export default {
         },
     },
     mounted () {
-        // Testing
+        // Register a method hook for navigation refreshing
+        // This component should only load once, but better safe than sorry...
+        this.$root.$off('refreshNavigation')
+        this.$root.$on('refreshNavigation', () => {
+            this.getCategories()
+        })
         this.getCategories()
     },
 }

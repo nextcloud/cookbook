@@ -60,9 +60,14 @@ import AppMain from './components/AppMain'
                 return true
             }
             return false
+        } else if (comps1.pop() === 'create') {
+            // But, if we are moving from create to view, do not reload
+            // the create component
+            return false
         }
-        // Only option left is that both of the routes are edit or view,
-        // but not identical -> reload view
+        // Only options left are that both of the routes are edit or view,
+        // but not identical, or that we're moving from view to create
+        // -> reload view
         return true
     }
     // Check if the two urls point to the same item instance

@@ -136,6 +136,7 @@ export default {
     mounted () {
         this.setup()
         // Register data load method hook for access from the controls components
+        this.$root.$off('reloadRecipeView')
         this.$root.$on('reloadRecipeView', () => {
             this.setup()
         })

@@ -140,7 +140,9 @@ export default {
                     data: this.recipe,
                 }).done(function (recipe) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    $this.$window.goTo('/recipe/'+$this.recipe.id)
+                    $this.$window.goTo('/recipe/'+recipe)
+                    // Refresh navigation to display changes
+                    $this.$root.$emit('refreshNavigation')
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
                     alert($this.t('Recipe could not be saved'))
@@ -152,20 +154,20 @@ export default {
                     method: 'POST',
                     data: this.recipe,
                 }).done(function (recipe) {
+                    $this.$store.dispatch('setSavingRecipe', { saving: false })
                     $this.$window.goTo('/recipe/'+recipe)
+                    // Refresh navigation to display changes
+                    $this.$root.$emit('refreshNavigation')
                 }).fail(function(e) {
+                    $this.$store.dispatch('setSavingRecipe', { saving: false })
                     alert($this.t('Recipe could not be saved'))
                 })
             }
         },
         setup: function() {
-            // Load the recipe from store and make edits to a local copy first
-            this.recipe = { ...this.$store.state.recipe }
-            // Store the initial recipe configuration for possible later use
-            if (this.recipeInit === null) {
-                this.recipeInit = this.recipe
-            }
             if (this.$route.params.id) {
+                // Load the recipe from store and make edits to a local copy first
+                this.recipe = { ...this.$store.state.recipe }
                 // Parse time values
                 let timeComps = this.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
                 if (timeComps) {
@@ -191,11 +193,19 @@ export default {
         },
     },
     mounted () {
+        // Store the initial recipe configuration for possible later use
+        if (this.recipeInit === null) {
+            this.recipeInit = this.recipe
+        }
         // Register save method hook for access from the controls components
+        // The event hookmust first be destroyed to avoid it from firing multiple
+        // times if the same component is loaded again
+        this.$root.$off('saveRecipe')
         this.$root.$on('saveRecipe', () => {
             this.save()
         })
         // Register data load method hook for access from the controls components
+        this.$root.$off('reloadRecipeEdit')
         this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })

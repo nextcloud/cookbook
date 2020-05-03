@@ -170,7 +170,8 @@ export default {
                 method: 'DELETE',
             })
             .done(function(reply) {
-                window.goTo('/')
+                $this.$window.goTo('/')
+                $this.$root.$emit('refreshNavigation')
             })
             .fail(function(e) {
                 alert($this.t('Delete failed'))

@@ -145,10 +145,8 @@ class MainController extends Controller
     public function category($category)
     {
         $category = urldecode($category);
-
         try {
 			$recipes = $this->service->getRecipesByCategory($category);
-
 			foreach ($recipes as $i => $recipe) {
                 $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
                     'cookbook.recipe.image',
@@ -159,11 +157,7 @@ class MainController extends Controller
                     ]
                 );
 			}
-
-			$response = new TemplateResponse($this->appName, 'content/search', ['tag' => $tag, 'recipes' => $recipes]);
-            $response->renderAs('blank');
-
-            return $response;
+			return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
         } catch (\Exception $e) {
             return new DataResponse($e->getMessage(), 500);
         }
