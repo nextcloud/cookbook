@@ -1,5 +1,6 @@
 { "translations": {
     "Could not set recipe update interval to {interval}" : "Не могу да постави време ажурирања на {interval}",
+    "Could not set preference for image printing" : "Не могу да поставим поставке за штампање слика",
     "Path to your recipe collection" : "Путања ка Вашој збирци рецепата",
     "Could not set recipe folder to {path}" : "Не могу да поставим фасциклу са рецептима на {path}",
     "Path to your Recipe Image" : "Путања ка Вашиј слици рецепата",
@@ -49,6 +50,8 @@
     "Rescan library" : "Поновно скенирај библиотеку",
     "Recipe folder" : "Фасцикла са рецептима",
     "Please pick a folder" : "Одаберите фасциклу",
-    "Update interval in minutes" : "Време ажурирања у минутима"
+    "Update interval in minutes" : "Време ажурирања у минутима",
+    "Last update:" : "Последње ажурирање:",
+    "Print image with recipe" : "Штампај и слику уз рецепт"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }
