@@ -7,7 +7,6 @@
 */
 
 import Vue from 'vue'
-import i18n from './i18n'
 import router from './router'
 import store from './store'
 
@@ -185,15 +184,6 @@ import AppMain from './components/AppMain'
         new App({
             store,
             router,
-            i18n,
         }).$mount("#app")
-        /*
-        const Navi = Vue.extend(AppNavi)
-        new Navi({
-            store,
-            router,
-            i18n,
-        }).$mount("#app-navigation")
-        */
     })
 })(OC, window, jQuery)

@@ -13,7 +13,7 @@
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ $t('Add') }}</button>
+        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ t('Add') }}</button>
     </fieldset>
 </template>
 

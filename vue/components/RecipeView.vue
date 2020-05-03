@@ -9,34 +9,34 @@
             <div class="details">
                 <p class="description">{{ $store.state.recipe.description }}</p>
                 <p v-if="$store.state.recipe.url">
-                    <strong>{{ $t('recipe.view.source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
+                    <strong>{{ t('Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
                 </p>
-                <p><strong>{{ $t('recipe.view.servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
+                <p><strong>{{ t('Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
             </div>
             <div class="times">
-                <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" />
-                <RecipeTimer v-if="timerCook" :value="timerCook" :phase="'prep'" :timer="true" />
-                <RecipeTimer v-if="timerTotal" :value="timerTotal" :phase="'total'" :timer="false" />
+                <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" :label="'Preparation time'" />
+                <RecipeTimer v-if="timerCook" :value="timerCook" :phase="'prep'" :timer="true" :label="'Cooking time'" />
+                <RecipeTimer v-if="timerTotal" :value="timerTotal" :phase="'total'" :timer="false" :label="'Total time'" />
             </div>
 
             <section>
                 <aside>
                     <section>
-                        <h3 v-if="ingredients.length">{{ $t('recipe.view.ingredients.header') }}</h3>
+                        <h3 v-if="ingredients.length">{{ t('Ingredients') }}</h3>
                         <ul v-if="ingredients.length">
                             <RecipeIngredient v-for="ingredient in ingredients" :key="ingredient" :ingredient="ingredient" />
                         </ul>
                     </section>
 
                     <section>
-                        <h3 v-if="tools.length">{{ $t('recipe.view.tools.header') }}</h3>
+                        <h3 v-if="tools.length">{{ t('Tools') }}</h3>
                         <ul v-if="tools.length">
                             <RecipeTool v-for="tool in tools" :key="tool" :tool="tool" />
                         </ul>
                     </section>
                 </aside>
                 <main v-if="instructions.length">
-                    <h3>{{ $t('recipe.view.instructions.header') }}</h3>
+                    <h3>{{ t('Instructions') }}</h3>
                     <ol class="instructions">
                         <RecipeInstruction v-for="instruction in instructions" :key="instruction" :instruction="instruction" />
                     </ol>
@@ -126,14 +126,14 @@ export default {
                     $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
                 }
                 $this.$store.dispatch('setPage', { page: 'recipe' })
-                alert($this.$t('Loading recipe failed'))
+                alert($this.t('Loading recipe failed'))
             })
         }
     },
     mounted () {
         this.setup()
         // Register data load method hook for access from the controls components
-        this.$root.$on('reloadRecipe', () => {
+        this.$root.$on('reloadRecipeView', () => {
             this.setup()
         })
     },

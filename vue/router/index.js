@@ -37,9 +37,9 @@ const routes = [
     // - View: /{item}/:id
     // - Edit: /{item}/:id/edit
     // - Create: /{item}/create
-    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
-    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
     { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
+    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
+    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
     // Index is the last defined route
     { path: '/', name:'index', component: Index },
     // Anything not matched goes to NotFound

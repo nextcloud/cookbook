@@ -12,6 +12,11 @@
     padding-left: 0 !important;
 }
 
+.router-link-exact-active {
+    opacity: 1 !important;
+    box-shadow: inset 4px 0 var(--color-primary) !important;
+}
+
 
  /**
   * Following are the old (obsolete in the Vue version) styles

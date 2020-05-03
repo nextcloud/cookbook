@@ -2,7 +2,7 @@
 <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <AppNavigation>
         <router-link :to="'/recipe/create'">
-            <AppNavigationNew class="create" :text="$t('Create recipe')" />
+            <AppNavigationNew class="create" :text="t('Create recipe')" />
         </router-link>
         <ul>
             <ActionInput
@@ -10,9 +10,9 @@
                 @submit="downloadRecipe"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
-                    {{ $t('Recipe URL') }}
+                    {{ t('Recipe URL') }}
             </ActionInput>
-            <AppNavigationItem :title="$t('All recipes')" icon="icon-category-organization" :to="'/'">
+            <AppNavigationItem :title="t('All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"
@@ -29,8 +29,7 @@
                         :key="idx+'-'+idy"
                         :title="rec.name"
                         :icon="$store.state.loadingRecipe===rec.recipe_id || !rec.recipe_id ? 'icon-loading-small' : null"
-                        @click="setLoadingRecipe(rec.recipe_id)"
-                        :to="'/recipe/'+rec.recipe_id"
+                        :to="isSameRecipe(rec.recipe_id) ? null : '/recipe/'+rec.recipe_id"
                     />
                 </template>
             </AppNavigationItem>
@@ -41,30 +40,29 @@
                     <ul>
                         <li>
                             <ActionButton
-                                :ariaLabel="$t('Rescan library')"
                                 class="button"
                                 :icon="scanningLibrary ? 'icon-loading-small' : 'icon-history'"
                                 @click="reindex()"
-                                :title="$t('Rescan library')"
+                                :title="t('Rescan library')"
                             />
                         </li>
                         <li>
-                            <label class="settings-input">{{ $t('Recipe folder') }}</label>
-                            <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="$t('Please pick a folder')">
+                            <label class="settings-input">{{ t('Recipe folder') }}</label>
+                            <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="t('Please pick a folder')">
                         </li>
                         <li>
                             <label class="settings-input">
-                                {{ $t('Update interval in minutes') }}
+                                {{ t('Update interval in minutes') }}
                             </label>
                             <div class="update">
                                 <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
-                                <button class="icon-info" disabled="disabled" :title="$t('Last update: ')"></button>
+                                <button class="icon-info" disabled="disabled" :title="t('Last update: ')"></button>
                             </div>
                         </li>
                         <li>
                             <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
                             <label for="recipe-print-image">
-                                {{ $t('Print image with recipe') }}
+                                {{ t('Print image with recipe') }}
                             </label>
                         </li>
                     </ul>
@@ -138,7 +136,7 @@ export default {
             }).done(function (response) {
                 // Should this check the response of the query? To catch some errors that redirect the page
             }).fail(function(e) {
-                alert($this.$t('Could not set preference for image printing'));
+                alert($this.t('Could not set preference for image printing'));
                 $this.resetPrintImage = true
                 $this.printImage = oldVal
             })
@@ -157,7 +155,7 @@ export default {
             }).done(function (response) {
                 // Should this check the response of the query? To catch some errors that redirect the page
             }).fail(function(e) {
-                alert($this.$t('Could not set recipe update interval to {interval}', { interval: newVal }))
+                alert($this.t('Could not set recipe update interval to {interval}', { interval: newVal }))
                 $this.resetInterval = true
                 $this.updateInterval = oldVal
             })
@@ -174,7 +172,7 @@ export default {
                 cat.recipes = json
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 cat.recipes = []
-                alert($this.$t('Failed to load category '+cat.name+' recipes'))
+                alert($this.t('Failed to load category '+cat.name+' recipes'))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -218,17 +216,27 @@ export default {
                         $this.categories.push({
                             name: json[i].name,
                             recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: $this.$t('Loading category recipes...') }],
+                            recipes: [{ id: 0, name: $this.t('Loading category recipes...') }],
                         })
                     }
                 }
             })
             .fail(function(e) {
-                alert($this.$t('Failed to fetch categories'))
+                alert($this.t('Failed to fetch categories'))
                 if (e && e instanceof Error) {
                     throw e
                 }
             })
+        },
+        /**
+         * Check that the recipe is not already open
+         */
+        isSameRecipe: function(rid) {
+            if (this.$store.state.recipe && this.$store.state.page === 'recipe'
+                && this.$store.state.recipe.id === rid) {
+                return true
+            }
+            return false
         },
         /**
          * Select a recipe folder using the Nextcloud file picker
@@ -236,7 +244,7 @@ export default {
         pickRecipeFolder: function(e) {
             let $this = this
             OC.dialogs.filepicker(
-                this.$t('Path to your recipe collection'),
+                this.t('Path to your recipe collection'),
                 function (path) {
                     $.ajax({
                         url: $this.$window.baseUrl + '/config',
@@ -250,7 +258,7 @@ export default {
                             $this.recipeFolder = path
                         })
                     }).fail(function(e) {
-                        alert($this.$t('Could not set recipe folder to {path}', { path: path }))
+                        alert($this.t('Could not set recipe folder to {path}', { path: path }))
                     })
                 },
                 false,

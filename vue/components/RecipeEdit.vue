@@ -1,18 +1,18 @@
 <template>
     <div class="wrapper">
-        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="$t('Name')" />
-        <EditInputField :fieldName="'description'" :fieldType="'text'" :fieldLabel="$t('Description')" />
-        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="$t('URL')" />
-        <EditImageField :fieldName="'image'" :fieldLabel="$t('Name')" />
-        <EditTimeField :fieldName="'prepTime'" :fieldLabel="$t('Preparation time')" />
-        <EditTimeField :fieldName="'cookTime'" :fieldLabel="$t('Cooking time')" />
-        <EditTimeField :fieldName="'totalTime'" :fieldLabel="$t('Total time')" />
-        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="$t('Category')" />
-        <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="$t('Keywords (comma separated)')" />
-        <EditInputField :fieldName="'servings'" :fieldType="'number'" :fieldLabel="$t('Servings')" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="$t('Tools')" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="$t('Ingredients')" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="$t('Instructions')" />
+        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('Name')" />
+        <EditInputField :fieldName="'description'" :fieldType="'text'" :fieldLabel="t('Description')" />
+        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('URL')" />
+        <EditImageField :fieldName="'image'" :fieldLabel="t('Name')" />
+        <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('Preparation time')" />
+        <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('Cooking time')" />
+        <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('Total time')" />
+        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('Category')" />
+        <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="t('Keywords (comma separated)')" />
+        <EditInputField :fieldName="'servings'" :fieldType="'number'" :fieldLabel="t('Servings')" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('Tools')" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('Ingredients')" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('Instructions')" />
     </div>
 </template>
 
@@ -104,7 +104,7 @@ export default {
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 $this.setup()
             }).fail(function(e) {
-                alert($this.$t('Loading recipe failed'))
+                alert($this.t('Loading recipe failed'))
                 // Browse back to the previous page
                 $this.$window.gotTo(-1)
             })
@@ -143,7 +143,7 @@ export default {
                     $this.$window.goTo('/recipe/'+$this.recipe.id)
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert($this.$t('Recipe could not be saved'))
+                    alert($this.t('Recipe could not be saved'))
                 })
             } else {
                 // Create a new recipe
@@ -154,7 +154,7 @@ export default {
                 }).done(function (recipe) {
                     $this.$window.goTo('/recipe/'+recipe)
                 }).fail(function(e) {
-                    alert($this.$t('Recipe could not be saved'))
+                    alert($this.t('Recipe could not be saved'))
                 })
             }
         },
@@ -179,6 +179,8 @@ export default {
                 if (timeComps) {
                     this.totalTime = [timeComps[1], timeComps[2]]
                 }
+                // Always set the active page last!
+                this.$store.dispatch('setPage', { page: 'edit' })
             } else {
                 this.recipe = this.recipeInit
                 this.prepTime = [0, 0]
@@ -186,8 +188,6 @@ export default {
                 this.totalTime = [0, 0]
                 this.$store.dispatch('setPage', { page: 'create' })
             }
-            // Always set the active page last!
-            this.$store.dispatch('setPage', { page: 'edit' })
         },
     },
     mounted () {
@@ -196,7 +196,7 @@ export default {
             this.save()
         })
         // Register data load method hook for access from the controls components
-        this.$root.$on('reloadRecipe', () => {
+        this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })
     },
@@ -208,11 +208,13 @@ export default {
     // the case, the user can always manually reload by clicking the breadcrumb.
     beforeRouteEnter (to, from, next) {
         if (window.isSameItemInstance(from.fullPath, to.fullPath)) {
-            console.log("same")
             next(vm => { vm.setup() })
         } else {
-            console.log("diff")
-            next(vm => { vm.loadRecipeData() })
+            if (to.params && to.params.id) {
+                next(vm => { vm.loadRecipeData() })
+            } else {
+                next(vm => { vm.setup() })
+            }
         }
     },
     /**

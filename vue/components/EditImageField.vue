@@ -4,7 +4,7 @@
             {{ fieldLabel }}
         </label>
         <input type="text" v-model="$parent.recipe[fieldName]" />
-        <button type="button" :title="$t('Pick a local image')" @click="pickImage"><span class="icon-category-multimedia"></span></button>
+        <button type="button" :title="t('Pick a local image')" @click="pickImage"><span class="icon-category-multimedia"></span></button>
     </fieldset>
 </template>
 
@@ -22,7 +22,7 @@ export default {
             e.preventDefault()
             let $this = this
             OC.dialogs.filepicker(
-                this.$t('Path to your Recipe Image'),
+                this.t('Path to your recipe image'),
                 function (path) {
                     $this.$parent.recipe.image = path
                 },
