@@ -7,18 +7,25 @@
     background-image: var(--icon-add-000) !important;
     background-repeat: no-repeat !important;
 }
+.app-navigation-entry * {
+    background: initial !important;
+}
 .app-navigation-entry.recipe {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
     padding-left: 0 !important;
 }
-
-.router-link-exact-active {
+.app-navigation-entry:hover,
+.app-navigation-entry.router-link-exact-active {
     opacity: 1 !important;
     box-shadow: inset 4px 0 var(--color-primary) !important;
 }
-.router-link-exact-active li.recipe {
-    box-shadow: inset 4px 0 rgba(255, 255, 255, 0.5) !important;
-}
+    .app-navigation-entry:not(:hover) li.recipe {
+        box-shadow: inset 4px 0 rgba(255, 255, 255, 0.5);
+    }
+    .app-navigation-entry:hover li.recipe {
+        box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
+    }
+
 
 
  /**
