@@ -241,7 +241,7 @@
 		text-align: center;
         margin-bottom: 1rem;
     }
-        #app-content-wrapper header.collapsed img {
+        #app-content-wrapper header img {
             cursor: pointer;
             max-width: 100%;
         }
