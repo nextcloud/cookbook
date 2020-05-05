@@ -241,7 +241,7 @@
 		text-align: center;
         margin-bottom: 1rem;
     }
-        #app-content-wrapper header.collapsed img {
+        #app-content-wrapper header img {
             cursor: pointer;
             max-width: 100%;
         }
@@ -299,7 +299,11 @@
 		#app-content-wrapper section {
 			margin-bottom: 1rem;
 		}
-		
+	
+        #app-content-wrapper > section {
+            padding: 1rem;
+        }
+
 		#app-content-wrapper section::after {
 			content: '';
 			display: table;
