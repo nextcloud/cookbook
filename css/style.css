@@ -179,6 +179,10 @@
         padding: 1rem;
     }
 
+    .home h2 {
+        margin-top: 1rem;
+    }
+
         .home .feature {
             background-position: left top;
             min-height: 32px;
