@@ -596,12 +596,21 @@ class RecipeService
         $full_image_data = null;
 
         if (isset($json['image']) && $json['image']) {
+            // The image is a URL
             if (strpos($json['image'], 'http') === 0) {
                 $json['image'] = str_replace(' ', '%20', $json['image']);
                 $full_image_data = file_get_contents($json['image']);
+
+            // The image is a local path
             } else {
-                $full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
-                $full_image_data = $full_image_file->getContent();
+                try {
+                    $full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
+                    $full_image_data = $full_image_file->getContent();
+
+                } catch (NotFoundException $e) {
+                    $full_image_data = null;
+
+                }
             }
         }
 

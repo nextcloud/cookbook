@@ -283,14 +283,19 @@ class MainController extends Controller
     public function update($id)
     {
 		try {
-	        $recipeData = [];
-	        parse_str(file_get_contents("php://input"), $recipeData);
-			$recipeData['id'] = $id;
-	        $file = $this->service->addRecipe($recipeData);
+	        $recipe_data = [];
+            
+            parse_str(file_get_contents("php://input"), $recipe_data);
+
+            $recipe_data['id'] = $id;
+
+	        $file = $this->service->addRecipe($recipe_data);
 			
-			return new DataResponse($id);
+            return new DataResponse($id);
+
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
-		}
+        
+        }
     }
 }
