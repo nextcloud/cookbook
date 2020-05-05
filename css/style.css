@@ -10,7 +10,7 @@
     background-image: var(--icon-add-000) !important;
     background-repeat: no-repeat !important;
 }
-.app-navigation-entry * {
+.app-navigation-entry *:not(.app-navigation-entry-icon) {
     background: initial !important;
 }
 .app-navigation-entry.recipe {
@@ -504,7 +504,6 @@
             vertical-align: middle;
             cursor: pointer;
         }
-
         #app-content-wrapper form fieldset > ul {
             margin-top: 2rem;
             padding-left: 1em;
