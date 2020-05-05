@@ -27,7 +27,7 @@ class RecipeService
     private $db;
     private $config;
 
-    public function __construct(string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config)
+    public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config)
     {
         $this->user_id = $UserId;
         $this->root = $root;
