@@ -1,6 +1,9 @@
 /**
- * These first styles are the ones that will be retained in the Vue version
+ * Main
  */
+ #app {
+    width: 100%;
+}
 
 .app-navigation-new button {
     min-height: 44px !important;
@@ -26,7 +29,12 @@
         box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
     }
 
-
+@media print {
+    a:link:after,
+    a:visited:after {
+        content:" [" attr(href) "] ";
+    }
+}
 
  /**
   * Following are the old (obsolete in the Vue version) styles
@@ -111,13 +119,6 @@
 */
 
 /**
- * Main
- */
-#app {
-    width: 100%;
-}
-
-/**
  * Navigation
 #app-navigation {}
     #app-navigation .app-navigation-create {
@@ -169,16 +170,17 @@
             background-position: 50% 50%;
         }
         */
-        /* For some reason, some images would disappear below 30px width if they were displayed inline */
+        /* For some reason, some images would disappear below 30px width if they were displayed inline
         #app-navigation > ul > li > a:first-child img {
             display: block;
             float: left;
             margin-top: 12px;
         }
+         */
 
 /**
  * Settings
- */
+
 #app-settings {}
     #app-settings .button {
         padding: 6px 12px;
@@ -196,10 +198,9 @@
         width: 100%;
         display: block;
     }
-
+ */
 /**
  * Content
- */
 #app-content {
     min-width: calc(100% - 300px);
 }
@@ -217,6 +218,7 @@
             padding-left: 32px;
             margin-top: 1em;
         }
+
 
 	#search {
 		display: flex;
@@ -250,7 +252,7 @@
 				display: block;
 				padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
 			}
-
+/*
 
     .loader {
         text-align: center;
@@ -266,7 +268,7 @@
             flex-grow: 100;
             flex-direction: row-reverse;
         }
-
+/*
     #app-content-wrapper header {
         display: block;
         width: 100%;
@@ -294,9 +296,7 @@
             padding: 1rem;
             flex-basis: 100%;
         }
-
-/* These are all handled by the Vue components
-
+/*
     #app-content-wrapper aside {
         flex-basis: 20rem;
         padding-right: 2rem;
@@ -346,7 +346,7 @@
 			width: 100%;
 			float: none;
 		}}
-
+/*
         #app-content-wrapper .instructions {
             list-style: none;
             padding: 0;
@@ -386,7 +386,7 @@
                 #app-content-wrapper .instructions .instruction.done::before {
                     content: '✔';
                 }
-
+/*
 		#app-content-wrapper .times {
 			display: flex;
 			margin-top: 10px;
@@ -419,7 +419,7 @@
 				#app-content-wrapper .times .time p {
 					padding: 0.5rem;
 				}
-
+/*
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);
     }
@@ -498,14 +498,13 @@
 				display: block;
 				float: none;
 			}}
-        */
 
         #app-content-wrapper form fieldset ul label input[type="checkbox"] {
             margin-left: 1em;
             vertical-align: middle;
             cursor: pointer;
         }
-/*
+
         #app-content-wrapper form fieldset > ul {
             margin-top: 2rem;
             padding-left: 1em;
@@ -559,15 +558,13 @@
 
 /**
  * Print
- */
 @media print {
     #header,
-    #app-navigation
-    /*
+    #app-navigation,
     #controls,
     .recipe-toolbar,
 	#app-content header:not(.printable),
-	.times button */ {
+	.times button  {
         display: none !important;
     }
 
@@ -581,9 +578,4 @@
     #app-content {
         margin-left: 0 !important;
     }
-
-    a:link:after,
-    a:visited:after {
-        content:" [" attr(href) "] ";
-    }
-}
+*/

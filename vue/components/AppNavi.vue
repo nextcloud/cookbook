@@ -341,4 +341,10 @@ export default {
     float: left;
 }
 
+@media print {
+    * {
+        display: none !important;
+    }
+}
+
 </style>

@@ -7,7 +7,7 @@
             <!-- INDEX PAGE -->
             <Breadcrumb v-if="isIndex" class="active" :title="t('All recipes')" :disableDrop="true"></Breadcrumb>
             <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-search" class="action-button" :ariaLabel="t('Search')" @click="$window.goTo('/search')" />
+                <ActionButton icon="icon-search" class="action-button" :disabled="true" :ariaLabel="t('Search')" @click="$window.goTo('/search')" />
             </Breadcrumb>
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
@@ -65,7 +65,9 @@
                 <ActionButton icon="icon-loading-small" :ariaLabel="t('Loading...')" />
             </Breadcrumb>
             <!-- No recipe found -->
-            <Breadcrumb v-else-if="isNotFound" class="active" :title="t('Recipe not found')" :disableDrop="true" />
+            <Breadcrumb v-else-if="recipeNotFound" class="active no-arrow" :title="t('Recipe not found')" :disableDrop="true" />
+            <!-- No page found -->
+            <Breadcrumb v-else-if="pageNotFound" class="active no-arrow" :title="t('Page not found')" :disableDrop="true" />
         </Breadcrumbs>
     </div>
 
@@ -91,6 +93,7 @@ export default {
             if (this.$store.state.page === 'create') {
                 return true
             }
+            return false
         },
         isEdit () {
             if (this.isLoadingRecipe) {
@@ -100,6 +103,7 @@ export default {
             if (this.$store.state.page === 'edit' && this.$store.state.recipe) {
                 return true
             }
+            return false
         },
         isIndex () {
             if (this.isLoadingRecipe) {
@@ -108,25 +112,21 @@ export default {
             if (this.$store.state.page === 'index') {
                 return true
             }
+            return false
         },
         isLoading () {
             //  The page is being loaded
             if (this.$store.state.page === null) {
                 return true
             }
+            return false
         },
         isLoadingRecipe () {
             //  A recipe is being loaded
             if (this.$store.state.loadingRecipe) {
                 return true
             }
-        },
-        isNotFound () {
-            // Editing or viewing recipe was attempted, but no recipe was found
-            if (['edit', 'recipe'].indexOf(this.$store.state.page) !== -1
-                && !this.$store.state.recipe) {
-                return true
-            }
+            return false
         },
         isRecipe () {
             if (this.isLoadingRecipe) {
@@ -136,6 +136,7 @@ export default {
             if (this.$store.state.page === 'recipe' && this.$store.state.recipe) {
                 return true
             }
+            return false
         },
         isSearch () {
             if (this.isLoadingRecipe) {
@@ -144,6 +145,21 @@ export default {
             if (this.$store.state.page === 'search') {
                 return true
             }
+            return false
+        },
+        pageNotFound () {
+            if (this.$store.state.page === 'notfound') {
+                return true
+            }
+            return false
+        },
+        recipeNotFound () {
+            // Editing or viewing recipe was attempted, but no recipe was found
+            if (['edit', 'recipe'].indexOf(this.$store.state.page) !== -1
+                && !this.$store.state.recipe) {
+                return true
+            }
+            return false
         },
         searchTitle () {
             if (this.$route.name === 'search-category') {

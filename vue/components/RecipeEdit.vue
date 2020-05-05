@@ -266,4 +266,11 @@ export default {
     padding: 1rem;
 }
 
+/* This is not used anywhere at the moment, but left here for future reference
+form fieldset ul label input[type="checkbox"] {
+    margin-left: 1em;
+    vertical-align: middle;
+    cursor: pointer;
+} */
+
 </style>

@@ -231,4 +231,12 @@ aside {
         margin-top: 10px;
     }
 
+@media print {
+    #content {
+        display: block !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+}
+
 </style>

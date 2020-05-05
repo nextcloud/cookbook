@@ -1,5 +1,5 @@
 <template>
-    <li :class="{ 'instruction': true, 'done': isDone }" @click="toggleDone">{{ instruction }}</li>
+    <li :class="{ 'done': isDone }" @click="toggleDone">{{ instruction }}</li>
 </template>
 
 <script>

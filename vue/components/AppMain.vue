@@ -31,4 +31,23 @@ export default {
 
 <style>
 
+#app-content {
+    min-width: calc(100% - 300px);
+}
+
+#app-content-wrapper {
+    flex-wrap: wrap;
+}
+
+@media print {
+    #app-content-wrapper {
+        display: block !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+    #app-content {
+        margin-left: 0 !important;
+    }
+}
+
 </style>
