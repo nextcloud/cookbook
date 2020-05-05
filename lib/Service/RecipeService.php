@@ -579,7 +579,12 @@ class RecipeService
         $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
 
         if (!$recipe_file) {
-            $recipe_file = $recipe_folder->newFile($json['name'] . '.json');
+            $recipe_file = $recipe_folder->newFile('recipe.json');
+        }
+
+        // Rename .json file if it's not "recipe.json"
+        if($recipe_file->getName() !== 'recipe.json') {
+            $recipe_file->move(str_replace($recipe_file->getName(), 'recipe.json', $recipe_file->getPath()));
         }
 
         $recipe_file->putContent(json_encode($json));
@@ -726,9 +731,9 @@ class RecipeService
 
                 $recipe_folder = $user_folder->newFolder($recipe_name);
 
-                $node->move($recipe_folder->getPath() . '/' . $recipe_name . '.json');
+                $node->move($recipe_folder->getPath() . '/recipe.json');
 
-                // Rename folders with .json extensions (this was likely caused by a migration bug)
+            // Rename folders with .json extensions (this was likely caused by a migration bug)
             } else if ($node instanceof Folder && strpos($node->getName(), '.json')) {
                 $node->move(str_replace('.json', '', $node->getPath()));
 
@@ -1024,14 +1029,18 @@ class RecipeService
     private function isRecipeFile($file)
     {
         $allowedExtensions = ['json'];
+
         if ($file->getType() !== 'file') {
             return false;
         }
+
         $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
         $iext = strtolower($ext);
-        if (!in_array($iext, $allowedExtensions)) {
+
+        if(!in_array($iext, $allowedExtensions)) {
             return false;
         }
+
         return true;
     }
 
