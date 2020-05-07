@@ -5,6 +5,9 @@ cookbook.tar.gz
 
 .idea/
 
+# Built js package
+js/*
+
 ### NPM ###
 
 # Node modules
