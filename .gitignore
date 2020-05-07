@@ -15,4 +15,4 @@ src/node_modules
 # Package lock
 src/package-lock.json
 # Temporary dist scripts
-src/dist/*.js
+src/dist/*.js*
