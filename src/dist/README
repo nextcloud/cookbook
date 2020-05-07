@@ -1,0 +1,1 @@
+This is where Node and Webpack write the script files before tinyfying and moving them to the app js folder.

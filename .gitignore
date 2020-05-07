@@ -8,8 +8,8 @@ cookbook.tar.gz
 ### NPM ###
 
 # Node modules
-vue/node_modules
+src/node_modules
 # Package lock
-vue/package-lock.json
+src/package-lock.json
 # Temporary dist scripts
-vue/dist/*.js
+src/dist/*.js
