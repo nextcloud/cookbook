@@ -44,7 +44,7 @@ class MainController extends Controller
             'print_image' => $this->service->getPrintImage(),
         ];
 
-        return new TemplateResponse($this->appName, 'index_vue', $view_data);  // templates/index.php
+        return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
     }
 
     /**
