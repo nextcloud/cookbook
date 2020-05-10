@@ -9,10 +9,14 @@ const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
 
-    entry: path.join(__dirname, 'main.js'),
+    entry:{
+        script: path.join(__dirname, 'src', 'main.js'),
+    },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'script.js',
+        path: path.resolve(__dirname, './js'),
+        publicPath: '/js/',
+        filename: '[name].js',
+        chunkFilename: '[name].js?v=[contenthash]',
     },
     module: {
         rules: [

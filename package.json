@@ -2,7 +2,7 @@
   "name": "nextcloud-cookbook",
   "version": "0.7.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config webpack.build.js",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --watch --config webpack.devel.js",
@@ -31,7 +31,6 @@
     "babel-loader": "^8.1.0",
     "css-loader": "^3.5.2",
     "file-loader": "^6.0.0",
-    "filemanager-webpack-plugin": "^2.0.5",
     "url-loader": "^4.1.0",
     "vue-loader": "^15.9.1",
     "vue-style-loader": "^4.1.2",
