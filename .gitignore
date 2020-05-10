@@ -11,7 +11,7 @@ js/*
 ### NPM ###
 
 # Node modules
-src/node_modules
+node_modules
 # Package lock
 src/package-lock.json
 # Temporary dist scripts
