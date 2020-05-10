@@ -13,6 +13,4 @@ js/*
 # Node modules
 node_modules
 # Package lock
-src/package-lock.json
-# Temporary dist scripts
-src/dist/*.js*
+package-lock.json
