@@ -1,10 +1,14 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Could not set recipe update interval to {interval}" : "Gat ekki stillt uppfærslutíðni uppskrifta á {interval}",
+    "Could not set preference for image printing" : "Gat ekki sett kjörstillingar fyrir prentun mynda",
     "Path to your recipe collection" : "Slóðin á uppskriftasafnið þitt",
+    "Could not set recipe folder to {path}" : "Gat ekki stillt uppskriftamöppu á {path}",
     "Path to your Recipe Image" : "Slóðin á uppskriftarmyndina þína",
     "Are you sure you want to delete this recipe?" : "Ertu viss um að þú viljir eyða þessari uppskrift?",
     "Failed to delete recipe" : "Mistókst að eyða uppskrift",
+    "Cooking time is up!" : "Eldunartímanum er lokið!",
     "Could not update recipe" : "Gat ekki uppfært uppskrift",
     "Could not add recipe" : "Gat ekki bætt við uppskrift",
     "Could not rebuild recipe index." : "Gat ekki endurbyggt atriðaskrá uppskrifta.",
@@ -12,6 +16,7 @@ OC.L10N.register(
     "No category" : "Enginn flokkur",
     "Failed to fetch categories" : "Ekki tókst að sækja flokka",
     "Cookbook" : "Uppskriftabók",
+    "An integrated cookbook using schema.org JSON files as recipes" : "Innbyggð uppskriftabók sem notar schema.org JSON-skrár sem uppskriftir",
     "New recipe" : "Ný uppskrift",
     "Edit" : "Breyta",
     "Save changes" : "Vista breytingar",
@@ -39,8 +44,15 @@ OC.L10N.register(
     "No results" : "Engar niðurstöður",
     "Error" : "Villa",
     "This page doesn't exist." : "Þessi síða er ekki til.",
+    "Create recipe" : "Búa til uppskrift",
+    "Recipe URL" : "Slóð á uppskrift",
+    "Download recipe" : "Sækja uppskrift",
     "Settings" : "Stillingar",
+    "Rescan library" : "Skanna safn aftur",
+    "Recipe folder" : "Uppskriftamappa",
     "Please pick a folder" : "Veldu möppu",
-    "Last update:" : "Síðast uppfært:"
+    "Update interval in minutes" : "Uppfærslutíðni í mínútum",
+    "Last update:" : "Síðast uppfært:",
+    "Print image with recipe" : "Prenta mynd með uppskrift"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
