@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Δεν μπορεί να οριστεί εσωτερική ενημέρωση συνταγής σε {interval}",
+    "Could not set preference for image printing" : "Δεν μπορούν να οριστούν προτιμήσεις για εκτύπωση εικόνας",
     "Path to your recipe collection" : "Διαδρομή για την συλλογή συνταγών σας",
     "Could not set recipe folder to {path}" : "Δεν μπορεί να οριστεί φάκελος συνταγών σε {path}",
     "Path to your Recipe Image" : "Διαδρομή για τις Εικόνες Συνταγών",
@@ -52,6 +53,7 @@ OC.L10N.register(
     "Recipe folder" : "Φάκελος συνταγής",
     "Please pick a folder" : "Παρακαλώ επιλέξτε φάκελο",
     "Update interval in minutes" : "Εσωτερική ενημέρωση σε λεπτά",
-    "Last update" : "Τελευταία ενημέρωση"
+    "Last update:" : "Τελευταία ενημέρωση:",
+    "Print image with recipe" : "Εκτύπωση εικόνας συνταγής"
 },
 "nplurals=2; plural=(n != 1);");

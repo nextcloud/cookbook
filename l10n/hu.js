@@ -52,6 +52,7 @@ OC.L10N.register(
     "Recipe folder" : "Recept mappa",
     "Please pick a folder" : "Kérem válassz mappát",
     "Update interval in minutes" : "Frissítési időszak percben",
-    "Last update" : "Utolsó frissítés"
+    "Last update:" : "Utolsó frissítés:",
+    "Print image with recipe" : "Kép nyomtatása a receptel"
 },
 "nplurals=2; plural=(n != 1);");

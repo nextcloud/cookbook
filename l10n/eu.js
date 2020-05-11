@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Ezin izan da ezarri errezeta eguneratzeko tartea {interval}-era",
+    "Could not set preference for image printing" : "Ezin izan da hobespena ezarri irudien inprimaketarako",
     "Path to your recipe collection" : "Zure errezeta bildumarako bidea",
     "Could not set recipe folder to {path}" : "Ezin izan da ezarri errezeta karpetaren bidea hona {path}",
     "Path to your Recipe Image" : "Zure errezetaren irudiaren bidea",
@@ -52,6 +53,7 @@ OC.L10N.register(
     "Recipe folder" : "Errezeten karpeta",
     "Please pick a folder" : "Aukeratu karpeta bat",
     "Update interval in minutes" : "Eguneratzeko tartea minututan",
-    "Last update" : "Azken eguneraketa"
+    "Last update:" : "Azken eguneraketa:",
+    "Print image with recipe" : "Inprimatu irudia errezetarekin"
 },
 "nplurals=2; plural=(n != 1);");

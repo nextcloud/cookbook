@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Could not set recipe update interval to {interval}" : "Kunde inte välja uppdateringsinterval till {interval}",
+    "Could not set preference for image printing" : "Valen för bildutskrift gick inte att ställa in.",
     "Path to your recipe collection" : "Sökväg till din receptsamling",
     "Could not set recipe folder to {path}" : "Kunde inte ange receptkatalog till {path}",
     "Path to your Recipe Image" : "Sökväg till din receptbild",
@@ -16,7 +17,7 @@ OC.L10N.register(
     "Failed to fetch categories" : "Kunde inte hämta kategorier",
     "Cookbook" : "Kokbok",
     "An integrated cookbook using schema.org JSON files as recipes" : "En integrerad kokbok som använder schema.org JSON filer som recept",
-    "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Ett bibliotek för alla dina recept. Det använder JSON-filer som följerschema.org-formatet. För att lägga till ett recept i din samling, kopierain URL-länken till receptet, så kommer webbsidan med receptet att analyserasoch laddas ned till den mapp du valt i Inställningar.",
+    "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Ett bibliotek för alla dina recept. Det använder JSON-filer som följerschema.org-formatet. För att lägga till ett recept i din samling, kopierain URL-länken till receptet, så kommer webbsidan med receptet att analyserasoch hämtas till den mapp du valt i Inställningar.",
     "New recipe" : "Nytt recept",
     "Edit" : "Redigera",
     "Save changes" : "Spara ändringar",
@@ -46,12 +47,13 @@ OC.L10N.register(
     "This page doesn't exist." : "Sidan finns inte.",
     "Create recipe" : "Skapa recept",
     "Recipe URL" : "Recept URL",
-    "Download recipe" : "Ladda ned recept",
+    "Download recipe" : "Hämta recept",
     "Settings" : "Inställnigar",
     "Rescan library" : "Uppdatera bibliotek",
     "Recipe folder" : "Receptkatalog",
     "Please pick a folder" : "Välj katalog",
     "Update interval in minutes" : "Uppdateringsintervall",
-    "Last update" : "Senaste uppdatering"
+    "Last update:" : "Senaste uppdatering:",
+    "Print image with recipe" : "Skriv ut bild med recept"
 },
 "nplurals=2; plural=(n != 1);");
