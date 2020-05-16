@@ -287,7 +287,7 @@ export default {
                 $this.scanningLibrary = false
                 console.log("Library reindexing complete")
                 $this.getCategories()
-                if (['search', 'recipe', 'edit'].indexOf($this.$store.state.page) > -1) {
+                if (['index', 'search'].indexOf($this.$store.state.page) > -1) {
                     // This refreshes the current router view in case items in it changed during reindex
                     $this.$router.go()
                 }
