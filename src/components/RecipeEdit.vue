@@ -105,8 +105,14 @@ export default {
                 $this.setup()
             }).fail(function(e) {
                 alert($this.t('Loading recipe failed'))
-                // Browse back to the previous page
-                $this.$window.gotTo(-1)
+                // Disable loading indicator
+                if ($this.$store.state.loadingRecipe) {
+                    $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
+                } else if ($this.$store.state.reloadingRecipe) {
+                    $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
+                }
+                // Browse to new recipe creation
+                $this.$window.goTo('/recipe/create')
             })
         },
         moveEntryDown: function(field, index) {
