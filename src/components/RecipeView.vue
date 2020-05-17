@@ -24,21 +24,21 @@
                     <section>
                         <h3 v-if="ingredients.length">{{ t('Ingredients') }}</h3>
                         <ul v-if="ingredients.length">
-                            <RecipeIngredient v-for="ingredient in ingredients" :key="ingredient" :ingredient="ingredient" />
+                            <RecipeIngredient v-for="(ingredient,idx) in ingredients" :key="'ingr'+idx" :ingredient="ingredient" />
                         </ul>
                     </section>
 
                     <section>
                         <h3 v-if="tools.length">{{ t('Tools') }}</h3>
                         <ul v-if="tools.length">
-                            <RecipeTool v-for="tool in tools" :key="tool" :tool="tool" />
+                            <RecipeTool v-for="(tool,idx) in tools" :key="'tool'+idx" :tool="tool" />
                         </ul>
                     </section>
                 </aside>
                 <main v-if="instructions.length">
                     <h3>{{ t('Instructions') }}</h3>
                     <ol class="instructions">
-                        <RecipeInstruction v-for="instruction in instructions" :key="instruction" :instruction="instruction" />
+                        <RecipeInstruction v-for="(instruction,idx) in instructions" :key="'instr'+idx" :instruction="instruction" />
                     </ol>
                 </main>
             </section>
