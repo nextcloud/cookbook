@@ -193,6 +193,7 @@ export default {
             }).done(function (recipe) {
                 $this.downloading = false
                 $this.$window.goTo('/recipe/' + recipe.id)
+                e.target[1].value = ''
                 deferred.resolve()
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 $this.downloading = false
