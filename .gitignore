@@ -4,3 +4,13 @@
 cookbook.tar.gz
 
 .idea/
+
+# Built js package
+js/*
+
+### NPM ###
+
+# Node modules
+node_modules
+# Package lock
+package-lock.json

@@ -46,7 +46,7 @@ class RecipeController extends Controller
             $recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
         }
         foreach ($recipes as $i => $recipe) {
-            $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+            $recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
         }
         return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
     }
@@ -64,6 +64,7 @@ class RecipeController extends Controller
         if (null === $json) {
             return new DataResponse($id, Http::STATUS_NOT_FOUND, ['Content-Type' => 'application/json']);
         }
+        $json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
         return new DataResponse($json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
     }
 
@@ -134,10 +135,10 @@ class RecipeController extends Controller
             $file = $this->service->getRecipeImageFileByFolderId($id, $size);
 
             return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
-        
+
         } catch (\Exception $e) {
             $file = file_get_contents(dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg');
-            
+
             return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
         }
     }

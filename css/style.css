@@ -1,179 +1,26 @@
 /**
- * Helpers
- */
-
-.icon-arrow-up {
-    background-image: var(--icon-triangle-n-000);
-}
-
-.icon-arrow-down {
-    background-image: var(--icon-triangle-s-000);
-}
-
-.input-group {
-    display: flex;
-    width: 100%;
-}
-
-    .input-group > input {
-        width: 100%;
-        margin: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .input-group > .input-group-addon {
-        display: flex;
-    }
-
-        .input-group > .input-group-addon > button {
-            padding: 0;
-            margin: 0;
-            min-width: 34px;
-            min-height: 34px;
-        }
-
-        .input-group > .input-group-addon > button {
-            border-radius: 0;
-            border-left-color: transparent;
-            border-right-color: transparent;
-        }
-
-        .input-group > .input-group-addon > button:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            border-right-width: 1px;
-        }
-
-.textarea-group {
-    
-}
-    .textarea-group-addon {
-        float: right;
-        display: flex;
-        position: relative;
-        top: 1px;
-        z-index: 1;
-    }
-        
-        .textarea-group-addon::after {
-            display: table;
-            content: '';
-            clear: both;
-        }
-        
-        .textarea-group-addon button {
-            min-width: 34px;
-            min-height: 34px;
-            border-radius: 0;
-            margin: 0;
-        }
-        
-        .textarea-group-addon button:first-child {
-            border-top-left-radius: var(--border-radius);
-        }
-        
-        .textarea-group-addon button:last-child {
-            border-top-right-radius: var(--border-radius);
-        }
-
-/**
  * Main
  */
-#app {
+ #app {
     width: 100%;
 }
 
-/**
- * Navigation
- */
-#app-navigation {}
-    #app-navigation .app-navigation-create {
-        padding: 10px;
-    }
-
-        #app-navigation .app-navigation-create .button {
-            display: inline-block;
-            width: 100%;
-            padding: 10px;
-            padding-left: 34px;
-            background-position: 10px center;
-            text-align: left;
-            margin: 0;
-        }
-		
-        #app-navigation li {
-            background-position: 10px center;
-            text-align: left;
-            margin: 0;
-        }
-
-    #app-navigation .app-navigation-new {
-        display: flex !important;
-    }
-        #app-navigation .app-navigation-new:not(:first-child) {
-            padding-top: 0;
-        }
-
-        #app-navigation #create-recipe > button {
-            height: 40px !important;
-        }
-
-        #app-navigation .app-navigation-new input {
-            border-radius: var(--border-radius) 0 0 var(--border-radius);
-            line-height: 40px;
-            height: 40px;
-            margin: 0;
-            flex-grow: 1;
-            border-right-width: 0;
-            flex-basis: 0;
-        }
-
-        #app-navigation .app-navigation-new button {
-            border-radius: 0 var(--border-radius) var(--border-radius) 0;
-            padding: 0 !important;
-            width: 40px !important;
-            height: 40px !important;
-            background-position: 50% 50%;
-        }
-
-        /* For some reason, some images would disappear below 30px width if they were displayed inline */
-        #app-navigation > ul > li > a:first-child img {
-            display: block;
-            float: left;
-            margin-top: 12px;
-        }
-
-/**
- * Settings
- */
-#app-settings {}
-    #app-settings .button {
-        padding: 6px 12px;
-        padding-left: 12px;
-        padding-left: 34px;
-        margin: 0 0 1em 0;
-        border-radius: var(--border-radius);
-        background-position: left 9px center;
-        z-index: 2;
-    }
-
-    #app-settings input[type="text"],
-    #app-settings input[type="number"],
-    #app-settings .button {
-        width: 100%;
-        display: block;
-    }
-
-/**
- * Content
- */
-#app-content {
-    min-width: calc(100% - 300px);
+.app-navigation-new button {
+    min-height: 44px !important;
+    background-image: var(--icon-add-000) !important;
+    background-repeat: no-repeat !important;
 }
-
-#app-content-wrapper {
-    flex-wrap: wrap;
+.app-navigation-entry *:not(.app-navigation-entry-icon) {
+    background: initial !important;
+}
+.app-navigation-entry.recipe {
+    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
+    padding-left: 0 !important;
+}
+.app-navigation-entry:hover,
+.app-navigation-entry.router-link-exact-active {
+    opacity: 1 !important;
+    box-shadow: inset 4px 0 var(--color-primary) !important;
 }
     .home {
         padding: 1rem;
@@ -437,122 +284,14 @@
 				width: 100%;
 			}}
 
-        #app-content-wrapper form fieldset > input[name="image"] {
-            width: calc(100% - 14em);
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border-right: 0;
-        }
-			@media(max-width:1199px) { #app-content-wrapper form fieldset > input[name="image"] {
-				width: calc(100% - 3em);
-			}}
+    .app-navigation-entry:not(:hover) li.recipe {
+        box-shadow: inset 4px 0 rgba(255, 255, 255, 0.5);
+    }
+    .app-navigation-entry:hover li.recipe {
+        box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
+    }
 
-        #app-content-wrapper form fieldset > input[name="image"] + button {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-            width: 3em;
-            margin: 0;
-        }
-
-        #app-content-wrapper form fieldset > input[name="image"] + button > * {
-            pointer-events: none;
-        }
-
-        #app-content-wrapper form fieldset > label {
-            display: inline-block;
-            width: 10em;
-            line-height: 18px;
-            font-weight: bold;
-			float: left;
-        }
-			@media(max-width:1199px) { #app-content-wrapper form fieldset > label {
-				display: block;
-				float: none;
-			}}
-
-        #app-content-wrapper form fieldset ul label input[type="checkbox"] {
-            margin-left: 1em;
-            vertical-align: middle;
-            cursor: pointer;
-        }
-
-        #app-content-wrapper form fieldset > ul {
-            margin-top: 2rem;
-            padding-left: 1em;
-        }
-        
-        #app-content-wrapper form fieldset > ul + button {
-            width: 36px;
-            text-align: center;
-            padding: 0;
-            float: right;
-        }
-        
-        #app-content-wrapper form fieldset > ul > li {
-            margin: 0 0 1em 0;
-        }
-
-        #app-content-wrapper form fieldset > ul > li > input {
-            width: 100%;
-            margin: 0;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-
-        #app-content-wrapper form fieldset > ul > li > button {
-            position: absolute;
-            right: 10px;
-            margin-top: 8px;
-            margin-right: 9px;
-            z-index: 10;
-			border: 0;
-			background-color: transparent;
-        }
-
-        #app-content-wrapper form fieldset > ul > li > textarea {
-            min-height: 10em;
-            resize: vertical;
-            width: 100%;
-            margin: 0;
-            border-top-right-radius: 0;
-        }
-
-        #app-content-wrapper form fieldset > ul > li .step-number {
-            padding: 6px;
-            float: left;
-        }
-
-        #app-content-wrapper form button[type="submit"] {
-            margin-left: auto;
-            display: block;
-        }
-
-/**
- * Print
- */
 @media print {
-    #header,
-    #app-navigation,
-    #controls,
-    .recipe-toolbar,
-	#app-content header:not(.printable),
-	.times button {
-        display: none !important;
-    }
-
-    #content,
-    #app-content-wrapper {
-        display: block !important;
-        padding: 0 !important;
-        overflow: visible !important;
-    }
-
-    #app-content {
-        margin-left: 0 !important;
-    }
-
     a:link:after,
     a:visited:after {
         content:" [" attr(href) "] ";

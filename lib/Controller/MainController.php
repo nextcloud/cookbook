@@ -46,7 +46,7 @@ class MainController extends Controller
 
         return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
     }
-    
+
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
@@ -75,7 +75,7 @@ class MainController extends Controller
     {
         try {
 			$recipes = $this->service->getAllRecipesInSearchIndex();
-			
+
 			foreach ($recipes as $i => $recipe) {
                 $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
                     'cookbook.recipe.image',
@@ -86,7 +86,7 @@ class MainController extends Controller
                     ]
                 );
 			}
-			
+
 			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
             $response->renderAs('blank');
 
@@ -107,7 +107,7 @@ class MainController extends Controller
 
         return $response;
     }
-	
+
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
@@ -117,7 +117,7 @@ class MainController extends Controller
 		$query = urldecode($query);
         try {
 			$recipes = $this->service->findRecipesInSearchIndex($query);
-			
+
 			foreach ($recipes as $i => $recipe) {
                 $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
                     'cookbook.recipe.image',
@@ -128,7 +128,7 @@ class MainController extends Controller
                     ]
                 );
 			}
-			
+
 			$response = new TemplateResponse($this->appName, 'content/search', ['query' => $query, 'recipes' => $recipes]);
             $response->renderAs('blank');
 
@@ -137,7 +137,7 @@ class MainController extends Controller
             return new DataResponse($e->getMessage(), 500);
         }
     }
-	
+
     /**
      * @NoAdminRequired
      * @NoCSRFRequired
@@ -145,12 +145,10 @@ class MainController extends Controller
     public function category($category)
     {
         $category = urldecode($category);
-
         try {
 			$recipes = $this->service->getRecipesByCategory($category);
-			
 			foreach ($recipes as $i => $recipe) {
-                $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
+                $recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute(
                     'cookbook.recipe.image',
                     [
                         'id' => $recipe['recipe_id'],
@@ -159,11 +157,8 @@ class MainController extends Controller
                     ]
                 );
 			}
-			
-			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
-            $response->renderAs('blank');
-
-            return $response;
+            
+            return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
         } catch (\Exception $e) {
             return new DataResponse($e->getMessage(), 500);
         }
@@ -187,7 +182,7 @@ class MainController extends Controller
             );
             $recipe['id'] = $id;
             $recipe['print_image'] = $this->service->getPrintImage();
-            $response = new TemplateResponse($this->appName, 'content/recipe', $recipe);
+            $response = new TemplateResponse($this->appName, 'content/recipe_vue', $recipe);
             $response->renderAs('blank');
 
             return $response;
@@ -204,7 +199,7 @@ class MainController extends Controller
     {
         try {
             $recipe = [];
-			
+
             $response = new TemplateResponse($this->appName, 'content/edit', $recipe);
             $response->renderAs('blank');
 
@@ -213,7 +208,7 @@ class MainController extends Controller
             return new DataResponse($e->getMessage(), 500);
         }
 	}
-    
+
     /**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
@@ -243,7 +238,7 @@ class MainController extends Controller
 		try {
 	        $recipe_data = $_POST;
 			$file = $this->service->addRecipe($recipe_data);
-			
+
 			return new DataResponse($file->getParent()->getId());
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
@@ -266,7 +261,7 @@ class MainController extends Controller
 
                 $recipe['id'] = $id;
             }
-			
+
             $response = new TemplateResponse($this->appName, 'content/edit', $recipe);
             $response->renderAs('blank');
 
