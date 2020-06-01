@@ -23,18 +23,19 @@ export default {
 <style scoped>
 
 li {
-    margin-left: 1em;
     cursor: pointer;
     counter-increment: instruction-counter;
     clear: both;
     margin-bottom: 2rem;
-    /* I find this more convenient than a ln2br-function */
     white-space: pre-line;
+    position: relative;
+    padding-left: calc(36px + 1rem);
 }
     li:before {
         content: counter(instruction-counter);
-        float: left;
-        margin: 0 1rem 1rem 0;
+        position: absolute;
+        left: 0;
+        top: 0;
         height: 36px;
         width: 36px;
         border-radius: 50%;
@@ -45,7 +46,6 @@ li {
         background-color: var(--color-background-dark);
         line-height: 36px;
         text-align: center;
-        margin-top: -6px;
     }
         li:hover::before {
             border-color: var(--color-primary-element);
