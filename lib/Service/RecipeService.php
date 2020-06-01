@@ -496,19 +496,14 @@ class RecipeService
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
                         if(!empty($prop_element->getAttribute('src'))) {
-                            $src = $prop_element->getAttribute('src');
-                            
+                            array_push($json[$prop], $prop_element->getAttribute('src'));
                         } else if(
                             null !== $prop_element->getAttributeNode('content') &&
                             !empty($prop_element->getAttributeNode('content')->value)
                         ) {
-                            $src = $prop_element->getAttributeNode('content')->value;
-                        
-                        } else {
-                            break;
+                            array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
                         }
 
-                        array_push($json[$prop], $src);
                         break;
 
                     case 'recipeIngredient':
@@ -525,6 +520,7 @@ class RecipeService
                         } else {
                             array_push($json[$prop], $prop_element->nodeValue);
                         }
+                        
                         break;
 
                     case 'recipeInstructions':
@@ -535,13 +531,27 @@ class RecipeService
                         
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        array_push($json[$prop], $prop_element->nodeValue);
+                        if(
+                            null !== $prop_element->getAttributeNode('content') &&
+                            !empty($prop_element->getAttributeNode('content')->value)
+                        ) {
+                            array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
+                        } else {
+                            array_push($json[$prop], $prop_element->nodeValue);
+                        }
                         break;
 
                     default:
                         if (isset($json[$prop]) && $json[$prop]) { break; }
 
-                        $json[$prop] = $prop_element->nodeValue;
+                        if(
+                            null !== $prop_element->getAttributeNode('content') &&
+                            !empty($prop_element->getAttributeNode('content')->value)
+                        ) {
+                            $json[$prop] = $prop_element->getAttributeNode('content')->value;
+                        } else {
+                            $json[$prop] = $prop_element->nodeValue;
+                        }
                         break;
                 }
             }
