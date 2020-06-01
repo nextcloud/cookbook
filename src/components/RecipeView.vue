@@ -184,6 +184,10 @@ aside {
         width: 30%;
         float: left;
     }
+        @media(max-width:1199px) { .content aside {
+            width: 100%;
+            float: none;
+        } }
 
     main {
         flex-basis: calc(100% - 22rem);
@@ -191,6 +195,7 @@ aside {
         float: left;
         text-align: justify;
     }
+    
     @media(max-width:1199px) { main {
         flex-basis: 100%;
         width: 100%;

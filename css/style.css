@@ -211,6 +211,9 @@
 			display: flex;
 			margin-top: 10px;
 		}
+            @media(max-width:1199px) { #app-content-wrapper .times {
+                flex-direction: column;
+            } }
 		
 			#app-content-wrapper .times .time {
 				position: relative;
