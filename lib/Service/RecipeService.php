@@ -684,6 +684,7 @@ class RecipeService
             // Write the thumbnail
             $thumb_image = new Image();
             $thumb_image->loadFromData($full_image_data);
+            $thumb_image->fixOrientation();
             $thumb_image->resize(128);
             $thumb_image->centerCrop();
 
