@@ -1029,7 +1029,11 @@ class RecipeService
         }
 
         $json['id'] = $file->getParent()->getId();
-        $json['dateCreated'] = $file->getCreationTime();
+
+        if(method_exists($file, 'getCreationTime')) {
+            $json['dateCreated'] = $file->getCreationTime();
+        }
+        
         $json['dateModified'] = $file->getMTime();
 
         return $this->checkRecipe($json);
