@@ -160,7 +160,7 @@ class MainController extends Controller
                 );
 			}
 			
-			$response = new TemplateResponse($this->appName, 'content/search', ['tag' => $tag, 'recipes' => $recipes]);
+			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
             $response->renderAs('blank');
 
             return $response;
