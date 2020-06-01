@@ -3,7 +3,8 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input :type="fieldType" v-model="$parent.recipe[fieldName]" />
+        <input v-if="fieldType!=='textarea'" :type="fieldType" v-model="$parent.recipe[fieldName]" />
+        <textarea v-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName]" />
     </fieldset>
 </template>
 
@@ -43,10 +44,17 @@ fieldset > label {
         float: none;
     }}
 
-fieldset > input {
+fieldset > input,
+fieldset > textarea {
     width: calc(100% - 11em);
 }
-    @media(max-width:1199px) { fieldset > input {
+
+fieldset > textarea {
+    min-height: 10em;
+    resize: vertical;
+}
+
+    @media(max-width:1199px) { fieldset > input, fieldset > textarea {
         width: 100%;
     }}
 

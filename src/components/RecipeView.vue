@@ -203,6 +203,7 @@ aside {
 
         .description {
             font-style: italic;
+            white-space: pre;
         }
         .details p {
             margin: 0.5em 0

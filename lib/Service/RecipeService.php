@@ -342,7 +342,7 @@ class RecipeService
 
         // Make sure the 'description' is a string
         if (isset($json['description']) && is_string($json['description'])) {
-            $json['description'] = $this->cleanUpString($json['description']);
+            $json['description'] = $this->cleanUpString($json['description'], true);
         } else {
             $json['description'] = "";
         }

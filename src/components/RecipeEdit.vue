@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('Name')" />
-        <EditInputField :fieldName="'description'" :fieldType="'text'" :fieldLabel="t('Description')" />
+        <EditInputField :fieldName="'description'" :fieldType="'textarea'" :fieldLabel="t('Description')" />
         <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('URL')" />
         <EditImageField :fieldName="'image'" :fieldLabel="('Image')" />
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('Preparation time')" />
