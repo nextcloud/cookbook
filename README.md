@@ -1,4 +1,4 @@
-| **IMPORTANT** |
+| ⚠️ **IMPORTANT** ⚠️ |
 | --- |
 | Users of this app are practically testers. We're limited on resources, and still working out how to make this app function the best it can. There will be regressions and bugs. And we of course appreciate constructive feedback whenever users run into them. |
 
