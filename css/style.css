@@ -211,10 +211,14 @@
 			display: flex;
 			margin-top: 10px;
 		}
-            @media(max-width:1199px) { #app-content-wrapper .times {
+            @media(max-width:991px) { #app-content-wrapper .times {
                 flex-direction: column;
             } }
-		
+	
+            @media print { #app-content-wrapper .times {
+                flex-direction: row;
+            } }
+
 			#app-content-wrapper .times .time {
 				position: relative;
 				flex-grow: 1;
@@ -247,7 +251,7 @@
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);
     }
-        @media(max-width:1199px) { #app-content-wrapper main {
+        @media screen and (max-width:1199px) { #app-content-wrapper main {
             flex-basis: 100%;
             width: 100%;
         } }
@@ -295,6 +299,10 @@
     }
 
 @media print {
+    #header {
+        display: none !important;
+    }
+
     a:link:after,
     a:visited:after {
         content:" [" attr(href) "] ";

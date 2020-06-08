@@ -64,7 +64,10 @@ class RecipeController extends Controller
         if (null === $json) {
             return new DataResponse($id, Http::STATUS_NOT_FOUND, ['Content-Type' => 'application/json']);
         }
+
+        $json['printImage'] = $this->service->getPrintImage();
         $json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
+        
         return new DataResponse($json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
     }
 

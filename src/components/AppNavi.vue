@@ -163,6 +163,30 @@ export default {
         },
     },
     methods: {
+        /**
+         * Initial setup
+         */
+        setup: function() {
+            let $this = this
+            
+            $.ajax({
+                url: this.$window.baseUrl + '/config',
+                method: 'GET',
+                data: null,
+            }).done(function (config) {
+                $this.resetPrintImage = false;
+                $this.printImage = config['print_image'];
+                $this.updateInterval = config['update_interval'];
+                $this.recipeFolder = config['folder'];
+           
+            }).fail(function(e) {
+                alert($this.t('Loading config failed'))
+            })
+        },
+
+        /**
+         * Opens a category
+         */
         categoryOpen: function(idx) {
             if (!this.categories[idx].recipes.length || this.categories[idx].recipes[0].id) {
                 // Recipes have already been loaded
@@ -179,6 +203,7 @@ export default {
                 }
             })
         },
+
         /**
          * Download and import the recipe at given URL
          */
@@ -202,6 +227,7 @@ export default {
             })
             return deferred.promise()
         },
+
         /**
          * Fetch and display recipe categories
          */
@@ -241,6 +267,7 @@ export default {
                 }
             })
         },
+
         /**
          * Select a recipe folder using the Nextcloud file picker
          */
@@ -269,6 +296,7 @@ export default {
                 true
             )
         },
+
         /**
          * Reindex all recipes
          */
@@ -299,6 +327,7 @@ export default {
             })
             return deferred.promise()
         },
+
         /**
          * Set loading recipe index to show the loading icon
          */
@@ -307,6 +336,7 @@ export default {
         },
     },
     mounted () {
+        this.setup()
         // Register a method hook for navigation refreshing
         // This component should only load once, but better safe than sorry...
         this.$root.$off('refreshNavigation')

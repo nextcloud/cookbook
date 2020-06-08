@@ -1,6 +1,5 @@
 <template>
     <div class="wrapper">
-
         <RecipeImages v-if="$store.state.recipe" />
 
         <div v-if="$store.state.recipe" class="content">
@@ -76,61 +75,75 @@ export default {
     },
     methods: {
         setup: function() {
+            // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
-                // Make the control row show that a recipe is loading
                 this.$store.dispatch('setLoadingRecipe', { recipe: -1 })
+            
+            // Make the control row show that the recipe is reloading
             } else if (this.$store.state.recipe.id === parseInt(this.$route.params.id)) {
-                // Make the control row show that the recipe is reloading
                 this.$store.dispatch('setReloadingRecipe', {
                     recipe: this.$route.params.id
                 })
+
+            // Make the control row show that a new recipe is loading
             } else {
-                // Make the control row show that a new recipe is loading
                 this.$store.dispatch('setLoadingRecipe', { recipe: this.$route.params.id })
             }
+
             let $this = this
+            
             $.ajax({
-                url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
+                url: this.$window.baseUrl + '/api/recipes/' + this.$route.params.id,
                 method: 'GET',
                 data: null,
+            
             }).done(function (recipe) {
                 // Store recipe data in vuex
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
+                
                 if ($this.$store.state.recipe.recipeIngredient) {
                     $this.ingredients = Object.values($this.$store.state.recipe.recipeIngredient)
                 }
+                
                 if ($this.$store.state.recipe.recipeInstructions) {
                     $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
                 }
+                
                 if ($this.$store.state.recipe.cookTime) {
                     let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
                 }
+                
                 if ($this.$store.state.recipe.prepTime) {
                     let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
                 }
+                
                 if ($this.$store.state.recipe.totalTime) {
                     let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
                 }
+                
                 if ($this.$store.state.recipe.tool) {
                     $this.tools = $this.$store.state.recipe.tool
                 }
+                
                 // Always set the active page last!
                 $this.$store.dispatch('setPage', { page: 'recipe' })
-
-                console.log('DEBUG', $this);
+            
             }).fail(function(e) {
                 if ($this.$store.state.loadingRecipe) {
                     // Reset loading recipe
                     $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
                 }
+                
                 if ($this.$store.state.reloadingRecipe) {
                     // Reset reloading recipe
                     $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
                 }
+                
                 $this.$store.dispatch('setPage', { page: 'recipe' })
+                
                 alert($this.t('Loading recipe failed'))
             })
         }
@@ -186,7 +199,7 @@ aside {
         width: 30%;
         float: left;
     }
-        @media(max-width:1199px) { .content aside {
+        @media screen and (max-width:1199px) { .content aside {
             width: 100%;
             float: none;
         } }
@@ -198,7 +211,7 @@ aside {
         text-align: justify;
     }
     
-    @media(max-width:1199px) { main {
+    @media screen and (max-width:1199px) { main {
         flex-basis: 100%;
         width: 100%;
     } }
@@ -221,7 +234,7 @@ aside {
         clear: both;
     }
 
-    @media(max-width:1199px) { .recipe-content aside {
+    @media screen and (max-width:1199px) { .recipe-content aside {
         display: block;
         width: 100%;
         float: none;

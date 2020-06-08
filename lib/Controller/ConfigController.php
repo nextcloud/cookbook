@@ -38,6 +38,18 @@ class ConfigController extends Controller
      * @NoAdminRequired
      * @NoCSRFRequired
      */
+    public function list() {
+        return new DataResponse([
+            'folder' => $this->service->getUserFolderPath(),
+            'update_interval' => $this->service->getSearchIndexUpdateInterval(),
+            'print_image' => $this->service->getPrintImage(),
+        ], Http::STATUS_OK);
+    }
+
+    /**
+     * @NoAdminRequired
+     * @NoCSRFRequired
+     */
     public function config()
     {
         if (isset($_POST['folder'])) {
