@@ -97,10 +97,10 @@ export default {
                 // Store recipe data in vuex
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 if ($this.$store.state.recipe.recipeIngredient) {
-                    $this.ingredients = $this.$store.state.recipe.recipeIngredient
+                    $this.ingredients = Object.values($this.$store.state.recipe.recipeIngredient)
                 }
                 if ($this.$store.state.recipe.recipeInstructions) {
-                    $this.instructions = $this.$store.state.recipe.recipeInstructions
+                    $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
                 }
                 if ($this.$store.state.recipe.cookTime) {
                     let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
@@ -119,6 +119,8 @@ export default {
                 }
                 // Always set the active page last!
                 $this.$store.dispatch('setPage', { page: 'recipe' })
+
+                console.log('DEBUG', $this);
             }).fail(function(e) {
                 if ($this.$store.state.loadingRecipe) {
                     // Reset loading recipe
