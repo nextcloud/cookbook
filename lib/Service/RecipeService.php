@@ -432,6 +432,9 @@ class RecipeService
                 continue;
             }
 
+            // Some recipes have newlines inside quotes, which is invalid JSON. Fix this before continuing.
+            $string = preg_replace('/\s+/', ' ', $string);
+
             $json = json_decode($string, true);
 
             // Look through @graph field for recipe
