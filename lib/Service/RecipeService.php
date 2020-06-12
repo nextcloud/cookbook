@@ -448,14 +448,11 @@ class RecipeService
 
             // Check if json is an array for some reason
             if($json && isset($json[0])) {
-                $i = -1;
                 foreach ($json as $element) {
-                    $i++;
                     if ($element && isset($element['@type']) && $element['@type'] == 'Recipe') {
-                        break;
+                        return $this->checkRecipe($json);
                     }
                 }
-                $json = $json[$i];
             }
 
             if (!$json || !isset($json['@type']) || $json['@type'] !== 'Recipe') {
