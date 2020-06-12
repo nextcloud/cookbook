@@ -4,10 +4,12 @@
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
             <Breadcrumb :title="t('Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
-            <Breadcrumb v-if="isIndex" class="active" :title="t('All recipes')" :disableDrop="true"></Breadcrumb>
+            <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('All recipes')" :disableDrop="true"></Breadcrumb>
+            <!--
             <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton icon="icon-search" class="action-button" :disabled="true" :ariaLabel="t('Search')" @click="$window.goTo('/search')" />
             </Breadcrumb>
+            -->
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
             <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value" :disableDrop="true" />
