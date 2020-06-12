@@ -1,6 +1,13 @@
 #!/bin/bash
 
 echo ""
+echo "Building..."
+echo ""
+
+npm install
+npm run build
+
+echo ""
 echo "Creating archive..."
 echo ""
 

@@ -280,8 +280,14 @@ class RecipeDb {
                 $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
                 $qb->setParameter('keyword', $keyword, Type::STRING);
                 $qb->setParameter('user', $user_id, Type::STRING);
-                
-                $qb->execute();
+
+                try {         
+                    $qb->execute();
+
+                } catch(\Exception $e) {
+                    // Keyword didn't meet restrictions, skip it
+
+                }
             }
         }
         
@@ -311,7 +317,14 @@ class RecipeDb {
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         $qb->setParameter('category', $json['recipeCategory'], Type::STRING);
         $qb->setParameter('user', $user_id, Type::STRING);
-        $qb->execute();
+
+        try {
+            $qb->execute();
+
+        } catch(\Exception $e) {
+            // Category didn't meet restrictions, skip it
+        
+        }
     }
 }
 

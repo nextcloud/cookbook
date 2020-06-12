@@ -24,8 +24,11 @@ return [
 	   ['name' => 'main#recipe', 'url' => '/recipes/{id}', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
 	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
 	   ['name' => 'config#reindex', 'url' => '/reindex', 'verb' => 'POST'],
+	   ['name' => 'config#list', 'url' => '/config', 'verb' => 'GET'],
 	   ['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
    ],
+   
+   /* API routes */
    'resources' => [
 	   	'recipe' => ['url' => '/api/recipes']
    ]

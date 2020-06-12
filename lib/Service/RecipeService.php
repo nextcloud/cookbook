@@ -7,6 +7,7 @@ use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Image;
 use OCP\IConfig;
+use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\FileInfo;
 use OCP\Files\File;
@@ -26,13 +27,15 @@ class RecipeService
     private $user_id;
     private $db;
     private $config;
+    private $il10n;
 
-    public function __construct(string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config)
+    public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config, IL10N $il10n)
     {
         $this->user_id = $UserId;
         $this->root = $root;
         $this->db = $db;
         $this->config = $config;
+        $this->il10n = $il10n;
     }
 
     /**
@@ -113,8 +116,17 @@ class RecipeService
      */
     public function checkRecipe(array $json): array
     {
-        if (!$json) { throw new Exception('Recipe array was null'); }
-        if (empty($json['name'])) { throw new Exception('Field "name" is required'); }
+        if (!$json) {
+            throw new Exception('Recipe array was null');
+        }
+        
+        if (empty($json['name'])) {
+            throw new Exception('Field "name" is required');
+        }
+
+        if (strpos(empty($json['name']), '/') !== false) {
+            throw new Exception('Illegal characters in recipe name');
+        }
 
         // Make sure the schema.org fields are present
         $json['@context'] = 'http://schema.org';
@@ -164,7 +176,16 @@ class RecipeService
         } else {
             $json['image'] = '';
         }
-        
+
+        // The image is a URL without a scheme, fix it
+        if (strpos($json['image'], '//') === 0) {
+            if(isset($json['url']) && strpos($json['url'], 'https') === 0) {
+                $json['image'] = 'https:' . $json['image'];
+            } else {
+                $json['image'] = 'http:' . $json['image'];
+            }
+        }
+
         // Clean up the image URL string
         $json['image'] = stripslashes($json['image']);
 
@@ -321,7 +342,7 @@ class RecipeService
 
         // Make sure the 'description' is a string
         if (isset($json['description']) && is_string($json['description'])) {
-            $json['description'] = $this->cleanUpString($json['description']);
+            $json['description'] = $this->cleanUpString($json['description'], true);
         } else {
             $json['description'] = "";
         }
@@ -337,6 +358,7 @@ class RecipeService
             $json['url'] = "";
         }
 
+        // Parse duration fields
         $durations = ['prepTime', 'cookTime', 'totalTime'];
         $duration_patterns = [
             '/P.*T(\d+H)?(\d+M)?/',   // ISO 8601
@@ -367,6 +389,11 @@ class RecipeService
                         $duration_minutes = intval($duration_matches[2][0]);
                     }
                 }
+            }
+
+            while($duration_minutes >= 60) {
+                $duration_minutes -= 60;
+                $duration_hours++;
             }
 
             $json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
@@ -419,6 +446,11 @@ class RecipeService
                 }
             }
 
+            // Check if json is an array for some reason
+            if($json && isset($json[0])) {
+                $json = $json[0];
+            }
+
             if (!$json || !isset($json['@type']) || $json['@type'] !== 'Recipe') {
                 continue;
             }
@@ -463,9 +495,15 @@ class RecipeService
                         
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        $src = $prop_element->getAttribute('src');
+                        if(!empty($prop_element->getAttribute('src'))) {
+                            array_push($json[$prop], $prop_element->getAttribute('src'));
+                        } else if(
+                            null !== $prop_element->getAttributeNode('content') &&
+                            !empty($prop_element->getAttributeNode('content')->value)
+                        ) {
+                            array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
+                        }
 
-                        array_push($json[$prop], $src);
                         break;
 
                     case 'recipeIngredient':
@@ -474,11 +512,15 @@ class RecipeService
                         
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        if(null !== $prop_element->getAttributeNode('content')) {
+                        if(
+                            null !== $prop_element->getAttributeNode('content') &&
+                            !empty($prop_element->getAttributeNode('content')->value)
+                        ) {
                             array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
                         } else {
                             array_push($json[$prop], $prop_element->nodeValue);
                         }
+                        
                         break;
 
                     case 'recipeInstructions':
@@ -489,18 +531,32 @@ class RecipeService
                         
                         if(!isset($json[$prop]) || !is_array($json[$prop])) { $json[$prop] = []; }
 
-                        array_push($json[$prop], $prop_element->nodeValue);
+                        if(
+                            null !== $prop_element->getAttributeNode('content') &&
+                            !empty($prop_element->getAttributeNode('content')->value)
+                        ) {
+                            array_push($json[$prop], $prop_element->getAttributeNode('content')->value);
+                        } else {
+                            array_push($json[$prop], $prop_element->nodeValue);
+                        }
                         break;
 
                     default:
                         if (isset($json[$prop]) && $json[$prop]) { break; }
 
-                        $json[$prop] = $prop_element->nodeValue;
+                        if(
+                            null !== $prop_element->getAttributeNode('content') &&
+                            !empty($prop_element->getAttributeNode('content')->value)
+                        ) {
+                            $json[$prop] = $prop_element->getAttributeNode('content')->value;
+                        } else {
+                            $json[$prop] = $prop_element->nodeValue;
+                        }
                         break;
                 }
             }
         }
-        
+
         // Make one final desparate attempt at getting the instructions
         if (!isset($json['recipeInstructions']) || !$json['recipeInstructions'] || sizeof($json['recipeInstructions']) < 1) {
             $json['recipeInstructions'] = [];
@@ -579,7 +635,12 @@ class RecipeService
         $recipe_file = $this->getRecipeFileByFolderId($recipe_folder->getId());
 
         if (!$recipe_file) {
-            $recipe_file = $recipe_folder->newFile($json['name'] . '.json');
+            $recipe_file = $recipe_folder->newFile('recipe.json');
+        }
+
+        // Rename .json file if it's not "recipe.json"
+        if($recipe_file->getName() !== 'recipe.json') {
+            $recipe_file->move(str_replace($recipe_file->getName(), 'recipe.json', $recipe_file->getPath()));
         }
 
         $recipe_file->putContent(json_encode($json));
@@ -591,12 +652,31 @@ class RecipeService
         $full_image_data = null;
 
         if (isset($json['image']) && $json['image']) {
+            // The image is a URL
             if (strpos($json['image'], 'http') === 0) {
                 $json['image'] = str_replace(' ', '%20', $json['image']);
                 $full_image_data = file_get_contents($json['image']);
+
+            // The image is a local path
             } else {
-                $full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
-                $full_image_data = $full_image_file->getContent();
+                try {
+                    $full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
+                    $full_image_data = $full_image_file->getContent();
+
+                } catch (NotFoundException $e) {
+                    $full_image_data = null;
+
+                }
+            }
+
+        // The image field was empty, remove images in the recipe folder
+        } else {
+            if($recipe_folder->nodeExists('full.jpg')) {
+                $recipe_folder->get('full.jpg')->delete();
+            }
+
+            if($recipe_folder->nodeExists('thumb.jpg')) {
+                $recipe_folder->get('thumb.jpg')->delete();
             }
         }
 
@@ -614,6 +694,7 @@ class RecipeService
             // Write the thumbnail
             $thumb_image = new Image();
             $thumb_image->loadFromData($full_image_data);
+            $thumb_image->fixOrientation();
             $thumb_image->resize(128);
             $thumb_image->centerCrop();
 
@@ -625,6 +706,14 @@ class RecipeService
 
             $thumb_image_file->putContent($thumb_image->data());
         }
+
+        // Write .nomedia file to avoid gallery indexing
+        if(!$recipe_folder->nodeExists('.nomedia')) {
+            $recipe_folder->newFile('.nomedia');
+        }
+
+        // Make sure the directory has been marked as changed
+        $recipe_folder->touch();
 
         return $recipe_file;
     }
@@ -726,9 +815,9 @@ class RecipeService
 
                 $recipe_folder = $user_folder->newFolder($recipe_name);
 
-                $node->move($recipe_folder->getPath() . '/' . $recipe_name . '.json');
+                $node->move($recipe_folder->getPath() . '/recipe.json');
 
-                // Rename folders with .json extensions (this was likely caused by a migration bug)
+            // Rename folders with .json extensions (this was likely caused by a migration bug)
             } else if ($node instanceof Folder && strpos($node->getName(), '.json')) {
                 $node->move(str_replace('.json', '', $node->getPath()));
 
@@ -853,7 +942,7 @@ class RecipeService
         $path = $this->config->getUserValue($this->user_id, 'cookbook', 'folder');
 
         if (!$path) {
-            $path = '/Recipes';
+            $path = '/' . $this->il10n->t('Recipes');
         }
 
         return $path;
@@ -950,7 +1039,11 @@ class RecipeService
         }
 
         $json['id'] = $file->getParent()->getId();
-        $json['dateCreated'] = $file->getCreationTime();
+
+        if(method_exists($file, 'getCreationTime')) {
+            $json['dateCreated'] = $file->getCreationTime();
+        }
+        
         $json['dateModified'] = $file->getMTime();
 
         return $this->checkRecipe($json);
@@ -1024,14 +1117,18 @@ class RecipeService
     private function isRecipeFile($file)
     {
         $allowedExtensions = ['json'];
+
         if ($file->getType() !== 'file') {
             return false;
         }
+
         $ext = pathinfo($file->getName(), PATHINFO_EXTENSION);
         $iext = strtolower($ext);
-        if (!in_array($iext, $allowedExtensions)) {
+
+        if(!in_array($iext, $allowedExtensions)) {
             return false;
         }
+
         return true;
     }
 
