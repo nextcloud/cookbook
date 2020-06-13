@@ -124,10 +124,6 @@ class RecipeService
             throw new Exception('Field "name" is required');
         }
 
-        if (strpos(empty($json['name']), '/') !== false) {
-            throw new Exception('Illegal characters in recipe name');
-        }
-
         // Make sure the schema.org fields are present
         $json['@context'] = 'http://schema.org';
         $json['@type'] = 'Recipe';
@@ -216,9 +212,10 @@ class RecipeService
             $json['recipeCategory'] = '';
         }
 
+        $json['recipeCategory'] = $this->cleanUpString($json['recipeCategory']);
+
         // Make sure that "recipeYield" is an integer which is at least 1
         if (isset($json['recipeYield']) && $json['recipeYield']) {
-
             $regex_matches = [];
             preg_match('/^.*?(\d*)/', $json['recipeYield'], $regex_matches);
             if (count($regex_matches) >= 1 ){
@@ -226,7 +223,7 @@ class RecipeService
             }
 
             if ($yield && $yield > 0) {
-                $json['recipeYield'] = (int)$yield;
+                $json['recipeYield'] = (int) $yield;
             } else {
                 $json['recipeYield'] = 1;
             }
@@ -238,10 +235,15 @@ class RecipeService
         if(isset($json['keywords']) && is_string($json['keywords'])) {
             $keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
             $keywords = strip_tags($keywords);
-            $keywords = preg_replace('/\s+/', ' ', $keywords); // Colapse whitespace
+            $keywords = preg_replace('/\s+/', ' ', $keywords); // Collapse whitespace
             $keywords = preg_replace('/(, | ,|,)+/', ',', $keywords); // Clean up separators
             $keywords = explode(',', $keywords);
             $keywords = array_unique($keywords);
+
+            foreach($keywords as $i => $keyword) {
+                $keywords[$i] = $this->cleanUpString($keywords[$i]);
+            }
+
             $keywords = implode(',', $keywords);
             $json['keywords'] = $keywords;
         } else {
@@ -1157,7 +1159,7 @@ class RecipeService
             $str = str_replace(["\r", "\n"], '', $str);
         }
 
-        $str = str_replace(["\t", "\\"], '', $str);
+        $str = str_replace(["\t", "\\", "/"], '', $str);
 
         $str = html_entity_decode($str);
 
