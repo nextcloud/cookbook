@@ -3,7 +3,7 @@
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
             <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
-                <div v-if="fieldName==='instructions'" class="step-number"></div>
+                <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ id+1 }}</div>
                 <input v-if="fieldType==='text'" type="text" v-model="$parent.recipe[fieldName][idx]" @keyup="keyPressed" />
                 <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName][idx]"></textarea>
                 <div class="controls">
@@ -13,7 +13,7 @@
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ t('Add') }}</button>
+        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
     </fieldset>
 </template>
 
@@ -154,8 +154,8 @@ li.textarea {
     li.textarea > textarea {
         min-height: 10em;
         resize: vertical;
-        width: 100%;
-        margin: 0;
+        width: calc(100% - 44px);
+        margin: 0 0 0 44px;
         border-top-right-radius: 0;
     }
 
@@ -163,6 +163,21 @@ li.textarea {
         display: table;
         content: '';
         clear: both;
+    }
+    .step-number {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 36px;
+        width: 36px;
+        border-radius: 50%;
+        border: 1px solid var(--color-border-dark);
+        outline: none;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: var(--color-background-dark);
+        line-height: 36px;
+        text-align: center;
     }
 
 .icon-arrow-up {

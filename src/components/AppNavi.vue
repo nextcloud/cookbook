@@ -2,7 +2,7 @@
 <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <AppNavigation>
         <router-link :to="'/recipe/create'">
-            <AppNavigationNew class="create" :text="t('Create recipe')" />
+            <AppNavigationNew class="create" :text="t('cookbook', 'Create recipe')" />
         </router-link>
         <ul>
             <ActionInput
@@ -10,9 +10,9 @@
                 @submit="downloadRecipe"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
-                    {{ t('Recipe URL') }}
+                    {{ t('cookbook', 'Recipe URL') }}
             </ActionInput>
-            <AppNavigationItem :title="t('All recipes')" icon="icon-category-organization" :to="'/'">
+            <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"
@@ -44,26 +44,26 @@
                                 class="button"
                                 :icon="scanningLibrary ? 'icon-loading-small' : 'icon-history'"
                                 @click="reindex()"
-                                :title="t('Rescan library')"
+                                :title="t('cookbook', 'Rescan library')"
                             />
                         </li>
                         <li>
-                            <label class="settings-input">{{ t('Recipe folder') }}</label>
-                            <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="t('Please pick a folder')">
+                            <label class="settings-input">{{ t('cookbook', 'Recipe folder') }}</label>
+                            <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="t('cookbook', 'Please pick a folder')">
                         </li>
                         <li>
                             <label class="settings-input">
-                                {{ t('Update interval in minutes') }}
+                                {{ t('cookbook', 'Update interval in minutes') }}
                             </label>
                             <div class="update">
                                 <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
-                                <button class="icon-info" disabled="disabled" :title="t('Last update: ')"></button>
+                                <button class="icon-info" disabled="disabled" :title="t('cookbook', 'Last update: ')"></button>
                             </div>
                         </li>
                         <li>
                             <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
                             <label for="recipe-print-image">
-                                {{ t('Print image with recipe') }}
+                                {{ t('cookbook', 'Print image with recipe') }}
                             </label>
                         </li>
                     </ul>
@@ -137,7 +137,7 @@ export default {
             }).done(function (response) {
                 // Should this check the response of the query? To catch some errors that redirect the page
             }).fail(function(e) {
-                alert($this.t('Could not set preference for image printing'));
+                alert($this.t('cookbook', 'Could not set preference for image printing'));
                 $this.resetPrintImage = true
                 $this.printImage = oldVal
             })
@@ -156,7 +156,7 @@ export default {
             }).done(function (response) {
                 // Should this check the response of the query? To catch some errors that redirect the page
             }).fail(function(e) {
-                alert($this.t('Could not set recipe update interval to {interval}', { interval: newVal }))
+                alert($this.t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
                 $this.resetInterval = true
                 $this.updateInterval = oldVal
             })
@@ -168,7 +168,7 @@ export default {
          */
         setup: function() {
             let $this = this
-            
+
             $.ajax({
                 url: this.$window.baseUrl + '/config',
                 method: 'GET',
@@ -178,9 +178,9 @@ export default {
                 $this.printImage = config['print_image'];
                 $this.updateInterval = config['update_interval'];
                 $this.recipeFolder = config['folder'];
-           
+
             }).fail(function(e) {
-                alert($this.t('Loading config failed'))
+                alert($this.t('cookbook', 'Loading config failed'))
             })
         },
 
@@ -197,7 +197,7 @@ export default {
                 cat.recipes = json
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 cat.recipes = []
-                alert($this.t('Failed to load category '+cat.name+' recipes'))
+                alert($this.t('cookbook', 'Failed to load category '+cat.name+' recipes'))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -245,7 +245,7 @@ export default {
                         $this.categories.push({
                             name: json[i].name,
                             recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: $this.t('Loading category recipes...') }],
+                            recipes: [{ id: 0, name: $this.t('cookbook', 'Loading category recipes...') }],
                         })
                     }
                 }
@@ -261,7 +261,7 @@ export default {
                 }
             })
             .fail(function(e) {
-                alert($this.t('Failed to fetch categories'))
+                alert($this.t('cookbook', 'Failed to fetch categories'))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -274,7 +274,7 @@ export default {
         pickRecipeFolder: function(e) {
             let $this = this
             OC.dialogs.filepicker(
-                this.t('Path to your recipe collection'),
+                this.t('cookbook', 'Path to your recipe collection'),
                 function (path) {
                     $.ajax({
                         url: $this.$window.baseUrl + '/config',
@@ -288,7 +288,7 @@ export default {
                             $this.recipeFolder = path
                         })
                     }).fail(function(e) {
-                        alert($this.t('Could not set recipe folder to {path}', { path: path }))
+                        alert($this.t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
                     })
                 },
                 false,
