@@ -432,6 +432,9 @@ class RecipeService
                 continue;
             }
 
+            // Some recipes have newlines inside quotes, which is invalid JSON. Fix this before continuing.
+            $string = preg_replace('/\s+/', ' ', $string);
+
             $json = json_decode($string, true);
 
             // Look through @graph field for recipe
@@ -447,11 +450,12 @@ class RecipeService
             }
 
             // Check if json is an array for some reason
-            if($json && isset($json[0])) {
+            if ($json && isset($json[0])) {
                 foreach ($json as $element) {
-                    if ($element && isset($element['@type']) && $element['@type'] == 'Recipe') {
-                        return $this->checkRecipe($json);
+                    if (!$element || !isset($element['@type']) || $element['@type'] !== 'Recipe') {
+                        continue;
                     }
+                    return $this->checkRecipe($element);
                 }
             }
 
