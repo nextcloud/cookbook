@@ -287,7 +287,7 @@ class RecipeService
             $json['recipeIngredient'] = [];
         }
 
-        $json['recipeIngredient'] = array_filter($json['recipeIngredient']);
+        $json['recipeIngredient'] = array_filter(array_values($json['recipeIngredient']));
 
         // Make sure that "recipeInstructions" is an array of strings
         if (isset($json['recipeInstructions'])) {
@@ -336,7 +336,7 @@ class RecipeService
             $json['recipeInstructions'] = [];
         }
 
-        $json['recipeInstructions'] = array_filter($json['recipeInstructions'], function ($v) {
+        $json['recipeInstructions'] = array_filter(array_values($json['recipeInstructions']), function ($v) {
             return !empty($v) && $v !== "\n" && $v !== "\r";
         });
 

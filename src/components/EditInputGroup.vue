@@ -3,7 +3,7 @@
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
             <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
-                <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ id+1 }}</div>
+                <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ parseInt(idx) + 1 }}</div>
                 <input v-if="fieldType==='text'" type="text" v-model="$parent.recipe[fieldName][idx]" @keyup="keyPressed" />
                 <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName][idx]"></textarea>
                 <div class="controls">
