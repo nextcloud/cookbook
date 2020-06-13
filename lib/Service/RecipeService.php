@@ -124,10 +124,6 @@ class RecipeService
             throw new Exception('Field "name" is required');
         }
 
-        if (strpos(empty($json['name']), '/') !== false) {
-            throw new Exception('Illegal characters in recipe name');
-        }
-
         // Make sure the schema.org fields are present
         $json['@context'] = 'http://schema.org';
         $json['@type'] = 'Recipe';
@@ -216,9 +212,10 @@ class RecipeService
             $json['recipeCategory'] = '';
         }
 
+        $json['recipeCategory'] = $this->cleanUpString($json['recipeCategory']);
+
         // Make sure that "recipeYield" is an integer which is at least 1
         if (isset($json['recipeYield']) && $json['recipeYield']) {
-
             $regex_matches = [];
             preg_match('/^.*?(\d*)/', $json['recipeYield'], $regex_matches);
             if (count($regex_matches) >= 1 ){
@@ -226,7 +223,7 @@ class RecipeService
             }
 
             if ($yield && $yield > 0) {
-                $json['recipeYield'] = (int)$yield;
+                $json['recipeYield'] = (int) $yield;
             } else {
                 $json['recipeYield'] = 1;
             }
@@ -238,10 +235,15 @@ class RecipeService
         if(isset($json['keywords']) && is_string($json['keywords'])) {
             $keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
             $keywords = strip_tags($keywords);
-            $keywords = preg_replace('/\s+/', ' ', $keywords); // Colapse whitespace
+            $keywords = preg_replace('/\s+/', ' ', $keywords); // Collapse whitespace
             $keywords = preg_replace('/(, | ,|,)+/', ',', $keywords); // Clean up separators
             $keywords = explode(',', $keywords);
             $keywords = array_unique($keywords);
+
+            foreach($keywords as $i => $keyword) {
+                $keywords[$i] = $this->cleanUpString($keywords[$i]);
+            }
+
             $keywords = implode(',', $keywords);
             $json['keywords'] = $keywords;
         } else {
@@ -287,7 +289,7 @@ class RecipeService
             $json['recipeIngredient'] = [];
         }
 
-        $json['recipeIngredient'] = array_filter($json['recipeIngredient']);
+        $json['recipeIngredient'] = array_filter(array_values($json['recipeIngredient']));
 
         // Make sure that "recipeInstructions" is an array of strings
         if (isset($json['recipeInstructions'])) {
@@ -336,7 +338,7 @@ class RecipeService
             $json['recipeInstructions'] = [];
         }
 
-        $json['recipeInstructions'] = array_filter($json['recipeInstructions'], function ($v) {
+        $json['recipeInstructions'] = array_filter(array_values($json['recipeInstructions']), function ($v) {
             return !empty($v) && $v !== "\n" && $v !== "\r";
         });
 
@@ -416,21 +418,26 @@ class RecipeService
         // Make sure we don't have any encoded entities in the HTML string
         $html = html_entity_decode($html);
 
-        // Parse JSON
-        $json_matches = [];
+        // Start document parser
+        $document = new \DOMDocument();
+
+        if(!$document->loadHTML($html)) {
+            throw new \Exception('Malformed HTML');
+        }
         
-        preg_match_all('/<script type=["|\']application\/ld\+json["|\'][^>]*>([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
+        $xpath = new \DOMXPath($document);
 
-        foreach ($json_matches as $json_match) {
-            if (!$json_match || !isset($json_match[1])) {
+        $json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
+
+        foreach ($json_ld_elements as $json_ld_element) {
+            if (!$json_ld_element || !$json_ld_element->nodeValue) {
                 continue;
             }
 
-            $string = $json_match[1];
+            $string = $json_ld_element->nodeValue;
 
-            if (!$string) {
-                continue;
-            }
+            // Some recipes have newlines inside quotes, which is invalid JSON. Fix this before continuing.
+            $string = preg_replace('/\s+/', ' ', $string);
 
             $json = json_decode($string, true);
 
@@ -447,8 +454,13 @@ class RecipeService
             }
 
             // Check if json is an array for some reason
-            if($json && isset($json[0])) {
-                $json = $json[0];
+            if ($json && isset($json[0])) {
+                foreach ($json as $element) {
+                    if (!$element || !isset($element['@type']) || $element['@type'] !== 'Recipe') {
+                        continue;
+                    }
+                    return $this->checkRecipe($element);
+                }
             }
 
             if (!$json || !isset($json['@type']) || $json['@type'] !== 'Recipe') {
@@ -460,13 +472,6 @@ class RecipeService
 
         // Parse HTML if JSON couldn't be found
         $json = [];
-        $document = new \DOMDocument();
-
-        if(!$document->loadHTML($html)) {
-            throw new \Exception('Malformed HTML');
-        }
-        
-        $xpath = new \DOMXPath($document);
         
         $recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 
@@ -1149,7 +1154,7 @@ class RecipeService
             $str = str_replace(["\r", "\n"], '', $str);
         }
 
-        $str = str_replace(["\t", "\\"], '', $str);
+        $str = str_replace(["\t", "\\", "/"], '', $str);
 
         $str = html_entity_decode($str);
 

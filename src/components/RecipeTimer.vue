@@ -2,7 +2,7 @@
 
     <div class="time">
         <button v-if="this.timer" type="button" :class="countdown===null ? 'icon-play' : 'icon-pause'" @click="timerToggle"></button>
-        <h4>{{ t(label) }}</h4>
+        <h4>{{ t('cookbook', label) }}</h4>
         <p>{{ displayTime }}</p>
     </div>
 
@@ -44,8 +44,8 @@ export default {
             window.setTimeout(function() {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
-                alert($this.t('Cooking time is up!'))
-                //cookbook.notify($this.t('Cooking time is up!'))
+                alert(t('cookbook', 'Cooking time is up!'))
+                //cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false
                 $this.resetTimeDisplay()

@@ -2,33 +2,35 @@
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
-            <Breadcrumb :title="t('Home')" :to="'/'" :disableDrop="true" />
+            <Breadcrumb :title="t('cookbook', 'Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
-            <Breadcrumb v-if="isIndex" class="active" :title="t('All recipes')" :disableDrop="true"></Breadcrumb>
+            <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('cookbook', 'All recipes')" :disableDrop="true"></Breadcrumb>
+            <!--
             <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-search" class="action-button" :disabled="true" :ariaLabel="t('Search')" @click="$window.goTo('/search')" />
+                <ActionButton icon="icon-search" class="action-button" :disabled="true" :ariaLabel="t('cookbook', 'Search')" @click="$window.goTo('/search')" />
             </Breadcrumb>
+            -->
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
             <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value" :disableDrop="true" />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
-            <Breadcrumb v-if="isEdit" class="not-link" :title="t('Edit recipe')" :disableDrop="true" />
+            <Breadcrumb v-if="isEdit" class="not-link" :title="t('cookbook', 'Edit recipe')" :disableDrop="true" />
             <Breadcrumb v-if="isEdit" class="active" :title="$store.state.recipe.name" :disableDrop="true">
                 <ActionButton
                     :icon="$store.state.reloadingRecipe===parseInt($route.params.id) ? 'icon-loading-small' : 'icon-history'"
                     class="action-button"
-                    :ariaLabel="t('Reload recipe')"
+                    :ariaLabel="t('cookbook', 'Reload recipe')"
                     @click="reloadRecipeEdit()"
                 />
             </Breadcrumb>
             <!-- Create new recipe -->
-            <Breadcrumb v-else-if="isCreate" class="active" :title="t('New recipe')" :disableDrop="true" />
+            <Breadcrumb v-else-if="isCreate" class="active" :title="t('cookbook', 'New recipe')" :disableDrop="true" />
             <Breadcrumb v-if="isEdit || isCreate" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton
                     :icon="$store.state.savingRecipe ? 'icon-loading-small' : 'icon-checkmark'"
                     class="action-button"
-                    :ariaLabel="t('Save changes')"
+                    :ariaLabel="t('cookbook', 'Save changes')"
                     @click="saveChanges()"
                 />
             </Breadcrumb>
@@ -37,7 +39,7 @@
                 <ActionButton
                     :icon="$store.state.reloadingRecipe===parseInt($route.params.id) ? 'icon-loading-small' : 'icon-history'"
                     class="action-button"
-                    :ariaLabel="t('Reload recipe')"
+                    :ariaLabel="t('cookbook', 'Reload recipe')"
                     @click="reloadRecipeView()"
                 />
             </Breadcrumb>
@@ -45,28 +47,28 @@
                 <ActionButton
                     icon="icon-rename"
                     class="action-button"
-                    :ariaLabel="t('Edit recipe')"
+                    :ariaLabel="t('cookbook', 'Edit recipe')"
                     @click="$window.goTo('/recipe/'+$store.state.recipe.id+'/edit')"
                 />
             </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-category-office" class="action-button" :ariaLabel="t('Print recipe')" @click="printRecipe()" />
+                <ActionButton icon="icon-category-office" class="action-button" :ariaLabel="t('cookbook', 'Print recipe')" @click="printRecipe()" />
             </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-delete" class="action-button" :ariaLabel="t('Delete recipe')" @click="deleteRecipe()" />
+                <ActionButton icon="icon-delete" class="action-button" :ariaLabel="t('cookbook', 'Delete recipe')" @click="deleteRecipe()" />
             </Breadcrumb>
             <!-- Is the app loading? -->
-            <Breadcrumb v-if="isLoading" class="active no-arrow" :title="t('App is loading')" :disableDrop="true">
-                <ActionButton icon="icon-loading-small" :ariaLabel="t('Loading...')" />
+            <Breadcrumb v-if="isLoading" class="active no-arrow" :title="t('cookbook', 'App is loading')" :disableDrop="true">
+                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading...')" />
             </Breadcrumb>
             <!-- Is a recipe loading? -->
-            <Breadcrumb v-else-if="isLoadingRecipe" class="active no-arrow" :title="t('Loading recipe')" :disableDrop="true">
-                <ActionButton icon="icon-loading-small" :ariaLabel="t('Loading...')" />
+            <Breadcrumb v-else-if="isLoadingRecipe" class="active no-arrow" :title="t('cookbook', 'Loading recipe')" :disableDrop="true">
+                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading...')" />
             </Breadcrumb>
             <!-- No recipe found -->
-            <Breadcrumb v-else-if="recipeNotFound" class="active no-arrow" :title="t('Recipe not found')" :disableDrop="true" />
+            <Breadcrumb v-else-if="recipeNotFound" class="active no-arrow" :title="t('cookbook', 'Recipe not found')" :disableDrop="true" />
             <!-- No page found -->
-            <Breadcrumb v-else-if="pageNotFound" class="active no-arrow" :title="t('Page not found')" :disableDrop="true" />
+            <Breadcrumb v-else-if="pageNotFound" class="active no-arrow" :title="t('cookbook', 'Page not found')" :disableDrop="true" />
         </Breadcrumbs>
     </div>
 
@@ -162,20 +164,20 @@ export default {
         },
         searchTitle () {
             if (this.$route.name === 'search-category') {
-                return this.t('Category')
+                return t('cookbook', 'Category')
             } else if (this.$route.name === 'search-name') {
-                return this.t('Recipe name')
+                return t('cookbook', 'Recipe name')
             } else if (this.$route.name === 'search-tag') {
-                return this.t('Tag')
+                return t('cookbook', 'Tag')
             } else {
-                return this.t('Search for recipes')
+                return t('cookbook', 'Search for recipes')
             }
         }
     },
     methods: {
         deleteRecipe: function() {
             // Confirm delete
-            if (!confirm(this.t('Are you sure you want to delete this recipe?'))) {
+            if (!confirm(t('cookbook', 'Are you sure you want to delete this recipe?'))) {
                 return
             }
             let id = this.$store.state.recipe.id
@@ -189,7 +191,7 @@ export default {
                 $this.$root.$emit('refreshNavigation')
             })
             .fail(function(e) {
-                alert($this.t('Delete failed'))
+                alert(t('cookbook', 'Delete failed'))
                 if (e && e instanceof Error) {
                     throw e
                 }

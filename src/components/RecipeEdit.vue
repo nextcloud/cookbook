@@ -1,18 +1,18 @@
 <template>
     <div class="wrapper">
-        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('Name')" />
-        <EditInputField :fieldName="'description'" :fieldType="'textarea'" :fieldLabel="t('Description')" />
-        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('URL')" />
-        <EditImageField :fieldName="'image'" :fieldLabel="('Image')" />
-        <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('Preparation time')" />
-        <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('Cooking time')" />
-        <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('Total time')" />
-        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('Category')" />
-        <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="t('Keywords (comma separated)')" />
-        <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('Servings')" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('Tools')" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('Ingredients')" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('Instructions')" />
+        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" />
+        <EditInputField :fieldName="'description'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" />
+        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" />
+        <EditImageField :fieldName="'image'" :fieldLabel="t('cookbook', 'Image')" />
+        <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
+        <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
+        <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
+        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Category')" />
+        <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
+        <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')" />
     </div>
 </template>
 
@@ -104,7 +104,7 @@ export default {
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 $this.setup()
             }).fail(function(e) {
-                alert($this.t('Loading recipe failed'))
+                alert(t('cookbook', 'Loading recipe failed'))
                 // Disable loading indicator
                 if ($this.$store.state.loadingRecipe) {
                     $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
@@ -151,7 +151,7 @@ export default {
                     $this.$root.$emit('refreshNavigation')
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert($this.t('Recipe could not be saved'))
+                    alert(t('cookbook', 'Recipe could not be saved'))
                 })
             } else {
                 // Create a new recipe
@@ -166,7 +166,7 @@ export default {
                     $this.$root.$emit('refreshNavigation')
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert($this.t('Recipe could not be saved'))
+                    alert(t('cookbook', 'Recipe could not be saved'))
                 })
             }
         },

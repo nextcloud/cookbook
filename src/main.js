@@ -17,21 +17,21 @@ import AppMain from './components/AppMain'
 
 (function (OC, window, $, undefined) {
     'use strict'
-    
+
     // Fetch Nextcloud nonce identifier for dynamic script loading
     __webpack_nonce__ = btoa(OC.requestToken)
 
     window.baseUrl = OC.generateUrl('apps/cookbook')
-    
+
     // Check if two routes point to the same component but have different content
     window.shouldReloadContent = function(url1, url2) {
         if (url1 === url2) {
             return false // Obviously should not if both routes are the same
         }
-        
+
         let comps1 = url1.split('/')
         let comps2 = url2.split('/')
-        
+
         if (comps1.length < 2 || comps2.length < 2) {
             return false // Just a failsafe, this should never happen
         }
@@ -52,22 +52,22 @@ import AppMain from './components/AppMain'
             if (comps1.pop() === 'create' || comps2.pop() === 'create') {
                 return true
             }
-        
+
             return false
 
         } else if (comps1.pop() === 'create') {
             // But, if we are moving from create to view, do not reload
             // the create component
             return false
-        
+
         }
-        
+
         // Only options left are that both of the routes are edit or view,
         // but not identical, or that we're moving from view to create
         // -> reload view
         return true
     }
-    
+
     // Check if the two urls point to the same item instance
     window.isSameItemInstance = function(url1, url2) {
         if (url1 === url2) {
@@ -127,12 +127,12 @@ import AppMain from './components/AppMain'
             return value.toString().replace('.', ',')
         }
     }
-    
+
     // This will replace the PHP function nl2br in Vue components
     window.nl2br = function(text) {
         return text.replace(/\n/g, '<br />')
     }
-    
+
     // A simple function that converts a MySQL datetime into a timestamp.
     window.getTimestamp = function(date) {
         if (date) {
@@ -141,12 +141,12 @@ import AppMain from './components/AppMain'
             return null
         }
     }
-    
+
     // Push a new URL to the router, essentially navigating to that page.
     window.goTo = function(url) {
         router.push(url)
     }
-    
+
     // Notify the user if notifications are allowed
 	window.notify = function notify(title, options) {
 		if (!('Notification' in window)) {
@@ -166,18 +166,14 @@ import AppMain from './components/AppMain'
 			})
 		}
 	}
-    
+
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
     Vue.prototype.OC = OC
-    
-    // Make translations easier by automatically providing the app name
-    let tx = function(text) {
-        return window.t('cookbook', text)
-    }
 
-    Vue.prototype.t = tx
-    
+    // Pass translation engine to Vue
+    Vue.prototype.t = window.t
+
     // Start the app once document is done loading
     $(document).ready(function () {
         const App = Vue.extend(AppMain)
