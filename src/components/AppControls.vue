@@ -164,20 +164,20 @@ export default {
         },
         searchTitle () {
             if (this.$route.name === 'search-category') {
-                return this.t('cookbook', 'Category')
+                return t('cookbook', 'Category')
             } else if (this.$route.name === 'search-name') {
-                return this.t('cookbook', 'Recipe name')
+                return t('cookbook', 'Recipe name')
             } else if (this.$route.name === 'search-tag') {
-                return this.t('cookbook', 'Tag')
+                return t('cookbook', 'Tag')
             } else {
-                return this.t('cookbook', 'Search for recipes')
+                return t('cookbook', 'Search for recipes')
             }
         }
     },
     methods: {
         deleteRecipe: function() {
             // Confirm delete
-            if (!confirm(this.t('cookbook', 'Are you sure you want to delete this recipe?'))) {
+            if (!confirm(t('cookbook', 'Are you sure you want to delete this recipe?'))) {
                 return
             }
             let id = this.$store.state.recipe.id
@@ -191,7 +191,7 @@ export default {
                 $this.$root.$emit('refreshNavigation')
             })
             .fail(function(e) {
-                alert($this.t('cookbook', 'Delete failed'))
+                alert(t('cookbook', 'Delete failed'))
                 if (e && e instanceof Error) {
                     throw e
                 }

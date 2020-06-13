@@ -104,7 +104,7 @@ export default {
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 $this.setup()
             }).fail(function(e) {
-                alert($this.t('cookbook', 'Loading recipe failed'))
+                alert(t('cookbook', 'Loading recipe failed'))
                 // Disable loading indicator
                 if ($this.$store.state.loadingRecipe) {
                     $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
@@ -151,7 +151,7 @@ export default {
                     $this.$root.$emit('refreshNavigation')
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert($this.t('cookbook', 'Recipe could not be saved'))
+                    alert(t('cookbook', 'Recipe could not be saved'))
                 })
             } else {
                 // Create a new recipe
@@ -166,7 +166,7 @@ export default {
                     $this.$root.$emit('refreshNavigation')
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert($this.t('cookbook', 'Recipe could not be saved'))
+                    alert(t('cookbook', 'Recipe could not be saved'))
                 })
             }
         },

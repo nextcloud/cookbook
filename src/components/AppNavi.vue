@@ -129,17 +129,16 @@ export default {
                 this.resetPrintImage = false
                 return
             }
-            var $this = this
             $.ajax({
                 url: this.$window.baseUrl + '/config',
                 method: 'POST',
                 data: { 'print_image': newVal ? 1 : 0 }
-            }).done(function (response) {
+            }).done((response) => {
                 // Should this check the response of the query? To catch some errors that redirect the page
-            }).fail(function(e) {
-                alert($this.t('cookbook', 'Could not set preference for image printing'));
-                $this.resetPrintImage = true
-                $this.printImage = oldVal
+            }).fail((e) => {
+                alert(t('cookbook', 'Could not set preference for image printing'));
+                this.resetPrintImage = true
+                this.printImage = oldVal
             })
         },
         updateInterval: function(newVal, oldVal) {
@@ -148,17 +147,16 @@ export default {
                 this.resetInterval = false
                 return
             }
-            var $this = this
             $.ajax({
-                url: $this.$window.baseUrl + '/config',
+                url: this.$window.baseUrl + '/config',
                 method: 'POST',
                 data: { 'update_interval': newVal }
-            }).done(function (response) {
+            }).done((response) => {
                 // Should this check the response of the query? To catch some errors that redirect the page
-            }).fail(function(e) {
-                alert($this.t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
-                $this.resetInterval = true
-                $this.updateInterval = oldVal
+            }).fail((e) => {
+                alert(t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
+                this.resetInterval = true
+                this.updateInterval = oldVal
             })
         },
     },
@@ -167,20 +165,18 @@ export default {
          * Initial setup
          */
         setup: function() {
-            let $this = this
-
             $.ajax({
                 url: this.$window.baseUrl + '/config',
                 method: 'GET',
                 data: null,
-            }).done(function (config) {
-                $this.resetPrintImage = false;
-                $this.printImage = config['print_image'];
-                $this.updateInterval = config['update_interval'];
-                $this.recipeFolder = config['folder'];
+            }).done((config) => {
+                this.resetPrintImage = false;
+                this.printImage = config['print_image'];
+                this.updateInterval = config['update_interval'];
+                this.recipeFolder = config['folder'];
 
-            }).fail(function(e) {
-                alert($this.t('cookbook', 'Loading config failed'))
+            }).fail((e) => {
+                alert(t('cookbook', 'Loading config failed'))
             })
         },
 
@@ -195,9 +191,9 @@ export default {
             let cat = this.categories[idx]
             $.get(this.$window.baseUrl + '/category/'+cat.name).done(function(json) {
                 cat.recipes = json
-            }).fail(function (jqXHR, textStatus, errorThrown) {
+            }).fail((jqXHR, textStatus, errorThrown) => {
                 cat.recipes = []
-                alert($this.t('cookbook', 'Failed to load category '+cat.name+' recipes'))
+                alert(t('cookbook', 'Failed to load category '+cat.name+' recipes'))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -209,21 +205,20 @@ export default {
          */
         downloadRecipe: function(e) {
             let deferred = $.Deferred()
-            let $this = this
             this.downloading = true
             $.ajax({
                 url: this.$window.baseUrl + '/import',
                 method: 'POST',
                 data: 'url=' + e.target[1].value
-            }).done(function (recipe) {
-                $this.downloading = false
-                $this.$window.goTo('/recipe/' + recipe.id)
+            }).done((recipe) => {
+                this.downloading = false
+                this.$window.goTo('/recipe/' + recipe.id)
                 e.target[1].value = ''
                 deferred.resolve()
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                $this.downloading = false
+            }).fail((jqXHR, textStatus, errorThrown) => {
+                this.downloading = false
                 deferred.reject(new Error(jqXHR.responseText))
-                alert($this.t(jqXHR.responseJSON))
+                alert(t('cookbook', jqXHR.responseJSON))
             })
             return deferred.promise()
         },
@@ -232,36 +227,35 @@ export default {
          * Fetch and display recipe categories
          */
         getCategories: function() {
-            let $this = this
-            $.get(this.$window.baseUrl + '/categories').done(function(json) {
+            $.get(this.$window.baseUrl + '/categories').done((json) => {
                 json = json || []
                 // Reset the old values
-                $this.uncatRecipes = 0
-                $this.categories = []
+                this.uncatRecipes = 0
+                this.categories = []
                 for (let i=0; i<json.length; i++) {
                     if (json[i].name === '*') {
-                        $this.uncatRecipes = parseInt(json[i].recipe_count)
+                        this.uncatRecipes = parseInt(json[i].recipe_count)
                     } else {
-                        $this.categories.push({
+                        this.categories.push({
                             name: json[i].name,
                             recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: $this.t('cookbook', 'Loading category recipes...') }],
+                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes...') }],
                         })
                     }
                 }
-                for (let i=0; i<$this.categories.length; i++) {
+                for (let i=0; i<this.categories.length; i++) {
                     // Reload recipes in open categories
-                    if (!$this.$refs['app-navi-cat-'+i]) {
+                    if (!this.$refs['app-navi-cat-'+i]) {
                         continue
                     }
-                    if ($this.$refs['app-navi-cat-'+i][0].opened) {
-                        console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
-                        $this.categoryOpen(i)
+                    if (this.$refs['app-navi-cat-'+i][0].opened) {
+                        console.log("Reloading recipes in "+this.$refs['app-navi-cat-'+i][0].title)
+                        this.categoryOpen(i)
                     }
                 }
             })
-            .fail(function(e) {
-                alert($this.t('cookbook', 'Failed to fetch categories'))
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch categories'))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -272,23 +266,22 @@ export default {
          * Select a recipe folder using the Nextcloud file picker
          */
         pickRecipeFolder: function(e) {
-            let $this = this
             OC.dialogs.filepicker(
-                this.t('cookbook', 'Path to your recipe collection'),
-                function (path) {
+                t('cookbook', 'Path to your recipe collection'),
+                (path) => {
                     $.ajax({
-                        url: $this.$window.baseUrl + '/config',
+                        url: this.$window.baseUrl + '/config',
                         method: 'POST',
                         data: { 'folder': path },
-                    }).done(function () {
-                        $this.loadAll()
-                        .then(function() {
-                            $this.$store.dispatch('setRecipe', { recipe: null })
-                            $this.$window.goTo('/')
-                            $this.recipeFolder = path
+                    }).done(() => {
+                        this.loadAll()
+                        .then(() => {
+                            this.$store.dispatch('setRecipe', { recipe: null })
+                            this.$window.goTo('/')
+                            this.recipeFolder = path
                         })
-                    }).fail(function(e) {
-                        alert($this.t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
+                    }).fail((e) => {
+                        alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
                     })
                 },
                 false,
@@ -307,22 +300,21 @@ export default {
             }
             this.scanningLibrary = true
             var deferred = $.Deferred()
-            var $this = this
             $.ajax({
                 url: this.$window.baseUrl + '/reindex',
                 method: 'POST'
-            }).done(function () {
+            }).done(() => {
                 deferred.resolve()
-                $this.scanningLibrary = false
+                this.scanningLibrary = false
                 console.log("Library reindexing complete")
-                $this.getCategories()
-                if (['index', 'search'].indexOf($this.$store.state.page) > -1) {
+                this.getCategories()
+                if (['index', 'search'].indexOf(this.$store.state.page) > -1) {
                     // This refreshes the current router view in case items in it changed during reindex
-                    $this.$router.go()
+                    this.$router.go()
                 }
-            }).fail(function (jqXHR, textStatus, errorThrown) {
+            }).fail((jqXHR, textStatus, errorThrown) => {
                 deferred.reject(new Error(jqXHR.responseText))
-                $this.scanningLibrary = false
+                this.scanningLibrary = false
                 console.log("Library reindexing failed!")
             })
             return deferred.promise()

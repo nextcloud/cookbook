@@ -22,7 +22,7 @@ export default {
             e.preventDefault()
             let $this = this
             OC.dialogs.filepicker(
-                this.t('cookbook', 'Path to your recipe image'),
+                t('cookbook', 'Path to your recipe image'),
                 function (path) {
                     $this.$parent.recipe.image = path
                 },

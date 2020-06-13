@@ -418,21 +418,23 @@ class RecipeService
         // Make sure we don't have any encoded entities in the HTML string
         $html = html_entity_decode($html);
 
-        // Parse JSON
-        $json_matches = [];
+        // Start document parser
+        $document = new \DOMDocument();
+
+        if(!$document->loadHTML($html)) {
+            throw new \Exception('Malformed HTML');
+        }
         
-        preg_match_all('/<script type=["|\']application\/ld\+json["|\'][^>]*>([\s\S]*?)<\/script>/', $html, $json_matches, PREG_SET_ORDER);
+        $xpath = new \DOMXPath($document);
 
-        foreach ($json_matches as $json_match) {
-            if (!$json_match || !isset($json_match[1])) {
+        $json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
+
+        foreach ($json_ld_elements as $json_ld_element) {
+            if (!$json_ld_element || !$json_ld_element->nodeValue) {
                 continue;
             }
 
-            $string = $json_match[1];
-
-            if (!$string) {
-                continue;
-            }
+            $string = $json_ld_element->nodeValue;
 
             // Some recipes have newlines inside quotes, which is invalid JSON. Fix this before continuing.
             $string = preg_replace('/\s+/', ' ', $string);
@@ -470,13 +472,6 @@ class RecipeService
 
         // Parse HTML if JSON couldn't be found
         $json = [];
-        $document = new \DOMDocument();
-
-        if(!$document->loadHTML($html)) {
-            throw new \Exception('Malformed HTML');
-        }
-        
-        $xpath = new \DOMXPath($document);
         
         $recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 

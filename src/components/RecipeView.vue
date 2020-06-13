@@ -144,7 +144,7 @@ export default {
 
                 $this.$store.dispatch('setPage', { page: 'recipe' })
 
-                alert($this.t('cookbook', 'Loading recipe failed'))
+                alert(t('cookbook', 'Loading recipe failed'))
             })
         }
     },
