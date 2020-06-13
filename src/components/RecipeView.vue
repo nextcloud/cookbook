@@ -8,9 +8,9 @@
             <div class="details">
                 <p class="description">{{ $store.state.recipe.description }}</p>
                 <p v-if="$store.state.recipe.url">
-                    <strong>{{ t('Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
+                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
                 </p>
-                <p><strong>{{ t('Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
+                <p><strong>{{ t('cookbook', 'Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
             </div>
             <div class="times">
                 <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" :label="'Preparation time'" />
@@ -21,21 +21,21 @@
             <section>
                 <aside>
                     <section>
-                        <h3 v-if="ingredients.length">{{ t('Ingredients') }}</h3>
+                        <h3 v-if="ingredients.length">{{ t('cookbook', 'Ingredients') }}</h3>
                         <ul v-if="ingredients.length">
                             <RecipeIngredient v-for="(ingredient,idx) in ingredients" :key="'ingr'+idx" :ingredient="ingredient" />
                         </ul>
                     </section>
 
                     <section>
-                        <h3 v-if="tools.length">{{ t('Tools') }}</h3>
+                        <h3 v-if="tools.length">{{ t('cookbook', 'Tools') }}</h3>
                         <ul v-if="tools.length">
                             <RecipeTool v-for="(tool,idx) in tools" :key="'tool'+idx" :tool="tool" />
                         </ul>
                     </section>
                 </aside>
                 <main v-if="instructions.length">
-                    <h3>{{ t('Instructions') }}</h3>
+                    <h3>{{ t('cookbook', 'Instructions') }}</h3>
                     <ol class="instructions">
                         <RecipeInstruction v-for="(instruction,idx) in instructions" :key="'instr'+idx" :instruction="instruction" />
                     </ol>
@@ -78,7 +78,7 @@ export default {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
                 this.$store.dispatch('setLoadingRecipe', { recipe: -1 })
-            
+
             // Make the control row show that the recipe is reloading
             } else if (this.$store.state.recipe.id === parseInt(this.$route.params.id)) {
                 this.$store.dispatch('setReloadingRecipe', {
@@ -91,60 +91,60 @@ export default {
             }
 
             let $this = this
-            
+
             $.ajax({
                 url: this.$window.baseUrl + '/api/recipes/' + this.$route.params.id,
                 method: 'GET',
                 data: null,
-            
+
             }).done(function (recipe) {
                 // Store recipe data in vuex
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
-                
+
                 if ($this.$store.state.recipe.recipeIngredient) {
                     $this.ingredients = Object.values($this.$store.state.recipe.recipeIngredient)
                 }
-                
+
                 if ($this.$store.state.recipe.recipeInstructions) {
                     $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
                 }
-                
+
                 if ($this.$store.state.recipe.cookTime) {
                     let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
                 }
-                
+
                 if ($this.$store.state.recipe.prepTime) {
                     let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
                 }
-                
+
                 if ($this.$store.state.recipe.totalTime) {
                     let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
                 }
-                
+
                 if ($this.$store.state.recipe.tool) {
                     $this.tools = $this.$store.state.recipe.tool
                 }
-                
+
                 // Always set the active page last!
                 $this.$store.dispatch('setPage', { page: 'recipe' })
-            
+
             }).fail(function(e) {
                 if ($this.$store.state.loadingRecipe) {
                     // Reset loading recipe
                     $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
                 }
-                
+
                 if ($this.$store.state.reloadingRecipe) {
                     // Reset reloading recipe
                     $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
                 }
-                
+
                 $this.$store.dispatch('setPage', { page: 'recipe' })
-                
-                alert($this.t('Loading recipe failed'))
+
+                alert($this.t('cookbook', 'Loading recipe failed'))
             })
         }
     },
@@ -210,7 +210,7 @@ aside {
         float: left;
         text-align: justify;
     }
-    
+
     @media screen and (max-width:1199px) { main {
         flex-basis: 100%;
         width: 100%;

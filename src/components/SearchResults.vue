@@ -37,7 +37,7 @@ export default {
                     $this.results = json
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     $this.results = []
-                    alert($this.t('Failed to load category '+cat+' recipes'))
+                    alert($this.t('cookbook', 'Failed to load category '+cat+' recipes'))
                     if (e && e instanceof Error) {
                         throw e
                     }
