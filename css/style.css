@@ -36,14 +36,14 @@
             padding-left: 32px;
             margin-top: 1em;
         }
-	
+
 	#search {
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
 		margin: 0 -1rem;
 	}
-	
+
 		#search li {
 			width: 300px;
 			max-width: 100%;
@@ -58,19 +58,19 @@
 			#search li a:hover {
 				box-shadow: 0 0 5px #888;
 			}
-		
+
 			#search li img {
 				float: left;
 				height: 105px;
 				border-radius: 3px 0 0 3px;
 			}
-			
+
 			#search li span {
 				display: block;
 				padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
 			}
-		
-	
+
+
     .loader {
         text-align: center;
         flex-basis: 100%;
@@ -139,18 +139,18 @@
 			width: 30%;
 			float: left;
 		}
-		
+
 		#app-content-wrapper main {
 			display: inline-block;
 			width: 70%;
 			float: left;
 			text-align: justify;
 		}
-		
+
 		#app-content-wrapper section {
 			margin-bottom: 1rem;
 		}
-	
+
         #app-content-wrapper > section {
             padding: 1rem;
         }
@@ -160,27 +160,27 @@
 			display: table;
 			clear: both;
 		}
-		
+
 		@media(max-width:1199px) { #app-content-wrapper .recipe-content aside {
 			display: block;
 			width: 100%;
 			float: none;
 		}}
-		
+
         #app-content-wrapper .instructions {
             list-style: none;
             padding: 0;
             counter-reset: instruction-counter;
             margin-top: 2rem;
         }
-		
+
             #app-content-wrapper .instructions .instruction {
                 cursor: pointer;
                 counter-increment: instruction-counter;
                 clear: both;
                 margin-bottom: 2rem;
             }
-            
+
                 #app-content-wrapper .instructions .instruction::before {
                     content: counter(instruction-counter);
                     display: block;
@@ -206,7 +206,7 @@
                 #app-content-wrapper .instructions .instruction.done::before {
                     content: '✔';
                 }
-		
+
 		#app-content-wrapper .times {
 			display: flex;
 			margin-top: 10px;
@@ -214,7 +214,7 @@
             @media(max-width:991px) { #app-content-wrapper .times {
                 flex-direction: column;
             } }
-	
+
             @media print { #app-content-wrapper .times {
                 flex-direction: row;
             } }
@@ -242,11 +242,11 @@
 					background-color: var(--color-background-dark);
 					padding: 0.5rem;
 				}
-				
+
 				#app-content-wrapper .times .time p {
 					padding: 0.5rem;
 				}
-		
+
 
     #app-content-wrapper main {
         flex-basis: calc(100% - 22rem);
@@ -263,25 +263,25 @@
         #app-content-wrapper form .recipe-edit {
             padding: 1rem;
         }
-        
+
         #app-content-wrapper form fieldset {
             margin-bottom: 1em;
             width: 100%;
         }
-        
+
         #app-content-wrapper form fieldset > span {
 			float: left;
             margin: 0 0.5rem;
             display: block;
             line-height: 34px;
         }
-        
+
         #app-content-wrapper form fieldset > input {
             width: calc(100% - 11em);
             margin: 0;
 			float: left;
         }
-		
+
         #app-content-wrapper form fieldset.duration > input {
             width: 50px !important;
             text-align: center;
@@ -291,6 +291,10 @@
 				width: 100%;
 			}}
 
+    #app-navigation.show-navigation {
+        transform: translateX(0px) !important;
+        z-index: 10000 !important;
+    }
     .app-navigation-entry:not(:hover) li.recipe {
         box-shadow: inset 4px 0 rgba(255, 255, 255, 0.5);
     }
