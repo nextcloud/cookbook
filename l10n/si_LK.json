@@ -1,0 +1,9 @@
+{ "translations": {
+    "Home" : "නිවස.",
+    "Search" : "Search",
+    "Add" : "එක් කරන්න",
+    "Name" : "නම",
+    "Description" : "විස්තරය",
+    "URL" : "URL"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}
