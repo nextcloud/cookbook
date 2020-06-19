@@ -1154,12 +1154,12 @@ class RecipeService
             $str = str_replace(["\r", "\n"], '', $str);
         }
 
-		if (!$preserve_slashes) {
+        if (!$preserve_slashes) {
             $str = str_replace(["\t", "\\"], '', $str);
         }
-		else {
+        else {
             $str = str_replace(["\t", "\\", "/"], '', $str);			
-		}
+        }
 		
         $str = html_entity_decode($str);
 
