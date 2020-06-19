@@ -275,7 +275,7 @@ class RecipeService
             $ingredients = [];
 
             foreach ($json['recipeIngredient'] as $i => $ingredient) {
-                $ingredient = $this->cleanUpString($ingredient);
+                $ingredient = $this->cleanUpString($ingredient, false, true);
 
                 if (!$ingredient) {
                     continue;
@@ -1142,7 +1142,7 @@ class RecipeService
      *
      * @return string
      */
-    private function cleanUpString($str, $preserve_newlines = false)
+    private function cleanUpString($str, $preserve_newlines = false, $preserve_slashes = false)
     {
         if (!$str) {
             return '';
@@ -1154,8 +1154,13 @@ class RecipeService
             $str = str_replace(["\r", "\n"], '', $str);
         }
 
-        $str = str_replace(["\t", "\\", "/"], '', $str);
-
+		if (!$preserve_slashes) {
+            $str = str_replace(["\t", "\\"], '', $str);
+        }
+		else {
+            $str = str_replace(["\t", "\\", "/"], '', $str);			
+		}
+		
         $str = html_entity_decode($str);
 
         return $str;
