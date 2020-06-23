@@ -129,7 +129,7 @@ class RecipeService
         $json['@type'] = 'Recipe';
 
         // Make sure that "name" doesn't have any funky characters in it
-        $json['name'] = $this->cleanUpString($json['name']);
+        $json['name'] = $this->cleanUpString($json['name'], false, true);
 
         // Make sure that "image" is a string of the highest resolution image available
         if (isset($json['image']) && $json['image']) {
@@ -275,7 +275,7 @@ class RecipeService
             $ingredients = [];
 
             foreach ($json['recipeIngredient'] as $i => $ingredient) {
-                $ingredient = $this->cleanUpString($ingredient, false, true);
+                $ingredient = $this->cleanUpString($ingredient, false);
 
                 if (!$ingredient) {
                     continue;
@@ -1142,7 +1142,7 @@ class RecipeService
      *
      * @return string
      */
-    private function cleanUpString($str, $preserve_newlines = false, $preserve_slashes = false)
+    private function cleanUpString($str, $preserve_newlines = false, $remove_slashes = false)
     {
         if (!$str) {
             return '';
@@ -1154,11 +1154,12 @@ class RecipeService
             $str = str_replace(["\r", "\n"], '', $str);
         }
 
-        if (!$preserve_slashes) {
-            $str = str_replace(["\t", "\\"], '', $str);
+		//We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
+        if ($remove_slashes) {
+            $str = str_replace(["\t", "\\", "/"], '', $str);
         }
         else {
-            $str = str_replace(["\t", "\\", "/"], '', $str);			
+            $str = str_replace(["\t", "\\"], '', $str);			
         }
 		
         $str = html_entity_decode($str);
