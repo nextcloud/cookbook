@@ -1,0 +1,11 @@
+{ "translations": {
+    "Home" : "Нүүр",
+    "Search" : "Хайх",
+    "Save changes" : "Өөрчлөлтийг хадгалах",
+    "Category" : "Ангилал",
+    "Add" : "нэмэх",
+    "Name" : "Нэр",
+    "Description" : "Тодорхойлолт",
+    "URL" : "URL"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

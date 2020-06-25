@@ -1,0 +1,9 @@
+{ "translations": {
+    "Home" : "Domicili",
+    "Search" : "Search",
+    "Add" : "Ajustar",
+    "Name" : "Nom",
+    "Description" : "Descripcion",
+    "URL" : "URL"
+},"pluralForm" :"nplurals=2; plural=(n > 1);"
+}

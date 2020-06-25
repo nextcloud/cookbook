@@ -1,0 +1,13 @@
+{ "translations": {
+    "Home" : "Hejmo",
+    "Search" : "Serĉi",
+    "Save changes" : "Konservi ŝanĝojn",
+    "Page not found" : "Ne trovita paĝo",
+    "Category" : "Kategorio",
+    "Add" : "Aldoni",
+    "Name" : "Nomo",
+    "Description" : "Priskribo",
+    "URL" : "Retadreso",
+    "Tools" : "Iloj"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

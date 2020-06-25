@@ -1,6 +1,13 @@
 <template>
 <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <AppNavigation>
+        <ActionButton
+            id="hide-navigation"
+            icon="icon-menu"
+            class="action-button"
+            :ariaLabel="t('cookbook', 'Open navigation')"
+            @click="toggleNavigation()"
+        >{{ t('cookbook', 'Hide navigation') }}</ActionButton>
         <router-link :to="'/recipe/create'">
             <AppNavigationNew class="create" :text="t('cookbook', 'Create recipe')" />
         </router-link>
@@ -326,6 +333,9 @@ export default {
         setLoadingRecipe: function(id) {
             this.$store.dispatch('setLoadingRecipe', { recipe: id })
         },
+        toggleNavigation: function() {
+            $("#app-navigation").toggleClass("show-navigation")
+        },
     },
     mounted () {
         this.setup()
@@ -369,6 +379,19 @@ export default {
     float: left;
 }
 
+#hide-navigation {
+    height: 44px;
+    display: none;
+}
+    #hide-navigation .action-button {
+        padding-right: 0 !important;
+    }
+
+@media only screen and (max-width: 1024px) {
+    #hide-navigation {
+        display: block;
+    }
+}
 @media print {
     * {
         display: none !important;

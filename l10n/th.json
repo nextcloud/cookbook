@@ -1,0 +1,9 @@
+{ "translations": {
+    "Home" : "หน้าหลัก",
+    "Search" : "Search",
+    "Add" : "เพิ่ม",
+    "Name" : "ชื่อ",
+    "Description" : "รายละเอียด",
+    "URL" : "URL"
+},"pluralForm" :"nplurals=1; plural=0;"
+}
