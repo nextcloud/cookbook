@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Acasă",
     "Search" : "Caută",
     "Save changes" : "Salvează modificările",
+    "Loading…" : "Se încarcă…",
     "Add" : "Adaugă",
     "Name" : "Nume",
     "Description" : "Descriere",

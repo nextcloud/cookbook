@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Home" : "Cartref",
     "Search" : "Chwilio",
+    "Loading…" : "Yn llwytho…",
     "Category" : "Categori",
     "Add" : "Ychwanegu",
     "Name" : "Enw",

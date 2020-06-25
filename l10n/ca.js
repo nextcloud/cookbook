@@ -12,7 +12,7 @@ OC.L10N.register(
     "Save changes" : "Desa els canvis",
     "Print recipe" : "Imprimeix la recepta",
     "Delete recipe" : "Suprimeix la recepta",
-    "Loading..." : "Carregant...",
+    "Loading…" : "S'està carregant…",
     "Page not found" : "Pàgina no trobada",
     "Category" : "Categoria",
     "Tag" : "Etiqueta",

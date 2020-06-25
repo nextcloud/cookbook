@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "الرئيسية",
     "Search" : "البحث",
     "Save changes" : "حفظ التعديلات",
+    "Loading…" : "التحميل جارٍ…",
     "Category" : "الفئة",
     "Add" : "إضافة",
     "Name" : "الاسم",

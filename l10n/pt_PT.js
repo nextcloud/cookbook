@@ -12,6 +12,7 @@ OC.L10N.register(
     "Save changes" : "Guardar alterações",
     "Print recipe" : "Imprimir receita",
     "Delete recipe" : "Eliminar receita",
+    "Loading…" : "A carregar...",
     "Page not found" : "Página não encontrada",
     "Category" : "Categoria",
     "Tag" : "Etiqueta",

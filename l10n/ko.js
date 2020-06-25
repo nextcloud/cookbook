@@ -4,7 +4,7 @@ OC.L10N.register(
     "Home" : "집",
     "Search" : "검색",
     "Save changes" : "변경 사항 저장",
-    "Loading..." : "불러오는 중...",
+    "Loading…" : "불러오는 중…",
     "Page not found" : "페이지를 찾을 수 없음",
     "Category" : "분류",
     "Add" : "추가",

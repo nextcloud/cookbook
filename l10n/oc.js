@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Home" : "Domicili",
     "Search" : "Search",
+    "Loading…" : "Cargament...",
     "Add" : "Ajustar",
     "Name" : "Nom",
     "Description" : "Descripcion",

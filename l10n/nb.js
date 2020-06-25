@@ -4,7 +4,7 @@ OC.L10N.register(
     "Home" : "Hjem",
     "Search" : "Søk",
     "Save changes" : "Lagre endringer",
-    "Loading..." : "Laster…",
+    "Loading…" : "Laster…",
     "Page not found" : "Siden ble ikke funnet",
     "Category" : "Kategori",
     "Add" : "Legg til",

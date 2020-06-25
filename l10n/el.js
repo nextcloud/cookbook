@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Εκτύπωση συνταγής",
     "Delete recipe" : "Διαγραφή συνταγής",
     "App is loading" : "Φόρτωση της εφαρμογής σε εξέλιξη",
-    "Loading..." : "Γίνεται φόρτωση...",
+    "Loading…" : "Φορτώνει…",
     "Loading recipe" : "Φόρτωση της συνταγής σε εξέλιξη",
     "Recipe not found" : "Η συνταγή δεν βρέθηκε",
     "Page not found" : "Δεν βρέθηκε η σελίδα",

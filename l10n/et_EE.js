@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Avaleht",
     "Search" : "Otsi",
     "Save changes" : "Salvesta muudatused",
+    "Loading…" : "Laadimine…",
     "Category" : "Kategooria",
     "Add" : "Lisa",
     "Name" : "Nimi",

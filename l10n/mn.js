@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Нүүр",
     "Search" : "Хайх",
     "Save changes" : "Өөрчлөлтийг хадгалах",
+    "Loading…" : "уншиж байна",
     "Category" : "Ангилал",
     "Add" : "нэмэх",
     "Name" : "Нэр",

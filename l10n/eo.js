@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Hejmo",
     "Search" : "Serĉi",
     "Save changes" : "Konservi ŝanĝojn",
+    "Loading…" : "Ŝargado...",
     "Page not found" : "Ne trovita paĝo",
     "Category" : "Kategorio",
     "Add" : "Aldoni",

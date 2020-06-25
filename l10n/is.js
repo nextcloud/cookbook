@@ -11,7 +11,7 @@ OC.L10N.register(
     "Save changes" : "Vista breytingar",
     "Print recipe" : "Prenta uppskrift",
     "Delete recipe" : "Eyða uppskrift",
-    "Loading..." : "Hleð inn...",
+    "Loading…" : "Hleð inn…",
     "Page not found" : "Síða fannst ekki",
     "Category" : "Flokkur",
     "Tag" : "Merki",

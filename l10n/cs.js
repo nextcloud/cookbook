@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Vytisknout recept",
     "Delete recipe" : "Smazat recept",
     "App is loading" : "Aplikace se načítá",
-    "Loading..." : "Načítání…",
+    "Loading…" : "Načítání…",
     "Loading recipe" : "Načítání receptu",
     "Recipe not found" : "Recept nenalezen",
     "Page not found" : "Stránka nebyla nalezena",

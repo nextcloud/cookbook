@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Домашній",
     "Search" : "Пошук",
     "Save changes" : "Зберегти зміни",
+    "Loading…" : "Завантаження…",
     "Page not found" : "Сторінку не знайдено",
     "Category" : "Категорія",
     "Add" : "Додати",

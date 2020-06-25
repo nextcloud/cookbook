@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Spausdinti receptą",
     "Delete recipe" : "Ištrinti receptą",
     "App is loading" : "Programėlė yra įkeliama",
-    "Loading..." : "Įkeliama...",
+    "Loading…" : "Įkeliama…",
     "Loading recipe" : "Įkeliamas receptas",
     "Recipe not found" : "Receptas nerastas",
     "Page not found" : "Puslapis nerastas",

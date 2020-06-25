@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Initio",
     "Search" : "Cercar",
     "Save changes" : "Salveguardar cambios",
+    "Loading…" : "Cargante...",
     "Category" : "Categoria",
     "Add" : "Adder",
     "Name" : "Nomine",

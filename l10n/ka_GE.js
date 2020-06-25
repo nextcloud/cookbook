@@ -4,7 +4,7 @@ OC.L10N.register(
     "Home" : "სახლი",
     "Search" : "ძიება",
     "Save changes" : "ცვილებების შენახვა",
-    "Loading..." : "იტვირთება…",
+    "Loading…" : "იტვირთება…",
     "Page not found" : "გვერდი არაა ნაპოვნი",
     "Category" : "კატეგორია",
     "Add" : "დამატება",
