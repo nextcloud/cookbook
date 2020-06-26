@@ -212,7 +212,7 @@ class RecipeService
             $json['recipeCategory'] = '';
         }
 
-        $json['recipeCategory'] = $this->cleanUpString($json['recipeCategory']);
+        $json['recipeCategory'] = $this->cleanUpString($json['recipeCategory'], false, true);
 
         // Make sure that "recipeYield" is an integer which is at least 1
         if (isset($json['recipeYield']) && $json['recipeYield']) {
@@ -1154,7 +1154,7 @@ class RecipeService
             $str = str_replace(["\r", "\n"], '', $str);
         }
 
-		//We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
+		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
         if ($remove_slashes) {
             $str = str_replace(["\t", "\\", "/"], '', $str);
         }
