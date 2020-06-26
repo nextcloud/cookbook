@@ -120,7 +120,7 @@ export default {
                 // Already at the send of array
                 return
             }
-            let entry = this.recipe[field].splice(index, 1)
+            let entry = this.recipe[field].splice(index, 1)[0]
             if (index + 1 < this.recipe[field].length) {
                 this.recipe[field].splice(index + 1, 0, entry)
             } else {
@@ -132,7 +132,7 @@ export default {
                 // Already at the start of array
                 return
             }
-            let entry = this.recipe[field].splice(index, 1)
+            let entry = this.recipe[field].splice(index, 1)[0]
             this.recipe[field].splice(index - 1, 0, entry)
         },
         save: function() {
