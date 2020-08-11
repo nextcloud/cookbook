@@ -60,11 +60,11 @@
             </Breadcrumb>
             <!-- Is the app loading? -->
             <Breadcrumb v-if="isLoading" class="active no-arrow" :title="t('cookbook', 'App is loading')" :disableDrop="true">
-                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading...')" />
+                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading…')" />
             </Breadcrumb>
             <!-- Is a recipe loading? -->
             <Breadcrumb v-else-if="isLoadingRecipe" class="active no-arrow" :title="t('cookbook', 'Loading recipe')" :disableDrop="true">
-                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading...')" />
+                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading…')" />
             </Breadcrumb>
             <!-- No recipe found -->
             <Breadcrumb v-else-if="recipeNotFound" class="active no-arrow" :title="t('cookbook', 'Recipe not found')" :disableDrop="true" />
