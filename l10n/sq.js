@@ -4,7 +4,7 @@ OC.L10N.register(
     "Home" : "Kryefaqja",
     "Search" : "Kërko",
     "Save changes" : "Ruaj ndryshimet",
-    "Loading..." : "Po ngarkohet",
+    "Loading…" : "Duke u ngarkuar…",
     "Page not found" : "Faqja nuk u gjet ",
     "Category" : "Kategori",
     "Add" : "Shto",

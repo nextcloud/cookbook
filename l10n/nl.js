@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Recept afdrukken",
     "Delete recipe" : "Recept verwijderen",
     "App is loading" : "App laadt",
-    "Loading..." : "Laden....",
+    "Loading…" : "Laden…",
     "Loading recipe" : "Recept laden",
     "Recipe not found" : "Recept niet gevonden",
     "Page not found" : "Pagina niet gevonden",

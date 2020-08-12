@@ -4,7 +4,7 @@ OC.L10N.register(
     "Home" : "Aniciu",
     "Search" : "Search",
     "Save changes" : "Guardar camudancies",
-    "Loading..." : "Cargando...",
+    "Loading…" : "Cargando...",
     "Page not found" : "Nun s'alcontró la páxina",
     "Category" : "Estaya",
     "Add" : "Amestar",

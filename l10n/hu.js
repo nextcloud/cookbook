@@ -12,7 +12,7 @@ OC.L10N.register(
     "Save changes" : "Változások mentése",
     "Print recipe" : "Recept nyomtatása",
     "Delete recipe" : "Recept törlése",
-    "Loading..." : "Betöltés...",
+    "Loading…" : "Betöltés…",
     "Page not found" : "Az oldal nem található",
     "Category" : "Kategória",
     "Tag" : "Jelöl",

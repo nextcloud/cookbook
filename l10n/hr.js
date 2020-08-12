@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Ispiši recept",
     "Delete recipe" : "Izbriši recept",
     "App is loading" : "Učitavanje aplikacije",
-    "Loading..." : "Učitavanje...",
+    "Loading…" : "Učitavanje…",
     "Loading recipe" : "Učitavanje recepta",
     "Recipe not found" : "Recept nije pronađen",
     "Page not found" : "Stranica nije pronađena",

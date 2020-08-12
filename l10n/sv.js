@@ -12,7 +12,7 @@ OC.L10N.register(
     "Save changes" : "Spara ändringar",
     "Print recipe" : "Skriv ut recept",
     "Delete recipe" : "Ta bort recept",
-    "Loading..." : "Laddar...",
+    "Loading…" : "Läser in…",
     "Page not found" : "Sidan hittades inte",
     "Category" : "Kategori",
     "Tag" : "Tagg",

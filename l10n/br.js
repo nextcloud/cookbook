@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Degemer",
     "Search" : "Klask",
     "Save changes" : "Enrollañ ar cheñchoù",
+    "Loading…" : "O Kargañ...",
     "Add" : "Ouzhpennañ",
     "Name" : "Anv",
     "Description" : "Diskrivadur",

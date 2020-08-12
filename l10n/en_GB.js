@@ -4,7 +4,7 @@ OC.L10N.register(
     "Home" : "Home",
     "Search" : "Search",
     "Save changes" : "Save changes",
-    "Loading..." : "Loading...",
+    "Loading…" : "Loading…",
     "Page not found" : "Page not found",
     "Category" : "Category",
     "Add" : "Add",

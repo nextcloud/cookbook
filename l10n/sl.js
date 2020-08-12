@@ -12,6 +12,7 @@ OC.L10N.register(
     "Save changes" : "Shrani spremembe",
     "Print recipe" : "Natisni recept",
     "Delete recipe" : "Izbriši recept",
+    "Loading…" : "Poteka nalaganje …",
     "Page not found" : "Strani ni mogoče najti",
     "Category" : "Kategorija",
     "Tag" : "Oznaka",

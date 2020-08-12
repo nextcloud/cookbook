@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Search" : "Qidirmoq",
     "Save changes" : "O'zgarishlarni saqlang",
+    "Loading…" : "Yuklanmoqda…",
     "Add" : "Qo'shish",
     "Name" : "Ism..."
 },

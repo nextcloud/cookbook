@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Дома",
     "Search" : "Барај",
     "Save changes" : "Зачувај ги промените",
+    "Loading…" : "Се вчитува…",
     "Category" : "Категорија",
     "Add" : "Додади",
     "Name" : "Име",

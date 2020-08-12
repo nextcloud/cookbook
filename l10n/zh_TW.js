@@ -10,6 +10,7 @@ OC.L10N.register(
     "Save changes" : "保存變更",
     "Print recipe" : "列印食譜",
     "Delete recipe" : "刪除食譜",
+    "Loading…" : "載入中…",
     "Page not found" : "找不到頁面",
     "Category" : "分類",
     "Tag" : "標籤",

@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "خانه ",
     "Search" : "جستجو کردن",
     "Save changes" : "ذخیره تغییرات",
+    "Loading…" : "بار کردن…",
     "Page not found" : "صفحه یافت نشد",
     "Category" : "دسته‌بندی",
     "Add" : "افزودن",

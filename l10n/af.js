@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Tuis",
     "Search" : "Soek",
     "Save changes" : "Bewaar veranderinge",
+    "Loading…" : "Laai…",
     "Page not found" : "Blad nie gevind nie",
     "Category" : "Kategorie",
     "Add" : "Voeg by",

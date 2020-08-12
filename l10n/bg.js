@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Начало",
     "Search" : "Търсене",
     "Save changes" : "Запиши промените",
+    "Loading…" : "Зареждане…",
     "Page not found" : "Страницата не е намерена",
     "Category" : "Категория",
     "Add" : "Добави",

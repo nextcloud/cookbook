@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Yemek tarifini yazdır",
     "Delete recipe" : "Yemek tarifini sil",
     "App is loading" : "Uygulama yükleniyor",
-    "Loading..." : "Yükleniyor...",
+    "Loading…" : "Yükleniyor …",
     "Loading recipe" : "Tarif yükleniyor",
     "Recipe not found" : "Tarif bulunamadı",
     "Page not found" : "Sayfa bulunamadı",

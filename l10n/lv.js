@@ -12,7 +12,7 @@ OC.L10N.register(
     "Save changes" : "Saglabāt izmaiņas",
     "Print recipe" : "Drukāt recepti",
     "Delete recipe" : "Dzēst recepti",
-    "Loading..." : "Notiek ielāde...",
+    "Loading…" : "Notiek ielāde...",
     "Page not found" : "Lapa nav atrasta",
     "Category" : "Kategorija",
     "Tag" : "Birkas",

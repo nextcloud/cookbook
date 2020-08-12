@@ -10,7 +10,7 @@ OC.L10N.register(
     "Edit recipe" : "编辑菜谱",
     "Save changes" : "保存更改",
     "Delete recipe" : "删除菜谱",
-    "Loading..." : "载入中...",
+    "Loading…" : "正在加载…",
     "Page not found" : "没有找到页面",
     "Category" : "分类",
     "Tag" : "Tag",

@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Beranda",
     "Search" : "Cari",
     "Save changes" : "Simpan perubahan",
+    "Loading…" : "Memuat…",
     "Page not found" : "Halaman tidak ditemukan",
     "Category" : "Kategori",
     "Add" : "Masukkan",

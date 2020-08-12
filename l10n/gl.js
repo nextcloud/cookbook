@@ -16,7 +16,7 @@ OC.L10N.register(
     "Print recipe" : "Imprimir a receita",
     "Delete recipe" : "Eliminar a receita",
     "App is loading" : "A apli está a cargar",
-    "Loading..." : "Cargando...",
+    "Loading…" : "Cargando…",
     "Loading recipe" : "Cargando a receita",
     "Recipe not found" : "Non se atopou a receita",
     "Page not found" : "Non se atopou a páxina",
