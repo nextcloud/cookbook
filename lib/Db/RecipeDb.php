@@ -453,13 +453,29 @@ class RecipeDb {
     
     public function addCategoryOfRecipe(int $recipeId, string $categoryName, string $userId)
     {
+        // NOTE: We're using * as a placeholder for no category
+        if(empty($categoryName)) {
+            $categoryName = '*';
+        }
+//         else if(is_array($json['recipeCategory']))
+//         {
+//             $json['recipeCategory'] = reset($json['recipeCategory']);
+//         }
+        
         $qb = $this->db->getQueryBuilder();
         $qb->insert(self::DB_TABLE_CATEGORIES)
             ->values(array('recipe_id' => ':rid', 'name' => ':name', 'user_id' => ':user'));
         $qb->setParameter('rid', $recipeId, Type::INTEGER);
         $qb->setParameter('name', $categoryName, Type::STRING);
         $qb->setParameter('user', $userId, Type::STRING);
-        $qb->execute();
+        
+        try {
+            $qb->execute();
+        }
+        catch (\Exception $e)
+        {
+            // Category didn't meet restrictions, skip it
+        }
     }
     
     public function removeCategoryOfRecipe(int $recipeId, string $userId)
@@ -486,7 +502,15 @@ class RecipeDb {
         {
             $qb->setParameter('rid', $p['recipeId'], Type::INTEGER);
             $qb->setParameter('name', $p['name'], Type::STRING);
-            $qb->execute();
+            
+            try
+            {
+                $qb->execute();
+            }
+            catch(\Exception $ex)
+            {
+                // The insertion of a keywaord might conflict with the requirements. Skip it.
+            }
         }
     }
     
