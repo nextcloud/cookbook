@@ -11,6 +11,8 @@ use OCP\IDBConnection;
 class RecipeDb {
 
     private const DB_TABLE_RECIPES = 'cookbook_names';
+    private const DB_TABLE_KEYWORDS = 'cookbook_keywords';
+    private const DB_TABLE_CATEGORIES = 'cookbook_categories';
     
     private $db;
     
@@ -240,26 +242,6 @@ class RecipeDb {
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
 
-        // Insert recipe
-        $qb->delete('cookbook_names')
-            ->where('recipe_id = :id')
-            ->andWhere('user_id = :user');
-        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('user', $user_id, TYPE::STRING);
-
-        $qb->execute();
-
-        $qb->insert('cookbook_names')
-            ->values([
-                'recipe_id' => ':id',
-                'name' => ':name',
-                'user_id' => ':user',
-            ]);
-        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('name', $json['name'], Type::STRING);
-        $qb->setParameter('user', $user_id, Type::STRING);
-        
-        $qb->execute();
 
         // Insert keywords
         $qb->delete('cookbook_keywords')
@@ -333,19 +315,37 @@ class RecipeDb {
     /**
      * @param array $ids
      */
-    public function deleteRecipes(array $ids)
+    public function deleteRecipes(array $ids, string $userId)
     {
         if(!is_array($ids) || empty($ids))
             return;
+        
+        foreach ($ids as $id)
+        {
+            // Remove category
+            $this->removeCategoryOfRecipe($id, $userId);
+            
+            // Remove all keywords
+            $keywords = $this->getKeywordsOfRecipe($id, $userId);
+            $pairs = array_map(function ($kw) use ($id) {
+                return array('recipeId' => $id, 'name' => $kw);
+            }, $keywords);
+            $this->removeKeywordPairs($pairs, $userId);
+        }
         
         $qb = $this->db->getQueryBuilder();
         
         $qb->delete(self::DB_TABLE_RECIPES);
         
         foreach ($ids as $id)
-            $qb->orWhere("recipe_id = $id");
+            $qb->orWhere(
+                $qb->expr()->andX(
+                    "recipe_id = $id",
+                    $qb->expr()->eq("user_id", $qb->expr()->literal($userId))
+                    ));
         
         $qb->execute();
+        
     }
     
     /**
@@ -376,7 +376,7 @@ class RecipeDb {
         }
     }
     
-    public function updateRecipes(array $recipes)
+    public function updateRecipes(array $recipes, string $userId)
     {
         if(!is_array($recipes) || empty($recipes))
             return;
@@ -386,16 +386,130 @@ class RecipeDb {
         foreach ($recipes as $recipe)
         {
             $qb->update(self::DB_TABLE_RECIPES)
-                ->where('recipe_id = :id');
+                ->where('recipe_id = :id', 'user_id = :uid');
             
             $literal = array();
             $literal['name'] = $qb->expr()->literal($recipe['name'], IQueryBuilder::PARAM_STR);
             $qb->set('name', $literal['name']);
             
             $qb->setParameter('id', $recipe['id']);
+            $qb->setParameter('uid', $userId);
             
             $qb->execute();
         }
+    }
+    
+    public function getKeywordsOfRecipe(int $recipeId, string $userId)
+    {
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->select('name')
+            ->from(self::DB_TABLE_KEYWORDS)
+            ->where('recipe_id = :rid', 'user_id = :uid');
+        
+        $qb->setParameter('rid', $recipeId);
+        $qb->setParameter('uid', $userId);
+        
+        $cursor = $qb->execute();
+        $result = $cursor->fetchAll();
+        $cursor->closeCursor();
+        
+        $ret = array_map(function ($row){
+            $r = $row['name'];
+            return $r;
+        }, $result);
+        
+        return $ret;
+    }
+    
+    public function getCategoryOfRecipe(int $recipeId, string $userId)
+    {
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->select('name')
+        ->from(self::DB_TABLE_CATEGORIES)
+        ->where('recipe_id = :rid', 'user_id = :uid');
+        
+        $qb->setParameter('rid', $recipeId);
+        $qb->setParameter('uid', $userId);
+        
+        $cursor = $qb->execute();
+        $result = $cursor->fetch();
+        $cursor->closeCursor();
+        
+        return $result['name'];
+    }
+    
+    public function updateCategoryOfRecipe(int $recipeId, string $categoryName, string $userId)
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->update(self::DB_TABLE_CATEGORIES)
+            ->where(array('recipe_id' => ':rid', 'user' => ':user'));
+        $qb->set('name', $qb->expr()->literal($categoryName, IQueryBuilder::PARAM_STR));
+        $qb->setParameter('id', $recipeId, Type::INTEGER);
+        $qb->setParameter('user', $userId, Type::STRING);
+        $qb->execute();
+    }
+    
+    public function addCategoryOfRecipe(int $recipeId, string $categoryName, string $userId)
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->insert(self::DB_TABLE_CATEGORIES)
+            ->values(array('recipe_id' => ':rid', 'name' => ':name', 'user_id' => ':user'));
+        $qb->setParameter('rid', $recipeId, Type::INTEGER);
+        $qb->setParameter('name', $categoryName, Type::STRING);
+        $qb->setParameter('user', $userId, Type::STRING);
+        $qb->execute();
+    }
+    
+    public function removeCategoryOfRecipe(int $recipeId, string $userId)
+    {
+        $qb = $this->db->getQueryBuilder();
+        $qb->delete(self::DB_TABLE_CATEGORIES)
+            ->where('recipe_id = :rid', 'user_id = :user');
+        $qb->setParameter('rid', $recipeId, Type::INTEGER);
+        $qb->setParameter('user', $userId, Type::STRING);
+        $qb->execute();
+    }
+    
+    public function addKeywordPairs(array $pairs, string $userId)
+    {
+        if(!is_array($pairs) || empty($pairs))
+            return;
+        
+        $qb = $this->db->getQueryBuilder();
+        $qb->insert(self::DB_TABLE_KEYWORDS)
+            ->values(array('recipe_id' => ':rid', 'name' => ':name', 'user_id' => ':user'));
+        $qb->setParameter('user', $userId, Type::STRING);
+        
+        foreach ($pairs as $p)
+        {
+            $qb->setParameter('rid', $p['recipeId'], Type::INTEGER);
+            $qb->setParameter('name', $p['name'], Type::STRING);
+            $qb->execute();
+        }
+    }
+    
+    public function removeKeywordPairs(array $pairs, string $userId)
+    {
+        if(!is_array($pairs) || empty($pairs))
+            return;
+        
+        $qb = $this->db->getQueryBuilder();
+        $qb->delete(self::DB_TABLE_KEYWORDS);
+        
+        foreach ($pairs as $p)
+        {
+            $qb->orWhere(
+                $qb->expr()->andX(
+                    $qb->expr()->eq('user_id', $qb->expr()->literal($userId)),
+                    $qb->expr()->eq('recipe_id', $qb->expr()->literal($p['recipeId'])),
+                    $qb->expr()->eq('name', $qb->expr()->literal($p['name']))
+                    )
+                );
+        }
+        
+        $qb->execute();
     }
 }
 

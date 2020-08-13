@@ -21,7 +21,9 @@ class DbCacheService
     private $recipeService;
     
     private $jsonFiles;
-    private $dbFiles;
+    private $dbReceipeFiles;
+    private $dbKeywords;
+    private $dbCategories;
     
     private $newRecipes;
     private $obsoleteRecipes;
@@ -39,12 +41,17 @@ class DbCacheService
     public function updateCache()
     {
         $this->jsonFiles = $this->parseJSONFiles();
-        $this->dbFiles = $this->fetchDbInformations();
+        $this->dbReceipeFiles = $this->fetchDbRecipeInformations();
         
         $this->resetFields();
-        $this->compareLists();
+        $this->compareReceipeLists();
         
-        $this->applyDbChanges();
+        $this->applyDbReceipeChanges();
+        
+        $this->fetchDbAssociatedInformations();
+        $this->updateCategories();
+        $this->updateKeywords();
+        
         // FIXME Continue writing
     }
     
@@ -77,7 +84,7 @@ class DbCacheService
         return $ret;
     }
     
-    private function fetchDbInformations()
+    private function fetchDbRecipeInformations()
     {
         $dbResult = $this->db->findAllRecipes($this->userId);
         
@@ -86,21 +93,38 @@ class DbCacheService
         foreach ($dbResult as $row)
         {
             // TODO Create an Entity from DB row better in DB file
+            $id = $row['recipe_id'];
+            
             $obj = array();
             $obj['name'] = $row['name'];
-            $obj['id'] = $row['recipe_id'];
+            $obj['id'] = $id;
             
-            $ret[$obj['id']] = $obj;
+            $ret[$id] = $obj;
         }
         
         return $ret;
     }
     
-    private function compareLists()
+    private function fetchDbAssociatedInformations()
+    {
+        $recipeIds = array_keys($this->jsonFiles);
+        
+        $this->dbKeywords = array();
+        $this->dbCategories = array();
+        
+        foreach ($recipeIds as $rid)
+        {
+            // XXX Enhancement by selecting all keywords/categories and associating in RAM
+            $this->dbKeywords[$rid] = $this->db->getKeywordsOfRecipe($rid, $this->userId);
+            $this->dbCategories[$rid] = $this->db->getCategoryOfRecipe($rid, $this->userId);
+        }
+    }
+    
+    private function compareReceipeLists()
     {
         foreach (array_keys($this->jsonFiles) as $id)
         {
-            if(array_key_exists($id, $this->dbFiles))
+            if(array_key_exists($id, $this->dbReceipeFiles))
             {
                 // The file was at least in the database
                 
@@ -111,7 +135,7 @@ class DbCacheService
                 }
                 
                 // Remove from array for later removal of old recipes
-                unset($this->dbFiles[$id]);
+                unset($this->dbReceipeFiles[$id]);
             }
             else
             {
@@ -121,12 +145,14 @@ class DbCacheService
         }
         
         // Any remining recipe in dbFiles is to be removed
-        $this->obsoleteRecipes = array_keys($this->dbFiles);
+        $this->obsoleteRecipes = array_keys($this->dbReceipeFiles);
     }
+    
+//     private function 
     
     private function isDbEntryUpToDate($id)
     {
-        $dbEntry = $this->dbFiles[$id];
+        $dbEntry = $this->dbReceipeFiles[$id];
         $fileEntry = $this->jsonFiles[$id];
         
         if($dbEntry['name'] != $fileEntry['name'])
@@ -135,9 +161,9 @@ class DbCacheService
         return true;
     }
     
-    private function applyDbChanges()
+    private function applyDbReceipeChanges()
     {
-        $this->db->deleteRecipes($this->obsoleteRecipes);
+        $this->db->deleteRecipes($this->obsoleteRecipes, $this->userId);
         
         $newRecipes = array_map(
             function ($id)
@@ -155,6 +181,86 @@ class DbCacheService
             },
             $this->updatedRecipes
         );
-        $this->db->updateRecipes($updatedRecipes);
+        $this->db->updateRecipes($updatedRecipes, $this->userId);
+    }
+    
+    private function updateCategories()
+    {
+        foreach ($this->jsonFiles as $rid => $json)
+        {
+            if($this->hasJSONCategory($json))
+            {
+                // There is a category in the JSON file present.
+                
+                $category = trim($json['recipeCategory']);
+                
+                if(isset($this->dbCategories[$rid]))
+                {
+                    // There is a category present. Update needed?
+                    if($this->dbCategories[$rid] != trim($category))
+                        $this->db->updateCategoryOfRecipe($rid, $category, $this->userid);
+                }
+                else
+                    $this->db->addCategoryOfRecipe($rid, $category, $this->userId);
+            }
+            else
+            {
+                // There is no category in the JSON file present.
+                if(isset($this->dbCategories[$rid]))
+                    $this->db->removeCategoryOfRecipe($rid, $this->userId);
+            }
+        }
+    }
+    
+    /**
+     * @param array $json
+     * @return boolean
+     */
+    private function hasJSONCategory(array $json)
+    {
+        return isset($json['recipeCategory']) && strlen(trim($json['recipeCategory'])) > 0;
+    }
+    
+    private function updateKeywords()
+    {
+        $newPairs = [];
+        $obsoletePairs = [];
+        
+        foreach ($this->jsonFiles as $rid => $json)
+        {
+            
+            $keywords = explode(',', $json['keywords']);
+            $keywords = array_map(function ($v) {
+                return trim($v);
+            }, $keywords);
+            $keywords = array_filter($keywords, function ($v) {
+                return ! empty($v);
+            });
+            
+            $dbKeywords = $this->dbKeywords[$rid];
+            
+            $onlyInDb = array_filter($dbKeywords, function ($v) use ($keywords) {
+                return empty(array_keys($keywords, $v));
+            });
+            $onlyInJSON = array_filter($keywords, function ($v) use ($dbKeywords){
+                return empty(array_keys($dbKeywords, $v));
+            });
+            
+            $newPairs = array_merge($newPairs, array_map(function ($keyword) use ($rid) {
+                return array(
+                    'recipeId' => $rid,
+                    'name' => $keyword
+                );
+            }, $onlyInJSON));
+            $obsoletePairs = array_merge($obsoletePairs, array_map(function ($keyword) use ($rid) {
+                return array(
+                    'recipeId' => $rid,
+                    'name' => $keyword
+                );
+            }, $onlyInDb));
+        }
+        
+        $this->db->addKeywordPairs($newPairs, $this->userId);
+        $this->db->removeKeywordPairs($obsoletePairs, $this->userId);
     }
 }

@@ -1,0 +1,3 @@
+- Make categories and keywords separate tables refferring to ids only
+- Add indices to schemata
+- Category is 1:n mappiung with recipe -> make column out of it
