@@ -41,11 +41,11 @@ before_install:
 before_script:
     - if [[ "$DB" == 'pgsql' ]]; then createuser -U travis -s oc_autotest; fi
     - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e 'create database oc_autotest;'; fi
-    - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY '';"; fi
+    - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "CREATE USER 'oc_autotest'@'localhost' IDENTIFIED BY 'pass';"; fi
     - if [[ "$DB" == 'mysql' ]]; then mysql -u root -e "grant all on oc_autotest.* to 'oc_autotest'@'localhost';"; fi
     - cd nextcloud
     - mkdir data
-    - ./occ maintenance:install --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass=''
+    - ./occ maintenance:install -vvv --no-interaction --database-name oc_autotest --database-user oc_autotest --admin-user admin --admin-pass admin --database $DB --database-pass='pass' --database-host localhost
     - ./occ app:enable cookbook
     - php -S localhost:8080 &
     - cd apps/cookbook
