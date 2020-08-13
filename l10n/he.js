@@ -12,6 +12,7 @@ OC.L10N.register(
     "Save changes" : "שמירת השינויים",
     "Print recipe" : "הדפסת מתכון",
     "Delete recipe" : "מחיקת מתכון",
+    "Loading…" : "בטעינה…",
     "Page not found" : "העמוד לא נמצא",
     "Category" : "קטגוריה",
     "Tag" : "תגית",
