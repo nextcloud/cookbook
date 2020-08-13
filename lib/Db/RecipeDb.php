@@ -345,7 +345,6 @@ class RecipeDb {
         foreach ($ids as $id)
             $qb->orWhere("recipe_id = $id");
         
-        $sql = $qb->getSQL();
         $qb->execute();
     }
     
