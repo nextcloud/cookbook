@@ -9,8 +9,11 @@ use OCP\Files\Folder;
 use OCP\IDBConnection;
 
 class RecipeDb {
-    private $db;
 
+    private const DB_TABLE_RECIPES = 'cookbook_names';
+    
+    private $db;
+    
     public function __construct(IDBConnection $db) {
         $this->db = $db;
     }
@@ -324,6 +327,75 @@ class RecipeDb {
         } catch(\Exception $e) {
             // Category didn't meet restrictions, skip it
         
+        }
+    }
+    
+    /**
+     * @param array $ids
+     */
+    public function deleteRecipes(array $ids)
+    {
+        if(!is_array($ids) || empty($ids))
+            return;
+        
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->delete(self::DB_TABLE_RECIPES);
+        
+        foreach ($ids as $id)
+            $qb->orWhere("recipe_id = $id");
+        
+        $sql = $qb->getSQL();
+        $qb->execute();
+    }
+    
+    /**
+     * @param array $recipes
+     */
+    public function insertRecipes(array $recipes, string $userId)
+    {
+        if(!is_array($recipes) || empty($recipes))
+            return;
+        
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->insert(self::DB_TABLE_RECIPES)
+            ->values(array(
+                'recipe_id' => ':id',
+                'user_id' => ':userid',
+                'name' => ':name'
+            ));
+        
+        $qb->setParameter('userid', $userId);
+        
+        foreach ($recipes as $recipe)
+        {
+            $qb->setParameter('id', $recipe['id'], Type::INTEGER);
+            $qb->setParameter('name', $recipe['name'], Type::STRING);
+            
+            $qb->execute();
+        }
+    }
+    
+    public function updateRecipes(array $recipes)
+    {
+        if(!is_array($recipes) || empty($recipes))
+            return;
+        
+        $qb = $this->db->getQueryBuilder();
+        
+        foreach ($recipes as $recipe)
+        {
+            $qb->update(self::DB_TABLE_RECIPES)
+                ->where('recipe_id = :id');
+            
+            $literal = array();
+            $literal['name'] = $qb->expr()->literal($recipe['name'], IQueryBuilder::PARAM_STR);
+            $qb->set('name', $literal['name']);
+            
+            $qb->setParameter('id', $recipe['id']);
+            
+            $qb->execute();
         }
     }
 }

@@ -14,6 +14,7 @@ use OCP\AppFramework\Controller;
 
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IURLGenerator;
+use OCA\Cookbook\Service\DbCacheService;
 
 class ConfigController extends Controller
 {
@@ -25,13 +26,19 @@ class ConfigController extends Controller
      * @var IURLGenerator
      */
     private $urlGenerator;
+    
+    /**
+     * @var DbCacheService
+     */
+    private $dbCacheService;
 
-    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService)
+    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService)
     {
         parent::__construct($AppName, $request);
 
         $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
+        $this->dbCacheService = $dbCacheService;
     }
 
     /**
@@ -74,7 +81,8 @@ class ConfigController extends Controller
      */
     public function reindex()
     {
-        $this->service->rebuildSearchIndex();
+        //$this->service->rebuildSearchIndex();
+        $this->dbCacheService->updateCache();
 
         return new DataResponse('Search index rebuilt successfully', Http::STATUS_OK);
     }
