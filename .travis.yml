@@ -30,6 +30,7 @@ before_install:
     - sh -e /etc/init.d/xvfb start
     - nvm install 8
     - npm install -g npm@latest
+    - npm install
     - make
     - make appstore
     # install core
