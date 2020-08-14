@@ -129,9 +129,9 @@ class DbCacheService
     /**
      * @param File $jsonFile
      * @throws InvalidJSONFileException
-     * @return string
+     * @return array
      */
-    private function parseJSONFile(File $jsonFile) : string
+    private function parseJSONFile(File $jsonFile) : array
     {
         // XXX Export of file reading into library/service?
         $json = json_decode($jsonFile->getContent(), true);

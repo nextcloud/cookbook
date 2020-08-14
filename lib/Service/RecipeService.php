@@ -602,6 +602,7 @@ class RecipeService
     public function addRecipe($json)
     {
         if (!$json || !isset($json['name']) || !$json['name']) {
+            // XXX More specific Exception better?
             throw new Exception('Recipe name not found');
         }
 
