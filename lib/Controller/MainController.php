@@ -37,6 +37,7 @@ class MainController extends Controller
         $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
         $this->appName = $AppName;
+        $this->dbCacheService = $dbCacheService;
     }
 
     /**
@@ -47,11 +48,13 @@ class MainController extends Controller
      */
     public function index(): TemplateResponse
     {
+        $this->dbCacheService->triggerCheck();
+        
         $view_data = [
             'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
             'folder' => $this->service->getUserFolderPath(),
-            'update_interval' => $this->service->getSearchIndexUpdateInterval(),
-            'last_update' => $this->service->getSearchIndexLastUpdateTime(),
+            'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
+            'last_update' => $this->dbCacheService->getSearchIndexLastUpdateTime(),
             'print_image' => $this->service->getPrintImage(),
         ];
 
@@ -64,6 +67,8 @@ class MainController extends Controller
      */
     public function categories()
     {
+        $this->dbCacheService->triggerCheck();
+        
 		$categories = $this->service->getAllCategoriesInSearchIndex();
         return new DataResponse($categories, 200, ['Content-Type' => 'application/json']);
     }
@@ -74,6 +79,8 @@ class MainController extends Controller
      */
     public function keywords()
     {
+        $this->dbCacheService->triggerCheck();
+        
 		$keywords = $this->service->getAllKeywordsInSearchIndex();
         return new DataResponse($keywords, 200, ['Content-Type' => 'application/json']);
     }
@@ -84,6 +91,8 @@ class MainController extends Controller
      */
     public function home()
     {
+        $this->dbCacheService->triggerCheck();
+        
         try {
 			$recipes = $this->service->getAllRecipesInSearchIndex();
 
@@ -113,6 +122,8 @@ class MainController extends Controller
      */
     public function error()
     {
+        $this->dbCacheService->triggerCheck();
+        
         $response = new TemplateResponse($this->appName, 'navigation/error');
         $response->renderAs('blank');
 
@@ -125,7 +136,9 @@ class MainController extends Controller
      */
     public function search($query)
     {
-		$query = urldecode($query);
+		$this->dbCacheService->triggerCheck();
+		
+        $query = urldecode($query);
         try {
 			$recipes = $this->service->findRecipesInSearchIndex($query);
 
@@ -155,6 +168,8 @@ class MainController extends Controller
      */
     public function category($category)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $category = urldecode($category);
         try {
 			$recipes = $this->service->getRecipesByCategory($category);
@@ -181,6 +196,8 @@ class MainController extends Controller
      */
     public function recipe($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         try {
             $recipe = $this->service->getRecipeById($id);
             $recipe['image_url'] = $this->urlGenerator->linkToRoute(
@@ -208,6 +225,8 @@ class MainController extends Controller
      */
     public function create()
     {
+        $this->dbCacheService->triggerCheck();
+        
         try {
             $recipe = [];
 
@@ -226,6 +245,8 @@ class MainController extends Controller
 	 */
 	public function import()
 	{
+	    $this->dbCacheService->triggerCheck();
+	    
         if (!isset($_POST['url'])) {
             return new DataResponse('Field "url" is required', 400);
         }
@@ -247,7 +268,9 @@ class MainController extends Controller
 	 */
 	public function new()
 	{
-		try {
+		$this->dbCacheService->triggerCheck();
+		
+	    try {
 	        $recipe_data = $_POST;
 			$file = $this->service->addRecipe($recipe_data);
 			$this->dbCacheService->addRecipe($file);
@@ -264,6 +287,8 @@ class MainController extends Controller
      */
     public function edit($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         try {
             $recipe = [];
 
@@ -290,6 +315,8 @@ class MainController extends Controller
      */
     public function update($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
 		try {
 	        $recipe_data = [];
             

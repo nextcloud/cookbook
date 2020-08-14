@@ -5,6 +5,7 @@ namespace OCA\Cookbook\Service;
 use OCA\Cookbook\Db\RecipeDb;
 use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\IConfig;
 
 class DbCacheService
 {
@@ -22,6 +23,11 @@ class DbCacheService
      */
     private $recipeService;
     
+    /**
+     * @var IConfig
+     */
+    private $config;
+    
     private $jsonFiles;
     private $dbReceipeFiles;
     private $dbKeywords;
@@ -31,13 +37,12 @@ class DbCacheService
     private $obsoleteRecipes;
     private $updatedRecipes;
     
-    public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService)
+    public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService, IConfig $config)
     {
         $this->userId = $UserId;
-//         $this->root = $root;
         $this->db = $db;
         $this->recipeService = $recipeService;
-        
+        $this->config = $config;
     }
     
     public function updateCache()
@@ -309,5 +314,53 @@ class DbCacheService
         
         $this->db->addKeywordPairs($newPairs, $this->userId);
         $this->db->removeKeywordPairs($obsoletePairs, $this->userId);
+    }
+    
+    /**
+     * Gets the last time the search index was updated
+     */
+    public function getSearchIndexLastUpdateTime()
+    {
+        return (int) $this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
+    }
+    
+    /**
+     * @return int
+     */
+    public function getSearchIndexUpdateInterval(): int
+    {
+        $interval = (int)$this->config->getUserValue($this->user_id, 'cookbook', 'update_interval');
+        
+        if ($interval < 1) {
+            $interval = 5;
+        }
+        
+        return $interval;
+    }
+    
+    public function triggerCheck()
+    {
+        // FIXME Implement regular check
+        // TODO Locking
+        $this->checkSearchIndexUpdate();
+    }
+    
+    /**
+     * Checks if a search index update is needed and performs it
+     */
+    private function checkSearchIndexUpdate()
+    {
+        $last_index_update = $this->getSearchIndexLastUpdateTime();
+        $interval = $this->getSearchIndexUpdateInterval();
+        
+        if ($last_index_update < 1 || time() > $last_index_update + ($interval * 60)) {
+            $this->updateCache();
+            
+            // Cache the last index update
+            $this->config->setUserValue($this->user_id, 'cookbook', 'last_index_update', time());
+            
+            // TODO Make triggers more general, need refactoring of *all* Services
+            $this->recipeService->updateSearchIndex();
+        }
     }
 }

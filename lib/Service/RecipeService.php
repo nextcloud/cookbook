@@ -786,78 +786,43 @@ class RecipeService
     }
 
     /**
-     * Rebuilds the search index
-     */
-    public function rebuildSearchIndex()
-    {
-        // Clear the database
-        $this->db->emptySearchIndex($this->user_id);
-
-        // Rebuild info
-        $this->updateSearchIndex();
-    }
-
-    /**
-     * Updates the search index
+     * Updates the search index (no more) and migrate file structure
+     * @deprecated
      */
     public function updateSearchIndex()
     {
+        $this->migrateFolderStructure();
+    }
+    
+    private function migrateFolderStructure ()
+    {
         // Remove old cache folder if needed
         $legacy_cache_path = '/cookbook/cache';
-
+        
         if ($this->root->nodeExists($legacy_cache_path)) {
             $this->root->get($legacy_cache_path)->delete();
         }
-
+        
         // Restructure files if needed
         $user_folder = $this->getFolderForUser();
-
+        
         foreach ($user_folder->getDirectoryListing() as $node) {
             // Move JSON files from the user directory into its own folder
             if ($this->isRecipeFile($node)) {
                 $recipe_name = str_replace('.json', '', $node->getName());
-
+                
                 $node->move($node->getPath() . '_tmp');
-
+                
                 $recipe_folder = $user_folder->newFolder($recipe_name);
-
+                
                 $node->move($recipe_folder->getPath() . '/recipe.json');
-
-            // Rename folders with .json extensions (this was likely caused by a migration bug)
+                
+                // Rename folders with .json extensions (this was likely caused by a migration bug)
             } else if ($node instanceof Folder && strpos($node->getName(), '.json')) {
                 $node->move(str_replace('.json', '', $node->getPath()));
-
+                
             }
         }
-
-        // Re-index recipe files
-        foreach ($this->getRecipeFiles() as $file) {
-            $this->db->indexRecipeFile($file, $this->user_id);
-        }
-
-        // Cache the last index update
-        $this->config->setUserValue($this->user_id, 'cookbook', 'last_index_update', time());
-    }
-
-    /**
-     * Checks if a search index update is needed and performs it
-     */
-    private function checkSearchIndexUpdate()
-    {
-        $last_index_update = $this->getSearchIndexLastUpdateTime();
-        $interval = $this->getSearchIndexUpdateInterval();
-
-        if ($last_index_update < 1 || time() > $last_index_update + ($interval * 60)) {
-            $this->updateSearchIndex();
-        }
-    }
-
-    /**
-     * Gets the last time the search index was updated
-     */
-    public function getSearchIndexLastUpdateTime()
-    {
-        return (int) $this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
     }
 
     /**
@@ -867,8 +832,6 @@ class RecipeService
      */
     public function getAllKeywordsInSearchIndex()
     {
-        $this->checkSearchIndexUpdate();
-
         return $this->db->findAllKeywords($this->user_id);
     }
     
@@ -879,8 +842,6 @@ class RecipeService
      */
     public function getAllCategoriesInSearchIndex()
     {
-        $this->checkSearchIndexUpdate();
-
         return $this->db->findAllCategories($this->user_id);
     }
 
@@ -891,8 +852,6 @@ class RecipeService
      */
     public function getAllRecipesInSearchIndex()
     {
-        $this->checkSearchIndexUpdate();
-
         return $this->db->findAllRecipes($this->user_id);
     }
 
@@ -905,8 +864,6 @@ class RecipeService
      */
     public function getRecipesByCategory($category)
     {
-        $this->checkSearchIndexUpdate();
-
         return $this->db->getRecipesByCategory($category, $this->user_id);
     }
 
@@ -919,8 +876,6 @@ class RecipeService
      */
     public function findRecipesInSearchIndex($keywords_string)
     {
-        $this->checkSearchIndexUpdate();
-
         $keywords_string = strtolower($keywords_string);
         $keywords_array = [];
         preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -961,20 +916,6 @@ class RecipeService
     public function setSearchIndexUpdateInterval(int $interval)
     {
         $this->config->setUserValue($this->user_id, 'cookbook', 'update_interval', $interval);
-    }
-
-    /**
-     * @return int
-     */
-    public function getSearchIndexUpdateInterval(): int
-    {
-        $interval = (int)$this->config->getUserValue($this->user_id, 'cookbook', 'update_interval');
-
-        if ($interval < 1) {
-            $interval = 5;
-        }
-
-        return $interval;
     }
 
     /**

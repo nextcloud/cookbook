@@ -10,6 +10,9 @@
 - Usage of PHP objects instead of arrays
 - Test cases
 - Look for deprecated methods
+- Truncate DB to restart from scratch
+- Export DB for debugging?
+- Abort Search for JSON after fixed numer/time to avoid timeout
 
 # Bugs found
 - When no category is given for one recipe, the total number of recipes is falsely calculated

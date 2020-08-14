@@ -47,6 +47,8 @@ class RecipeController extends Controller
      */
     public function index()
     {
+        $this->dbCacheService->triggerCheck();
+        
         if (empty($_GET['keywords'])) {
             $recipes = $this->service->getAllRecipesInSearchIndex();
         } else {
@@ -66,6 +68,8 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $json = $this->service->getRecipeById($id);
 
         if (null === $json) {
@@ -90,6 +94,8 @@ class RecipeController extends Controller
      */
     public function update($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $recipeData = [];
         parse_str(file_get_contents("php://input"), $recipeData);
         $file = $this->service->addRecipe($recipeData);
@@ -110,6 +116,8 @@ class RecipeController extends Controller
      */
     public function create()
     {
+        $this->dbCacheService->triggerCheck();
+        
         $recipeData = $_POST;
         $file = $this->service->addRecipe($recipeData);
         $this->dbCacheService->addRecipe($file);
@@ -125,6 +133,8 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         try {
             $this->service->deleteRecipe($id);
             return new DataResponse('Recipe ' . $_GET['id'] . ' deleted successfully', Http::STATUS_OK);
@@ -141,6 +151,8 @@ class RecipeController extends Controller
      */
     public function image($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $size = isset($_GET['size']) ? $_GET['size'] : null;
 
         try {
