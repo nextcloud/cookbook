@@ -53,17 +53,17 @@ class RecipeDb {
     public function deleteRecipeById(int $id) {
         $qb = $this->db->getQueryBuilder();
 
-        $qb->delete('cookbook_names')
+        $qb->delete(self::DB_TABLE_RECIPES)
             ->where('recipe_id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         
         $qb->execute();
         
-        $qb->delete('cookbook_keywords')
+        $qb->delete(self::DB_TABLE_KEYWORDS)
             ->where('recipe_id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
         
-        $qb->delete('cookbook_categories')
+        $qb->delete(self::DB_TABLE_CATEGORIES)
             ->where('recipe_id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
@@ -74,7 +74,7 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
-            ->from('cookbook_names', 'r')
+            ->from(self::DB_TABLE_RECIPES, 'r')
             ->where('user_id = :user')
             ->orderBy('r.name');
         $qb->setParameter('user', $user_id, TYPE::STRING);
@@ -107,7 +107,7 @@ class RecipeDb {
 
         $qb->select('k.name')
 			->selectAlias($qb->createFunction('COUNT(k.recipe_id)'), 'recipe_count')
-            ->from('cookbook_keywords', 'k')
+            ->from(self::DB_TABLE_KEYWORDS, 'k')
             ->where('user_id = :user AND k.name != \'\'')
             ->groupBy('k.name')
             ->orderBy('k.name');
@@ -128,7 +128,7 @@ class RecipeDb {
 
         $qb->select('k.name')
 			->selectAlias($qb->createFunction('COUNT(k.recipe_id)'), 'recipe_count')
-            ->from('cookbook_categories', 'k')
+            ->from(self::DB_TABLE_CATEGORIES, 'k')
             ->where('user_id = :user AND k.name != \'\'')
             ->groupBy('k.name')
             ->orderBy('k.name');
@@ -178,13 +178,13 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select(['r.recipe_id', 'r.name'])
-            ->from('cookbook_categories', 'k')
+            ->from(self::DB_TABLE_CATEGORIES, 'k')
             ->where('k.name = :category')
             ->andWhere('k.user_id = :user')
             ->setParameter('category', $category, TYPE::STRING)
             ->setParameter('user', $user_id, TYPE::STRING);
         
-        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
+        $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
 
         $qb->groupBy(['r.name', 'r.recipe_id']);
         $qb->orderBy('r.name');
@@ -207,7 +207,7 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select(['r.recipe_id', 'r.name'])
-            ->from('cookbook_keywords', 'k');
+            ->from(self::DB_TABLE_KEYWORDS, 'k');
         
         $paramIdx = 1;
         $params = [];
@@ -231,7 +231,7 @@ class RecipeDb {
         $qb->setParameters($params, $types);
         $qb->setParameter('user', $user_id, TYPE::STRING);
         
-        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
+        $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
 
         $qb->groupBy(['r.name', 'r.recipe_id']);
         $qb->orderBy('r.name');
@@ -250,7 +250,7 @@ class RecipeDb {
     public function emptySearchIndex(string $user_id) {
         $qb = $this->db->getQueryBuilder();
         
-        $qb->delete('cookbook_names')
+        $qb->delete(self::DB_TABLE_RECIPES)
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
         $qb->setParameter('user', $user_id, TYPE::STRING);
@@ -258,13 +258,13 @@ class RecipeDb {
         
         $qb->execute();
         
-        $qb->delete('cookbook_keywords')
+        $qb->delete(self::DB_TABLE_KEYWORDS)
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
         $qb->setParameter('user', $user_id, TYPE::STRING);
         $qb->setParameter('empty', 'empty', TYPE::STRING);
         
-        $qb->delete('cookbook_categories')
+        $qb->delete(self::DB_TABLE_CATEGORIES)
             ->where('user_id = :user')
             ->orWhere('user_id = :empty');
         $qb->setParameter('user', $user_id, TYPE::STRING);

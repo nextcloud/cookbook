@@ -6,6 +6,5 @@
 - Truncate DB to restart from scratch
 - Export DB for debugging?
 - Abort Search for JSON after fixed numer/time to avoid timeout
-- Use of table names from constants in DB table
 
 # Bugs found
