@@ -6,6 +6,7 @@ use OCA\Cookbook\Db\RecipeDb;
 use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\IConfig;
+use OCA\Cookbook\Exception\InvalidJSONFileException;
 
 class DbCacheService
 {
@@ -58,7 +59,15 @@ class DbCacheService
      */
     public function addRecipe(File $recipeFile)
     {
+        try {
         $json = $this->parseJSONFile($recipeFile);
+        }
+        catch (InvalidJSONFileException $e)
+        {
+            // XXX Put a log message and infor the user of problem.
+            return;
+        }
+        
         $id = $json['id'];
         
         $this->jsonFiles = [$id => $json];
@@ -102,7 +111,13 @@ class DbCacheService
         $jsonFiles = $this->recipeService->getRecipeFiles();
         foreach ($jsonFiles as $jsonFile)
         {
+            try {
             $json = $this->parseJSONFile($jsonFile);
+            }
+            catch (InvalidJSONFileException $e)
+            {
+                continue;
+            }
             $id = $json['id'];
             
             $ret[$id] = $json;
@@ -111,13 +126,21 @@ class DbCacheService
         return $ret;
     }
     
-    private function parseJSONFile(File $jsonFile)
+    /**
+     * @param File $jsonFile
+     * @throws InvalidJSONFileException
+     * @return string
+     */
+    private function parseJSONFile(File $jsonFile) : string
     {
         // XXX Export of file reading into library/service?
         $json = json_decode($jsonFile->getContent(), true);
         
-        // TODO Need to be implemented using Exception
-        // if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
+        if(!$json || !isset($json['name']) || $json['name'] === 'No name') { 
+            $id = $jsonFile->getParent()->getId();
+            
+            throw new InvalidJSONFileException("The JSON file in the folder with id $id does not have a valid name.");
+        }
         
         $id = (int) $jsonFile->getParent()->getId();
         $json['id'] = $id;
@@ -133,7 +156,7 @@ class DbCacheService
         
         foreach ($dbResult as $row)
         {
-            // TODO Create an Entity from DB row better in DB file
+            // XXX Create an Entity from DB row better in DB file
             $id = $row['recipe_id'];
             
             $obj = array();
@@ -166,7 +189,7 @@ class DbCacheService
         
         foreach ($recipeIds as $rid)
         {
-            // XXX Enhancement by selecting all keywords/categories and associating in RAM
+            // XXX Enhancement by selecting all keywords/categories and associating in RAM into data structure
             $this->dbKeywords[$rid] = $this->db->getKeywordsOfRecipe($rid, $this->userId);
             $this->dbCategories[$rid] = $this->db->getCategoryOfRecipe($rid, $this->userId);
         }
@@ -340,8 +363,8 @@ class DbCacheService
     
     public function triggerCheck()
     {
-        // FIXME Implement regular check
         // TODO Locking
+        // XXX Catch Exceptions
         $this->checkSearchIndexUpdate();
     }
     

@@ -651,9 +651,6 @@ class RecipeService
 
         $recipe_file->putContent(json_encode($json));
 
-        // Update database cache
-        $this->db->indexRecipeFile($recipe_file, $this->user_id);
-
         // Download image and generate thumbnail
         $full_image_data = null;
 

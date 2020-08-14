@@ -249,23 +249,6 @@ class RecipeDb {
     private function isRecipeEmpty($json) {}
 
     /**
-     * @param File $file
-     * @param string $user_id
-     * @deprecated
-     */
-    public function indexRecipeFile(File $file, string $user_id) {
-        $json = json_decode($file->getContent(), true);
-
-        if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
-
-        $id = (int) $file->getParent()->getId();
-        $json['id'] = $id;
-        $qb = $this->db->getQueryBuilder();
-
-        // FIXME Setup without this function
-    }
-    
-    /**
      * @param array $ids
      */
     public function deleteRecipes(array $ids, string $userId)
