@@ -137,7 +137,34 @@ class RecipeDb {
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
+        
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->select($qb->createFunction('COUNT(1) as cnt'))
+            ->from(self::DB_TABLE_RECIPES, 'r')
+            ->leftJoin(
+                'r',
+                self::DB_TABLE_CATEGORIES,
+                'c',
+                $qb->expr()->andX(
+                    'r.user_id = c.user_id',
+                    'r.recipe_id = c.recipe_id'
+                    )
+                )
+            ->where(
+                $qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+                $qb->expr()->isNull('c.name')
+                );
 		
+        $cursor = $qb->execute();
+        $row = $cursor->fetch();
+        $cursor->closeCursor();
+        
+        $result[] = array(
+            'name' => '*',
+            'recipe_count' => $row['cnt']
+        );
+        
         $result = array_unique($result, SORT_REGULAR);
         $result = array_filter($result);
 		

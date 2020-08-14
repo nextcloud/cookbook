@@ -18,4 +18,3 @@
 - Use of table names from constants in DB table
 
 # Bugs found
-- When no category is given for one recipe, the total number of recipes is falsely calculated
