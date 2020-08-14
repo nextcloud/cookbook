@@ -397,9 +397,9 @@ class RecipeDb {
     {
         $qb = $this->db->getQueryBuilder();
         $qb->update(self::DB_TABLE_CATEGORIES)
-            ->where(array('recipe_id' => ':rid', 'user' => ':user'));
+            ->where('recipe_id = :rid', 'user_id = :user');
         $qb->set('name', $qb->expr()->literal($categoryName, IQueryBuilder::PARAM_STR));
-        $qb->setParameter('id', $recipeId, Type::INTEGER);
+        $qb->setParameter('rid', $recipeId, Type::INTEGER);
         $qb->setParameter('user', $userId, Type::STRING);
         $qb->execute();
     }

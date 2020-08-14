@@ -245,7 +245,7 @@ class DbCacheService
                 {
                     // There is a category present. Update needed?
                     if($this->dbCategories[$rid] != trim($category))
-                        $this->db->updateCategoryOfRecipe($rid, $category, $this->userid);
+                        $this->db->updateCategoryOfRecipe($rid, $category, $this->userId);
                 }
                 else
                     $this->db->addCategoryOfRecipe($rid, $category, $this->userId);

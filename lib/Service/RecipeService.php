@@ -989,7 +989,7 @@ class RecipeService
     }
 
     /**
-     * @param bppm $printImage
+     * @param bool $printImage
      * @throws PreConditionNotMetException
      */
     public function setPrintImage(bool $printImage)
