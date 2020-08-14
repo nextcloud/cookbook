@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Type;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\IDBConnection;
+use OCP\AppFramework\Db\DoesNotExistException;
 
 class RecipeDb {
 
@@ -23,20 +24,30 @@ class RecipeDb {
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
      * @deprecated
+     * @todo Why deprecated?
      */
     public function findRecipeById(int $id) {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select('*')
-            ->from('cookbook_recipe')
-            ->where('id = :id');
+            ->from(self::DB_TABLE_RECIPES)
+            ->where('recipe_id = :id');
         $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
         $cursor = $qb->execute();
         $row = $cursor->fetch();
         $cursor->closeCursor();
 
-        return $row;
+        if($row === false)
+        {
+            throw new DoesNotExistException("Recipe with $id was not found in database.");
+        }
+        
+        $ret = [];
+        $ret['name'] = $row['name'];
+        $ret['id'] = $row['recipe_id'];
+        
+        return $ret;
     }
     
     public function deleteRecipeById(int $id) {
@@ -205,6 +216,10 @@ class RecipeDb {
         return $this->unique($result);
     }
     
+    /**
+     * @param string $user_id
+     * @deprecated
+     */
     public function emptySearchIndex(string $user_id) {
         $qb = $this->db->getQueryBuilder();
         
@@ -233,6 +248,11 @@ class RecipeDb {
 
     private function isRecipeEmpty($json) {}
 
+    /**
+     * @param File $file
+     * @param string $user_id
+     * @deprecated
+     */
     public function indexRecipeFile(File $file, string $user_id) {
         $json = json_decode($file->getContent(), true);
 
@@ -242,74 +262,7 @@ class RecipeDb {
         $json['id'] = $id;
         $qb = $this->db->getQueryBuilder();
 
-
-        // Insert keywords
-        $qb->delete('cookbook_keywords')
-            ->where('recipe_id = :id')
-            ->andWhere('user_id = :user');
-        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('user', $user_id, TYPE::STRING);
-        
-        $qb->execute();
-        
-        if(isset($json['keywords']) && !empty($json['keywords'])) {
-            foreach(explode(',', $json['keywords']) as $keyword) {
-                $keyword = trim($keyword);
-
-                $qb->insert('cookbook_keywords')
-                    ->values([
-                        'recipe_id' => ':id',
-                        'name' => ':keyword',
-                        'user_id' => ':user',
-                    ]);
-                $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-                $qb->setParameter('keyword', $keyword, Type::STRING);
-                $qb->setParameter('user', $user_id, Type::STRING);
-
-                try {         
-                    $qb->execute();
-
-                } catch(\Exception $e) {
-                    // Keyword didn't meet restrictions, skip it
-
-                }
-            }
-        }
-        
-        // Insert category
-        // NOTE: We're using * as a placeholder for no category
-        $qb->delete('cookbook_categories')
-            ->where('recipe_id = :id')
-            ->andWhere('user_id = :user');
-        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('user', $user_id, TYPE::STRING);
-                
-        $qb->execute();
-        
-        if(!isset($json['recipeCategory']) || empty($json['recipeCategory'])) {
-            $json['recipeCategory'] = '*';
-        } else if(is_array($json['recipeCategory'])) {
-            $json['recipeCategory'] = reset($json['recipeCategory']);
-        }
-        
-        $qb->insert('cookbook_categories')
-            ->values([
-                'recipe_id' => ':id',
-                'name' => ':category',
-                'user_id' => ':user',
-            ]);
-
-        $qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
-        $qb->setParameter('category', $json['recipeCategory'], Type::STRING);
-        $qb->setParameter('user', $user_id, Type::STRING);
-
-        try {
-            $qb->execute();
-
-        } catch(\Exception $e) {
-            // Category didn't meet restrictions, skip it
-        
-        }
+        // FIXME Setup without this function
     }
     
     /**

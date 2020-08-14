@@ -11,15 +11,26 @@ use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
+use OCA\Cookbook\Service\DbCacheService;
 
 class MainController extends Controller
 {
     protected $appName;
 
+    /**
+     * @var RecipeService
+     */
     private $service;
+    /**
+     * @var DbCacheService
+     */
+    private $dbCacheService;
+    /**
+     * @var IURLGenerator
+     */
     private $urlGenerator;
 
-    public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, IURLGenerator $urlGenerator)
+    public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, IURLGenerator $urlGenerator)
     {
         parent::__construct($AppName, $request);
 
@@ -222,6 +233,7 @@ class MainController extends Controller
         try {
             $recipe_file = $this->service->downloadRecipe($_POST['url']);
             $recipe_json = $this->service->parseRecipeFile($recipe_file);
+            $this->dbCacheService->addRecipe($recipe_file);
 
             return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
         } catch (\Exception $e) {
@@ -238,6 +250,7 @@ class MainController extends Controller
 		try {
 	        $recipe_data = $_POST;
 			$file = $this->service->addRecipe($recipe_data);
+			$this->dbCacheService->addRecipe($file);
 
 			return new DataResponse($file->getParent()->getId());
 		} catch (\Exception $e) {
@@ -285,6 +298,7 @@ class MainController extends Controller
             $recipe_data['id'] = $id;
 
 	        $file = $this->service->addRecipe($recipe_data);
+	        $this->dbCacheService->addRecipe($file);
 			
             return new DataResponse($id);
 

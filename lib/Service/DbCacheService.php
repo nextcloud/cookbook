@@ -3,6 +3,8 @@
 namespace OCA\Cookbook\Service;
 
 use OCA\Cookbook\Db\RecipeDb;
+use OCP\Files\File;
+use OCP\AppFramework\Db\DoesNotExistException;
 
 class DbCacheService
 {
@@ -43,6 +45,34 @@ class DbCacheService
         $this->jsonFiles = $this->parseJSONFiles();
         $this->dbReceipeFiles = $this->fetchDbRecipeInformations();
         
+        $this->carryOutUpdate();
+    }
+    
+    /**
+     * @param File $recipeFile
+     */
+    public function addRecipe(File $recipeFile)
+    {
+        $json = $this->parseJSONFile($recipeFile);
+        $id = $json['id'];
+        
+        $this->jsonFiles = [$id => $json];
+        
+        $this->dbReceipeFiles = [];
+        try {
+            $dbEntry = $this->fetchSingleRecipeDbInformations($id);
+            $this->dbReceipeFiles[$id] = $dbEntry;
+        }
+        catch (DoesNotExistException $e)
+        {
+            // No entry was found, keep the array empty
+        }
+        
+        $this->carryOutUpdate();
+    }
+    
+    private function carryOutUpdate()
+    {
         $this->resetFields();
         $this->compareReceipeLists();
         
@@ -51,8 +81,6 @@ class DbCacheService
         $this->fetchDbAssociatedInformations();
         $this->updateCategories();
         $this->updateKeywords();
-        
-        // FIXME Continue writing
     }
     
     private function resetFields()
@@ -69,19 +97,27 @@ class DbCacheService
         $jsonFiles = $this->recipeService->getRecipeFiles();
         foreach ($jsonFiles as $jsonFile)
         {
-            // XXX Export of file reading into library/service?
-            $json = json_decode($jsonFile->getContent(), true);
-            
-            // TODO Need to be implemented using Exception
-            // if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
-            
-            $id = (int) $jsonFile->getParent()->getId();
-            $json['id'] = $id;
+            $json = $this->parseJSONFile($jsonFile);
+            $id = $json['id'];
             
             $ret[$id] = $json;
         }
         
         return $ret;
+    }
+    
+    private function parseJSONFile(File $jsonFile)
+    {
+        // XXX Export of file reading into library/service?
+        $json = json_decode($jsonFile->getContent(), true);
+        
+        // TODO Need to be implemented using Exception
+        // if(!$json || !isset($json['name']) || $json['name'] === 'No name') { return; }
+        
+        $id = (int) $jsonFile->getParent()->getId();
+        $json['id'] = $id;
+        
+        return $json;
     }
     
     private function fetchDbRecipeInformations()
@@ -103,6 +139,17 @@ class DbCacheService
         }
         
         return $ret;
+    }
+    
+    /**
+     * 
+     * @param int $id
+     * @return array
+     * @throws DoesNotExistException
+     */
+    private function fetchSingleRecipeDbInformations(int $id)
+    {
+        return $this->db->findRecipeById($id);
     }
     
     private function fetchDbAssociatedInformations()
