@@ -3,7 +3,7 @@ OC.L10N.register(
     {
     "Home" : "Degemer",
     "Search" : "Klask",
-    "Save changes" : "Enrollañ ar cheñchoù",
+    "Save changes" : "Enrollañ ar cheñchamantoù",
     "Loading…" : "O Kargañ...",
     "Add" : "Ouzhpennañ",
     "Name" : "Anv",
