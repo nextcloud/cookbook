@@ -49,7 +49,7 @@ OC.L10N.register(
     "The page was not found" : "Strona nie została znaleziona",
     "Name" : "Nazwa",
     "Description" : "Opis",
-    "URL" : "URL",
+    "URL" : "Adres URL",
     "Image" : "Obraz",
     "Preparation time" : "Czas przygotowania",
     "Cooking time" : "Czas gotowania",
