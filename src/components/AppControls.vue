@@ -5,12 +5,12 @@
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
             <Breadcrumb :title="t('cookbook', 'Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
-            <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('cookbook', 'All recipes')" :disableDrop="true"></Breadcrumb>
-            <!--
+            <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('cookbook', 'All recipes')" :disableDrop="true" />
             <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-search" class="action-button" :disabled="true" :ariaLabel="t('cookbook', 'Search')" @click="$window.goTo('/search')" />
+                <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
+                <ActionInput icon="icon-quota" @update:value="updateFilters">{{ t('cookbook', 'Filter') }}</ActionInput>
+                <ActionInput icon="icon-search" @submit="search">{{ t('cookbook', 'Search') }}</ActionInput>
             </Breadcrumb>
-            -->
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
             <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value" :disableDrop="true" />
@@ -87,13 +87,14 @@
 
 <script>
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import Breadcrumbs from '@nextcloud/vue/dist/Components/Breadcrumbs'
 import Breadcrumb from '@nextcloud/vue/dist/Components/Breadcrumb'
 
 export default {
     name: 'AppControls',
     components: {
-        ActionButton, Breadcrumbs, Breadcrumb
+        ActionButton, ActionInput, Breadcrumbs, Breadcrumb
     },
     data () {
         return {
@@ -220,8 +221,14 @@ export default {
         saveChanges: function() {
             this.$root.$emit('saveRecipe')
         },
+        search: function(e) {
+            this.$window.goTo('/search/'+e.target[1].value)
+        },
         toggleNavigation: function() {
             $("#app-navigation").toggleClass("show-navigation")
+        },
+        updateFilters: function(e) {
+            this.$root.$emit('applyRecipeFilter', e)
         },
     },
     mounted () {
