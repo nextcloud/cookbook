@@ -119,7 +119,7 @@ class MainController extends Controller
 			$recipes = $this->service->findRecipesInSearchIndex($query);
 
 			foreach ($recipes as $i => $recipe) {
-                $recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
+                $recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute(
                     'cookbook.recipe.image',
                     [
                         'id' => $recipe['recipe_id'],
@@ -129,6 +129,8 @@ class MainController extends Controller
                 );
 			}
 
+            return new DataResponse($recipes, 200, ['Content-Type' => 'application/json']);
+            // TODO: Remove obsolete code below when this is ready
 			$response = new TemplateResponse($this->appName, 'content/search', ['query' => $query, 'recipes' => $recipes]);
             $response->renderAs('blank');
 
@@ -157,7 +159,7 @@ class MainController extends Controller
                     ]
                 );
 			}
-            
+
             return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
         } catch (\Exception $e) {
             return new DataResponse($e->getMessage(), 500);
@@ -279,18 +281,18 @@ class MainController extends Controller
     {
 		try {
 	        $recipe_data = [];
-            
+
             parse_str(file_get_contents("php://input"), $recipe_data);
 
             $recipe_data['id'] = $id;
 
 	        $file = $this->service->addRecipe($recipe_data);
-			
+
             return new DataResponse($id);
 
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
-        
+
         }
     }
 }
