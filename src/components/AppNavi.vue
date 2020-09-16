@@ -17,7 +17,7 @@
                 @submit="downloadRecipe"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
-                    {{ t('cookbook', 'Recipe URL') }}
+                    {{ t('cookbook', 'Download recipe from URL') }}
             </ActionInput>
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
