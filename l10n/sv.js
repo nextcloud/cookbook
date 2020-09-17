@@ -18,7 +18,6 @@ OC.L10N.register(
     "Tag" : "Tagg",
     "Are you sure you want to delete this recipe?" : "Är du säker på att du vill ta bort detta recept?",
     "Create recipe" : "Skapa recept",
-    "Recipe URL" : "Recept URL",
     "Rescan library" : "Uppdatera bibliotek",
     "Recipe folder" : "Receptkatalog",
     "Please pick a folder" : "Välj katalog",

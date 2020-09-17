@@ -18,7 +18,6 @@ OC.L10N.register(
     "Tag" : "תגית",
     "Are you sure you want to delete this recipe?" : "למחוק את המתכון הזה?",
     "Create recipe" : "יצירת מתכון",
-    "Recipe URL" : "כתובת מתכון",
     "Rescan library" : "סריקת הספרייה מחדש",
     "Recipe folder" : "תיקיית מתכונים",
     "Please pick a folder" : "נא לבחור תיקייה",

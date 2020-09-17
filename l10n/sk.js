@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Zmazanie zlyhalo",
     "Hide navigation" : "Skryť navigáciu",
     "Create recipe" : "Vytvoriť recept",
-    "Recipe URL" : "URL receptu",
     "Rescan library" : "Znovu prehľadať knižnicu",
     "Recipe folder" : "Adresár receptu",
     "Please pick a folder" : "Vyberte priečinok",

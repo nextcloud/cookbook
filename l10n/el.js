@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Αποτυχία διαγραφής",
     "Hide navigation" : "Απόκρυψη  πλοήγησης",
     "Create recipe" : "Δημιουργία συνταγής",
-    "Recipe URL" : "Διεύθυνση URL συνταγής",
     "Rescan library" : "Έλεγχος ξανά βιβλιοθήκης",
     "Recipe folder" : "Φάκελος συνταγής",
     "Please pick a folder" : "Παρακαλώ επιλέξτε φάκελο",

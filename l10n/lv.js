@@ -18,7 +18,6 @@ OC.L10N.register(
     "Tag" : "Birkas",
     "Are you sure you want to delete this recipe?" : "Vai vēlaties dzēst šo recepti?",
     "Create recipe" : "Izveidot recepti",
-    "Recipe URL" : "Receptes URL",
     "Rescan library" : "Atjaunināt bibliotēku",
     "Recipe folder" : "Recepšu mape",
     "Please pick a folder" : "Lūdzu izvēlaties mapi",

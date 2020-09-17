@@ -18,7 +18,6 @@ OC.L10N.register(
     "Tag" : "Oznaka",
     "Are you sure you want to delete this recipe?" : "Ali ste prepričani, da želite izbrisati recept?",
     "Create recipe" : "Ustvari recept",
-    "Recipe URL" : "Naslov URL recepta",
     "Rescan library" : "Ponovno preišči zbirko",
     "Recipe folder" : "Mapa receptov",
     "Please pick a folder" : "Izbrati je treba mapo",

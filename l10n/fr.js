@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Échec de la suppression",
     "Hide navigation" : "Masquer la navigation",
     "Create recipe" : "Créer une recette",
-    "Recipe URL" : "URL de la recette",
     "Rescan library" : "Rescanner la bibliothèque",
     "Recipe folder" : "Dossier des recettes",
     "Please pick a folder" : "Veuillez choisir un dossier",

@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Usuwanie nie powiodło się",
     "Hide navigation" : "Ukryj nawigację",
     "Create recipe" : "Stwórz przepis",
-    "Recipe URL" : "Adres URL przepisu",
     "Rescan library" : "Skanowanie biblioteki",
     "Recipe folder" : "Folder przepisu",
     "Please pick a folder" : "Proszę wybierać folder",

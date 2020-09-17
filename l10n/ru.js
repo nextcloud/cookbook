@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Сбой удаления",
     "Hide navigation" : "Скрыть навигацию",
     "Create recipe" : "Создать рецепт",
-    "Recipe URL" : "URL рецепта",
     "Rescan library" : "Сканировать библиотеку",
     "Recipe folder" : "Папка с рецептами",
     "Please pick a folder" : "Выберите папку",
