@@ -28,6 +28,7 @@ OC.L10N.register(
     "Delete failed" : "Verwijderen is mislukt",
     "Hide navigation" : "Verberg navigatie",
     "Create recipe" : "Maak een recept",
+    "Download recipe from URL" : "Recept downloaden van URL",
     "Rescan library" : "Bibliotheek opnieuw inladen",
     "Recipe folder" : "Receptenmap",
     "Please pick a folder" : "Selecteer alstublieft een map",

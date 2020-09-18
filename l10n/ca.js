@@ -28,6 +28,7 @@ OC.L10N.register(
     "Delete failed" : "Ha fallat la supressió",
     "Hide navigation" : "Amaga la navegació",
     "Create recipe" : "Crea una recepta",
+    "Download recipe from URL" : "Descarregar recepta des d'URL",
     "Rescan library" : "Torna a escanejar la biblioteca",
     "Recipe folder" : "Carpeta de receptes",
     "Please pick a folder" : "Seleccioneu una carpeta",

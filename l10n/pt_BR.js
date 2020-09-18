@@ -28,6 +28,7 @@ OC.L10N.register(
     "Delete failed" : "Erro na exclusão",
     "Hide navigation" : "Ocultar navegação",
     "Create recipe" : "Criar receita",
+    "Download recipe from URL" : "Baixar a receita da URL",
     "Rescan library" : "Verificar biblioteca novamente",
     "Recipe folder" : "Pasta da receita",
     "Please pick a folder" : "Escolha uma pasta",
