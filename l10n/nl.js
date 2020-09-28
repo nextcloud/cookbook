@@ -31,7 +31,7 @@ OC.L10N.register(
     "Download recipe from URL" : "Recept downloaden van URL",
     "Rescan library" : "Bibliotheek opnieuw inladen",
     "Recipe folder" : "Receptenmap",
-    "Please pick a folder" : "Selecteer alstublieft een map",
+    "Please pick a folder" : "Selecteer alsjeblieft een map",
     "Update interval in minutes" : "Update-interval in minuten",
     "Last update: " : "Laatste update:",
     "Print image with recipe" : "Recept afdrukken met afbeelding",
@@ -56,12 +56,12 @@ OC.L10N.register(
     "Total time" : "Totale tijd",
     "Keywords (comma separated)" : "Trefwoorden (gescheiden door een komma)",
     "Servings" : "Porties",
-    "Tools" : "Tools",
+    "Tools" : "Hulpmiddelen",
     "Ingredients" : "Ingrediënten",
     "Instructions" : "Instructies",
     "Loading recipe failed" : "Laden recept mislukt",
     "Recipe could not be saved" : "Recept kon niet worden opgelagen",
-    "Cooking time is up!" : "Kooktijd is vertreken!",
+    "Cooking time is up!" : "Kooktijd is verstreken!",
     "Source" : "Bron"
 },
 "nplurals=2; plural=(n != 1);");
