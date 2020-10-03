@@ -40,7 +40,7 @@ OC.L10N.register(
     "Loading config failed" : "Produciuse un fallo ao cargar a configuración",
     "Failed to load category " : "Produciuse un fallo ao cargar a categoría",
     "Loading category recipes..." : "Cargando receitas da categoría…",
-    "Failed to fetch categories" : "Produciuse un fallo ao recuperar as categorías",
+    "Failed to fetch categories" : "Produciuse un fallo ao obter as categorías",
     "Path to your recipe collection" : "Ruta á súa colección de receitas",
     "Could not set recipe folder to {path}" : "Non foi posíbel  estabelecer o cartafol de receitas en {path}",
     "Pick a local image" : "Escolla unha imaxe local",
