@@ -3,6 +3,10 @@
 php --version
 
 # Prepare the system
-npm install -g npm@latest
+# npm install -g npm@latest
+
+# Build the system
+pwd
+ls
 
 env
