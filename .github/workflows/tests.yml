@@ -13,7 +13,7 @@ jobs:
       - name: Checkout the nextcloud server
         uses: actions/checkout@v2
         with:
-            repository: https://github.com/nextcloud/server.git
+            repository: nextcloud/server
             ref: stable19
             path: nextcloud
       - name: Checkout the app
