@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-env
+# env
 
 cd /tests
 echo "Creating test docker image with the following settings"
