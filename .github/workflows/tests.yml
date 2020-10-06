@@ -8,7 +8,8 @@ on:
 jobs:
   
   test:
-    
     runs-on: ubuntu-latest
-    
-    steps: ~
+    steps:
+      - name: Checkout the app
+        uses: actions/checkout@v2
+        
