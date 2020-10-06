@@ -24,5 +24,5 @@ runs:
             shell: bash
         -   run: echo docker run -e INPUT_DB -v "$GITHUB_WORKSPACE":/workdir docker-test
             name: Run the test container
-            bash: shell
+            shell: bash
             
