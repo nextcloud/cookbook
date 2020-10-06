@@ -13,6 +13,7 @@ cd nextcloud
 
 echo "Build the app"
 pushd custom_apps/cookbook
+npm install
 make
 popd
 
