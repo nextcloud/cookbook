@@ -1,0 +1,15 @@
+
+name: Run test suite on code base
+author: Christian Wolf <github@christianwolf.email>
+description: <
+    This is a github action to test the cookbook Nextcloud app.
+
+inputs:
+    phpVersion:
+        description: The PHP version to use for the tests
+        required: false
+        default: '7'
+
+runs:
+    using: 'docker'
+    image: 'Dockerfile'
