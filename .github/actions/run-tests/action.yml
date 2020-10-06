@@ -19,7 +19,7 @@ runs:
         -   run: docker build -t docker-tests --build-arg PHPVERSION=${{ inputs.phpVersion }} $(pwd)/nextcloud/custom_apps/cookbook/.github/actions/run-tests/tests
             name: Build the test image
             shell: bash
-        -   run: <
+        -   run: >-
                 docker run 
                 -e INPUT_DB
                 -e GITHUB_ACTIONS
