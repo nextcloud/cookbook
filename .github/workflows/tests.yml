@@ -29,4 +29,4 @@ jobs:
         uses: ./nextcloud/custom_apps/cookbook/.github/actions/run-tests
         with:
             db: mysql
-            hostWorkspace: "$GITHUB_WORKSPACE"
+            hostWorkspace: "${GITHUB_WORKSPACE}"
