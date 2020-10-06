@@ -30,15 +30,15 @@ jobs:
         with:
             db: mysql
     
-    services:
+    #services:
         
-        mysql:
-            image: mariadb:10.1
-            env:
-                MYSQL_ROOT_PASSWORD: my-secret-root
-                MYSQL_DATABASE: nc_test
-                MYSQL_USER: tester
-                MYSQL_PASSWORD: tester_pass
-            ports:
-                - 127.0.0.1:3306:3306
+        #mysql:
+            #image: mariadb:10.1
+            #env:
+                #MYSQL_ROOT_PASSWORD: my-secret-root
+                #MYSQL_DATABASE: nc_test
+                #MYSQL_USER: tester
+                #MYSQL_PASSWORD: tester_pass
+            #ports:
+                #- 127.0.0.1:3306:3306
                 

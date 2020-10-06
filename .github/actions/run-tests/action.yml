@@ -19,6 +19,24 @@ runs:
         -   run: docker build -t docker-tests --build-arg PHPVERSION=${{ inputs.phpVersion }} $(pwd)/nextcloud/custom_apps/cookbook/.github/actions/run-tests/tests
             name: Build the test image
             shell: bash
+        
+        -   name: Create docker network
+            run: >-
+                docker network
+                create net_cookbook
+                
+        -   name: Run MySQL service container
+            run: >-
+                docker create
+                --name service-mysql
+                --network net_cookbook
+                --network-alias mysql
+                -e MYSQL_ROOT_PASSWORD=my-secret-root
+                -e MYSQL_DATABASE=nc_test
+                -e MYSQL_USER=tester
+                -e MYSQL_PASSWORD=tester_pass
+                mariadb:10.1
+            
         -   run: >-
                 docker run 
                 -e INPUT_DB=${{ inputs.db }}
@@ -40,6 +58,7 @@ runs:
                 -e GITHUB_API_URL
                 -e GITHUB_GRAPHQL_URL
                 -e CI
+                --network net_cookbook
                 -v "$GITHUB_WORKSPACE":/workdir
                 docker-tests
             name: Run the test container
