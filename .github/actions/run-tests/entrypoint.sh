@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/sh -e
 
 env
 
 cd /tests
 echo "Creating test docker image with the following settings"
-echo "PHP version: $PHP_VERSION"
+echo "PHP version: $INPUT_PHPVERSION"
 
-docker build -t docker-tests --build-arg PHPVERSION="$PHP_VERSION" .
+docker build -t docker-tests --build-arg PHPVERSION="$INPUT_PHPVERSION" .
 docker run docker-tests
