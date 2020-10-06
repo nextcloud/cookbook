@@ -22,7 +22,7 @@ echo "Prepare database"
 
 function call_mysql()
 {
-	mysql -u tester -h mysql -ptester_pass "$@"
+	mysql -u tester -h 127.0.0.1 -ptester_pass "$@"
 }
 
 case "$INPUT_DB" in
@@ -48,7 +48,7 @@ mkdir data
 
 case "$INPUT_DB" in
 	mysql)
-		./occ maintenance:install --database-name nc_test --database-user tester --admin-user admin --admin-pass admin --database mysql --database-pass 'tester_pass'
+		./occ maintenance:install --database-name nc_test --database-user tester --admin-user admin --admin-pass admin --database 127.0.0.1 --database-pass 'tester_pass'
 		;;
 	*)
 		echo "::error ::No database specific initilization in test script. This might be a bug."
