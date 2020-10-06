@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+set -x
+
 # env
 
 cd /tests
