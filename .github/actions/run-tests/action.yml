@@ -32,7 +32,7 @@ runs:
                 
         -   name: Run MySQL service container
             run: >-
-                docker create
+                docker run -d
                 --name service-mysql
                 --network net_cookbook
                 --network-alias mysql
