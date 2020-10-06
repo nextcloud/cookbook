@@ -7,7 +7,7 @@ php --version
 echo "Preparing the build system"
 
 # Prepare the system
-# npm install -g npm@latest
+npm install -g npm@latest
 
 # Build the system
 
