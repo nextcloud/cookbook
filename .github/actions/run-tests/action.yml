@@ -12,9 +12,12 @@ inputs:
     db:
         description: The db type to use
         required: true
+    hostWorkspace:
+        description: The content of the environment variable GITHUB_WORKSPACE on the host runner
+        required: true
 
 runs:
     using: 'docker'
     image: 'Dockerfile'
     env:
-        HOST_GITHUB_WORKSPACE: ${{ inputs.db }}
+        HOST_GITHUB_WORKSPACE: ${{ inputs.hostWorkspace }}
