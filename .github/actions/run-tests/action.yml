@@ -21,7 +21,7 @@ runs:
             shell: bash
         -   run: >-
                 docker run 
-                -e INPUT_DB
+                -e INPUT_DB=${{ inputs.db }}
                 -e GITHUB_ACTIONS
                 -e GITHUB_WORKFLOW
                 -e GITHUB_RUN_ID
