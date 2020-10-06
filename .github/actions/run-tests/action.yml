@@ -17,7 +17,12 @@ inputs:
         required: true
 
 runs:
-    using: 'docker'
-    image: 'Dockerfile'
-    env:
-        HOST_GITHUB_WORKSPACE: ${{ inputs.hostWorkspace }}
+    using: 'composite'
+    steps:
+        -   run: echo docker build -t docker-tests --build-arg PHPVERSION="$INPUT_PHPVERSION" $(pwd)/tests
+            name: Build the test image
+            shell: bash
+        -   run: echo docker run -e INPUT_DB -v "$GITHUB_WORKSPACE":/workdir docker-test
+            name: Run the test container
+            bash: shell
+            
