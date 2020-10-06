@@ -19,7 +19,7 @@ inputs:
 runs:
     using: 'composite'
     steps:
-        -   run: echo docker build -t docker-tests --build-arg PHPVERSION=$INPUT_PHPVERSION $(pwd)/tests
+        -   run: echo docker build -t docker-tests --build-arg PHPVERSION=${{ inputs.phpVersion }} $(pwd)/tests
             name: Build the test image
             shell: bash
         -   run: echo docker run -e INPUT_DB -v "$GITHUB_WORKSPACE":/workdir docker-test
