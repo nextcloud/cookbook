@@ -16,7 +16,11 @@ inputs:
 runs:
     using: 'composite'
     steps:
-        -   run: docker build -t docker-tests --build-arg PHPVERSION=${{ inputs.phpVersion }} $(pwd)/nextcloud/custom_apps/cookbook/.github/actions/run-tests/tests
+        -   run: >-
+                docker build
+                -t docker-tests
+                --build-arg PHPVERSION=${{ inputs.phpVersion }}
+                $(pwd)/nextcloud/custom_apps/cookbook/.github/actions/run-tests/tests
             name: Build the test image
             shell: bash
         
