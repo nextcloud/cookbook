@@ -1,7 +1,11 @@
 
-ARG INPUT_PHPVERSION=7
-FROM php:${INPUT_PHPVERSION}-cli
+FROM alpine:latest
 
-COPY test-entrypoint.sh /
-ENTRYPOINT ["/test-entrypoint.sh"]
+COPY entrypoint.sh /entrypoint.sh
+COPY tests /tests
 
+RUN apk add --update --no-cache docker
+
+ENV PHP_VERSION
+
+ENTRYPOINT ["/entrypoint.sh"]

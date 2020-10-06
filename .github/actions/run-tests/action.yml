@@ -13,3 +13,5 @@ inputs:
 runs:
     using: 'docker'
     image: 'Dockerfile'
+    env:
+        PHP_VERSION: $INPUT_PHPVERSION
