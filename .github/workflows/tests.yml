@@ -19,9 +19,9 @@ jobs:
       - name: Checkout the app
         uses: actions/checkout@v2
         with:
-            path: nextcloud/app/cookbook
+            path: nextcloud/custom_apps/cookbook
         
       - name: Run the tests in docker container
-        uses: ./.github/actions/run-tests
+        uses: ./nextcloud/custom_apps/cookbook/.github/actions/run-tests
         with:
             db: mysql
