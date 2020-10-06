@@ -8,6 +8,7 @@ on:
 jobs:
   
   test:
+    name: Run the unittests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the nextcloud server
@@ -24,9 +25,12 @@ jobs:
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
-      
+      - name: Save the WORKSPACE on the host runner
+        run: echo ::set-output name=hostWorkspace::$GITHUB_WORKSPACE
+        id: workspace
+        
       - name: Run the tests in docker container
         uses: ./nextcloud/custom_apps/cookbook/.github/actions/run-tests
         with:
             db: mysql
-            hostWorkspace: $GITHUB_WORKSPACE
+            hostWorkspace: ${{ steps.workspace.hostWorkspace }}
