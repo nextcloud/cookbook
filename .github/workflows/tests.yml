@@ -25,16 +25,7 @@ jobs:
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
-      - name: Save the WORKSPACE on the host runner
-        run: echo ::set-output name=hostWorkspace::$GITHUB_WORKSPACE
-        id: workspace
-      - name: Save the WORKSPACE on the host runner to environment copy
-        run: echo HOST_WORKSPACE=$GITHUB_WORKSPACE >> $GITHUB_ENV
-      - name: Debug variables
-        run: env; echo $GITHUB_WORKSPACE
-        
       - name: Run the tests in docker container
         uses: ./nextcloud/custom_apps/cookbook/.github/actions/run-tests
         with:
             db: mysql
-            hostWorkspace: ${{ steps.workspace.outputs.hostWorkspace }}
