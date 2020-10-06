@@ -16,3 +16,5 @@ inputs:
 runs:
     using: 'docker'
     image: 'Dockerfile'
+    env:
+        HOST_GITHUB_WORKSPACE: ${{ INPUT_DB }}
