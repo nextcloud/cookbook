@@ -13,3 +13,5 @@ jobs:
       - name: Checkout the app
         uses: actions/checkout@v2
         
+      - name: Run the tests in docker container
+        uses: ./.github/actions/run-tests
