@@ -3,6 +3,7 @@
 set -x
 
 php --version
+env
 
 echo "Preparing the build system"
 
@@ -68,11 +69,3 @@ cd custom_apps/cookbook
 make test
 
 kill $pid
-
-###############
-echo
-ls -la
-echo
-
-echo "Environment"
-env
