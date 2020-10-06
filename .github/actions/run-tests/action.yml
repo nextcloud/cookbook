@@ -9,6 +9,9 @@ inputs:
         description: The PHP version to use for the tests
         required: false
         default: '7'
+    db:
+        description: The db type to use
+        required: true
 
 runs:
     using: 'docker'

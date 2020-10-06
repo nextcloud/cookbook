@@ -10,8 +10,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the nextcloud server
+        uses: actions/checkout@v2
+        with:
+            repository: https://github.com/nextcloud/server.git
+            ref: stable19
+            path: nextcloud
       - name: Checkout the app
         uses: actions/checkout@v2
+        with:
+            path: nextcloud/app/cookbook
         
       - name: Run the tests in docker container
         uses: ./.github/actions/run-tests
+        with:
+            db: mysql
