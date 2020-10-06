@@ -6,6 +6,4 @@ COPY tests /tests
 
 RUN apk add --update --no-cache docker
 
-ENV PHP_VERSION
-
 ENTRYPOINT ["/entrypoint.sh"]
