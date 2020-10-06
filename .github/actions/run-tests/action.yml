@@ -24,6 +24,7 @@ runs:
             run: >-
                 docker network
                 create net_cookbook
+            shell: bash
                 
         -   name: Run MySQL service container
             run: >-
@@ -36,6 +37,7 @@ runs:
                 -e MYSQL_USER=tester
                 -e MYSQL_PASSWORD=tester_pass
                 mariadb:10.1
+            shell: bash
             
         -   run: >-
                 docker run 
