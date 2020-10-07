@@ -43,6 +43,18 @@ runs:
                 mariadb:10.1
             shell: bash
             
+        -   name: Run PostgresSQL container
+            run: >-
+                docker run -d --rm
+                --name service-pgsql
+                --network net_cookbook
+                --network-alias postgres
+                -e POSTGRES_USER=tester
+                -e POSTGRES_PASSWORD=tester_pass
+                -e POSTGRES_DB=nc_test
+                postgres:alpine
+            shell: bash
+            
         -   run: >-
                 docker run --rm
                 -e INPUT_DB=${{ inputs.db }}
@@ -68,5 +80,9 @@ runs:
                 -v "$GITHUB_WORKSPACE":/workdir
                 docker-tests
             name: Run the test container
+            shell: bash
+            
+        -   name: Stop helper containers
+            run: docker stop service-mysql service-pgsql
             shell: bash
             

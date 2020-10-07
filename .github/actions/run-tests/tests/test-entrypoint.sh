@@ -28,6 +28,11 @@ function call_mysql()
 	mysql -u tester -h mysql -ptester_pass "$@"
 }
 
+function call_pgsql()
+{
+	PGPASSWORD=tester_pass psql -h pgsql nc_test tester "$@"
+}
+
 case "$INPUT_DB" in
 	mysql)
 		for i in `seq 1 10`
@@ -39,7 +44,17 @@ case "$INPUT_DB" in
 			echo '::error ::Could not connect to mysql database'
 			exit 1
 		fi
-		
+		;;
+	pgsql)
+		for i in `seq 1 10`
+		do
+			call_mysql -c '\q' && break || true
+			sleep 5
+		done
+		if [ $i -eq 10 ]; then
+			echo '::error ::Could not connect to postgres database'
+			exit 1
+		fi
 		;;
 	*)
 		echo "::warning ::No database specific initilization in test script. This might be a bug."
@@ -54,6 +69,16 @@ case "$INPUT_DB" in
 		./occ maintenance:install \
 			--database mysql \
 			--database-host mysql \
+			--database-name nc_test \
+			--database-user tester \
+			--database-pass 'tester_pass' \
+			--admin-user admin \
+			--admin-pass admin
+		;;
+	postgres)
+		./occ maintenance:install \
+			--database pgsql \
+			--database-host pgsql \
 			--database-name nc_test \
 			--database-user tester \
 			--database-pass 'tester_pass' \
@@ -76,6 +101,9 @@ pid=$!
 
 cd custom_apps/cookbook
 
+echo 'Running the main tests'
 make test
+echo 'Tests finished'
 
+echo 'Shutting down temporary web server'
 kill $pid
