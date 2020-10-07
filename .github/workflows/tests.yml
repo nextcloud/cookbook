@@ -56,3 +56,9 @@ jobs:
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
+        
+      - name: Upload the log file
+        uses: actions/upload-artifact@v2
+        with:
+            name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
+            path: nextcloud/data/nextcloud.log
