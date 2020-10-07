@@ -18,14 +18,26 @@ jobs:
                 - pgsql
                 - sqlite
             coreVersion:
-                - stable18
                 - stable19
-                - stable20
             phpVersion:
-                - "5.6"
                 - "7"
-                - "7.1"
-    
+            include:
+                # Test different core versions additionally
+                -   database: mysql
+                    coreVersion: stable18
+                    phpVersion: "7"
+                -   database: mysql
+                    coreVersion: stable20
+                    phpVersion: "7"
+                
+                # Test different PHP versions additionally
+                -   database: mysql
+                    coreVersion: stable19
+                    phpVersion: "7.1"
+                -   database: mysql
+                    coreVersion: stable19
+                    phpVersion: "5.6"
+                    
     steps:
       - name: Checkout the nextcloud server
         uses: actions/checkout@v2
