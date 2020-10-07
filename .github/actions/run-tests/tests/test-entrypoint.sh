@@ -107,11 +107,13 @@ echo 'Starting a temporary web server'
 php -S localhost:8080 &
 pid=$!
 
-cd custom_apps/cookbook
+pushd custom_apps/cookbook
 
 echo 'Running the main tests'
 make test
 echo 'Tests finished'
+
+popd
 
 echo 'Shutting down temporary web server'
 kill $pid
