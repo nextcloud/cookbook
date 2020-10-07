@@ -31,7 +31,7 @@ class ValidateDurationTest extends TestCase
      */
     private $reflectedValidateDurationMethod;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->recipeService = new RecipeService(
             'admin',
