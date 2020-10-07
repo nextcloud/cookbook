@@ -30,7 +30,7 @@ function call_mysql()
 
 function call_pgsql()
 {
-	PGPASSWORD=tester_pass psql -h pgsql "$@" nc_test tester
+	PGPASSWORD=tester_pass psql -h postgres "$@" nc_test tester
 }
 
 case "$INPUT_DB" in
@@ -78,7 +78,7 @@ case "$INPUT_DB" in
 	postgres)
 		./occ maintenance:install \
 			--database pgsql \
-			--database-host pgsql \
+			--database-host postgres \
 			--database-name nc_test \
 			--database-user tester \
 			--database-pass 'tester_pass' \
