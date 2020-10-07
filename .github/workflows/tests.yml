@@ -16,6 +16,7 @@ jobs:
             database:
                 - mysql
                 - pgsql
+                - sqlite
     
     steps:
       - name: Checkout the nextcloud server

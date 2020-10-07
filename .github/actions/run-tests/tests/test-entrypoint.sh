@@ -56,6 +56,8 @@ case "$INPUT_DB" in
 			exit 1
 		fi
 		;;
+	sqlite)
+		;;
 	*)
 		echo "::warning ::No database specific initilization in test script. This might be a bug."
 		;;
@@ -82,6 +84,12 @@ case "$INPUT_DB" in
 			--database-name nc_test \
 			--database-user tester \
 			--database-pass 'tester_pass' \
+			--admin-user admin \
+			--admin-pass admin
+		;;
+	sqlite)
+		./occ maintenance:install \
+			--database sqlite \
 			--admin-user admin \
 			--admin-pass admin
 		;;
