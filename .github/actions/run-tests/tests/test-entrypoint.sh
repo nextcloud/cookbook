@@ -51,7 +51,13 @@ mkdir data
 
 case "$INPUT_DB" in
 	mysql)
-		./occ maintenance:install --database-name nc_test --database-user tester --admin-user admin --admin-pass admin --database mysql --database-pass 'tester_pass'
+		./occ maintenance:install \
+			--database mysql \
+			--database-name nc_test \
+			--database-user tester \
+			--database-pass 'tester_pass' \
+			--admin-user admin \
+			--admin-pass admin
 		;;
 	*)
 		echo "::error ::No database specific initilization in test script. This might be a bug."
