@@ -21,6 +21,10 @@ jobs:
                 - stable18
                 - stable19
                 - stable20
+            phpVersion:
+                - "5.6"
+                - "7"
+                - "7.1"
     
     steps:
       - name: Checkout the nextcloud server
@@ -41,3 +45,4 @@ jobs:
         uses: ./nextcloud/custom_apps/cookbook/.github/actions/run-tests
         with:
             db: ${{ matrix.database }}
+            phpVersion: ${{ matrix.phpVersion }}
