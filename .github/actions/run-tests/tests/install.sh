@@ -1,5 +1,7 @@
 #!/bin/bash -e
 
+echo "Install called with parameters '$@'"
+
 set -x
 
 function configure_gd_normal ()

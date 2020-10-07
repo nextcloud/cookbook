@@ -2,6 +2,8 @@
 ARG PHPVERSION
 FROM php:${PHPVERSION}-cli
 
+ARG PHPVERSION
+
 COPY install.sh /install.sh
 RUN /install.sh ${PHPVERSION}
 
