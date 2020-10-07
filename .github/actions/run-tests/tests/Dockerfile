@@ -5,7 +5,11 @@ FROM php:${PHPVERSION}-cli
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends npm make default-mysql-client postgresql-client \
 		unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev cmake libpq-dev libsqlite3-dev && \
-	docker-php-ext-configure gd --with-freetype --with-jpeg && \
+	if [ ${PHPVERSION} = "7.2" ]; then \
+		docker-php-ext-configure gd; \
+	else \
+		docker-php-ext-configure gd --with-freetype --with-jpeg; \
+	fi && \
 	docker-php-ext-install -j $(nproc) gd && \
 	docker-php-ext-configure zip && \
 	docker-php-ext-install -j$(nproc) zip && \
