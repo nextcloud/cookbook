@@ -16,7 +16,7 @@ class PageControllerTest extends TestCase
     private $controller;
     private $mockedRecipeService;
 
-    public function setUp()
+    public function setUp(): void
     {
         $request = $this->getMockBuilder(IRequest::class)->getMock();
         $this->mockedRecipeService = $this->getMockBuilder(RecipeService::class)->disableOriginalConstructor()->getMock();
