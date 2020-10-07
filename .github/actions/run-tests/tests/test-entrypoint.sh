@@ -30,7 +30,7 @@ function call_mysql()
 
 function call_pgsql()
 {
-	PGPASSWORD=tester_pass psql -h pgsql nc_test tester "$@"
+	PGPASSWORD=tester_pass psql -h pgsql "$@" nc_test tester
 }
 
 case "$INPUT_DB" in
@@ -48,7 +48,7 @@ case "$INPUT_DB" in
 	pgsql)
 		for i in `seq 1 10`
 		do
-			call_mysql -c '\q' && break || true
+			call_pgsql -c '\q' && break || true
 			sleep 5
 		done
 		if [ $i -eq 10 ]; then
