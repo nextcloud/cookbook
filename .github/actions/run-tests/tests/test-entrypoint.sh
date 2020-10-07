@@ -12,6 +12,9 @@ npm install -g npm@latest
 
 cd nextcloud
 
+echo 'Updating the submodules'
+git submodule update --init
+
 echo "Build the app"
 pushd custom_apps/cookbook
 npm install
