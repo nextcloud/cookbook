@@ -75,7 +75,7 @@ case "$INPUT_DB" in
 			--admin-user admin \
 			--admin-pass admin
 		;;
-	postgres)
+	pgsql)
 		./occ maintenance:install \
 			--database pgsql \
 			--database-host postgres \
