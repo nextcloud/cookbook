@@ -33,10 +33,7 @@ jobs:
                 # Test different PHP versions additionally
                 -   database: mysql
                     coreVersion: stable19
-                    phpVersion: "7.1"
-                -   database: mysql
-                    coreVersion: stable19
-                    phpVersion: "5.6"
+                    phpVersion: "7.2"
                     
     steps:
       - name: Checkout the nextcloud server
