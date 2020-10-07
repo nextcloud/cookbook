@@ -53,6 +53,7 @@ case "$INPUT_DB" in
 	mysql)
 		./occ maintenance:install \
 			--database mysql \
+			--database-host mysql \
 			--database-name nc_test \
 			--database-user tester \
 			--database-pass 'tester_pass' \
