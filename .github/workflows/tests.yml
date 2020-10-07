@@ -10,6 +10,13 @@ jobs:
   test:
     name: Run the unittests
     runs-on: ubuntu-latest
+    
+    strategy:
+        matrix:
+            database:
+                - mysql
+                - pgsql
+    
     steps:
       - name: Checkout the nextcloud server
         uses: actions/checkout@v2
@@ -28,7 +35,7 @@ jobs:
       - name: Run the tests in docker container
         uses: ./nextcloud/custom_apps/cookbook/.github/actions/run-tests
         with:
-            db: mysql
+            db: ${{ matrix.database }}
     
     #services:
         
