@@ -120,3 +120,4 @@ kill $pid
 
 echo 'Make data folder readable again'
 chmod a+rx data
+chmod a+r data/nextcloud.log
