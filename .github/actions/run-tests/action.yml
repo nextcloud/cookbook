@@ -32,7 +32,7 @@ runs:
                 
         -   name: Run MySQL service container
             run: >-
-                docker run -d
+                docker run -d --rm
                 --name service-mysql
                 --network net_cookbook
                 --network-alias mysql
@@ -44,7 +44,7 @@ runs:
             shell: bash
             
         -   run: >-
-                docker run 
+                docker run --rm
                 -e INPUT_DB=${{ inputs.db }}
                 -e GITHUB_ACTIONS
                 -e GITHUB_WORKFLOW
