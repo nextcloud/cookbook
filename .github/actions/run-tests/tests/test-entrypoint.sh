@@ -115,3 +115,6 @@ echo 'Tests finished'
 
 echo 'Shutting down temporary web server'
 kill $pid
+
+echo 'Make data folder readable again'
+chmod a+rx data
