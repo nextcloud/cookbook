@@ -2,8 +2,6 @@
 ARG PHPVERSION
 FROM php:${PHPVERSION}-cli
 
-ENV DISPLAY=:99.0
-
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends npm make default-mysql-client postgresql-client \
 		unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev cmake libpq-dev libsqlite3-dev && \
