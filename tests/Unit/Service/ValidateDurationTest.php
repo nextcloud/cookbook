@@ -8,6 +8,7 @@ use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCA\Cookbook\Controller\PageController;
 use OCP\Files\IRootFolder;
+use OCP\IL10N;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IRequest;
@@ -37,7 +38,8 @@ class ValidateDurationTest extends TestCase
             'admin',
             $this->getMockBuilder(IRootFolder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(RecipeDb::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(IConfig::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(IConfig::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(IL10N::class)->disableOriginalConstructor()->getMock()
         );
         $reflectedRecipeService = new ReflectionClass(RecipeService::class);
         $this->reflectedValidateDurationMethod = $reflectedRecipeService->getMethod('validateDuration');
