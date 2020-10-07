@@ -3,7 +3,7 @@ ARG PHPVERSION
 FROM php:${PHPVERSION}-cli
 
 COPY install.sh /install.sh
-RUN /install.sh
+RUN /install.sh ${PHPVERSION}
 
 RUN mkdir /workdir
 WORKDIR /workdir
