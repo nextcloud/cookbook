@@ -13,3 +13,6 @@ WORKDIR /workdir
 COPY test-entrypoint.sh /
 ENTRYPOINT ["/test-entrypoint.sh"]
 
+ARG UID
+RUN useradd --uid ${UID} runner && chown runner /workdir
+USER runner
