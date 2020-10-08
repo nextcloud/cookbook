@@ -15,7 +15,7 @@ echo 'Updating the submodules'
 git submodule update --init
 
 echo "Build the app"
-pushd custom_apps/cookbook
+pushd apps/cookbook
 npm install
 make
 popd
@@ -106,7 +106,7 @@ echo 'Starting a temporary web server'
 php -S localhost:8080 &
 pid=$!
 
-pushd custom_apps/cookbook
+pushd apps/cookbook
 
 echo 'Running the main tests'
 make test
