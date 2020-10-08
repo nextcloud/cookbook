@@ -43,6 +43,12 @@ jobs:
                     phpVersion: "7.2"
                     mayFail: "false"
                     
+                # Test against master (optionally)
+                -   database: mysql
+                    coreVersion: master
+                    phpVersion: "7"
+                    mayFail: "true"
+                    
     steps:
       - name: Checkout the nextcloud server
         uses: actions/checkout@v2
