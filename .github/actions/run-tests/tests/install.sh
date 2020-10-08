@@ -44,3 +44,5 @@ docker-php-ext-install -j$(nproc) zip
 docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite
 
 echo 'runner ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+npm install -g npm@latest

@@ -8,7 +8,6 @@ env
 echo "Preparing the build system"
 
 # Prepare the system
-sudo npm install -g npm@latest
 
 cd nextcloud
 
