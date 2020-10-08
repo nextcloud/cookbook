@@ -25,29 +25,29 @@ jobs:
             phpVersion:
                 - "7"
             mayFail:
-                - 'false'
+                - false
             include:
                 # Test different core versions additionally
                 -   database: mysql
                     coreVersion: stable18
                     phpVersion: "7"
-                    mayFail: "false"
+                    mayFail: false
                 -   database: mysql
                     coreVersion: stable20
                     phpVersion: "7"
-                    mayFail: "false"
+                    mayFail: false
                 
                 # Test different PHP versions additionally
                 -   database: mysql
                     coreVersion: stable19
                     phpVersion: "7.2"
-                    mayFail: "false"
+                    mayFail: false
                     
                 # Test against master (optionally)
                 -   database: mysql
                     coreVersion: master
                     phpVersion: "7"
-                    mayFail: "true"
+                    mayFail: true
                     
     steps:
       - name: Checkout the nextcloud server
