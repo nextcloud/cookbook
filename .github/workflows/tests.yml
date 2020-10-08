@@ -11,6 +11,8 @@ jobs:
     name: Run the unittests
     runs-on: ubuntu-latest
     
+    continue-on-error: ${{ matrix.mayFail }}
+    
     strategy:
         fail-fast: false
         matrix:
@@ -22,19 +24,24 @@ jobs:
                 - stable19
             phpVersion:
                 - "7"
+            mayFail:
+                - 'false'
             include:
                 # Test different core versions additionally
                 -   database: mysql
                     coreVersion: stable18
                     phpVersion: "7"
+                    mayFail: "false"
                 -   database: mysql
                     coreVersion: stable20
                     phpVersion: "7"
+                    mayFail: "false"
                 
                 # Test different PHP versions additionally
                 -   database: mysql
                     coreVersion: stable19
                     phpVersion: "7.2"
+                    mayFail: "false"
                     
     steps:
       - name: Checkout the nextcloud server
