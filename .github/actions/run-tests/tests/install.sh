@@ -31,7 +31,8 @@ function configure_gd()
 apt-get update
 apt-get install -y --no-install-recommends \
 	npm make default-mysql-client postgresql-client \
-	unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev cmake libpq-dev libsqlite3-dev
+	unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev \
+	cmake libpq-dev libsqlite3-dev sudo
 apt-get clean
 
 configure_gd "$1"
@@ -41,3 +42,5 @@ docker-php-ext-configure zip
 docker-php-ext-install -j$(nproc) zip
 
 docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite
+
+echo 'runner ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
