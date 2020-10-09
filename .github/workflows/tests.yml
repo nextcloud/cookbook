@@ -70,10 +70,6 @@ jobs:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
     
-      - name: Look into the folders
-        run: ls nextcloud -la ; ls -la nextcloud/data
-        shell: bash
-        
       - name: Upload the log file
         uses: actions/upload-artifact@v2
         with:
