@@ -2,102 +2,110 @@
 
 set -x
 
-echo "Preparing the build system"
-
-# Prepare the system
-
 cd nextcloud
 
-echo 'Cloning the app code'
-mkdir -p apps/cookbook
-rsync -a /app/ apps/cookbook/ --delete --exclude /.git --exclude /build --exclude /.github
+if [ ! "$1" = '--test-only' ]; then
 
-echo 'Updating the submodules'
-git submodule update --init
+	echo "Preparing the build system"
 
-echo "Build the app"
-pushd apps/cookbook
-npm install
-make
-popd
+	echo 'Cloning the app code'
+	mkdir -p apps/cookbook
+	rsync -a /app/ apps/cookbook/ --delete --exclude /.git --exclude /build --exclude /.github
 
-echo "Prepare database"
+	echo 'Updating the submodules'
+	git submodule update --init
 
-function call_mysql()
-{
-	mysql -u tester -h mysql -ptester_pass "$@"
-}
+	echo "Build the app"
+	pushd apps/cookbook
+	npm install
+	make
+	popd
 
-function call_pgsql()
-{
-	PGPASSWORD=tester_pass psql -h postgres "$@" nc_test tester
-}
+	echo "Prepare database"
 
-case "$INPUT_DB" in
-	mysql)
-		for i in `seq 1 10`
-		do
-			call_mysql -e 'SHOW PROCESSLIST;' && break || true
-			sleep 5
-		done
-		if [ $i -eq 10 ]; then
-			echo '::error ::Could not connect to mysql database'
+	function call_mysql()
+	{
+		mysql -u tester -h mysql -ptester_pass "$@"
+	}
+
+	function call_pgsql()
+	{
+		PGPASSWORD=tester_pass psql -h postgres "$@" nc_test tester
+	}
+
+	case "$INPUT_DB" in
+		mysql)
+			for i in `seq 1 10`
+			do
+				call_mysql -e 'SHOW PROCESSLIST;' && break || true
+				sleep 5
+			done
+			if [ $i -eq 10 ]; then
+				echo '::error ::Could not connect to mysql database'
+				exit 1
+			fi
+			;;
+		pgsql)
+			for i in `seq 1 10`
+			do
+				call_pgsql -c '\q' && break || true
+				sleep 5
+			done
+			if [ $i -eq 10 ]; then
+				echo '::error ::Could not connect to postgres database'
+				exit 1
+			fi
+			;;
+		sqlite)
+			;;
+		*)
+			echo "::warning ::No database specific initilization in test script. This might be a bug."
+			;;
+	esac
+
+	echo "Initialize nextcloud instance"
+	mkdir data
+
+	case "$INPUT_DB" in
+		mysql)
+			./occ maintenance:install \
+				--database mysql \
+				--database-host mysql \
+				--database-name nc_test \
+				--database-user tester \
+				--database-pass 'tester_pass' \
+				--admin-user admin \
+				--admin-pass admin
+			;;
+		pgsql)
+			./occ maintenance:install \
+				--database pgsql \
+				--database-host postgres \
+				--database-name nc_test \
+				--database-user tester \
+				--database-pass 'tester_pass' \
+				--admin-user admin \
+				--admin-pass admin
+			;;
+		sqlite)
+			./occ maintenance:install \
+				--database sqlite \
+				--admin-user admin \
+				--admin-pass admin
+			;;
+		*)
+			echo "::error ::No database specific initilization in test script. This might be a bug."
 			exit 1
-		fi
-		;;
-	pgsql)
-		for i in `seq 1 10`
-		do
-			call_pgsql -c '\q' && break || true
-			sleep 5
-		done
-		if [ $i -eq 10 ]; then
-			echo '::error ::Could not connect to postgres database'
-			exit 1
-		fi
-		;;
-	sqlite)
-		;;
-	*)
-		echo "::warning ::No database specific initilization in test script. This might be a bug."
-		;;
-esac
+			;;
+	esac
 
-echo "Initialize nextcloud instance"
-mkdir data
-
-case "$INPUT_DB" in
-	mysql)
-		./occ maintenance:install \
-			--database mysql \
-			--database-host mysql \
-			--database-name nc_test \
-			--database-user tester \
-			--database-pass 'tester_pass' \
-			--admin-user admin \
-			--admin-pass admin
-		;;
-	pgsql)
-		./occ maintenance:install \
-			--database pgsql \
-			--database-host postgres \
-			--database-name nc_test \
-			--database-user tester \
-			--database-pass 'tester_pass' \
-			--admin-user admin \
-			--admin-pass admin
-		;;
-	sqlite)
-		./occ maintenance:install \
-			--database sqlite \
-			--admin-user admin \
-			--admin-pass admin
-		;;
-	*)
-		echo "::error ::No database specific initilization in test script. This might be a bug."
-		exit 1
-		;;
-esac
+else
+	
+	echo 'Copying the app code changes'
+	echo 'This might cause trouble when dependencies have changed'
+	rsync -a /app/ apps/cookbook/ --exclude /.git --exclude /build --exclude /.github
+	
+fi
 
 echo 'Installing the cookbook app'
 
