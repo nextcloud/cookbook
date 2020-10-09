@@ -164,7 +164,10 @@ class RecipeDb {
         $qb = $this->db->getQueryBuilder();
 
         $qb->select(['r.recipe_id', 'r.name'])
-            ->from('cookbook_keywords', 'k');
+            ->from('cookbook_names', 'r');
+        
+        $qb->leftJoin('r', 'cookbook_keywords', 'k', 'k.recipe_id = r.recipe_id');
+        $qb->leftJoin('r', 'cookbook_categories', 'c', 'r.recipe_id = c.recipe_id');
         
         $paramIdx = 1;
         $params = [];
@@ -176,6 +179,7 @@ class RecipeDb {
             
             $qb->orWhere("LOWER(k.name) LIKE :keyword$paramIdx");
             $qb->orWhere("LOWER(r.name) LIKE :keyword$paramIdx");
+            $qb->orWhere("LOWER(c.name) LIKE :keyword$paramIdx");
             
             $params["keyword$paramIdx"] = "%$lowerKeyword%";
             $types["keyword$paramIdx"] = Type::STRING;
@@ -183,12 +187,10 @@ class RecipeDb {
             
         }
 
-        $qb->andWhere('k.user_id = :user');
+        $qb->andWhere('r.user_id = :user');
 
         $qb->setParameters($params, $types);
         $qb->setParameter('user', $user_id, TYPE::STRING);
-        
-        $qb->join('k', 'cookbook_names', 'r', 'k.recipe_id = r.recipe_id');
 
         $qb->groupBy(['r.name', 'r.recipe_id']);
         $qb->orderBy('r.name');
