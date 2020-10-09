@@ -30,5 +30,5 @@ function call_postgres() {
 echo "SHOW TABLES;" | call_mysql | tail -n +2 | sed 's@.*@DROP TABLE \0;@' | call_mysql
 echo "SELECT tablename FROM pg_tables WHERE schemaname = 'public';" | call_postgres | head -n -1 | sed 's@.*@DROP TABLE \0;@' | call_postgres
 
-# docker-compose run dut
+docker-compose run dut
 
