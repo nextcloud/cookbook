@@ -20,4 +20,4 @@ comment:
   require_changes: no
 
 fixes:
-  - "nextcloud/apps/::"
+  - "nextcloud/apps/cookbook/::"
