@@ -75,6 +75,13 @@ jobs:
         with:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
             path: nextcloud/data/nextcloud.log
+      
+      - name: Upload the coverage reports to codecov.io
+        shell: bash
+        run: >-
+            bash <(curl -s https://codecov.io/bash) -cF unittests -f nextcloud/apps/cookbook/coverage.xml &&
+            bash <(curl -s https://codecov.io/bash) -cF integration -f nextcloud/apps/cookbook/coverage.integration.xml
+      
 
   source-package:
     name: Create source code artifacts
