@@ -59,13 +59,13 @@ jobs:
       - name: Checkout the app
         uses: actions/checkout@v2
         with:
-            path: nextcloud/apps/cookbook
+            path: cookbook
       
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
       - name: Run the tests in docker container
-        uses: ./nextcloud/apps/cookbook/.github/actions/run-tests
+        uses: ./cookbook/.github/actions/run-tests
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}

@@ -52,4 +52,4 @@ services:
             #CI
         volumes:
             - ./workdir:/workdir
-            - ../../..:/workdir/apps/cookbook
+            - ../../..:/app:ro

@@ -8,6 +8,10 @@ echo "Preparing the build system"
 
 cd nextcloud
 
+echo 'Cloning the app code'
+mkdir -p apps/cookbook
+rsync -a /app/ apps/cookbook/ --delete --exclude /.git --exclude /build --exclude /.github
+
 echo 'Updating the submodules'
 git submodule update --init
 

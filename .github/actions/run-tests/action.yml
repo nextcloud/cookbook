@@ -79,6 +79,7 @@ runs:
                 -e CI
                 --network net_cookbook
                 -v "$GITHUB_WORKSPACE":/workdir
+                -v "$GITHUB_WORKSPACE/cookbook":/app:ro
                 docker-tests
             name: Run the test container
             shell: bash
