@@ -75,3 +75,54 @@ jobs:
         with:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
             path: nextcloud/data/nextcloud.log
+
+  source-package:
+    name: Create source code artifacts
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+        -   name: Checkout the nextcloud server
+            uses: actions/checkout@v2
+            with:
+                repository: nextcloud/server
+                ref: ${{ matrix.coreVersion }}
+                path: nextcloud
+        -   name: Checkout the app
+            uses: actions/checkout@v2
+            with:
+                path: nextcloud/apps/cookbook
+        
+        -   name: Install the NPM dependencies
+            shell: bash
+            run: >-
+                cd nextcloud/apps/cookbook &&
+                npm install
+        -   name: Install the dependencies for composer
+            shell: bash
+            run: >-
+                cd nextcloud/apps/cookbook &&
+                make
+        
+        -   name: Create the source package
+            shell: bash
+            run: >-
+                cd nextcloud/apps/cookbook &&
+                make source
+        -   name: Publish the source package as artifact
+            uses: actions/upload-artifact@v2
+            with:
+                name: cookbook.tar.gz
+                path: nextcloud/apps/cookbook/build/artifacts/source/cookbook.tar.gz
+            
+        -   name: Create the app store package
+            shell: bash
+            run: >-
+                cd nextcloud/apps/cookbook &&
+                make appstore
+        -   name: Publish the spp store package as artifact
+            uses: actions/upload-artifact@v2
+            with:
+                name: cookbook.tar.gz
+                path: nextcloud/apps/cookbook/build/artifacts/appstore/cookbook.tar.gz
+            
