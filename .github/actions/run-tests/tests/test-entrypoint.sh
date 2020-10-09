@@ -2,9 +2,6 @@
 
 set -x
 
-php --version
-env
-
 echo "Preparing the build system"
 
 # Prepare the system

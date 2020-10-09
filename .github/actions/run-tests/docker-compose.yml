@@ -4,7 +4,7 @@ volumes:
     mysql:
     postgres:
 
-service:
+services:
     mysql:
         image: mariadb:10.1
         volumes:
@@ -26,6 +26,10 @@ service:
     
     dut:
         build:
+            context: ./tests
+            args:
+                PHPVERSION: 7
+                UID: 1000
         environment:
             INPUT_DB: mysql
             GITHUB_WORKSPACE: /workdir
