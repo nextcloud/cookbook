@@ -107,22 +107,20 @@ jobs:
         -   name: Create the source package
             shell: bash
             run: >-
-                cd nextcloud/apps/cookbook &&
-                make source
+                make -C nextcloud/apps/cookbook source_package_name=$(pwd)/source source
         -   name: Publish the source package as artifact
             uses: actions/upload-artifact@v2
             with:
-                name: cookbook.tar.gz
-                path: nextcloud/apps/cookbook/build/artifacts/source/cookbook.tar.gz
+                name: cookbook-source
+                path: source.tar.gz
             
         -   name: Create the app store package
             shell: bash
             run: >-
-                cd nextcloud/apps/cookbook &&
-                make appstore
-        -   name: Publish the spp store package as artifact
+                make -C nextcloud/apps/cookbook appstore_package_name=$(pwd)/appstore appstore
+        -   name: Publish the app store package as artifact
             uses: actions/upload-artifact@v2
             with:
-                name: cookbook.tar.gz
-                path: nextcloud/apps/cookbook/build/artifacts/appstore/cookbook.tar.gz
+                name: cookbook-appstore
+                path: appstore.tar.gz
             
