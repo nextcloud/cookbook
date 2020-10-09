@@ -14,3 +14,7 @@ js/*
 node_modules
 # Package lock
 package-lock.json
+
+### Composer ###
+
+/vendor
