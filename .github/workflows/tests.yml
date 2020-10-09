@@ -111,7 +111,7 @@ jobs:
         -   name: Publish the source package as artifact
             uses: actions/upload-artifact@v2
             with:
-                name: cookbook-source.tar.gz
+                name: cookbook-source
                 path: source.tar.gz
             
         -   name: Create the app store package
@@ -121,6 +121,6 @@ jobs:
         -   name: Publish the app store package as artifact
             uses: actions/upload-artifact@v2
             with:
-                name: cookbook-appstore.tar.gz
+                name: cookbook-appstore
                 path: appstore.tar.gz
             
