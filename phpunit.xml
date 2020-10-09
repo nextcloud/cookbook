@@ -4,4 +4,14 @@
             <directory>./tests/Unit</directory>
         </testsuite>
     </testsuites>
+	<filter>
+		<whitelist processUncoveredFilesFromWhitelist="true" addUncoveredFilesFromWhitelist="true">
+			<directory suffix=".php">lib</directory>
+			<!--<directory suffix=".php">lib/Controller</directory>
+			<directory suffix=".php">lib/Db</directory>
+			<directory suffix=".php">lib/Exception</directory>
+			<directory suffix=".php">lib/Migration</directory>
+			<directory suffix=".php">lib/Service</directory>-->
+		</whitelist>
+	</filter>
 </phpunit>
