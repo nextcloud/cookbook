@@ -8,7 +8,7 @@
             <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('cookbook', 'All recipes')" :disableDrop="true" />
             <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
                 <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
-                <ActionInput icon="icon-quota" @update:value="updateFilters">{{ t('cookbook', 'Filter') }}</ActionInput>
+                <ActionInput icon="icon-quota" @update:value="updateFilters" :value="filterValue">{{ t('cookbook', 'Filter') }}</ActionInput>
                 <ActionInput icon="icon-search" @submit="search">{{ t('cookbook', 'Search') }}</ActionInput>
             </Breadcrumb>
             <!-- SEARCH PAGE -->
@@ -98,7 +98,7 @@ export default {
     },
     data () {
         return {
-
+            filterValue: '',
         }
     },
     computed: {
@@ -228,6 +228,7 @@ export default {
             $("#app-navigation").toggleClass("show-navigation")
         },
         updateFilters: function(e) {
+            this.filterValue = e
             this.$root.$emit('applyRecipeFilter', e)
         },
     },
