@@ -5,6 +5,7 @@ OC.L10N.register(
     "Search" : "Otsi",
     "Save changes" : "Salvesta muudatused",
     "Loading…" : "Laadimine…",
+    "Page not found" : "Lehekülge ei leitud",
     "Category" : "Kategooria",
     "Add" : "Lisa",
     "Name" : "Nimi",
