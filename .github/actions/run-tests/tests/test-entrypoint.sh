@@ -121,6 +121,10 @@ echo 'Running the main tests'
 make test
 echo 'Tests finished'
 
+echo 'Copy code coverage in HTML format'
+cp -r coverage $GITHUB_WORKSPACE
+cp -r coverage-integration $GITHUB_WORKSPACE
+
 popd
 
 echo 'Shutting down temporary web server'
