@@ -1,10 +1,11 @@
 # Test scripts
 
 - [Manual usage](#manual-usage)
+- [Automatic usage](#automatic-usage)
 
 The scripts in this folder should allow both local (manual) testing of the app as well as automatic continuous integration testing. This documentation should cover both useages and flavours of these scripts .
 
-## Manual useage
+## Manual usage
 
 For Manuel usage a containerized environment is used. Here `docker` and `docker-compose` are used in order to use exactly same environment for the tests compared with the continuous integration environment.
 
@@ -59,7 +60,7 @@ Obviously, this can only work if the rest of the system is prepared accordingly.
 
 After that, by calling
 ```
-docker-compose run --rm -T dut --test-only
+docker-compose run --rm dut --test-only
 ```
 you can run only the tests.
 
@@ -68,6 +69,8 @@ Here the database is not affected and the installation is not tested as well. If
 **Note:** Before publishing large changes a complete build is highly suggested.
 
 ### Test coverage
+
+The test will generate code coverage reports for the developer. These can be found in plain HTML format under `workdir/nextcloud/apps/cookbook`.
 
 ## Automatic usage
 
@@ -83,3 +86,5 @@ In fact, building and running the container is done by Github Actions. During th
 The main build process involves creating a nextcloud installation, building the main app (fulfill composer and npm dependencies), preparing some database values depending on the selected database and installing the nextcloud main instance. The tests are carried out and the results are kept in the local folder.
 
 The application is installed in the folder `nextcloud/apps/cookbook`. There will also reside a set of build artefacts, that are generated during the test run.
+
+If you want to have an interactive look at the code coverage, you might want to go to [codecov.io](https://codecov.io/gh/nextcloud/cookbook). The latest information should be available there.
