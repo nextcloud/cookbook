@@ -83,6 +83,8 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
+        $result = $this->sortRecipes($result);
+        
         return $this->unique($result);
     }
 
@@ -101,6 +103,15 @@ class RecipeDb {
         
         return array_values($unique_result);
     }
+    
+    private function sortRecipes(array $recipes): array
+    {
+        usort($recipes, function($a, $b){
+            return strcasecmp($a['name'], $b['name']);
+        });
+        
+        return $recipes;
+    }
 
     public function findAllKeywords(string $user_id) {
         $qb = $this->db->getQueryBuilder();
@@ -116,6 +127,8 @@ class RecipeDb {
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
+        
+        $result = $this->sortRecipes($result);
 		
         $result = array_unique($result, SORT_REGULAR);
         $result = array_filter($result);
