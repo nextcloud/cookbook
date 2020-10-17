@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li v-for="recipe in recipes" :key="recipe.recipe_id">
+        <li v-for="recipe in filteredRecipes" :key="recipe.recipe_id">
             <router-link :to="'/recipe/'+recipe.recipe_id">
                 <img v-if="recipe.imageUrl" :src="recipe.imageUrl">
                 <span>{{ recipe.name }}</span>
@@ -14,8 +14,24 @@ export default {
     name: 'Index',
     data () {
         return {
-            recipes: []
+            filters: "",
+            recipes: [],
         }
+    },
+    computed: {
+        filteredRecipes () {
+            if (!this.filters) {
+                return this.recipes
+            } else if (this.recipes.length) {
+                let filtered = []
+                for (let i=0; i<this.recipes.length; i++) {
+                    if (this.recipes[i].name.toLowerCase().indexOf(this.filters.toLowerCase()) >= 0) {
+                        filtered.push(this.recipes[i])
+                    }
+                }
+                return filtered
+            }
+        },
     },
     methods: {
         /**
@@ -38,6 +54,10 @@ export default {
         },
     },
     mounted () {
+        this.$root.$off('applyRecipeFilter')
+        this.$root.$on('applyRecipeFilter', (value) => {
+            this.filters = value
+        })
         this.loadAll()
     },
 }

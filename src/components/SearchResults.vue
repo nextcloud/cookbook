@@ -20,20 +20,18 @@ export default {
     },
     methods: {
         setup: function() {
+            // TODO: This is a mess of different implementation styles, needs cleanup
             if (this.query === 'name') {
                 // Search by name
-                console.log("Recipe name search for "+this.$route.params.value)
             }
             if (this.query === 'tag') {
                 // Search by tag
-                console.log("Tag search for "+this.$route.params.value)
             }
             if (this.query === 'cat') {
                 // Search by category
-                console.log("Category search for "+this.$route.params.value)
                 let $this = this
                 let cat = this.$route.params.value
-                $.get(this.$window.baseUrl + '/category/'+cat).done(function(json) {
+                $.get(this.$window.baseUrl + '/api/category/'+cat).done(function(json) {
                     $this.results = json
                 }).fail(function (jqXHR, textStatus, errorThrown) {
                     $this.results = []
@@ -43,7 +41,21 @@ export default {
                     }
                 })
             } else {
-                // Something else?
+                // General search
+                let deferred = $.Deferred()
+                $.get(this.$window.baseUrl + '/api/search/'+this.$route.params.value).done((recipes) => {
+                    this.results = recipes
+                    deferred.resolve()
+                }).fail((jqXHR, textStatus, errorThrown) => {
+                    this.results = []
+                    deferred.reject(new Error(jqXHR.responseText))
+                    alert(t('cookbook', 'Failed to load search results'))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
+                this.$store.dispatch('setPage', { page: 'search' })
+                return deferred.promise()
             }
             this.$store.dispatch('setPage', { page: 'search' })
         },
