@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Brisanje nije uspjelo",
     "Hide navigation" : "Sakrij navigaciju",
     "Create recipe" : "Stvori recept",
-    "Recipe URL" : "URL recepta",
     "Rescan library" : "Ponovno pretraži biblioteku",
     "Recipe folder" : "Mapa s receptima",
     "Please pick a folder" : "Odaberite mapu",

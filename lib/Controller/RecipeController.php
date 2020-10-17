@@ -14,6 +14,7 @@ use OCP\AppFramework\Controller;
 
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IURLGenerator;
+use OCA\Cookbook\Service\DbCacheService;
 
 class RecipeController extends Controller
 {
@@ -25,13 +26,19 @@ class RecipeController extends Controller
      * @var IURLGenerator
      */
     private $urlGenerator;
+    
+    /**
+     * @var DbCacheService
+     */
+    private $dbCacheService;
 
-    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService)
+    public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService)
     {
         parent::__construct($AppName, $request);
 
         $this->service = $recipeService;
         $this->urlGenerator = $urlGenerator;
+        $this->dbCacheService = $dbCacheService;
     }
 
     /**
@@ -40,6 +47,8 @@ class RecipeController extends Controller
      */
     public function index()
     {
+        $this->dbCacheService->triggerCheck();
+        
         if (empty($_GET['keywords'])) {
             $recipes = $this->service->getAllRecipesInSearchIndex();
         } else {
@@ -59,6 +68,8 @@ class RecipeController extends Controller
      */
     public function show($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $json = $this->service->getRecipeById($id);
 
         if (null === $json) {
@@ -83,9 +94,12 @@ class RecipeController extends Controller
      */
     public function update($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $recipeData = [];
         parse_str(file_get_contents("php://input"), $recipeData);
         $file = $this->service->addRecipe($recipeData);
+        $this->dbCacheService->addRecipe($file);
 
         return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
     }
@@ -102,8 +116,11 @@ class RecipeController extends Controller
      */
     public function create()
     {
+        $this->dbCacheService->triggerCheck();
+        
         $recipeData = $_POST;
         $file = $this->service->addRecipe($recipeData);
+        $this->dbCacheService->addRecipe($file);
 
         return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
     }
@@ -116,6 +133,8 @@ class RecipeController extends Controller
      */
     public function destroy($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         try {
             $this->service->deleteRecipe($id);
             return new DataResponse('Recipe ' . $_GET['id'] . ' deleted successfully', Http::STATUS_OK);
@@ -132,6 +151,8 @@ class RecipeController extends Controller
      */
     public function image($id)
     {
+        $this->dbCacheService->triggerCheck();
+        
         $size = isset($_GET['size']) ? $_GET['size'] : null;
 
         try {

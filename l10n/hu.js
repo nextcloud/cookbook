@@ -18,7 +18,6 @@ OC.L10N.register(
     "Tag" : "Jelöl",
     "Are you sure you want to delete this recipe?" : "Biztos törölni szeretnéd ezt a receptet?",
     "Create recipe" : "Recept létrehozása",
-    "Recipe URL" : "Recept URL",
     "Rescan library" : "Könyvtár felülvizsgálata",
     "Recipe folder" : "Recept mappa",
     "Please pick a folder" : "Kérem válassz mappát",

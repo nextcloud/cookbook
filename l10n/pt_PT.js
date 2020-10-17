@@ -18,7 +18,6 @@ OC.L10N.register(
     "Tag" : "Etiqueta",
     "Are you sure you want to delete this recipe?" : "Tem que certeza que quer eliminar esta receita?",
     "Create recipe" : "Criar receita",
-    "Recipe URL" : "URL da receita",
     "Rescan library" : "Varrer novamente a biblioteca",
     "Recipe folder" : "Pasta de receitas",
     "Please pick a folder" : "Escolha uma pasta",

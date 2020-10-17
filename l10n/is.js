@@ -17,7 +17,6 @@ OC.L10N.register(
     "Tag" : "Merki",
     "Are you sure you want to delete this recipe?" : "Ertu viss um að þú viljir eyða þessari uppskrift?",
     "Create recipe" : "Búa til uppskrift",
-    "Recipe URL" : "Slóð á uppskrift",
     "Rescan library" : "Skanna safn aftur",
     "Recipe folder" : "Uppskriftamappa",
     "Please pick a folder" : "Veldu möppu",

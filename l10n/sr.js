@@ -28,7 +28,7 @@ OC.L10N.register(
     "Delete failed" : "Брисање није успело",
     "Hide navigation" : "Сакриј навигацију",
     "Create recipe" : "Направи рецепт",
-    "Recipe URL" : "Адреса рецепта",
+    "Download recipe from URL" : "Преузми рецепт са адресе",
     "Rescan library" : "Поновно скенирај библиотеку",
     "Recipe folder" : "Фасцикла са рецептима",
     "Please pick a folder" : "Одаберите фасциклу",

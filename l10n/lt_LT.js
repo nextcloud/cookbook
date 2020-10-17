@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Ištrynimas nepavyko",
     "Hide navigation" : "Slėpti naršymą",
     "Create recipe" : "Sukurti receptą",
-    "Recipe URL" : "Recepto URL",
     "Rescan library" : "Peržiūrėti biblioteką iš naujo",
     "Recipe folder" : "Receptų aplankas",
     "Please pick a folder" : "Pasirinkite aplanką",

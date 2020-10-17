@@ -28,7 +28,6 @@ OC.L10N.register(
     "Delete failed" : "Ezabatzeak huts egin du",
     "Hide navigation" : "Itxi nabigazioa",
     "Create recipe" : "Sortu errezeta",
-    "Recipe URL" : "Errezetaren URLa",
     "Rescan library" : "Bireskaneatu liburutegia",
     "Recipe folder" : "Errezeten karpeta",
     "Please pick a folder" : "Aukeratu karpeta bat",

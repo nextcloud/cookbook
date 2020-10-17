@@ -28,7 +28,7 @@ OC.L10N.register(
     "Delete failed" : "Silinemedi",
     "Hide navigation" : "Gezinmeyi gizle",
     "Create recipe" : "Yemek tarifi oluştur",
-    "Recipe URL" : "Yemek tarifi adresi",
+    "Download recipe from URL" : "Yemek tarifini adresten indir",
     "Rescan library" : "Kitaplığı yeniden tara",
     "Recipe folder" : "Yemek tarifi klasörü",
     "Please pick a folder" : "Lütfen bir klasör seçin",

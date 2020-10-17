@@ -28,7 +28,7 @@ OC.L10N.register(
     "Delete failed" : "Smazání se nezdařilo",
     "Hide navigation" : "Skrýt navigační panel",
     "Create recipe" : "Vytvořit recept",
-    "Recipe URL" : "URL adresa receptu",
+    "Download recipe from URL" : "Stáhnout si recept z URL adresy",
     "Rescan library" : "Znovu projít knihovnu",
     "Recipe folder" : "Složka pro recepty",
     "Please pick a folder" : "Vyberte složku",
