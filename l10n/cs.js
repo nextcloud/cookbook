@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Otevřít navigační panel",
     "Home" : "Domů",
     "All recipes" : "Všechny recepty",
+    "Filter" : "Filtr",
     "Search" : "Hledat",
     "Edit recipe" : "Upravit recept",
     "Reload recipe" : "Načíst recept znovu",

@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Open navigatie",
     "Home" : "Thuis",
     "All recipes" : "Alle recepten",
+    "Filter" : "Filter",
     "Search" : "Zoeken",
     "Edit recipe" : "Recept bewerken",
     "Reload recipe" : "Recept opnieuw laden",

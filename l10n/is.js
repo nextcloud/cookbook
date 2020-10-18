@@ -5,6 +5,7 @@ OC.L10N.register(
     "An integrated cookbook using schema.org JSON files as recipes" : "Innbyggð uppskriftabók sem notar schema.org JSON-skrár sem uppskriftir",
     "Home" : "Heima",
     "All recipes" : "Allar uppskriftir",
+    "Filter" : "Sía",
     "Search" : "Search",
     "Edit recipe" : "Breyta uppskrift",
     "New recipe" : "Ný uppskrift",

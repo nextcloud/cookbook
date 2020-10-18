@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "სახლი",
+    "Filter" : "ფილტრი",
     "Search" : "ძიება",
     "Save changes" : "ცვილებების შენახვა",
     "Loading…" : "იტვირთება…",

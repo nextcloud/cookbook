@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Avaleht",
+    "Filter" : "Filter",
     "Search" : "Otsi",
     "Save changes" : "Salvesta muudatused",
     "Loading…" : "Laadimine…",

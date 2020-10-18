@@ -4,6 +4,7 @@ OC.L10N.register(
     "Cookbook" : "食譜",
     "Home" : "家",
     "All recipes" : "全部食譜",
+    "Filter" : "過濾",
     "Search" : "搜尋",
     "Edit recipe" : "編輯食譜",
     "New recipe" : "新食譜",

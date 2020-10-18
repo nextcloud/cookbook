@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Gezinmeyi aç",
     "Home" : "Giriş",
     "All recipes" : "Tüm yemek tarifleri",
+    "Filter" : "Süzgeç",
     "Search" : "Arama",
     "Edit recipe" : "Yemek tarifini düzenle",
     "Reload recipe" : "Tarifi yeniden yükle",
