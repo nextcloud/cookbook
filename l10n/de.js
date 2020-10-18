@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Navigation öffnen",
     "Home" : "Zuhause",
     "All recipes" : "Alle Rezepte",
+    "Filter" : "Benötigt keine Übersetzung. Für Android wird nur die formelle Übersetzung verwendet (de_DE).",
     "Search" : "Suche",
     "Edit recipe" : "Rezept bearbeiten",
     "Reload recipe" : "Rezept neu laden",

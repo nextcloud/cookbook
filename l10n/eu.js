@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Ireki nabigazioa",
     "Home" : "Etxea",
     "All recipes" : "Errezeta guztiak",
+    "Filter" : "Iragazkiak",
     "Search" : "Bilatu",
     "Edit recipe" : "Editatu errezeta",
     "Reload recipe" : "Kargatu berriro errezeta",

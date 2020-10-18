@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Άνοιγμα πλοήγησης",
     "Home" : "Αρχική",
     "All recipes" : "Όλες οι συνταγές",
+    "Filter" : "Φίλτρο",
     "Search" : "Αναζήτηση",
     "Edit recipe" : "Επεξεργασία συνταγής",
     "Reload recipe" : "Επαναφόρτωση συνταγής",

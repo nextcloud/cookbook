@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "집",
+    "Filter" : "필터",
     "Search" : "검색",
     "Save changes" : "변경 사항 저장",
     "Loading…" : "불러오는 중…",

@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Avaa navigointi",
     "Home" : "Koti",
     "All recipes" : "Kaikki reseptit",
+    "Filter" : "Suodata",
     "Search" : "Etsi",
     "Edit recipe" : "Muokkaa reseptiä",
     "Reload recipe" : "Lataa resepti uudelleen",

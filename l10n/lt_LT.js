@@ -8,6 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Atverti naršymą",
     "Home" : "Namai",
     "All recipes" : "Visi receptai",
+    "Filter" : "Filtras",
     "Search" : "Ieškoti",
     "Edit recipe" : "Taisyti receptą",
     "Reload recipe" : "Įkelti receptą iš naujo",
