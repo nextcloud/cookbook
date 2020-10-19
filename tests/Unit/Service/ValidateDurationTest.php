@@ -8,6 +8,7 @@ use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCA\Cookbook\Controller\PageController;
 use OCP\Files\IRootFolder;
+use OCP\IL10N;
 use OCP\IConfig;
 use OCP\IDBConnection;
 use OCP\IRequest;
@@ -31,17 +32,18 @@ class ValidateDurationTest extends TestCase
      */
     private $reflectedValidateDurationMethod;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->recipeService = new RecipeService(
             'admin',
             $this->getMockBuilder(IRootFolder::class)->disableOriginalConstructor()->getMock(),
             $this->getMockBuilder(RecipeDb::class)->disableOriginalConstructor()->getMock(),
-            $this->getMockBuilder(IConfig::class)->disableOriginalConstructor()->getMock()
+            $this->getMockBuilder(IConfig::class)->disableOriginalConstructor()->getMock(),
+            $this->getMockBuilder(IL10N::class)->disableOriginalConstructor()->getMock()
         );
         $reflectedRecipeService = new ReflectionClass(RecipeService::class);
-        $this->reflectedValidateDurationMethod = $reflectedRecipeService->getMethod('validateDuration');
-        $this->reflectedValidateDurationMethod->setAccessible(true);
+        //$this->reflectedValidateDurationMethod = $reflectedRecipeService->getMethod('validateDuration');
+        //$this->reflectedValidateDurationMethod->setAccessible(true);
     }
 
     /**
@@ -50,14 +52,14 @@ class ValidateDurationTest extends TestCase
      * @param string $interval
      * @param bool $expectedResult
      */
-    public function testValidateCorrectTimeInterval(string $interval, bool $expectedResult)
+    /*public function testValidateCorrectTimeInterval(string $interval, bool $expectedResult)
     {
         if ($expectedResult) {
             $this->assertTrue($this->reflectedValidateDurationMethod->invoke($this->recipeService, $interval));
         } else {
             $this->assertFalse($this->reflectedValidateDurationMethod->invoke($this->recipeService, $interval));
         }
-    }
+    }*/
 
     /**
      * @return array

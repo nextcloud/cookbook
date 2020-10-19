@@ -1,0 +1,55 @@
+version: "3.1"
+
+volumes:
+    mysql:
+    postgres:
+
+services:
+    mysql:
+        image: mariadb:10.1
+        volumes:
+            - mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: nc_test
+            MYSQL_USER: tester
+            MYSQL_PASSWORD: tester_pass
+            MYSQL_ROOT_PASSWORD: pass_root
+            
+    postgres:
+        image: postgres:alpine
+        environment:
+            POSTGRES_USER: tester
+            POSTGRES_PASSWORD: tester_pass
+            POSTGRES_DB: nc_test
+        volumes:
+            - postgres:/var/lib/postgresql/data
+    
+    dut:
+        build:
+            context: ./tests
+            args:
+                PHPVERSION: 7
+                UID: 1000
+        environment:
+            INPUT_DB: mysql
+            GITHUB_WORKSPACE: /workdir
+            #GITHUB_ACTIONS
+            #GITHUB_WORKFLOW
+            #GITHUB_RUN_ID
+            #GITHUB_RUN_NUMBER
+            #GITHUB_ACTION
+            #GITHUB_ACTOR
+            #GITHUB_REPOSIITORY
+            #GITHUB_EVENT_NAME
+            #GITHUB_EVENT_PATH
+            #GITHUB_SHA
+            #GITHUB_REF
+            #GITGUB_HEAD_REF
+            #GITHUB_BASE_REF
+            #GITHUB_SERVER_URL
+            #GITHUB_API_URL
+            #GITHUB_GRAPHQL_URL
+            #CI
+        volumes:
+            - ./workdir:/workdir
+            - ../../..:/app:ro
