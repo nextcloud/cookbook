@@ -63,6 +63,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Produciuse un fallo ao cargar a receita",
     "Recipe could not be saved" : "Non foi posíbel gardar a receita",
     "Cooking time is up!" : "Rematou o tempo de cociñar!",
-    "Source" : "Orixe"
+    "Source" : "Orixe",
+    "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca"
 },
 "nplurals=2; plural=(n != 1);");

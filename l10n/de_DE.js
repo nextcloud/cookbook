@@ -63,6 +63,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Recipe could not be saved" : "Rezept konnte nicht gespeichert werden",
     "Cooking time is up!" : "Die Kochzeit is vorbei!",
-    "Source" : "Quelle"
+    "Source" : "Quelle",
+    "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
 },
 "nplurals=2; plural=(n != 1);");

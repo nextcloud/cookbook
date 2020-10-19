@@ -63,6 +63,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Tarif yüklenemedi",
     "Recipe could not be saved" : "Tarif kaydedilemedi",
     "Cooking time is up!" : "Pişirme zamanı doldu!",
-    "Source" : "Kaynak"
+    "Source" : "Kaynak",
+    "Failed to load search results" : "Arama sonuçları yüklenemedi"
 },
 "nplurals=2; plural=(n > 1);");
