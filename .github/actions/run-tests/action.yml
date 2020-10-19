@@ -12,14 +12,6 @@ inputs:
     db:
         description: The db type to use
         required: true
-    allowFailure:
-        description: The test may fail
-        required: false
-        default: false
-outputs:
-    silentFail:
-        description: If the test failed but was allowed to do so
-        value: ${{ steps.run-docker.outputs.silent-fail }}
 
 runs:
     using: 'composite'
@@ -85,13 +77,11 @@ runs:
                 -e GITHUB_API_URL
                 -e GITHUB_GRAPHQL_URL
                 -e CI
-                -e ALLOW_FAILURE=${{ inputs.allowFailure }}
                 --network net_cookbook
                 -v "$GITHUB_WORKSPACE":/workdir
                 -v "$GITHUB_WORKSPACE/cookbook":/app:ro
                 docker-tests
             name: Run the test container
-            id: run-docker
             shell: bash
             
         -   name: Stop helper containers

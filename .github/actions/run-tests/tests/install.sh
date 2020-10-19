@@ -18,7 +18,7 @@ function configure_gd_without ()
 
 function configure_gd()
 {
-	if [ "$1" = "7.2" -o "$1" = "7.3" ]; then
+	if [ "$1" = "7.2" ]; then
 		configure_gd_without
 		return $?
 	else
@@ -42,9 +42,6 @@ docker-php-ext-configure zip
 docker-php-ext-install -j$(nproc) zip
 
 docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite
-
-pecl install xdebug
-docker-php-ext-enable xdebug
 
 echo 'runner ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 

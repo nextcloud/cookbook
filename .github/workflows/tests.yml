@@ -66,83 +66,12 @@ jobs:
         
       - name: Run the tests in docker container
         uses: ./cookbook/.github/actions/run-tests
-        id: run-tests
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
-            allowFailure: ${{ matrix.mayFail }}
     
       - name: Upload the log file
         uses: actions/upload-artifact@v2
         with:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
             path: nextcloud/data/nextcloud.log
-      
-      - name: Upload the coverage reports to codecov.io
-        shell: bash
-        run: >-
-            cd nextcloud/apps/cookbook &&
-            bash <(curl -s https://codecov.io/bash) -F unittests -f coverage.xml -R . &&
-            bash <(curl -s https://codecov.io/bash) -F integration -f coverage.integration.xml -R .
-        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
-      
-      - name: Upload the code coverage report (unit tests)
-        uses: actions/upload-artifact@v2
-        with:
-            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
-            path: |
-                coverage/
-                coverage-integration/
-                coverage.xml
-                coverage.integration.xml
-        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
-      
-
-  source-package:
-    name: Create source code artifacts
-    needs: test
-    runs-on: ubuntu-latest
-    
-    steps:
-        -   name: Checkout the nextcloud server
-            uses: actions/checkout@v2
-            with:
-                repository: nextcloud/server
-                ref: ${{ matrix.coreVersion }}
-                path: nextcloud
-        -   name: Checkout the app
-            uses: actions/checkout@v2
-            with:
-                path: nextcloud/apps/cookbook
-        
-        -   name: Install the NPM dependencies
-            shell: bash
-            run: >-
-                cd nextcloud/apps/cookbook &&
-                npm install
-        -   name: Install the dependencies for composer
-            shell: bash
-            run: >-
-                cd nextcloud/apps/cookbook &&
-                make
-        
-        -   name: Create the source package
-            shell: bash
-            run: >-
-                make -C nextcloud/apps/cookbook source_package_name=$(pwd)/source source
-        -   name: Publish the source package as artifact
-            uses: actions/upload-artifact@v2
-            with:
-                name: cookbook-source
-                path: source.tar.gz
-            
-        -   name: Create the app store package
-            shell: bash
-            run: >-
-                make -C nextcloud/apps/cookbook appstore_package_name=$(pwd)/appstore appstore
-        -   name: Publish the app store package as artifact
-            uses: actions/upload-artifact@v2
-            with:
-                name: cookbook-appstore
-                path: appstore.tar.gz
-            
