@@ -30,7 +30,6 @@ OC.L10N.register(
     "Hide navigation" : "Ukryj nawigację",
     "Create recipe" : "Stwórz przepis",
     "Download recipe from URL" : "Pobierz przepis z adresu URL",
-    "Uncategorized recipes" : "Przepisy bez kategorii",
     "Rescan library" : "Skanowanie biblioteki",
     "Recipe folder" : "Folder przepisu",
     "Please pick a folder" : "Proszę wybierać folder",
@@ -40,8 +39,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nie można ustawić preferencji drukowania obrazu",
     "Could not set recipe update interval to {interval}" : "Nie można ustawić interwału aktualizacji przepisu na {interval}",
     "Loading config failed" : "Nieudane ładowanie konfiguracji",
-    "Failed to load category {category} recipes" : "Nie udało się załadować przepisów z kategorii {category}",
-    "Loading category recipes …" : "Ładowanie przepisów kategorii…",
+    "Failed to load category " : "Nie udało się załadować kategorii",
+    "Loading category recipes..." : "Ładowanie kategorii przepisów...",
     "Failed to fetch categories" : "Nie udało się pobrać kategorii",
     "Path to your recipe collection" : "Ścieżka do kolekcji przepisów",
     "Could not set recipe folder to {path}" : "Nie można ustawić folderu przepisów na {path}",
@@ -65,7 +64,6 @@ OC.L10N.register(
     "Recipe could not be saved" : "Przepis nie mógł zostać zapisany",
     "Cooking time is up!" : "Czas gotowania minął!",
     "Source" : "Źródło",
-    "Failed to load category " : "Nie udało się załadować kategorii",
     "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

@@ -30,7 +30,6 @@ OC.L10N.register(
     "Hide navigation" : "Slėpti naršymą",
     "Create recipe" : "Sukurti receptą",
     "Download recipe from URL" : "Atsisiųsti receptą iš URL",
-    "Uncategorized recipes" : "Nekategorizuoti receptai",
     "Rescan library" : "Peržiūrėti biblioteką iš naujo",
     "Recipe folder" : "Receptų aplankas",
     "Please pick a folder" : "Pasirinkite aplanką",
@@ -40,8 +39,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nepavyko nustatyti nuostatos paveikslų spausdinimui",
     "Could not set recipe update interval to {interval}" : "Nepavyko nustatyti recepto atnaujinimo intervalo į {interval}",
     "Loading config failed" : "Konfigūracijos įkėlimas nepavyko",
-    "Failed to load category {category} recipes" : "Nepavyko įkelti receptų iš kategorijos {category}",
-    "Loading category recipes …" : "Įkeliami kategorijos receptai…",
+    "Failed to load category " : "Nepavyko įkelti kategorijos",
+    "Loading category recipes..." : "Įkeliami kategorijos receptai...",
     "Failed to fetch categories" : "Nepavyko gauti kategorijų",
     "Path to your recipe collection" : "Kelias į jūsų receptų kolekciją",
     "Could not set recipe folder to {path}" : "Nepavyko nustatyti receptų aplanko į {path}",
@@ -65,7 +64,6 @@ OC.L10N.register(
     "Recipe could not be saved" : "Nepavyko įrašyti recepto",
     "Cooking time is up!" : "Gaminimo laikas baigėsi!",
     "Source" : "Šaltinis",
-    "Failed to load category " : "Nepavyko įkelti kategorijos",
     "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

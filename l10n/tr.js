@@ -30,7 +30,6 @@ OC.L10N.register(
     "Hide navigation" : "Gezinmeyi gizle",
     "Create recipe" : "Yemek tarifi oluştur",
     "Download recipe from URL" : "Yemek tarifini adresten indir",
-    "Uncategorized recipes" : "Kategorisiz tarifler",
     "Rescan library" : "Kitaplığı yeniden tara",
     "Recipe folder" : "Yemek tarifi klasörü",
     "Please pick a folder" : "Lütfen bir klasör seçin",
@@ -40,8 +39,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Görsel yazdırma ayarı yapılamadı",
     "Could not set recipe update interval to {interval}" : "Yemek tarifi güncelleme sıklığı {interval} olarak ayarlanamadı",
     "Loading config failed" : "Yapılandırma yüklenemedi",
-    "Failed to load category {category} recipes" : "{category} kategorisindeki tarifler yüklenemedi",
-    "Loading category recipes …" : "Kategorinin tarifleri yükleniyor …",
+    "Failed to load category " : "Kategori yüklenemedi",
+    "Loading category recipes..." : "Kategorideki tarifler yükleniyor...",
     "Failed to fetch categories" : "Kategoriler alınamadı",
     "Path to your recipe collection" : "Yemek tarifi derlemenizin yolu",
     "Could not set recipe folder to {path}" : "Yemek tarifi derleme klasörü {path} olarak ayarlanamadı",
@@ -65,7 +64,6 @@ OC.L10N.register(
     "Recipe could not be saved" : "Tarif kaydedilemedi",
     "Cooking time is up!" : "Pişirme zamanı doldu!",
     "Source" : "Kaynak",
-    "Failed to load category " : "Kategori yüklenemedi",
     "Failed to load search results" : "Arama sonuçları yüklenemedi"
 },
 "nplurals=2; plural=(n > 1);");

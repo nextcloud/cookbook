@@ -30,7 +30,6 @@ OC.L10N.register(
     "Hide navigation" : "Ocultar navegação",
     "Create recipe" : "Criar receita",
     "Download recipe from URL" : "Baixar a receita da URL",
-    "Uncategorized recipes" : "Receitas sem categoria",
     "Rescan library" : "Verificar biblioteca novamente",
     "Recipe folder" : "Pasta da receita",
     "Please pick a folder" : "Escolha uma pasta",
@@ -40,8 +39,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Não foi possível definir a preferência para impressão de imagem",
     "Could not set recipe update interval to {interval}" : "Não foi possível definir o intervalo de atualização da receita para {interval}",
     "Loading config failed" : "Erro ao carregar a configuração",
-    "Failed to load category {category} recipes" : "Não foi possível carregar as receitas da categoria {category}",
-    "Loading category recipes …" : "Carregando receitas da categoria...",
+    "Failed to load category " : "Erro ao carregar categoria",
+    "Loading category recipes..." : "Carregando categorias de receitas...",
     "Failed to fetch categories" : "Erro ao obter categorias",
     "Path to your recipe collection" : "Caminho para sua coleção de receitas",
     "Could not set recipe folder to {path}" : "Não foi possível definir a pasta de receitas para {path}",
@@ -65,7 +64,6 @@ OC.L10N.register(
     "Recipe could not be saved" : "A receita não pôde ser salva",
     "Cooking time is up!" : "O tempo de cozimento acabou!",
     "Source" : "Fonte",
-    "Failed to load category " : "Erro ao carregar categoria",
     "Failed to load search results" : "Erro ao carregar os resultados da pesquisa"
 },
 "nplurals=2; plural=(n > 1);");
