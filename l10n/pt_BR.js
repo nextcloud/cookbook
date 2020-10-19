@@ -52,7 +52,7 @@ OC.L10N.register(
     "Description" : "Descrição",
     "URL" : "URL",
     "Image" : "Imagem",
-    "Preparation time" : "Tempo de preparação",
+    "Preparation time" : "Tempo de preparo",
     "Cooking time" : "Tempo de cozimento",
     "Total time" : "Tempo total",
     "Keywords (comma separated)" : "Palavras-chave (separadas por vírgula)",
@@ -63,6 +63,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Erro ao carregar receita",
     "Recipe could not be saved" : "A receita não pôde ser salva",
     "Cooking time is up!" : "O tempo de cozimento acabou!",
-    "Source" : "Fonte"
+    "Source" : "Fonte",
+    "Failed to load search results" : "Erro ao carregar os resultados da pesquisa"
 },
 "nplurals=2; plural=(n > 1);");

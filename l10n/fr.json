@@ -61,6 +61,7 @@
     "Loading recipe failed" : "Erreur lors du chargement de la recette",
     "Recipe could not be saved" : "La recette n'a pas pu être enregistrée",
     "Cooking time is up!" : "La cuisson est terminée !",
-    "Source" : "Source"
+    "Source" : "Source",
+    "Failed to load search results" : "Impossible de charger les résultats de recherche"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

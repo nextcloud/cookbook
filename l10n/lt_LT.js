@@ -29,6 +29,7 @@ OC.L10N.register(
     "Delete failed" : "Ištrynimas nepavyko",
     "Hide navigation" : "Slėpti naršymą",
     "Create recipe" : "Sukurti receptą",
+    "Download recipe from URL" : "Atsisiųsti receptą iš URL",
     "Rescan library" : "Peržiūrėti biblioteką iš naujo",
     "Recipe folder" : "Receptų aplankas",
     "Please pick a folder" : "Pasirinkite aplanką",
@@ -62,6 +63,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Recepto įkėlimas nepavyko",
     "Recipe could not be saved" : "Nepavyko įrašyti recepto",
     "Cooking time is up!" : "Gaminimo laikas baigėsi!",
-    "Source" : "Šaltinis"
+    "Source" : "Šaltinis",
+    "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");
