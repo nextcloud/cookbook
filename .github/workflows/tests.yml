@@ -82,8 +82,8 @@ jobs:
         shell: bash
         run: >-
             cd nextcloud/apps/cookbook &&
-            bash <(curl -s https://codecov.io/bash) -cF unittests -f coverage.xml &&
-            bash <(curl -s https://codecov.io/bash) -cF integration -f coverage.integration.xml
+            bash <(curl -s https://codecov.io/bash) -F unittests -f coverage.xml -R . &&
+            bash <(curl -s https://codecov.io/bash) -F integration -f coverage.integration.xml -R .
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
       - name: Upload the code coverage report (unit tests)
@@ -93,6 +93,8 @@ jobs:
             path: |
                 coverage/
                 coverage-integration/
+                coverage.xml
+                coverage.integration.xml
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
 
