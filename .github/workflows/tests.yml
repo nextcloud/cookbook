@@ -81,8 +81,9 @@ jobs:
       - name: Upload the coverage reports to codecov.io
         shell: bash
         run: >-
-            bash <(curl -s https://codecov.io/bash) -cF unittests -f nextcloud/apps/cookbook/coverage.xml &&
-            bash <(curl -s https://codecov.io/bash) -cF integration -f nextcloud/apps/cookbook/coverage.integration.xml
+            cd nextcloud/apps/cookbook &&
+            bash <(curl -s https://codecov.io/bash) -cF unittests -f coverage.xml &&
+            bash <(curl -s https://codecov.io/bash) -cF integration -f coverage.integration.xml
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
       - name: Upload the code coverage report (unit tests)
