@@ -28,7 +28,6 @@
     "Hide navigation" : "Skrýt navigační panel",
     "Create recipe" : "Vytvořit recept",
     "Download recipe from URL" : "Stáhnout si recept z URL adresy",
-    "Uncategorized recipes" : "Nezařazené recepty",
     "Rescan library" : "Znovu projít knihovnu",
     "Recipe folder" : "Složka pro recepty",
     "Please pick a folder" : "Vyberte složku",
@@ -38,8 +37,8 @@
     "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",
     "Loading config failed" : "Načítání nastavení se nezdařilo",
-    "Failed to load category {category} recipes" : "Nepodařilo se načíst recepty z katergorie {category}",
-    "Loading category recipes …" : "Načítání receptů v této kategorii…",
+    "Failed to load category " : "Kategorii se nepodařilo načíst",
+    "Loading category recipes..." : "Načítání receptů v kategorii…",
     "Failed to fetch categories" : "Nepodařilo se získat kategorie",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
@@ -63,7 +62,6 @@
     "Recipe could not be saved" : "Recept se nepodařilo uložit",
     "Cooking time is up!" : "Čas vaření je u konce!",
     "Source" : "Zdroj",
-    "Failed to load category " : "Kategorii se nepodařilo načíst",
     "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
