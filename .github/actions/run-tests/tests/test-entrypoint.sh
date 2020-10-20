@@ -142,6 +142,8 @@ echo 'Tests finished'
 echo 'Copy code coverage in HTML format'
 cp -r coverage $GITHUB_WORKSPACE
 cp -r coverage-integration $GITHUB_WORKSPACE
+cp coverage.xml $GITHUB_WORKSPACE
+cp coverage.integration.xml $GITHUB_WORKSPACE
 
 popd
 
