@@ -6,10 +6,13 @@ trap 'catch $? $LINENO' EXIT
 
 catch()
 {
+	echo '::set-output name=silent-fail::false';
+	
 	if [ "$1" != '0' ]; then
 		echo "::error line=$LINENO::Error during the test run: $1"
 		
 		if [ "$ALLOW_FAILURE" = 'true' ]; then
+			echo '::set-output name=silent-fail::true'
 			exit 0
 		else
 			exit $1
@@ -139,6 +142,8 @@ echo 'Tests finished'
 echo 'Copy code coverage in HTML format'
 cp -r coverage $GITHUB_WORKSPACE
 cp -r coverage-integration $GITHUB_WORKSPACE
+cp coverage.xml $GITHUB_WORKSPACE
+cp coverage.integration.xml $GITHUB_WORKSPACE
 
 popd
 

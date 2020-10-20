@@ -16,6 +16,10 @@ inputs:
         description: The test may fail
         required: false
         default: false
+outputs:
+    silentFail:
+        description: If the test failed but was allowed to do so
+        value: ${{ steps.run-docker.outputs.silent-fail }}
 
 runs:
     using: 'composite'
@@ -87,6 +91,7 @@ runs:
                 -v "$GITHUB_WORKSPACE/cookbook":/app:ro
                 docker-tests
             name: Run the test container
+            id: run-docker
             shell: bash
             
         -   name: Stop helper containers

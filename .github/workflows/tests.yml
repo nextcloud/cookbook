@@ -66,6 +66,7 @@ jobs:
         
       - name: Run the tests in docker container
         uses: ./cookbook/.github/actions/run-tests
+        id: run-tests
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
@@ -80,8 +81,10 @@ jobs:
       - name: Upload the coverage reports to codecov.io
         shell: bash
         run: >-
-            bash <(curl -s https://codecov.io/bash) -cF unittests -f nextcloud/apps/cookbook/coverage.xml &&
-            bash <(curl -s https://codecov.io/bash) -cF integration -f nextcloud/apps/cookbook/coverage.integration.xml
+            cd nextcloud/apps/cookbook &&
+            bash <(curl -s https://codecov.io/bash) -F unittests -f coverage.xml -R . &&
+            bash <(curl -s https://codecov.io/bash) -F integration -f coverage.integration.xml -R .
+        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
       - name: Upload the code coverage report (unit tests)
         uses: actions/upload-artifact@v2
@@ -90,6 +93,9 @@ jobs:
             path: |
                 coverage/
                 coverage-integration/
+                coverage.xml
+                coverage.integration.xml
+        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
 
   source-package:
