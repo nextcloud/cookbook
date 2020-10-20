@@ -295,6 +295,11 @@ class RecipeService
         // Make sure that "recipeInstructions" is an array of strings
         if (isset($json['recipeInstructions'])) {
             if (is_array($json['recipeInstructions'])) {
+                // Workaround for https://www.colruyt.be/fr/en-cuisine/meli-melo-de-legumes-oublies-au-chevre
+                if (isset($json['recipeInstructions']['itemListElement'])) {
+                    $json['recipeInstructions'] = $json['recipeInstructions']['itemListElement'];
+                }
+
                 foreach ($json['recipeInstructions'] as $i => $step) {
                     if (is_string($step)) {
                         $json['recipeInstructions'][$i] = $this->cleanUpString($step, true);
