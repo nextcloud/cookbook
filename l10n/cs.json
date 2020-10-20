@@ -61,6 +61,7 @@
     "Loading recipe failed" : "Načítání receptu se nezdařilo",
     "Recipe could not be saved" : "Recept se nepodařilo uložit",
     "Cooking time is up!" : "Čas vaření je u konce!",
-    "Source" : "Zdroj"
+    "Source" : "Zdroj",
+    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

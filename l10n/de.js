@@ -8,7 +8,7 @@ OC.L10N.register(
     "Open navigation" : "Navigation öffnen",
     "Home" : "Zuhause",
     "All recipes" : "Alle Rezepte",
-    "Filter" : "Benötigt keine Übersetzung. Für Android wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Filter" : "Filter",
     "Search" : "Suche",
     "Edit recipe" : "Rezept bearbeiten",
     "Reload recipe" : "Rezept neu laden",
@@ -64,6 +64,6 @@ OC.L10N.register(
     "Recipe could not be saved" : "Rezept konnte nicht gespeichert werden",
     "Cooking time is up!" : "Die Kochzeit ist vorbei!",
     "Source" : "Quelle",
-    "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
+    "Failed to load search results" : "Laden der Suchergebnisse fehlgeschlagen"
 },
 "nplurals=2; plural=(n != 1);");
