@@ -19,5 +19,5 @@ comment:
   behavior: default
   require_changes: no
 
-#fixes:
-  #- "nextcloud/apps/cookbook/::"
+fixes:
+  - "/workdir/nextcloud/apps/cookbook/::"
