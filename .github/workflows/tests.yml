@@ -69,6 +69,7 @@ jobs:
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
+            allowFailure: ${{ matrix.mayFail }}
     
       - name: Upload the log file
         uses: actions/upload-artifact@v2
