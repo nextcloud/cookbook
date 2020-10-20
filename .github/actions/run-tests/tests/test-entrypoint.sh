@@ -2,6 +2,21 @@
 
 set -x
 
+trap 'catch $? $LINENO' EXIT
+
+catch()
+{
+	if [ "$1" != '0' ]; then
+		echo "::error line=$LINENO::Error during the test run: $1"
+		
+		if [ "$ALLOW_FAILURE" = 'true' ]; then
+			exit 0
+		else
+			exit $1
+		fi
+	fi
+}
+
 cd nextcloud
 
 if [ ! "$1" = '--test-only' ]; then
