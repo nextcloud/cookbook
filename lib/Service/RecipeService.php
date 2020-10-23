@@ -28,14 +28,16 @@ class RecipeService
     private $db;
     private $config;
     private $il10n;
+    private $logger;
 
-    public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config, IL10N $il10n)
+    public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config, IL10N $il10n, LoggerInterface $logger)
     {
         $this->user_id = $UserId;
         $this->root = $root;
         $this->db = $db;
         $this->config = $config;
         $this->il10n = $il10n;
+        $this->logger = $logger;
     }
 
     /**
@@ -427,8 +429,19 @@ class RecipeService
         // Start document parser
         $document = new \DOMDocument();
 
-        if(!$document->loadHTML($html)) {
-            throw new \Exception('Malformed HTML');
+        $libxml_previous_state = libxml_use_internal_errors(true);
+
+        try {
+            if(!$document->loadHTML($html)) {
+                throw new \Exception('Malformed HTML');
+            }
+            $errors = libxml_get_errors();
+            foreach ($errors as $error) {
+                $this->display_html_error($error);
+            }
+            libxml_clear_errors();
+        } finally {
+            libxml_use_internal_errors($libxml_previous_state);
         }
         
         $xpath = new \DOMXPath($document);
@@ -582,6 +595,29 @@ class RecipeService
         }
         
         return $this->checkRecipe($json);
+    }
+
+    private function display_html_error($error)
+    {
+        $return = "";
+        switch ($error->level) {
+            case LIBXML_ERR_WARNING:
+                $return .= "Warning $error->code ";
+                break;
+            case LIBXML_ERR_ERROR:
+                $return .= "Error $error->code ";
+                break;
+            case LIBXML_ERR_FATAL:
+                $return .= "Fatal Error $error->code ";
+                break;
+        }
+
+        $return .= "in line: $error->line" .
+            " and column: $error->column: ";
+
+        $return .= trim($error->message);
+
+        $this->logger->warning($return);
     }
 
     /**
