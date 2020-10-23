@@ -15,7 +15,6 @@ use OCP\Files\Folder;
 use OCP\IDBConnection;
 use OCA\Cookbook\Db\RecipeDb;
 use OCP\PreConditionNotMetException;
-use Psr\Log\LoggerInterface;
 
 /**
  * Main service class for the cookbook app.
@@ -418,7 +417,7 @@ class RecipeService
      *
      * @return array
      */
-    private function parseRecipeHtml($url, $html)
+    private function parseRecipeHtml($html)
     {
         if (!$html) {
             return null;
@@ -437,7 +436,9 @@ class RecipeService
                 throw new \Exception('Malformed HTML');
             }
             $errors = libxml_get_errors();
-            $this->display_libxml_errors($url, $errors);
+            foreach ($errors as $error) {
+                $this->display_html_error($error);
+            }
             libxml_clear_errors();
         } finally {
             libxml_use_internal_errors($libxml_previous_state);
@@ -596,39 +597,27 @@ class RecipeService
         return $this->checkRecipe($json);
     }
 
-    private function display_libxml_errors($url, $errors)
+    private function display_html_error($error)
     {
-        $error_counter = [];
-        $by_error_code = [];
-        
-        foreach ($errors as $error) {
-            $count = array_key_exists($error->code, $error_counter) ? $error_counter[$error->code] : 0;
-            $error_counter[$error->code] = $count + 1;
-            $by_error_code[$error->code] = $error;
+        $return = "";
+        switch ($error->level) {
+            case LIBXML_ERR_WARNING:
+                $return .= "Warning $error->code ";
+                break;
+            case LIBXML_ERR_ERROR:
+                $return .= "Error $error->code ";
+                break;
+            case LIBXML_ERR_FATAL:
+                $return .= "Fatal Error $error->code ";
+                break;
         }
-        
-        foreach ($error_counter as $code => $count) {
-            $error = $by_error_code[$code];
-            
-            switch ($error->level) {
-                case LIBXML_ERR_WARNING:
-                    $error_message = "libxml: Warning $error->code ";
-                    break;
-                case LIBXML_ERR_ERROR:
-                    $error_message = "libxml: Error $error->code ";
-                    break;
-                case LIBXML_ERR_FATAL:
-                    $error_message = "libxml: Fatal Error $error->code ";
-                    break;
-                default:
-                    $error_message = "Unknown Error ";
-            }
 
-            $error_message .= "occurred " . $count . " times while parsing " . $url . ". Last time in line $error->line" .
-                " and column $error->column: " . $error->message;
-            
-            $this->logger->warning($error_message);
-        }
+        $return .= "in line: $error->line" .
+            " and column: $error->column: ";
+
+        $return .= trim($error->message);
+
+        $this->logger->warning($return);
     }
 
     /**
@@ -802,7 +791,7 @@ class RecipeService
             throw new Exception('Could not fetch site ' . $url);
         }
 
-        $json = $this->parseRecipeHtml($url, $html);
+        $json = $this->parseRecipeHtml($html);
 
         if (!$json) {
             throw new Exception('No recipe data found');
@@ -954,7 +943,6 @@ class RecipeService
 
         if (!$path) {
             $path = '/' . $this->il10n->t('Recipes');
-            $this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
         }
 
         return $path;
