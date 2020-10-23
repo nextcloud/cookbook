@@ -5,6 +5,7 @@ OC.L10N.register(
     "Search" : "Барај",
     "Save changes" : "Зачувај ги промените",
     "Loading…" : "Се вчитува…",
+    "Page not found" : "Страницата не е пронајдена",
     "Category" : "Категорија",
     "Add" : "Додади",
     "Name" : "Име",
