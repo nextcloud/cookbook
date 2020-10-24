@@ -269,6 +269,18 @@ aside {
         padding: 0 !important;
         overflow: visible !important;
     }
+    
+    div.header {
+		display: flex;
+	}
+	
+	div.header > div.image {
+		flex: 600px 0 0;
+	}
+	
+	div.header > div.meta {
+		margin: 0 10px;
+	}
 }
 
 @media only screen and (min-width: 1500px) {
