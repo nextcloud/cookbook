@@ -1,5 +1,5 @@
 {
-    "name": "Cookbook",
+    "name": "nextcloud-apps/cookbook",
     "description": "An integrated cookbook using YAML files as recipes",
     "type": "project",
     "license": "AGPL",
