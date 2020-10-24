@@ -12,7 +12,7 @@
 	            <div class="details">
 	                <p class="description">{{ $store.state.recipe.description }}</p>
 	                <p v-if="$store.state.recipe.url">
-	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
+	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
 	                </p>
 	                <p><strong>{{ t('cookbook', 'Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
 	            </div>
@@ -280,6 +280,10 @@ aside {
 	
 	div.header > div.meta {
 		margin: 0 10px;
+	}
+	
+	div.header a::after {
+		content: '';
 	}
 }
 
