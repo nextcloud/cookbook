@@ -436,9 +436,7 @@ class RecipeService
                 throw new \Exception('Malformed HTML');
             }
             $errors = libxml_get_errors();
-            foreach ($errors as $error) {
-                $this->display_html_error($error);
-            }
+            $this->display_libxml_errors($errors);
             libxml_clear_errors();
         } finally {
             libxml_use_internal_errors($libxml_previous_state);
@@ -597,27 +595,36 @@ class RecipeService
         return $this->checkRecipe($json);
     }
 
-    private function display_html_error($error)
+    private function display_libxml_errors($errors)
     {
-        $return = "";
-        switch ($error->level) {
-            case LIBXML_ERR_WARNING:
-                $return .= "Warning $error->code ";
-                break;
-            case LIBXML_ERR_ERROR:
-                $return .= "Error $error->code ";
-                break;
-            case LIBXML_ERR_FATAL:
-                $return .= "Fatal Error $error->code ";
-                break;
+        $error_counter = [];
+        $error_messages = [];
+        
+        foreach ($errors as $error) {
+            $error_message = "";
+            switch ($error->level) {
+                case LIBXML_ERR_WARNING:
+                    $error_message .= "Warning $error->code ";
+                    break;
+                case LIBXML_ERR_ERROR:
+                    $error_message .= "Error $error->code ";
+                    break;
+                case LIBXML_ERR_FATAL:
+                    $error_message .= "Fatal Error $error->code ";
+                    break;
+            }
+
+            $error_message .= "in line: $error->line" .
+                " and column: $error->column: ";
+            
+            $count = $error_counter[$error->line] || 0;
+            $error_counter[$error->line] = $count + 1;
+            $error_messages[$error->line] = trim($error_message);
         }
-
-        $return .= "in line: $error->line" .
-            " and column: $error->column: ";
-
-        $return .= trim($error->message);
-
-        $this->logger->warning($return);
+        
+        foreach ($error_counter as $key => $value) {
+            $this->logger->warning($error_messages[$key] . " " . $value . " times");
+        }
     }
 
     /**
