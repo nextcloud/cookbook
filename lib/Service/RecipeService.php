@@ -418,7 +418,7 @@ class RecipeService
      *
      * @return array
      */
-    private function parseRecipeHtml($html)
+    private function parseRecipeHtml($url, $html)
     {
         if (!$html) {
             return null;
@@ -437,7 +437,7 @@ class RecipeService
                 throw new \Exception('Malformed HTML');
             }
             $errors = libxml_get_errors();
-            $this->display_libxml_errors($errors);
+            $this->display_libxml_errors($url, $errors);
             libxml_clear_errors();
         } finally {
             libxml_use_internal_errors($libxml_previous_state);
@@ -596,7 +596,7 @@ class RecipeService
         return $this->checkRecipe($json);
     }
 
-    private function display_libxml_errors($errors)
+    private function display_libxml_errors($url, $errors)
     {
         $error_counter = [];
         $by_error_code = [];
@@ -624,7 +624,7 @@ class RecipeService
                     $error_message = "Unknown Error ";
             }
 
-            $error_message .= "occurred " . $count . " times. Last time in line $error->line" .
+            $error_message .= "occurred " . $count . " times while parsing " . $url . ". Last time in line $error->line" .
                 " and column $error->column: " . $error->message;
             
             $this->logger->warning($error_message);
@@ -802,7 +802,7 @@ class RecipeService
             throw new Exception('Could not fetch site ' . $url);
         }
 
-        $json = $this->parseRecipeHtml($html);
+        $json = $this->parseRecipeHtml($url, $html);
 
         if (!$json) {
             throw new Exception('No recipe data found');
