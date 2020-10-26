@@ -246,7 +246,7 @@ export default {
                         this.categories.push({
                             name: json[i].name,
                             recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes...') }],
+                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
                         })
                     }
                 }
