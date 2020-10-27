@@ -80,6 +80,63 @@ export default {
         addEntry: function(field, index, content='') {
             this.recipe[field].splice(index, 0, content)
         },
+        /**
+         * Compares initial with current recipe. Returns true if they are the
+         * same. Ignores padding that has been added to the hours and minutes
+         * of preparation, cooking, and total time.
+         */
+        compareCurrentWithInitialRecipe: function () {
+          const initKeys = Object.keys(this.recipeInit)
+          const currKeys = Object.keys(this.recipe)
+          var recipe = this.recipe
+
+          if (initKeys.length != currKeys.length)
+          {
+            return false
+          }
+
+          for(let key of initKeys)
+          {
+            if (this.recipeInit[key] instanceof Array) {
+              if(! (this.recipe[key] instanceof Array) ) {
+                return false
+              }
+              var arrIdentical = (this.recipeInit[key].length == this.recipe[key].length) 
+                && this.recipeInit[key].every(function(element, index) {
+                    return element === recipe[key][index]
+                  });
+              if(!arrIdentical) {
+                return false
+              }
+              
+            }
+            else {
+              if(["prepTime", "cookTime", "totalTime"].includes(key)) {
+                // ignore added padding changes in datetime fields
+                let timeStringInit = this.recipeInit[key]
+                let timeString = this.recipe[key]
+
+                // Parse time values
+                let timeComps = timeString ? timeStringInit.match(/PT(\d+?)H(\d+?)M/) : null
+                let hours = timeComps[1].toString().padStart(2, '0')
+                let minutes = timeComps[2].toString().padStart(2, '0')
+
+                timeComps = timeStringInit ? timeStringInit.match(/PT(\d+?)H(\d+?)M/) : null
+                let hoursInit = timeComps[1].toString().padStart(2, '0')
+                let minutesInit = timeComps[2].toString().padStart(2, '0')
+
+                if (hours != hoursInit || minutes != minutesInit) {
+                  return false
+                }
+              } else {
+                if (this.recipeInit[key] != this.recipe[key]) {
+                  return false
+                }
+              }
+            }
+          }
+          return true
+        },
         deleteEntry: function(field, index) {
             this.recipe[field].splice(index, 1)
         },
