@@ -39,6 +39,7 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Kon de voorkeur voor afbeelding afdrukken niet instellen",
     "Could not set recipe update interval to {interval}" : "Kon de update-interval voor recepten niet instellen op {interval}",
     "Loading config failed" : "Laden configuratie mislukt",
+    "Failed to load category " : "Laden categorie mislukt",
     "Failed to fetch categories" : "Categorieën ophalen niet gelukt",
     "Path to your recipe collection" : "Pad naar je receptencollectie",
     "Could not set recipe folder to {path}" : "Kan de receptenmap niet instellen op {path}",
@@ -61,7 +62,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Laden recept mislukt",
     "Recipe could not be saved" : "Recept kon niet worden opgelagen",
     "Cooking time is up!" : "Kooktijd is verstreken!",
-    "Source" : "Bron",
-    "Failed to load category " : "Laden categorie mislukt"
+    "Source" : "Bron"
 },
 "nplurals=2; plural=(n != 1);");

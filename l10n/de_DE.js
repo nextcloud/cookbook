@@ -40,7 +40,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Loading config failed" : "Laden der Konfiguration fehlgeschlagen",
     "Failed to load category " : "Laden der Kategorie fehlgeschlagen",
-    "Loading category recipes..." : "Lade Kategorie-Rezepte...",
     "Failed to fetch categories" : "Kategorien konnten nicht abgerufen werden.",
     "Path to your recipe collection" : "Pfad zur Rezept-Sammlung",
     "Could not set recipe folder to {path}" : "Konnte den Pfad '{path}' nicht als Rezept-Ordner setzen",
@@ -62,7 +61,7 @@ OC.L10N.register(
     "Instructions" : "Zubereitung",
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Recipe could not be saved" : "Rezept konnte nicht gespeichert werden",
-    "Cooking time is up!" : "Die Kochzeit is vorbei!",
+    "Cooking time is up!" : "Die Kochzeit ist vorbei!",
     "Source" : "Quelle",
     "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
 },

@@ -36,6 +36,7 @@
     "Could not set preference for image printing" : "Postavljanje željenih značajki za ispis slike nije uspjelo",
     "Could not set recipe update interval to {interval}" : "Postavljanje intervala ažuriranja recepta na {interval} nije uspjelo",
     "Loading config failed" : "Učitavanje konfiguracije nije uspjelo",
+    "Failed to load category " : "Učitavanje kategorije nije uspjelo ",
     "Failed to fetch categories" : "Dohvaćanje kategorija nije uspjelo",
     "Path to your recipe collection" : "Put do vaše zbirke recepata",
     "Could not set recipe folder to {path}" : "Postavljanje mape recepata na {path} nije uspjelo",
@@ -58,7 +59,6 @@
     "Loading recipe failed" : "Učitavanje recepta nije uspjelo",
     "Recipe could not be saved" : "Recept nije moguće spremiti",
     "Cooking time is up!" : "Kuhanje je završeno!",
-    "Source" : "Izvor",
-    "Failed to load category " : "Učitavanje kategorije nije uspjelo "
+    "Source" : "Izvor"
 },"pluralForm" :"nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;"
 }

@@ -37,6 +37,7 @@
     "Could not set preference for image printing" : "Kuvan tulostuksen määritys epäonnistui",
     "Could not set recipe update interval to {interval}" : "Reseptin päivitysvälin määrittäminen arvoon {interval} epäonnistui",
     "Loading config failed" : "Asetusten lataus epäonnistui",
+    "Failed to load category " : "Kategorian lataus epäonnistui",
     "Failed to fetch categories" : "Kategorioiden haku epäonnistui",
     "Path to your recipe collection" : "Reseptikokoelmasi sijainti",
     "Could not set recipe folder to {path}" : "Reseptihakemistoa ei voitu määrittää kohteeseen {path}",
@@ -59,7 +60,6 @@
     "Loading recipe failed" : "Reseptin lataus epäonnistui",
     "Recipe could not be saved" : "Reseptiä ei voitu tallentaa",
     "Cooking time is up!" : "Valmistusaika päättyi!",
-    "Source" : "Lähde",
-    "Failed to load category " : "Kategorian lataus epäonnistui"
+    "Source" : "Lähde"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

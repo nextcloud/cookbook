@@ -39,6 +39,7 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Δεν μπορούν να οριστούν προτιμήσεις για εκτύπωση εικόνας",
     "Could not set recipe update interval to {interval}" : "Δεν μπορεί να οριστεί εσωτερική ενημέρωση συνταγής σε {interval}",
     "Loading config failed" : "Η φόρτωση των ρυθμίσεων απέτυχε",
+    "Failed to load category " : "Η φόρτωση της κατηγορίας απέτυχε",
     "Failed to fetch categories" : "Αποτυχία εμφάνισης κατηγοριών",
     "Path to your recipe collection" : "Διαδρομή για την συλλογή συνταγών σας",
     "Could not set recipe folder to {path}" : "Δεν μπορεί να οριστεί φάκελος συνταγών σε {path}",
@@ -61,7 +62,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Η φόρτωση των συνταγής απέτυχε",
     "Recipe could not be saved" : "Η συνταγή δεν μπορεί να αποθηκευτεί",
     "Cooking time is up!" : "Ο χρόνος μαγειρέματος έχει φτάσει!",
-    "Source" : "Πηγή",
-    "Failed to load category " : "Η φόρτωση της κατηγορίας απέτυχε"
+    "Source" : "Πηγή"
 },
 "nplurals=2; plural=(n != 1);");

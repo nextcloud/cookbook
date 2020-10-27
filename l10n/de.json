@@ -38,11 +38,10 @@
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Loading config failed" : "Laden der Konfiguration fehlgeschlagen",
     "Failed to load category " : "Laden der Kategorie fehlgeschlagen",
-    "Loading category recipes..." : "Lade Kategorie-Rezepte...",
     "Failed to fetch categories" : "Kategorien konnten nicht abgerufen werden.",
     "Path to your recipe collection" : "Pfad zur Rezept-Sammlung",
     "Could not set recipe folder to {path}" : "Konnte den Pfad '{path}' nicht als Rezept-Ordner setzen",
-    "Pick a local image" : "Wähle eine lokale Bilddatei aus",
+    "Pick a local image" : "Bitte wähle eine lokale Bilddatei",
     "Path to your recipe image" : "Pfad zum Rezeptbild",
     "Add" : "Hinzufügen",
     "The page was not found" : "Die Seite wurde nicht gefunden",
@@ -62,6 +61,6 @@
     "Recipe could not be saved" : "Rezept konnte nicht gespeichert werden",
     "Cooking time is up!" : "Die Kochzeit ist vorbei!",
     "Source" : "Quelle",
-    "Failed to load search results" : "Laden der Suchergebnisse fehlgeschlagen"
+    "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
