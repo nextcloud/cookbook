@@ -40,7 +40,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Reseptin päivitysvälin määrittäminen arvoon {interval} epäonnistui",
     "Loading config failed" : "Asetusten lataus epäonnistui",
     "Failed to load category " : "Kategorian lataus epäonnistui",
-    "Loading category recipes..." : "Ladataan kategorian reseptejä...",
     "Failed to fetch categories" : "Kategorioiden haku epäonnistui",
     "Path to your recipe collection" : "Reseptikokoelmasi sijainti",
     "Could not set recipe folder to {path}" : "Reseptihakemistoa ei voitu määrittää kohteeseen {path}",

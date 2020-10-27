@@ -40,7 +40,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Yemek tarifi güncelleme sıklığı {interval} olarak ayarlanamadı",
     "Loading config failed" : "Yapılandırma yüklenemedi",
     "Failed to load category " : "Kategori yüklenemedi",
-    "Loading category recipes..." : "Kategorideki tarifler yükleniyor...",
     "Failed to fetch categories" : "Kategoriler alınamadı",
     "Path to your recipe collection" : "Yemek tarifi derlemenizin yolu",
     "Could not set recipe folder to {path}" : "Yemek tarifi derleme klasörü {path} olarak ayarlanamadı",

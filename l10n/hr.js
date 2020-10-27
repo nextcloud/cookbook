@@ -39,7 +39,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Postavljanje intervala ažuriranja recepta na {interval} nije uspjelo",
     "Loading config failed" : "Učitavanje konfiguracije nije uspjelo",
     "Failed to load category " : "Učitavanje kategorije nije uspjelo ",
-    "Loading category recipes..." : "Učitavanje recepata kategorije...",
     "Failed to fetch categories" : "Dohvaćanje kategorija nije uspjelo",
     "Path to your recipe collection" : "Put do vaše zbirke recepata",
     "Could not set recipe folder to {path}" : "Postavljanje mape recepata na {path} nije uspjelo",

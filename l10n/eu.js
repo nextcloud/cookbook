@@ -39,7 +39,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Ezin izan da ezarri errezeta eguneratzeko tartea {interval}-era",
     "Loading config failed" : "Konfigurazioa kargatzeak huts egin du",
     "Failed to load category " : "Kategoria kargatzeak huts egin du",
-    "Loading category recipes..." : "Kategoriako errezetak kargatzen...",
     "Failed to fetch categories" : "Huts egin du kategoriak eskuratzen",
     "Path to your recipe collection" : "Zure errezeta bildumarako bidea",
     "Could not set recipe folder to {path}" : "Ezin izan da ezarri errezeta karpetaren bidea hona {path}",
