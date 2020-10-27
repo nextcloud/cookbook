@@ -202,6 +202,7 @@ export default {
         // Store the initial recipe configuration for possible later use
         if (this.recipeInit === null) {
             this.recipeInit = this.recipe
+            this.recipeInit = Object.assign({}, this.recipe)
         }
         // Register save method hook for access from the controls components
         // The event hookmust first be destroyed to avoid it from firing multiple
