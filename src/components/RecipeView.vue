@@ -5,10 +5,10 @@
 	        <div class='image'>
 	        	<RecipeImages v-if="$store.state.recipe" />
 	        </div>
-	        
+
 	        <div class='meta'>
 	            <h2>{{ $store.state.recipe.name }}</h2>
-	
+
 	            <div class="details">
 	                <p class="description">{{ $store.state.recipe.description }}</p>
 	                <p v-if="$store.state.recipe.url">
@@ -23,7 +23,7 @@
 	            </div>
             </div>
 		</div>
-			
+
         <div v-if="$store.state.recipe" class="content">
             <section>
                 <aside>
@@ -258,9 +258,9 @@ aside {
         display: flex;
         margin-top: 10px;
     }
-    
+
     div.meta {
-    	margin: 0 5px;
+    	margin: 0 1rem;
     }
 
 @media print {
@@ -269,19 +269,19 @@ aside {
         padding: 0 !important;
         overflow: visible !important;
     }
-    
+
     div.header {
 		display: flex;
 	}
-	
+
 	div.header > div.image {
 		flex: 600px 0 0;
 	}
-	
+
 	div.header > div.meta {
 		margin: 0 10px;
 	}
-	
+
 	div.header a::after {
 		content: '';
 	}
@@ -291,11 +291,11 @@ aside {
 	div.header {
 		display: flex;
 	}
-	
+
 	div.header > div.image {
 		flex: 700px 0 0;
 	}
-	
+
 	div.header > div.meta {
 		margin: 0 10px;
 	}
