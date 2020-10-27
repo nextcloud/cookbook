@@ -137,6 +137,12 @@ export default {
           }
           return true
         },
+        confirmLeavePage() {
+          return window.confirm('You have unsaved changes! Do you still want to leave?')
+        },
+        confirmStayInEditedForm() {
+          return !this.savingRecipe && !this.compareCurrentWithInitialRecipe() && !this.confirmLeavePage()
+        },
         deleteEntry: function(field, index) {
             this.recipe[field].splice(index, 1)
         },
@@ -258,7 +264,6 @@ export default {
     mounted () {
         // Store the initial recipe configuration for possible later use
         if (this.recipeInit === null) {
-            this.recipeInit = this.recipe
             this.recipeInit = Object.assign({}, this.recipe)
         }
         // Register save method hook for access from the controls components
@@ -267,12 +272,14 @@ export default {
         this.$root.$off('saveRecipe')
         this.$root.$on('saveRecipe', () => {
             this.save()
+            this.savingRecipe = true
         })
         // Register data load method hook for access from the controls components
         this.$root.$off('reloadRecipeEdit')
         this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })
+        this.savingRecipe = false
     },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
@@ -301,11 +308,17 @@ export default {
      */
     beforeRouteLeave (to, from, next) {
         // beforeRouteLeave is called when the static route changes.
-        // We have to check if the target component stays the same and reload.
-        // However, we should not reload if the component changes; otherwise
-        // reloaded data may overwrite the data loaded at the target component
-        // which will at the very least result in incorrect breadcrumb path!
-        next()
+        // Cancel the navigation, if the form has unsaved edits and the user did not
+        // confirm leave. This prevents accidentally losing changes
+        if (this.confirmStayInEditedForm()){
+          next(false)
+        } else {
+          // We have to check if the target component stays the same and reload.
+          // However, we should not reload if the component changes; otherwise
+          // reloaded data may overwrite the data loaded at the target component
+          // which will at the very least result in incorrect breadcrumb path!
+          next()
+        }
         // Check if we should reload the component content
         if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
             this.setup()
