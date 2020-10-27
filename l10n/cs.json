@@ -38,7 +38,6 @@
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",
     "Loading config failed" : "Načítání nastavení se nezdařilo",
     "Failed to load category " : "Kategorii se nepodařilo načíst",
-    "Loading category recipes..." : "Načítání receptů v kategorii…",
     "Failed to fetch categories" : "Nepodařilo se získat kategorie",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",

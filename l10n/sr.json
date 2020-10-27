@@ -38,7 +38,6 @@
     "Could not set recipe update interval to {interval}" : "Не могу да постави време ажурирања на {interval}",
     "Loading config failed" : "Учитавање конфигурације није успело",
     "Failed to load category " : "Грешка прилико учитавања категорије",
-    "Loading category recipes..." : "Учитавам категорију рецепата...",
     "Failed to fetch categories" : "Грешка при дохватању категорија",
     "Path to your recipe collection" : "Путања ка Вашој збирци рецепата",
     "Could not set recipe folder to {path}" : "Не могу да поставим фасциклу са рецептима на {path}",

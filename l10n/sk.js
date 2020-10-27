@@ -39,7 +39,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Interval aktualizácie receptu sa nepodarilo nastaviť na {interval}",
     "Loading config failed" : "Načítanie nastavenia zlyhalo",
     "Failed to load category " : "Zlyhalo načítanie kategórie ",
-    "Loading category recipes..." : "Načítavanie kategórie receptov...",
     "Failed to fetch categories" : "Nepodarilo sa načítať kategórie",
     "Path to your recipe collection" : "Cesta k vašim receptom",
     "Could not set recipe folder to {path}" : "Priečinok receptov sa nepodarilo nastaviť na {path}",

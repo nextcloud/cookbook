@@ -40,7 +40,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Kon de update-interval voor recepten niet instellen op {interval}",
     "Loading config failed" : "Laden configuratie mislukt",
     "Failed to load category " : "Laden categorie mislukt",
-    "Loading category recipes..." : "Laden recepten categorieën",
     "Failed to fetch categories" : "Categorieën ophalen niet gelukt",
     "Path to your recipe collection" : "Pad naar je receptencollectie",
     "Could not set recipe folder to {path}" : "Kan de receptenmap niet instellen op {path}",

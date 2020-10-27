@@ -40,7 +40,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "No s'ha pogut establir l'interval d'actualització de les receptes a {interval}",
     "Loading config failed" : "Ha fallat la càrrega de la configuració",
     "Failed to load category " : "No s'ha pogut carregar la categoria ",
-    "Loading category recipes..." : "S'estan carregant les receptes de categoria...",
     "Failed to fetch categories" : "No s'han pogut recuperar les categories",
     "Path to your recipe collection" : "Camí a la col·lecció de receptes",
     "Could not set recipe folder to {path}" : "No s'ha pogut establir la carpeta de receptes a {path}",
