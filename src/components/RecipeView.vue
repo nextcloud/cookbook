@@ -1,9 +1,9 @@
 <template>
     <div class="wrapper">
 
-        <div v-if="$store.state.recipe" class='header'>
-	        <div class='image'>
-	        	<RecipeImages v-if="$store.state.recipe" />
+        <div v-if="$store.state.recipe" class='header' :class="{ 'responsive': $store.state.recipe.image }">
+	        <div class='image' v-if="$store.state.recipe.image">
+	        	<RecipeImages />
 	        </div>
 
 	        <div class='meta'>
@@ -288,16 +288,12 @@ aside {
 }
 
 @media only screen and (min-width: 1500px) {
-	div.header {
+	div.header.responsive {
 		display: flex;
 	}
 
-	div.header > div.image {
+	div.header.responsive > div.image {
 		flex: 700px 0 0;
-	}
-
-	div.header > div.meta {
-		margin: 0 10px;
 	}
 }
 
