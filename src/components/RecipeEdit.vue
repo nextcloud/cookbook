@@ -80,6 +80,13 @@ export default {
         addEntry: function(field, index, content='') {
             this.recipe[field].splice(index, 0, content)
         },
+        beforeWindowUnload(e) {
+          if (this.confirmStayInEditedForm()) {
+            // Cancel the window unload event
+            e.preventDefault()
+            e.returnValue = ''
+          }   
+        },
         /**
          * Compares initial with current recipe. Returns true if they are the
          * same. Ignores padding that has been added to the hours and minutes
@@ -281,6 +288,9 @@ export default {
         })
         this.savingRecipe = false
     },
+    beforeDestroy() {
+      window.removeEventListener('beforeunload', this.beforeWindowUnload)
+    },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
     // more seamless experience.
@@ -331,6 +341,9 @@ export default {
         if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
             this.setup()
         }
+    },
+    created() {
+      window.addEventListener('beforeunload', this.beforeWindowUnload)
     },
 
 }
