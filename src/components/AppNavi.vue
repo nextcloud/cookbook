@@ -200,7 +200,7 @@ export default {
                 cat.recipes = json
             }).fail((jqXHR, textStatus, errorThrown) => {
                 cat.recipes = []
-                alert(t('cookbook', 'Failed to load category '+cat.name+' recipes'))
+                alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat.name}))
                 if (e && e instanceof Error) {
                     throw e
                 }
