@@ -37,7 +37,6 @@
     "Could not set preference for image printing" : "Could not set preference for image printing",
     "Could not set recipe update interval to {interval}" : "Could not set recipe update interval to {interval}",
     "Loading config failed" : "Loading configuration failed",
-    "Failed to load category " : "Failed to load category ",
     "Failed to fetch categories" : "Failed to fetch categories",
     "Path to your recipe collection" : "Path to your recipe collection",
     "Could not set recipe folder to {path}" : "Could not set recipe folder to {path}",
@@ -61,6 +60,7 @@
     "Recipe could not be saved" : "Recipe could not be saved",
     "Cooking time is up!" : "Cooking time is up!",
     "Source" : "Source",
+    "Failed to load category " : "Failed to load category ",
     "Failed to load search results" : "Failed to load search results"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -37,7 +37,6 @@ OC.L10N.register(
     "Print image with recipe" : "Напечатать изображение с рецептом",
     "Could not set preference for image printing" : "Не удалось настроить печать изображения",
     "Could not set recipe update interval to {interval}" : "Не удалось заменить интервал обновления рецептов на {interval}",
-    "Failed to load category " : "Не удалось загрузить категорию",
     "Failed to fetch categories" : "Не удалось получить категории",
     "Path to your recipe collection" : "Путь к коллекции рецептов",
     "Could not set recipe folder to {path}" : "Не удалось заменить папку с рецептами на {path}",
@@ -56,6 +55,7 @@ OC.L10N.register(
     "Ingredients" : "Ингредиенты",
     "Instructions" : "Инструкции",
     "Cooking time is up!" : "Время приготовления истекло!",
-    "Source" : "Источник"
+    "Source" : "Источник",
+    "Failed to load category " : "Не удалось загрузить категорию"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

@@ -38,7 +38,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nedarí sa nastaviť predvoľbu pre tlač obrázkov",
     "Could not set recipe update interval to {interval}" : "Interval aktualizácie receptu sa nepodarilo nastaviť na {interval}",
     "Loading config failed" : "Načítanie nastavenia zlyhalo",
-    "Failed to load category " : "Zlyhalo načítanie kategórie ",
     "Failed to fetch categories" : "Nepodarilo sa načítať kategórie",
     "Path to your recipe collection" : "Cesta k vašim receptom",
     "Could not set recipe folder to {path}" : "Priečinok receptov sa nepodarilo nastaviť na {path}",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Načítanie receptu zlyhalo",
     "Recipe could not be saved" : "Recept nemohol byť uložený",
     "Cooking time is up!" : "Čas varenia vypršal!",
-    "Source" : "Zdroj"
+    "Source" : "Zdroj",
+    "Failed to load category " : "Zlyhalo načítanie kategórie "
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

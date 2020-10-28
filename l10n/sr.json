@@ -37,7 +37,6 @@
     "Could not set preference for image printing" : "Не могу да поставим поставке за штампање слика",
     "Could not set recipe update interval to {interval}" : "Не могу да постави време ажурирања на {interval}",
     "Loading config failed" : "Учитавање конфигурације није успело",
-    "Failed to load category " : "Грешка прилико учитавања категорије",
     "Failed to fetch categories" : "Грешка при дохватању категорија",
     "Path to your recipe collection" : "Путања ка Вашој збирци рецепата",
     "Could not set recipe folder to {path}" : "Не могу да поставим фасциклу са рецептима на {path}",
@@ -61,6 +60,7 @@
     "Recipe could not be saved" : "Рецепт не може да се сачува",
     "Cooking time is up!" : "Време за кување!",
     "Source" : "Извор",
+    "Failed to load category " : "Грешка прилико учитавања категорије",
     "Failed to load search results" : "Грешка приликом учитавања резултата претраге"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }
