@@ -39,7 +39,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "No s'ha pogut establir la configuració per impressió d'imatges",
     "Could not set recipe update interval to {interval}" : "No s'ha pogut establir l'interval d'actualització de les receptes a {interval}",
     "Loading config failed" : "Ha fallat la càrrega de la configuració",
-    "Failed to load category " : "No s'ha pogut carregar la categoria ",
     "Failed to fetch categories" : "No s'han pogut recuperar les categories",
     "Path to your recipe collection" : "Camí a la col·lecció de receptes",
     "Could not set recipe folder to {path}" : "No s'ha pogut establir la carpeta de receptes a {path}",
@@ -62,6 +61,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Ha fallat la càrrega de la recepta",
     "Recipe could not be saved" : "No s'ha pogut desar la recepta",
     "Cooking time is up!" : "S'ha acabat el temps de cocció!",
-    "Source" : "Origen"
+    "Source" : "Origen",
+    "Failed to load category " : "No s'ha pogut carregar la categoria "
 },
 "nplurals=2; plural=(n != 1);");

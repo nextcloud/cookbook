@@ -39,7 +39,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",
     "Loading config failed" : "Načítání nastavení se nezdařilo",
-    "Failed to load category " : "Kategorii se nepodařilo načíst",
     "Failed to fetch categories" : "Nepodařilo se získat kategorie",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "Recipe could not be saved" : "Recept se nepodařilo uložit",
     "Cooking time is up!" : "Čas vaření je u konce!",
     "Source" : "Zdroj",
+    "Failed to load category " : "Kategorii se nepodařilo načíst",
     "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

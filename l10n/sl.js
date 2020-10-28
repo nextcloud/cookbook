@@ -37,7 +37,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Ni mogoče nastaviti lastnostni za tiskanje slike",
     "Could not set recipe update interval to {interval}" : "Ni mogoče nastaviti posodobitve receptov na {interval}",
     "Loading config failed" : "Nalaganje nastavitev je spodletelo",
-    "Failed to load category " : "Nalaganje kategorije je spodletelo",
     "Failed to fetch categories" : "Pridobivanje kategorij je spodletelo",
     "Path to your recipe collection" : "Pot do zbirke receptov",
     "Could not set recipe folder to {path}" : "Ni mogoče nastaviti mape receptov na {path}",
@@ -61,6 +60,7 @@ OC.L10N.register(
     "Recipe could not be saved" : "Recepta ni mogoče shraniti",
     "Cooking time is up!" : "Čas kuhanja je končan!",
     "Source" : "Vir",
+    "Failed to load category " : "Nalaganje kategorije je spodletelo",
     "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

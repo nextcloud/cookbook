@@ -37,7 +37,6 @@
     "Could not set preference for image printing" : "No se pudo ajustar las preferencias para impresión de imágenes",
     "Could not set recipe update interval to {interval}" : "No se puede ajustar el intervalo de actualización de la receta a {interval}",
     "Loading config failed" : "Fallo al cargar la configuración",
-    "Failed to load category " : "Fallo al cargar categoría",
     "Failed to fetch categories" : "Fallo al buscar las categorías",
     "Path to your recipe collection" : "Ruta a tu colección de recetas",
     "Could not set recipe folder to {path}" : "No fue posible establecer {path} como ruta para la carpeta de recetas",
@@ -61,6 +60,7 @@
     "Recipe could not be saved" : "No se ha podido guardar la receta",
     "Cooking time is up!" : "¡Se acabó el tiempo de cocción!",
     "Source" : "Origen",
+    "Failed to load category " : "Fallo al cargar categoría",
     "Failed to load search results" : "Fallo al cargar los resultados de la búsqueda"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
