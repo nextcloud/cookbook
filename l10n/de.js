@@ -39,7 +39,7 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Die Voreinstellung für den Druck von Bildern konnten nicht festgelegt werden",
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Loading config failed" : "Laden der Konfiguration fehlgeschlagen",
-    "Failed to load category " : "Laden der Kategorie fehlgeschlagen",
+    "Loading category recipes …" : "Lade Kategorie-Rezepte …",
     "Failed to fetch categories" : "Kategorien konnten nicht abgerufen werden.",
     "Path to your recipe collection" : "Pfad zur Rezept-Sammlung",
     "Could not set recipe folder to {path}" : "Konnte den Pfad '{path}' nicht als Rezept-Ordner setzen",
@@ -63,6 +63,7 @@ OC.L10N.register(
     "Recipe could not be saved" : "Rezept konnte nicht gespeichert werden",
     "Cooking time is up!" : "Die Kochzeit ist vorbei!",
     "Source" : "Quelle",
+    "Failed to load category " : "Laden der Kategorie fehlgeschlagen",
     "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
 },
 "nplurals=2; plural=(n != 1);");

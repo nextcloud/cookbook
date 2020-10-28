@@ -37,7 +37,7 @@
     "Could not set preference for image printing" : "Impossible de définir le paramètre d'impression des images",
     "Could not set recipe update interval to {interval}" : "Impossible de définir l'intervalle de mise à jour à {interval}",
     "Loading config failed" : "Erreur lors du chargement de la configuration",
-    "Failed to load category " : "Impossible de charger la catégorie",
+    "Loading category recipes …" : "Chargement des recettes de la catégorie ...",
     "Failed to fetch categories" : "Impossible de récupérer les catégories",
     "Path to your recipe collection" : "Répertoire de votre collection de recettes",
     "Could not set recipe folder to {path}" : "Impossible de définir le répertoire de recette sur {path}",
@@ -61,6 +61,7 @@
     "Recipe could not be saved" : "La recette n'a pas pu être enregistrée",
     "Cooking time is up!" : "La cuisson est terminée !",
     "Source" : "Source",
+    "Failed to load category " : "Impossible de charger la catégorie",
     "Failed to load search results" : "Impossible de charger les résultats de recherche"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

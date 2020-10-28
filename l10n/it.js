@@ -39,7 +39,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Impossibile impostare la preferenze per la stampa dell'immagine",
     "Could not set recipe update interval to {interval}" : "Impossibile impostare l'intervallo di aggiornamento delle ricette a {interval}",
     "Loading config failed" : "Caricamento della configurazione non riuscito",
-    "Failed to load category " : "Caricamento della categoria non riuscito",
     "Failed to fetch categories" : "Recupero delle categorie non riuscito",
     "Path to your recipe collection" : "Percorso alla tua raccolta di ricetta",
     "Could not set recipe folder to {path}" : "Impossibile impostare la cartelle delle ricetta a {path}",
@@ -63,6 +62,7 @@ OC.L10N.register(
     "Recipe could not be saved" : "La ricetta non può essere salvata",
     "Cooking time is up!" : "Il tempo di cottura è scaduto!",
     "Source" : "Fonte",
+    "Failed to load category " : "Caricamento della categoria non riuscito",
     "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito"
 },
 "nplurals=2; plural=(n != 1);");
