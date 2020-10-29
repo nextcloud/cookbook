@@ -22,7 +22,7 @@
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
-            <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/None/'">
+            <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/_/'">
                 <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"

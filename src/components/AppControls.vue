@@ -13,7 +13,7 @@
             </Breadcrumb>
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
-            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value" :disableDrop="true" />
+            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value=='_'?'None':$route.params.value" :disableDrop="true" />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
             <Breadcrumb v-if="isEdit" class="not-link" :title="t('cookbook', 'Edit recipe')" :disableDrop="true" />
