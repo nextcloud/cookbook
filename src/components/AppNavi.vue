@@ -245,7 +245,6 @@ export default {
                 for (let i=0; i<json.length; i++) {
                     if (json[i].name === '*') {
                         this.uncatRecipes = parseInt(json[i].recipe_count)
-                        json[i].name = "Uncategorized"
                     } else {
                         this.categories.push({
                             name: json[i].name,
