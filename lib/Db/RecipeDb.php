@@ -192,17 +192,39 @@ class RecipeDb {
     public function getRecipesByCategory(string $category, string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
-        $qb->select(['r.recipe_id', 'r.name'])
-            ->from(self::DB_TABLE_CATEGORIES, 'k')
-            ->where('k.name = :category')
-            ->andWhere('k.user_id = :user')
-            ->setParameter('category', $category, TYPE::STRING)
-            ->setParameter('user', $user_id, TYPE::STRING);
-        
-        $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
+        if ($category != 'None')
+        {
+            $qb->select(['r.recipe_id', 'r.name'])
+                ->from(self::DB_TABLE_CATEGORIES, 'k')
+                ->where('k.name = :category')
+                ->andWhere('k.user_id = :user')
+                ->setParameter('category', $category, TYPE::STRING)
+                ->setParameter('user', $user_id, TYPE::STRING);
+            
+            $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
 
-        $qb->groupBy(['r.name', 'r.recipe_id']);
-        $qb->orderBy('r.name');
+            $qb->groupBy(['r.name', 'r.recipe_id']);
+            $qb->orderBy('r.name');            
+        }
+        else
+        {
+
+            $qb->select(['r.recipe_id', 'r.name'])
+            ->from(self::DB_TABLE_RECIPES, 'r')
+            ->leftJoin(
+                'r',
+                self::DB_TABLE_CATEGORIES,
+                'c',
+                $qb->expr()->andX(
+                    'r.user_id = c.user_id',
+                    'r.recipe_id = c.recipe_id'
+                    )
+                )
+            ->where(
+                $qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+                $qb->expr()->isNull('c.name')
+                );
+        }
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
