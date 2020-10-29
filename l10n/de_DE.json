@@ -37,6 +37,7 @@
     "Could not set preference for image printing" : "Die Voreinstellung für den Druck von Bildern konnten nicht festgelegt werden",
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Loading config failed" : "Laden der Konfiguration fehlgeschlagen",
+    "Failed to load category {category} recipes" : "Fehler beim Laden der Rezepte aus Kategorie {category} ",
     "Loading category recipes …" : "Lade Kategorie-Rezepte …",
     "Failed to fetch categories" : "Kategorien konnten nicht abgerufen werden.",
     "Path to your recipe collection" : "Pfad zur Rezept-Sammlung",
