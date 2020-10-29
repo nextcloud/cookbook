@@ -188,11 +188,13 @@ class RecipeDb {
     
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
+     *
+     * Using '_' as a placeholder for recipes w/o category
      */
     public function getRecipesByCategory(string $category, string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
-        if ($category != 'None')
+        if ($category != '_')
         {
             $qb->select(['r.recipe_id', 'r.name'])
                 ->from(self::DB_TABLE_CATEGORIES, 'k')
