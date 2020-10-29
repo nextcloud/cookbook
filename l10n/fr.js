@@ -39,6 +39,7 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Impossible de définir le paramètre d'impression des images",
     "Could not set recipe update interval to {interval}" : "Impossible de définir l'intervalle de mise à jour à {interval}",
     "Loading config failed" : "Erreur lors du chargement de la configuration",
+    "Failed to load category {category} recipes" : "Impossible de charger les recette de la catégorie {category}",
     "Loading category recipes …" : "Chargement des recettes de la catégorie ...",
     "Failed to fetch categories" : "Impossible de récupérer les catégories",
     "Path to your recipe collection" : "Répertoire de votre collection de recettes",
