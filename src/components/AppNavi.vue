@@ -22,6 +22,9 @@
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
+            <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/None/'">
+                <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
+            </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
                 :ref="'app-navi-cat-'+idx"
@@ -242,6 +245,7 @@ export default {
                 for (let i=0; i<json.length; i++) {
                     if (json[i].name === '*') {
                         this.uncatRecipes = parseInt(json[i].recipe_count)
+                        json[i].name = "Uncategorized"
                     } else {
                         this.categories.push({
                             name: json[i].name,
