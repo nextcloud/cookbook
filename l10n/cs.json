@@ -37,6 +37,8 @@
     "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",
     "Loading config failed" : "Načítání nastavení se nezdařilo",
+    "Failed to load category {category} recipes" : "Nepodařilo se načíst recepty z katergorie {category}",
+    "Loading category recipes …" : "Načítání receptů v této kategorii…",
     "Failed to fetch categories" : "Nepodařilo se získat kategorie",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
