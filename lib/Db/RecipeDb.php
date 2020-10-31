@@ -139,12 +139,13 @@ class RecipeDb {
     public function findAllCategories(string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
-        $qb->select('k.name')
-			->selectAlias($qb->createFunction('COUNT(k.recipe_id)'), 'recipe_count')
-            ->from(self::DB_TABLE_CATEGORIES, 'k')
-            ->where('user_id = :user AND k.name != \'\'')
-            ->groupBy('k.name')
-            ->orderBy('k.name');
+        // Get all named categories
+        $qb->select('c.name')
+			->selectAlias($qb->createFunction('COUNT(c.recipe_id)'), 'recipe_count')
+            ->from(self::DB_TABLE_CATEGORIES, 'c')
+            ->where('user_id = :user')
+            ->groupBy('c.name')
+            ->orderBy('c.name');
         $qb->setParameter('user', $user_id, TYPE::STRING);
 
         $cursor = $qb->execute();
@@ -153,6 +154,7 @@ class RecipeDb {
         
         $qb = $this->db->getQueryBuilder();
         
+        // Get count of recipes without category
         $qb->select($qb->createFunction('COUNT(1) as cnt'))
             ->from(self::DB_TABLE_RECIPES, 'r')
             ->leftJoin(
@@ -177,7 +179,7 @@ class RecipeDb {
             'name' => '*',
             'recipe_count' => $row['cnt']
         );
-        
+
         $result = array_unique($result, SORT_REGULAR);
         $result = array_filter($result);
 		
@@ -186,21 +188,45 @@ class RecipeDb {
     
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
+     *
+     * Using '_' as a placeholder for recipes w/o category
      */
     public function getRecipesByCategory(string $category, string $user_id) {
         $qb = $this->db->getQueryBuilder();
 
-        $qb->select(['r.recipe_id', 'r.name'])
-            ->from(self::DB_TABLE_CATEGORIES, 'k')
-            ->where('k.name = :category')
-            ->andWhere('k.user_id = :user')
-            ->setParameter('category', $category, TYPE::STRING)
-            ->setParameter('user', $user_id, TYPE::STRING);
-        
-        $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
+        if ($category != '_')
+        {
+            $qb->select(['r.recipe_id', 'r.name'])
+                ->from(self::DB_TABLE_CATEGORIES, 'k')
+                ->where('k.name = :category')
+                ->andWhere('k.user_id = :user')
+                ->setParameter('category', $category, TYPE::STRING)
+                ->setParameter('user', $user_id, TYPE::STRING);
+            
+            $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
 
-        $qb->groupBy(['r.name', 'r.recipe_id']);
-        $qb->orderBy('r.name');
+            $qb->groupBy(['r.name', 'r.recipe_id']);
+            $qb->orderBy('r.name');            
+        }
+        else
+        {
+
+            $qb->select(['r.recipe_id', 'r.name'])
+            ->from(self::DB_TABLE_RECIPES, 'r')
+            ->leftJoin(
+                'r',
+                self::DB_TABLE_CATEGORIES,
+                'c',
+                $qb->expr()->andX(
+                    'r.user_id = c.user_id',
+                    'r.recipe_id = c.recipe_id'
+                    )
+                )
+            ->where(
+                $qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+                $qb->expr()->isNull('c.name')
+                );
+        }
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
