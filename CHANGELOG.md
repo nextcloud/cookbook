@@ -13,19 +13,12 @@
   [#347](https://github.com/nextcloud/cookbook/pull/347) @victorjoos
 - Show button to view all recipes without a category
   [#362](https://github.com/nextcloud/cookbook/pull/362/) @seyfeb
-- Add a basic changelog to the repository
-  [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
-- Enfoce update of changelog through CI
-  [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
 - Chanage in issue managment
 - Changes to `.gitignore` file
 - Translation issues
-- Added available Android apps to README
-- Update dev dependencies to recent phpunit to avoid warnings and issues
-  [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
 
 ### Fixed
 - Add a min PHP restriction in the metadata
@@ -46,8 +39,6 @@
   [#350](https://github.com/nextcloud/cookbook/pull/350) @maxammann
 - Make complete sentence in transifex translation from parts
   [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
-- Avoid recipe are no longer reachable when user changes locales
-  [#371](https://github.com/nextcloud/cookbook/pull/371) @christianlupus
 
 ### Removed
 - Travis build system
