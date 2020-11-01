@@ -39,6 +39,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nepavyko nustatyti nuostatos paveikslų spausdinimui",
     "Could not set recipe update interval to {interval}" : "Nepavyko nustatyti recepto atnaujinimo intervalo į {interval}",
     "Loading config failed" : "Konfigūracijos įkėlimas nepavyko",
+    "Failed to load category {category} recipes" : "Nepavyko įkelti receptų iš kategorijos {category}",
+    "Loading category recipes …" : "Įkeliami kategorijos receptai…",
     "Failed to fetch categories" : "Nepavyko gauti kategorijų",
     "Path to your recipe collection" : "Kelias į jūsų receptų kolekciją",
     "Could not set recipe folder to {path}" : "Nepavyko nustatyti receptų aplanko į {path}",
