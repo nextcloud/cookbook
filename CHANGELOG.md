@@ -1,0 +1,59 @@
+## [Unreleased]
+
+### Added
+- Parse a textual yield field in an imported recipe to a certain degree
+  [#327](https://github.com/nextcloud/cookbook/pull/327) @zwoabier
+- Search and filter for recipes in the web interface
+  [#318](https://github.com/nextcloud/cookbook/pull/318) @sam-19
+- CI: Use github actions to check the latest head against unittests
+  [#346](https://github.com/nextcloud/cookbook/pull/346) @christianlupus
+- CI: Create source code packages for each commit
+  [#346](https://github.com/nextcloud/cookbook/pull/346) @christianlupus
+- Allow for inconsistient schema: Parse instructions as list of elements
+  [#347](https://github.com/nextcloud/cookbook/pull/347) @victorjoos
+- Show button to view all recipes without a category
+  [#362](https://github.com/nextcloud/cookbook/pull/362/) @seyfeb
+- Add a basic changelog to the repository
+  [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
+- Enfoce update of changelog through CI
+  [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
+
+### Changed
+- Switch of project ownership to neextcloud organization in GitHub
+- Chanage in issue managment
+- Changes to `.gitignore` file
+- Translation issues
+
+### Fixed
+- Add a min PHP restriction in the metadata
+  [#282](https://github.com/nextcloud/cookbook/issues/282) @mrzapp
+- Make the codebase consistent with the code standards of the main nextcloud team
+  [#295](https://github.com/nextcloud/cookbook/pull/295) @rakekniven
+- Improved tooltips of navigation
+  [#317](https://github.com/nextcloud/cookbook/pull/317) @sam-19
+- Optimize database request for faster access
+  [#297](https://github.com/nextcloud/cookbook/pull/297) @christianlupus
+- Ignore case during sorting of recipes
+  [#333](https://github.com/nextcloud/cookbook/issues/333) @christianlupus
+- CI: Repair codecov file paths for correct linkings
+  [#348](https://github.com/nextcloud/cookbook/pull/348) @christianlupus
+- Make project name compatible with composer 2.0
+  [#352](https://github.com/nextcloud/cookbook/pull/352) @christianlupus
+- Compress nextcloud logs in case of HTML parsing errors during import
+  [#350](https://github.com/nextcloud/cookbook/pull/350) @maxammann
+- Make complete sentence in transifex translation from parts
+  [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
+
+### Removed
+- Travis build system
+
+
+## 0.7.6 - 2020-06-27
+
+### Added
+- Allow forward slashes in ingredients
+  [#272](https://github.com/nextcloud/cookbook/pull/272) @timandrews335
+
+### Fixed
+- Swapping ingredients and instructions cause items been deleted
+  [#278](https://github.com/nextcloud/cookbook/pull/278) @sam-19
