@@ -43,6 +43,8 @@
   [#350](https://github.com/nextcloud/cookbook/pull/350) @maxammann
 - Make complete sentence in transifex translation from parts
   [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
+- Hide tooltips in printouts
+  [#343](https://github.com/nextcloud/cookbook/pull/343/) @christianlupus
 
 ### Removed
 - Travis build system
