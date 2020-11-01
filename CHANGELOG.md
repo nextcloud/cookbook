@@ -13,6 +13,10 @@
   [#347](https://github.com/nextcloud/cookbook/pull/347) @victorjoos
 - Show button to view all recipes without a category
   [#362](https://github.com/nextcloud/cookbook/pull/362/) @seyfeb
+- Add a basic changelog to the repository
+  [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
+- Enfoce update of changelog through CI
+  [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
