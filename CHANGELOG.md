@@ -23,6 +23,8 @@
 - Chanage in issue managment
 - Changes to `.gitignore` file
 - Translation issues
+- Made the layout more responsive to shift the metadata right of the image in very wide screens
+  [#349](https://github.com/nextcloud/cookbook/pull/349/) @christianlupus
 
 ### Fixed
 - Add a min PHP restriction in the metadata
