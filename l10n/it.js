@@ -30,6 +30,7 @@ OC.L10N.register(
     "Hide navigation" : "Nascondi navigazione",
     "Create recipe" : "Crea ricetta",
     "Download recipe from URL" : "Scarica ricetta da URL",
+    "Uncategorized recipes" : "Ricette senza categoria",
     "Rescan library" : "Nuova scansione raccolta",
     "Recipe folder" : "Cartella delle ricette",
     "Please pick a folder" : "Scegli una cartella",
