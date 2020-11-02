@@ -23,6 +23,8 @@
   [#379](https://github.com/nextcloud/cookbook/pull/379/) @seyfeb
 - Selectable keywords for filtering in recipe lists
   [#375](https://github.com/nextcloud/cookbook/pull/375/) @seyfeb
+- Check recipe for changes when leaving edit page withour saving
+  [#359]((https://github.com/nextcloud/cookbook/pull/359) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
