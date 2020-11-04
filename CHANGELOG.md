@@ -43,6 +43,8 @@
   [#350](https://github.com/nextcloud/cookbook/pull/350) @maxammann
 - Make complete sentence in transifex translation from parts
   [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
+- Avoid recipe are no longer reachable when user changes locales
+  [#371](https://github.com/nextcloud/cookbook/pull/371) @christianlupus
 
 ### Removed
 - Travis build system
