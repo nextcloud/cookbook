@@ -23,6 +23,7 @@
 - Chanage in issue managment
 - Changes to `.gitignore` file
 - Translation issues
+- Added available Android apps to README
 
 ### Fixed
 - Add a min PHP restriction in the metadata
