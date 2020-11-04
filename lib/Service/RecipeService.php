@@ -954,6 +954,7 @@ class RecipeService
 
         if (!$path) {
             $path = '/' . $this->il10n->t('Recipes');
+            $this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
         }
 
         return $path;
