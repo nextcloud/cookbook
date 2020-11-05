@@ -1,5 +1,5 @@
 <template>
-    <li>{{ keyword }}</li>
+    <router-link :to="'/tag/' + keyword"><li>{{ keyword }}</li></router-link>
 </template>
 
 <script>
@@ -28,6 +28,10 @@ li {
     padding: 0px .5em;
     border: 1px solid #999999;
     border-radius: 4px;
+}
+
+li:hover {
+    background-color: #EEEEEE;
 }
 
 </style>
