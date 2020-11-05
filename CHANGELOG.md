@@ -17,6 +17,8 @@
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
 - Enfoce update of changelog through CI
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
+- Keyword cloud is displayed in recipe
+  [#373](https://github.com/nextcloud/cookbook/pull/373/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
