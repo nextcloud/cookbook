@@ -918,6 +918,18 @@ class RecipeService
     }
 
     /**
+     * Get all recipes containing all of the keywords.
+     *
+     * @param string $keywords Keywords/tags as a comma-separated string.
+     *
+     * @return array
+     */
+    public function getRecipesByKeywords($keywords)
+    {
+        return $this->db->getRecipesByKeywords($keywords, $this->user_id);
+    }
+
+    /**
      * Search for recipes by keywords
      *
      * @param string $keywords
