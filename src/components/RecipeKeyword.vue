@@ -27,12 +27,12 @@ li {
     margin-right: .3em;
     margin-bottom: .3em;
     padding: 0px .5em;
-    border: 1px solid #999999;
+    border: 1px solid var(--color-border-dark);
     border-radius: 4px;
 }
 
 li:hover {
-    background-color: #EEEEEE;
+    background-color: var(--color-background-dark);;
 }
 
 </style>
