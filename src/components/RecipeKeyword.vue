@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/tag/' + keyword"><li>{{ keyword }}</li></router-link>
+    <router-link :to="'/tags/' + keyword"><li>{{ keyword }}</li></router-link>
 </template>
 
 <script>

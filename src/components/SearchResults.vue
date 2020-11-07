@@ -24,10 +24,21 @@ export default {
             if (this.query === 'name') {
                 // Search by name
             }
-            if (this.query === 'tag') {
-                // Search by tag
+            else if (this.query === 'tags') {
+                // Search by tags
+                let $this = this
+                let tags = this.$route.params.value
+                $.get(this.$window.baseUrl + '/api/tags/'+tags).done(function(json) {
+                    $this.results = json
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    $this.results = []
+                    alert(t('cookbook', 'Failed to load recipes with keywords: ' + tags))
+                    if (errorThrown && errorThrown instanceof Error) {
+                        throw errorThrown
+                    }
+                })
             }
-            if (this.query === 'cat') {
+            else if (this.query === 'cat') {
                 // Search by category
                 let $this = this
                 let cat = this.$route.params.value
