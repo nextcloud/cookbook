@@ -8,7 +8,7 @@
             <div class="details">
                 <p v-if="keywords.length">
                     <ul v-if="keywords.length">
-                        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :keyword="keyword" />
+                        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :keyword="keyword"  v-on:keyword-clicked="keywordClicked(keyword)" />
                     </ul>
                 </p>
                 <p class="description">{{ $store.state.recipe.description }}</p>
@@ -82,6 +82,14 @@ export default {
         }
     },
     methods: {
+        /**
+         * Callback for click on keyword
+         */
+        keywordClicked: function(keyword) {
+            if(keyword) {
+                this.$router.push('/tags/'+keyword);
+            }
+        },
         setup: function() {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {

@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/tags/' + keyword"><li>{{ keyword }}</li></router-link>
+    <a v-on:click="clicked"><li>{{ keyword }}</li></a>
 </template>
 
 <script>
@@ -11,10 +11,11 @@ export default {
         };
     },
     computed: {
-        
     },
     methods: {
-
+        clicked() {
+            this.$emit('keyword-clicked')
+        }
     }
 
 }
@@ -29,10 +30,20 @@ li {
     padding: 0px .5em;
     border: 1px solid var(--color-border-dark);
     border-radius: 4px;
+
+    /* prevent text selection - doesn't look good */
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
 }
 
-li:hover {
-    background-color: var(--color-background-dark);;
+.active li {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
 }
 
+li:hover, .active li:hover {
+    border: 1px solid var(--color-primary);
+}
 </style>
