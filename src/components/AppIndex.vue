@@ -1,21 +1,33 @@
 <template>
-    <ul>
-        <li v-for="recipe in filteredRecipes" :key="recipe.recipe_id">
-            <router-link :to="'/recipe/'+recipe.recipe_id">
-                <img v-if="recipe.imageUrl" :src="recipe.imageUrl">
-                <span>{{ recipe.name }}</span>
-            </router-link>
-        </li>
-    </ul>
+    <div>
+        <ul v-if="keywords.length" class="keywords">
+            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword)}" />
+        </ul>
+        <ul class="recipes">
+            <li v-for="recipe in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(recipe.keywords)">
+                <router-link :to="'/recipe/'+recipe.recipe_id">
+                    <img v-if="recipe.imageUrl" :src="recipe.imageUrl">
+                    <span>{{ recipe.name }}</span>
+                </router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
+import RecipeKeyword from './RecipeKeyword'
+
 export default {
     name: 'Index',
+    components: {
+        RecipeKeyword,
+    },
     data () {
         return {
             filters: "",
             recipes: [],
+            keywords: [],
+            keywordFilter: [],
         }
     },
     computed: {
@@ -35,6 +47,17 @@ export default {
     },
     methods: {
         /**
+         * Callback for click on keyword
+         */
+        keywordClicked: function(keyword) {
+            const index = this.keywordFilter.indexOf(keyword);
+            if (index > -1) {
+                this.keywordFilter.splice(index, 1);
+            } else {
+                this.keywordFilter.push(keyword)
+            }
+        },
+        /**
          * Load all recipes from the database
          */
         loadAll: function () {
@@ -42,6 +65,7 @@ export default {
             var $this = this
             $.get(this.$window.baseUrl + '/api/recipes').done(function (recipes) {
                 $this.recipes = recipes
+                $this.setKeywords(recipes)
                 deferred.resolve()
                 // Always set page name last
                 $this.$store.dispatch('setPage', { page: 'index' })
@@ -51,6 +75,36 @@ export default {
                 $this.$store.dispatch('setPage', { page: 'index' })
             })
             return deferred.promise()
+        },
+        /**
+         * Check if recipe should be displayed, depending on selected keyword filter.
+         * Returns true if recipe contains all selected keywords.
+         */
+        recipeVisible: function(keywords) {     
+            if (this.keywordFilter.length == 0) {
+                return true;
+            } else {
+                if (!keywords) return false;
+                let kw_array = keywords.split(',');
+                return this.keywordFilter.every(kw => kw_array.includes(kw));
+            }
+        },
+        /**
+         * Extract and set list of keywords from the returned recipes
+         */
+        setKeywords: function(recipes) {
+            this.keywords = []
+            if ((recipes.length) > 0) {
+                recipes.forEach(recipe => {
+                    if(recipe['keywords']) {                    
+                        recipe['keywords'].split(',').forEach(kw => {
+                            if(!this.keywords.includes(kw)) {
+                                this.keywords.push(kw)                           
+                            }
+                        })
+                    }                    
+                })
+            }
         },
     },
     mounted () {
@@ -65,35 +119,43 @@ export default {
 
 <style scoped>
 
-ul {
+ul.keywords {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    margin: .5rem 1rem .5rem;
+}
+
+ul.recipes {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     width: 100%;
 }
 
-    ul li {
+    ul.recipes li {
         width: 300px;
         max-width: 100%;
         margin: 0.5rem 1rem 1rem;
     }
-        ul li a {
+        ul.recipes li a {
             display: block;
             height: 105px;
             box-shadow: 0 0 3px #AAA;
             border-radius: 3px;
         }
-        ul li a:hover {
+        ul.recipes li a:hover {
             box-shadow: 0 0 5px #888;
         }
 
-        ul li img {
+        ul.recipes li img {
             float: left;
             height: 105px;
             border-radius: 3px 0 0 3px;
         }
 
-        ul li span {
+        ul.recipes li span {
             display: block;
             padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
         }
