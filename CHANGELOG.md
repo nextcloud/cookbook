@@ -21,6 +21,8 @@
   [#373](https://github.com/nextcloud/cookbook/pull/373/) @seyfeb
 - Pasted content with newlines creates new input fields automatically for tools and ingredients in recipe editor
   [#379](https://github.com/nextcloud/cookbook/pull/379/) @seyfeb
+- Selectable keywords for filtering in recipe lists
+  [#375](https://github.com/nextcloud/cookbook/pull/375/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
