@@ -1,5 +1,5 @@
 <template>
-    <a v-on:click="clicked"><li>{{ keyword }}</li></a>
+    <a v-on:click="clicked" ref="link"><li>{{ keyword }}</li></a>
 </template>
 
 <script>
@@ -14,10 +14,11 @@ export default {
     },
     methods: {
         clicked() {
-            this.$emit('keyword-clicked')
+            if(!this.$refs.link.classList.contains('disabled')) {
+                this.$emit('keyword-clicked')
+            }
         }
     }
-
 }
 </script>
 
@@ -29,7 +30,7 @@ li {
     margin-bottom: .3em;
     padding: 0px .5em;
     border: 1px solid var(--color-border-dark);
-    border-radius: 4px;
+    border-radius: var(--border-radius-pill);
 
     /* prevent text selection - doesn't look good */
     -webkit-user-select: none; /* Safari */        
@@ -41,6 +42,17 @@ li {
 .active li {
     background-color: var(--color-primary);
     color: var(--color-primary-text);
+}
+
+.disabled li {
+    background-color: #FFF;
+    border-color: var(--color-border);
+    color: var(--color-border);
+}
+
+.disabled li:hover {
+    border-color: var(--color-border);
+    cursor: default;
 }
 
 li:hover, .active li:hover {
