@@ -7,6 +7,7 @@ OC.L10N.register(
     "Save changes" : "حفظ التعديلات",
     "Loading…" : "التحميل جارٍ…",
     "Category" : "الفئة",
+    "Uncategorized recipes" : "وصفات غير مصنفة",
     "Add" : "إضافة",
     "Name" : "الاسم",
     "Description" : "الوصف",
