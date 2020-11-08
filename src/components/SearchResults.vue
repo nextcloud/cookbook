@@ -1,10 +1,10 @@
 <template>
 <div>
     <ul v-if="keywords.length" class="keywords">
-        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword)}" />
+        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword), disabled : !keywordContainedInVisibleRecipes(keyword)}" />
     </ul>
     <ul class="recipes">
-        <li v-for="result in results" :key="result.recipe_id" v-show="recipeVisible(result.keywords)">
+        <li v-for="(result, index) in results" :key="result.recipe_id" v-show="recipeVisible(index)">
             <router-link :to="'/recipe/'+result.recipe_id">
                 <img v-if="result.imageUrl" :src="result.imageUrl">
                 <span>{{ result.name }}</span>
@@ -35,19 +35,6 @@ export default {
     },    
     methods: {
         /**
-         * Check if recipe should be displayed, depending on selected keyword filter.
-         * Returns true if recipe contains all selected keywords.
-         */
-        recipeVisible: function(keywords) {     
-            if (this.keywordFilter.length == 0) {
-                return true;
-            } else {
-                if (!keywords) return false;
-                let kw_array = keywords.split(',');
-                return this.keywordFilter.every(kw => kw_array.includes(kw));
-            }
-        },
-        /**
          * Callback for click on keyword
          */
         keywordClicked: function(keyword) {
@@ -56,6 +43,32 @@ export default {
                 this.keywordFilter.splice(index, 1);
             } else {
                 this.keywordFilter.push(keyword)
+            }
+        },
+        /**
+         * Check if a keyword exists in the currently visible recipes.
+         */
+        keywordContainedInVisibleRecipes: function(keyword) {
+            for (let i=0; i<this.results.length; ++i) {
+                if (this.recipeVisible(i) 
+                    && this.recipes[i].keywords
+                    && this.results[i].keywords.split(',').includes(keyword)) {
+                    return true
+                }                
+            }
+            return false
+        },
+        /**
+         * Check if recipe should be displayed, depending on selected keyword filter.
+         * Returns true if recipe contains all selected keywords.
+         */
+        recipeVisible: function(index) {     
+            if (this.keywordFilter.length == 0) {
+                return true;
+            } else {
+                if (!this.results[index].keywords) return false;
+                let kw_array = this.results[index].keywords.split(',');
+                return this.keywordFilter.every(kw => kw_array.includes(kw));
             }
         },
         /**

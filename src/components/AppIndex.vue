@@ -1,10 +1,10 @@
 <template>
     <div>
         <ul v-if="keywords.length" class="keywords">
-            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword)}" />
+            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword), disabled : !keywordContainedInVisibleRecipes(keyword)}" />
         </ul>
         <ul class="recipes">
-            <li v-for="recipe in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(recipe.keywords)">
+            <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
                 <router-link :to="'/recipe/'+recipe.recipe_id">
                     <img v-if="recipe.imageUrl" :src="recipe.imageUrl">
                     <span>{{ recipe.name }}</span>
@@ -58,6 +58,19 @@ export default {
             }
         },
         /**
+         * Check if a keyword exists in the currently visible recipes.
+         */
+        keywordContainedInVisibleRecipes: function(keyword) {
+            for (let i=0; i<this.recipes.length; ++i) {
+                if (this.recipeVisible(i) 
+                    && this.recipes[i].keywords
+                    && this.recipes[i].keywords.split(',').includes(keyword)) {
+                    return true
+                }                
+            }
+            return false
+        },
+        /**
          * Load all recipes from the database
          */
         loadAll: function () {
@@ -80,12 +93,12 @@ export default {
          * Check if recipe should be displayed, depending on selected keyword filter.
          * Returns true if recipe contains all selected keywords.
          */
-        recipeVisible: function(keywords) {     
+        recipeVisible: function(index) {     
             if (this.keywordFilter.length == 0) {
                 return true;
             } else {
-                if (!keywords) return false;
-                let kw_array = keywords.split(',');
+                if (!this.recipes[index].keywords) return false;
+                let kw_array = this.recipes[index].keywords.split(',');
                 return this.keywordFilter.every(kw => kw_array.includes(kw));
             }
         },
