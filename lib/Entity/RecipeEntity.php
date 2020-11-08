@@ -135,9 +135,9 @@ class RecipeEntity
      * Set the cooking time of a recipe
      * @param string The new cooking time
      */
-    public function setPrepTime(string $cookTime) : void
+    public function setCookTime(string $cookTime) : void
     {
-        $this->json['prepTime'] = $cookTime;
+        $this->json['cookTime'] = $cookTime;
         $this->changed = true;
     }
     /**
@@ -191,7 +191,7 @@ class RecipeEntity
      * Set the tools of a recipe
      * @param array The list of tools of the recipe
      */
-    public function setIngredients(array $tools) : void
+    public function setTools(array $tools) : void
     {
         $this->json['tool'] = $tools;
         $this->changed = true;
@@ -210,7 +210,7 @@ class RecipeEntity
      * Set the instructions of a recipe
      * @param array The list of instructions of the recipe
      */
-    public function setIngredients(array $instructions) : void
+    public function setInstructions(array $instructions) : void
     {
         $this->json['recipeInstructions'] = $instructions;
         $this->changed = true;
