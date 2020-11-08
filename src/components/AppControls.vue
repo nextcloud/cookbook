@@ -179,8 +179,6 @@ export default {
                 return t('cookbook', 'Category')
             } else if (this.$route.name === 'search-name') {
                 return t('cookbook', 'Recipe name')
-            } else if (this.$route.name === 'search-tag') {
-                return t('cookbook', 'Tag')
             } else if (this.$route.name === 'search-tags') {
                 return t('cookbook', 'Tags')
             } else {
