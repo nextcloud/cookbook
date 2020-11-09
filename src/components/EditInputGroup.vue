@@ -42,32 +42,23 @@ export default {
          * the content is inserted into the newly created field
          **/
         addNew: function(index = -1, focusAfterInsert = true, content = '') {
-            // This is a dirty hack, but Vue components update with a slight delay so you
-            // can't just straight up go and set focus here
-            let nextFocus = index
-            if (nextFocus === -1) {
-                nextFocus = this.$parent.recipe[this.fieldName].length
+            if (index === -1) {
+                index = this.$parent.recipe[this.fieldName].length
             }
-            this.$parent.addEntry(this.fieldName, nextFocus, content)
+            this.$parent.addEntry(this.fieldName, index, content)
 
             if (focusAfterInsert) {
-                let failSafe = 2500
                 let $ul = $(this.$refs['list'])
                 let $this = this
-                let focusMonitor = window.setInterval(function() {
-                    if ($ul.children('li').length > nextFocus) {
+                this.$nextTick(function() {
+                    if ($ul.children('li').length > index) {
                         if ($this.fieldType === 'text') {
-                            $ul.children('li').eq(nextFocus).find('input').focus()
+                            $ul.children('li').eq(index).find('input').focus()
                         } else if ($this.fieldType === 'textarea') {
-                            $ul.children('li').eq(nextFocus).find('textarea').focus()
+                            $ul.children('li').eq(index).find('textarea').focus()
                         }
-                        window.clearInterval(focusMonitor)
                     }
-                    failSafe -= 100
-                    if (!failSafe) {
-                        window.clearInterval(focusMonitor)
-                    }
-                }, 100)
+                })
             }
         },
         /**
