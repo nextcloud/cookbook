@@ -35,6 +35,8 @@
   [#402](https://github.com/nextcloud/cookbook/pull/402/) @seyfeb
 - Allow checking of ingredients in web UI
   [#393](https://github.com/nextcloud/cookbook/pull/393) @christianlupus
+- Support for dateCreated and dateModified field of schema.org Recipe
+  [#377](https://github.com/nextcloud/cookbook/pull/366/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
