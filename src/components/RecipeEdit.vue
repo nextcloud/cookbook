@@ -8,10 +8,10 @@
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
         <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Category')" />
-        <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
+        <EditInputField :fieldName="'keywords'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')" />
     </div>
 </template>
@@ -77,8 +77,8 @@ export default {
         },
     },
     methods: {
-        addEntry: function(field) {
-            this.recipe[field].push('')
+        addEntry: function(field, index, content='') {
+            this.recipe[field].splice(index, 0, content)
         },
         deleteEntry: function(field, index) {
             this.recipe[field].splice(index, 1)
