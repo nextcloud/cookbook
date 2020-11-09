@@ -657,8 +657,13 @@ class RecipeService {
 			throw new Exception('Recipe name not found');
 		}
 
+		$now = date(DATE_ISO8601);
+
 		// Sanity check
 		$json = $this->checkRecipe($json);
+
+		// Update modification date
+		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
 		$user_folder = $this->getFolderForUser();
@@ -682,6 +687,8 @@ class RecipeService {
 
 			// This is a new recipe, create it
 		} else {
+			$json['dateCreated'] = $now;
+
 			if ($user_folder->nodeExists($json['name'])) {
 				throw new Exception('Another recipe with that name already exists');
 			}
@@ -1041,11 +1048,13 @@ class RecipeService {
 
 		$json['id'] = $file->getParent()->getId();
 
-		if (method_exists($file, 'getCreationTime')) {
+
+		if (!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')) {
 			$json['dateCreated'] = $file->getCreationTime();
 		}
-		
-		$json['dateModified'] = $file->getMTime();
+		if (!array_key_exists('dateModified', $json)) {
+			$json['dateModified'] = $file->getMTime();
+		}
 
 		return $this->checkRecipe($json);
 	}
