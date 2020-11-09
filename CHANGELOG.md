@@ -24,6 +24,8 @@
 - Changes to `.gitignore` file
 - Translation issues
 - Added available Android apps to README
+- Update dev dependencies to recent phpunit to avoid warnings and issues
+  [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
 
 ### Fixed
 - Add a min PHP restriction in the metadata
