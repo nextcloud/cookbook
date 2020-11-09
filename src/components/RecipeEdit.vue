@@ -12,7 +12,7 @@
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-bind:createFieldsOnNewlines="true" />
     </div>
 </template>
 

@@ -4,8 +4,8 @@
         <ul ref="list">
             <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
                 <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" @keyup="keyPressed" :value="$parent.recipe[fieldName][idx]" v-on:input="inputFieldChange" @paste="inputFieldPaste" />
-                <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName][idx]"></textarea>
+                <input v-if="fieldType==='text'" type="text" @keyup="keyPressed" :value="$parent.recipe[fieldName][idx]" v-on:input="inputFieldChange" @paste="handlePaste" />
+                <textarea v-else-if="fieldType==='textarea'" :value="$parent.recipe[fieldName][idx]" v-on:input="inputFieldChange" @paste="handlePaste"></textarea>
                 <div class="controls">
                     <button class="icon-arrow-up" @click="moveUp(idx)"></button>
                     <button class="icon-arrow-down" @click="moveDown(idx)"></button>
@@ -24,7 +24,7 @@ export default {
         fieldType: String,
         fieldName: String,
         fieldLabel: String,
-        // Add new fields, for newlines in pasted data
+        // If true, add new fields, for newlines in pasted data
         createFieldsOnNewlines: {
             type: Boolean,
             default: false
@@ -68,7 +68,7 @@ export default {
             this.$parent.deleteEntry(this.fieldName, idx)
         },
         /** 
-         * Handle typing in input field 
+         * Handle typing in input or field or textarea
          */
         inputFieldChange: function(e) {  
             // wait a tick to check if content was typed or pasted
@@ -82,25 +82,37 @@ export default {
             })
         },
         /** 
-         * Handle paste in input field 
+         * Handle paste in input field or textarea
          */
-        inputFieldPaste: function(e) {
+        handlePaste: function(e) {
             this.contentPasted = true
             if (!this.createFieldsOnNewlines) {
                 return
             }
-            e.preventDefault();
 
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
             var clipboardData = e.clipboardData || window.clipboardData;
             var pastedData = clipboardData.getData('Text');
 
+            let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
+            if ( input_lines_array.length == 1) {
+                return
+            }
+            e.preventDefault();
+
             let $li = $(e.currentTarget).parents('li')
             let $inserted_index = $li.index()
             let $ul = $li.parents('ul')
 
-            let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
+            if (this.fieldType === 'textarea') {
+                for (let i = input_lines_array.length-1; i >= 0; --i)
+                {
+                    if (input_lines_array[i].trim() == '') {
+                        input_lines_array.splice(i, 1)
+                    }
+                }
+            }
             for (let i = 0; i < input_lines_array.length; ++i)
             {
                 this.addNew($inserted_index+i+1, false, input_lines_array[i])
