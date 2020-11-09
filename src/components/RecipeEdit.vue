@@ -195,6 +195,7 @@ export default {
                 this.totalTime = [0, 0]
                 this.$store.dispatch('setPage', { page: 'create' })
             }
+            this.recipeInit = this.recipe
         },
     },
     mounted () {
