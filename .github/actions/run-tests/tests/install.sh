@@ -18,7 +18,7 @@ function configure_gd_without ()
 
 function configure_gd()
 {
-	if [ "$1" = "7.2" ]; then
+	if [ "$1" = "7.2" -o "$1" = "7.3" ]; then
 		configure_gd_without
 		return $?
 	else
