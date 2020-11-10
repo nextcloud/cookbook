@@ -234,6 +234,34 @@ class RecipeDb {
 
         return $this->unique($result);
     }
+
+    /**
+     * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
+     *
+     */
+    public function getRecipesByKeywords(string $keywords, string $user_id) {
+        $keywords_arr = explode(',', $keywords);
+
+        $qb = $this->db->getQueryBuilder();
+
+        $qb->select(['r.recipe_id', 'r.name'])
+        ->from(self::DB_TABLE_KEYWORDS, 'k')
+        ->where('k.name IN (:keywords)')
+        ->andWhere('k.user_id = :user')
+        ->having('COUNT(DISTINCT k.name) = :keywordsCount')
+        ->setParameter('user', $user_id, TYPE::INTEGER)
+        ->setParameter('keywords', $keywords_arr, IQueryBuilder::PARAM_STR_ARRAY)
+        ->setParameter('keywordsCount', sizeof($keywords_arr), TYPE::INTEGER);
+        $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
+        $qb->groupBy(['r.name', 'r.recipe_id']);
+        $qb->orderBy('r.name');
+
+        $cursor = $qb->execute();
+        $result = $cursor->fetchAll();
+        $cursor->closeCursor();
+
+        return $this->unique($result);
+    }
     
     /**
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
