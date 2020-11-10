@@ -51,7 +51,7 @@ export default {
         keywordContainedInVisibleRecipes: function(keyword) {
             for (let i=0; i<this.results.length; ++i) {
                 if (this.recipeVisible(i) 
-                    && this.recipes[i].keywords
+                    && this.results[i].keywords
                     && this.results[i].keywords.split(',').includes(keyword)) {
                     return true
                 }                
