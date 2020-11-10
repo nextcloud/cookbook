@@ -30,6 +30,7 @@ OC.L10N.register(
     "Hide navigation" : "Slėpti naršymą",
     "Create recipe" : "Sukurti receptą",
     "Download recipe from URL" : "Atsisiųsti receptą iš URL",
+    "Uncategorized recipes" : "Nekategorizuoti receptai",
     "Rescan library" : "Peržiūrėti biblioteką iš naujo",
     "Recipe folder" : "Receptų aplankas",
     "Please pick a folder" : "Pasirinkite aplanką",

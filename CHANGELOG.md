@@ -23,6 +23,9 @@
 - Chanage in issue managment
 - Changes to `.gitignore` file
 - Translation issues
+- Added available Android apps to README
+- Update dev dependencies to recent phpunit to avoid warnings and issues
+  [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
 
 ### Fixed
 - Add a min PHP restriction in the metadata
@@ -43,6 +46,8 @@
   [#350](https://github.com/nextcloud/cookbook/pull/350) @maxammann
 - Make complete sentence in transifex translation from parts
   [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
+- Avoid recipe are no longer reachable when user changes locales
+  [#371](https://github.com/nextcloud/cookbook/pull/371) @christianlupus
 - Hide tooltips in printouts
   [#343](https://github.com/nextcloud/cookbook/pull/343/) @christianlupus
 
