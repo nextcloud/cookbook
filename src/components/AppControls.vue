@@ -283,3 +283,16 @@ export default {
 }
 
 </style>
+
+<style>
+
+@media print {
+	
+	.vue-tooltip {
+		display: none !important;
+	}
+	
+}
+
+</style>
+

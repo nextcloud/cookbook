@@ -48,6 +48,8 @@
   [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
 - Avoid recipe are no longer reachable when user changes locales
   [#371](https://github.com/nextcloud/cookbook/pull/371) @christianlupus
+- Hide tooltips in printouts
+  [#343](https://github.com/nextcloud/cookbook/pull/343/) @christianlupus
 
 ### Removed
 - Travis build system
