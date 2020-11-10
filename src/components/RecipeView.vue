@@ -295,6 +295,10 @@ aside {
 	div.header.responsive > div.image {
 		flex: 700px 0 0;
 	}
+
+    div.times > div {
+        margin: 1rem 0.75rem !important;
+    }
 }
 
 </style>
