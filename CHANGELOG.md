@@ -26,6 +26,8 @@
 - Added available Android apps to README
 - Update dev dependencies to recent phpunit to avoid warnings and issues
   [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
+- Markdown rendering for Description
+  [#367](https://github.com/nextcloud/cookbook/issues/367) @thembeat
 
 ### Fixed
 - Add a min PHP restriction in the metadata
