@@ -25,7 +25,7 @@
                         </span>
                     </p>
 
-	                <p class="description">{{ $store.state.recipe.description }}</p>
+	                <VueShowdown :markdown="$store.state.recipe.description"/>
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
 	                </p>
