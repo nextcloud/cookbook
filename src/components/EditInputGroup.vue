@@ -4,8 +4,8 @@
         <ul ref="list">
             <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
                 <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" @keyup="keyPressed" :value="$parent.recipe[fieldName][idx]" v-on:input="inputFieldChange" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" :value="$parent.recipe[fieldName][idx]" v-on:input="inputFieldChange" @paste="handlePaste"></textarea>
+                <input v-if="fieldType==='text'" type="text" @keyup="keyPressed" :value="$parent.recipe[fieldName][idx]" v-on:input="handleFieldChange" @paste="handlePaste" />
+                <textarea v-else-if="fieldType==='textarea'" :value="$parent.recipe[fieldName][idx]" v-on:input="handleFieldChange" @paste="handlePaste"></textarea>
                 <div class="controls">
                     <button class="icon-arrow-up" @click="moveUp(idx)"></button>
                     <button class="icon-arrow-down" @click="moveDown(idx)"></button>
@@ -70,7 +70,7 @@ export default {
         /** 
          * Handle typing in input or field or textarea
          */
-        inputFieldChange: function(e) {  
+        handleFieldChange: function(e) {  
             // wait a tick to check if content was typed or pasted
             this.$nextTick(function() {
                 if (this.contentPasted) {
@@ -105,12 +105,11 @@ export default {
             let $inserted_index = $li.index()
             let $ul = $li.parents('ul')
 
-            if (this.fieldType === 'textarea') {
-                for (let i = input_lines_array.length-1; i >= 0; --i)
-                {
-                    if (input_lines_array[i].trim() == '') {
-                        input_lines_array.splice(i, 1)
-                    }
+            // Remove empty lines
+            for (let i = input_lines_array.length-1; i >= 0; --i)
+            {
+                if (input_lines_array[i].trim() == '') {
+                    input_lines_array.splice(i, 1)
                 }
             }
             for (let i = 0; i < input_lines_array.length; ++i)
