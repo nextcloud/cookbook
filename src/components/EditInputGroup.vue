@@ -92,14 +92,14 @@ export default {
 
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
-            var clipboardData = e.clipboardData || window.clipboardData;
-            var pastedData = clipboardData.getData('Text');
+            var clipboardData = e.clipboardData || window.clipboardData
+            var pastedData = clipboardData.getData('Text')
 
             let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
             if ( input_lines_array.length == 1) {
                 return
             }
-            e.preventDefault();
+            e.preventDefault()
 
             let $li = $(e.currentTarget).parents('li')
             let $inserted_index = $li.index()
