@@ -3,8 +3,9 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input v-if="fieldType!=='textarea'" :type="fieldType" v-model="$parent.recipe[fieldName]" />
-        <textarea v-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName]" />
+        <markdown-editor class='editor' v-if="fieldType==='markdown'" :type="textarea" v-model="$parent.recipe[fieldName]" toolbar='' />
+        <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName]" />
+        <input v-else-if="fieldType!=='textarea'" :type="fieldType" v-model="$parent.recipe[fieldName]" />
     </fieldset>
 </template>
 
@@ -54,7 +55,17 @@ fieldset > textarea {
     resize: vertical;
 }
 
-    @media(max-width:1199px) { fieldset > input, fieldset > textarea {
+fieldset > .editor {
+    width: calc(100% - 11em);
+}
+
+fieldset > .editor {
+    min-height: 10em;
+    resize: vertical;
+    radius: 2;
+}
+
+    @media(max-width:1199px) { fieldset > input, fieldset > textarea, fieldset > .editor {
         width: 100%;
     }}
 
