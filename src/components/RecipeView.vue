@@ -10,6 +10,11 @@
 	            <h2>{{ $store.state.recipe.name }}</h2>
 
 	            <div class="details">
+                <p v-if="keywords.length">
+                    <ul v-if="keywords.length">
+                        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :keyword="keyword"  v-on:keyword-clicked="keywordClicked(keyword)" />
+                    </ul>
+                </p>
 	                <p class="description">{{ $store.state.recipe.description }}</p>
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
@@ -57,6 +62,7 @@
 import RecipeImages from './RecipeImages'
 import RecipeIngredient from './RecipeIngredient'
 import RecipeInstruction from './RecipeInstruction'
+import RecipeKeyword from './RecipeKeyword'
 import RecipeTimer from './RecipeTimer'
 import RecipeTool from './RecipeTool'
 
@@ -66,6 +72,7 @@ export default {
         RecipeImages,
         RecipeIngredient,
         RecipeInstruction,
+        RecipeKeyword,
         RecipeTimer,
         RecipeTool,
     },
@@ -74,6 +81,7 @@ export default {
             // Own properties
             ingredients: [],
             instructions: [],
+            keywords: [],
             timerCook: null,
             timerPrep: null,
             timerTotal: null,
@@ -81,6 +89,14 @@ export default {
         }
     },
     methods: {
+        /**
+         * Callback for click on keyword
+         */
+        keywordClicked: function(keyword) {
+            if(keyword) {
+                this.$router.push('/tags/'+keyword);
+            }
+        },
         setup: function() {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
@@ -114,6 +130,10 @@ export default {
 
                 if ($this.$store.state.recipe.recipeInstructions) {
                     $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
+                }
+
+                if ($this.$store.state.recipe.keywords) {
+                    $this.keywords = String($this.$store.state.recipe.keywords).split(',');
                 }
 
                 if ($this.$store.state.recipe.cookTime) {

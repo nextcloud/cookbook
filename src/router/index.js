@@ -28,7 +28,7 @@ const routes = [
     { path: '/category/:value', name: 'search-category', component: Search, props: { query: 'cat' } },
     { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
     { path: '/search/:value', name: 'search-general', component: Search, props: { query: 'general' } },
-    { path: '/tag/:value', name: 'search-tag', component: Search, props: { query: 'tag' } },
+    { path: '/tags/:value', name: 'search-tags', component: Search, props: { query: 'tags' } },
 
     // Recipe routes
     // Vue router has a strange way of determining when it renders a component again and when not.

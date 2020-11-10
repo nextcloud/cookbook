@@ -13,7 +13,7 @@
             </Breadcrumb>
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
-            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value=='_'?'None':$route.params.value" :disableDrop="true" />
+            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value=='_'?'None':decodeURIComponent($route.params.value)" :disableDrop="true" />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
             <Breadcrumb v-if="isEdit" class="not-link" :title="t('cookbook', 'Edit recipe')" :disableDrop="true" />
@@ -179,8 +179,8 @@ export default {
                 return t('cookbook', 'Category')
             } else if (this.$route.name === 'search-name') {
                 return t('cookbook', 'Recipe name')
-            } else if (this.$route.name === 'search-tag') {
-                return t('cookbook', 'Tag')
+            } else if (this.$route.name === 'search-tags') {
+                return t('cookbook', 'Tags')
             } else {
                 return t('cookbook', 'Search for recipes')
             }
@@ -283,3 +283,16 @@ export default {
 }
 
 </style>
+
+<style>
+
+@media print {
+	
+	.vue-tooltip {
+		display: none !important;
+	}
+	
+}
+
+</style>
+

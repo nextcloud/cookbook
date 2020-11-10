@@ -17,12 +17,17 @@
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
 - Enfoce update of changelog through CI
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
+- Keyword cloud is displayed in recipe
+  [#373](https://github.com/nextcloud/cookbook/pull/373/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
 - Chanage in issue managment
 - Changes to `.gitignore` file
 - Translation issues
+- Added available Android apps to README
+- Update dev dependencies to recent phpunit to avoid warnings and issues
+  [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
 - Made the layout more responsive to shift the metadata right of the image in very wide screens
   [#349](https://github.com/nextcloud/cookbook/pull/349/) @christianlupus
 
@@ -45,6 +50,10 @@
   [#350](https://github.com/nextcloud/cookbook/pull/350) @maxammann
 - Make complete sentence in transifex translation from parts
   [#358](https://github.com/nextcloud/cookbook/pull/358) @christianlupus
+- Avoid recipe are no longer reachable when user changes locales
+  [#371](https://github.com/nextcloud/cookbook/pull/371) @christianlupus
+- Hide tooltips in printouts
+  [#343](https://github.com/nextcloud/cookbook/pull/343/) @christianlupus
 
 ### Removed
 - Travis build system
