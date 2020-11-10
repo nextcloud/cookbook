@@ -38,9 +38,9 @@ export default {
          * Callback for click on keyword
          */
         keywordClicked: function(keyword) {
-            const index = this.keywordFilter.indexOf(keyword);
+            const index = this.keywordFilter.indexOf(keyword)
             if (index > -1) {
-                this.keywordFilter.splice(index, 1);
+                this.keywordFilter.splice(index, 1)
             } else {
                 this.keywordFilter.push(keyword)
             }
@@ -64,11 +64,13 @@ export default {
          */
         recipeVisible: function(index) {     
             if (this.keywordFilter.length == 0) {
-                return true;
+                return true
             } else {
-                if (!this.results[index].keywords) return false;
-                let kw_array = this.results[index].keywords.split(',');
-                return this.keywordFilter.every(kw => kw_array.includes(kw));
+                if (!this.results[index].keywords) {
+                    return false
+                }
+                let kw_array = this.results[index].keywords.split(',')
+                return this.keywordFilter.every(kw => kw_array.includes(kw))
             }
         },
         /**
@@ -85,7 +87,7 @@ export default {
                             }
                         })
                     }
-                });
+                })
             }
         },
         setup: function() {

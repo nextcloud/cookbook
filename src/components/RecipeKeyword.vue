@@ -8,7 +8,7 @@ export default {
     props: ['keyword'],
     data () {
         return {
-        };
+        }
     },
     computed: {
     },
