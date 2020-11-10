@@ -28,6 +28,8 @@
 - Added available Android apps to README
 - Update dev dependencies to recent phpunit to avoid warnings and issues
   [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
+- Made the layout more responsive to shift the metadata right of the image in very wide screens
+  [#349](https://github.com/nextcloud/cookbook/pull/349/) @christianlupus
 
 ### Fixed
 - Add a min PHP restriction in the metadata

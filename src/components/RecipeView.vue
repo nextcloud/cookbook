@@ -1,28 +1,35 @@
 <template>
     <div class="wrapper">
-        <RecipeImages v-if="$store.state.recipe" />
 
-        <div v-if="$store.state.recipe" class="content">
-            <h2>{{ $store.state.recipe.name }}</h2>
+        <div v-if="$store.state.recipe" class='header' :class="{ 'responsive': $store.state.recipe.image }">
+	        <div class='image' v-if="$store.state.recipe.image">
+	        	<RecipeImages />
+	        </div>
 
-            <div class="details">
+	        <div class='meta'>
+	            <h2>{{ $store.state.recipe.name }}</h2>
+
+	            <div class="details">
                 <p v-if="keywords.length">
                     <ul v-if="keywords.length">
                         <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :keyword="keyword"  v-on:keyword-clicked="keywordClicked(keyword)" />
                     </ul>
                 </p>
-                <p class="description">{{ $store.state.recipe.description }}</p>
-                <p v-if="$store.state.recipe.url">
-                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
-                </p>
-                <p><strong>{{ t('cookbook', 'Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
+	                <p class="description">{{ $store.state.recipe.description }}</p>
+	                <p v-if="$store.state.recipe.url">
+	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
+	                </p>
+	                <p><strong>{{ t('cookbook', 'Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
+	            </div>
+	            <div class="times">
+	                <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" :label="'Preparation time'" />
+	                <RecipeTimer v-if="timerCook" :value="timerCook" :phase="'prep'" :timer="true" :label="'Cooking time'" />
+	                <RecipeTimer v-if="timerTotal" :value="timerTotal" :phase="'total'" :timer="false" :label="'Total time'" />
+	            </div>
             </div>
-            <div class="times">
-                <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" :label="'Preparation time'" />
-                <RecipeTimer v-if="timerCook" :value="timerCook" :phase="'prep'" :timer="true" :label="'Cooking time'" />
-                <RecipeTimer v-if="timerTotal" :value="timerTotal" :phase="'total'" :timer="false" :label="'Total time'" />
-            </div>
+		</div>
 
+        <div v-if="$store.state.recipe" class="content">
             <section>
                 <aside>
                     <section>
@@ -272,11 +279,45 @@ aside {
         margin-top: 10px;
     }
 
+    div.meta {
+    	margin: 0 1rem;
+    }
+
 @media print {
     #content {
         display: block !important;
         padding: 0 !important;
         overflow: visible !important;
+    }
+
+    div.header {
+		display: flex;
+	}
+
+	div.header > div.image {
+		flex: 600px 0 0;
+	}
+
+	div.header > div.meta {
+		margin: 0 10px;
+	}
+
+	div.header a::after {
+		content: '';
+	}
+}
+
+@media only screen and (min-width: 1500px) {
+	div.header.responsive {
+		display: flex;
+	}
+
+	div.header.responsive > div.image {
+		flex: 700px 0 0;
+	}
+
+    #app-content-wrapper div.times > div {
+        margin: 1rem 0.75rem;
     }
 }
 
