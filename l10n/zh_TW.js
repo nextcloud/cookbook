@@ -14,7 +14,6 @@ OC.L10N.register(
     "Loading…" : "載入中…",
     "Page not found" : "找不到頁面",
     "Category" : "分類",
-    "Tag" : "標籤",
     "Are you sure you want to delete this recipe?" : "您確定要刪除此食譜？",
     "Create recipe" : "新增食譜",
     "Recipe folder" : "食譜夾",

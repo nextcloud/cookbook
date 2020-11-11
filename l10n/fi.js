@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Sivua ei löytynyt",
     "Category" : "Luokka",
     "Recipe name" : "Reseptin nimi",
-    "Tag" : "Tunniste",
     "Search for recipes" : "Etsi reseptejä",
     "Are you sure you want to delete this recipe?" : "Haluatko varmasti poistaa tämän reseptin?",
     "Delete failed" : "Poistaminen epäonnistui",
@@ -61,7 +60,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Reseptin lataus epäonnistui",
     "Recipe could not be saved" : "Reseptiä ei voitu tallentaa",
     "Cooking time is up!" : "Valmistusaika päättyi!",
-    "Source" : "Lähde",
-    "Failed to load category " : "Kategorian lataus epäonnistui"
+    "Source" : "Lähde"
 },
 "nplurals=2; plural=(n != 1);");

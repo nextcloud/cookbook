@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Stránka nebyla nalezena",
     "Category" : "Kategorie",
     "Recipe name" : "Název receptu",
-    "Tag" : "Štítek",
     "Search for recipes" : "Hledat recepty",
     "Are you sure you want to delete this recipe?" : "Opravdu chcete tento recept smazat?",
     "Delete failed" : "Smazání se nezdařilo",
@@ -64,8 +63,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Načítání receptu se nezdařilo",
     "Recipe could not be saved" : "Recept se nepodařilo uložit",
     "Cooking time is up!" : "Čas vaření je u konce!",
-    "Source" : "Zdroj",
-    "Failed to load category " : "Kategorii se nepodařilo načíst",
-    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
+    "Source" : "Zdroj"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Página não encontrada",
     "Category" : "Categoria",
     "Recipe name" : "Nome da receita",
-    "Tag" : "Etiqueta",
     "Search for recipes" : "Pesquisar por receitas",
     "Are you sure you want to delete this recipe?" : "Quer realmente excluir esta receita?",
     "Delete failed" : "Erro na exclusão",
@@ -64,8 +63,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Erro ao carregar receita",
     "Recipe could not be saved" : "A receita não pôde ser salva",
     "Cooking time is up!" : "O tempo de cozimento acabou!",
-    "Source" : "Fonte",
-    "Failed to load category " : "Erro ao carregar categoria",
-    "Failed to load search results" : "Erro ao carregar os resultados da pesquisa"
+    "Source" : "Fonte"
 },
 "nplurals=2; plural=(n > 1);");

@@ -16,7 +16,6 @@ OC.L10N.register(
     "Loading…" : "Betöltés…",
     "Page not found" : "Az oldal nem található",
     "Category" : "Kategória",
-    "Tag" : "Jelöl",
     "Are you sure you want to delete this recipe?" : "Biztos törölni szeretnéd ezt a receptet?",
     "Create recipe" : "Recept létrehozása",
     "Rescan library" : "Könyvtár felülvizsgálata",

@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Страница не найдена",
     "Category" : "Категория",
     "Recipe name" : "Название рецепта",
-    "Tag" : "Метка",
     "Search for recipes" : "Поиск рецептов",
     "Are you sure you want to delete this recipe?" : "Действительно удалить рецепт?",
     "Delete failed" : "Сбой удаления",
@@ -55,7 +54,6 @@ OC.L10N.register(
     "Ingredients" : "Ингредиенты",
     "Instructions" : "Инструкции",
     "Cooking time is up!" : "Время приготовления истекло!",
-    "Source" : "Источник",
-    "Failed to load category " : "Не удалось загрузить категорию"
+    "Source" : "Источник"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

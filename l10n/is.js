@@ -15,7 +15,6 @@ OC.L10N.register(
     "Loading…" : "Hleð inn…",
     "Page not found" : "Síða fannst ekki",
     "Category" : "Flokkur",
-    "Tag" : "Merki",
     "Are you sure you want to delete this recipe?" : "Ertu viss um að þú viljir eyða þessari uppskrift?",
     "Create recipe" : "Búa til uppskrift",
     "Rescan library" : "Skanna safn aftur",
