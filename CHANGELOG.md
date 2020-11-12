@@ -19,6 +19,8 @@
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
 - Keyword cloud is displayed in recipe
   [#373](https://github.com/nextcloud/cookbook/pull/373/) @seyfeb
+- Pasted content with newlines creates new input fields automatically for tools and ingredients in recipe editor
+  [#379](https://github.com/nextcloud/cookbook/pull/379/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
