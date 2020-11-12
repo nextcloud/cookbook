@@ -72,20 +72,24 @@ class RecipeDb {
     
     public function findAllRecipes(string $user_id) {
         $qb = $this->db->getQueryBuilder();
-
-        $qb->select('*')
+        
+        $qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
             ->from(self::DB_TABLE_RECIPES, 'r')
-            ->where('user_id = :user')
+            ->where('r.user_id = :user')
             ->orderBy('r.name');
         $qb->setParameter('user', $user_id, TYPE::STRING);
+        $qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id');
 
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
         $result = $this->sortRecipes($result);
-        
-        return $this->unique($result);
+
+        // group recipes, convert keywords to comma-separated list
+        $recipesGroupedTags = $this->groupKeywordInResult($result);
+
+        return $this->unique($recipesGroupedTags);
     }
 
     public function unique(array $result) {
@@ -196,23 +200,28 @@ class RecipeDb {
 
         if ($category != '_')
         {
-            $qb->select(['r.recipe_id', 'r.name'])
-                ->from(self::DB_TABLE_CATEGORIES, 'k')
-                ->where('k.name = :category')
-                ->andWhere('k.user_id = :user')
+            // One would probably want to use GROUP_CONCAT to create the list of keywords 
+            // for the recipe, but those don't seem to work:
+            // $qb->select(['r.recipe_id', 'r.name', 'GROUP_CONCAT(k.name) AS keywords']) // not working
+            // $qb->select(['r.recipe_id', 'r.name', DB::raw('GROUP_CONCAT(k.name) AS keywords')]) // not working
+            $qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+                ->from(self::DB_TABLE_CATEGORIES, 'c')
+                ->where('c.name = :category')
+                ->andWhere('c.user_id = :user')
                 ->setParameter('category', $category, TYPE::STRING)
                 ->setParameter('user', $user_id, TYPE::STRING);
             
-            $qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
+            $qb->join('c', self::DB_TABLE_RECIPES, 'r', 'c.recipe_id = r.recipe_id');
+            $qb->leftJoin('c', self::DB_TABLE_KEYWORDS, 'k', 'c.recipe_id = k.recipe_id');
 
-            $qb->groupBy(['r.name', 'r.recipe_id']);
-            $qb->orderBy('r.name');            
+            $qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
+            $qb->orderBy('r.name');
         }
         else
         {
-
-            $qb->select(['r.recipe_id', 'r.name'])
+            $qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
             ->from(self::DB_TABLE_RECIPES, 'r')
+            ->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id')
             ->leftJoin(
                 'r',
                 self::DB_TABLE_CATEGORIES,
@@ -231,8 +240,11 @@ class RecipeDb {
         $cursor = $qb->execute();
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
+        
+        // group recipes, convert keywords to comma-separated list
+        $recipesGroupedTags = $this->groupKeywordInResult($result);
 
-        return $this->unique($result);
+        return $this->unique($recipesGroupedTags);
     }
 
     /**
@@ -267,13 +279,14 @@ class RecipeDb {
      * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
      */
     public function findRecipes(array $keywords, string $user_id) {
+        
         $has_keywords = $keywords && is_array($keywords) && sizeof($keywords) > 0 && $keywords[0];
 
         if(!$has_keywords) { return $this->findAllRecipes($user_id); }
 
         $qb = $this->db->getQueryBuilder();
 
-        $qb->select(['r.recipe_id', 'r.name'])
+        $qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
             ->from(self::DB_TABLE_RECIPES, 'r');
         
         $qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
@@ -309,7 +322,28 @@ class RecipeDb {
         $result = $cursor->fetchAll();
         $cursor->closeCursor();
 
-        return $this->unique($result);
+        // group recipes, convert keywords to comma-separated list
+        $recipesGroupedTags = $this->groupKeywordInResult($result);
+
+        return $this->unique($recipesGroupedTags);
+    }
+    
+    /**
+     * @param array $results Array of recipes with double entries for different keywords
+     * Group recipes by id and convert keywords to comma-separated list
+     */
+    public function groupKeywordInResult(array $result) {
+        $recipesGroupedTags = array();
+        foreach ($result as $recipe) {
+            if(!array_key_exists($recipe['recipe_id'], $recipesGroupedTags)){
+                $recipesGroupedTags[$recipe['recipe_id']] = $recipe;
+            } else {
+                if (!is_null($recipe['keywords'])) {
+                    $recipesGroupedTags[$recipe['recipe_id']]['keywords'] .= ','.$recipe['keywords'];
+                }                
+            }
+        }
+        return $recipesGroupedTags;
     }
     
     /**
