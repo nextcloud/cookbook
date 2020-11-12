@@ -54,6 +54,8 @@
   [#371](https://github.com/nextcloud/cookbook/pull/371) @christianlupus
 - Hide tooltips in printouts
   [#343](https://github.com/nextcloud/cookbook/pull/343/) @christianlupus
+- Creating new recipe not possible due to null reference
+  [#378](https://github.com/nextcloud/cookbook/pull/378/) @seyfeb
 
 ### Removed
 - Travis build system

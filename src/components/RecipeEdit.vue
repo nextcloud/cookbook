@@ -190,7 +190,6 @@ export default {
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
-                this.recipe = this.recipeInit
                 this.prepTime = [0, 0]
                 this.cookTime = [0, 0]
                 this.totalTime = [0, 0]
