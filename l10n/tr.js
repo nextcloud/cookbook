@@ -23,6 +23,7 @@ OC.L10N.register(
     "Page not found" : "Sayfa bulunamadı",
     "Category" : "Kategori",
     "Recipe name" : "Tarif adı",
+    "Tags" : "Etiketler",
     "Search for recipes" : "Tarif arama",
     "Are you sure you want to delete this recipe?" : "Bu yemek tarifini silmek istediğinize emin misiniz?",
     "Delete failed" : "Silinemedi",
