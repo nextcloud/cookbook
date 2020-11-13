@@ -2,18 +2,18 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
-            <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
-                <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" @keyup="keyPressed" :value="$parent.recipe[fieldName][idx]" v-on:input="handleFieldChange" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" :value="$parent.recipe[fieldName][idx]" v-on:input="handleFieldChange" @paste="handlePaste"></textarea>
+            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
+                <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
+                <input v-if="fieldType==='text'" type="text" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
+                <textarea v-else-if="fieldType==='textarea'" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
                 <div class="controls">
-                    <button class="icon-arrow-up" @click="moveUp(idx)"></button>
-                    <button class="icon-arrow-down" @click="moveDown(idx)"></button>
+                    <button class="icon-arrow-up" @click="moveEntryUp(idx)"></button>
+                    <button class="icon-arrow-down" @click="moveEntryDown(idx)"></button>
                     <button class="icon-delete" @click="deleteEntry(idx)"></button>
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
+        <button class="button add-list-item" @click="addNewEntry ()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
     </fieldset>
 </template>
 
@@ -21,8 +21,16 @@
 export default {
     name: "EditInputGroup",  
     props: {
+        value: {
+          type: Array,
+          default: []
+        },
         fieldType: String,
         fieldName: String,
+        showStepNumber: {
+            type: Boolean,
+            default: false
+        },
         fieldLabel: String,
         // If true, add new fields, for newlines in pasted data
         createFieldsOnNewlines: {
@@ -33,7 +41,16 @@ export default {
     data () {
         return {
             // helper variables
+            buffer: this.value.slice(),
             contentPasted: false
+        }
+    },
+    watch: {
+        value: {
+            handler() {
+                this.buffer = this.value.slice()
+            },
+            deep: true
         }
     },
     methods: {
@@ -41,11 +58,11 @@ export default {
          * if focusAfterInsert=true, the element is focussed after inserting
          * the content is inserted into the newly created field
          **/
-        addNew: function(index = -1, focusAfterInsert = true, content = '') {
+        addNewEntry: function(index = -1, focusAfterInsert = true, content = '') {
             if (index === -1) {
-                index = this.$parent.recipe[this.fieldName].length
+                index = this.buffer.length
             }
-            this.$parent.addEntry(this.fieldName, index, content)
+            this.buffer.splice(index, 0, content)
 
             if (focusAfterInsert) {
                 let $ul = $(this.$refs['list'])
@@ -64,21 +81,21 @@ export default {
         /**
          * Delete an entry from the list
          */
-        deleteEntry: function(idx) {
-            this.$parent.deleteEntry(this.fieldName, idx)
+        deleteEntry: function(index) {
+            this.buffer.splice(index, 1)
+            this.$emit('input', this.buffer)
         },
         /** 
          * Handle typing in input or field or textarea
          */
-        handleFieldChange: function(e) {  
+        handleInput: function(e) {  
             // wait a tick to check if content was typed or pasted
             this.$nextTick(function() {
                 if (this.contentPasted) {
                     this.contentPasted = false
                     return
                 }
-                let $li = $(e.currentTarget).parents('li')
-                this.$parent.recipe[this.fieldName][$li.index()] = e.target.value
+                this.$emit('input', this.buffer)
             })
         },
         /** 
@@ -114,12 +131,14 @@ export default {
             }
             for (let i = 0; i < input_lines_array.length; ++i)
             {
-                this.addNew($inserted_index+i+1, false, input_lines_array[i])
+                this.addNewEntry ($inserted_index+i+1, false, input_lines_array[i])
             }
+            this.$emit('input', this.buffer)
+
             this.$nextTick(function() {
                 let indexToFocus = $inserted_index+input_lines_array.length
                 // Delete field if it's empty
-                if (this.$parent.recipe[this.fieldName][$inserted_index].trim() == "" ) {
+                if (this.buffer[$inserted_index].trim() == "" ) {
                     this.deleteEntry($inserted_index)
                     indexToFocus--
                 }
@@ -137,17 +156,33 @@ export default {
                 let $li = $(e.currentTarget).parents('li')
                 let $ul = $li.parents('ul')
                 if ($li.index() >= $ul.children('li').length - 1) {
-                    this.addNew()
+                    this.addNewEntry ()
                 } else {
                     $ul.children('li').eq($li.index() + 1).find('input').focus()
                 }
             }
         },
-        moveDown: function(idx) {
-            this.$parent.moveEntryDown(this.fieldName, idx)
+        moveEntryDown: function(index) {
+            if (index >= this.buffer.length - 1) {
+                // Already at the end of array
+                return
+            }
+            let entry = this.buffer.splice(index, 1)[0]
+            if (index + 1 < this.buffer.length) {
+                this.buffer.splice(index + 1, 0, entry)
+            } else {
+                this.buffer.push(entry)
+            }
+            this.$emit('input', this.buffer)
         },
-        moveUp: function(idx) {
-            this.$parent.moveEntryUp(this.fieldName, idx)
+        moveEntryUp: function(index) {
+            if (index < 1) {
+                // Already at the start of array
+                return
+            }
+            let entry = this.buffer.splice(index, 1)[0]
+            this.buffer.splice(index - 1, 0, entry)
+            this.$emit('input', this.buffer)
         },
     },
 }
