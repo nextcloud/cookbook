@@ -1,25 +1,53 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <input type="number" min="0" v-model="$parent[fieldName][0]" placeholder="00">
+        <input type="number" min="0" v-model="hours" placeholder="00" @input="handleInput">
         <span>:</span>
-        <input type="number" min="0" max="59" v-model="$parent[fieldName][1]" placeholder="00">
+        <input type="number" min="0" max="59" v-model="minutes" placeholder="00" @input="handleInput">
     </fieldset>
 </template>
 
 <script>
 export default {
     name: "EditTimeField",
-    props: ['fieldName','fieldLabel'],
+    props: {
+        value: {
+            type: Object,
+            required: true,
+            default: {
+                time: [null, null],
+                paddedTime: null
+            }
+        },
+        fieldLabel: String,
+    },
     data () {
         return {
+            minutes: null,
+            hours: null,
         }
     },
-    computed: {
+    watch: {
+        value: function() {
+            this.hours = this.value.time[0]
+            this.minutes = this.value.time[1]
+        }
     },
     methods: {
-    },
-    mounted () {
+
+        handleInput () {
+            this.minutes = this.minutes ? this.minutes : 0
+            this.hours = this.hours ? this.hours : 0
+
+            // create padded time string
+            let hours_p = this.hours.toString().padStart(2, '0')
+            let mins_p = this.minutes.toString().padStart(2, '0')
+            
+            this.$emit('input', {
+                time: [this.hours, this.minutes],
+                paddedTime:  'PT' + hours_p + 'H' + mins_p + 'M'
+                })
+        },
     },
 }
 </script>
