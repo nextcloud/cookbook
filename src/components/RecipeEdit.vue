@@ -1,15 +1,15 @@
 <template>
     <div class="wrapper">
-        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" />
-        <EditInputField :fieldName="'description'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" />
-        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" />
+        <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
+        <EditInputField :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
+        <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
         <EditImageField :fieldName="'image'" :fieldLabel="t('cookbook', 'Image')" />
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
-        <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
+        <EditInputField :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" v-model="recipe['recipeYield']" />
         <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" />
