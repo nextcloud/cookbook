@@ -3,7 +3,7 @@
         <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
         <EditInputField :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
         <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
-        <EditImageField :fieldName="'image'" :fieldLabel="t('cookbook', 'Image')" />
+        <EditImageField :fieldLabel="t('cookbook', 'Image')" v-model="recipe['image']" />
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />

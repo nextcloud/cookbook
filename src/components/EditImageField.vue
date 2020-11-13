@@ -3,7 +3,7 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input type="text" v-model="$parent.recipe[fieldName]" />
+        <input type="text" v-model="content" />
         <button type="button" :title="t('cookbook', 'Pick a local image')" @click="pickImage"><span class="icon-category-multimedia"></span></button>
     </fieldset>
 </template>
@@ -11,20 +11,25 @@
 <script>
 export default {
     name: "EditImageField",
-    props: ['fieldName','fieldLabel'],
+    props: ['value','fieldLabel'],
     data () {
         return {
-
+            content: ''
+        }
+    },
+    watch: {
+        value: function() {
+            this.content = this.value
         }
     },
     methods: {
         pickImage: function(e) {
             e.preventDefault()
             let $this = this
-            OC.dialogs.filepicker(
+            OC.dialogs.filepicker (
                 t('cookbook', 'Path to your recipe image'),
                 function (path) {
-                    $this.$parent.recipe.image = path
+                    $this.$emit('input', path)
                 },
                 false,
                 ['image/jpeg', 'image/png'],
