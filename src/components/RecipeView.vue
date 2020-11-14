@@ -15,11 +15,11 @@
                     </ul>
                 </p>
                 <p class="dates">
-                    <span v-if="showCreatedDate" class="date" title="t('cookbook', 'Date created')">
+                    <span v-if="showCreatedDate" class="date"  :title="t('cookbook', 'Date created')">
                         <span class="icon-calendar-dark date-icon" />
                         <span class="date-text">{{ dateCreated }}</span>
                     </span>
-                    <span v-if="showModifiedDate" class="date" title="t('cookbook', 'Last modified')">
+                    <span v-if="showModifiedDate" class="date" :title="t('cookbook', 'Last modified')">
                         <span class="icon-rename date-icon" />
                         <span class="date-text">{{ dateModified }}</span>
                     </span>
