@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RatingService;
-use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataResponse;
 
 /**
  * A controller that allows altering of the ratings of a recipe

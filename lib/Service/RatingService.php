@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Service;
 
 use OCP\IL10N;
 use OCA\Cookbook\JsonService;
+use OCP\IDBConnection;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 
 class RatingService
 {
@@ -24,6 +26,11 @@ class RatingService
     private $jsonService;
     
     /**
+     * @var IDBConnection
+     */
+    private $db;
+    
+    /**
      * The name of the rating field
      */
     private const CONTENT_RATING = 'contentRating';
@@ -34,12 +41,15 @@ class RatingService
      * @param RecipeService $recipeService
      * @param JsonService $jsonService
      * @param IL10N $l10n
+     * @param IDBConnection $db
      */
-    public function __construct(RecipeService $recipeService, JsonService $jsonService, IL10N $l10n)
+    public function __construct(RecipeService $recipeService, JsonService $jsonService,
+        IL10N $l10n, IDBConnection $db)
     {
         $this->recipeService = $recipeService;
         $this->jsonService = $jsonService;
         $this->l = $l10n;
+        $this->db = $db;
     }
     
     /**
@@ -67,6 +77,7 @@ class RatingService
             unset($json[self::CONTENT_RATING][$idx]);
             
             $json = $this->updateAggregateRating($json);
+            $this->updateDatabase($userId, $recipeId, $json['aggregateRating']);
             
             // Undo our canonicalization
             $json = $this->uncanonicalizeRatings($json);
@@ -111,6 +122,7 @@ class RatingService
         }
         
         $this->updateAggregateRating($json);
+        $this->updateDatabase($userId, $recipeId, $json['aggregateRating']);
         
         // Undo our canonicalization
         $json = $this->uncanonicalizeRatings($json);
@@ -187,6 +199,51 @@ class RatingService
         }
         
         return $json;
+    }
+    
+    /**
+     * Update the ratings in the database
+     * @param string $userId The owner of the recipe
+     * @param int $recipeId The id or the recipe
+     * @param array $rating The aggregate rating array as a AggregareRating schema.org object
+     * @deprecated This should be moved to a DB helper class
+     */
+    private function updateDatabase(string $userId, int $recipeId, array $rating)
+    {
+        
+        $qb = $this->db->getQueryBuilder();
+        
+        $qb->delete('cookbook_ratings')
+            ->where(['recipe_id = :rid', 'user_id = :uid']);
+        
+        $qb->setParameter('uid', $userId, IQueryBuilder::PARAM_STR);
+        $qb->setParameter('rid', $recipeId, IQueryBuilder::PARAM_INT);
+        
+        $qb->execute();
+        
+        if($rating['ratingCount'] > 0)
+        {
+            $qb = $this->db->getQueryBuilder();
+            
+            $qb ->insert('cookbook_ratings')
+                ->values([
+                    'recipe_id' => ':rid',
+                    'user_id' => ':uid',
+                    'rating' => ':rating'
+                ]);
+            
+            $qb->setParameters([
+                'rid' => $recipeId,
+                'uid' => $userId,
+                'rating' => $rating['ratingValue']
+            ], [
+                IQueryBuilder::PARAM_INT,
+                IQueryBuilder::PARAM_STR,
+                IQueryBuilder::PARAM_STR
+            ]);
+            
+            $qb->execute();
+        }
     }
     
     /**
