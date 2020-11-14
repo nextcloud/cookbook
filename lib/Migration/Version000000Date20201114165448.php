@@ -27,7 +27,7 @@ class Version000000Date20201114165448 extends SimpleMigrationStep {
 	    /**
 	     * @var ISchemaWrapper $schema
 	     */
-	    $schema = $schemaClosure;
+	    $schema = $schemaClosure();
 	    
         $tableRatings = $schema->createTable(self::RATINGS);
         
