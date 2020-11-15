@@ -32,7 +32,7 @@ The folder will be populated later during the build. There will be a few 100MB n
 
 In order to run the tests, a docker image accoring to your settings needs to be generated. This is done by calling
 ```
-docker-compose built dut
+docker-compose build dut
 ```
 
 This process will take some time as a few dependencies need to be compiled into the image. Just wait for it to succeed.

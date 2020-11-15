@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook;
+namespace OCA\Cookbook\Service;
 
 /**
  * A collection of useful functions to handle schema.org JSON data
