@@ -28,6 +28,9 @@ return [
 	   ['name' => 'main#category', 'url' => '/api/category/{category}', 'verb' => 'GET'],
 	   ['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
 	   ['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
+        /* Rating routes */
+       ['name' => 'rating#save', 'url' => '/api/v1/recipes/{id}/rating', 'verb' => 'POST', 'requirements' => ['id' => '\d+']],
+       ['name' => 'rating#remove', 'url' => '/api/v1/recipes/{id}/rating', 'verb' => 'DELETE', 'requirements' => ['id' => '\d+']],
    ],
 
    /* API resources */

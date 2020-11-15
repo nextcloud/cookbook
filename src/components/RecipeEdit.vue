@@ -38,6 +38,7 @@ export default {
                 id: 0,
                 name: null,
                 description: '',
+                contentRating: 0,
                 url: '',
                 image: '',
                 prepTime: '',

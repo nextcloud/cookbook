@@ -27,6 +27,8 @@
   [#383](https://github.com/nextcloud/cookbook/pull/383/) @christianlupus
 - Unit tests for JSON object service
   [#387](https://github.com/nextcloud/cookbook/pull/387) @TobiasMie
+- Rating recipes for nextcloud users
+  [#342](https://github.com/nextcloud/cookbook/pull/342/) @sam-19
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub

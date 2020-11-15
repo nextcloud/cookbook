@@ -664,6 +664,8 @@ class RecipeService
         // Create/move recipe folder
         $user_folder = $this->getFolderForUser();
         $recipe_folder = null;
+        
+        $this->dropRatingChange($json, $user_folder);
 
         // Recipe already has an id, update it
         if (isset($json['id']) && $json['id']) {
@@ -1171,4 +1173,48 @@ class RecipeService
 
         return $str;
     }
+    
+    /**
+     * Drop any changes of the ratings of the JSON data in favor of the currently stored ones.
+     * This avoid unintended or malicious changes to the rating data.
+     * 
+     * @param string $json The JSON data to be checked
+     * @param Folder $userFolder The folder of the cookbook to look for the recipe
+     */
+    private function dropRatingChange(string &$json, Folder $userFolder) : void
+    {
+        if(isset($json['id']))
+        {
+            // We have an existing recipe. Copy the ratings from there to make sure,
+            // no change has been made.
+            $recipeFolder = $userFolder->getById((int) $json['id'])[0];
+            $recipeFile = $this->getRecipeFileByFolderId($recipeFolder->getId());
+            $oldJson = json_decode($recipeFile->getContent());
+            
+            if(isset($oldJson['contentRating']))
+            {
+                $json['contentRating'] = $oldJson['contentRating'];
+            }
+            
+            if(isset($oldJson['aggregateRating']))
+            {
+                $json['aggregateRating'] = $oldJson['aggregateRating'];
+            }
+        }
+        
+        // Ensure the rating fields do exist in all cases.
+        if(!isset($json['contentRating']))
+        {
+            $json['contentRating'] = [];
+        }
+        
+        if(!isset($json['aggreegateRating']))
+        {
+            $json['aggregateRating'] = array(
+                '@type' => 'AggregateRating',
+                'ratingCount' => 0
+            );
+        }
+    }
+    
 }
