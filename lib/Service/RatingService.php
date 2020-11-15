@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\Service;
 
 use OCP\IL10N;
-use OCA\Cookbook\JsonService;
 use OCP\IDBConnection;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 
