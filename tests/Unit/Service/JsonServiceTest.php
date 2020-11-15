@@ -80,5 +80,8 @@ class JsonServiceTest extends TestCase{
 		self::assertTrue($result);
 		$result = $this->service->hasProperty($testData, 'Bar');
 		self::assertFalse($result);
+		
+		$result = $this->service->hasProperty(['foo' => 'bar'], 'foo');
+		self::assertFalse($result, 'Property of a non-object must not be returned.');
 	}
 }
