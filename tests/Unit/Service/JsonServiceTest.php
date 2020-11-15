@@ -3,9 +3,14 @@
 namespace OCA\Cookbook;
 
 use PHPUnit\Framework\TestCase;
+use OCA\Cookbook\Service\JsonService;
 
 class JsonServiceTest extends TestCase{
-	private JsonService $service;
+    
+    /**
+     * @var JsonService
+     */
+    private $service;
 
 	public function setUp(): void{
 		$this->service = new JsonService();
