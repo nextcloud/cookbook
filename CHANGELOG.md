@@ -27,6 +27,8 @@
   [#383](https://github.com/nextcloud/cookbook/pull/383/) @christianlupus
 - Unit tests for JSON object service
   [#387](https://github.com/nextcloud/cookbook/pull/387) @TobiasMie
+- PHP linter and style checker enabled
+  [#390](https://github.com/nextcloud/cookbook/pull/390) @christianlupus
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
