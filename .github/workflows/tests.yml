@@ -7,6 +7,42 @@ on:
 
 jobs:
   
+  lint:
+     name: Run PHP Linter
+     runs-on: ubuntu-latest
+     steps:
+        -  name: Checkout the project
+           uses: actions/checkout@v2
+        -  name: Install Composer
+           shell: bash
+           run: >-
+              wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
+              php -- --quiet
+        -  name: Install packages
+           shell: bash
+           run: composer install
+        -  name: Run linter
+           shell: bash
+           run: composer lint:lint
+  
+  php-cs:
+     name: Run PHP style checker
+     runs-on: ubuntu-latest
+     steps:
+        -  name: Checkout the project
+           uses: actions/checkout@v2
+        -  name: Install Composer
+           shell: bash
+           run: >-
+              wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
+              php -- --quiet
+        -  name: Install packages
+           shell: bash
+           run: composer install
+        -  name: Run linter
+           shell: bash
+           run: composer cs:check
+  
   test:
     name: Run the unittests
     runs-on: ubuntu-latest
