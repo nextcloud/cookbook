@@ -33,6 +33,8 @@
   [#433](https://github.com/nextcloud/cookbook/pull/433) @christianlupus
 - Category and keyword selection from list of existing ones in recipe editor
   [#402](https://github.com/nextcloud/cookbook/pull/402/) @seyfeb
+- Allow checking of ingredients in web UI
+  [#393](https://github.com/nextcloud/cookbook/pull/393) @christianlupus
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
