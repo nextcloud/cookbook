@@ -13,6 +13,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": ">=8.0",
-        "nikic/php-parser": "4.2"
+        "nikic/php-parser": "4.2",
+        "nextcloud/coding-standard": "^0.3.0"
+    },
+    "scripts": {
+        "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "./vendor/bin/php-cs-fixer fix",
+        "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -print0 | xargs -0 -n1 php -l"
     }
 }
