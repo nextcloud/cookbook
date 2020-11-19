@@ -31,6 +31,8 @@
   [#390](https://github.com/nextcloud/cookbook/pull/390) @christianlupus
 - Automatic deployment of new releases to the nextcloud app store
   [#433](https://github.com/nextcloud/cookbook/pull/433) @christianlupus
+- Category and keyword selection from list of existing ones in recipe editor
+  [#402](https://github.com/nextcloud/cookbook/pull/402/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
