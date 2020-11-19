@@ -13,8 +13,15 @@ class CategoryDbWrapper extends AbstractDbWrapper {
 	 */
 	private $userId;
 	
+	/**
+	 * @var IDBConnection
+	 */
+	private $db;
+	
 	public function __construct(string $UserId, IDBConnection $db) {
 		parent::__construct($db);
+		$this->userId = $UserId;
+		$this->db = $db;
 	}
 	
 	protected function fetchDatabase(): array {

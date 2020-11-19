@@ -18,6 +18,7 @@ class KeywordDbWrapper extends AbstractDbWrapper {
 	private $db;
 	
 	public function __construct(string $UserId, IDBConnection $db) {
+		parent::__construct($db);
 		$this->userId = $UserId;
 		$this->db = $db;
 	}
