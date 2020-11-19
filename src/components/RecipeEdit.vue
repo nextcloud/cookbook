@@ -7,8 +7,8 @@
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
-        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" @tag="addCategory" />
-        <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" @tag="addKeyword" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
@@ -60,6 +60,8 @@ export default {
             cookTime: [0, 0],
             totalTime: [0, 0],
             allCategories: [],
+            isFetchingCategories: true,
+            isFetchingKeywords: true,
             allKeywords: [],
             selectedKeywords: [],
         }
@@ -112,7 +114,7 @@ export default {
         /**
          * Fetch and display recipe categories
          */
-        fetchCategories: function() {
+        fetchCategories: function() {            
             $.get(this.$window.baseUrl + '/categories').done((json) => {
                 json = json || []
                 this.allCategories = []
@@ -123,6 +125,7 @@ export default {
                         )
                     }
                 }
+                this.isFetchingCategories = false
             })
             .fail((e) => {
                 alert(t('cookbook', 'Failed to fetch categories'))
@@ -147,6 +150,7 @@ export default {
                         }
                     }
                 }
+                this.isFetchingKeywords = false
             })
             .fail((e) => {
                 alert(t('cookbook', 'Failed to fetch keywords'))
@@ -262,6 +266,19 @@ export default {
                     this.totalTime = [timeComps[1], timeComps[2]]
                 }
                 this.selectedKeywords = this.recipe['keywords'].split(',')
+                
+                // fallback if fetching all keywords fails
+                this.selectedKeywords.forEach(kw => {
+                    if (!this.allKeywords.includes(kw)) {
+                        this.allKeywords.push(kw)
+                    }
+                })
+
+                // fallback if fetching all categories fails
+                if (!this.allCategories.includes(this.recipe['recipeCategory'])) {
+                    this.allCategories.push(this.recipe['recipeCategory'])
+                }
+
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
