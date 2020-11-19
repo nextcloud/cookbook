@@ -7,7 +7,7 @@
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
-        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Category')" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="categories" :taggable="true" :multiple="false" @tag="addCategory" />
         <EditInputField :fieldName="'keywords'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
@@ -20,6 +20,7 @@
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
+import EditMultiselect from './EditMultiselect'
 import EditTimeField from './EditTimeField'
 
 export default {
@@ -28,6 +29,7 @@ export default {
         EditImageField,
         EditInputField,
         EditInputGroup,
+        EditMultiselect,
         EditTimeField,
     },
     props: ['id'],
@@ -57,6 +59,7 @@ export default {
             prepTime: [0, 0],
             cookTime: [0, 0],
             totalTime: [0, 0],
+            categories: [],
         }
     },
     watch: {
@@ -77,11 +80,40 @@ export default {
         },
     },
     methods: {
+        /** 
+         * Add newly created category and set as selected.
+         */
+        addCategory (newCategory) {            
+            this.categories.push(newCategory)            
+            this.recipe['recipeCategory'] = newCategory
+        },
         addEntry: function(field, index, content='') {
             this.recipe[field].splice(index, 0, content)
         },
         deleteEntry: function(field, index) {
             this.recipe[field].splice(index, 1)
+        },
+        /**
+         * Fetch and display recipe categories
+         */
+        fetchCategories: function() {
+            $.get(this.$window.baseUrl + '/categories').done((json) => {
+                json = json || []
+                this.categories = []
+                for (let i=0; i<json.length; i++) {
+                    if (json[i].name != '*') {
+                        this.categories.push(
+                            json[i].name,
+                        )
+                    }
+                }
+            })
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch categories'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
         },
         loadRecipeData: function() {
             if (!this.$store.state.recipe) {
@@ -171,6 +203,7 @@ export default {
             }
         },
         setup: function() {
+            this.fetchCategories()
             if (this.$route.params.id) {
                 // Load the recipe from store and make edits to a local copy first
                 this.recipe = { ...this.$store.state.recipe }
