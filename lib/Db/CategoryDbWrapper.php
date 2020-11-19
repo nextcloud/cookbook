@@ -37,6 +37,23 @@ class CategoryDbWrapper extends AbstractDbWrapper {
 			$ret[] = $entity;
 		}
 		
+		$res->closeCursor();
+		
 		return $ret;
+	}
+	
+	/**
+	 * Store a single entity back to the database
+	 * @param CategoryEntity $category The entity to store
+	 */
+	public function store(CategoryEntity $category): void {
+	}
+	
+	/**
+	 * Create a new entity and reegister it with this wrapper
+	 * @return CategoryEntity The new entity
+	 */
+	public function createEntity(): CategoryEntity {
+		return new CategoryEntity($this);
 	}
 }

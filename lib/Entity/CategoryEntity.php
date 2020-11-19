@@ -18,6 +18,7 @@ class CategoryEntity implements Entity {
 	
 	/**
 	 * Create a new category entity
+	 * Do not use this constructor directly but create new entities from the corresponding wrapper.
 	 * @param CategoryDbWrapper $wrapper The wrapper to use for DB access
 	 */
 	public function __construct(CategoryDbWrapper $wrapper) {
@@ -41,5 +42,6 @@ class CategoryEntity implements Entity {
 	}
 	
 	public function persist(): void {
+		$this->wrapper->store($this);
 	}
 }
