@@ -7,8 +7,8 @@
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
-        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="categories" :taggable="true" :multiple="false" @tag="addCategory" />
-        <EditInputField :fieldName="'keywords'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" @tag="addCategory" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" @tag="addKeyword" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
@@ -59,7 +59,9 @@ export default {
             prepTime: [0, 0],
             cookTime: [0, 0],
             totalTime: [0, 0],
-            categories: [],
+            allCategories: [],
+            allKeywords: [],
+            selectedKeywords: [],
         }
     },
     watch: {
@@ -78,14 +80,28 @@ export default {
             let mins = this.totalTime[1].toString().padStart(2, '0')
             this.recipe.totalTime = 'PT' + hours + 'H' + mins + 'M'
         },
+        selectedKeywords: {
+            deep: true,
+            handler() {
+                // convert keyword array to comma-separated string
+                this.recipe['keywords'] = this.selectedKeywords.join()
+            }
+        }
     },
     methods: {
         /** 
          * Add newly created category and set as selected.
          */
-        addCategory (newCategory) {            
-            this.categories.push(newCategory)            
+        addCategory (newCategory) {
+            this.allCategories.push(newCategory)
             this.recipe['recipeCategory'] = newCategory
+        },
+        /** 
+         * Add newly created keyword.
+         */
+        addKeyword (newKeyword) {
+            this.allKeywords.push(newKeyword)
+            this.selectedKeywords.push(newKeyword)
         },
         addEntry: function(field, index, content='') {
             this.recipe[field].splice(index, 0, content)
@@ -99,10 +115,10 @@ export default {
         fetchCategories: function() {
             $.get(this.$window.baseUrl + '/categories').done((json) => {
                 json = json || []
-                this.categories = []
+                this.allCategories = []
                 for (let i=0; i<json.length; i++) {
                     if (json[i].name != '*') {
-                        this.categories.push(
+                        this.allCategories.push(
                             json[i].name,
                         )
                     }
@@ -110,6 +126,30 @@ export default {
             })
             .fail((e) => {
                 alert(t('cookbook', 'Failed to fetch categories'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
+        },
+        /**
+         * Fetch and display recipe keywords
+         */
+        fetchKeywords: function() {
+            $.ajax(this.$window.baseUrl + '/keywords').done((json) => {
+                json = json || []
+                if (json) {
+                    this.allKeywords = []
+                    for (let i=0; i<json.length; i++) {
+                        if (json[i].name != '*') {
+                            this.allKeywords.push(
+                                json[i].name,
+                            )
+                        }
+                    }
+                }
+            })
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch keywords'))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -204,6 +244,7 @@ export default {
         },
         setup: function() {
             this.fetchCategories()
+            this.fetchKeywords()
             if (this.$route.params.id) {
                 // Load the recipe from store and make edits to a local copy first
                 this.recipe = { ...this.$store.state.recipe }
@@ -220,6 +261,7 @@ export default {
                 if (timeComps) {
                     this.totalTime = [timeComps[1], timeComps[2]]
                 }
+                this.selectedKeywords = this.recipe['keywords'].split(',')
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
