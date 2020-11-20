@@ -21,7 +21,7 @@
     "Page not found" : "Nie znaleziono strony",
     "Category" : "Kategoria",
     "Recipe name" : "Nazwa przepisu",
-    "Tag" : "Etykieta",
+    "Tags" : "Etykiety",
     "Search for recipes" : "Wyszukaj przepisy",
     "Are you sure you want to delete this recipe?" : "Czy na pewno chcesz usunąć ten przepis?",
     "Delete failed" : "Usuwanie nie powiodło się",
@@ -62,8 +62,6 @@
     "Loading recipe failed" : "Nieudane ładowanie przepisu",
     "Recipe could not be saved" : "Przepis nie mógł zostać zapisany",
     "Cooking time is up!" : "Czas gotowania minął!",
-    "Source" : "Źródło",
-    "Failed to load category " : "Nie udało się załadować kategorii",
-    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania"
+    "Source" : "Źródło"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

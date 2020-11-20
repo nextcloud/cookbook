@@ -14,7 +14,6 @@ OC.L10N.register(
     "Loading…" : "正在加载…",
     "Page not found" : "没有找到页面",
     "Category" : "分类",
-    "Tag" : "Tag",
     "Are you sure you want to delete this recipe?" : "您确定要删除此菜谱吗？",
     "Create recipe" : "创建菜谱",
     "Rescan library" : "重新扫描书库",

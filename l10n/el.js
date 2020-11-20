@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Δεν βρέθηκε η σελίδα",
     "Category" : "Κατηγορία",
     "Recipe name" : "Όνομα συνταγής",
-    "Tag" : "Ετικέτα",
     "Search for recipes" : "Αναζήτηση συνταγών",
     "Are you sure you want to delete this recipe?" : "Σίγουρα θέλετε να διαγράψετε την συνταγή;",
     "Delete failed" : "Αποτυχία διαγραφής",
@@ -61,7 +60,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Η φόρτωση των συνταγής απέτυχε",
     "Recipe could not be saved" : "Η συνταγή δεν μπορεί να αποθηκευτεί",
     "Cooking time is up!" : "Ο χρόνος μαγειρέματος έχει φτάσει!",
-    "Source" : "Πηγή",
-    "Failed to load category " : "Η φόρτωση της κατηγορίας απέτυχε"
+    "Source" : "Πηγή"
 },
 "nplurals=2; plural=(n != 1);");

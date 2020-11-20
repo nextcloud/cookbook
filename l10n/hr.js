@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Stranica nije pronađena",
     "Category" : "Kategorija",
     "Recipe name" : "Naziv recepta",
-    "Tag" : "Oznaka",
     "Search for recipes" : "Traži recepte",
     "Are you sure you want to delete this recipe?" : "Jeste li sigurni da želite izbrisati ovaj recept?",
     "Delete failed" : "Brisanje nije uspjelo",
@@ -60,7 +59,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Učitavanje recepta nije uspjelo",
     "Recipe could not be saved" : "Recept nije moguće spremiti",
     "Cooking time is up!" : "Kuhanje je završeno!",
-    "Source" : "Izvor",
-    "Failed to load category " : "Učitavanje kategorije nije uspjelo "
+    "Source" : "Izvor"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

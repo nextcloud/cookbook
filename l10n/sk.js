@@ -23,12 +23,14 @@ OC.L10N.register(
     "Page not found" : "Stránka nenájdená",
     "Category" : "Kategória",
     "Recipe name" : "Názov receptu",
-    "Tag" : "Štítok",
+    "Tags" : "Štítky",
     "Search for recipes" : "Hľadať recept",
     "Are you sure you want to delete this recipe?" : "Naozaj chcete odstrániť tento recept?",
     "Delete failed" : "Zmazanie zlyhalo",
     "Hide navigation" : "Skryť navigáciu",
     "Create recipe" : "Vytvoriť recept",
+    "Download recipe from URL" : "Stiahnuť recept z URL",
+    "Uncategorized recipes" : "Nezaradené recepty",
     "Rescan library" : "Znovu prehľadať knižnicu",
     "Recipe folder" : "Adresár receptu",
     "Please pick a folder" : "Vyberte priečinok",
@@ -38,6 +40,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nedarí sa nastaviť predvoľbu pre tlač obrázkov",
     "Could not set recipe update interval to {interval}" : "Interval aktualizácie receptu sa nepodarilo nastaviť na {interval}",
     "Loading config failed" : "Načítanie nastavenia zlyhalo",
+    "Failed to load category {category} recipes" : "Zlyhalo načítanie kategórie {category} receptov",
+    "Loading category recipes …" : "Načítavanie kategórie receptov ...",
     "Failed to fetch categories" : "Nepodarilo sa načítať kategórie",
     "Path to your recipe collection" : "Cesta k vašim receptom",
     "Could not set recipe folder to {path}" : "Priečinok receptov sa nepodarilo nastaviť na {path}",
@@ -60,7 +64,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Načítanie receptu zlyhalo",
     "Recipe could not be saved" : "Recept nemohol byť uložený",
     "Cooking time is up!" : "Čas varenia vypršal!",
-    "Source" : "Zdroj",
-    "Failed to load category " : "Zlyhalo načítanie kategórie "
+    "Source" : "Zdroj"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

@@ -23,13 +23,14 @@ OC.L10N.register(
     "Page not found" : "Sivua ei löytynyt",
     "Category" : "Luokka",
     "Recipe name" : "Reseptin nimi",
-    "Tag" : "Tunniste",
+    "Tags" : "Tunnisteet",
     "Search for recipes" : "Etsi reseptejä",
     "Are you sure you want to delete this recipe?" : "Haluatko varmasti poistaa tämän reseptin?",
     "Delete failed" : "Poistaminen epäonnistui",
     "Hide navigation" : "Piilota navigointi",
     "Create recipe" : "Luo resepti",
     "Download recipe from URL" : "Lataa resepti URL-osoitteesta",
+    "Uncategorized recipes" : "Luokittelemattomat reseptit",
     "Rescan library" : "Lataa kirjasto uudelleen",
     "Recipe folder" : "Reseptihakemisto",
     "Please pick a folder" : "Valitse hakemisto",
@@ -39,6 +40,8 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Kuvan tulostuksen määritys epäonnistui",
     "Could not set recipe update interval to {interval}" : "Reseptin päivitysvälin määrittäminen arvoon {interval} epäonnistui",
     "Loading config failed" : "Asetusten lataus epäonnistui",
+    "Failed to load category {category} recipes" : "Kategorian {category} reseptien lataaminen epäonnistui",
+    "Loading category recipes …" : "Ladataan kategorian reseptejä ...",
     "Failed to fetch categories" : "Kategorioiden haku epäonnistui",
     "Path to your recipe collection" : "Reseptikokoelmasi sijainti",
     "Could not set recipe folder to {path}" : "Reseptihakemistoa ei voitu määrittää kohteeseen {path}",
@@ -61,7 +64,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Reseptin lataus epäonnistui",
     "Recipe could not be saved" : "Reseptiä ei voitu tallentaa",
     "Cooking time is up!" : "Valmistusaika päättyi!",
-    "Source" : "Lähde",
-    "Failed to load category " : "Kategorian lataus epäonnistui"
+    "Source" : "Lähde"
 },
 "nplurals=2; plural=(n != 1);");

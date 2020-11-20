@@ -23,7 +23,7 @@ OC.L10N.register(
     "Page not found" : "Sayfa bulunamadı",
     "Category" : "Kategori",
     "Recipe name" : "Tarif adı",
-    "Tag" : "Etiket",
+    "Tags" : "Etiketler",
     "Search for recipes" : "Tarif arama",
     "Are you sure you want to delete this recipe?" : "Bu yemek tarifini silmek istediğinize emin misiniz?",
     "Delete failed" : "Silinemedi",
@@ -64,8 +64,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Tarif yüklenemedi",
     "Recipe could not be saved" : "Tarif kaydedilemedi",
     "Cooking time is up!" : "Pişirme zamanı doldu!",
-    "Source" : "Kaynak",
-    "Failed to load category " : "Kategori yüklenemedi",
-    "Failed to load search results" : "Arama sonuçları yüklenemedi"
+    "Source" : "Kaynak"
 },
 "nplurals=2; plural=(n > 1);");

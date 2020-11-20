@@ -16,7 +16,6 @@ OC.L10N.register(
     "Loading…" : "בטעינה…",
     "Page not found" : "העמוד לא נמצא",
     "Category" : "קטגוריה",
-    "Tag" : "תגית",
     "Are you sure you want to delete this recipe?" : "למחוק את המתכון הזה?",
     "Create recipe" : "יצירת מתכון",
     "Rescan library" : "סריקת הספרייה מחדש",

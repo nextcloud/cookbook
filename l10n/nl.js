@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Pagina niet gevonden",
     "Category" : "Categorie",
     "Recipe name" : "Recept naam",
-    "Tag" : "Label",
     "Search for recipes" : "Zoek naar recepten",
     "Are you sure you want to delete this recipe?" : "Weet je zeker dat je dit recept wil verwijderen?",
     "Delete failed" : "Verwijderen is mislukt",
@@ -61,7 +60,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Laden recept mislukt",
     "Recipe could not be saved" : "Recept kon niet worden opgelagen",
     "Cooking time is up!" : "Kooktijd is verstreken!",
-    "Source" : "Bron",
-    "Failed to load category " : "Laden categorie mislukt"
+    "Source" : "Bron"
 },
 "nplurals=2; plural=(n != 1);");

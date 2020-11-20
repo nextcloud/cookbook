@@ -23,7 +23,6 @@ OC.L10N.register(
     "Page not found" : "Puslapis nerastas",
     "Category" : "Kategorija",
     "Recipe name" : "Recepto pavadinimas",
-    "Tag" : "Žymė",
     "Search for recipes" : "Ieškoti receptų",
     "Are you sure you want to delete this recipe?" : "Ar tikrai norite ištrinti šį receptą?",
     "Delete failed" : "Ištrynimas nepavyko",
@@ -64,8 +63,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Recepto įkėlimas nepavyko",
     "Recipe could not be saved" : "Nepavyko įrašyti recepto",
     "Cooking time is up!" : "Gaminimo laikas baigėsi!",
-    "Source" : "Šaltinis",
-    "Failed to load category " : "Nepavyko įkelti kategorijos",
-    "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"
+    "Source" : "Šaltinis"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

@@ -15,7 +15,6 @@ OC.L10N.register(
     "Loading…" : "Notiek ielāde...",
     "Page not found" : "Lapa nav atrasta",
     "Category" : "Kategorija",
-    "Tag" : "Birkas",
     "Are you sure you want to delete this recipe?" : "Vai vēlaties dzēst šo recepti?",
     "Create recipe" : "Izveidot recepti",
     "Rescan library" : "Atjaunināt bibliotēku",
