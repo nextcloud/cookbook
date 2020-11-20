@@ -93,4 +93,16 @@ abstract class AbstractDbWrapper {
 	public function setWrapperServiceLocator(DbWrapperServiceProvider $locator) {
 		$this->wrapperLocator = $locator;
 	}
+	
+	/**
+	 * Get the central service locator for registering of all wrappers
+     * @return DbWrapperServiceProvider The locator for the registered wrappers
+     */
+    public function getWrapperServiceLocator()
+    {
+        return $this->wrapperLocator;
+    }
+
+	
+	
 }
