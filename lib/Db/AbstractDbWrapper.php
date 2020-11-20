@@ -21,6 +21,11 @@ abstract class AbstractDbWrapper {
 	 */
 	private $db;
 	
+	/**
+	 * @var DbWrapperServiceProvider
+	 */
+	protected $wrapperLocator;
+	
 	public function __construct(IDBConnection $db) {
 		$this->initialized = false;
 		$this->db = $db;
@@ -79,5 +84,13 @@ abstract class AbstractDbWrapper {
 	protected function setEntites(array $entities): void {
 		$this->cache = $entities;
 		$this->initialized = true;
+	}
+	
+	/**
+	 * Set the central service locator for registering of all wrappers
+	 * @param DbWrapperServiceProvider $locator The locator for the registered wrappers
+	 */
+	public function setWrapperServiceLocator(DbWrapperServiceProvider $locator) {
+		$this->wrapperLocator = $locator;
 	}
 }
