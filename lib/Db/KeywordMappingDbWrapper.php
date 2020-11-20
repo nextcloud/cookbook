@@ -1,8 +1,7 @@
 <?php
 
-namespace  OCAA\Cookbook\Db;
+namespace OCA\Cookbook\Db;
 
-use OCA\Cookbook\Db\AbstractDbWrapper;
 use OCP\IDBConnection;
 use OCA\Cookbook\Entity\KeywordMappingEntity;
 
