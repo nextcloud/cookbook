@@ -40,6 +40,8 @@
   [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
 - Made the layout more responsive to shift the metadata right of the image in very wide screens
   [#349](https://github.com/nextcloud/cookbook/pull/349/) @christianlupus
+- Optimization for SVG to reduce the filesize
+  [#404](https://github.com/nextcloud/cookbook/pull/404) @thembeat
 
 ### Fixed
 - Add a min PHP restriction in the metadata
