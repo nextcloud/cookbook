@@ -62,4 +62,7 @@ class CategoryDbWrapper extends AbstractDbWrapper {
 	public function createEntity(): CategoryEntity {
 		return new CategoryEntity($this);
 	}
+	
+	public function remove(CategoryEntity $category) {
+	}
 }

@@ -44,4 +44,10 @@ class CategoryEntity implements Entity {
 	public function persist(): void {
 		$this->wrapper->store($this);
 	}
+
+	public function remove(): void
+    {
+		$this->wrapper->remove($this);
+	}
+
 }

@@ -66,4 +66,11 @@ class RecipeEntity implements Entity {
 	public function setName($name): void {
 		$this->name = $name;
 	}
+
+	public function remove(): void
+    {
+		$this->wrapper->remove($this);
+	}
+
+
 }

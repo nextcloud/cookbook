@@ -65,4 +65,10 @@ class CategoryMappingEntity implements Entity {
     {
         $this->category = $category;
     }
+
+	public function remove(): void
+    {
+		$this->wrapper->remove($this);
+	}
+
 }

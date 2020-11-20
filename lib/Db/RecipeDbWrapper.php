@@ -34,4 +34,8 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	public function createEntity(): RecipeEntity {
 		// FIXME
 	}
+	
+	public function remove(RecipeEntity $recipe): void {
+		// FIXME
+	}
 }
