@@ -7,6 +7,8 @@ use OCA\Cookbook\Entity\CategoryMappingEntity;
 
 class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	
+	private const CATEGORIES = 'cookbook_categories';
+	
 	/**
 	 * @var string
 	 */
@@ -24,28 +26,29 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	}
 	
 	protected function fetchDatabase(): array {
-// 		$qb = $this->db->getQueryBuilder();
+		// FIXME
+		$qb = $this->db->getQueryBuilder();
 		
-// 		$qb ->select('name')
-// 			->from('cookbook_categories')
-// 			->where('user_id = :uid')
-// 			->groupBy('name')
-// 			->orderBy('name');
+		$qb ->select('name', 'recipe_id')
+			->from(self::CATEGORIES)
+			->where('user_id = :uid');
 		
-// 		$qb->setParameter('uid', $this->userId);
+		$qb->setParameter('uid', $this->userId);
 		
-// 		$res = $qb->execute();
-// 		$ret = [];
-// 		while ($row = $res->fetch()) {
-// 			$entity = new CategoryEntity($this);
-// 			$entity->setName($row['name']);
+		$res = $qb->execute();
+		$ret = [];
+		
+		while ($row = $res->fetch()) {
+			$entity = $this->createEntity();
+			$entity->setName($row['name']);
+			$entity->setRecipe($this->getWrapperServiceLocator()->getRecipeDbWrapper()->getRecipeById($row['recipe_id']));
 			
-// 			$ret[] = $entity;
-// 		}
+			$ret[] = $entity;
+		}
 		
-// 		$res->closeCursor();
+		$res->closeCursor();
 		
-// 		return $ret;
+		return $ret;
 	}
 	
 	/**
@@ -53,6 +56,36 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	 * @param CategoryMappingEntity $category The entity to store
 	 */
 	public function store(CategoryMappingEntity $mapping): void {
+		// FIXME
+		$foundMapping = array_filter($this->getEntries(), function (CategoryMappingEntity $entity) use ($mapping) {
+			return $entity === $mapping;
+		});
+		
+		$qb = $this->db->getQueryBuilder();
+		
+		if(count($foundMapping) > 0) {
+			// We need to update an existing entry
+			$qb ->update(self::CATEGORIES)
+				->set('name', $mapping->getCategory()->getName())
+				->where('recipe_id = :rid', 'user_id = :uid');
+			$qb->setParameters([
+				'rid' => $mapping->getRecipe()->getId(),
+				'uid' => $this->userId
+			]);
+		}
+		else {
+			// We need to create a new entry
+			$qb ->insert(self::CATEGORIES)
+				->values([
+					'recipe_id' => $mapping->getRecipe()->getId(),
+					'user_id' => $this->userId,
+					'name' => $mapping->getCategory()->getName()
+				]);
+		}
+		
+		$qb->execute();
+		$this->invalidateCache();
+		// TODO Changing of an object will change the cache as well
 	}
 	
 	/**
@@ -64,5 +97,22 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	}
 	
 	public function remove(CategoryMappingEntity $mapper): void {
+		$qb = $this->db->getQueryBuilder();
+		
+		$qb ->delete(self::CATEGORIES)
+			->where('recipe_id = :rid', 'user_id = :uid');
+		$qb->setParameters([
+			'rid' => $mapper->getRecipe()->getId(),
+			'uid' => $this->userId
+		]);
+		
+		$qb->execute();
+		$this->invalidateCache();
+		
+// 		$this->setEntites(array_filter($this->getEntries(), function (CategoryMappingEntity $entity) use ($mapper) {
+// 			return $entity !== $mapper;
+// 		}));
+		
+		// XXX Remove CategoryEntity completely?
 	}
 }
