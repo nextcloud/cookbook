@@ -21,6 +21,15 @@ class RecipeEntity implements Entity {
 	 */
 	private $name;
 	
+	/**
+	 * Creat a new entity object
+	 * Do not use this constructor directly but create new entities from the corresponding wrapper.
+	 * @param RecipeDbWrapper $wrapper The wrapper to use for DB access
+	 */
+	public function __construct(RecipeDbWrapper $wrapper){
+		$this->wrapper = $wrapper;
+	}
+	
 	public function persist(): void {
 		$this->wrapper->store($this);
 	}
