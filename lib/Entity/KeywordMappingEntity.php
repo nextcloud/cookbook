@@ -2,7 +2,7 @@
 
 namespace  OCA\Cookbook\Entity;
 
-use OCAA\Cookbook\Db\KeywordMappingDbWrapper;
+use OCA\Cookbook\Db\KeywordMappingDbWrapper;
 
 class KeywordMappingEntity implements Entity {
 	

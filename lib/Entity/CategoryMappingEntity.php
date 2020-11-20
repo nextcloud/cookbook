@@ -2,7 +2,7 @@
 
 namespace  OCA\Cookbook\Entity;
 
-use OCAA\Cookbook\Db\CategoryMappingDbWrapper;
+use OCA\Cookbook\Db\CategoryMappingDbWrapper;
 
 
 class CategoryMappingEntity implements Entity {
