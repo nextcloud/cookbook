@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Db;
 
 use OCP\IDBConnection;
 use OCA\Cookbook\Entity\CategoryMappingEntity;
+use OCA\Cookbook\Exception\InvalidDbStateException;
+use OCP\IL10N;
 
 class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	
@@ -19,10 +21,16 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	 */
 	private $db;
 	
-	public function __construct(string $UserId, IDBConnection $db) {
+	/**
+	 * @var IL10N
+	 */
+	private $l;
+	
+	public function __construct(string $UserId, IDBConnection $db, IL10N $l) {
 		parent::__construct($db);
 		$this->userId = $UserId;
 		$this->db = $db;
+		$this->l = $l;
 	}
 	
 	protected function fetchDatabase(): array {
@@ -57,6 +65,12 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	 */
 	public function store(CategoryMappingEntity $mapping): void {
 		// FIXME
+		if($mapping->getRecipe()->getId() == -1)
+		{
+			// Recipe was not saved yet.
+			throw new InvalidDbStateException($this->l->t('The recipe was not stored to the database yet. No id known.'));
+		}
+		
 		$foundMapping = array_filter($this->getEntries(), function (CategoryMappingEntity $entity) use ($mapping) {
 			return $entity === $mapping;
 		});

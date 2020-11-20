@@ -6,8 +6,11 @@ use OCA\Cookbook\Entity\RecipeEntity;
 use OCP\IDBConnection;
 use OCA\Cookbook\Exception\EntityNotFoundException;
 use OCP\IL10N;
+use OCA\Cookbook\Exception\InvalidDbStateException;
 
 class RecipeDbWrapper extends AbstractDbWrapper {
+	
+	private const NAMES = 'cookbook_names';
 	
 	/**
 	 * @var IDBConnection
@@ -57,14 +60,54 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	
 	public function store(RecipeEntity $recipe): void {
 		// FIXME
+		
+		$qb = $this->db->getQueryBuilder();
+		
+		if($recipe->getId() == -1)
+		{
+			$qb ->insert(self::NAMES)
+				->values([
+					'name' => $recipe->getName(),
+					'user_id' => $this->userId
+				]);
+		}
+		else {
+			$qb ->update(self::NAMES)
+				->set('name', ':name')
+				->where('recipe_id = :rid');
+			$qb->setParameter('rid', $recipe->getId());
+			$qb->setParameter('name', $recipe->getName());
+		}
+		
+		$qb->execute();
+		$this->invalidateCache();
+		
+		if($recipe->getId() == -1){
+			$recipe->setId($qb->getLastInsertId());
+		}
 	}
 	
 	public function createEntity(): RecipeEntity {
-		return new RecipeEntity($this);
+		$ret = new RecipeEntity($this);
+		$ret->setId(-1);
+		return $ret;
 	}
 	
 	public function remove(RecipeEntity $recipe): void {
 		// FIXME
+		if($recipe->getId() == -1)
+		{
+			throw new InvalidDbStateException($this->l->t('Cannot remove recipe that was not yet saved.'));
+		}
+		
+		$qb = $this->db->getQueryBuilder();
+		
+		$qb ->delete(self::NAMES)
+			->where('recipe_id = :rid');
+		$qb->setParameter('rid', $recipe->getId());
+		
+		$qb->execute();
+		$this->invalidateCache();
 	}
 	
 	public function getRecipeById(int $id): RecipeEntity {
