@@ -1,0 +1,169 @@
+@startuml
+
+namespace OCA.Cookbook {
+	
+	namespace Entity {
+		
+		interface Entity {
+			+persist()
+			+remove()
+		}
+		
+		interface RecipeEntity {
+			--
+			+ getId() : int
+			+ getName() : string
+			+ setName(string) : void
+			..
+			+ getCategory() : CategoryEntity
+			+ setCategory(CategoryEntity) : void
+			+ getKeywords() : array
+			+ setKeywords(array) : void
+		}
+		
+		interface CategoryEntity {
+			--
+			+ getName() : string
+			+ setName(string) : void
+			..
+			+ getRecipes() : array
+		}
+		
+		interface KeywordEntity {
+			--
+			+ getName() : string
+			+ setName(string) : void
+			..
+			+ getRecipes() : array
+		}
+		
+		
+		namespace impl {
+			
+'			class AbstractEntity {}
+			
+			interface ImplEntity {
+				+ isPersisted() : bool
+				+ clone() : ImplEntity
+				+ isSame(ImplEntity) : bool
+			}
+			
+			class RecipeEntityImpl {
+				#id
+				#name
+				#userId
+				# RecipeDbWrapper wrapper
+			}
+			
+			class CategoryEntityImpl {
+				#name
+				# CategoryDbWrapper wrapper
+			}
+			
+			class KeywordEntityImpl {
+				#name
+				# KeywordDbWrapper wrapper
+			}
+			
+			class CategoryMappingEntity {
+				# CategoryMappingDbWrapper wrapper
+			}
+			
+			class KeywordMappingEntity {
+				# KeywordMappingDbWrapper wrapper
+			}
+			
+'			AbstractEntity <|-- RecipeEntity
+'			AbstractEntity <|-- CategoryEntity
+'			AbstractEntity <|-- KeywordEntity
+'			AbstractEntity <|-- OCA\Cookbook.Entity.impl.KeywordMappingEntity
+			
+/'			ImplEntity <|. RecipeEntityImpl
+			ImplEntity <|. CategoryEntityImpl
+			ImplEntity <|. KeywordEntityImpl
+			ImplEntity <|. CategoryMappingEntity
+			ImplEntity <|. KeywordMappingEntity'/
+			
+			RecipeEntityImpl ..|> ImplEntity
+			CategoryEntityImpl ..|> ImplEntity
+			KeywordEntityImpl ..|> ImplEntity
+			CategoryMappingEntity ..|> ImplEntity
+			KeywordMappingEntity ..|> ImplEntity
+			
+			RecipeEntityImpl "1" *-- "0..1" OCA.Cookbook.Entity.impl.CategoryMappingEntity
+			CategoryEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.CategoryMappingEntity
+			
+			RecipeEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.KeywordMappingEntity
+			KeywordEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.KeywordMappingEntity
+			
+		}
+		
+		RecipeEntity <|.. OCA.Cookbook.Entity.impl.RecipeEntityImpl
+		CategoryEntity <|.. OCA.Cookbook.Entity.impl.CategoryEntityImpl
+		KeywordEntity <|.. OCA.Cookbook.Entity.impl.KeywordEntityImpl
+		
+		Entity <|.. RecipeEntity
+		Entity <|.. CategoryEntity
+		Entity <|.. KeywordEntity
+		
+	}
+	
+	namespace Db {
+		
+		abstract class AbstractDbWrapper {
+			# IDbConnection db
+			+ abstract createEntity() : Entity
+			- array cache
+			- bool cacheValid
+			# abstract fetchDatabase() : array
+			+ getEntites() : array
+			# setCache(array) : void
+		}
+		note right
+		Cache representys the current state
+		of the database tables.
+		endnote
+		
+		class RecipeDbWrapper {
+			+ createEntity() : RecipeEntity
+			+ store(RecipeEntityImpl) : void
+			- storeNew(RecipeEntityImpl) : void
+			- update(RecipeEntityImpl) : void
+		}
+		class CategoryDbWrapper {
+			+ createEntity() : CategoryEntity
+			+ store(CategoryEntityImpl) : void
+			- storeNew(CategoryEntityImpl) : void
+			- update(CategoryEntityImpl) : void
+		}
+		class KeywordDbWrapper {
+			+ createEntity() : KeywordEntity
+			+ store(KeywordEntityImpl) : void
+			- storeNew(KeywordEntityImpl) : void
+			- update(KeywordEntityImpl) : void
+		}
+		class CategoryMappingDbWrapper {
+			+ createEntity() : CategoryMappingEntity
+		}
+		class KeywordMappingDbWrapper {
+			+ createEntity() : KeywordMappingEntity
+		}
+		
+		class DbWrapperSerciveLocation {}
+		
+		AbstractDbWrapper <|-- RecipeDbWrapper
+		AbstractDbWrapper <|-- CategoryDbWrapper
+		AbstractDbWrapper <|-- KeywordDbWrapper
+		AbstractDbWrapper <|-- CategoryMappingDbWrapper
+		AbstractDbWrapper <|-- KeywordMappingDbWrapper
+		
+		RecipeDbWrapper "1" o-- "1" DbWrapperSerciveLocation
+		CategoryDbWrapper "1" o-- "1" DbWrapperSerciveLocation
+		KeywordDbWrapper "1" o-- "1" DbWrapperSerciveLocation
+		CategoryMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocation
+		KeywordMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocation
+	}
+	
+}
+
+@enduml
