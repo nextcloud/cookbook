@@ -18,7 +18,8 @@ namespace OCA.Cookbook {
 			+ getCategory() : CategoryEntity
 			+ setCategory(CategoryEntity) : void
 			+ getKeywords() : array
-			+ setKeywords(array) : void
+			+ addKeyword(KeywordEntity) : void
+			+ removeKeyword(KeywordEntity) : void
 		}
 		
 		interface CategoryEntity {
@@ -42,10 +43,12 @@ namespace OCA.Cookbook {
 			
 '			class AbstractEntity {}
 			
-			interface ImplEntity {
+			abstract class AbstractEntity {
+				- bool persisted
 				+ isPersisted() : bool
 				+ clone() : ImplEntity
-				+ isSame(ImplEntity) : bool
+				+ isSame(AbstractEntity) : bool
+				+ equals(AbstractEntity) : bool
 			}
 			
 			class RecipeEntityImpl {
@@ -84,11 +87,11 @@ namespace OCA.Cookbook {
 			ImplEntity <|. CategoryMappingEntity
 			ImplEntity <|. KeywordMappingEntity'/
 			
-			RecipeEntityImpl ..|> ImplEntity
-			CategoryEntityImpl ..|> ImplEntity
-			KeywordEntityImpl ..|> ImplEntity
-			CategoryMappingEntity ..|> ImplEntity
-			KeywordMappingEntity ..|> ImplEntity
+			RecipeEntityImpl --|> AbstractEntity
+			CategoryEntityImpl --|> AbstractEntity
+			KeywordEntityImpl --|> AbstractEntity
+			CategoryMappingEntity --|> AbstractEntity
+			KeywordMappingEntity --|> AbstractEntity
 			
 			RecipeEntityImpl "1" *-- "0..1" OCA.Cookbook.Entity.impl.CategoryMappingEntity
 			CategoryEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.CategoryMappingEntity
@@ -118,26 +121,31 @@ namespace OCA.Cookbook {
 			# abstract fetchDatabase() : array
 			+ getEntites() : array
 			# setCache(array) : void
+			+ getServiceLocator() : DbWrapperSerciveLocator
 		}
 		note right
 		Cache representys the current state
-		of the database tables.
+		of the database tables as clones.
 		endnote
 		
 		class RecipeDbWrapper {
-			+ createEntity() : RecipeEntity
+			'--
+			+ createEntity() : RecipeEntityImpl
 			+ store(RecipeEntityImpl) : void
 			- storeNew(RecipeEntityImpl) : void
 			- update(RecipeEntityImpl) : void
+			/'..
+			+ addKeyword(RecipeEntityImpl, KeywordEntityImpl) : KeywordMappingEntity
+			+ setCategory(RecipeEntityImpl, CategoryEntityImpl) : CategoryMappingEntity'/
 		}
 		class CategoryDbWrapper {
-			+ createEntity() : CategoryEntity
+			+ createEntity() : CategoryEntityImpl
 			+ store(CategoryEntityImpl) : void
 			- storeNew(CategoryEntityImpl) : void
 			- update(CategoryEntityImpl) : void
 		}
 		class KeywordDbWrapper {
-			+ createEntity() : KeywordEntity
+			+ createEntity() : KeywordEntityImpl
 			+ store(KeywordEntityImpl) : void
 			- storeNew(KeywordEntityImpl) : void
 			- update(KeywordEntityImpl) : void
@@ -149,7 +157,13 @@ namespace OCA.Cookbook {
 			+ createEntity() : KeywordMappingEntity
 		}
 		
-		class DbWrapperSerciveLocation {}
+		class DbWrapperSerciveLocator {
+			+ getRecipeDbWrapoper() : RecipeDbWrapper
+			+ getCategoryDbWrapper() : CategoryDbWrapper
+			+ getKeywordDbWrapper() : KeywordDbWrapper
+			+ getCategoryMappingDbWrapper() : CategoryMappingDbWrapper
+			+ getKeywordMappingDbWrapper() : KeywordMappingDbWrapper
+		}
 		
 		AbstractDbWrapper <|-- RecipeDbWrapper
 		AbstractDbWrapper <|-- CategoryDbWrapper
@@ -157,11 +171,11 @@ namespace OCA.Cookbook {
 		AbstractDbWrapper <|-- CategoryMappingDbWrapper
 		AbstractDbWrapper <|-- KeywordMappingDbWrapper
 		
-		RecipeDbWrapper "1" o-- "1" DbWrapperSerciveLocation
-		CategoryDbWrapper "1" o-- "1" DbWrapperSerciveLocation
-		KeywordDbWrapper "1" o-- "1" DbWrapperSerciveLocation
-		CategoryMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocation
-		KeywordMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocation
+		RecipeDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		CategoryDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		KeywordDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		CategoryMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		KeywordMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocator
 	}
 	
 }
