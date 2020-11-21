@@ -5,8 +5,9 @@ namespace OCA.Cookbook {
 	namespace Entity {
 		
 		interface Entity {
-			+persist()
-			+remove()
+			+ persist() : void
+			+ remove() : void
+			+ reload() : void
 		}
 		
 		interface RecipeEntity {
@@ -72,10 +73,23 @@ namespace OCA.Cookbook {
 				# KeywordDbWrapper wrapper
 			}
 			
+			class CategoryMappingEntity {
+			}
+			
+			class KeywordMappingEntity {
+			}
+			
 			RecipeEntityImpl --|> AbstractEntity
 			CategoryEntityImpl --|> AbstractEntity
 			KeywordEntityImpl --|> AbstractEntity
 			
+			CategoryMappingEntity -|> AbstractEntity
+			AbstractEntity <|- KeywordMappingEntity
+			
+			RecipeEntityImpl "1" *--x CategoryMappingEntity
+			RecipeEntityImpl "1" *--x KeywordMappingEntity
+			CategoryEntityImpl "1" *--x CategoryMappingEntity
+			KeywordEntityImpl "1" *--x KeywordMappingEntity
 			
 		}
 		
@@ -141,10 +155,28 @@ namespace OCA.Cookbook {
 			+ getRecipes(KeywordEntityImpl) : array
 		}
 		
+		class CategoryMappingsDbWrapper {
+			+ createEntity() : CategoryMappingEntity
+			+ store(CategoryMappingEntity) : void
+			- createNew(CategoryMappingEntity) : void
+			- update(CategoryMappingEntity) : void
+			+ remove(CategoryMappingEntity) : void
+		}
+		
+		class KeywordMappingsDbWrapper {
+			+ createEntity() : KeywordMappingEntity
+			+ store(KeywordMappingEntity) : void
+			- createNew(KeywordMappingEntity) : void
+			- update(KeywordMappingEntity) : void
+			+ remove(KeywordMappingEntity) : void
+		}
+		
 		class DbWrapperSerciveLocator {
 			+ getRecipeDbWrapoper() : RecipeDbWrapper
 			+ getCategoryDbWrapper() : CategoryDbWrapper
 			+ getKeywordDbWrapper() : KeywordDbWrapper
+			+ getKeywordMappingDbWrapper() : KeywordMappingsDbWrapper
+			+ getCategoryMappingDbWrapper() : CategoryMappingsDbWrapper
 		}
 		
 		AbstractDbWrapper <|-- RecipeDbWrapper
@@ -154,8 +186,17 @@ namespace OCA.Cookbook {
 		RecipeDbWrapper "1" o-- "1" DbWrapperSerciveLocator
 		CategoryDbWrapper "1" o-- "1" DbWrapperSerciveLocator
 		KeywordDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		
+		CategoryMappingsDbWrapper "1" o- "1" DbWrapperSerciveLocator
+		DbWrapperSerciveLocator "1" -o "1" KeywordMappingsDbWrapper
+		
+		AbstractDbWrapper <|--- CategoryMappingsDbWrapper
+		AbstractDbWrapper <|--- KeywordMappingsDbWrapper
+		
+		DbWrapperSerciveLocator -[hidden]-> AbstractDbWrapper
 	}
 	
 }
+
 
 @enduml
