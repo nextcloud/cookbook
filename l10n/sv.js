@@ -16,6 +16,7 @@ OC.L10N.register(
     "Loading…" : "Läser in…",
     "Page not found" : "Sidan hittades inte",
     "Category" : "Kategori",
+    "Search for recipes" : "Sök efter recept",
     "Are you sure you want to delete this recipe?" : "Är du säker på att du vill ta bort detta recept?",
     "Create recipe" : "Skapa recept",
     "Rescan library" : "Uppdatera bibliotek",
