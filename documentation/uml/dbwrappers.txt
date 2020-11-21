@@ -41,14 +41,12 @@ namespace OCA.Cookbook {
 		
 		namespace impl {
 			
-'			class AbstractEntity {}
-			
 			abstract class AbstractEntity {
 				- bool persisted
 				+ isPersisted() : bool
-				+ clone() : ImplEntity
-				+ isSame(AbstractEntity) : bool
-				+ equals(AbstractEntity) : bool
+				+ abstract clone() : ImplEntity
+				+ abstract isSame(AbstractEntity) : bool
+				+ abstract equals(AbstractEntity) : bool
 			}
 			
 			class RecipeEntityImpl {
@@ -56,6 +54,12 @@ namespace OCA.Cookbook {
 				#name
 				#userId
 				# RecipeDbWrapper wrapper
+				# CategoryEntityImpl newCategory
+				# array newKeywords
+				# array removedKeywords
+				+ getNewCategory() : CategoryEntityImpl | null
+				+ getNewKeywords() : array
+				+ getRemovedKeywords() : array
 			}
 			
 			class CategoryEntityImpl {
@@ -68,36 +72,10 @@ namespace OCA.Cookbook {
 				# KeywordDbWrapper wrapper
 			}
 			
-			class CategoryMappingEntity {
-				# CategoryMappingDbWrapper wrapper
-			}
-			
-			class KeywordMappingEntity {
-				# KeywordMappingDbWrapper wrapper
-			}
-			
-'			AbstractEntity <|-- RecipeEntity
-'			AbstractEntity <|-- CategoryEntity
-'			AbstractEntity <|-- KeywordEntity
-'			AbstractEntity <|-- OCA\Cookbook.Entity.impl.KeywordMappingEntity
-			
-/'			ImplEntity <|. RecipeEntityImpl
-			ImplEntity <|. CategoryEntityImpl
-			ImplEntity <|. KeywordEntityImpl
-			ImplEntity <|. CategoryMappingEntity
-			ImplEntity <|. KeywordMappingEntity'/
-			
 			RecipeEntityImpl --|> AbstractEntity
 			CategoryEntityImpl --|> AbstractEntity
 			KeywordEntityImpl --|> AbstractEntity
-			CategoryMappingEntity --|> AbstractEntity
-			KeywordMappingEntity --|> AbstractEntity
 			
-			RecipeEntityImpl "1" *-- "0..1" OCA.Cookbook.Entity.impl.CategoryMappingEntity
-			CategoryEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.CategoryMappingEntity
-			
-			RecipeEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.KeywordMappingEntity
-			KeywordEntityImpl "1" *-- "*" OCA.Cookbook.Entity.impl.KeywordMappingEntity
 			
 		}
 		
@@ -129,53 +107,53 @@ namespace OCA.Cookbook {
 		endnote
 		
 		class RecipeDbWrapper {
-			'--
+'			- array idMap
+			--
 			+ createEntity() : RecipeEntityImpl
 			+ store(RecipeEntityImpl) : void
 			- storeNew(RecipeEntityImpl) : void
 			- update(RecipeEntityImpl) : void
-			/'..
-			+ addKeyword(RecipeEntityImpl, KeywordEntityImpl) : KeywordMappingEntity
+			+ remove(RecipeEntityImpl) : void
+			..
+			/'+ addKeyword(RecipeEntityImpl, KeywordEntityImpl) : KeywordMappingEntity
 			+ setCategory(RecipeEntityImpl, CategoryEntityImpl) : CategoryMappingEntity'/
+			+ getCategory(RecipeEntityImpl) : CategoryEntityImpl
+			+ getKeywords(RecipeEntityImpl) : array
 		}
 		class CategoryDbWrapper {
+			--
 			+ createEntity() : CategoryEntityImpl
 			+ store(CategoryEntityImpl) : void
 			- storeNew(CategoryEntityImpl) : void
 			- update(CategoryEntityImpl) : void
+			+ remove(CategoryEntityImpl) : void
+			..
+			+ getRecipes(CategoryEntityImpl) : array
 		}
 		class KeywordDbWrapper {
+			--
 			+ createEntity() : KeywordEntityImpl
 			+ store(KeywordEntityImpl) : void
 			- storeNew(KeywordEntityImpl) : void
 			- update(KeywordEntityImpl) : void
-		}
-		class CategoryMappingDbWrapper {
-			+ createEntity() : CategoryMappingEntity
-		}
-		class KeywordMappingDbWrapper {
-			+ createEntity() : KeywordMappingEntity
+			+ remove(KeywordEntityImpl) : void
+			..
+			+ getRecipes(KeywordEntityImpl) : array
 		}
 		
 		class DbWrapperSerciveLocator {
 			+ getRecipeDbWrapoper() : RecipeDbWrapper
 			+ getCategoryDbWrapper() : CategoryDbWrapper
 			+ getKeywordDbWrapper() : KeywordDbWrapper
-			+ getCategoryMappingDbWrapper() : CategoryMappingDbWrapper
-			+ getKeywordMappingDbWrapper() : KeywordMappingDbWrapper
 		}
 		
 		AbstractDbWrapper <|-- RecipeDbWrapper
 		AbstractDbWrapper <|-- CategoryDbWrapper
 		AbstractDbWrapper <|-- KeywordDbWrapper
-		AbstractDbWrapper <|-- CategoryMappingDbWrapper
-		AbstractDbWrapper <|-- KeywordMappingDbWrapper
 		
 		RecipeDbWrapper "1" o-- "1" DbWrapperSerciveLocator
 		CategoryDbWrapper "1" o-- "1" DbWrapperSerciveLocator
 		KeywordDbWrapper "1" o-- "1" DbWrapperSerciveLocator
-		CategoryMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocator
-		KeywordMappingDbWrapper "1" o-- "1" DbWrapperSerciveLocator
 	}
 	
 }
