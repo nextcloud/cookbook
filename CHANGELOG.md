@@ -60,6 +60,8 @@
   [#435](https://github.com/nextcloud/cookbook/pull/435) @christianlupus
 - Images in recipe list are lazily loaded
   [#413](https://github.com/nextcloud/cookbook/pull/413/) @seyfeb
+- Improved keyword filtering in recipe lists
+  [#408](https://github.com/nextcloud/cookbook/pull/408/) @seyfeb
 
 ### Fixed
 - Add a min PHP restriction in the metadata
