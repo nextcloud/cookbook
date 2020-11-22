@@ -11,7 +11,7 @@
 	            <div class="details">
                 <p v-if="keywords.length">
                     <ul v-if="keywords.length">
-                        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :keyword="keyword"  v-on:keyword-clicked="keywordClicked(keyword)" />
+                        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :name="keyword"  v-on:keyword-clicked="keywordClicked(keyword)" />
                     </ul>
                 </p>
                 <p class="dates">
