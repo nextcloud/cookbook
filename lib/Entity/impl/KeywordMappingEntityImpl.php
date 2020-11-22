@@ -32,38 +32,38 @@ class KeywordMappingEntityImpl extends AbstractEntity {
 	}
 	
 	/**
-     * @return \OCA\Cookbook\Entity\RecipeEntity
+     * @return RecipeEntityImpl
      */
-    public function getRecipe()
+    public function getRecipe(): RecipeEntityImpl
     {
         return $this->recipe;
     }
 
 	/**
-     * @return \OCA\Cookbook\Entity\KeywordEntity
+     * @return KeywordEntityImpl
      */
-    public function getKeyword()
+    public function getKeyword(): KeywordEntityImpl
     {
         return $this->keyword;
     }
 
 	/**
-     * @param \OCA\Cookbook\Entity\RecipeEntity $recipe
+     * @param RecipeEntityImpl $recipe
      */
-    public function setRecipe($recipe)
+    public function setRecipe(RecipeEntityImpl $recipe)
     {
         $this->recipe = $recipe;
     }
 
 	/**
-     * @param \OCA\Cookbook\Entity\KeywordEntity $keyword
+     * @param KeywordEntityImpl $keyword
      */
-    public function setKeyword($keyword)
+    public function setKeyword(KeywordEntityImpl $keyword)
     {
         $this->keyword = $keyword;
     }
     
-	public function clone(): AbstractEntity
+	public function clone(): KeywordMappingEntityImpl
     {
     	$ret = $this->wrapper->createEntity();
     	

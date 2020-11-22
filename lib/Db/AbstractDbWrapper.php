@@ -46,7 +46,7 @@ abstract class AbstractDbWrapper {
 	 *
 	 * @return array The entities in the database.
 	 */
-	protected function getEntries(): array {
+	public function getEntries(): array {
 		if (! $this->initialized) {
 			$this->reloadCache();
 		}
@@ -103,6 +103,4 @@ abstract class AbstractDbWrapper {
         return $this->wrapperLocator;
     }
 
-	
-	
 }

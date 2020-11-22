@@ -37,33 +37,33 @@ class CategoryMappingEntityImpl extends AbstractEntity {
 	}
 	
 	/**
-	 * @return \OCA\Cookbook\Entity\RecipeEntity
+	 * @return RecipeEntityImpl
 	 */
-	public function getRecipe()
+	public function getRecipe(): RecipeEntityImpl
 	{
 		return $this->recipe;
 	}
 	
 	/**
-     * @return \OCA\Cookbook\Entity\CategoryEntity
+     * @return CategoryEntityImpl
      */
-    public function getCategory()
+    public function getCategory(): CategoryEntityImpl
     {
         return $this->category;
     }
 
 	/**
-     * @param \OCA\Cookbook\Entity\RecipeEntity $recipe
+     * @param RecipeEntityImpl $recipe
      */
-    public function setRecipe($recipe)
+    public function setRecipe(RecipeEntityImpl $recipe)
     {
         $this->recipe = $recipe;
     }
 
 	/**
-     * @param \OCA\Cookbook\Entity\CategoryEntity $category
+     * @param CategoryEntityImpl $category
      */
-    public function setCategory($category)
+    public function setCategory(CategoryEntityImpl $category)
     {
         $this->category = $category;
     }

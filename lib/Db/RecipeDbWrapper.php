@@ -7,6 +7,11 @@ use OCP\IDBConnection;
 use OCA\Cookbook\Exception\EntityNotFoundException;
 use OCP\IL10N;
 use OCA\Cookbook\Exception\InvalidDbStateException;
+use OCA\Cookbook\Entity\impl\CategoryEntityImpl;
+use OCA\Cookbook\Entity\impl\KeywordEntityImpl;
+use OCA\Cookbook\Entity\impl\RecipeEntityImpl;
+use OCA\Cookbook\Entity\impl\CategoryMappingEntityImpl;
+use OCA\Cookbook\Entity\impl\KeywordMappingEntityImpl;
 
 class RecipeDbWrapper extends AbstractDbWrapper {
 	
@@ -35,7 +40,6 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	}
 	
 	protected function fetchDatabase(): array {
-		// FIXME
 		$qb = $this->db->getQueryBuilder();
 		
 		$qb ->select('id', 'name')
@@ -48,7 +52,8 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		while($row = $res->fetch())
 		{
-			$recipe = $this->createEntity(); // XXX Better create directly?
+			$recipe = $this->createEntity();
+			
 			$recipe->setName($row['name']);
 			$recipe->setId($row['id']);
 			
@@ -58,56 +63,92 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		return $ret;
 	}
 	
-	public function store(RecipeEntity $recipe): void {
-		// FIXME
-		
-		$qb = $this->db->getQueryBuilder();
-		
-		if($recipe->getId() == -1)
-		{
-			$qb ->insert(self::NAMES)
-				->values([
-					'name' => $recipe->getName(),
-					'user_id' => $this->userId
-				]);
-		}
-		else {
-			$qb ->update(self::NAMES)
-				->set('name', ':name')
-				->where('recipe_id = :rid');
-			$qb->setParameter('rid', $recipe->getId());
-			$qb->setParameter('name', $recipe->getName());
-		}
-		
-		$qb->execute();
-		$this->invalidateCache();
-		
-		if($recipe->getId() == -1){
-			$recipe->setId($qb->getLastInsertId());
-		}
-	}
-	
-	public function createEntity(): RecipeEntity {
-		$ret = new RecipeEntity($this);
+	public function createEntity(): RecipeEntityImpl {
+		$ret = new RecipeEntityImpl($this);
 		$ret->setId(-1);
 		return $ret;
 	}
 	
-	public function remove(RecipeEntity $recipe): void {
-		// FIXME
-		if($recipe->getId() == -1)
+	public function store(RecipeEntityImpl $recipe): void {
+		if($recipe->isPersisted())
+		{
+			$this->storeNew($recipe);
+		}
+		else 
+		{
+			$this->store($recipe);
+		}
+	}
+	
+	private function storeNew(RecipeEntityImpl $recipe): void {
+		$qb = $this->db->getQueryBuilder();
+		
+		$cache = $this->getEntries();
+		
+		$qb ->insert(self::NAMES)
+			->values([
+				'name' => $recipe->getName(),
+				'user_id' => $this->userId
+			]);
+			
+		$qb->execute();
+		$recipe->setId($qb->getLastInsertId());
+		
+		$cache[] = $recipe->clone();
+		$this->setEntites($cache);
+		
+		// FIXME Foreign eleemnts
+	}
+	
+	private function update(RecipeEntityImpl $recipe): void {
+		$qb = $this->db->getQueryBuilder();
+		
+		$cache = $this->getEntries();
+		
+		$qb ->update(self::NAMES)
+			->set('name', ':name')
+			->where('recipe_id = :rid');
+		$qb->setParameter('rid', $recipe->getId());
+		$qb->setParameter('name', $recipe->getName());
+		
+		$qb->execute();
+		
+		$cache = array_map(function(RecipeEntityImpl $r) use ($recipe) {
+			if($r->isSame($recipe))
+			{
+				return $recipe;
+			}
+			else {
+				return $r;
+			}
+		}, $cache);
+		$this->setEntites($cache);
+		
+		// FIXME Foreign elemtns
+	}
+	
+	public function remove(RecipeEntityImpl $recipe): void {
+		if(! $recipe->isPersisted())
 		{
 			throw new InvalidDbStateException($this->l->t('Cannot remove recipe that was not yet saved.'));
 		}
 		
+		// FIXME Remove all foreign elements
+		
 		$qb = $this->db->getQueryBuilder();
+		
+		$cache = $this->getEntries();
 		
 		$qb ->delete(self::NAMES)
 			->where('recipe_id = :rid');
 		$qb->setParameter('rid', $recipe->getId());
 		
 		$qb->execute();
-		$this->invalidateCache();
+		
+		$cache = array_filter($cache, function (RecipeEntityImpl $r) use ($recipe) {
+			return ! $r->isSame($recipe);
+		});
+		$this->setEntites($cache);
 	}
 	
 	public function getRecipeById(int $id): RecipeEntity {
@@ -124,4 +165,40 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		throw new EntityNotFoundException($this->l->t('Recipe with id %d was not found.', $id));
 	}
+	
+	public function getCategory(RecipeEntity $recipe): ?CategoryEntityImpl {
+		$mappings = $this->getWrapperServiceLocator()->getCategoryMappingDbWrapper()->getEntries();
+		$mappings = array_filter($mappings, function (CategoryMappingEntityImpl $c) use ($recipe) {
+			return $c->getRecipe()->isSame($recipe);
+		});
+		
+		if(count($mappings) == 0)
+		{
+			return null;
+		}
+		if(count($mappings) > 1)
+		{
+			throw new InvalidDbStateException($this->l->t('Multiple categopries for a single recipe found.'));
+		}
+		
+		return $mappings[0]->getCategory();
+	}
+	
+	/**
+	 * @param RecipeEntity $recipe
+	 * @return KeywordEntityImpl[]
+	 */
+	public function getKeywords(RecipeEntity $recipe): array {
+		$mappings = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper()->getEntries();
+		$mappings = array_filter($mappings, function (KeywordMappingEntityImpl $m) use ($recipe) {
+			return $m->getRecipe()->isSame($recipe);
+		});
+		
+		$keywords = array_map(function(KeywordMappingEntityImpl $m) {
+			return $m->getKeyword();
+		}, $mappings);
+		
+		return $keywords;
+	}
+	
 }
