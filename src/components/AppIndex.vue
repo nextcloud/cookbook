@@ -153,6 +153,18 @@ export default {
         sortKeywords: function() {
             // Sort by number recipes
             this.keywords = this.keywords.sort((k1, k2) => k2.count - k1.count)
+
+            // Move unselectable keywords to the end
+            let tmp = []
+            for (let i=this.keywords.length-1; i>=0; --i) {
+                if (!this.keywordContainedInVisibleRecipes(this.keywords[i])) {
+                    let elm = this.keywords.splice(i, 1)[0]
+                    if (elm) {
+                        tmp.push(elm)
+                    }
+                }
+            }
+            this.keywords = this.keywords.concat(tmp)
         },
     },
     mounted () {
