@@ -167,21 +167,28 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	}
 	
 	public function getCategory(RecipeEntity $recipe): ?CategoryEntityImpl {
-		$mappings = $this->getWrapperServiceLocator()->getCategoryMappingDbWrapper()->getEntries();
-		$mappings = array_filter($mappings, function (CategoryMappingEntityImpl $c) use ($recipe) {
-			return $c->getRecipe()->isSame($recipe);
-		});
+		$mappings = $this->getRecipeCategoryMappings($recipe);
 		
 		if(count($mappings) == 0)
 		{
 			return null;
 		}
+		
+		return $mappings[0]->getCategory();
+	}
+	
+	private function getRecipeCategoryMappings(RecipeEntityImpl $recipe): array {
+		$mappings = $this->getWrapperServiceLocator()->getCategoryMappingDbWrapper()->getEntries();
+		$mappings = array_filter($mappings, function (CategoryMappingEntityImpl $c) use ($recipe) {
+			return $c->getRecipe()->isSame($recipe);
+		});
+			
 		if(count($mappings) > 1)
 		{
 			throw new InvalidDbStateException($this->l->t('Multiple categopries for a single recipe found.'));
 		}
 		
-		return $mappings[0]->getCategory();
+		return $mappings;
 	}
 	
 	/**
@@ -189,16 +196,21 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	 * @return KeywordEntityImpl[]
 	 */
 	public function getKeywords(RecipeEntity $recipe): array {
-		$mappings = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper()->getEntries();
-		$mappings = array_filter($mappings, function (KeywordMappingEntityImpl $m) use ($recipe) {
-			return $m->getRecipe()->isSame($recipe);
-		});
-		
+		$mappings = $this->getRecipeKeywordMappings($recipe);
 		$keywords = array_map(function(KeywordMappingEntityImpl $m) {
 			return $m->getKeyword();
 		}, $mappings);
 		
 		return $keywords;
+	}
+	
+	private function getRecipeKeywordMappings(RecipeEntityImpl $recipe): array {
+		$mappings = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper()->getEntries();
+		$mappings = array_filter($mappings, function (KeywordMappingEntityImpl $m) use ($recipe) {
+			return $m->getRecipe()->isSame($recipe);
+		});
+		
+		return $mappings;
 	}
 	
 }
