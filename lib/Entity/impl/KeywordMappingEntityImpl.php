@@ -5,6 +5,7 @@ namespace  OCA\Cookbook\Entity\impl;
 use OCA\Cookbook\Db\KeywordMappingDbWrapper;
 
 class KeywordMappingEntityImpl extends AbstractEntity {
+	// XXX Add interface?
 	
 	/**
 	 * @var RecipeEntityImpl
@@ -27,7 +28,9 @@ class KeywordMappingEntityImpl extends AbstractEntity {
 	
 	public function persist(): void {
 		$this->wrapper->store($this);
+		$this->setPersisted();
 	}
+	
 	/**
      * @return \OCA\Cookbook\Entity\RecipeEntity
      */
@@ -62,17 +65,27 @@ class KeywordMappingEntityImpl extends AbstractEntity {
     
 	public function clone(): AbstractEntity
     {
-		// FIXME
+    	$ret = $this->wrapper->createEntity();
+    	
+    	$ret->setKeyword($this->keyword);
+    	$ret->setRecipe($this->recipe);
+    	
+    	if($this->isPersisted())
+    	{
+    		$ret->setPersisted();
+    	}
+    	
+    	return $ret;
 	}
 
 	protected function equalsImpl(AbstractEntity $other): bool
     {
-		// FIXME
+    	return $this->keyword->isSame($other->keyword) && $this->recipe->isSame($other->recipe);
 	}
 
 	protected function isSameImpl(AbstractEntity $other): bool
     {
-		// FIXME
+		return $this->equalsImpl($other);
 	}
 
 }

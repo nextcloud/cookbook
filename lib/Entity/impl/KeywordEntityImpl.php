@@ -44,6 +44,7 @@ class KeywordEntityImpl extends AbstractEntity implements KeywordEntity {
 
 	public function persist(): void {
 		$this->wrapper->store($this);
+		$this->setPersisted();
 	}
 	
 	public function reload(): void
@@ -51,29 +52,35 @@ class KeywordEntityImpl extends AbstractEntity implements KeywordEntity {
 		// FIXME
 	}
 
-	public function clone(): AbstractEntity
+	public function clone(): KeywordEntityImpl
 	{
-		// FIXME
+		$ret = $this->wrapper->createEntity();
+		$ret->name = $this->name;
+		if($this->isPersisted())
+		{
+			$ret->setPersisted();
+		}
+		return $ret;
 	}
 
 	protected function equalsImpl(AbstractEntity $other): bool
 	{
-		// FIXME
+		return $this->name === $other->name;
 	}
 
 	protected function isSameImpl(AbstractEntity $other): bool
 	{
-		// FIXME
+		return $this->name === $other->name;
 	}
 
 	public function getRecipes(): array
 	{
-		// FIXME
+		return $this->wrapper->getRecipes($this);
 	}
 
 	public function remove(): void
 	{
-		// FIXME
+		$this->wrapper->remove($this);
 	}
 
 }

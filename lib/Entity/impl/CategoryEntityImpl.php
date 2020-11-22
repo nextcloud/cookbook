@@ -44,12 +44,17 @@ class CategoryEntityImpl extends AbstractEntity implements CategoryEntity {
 	
 	public function persist(): void {
 		$this->wrapper->store($this);
+		$this->setPersisted();
 	}
 	
 	public function clone(): CategoryEntity
     {
 		$ret = $this->wrapper->createEntity();
 		$ret->setName($this->name);
+		if($this->isPersisted())
+		{
+			$ret->setPersisted();
+		}
 		return $ret;
 	}
 
@@ -65,17 +70,17 @@ class CategoryEntityImpl extends AbstractEntity implements CategoryEntity {
 
 	protected function equalsImpl(AbstractEntity $other): bool
     {
-		// FIXME
+		return $this->name === $other->name;
 	}
 
 	protected function isSameImpl(AbstractEntity $other): bool
     {
-		// FIXME
+		return $this->name === $other->name;
 	}
 
 	public function getRecipes(): array
     {
-		// FIXME
+		return $this->wrapper->getRecipes($this);
 	}
 
 

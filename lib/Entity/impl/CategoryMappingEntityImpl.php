@@ -5,6 +5,7 @@ namespace OCA\Cookbook\Entity\impl;
 use OCA\Cookbook\Db\CategoryMappingDbWrapper;
 
 class CategoryMappingEntityImpl extends AbstractEntity {
+	// XXX Add interface?
 	
 	/**
 	 * @var CategoryMappingDbWrapper
@@ -70,12 +71,15 @@ class CategoryMappingEntityImpl extends AbstractEntity {
 	public function clone(): CategoryMappingEntityImpl
     {
 		$ret = $this->wrapper->createEntity();
+		
 		$ret->setCategory($this->category);
 		$ret->setRecipe($this->recipe);
+		
 		if($this->isPersisted())
 		{
 			$ret->setPersisted();
 		}
+		
 		return $ret;
 	}
 
@@ -86,12 +90,12 @@ class CategoryMappingEntityImpl extends AbstractEntity {
 	
 	protected function equalsImpl(AbstractEntity $other): bool
     {
-		// FIXME
+		return $this->category->isSame($other->category) && $this->recipe->isSame($other->recipe);
 	}
 
 	protected function isSameImpl(AbstractEntity $other): bool
     {
-		// FIXME
+		return $this->equalsImpl($other);
 	}
 
 	
