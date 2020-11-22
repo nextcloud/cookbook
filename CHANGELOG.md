@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Database abstraction added for simpler access
+  [#407](https://github.com/nextcloud/cookbook/pull/407) @christianlupus
+
 ## 0.7.9 - 2021-01-15
 
 ### Changed
