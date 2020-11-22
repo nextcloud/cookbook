@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\Entity\impl;
 
 use OCA\Cookbook\Db\RecipeDbWrapper;
+use OCA\Cookbook\Entity\CategoryEntity;
 use OCA\Cookbook\Entity\KeywordEntity;
 use OCA\Cookbook\Entity\RecipeEntity;
 use OCA\Cookbook\Exception\EntityNotFoundException;
@@ -36,6 +37,11 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	private $newCategory;
 	
 	/**
+	 * @var bool
+	 */
+	private $setNewCategory;
+	
+	/**
 	 * @var KeywordEntity[]
 	 */
 	private $newKeywords;
@@ -54,6 +60,7 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 		$this->wrapper = $wrapper;
 		
 		$this->newCategory = null;
+		$this->setNewCategory = false;
 		$this->newKeywords = [];
 		$this->removedKeywords = [];
 	}
@@ -101,24 +108,20 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	}
 	
 	/**
-     * @return \OCA\Cookbook\Entity\CategoryEntity
+     * @return CategoryEntityImpl
      */
     public function getCategory()
     {
-    	if(! is_null($this->newCategory))
-    	{
-    		return $this->newCategory;
-    	}
-    	
-    	return $this->wrapper->getCategory($this);
+    	return $this->setNewCategory ? $this->newCategory : $this->wrapper->getCategory($this);
     }
 
 	/**
-     * @param \OCA\Cookbook\Entity\CategoryEntity $category
+     * @param CategoryEntity $category
      */
-    public function setCategory($category)
+    public function setCategory(CategoryEntity $category)
     {
     	$this->newCategory = $category;
+    	$this->setNewCategory = true;
     }
 
 	public function remove(): void
@@ -251,5 +254,41 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 		
 		return $oldNumber != $newNumber;
 	}
+	
+	/**
+     * @return ?CategoryEntityImpl
+     */
+    public function getNewCategory(): ?CategoryEntityImpl
+    {
+        return $this->newCategory;
+    }
+
+	/**
+     * @return KeywordEntityImpl[] 
+     */
+    public function getNewKeywords(): array
+    {
+        return $this->newKeywords;
+    }
+
+	/**
+     * @return KeywordEntityImpl[]
+     */
+    public function getRemovedKeywords(): array
+    {
+        return $this->removedKeywords;
+    }
+    
+	/**
+     * @return boolean
+     */
+    public function newCategoryWasSet()
+    {
+        return $this->setNewCategory;
+    }
+
+
+	
+	
 
 }

@@ -87,5 +87,9 @@ class KeywordMappingEntityImpl extends AbstractEntity {
     {
 		return $this->equalsImpl($other);
 	}
+	
+	public function remove(): void {
+		$this->wrapper->remove($this);
+	}
 
 }

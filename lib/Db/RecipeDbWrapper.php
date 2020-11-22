@@ -94,10 +94,33 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		$qb->execute();
 		$recipe->setId($qb->getLastInsertId());
 		
+		// Update cache
 		$cache[] = $recipe->clone();
 		$this->setEntites($cache);
 		
-		// FIXME Foreign eleemnts
+		// Set category mapping
+		$cat = $recipe->getCategory();
+		$cat->persist();
+		
+		$cm = $this->getWrapperServiceLocator()->getCategoryMappingDbWrapper()->createEntity();
+		$cm->setCategory($cat);
+		$cm->setRecipe($recipe);
+		$cm->persist();
+		
+		// Set keyword setting
+		$keywordMapperWrapper = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper();
+		foreach($recipe->getKeywords() as $keyword)
+		{
+			/**
+			 * @var KeywordEntityImpl $keyword
+			 */
+			$keyword->persist();
+			
+			$km = $keywordMapperWrapper->createEntity();
+			$km->setRecipe($recipe);
+			$km->setKeyword($keyword);
+			$km->persist();
+		}
 	}
 	
 	private function update(RecipeEntityImpl $recipe): void {
@@ -113,6 +136,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		$qb->execute();
 		
+		// Update cache
 		$cache = array_map(function(RecipeEntityImpl $r) use ($recipe) {
 			if($r->isSame($recipe))
 			{
@@ -124,7 +148,64 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		}, $cache);
 		$this->setEntites($cache);
 		
-		// FIXME Foreign elemtns
+		// Update the category if needed
+		$newCategory = $recipe->getNewCategory();
+		if($recipe->newCategoryWasSet() && ! is_null($newCategory))
+		{
+			$oldMappings = $this->getRecipeCategoryMappings($recipe);
+			
+			$newCategory->persist();
+			
+			if(count($oldMappings) == 0){
+				// We need to insert a new Mapping
+				$mapping = $this->getWrapperServiceLocator()->getCategoryMappingDbWrapper()->createEntity();
+				$mapping->setCategory($newCategory);
+				$mapping->setRecipe($recipe);
+				$mapping->persist();
+			}
+			else {
+				$mapping = $oldMappings[0];
+				$mapping->setCategory($newCategory);
+				$mapping->persist();
+			}
+		}
+		
+		// Update the keywords
+		$kwWrapper = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper();
+		
+		foreach($recipe->getNewKeywords() as $kw) {
+			/**
+			 * @var KeywordEntityImpl $kw
+			 */
+			$kw->persist();
+			
+			$mapping = $kwWrapper->createEntity();
+			$mapping->setRecipe($recipe);
+			$mapping->setKeyword($kw);
+			$mapping->persist();
+		}
+		
+		$removedKeywords = $recipe->getRemovedKeywords();
+		$currentKwMappings = $this->getRecipeKeywordMappings($recipe);
+		$removingMappings = array_filter($currentKwMappings, function(KeywordMappingEntityImpl $m) use ($removedKeywords){
+			foreach($removedKeywords as $kw){
+				/**
+				 * @var KeywordEntityImpl $kw
+				 */
+				if($m->getKeyword()->isSame($kw))
+				{
+					return true;
+				}
+			}
+			return false;
+		});
+		
+		foreach ($removingMappings as $mapping){
+			/**
+			 * @var KeywordMappingEntityImpl $mapping
+			 */
+			$mapping->remove();
+		}
 	}
 	
 	public function remove(RecipeEntityImpl $recipe): void {
@@ -133,7 +214,22 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 			throw new InvalidDbStateException($this->l->t('Cannot remove recipe that was not yet saved.'));
 		}
 		
-		// FIXME Remove all foreign elements
+		$catMappings = $this->getRecipeCategoryMappings($recipe);
+		foreach($catMappings as $catMapping)
+		{
+			/**
+			 * @var CategoryMappingEntityImpl $catMapping
+			 */
+			$catMapping->remove();
+		}
+		
+		$keywordMappings = $this->getRecipeKeywordMappings($recipe);
+		foreach($keywordMappings as $keywordMapping){
+			/**
+			 * @var KeywordMappingEntityImpl $keywordMapping
+			 */
+			$keywordMapping->remove();
+		}
 		
 		$qb = $this->db->getQueryBuilder();
 		
