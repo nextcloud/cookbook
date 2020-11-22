@@ -56,7 +56,7 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	 * Do not use this constructor directly but create new entities from the corresponding wrapper.
 	 * @param RecipeDbWrapper $wrapper The wrapper to use for DB access
 	 */
-	public function __construct(RecipeDbWrapper $wrapper, IL10N $l){
+	public function __construct(RecipeDbWrapper $wrapper, IL10N $l) {
 		$this->wrapper = $wrapper;
 		
 		$this->newCategory = null;
@@ -108,49 +108,42 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	}
 	
 	/**
-     * @return CategoryEntityImpl
-     */
-    public function getCategory()
-    {
-    	return $this->setNewCategory ? $this->newCategory : $this->wrapper->getCategory($this);
-    }
+	 * @return CategoryEntityImpl
+	 */
+	public function getCategory() {
+		return $this->setNewCategory ? $this->newCategory : $this->wrapper->getCategory($this);
+	}
 
 	/**
-     * @param CategoryEntity $category
-     */
-    public function setCategory(CategoryEntity $category)
-    {
-    	$this->newCategory = $category;
-    	$this->setNewCategory = true;
-    }
+	 * @param CategoryEntity $category
+	 */
+	public function setCategory(CategoryEntity $category) {
+		$this->newCategory = $category;
+		$this->setNewCategory = true;
+	}
 
-	public function remove(): void
-    {
+	public function remove(): void {
 		$this->wrapper->remove($this);
 	}
 	
-	protected function equalsImpl(AbstractEntity $other): bool
-	{
-		if(! $this->isSame($other))
-		{
+	protected function equalsImpl(AbstractEntity $other): bool {
+		if (! $this->isSame($other)) {
 			return false;
 		}
 		
 		// Compare internal structures
-		if($this->name !== $other->name)
-		{
+		if ($this->name !== $other->name) {
 			return false;
 		}
 		
 		// FIXME Compare references as well?
 	}
 
-	public function getKeywords(): array
-	{
+	public function getKeywords(): array {
 		$keywords = $this->wrapper->getKeywords($this);
 		
 		// Filter out all removed keywords
-		foreach($this->removedKeywords as $rkw) {
+		foreach ($this->removedKeywords as $rkw) {
 			$keywords = $this->filterOutKeyword($keywords, $rkw);
 		}
 		
@@ -160,48 +153,42 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 		return $keywords;
 	}
 
-	public function removeKeyword(KeywordEntity $keyword): void
-	{
-		if($this->isKeywordInList($keyword, $this->removedKeywords))
-		{
+	public function removeKeyword(KeywordEntity $keyword): void {
+		if ($this->isKeywordInList($keyword, $this->removedKeywords)) {
 			// The keyword is already mentioned as to be removed.
 			return;
 		}
 		
-		if($this->isKeywordInList($keyword, $this->newKeywords)){
+		if ($this->isKeywordInList($keyword, $this->newKeywords)) {
 			// We recently added the keyword. Remove it simply from the adding list
 			$this->newKeywords = $this->filterOutKeyword($this->newKeywords, $keyword);
-		}
-		else {
+		} else {
 			$dbKeywords = $this->wrapper->getKeywords($this);
 			
-			if($this->isKeywordInList($keyword, $dbKeywords)) {
+			if ($this->isKeywordInList($keyword, $dbKeywords)) {
 				// It is present in the DB, remove it
 				$this->removedKeywords[] = $keyword;
-			}
-			else {
+			} else {
 				// We have the keyword not in the DB.
 				throw new EntityNotFoundException($this->l->t('Cannot remove a keyword not been assigned to recipe.'));
 			}
 		}
 	}
 
-	public function reload(): void
-	{
+	public function reload(): void {
 		// FIXME
 	}
 
-	public function addKeyword(KeywordEntity $keyword): void
-	{
-		if($this->isKeywordInList($keyword, $this->removedKeywords)){
+	public function addKeyword(KeywordEntity $keyword): void {
+		if ($this->isKeywordInList($keyword, $this->removedKeywords)) {
 			// If we should remove the keyword previously, just drop the removal
 			$this->removedKeywords = $this->filterOutKeyword($this->removedKeywords, $keyword);
 			return;
 		}
 		
 		$dbKeywords = $this->wrapper->getKeywords($this);
-		if($this->isKeywordInList($keyword, $dbKeywords)){
-// 			throw new InvalidDbStateException($this->l->t('Cannot add a keyword multiple times.'));
+		if ($this->isKeywordInList($keyword, $dbKeywords)) {
+			// 			throw new InvalidDbStateException($this->l->t('Cannot add a keyword multiple times.'));
 			return;
 			// XXX Better silent ignorance or exception
 		}
@@ -209,13 +196,11 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 		$this->newKeywords[] = $keyword;
 	}
 
-	protected function isSameImpl(AbstractEntity $other): bool
-	{
+	protected function isSameImpl(AbstractEntity $other): bool {
 		return $this->id == $other->id;
 	}
 
-	public function clone(): RecipeEntity
-	{
+	public function clone(): RecipeEntity {
 		$ret = $this->wrapper->createEntity();
 		
 		$ret->id = $this->id;
@@ -224,8 +209,7 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 		$ret->newKeywords = $this->newKeywords;
 		$ret->removedKeywords = $this->removedKeywords;
 		
-		if($this->isPersisted())
-		{
+		if ($this->isPersisted()) {
 			$ret->setPersisted();
 		}
 		
@@ -239,8 +223,7 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	 */
 	private function filterOutKeyword(array $list, KeywordEntityImpl $keyword): array {
 		return array_filter($list, function ($kw) use ($keyword) {
-			if($keyword->equals($kw))
-			{
+			if ($keyword->equals($kw)) {
 				return false;
 			}
 			return true;
@@ -256,39 +239,30 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	}
 	
 	/**
-     * @return ?CategoryEntityImpl
-     */
-    public function getNewCategory(): ?CategoryEntityImpl
-    {
-        return $this->newCategory;
-    }
+	 * @return ?CategoryEntityImpl
+	 */
+	public function getNewCategory(): ?CategoryEntityImpl {
+		return $this->newCategory;
+	}
 
 	/**
-     * @return KeywordEntityImpl[] 
-     */
-    public function getNewKeywords(): array
-    {
-        return $this->newKeywords;
-    }
+	 * @return KeywordEntityImpl[]
+	 */
+	public function getNewKeywords(): array {
+		return $this->newKeywords;
+	}
 
 	/**
-     * @return KeywordEntityImpl[]
-     */
-    public function getRemovedKeywords(): array
-    {
-        return $this->removedKeywords;
-    }
-    
-	/**
-     * @return boolean
-     */
-    public function newCategoryWasSet()
-    {
-        return $this->setNewCategory;
-    }
-
-
+	 * @return KeywordEntityImpl[]
+	 */
+	public function getRemovedKeywords(): array {
+		return $this->removedKeywords;
+	}
 	
-	
-
+	/**
+	 * @return boolean
+	 */
+	public function newCategoryWasSet() {
+		return $this->setNewCategory;
+	}
 }

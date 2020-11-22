@@ -7,7 +7,6 @@ use OCP\IDBConnection;
 use OCA\Cookbook\Exception\InvalidDbStateException;
 
 class KeywordMappingDbWrapper extends AbstractDbWrapper {
-	
 	private const KEYWORDS = 'cookbook_keywords';
 	
 	/**
@@ -70,15 +69,13 @@ class KeywordMappingDbWrapper extends AbstractDbWrapper {
 	 * @param KeywordMappingEntityImpl $category The entity to store
 	 */
 	public function store(KeywordMappingEntityImpl $mapping): void {
-		if(! $mapping->getRecipe()->isPersisted()){
+		if (! $mapping->getRecipe()->isPersisted()) {
 			throw new InvalidDbStateException($this->l->t('The recipe was not stored to the database yet. No id known.'));
 		}
 		
-		if($mapping->isPersisted())
-		{
+		if ($mapping->isPersisted()) {
 			$this->update($mapping);
-		}
-		else {
+		} else {
 			$this->storeNew($mapping);
 		}
 	}
@@ -114,12 +111,10 @@ class KeywordMappingDbWrapper extends AbstractDbWrapper {
 		
 		$qb->execute();
 		
-		$cache = array_map(function(KeywordMappingEntityImpl $m) use ($mapping) {
-			if($m->isSame($mapping))
-			{
+		$cache = array_map(function (KeywordMappingEntityImpl $m) use ($mapping) {
+			if ($m->isSame($mapping)) {
 				return $mapping;
-			}
-			else {
+			} else {
 				return $m;
 			}
 		}, $cache);
@@ -138,10 +133,9 @@ class KeywordMappingDbWrapper extends AbstractDbWrapper {
 		
 		$qb->execute();
 		
-		$cache = array_filter($cache, function(KeywordMappingEntityImpl $m) use ($mapping) {
+		$cache = array_filter($cache, function (KeywordMappingEntityImpl $m) use ($mapping) {
 			return ! $m->isSame($mapping);
 		});
 		$this->setEntites($cache);
 	}
-	
 }

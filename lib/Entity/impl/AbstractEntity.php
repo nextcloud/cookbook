@@ -11,8 +11,7 @@ abstract class AbstractEntity {
 	 */
 	private $persisted;
 	
-	public function __construct($persisted = false)
-	{
+	public function __construct($persisted = false) {
 		$this->persisted = $persisted;
 	}
 	
@@ -28,19 +27,17 @@ abstract class AbstractEntity {
 		$this->persisted = true;
 	}
 	
-	abstract function clone(): AbstractEntity;
+	abstract public function clone(): AbstractEntity;
 	
 	public function isSame(AbstractEntity $other): bool {
-		if(get_class($this) !== get_class($other))
-		{
+		if (get_class($this) !== get_class($other)) {
 			throw new InvalidComponentType();
 		}
 		
 		return $this->isSameImpl($other);
 	}
 	public function equals(AbstractEntity $other): bool {
-		if(get_class($this) !== get_class($other))
-		{
+		if (get_class($this) !== get_class($other)) {
 			throw new InvalidComponentType();
 		}
 		

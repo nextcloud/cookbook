@@ -9,7 +9,6 @@ use OCA\Cookbook\Entity\impl\KeywordMappingEntityImpl;
 use OCA\Cookbook\Entity\impl\RecipeEntityImpl;
 
 class KeywordDbWrapper extends AbstractDbWrapper {
-	
 	private const KEYWORDS = 'cookbook_keywords';
 	
 	/**
@@ -73,7 +72,7 @@ class KeywordDbWrapper extends AbstractDbWrapper {
 	 * @param KeywordEntity $keyword
 	 * @return RecipeEntityImpl[] The recipes associated with the keyword
 	 */
-	public function getRecipes(KeywordEntity $keyword): array{
+	public function getRecipes(KeywordEntity $keyword): array {
 		$mappings = $this->wrapperLocator->getKeywordMappingDbWrapper()->getEntries();
 		$mappings = array_filter($mappings, function (KeywordMappingEntityImpl $mapping) use ($keyword) {
 			return $mapping->getKeyword()->isSame($keyword);
@@ -83,12 +82,11 @@ class KeywordDbWrapper extends AbstractDbWrapper {
 		}, $mappings);
 	}
 	
-	public function remove(KeywordEntity $keyword): void
-	{
+	public function remove(KeywordEntity $keyword): void {
 		// Remove all foreign links
 		$recipes = $keyword->getRecipes();
 		
-		foreach($recipes as $r){
+		foreach ($recipes as $r) {
 			/**
 			 * @var RecipeEntity $r
 			 */

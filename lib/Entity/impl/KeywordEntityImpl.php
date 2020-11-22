@@ -47,40 +47,32 @@ class KeywordEntityImpl extends AbstractEntity implements KeywordEntity {
 		$this->setPersisted();
 	}
 	
-	public function reload(): void
-    {
+	public function reload(): void {
 		// FIXME
 	}
 
-	public function clone(): KeywordEntityImpl
-	{
+	public function clone(): KeywordEntityImpl {
 		$ret = $this->wrapper->createEntity();
 		$ret->name = $this->name;
-		if($this->isPersisted())
-		{
+		if ($this->isPersisted()) {
 			$ret->setPersisted();
 		}
 		return $ret;
 	}
 
-	protected function equalsImpl(AbstractEntity $other): bool
-	{
+	protected function equalsImpl(AbstractEntity $other): bool {
 		return $this->name === $other->name;
 	}
 
-	protected function isSameImpl(AbstractEntity $other): bool
-	{
+	protected function isSameImpl(AbstractEntity $other): bool {
 		return $this->name === $other->name;
 	}
 
-	public function getRecipes(): array
-	{
+	public function getRecipes(): array {
 		return $this->wrapper->getRecipes($this);
 	}
 
-	public function remove(): void
-	{
+	public function remove(): void {
 		$this->wrapper->remove($this);
 	}
-
 }

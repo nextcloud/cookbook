@@ -32,64 +32,55 @@ class KeywordMappingEntityImpl extends AbstractEntity {
 	}
 	
 	/**
-     * @return RecipeEntityImpl
-     */
-    public function getRecipe(): RecipeEntityImpl
-    {
-        return $this->recipe;
-    }
-
-	/**
-     * @return KeywordEntityImpl
-     */
-    public function getKeyword(): KeywordEntityImpl
-    {
-        return $this->keyword;
-    }
-
-	/**
-     * @param RecipeEntityImpl $recipe
-     */
-    public function setRecipe(RecipeEntityImpl $recipe)
-    {
-        $this->recipe = $recipe;
-    }
-
-	/**
-     * @param KeywordEntityImpl $keyword
-     */
-    public function setKeyword(KeywordEntityImpl $keyword)
-    {
-        $this->keyword = $keyword;
-    }
-    
-	public function clone(): KeywordMappingEntityImpl
-    {
-    	$ret = $this->wrapper->createEntity();
-    	
-    	$ret->setKeyword($this->keyword);
-    	$ret->setRecipe($this->recipe);
-    	
-    	if($this->isPersisted())
-    	{
-    		$ret->setPersisted();
-    	}
-    	
-    	return $ret;
+	 * @return RecipeEntityImpl
+	 */
+	public function getRecipe(): RecipeEntityImpl {
+		return $this->recipe;
 	}
 
-	protected function equalsImpl(AbstractEntity $other): bool
-    {
-    	return $this->keyword->isSame($other->keyword) && $this->recipe->isSame($other->recipe);
+	/**
+	 * @return KeywordEntityImpl
+	 */
+	public function getKeyword(): KeywordEntityImpl {
+		return $this->keyword;
 	}
 
-	protected function isSameImpl(AbstractEntity $other): bool
-    {
+	/**
+	 * @param RecipeEntityImpl $recipe
+	 */
+	public function setRecipe(RecipeEntityImpl $recipe) {
+		$this->recipe = $recipe;
+	}
+
+	/**
+	 * @param KeywordEntityImpl $keyword
+	 */
+	public function setKeyword(KeywordEntityImpl $keyword) {
+		$this->keyword = $keyword;
+	}
+	
+	public function clone(): KeywordMappingEntityImpl {
+		$ret = $this->wrapper->createEntity();
+		
+		$ret->setKeyword($this->keyword);
+		$ret->setRecipe($this->recipe);
+		
+		if ($this->isPersisted()) {
+			$ret->setPersisted();
+		}
+		
+		return $ret;
+	}
+
+	protected function equalsImpl(AbstractEntity $other): bool {
+		return $this->keyword->isSame($other->keyword) && $this->recipe->isSame($other->recipe);
+	}
+
+	protected function isSameImpl(AbstractEntity $other): bool {
 		return $this->equalsImpl($other);
 	}
 	
 	public function remove(): void {
 		$this->wrapper->remove($this);
 	}
-
 }

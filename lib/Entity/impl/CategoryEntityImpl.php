@@ -47,41 +47,32 @@ class CategoryEntityImpl extends AbstractEntity implements CategoryEntity {
 		$this->setPersisted();
 	}
 	
-	public function clone(): CategoryEntity
-    {
+	public function clone(): CategoryEntity {
 		$ret = $this->wrapper->createEntity();
 		$ret->setName($this->name);
-		if($this->isPersisted())
-		{
+		if ($this->isPersisted()) {
 			$ret->setPersisted();
 		}
 		return $ret;
 	}
 
-	public function remove(): void
-    {
+	public function remove(): void {
 		$this->wrapper->remove($this);
 	}
 	
-	public function reload(): void
-    {
+	public function reload(): void {
 		// FIXME
 	}
 
-	protected function equalsImpl(AbstractEntity $other): bool
-    {
+	protected function equalsImpl(AbstractEntity $other): bool {
 		return $this->name === $other->name;
 	}
 
-	protected function isSameImpl(AbstractEntity $other): bool
-    {
+	protected function isSameImpl(AbstractEntity $other): bool {
 		return $this->name === $other->name;
 	}
 
-	public function getRecipes(): array
-    {
+	public function getRecipes(): array {
 		return $this->wrapper->getRecipes($this);
 	}
-
-
 }

@@ -14,7 +14,6 @@ use OCA\Cookbook\Entity\impl\CategoryMappingEntityImpl;
 use OCA\Cookbook\Entity\impl\KeywordMappingEntityImpl;
 
 class RecipeDbWrapper extends AbstractDbWrapper {
-	
 	private const NAMES = 'cookbook_names';
 	
 	/**
@@ -50,8 +49,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		$res = $qb->execute();
 		$ret = [];
 		
-		while($row = $res->fetch())
-		{
+		while ($row = $res->fetch()) {
 			$recipe = $this->createEntity();
 			
 			$recipe->setName($row['name']);
@@ -70,12 +68,9 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	}
 	
 	public function store(RecipeEntityImpl $recipe): void {
-		if($recipe->isPersisted())
-		{
+		if ($recipe->isPersisted()) {
 			$this->storeNew($recipe);
-		}
-		else 
-		{
+		} else {
 			$this->store($recipe);
 		}
 	}
@@ -109,8 +104,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		// Set keyword setting
 		$keywordMapperWrapper = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper();
-		foreach($recipe->getKeywords() as $keyword)
-		{
+		foreach ($recipe->getKeywords() as $keyword) {
 			/**
 			 * @var KeywordEntityImpl $keyword
 			 */
@@ -137,12 +131,10 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		$qb->execute();
 		
 		// Update cache
-		$cache = array_map(function(RecipeEntityImpl $r) use ($recipe) {
-			if($r->isSame($recipe))
-			{
+		$cache = array_map(function (RecipeEntityImpl $r) use ($recipe) {
+			if ($r->isSame($recipe)) {
 				return $recipe;
-			}
-			else {
+			} else {
 				return $r;
 			}
 		}, $cache);
@@ -150,20 +142,18 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		// Update the category if needed
 		$newCategory = $recipe->getNewCategory();
-		if($recipe->newCategoryWasSet() && ! is_null($newCategory))
-		{
+		if ($recipe->newCategoryWasSet() && ! is_null($newCategory)) {
 			$oldMappings = $this->getRecipeCategoryMappings($recipe);
 			
 			$newCategory->persist();
 			
-			if(count($oldMappings) == 0){
+			if (count($oldMappings) == 0) {
 				// We need to insert a new Mapping
 				$mapping = $this->getWrapperServiceLocator()->getCategoryMappingDbWrapper()->createEntity();
 				$mapping->setCategory($newCategory);
 				$mapping->setRecipe($recipe);
 				$mapping->persist();
-			}
-			else {
+			} else {
 				$mapping = $oldMappings[0];
 				$mapping->setCategory($newCategory);
 				$mapping->persist();
@@ -173,7 +163,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		// Update the keywords
 		$kwWrapper = $this->getWrapperServiceLocator()->getKeywordMappingDbWrapper();
 		
-		foreach($recipe->getNewKeywords() as $kw) {
+		foreach ($recipe->getNewKeywords() as $kw) {
 			/**
 			 * @var KeywordEntityImpl $kw
 			 */
@@ -187,20 +177,19 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		$removedKeywords = $recipe->getRemovedKeywords();
 		$currentKwMappings = $this->getRecipeKeywordMappings($recipe);
-		$removingMappings = array_filter($currentKwMappings, function(KeywordMappingEntityImpl $m) use ($removedKeywords){
-			foreach($removedKeywords as $kw){
+		$removingMappings = array_filter($currentKwMappings, function (KeywordMappingEntityImpl $m) use ($removedKeywords) {
+			foreach ($removedKeywords as $kw) {
 				/**
 				 * @var KeywordEntityImpl $kw
 				 */
-				if($m->getKeyword()->isSame($kw))
-				{
+				if ($m->getKeyword()->isSame($kw)) {
 					return true;
 				}
 			}
 			return false;
 		});
 		
-		foreach ($removingMappings as $mapping){
+		foreach ($removingMappings as $mapping) {
 			/**
 			 * @var KeywordMappingEntityImpl $mapping
 			 */
@@ -209,14 +198,12 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	}
 	
 	public function remove(RecipeEntityImpl $recipe): void {
-		if(! $recipe->isPersisted())
-		{
+		if (! $recipe->isPersisted()) {
 			throw new InvalidDbStateException($this->l->t('Cannot remove recipe that was not yet saved.'));
 		}
 		
 		$catMappings = $this->getRecipeCategoryMappings($recipe);
-		foreach($catMappings as $catMapping)
-		{
+		foreach ($catMappings as $catMapping) {
 			/**
 			 * @var CategoryMappingEntityImpl $catMapping
 			 */
@@ -224,7 +211,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		}
 		
 		$keywordMappings = $this->getRecipeKeywordMappings($recipe);
-		foreach($keywordMappings as $keywordMapping){
+		foreach ($keywordMappings as $keywordMapping) {
 			/**
 			 * @var KeywordMappingEntityImpl $keywordMapping
 			 */
@@ -250,13 +237,13 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	public function getRecipeById(int $id): RecipeEntity {
 		$entities = $this->getEntries();
 		
-		foreach($entities as $entry)
-		{
+		foreach ($entities as $entry) {
 			/**
 			 * @var RecipeEntity $entry
 			 */
-			if($entry->getId() == $id)
+			if ($entry->getId() == $id) {
 				return $entry;
+			}
 		}
 		
 		throw new EntityNotFoundException($this->l->t('Recipe with id %d was not found.', $id));
@@ -265,8 +252,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	public function getCategory(RecipeEntity $recipe): ?CategoryEntityImpl {
 		$mappings = $this->getRecipeCategoryMappings($recipe);
 		
-		if(count($mappings) == 0)
-		{
+		if (count($mappings) == 0) {
 			return null;
 		}
 		
@@ -279,8 +265,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 			return $c->getRecipe()->isSame($recipe);
 		});
 			
-		if(count($mappings) > 1)
-		{
+		if (count($mappings) > 1) {
 			throw new InvalidDbStateException($this->l->t('Multiple categopries for a single recipe found.'));
 		}
 		
@@ -293,7 +278,7 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 	 */
 	public function getKeywords(RecipeEntity $recipe): array {
 		$mappings = $this->getRecipeKeywordMappings($recipe);
-		$keywords = array_map(function(KeywordMappingEntityImpl $m) {
+		$keywords = array_map(function (KeywordMappingEntityImpl $m) {
 			return $m->getKeyword();
 		}, $mappings);
 		
@@ -308,5 +293,4 @@ class RecipeDbWrapper extends AbstractDbWrapper {
 		
 		return $mappings;
 	}
-	
 }

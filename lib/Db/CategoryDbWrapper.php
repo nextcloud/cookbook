@@ -9,7 +9,6 @@ use OCA\Cookbook\Entity\impl\RecipeEntityImpl;
 use OCP\IDBConnection;
 
 class CategoryDbWrapper extends AbstractDbWrapper {
-	
 	private const CATEGORIES = 'cookbook_categories';
 	
 	/**
@@ -74,7 +73,7 @@ class CategoryDbWrapper extends AbstractDbWrapper {
 		// Remove all foreign links
 		$recipes = $category->getRecipes();
 		
-		foreach($recipes as $r){
+		foreach ($recipes as $r) {
 			/**
 			 * @var RecipeEntity $r
 			 */

@@ -8,7 +8,6 @@ use OCP\IDBConnection;
 use OCP\IL10N;
 
 class CategoryMappingDbWrapper extends AbstractDbWrapper {
-	
 	private const CATEGORIES = 'cookbook_categories';
 	
 	/**
@@ -78,15 +77,13 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 	 * @param CategoryMappingEntityImpl $category The entity to store
 	 */
 	public function store(CategoryMappingEntityImpl $mapping): void {
-		if(! $mapping->getRecipe()->isPersisted())
-		{
+		if (! $mapping->getRecipe()->isPersisted()) {
 			throw new InvalidDbStateException($this->l->t('The recipe was not stored to the database yet. No id known.'));
 		}
 		
-		if($mapping->isPersisted()){
+		if ($mapping->isPersisted()) {
 			$this->update($mapping);
-		}
-		else {
+		} else {
 			$this->storeNew($mapping);
 		}
 	}
@@ -119,16 +116,14 @@ class CategoryMappingDbWrapper extends AbstractDbWrapper {
 		$qb->setParameters([
 			'rid' => $mapping->getRecipe()->getId(),
 			'uid' => $this->userId
-			]);
+		]);
 		$qb->execute();
 		
 		$cache = array_map(function (CategoryMappingEntityImpl $m) use ($mapping) {
-			if($m->isSame($mapping))
-			{
+			if ($m->isSame($mapping)) {
 				// We need to update
 				return $mapping->clone();
-			}
-			else {
+			} else {
 				return $m;
 			}
 		}, $cache);

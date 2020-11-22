@@ -39,66 +39,53 @@ class CategoryMappingEntityImpl extends AbstractEntity {
 	/**
 	 * @return RecipeEntityImpl
 	 */
-	public function getRecipe(): RecipeEntityImpl
-	{
+	public function getRecipe(): RecipeEntityImpl {
 		return $this->recipe;
 	}
 	
 	/**
-     * @return CategoryEntityImpl
-     */
-    public function getCategory(): CategoryEntityImpl
-    {
-        return $this->category;
-    }
+	 * @return CategoryEntityImpl
+	 */
+	public function getCategory(): CategoryEntityImpl {
+		return $this->category;
+	}
 
 	/**
-     * @param RecipeEntityImpl $recipe
-     */
-    public function setRecipe(RecipeEntityImpl $recipe)
-    {
-        $this->recipe = $recipe;
-    }
+	 * @param RecipeEntityImpl $recipe
+	 */
+	public function setRecipe(RecipeEntityImpl $recipe) {
+		$this->recipe = $recipe;
+	}
 
 	/**
-     * @param CategoryEntityImpl $category
-     */
-    public function setCategory(CategoryEntityImpl $category)
-    {
-        $this->category = $category;
-    }
-    
-	public function clone(): CategoryMappingEntityImpl
-    {
+	 * @param CategoryEntityImpl $category
+	 */
+	public function setCategory(CategoryEntityImpl $category) {
+		$this->category = $category;
+	}
+	
+	public function clone(): CategoryMappingEntityImpl {
 		$ret = $this->wrapper->createEntity();
 		
 		$ret->setCategory($this->category);
 		$ret->setRecipe($this->recipe);
 		
-		if($this->isPersisted())
-		{
+		if ($this->isPersisted()) {
 			$ret->setPersisted();
 		}
 		
 		return $ret;
 	}
 
-	public function remove(): void
-    {
+	public function remove(): void {
 		$this->wrapper->remove($this);
 	}
 	
-	protected function equalsImpl(AbstractEntity $other): bool
-    {
+	protected function equalsImpl(AbstractEntity $other): bool {
 		return $this->category->isSame($other->category) && $this->recipe->isSame($other->recipe);
 	}
 
-	protected function isSameImpl(AbstractEntity $other): bool
-    {
+	protected function isSameImpl(AbstractEntity $other): bool {
 		return $this->equalsImpl($other);
 	}
-
-	
-
-
 }
