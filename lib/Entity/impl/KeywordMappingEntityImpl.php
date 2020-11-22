@@ -1,18 +1,18 @@
 <?php
 
-namespace  OCA\Cookbook\Entity;
+namespace  OCA\Cookbook\Entity\impl;
 
 use OCA\Cookbook\Db\KeywordMappingDbWrapper;
 
-class KeywordMappingEntity implements Entity {
+class KeywordMappingEntityImpl extends AbstractEntity {
 	
 	/**
-	 * @var RecipeEntity
+	 * @var RecipeEntityImpl
 	 */
 	private $recipe;
 	
 	/**
-	 * @var KeywordEntity
+	 * @var KeywordEntityImpl
 	 */
 	private $keyword;
 	
@@ -59,4 +59,20 @@ class KeywordMappingEntity implements Entity {
     {
         $this->keyword = $keyword;
     }
+    
+	public function clone(): AbstractEntity
+    {
+		// FIXME
+	}
+
+	protected function equalsImpl(AbstractEntity $other): bool
+    {
+		// FIXME
+	}
+
+	protected function isSameImpl(AbstractEntity $other): bool
+    {
+		// FIXME
+	}
+
 }

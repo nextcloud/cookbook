@@ -1,10 +1,10 @@
 <?php
 
-namespace OCA\Cookbook\Entity;
+namespace OCA\Cookbook\Entity\impl;
 
 use OCA\Cookbook\Db\CategoryMappingDbWrapper;
 
-class CategoryMappingEntity implements Entity {
+class CategoryMappingEntityImpl extends AbstractEntity {
 	
 	/**
 	 * @var CategoryMappingDbWrapper
@@ -12,12 +12,12 @@ class CategoryMappingEntity implements Entity {
 	private $wrapper;
 	
 	/**
-	 * @var RecipeEntity
+	 * @var RecipeEntityImpl
 	 */
 	private $recipe;
 	
 	/**
-	 * @var CategoryEntity
+	 * @var CategoryEntityImpl
 	 */
 	private $category;
 	
@@ -32,6 +32,7 @@ class CategoryMappingEntity implements Entity {
 	
 	public function persist(): void {
 		$this->wrapper->store($this);
+		$this->setPersisted();
 	}
 	
 	/**
@@ -65,10 +66,35 @@ class CategoryMappingEntity implements Entity {
     {
         $this->category = $category;
     }
+    
+	public function clone(): CategoryMappingEntityImpl
+    {
+		$ret = $this->wrapper->createEntity();
+		$ret->setCategory($this->category);
+		$ret->setRecipe($this->recipe);
+		if($this->isPersisted())
+		{
+			$ret->setPersisted();
+		}
+		return $ret;
+	}
 
 	public function remove(): void
     {
 		$this->wrapper->remove($this);
 	}
+	
+	protected function equalsImpl(AbstractEntity $other): bool
+    {
+		// FIXME
+	}
+
+	protected function isSameImpl(AbstractEntity $other): bool
+    {
+		// FIXME
+	}
+
+	
+
 
 }
