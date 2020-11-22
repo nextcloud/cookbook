@@ -105,18 +105,24 @@ namespace OCA.Cookbook {
 	
 	namespace Db {
 		
-		abstract class AbstractDbWrapper {
+		abstract class AbstractDbWrapper<T extends OCA.Cookbook.Entity.impl.AbstractEntity> {
 			# IDbConnection db
-			+ abstract createEntity() : Entity
 			- array cache
 			- bool cacheValid
+			--
+			+ abstract createEntity() : T
 			# abstract fetchDatabase() : array
 			+ getEntites() : array
 			# setCache(array) : void
 			+ getServiceLocator() : DbWrapperSerciveLocator
+			..
+			+ store(T) : void
+			# abstract storeNew(T) : void
+			# abstract update(T) : void
+			+ remove(T) : void
 		}
 		note right
-		Cache representys the current state
+		Cache represents the current state
 		of the database tables as clones.
 		endnote
 		
@@ -125,8 +131,8 @@ namespace OCA.Cookbook {
 			--
 			+ createEntity() : RecipeEntityImpl
 			+ store(RecipeEntityImpl) : void
-			- storeNew(RecipeEntityImpl) : void
-			- update(RecipeEntityImpl) : void
+			# storeNew(RecipeEntityImpl) : void
+			# update(RecipeEntityImpl) : void
 			+ remove(RecipeEntityImpl) : void
 			..
 			/'+ addKeyword(RecipeEntityImpl, KeywordEntityImpl) : KeywordMappingEntity
@@ -138,8 +144,8 @@ namespace OCA.Cookbook {
 			--
 			+ createEntity() : CategoryEntityImpl
 			+ store(CategoryEntityImpl) : void
-			- storeNew(CategoryEntityImpl) : void
-			- update(CategoryEntityImpl) : void
+			# storeNew(CategoryEntityImpl) : void
+			# update(CategoryEntityImpl) : void
 			+ remove(CategoryEntityImpl) : void
 			..
 			+ getRecipes(CategoryEntityImpl) : array
@@ -148,8 +154,8 @@ namespace OCA.Cookbook {
 			--
 			+ createEntity() : KeywordEntityImpl
 			+ store(KeywordEntityImpl) : void
-			- storeNew(KeywordEntityImpl) : void
-			- update(KeywordEntityImpl) : void
+			# storeNew(KeywordEntityImpl) : void
+			# update(KeywordEntityImpl) : void
 			+ remove(KeywordEntityImpl) : void
 			..
 			+ getRecipes(KeywordEntityImpl) : array
@@ -158,16 +164,16 @@ namespace OCA.Cookbook {
 		class CategoryMappingsDbWrapper {
 			+ createEntity() : CategoryMappingEntity
 			+ store(CategoryMappingEntity) : void
-			- createNew(CategoryMappingEntity) : void
-			- update(CategoryMappingEntity) : void
+			# storeNew(CategoryMappingEntity) : void
+			# update(CategoryMappingEntity) : void
 			+ remove(CategoryMappingEntity) : void
 		}
 		
 		class KeywordMappingsDbWrapper {
 			+ createEntity() : KeywordMappingEntity
 			+ store(KeywordMappingEntity) : void
-			- createNew(KeywordMappingEntity) : void
-			- update(KeywordMappingEntity) : void
+			# storeNew(KeywordMappingEntity) : void
+			# update(KeywordMappingEntity) : void
 			+ remove(KeywordMappingEntity) : void
 		}
 		
