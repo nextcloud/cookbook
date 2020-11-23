@@ -70,7 +70,7 @@ jobs:
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable19
-                    phpVersion: "8"
+                    phpVersion: "rc"
                     mayFail: true
                     
                 # Test against master (optionally)
