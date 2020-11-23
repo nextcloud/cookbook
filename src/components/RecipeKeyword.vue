@@ -84,6 +84,10 @@ li .count {
     cursor: default;
 }
 
+.disabled :hover {
+    cursor: default;
+}
+
 li:hover, .active li:hover {
     border: 1px solid var(--color-primary);
 }

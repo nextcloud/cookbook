@@ -1,15 +1,16 @@
 <template>
     <div>
         <div class="kw">
-            <ul v-if="keywords.length" class="keywords">
-                <RecipeKeyword v-for="(keyword,idx) in keywords"
-                    :key="'kw.name'+idx"
+            <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
+                <RecipeKeyword v-for="keyword in keywords"
+                    :key="keyword.name"
                     :name="keyword.name"
                     :count="keyword.count"
+                    :title="keywordContainedInVisibleRecipes(keyword) ? t('cookbook','Toggle keyword') : t('cookbook','Keyword not contained in visible recipes')"
                     v-on:keyword-clicked="keywordClicked(keyword)"
-                    :class="{active : keywordFilter.includes(keyword.name), disabled : !keywordContainedInVisibleRecipes(keyword)}"
+                    :class="{keyword, active : keywordFilter.includes(keyword.name), disabled : !keywordContainedInVisibleRecipes(keyword)}"
                     />
-            </ul>
+            </transition-group>
         </div>
         <ul class="recipes">
             <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
@@ -164,7 +165,7 @@ export default {
                     }
                 }
             }
-            this.keywords = this.keywords.concat(tmp)
+            this.keywords = this.keywords.concat(tmp.reverse())
         },
     },
     mounted () {
@@ -192,8 +193,15 @@ ul.keywords {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 100%;
-    margin: .5rem 1rem .5rem;
+    padding: .5rem 1rem .5rem;
+}
+
+.keyword {
+  display: inline-block;
+}
+
+.keyword-list-move {
+  transition: transform .5s;
 }
 
 ul.recipes {
