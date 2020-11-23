@@ -136,9 +136,9 @@ export default {
                 recipes.forEach(recipe => {
                     if(recipe['keywords']) {
                         recipe['keywords'].split(',').forEach(kw => {
-                            const idx = this.keywords.findIndex(el  => el.name == kw);
+                            const idx = this.keywords.findIndex(el => el.name == kw)
                             if (idx > -1) {
-                                this.keywords[idx].count++;
+                                this.keywords[idx].count++
                             } else {
                                 this.keywords.push({name: kw, count: 1})
                             }
@@ -152,20 +152,23 @@ export default {
          * Sort keywords.
          */
         sortKeywords: function() {
-            // Sort by number recipes
+            // Sort by number of recipes containing keyword
             this.keywords = this.keywords.sort((k1, k2) => k2.count - k1.count)
 
-            // Move unselectable keywords to the end
-            let tmp = []
-            for (let i=this.keywords.length-1; i>=0; --i) {
-                if (!this.keywordContainedInVisibleRecipes(this.keywords[i])) {
-                    let elm = this.keywords.splice(i, 1)[0]
-                    if (elm) {
-                        tmp.push(elm)
-                    }
+            // Move selected keywords to the front and unselectable to the end
+            let selected_kw = [], selectable_kw = [], unavailable_kw = []
+            this.keywords.forEach(kw => {
+                if (this.keywordFilter.includes(kw.name)) {
+                    selected_kw.push(kw)
                 }
-            }
-            this.keywords = this.keywords.concat(tmp.reverse())
+                else if (this.keywordContainedInVisibleRecipes(kw)) {
+                    selectable_kw.push(kw)
+                }
+                else {
+                    unavailable_kw.push(kw)
+                }
+            })
+            this.keywords = selected_kw.concat(selectable_kw.concat(unavailable_kw))
         },
     },
     mounted () {
