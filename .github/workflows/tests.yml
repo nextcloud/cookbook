@@ -68,6 +68,10 @@ jobs:
                     coreVersion: stable19
                     phpVersion: "7.3"
                     mayFail: false
+                -   database: mysql
+                    coreVersion: stable19
+                    phpVersion: "8"
+                    mayFail: true
                     
                 # Test against master (optionally)
                 -   database: mysql
