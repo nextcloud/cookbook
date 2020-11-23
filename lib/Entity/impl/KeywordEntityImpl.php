@@ -38,7 +38,7 @@ class KeywordEntityImpl extends AbstractEntity implements KeywordEntity {
 	 * Set the name of the keyword
 	 * @param string $name The name of the keyword
 	 */
-	public function setName($name) {
+	public function setName($name): void {
 		$this->name = $name;
 	}
 

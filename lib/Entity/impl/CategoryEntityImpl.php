@@ -47,7 +47,7 @@ class CategoryEntityImpl extends AbstractEntity implements CategoryEntity {
 		$this->setPersisted();
 	}
 	
-	public function clone(): CategoryEntity {
+	public function clone(): CategoryEntityImpl {
 		$ret = $this->wrapper->createEntity();
 		$ret->setName($this->name);
 		if ($this->isPersisted()) {

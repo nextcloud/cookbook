@@ -110,14 +110,14 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 	/**
 	 * @return CategoryEntityImpl
 	 */
-	public function getCategory() {
+	public function getCategory(): CategoryEntityImpl {
 		return $this->setNewCategory ? $this->newCategory : $this->wrapper->getCategory($this);
 	}
 
 	/**
 	 * @param CategoryEntity $category
 	 */
-	public function setCategory(CategoryEntity $category) {
+	public function setCategory(CategoryEntity $category): void {
 		$this->newCategory = $category;
 		$this->setNewCategory = true;
 	}
@@ -200,7 +200,7 @@ class RecipeEntityImpl extends AbstractEntity implements RecipeEntity {
 		return $this->id == $other->id;
 	}
 
-	public function clone(): RecipeEntity {
+	public function clone(): RecipeEntityImpl {
 		$ret = $this->wrapper->createEntity();
 		
 		$ret->id = $this->id;
