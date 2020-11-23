@@ -2,7 +2,7 @@
 
 namespace OCA\Cookbook\Entity\impl;
 
-use Sabre\CalDAV\Exception\InvalidComponentType;
+use OCA\Cookbook\Exception\InvalidComparisionException;
 
 abstract class AbstractEntity {
 	
@@ -31,14 +31,14 @@ abstract class AbstractEntity {
 	
 	public function isSame(AbstractEntity $other): bool {
 		if (get_class($this) !== get_class($other)) {
-			throw new InvalidComponentType();
+			throw new InvalidComparisionException();
 		}
 		
 		return $this->isSameImpl($other);
 	}
 	public function equals(AbstractEntity $other): bool {
 		if (get_class($this) !== get_class($other)) {
-			throw new InvalidComponentType();
+			throw new InvalidComparisionException();
 		}
 		
 		return $this->equalsImpl($other);

@@ -2,7 +2,7 @@
 
 namespace OCA\Cookbook\Exception;
 
-class InvaludComparisionException extends \Exception {
+class InvalidComparisionException extends \Exception {
 	/**
 	 * {@inheritDoc}
 	 * @see \Exception::__construct()
