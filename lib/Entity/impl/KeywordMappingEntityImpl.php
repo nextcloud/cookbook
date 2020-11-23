@@ -59,7 +59,12 @@ class KeywordMappingEntityImpl extends AbstractEntity {
 		$this->keyword = $keyword;
 	}
 	
-	public function clone(): KeywordMappingEntityImpl {
+	/**
+	 * {@inheritDoc}
+	 * @see \OCA\Cookbook\Entity\impl\AbstractEntity::clone()
+	 * @return KeywordMappingEntityImpl
+	 */
+	public function clone(): AbstractEntity {
 		$ret = $this->wrapper->createEntity();
 		
 		$ret->setKeyword($this->keyword);

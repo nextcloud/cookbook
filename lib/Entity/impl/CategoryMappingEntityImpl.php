@@ -64,7 +64,12 @@ class CategoryMappingEntityImpl extends AbstractEntity {
 		$this->category = $category;
 	}
 	
-	public function clone(): CategoryMappingEntityImpl {
+	/**
+	 * {@inheritDoc}
+	 * @see \OCA\Cookbook\Entity\impl\AbstractEntity::clone()
+	 * @return CategoryMappingEntityImpl
+	 */
+	public function clone(): AbstractEntity {
 		$ret = $this->wrapper->createEntity();
 		
 		$ret->setCategory($this->category);

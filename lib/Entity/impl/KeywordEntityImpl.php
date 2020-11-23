@@ -51,7 +51,12 @@ class KeywordEntityImpl extends AbstractEntity implements KeywordEntity {
 		// FIXME
 	}
 
-	public function clone(): KeywordEntityImpl {
+	/**
+	 * {@inheritDoc}
+	 * @see \OCA\Cookbook\Entity\impl\AbstractEntity::clone()
+	 * @return KeywordEntityImpl
+	 */
+	public function clone(): AbstractEntity {
 		$ret = $this->wrapper->createEntity();
 		$ret->name = $this->name;
 		if ($this->isPersisted()) {

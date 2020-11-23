@@ -47,7 +47,12 @@ class CategoryEntityImpl extends AbstractEntity implements CategoryEntity {
 		$this->setPersisted();
 	}
 	
-	public function clone(): CategoryEntityImpl {
+	/**
+	 * {@inheritDoc}
+	 * @see \OCA\Cookbook\Entity\impl\AbstractEntity::clone()
+	 * @return CategoryEntityImpl
+	 */
+	public function clone(): AbstractEntity {
 		$ret = $this->wrapper->createEntity();
 		$ret->setName($this->name);
 		if ($this->isPersisted()) {
