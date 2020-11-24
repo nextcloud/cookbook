@@ -48,6 +48,8 @@
   [#418](https://github.com/nextcloud/cookbook/pull/418) @thembeat
 - ENhance the CI tests and build valid dist tarballs during the CI runs
   [#435](https://github.com/nextcloud/cookbook/pull/435) @christianlupus
+- Images in recipe list are lazily loaded
+  [#413](https://github.com/nextcloud/cookbook/pull/413/) @seyfeb
 
 ### Fixed
 - Add a min PHP restriction in the metadata
