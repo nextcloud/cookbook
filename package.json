@@ -21,6 +21,7 @@
   "dependencies": {
     "@nextcloud/event-bus": "^1.1.4",
     "@nextcloud/vue": "^1.5.0",
+    "lozad": "^1.16.0",
     "vue": "^2.6.11",
     "vue-i18n": "^8.17.1",
     "vue-router": "^3.1.6",
