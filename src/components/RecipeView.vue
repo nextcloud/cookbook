@@ -54,6 +54,24 @@
                             <RecipeTool v-for="(tool,idx) in tools" :key="'tool'+idx" :tool="tool" />
                         </ul>
                     </section>
+
+                    <section>
+                        <h3 v-if="nutrition">{{ t('cookbook', 'Nutrition Information') }}</h3>
+                        <ul v-if="nutrition">
+                            <recipe-nutrition-info-item v-if="('servingSize' in nutrition) && !isNullOrEmpty(nutrition['servingSize'])" :title="t('cookbook', 'Serving Size')" :data="nutrition['servingSize']" />
+                            <recipe-nutrition-info-item v-if="('calories' in nutrition) && !isNullOrEmpty(nutrition['calories'])" :title="t('cookbook', 'Energy')" :data="nutrition['calories']" />
+                            <recipe-nutrition-info-item v-if="('sugarContent' in nutrition) && !isNullOrEmpty(nutrition['sugarContent'])" :title="t('cookbook', 'Sugar')" :data="nutrition['sugarContent']" />
+                            <recipe-nutrition-info-item v-if="('carbohydrateContent' in nutrition) && !isNullOrEmpty(nutrition['carbohydrateContent'])" :title="t('cookbook', 'Carbohydrate')" :data="nutrition['carbohydrateContent']" />
+                            <recipe-nutrition-info-item v-if="('cholesterolContent' in nutrition) && !isNullOrEmpty(nutrition['cholesterolContent'])" :title="t('cookbook', 'Cholesterol')" :data="nutrition['cholesterolContent']" />
+                            <recipe-nutrition-info-item v-if="('fiberContent' in nutrition) && !isNullOrEmpty(nutrition['fiberContent'])" :title="t('cookbook', 'Fiber')" :data="nutrition['fiberContent']" />
+                            <recipe-nutrition-info-item v-if="('proteinContent' in nutrition) && !isNullOrEmpty(nutrition['proteinContent'])" :title="t('cookbook', 'Protein')" :data="nutrition['proteinContent']" />
+                            <recipe-nutrition-info-item v-if="('sodiumContent' in nutrition) && !isNullOrEmpty(nutrition['sodiumContent'])" :title="t('cookbook', 'Sodium')" :data="nutrition['sodiumContent']" />
+                            <recipe-nutrition-info-item v-if="('fatContent' in nutrition) && !isNullOrEmpty(nutrition['fatContent'])" :title="t('cookbook', 'Fat total')" :data="nutrition['fatContent']" />
+                            <recipe-nutrition-info-item v-if="('saturatedFatContent' in nutrition) && !isNullOrEmpty(nutrition['saturatedFatContent'])" :title="t('cookbook', 'Saturated Fat')" :data="nutrition['saturatedFatContent']" />
+                            <recipe-nutrition-info-item v-if="('unsaturatedFatContent' in nutrition) && !isNullOrEmpty(nutrition['unsaturatedFatContent'])" :title="t('cookbook', 'Unsaturated Fat')" :data="nutrition['unsaturatedFatContent']" />
+                            <recipe-nutrition-info-item v-if="('transFatContent' in nutrition) && !isNullOrEmpty(nutrition['transFatContent'])" :title="t('cookbook', 'Trans Fat')" :data="nutrition['transFatContent']" />
+                        </ul>
+                    </section>
                 </aside>
                 <main v-if="instructions.length">
                     <h3>{{ t('cookbook', 'Instructions') }}</h3>
@@ -74,6 +92,7 @@ import RecipeImages from './RecipeImages'
 import RecipeIngredient from './RecipeIngredient'
 import RecipeInstruction from './RecipeInstruction'
 import RecipeKeyword from './RecipeKeyword'
+import RecipeNutritionInfoItem from './RecipeNutritionInfoItem'
 import RecipeTimer from './RecipeTimer'
 import RecipeTool from './RecipeTool'
 
@@ -84,8 +103,9 @@ export default {
         RecipeIngredient,
         RecipeInstruction,
         RecipeKeyword,
+        RecipeNutritionInfoItem,
         RecipeTimer,
-        RecipeTool,
+        RecipeTool
     },
     data () {
         return {
@@ -99,6 +119,7 @@ export default {
             tools: [],
             dateCreated: null,
             dateModified: null,
+            nutrition: null
         }
     },
     computed: {
@@ -122,6 +143,9 @@ export default {
         },
     },
     methods: {
+        isNullOrEmpty: function(str) {
+            return !str || typeof(str) === 'string' && 0 === str.trim().length;
+        },
         /**
          * Callback for click on keyword
          */
@@ -207,6 +231,11 @@ export default {
                 if ($this.$store.state.recipe.dateModified) {
                     let date = $this.parseDateTime($this.$store.state.recipe.dateModified)
                     $this.dateModified = (date != null ? date.format('L, LT').toString() : null)
+                }
+                if ($this.$store.state.recipe.nutrition) {
+                    console.log("Has nutrition info:" + $this.$store.state.recipe.nutrition.length)
+                    $this.nutrition = $this.$store.state.recipe.nutrition
+                    console.log($this.nutrition)
                 }
 
                 // Always set the active page last!
