@@ -10,6 +10,9 @@
         <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
+        
+        <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" :placeholders="nutritionFieldPlaceholders" />
+        
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-bind:createFieldsOnNewlines="true" />
@@ -21,6 +24,7 @@ import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
 import EditMultiselect from './EditMultiselect'
+import EditMultiselectInputGroup from './EditMultiselectInputGroup'
 import EditTimeField from './EditTimeField'
 
 export default {
@@ -31,6 +35,7 @@ export default {
         EditInputGroup,
         EditMultiselect,
         EditTimeField,
+        EditMultiselectInputGroup,
     },
     props: ['id'],
     data () {
@@ -64,9 +69,25 @@ export default {
             isFetchingKeywords: true,
             allKeywords: [],
             selectedKeywords: [],
+            availableNutritionFields:
+                ['calories', 'carbohydrateContent', 'cholesterolContent',
+                'fatContent', 'fiberContent', 'proteinContent',
+                'saturatedFatContent', 'servingSize', 'sodiumContent',
+                'sugarContent', 'transFatContent', 'unsaturatedFatContent'],
+            nutritionFieldPlaceholders:
+                ['E.g.: 450 kcal (amount & unit)', 'E.g.: 2 g (amount & unit)', 'E.g.: 2 g (amount & unit)',
+                'E.g.: 2 g (amount & unit)', 'E.g.: 2 g (amount & unit)', 'E.g.: 2 g (amount & unit)',
+                'E.g.: 2 g (amount & unit)', 'Enter serving size (volume or mass)', 'E.g.: 2 g (amount & unit)',
+                'E.g.: 2 g (amount & unit)', 'E.g.: 2 g (amount & unit)', 'E.g.: 2 g (amount & unit)']
         }
     },
     watch: {
+        recipe: {
+            deep: true,
+            handler() {
+                console.log(this.recipe.nutrition)
+            }
+        },
         prepTime () {
             let hours = this.prepTime[0].toString().padStart(2, '0')
             let mins = this.prepTime[1].toString().padStart(2, '0')
