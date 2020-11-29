@@ -101,25 +101,32 @@ namespace OCA.Cookbook {
 		Entity <|.. CategoryEntity
 		Entity <|.. KeywordEntity
 		
+		namespace Collections {
+			
+			abstract class AbstractCollection<T extends Entity> {}
+			class Recipes {}
+			class Categories {}
+			class Keywords {}
+			
+			
+			AbstractCollection <|-- Recipes
+			AbstractCollection <|-- Categories
+			AbstractCollection <|-- Keywords
+		}
+		
 	}
 	
 	namespace Db {
 		
-		abstract class AbstractDbWrapper<T extends OCA.Cookbook.Entity.impl.AbstractEntity> {
+		abstract class AbstractDbWrapper {
 			# IDbConnection db
 			- array cache
 			- bool cacheValid
-			--
 			+ abstract createEntity() : T
 			# abstract fetchDatabase() : array
 			+ getEntites() : array
 			# setCache(array) : void
 			+ getServiceLocator() : DbWrapperSerciveLocator
-			..
-			+ store(T) : void
-			# abstract storeNew(T) : void
-			# abstract update(T) : void
-			+ remove(T) : void
 		}
 		note right
 		Cache represents the current state
@@ -204,5 +211,6 @@ namespace OCA.Cookbook {
 	
 }
 
+ArrayIterator <|-- OCA.Cookbook.Entity.Collections.AbstractCollection
 
 @enduml
