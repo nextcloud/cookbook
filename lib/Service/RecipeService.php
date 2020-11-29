@@ -405,10 +405,11 @@ class RecipeService {
 
 		// Nutrition information
 		if (isset($json['nutrition']) && is_array($json['nutrition'])) {
-			$json['nutrition'] = array_filter($json['nutrition']);			
+			$json['nutrition'] = array_filter($json['nutrition']);
 		} else {
 			$json['nutrition'] = [];
 		}
+		
 		return $json;
 	}
 

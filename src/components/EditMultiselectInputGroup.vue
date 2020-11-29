@@ -17,8 +17,7 @@
                     @input="e => fieldValueUpdated(idx, e)"
                     :value="filledValues[idx]"
                     />
-            </li>
-            
+            </li>            
             <li v-if="selectedOptions.length < options.length" :key="fieldLabel+selectedOptions.length">
                 <multiselect
                     class="key"
@@ -112,13 +111,10 @@ export default {
     },
     methods: {
         /**
-         * Called when a new option is chosen in one of the `Multiselect`s.
+         * Emit locally updated value to parent component.
          */
-        optionUpdated: function (idx, val) {
-            delete this.localValue[this.selectedOptions[idx]]
-            this.localValue[val] = this.filledValues[idx]
-            this.$set(this.selectedOptions,idx, [val]);
-            this.emitUpdate()
+        emitUpdate: function() {
+            this.$emit('change', JSON.parse(JSON.stringify(this.localValue)))
         },
         /**
          * Called when input-fields content is changed.
@@ -129,12 +125,29 @@ export default {
             this.emitUpdate()
         },
         /**
-         * Emit locally updated value to parent component.
+         * Called when a new option is chosen in one of the `Multiselect`s.
          */
-        emitUpdate: function() {
-            console.log("Emitting new value from MultiselectInputGroup: ")
-            console.log(this.localValue)
-            this.$emit('change', JSON.parse(JSON.stringify(this.localValue)))
+        optionUpdated: function (idx, val) {
+            if (idx == this.selectedOptions.length && (typeof this.filledValues[idx]) === 'undefined') {
+                this.filledValues[idx] = ''
+            }
+            delete this.localValue[this.selectedOptions[idx]]
+            this.localValue[val] = this.filledValues[idx]
+            this.$set(this.selectedOptions, idx, [val]);
+            this.emitUpdate()
+        },
+        /**
+         * Get content of the descriptive placeholder for an input field.
+         */
+        placeholder: function (idx) {
+            if (idx >= this.selectedOptions.length || idx >= this.placeholders.length) {
+                return ''
+            }
+            let optionIdx = this.options.indexOf(this.selectedOptions[idx][0])
+            if (optionIdx > -1 && this.placeholders.length >= optionIdx-1) {
+                return this.placeholders[optionIdx]
+            }
+            return ''
         },
         /**
          * Get a list of not yet selected options.
@@ -148,20 +161,10 @@ export default {
                 )
         },
         /**
-         * Get content of the describptive placeholder for input field.
-         */
-        placeholder: function (idx) {
-            let optionIdx = this.options.indexOf(this.selectedOptions[idx])
-            if (optionIdx > -1 && this.placeholders.length >= optionIdx-1) {
-                return this.placeholders[optionIdx]
-            }
-            return ''
-        },
-        /**
          * Update the helper fields with the localValue.
          */
         updateLocalValues: function() {
-            // show only fields made available in passed options
+            // show only fields made available in passed `options`
             this.selectedOptions = []
             this.filledValues = []
             for (let key in this.localValue) {
