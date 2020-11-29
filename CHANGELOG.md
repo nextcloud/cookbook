@@ -68,6 +68,8 @@
   [#343](https://github.com/nextcloud/cookbook/pull/343/) @christianlupus
 - Creating new recipe not possible due to null reference
   [#378](https://github.com/nextcloud/cookbook/pull/378/) @seyfeb
+- Reenabling CI testing with current xdebug 3
+  [#417](https://github.com/nextcloud/cookbook/pull/417/) @christianlupus
 
 ### Removed
 - Travis build system
