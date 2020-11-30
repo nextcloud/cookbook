@@ -42,6 +42,8 @@
   [#349](https://github.com/nextcloud/cookbook/pull/349/) @christianlupus
 - Optimization for SVG to reduce the filesize
   [#404](https://github.com/nextcloud/cookbook/pull/404) @thembeat
+- Replace Default Recipe-Thumb and Full Image with SVG
+  [#XXX](https://github.com/nextcloud/cookbook/pull/404) @thembeat
 
 ### Fixed
 - Add a min PHP restriction in the metadata
