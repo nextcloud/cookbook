@@ -149,9 +149,9 @@ class RecipeController extends Controller {
 
 			return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {
-			$file = file_get_contents(dirname(__FILE__) . '/../../img/recipe-' . $size . '.jpg');
+			$file = file_get_contents(dirname(__FILE__) . '/../../img/recipe-' . $size . '.svg');
 
-			return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg']);
+			return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/svg+xml']);
 		}
 	}
 }
