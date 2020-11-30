@@ -7,6 +7,9 @@ ARG PHPVERSION
 COPY install.sh /install.sh
 RUN /install.sh ${PHPVERSION}
 
+COPY xdebug.config /tmp/xdebug.config
+RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
 RUN mkdir /workdir
 WORKDIR /workdir
 
