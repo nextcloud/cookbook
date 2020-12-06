@@ -1077,6 +1077,36 @@ class RecipeService {
 		$image_file = null;
 		$image_filename = $size . '.jpg';
 
+		if (($size == 'thumb16' || $size == 'thumb') && !$recipe_folder->nodeExists($image_filename)) {
+			if ($recipe_folder->nodeExists('full.jpg')) {
+				// Write the thumbnail
+				$recipe_full_image_file = $recipe_folder->get('full.jpg');
+				$full_image_data = $recipe_full_image_file->getContent();
+				$thumb_image = new Image();
+				$thumb_image->loadFromData($full_image_data);
+				$thumb_image->fixOrientation();
+				$thumb_image->resize(256);
+				$thumb_image->centerCrop();
+
+				try {
+					$thumb_image_file = $recipe_folder->get('thumb.jpg');
+				} catch (NotFoundException $e) {
+					$thumb_image_file = $recipe_folder->newFile('thumb.jpg');
+				}
+
+				$thumb_image_file->putContent($thumb_image->data());
+
+				// Create low-resolution thumbnail preview
+				$low_res_thumb_image = $thumb_image->resizeCopy(16);
+				try {
+					$low_res_thumb_image_file = $recipe_folder->get('thumb16.jpg');
+				} catch (NotFoundException $e) {
+					$low_res_thumb_image_file = $recipe_folder->newFile('thumb16.jpg');
+				}
+				$low_res_thumb_image_file->putContent($low_res_thumb_image->data());
+			}
+		}
+
 		$image_file = $recipe_folder->get($image_filename);
 
 		if ($image_file && $this->isImage($image_file)) {
