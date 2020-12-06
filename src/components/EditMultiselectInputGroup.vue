@@ -6,6 +6,8 @@
                 <multiselect
                     class="key"
                     :options="selectableOptions(idx)"
+                    track-by="key"
+                    label="label"
                     :multiple="false"
                     @change="e => optionUpdated(idx, e)"
                     :value="selectedOptions[idx][0]"
@@ -22,6 +24,8 @@
                 <multiselect
                     class="key"
                     :options="selectableOptions(selectedOptions.length)"
+                    track-by="key"
+                    label="label"
                     :multiple="false"
                     @change="e => optionUpdated(selectedOptions.length, e)"
                     />
@@ -53,16 +57,16 @@ export default {
             type: String,
             default: ""
         },
-        // Selectable options
+        /** Selectable options.
+         * Array of option objects with keys: key, label, and placeholder
+         * key: Key of the v-model object
+         * label: label to display for the key in the Multiselect
+         * placeholder: Placeholder shown for the key in the empty input field
+         */
         options: {
             type: Array,
             default: [],
             required: true
-        },
-        // Placeholder content of the input fields
-        placeholders: {
-            type: Array,
-            default: []
         },
         // Value (passed in v-model)
         value: {
@@ -121,7 +125,7 @@ export default {
          */
         fieldValueUpdated: function (idx, e) {
             this.filledValues[idx] = e.target.value
-            this.localValue[this.selectedOptions[idx]] = e.target.value
+            this.localValue[this.selectedOptions[idx][0][0].key] = e.target.value
             this.emitUpdate()
         },
         /**
@@ -131,8 +135,11 @@ export default {
             if (idx == this.selectedOptions.length && (typeof this.filledValues[idx]) === 'undefined') {
                 this.filledValues[idx] = ''
             }
-            delete this.localValue[this.selectedOptions[idx]]
-            this.localValue[val] = this.filledValues[idx]
+            // Entry exists
+            if (this.selectedOptions[idx] != null && (typeof this.selectedOptions[idx] !== 'undefined')) {
+                delete this.localValue[this.selectedOptions[idx][0][0].key]
+            }
+            this.localValue[val.key] = this.filledValues[idx]
             this.$set(this.selectedOptions, idx, [val]);
             this.emitUpdate()
         },
@@ -140,12 +147,12 @@ export default {
          * Get content of the descriptive placeholder for an input field.
          */
         placeholder: function (idx) {
-            if (idx >= this.selectedOptions.length || idx >= this.placeholders.length) {
+            if (idx >= this.selectedOptions.length || idx >= this.options.length) {
                 return ''
             }
-            let optionIdx = this.options.indexOf(this.selectedOptions[idx][0])
-            if (optionIdx > -1 && this.placeholders.length >= optionIdx-1) {
-                return this.placeholders[optionIdx]
+            let optionIdx = this.options.map(o => o.key).indexOf(this.selectedOptions[idx][0][0].key)
+            if (optionIdx > -1 && 'placeholder' in this.options[optionIdx]) {
+                return this.options[optionIdx].placeholder
             }
             return ''
         },
@@ -156,9 +163,19 @@ export default {
             if (!(this.selectedOptions instanceof Array)) {
                 return []
             }
-            return this.options.filter(
-                    x => !(this.selectedOptions.map(m => m[0]).includes(x))
-                )
+            let selectable_Opts = []
+            let selected_keys = this.selectedOptions.map(m => m[0][0].key)
+            for (let i = 0; i < this.options.length; i++) {
+                let option = this.options[i]
+                if (!('label' in option)) {
+                    option.label = option.key
+                }
+                if ( !(selected_keys.includes(option.key)) )
+                {
+                    selectable_Opts.push(option)
+                }
+            }
+            return selectable_Opts
         },
         /**
          * Update the helper fields with the localValue.
@@ -168,8 +185,9 @@ export default {
             this.selectedOptions = []
             this.filledValues = []
             for (let key in this.localValue) {
-                if (this.options.includes(key)) {
-                    this.selectedOptions.push([key])
+                if (this.options.map(o => o.key).includes(key)) {
+                    let opt = this.options.filter(o => o.key == key)
+                    this.selectedOptions.push([opt])
                     this.filledValues.push(this.localValue[key])
                 }                    
             }
@@ -195,7 +213,7 @@ fieldset > * {
     }}
 fieldset > label {
     display: inline-block;
-    width: 10em;
+    width: 16em;
     line-height: 18px;
     font-weight: bold;
     word-spacing: initial;

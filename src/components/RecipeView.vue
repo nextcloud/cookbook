@@ -233,9 +233,7 @@ export default {
                     $this.dateModified = (date != null ? date.format('L, LT').toString() : null)
                 }
                 if ($this.$store.state.recipe.nutrition) {
-                    console.log("Has nutrition info:" + $this.$store.state.recipe.nutrition.length)
                     $this.nutrition = $this.$store.state.recipe.nutrition
-                    console.log($this.nutrition)
                 }
 
                 // Always set the active page last!

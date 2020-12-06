@@ -10,7 +10,7 @@
         <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
-        <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" :placeholders="nutritionFieldPlaceholders" />
+        <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-bind:createFieldsOnNewlines="true" />
@@ -68,15 +68,18 @@ export default {
             allKeywords: [],
             selectedKeywords: [],
             availableNutritionFields:
-                ['calories', 'carbohydrateContent', 'cholesterolContent',
-                'fatContent', 'fiberContent', 'proteinContent',
-                'saturatedFatContent', 'servingSize', 'sodiumContent',
-                'sugarContent', 'transFatContent', 'unsaturatedFatContent'],
-            nutritionFieldPlaceholders:
-                [t('cookbook', 'E.g.: 450 kcal (amount & unit)'), t('cookbook', 'E.g.: 2 g (amount & unit)'), t('cookbook', 'E.g.: 2 g (amount & unit)'),
-                t('cookbook', 'E.g.: 2 g (amount & unit)'), t('cookbook', 'E.g.: 2 g (amount & unit)'), t('cookbook', 'E.g.: 2 g (amount & unit)'),
-                t('cookbook', 'E.g.: 2 g (amount & unit)'), t('cookbook', 'Enter serving size (volume or mass)'), t('cookbook', 'E.g.: 2 g (amount & unit)'),
-                t('cookbook', 'E.g.: 2 g (amount & unit)'), t('cookbook', 'E.g.: 2 g (amount & unit)'), t('cookbook', 'E.g.: 2 g (amount & unit)')]
+                [{ key: 'calories', label: t('cookbook', 'Calories'), placeholder: t('cookbook', 'E.g.: 450 kcal (amount & unit)') },
+                { key: 'carbohydrateContent', label: t('cookbook', 'Carbohydrate content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'cholesterolContent',label: t('cookbook', 'Cholesterol content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'fatContent', label: t('cookbook', 'Fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'fiberContent', label: t('cookbook', 'Fiber content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'proteinContent',label: t('cookbook', 'Protein content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'saturatedFatContent', label: t('cookbook', 'Saturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'servingSize', label: t('cookbook', 'Serving size'), placeholder: t('cookbook', 'Enter serving size (volume or mass)') },
+                { key: 'sodiumContent',label: t('cookbook', 'Sodium content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'sugarContent', label: t('cookbook', 'Sugar content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'transFatContent', label: t('cookbook', 'Trans-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }]
         }
     },
     watch: {
