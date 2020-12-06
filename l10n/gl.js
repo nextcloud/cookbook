@@ -60,7 +60,7 @@ OC.L10N.register(
     "Servings" : "Racións",
     "Tools" : "Trebellos",
     "Ingredients" : "Ingredientes",
-    "Instructions" : "Execución",
+    "Instructions" : "Elaboración",
     "Loading recipe failed" : "Produciuse un fallo ao cargar a receita",
     "Recipe could not be saved" : "Non foi posíbel gardar a receita",
     "Cooking time is up!" : "Rematou o tempo de cocedura!",
