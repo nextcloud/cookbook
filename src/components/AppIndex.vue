@@ -6,7 +6,7 @@
         <ul class="recipes">
             <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
                 <router-link :to="'/recipe/'+recipe.recipe_id">
-                    <img v-if="$store.state.recipe.image" :src="recipe.imageUrl">
+                    <img v-if="$store.imageUrl" :src="recipe.imageUrl">
                     <span>{{ recipe.name }}</span>
                 </router-link>
             </li>
