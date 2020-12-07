@@ -72,6 +72,8 @@
   [#417](https://github.com/nextcloud/cookbook/pull/417/) @christianlupus
 - Corrected code style in appinfo path
   [#427](https://github.com/nextcloud/cookbook/pull/427) @christianlupus
+- Clear filtered keywords when changing the route, fixes #425
+  [#426](https://github.com/nextcloud/cookbook/pull/426/) @seyfeb
 
 ### Removed
 - Travis build system
