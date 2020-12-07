@@ -32,7 +32,12 @@ export default {
         }
     },
     computed: {
-    },    
+    },
+    watch: {
+        $route(to, from) {
+            this.keywordFilter = [];
+        }
+    },
     methods: {
         /**
          * Callback for click on keyword
