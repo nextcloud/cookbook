@@ -70,6 +70,8 @@
   [#378](https://github.com/nextcloud/cookbook/pull/378/) @seyfeb
 - Reenabling CI testing with current xdebug 3
   [#417](https://github.com/nextcloud/cookbook/pull/417/) @christianlupus
+- Corrected code style in appinfo path
+  [#427](https://github.com/nextcloud/cookbook/pull/427) @christianlupus
 
 ### Removed
 - Travis build system
