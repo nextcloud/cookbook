@@ -23,6 +23,7 @@ OC.L10N.register(
     "Page not found" : "Strani ni mogoče najti",
     "Category" : "Kategorija",
     "Recipe name" : "Naslov recepta",
+    "Tags" : "Oznake",
     "Search for recipes" : "Iskanje med recepti",
     "Are you sure you want to delete this recipe?" : "Ali ste prepričani, da želite izbrisati recept?",
     "Delete failed" : "Brisanje je spodletelo",
