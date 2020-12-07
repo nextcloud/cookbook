@@ -30,8 +30,8 @@ return [
 		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
 	],
 
-   /* API resources */
-   'resources' => [
-   	'recipe' => ['url' => '/api/recipes']
-   ]
+	/* API resources */
+	'resources' => [
+		'recipe' => ['url' => '/api/recipes']
+	]
 ];
