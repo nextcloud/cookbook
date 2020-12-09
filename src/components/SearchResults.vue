@@ -201,6 +201,7 @@ ul.recipes {
             float: left;
             height: 105px;
             border-radius: 3px 0 0 3px;
+            background-color: #bebdbd;
         }
 
         ul.recipes li span {

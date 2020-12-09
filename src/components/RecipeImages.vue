@@ -34,6 +34,7 @@ export default {
         cursor: pointer;
         width: 100%;
         max-width: 950px;
+        background-color: #bebdbd;
     }
     div.collapsed {
         height: 40vh;
