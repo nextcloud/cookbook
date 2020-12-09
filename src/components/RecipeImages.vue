@@ -24,12 +24,12 @@ export default {
 
 <style scoped>
 
-    div {
-        display: block;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 1rem;
-    }
+	div {
+	    display: block;
+	    width: 100%;
+	    text-align: center;
+	    margin-bottom: 1rem;
+	}
     img {
         cursor: pointer;
         width: 100%;
