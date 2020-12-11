@@ -1,0 +1,85 @@
+
+name: Deploy testing
+
+on:
+    push:
+        branches:
+            - test-stable
+
+jobs:
+    
+    deploy:
+        name: Deploy codebase
+        runs-on: ubuntu-latest
+        
+        defaults:
+            run:
+                shell: bash
+                working-directory: cookbook
+        
+        steps:
+            -   name: Checkout the project
+                uses: actions/checkout@v2
+                with:
+                    path: cookbook
+                    ref: ${{ github.ref }}
+                    fetch-depth: 0
+            
+            -   name: Bump the version
+                id: bump
+                run: ./.github/actions/deploy/create-version.sh
+            
+            -   name: Install the NPM packages
+                run: npm install
+            -   name: Build NPM
+                run: npm run build
+                
+            -   name: Install composer packages
+                run: make composer_dist
+                
+            -   name: Build the appstore package
+                run: make appstore
+                
+            -   name: Move the tarball to temp folder
+                run: cp build/artifacts/appstore/cookbook.tar.gz /tmp
+            -   name: Show the size of the tarball
+                run: ls -lh /tmp/cookbook.tar.gz
+                
+            -   name: Save key in file
+                env:
+                    PEM: ${{ secrets.PEM }}
+                run: |
+                    touch /tmp/key.pem
+                    chmod 600 /tmp/key.pem
+                    echo "$PEM" > /tmp/key.pem
+            
+            -   name: Create a signature for the tarball
+                run: >-
+                    openssl dgst -sha512
+                    -sign /tmp/key.pem
+                    /tmp/cookbook.tar.gz 
+                    | openssl base64
+                    | tee /tmp/signature
+            
+            -   name: Create the release in GitHub
+                uses: actions/create-release@v1
+                id: create_release
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                with:
+                    tag_name: v${{ steps.bump.outputs.version }}
+                    release_name: "Version ${{ steps.bump.outputs.version }}"
+                    draft: false
+            -   name: Upload the asset to the version
+                uses: actions/upload-release-asset@v1.0.2
+                id: upload_asset
+                env:
+                    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+                with:
+                    upload_url: "${{ steps.create_release.outputs.upload_url }}"
+                    asset_path: /tmp/cookbook.tar.gz
+                    asset_name: Cookbook-${{ steps.bump.outputs.version }}.tar.gz
+                    asset_content_type: application/gzip
+            
+            -   name: Output asset URL
+                run: echo "Download URL is ${{ steps.upload_asset.outputs.browser_download_url }}"
