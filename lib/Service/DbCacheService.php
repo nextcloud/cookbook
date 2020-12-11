@@ -305,14 +305,14 @@ class DbCacheService {
 	 * Gets the last time the search index was updated
 	 */
 	public function getSearchIndexLastUpdateTime() {
-		return (int) $this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
+		return (int) $this->config->getUserValue($this->userId, 'cookbook', 'last_index_update');
 	}
 	
 	/**
 	 * @return int
 	 */
 	public function getSearchIndexUpdateInterval(): int {
-		$interval = (int)$this->config->getUserValue($this->user_id, 'cookbook', 'update_interval');
+		$interval = (int)$this->config->getUserValue($this->userId, 'cookbook', 'update_interval');
 		
 		if ($interval < 1) {
 			$interval = 5;
@@ -338,7 +338,7 @@ class DbCacheService {
 			$this->updateCache();
 			
 			// Cache the last index update
-			$this->config->setUserValue($this->user_id, 'cookbook', 'last_index_update', time());
+			$this->config->setUserValue($this->userId, 'cookbook', 'last_index_update', time());
 			
 			// TODO Make triggers more general, need refactoring of *all* Services
 			$this->recipeService->updateSearchIndex();
