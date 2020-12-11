@@ -29,6 +29,8 @@
   [#387](https://github.com/nextcloud/cookbook/pull/387) @TobiasMie
 - PHP linter and style checker enabled
   [#390](https://github.com/nextcloud/cookbook/pull/390) @christianlupus
+- Automatic deployment of new releases to the nextcloud app store
+  [#433](https://github.com/nextcloud/cookbook/pull/433) @christianlupus
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
