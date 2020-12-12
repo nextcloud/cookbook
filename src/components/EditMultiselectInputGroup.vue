@@ -48,6 +48,8 @@ export default {
     components: {
         Multiselect
     },
+    // Define which prop and which event is used here, for binding to the 
+    // v-model used in the parent (the one using this component)
     model: {
         prop: 'value',
         event: 'change'
