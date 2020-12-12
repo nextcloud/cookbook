@@ -23,6 +23,7 @@ OC.L10N.register(
     "Page not found" : "Puslapis nerastas",
     "Category" : "Kategorija",
     "Recipe name" : "Recepto pavadinimas",
+    "Tags" : "Žymės",
     "Search for recipes" : "Ieškoti receptų",
     "Are you sure you want to delete this recipe?" : "Ar tikrai norite ištrinti šį receptą?",
     "Delete failed" : "Ištrynimas nepavyko",
