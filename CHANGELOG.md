@@ -44,6 +44,8 @@
   [#404](https://github.com/nextcloud/cookbook/pull/404) @thembeat
 - Replace Default Recipe-Thumb and Full Image with SVG
   [#418](https://github.com/nextcloud/cookbook/pull/418) @thembeat
+- ENhance the CI tests and build valid dist tarballs during the CI runs
+  [#435](https://github.com/nextcloud/cookbook/pull/435) @christianlupus
 
 ### Fixed
 - Add a min PHP restriction in the metadata
