@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import lozad from 'lozad';
+import lozad from 'lozad'
 
 export default {
     name: "LazyPicture",
@@ -59,7 +59,7 @@ export default {
                 type: Boolean,
                 default: true,
             },
-        };
+        }
     },
     computed: {
         style() {
@@ -71,7 +71,7 @@ export default {
                 style.height = 0
                 style.paddingTop = `${this.height}px`
             }
-            return style;
+            return style
         },
     },
     mounted() {
