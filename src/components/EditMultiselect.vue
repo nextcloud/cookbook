@@ -2,7 +2,7 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <Multiselect
-            class="edit_ms"
+            class="edit-multiselect"
             v-bind="$attrs"
             v-on="$listeners"
             />
@@ -50,12 +50,38 @@ fieldset > label {
     vertical-align: top;
 }
 
-.edit_ms {
+.edit-multiselect {
     width: calc(100% - 11em + 10px);
 }
 
-    @media(max-width:1199px) { .edit_ms {
+    @media(max-width:1199px) { .edit-multiselect {
         width: 100%;
     }}
+</style>
 
+<style>
+#app
+.edit-multiselect
+.multiselect__tags {
+    height: auto;
+    min-height: 34px;
+}
+
+#app
+.edit-multiselect
+.multiselect__tags
+.multiselect__tags-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 0px;
+}
+
+#app
+.edit-multiselect
+.multiselect__tags
+.multiselect__tags-wrap
+.multiselect__tag {
+    flex-basis: 50px;
+    margin-bottom: 3px;
+} 
 </style>
