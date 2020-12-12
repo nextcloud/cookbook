@@ -353,7 +353,7 @@ class RecipeService {
 		// Make sure the 'url' is a URL, or blank
 		if (isset($json['url']) && $json['url']) {
 			$url = filter_var($json['url'], FILTER_SANITIZE_URL);
-			if (filter_var($url, FILTER_VALIDATE_URL) == false) {
+			if (filter_var($url, FILTER_VALIDATE_URL) === false) {
 				$url = "";
 			}
 			$json['url'] = $url;
