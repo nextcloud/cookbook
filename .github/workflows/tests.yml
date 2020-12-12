@@ -145,7 +145,7 @@ jobs:
             shell: bash
             run: >-
                 cd nextcloud/apps/cookbook &&
-                make
+                make npm composer_dist
         
         -   name: Create the source package
             shell: bash
