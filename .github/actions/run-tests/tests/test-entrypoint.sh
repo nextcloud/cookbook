@@ -147,6 +147,10 @@ cp coverage.integration.xml $GITHUB_WORKSPACE
 
 popd
 
+echo 'Running the code checker'
+./occ app:check-code cookbook
+echo 'Code checker finished'
+
 echo 'Shutting down temporary web server'
 kill $pid
 
