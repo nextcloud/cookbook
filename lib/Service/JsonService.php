@@ -38,7 +38,7 @@ class JsonService {
 		}
 		
 		// Check if type matches
-		return (strcmp($obj['@type'], $type) == 0);
+		return (strcmp($obj['@type'], $type) === 0);
 	}
 	
 	/**

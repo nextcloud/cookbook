@@ -197,7 +197,7 @@ class RecipeDb {
 	public function getRecipesByCategory(string $category, string $user_id) {
 		$qb = $this->db->getQueryBuilder();
 
-		if ($category != '_') {
+		if ($category !== '_') {
 			// One would probably want to use GROUP_CONCAT to create the list of keywords
 			// for the recipe, but those don't seem to work:
 			// $qb->select(['r.recipe_id', 'r.name', 'GROUP_CONCAT(k.name) AS keywords']) // not working

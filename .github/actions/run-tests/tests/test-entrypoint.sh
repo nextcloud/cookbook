@@ -147,6 +147,13 @@ cp coverage.integration.xml $GITHUB_WORKSPACE
 
 popd
 
+echo 'Running the code checker'
+if ! ./occ app:check-code cookbook; then
+	echo '::error ::The code checker rejected the code base. See the logs of the action for further details.'
+	exit 1
+fi
+echo 'Code checker finished'
+
 echo 'Shutting down temporary web server'
 kill $pid
 

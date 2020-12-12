@@ -202,7 +202,7 @@ class DbCacheService {
 		$dbEntry = $this->dbReceipeFiles[$id];
 		$fileEntry = $this->jsonFiles[$id];
 		
-		if ($dbEntry['name'] != $fileEntry['name']) {
+		if ($dbEntry['name'] !== $fileEntry['name']) {
 			return false;
 		}
 		
@@ -238,7 +238,7 @@ class DbCacheService {
 				
 				if (isset($this->dbCategories[$rid])) {
 					// There is a category present. Update needed?
-					if ($this->dbCategories[$rid] != trim($category)) {
+					if ($this->dbCategories[$rid] !== trim($category)) {
 						$this->db->updateCategoryOfRecipe($rid, $category, $this->userId);
 					}
 				} else {
