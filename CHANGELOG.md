@@ -84,6 +84,8 @@
   [#434](https://github.com/nextcloud/cookbook/pull/434) @christianlupus
 - Update dependency on code style to version 0.4.x
   [#437](https://github.com/nextcloud/cookbook/pull/437) @christianlupus
+- Corrected bugs in CI system
+  [#447](https://github.com/nextcloud/cookbook/pull/447) @christianlupus
 
 ### Removed
 - Travis build system
