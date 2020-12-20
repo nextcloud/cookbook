@@ -12,7 +12,7 @@ minor=$(cat "$deploy_path/minor")
 patch=$(cat "$deploy_path/patch")
 
 # release
-message=$(git log HEAD~1...HEAD --format='%s%n%b')
+message=$(git log HEAD~1...HEAD --max-count=1 --format='%s%n%b')
 
 if echo "$message" | grep '%MAJOR%' > /dev/null ; then
         
