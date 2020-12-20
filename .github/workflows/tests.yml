@@ -29,6 +29,8 @@ jobs:
            run: composer lint:lint
         -  name: Run code style checker
            shell: bash
+           env:
+              PHP_CS_FIXER_IGNORE_ENV: 1
            run: composer cs:check
   
   test:
