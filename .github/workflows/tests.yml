@@ -13,6 +13,9 @@ jobs:
      steps:
         -  name: Checkout the project
            uses: actions/checkout@v2
+        -  name: Get PHP version
+           shell: bash
+           run: php -v
         -  name: Install Composer
            shell: bash
            run: >-
@@ -61,7 +64,7 @@ jobs:
                 # Test different PHP versions additionally
                 -   database: mysql
                     coreVersion: stable19
-                    phpVersion: "7.2"
+                    phpVersion: "7.3"
                     mayFail: false
                     
                 # Test against master (optionally)

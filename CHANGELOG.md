@@ -80,9 +80,12 @@
   [#426](https://github.com/nextcloud/cookbook/pull/426/) @seyfeb
 - Removed typo introduced during refactory cycles
   [#434](https://github.com/nextcloud/cookbook/pull/434) @christianlupus
+- Update dependency on code style to version 0.4.x
+  [#437](https://github.com/nextcloud/cookbook/pull/437) @christianlupus
 
 ### Removed
 - Travis build system
+- Support for PHP 7.2
 
 
 ## 0.7.6 - 2020-06-27
