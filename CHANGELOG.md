@@ -88,6 +88,12 @@
 - Support for PHP 7.2
 
 
+## 0.7.7 - 2020-12-10
+
+### Fixed
+- Increase version compatibility to nextcloud 20 @mrzapp
+
+
 ## 0.7.6 - 2020-06-27
 
 ### Added
