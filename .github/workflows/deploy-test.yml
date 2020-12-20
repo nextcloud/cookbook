@@ -87,11 +87,10 @@ jobs:
                 env:
                     TOKEN: ${{ secrets.APP_STORE_TOKEN }}
                 run: >-
+                    CONTENT="{\"download\": \"${{ steps.upload_asset.outputs.browser_download_url }}\", \"signature\": \"$(cat /tmp/signature | tr -d '\n')\"}" &&
+                    echo "$CONTENT" &&
                     curl -X POST
                     https://apps.nextcloud.com/api/v1/apps/releases
                     -H "Authorization: Token $TOKEN"
                     -H "Content-Type: application/json"
-                    -d "{
-                        \"download\":\"${{ steps.upload_asset.outputs.browser_download_url }}\",
-                        \"signature\": \"$(cat /tmp/signature)\"
-                    }"
+                    -d "$CONTENT"
