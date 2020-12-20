@@ -93,5 +93,5 @@ jobs:
                     -H "Content-Type: application/json"
                     -d "{
                         \"download\":\"${{ steps.upload_asset.outputs.browser_download_url }}\",
-                        \"signature\": \"$(cat /tmp/signature | tr -d '\n')\"
+                        \"signature\": \"$(cat /tmp/signature)\"
                     }"
