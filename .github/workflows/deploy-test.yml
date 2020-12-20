@@ -4,7 +4,7 @@ name: Deploy testing
 on:
     push:
         branches:
-            - test-stable
+            - stable
 
 jobs:
     
@@ -83,3 +83,15 @@ jobs:
             
             -   name: Output asset URL
                 run: echo "Download URL is ${{ steps.upload_asset.outputs.browser_download_url }}"
+            -   name: Register the release with the app store via REST API request
+                env:
+                    TOKEN: ${{ secrets.APP_STORE_TOKEN }}
+                run: >-
+                    curl -X POST
+                    https://apps.nextcloud.com/api/v1/apps/releases
+                    -H "Authorization: Token $TOKEN"
+                    -H "Content-Type: application/json"
+                    -d "{
+                        \"download\":\"${{ steps.upload_asset.outputs.browser_download_url }}\",
+                        \"signature\": \"$(cat /tmp/signature | tr -d '\n')\"
+                    }"

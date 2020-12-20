@@ -1,11 +1,11 @@
 #! /bin/bash
 
-set -x
+# set -x
 
 deploy_path='.github/actions/deploy'
 
-stable_branch=test-stable
-master_branch=test/deployment-tests
+stable_branch=stable
+master_branch=master
 
 major=$(cat "$deploy_path/major")
 minor=$(cat "$deploy_path/minor")
