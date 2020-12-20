@@ -5,7 +5,7 @@
     <name>Cookbook</name>
     <summary>An integrated cookbook using schema.org JSON files as recipes</summary>
     <description><![CDATA[A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.]]></description>
-    <version>0.7.8</version>
+    <version>0.7.6</version>
     <licence>agpl</licence>
     <author mail="mrzapp@users.noreply.github.com">Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
