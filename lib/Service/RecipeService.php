@@ -427,7 +427,6 @@ class RecipeService {
 		$html = html_entity_decode($html);
 
 		// Convert utf8 entity 
-
 		$html = utf8_decode($html);
 
 		// Start document parser
