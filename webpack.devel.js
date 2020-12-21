@@ -6,6 +6,10 @@ module.exports = merge(common, {
     mode: 'development',
     devtool: 'inline-cheap-source-map',
     plugins: [
-        new BundleAnalyzerPlugin()
+        new BundleAnalyzerPlugin(
+            {
+                openAnalyzer: false,
+            }
+        )
     ],
 })
