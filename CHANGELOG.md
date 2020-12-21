@@ -98,6 +98,8 @@
   [#437](https://github.com/nextcloud/cookbook/pull/437) @christianlupus
 - Corrected bugs in CI system
   [#447](https://github.com/nextcloud/cookbook/pull/447) @christianlupus
+- Correct encoding error when importing UTF8 Encoded recipe
+  [#284](https://github.com/nextcloud/cookbook/issues/284) @cholletk
 
 ### Removed
 - Travis build system
