@@ -64,6 +64,8 @@ OC.L10N.register(
     "Loading recipe failed" : "Loading recipe failed",
     "Recipe could not be saved" : "Recipe could not be saved",
     "Cooking time is up!" : "Cooking time is up!",
-    "Source" : "Source"
+    "Source" : "Source",
+    "Date created" : "Date created",
+    "Last modified" : "Last modified"
 },
 "nplurals=2; plural=(n != 1);");
