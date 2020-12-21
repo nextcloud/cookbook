@@ -403,6 +403,13 @@ class RecipeService {
 			$json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
 		}
 
+		// Nutrition information
+		if (isset($json['nutrition']) && is_array($json['nutrition'])) {
+			$json['nutrition'] = array_filter($json['nutrition']);
+		} else {
+			$json['nutrition'] = [];
+		}
+		
 		return $json;
 	}
 

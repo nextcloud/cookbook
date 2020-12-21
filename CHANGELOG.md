@@ -39,6 +39,8 @@
   [#377](https://github.com/nextcloud/cookbook/pull/366/) @seyfeb
 - Bundle-Analyzer and Optimization
   [#403](https://github.com/nextcloud/cookbook/pull/403) @thembeat
+- Nutrition information display and editing
+  [#416](https://github.com/nextcloud/cookbook/pull/416/) @seyfeb
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
