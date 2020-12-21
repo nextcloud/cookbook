@@ -37,6 +37,8 @@
   [#393](https://github.com/nextcloud/cookbook/pull/393) @christianlupus
 - Support for dateCreated and dateModified field of schema.org Recipe
   [#377](https://github.com/nextcloud/cookbook/pull/366/) @seyfeb
+- Bundle-Analyzer and Optimization
+  [#403](https://github.com/nextcloud/cookbook/pull/403) @thembeat
 
 ### Changed
 - Switch of project ownership to neextcloud organization in GitHub
