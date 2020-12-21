@@ -7,8 +7,8 @@
         <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
         <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
         <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
-        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Category')" />
-        <EditInputField :fieldName="'keywords'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
@@ -20,6 +20,7 @@
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
+import EditMultiselect from './EditMultiselect'
 import EditTimeField from './EditTimeField'
 
 export default {
@@ -28,6 +29,7 @@ export default {
         EditImageField,
         EditInputField,
         EditInputGroup,
+        EditMultiselect,
         EditTimeField,
     },
     props: ['id'],
@@ -57,6 +59,11 @@ export default {
             prepTime: [0, 0],
             cookTime: [0, 0],
             totalTime: [0, 0],
+            allCategories: [],
+            isFetchingCategories: true,
+            isFetchingKeywords: true,
+            allKeywords: [],
+            selectedKeywords: [],
         }
     },
     watch: {
@@ -75,13 +82,82 @@ export default {
             let mins = this.totalTime[1].toString().padStart(2, '0')
             this.recipe.totalTime = 'PT' + hours + 'H' + mins + 'M'
         },
+        selectedKeywords: {
+            deep: true,
+            handler() {
+                // convert keyword array to comma-separated string
+                this.recipe['keywords'] = this.selectedKeywords.join()
+            }
+        }
     },
     methods: {
+        /** 
+         * Add newly created category and set as selected.
+         */
+        addCategory (newCategory) {
+            this.allCategories.push(newCategory)
+            this.recipe['recipeCategory'] = newCategory
+        },
+        /** 
+         * Add newly created keyword.
+         */
+        addKeyword (newKeyword) {
+            this.allKeywords.push(newKeyword)
+            this.selectedKeywords.push(newKeyword)
+        },
         addEntry: function(field, index, content='') {
             this.recipe[field].splice(index, 0, content)
         },
         deleteEntry: function(field, index) {
             this.recipe[field].splice(index, 1)
+        },
+        /**
+         * Fetch and display recipe categories
+         */
+        fetchCategories: function() {            
+            $.get(this.$window.baseUrl + '/categories').done((json) => {
+                json = json || []
+                this.allCategories = []
+                for (let i=0; i<json.length; i++) {
+                    if (json[i].name != '*') {
+                        this.allCategories.push(
+                            json[i].name,
+                        )
+                    }
+                }
+                this.isFetchingCategories = false
+            })
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch categories'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
+        },
+        /**
+         * Fetch and display recipe keywords
+         */
+        fetchKeywords: function() {
+            $.ajax(this.$window.baseUrl + '/keywords').done((json) => {
+                json = json || []
+                if (json) {
+                    this.allKeywords = []
+                    for (let i=0; i<json.length; i++) {
+                        if (json[i].name != '*') {
+                            this.allKeywords.push(
+                                json[i].name,
+                            )
+                        }
+                    }
+                }
+                this.isFetchingKeywords = false
+            })
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch keywords'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
         },
         loadRecipeData: function() {
             if (!this.$store.state.recipe) {
@@ -171,6 +247,8 @@ export default {
             }
         },
         setup: function() {
+            this.fetchCategories()
+            this.fetchKeywords()
             if (this.$route.params.id) {
                 // Load the recipe from store and make edits to a local copy first
                 this.recipe = { ...this.$store.state.recipe }
@@ -187,6 +265,20 @@ export default {
                 if (timeComps) {
                     this.totalTime = [timeComps[1], timeComps[2]]
                 }
+                this.selectedKeywords = this.recipe['keywords'].split(',')
+                
+                // fallback if fetching all keywords fails
+                this.selectedKeywords.forEach(kw => {
+                    if (!this.allKeywords.includes(kw)) {
+                        this.allKeywords.push(kw)
+                    }
+                })
+
+                // fallback if fetching all categories fails
+                if (!this.allCategories.includes(this.recipe['recipeCategory'])) {
+                    this.allCategories.push(this.recipe['recipeCategory'])
+                }
+
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
