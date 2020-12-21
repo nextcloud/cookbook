@@ -1077,7 +1077,7 @@ class RecipeService {
 		$image_file = null;
 		$image_filename = $size . '.jpg';
 
-		if (($size == 'thumb16' || $size == 'thumb') && !$recipe_folder->nodeExists($image_filename)) {
+		if (($size === 'thumb16' || $size === 'thumb') && !$recipe_folder->nodeExists($image_filename)) {
 			if ($recipe_folder->nodeExists('full.jpg')) {
 				// Write the thumbnail
 				$recipe_full_image_file = $recipe_folder->get('full.jpg');
