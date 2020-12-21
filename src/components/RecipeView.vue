@@ -55,9 +55,9 @@
                         </ul>
                     </section>
 
-                    <section>
-                        <h3 v-if="nutrition">{{ t('cookbook', 'Nutrition Information') }}</h3>
-                        <ul v-if="nutrition">
+                    <section v-if="showNutritions">
+                        <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
+                        <ul>
                             <recipe-nutrition-info-item v-if="('servingSize' in nutrition) && !isNullOrEmpty(nutrition['servingSize'])" :title="t('cookbook', 'Serving Size')" :data="nutrition['servingSize']" />
                             <recipe-nutrition-info-item v-if="('calories' in nutrition) && !isNullOrEmpty(nutrition['calories'])" :title="t('cookbook', 'Energy')" :data="nutrition['calories']" />
                             <recipe-nutrition-info-item v-if="('sugarContent' in nutrition) && !isNullOrEmpty(nutrition['sugarContent'])" :title="t('cookbook', 'Sugar')" :data="nutrition['sugarContent']" />
@@ -141,6 +141,7 @@ export default {
             }
             return true
         },
+        showNutritions: function() { return this.nutrition && !(this.nutrition instanceof Array) }
     },
     methods: {
         isNullOrEmpty: function(str) {
