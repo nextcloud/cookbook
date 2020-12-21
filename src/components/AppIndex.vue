@@ -6,7 +6,11 @@
         <ul class="recipes">
             <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
                 <router-link :to="'/recipe/'+recipe.recipe_id">
-                    <img v-if="recipe.imageUrl" :src="recipe.imageUrl">
+                     <lazy-picture v-if="recipe.imageUrl"
+                        class="recipe-thumbnail"
+                        :lazy-src="recipe.imageUrl"
+                        :blurred-preview-src="recipe.imagePlaceholderUrl"
+                        :width="105" :height="105"/>
                     <span>{{ recipe.name }}</span>
                 </router-link>
             </li>
@@ -15,12 +19,14 @@
 </template>
 
 <script>
+import LazyPicture from './LazyPicture'
 import RecipeKeyword from './RecipeKeyword'
 
 export default {
     name: 'Index',
     components: {
-        RecipeKeyword,
+        LazyPicture,
+        RecipeKeyword
     },
     data () {
         return {
@@ -164,11 +170,14 @@ ul.recipes {
             box-shadow: 0 0 5px #888;
         }
 
-        ul.recipes li img {
+        ul.recipes li .recipe-thumbnail {
+            position: relative;
             float: left;
             height: 105px;
+            width: 105px;
             border-radius: 3px 0 0 3px;
             background-color: #bebdbd;
+            overflow: hidden;
         }
 
         ul.recipes li span {

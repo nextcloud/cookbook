@@ -141,6 +141,13 @@ class MainController extends Controller {
 						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
 					]
 				);
+				$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute(
+					'cookbook.recipe.image',
+					[
+						'id' => $recipe['recipe_id'],
+						'size' => 'thumb16'
+					]
+				);
 			}
 
 			return new DataResponse($recipes, 200, ['Content-Type' => 'application/json']);
@@ -173,6 +180,13 @@ class MainController extends Controller {
 						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
 					]
 				);
+				$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute(
+					'cookbook.recipe.image',
+					[
+						'id' => $recipe['recipe_id'],
+						'size' => 'thumb16'
+					]
+				);
 			}
 
 			return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
@@ -198,6 +212,13 @@ class MainController extends Controller {
 						'id' => $recipe['recipe_id'],
 						'size' => 'thumb',
 						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+					]
+				);
+				$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute(
+					'cookbook.recipe.image',
+					[
+						'id' => $recipe['recipe_id'],
+						'size' => 'thumb16'
 					]
 				);
 			}

@@ -50,6 +50,7 @@ class RecipeController extends Controller {
 		}
 		foreach ($recipes as $i => $recipe) {
 			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
 		}
 		return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 	}

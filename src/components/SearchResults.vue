@@ -1,27 +1,32 @@
 <template>
-<div>
-    <ul v-if="keywords.length" class="keywords">
-        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword), disabled : !keywordContainedInVisibleRecipes(keyword)}" />
-    </ul>
-    <ul class="recipes">
-        <li v-for="(result, index) in results" :key="result.recipe_id" v-show="recipeVisible(index)">
-            <router-link :to="'/recipe/'+result.recipe_id">
-                <img v-if="result.imageUrl" :src="result.imageUrl">
-                <span>{{ result.name }}</span>
-            </router-link>
-        </li>
-    </ul>
-</div>
+    <div>
+        <ul v-if="keywords.length" class="keywords">
+            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword), disabled : !keywordContainedInVisibleRecipes(keyword)}" />
+        </ul>
+        <ul class="recipes">
+            <li v-for="(result, index) in results" :key="result.recipe_id" v-show="recipeVisible(index)">
+                <router-link :to="'/recipe/'+result.recipe_id">
+                     <lazy-picture v-if="result.imageUrl"
+                        class="recipe-thumbnail"
+                        :lazy-src="result.imageUrl"
+                        :blurred-preview-src="result.imagePlaceholderUrl"
+                        :width="105" :height="105"/>
+                    <span>{{ result.name }}</span>
+                </router-link>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
-
+import LazyPicture from './LazyPicture'
 import RecipeKeyword from './RecipeKeyword'
 
 export default {
     name: "Search",
     components: {
-        RecipeKeyword,
+        LazyPicture,
+        RecipeKeyword
     },
     props: ['query'],
     data () {
@@ -197,11 +202,14 @@ ul.recipes {
             box-shadow: 0 0 5px #888;
         }
 
-        ul.recipes li img {
+        ul.recipes li .recipe-thumbnail {
+            position: relative;
             float: left;
             height: 105px;
+            width: 105px;
             border-radius: 3px 0 0 3px;
             background-color: #bebdbd;
+            overflow: hidden;
         }
 
         ul.recipes li span {
