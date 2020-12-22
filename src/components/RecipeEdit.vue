@@ -54,6 +54,7 @@ export default {
                 tool: [],
                 recipeIngredient: [],
                 recipeInstructions: [],
+                nutrition: {}
             },
             // This will hold the above configuration after recipe is loaded, so we don't have to
             // keep it up to date in multiple places if it changes later
@@ -197,6 +198,9 @@ export default {
                 method: 'GET',
                 data: null,
             }).done(function (recipe) {
+                if ('nutrition' in recipe && recipe.nutrition instanceof Array) {
+                    recipe.nutrition = {}
+                }
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 $this.setup()
             }).fail(function(e) {
@@ -283,12 +287,14 @@ export default {
                     this.allCategories.push(this.recipe['recipeCategory'])
                 }
 
+
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
                 this.prepTime = [0, 0]
                 this.cookTime = [0, 0]
                 this.totalTime = [0, 0]
+                this.nutrition = {}
                 this.$store.dispatch('setPage', { page: 'create' })
             }
             this.recipeInit = this.recipe
