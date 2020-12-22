@@ -53,7 +53,6 @@ OC.L10N.register(
     "Preparation time" : "Vrijeme pripreme",
     "Cooking time" : "Vrijeme kuhanja",
     "Total time" : "Ukupno vrijeme",
-    "Keywords (comma separated)" : "Ključne riječi (odvojene zarezom)",
     "Servings" : "Obroci",
     "Tools" : "Alati",
     "Ingredients" : "Sastojci",

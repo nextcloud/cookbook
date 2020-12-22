@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Temps de préparation",
     "Cooking time" : "Temps de cuisson",
     "Total time" : "Temps total",
-    "Keywords (comma separated)" : "Mots clés (séparés par des virgules)",
     "Servings" : "Portions",
     "Tools" : "Ustensiles",
     "Ingredients" : "Ingrédients",

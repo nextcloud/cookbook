@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Esivalmistelujen kesto",
     "Cooking time" : "Valmistuksen kesto",
     "Total time" : "Kokonaiskesto",
-    "Keywords (comma separated)" : "Avainsanat (pilkulla erotettuna)",
     "Servings" : "Annokset",
     "Tools" : "Työkalut",
     "Ingredients" : "Ainesosat",

@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Hazırlama süresi",
     "Cooking time" : "Pişirme süresi",
     "Total time" : "Toplam süre",
-    "Keywords (comma separated)" : "Anahtar sözcükler (virgül ile ayrılmış)",
     "Servings" : "Kaç kişilik",
     "Tools" : "Araçlar",
     "Ingredients" : "Malzemeler",

@@ -51,7 +51,6 @@ OC.L10N.register(
     "Preparation time" : "Prestatzeko denbora",
     "Cooking time" : "Kozinatzeko denbora",
     "Total time" : "Denbora denetara",
-    "Keywords (comma separated)" : "Gako-hitzak (komaz bereizita)",
     "Servings" : "Anoak",
     "Tools" : "Tresnak",
     "Ingredients" : "Osagaiak",

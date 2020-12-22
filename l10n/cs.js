@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Doba přípravy",
     "Cooking time" : "Doba vaření",
     "Total time" : "Celkový čas",
-    "Keywords (comma separated)" : "Klíčová slova (oddělovaná čárkou)",
     "Servings" : "Porce",
     "Tools" : "Nástroje",
     "Ingredients" : "Přísady",

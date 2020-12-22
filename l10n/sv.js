@@ -55,7 +55,6 @@ OC.L10N.register(
     "Preparation time" : "Förberedningstid",
     "Cooking time" : "Tillagningstid",
     "Total time" : "Total tid",
-    "Keywords (comma separated)" : "Nyckelord (kommaseparerade)",
     "Servings" : "Portioner",
     "Tools" : "Verktyg",
     "Ingredients" : "Ingredienser",

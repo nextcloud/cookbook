@@ -52,7 +52,6 @@ OC.L10N.register(
     "Preparation time" : "Време припреме",
     "Cooking time" : "Време кувања",
     "Total time" : "Укупно време",
-    "Keywords (comma separated)" : "Кључне речи (одвојене зарезима)",
     "Servings" : "Порција",
     "Tools" : "Алати",
     "Ingredients" : "Састојци",

@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Temps de preparació",
     "Cooking time" : "Temps de cocció",
     "Total time" : "Temps total",
-    "Keywords (comma separated)" : "Paraules clau (separades per comes)",
     "Servings" : "Racions",
     "Tools" : "Estris",
     "Ingredients" : "Ingredients",

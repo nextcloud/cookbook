@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Bereidingstijd",
     "Cooking time" : "Kooktijd",
     "Total time" : "Totale tijd",
-    "Keywords (comma separated)" : "Trefwoorden (gescheiden door een komma)",
     "Servings" : "Porties",
     "Tools" : "Hulpmiddelen",
     "Ingredients" : "Ingrediënten",

@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Pasiruošimo laikas",
     "Cooking time" : "Gaminimo laikas",
     "Total time" : "Bendras laikas",
-    "Keywords (comma separated)" : "Raktažodžiai (atskirti kableliais)",
     "Servings" : "Porcijos",
     "Tools" : "Įrankiai",
     "Ingredients" : "Ingredientai",

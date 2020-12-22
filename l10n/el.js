@@ -52,7 +52,6 @@ OC.L10N.register(
     "Preparation time" : "Χρόνος προετοιμασίας",
     "Cooking time" : "Χρόνος μαγειρέματος",
     "Total time" : "Συνολικός χρόνος",
-    "Keywords (comma separated)" : "Λέξεις κλειδιά (διαχωρισμένες με κόμμα)",
     "Servings" : "Σερβίρισμα",
     "Tools" : "Εργαλεία",
     "Ingredients" : "Συστατικά",

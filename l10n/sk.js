@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Čas na prípravu",
     "Cooking time" : "Čas varenia",
     "Total time" : "Celkový čas",
-    "Keywords (comma separated)" : "Kľúčové slová (oddelené čiarkou)",
     "Servings" : "Počet porcií",
     "Tools" : "Nástroje",
     "Ingredients" : "Prísady",

@@ -56,7 +56,6 @@ OC.L10N.register(
     "Preparation time" : "Preparation time",
     "Cooking time" : "Cooking time",
     "Total time" : "Total time",
-    "Keywords (comma separated)" : "Keywords (comma separated)",
     "Servings" : "Servings",
     "Tools" : "Tools",
     "Ingredients" : "Ingredients",
@@ -64,8 +63,6 @@ OC.L10N.register(
     "Loading recipe failed" : "Loading recipe failed",
     "Recipe could not be saved" : "Recipe could not be saved",
     "Cooking time is up!" : "Cooking time is up!",
-    "Source" : "Source",
-    "Date created" : "Date created",
-    "Last modified" : "Last modified"
+    "Source" : "Source"
 },
 "nplurals=2; plural=(n != 1);");
