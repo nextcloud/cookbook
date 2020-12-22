@@ -20,6 +20,8 @@
   [#503](https://github.com/nextcloud/cookbook/pull/503) @christianlupus
 - Updated color and bullets in nutrition information, fixes #510
   [#511](https://github.com/nextcloud/cookbook/pull/511/) @seyfeb
+- Update README with more clients
+  [#457](https://github.com/nextcloud/cookbook/pull/457) @geeseven
 
 
 ## 0.7.8 - 2021-01-08
