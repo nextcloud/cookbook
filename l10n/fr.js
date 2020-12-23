@@ -56,13 +56,18 @@ OC.L10N.register(
     "Preparation time" : "Temps de préparation",
     "Cooking time" : "Temps de cuisson",
     "Total time" : "Temps total",
+    "Keywords" : "Mots-clefs",
+    "Choose keywords" : "Sélectionner des mots-clefs",
     "Servings" : "Portions",
     "Tools" : "Ustensiles",
     "Ingredients" : "Ingrédients",
     "Instructions" : "Instructions",
+    "Calories" : "Calories",
     "Loading recipe failed" : "Erreur lors du chargement de la recette",
     "Recipe could not be saved" : "La recette n'a pas pu être enregistrée",
     "Cooking time is up!" : "La cuisson est terminée !",
+    "Date created" : "Date de création",
+    "Last modified" : "Dernière modification",
     "Source" : "Source"
 },
 "nplurals=2; plural=(n > 1);");
