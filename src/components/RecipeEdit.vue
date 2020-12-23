@@ -291,14 +291,34 @@ export default {
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
-                this.prepTime = [0, 0]
-                this.cookTime = [0, 0]
-                this.totalTime = [0, 0]
-                this.nutrition = {}
+                this.initEmptyRecipe()
                 this.$store.dispatch('setPage', { page: 'create' })
             }
             this.recipeInit = this.recipe
         },
+        initEmptyRecipe: function() {
+            this.prepTime = { time: [0, 0], paddedTime: '' }
+            this.cookTime = { time: [0, 0], paddedTime: '' }
+            this.totalTime = { time: [0, 0], paddedTime: '' }
+            this.nutrition = {}
+            this.recipe = {
+                id: 0,
+                name: null,
+                description: '',
+                url: '',
+                image: '',
+                prepTime: '',
+                cookTime: '',
+                totalTime: '',
+                recipeCategory: '',
+                keywords: '',
+                recipeYield: '',
+                tool: [],
+                recipeIngredient: [],
+                recipeInstructions: [],
+                nutrition: {}
+            }
+        }
     },
     mounted () {
         // Store the initial recipe configuration for possible later use
