@@ -98,6 +98,8 @@
   [#437](https://github.com/nextcloud/cookbook/pull/437) @christianlupus
 - Corrected bugs in CI system
   [#447](https://github.com/nextcloud/cookbook/pull/447) @christianlupus
+- Recipe-editing Vue components are not tightly coupled anymore
+  [#386](https://github.com/nextcloud/cookbook/pull/386/) @seyfeb
 
 ### Removed
 - Travis build system

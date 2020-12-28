@@ -141,7 +141,7 @@ export default {
             }
             return true
         },
-        showNutritions: function() { return this.nutrition && !(this.nutrition instanceof Array) }
+        showNutritions: function() { return this.nutrition && !(this.nutrition instanceof Array) && Object.keys(this.nutrition).length > 0 }
     },
     methods: {
         isNullOrEmpty: function(str) {
@@ -234,9 +234,14 @@ export default {
                     $this.dateModified = (date != null ? date.format('L, LT').toString() : null)
                 }
                 if ($this.$store.state.recipe.nutrition) {
-                    $this.nutrition = $this.$store.state.recipe.nutrition
+                    if ( $this.$store.state.recipe.nutrition instanceof Array) {
+                        $this.$store.state.recipe.nutrition = {}
+                    }
+                } else {
+                    $this.$store.state.recipe.nutrition = {}
                 }
-
+                $this.nutrition = $this.$store.state.recipe.nutrition
+                
                 // Always set the active page last!
                 $this.$store.dispatch('setPage', { page: 'recipe' })
 

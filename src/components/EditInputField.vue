@@ -3,20 +3,30 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input v-if="fieldType!=='textarea'" :type="fieldType" v-model="$parent.recipe[fieldName]" />
-        <textarea v-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName]" />
+        <input v-if="fieldType!=='textarea'" :type="fieldType" v-model="content" @input="handleInput" />
+        <textarea v-if="fieldType==='textarea'" v-model="content" @input="handleInput" />
     </fieldset>
 </template>
 
 <script>
 export default {
     name: "EditInputField",
-    props: ['fieldType','fieldName','fieldLabel'],
+    props: ['value','fieldType','fieldLabel'],
     data () {
         return {
-
+            content: ''
         }
     },
+    watch: {
+        value: function() {
+            this.content = this.value
+        }
+    },
+    methods: {
+        handleInput (e) {
+            this.$emit('input', this.content)
+        },
+    }
 }
 </script>
 

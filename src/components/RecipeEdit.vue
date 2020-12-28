@@ -1,19 +1,19 @@
 <template>
     <div class="wrapper">
-        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" />
-        <EditInputField :fieldName="'description'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" />
-        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" />
-        <EditImageField :fieldName="'image'" :fieldLabel="t('cookbook', 'Image')" />
-        <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
-        <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
-        <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
+        <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
+        <EditInputField :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
+        <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
+        <EditImageField :fieldLabel="t('cookbook', 'Image')" v-model="recipe['image']" />
+        <EditTimeField :fieldLabel="t('cookbook', 'Preparation time')" v-model="prepTime" />
+        <EditTimeField :fieldLabel="t('cookbook', 'Cooking time')" v-model="cookTime" />
+        <EditTimeField :fieldLabel="t('cookbook', 'Total time')" v-model="totalTime" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
-        <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
+        <EditInputField :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" v-model="recipe['recipeYield']" />
         <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-bind:createFieldsOnNewlines="true" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" />
     </div>
 </template>
 
@@ -54,14 +54,16 @@ export default {
                 tool: [],
                 recipeIngredient: [],
                 recipeInstructions: [],
+                nutrition: {}
             },
             // This will hold the above configuration after recipe is loaded, so we don't have to
             // keep it up to date in multiple places if it changes later
             recipeInit: null,
+
             // These are helper variables
-            prepTime: [0, 0],
-            cookTime: [0, 0],
-            totalTime: [0, 0],
+            prepTime: { time: [0, 0], paddedTime: '' },
+            cookTime: { time: [0, 0], paddedTime: '' },
+            totalTime: { time: [0, 0], paddedTime: '' },
             allCategories: [],
             isFetchingCategories: true,
             isFetchingKeywords: true,
@@ -83,20 +85,23 @@ export default {
         }
     },
     watch: {
-        prepTime () {
-            let hours = this.prepTime[0].toString().padStart(2, '0')
-            let mins = this.prepTime[1].toString().padStart(2, '0')
-            this.recipe.prepTime = 'PT' + hours + 'H' + mins + 'M'
+        prepTime: {
+            handler () {
+                this.recipe.prepTime = this.prepTime.paddedTime
+            },
+            deep: true
         },
-        cookTime () {
-            let hours = this.cookTime[0].toString().padStart(2, '0')
-            let mins = this.cookTime[1].toString().padStart(2, '0')
-            this.recipe.cookTime = 'PT' + hours + 'H' + mins + 'M'
+        cookTime: {
+            handler () {
+                this.recipe.cookTime = this.cookTime.paddedTime
+            },
+            deep: true,
         },
-        totalTime () {
-            let hours = this.totalTime[0].toString().padStart(2, '0')
-            let mins = this.totalTime[1].toString().padStart(2, '0')
-            this.recipe.totalTime = 'PT' + hours + 'H' + mins + 'M'
+        totalTime: {
+            handler () {
+                this.recipe.totalTime = this.totalTime.paddedTime
+            },
+            deep: true
         },
         selectedKeywords: {
             deep: true,
@@ -193,6 +198,9 @@ export default {
                 method: 'GET',
                 data: null,
             }).done(function (recipe) {
+                if ('nutrition' in recipe && recipe.nutrition instanceof Array) {
+                    recipe.nutrition = {}
+                }
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 $this.setup()
             }).fail(function(e) {
@@ -206,26 +214,6 @@ export default {
                 // Browse to new recipe creation
                 $this.$window.goTo('/recipe/create')
             })
-        },
-        moveEntryDown: function(field, index) {
-            if (index >= this.recipe[field].length - 1) {
-                // Already at the send of array
-                return
-            }
-            let entry = this.recipe[field].splice(index, 1)[0]
-            if (index + 1 < this.recipe[field].length) {
-                this.recipe[field].splice(index + 1, 0, entry)
-            } else {
-                this.recipe[field].push(entry)
-            }
-        },
-        moveEntryUp: function(field, index) {
-            if (index < 1) {
-                // Already at the start of array
-                return
-            }
-            let entry = this.recipe[field].splice(index, 1)[0]
-            this.recipe[field].splice(index - 1, 0, entry)
         },
         save: function() {
             this.$store.dispatch('setSavingRecipe', { saving: true })
@@ -270,17 +258,21 @@ export default {
                 this.recipe = { ...this.$store.state.recipe }
                 // Parse time values
                 let timeComps = this.recipe.prepTime ? this.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/) : null
-                if (timeComps) {
-                    this.prepTime = [timeComps[1], timeComps[2]]
-                }
+                this.prepTime = {
+                    time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
+                    paddedTime: this.recipe.prepTime }
+
                 timeComps = this.recipe.cookTime ? this.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/) : null
-                if (timeComps) {
-                    this.cookTime = [timeComps[1], timeComps[2]]
-                }
+                this.cookTime = {
+                    time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
+                    cookTime: this.recipe.cookTime }
+
                 timeComps = this.recipe.totalTime ? this.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/) : null
-                if (timeComps) {
-                    this.totalTime = [timeComps[1], timeComps[2]]
-                }
+
+                this.totalTime = {
+                    time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
+                    paddedTime: this.recipe.totalTime }
+
                 this.selectedKeywords = this.recipe['keywords'].split(',')
                 
                 // fallback if fetching all keywords fails
@@ -295,16 +287,38 @@ export default {
                     this.allCategories.push(this.recipe['recipeCategory'])
                 }
 
+
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
-                this.prepTime = [0, 0]
-                this.cookTime = [0, 0]
-                this.totalTime = [0, 0]
+                this.initEmptyRecipe()
                 this.$store.dispatch('setPage', { page: 'create' })
             }
             this.recipeInit = this.recipe
         },
+        initEmptyRecipe: function() {
+            this.prepTime = { time: [0, 0], paddedTime: '' }
+            this.cookTime = { time: [0, 0], paddedTime: '' }
+            this.totalTime = { time: [0, 0], paddedTime: '' }
+            this.nutrition = {}
+            this.recipe = {
+                id: 0,
+                name: null,
+                description: '',
+                url: '',
+                image: '',
+                prepTime: '',
+                cookTime: '',
+                totalTime: '',
+                recipeCategory: '',
+                keywords: '',
+                recipeYield: '',
+                tool: [],
+                recipeIngredient: [],
+                recipeInstructions: [],
+                nutrition: {}
+            }
+        }
     },
     mounted () {
         // Store the initial recipe configuration for possible later use
