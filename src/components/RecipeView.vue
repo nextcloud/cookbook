@@ -7,23 +7,24 @@
 
 	        <div class='meta'>
 	            <h2>{{ $store.state.recipe.name }}</h2>
-
 	            <div class="details">
-                <p v-if="keywords.length">
-                    <ul v-if="keywords.length">
-                        <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :keyword="keyword"  v-on:keyword-clicked="keywordClicked(keyword)" />
-                    </ul>
-                </p>
-                <p class="dates">
-                    <span v-if="showCreatedDate" class="date"  :title="t('cookbook', 'Date created')">
-                        <span class="icon-calendar-dark date-icon" />
-                        <span class="date-text">{{ dateCreated }}</span>
-                    </span>
-                    <span v-if="showModifiedDate" class="date" :title="t('cookbook', 'Last modified')">
-                        <span class="icon-rename date-icon" />
-                        <span class="date-text">{{ dateModified }}</span>
-                    </span>
-                </p>
+                    <p v-if="keywords.length">
+                        <ul v-if="keywords.length">
+                            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :name="keyword" :title="t('cookbook', 'Search recipes with this keyword')" v-on:keyword-clicked="keywordClicked(keyword)" />
+                        </ul>
+                    </p>
+
+                    <p class="dates">
+                        <span v-if="showCreatedDate" class="date"  :title="t('cookbook', 'Date created')">
+                            <span class="icon-calendar-dark date-icon" />
+                            <span class="date-text">{{ dateCreated }}</span>
+                        </span>
+                        <span v-if="showModifiedDate" class="date" :title="t('cookbook', 'Last modified')">
+                            <span class="icon-rename date-icon" />
+                            <span class="date-text">{{ dateModified }}</span>
+                        </span>
+                    </p>
+
 	                <p class="description">{{ $store.state.recipe.description }}</p>
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>

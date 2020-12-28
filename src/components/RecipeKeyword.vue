@@ -1,11 +1,25 @@
 <template>
-    <a v-on:click="clicked" ref="link"><li>{{ keyword }}</li></a>
+    <a v-on:click="clicked" ref="link">
+        <li>
+            <span>{{ name }}</span>
+            <span v-if="count != null" class="count">({{count}})</span>
+        </li>
+    </a>
 </template>
 
 <script>
 export default {
     name: 'RecipeKeyword',
-    props: ['keyword'],
+    props: {
+        name: {
+            type: String,
+            required: true
+        },
+        count: {
+            type: Number,
+            default: null
+        }
+    },
     data () {
         return {
         }
@@ -39,10 +53,21 @@ li {
     user-select: none; /* Standard */
 }
 
+
+li .count {
+    margin-left: .35em;
+    font-size: .8em;
+    color: var(--color-text-light);
+}
+
 .active li {
     background-color: var(--color-primary);
     color: var(--color-primary-text);
 }
+
+    .active li .count {
+        color: var(--color-primary-text);
+    }
 
 .disabled li {
     background-color: #FFF;
@@ -50,12 +75,21 @@ li {
     color: var(--color-border);
 }
 
+    .disabled li .count {
+        color: var(--color-border);
+    }
+
 .disabled li:hover {
     border-color: var(--color-border);
+    cursor: default;
+}
+
+.disabled :hover {
     cursor: default;
 }
 
 li:hover, .active li:hover {
     border: 1px solid var(--color-primary);
 }
+
 </style>

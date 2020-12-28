@@ -310,7 +310,7 @@ class RecipeDb {
 		$qb->setParameters($params, $types);
 		$qb->setParameter('user', $user_id, TYPE::STRING);
 
-		$qb->groupBy(['r.name', 'r.recipe_id']);
+		$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();

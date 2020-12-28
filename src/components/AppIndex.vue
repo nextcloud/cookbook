@@ -1,8 +1,17 @@
 <template>
     <div>
-        <ul v-if="keywords.length" class="keywords">
-            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'kw'+idx" :keyword="keyword" v-on:keyword-clicked="keywordClicked(keyword)" v-bind:class="{active : keywordFilter.includes(keyword), disabled : !keywordContainedInVisibleRecipes(keyword)}" />
-        </ul>
+        <div class="kw">
+            <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
+                <RecipeKeyword v-for="keyword in keywords"
+                    :key="keyword.name"
+                    :name="keyword.name"
+                    :count="keyword.count"
+                    :title="keywordContainedInVisibleRecipes(keyword) ? t('cookbook','Toggle keyword') : t('cookbook','Keyword not contained in visible recipes')"
+                    v-on:keyword-clicked="keywordClicked(keyword)"
+                    :class="{keyword, active : keywordFilter.includes(keyword.name), disabled : !keywordContainedInVisibleRecipes(keyword)}"
+                    />
+            </transition-group>
+        </div>
         <ul class="recipes">
             <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
                 <router-link :to="'/recipe/'+recipe.recipe_id">
@@ -51,16 +60,24 @@ export default {
             }
         },
     },
+    watch: {
+        keywordFilter: {
+            handler: function() {
+                this.sortKeywords()
+            },
+            deep: true
+        }
+    },
     methods: {
         /**
-         * Callback for click on keyword
+         * Callback for click on keyword, add to or remove from list
          */
         keywordClicked: function(keyword) {
-            const index = this.keywordFilter.indexOf(keyword)
+            const index = this.keywordFilter.indexOf(keyword.name)
             if (index > -1) {
                 this.keywordFilter.splice(index, 1)
             } else {
-                this.keywordFilter.push(keyword)
+                this.keywordFilter.push(keyword.name)
             }
         },
         /**
@@ -68,11 +85,11 @@ export default {
          */
         keywordContainedInVisibleRecipes: function(keyword) {
             for (let i=0; i<this.recipes.length; ++i) {
-                if (this.recipeVisible(i) 
+                if (this.recipeVisible(i)
                     && this.recipes[i].keywords
-                    && this.recipes[i].keywords.split(',').includes(keyword)) {
+                    && this.recipes[i].keywords.split(',').includes(keyword.name)) {
                     return true
-                }                
+                }
             }
             return false
         },
@@ -99,7 +116,7 @@ export default {
          * Check if recipe should be displayed, depending on selected keyword filter.
          * Returns true if recipe contains all selected keywords.
          */
-        recipeVisible: function(index) {     
+        recipeVisible: function(index) {
             if (this.keywordFilter.length == 0) {
                 return true
             } else {
@@ -111,21 +128,47 @@ export default {
             }
         },
         /**
-         * Extract and set list of keywords from the returned recipes
+         * Extract and set list of keywords from the returned recipes.
          */
         setKeywords: function(recipes) {
             this.keywords = []
             if ((recipes.length) > 0) {
                 recipes.forEach(recipe => {
-                    if(recipe['keywords']) {                    
+                    if(recipe['keywords']) {
                         recipe['keywords'].split(',').forEach(kw => {
-                            if(!this.keywords.includes(kw)) {
-                                this.keywords.push(kw)                           
+                            const idx = this.keywords.findIndex(el => el.name == kw)
+                            if (idx > -1) {
+                                this.keywords[idx].count++
+                            } else {
+                                this.keywords.push({name: kw, count: 1})
                             }
                         })
-                    }                    
+                    }
                 })
+                this.sortKeywords()
             }
+        },
+        /**
+         * Sort keywords.
+         */
+        sortKeywords: function() {
+            // Sort by number of recipes containing keyword
+            this.keywords = this.keywords.sort((k1, k2) => k2.count - k1.count)
+
+            // Move selected keywords to the front and unselectable to the end
+            let selected_kw = [], selectable_kw = [], unavailable_kw = []
+            this.keywords.forEach(kw => {
+                if (this.keywordFilter.includes(kw.name)) {
+                    selected_kw.push(kw)
+                }
+                else if (this.keywordContainedInVisibleRecipes(kw)) {
+                    selectable_kw.push(kw)
+                }
+                else {
+                    unavailable_kw.push(kw)
+                }
+            })
+            this.keywords = selected_kw.concat(selectable_kw.concat(unavailable_kw))
         },
     },
     mounted () {
@@ -140,12 +183,28 @@ export default {
 
 <style scoped>
 
+div.kw {
+    width: 100%;
+    max-height: 6.7em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-bottom: 1em;
+    padding: .1em;
+}
+
 ul.keywords {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 100%;
-    margin: .5rem 1rem .5rem;
+    padding: .5rem 1rem .5rem;
+}
+
+.keyword {
+  display: inline-block;
+}
+
+.keyword-list-move {
+  transition: transform .5s;
 }
 
 ul.recipes {
