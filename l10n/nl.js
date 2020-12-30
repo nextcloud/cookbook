@@ -27,6 +27,8 @@ OC.L10N.register(
     "Search for recipes" : "Zoek naar recepten",
     "Are you sure you want to delete this recipe?" : "Weet je zeker dat je dit recept wil verwijderen?",
     "Delete failed" : "Verwijderen is mislukt",
+    "Toggle keyword" : "Omschakelen sleutelwoord",
+    "Keyword not contained in visible recipes" : "Sleutelwoord niet in een van de zichtbare recepten",
     "Hide navigation" : "Verberg navigatie",
     "Create recipe" : "Maak een recept",
     "Download recipe from URL" : "Recept downloaden van URL",
@@ -83,6 +85,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Laden recept mislukt",
     "Recipe could not be saved" : "Recept kon niet worden opgeslagen",
     "Cooking time is up!" : "Kooktijd is verstreken!",
+    "Search recipes with this keyword" : "Zoek recepten met sleutelwoord",
     "Date created" : "Aanmaakdatum",
     "Last modified" : "Laatst gewijzigd",
     "Source" : "Bron"

@@ -27,6 +27,8 @@ OC.L10N.register(
     "Search for recipes" : "Wyszukaj przepisy",
     "Are you sure you want to delete this recipe?" : "Czy na pewno chcesz usunąć ten przepis?",
     "Delete failed" : "Usuwanie nie powiodło się",
+    "Toggle keyword" : "Przełącz słowo kluczowe",
+    "Keyword not contained in visible recipes" : "Słowo kluczowe nie występuje w widocznych przepisach",
     "Hide navigation" : "Ukryj nawigację",
     "Create recipe" : "Utwórz przepis",
     "Download recipe from URL" : "Pobierz przepis z adresu URL",
@@ -83,6 +85,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Nieudane ładowanie przepisu",
     "Recipe could not be saved" : "Przepis nie mógł zostać zapisany",
     "Cooking time is up!" : "Czas gotowania minął!",
+    "Search recipes with this keyword" : "Wyszukaj przepisy za pomocą tego słowa kluczowego",
     "Date created" : "Data utworzenia",
     "Last modified" : "Ostatnio zmodyfikowany",
     "Source" : "Źródło"

@@ -27,6 +27,8 @@ OC.L10N.register(
     "Search for recipes" : "Iskanje med recepti",
     "Are you sure you want to delete this recipe?" : "Ali ste prepričani, da želite izbrisati recept?",
     "Delete failed" : "Brisanje je spodletelo",
+    "Toggle keyword" : "Preklopi izbor ključnih besed",
+    "Keyword not contained in visible recipes" : "Beseda ni vključena v opis recepta",
     "Hide navigation" : "Skrij bočno okno",
     "Create recipe" : "Ustvari recept",
     "Download recipe from URL" : "Prejmi recept prek naslova URL",
@@ -83,6 +85,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Nalaganje receptov je spodletelo",
     "Recipe could not be saved" : "Recepta ni mogoče shraniti",
     "Cooking time is up!" : "Čas kuhanja je končan!",
+    "Search recipes with this keyword" : "Poišči recepte s ključno besedo",
     "Date created" : "Datum zapisa",
     "Last modified" : "Zadnjič spremenjeno",
     "Source" : "Vir"

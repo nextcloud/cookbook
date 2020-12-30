@@ -27,6 +27,8 @@ OC.L10N.register(
     "Search for recipes" : "搜索菜谱",
     "Are you sure you want to delete this recipe?" : "您确定要删除此菜谱吗？",
     "Delete failed" : "删除失败",
+    "Toggle keyword" : "切换关键词",
+    "Keyword not contained in visible recipes" : "关键词未包含在可见的菜谱中",
     "Hide navigation" : "隐藏导航",
     "Create recipe" : "创建菜谱",
     "Download recipe from URL" : "从 URL 下载菜谱",
@@ -83,6 +85,7 @@ OC.L10N.register(
     "Loading recipe failed" : "菜谱加载失败",
     "Recipe could not be saved" : "菜谱无法被保存",
     "Cooking time is up!" : "烹饪时间已到！",
+    "Search recipes with this keyword" : "用这个关键词搜索菜谱",
     "Date created" : "创建日期",
     "Last modified" : "最后更改",
     "Source" : "来源"

@@ -25,6 +25,8 @@
     "Search for recipes" : "Buscar recetas",
     "Are you sure you want to delete this recipe?" : "¿Realmente quieres borrar la receta?",
     "Delete failed" : "Ha fallado el borrado",
+    "Toggle keyword" : "Conmutar palabra clave",
+    "Keyword not contained in visible recipes" : "La palabra clave no aparece en las recetas visibles",
     "Hide navigation" : "Esconder navegación",
     "Create recipe" : "Crear nueva receta",
     "Download recipe from URL" : "Descargar receta desde URL",
@@ -81,6 +83,7 @@
     "Loading recipe failed" : "Fallo al cargar la receta",
     "Recipe could not be saved" : "No se ha podido guardar la receta",
     "Cooking time is up!" : "¡Se acabó el tiempo de cocción!",
+    "Search recipes with this keyword" : "Buscar recetas con esta palabra clave",
     "Date created" : "Fecha de creación",
     "Last modified" : "Última modificación",
     "Source" : "Origen"
