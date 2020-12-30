@@ -87,11 +87,14 @@ export default {
 
                 // callback for fully-loaded image event
                 const onThumbnailFullyLoaded = () => {
+                    img.removeEventListener('load', onThumbnailFullyLoaded)
                     el.removeChild(imgPlaceholder)
                     $this.isLoading = false
                 }
+
                 // callback for preview-image-loaded event
                 const onThumbnailPreviewLoaded = () => {
+                    imgPlaceholder.removeEventListener('load', onThumbnailPreviewLoaded)
                     img.addEventListener('load', onThumbnailFullyLoaded)
                     $this.$once('hook:destroyed', () => {
                         img.removeEventListener('load', onThumbnailFullyLoaded)
