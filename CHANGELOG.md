@@ -9,13 +9,13 @@
   [#346](https://github.com/nextcloud/cookbook/pull/346) @christianlupus
 - CI: Create source code packages for each commit
   [#346](https://github.com/nextcloud/cookbook/pull/346) @christianlupus
-- Allow for inconsistient schema: Parse instructions as list of elements
+- Allow for inconsistent schema: Parse instructions as list of elements
   [#347](https://github.com/nextcloud/cookbook/pull/347) @victorjoos
 - Show button to view all recipes without a category
   [#362](https://github.com/nextcloud/cookbook/pull/362/) @seyfeb
 - Add a basic changelog to the repository
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
-- Enfoce update of changelog through CI
+- Enforce update of changelog through CI
   [#366](https://github.com/nextcloud/cookbook/pull/366/) @christianlupus
 - Keyword cloud is displayed in recipe
   [#373](https://github.com/nextcloud/cookbook/pull/373/) @seyfeb
@@ -41,10 +41,12 @@
   [#403](https://github.com/nextcloud/cookbook/pull/403) @thembeat
 - Nutrition information display and editing
   [#416](https://github.com/nextcloud/cookbook/pull/416/) @seyfeb
+- Asking user for confirmation when leaving recipe-editor form with changes
+  [#464](https://github.com/nextcloud/cookbook/pull/464/) @seyfeb
 
 ### Changed
-- Switch of project ownership to neextcloud organization in GitHub
-- Chanage in issue managment
+- Switch of project ownership to nextcloud organization in GitHub
+- Change in issue management
 - Changes to `.gitignore` file
 - Translation issues
 - Added available Android apps to README
@@ -52,11 +54,11 @@
   [#376](https://github.com/nextcloud/cookbook/pull/376) @christianlupus
 - Made the layout more responsive to shift the metadata right of the image in very wide screens
   [#349](https://github.com/nextcloud/cookbook/pull/349/) @christianlupus
-- Optimization for SVG to reduce the filesize
+- Optimization for SVG to reduce the file size
   [#404](https://github.com/nextcloud/cookbook/pull/404) @thembeat
 - Replace Default Recipe-Thumb and Full Image with SVG
   [#418](https://github.com/nextcloud/cookbook/pull/418) @thembeat
-- ENhance the CI tests and build valid dist tarballs during the CI runs
+- Enhance the CI tests and build valid dist tarballs during the CI runs
   [#435](https://github.com/nextcloud/cookbook/pull/435) @christianlupus
 - Images in recipe list are lazily loaded
   [#413](https://github.com/nextcloud/cookbook/pull/413/) @seyfeb
