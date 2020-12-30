@@ -60,7 +60,11 @@ export default {
             // keep it up to date in multiple places if it changes later
             recipeInit: null,
 
+            // ==========================
             // These are helper variables
+
+            // Changes have been made to the initial values of the form
+            formDirty: false,
             prepTime: { time: [0, 0], paddedTime: '' },
             cookTime: { time: [0, 0], paddedTime: '' },
             totalTime: { time: [0, 0], paddedTime: '' },
@@ -108,6 +112,12 @@ export default {
             handler() {
                 // convert keyword array to comma-separated string
                 this.recipe['keywords'] = this.selectedKeywords.join()
+            }
+        },
+        recipe: {
+            deep: true,
+            handler() {
+                this.formDirty = true
             }
         }
     },
@@ -251,6 +261,7 @@ export default {
             }
         },
         setup: function() {
+            let $this = this
             this.fetchCategories()
             this.fetchKeywords()
             if (this.$route.params.id) {
@@ -294,7 +305,10 @@ export default {
                 this.initEmptyRecipe()
                 this.$store.dispatch('setPage', { page: 'create' })
             }
-            this.recipeInit = this.recipe
+            this.recipeInit = JSON.parse(JSON.stringify(this.recipe))
+            this.$nextTick(function() {
+                $this.formDirty = false
+            })
         },
         initEmptyRecipe: function() {
             this.prepTime = { time: [0, 0], paddedTime: '' }
@@ -318,6 +332,7 @@ export default {
                 recipeInstructions: [],
                 nutrition: {}
             }
+            this.formDirty = false
         }
     },
     mounted () {
