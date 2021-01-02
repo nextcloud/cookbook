@@ -241,6 +241,7 @@ export default {
             })
         },
         save: function() {
+            this.savingRecipe = true
             this.$store.dispatch('setSavingRecipe', { saving: true })
             let $this = this
             if (this.recipe.id) {
@@ -257,6 +258,8 @@ export default {
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
                     alert(t('cookbook', 'Recipe could not be saved'))
+                }).always(() => {
+                    $this.savingRecipe = false
                 })
             } else {
                 // Create a new recipe
@@ -272,11 +275,12 @@ export default {
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
                     alert(t('cookbook', 'Recipe could not be saved'))
+                }).always(() => {
+                    $this.savingRecipe = false
                 })
             }
         },
         setup: function() {
-            let $this = this
             this.fetchCategories()
             this.fetchKeywords()
             if (this.$route.params.id) {
@@ -313,7 +317,6 @@ export default {
                     this.allCategories.push(this.recipe['recipeCategory'])
                 }
 
-
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
@@ -322,7 +325,7 @@ export default {
             }
             this.recipeInit = JSON.parse(JSON.stringify(this.recipe))
             this.$nextTick(function() {
-                $this.formDirty = false
+                this.formDirty = false
             })
 
         },
@@ -362,7 +365,6 @@ export default {
         this.$root.$off('saveRecipe')
         this.$root.$on('saveRecipe', () => {
             this.save()
-            this.savingRecipe = true
         })
         // Register data load method hook for access from the controls components
         this.$root.$off('reloadRecipeEdit')
