@@ -180,7 +180,7 @@ import 'v-markdown-editor/dist/v-markdown-editor.css'
     //Markdown for Vue
     Vue.use(VueShowdown, {
         //set default flavor for Markdown
-        flavor: 'github',
+        flavor: 'vanilla',
     })
     Vue.use(Editor);
 
