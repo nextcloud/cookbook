@@ -295,7 +295,7 @@ export default {
                 timeComps = this.recipe.cookTime ? this.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/) : null
                 this.cookTime = {
                     time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
-                    cookTime: this.recipe.cookTime }
+                    paddedTime: this.recipe.cookTime }
 
                 timeComps = this.recipe.totalTime ? this.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/) : null
 
