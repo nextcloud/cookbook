@@ -67,7 +67,7 @@ OC.L10N.register(
     "Ingredients" : "Zutaten",
     "Instructions" : "Zubereitung",
     "Calories" : "Kalorien",
-    "E.g.: 450 kcal (amount & unit)" : "Z.B.: 450 kcal (Menge & Einheit)",
+    "E.g.: 450 kcal (amount & unit)" : "Z. B.: 450 kcal (Menge & Einheit)",
     "Carbohydrate content" : "Kohlenhydratgehalt",
     "E.g.: 2 g (amount & unit)" : "Z. B.: 2 g (Menge & Einheit)",
     "Cholesterol content" : "Cholesterin-Gehalt",
