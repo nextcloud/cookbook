@@ -70,7 +70,7 @@ OC.L10N.register(
     "E.g.: 450 kcal (amount & unit)" : "Z. B.: 450 kcal (Menge & Einheit)",
     "Carbohydrate content" : "Kohlenhydratgehalt",
     "E.g.: 2 g (amount & unit)" : "Z. B.: 2 g (Menge & Einheit)",
-    "Cholesterol content" : "Cholesterin-Gehalt",
+    "Cholesterol content" : "Cholesteringehalt",
     "Fat content" : "Fettgehalt",
     "Fiber content" : "Fasergehalt",
     "Protein content" : "Proteingehalt",
