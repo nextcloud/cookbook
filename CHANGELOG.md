@@ -106,6 +106,8 @@
   [#386](https://github.com/nextcloud/cookbook/pull/386/) @seyfeb
 - Fixed trying to remove already removed img DOM nodes in image lazyloading, fixes #462
   [#463](https://github.com/nextcloud/cookbook/pull/463/) @seyfeb
+- Fixed cooking time being removed if recipe is saved, fixes #472
+  [#473](https://github.com/nextcloud/cookbook/pull/473/) @seyfeb
 
 ### Removed
 - Travis build system
