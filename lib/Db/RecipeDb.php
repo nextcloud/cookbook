@@ -55,9 +55,15 @@ class RecipeDb {
 		
 		$qb->execute();
 		
+		$qb = $this->db->getQueryBuilder();
+		
 		$qb->delete(self::DB_TABLE_KEYWORDS)
 			->where('recipe_id = :id');
 		$qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
+		
+		$qb->execute();
+		
+		$qb = $this->db->getQueryBuilder();
 		
 		$qb->delete(self::DB_TABLE_CATEGORIES)
 			->where('recipe_id = :id');
