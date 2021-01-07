@@ -110,6 +110,9 @@
 ### Removed
 - Travis build system
 - Support for PHP 7.2
+- Removed info button (not) showing the last update time from settings menu, fixes #279
+  [#477](https://github.com/nextcloud/cookbook/pull/477/) @seyfeb
+
 
 
 ## 0.7.7 - 2020-12-10

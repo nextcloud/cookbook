@@ -65,10 +65,7 @@
                             <label class="settings-input">
                                 {{ t('cookbook', 'Update interval in minutes') }}
                             </label>
-                            <div class="update">
-                                <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
-                                <button class="icon-info" disabled="disabled" :title="t('cookbook', 'Last update: ')"></button>
-                            </div>
+                            <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
                         </li>
                         <li>
                             <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
@@ -368,18 +365,6 @@ export default {
 #app-settings .button {
     width: 100%;
     display: block;
-}
-
-.update > input {
-    width: calc(100% - 0.5rem - 34px) !important;
-    margin-right: 0.5rem;
-    float: left;
-}
-.update > button {
-    margin: 3px 0 !important;
-    width: 34px !important;
-    height: 34px !important;
-    float: left;
 }
 
 #hide-navigation {
