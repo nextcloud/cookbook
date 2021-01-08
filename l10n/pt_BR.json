@@ -32,7 +32,6 @@
     "Recipe folder" : "Pasta da receita",
     "Please pick a folder" : "Escolha uma pasta",
     "Update interval in minutes" : "Intervalo de atualização em minutos",
-    "Last update: " : "Última atualização:",
     "Print image with recipe" : "Imprimir imagem com receita",
     "Could not set preference for image printing" : "Não foi possível definir a preferência para impressão de imagem",
     "Could not set recipe update interval to {interval}" : "Não foi possível definir o intervalo de atualização da receita para {interval}",

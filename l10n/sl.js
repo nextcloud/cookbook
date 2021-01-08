@@ -37,7 +37,6 @@ OC.L10N.register(
     "Recipe folder" : "Mapa receptov",
     "Please pick a folder" : "Izbrati je treba mapo",
     "Update interval in minutes" : "Razmik posodobitev v minutah",
-    "Last update: " : "Zadnja posodobitev:",
     "Print image with recipe" : "Natisni sliko z receptom",
     "Could not set preference for image printing" : "Ni mogoče nastaviti lastnostni za tiskanje slike",
     "Could not set recipe update interval to {interval}" : "Ni mogoče nastaviti posodobitve receptov na {interval}",

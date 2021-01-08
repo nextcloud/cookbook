@@ -37,7 +37,6 @@ OC.L10N.register(
     "Recipe folder" : "Yemek tarifi klasörü",
     "Please pick a folder" : "Lütfen bir klasör seçin",
     "Update interval in minutes" : "Dakika cinsinden güncelleme sıklığı",
-    "Last update: " : "Son güncelleme:",
     "Print image with recipe" : "Tarif ile görsel de yazdırılsın",
     "Could not set preference for image printing" : "Görsel yazdırma ayarı yapılamadı",
     "Could not set recipe update interval to {interval}" : "Yemek tarifi güncelleme sıklığı {interval} olarak ayarlanamadı",

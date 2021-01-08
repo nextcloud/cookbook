@@ -37,7 +37,6 @@ OC.L10N.register(
     "Recipe folder" : "Katalog z przepisami",
     "Please pick a folder" : "Wybierz katalog",
     "Update interval in minutes" : "Interwał aktualizacji w minutach",
-    "Last update: " : "Ostatnia zmiana:",
     "Print image with recipe" : "Wydrukuj zdjęcie z przepisem",
     "Could not set preference for image printing" : "Nie można ustawić preferencji drukowania obrazu",
     "Could not set recipe update interval to {interval}" : "Nie można ustawić interwału aktualizacji przepisu na {interval}",

@@ -35,7 +35,6 @@ OC.L10N.register(
     "Recipe folder" : "Reseptihakemisto",
     "Please pick a folder" : "Valitse hakemisto",
     "Update interval in minutes" : "Valitse aika minuutteina",
-    "Last update: " : "Viimeisin päivitys:",
     "Print image with recipe" : "Tulosta resepti kuvalla",
     "Could not set preference for image printing" : "Kuvan tulostuksen määritys epäonnistui",
     "Could not set recipe update interval to {interval}" : "Reseptin päivitysvälin määrittäminen arvoon {interval} epäonnistui",

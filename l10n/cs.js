@@ -35,7 +35,6 @@ OC.L10N.register(
     "Recipe folder" : "Složka pro recepty",
     "Please pick a folder" : "Vyberte složku",
     "Update interval in minutes" : "Interval aktualizace (v minutách)",
-    "Last update: " : "Naposledy aktualizováno:",
     "Print image with recipe" : "Vytisknout obrázek s receptem",
     "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",

@@ -31,7 +31,6 @@
     "Recipe folder" : "Φάκελος συνταγής",
     "Please pick a folder" : "Παρακαλώ επιλέξτε φάκελο",
     "Update interval in minutes" : "Εσωτερική ενημέρωση σε λεπτά",
-    "Last update: " : "Τελευταία ενημέρωση:",
     "Print image with recipe" : "Εκτύπωση εικόνας συνταγής",
     "Could not set preference for image printing" : "Δεν μπορούν να οριστούν προτιμήσεις για εκτύπωση εικόνας",
     "Could not set recipe update interval to {interval}" : "Δεν μπορεί να οριστεί εσωτερική ενημέρωση συνταγής σε {interval}",

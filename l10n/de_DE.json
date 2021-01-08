@@ -35,7 +35,6 @@
     "Recipe folder" : "Rezept-Ordner",
     "Please pick a folder" : "Bitte einen Ordner auswählen",
     "Update interval in minutes" : "Aktualisierungsintervall in Minuten",
-    "Last update: " : "Letzte Aktualisierung:",
     "Print image with recipe" : "Bild mit Rezept drucken",
     "Could not set preference for image printing" : "Die Voreinstellung für den Druck von Bildern konnten nicht festgelegt werden",
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",

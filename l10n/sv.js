@@ -35,7 +35,6 @@ OC.L10N.register(
     "Recipe folder" : "Receptkatalog",
     "Please pick a folder" : "Välj katalog",
     "Update interval in minutes" : "Uppdateringsintervall",
-    "Last update: " : "Senaste uppdatering:",
     "Print image with recipe" : "Skriv ut bild med recept",
     "Could not set preference for image printing" : "Valen för bildutskrift gick inte att ställa in.",
     "Could not set recipe update interval to {interval}" : "Kunde inte välja uppdateringsinterval till {interval}",

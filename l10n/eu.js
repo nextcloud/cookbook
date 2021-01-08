@@ -32,7 +32,6 @@ OC.L10N.register(
     "Recipe folder" : "Errezeten karpeta",
     "Please pick a folder" : "Aukeratu karpeta bat",
     "Update interval in minutes" : "Eguneratzeko tartea minututan",
-    "Last update: " : "Azken eguneraketa",
     "Print image with recipe" : "Inprimatu irudia errezetarekin",
     "Could not set preference for image printing" : "Ezin izan da hobespena ezarri irudien inprimaketarako",
     "Could not set recipe update interval to {interval}" : "Ezin izan da ezarri errezeta eguneratzeko tartea {interval}-era",

@@ -30,7 +30,6 @@
     "Recipe folder" : "Папка с рецептами",
     "Please pick a folder" : "Выберите папку",
     "Update interval in minutes" : "Интервал обновления в минутах",
-    "Last update: " : "Последнее обновление:",
     "Print image with recipe" : "Напечатать изображение с рецептом",
     "Could not set preference for image printing" : "Не удалось настроить печать изображения",
     "Could not set recipe update interval to {interval}" : "Не удалось заменить интервал обновления рецептов на {interval}",

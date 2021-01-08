@@ -35,7 +35,6 @@ OC.L10N.register(
     "Recipe folder" : "Receptų aplankas",
     "Please pick a folder" : "Pasirinkite aplanką",
     "Update interval in minutes" : "Atnaujinimo intervalas, minutėmis",
-    "Last update: " : "Paskutinis atnaujinimas: ",
     "Print image with recipe" : "Spausdinti paveikslą su receptu",
     "Could not set preference for image printing" : "Nepavyko nustatyti nuostatos paveikslų spausdinimui",
     "Could not set recipe update interval to {interval}" : "Nepavyko nustatyti recepto atnaujinimo intervalo į {interval}",

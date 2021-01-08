@@ -35,7 +35,6 @@
     "Recipe folder" : "菜谱文件夹",
     "Please pick a folder" : "请选择一个文件夹",
     "Update interval in minutes" : "以分钟计的更新间隔",
-    "Last update: " : "上次更新：",
     "Print image with recipe" : "打印菜谱图片",
     "Could not set preference for image printing" : "无法设置图片打印选项",
     "Could not set recipe update interval to {interval}" : "无法将菜谱更新间隔设置为 {interval}",

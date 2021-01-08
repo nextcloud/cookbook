@@ -33,7 +33,6 @@
     "Recipe folder" : "Dossier des recettes",
     "Please pick a folder" : "Veuillez choisir un dossier",
     "Update interval in minutes" : "Intervalle de mise à jour en minutes",
-    "Last update: " : "Dernière mise à jour :",
     "Print image with recipe" : "Imprimer l'image avec la recette",
     "Could not set preference for image printing" : "Impossible de définir le paramètre d'impression des images",
     "Could not set recipe update interval to {interval}" : "Impossible de définir l'intervalle de mise à jour à {interval}",

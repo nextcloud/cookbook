@@ -33,7 +33,6 @@
     "Recipe folder" : "Adresár receptu",
     "Please pick a folder" : "Vyberte priečinok",
     "Update interval in minutes" : "Interval aktualizácie v minútach",
-    "Last update: " : "Posledná aktualizácia: ",
     "Print image with recipe" : "Vytlačiť obrázok s receptom",
     "Could not set preference for image printing" : "Nedarí sa nastaviť predvoľbu pre tlač obrázkov",
     "Could not set recipe update interval to {interval}" : "Interval aktualizácie receptu sa nepodarilo nastaviť na {interval}",

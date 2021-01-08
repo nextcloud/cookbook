@@ -31,7 +31,6 @@
     "Recipe folder" : "Фасцикла са рецептима",
     "Please pick a folder" : "Одаберите фасциклу",
     "Update interval in minutes" : "Време ажурирања у минутима",
-    "Last update: " : "Последње ажурирање:",
     "Print image with recipe" : "Штампај и слику уз рецепт",
     "Could not set preference for image printing" : "Не могу да поставим поставке за штампање слика",
     "Could not set recipe update interval to {interval}" : "Не могу да постави време ажурирања на {interval}",

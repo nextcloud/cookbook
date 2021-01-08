@@ -37,7 +37,6 @@ OC.L10N.register(
     "Recipe folder" : "Receptenmap",
     "Please pick a folder" : "Selecteer alsjeblieft een map",
     "Update interval in minutes" : "Update-interval in minuten",
-    "Last update: " : "Laatste update:",
     "Print image with recipe" : "Recept afdrukken met afbeelding",
     "Could not set preference for image printing" : "Kon de voorkeur voor afbeelding afdrukken niet instellen",
     "Could not set recipe update interval to {interval}" : "Kon de update-interval voor recepten niet instellen op {interval}",

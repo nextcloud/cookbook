@@ -35,7 +35,6 @@ OC.L10N.register(
     "Recipe folder" : "Carpeta de receptes",
     "Please pick a folder" : "Seleccioneu una carpeta",
     "Update interval in minutes" : "Interval d'actualització en minuts",
-    "Last update: " : "Última actualització: ",
     "Print image with recipe" : "Imprimir la imatge amb la recepta",
     "Could not set preference for image printing" : "No s'ha pogut establir la configuració per impressió d'imatges",
     "Could not set recipe update interval to {interval}" : "No s'ha pogut establir l'interval d'actualització de les receptes a {interval}",
