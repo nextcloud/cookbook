@@ -108,6 +108,8 @@
   [#463](https://github.com/nextcloud/cookbook/pull/463/) @seyfeb
 - Fixed cooking time being removed if recipe is saved, fixes #472
   [#473](https://github.com/nextcloud/cookbook/pull/473/) @seyfeb
+- Remove keywords from database when a recipe is removed
+  [#478](https://github.com/nextcloud/cookbook/pull/478) @christianlupus
 
 ### Removed
 - Travis build system
