@@ -47,7 +47,7 @@ jobs:
                 
             -   name: Save key in file
                 env:
-                    PEM: ${{ secrets.PEM }}
+                    PEM: ${{ secrets.APPSTORE_PRIV_KEY_PEM }}
                 run: |
                     touch /tmp/key.pem
                     chmod 600 /tmp/key.pem
