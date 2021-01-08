@@ -110,6 +110,8 @@
   [#473](https://github.com/nextcloud/cookbook/pull/473/) @seyfeb
 - Remove keywords from database when a recipe is removed
   [#478](https://github.com/nextcloud/cookbook/pull/478) @christianlupus
+- Correct CI to allow creation of releases
+  [#482](https://github.com/nextcloud/cookbook/pull/482) @christianlupus
 
 ### Removed
 - Travis build system
