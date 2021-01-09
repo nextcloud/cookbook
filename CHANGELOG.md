@@ -114,6 +114,8 @@
   [#478](https://github.com/nextcloud/cookbook/pull/478) @christianlupus
 - Correct CI to allow creation of releases
   [#482](https://github.com/nextcloud/cookbook/pull/482) @christianlupus
+- New version as reported in the API should be saved in the MainController file and thus checked in
+  [#488](https://github.com/nextcloud/cookbook/pull/488) @christianlupus
 
 ### Removed
 - Travis build system
