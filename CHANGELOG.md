@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.7.8 - 2021-01-08
+
 ### Added
 - Parse a textual yield field in an imported recipe to a certain degree
   [#327](https://github.com/nextcloud/cookbook/pull/327) @zwoabier
