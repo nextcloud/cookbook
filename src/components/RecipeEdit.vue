@@ -1,18 +1,19 @@
 <template>
     <div class="wrapper">
-        <EditInputField :fieldName="'name'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" />
-        <EditInputField :fieldName="'description'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" />
-        <EditInputField :fieldName="'url'" :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" />
-        <EditImageField :fieldName="'image'" :fieldLabel="t('cookbook', 'Image')" />
-        <EditTimeField :fieldName="'prepTime'" :fieldLabel="t('cookbook', 'Preparation time')" />
-        <EditTimeField :fieldName="'cookTime'" :fieldLabel="t('cookbook', 'Cooking time')" />
-        <EditTimeField :fieldName="'totalTime'" :fieldLabel="t('cookbook', 'Total time')" />
-        <EditInputField :fieldName="'recipeCategory'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Category')" />
-        <EditInputField :fieldName="'keywords'" :fieldType="'rext'" :fieldLabel="t('cookbook', 'Keywords (comma separated)')" />
-        <EditInputField :fieldName="'recipeYield'" :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')" />
+        <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
+        <EditInputField :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
+        <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
+        <EditImageField :fieldLabel="t('cookbook', 'Image')" v-model="recipe['image']" />
+        <EditTimeField :fieldLabel="t('cookbook', 'Preparation time')" v-model="prepTime" />
+        <EditTimeField :fieldLabel="t('cookbook', 'Cooking time')" v-model="cookTime" />
+        <EditTimeField :fieldLabel="t('cookbook', 'Total time')" v-model="totalTime" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
+        <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
+        <EditInputField :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" v-model="recipe['recipeYield']" />
+        <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" />
     </div>
 </template>
 
@@ -20,6 +21,8 @@
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
+import EditMultiselect from './EditMultiselect'
+import EditMultiselectInputGroup from './EditMultiselectInputGroup'
 import EditTimeField from './EditTimeField'
 
 export default {
@@ -28,7 +31,9 @@ export default {
         EditImageField,
         EditInputField,
         EditInputGroup,
+        EditMultiselect,
         EditTimeField,
+        EditMultiselectInputGroup,
     },
     props: ['id'],
     data () {
@@ -49,39 +54,156 @@ export default {
                 tool: [],
                 recipeIngredient: [],
                 recipeInstructions: [],
+                nutrition: {}
             },
             // This will hold the above configuration after recipe is loaded, so we don't have to
             // keep it up to date in multiple places if it changes later
             recipeInit: null,
+
+            // ==========================
             // These are helper variables
-            prepTime: [0, 0],
-            cookTime: [0, 0],
-            totalTime: [0, 0],
+
+            // Changes have been made to the initial values of the form
+            formDirty: false,
+            // the save button has been clicked
+            savingRecipe: false,
+            prepTime: { time: [0, 0], paddedTime: '' },
+            cookTime: { time: [0, 0], paddedTime: '' },
+            totalTime: { time: [0, 0], paddedTime: '' },
+            allCategories: [],
+            isFetchingCategories: true,
+            isFetchingKeywords: true,
+            allKeywords: [],
+            selectedKeywords: [],
+            availableNutritionFields:
+                [{ key: 'calories', label: t('cookbook', 'Calories'), placeholder: t('cookbook', 'E.g.: 450 kcal (amount & unit)') },
+                { key: 'carbohydrateContent', label: t('cookbook', 'Carbohydrate content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'cholesterolContent',label: t('cookbook', 'Cholesterol content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'fatContent', label: t('cookbook', 'Fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'fiberContent', label: t('cookbook', 'Fiber content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'proteinContent',label: t('cookbook', 'Protein content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'saturatedFatContent', label: t('cookbook', 'Saturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'servingSize', label: t('cookbook', 'Serving size'), placeholder: t('cookbook', 'Enter serving size (volume or mass)') },
+                { key: 'sodiumContent',label: t('cookbook', 'Sodium content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'sugarContent', label: t('cookbook', 'Sugar content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'transFatContent', label: t('cookbook', 'Trans-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
+                { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }]
         }
     },
     watch: {
-        prepTime () {
-            let hours = this.prepTime[0].toString().padStart(2, '0')
-            let mins = this.prepTime[1].toString().padStart(2, '0')
-            this.recipe.prepTime = 'PT' + hours + 'H' + mins + 'M'
+        prepTime: {
+            handler () {
+                this.recipe.prepTime = this.prepTime.paddedTime
+            },
+            deep: true
         },
-        cookTime () {
-            let hours = this.cookTime[0].toString().padStart(2, '0')
-            let mins = this.cookTime[1].toString().padStart(2, '0')
-            this.recipe.cookTime = 'PT' + hours + 'H' + mins + 'M'
+        cookTime: {
+            handler () {
+                this.recipe.cookTime = this.cookTime.paddedTime
+            },
+            deep: true,
         },
-        totalTime () {
-            let hours = this.totalTime[0].toString().padStart(2, '0')
-            let mins = this.totalTime[1].toString().padStart(2, '0')
-            this.recipe.totalTime = 'PT' + hours + 'H' + mins + 'M'
+        totalTime: {
+            handler () {
+                this.recipe.totalTime = this.totalTime.paddedTime
+            },
+            deep: true
         },
+        selectedKeywords: {
+            deep: true,
+            handler() {
+                // convert keyword array to comma-separated string
+                this.recipe['keywords'] = this.selectedKeywords.join()
+            }
+        },
+        recipe: {
+            deep: true,
+            handler() {
+                this.formDirty = true
+            }
+        }
     },
     methods: {
-        addEntry: function(field) {
-            this.recipe[field].push('')
+        /** 
+         * Add newly created category and set as selected.
+         */
+        addCategory (newCategory) {
+            this.allCategories.push(newCategory)
+            this.recipe['recipeCategory'] = newCategory
+        },
+        /** 
+         * Add newly created keyword.
+         */
+        addKeyword (newKeyword) {
+            this.allKeywords.push(newKeyword)
+            this.selectedKeywords.push(newKeyword)
+        },
+        addEntry: function(field, index, content='') {
+            this.recipe[field].splice(index, 0, content)
+        },
+        beforeWindowUnload(e) {
+          if (this.confirmStayInEditedForm()) {
+            // Cancel the window unload event
+            e.preventDefault()
+            e.returnValue = ''
+          }   
+        },
+        confirmLeavingPage() {
+          return window.confirm('You have unsaved changes! Do you still want to leave?')
+        },
+        confirmStayInEditedForm() {
+          return !this.savingRecipe && this.formDirty && !this.confirmLeavingPage()
         },
         deleteEntry: function(field, index) {
             this.recipe[field].splice(index, 1)
+        },
+        /**
+         * Fetch and display recipe categories
+         */
+        fetchCategories: function() {            
+            $.get(this.$window.baseUrl + '/categories').done((json) => {
+                json = json || []
+                this.allCategories = []
+                for (let i=0; i<json.length; i++) {
+                    if (json[i].name != '*') {
+                        this.allCategories.push(
+                            json[i].name,
+                        )
+                    }
+                }
+                this.isFetchingCategories = false
+            })
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch categories'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
+        },
+        /**
+         * Fetch and display recipe keywords
+         */
+        fetchKeywords: function() {
+            $.ajax(this.$window.baseUrl + '/keywords').done((json) => {
+                json = json || []
+                if (json) {
+                    this.allKeywords = []
+                    for (let i=0; i<json.length; i++) {
+                        if (json[i].name != '*') {
+                            this.allKeywords.push(
+                                json[i].name,
+                            )
+                        }
+                    }
+                }
+                this.isFetchingKeywords = false
+            })
+            .fail((e) => {
+                alert(t('cookbook', 'Failed to fetch keywords'))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            })
         },
         loadRecipeData: function() {
             if (!this.$store.state.recipe) {
@@ -101,6 +223,9 @@ export default {
                 method: 'GET',
                 data: null,
             }).done(function (recipe) {
+                if ('nutrition' in recipe && recipe.nutrition instanceof Array) {
+                    recipe.nutrition = {}
+                }
                 $this.$store.dispatch('setRecipe', { recipe: recipe })
                 $this.setup()
             }).fail(function(e) {
@@ -115,27 +240,8 @@ export default {
                 $this.$window.goTo('/recipe/create')
             })
         },
-        moveEntryDown: function(field, index) {
-            if (index >= this.recipe[field].length - 1) {
-                // Already at the send of array
-                return
-            }
-            let entry = this.recipe[field].splice(index, 1)[0]
-            if (index + 1 < this.recipe[field].length) {
-                this.recipe[field].splice(index + 1, 0, entry)
-            } else {
-                this.recipe[field].push(entry)
-            }
-        },
-        moveEntryUp: function(field, index) {
-            if (index < 1) {
-                // Already at the start of array
-                return
-            }
-            let entry = this.recipe[field].splice(index, 1)[0]
-            this.recipe[field].splice(index - 1, 0, entry)
-        },
         save: function() {
+            this.savingRecipe = true
             this.$store.dispatch('setSavingRecipe', { saving: true })
             let $this = this
             if (this.recipe.id) {
@@ -152,6 +258,8 @@ export default {
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
                     alert(t('cookbook', 'Recipe could not be saved'))
+                }).always(() => {
+                    $this.savingRecipe = false
                 })
             } else {
                 // Create a new recipe
@@ -167,36 +275,84 @@ export default {
                 }).fail(function(e) {
                     $this.$store.dispatch('setSavingRecipe', { saving: false })
                     alert(t('cookbook', 'Recipe could not be saved'))
+                }).always(() => {
+                    $this.savingRecipe = false
                 })
             }
         },
         setup: function() {
+            this.fetchCategories()
+            this.fetchKeywords()
             if (this.$route.params.id) {
                 // Load the recipe from store and make edits to a local copy first
                 this.recipe = { ...this.$store.state.recipe }
                 // Parse time values
                 let timeComps = this.recipe.prepTime ? this.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/) : null
-                if (timeComps) {
-                    this.prepTime = [timeComps[1], timeComps[2]]
-                }
+                this.prepTime = {
+                    time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
+                    paddedTime: this.recipe.prepTime }
+
                 timeComps = this.recipe.cookTime ? this.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/) : null
-                if (timeComps) {
-                    this.cookTime = [timeComps[1], timeComps[2]]
-                }
+                this.cookTime = {
+                    time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
+                    paddedTime: this.recipe.cookTime }
+
                 timeComps = this.recipe.totalTime ? this.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/) : null
-                if (timeComps) {
-                    this.totalTime = [timeComps[1], timeComps[2]]
+
+                this.totalTime = {
+                    time: timeComps ? [timeComps[1], timeComps[2]] : [0 , 0],
+                    paddedTime: this.recipe.totalTime }
+
+                this.selectedKeywords = this.recipe['keywords'].split(',')
+                
+                // fallback if fetching all keywords fails
+                this.selectedKeywords.forEach(kw => {
+                    if (!this.allKeywords.includes(kw)) {
+                        this.allKeywords.push(kw)
+                    }
+                })
+
+                // fallback if fetching all categories fails
+                if (!this.allCategories.includes(this.recipe['recipeCategory'])) {
+                    this.allCategories.push(this.recipe['recipeCategory'])
                 }
+
                 // Always set the active page last!
                 this.$store.dispatch('setPage', { page: 'edit' })
             } else {
-                this.recipe = this.recipeInit
-                this.prepTime = [0, 0]
-                this.cookTime = [0, 0]
-                this.totalTime = [0, 0]
+                this.initEmptyRecipe()
                 this.$store.dispatch('setPage', { page: 'create' })
             }
+            this.recipeInit = JSON.parse(JSON.stringify(this.recipe))
+            this.$nextTick(function() {
+                this.formDirty = false
+            })
+
         },
+        initEmptyRecipe: function() {
+            this.prepTime = { time: [0, 0], paddedTime: '' }
+            this.cookTime = { time: [0, 0], paddedTime: '' }
+            this.totalTime = { time: [0, 0], paddedTime: '' }
+            this.nutrition = {}
+            this.recipe = {
+                id: 0,
+                name: null,
+                description: '',
+                url: '',
+                image: '',
+                prepTime: '',
+                cookTime: '',
+                totalTime: '',
+                recipeCategory: '',
+                keywords: '',
+                recipeYield: '',
+                tool: [],
+                recipeIngredient: [],
+                recipeInstructions: [],
+                nutrition: {}
+            }
+            this.formDirty = false
+        }
     },
     mounted () {
         // Store the initial recipe configuration for possible later use
@@ -215,6 +371,10 @@ export default {
         this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })
+        this.savingRecipe = false
+    },
+    beforeDestroy() {
+      window.removeEventListener('beforeunload', this.beforeWindowUnload)
     },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
@@ -241,13 +401,19 @@ export default {
      * This can also be used to confirm that the user wants to leave the page
      * if there are unsaved changes.
      */
-    beforeRouteLeave (to, from, next) {
+beforeRouteLeave (to, from, next) {
         // beforeRouteLeave is called when the static route changes.
-        // We have to check if the target component stays the same and reload.
-        // However, we should not reload if the component changes; otherwise
-        // reloaded data may overwrite the data loaded at the target component
-        // which will at the very least result in incorrect breadcrumb path!
-        next()
+        // Cancel the navigation, if the form has unsaved edits and the user did not
+        // confirm leave. This prevents accidentally losing changes
+        if (this.confirmStayInEditedForm()){
+          next(false)
+        } else {
+          // We have to check if the target component stays the same and reload.
+          // However, we should not reload if the component changes; otherwise
+          // reloaded data may overwrite the data loaded at the target component
+          // which will at the very least result in incorrect breadcrumb path!
+          next()
+        }
         // Check if we should reload the component content
         if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
             this.setup()
@@ -261,7 +427,9 @@ export default {
             this.setup()
         }
     },
-
+    created() {
+      window.addEventListener('beforeunload', this.beforeWindowUnload)
+    },
 }
 </script>
 

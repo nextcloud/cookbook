@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Home" : "Početak",
     "Search" : "Traži",
+    "Loading…" : "Učitavam…",
     "Category" : "Kategorija",
     "Add" : "Dodaj",
     "Name" : "Ime",

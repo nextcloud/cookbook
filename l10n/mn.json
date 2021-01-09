@@ -1,7 +1,9 @@
 { "translations": {
     "Home" : "Нүүр",
+    "Filter" : "Шүүлтүүр",
     "Search" : "Хайх",
     "Save changes" : "Өөрчлөлтийг хадгалах",
+    "Loading…" : "уншиж байна",
     "Category" : "Ангилал",
     "Add" : "нэмэх",
     "Name" : "Нэр",

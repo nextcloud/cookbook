@@ -8,28 +8,31 @@
  * it's instantiated in there
  */
 return [
-    'routes' => [
-	   ['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
-	   ['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
-	   ['name' => 'main#keywords', 'url' => '/keywords', 'verb' => 'GET'],
-	   ['name' => 'main#categories', 'url' => '/categories', 'verb' => 'GET'],
-	   ['name' => 'main#category', 'url' => '/category/{category}', 'verb' => 'GET'],
-	   ['name' => 'main#search', 'url' => '/search/{query}', 'verb' => 'GET'],
-	   ['name' => 'main#error', 'url' => '/error', 'verb' => 'GET'],
-	   ['name' => 'main#create', 'url' => '/recipes/create', 'verb' => 'GET'],
-	   ['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
-	   ['name' => 'main#import', 'url' => '/import', 'verb' => 'POST'],
-	   ['name' => 'main#edit', 'url' => '/recipes/{id}/edit', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
-	   ['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
-	   ['name' => 'main#recipe', 'url' => '/recipes/{id}', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
-	   ['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
-	   ['name' => 'config#reindex', 'url' => '/reindex', 'verb' => 'POST'],
-	   ['name' => 'config#list', 'url' => '/config', 'verb' => 'GET'],
-	   ['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
-   ],
-   
-   /* API routes */
-   'resources' => [
-	   	'recipe' => ['url' => '/api/recipes']
-   ]
+	'routes' => [
+		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
+		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
+		['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
+		['name' => 'main#keywords', 'url' => '/keywords', 'verb' => 'GET'],
+		['name' => 'main#categories', 'url' => '/categories', 'verb' => 'GET'],
+		['name' => 'main#error', 'url' => '/error', 'verb' => 'GET'],
+		['name' => 'main#create', 'url' => '/recipes/create', 'verb' => 'GET'],
+		['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
+		['name' => 'main#import', 'url' => '/import', 'verb' => 'POST'],
+		['name' => 'main#edit', 'url' => '/recipes/{id}/edit', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
+		['name' => 'main#recipe', 'url' => '/recipes/{id}', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'config#reindex', 'url' => '/reindex', 'verb' => 'POST'],
+		['name' => 'config#list', 'url' => '/config', 'verb' => 'GET'],
+		['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
+		/* API routes */
+		['name' => 'main#category', 'url' => '/api/category/{category}', 'verb' => 'GET'],
+		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
+		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
+	],
+
+	/* API resources */
+	'resources' => [
+		'recipe' => ['url' => '/api/recipes']
+	]
 ];

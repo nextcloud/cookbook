@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Doheem",
     "Search" : "Search",
     "Save changes" : "Ännerunge späicheren",
+    "Loading…" : "Et gëtt gelueden",
     "Add" : "Derbäimaachen",
     "Name" : "Numm",
     "Description" : "Beschreiwung",

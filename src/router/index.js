@@ -27,7 +27,8 @@ const routes = [
     // Search routes
     { path: '/category/:value', name: 'search-category', component: Search, props: { query: 'cat' } },
     { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
-    { path: '/tag/:value', name: 'search-tag', component: Search, props: { query: 'tag' } },
+    { path: '/search/:value', name: 'search-general', component: Search, props: { query: 'general' } },
+    { path: '/tags/:value', name: 'search-tags', component: Search, props: { query: 'tags' } },
 
     // Recipe routes
     // Vue router has a strange way of determining when it renders a component again and when not.
@@ -41,10 +42,10 @@ const routes = [
     { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
     { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
     { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
-    
+
     // Index is the last defined route
     { path: '/', name:'index', component: Index },
-    
+
     // Anything not matched goes to NotFound
     { path: '*', name:'not-found', component: NotFound },
 ];

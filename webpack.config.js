@@ -6,6 +6,7 @@
  */
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = {
 
@@ -45,15 +46,22 @@ module.exports = {
                 },
             },
             {
-                test: /\.(eot|woff|woff2|ttf|svg)$/,
+                test: /\.(eot|woff|woff2|ttf)$/,
                 loaders: 'file-loader',
                 options: {
                     name: '[path][name].[ext]?[hash]'
                 },
             },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
+            },
         ],
     },
-    plugins: [new VueLoaderPlugin()],
+    plugins: [
+        new VueLoaderPlugin(),
+        new LodashModuleReplacementPlugin
+    ],
     resolve: {
         extensions: ['*', '.js', '.vue', '.json'],
         modules: [

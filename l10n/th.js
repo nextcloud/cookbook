@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Home" : "หน้าหลัก",
     "Search" : "Search",
+    "Loading…" : "กำลังโหลด...",
     "Add" : "เพิ่ม",
     "Name" : "ชื่อ",
     "Description" : "รายละเอียด",

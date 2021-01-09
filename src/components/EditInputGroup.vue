@@ -2,58 +2,149 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
-            <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
-                <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" v-model="$parent.recipe[fieldName][idx]" @keyup="keyPressed" />
-                <textarea v-else-if="fieldType==='textarea'" v-model="$parent.recipe[fieldName][idx]"></textarea>
+            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
+                <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
+                <input v-if="fieldType==='text'" type="text" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
+                <textarea v-else-if="fieldType==='textarea'" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
                 <div class="controls">
-                    <button class="icon-arrow-up" @click="moveUp(idx)"></button>
-                    <button class="icon-arrow-down" @click="moveDown(idx)"></button>
+                    <button class="icon-arrow-up" @click="moveEntryUp(idx)"></button>
+                    <button class="icon-arrow-down" @click="moveEntryDown(idx)"></button>
                     <button class="icon-delete" @click="deleteEntry(idx)"></button>
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
+        <button class="button add-list-item" @click="addNewEntry ()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
     </fieldset>
 </template>
 
 <script>
 export default {
-    name: "EditInputGroup",
-    props: ['fieldType','fieldName','fieldLabel'],
+    name: "EditInputGroup",  
+    props: {
+        value: {
+          type: Array,
+          default: []
+        },
+        fieldType: String,
+        fieldName: String,
+        showStepNumber: {
+            type: Boolean,
+            default: false
+        },
+        fieldLabel: String,
+        // If true, add new fields, for newlines in pasted data
+        createFieldsOnNewlines: {
+            type: Boolean,
+            default: false
+        },
+    },
     data () {
         return {
+            // helper variables
+            buffer: this.value.slice(),
+            contentPasted: false
+        }
+    },
+    watch: {
+        value: {
+            handler() {
+                this.buffer = this.value.slice()
+            },
+            deep: true
         }
     },
     methods: {
-        addNew: function() {
-            // This is a dirty hack, but Vue components update with a slight delay so you
-            // can't just straight up go and set focus here
-            let nextFocus = this.$parent.recipe[this.fieldName].length
-            this.$parent.addEntry(this.fieldName)
-            let failSafe = 2500
-            let $ul = $(this.$refs['list'])
-            let $this = this
-            let focusMonitor = window.setInterval(function() {
-                if ($ul.children('li').length > nextFocus) {
-                    if ($this.fieldType === 'text') {
-                        $ul.children('li').eq(nextFocus).find('input').focus()
-                    } else if ($this.fieldType === 'textarea') {
-                        $ul.children('li').eq(nextFocus).find('textarea').focus()
+        /* if index = -1, element is added at the end
+         * if focusAfterInsert=true, the element is focussed after inserting
+         * the content is inserted into the newly created field
+         **/
+        addNewEntry: function(index = -1, focusAfterInsert = true, content = '') {
+            if (index === -1) {
+                index = this.buffer.length
+            }
+            this.buffer.splice(index, 0, content)
+
+            if (focusAfterInsert) {
+                let $ul = $(this.$refs['list'])
+                let $this = this
+                this.$nextTick(function() {
+                    if ($ul.children('li').length > index) {
+                        if ($this.fieldType === 'text') {
+                            $ul.children('li').eq(index).find('input').focus()
+                        } else if ($this.fieldType === 'textarea') {
+                            $ul.children('li').eq(index).find('textarea').focus()
+                        }
                     }
-                    window.clearInterval(focusMonitor)
-                }
-                failSafe -= 100
-                if (!failSafe) {
-                    window.clearInterval(focusMonitor)
-                }
-            }, 100)
+                })
+            }
         },
         /**
          * Delete an entry from the list
          */
-        deleteEntry: function(idx) {
-            this.$parent.deleteEntry(this.fieldName, idx)
+        deleteEntry: function(index) {
+            this.buffer.splice(index, 1)
+            this.$emit('input', this.buffer)
+        },
+        /** 
+         * Handle typing in input or field or textarea
+         */
+        handleInput: function(e) {  
+            // wait a tick to check if content was typed or pasted
+            this.$nextTick(function() {
+                if (this.contentPasted) {
+                    this.contentPasted = false
+                    return
+                }
+                this.$emit('input', this.buffer)
+            })
+        },
+        /** 
+         * Handle paste in input field or textarea
+         */
+        handlePaste: function(e) {
+            this.contentPasted = true
+            if (!this.createFieldsOnNewlines) {
+                return
+            }
+
+            // get data from clipboard to keep newline characters, which are stripped
+            // from the data pasted in the input field (e.target.value)
+            var clipboardData = e.clipboardData || window.clipboardData
+            var pastedData = clipboardData.getData('Text')
+
+            let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
+            if ( input_lines_array.length == 1) {
+                return
+            }
+            e.preventDefault()
+
+            let $li = $(e.currentTarget).parents('li')
+            let $inserted_index = $li.index()
+            let $ul = $li.parents('ul')
+
+            // Remove empty lines
+            for (let i = input_lines_array.length-1; i >= 0; --i)
+            {
+                if (input_lines_array[i].trim() == '') {
+                    input_lines_array.splice(i, 1)
+                }
+            }
+            for (let i = 0; i < input_lines_array.length; ++i)
+            {
+                this.addNewEntry ($inserted_index+i+1, false, input_lines_array[i])
+            }
+            this.$emit('input', this.buffer)
+
+            this.$nextTick(function() {
+                let indexToFocus = $inserted_index+input_lines_array.length
+                // Delete field if it's empty
+                if (this.buffer[$inserted_index].trim() == "" ) {
+                    this.deleteEntry($inserted_index)
+                    indexToFocus--
+                }
+                $ul.children('li').eq(indexToFocus).find('input').focus()
+                this.contentPasted = false
+            })
         },
         /**
          * Catches enter and key down presses and either adds a new row or focuses the one below
@@ -65,17 +156,33 @@ export default {
                 let $li = $(e.currentTarget).parents('li')
                 let $ul = $li.parents('ul')
                 if ($li.index() >= $ul.children('li').length - 1) {
-                    this.addNew()
+                    this.addNewEntry ()
                 } else {
                     $ul.children('li').eq($li.index() + 1).find('input').focus()
                 }
             }
         },
-        moveDown: function(idx) {
-            this.$parent.moveEntryDown(this.fieldName, idx)
+        moveEntryDown: function(index) {
+            if (index >= this.buffer.length - 1) {
+                // Already at the end of array
+                return
+            }
+            let entry = this.buffer.splice(index, 1)[0]
+            if (index + 1 < this.buffer.length) {
+                this.buffer.splice(index + 1, 0, entry)
+            } else {
+                this.buffer.push(entry)
+            }
+            this.$emit('input', this.buffer)
         },
-        moveUp: function(idx) {
-            this.$parent.moveEntryUp(this.fieldName, idx)
+        moveEntryUp: function(index) {
+            if (index < 1) {
+                // Already at the start of array
+                return
+            }
+            let entry = this.buffer.splice(index, 1)[0]
+            this.buffer.splice(index - 1, 0, entry)
+            this.$emit('input', this.buffer)
         },
     },
 }

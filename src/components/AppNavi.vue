@@ -17,10 +17,13 @@
                 @submit="downloadRecipe"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
-                    {{ t('cookbook', 'Recipe URL') }}
+                    {{ t('cookbook', 'Download recipe from URL') }}
             </ActionInput>
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
+            </AppNavigationItem>
+            <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/_/'">
+                <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
@@ -62,10 +65,7 @@
                             <label class="settings-input">
                                 {{ t('cookbook', 'Update interval in minutes') }}
                             </label>
-                            <div class="update">
-                                <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
-                                <button class="icon-info" disabled="disabled" :title="t('cookbook', 'Last update: ')"></button>
-                            </div>
+                            <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
                         </li>
                         <li>
                             <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
@@ -200,7 +200,7 @@ export default {
                 cat.recipes = json
             }).fail((jqXHR, textStatus, errorThrown) => {
                 cat.recipes = []
-                alert(t('cookbook', 'Failed to load category '+cat.name+' recipes'))
+                alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat.name}))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -246,7 +246,7 @@ export default {
                         this.categories.push({
                             name: json[i].name,
                             recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes...') }],
+                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
                         })
                     }
                 }
@@ -365,18 +365,6 @@ export default {
 #app-settings .button {
     width: 100%;
     display: block;
-}
-
-.update > input {
-    width: calc(100% - 0.5rem - 34px) !important;
-    margin-right: 0.5rem;
-    float: left;
-}
-.update > button {
-    margin: 3px 0 !important;
-    width: 34px !important;
-    height: 34px !important;
-    float: left;
 }
 
 #hide-navigation {

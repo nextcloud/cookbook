@@ -1,5 +1,8 @@
 <template>
-    <li :class="{ 'header': isHeader() }">{{ displayIngredient }}</li>
+    <li :class="{ 'header': isHeader() }" @click="toggleDone">
+    	<div class="checkmark" :class="{ 'done': isDone }">✔</div>
+    	{{ displayIngredient }}
+	</li>
 </template>
 
 <script>
@@ -9,6 +12,7 @@ export default {
     data () {
         return {
             headerPrefix: "## ",
+            isDone: false,
         }
     },
     computed: {
@@ -25,6 +29,9 @@ export default {
                 return true
             }
             return false
+        },
+        toggleDone: function() {
+        	this.isDone = !this.isDone
         }
     }
 
@@ -43,5 +50,19 @@ li {
         list-style-type: none;
         font-variant: small-caps;
     }
-
+    
+    li > div.checkmark {
+    	display: inline;
+    	visibility: hidden;
+    }
+    li > div.done {
+    	visibility: visible;
+    }
+    
+    li:hover > div.checkmark {
+    	visibility: visible;
+    	opacity: 0.5;
+    	color: var(--color-primary-element);
+    }
+    
 </style>

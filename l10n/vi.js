@@ -4,6 +4,7 @@ OC.L10N.register(
     "Home" : "Trang nhất",
     "Search" : "Tìm",
     "Save changes" : "Lưu thay đổi",
+    "Loading…" : "Đang tải…",
     "Page not found" : "Trang không tìm thấy",
     "Category" : "Các hạng mục",
     "Add" : "Thêm",

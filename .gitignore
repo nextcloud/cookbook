@@ -5,6 +5,8 @@ cookbook.tar.gz
 
 .idea/
 
+/.php_cs.cache
+
 # Built js package
 js/*
 
@@ -14,3 +16,7 @@ js/*
 node_modules
 # Package lock
 package-lock.json
+
+### Composer ###
+
+/vendor

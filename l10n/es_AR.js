@@ -2,9 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Casa",
+    "Filter" : "Filtrar",
     "Search" : "Buscar",
     "Save changes" : "Guardar cambios",
-    "Loading..." : "Cargando...",
+    "Loading…" : "Cargando…",
     "Page not found" : "Página no encontrada",
     "Category" : "Categoría",
     "Add" : "Añadir",

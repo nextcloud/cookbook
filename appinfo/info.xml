@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- Do not alter this file in directly, tweak the template in .github/actions/deploy/info.xml.dist! -->
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
     <id>cookbook</id>
@@ -7,13 +8,14 @@
     <description><![CDATA[A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.]]></description>
     <version>0.7.7</version>
     <licence>agpl</licence>
-    <author mail="mrzapp@users.noreply.github.com" >Jeppe Zapp</author>
+    <author mail="mrzapp@users.noreply.github.com">Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
     <category>organization</category>
-    <website>https://github.com/mrzapp/nextcloud-cookbook/</website>
-    <screenshot small-thumbnail="https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/stable/img/screenshot-small.jpg">https://raw.githubusercontent.com/mrzapp/nextcloud-cookbook/stable/img/screenshot.jpg</screenshot>
-    <bugs>https://github.com/mrzapp/nextcloud-cookbook/issues</bugs>
+    <website>https://github.com/nextcloud/cookbook/</website>
+    <bugs>https://github.com/nextcloud/cookbook/issues</bugs>
+    <screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot-small.jpg">https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot-small.jpg</screenshot>
     <dependencies>
+        <php min-version="7.3"/>
         <nextcloud min-version="17" max-version="20"/>
     </dependencies>
     <navigations>

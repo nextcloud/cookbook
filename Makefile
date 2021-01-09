@@ -65,20 +65,34 @@ ifneq (,$(wildcard $(CURDIR)/js/package.json))
 	make npm
 endif
 
-# Installs and updates the composer dependencies. If composer is not installed
-# a copy is fetched from the web
-.PHONY: composer
-composer:
+
+.PHONY: install_composer
+install_composer:
 ifeq (, $(composer))
 	@echo "No composer command available, downloading a copy from the web"
 	mkdir -p $(build_tools_directory)
 	curl -sS https://getcomposer.org/installer | php
 	mv composer.phar $(build_tools_directory)
+endif
+
+# Installs and updates the composer dependencies. If composer is not installed
+# a copy is fetched from the web
+.PHONY: composer
+composer: install_composer
+ifeq (, $(composer))
 	php $(build_tools_directory)/composer.phar install --prefer-dist
 	php $(build_tools_directory)/composer.phar update --prefer-dist
 else
 	composer install --prefer-dist
 	composer update --prefer-dist
+endif
+
+.PHONY: composer_dist
+composer_dist: install_composer
+ifeq (, $(composer))
+	php $(build_tools_directory)/composer.phar install --prefer-dist --no-dev
+else
+	composer install --prefer-dist --no-dev
 endif
 
 # Installs npm dependencies
@@ -115,22 +129,24 @@ dist:
 source:
 	rm -rf $(source_build_directory)
 	mkdir -p $(source_build_directory)
-	tar cvzf $(source_package_name).tar.gz ../$(app_name) \
+	tar cvzf $(source_package_name).tar.gz \
 	--exclude-vcs \
 	--exclude="../$(app_name)/build" \
 	--exclude="../$(app_name)/js/node_modules" \
 	--exclude="../$(app_name)/node_modules" \
 	--exclude="../$(app_name)/*.log" \
 	--exclude="../$(app_name)/js/*.log" \
+	../$(app_name)
 
 # Builds the source package for the app store, ignores php and js tests
 .PHONY: appstore
 appstore:
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
-	tar cvzf $(appstore_package_name).tar.gz ../$(app_name) \
+	tar cvzf $(appstore_package_name).tar.gz \
 	--exclude-vcs \
 	--exclude="../$(app_name)/build" \
+	--exclude="../$(app_name)/documentation" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/Makefile" \
 	--exclude="../$(app_name)/*.log" \
@@ -144,14 +160,21 @@ appstore:
 	--exclude="../$(app_name)/js/bower.json" \
 	--exclude="../$(app_name)/js/karma.*" \
 	--exclude="../$(app_name)/js/protractor.*" \
+	--exclude="../$(app_name)/node_modules" \
+	--exclude="../$(app_name)/src" \
+	--exclude="../$(app_name)/translationfiles" \
+	--exclude="../$(app_name)/draft-release.sh" \
 	--exclude="../$(app_name)/package.json" \
+	--exclude="../$(app_name)/package-lock.json" \
 	--exclude="../$(app_name)/bower.json" \
 	--exclude="../$(app_name)/karma.*" \
 	--exclude="../$(app_name)/protractor\.*" \
 	--exclude="../$(app_name)/.*" \
+	--exclude="../$(app_name)/webpack.*.js" \
 	--exclude="../$(app_name)/js/.*" \
+	../$(app_name)
 
 .PHONY: test
 test: composer
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml --coverage-clover coverage.xml --coverage-html coverage
+	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml --coverage-clover coverage.integration.xml --coverage-html coverage-integration

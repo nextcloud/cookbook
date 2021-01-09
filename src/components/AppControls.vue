@@ -5,15 +5,15 @@
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
             <Breadcrumb :title="t('cookbook', 'Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
-            <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('cookbook', 'All recipes')" :disableDrop="true"></Breadcrumb>
-            <!--
+            <Breadcrumb v-if="isIndex" class="active no-arrow" :title="t('cookbook', 'All recipes')" :disableDrop="true" />
             <Breadcrumb v-if="isIndex" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-search" class="action-button" :disabled="true" :ariaLabel="t('cookbook', 'Search')" @click="$window.goTo('/search')" />
+                <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
+                <ActionInput icon="icon-quota" @update:value="updateFilters" :value="filterValue">{{ t('cookbook', 'Filter') }}</ActionInput>
+                <ActionInput icon="icon-search" @submit="search">{{ t('cookbook', 'Search') }}</ActionInput>
             </Breadcrumb>
-            -->
             <!-- SEARCH PAGE -->
             <Breadcrumb v-if="isSearch" class="not-link" :title="searchTitle" :disableDrop="true" />
-            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value" :disableDrop="true" />
+            <Breadcrumb v-if="isSearch && $route.params.value" class="active" :title="$route.params.value=='_'?'None':decodeURIComponent($route.params.value)" :disableDrop="true" />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
             <Breadcrumb v-if="isEdit" class="not-link" :title="t('cookbook', 'Edit recipe')" :disableDrop="true" />
@@ -23,7 +23,7 @@
                     class="action-button"
                     :ariaLabel="t('cookbook', 'Reload recipe')"
                     @click="reloadRecipeEdit()"
-                />
+                >{{ t('cookbook', 'Reload recipe') }}</ActionButton>
             </Breadcrumb>
             <!-- Create new recipe -->
             <Breadcrumb v-else-if="isCreate" class="active" :title="t('cookbook', 'New recipe')" :disableDrop="true" />
@@ -33,7 +33,7 @@
                     class="action-button"
                     :ariaLabel="t('cookbook', 'Save changes')"
                     @click="saveChanges()"
-                />
+                >{{ t('cookbook', 'Save changes') }}</ActionButton>
             </Breadcrumb>
             <!-- View recipe -->
             <Breadcrumb v-if="isRecipe" class="active" :title="$store.state.recipe.name" :disableDrop="true">
@@ -42,7 +42,7 @@
                     class="action-button"
                     :ariaLabel="t('cookbook', 'Reload recipe')"
                     @click="reloadRecipeView()"
-                />
+                >{{ t('cookbook', 'Reload recipe') }}</ActionButton>
             </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
                 <ActionButton
@@ -50,21 +50,31 @@
                     class="action-button"
                     :ariaLabel="t('cookbook', 'Edit recipe')"
                     @click="$window.goTo('/recipe/'+$store.state.recipe.id+'/edit')"
-                />
+                >{{ t('cookbook', 'Edit recipe') }}</ActionButton>
             </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-category-office" class="action-button" :ariaLabel="t('cookbook', 'Print recipe')" @click="printRecipe()" />
+                <ActionButton
+                    icon="icon-category-office"
+                    class="action-button"
+                    :ariaLabel="t('cookbook', 'Print recipe')"
+                    @click="printRecipe()"
+                >{{ t('cookbook', 'Print recipe') }}</ActionButton>
             </Breadcrumb>
             <Breadcrumb v-if="isRecipe" class="no-arrow" title="" :disableDrop="true">
-                <ActionButton icon="icon-delete" class="action-button" :ariaLabel="t('cookbook', 'Delete recipe')" @click="deleteRecipe()" />
+                <ActionButton
+                    icon="icon-delete"
+                    class="action-button"
+                    :ariaLabel="t('cookbook', 'Delete recipe')"
+                    @click="deleteRecipe()"
+                >{{ t('cookbook', 'Delete recipe') }}</ActionButton>
             </Breadcrumb>
             <!-- Is the app loading? -->
             <Breadcrumb v-if="isLoading" class="active no-arrow" :title="t('cookbook', 'App is loading')" :disableDrop="true">
-                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading...')" />
+                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading…')" />
             </Breadcrumb>
             <!-- Is a recipe loading? -->
             <Breadcrumb v-else-if="isLoadingRecipe" class="active no-arrow" :title="t('cookbook', 'Loading recipe')" :disableDrop="true">
-                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading...')" />
+                <ActionButton icon="icon-loading-small" :ariaLabel="t('cookbook', 'Loading…')" />
             </Breadcrumb>
             <!-- No recipe found -->
             <Breadcrumb v-else-if="recipeNotFound" class="active no-arrow" :title="t('cookbook', 'Recipe not found')" :disableDrop="true" />
@@ -77,17 +87,18 @@
 
 <script>
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
+import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import Breadcrumbs from '@nextcloud/vue/dist/Components/Breadcrumbs'
 import Breadcrumb from '@nextcloud/vue/dist/Components/Breadcrumb'
 
 export default {
     name: 'AppControls',
     components: {
-        ActionButton, Breadcrumbs, Breadcrumb
+        ActionButton, ActionInput, Breadcrumbs, Breadcrumb
     },
     data () {
         return {
-
+            filterValue: '',
         }
     },
     computed: {
@@ -168,8 +179,8 @@ export default {
                 return t('cookbook', 'Category')
             } else if (this.$route.name === 'search-name') {
                 return t('cookbook', 'Recipe name')
-            } else if (this.$route.name === 'search-tag') {
-                return t('cookbook', 'Tag')
+            } else if (this.$route.name === 'search-tags') {
+                return t('cookbook', 'Tags')
             } else {
                 return t('cookbook', 'Search for recipes')
             }
@@ -210,8 +221,15 @@ export default {
         saveChanges: function() {
             this.$root.$emit('saveRecipe')
         },
+        search: function(e) {
+            this.$window.goTo('/search/'+e.target[1].value)
+        },
         toggleNavigation: function() {
             $("#app-navigation").toggleClass("show-navigation")
+        },
+        updateFilters: function(e) {
+            this.filterValue = e
+            this.$root.$emit('applyRecipeFilter', e)
         },
     },
     mounted () {
@@ -265,3 +283,16 @@ export default {
 }
 
 </style>
+
+<style>
+
+@media print {
+	
+	.vue-tooltip {
+		display: none !important;
+	}
+	
+}
+
+</style>
+

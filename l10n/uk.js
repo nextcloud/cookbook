@@ -2,8 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Домашній",
+    "Filter" : "Фільтр",
     "Search" : "Пошук",
     "Save changes" : "Зберегти зміни",
+    "Loading…" : "Завантаження…",
     "Page not found" : "Сторінку не знайдено",
     "Category" : "Категорія",
     "Add" : "Додати",

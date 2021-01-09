@@ -4,16 +4,12 @@ namespace OCA\Notes\Controller;
 
 use OCP\AppFramework\Controller;
 
-use OCP\IConfig;
 use OCP\IRequest;
-use OCP\IUserManager;
 use OCP\IUserSession;
-use OCP\Files\IRootFolder;
 use OCP\AppFramework\Http\JSONResponse;
 use OCA\Cookbook\Service\SettingsService;
 
-class SettingsController extends Controller
-{
+class SettingsController extends Controller {
 	private $service;
 	private $userSession;
 
@@ -51,5 +47,3 @@ class SettingsController extends Controller
 		return new JSONResponse($this->service->getAll($this->getUID()));
 	}
 }
-
-?>

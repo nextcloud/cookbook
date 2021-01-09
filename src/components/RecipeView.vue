@@ -1,23 +1,45 @@
 <template>
     <div class="wrapper">
-        <RecipeImages v-if="$store.state.recipe" />
+        <div v-if="$store.state.recipe" class='header' :class="{ 'responsive': $store.state.recipe.image }">
+	        <div class='image' v-if="$store.state.recipe.image">
+	        	<RecipeImages />
+	        </div>
+
+	        <div class='meta'>
+	            <h2>{{ $store.state.recipe.name }}</h2>
+	            <div class="details">
+                    <p v-if="keywords.length">
+                        <ul v-if="keywords.length">
+                            <RecipeKeyword v-for="(keyword,idx) in keywords" :key="'keyw'+idx" :name="keyword" :title="t('cookbook', 'Search recipes with this keyword')" v-on:keyword-clicked="keywordClicked(keyword)" />
+                        </ul>
+                    </p>
+
+                    <p class="dates">
+                        <span v-if="showCreatedDate" class="date"  :title="t('cookbook', 'Date created')">
+                            <span class="icon-calendar-dark date-icon" />
+                            <span class="date-text">{{ dateCreated }}</span>
+                        </span>
+                        <span v-if="showModifiedDate" class="date" :title="t('cookbook', 'Last modified')">
+                            <span class="icon-rename date-icon" />
+                            <span class="date-text">{{ dateModified }}</span>
+                        </span>
+                    </p>
+
+	                <p class="description">{{ $store.state.recipe.description }}</p>
+	                <p v-if="$store.state.recipe.url">
+	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
+	                </p>
+	                <p><strong>{{ t('cookbook', 'Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
+	            </div>
+	            <div class="times">
+	                <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" :label="'Preparation time'" />
+	                <RecipeTimer v-if="timerCook" :value="timerCook" :phase="'prep'" :timer="true" :label="'Cooking time'" />
+	                <RecipeTimer v-if="timerTotal" :value="timerTotal" :phase="'total'" :timer="false" :label="'Total time'" />
+	            </div>
+            </div>
+		</div>
 
         <div v-if="$store.state.recipe" class="content">
-            <h2>{{ $store.state.recipe.name }}</h2>
-
-            <div class="details">
-                <p class="description">{{ $store.state.recipe.description }}</p>
-                <p v-if="$store.state.recipe.url">
-                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url">{{ $store.state.recipe.url }}</a>
-                </p>
-                <p><strong>{{ t('cookbook', 'Servings') }}: </strong>{{ $store.state.recipe.recipeYield }}</p>
-            </div>
-            <div class="times">
-                <RecipeTimer v-if="timerPrep" :value="timerPrep" :phase="'prep'" :timer="false" :label="'Preparation time'" />
-                <RecipeTimer v-if="timerCook" :value="timerCook" :phase="'prep'" :timer="true" :label="'Cooking time'" />
-                <RecipeTimer v-if="timerTotal" :value="timerTotal" :phase="'total'" :timer="false" :label="'Total time'" />
-            </div>
-
             <section>
                 <aside>
                     <section>
@@ -31,6 +53,24 @@
                         <h3 v-if="tools.length">{{ t('cookbook', 'Tools') }}</h3>
                         <ul v-if="tools.length">
                             <RecipeTool v-for="(tool,idx) in tools" :key="'tool'+idx" :tool="tool" />
+                        </ul>
+                    </section>
+
+                    <section v-if="showNutritions">
+                        <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
+                        <ul>
+                            <recipe-nutrition-info-item v-if="('servingSize' in nutrition) && !isNullOrEmpty(nutrition['servingSize'])" :title="t('cookbook', 'Serving Size')" :data="nutrition['servingSize']" />
+                            <recipe-nutrition-info-item v-if="('calories' in nutrition) && !isNullOrEmpty(nutrition['calories'])" :title="t('cookbook', 'Energy')" :data="nutrition['calories']" />
+                            <recipe-nutrition-info-item v-if="('sugarContent' in nutrition) && !isNullOrEmpty(nutrition['sugarContent'])" :title="t('cookbook', 'Sugar')" :data="nutrition['sugarContent']" />
+                            <recipe-nutrition-info-item v-if="('carbohydrateContent' in nutrition) && !isNullOrEmpty(nutrition['carbohydrateContent'])" :title="t('cookbook', 'Carbohydrate')" :data="nutrition['carbohydrateContent']" />
+                            <recipe-nutrition-info-item v-if="('cholesterolContent' in nutrition) && !isNullOrEmpty(nutrition['cholesterolContent'])" :title="t('cookbook', 'Cholesterol')" :data="nutrition['cholesterolContent']" />
+                            <recipe-nutrition-info-item v-if="('fiberContent' in nutrition) && !isNullOrEmpty(nutrition['fiberContent'])" :title="t('cookbook', 'Fiber')" :data="nutrition['fiberContent']" />
+                            <recipe-nutrition-info-item v-if="('proteinContent' in nutrition) && !isNullOrEmpty(nutrition['proteinContent'])" :title="t('cookbook', 'Protein')" :data="nutrition['proteinContent']" />
+                            <recipe-nutrition-info-item v-if="('sodiumContent' in nutrition) && !isNullOrEmpty(nutrition['sodiumContent'])" :title="t('cookbook', 'Sodium')" :data="nutrition['sodiumContent']" />
+                            <recipe-nutrition-info-item v-if="('fatContent' in nutrition) && !isNullOrEmpty(nutrition['fatContent'])" :title="t('cookbook', 'Fat total')" :data="nutrition['fatContent']" />
+                            <recipe-nutrition-info-item v-if="('saturatedFatContent' in nutrition) && !isNullOrEmpty(nutrition['saturatedFatContent'])" :title="t('cookbook', 'Saturated Fat')" :data="nutrition['saturatedFatContent']" />
+                            <recipe-nutrition-info-item v-if="('unsaturatedFatContent' in nutrition) && !isNullOrEmpty(nutrition['unsaturatedFatContent'])" :title="t('cookbook', 'Unsaturated Fat')" :data="nutrition['unsaturatedFatContent']" />
+                            <recipe-nutrition-info-item v-if="('transFatContent' in nutrition) && !isNullOrEmpty(nutrition['transFatContent'])" :title="t('cookbook', 'Trans Fat')" :data="nutrition['transFatContent']" />
                         </ul>
                     </section>
                 </aside>
@@ -47,9 +87,13 @@
 
 <script>
 
+import moment from '@nextcloud/moment'
+
 import RecipeImages from './RecipeImages'
 import RecipeIngredient from './RecipeIngredient'
 import RecipeInstruction from './RecipeInstruction'
+import RecipeKeyword from './RecipeKeyword'
+import RecipeNutritionInfoItem from './RecipeNutritionInfoItem'
 import RecipeTimer from './RecipeTimer'
 import RecipeTool from './RecipeTool'
 
@@ -59,21 +103,70 @@ export default {
         RecipeImages,
         RecipeIngredient,
         RecipeInstruction,
+        RecipeKeyword,
+        RecipeNutritionInfoItem,
         RecipeTimer,
-        RecipeTool,
+        RecipeTool
     },
     data () {
         return {
             // Own properties
             ingredients: [],
             instructions: [],
+            keywords: [],
             timerCook: null,
             timerPrep: null,
             timerTotal: null,
             tools: [],
+            dateCreated: null,
+            dateModified: null,
+            nutrition: null
         }
     },
+    computed: {
+        showModifiedDate: function() {
+            if (!this.dateModified) {  
+                return false
+            }
+            else if ( this.$store.state.recipe.dateCreated
+                && this.$store.state.recipe.dateModified
+                && this.$store.state.recipe.dateCreated === this.$store.state.recipe.dateModified) {
+                // don't show modified date if create and modified timestamp are the same
+                return false
+            }
+            return true
+        },
+        showCreatedDate: function() {
+            if (!this.dateCreated) {  
+                return false
+            }
+            return true
+        },
+        showNutritions: function() { return this.nutrition && !(this.nutrition instanceof Array) && Object.keys(this.nutrition).length > 0 }
+    },
     methods: {
+        isNullOrEmpty: function(str) {
+            return !str || typeof(str) === 'string' && 0 === str.trim().length;
+        },
+        /**
+         * Callback for click on keyword
+         */
+        keywordClicked: function(keyword) {
+            if(keyword) {
+                this.$router.push('/tags/'+keyword)
+            }
+        },
+        /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date) 
+         * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
+         */
+        parseDateTime: function(dt) {
+            if (!dt) return null
+            var date = moment(dt, moment.ISO_8601)
+            if(!date.isValid()) {
+                return null
+            }
+            return date
+        },
         setup: function() {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
@@ -109,6 +202,10 @@ export default {
                     $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
                 }
 
+                if ($this.$store.state.recipe.keywords) {
+                    $this.keywords = String($this.$store.state.recipe.keywords).split(',')
+                }
+
                 if ($this.$store.state.recipe.cookTime) {
                     let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
                     $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
@@ -128,6 +225,24 @@ export default {
                     $this.tools = $this.$store.state.recipe.tool
                 }
 
+                if ($this.$store.state.recipe.dateCreated) {
+                    let date = $this.parseDateTime($this.$store.state.recipe.dateCreated)
+                    $this.dateCreated = (date != null ? date.format('L, LT').toString() : null)
+                }
+                
+                if ($this.$store.state.recipe.dateModified) {
+                    let date = $this.parseDateTime($this.$store.state.recipe.dateModified)
+                    $this.dateModified = (date != null ? date.format('L, LT').toString() : null)
+                }
+                if ($this.$store.state.recipe.nutrition) {
+                    if ( $this.$store.state.recipe.nutrition instanceof Array) {
+                        $this.$store.state.recipe.nutrition = {}
+                    }
+                } else {
+                    $this.$store.state.recipe.nutrition = {}
+                }
+                $this.nutrition = $this.$store.state.recipe.nutrition
+                
                 // Always set the active page last!
                 $this.$store.dispatch('setPage', { page: 'recipe' })
 
@@ -178,6 +293,7 @@ export default {
 
 <style scoped>
 
+
 .wrapper {
     width: 100%;
 }
@@ -216,6 +332,22 @@ aside {
         width: 100%;
     } }
 
+        .dates {
+            font-size: .9em;
+        }
+            .date {
+                margin-right: 1.5em;
+            }
+                .date-icon {
+                    display: inline-block;
+                    background-size: 1em;
+                    margin-right: .2em;
+                    vertical-align: middle;
+                    margin-bottom: .2em;
+                } 
+                .date-text {
+                    vertical-align: middle;
+                } 
         .description {
             font-style: italic;
             white-space: pre-line;
@@ -252,11 +384,45 @@ aside {
         margin-top: 10px;
     }
 
+    div.meta {
+    	margin: 0 1rem;
+    }
+
 @media print {
     #content {
         display: block !important;
         padding: 0 !important;
         overflow: visible !important;
+    }
+
+    div.header {
+		display: flex;
+	}
+
+	div.header > div.image {
+		flex: 600px 0 0;
+	}
+
+	div.header > div.meta {
+		margin: 0 10px;
+	}
+
+	div.header a::after {
+		content: '';
+	}
+}
+
+@media only screen and (min-width: 1500px) {
+	div.header.responsive {
+		display: flex;
+	}
+
+	div.header.responsive > div.image {
+		flex: 700px 0 0;
+	}
+
+    #app-content-wrapper div.times > div {
+        margin: 1rem 0.75rem;
     }
 }
 

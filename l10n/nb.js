@@ -2,9 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Hjem",
+    "Filter" : "Filter",
     "Search" : "Søk",
     "Save changes" : "Lagre endringer",
-    "Loading..." : "Laster…",
+    "Loading…" : "Laster…",
     "Page not found" : "Siden ble ikke funnet",
     "Category" : "Kategori",
     "Add" : "Legg til",

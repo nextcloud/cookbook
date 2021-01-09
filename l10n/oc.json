@@ -1,6 +1,7 @@
 { "translations": {
     "Home" : "Domicili",
     "Search" : "Search",
+    "Loading…" : "Cargament...",
     "Add" : "Ajustar",
     "Name" : "Nom",
     "Description" : "Descripcion",

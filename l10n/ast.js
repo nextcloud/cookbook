@@ -2,9 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Aniciu",
+    "Filter" : "Peñerar",
     "Search" : "Search",
     "Save changes" : "Guardar camudancies",
-    "Loading..." : "Cargando...",
+    "Loading…" : "Cargando...",
     "Page not found" : "Nun s'alcontró la páxina",
     "Category" : "Estaya",
     "Add" : "Amestar",
