@@ -49,7 +49,7 @@ git config user.email 'bot@noreply.github.com'
 
 "$deploy_path/fill-in-data.sh" "$version" "$major" "$minor" "$patch"
 
-git add appinfo/info.xml package.json
+git add appinfo/info.xml package.json lib/Controller/MainController.php
 
 git commit -s -m "Bump to version $version"
 git tag "v$version"
