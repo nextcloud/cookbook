@@ -55,6 +55,22 @@ class MainController extends Controller {
 
 		return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
 	}
+	
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @return DataResponse
+	 */
+	public function getApiVersion(): DataResponse {
+		$response = [
+			'cookbook_version' => [0,7,7], /* VERSION_TAG do not change this line manually */
+			'api_version' => [
+				'major' => 0,
+				'minor' => 1
+			]
+		];
+		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);
+	}
 
 	/**
 	 * @NoAdminRequired

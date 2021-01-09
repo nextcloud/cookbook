@@ -43,6 +43,8 @@
   [#416](https://github.com/nextcloud/cookbook/pull/416/) @seyfeb
 - Asking user for confirmation when leaving recipe-editor form with changes
   [#464](https://github.com/nextcloud/cookbook/pull/464/) @seyfeb
+- Exporting the maximal API endpoint version
+  [#487](https://github.com/nextcloud/cookbook/pull/487) @christianlupus
 
 ### Changed
 - Switch of project ownership to nextcloud organization in GitHub
