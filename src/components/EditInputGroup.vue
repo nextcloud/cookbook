@@ -1,8 +1,8 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <ul ref="list">
-            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
+        <ul>
+            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx" ref="list-item">
                 <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
                 <input v-if="fieldType==='text'" type="text" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
                 <textarea v-else-if="fieldType==='textarea'" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
@@ -66,14 +66,14 @@ export default {
             this.buffer.splice(index, 0, content)
 
             if (focusAfterInsert) {
-                let $ul = $(this.$refs['list'])
                 let $this = this
+                let listItems = this.$refs['list-item']
                 this.$nextTick(function() {
-                    if ($ul.children('li').length > index) {
+                    if (listItems.length > index) {
                         if ($this.fieldType === 'text') {
-                            $ul.children('li').eq(index).find('input').focus()
+                            listItems[index].getElementsByTagName('input')[0].focus()
                         } else if ($this.fieldType === 'textarea') {
-                            $ul.children('li').eq(index).find('textarea').focus()
+                            listItems[index].getElementsByTagName('textarea')[0].focus()
                         }
                     }
                 })
@@ -129,9 +129,9 @@ export default {
 
             e.preventDefault()
 
-            let $li = $(e.currentTarget).parents('li')
-            let $inserted_index = $li.index()
-            let $ul = $li.parents('ul')
+            let $li = e.currentTarget.closest('li')
+            let $ul = $li.closest('ul')
+            let $inserted_index = Array.prototype.indexOf.call($ul.childNodes, $li)
 
             // Remove empty lines
             for (let i = input_lines_array.length-1; i >= 0; --i)
@@ -153,7 +153,7 @@ export default {
                     this.deleteEntry($inserted_index)
                     indexToFocus--
                 }
-                $ul.children('li').eq(indexToFocus).find('input').focus()
+                $ul.children[indexToFocus].getElementsByTagName('input')[0].focus()
                 this.contentPasted = false
             })
         },
@@ -164,12 +164,14 @@ export default {
             // Using keyup for trigger will prevent repeat triggering if key is held down
             if (e.keyCode === 13 || e.keyCode === 10) {
                 e.preventDefault()
-                let $li = $(e.currentTarget).parents('li')
-                let $ul = $li.parents('ul')
-                if ($li.index() >= $ul.children('li').length - 1) {
+                let $li = e.currentTarget.closest('li')
+                let $ul = $li.closest('ul')
+                let $pressed_li_index = Array.prototype.indexOf.call($ul.childNodes, $li)
+
+                if ($pressed_li_index >= this.$refs['list-item'].length - 1) {
                     this.addNewEntry ()
                 } else {
-                    $ul.children('li').eq($li.index() + 1).find('input').focus()
+                    $ul.children[$pressed_li_index+1].getElementsByTagName('input')[0].focus()
                 }
             }
         },
