@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/mrzapp/nextcloud-cookbook#readme",
   "dependencies": {
+    "@nextcloud/axios": "^1.6.0",
     "@nextcloud/event-bus": "^1.1.4",
     "@nextcloud/moment": "^1.1.1",
     "@nextcloud/vue": "^1.5.0",
