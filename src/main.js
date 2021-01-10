@@ -6,7 +6,6 @@
 */
 
 // TODO: Agree on a markdown parser
-// TODO: Remove dependency on jQuery
 
 import Vue from 'vue'
 import router from './router'
@@ -15,7 +14,7 @@ import store from './store'
 //import AppNavi from './components/AppNavi'
 import AppMain from './components/AppMain'
 
-(function (OC, window, $, undefined) {
+(function (OC, window) {
     'use strict'
 
     // Fetch Nextcloud nonce identifier for dynamic script loading
@@ -175,11 +174,11 @@ import AppMain from './components/AppMain'
     Vue.prototype.t = window.t
 
     // Start the app once document is done loading
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", function(event) {
         const App = Vue.extend(AppMain)
         new App({
             store,
             router,
         }).$mount("#app")
     })
-})(OC, window, jQuery)
+})(OC, window)
