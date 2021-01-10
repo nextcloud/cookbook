@@ -88,6 +88,7 @@
 <script>
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import axios from '@nextcloud/axios'
 import Breadcrumbs from '@nextcloud/vue/dist/Components/Breadcrumbs'
 import Breadcrumb from '@nextcloud/vue/dist/Components/Breadcrumb'
 
@@ -194,20 +195,18 @@ export default {
             }
             let id = this.$store.state.recipe.id
             let $this = this
-            $.ajax({
-                url: window.baseUrl + '/api/recipes/' + id,
-                method: 'DELETE',
-            })
-            .done(function(reply) {
-                $this.$window.goTo('/')
-                $this.$root.$emit('refreshNavigation')
-            })
-            .fail(function(e) {
-                alert(t('cookbook', 'Delete failed'))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            })
+
+            axios.delete(window.baseUrl + '/api/recipes/' + id)
+                .then(function(response) {
+                    $this.$window.goTo('/')
+                    $this.$root.$emit('refreshNavigation')
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Delete failed'))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
         },
         printRecipe: function() {
             window.print()
@@ -225,7 +224,7 @@ export default {
             this.$window.goTo('/search/'+e.target[1].value)
         },
         toggleNavigation: function() {
-            $("#app-navigation").toggleClass("show-navigation")
+            document.getElementById("app-navigation").classList.toggle("show-navigation")
         },
         updateFilters: function(e) {
             this.filterValue = e
