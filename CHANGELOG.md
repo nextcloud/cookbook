@@ -3,6 +3,8 @@
 ### Fixed
 - Fixed keywords of shared recipes counted multiple times, fixes #491
   [#493](https://github.com/nextcloud/cookbook/pull/493/) @seyfeb
+- Added basic structure for documentation
+  [#499](https://github.com/nextcloud/cookbook/pull/499) @christianlupus
 
 
 ## 0.7.8 - 2021-01-08
