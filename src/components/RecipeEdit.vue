@@ -257,7 +257,6 @@ export default {
                     url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
                     data: this.recipe
                     })
-                // axios.put(this.$window.baseUrl + '/api/recipes/'+this.recipe.id, this.recipe)
                     .then(function (response) {
                         // success
                         let recipe = response.data
@@ -276,21 +275,6 @@ export default {
                         // finally
                         $this.savingRecipe = false
                     })
-                // $.ajax({
-                //     url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
-                //     method: 'PUT',
-                //     data: this.recipe,
-                // }).done(function (recipe) {
-                //     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                //     $this.$window.goTo('/recipe/'+recipe)
-                //     // Refresh navigation to display changes
-                //     $this.$root.$emit('refreshNavigation')
-                // }).fail(function(e) {
-                //     $this.$store.dispatch('setSavingRecipe', { saving: false })
-                //     alert(t('cookbook', 'Recipe could not be saved'))
-                // }).always(() => {
-                //     $this.savingRecipe = false
-                // })
             } else {
                 // Create a new recipe
                 axios({
