@@ -7,6 +7,8 @@
   [#499](https://github.com/nextcloud/cookbook/pull/499) @christianlupus
 - Make categories load recipes against
   [#500](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
+- Handle recipes without category well
+  [#501](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
 
 
 ## 0.7.8 - 2021-01-08

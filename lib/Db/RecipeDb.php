@@ -505,7 +505,11 @@ class RecipeDb {
 		$result = $cursor->fetch();
 		$cursor->closeCursor();
 		
-		return $result['name'];
+		if ($result === false) {
+			return null;
+		} else {
+			return $result['name'];
+		}
 	}
 	
 	public function updateCategoryOfRecipe(int $recipeId, string $categoryName, string $userId) {
