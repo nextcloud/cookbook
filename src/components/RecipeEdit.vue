@@ -298,8 +298,9 @@ export default {
                     method: 'POST',
                     data: this.recipe,
                     })
-                    .then(function (recipe) {
+                    .then(function(response) {
                         // success
+                        let recipe = response.data
                         $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.$window.goTo('/recipe/'+recipe)
                         // Refresh navigation to display changes
