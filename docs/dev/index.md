@@ -2,5 +2,5 @@
 
 ## Github related information
 
-- Automatic deployment of new releases
-- Documentation using github pages
+- [Automatic deployment of new releases](deployment)
+- [Documentation using github pages](docs)
