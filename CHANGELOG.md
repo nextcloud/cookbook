@@ -5,6 +5,8 @@
   [#493](https://github.com/nextcloud/cookbook/pull/493/) @seyfeb
 - Added basic structure for documentation
   [#499](https://github.com/nextcloud/cookbook/pull/499) @christianlupus
+- Make categories load recipes against
+  [#500](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
 
 
 ## 0.7.8 - 2021-01-08

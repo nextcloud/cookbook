@@ -196,7 +196,7 @@ export default {
                 return
             }
             let cat = this.categories[idx]
-            $.get(this.$window.baseUrl + '/category/'+cat.name).done(function(json) {
+            $.get(this.$window.baseUrl + '/api/category/'+cat.name).done(function(json) {
                 cat.recipes = json
             }).fail((jqXHR, textStatus, errorThrown) => {
                 cat.recipes = []
