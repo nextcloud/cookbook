@@ -7,6 +7,8 @@
   [#513](https://github.com/nextcloud/cookbook/pull/513) @christianlupus
 - Central parsing of parameters for POST/PUT requests to simplify development
   [#518](https://github.com/nextcloud/cookbook/pull/518) @christianlupus
+- Removed dependencies on the global jQuery
+  [#497](https://github.com/nextcloud/cookbook/pull/497/) @seyfeb
 
 ### Fixed
 - Fixed keywords of shared recipes counted multiple times, fixes #491
@@ -25,7 +27,6 @@
   [#511](https://github.com/nextcloud/cookbook/pull/511/) @seyfeb
 - Update README with more clients
   [#457](https://github.com/nextcloud/cookbook/pull/457) @geeseven
-
 
 ## 0.7.8 - 2021-01-08
 
