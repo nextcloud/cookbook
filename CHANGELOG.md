@@ -9,6 +9,8 @@
   [#500](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
 - Handle recipes without category well
   [#501](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
+- Allow to save recipes with custom image URLs
+  [#505](https://github.com/nextcloud/cookbook/pull/505) @christianlupus
 
 
 ## 0.7.8 - 2021-01-08
