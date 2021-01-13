@@ -16,7 +16,7 @@ Further documentation (also internal ones) are published on the [documentation p
 The currently available clients are
 
 - Nextcloud Cookbook (by MicMun) ([Google Play](https://play.google.com/store/apps/details?id=de.micmun.android.nextcloudcookbook&hl=en_US&gl=US), [FDroid](https://f-droid.org/en/packages/de.micmun.android.nextcloudcookbook/), [homepage](https://micmun.de/nextcloud-cookbook-english/))
-- Nextcloud Cookbook (by Teifun2) ([Google Play](https://play.google.com/store/apps/details?id=com.nextcloud_cookbook_flutter&hl=en_US&gl=US))
+- [Nextcloud Cookbook](Teifun2/nextcloud-cookbook-flutter) (by Teifun2) ([Google Play](https://play.google.com/store/apps/details?id=com.nextcloud_cookbook_flutter&hl=en_US&gl=US))
 
 ## Join the discussion
 
