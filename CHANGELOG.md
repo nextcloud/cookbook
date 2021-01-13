@@ -11,6 +11,8 @@
   [#501](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
 - Allow to save recipes with custom image URLs
   [#505](https://github.com/nextcloud/cookbook/pull/505) @christianlupus
+- Allow pasting of instructions without newline again
+  [#503](https://github.com/nextcloud/cookbook/pull/503) @christianlupus
 
 
 ## 0.7.8 - 2021-01-08

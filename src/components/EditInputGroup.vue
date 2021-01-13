@@ -42,7 +42,8 @@ export default {
         return {
             // helper variables
             buffer: this.value.slice(),
-            contentPasted: false
+            contentPasted: false,
+            singleLinePasted: false
         }
     },
     watch: {
@@ -93,6 +94,11 @@ export default {
             this.$nextTick(function() {
                 if (this.contentPasted) {
                     this.contentPasted = false
+
+                    if(this.singleLinePasted) {
+                        this.$emit('input', this.buffer)
+                    }
+
                     return
                 }
                 this.$emit('input', this.buffer)
@@ -113,9 +119,14 @@ export default {
             var pastedData = clipboardData.getData('Text')
 
             let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
+
             if ( input_lines_array.length == 1) {
+                this.singleLinePasted = true
                 return
+            } else {
+                this.singleLinePasted = false
             }
+
             e.preventDefault()
 
             let $li = $(e.currentTarget).parents('li')
