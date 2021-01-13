@@ -55,17 +55,20 @@ class ConfigController extends Controller {
 	public function config() {
 		$this->dbCacheService->triggerCheck();
 		
-		if (isset($_POST['folder'])) {
-			$this->service->setUserFolderPath($_POST['folder']);
+		$rawContent = file_get_contents('php://input');
+		$data = json_decode($rawContent, true);
+		
+		if (isset($data['folder'])) {
+			$this->service->setUserFolderPath($data['folder']);
 			$this->dbCacheService->updateCache();
 		}
 
-		if (isset($_POST['update_interval'])) {
-			$this->service->setSearchIndexUpdateInterval($_POST['update_interval']);
+		if (isset($data['update_interval'])) {
+			$this->service->setSearchIndexUpdateInterval($data['update_interval']);
 		}
 
-		if (isset($_POST['print_image'])) {
-			$this->service->setPrintImage((bool)$_POST['print_image']);
+		if (isset($data['print_image'])) {
+			$this->service->setPrintImage((bool)$data['print_image']);
 		}
 
 		return new DataResponse('OK', Http::STATUS_OK);
