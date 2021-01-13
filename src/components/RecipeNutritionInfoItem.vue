@@ -35,7 +35,8 @@ li {
 
 li .title {
     margin-bottom: 0em;
-    color: var(--color-primary);
+    color: var(--color-main-text);
+    font-weight: bolder;
 }
 
 </style>
