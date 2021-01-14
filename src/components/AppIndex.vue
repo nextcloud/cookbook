@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="kw">
-            <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
+            <!-- <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
                 <RecipeKeyword v-for="keyword in keywords"
                     :key="keyword.name"
                     :name="keyword.name"
@@ -10,7 +10,7 @@
                     v-on:keyword-clicked="keywordClicked(keyword)"
                     :class="{keyword, active : keywordFilter.includes(keyword.name), disabled : !keywordContainedInVisibleRecipes(keyword)}"
                     />
-            </transition-group>
+            </transition-group> -->
         </div>
         <ul class="recipes">
             <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
@@ -46,18 +46,86 @@ export default {
         }
     },
     computed: {
-        filteredRecipes () {
-            if (!this.filters) {
-                return this.recipes
-            } else if (this.recipes.length) {
-                let filtered = []
-                for (let i=0; i<this.recipes.length; i++) {
-                    if (this.recipes[i].name.toLowerCase().indexOf(this.filters.toLowerCase()) >= 0) {
-                        filtered.push(this.recipes[i])
-                    }
+        rawKeywords() {
+            var keywordArray = this.recipes.map(function(r){
+                if(! 'keywords' in r) {
+                    return []
                 }
-                return filtered
+                if(r.keywords != null){
+                    return r.keywords.split(',')
+                } else {
+                    return []
+                }
+            })
+            return [].concat(... keywordArray)
+        },
+        uniqKeywords() {
+            function uniqFilter(value, index, self) {
+                return self.indexOf(value) === index
             }
+            return this.rawKeywords.sort().filter(uniqFilter)
+        },
+        keywordsWithCount() {
+            let $this = this
+            return this.uniqKeywords.map(function (kw){
+                return {
+                    'name': kw,
+                    'count': $this.rawKeywords.filter((kw2) => kw === kw2).length
+                }
+            }).sort((k1, k2) => k2.count - k1.count)
+        },
+        selectedKeywords() {
+            return this.keywordsWithCount.filter((kw) => this.keywordFilter.includes(kw.name))
+        },
+        unselectedKeywords() {
+            return this.keywordsWithCount.filter((kw) => ! this.selectedKeywords.includes(kw))
+        },
+        recipesFilteredByKeywords() {
+            let $this = this
+            return this.recipes.filter(function (r) {
+                if($this.keywordFilter.length == 0) {
+                    // No filtering, keep all
+                    return true
+                }
+                
+                if(r.keywords === null){
+                    return false
+                }
+                
+                function keywordInRecipePresent(kw,r) {
+                    if(! r.keywords) {
+                        return false;
+                    }
+                    
+                    let keywords = r.keywords.split(',')
+                    return keywords.includes(kw.name)
+                }
+                
+                return $this.selectedKeywords.map((kw) => keywordInRecipePresent(kw, r)).reduce((l,r) => l && r)
+            })
+        },
+        filteredRecipes () {
+            let ret = this.recipesFilteredByKeywords
+            let $this = this
+            
+            if(this.filters){
+                ret = ret.filter(function (r) {
+                    return r.name.toLowerCase().includes($this.filters.toLowerCase())
+                })
+            }
+            
+            return ret
+        },
+        selectableKeywords() {
+            let $this = this
+            return this.unselectedKeywords.filter(function (kw) {
+                return $this.filteredRecipes.map(function (r) {
+                    return r.keywords && r.keywords.split(',').includes(kw.name)
+                }).reduce((l,r) => l || r)
+            })
+        },
+        unavailableKeywords() {
+            return this.unselectedKeywords.filter((kw) => ! this.selectableKeywords.includes(kw))
         },
     },
     watch: {
@@ -84,6 +152,7 @@ export default {
          * Check if a keyword exists in the currently visible recipes.
          */
         keywordContainedInVisibleRecipes: function(keyword) {
+            console.log('keywordContainedInVisibleRecipes called.')
             for (let i=0; i<this.recipes.length; ++i) {
                 if (this.recipeVisible(i)
                     && this.recipes[i].keywords
@@ -132,6 +201,7 @@ export default {
          */
         setKeywords: function(recipes) {
             this.keywords = []
+            //debugger
             if ((recipes.length) > 0) {
                 recipes.forEach(recipe => {
                     if(recipe['keywords']) {
