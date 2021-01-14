@@ -45,7 +45,7 @@
                     <section>
                         <h3 v-if="ingredients.length">{{ t('cookbook', 'Ingredients') }}</h3>
                         <ul v-if="ingredients.length">
-                            <RecipeIngredient v-for="(ingredient,idx) in ingredients" :key="'ingr'+idx" :ingredient="ingredient" />
+                            <RecipeIngredient v-for="(ingredient,idx) in ingredients" :key="'ingr'+idx" :ingredient="ingredient" :recipeIngredientsHaveSubgroups="recipeIngredientsHaveSubgroups" />
                         </ul>
                     </section>
 
@@ -110,6 +110,7 @@ export default {
     },
     data () {
         return {
+            headerPrefix: "## ",
             // Own properties
             ingredients: [],
             instructions: [],
@@ -124,6 +125,16 @@ export default {
         }
     },
     computed: {
+        recipeIngredientsHaveSubgroups: function() {
+            if (this.ingredients && this.ingredients.length > 0) {
+                for (let idx = 0; idx < this.ingredients.length; ++idx) {
+                    if (this.ingredients[idx].startsWith(this.headerPrefix)) {
+                        return true
+                    }
+                }
+            }
+            return false
+        },
         showModifiedDate: function() {
             if (!this.dateModified) {  
                 return false
