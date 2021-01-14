@@ -380,7 +380,7 @@ aside {
     }
 
     .nutrition-items {
-        list-style-type: none !important;
+        list-style-type: none;
     }
 
     .times {
