@@ -67,8 +67,8 @@ li {
 
     li:hover > div.checkmark {
         visibility: visible;
-    	opacity: 0.5;
-    	color: var(--color-primary-element);
+        opacity: 0.5;
+        color: var(--color-primary-element);
     }
 
     li > div.ingredient {
