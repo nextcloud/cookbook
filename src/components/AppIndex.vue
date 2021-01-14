@@ -201,7 +201,7 @@ export default {
             axios.get(this.$window.baseUrl + '/api/recipes')
                 .then(function (response) {
                     $this.recipes = response.data
-                    $this.setKeywords(recipes)
+                    $this.setKeywords($this.recipes)
                     // Always set page name last
                     $this.$store.dispatch('setPage', { page: 'index' })
                 })
