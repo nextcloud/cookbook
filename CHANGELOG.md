@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+### Changed
+- Indentation of ingredients depends on existence of subgroups
+  [#512](https://github.com/nextcloud/cookbook/pull/512/) @seyfeb
+
+
 ### Fixed
 - Fixed keywords of shared recipes counted multiple times, fixes #491
   [#493](https://github.com/nextcloud/cookbook/pull/493/) @seyfeb
