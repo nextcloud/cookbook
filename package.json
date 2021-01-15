@@ -23,7 +23,7 @@
     "@nextcloud/axios": "^1.6.0",
     "@nextcloud/event-bus": "^1.2.0",
     "@nextcloud/moment": "^1.1.1",
-    "@nextcloud/vue": "^1.5.0",
+    "@nextcloud/vue": "^3.3.2",
     "lozad": "^1.16.0",
     "vue": "^2.6.11",
     "vue-i18n": "^8.17.1",
