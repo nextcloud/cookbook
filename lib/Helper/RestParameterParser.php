@@ -114,6 +114,8 @@ class RestParameterParser {
 				$ret[$key] = $value;
 			}
 		}
+		
+		return $ret;
 	}
 	
 	/**

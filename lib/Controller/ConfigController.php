@@ -38,6 +38,7 @@ class ConfigController extends Controller {
 		$this->service = $recipeService;
 		$this->urlGenerator = $urlGenerator;
 		$this->dbCacheService = $dbCacheService;
+		$this->restParser = $restParser;
 	}
 
 	/**
