@@ -172,13 +172,12 @@ export default {
         },
         // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown 
         recipeObjects() {
-            let filtered = this.filteredRecipes
             return this.recipes.map(function (r) {
                 return {
                     'recipe': r,
-                    'show': filtered.includes(r)
+                    'show': this.filteredRecipes.includes(r)
                 }
-            })
+            }, this)
         },
     },
     methods: {
