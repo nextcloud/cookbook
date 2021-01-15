@@ -12,11 +12,17 @@ Further documentation (also internal ones) are published on the [documentation p
 
 ## Clients
 
+The app works generally in any modern browser. Additionally, there are some more specialized clients listed here.
+
 ### Android
 The currently available clients are
 
 - Nextcloud Cookbook (by MicMun) ([Google Play](https://play.google.com/store/apps/details?id=de.micmun.android.nextcloudcookbook&hl=en_US&gl=US), [FDroid](https://f-droid.org/en/packages/de.micmun.android.nextcloudcookbook/), [homepage](https://micmun.de/nextcloud-cookbook-english/))
 - [Nextcloud Cookbook](Teifun2/nextcloud-cookbook-flutter) (by Teifun2) ([Google Play](https://play.google.com/store/apps/details?id=com.nextcloud_cookbook_flutter&hl=en_US&gl=US))
+
+### Browser plugins/scripts
+
+- [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
 
 ## Join the discussion
 
