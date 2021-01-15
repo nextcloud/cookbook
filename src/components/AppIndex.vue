@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="kw">
-            <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
+            <transition-group v-if="uniqKeywords.length" class="keywords" name="keyword-list" tag="ul">
                 <RecipeKeyword v-for="keywordObj in selectedKeywords"
                     :key="keywordObj.name"
                     :name="keywordObj.name"
@@ -62,7 +62,6 @@ export default {
         return {
             filters: "",
             recipes: [],
-            keywords: [],
             keywordFilter: [],
         }
     },
@@ -178,8 +177,6 @@ export default {
             })
         },
     },
-    watch: {
-    },
     methods: {
         /**
          * Callback for click on keyword, add to or remove from list
@@ -193,20 +190,6 @@ export default {
             }
         },
         /**
-         * Check if a keyword exists in the currently visible recipes.
-         */
-        keywordContainedInVisibleRecipes: function(keyword) {
-            console.log('keywordContainedInVisibleRecipes called.')
-            for (let i=0; i<this.recipes.length; ++i) {
-                if (this.recipeVisible(i)
-                    && this.recipes[i].keywords
-                    && this.recipes[i].keywords.split(',').includes(keyword.name)) {
-                    return true
-                }
-            }
-            return false
-        },
-        /**
          * Load all recipes from the database
          */
         loadAll: function () {
@@ -214,7 +197,6 @@ export default {
             var $this = this
             $.get(this.$window.baseUrl + '/api/recipes').done(function (recipes) {
                 $this.recipes = recipes
-                $this.setKeywords(recipes)
                 deferred.resolve()
                 // Always set page name last
                 $this.$store.dispatch('setPage', { page: 'index' })
@@ -224,65 +206,6 @@ export default {
                 $this.$store.dispatch('setPage', { page: 'index' })
             })
             return deferred.promise()
-        },
-        /**
-         * Check if recipe should be displayed, depending on selected keyword filter.
-         * Returns true if recipe contains all selected keywords.
-         */
-        recipeVisible: function(index) {
-            if (this.keywordFilter.length == 0) {
-                return true
-            } else {
-                if (!this.recipes[index].keywords) {
-                    return false
-                }
-                let kw_array = this.recipes[index].keywords.split(',')
-                return this.keywordFilter.every(kw => kw_array.includes(kw))
-            }
-        },
-        /**
-         * Extract and set list of keywords from the returned recipes.
-         */
-        setKeywords: function(recipes) {
-            this.keywords = []
-            //debugger
-            if ((recipes.length) > 0) {
-                recipes.forEach(recipe => {
-                    if(recipe['keywords']) {
-                        recipe['keywords'].split(',').forEach(kw => {
-                            const idx = this.keywords.findIndex(el => el.name == kw)
-                            if (idx > -1) {
-                                this.keywords[idx].count++
-                            } else {
-                                this.keywords.push({name: kw, count: 1})
-                            }
-                        })
-                    }
-                })
-                this.sortKeywords()
-            }
-        },
-        /**
-         * Sort keywords.
-         */
-        sortKeywords: function() {
-            // Sort by number of recipes containing keyword
-            this.keywords = this.keywords.sort((k1, k2) => k2.count - k1.count)
-
-            // Move selected keywords to the front and unselectable to the end
-            let selected_kw = [], selectable_kw = [], unavailable_kw = []
-            this.keywords.forEach(kw => {
-                if (this.keywordFilter.includes(kw.name)) {
-                    selected_kw.push(kw)
-                }
-                else if (this.keywordContainedInVisibleRecipes(kw)) {
-                    selectable_kw.push(kw)
-                }
-                else {
-                    unavailable_kw.push(kw)
-                }
-            })
-            this.keywords = selected_kw.concat(selectable_kw.concat(unavailable_kw))
         },
     },
     mounted () {
