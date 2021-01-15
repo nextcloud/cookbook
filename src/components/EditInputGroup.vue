@@ -2,10 +2,10 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <ul>
-            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx" ref="list-item">
+            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
                 <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
+                <input v-if="fieldType==='text'" type="text" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
+                <textarea v-else-if="fieldType==='textarea'" ref="list-field" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
                 <div class="controls">
                     <button class="icon-arrow-up" @click="moveEntryUp(idx)"></button>
                     <button class="icon-arrow-down" @click="moveEntryDown(idx)"></button>
@@ -68,13 +68,9 @@ export default {
             if (focusAfterInsert) {
                 let $this = this
                 this.$nextTick(function() {
-                    let listItems = this.$refs['list-item']
-                    if (listItems.length > index) {
-                        if ($this.fieldType === 'text') {
-                            listItems[index].getElementsByTagName('input')[0].focus()
-                        } else if ($this.fieldType === 'textarea') {
-                            listItems[index].getElementsByTagName('textarea')[0].focus()
-                        }
+                    let listFields = this.$refs['list-field']
+                    if (listFields.length > index) {
+                        listFields[index].focus()
                     }
                 })
             }
@@ -152,7 +148,7 @@ export default {
                     this.deleteEntry($inserted_index)
                     indexToFocus--
                 }
-                $ul.children[indexToFocus].getElementsByTagName('input')[0].focus()
+                this.$refs['list-field'][indexToFocus].focus()
                 this.contentPasted = false
             })
         },
@@ -167,7 +163,7 @@ export default {
                 let $ul = $li.closest('ul')
                 let $pressed_li_index = Array.prototype.indexOf.call($ul.childNodes, $li)
 
-                if ($pressed_li_index >= this.$refs['list-item'].length - 1) {
+                if ($pressed_li_index >= this.$refs['list-field'].length - 1) {
                     this.addNewEntry ()
                 } else {
                     $ul.children[$pressed_li_index+1].getElementsByTagName('input')[0].focus()
