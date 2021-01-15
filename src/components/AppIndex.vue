@@ -92,7 +92,14 @@ export default {
                     'name': kw,
                     'count': $this.rawKeywords.filter((kw2) => kw === kw2).length
                 }
-            }).sort((k1, k2) => k2.count - k1.count)
+            }).sort(function (k1, k2) {
+                if(k1.count != k2.count) {
+                    // Distinguish by number
+                    return k2.count - k1.count
+                }
+                // Distinguish by keyword name
+                return (k1.name.toLowerCase() > k2.name.toLowerCase()) ? 1 : -1
+            })
         },
         selectedKeywords() {
             return this.keywordsWithCount.filter((kw) => this.keywordFilter.includes(kw.name))
