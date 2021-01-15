@@ -60,12 +60,16 @@ export default {
     },
     data () {
         return {
+            // String-based filters applied to the list
             filters: "",
+            // The known recipes in the cookbook
             recipes: [],
+            // All keyword to filter the recipes for (conjunctively)
             keywordFilter: [],
         }
     },
     computed: {
+        // An array of all keywords in all recipes. These are neither sorted nor unique
         rawKeywords() {
             var keywordArray = this.recipes.map(function(r){
                 if(! 'keywords' in r) {
@@ -79,12 +83,14 @@ export default {
             })
             return [].concat(... keywordArray)
         },
+        // An array of sorted and unique keywords over all the recipes
         uniqKeywords() {
             function uniqFilter(value, index, self) {
                 return self.indexOf(value) === index
             }
             return this.rawKeywords.sort().filter(uniqFilter)
         },
+        // An array of objects that contain the keywords plus a count of recipes asociated with these keywords
         keywordsWithCount() {
             let $this = this
             return this.uniqKeywords.map(function (kw){
@@ -101,12 +107,15 @@ export default {
                 return (k1.name.toLowerCase() > k2.name.toLowerCase()) ? 1 : -1
             })
         },
+        // An array of keyword objects that are currently in use for filtering
         selectedKeywords() {
             return this.keywordsWithCount.filter((kw) => this.keywordFilter.includes(kw.name))
         },
+        // An array of those keyword objects that are currently not in use for filtering
         unselectedKeywords() {
             return this.keywordsWithCount.filter((kw) => ! this.selectedKeywords.includes(kw))
         },
+        // An array of all recipes that are part in all filtered keywords
         recipesFilteredByKeywords() {
             let $this = this
             return this.recipes.filter(function (r) {
@@ -131,6 +140,7 @@ export default {
                 return $this.selectedKeywords.map((kw) => keywordInRecipePresent(kw, r)).reduce((l,r) => l && r)
             })
         },
+        // An array of the finally filtered recipes, that is both filtered for keywords as well as string-based name filtering
         filteredRecipes () {
             let ret = this.recipesFilteredByKeywords
             let $this = this
@@ -143,6 +153,7 @@ export default {
             
             return ret
         },
+        // An array of keywords that are yet unselected but some visible recipes are associated
         selectableKeywords() {
             if (this.unselectedKeywords.length === 0) {
                 return []
@@ -155,9 +166,11 @@ export default {
                 }).reduce((l,r) => l || r, false)
             })
         },
+        // An array of nown keywords that are not associated with any visible recipe
         unavailableKeywords() {
             return this.unselectedKeywords.filter((kw) => ! this.selectableKeywords.includes(kw))
         },
+        // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown 
         recipeObjects() {
             let filtered = this.filteredRecipes
             return this.recipes.map(function (r) {
