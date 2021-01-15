@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="kw">
-            <transition-group v-if="uniqKeywords.length" class="keywords" name="keyword-list" tag="ul">
+            <transition-group v-if="uniqKeywords.length > 0" class="keywords" name="keyword-list" tag="ul">
                 <RecipeKeyword v-for="keywordObj in selectedKeywords"
                     :key="keywordObj.name"
                     :name="keywordObj.name"
