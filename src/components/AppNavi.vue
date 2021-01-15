@@ -225,6 +225,7 @@ export default {
          */
         downloadRecipe: function(e) {
             this.downloading = true
+            let $this = this
             axios({
                 url: this.$window.baseUrl + '/import',
                 method: 'POST',
@@ -232,12 +233,12 @@ export default {
             })
                 .then(function(response) {
                     let recipe = response.data
-                    this.downloading = false
-                    this.$window.goTo('/recipe/' + recipe.id)
+                    $this.downloading = false
+                    $this.$window.goTo('/recipe/' + recipe.id)
                     e.target[1].value = ''
                 })
                 .catch(function(e) {
-                    this.downloading = false
+                    $this.downloading = false
                     alert(t('cookbook', e.request.responseJSON))
                 })
         },
