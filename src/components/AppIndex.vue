@@ -1,26 +1,47 @@
 <template>
     <div>
         <div class="kw">
-            <!-- <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
-                <RecipeKeyword v-for="keyword in keywords"
-                    :key="keyword.name"
-                    :name="keyword.name"
-                    :count="keyword.count"
-                    :title="keywordContainedInVisibleRecipes(keyword) ? t('cookbook','Toggle keyword') : t('cookbook','Keyword not contained in visible recipes')"
-                    v-on:keyword-clicked="keywordClicked(keyword)"
-                    :class="{keyword, active : keywordFilter.includes(keyword.name), disabled : !keywordContainedInVisibleRecipes(keyword)}"
+            <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
+                <RecipeKeyword v-for="keywordObj in selectedKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook','Toggle keyword')"
+                    @keyword-clicked="keywordClicked(keywordObj)"
+                    class="keyword active"
                     />
-            </transition-group> -->
+                <RecipeKeyword v-for="keywordObj in selectableKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook','Toggle keyword')"
+                    @keyword-clicked="keywordClicked(keywordObj)"
+                    class="keyword"
+                    />
+                <RecipeKeyword v-for="keywordObj in unavailableKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook','Keyword not contained in visible recipes')"
+                    @keyword-clicked="keywordClicked(keywordObj)"
+                    class="keyword disabled"
+                    />
+                
+            </transition-group>
         </div>
         <ul class="recipes">
-            <li v-for="(recipe, index) in filteredRecipes" :key="recipe.recipe_id" v-show="recipeVisible(index)">
-                <router-link :to="'/recipe/'+recipe.recipe_id">
-                     <lazy-picture v-if="recipe.imageUrl"
+            <li
+                v-for="(recipeObj, index) in recipeObjects" 
+                :key="recipeObj.recipe.recipe_id"
+                v-show="recipeObj.show"
+                >
+                <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
+                     <lazy-picture v-if="recipeObj.recipe.imageUrl"
                         class="recipe-thumbnail"
-                        :lazy-src="recipe.imageUrl"
-                        :blurred-preview-src="recipe.imagePlaceholderUrl"
+                        :lazy-src="recipeObj.recipe.imageUrl"
+                        :blurred-preview-src="recipeObj.recipe.imagePlaceholderUrl"
                         :width="105" :height="105"/>
-                    <span>{{ recipe.name }}</span>
+                    <span>{{ recipeObj.recipe.name }}</span>
                 </router-link>
             </li>
         </ul>
@@ -127,14 +148,37 @@ export default {
         unavailableKeywords() {
             return this.unselectedKeywords.filter((kw) => ! this.selectableKeywords.includes(kw))
         },
+        keywordsForButtons() {
+            return this.selectedKeywords.map((kw) => (
+                {
+                    'keywordObject': kw,
+                    'selected': true,
+                    'selectable': true
+                }
+            )).concat(
+                this.selectableKeywords.map((kw) => ({
+                    'keywordObject': kw,
+                    'selected': false,
+                    'selectable': true
+                })),
+                this.unavailableKeywords.map((kw) => ({
+                    'keywordObject': kw,
+                    'selected': false,
+                    'selectable': false
+                })),
+            )
+        },
+        recipeObjects() {
+            let filtered = this.filteredRecipes
+            return this.recipes.map(function (r) {
+                return {
+                    'recipe': r,
+                    'show': filtered.includes(r)
+                }
+            })
+        },
     },
     watch: {
-        keywordFilter: {
-            handler: function() {
-                this.sortKeywords()
-            },
-            deep: true
-        }
     },
     methods: {
         /**
