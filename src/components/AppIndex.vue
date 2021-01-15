@@ -166,7 +166,7 @@ export default {
                 }).reduce((l,r) => l || r, false)
             })
         },
-        // An array of nown keywords that are not associated with any visible recipe
+        // An array of known keywords that are not associated with any visible recipe
         unavailableKeywords() {
             return this.unselectedKeywords.filter((kw) => ! this.selectableKeywords.includes(kw))
         },
