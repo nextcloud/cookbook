@@ -13,6 +13,8 @@
   [#505](https://github.com/nextcloud/cookbook/pull/505) @christianlupus
 - Allow pasting of instructions without newline again
   [#503](https://github.com/nextcloud/cookbook/pull/503) @christianlupus
+- Updated color and bullets in nutrition information, fixes #510
+  [#511](https://github.com/nextcloud/cookbook/pull/511/) @seyfeb
 
 
 ## 0.7.8 - 2021-01-08

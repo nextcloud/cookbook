@@ -58,7 +58,7 @@
 
                     <section v-if="showNutritions">
                         <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
-                        <ul>
+                        <ul class="nutrition-items">
                             <recipe-nutrition-info-item v-if="('servingSize' in nutrition) && !isNullOrEmpty(nutrition['servingSize'])" :title="t('cookbook', 'Serving Size')" :data="nutrition['servingSize']" />
                             <recipe-nutrition-info-item v-if="('calories' in nutrition) && !isNullOrEmpty(nutrition['calories'])" :title="t('cookbook', 'Energy')" :data="nutrition['calories']" />
                             <recipe-nutrition-info-item v-if="('sugarContent' in nutrition) && !isNullOrEmpty(nutrition['sugarContent'])" :title="t('cookbook', 'Sugar')" :data="nutrition['sugarContent']" />
@@ -377,6 +377,10 @@ aside {
         padding: 0;
         counter-reset: instruction-counter;
         margin-top: 2rem;
+    }
+
+    .nutrition-items {
+        list-style-type: none;
     }
 
     .times {

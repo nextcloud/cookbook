@@ -113,22 +113,19 @@
         flex-basis: 20rem;
         padding-right: 2rem;
     }
-        #app-content-wrapper aside ul {
-            list-style-type: disc;
+        #app-content-wrapper aside ul li {
+            margin-left: 1em;
         }
-            #app-content-wrapper aside ul li {
-                margin-left: 1em;
+            #app-content-wrapper aside ul li span,
+            #app-content-wrapper aside ul li input[type="checkbox"] {
+                line-height: 1rem;
+                margin: 0 0.5rem 0 0;
+                padding: 0;
+                height: auto;
+                width: 1rem;
+                display: inline-block;
+                vertical-align: middle;
             }
-                #app-content-wrapper aside ul li span,
-                #app-content-wrapper aside ul li input[type="checkbox"] {
-                    line-height: 1rem;
-                    margin: 0 0.5rem 0 0;
-                    padding: 0;
-                    height: auto;
-                    width: 1rem;
-                    display: inline-block;
-                    vertical-align: middle;
-                }
 
     #app-content-wrapper .recipe-content {
         padding: 1rem;
