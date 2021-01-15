@@ -80,7 +80,12 @@ class RecipeDb {
 			->where('r.user_id = :user')
 			->orderBy('r.name');
 		$qb->setParameter('user', $user_id, TYPE::STRING);
-		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id');
+		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k',
+			$qb->expr()->andX(
+				'r.recipe_id = k.recipe_id',
+				'k.user_id = :user'
+			)
+		);
 
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
@@ -500,7 +505,11 @@ class RecipeDb {
 		$result = $cursor->fetch();
 		$cursor->closeCursor();
 		
-		return $result['name'];
+		if ($result === false) {
+			return null;
+		} else {
+			return $result['name'];
+		}
 	}
 	
 	public function updateCategoryOfRecipe(int $recipeId, string $categoryName, string $userId) {

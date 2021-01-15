@@ -1,14 +1,14 @@
 <template>
-    <li :class="{ 'header': isHeader() }" @click="toggleDone">
+    <li :class="{ 'header': isHeader(), 'unindented': !recipeIngredientsHaveSubgroups}" @click="toggleDone">
     	<div class="checkmark" :class="{ 'done': isDone }">✔</div>
-    	{{ displayIngredient }}
+    	<div class="ingredient">{{ displayIngredient }}</div>
 	</li>
 </template>
 
 <script>
 export default {
     name: 'RecipeIngredient',
-    props: ['ingredient'],
+    props: ['ingredient','recipeIngredientsHaveSubgroups'],
     data () {
         return {
             headerPrefix: "## ",
@@ -41,7 +41,7 @@ export default {
 <style scoped>
 
 li {
-    margin-left: 1.25em;
+    display: flex;
 }
     li.header {
         position: relative;
@@ -50,19 +50,32 @@ li {
         list-style-type: none;
         font-variant: small-caps;
     }
-    
+
+    li.unindented {
+        position: relative;
+        left: -1.25em;
+    }
+
     li > div.checkmark {
     	display: inline;
     	visibility: hidden;
     }
+
     li > div.done {
-    	visibility: visible;
+        visibility: visible;
     }
-    
+
     li:hover > div.checkmark {
-    	visibility: visible;
-    	opacity: 0.5;
-    	color: var(--color-primary-element);
+        visibility: visible;
+        opacity: 0.5;
+        color: var(--color-primary-element);
     }
-    
+
+    li > div.ingredient {
+        display: inline;
+        margin-left: .3em;
+        padding-left: 1em;
+        text-indent: -1em;
+    }
+
 </style>

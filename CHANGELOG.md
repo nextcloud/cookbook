@@ -1,5 +1,34 @@
 ## [Unreleased]
 
+## 0.7.9 - 2021-01-15
+
+### Changed
+- Indentation of ingredients depends on existence of subgroups
+  [#512](https://github.com/nextcloud/cookbook/pull/512/) @seyfeb
+- Speed up index of recipes by using computed properties
+  [#513](https://github.com/nextcloud/cookbook/pull/513) @christianlupus
+- Central parsing of parameters for POST/PUT requests to simplify development
+  [#518](https://github.com/nextcloud/cookbook/pull/518) @christianlupus
+- Removed dependencies on the global jQuery
+  [#497](https://github.com/nextcloud/cookbook/pull/497/) @seyfeb
+
+### Fixed
+- Fixed keywords of shared recipes counted multiple times, fixes #491
+  [#493](https://github.com/nextcloud/cookbook/pull/493/) @seyfeb
+- Added basic structure for documentation
+  [#499](https://github.com/nextcloud/cookbook/pull/499) @christianlupus
+- Make categories load recipes against
+  [#500](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
+- Handle recipes without category well
+  [#501](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
+- Allow to save recipes with custom image URLs
+  [#505](https://github.com/nextcloud/cookbook/pull/505) @christianlupus
+- Allow pasting of instructions without newline again
+  [#503](https://github.com/nextcloud/cookbook/pull/503) @christianlupus
+- Updated color and bullets in nutrition information, fixes #510
+  [#511](https://github.com/nextcloud/cookbook/pull/511/) @seyfeb
+- Update README with more clients
+  [#457](https://github.com/nextcloud/cookbook/pull/457) @geeseven
 
 ## 0.7.8 - 2021-01-08
 

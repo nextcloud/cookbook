@@ -170,7 +170,9 @@ class DbCacheService {
 		foreach ($recipeIds as $rid) {
 			// XXX Enhancement by selecting all keywords/categories and associating in RAM into data structure
 			$this->dbKeywords[$rid] = $this->db->getKeywordsOfRecipe($rid, $this->userId);
-			$this->dbCategories[$rid] = $this->db->getCategoryOfRecipe($rid, $this->userId);
+			$category = $this->db->getCategoryOfRecipe($rid, $this->userId);
+			
+			$this->dbCategories[$rid] = $category;
 		}
 	}
 	

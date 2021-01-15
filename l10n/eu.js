@@ -23,6 +23,7 @@ OC.L10N.register(
     "Page not found" : "Orria ez da topatu",
     "Category" : "Kategoria",
     "Recipe name" : "Errezetaren izena",
+    "Tags" : "Etiketak",
     "Search for recipes" : "Bilatu errezetak",
     "Are you sure you want to delete this recipe?" : "Ziur errezeta hau ezabatu nahi duzula?",
     "Delete failed" : "Ezabatzeak huts egin du",
@@ -50,6 +51,7 @@ OC.L10N.register(
     "Preparation time" : "Prestatzeko denbora",
     "Cooking time" : "Kozinatzeko denbora",
     "Total time" : "Denbora denetara",
+    "Keywords" : "Hitz gakoak",
     "Servings" : "Anoak",
     "Tools" : "Tresnak",
     "Ingredients" : "Osagaiak",
@@ -57,6 +59,8 @@ OC.L10N.register(
     "Loading recipe failed" : "Errezeta kargatzeak huts egin du",
     "Recipe could not be saved" : "Ezin izan da errezeta gorde",
     "Cooking time is up!" : "Sukaldatzeko denbora amaitu da!",
+    "Date created" : "Sorrera-data",
+    "Last modified" : "Azken aldaketa",
     "Source" : "Iturburua"
 },
 "nplurals=2; plural=(n != 1);");
