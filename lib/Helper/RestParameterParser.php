@@ -6,9 +6,8 @@ use function GuzzleHttp\json_decode;
 use OCP\IL10N;
 
 class RestParameterParser {
-	
-	const CHARSET = 'charset';
-	const CONTENT_TYPE = 'CONTENT_TYPE';
+	private const CHARSET = 'charset';
+	private const CONTENT_TYPE = 'CONTENT_TYPE';
 	
 	/**
 	 * @var IL10N
@@ -21,24 +20,24 @@ class RestParameterParser {
 	
 	/**
 	 * Fetch the parameters from the input accordingly
-	 * 
+	 *
 	 * Depending on the way of transmitting parameters from the browser to the PHP script different ways to recover these have to be done.
 	 * This is a helper that should cover this.
-	 * 
+	 *
 	 * @return array The parameters transmitted
 	 */
 	public function getParameters(): array {
-		if(isset($_SERVER[self::CONTENT_TYPE])){
+		if (isset($_SERVER[self::CONTENT_TYPE])) {
 			$parts = explode(';', $_SERVER[self::CONTENT_TYPE], 2);
 			
-			switch(trim($parts[0])) {
+			switch (trim($parts[0])) {
 				case 'application/json':
 					$enc = $this->getEncoding($_SERVER[self::CONTENT_TYPE]);
 					return $this->parseApplicationJSON($enc);
 					break;
 					
 				case 'multipart/form-data':
-					if($this->isPost()) {
+					if ($this->isPost()) {
 						return $_POST;
 					} else {
 						throw new \Exception($this->l->t('Cannot parse non-POST multipart encoding. This is a bug.'));
@@ -46,7 +45,7 @@ class RestParameterParser {
 					break;
 					
 				case 'application/x-www-form-urlencoded':
-					if($this->isPost()) {
+					if ($this->isPost()) {
 						return $_POST;
 					} else {
 						$enc = $this->getEncoding($_SERVER[self::CONTENT_TYPE]);
@@ -54,7 +53,6 @@ class RestParameterParser {
 					}
 					break;
 			}
-			
 		} else {
 			throw new \Exception($this->l->t('Cannot detect type of transmitted data. This is a bug, please report it.'));
 		}
@@ -68,7 +66,7 @@ class RestParameterParser {
 	private function parseApplicationJSON(string $encoding): array {
 		$rawData = file_get_contents('php://input');
 		
-		if($encoding !== 'UTF-8') {
+		if ($encoding !== 'UTF-8') {
 			$rawData = iconv($encoding, 'UTF-8', $rawData);
 		}
 		return json_decode($rawData, true);
@@ -76,36 +74,36 @@ class RestParameterParser {
 	
 	/**
 	 * Parse the URL encoded value transmitted
-	 * 
+	 *
 	 * This is by far no ideal solution but just a quick hack in order to cope with this situation.
 	 * Either use the POST method (where PHP does the parsing) or use application/json
-	 *  
+	 *
 	 * @param string $encoding The encoding to use
 	 * @throws \Exception If the requested string is not well-formatted accoring to the minimal implementation
 	 * @return array The values transmitted
 	 */
 	private function parseUrlEncoded(string $encoding): array {
 		$rawData = file_get_contents('php://input');
-		if($encoding !== 'UTF-8') {
+		if ($encoding !== 'UTF-8') {
 			$rawData = iconv($encoding, 'UTF-8', $rawData);
 		}
 		
 		$ret = [];
-		foreach(explode('&', $rawData) as $assignment){
+		foreach (explode('&', $rawData) as $assignment) {
 			$parts = explode('=', $assignment, 2);
 			
-			if(count($parts) < 2) {
+			if (count($parts) < 2) {
 				throw new \Exception($this->l->t('Invlaid URL-encoded string found. Please report a bug.'));
 			}
 			
 			$key = $parts[0];
 			$value = urldecode($parts[1]);
 			
-			if(str_ends_with($key, '[]')){
+			if (str_ends_with($key, '[]')) {
 				// Drop '[]' at the end
 				$key = substr($key, 0, -2);
 				
-				if(!array_key_exists($key, $ret)) {
+				if (!array_key_exists($key, $ret)) {
 					$ret[$key] = [];
 				}
 				
@@ -129,8 +127,8 @@ class RestParameterParser {
 		// Fallback encoding
 		$enc = 'UTF-8';
 		
-		for($i=1; $i < count($parts); $i++){
-			if(str_starts_with(trim($parts[$i]), self::CHARSET)) {
+		for ($i = 1; $i < count($parts); $i++) {
+			if (str_starts_with(trim($parts[$i]), self::CHARSET)) {
 				// Drop string 'charset='
 				$enc = substr(trim($parts[1]), strlen(self::CHARSET) + 1);
 				break;
