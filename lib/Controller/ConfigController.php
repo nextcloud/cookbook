@@ -10,6 +10,7 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Helper\RestParameterParser;
 
 class ConfigController extends Controller {
 	/**
@@ -25,8 +26,13 @@ class ConfigController extends Controller {
 	 * @var DbCacheService
 	 */
 	private $dbCacheService;
+	
+	/**
+	 * @var RestParameterParser
+	 */
+	private $restParser;
 
-	public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService) {
+	public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService, RestParameterParser $restParser) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
@@ -55,8 +61,7 @@ class ConfigController extends Controller {
 	public function config() {
 		$this->dbCacheService->triggerCheck();
 		
-		$rawContent = file_get_contents('php://input');
-		$data = json_decode($rawContent, true);
+		$data = $this->restParser->getParameters();
 		
 		if (isset($data['folder'])) {
 			$this->service->setUserFolderPath($data['folder']);
