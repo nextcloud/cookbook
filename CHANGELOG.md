@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.7.9 - 2021-01-15
+
 ### Changed
 - Indentation of ingredients depends on existence of subgroups
   [#512](https://github.com/nextcloud/cookbook/pull/512/) @seyfeb
