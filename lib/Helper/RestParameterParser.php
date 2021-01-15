@@ -8,6 +8,7 @@ use OCP\IL10N;
 class RestParameterParser {
 	private const CHARSET = 'charset';
 	private const CONTENT_TYPE = 'CONTENT_TYPE';
+	private const REQUEST_METHOD = 'REQUEST_METHOD';
 	
 	/**
 	 * @var IL10N
@@ -143,6 +144,6 @@ class RestParameterParser {
 	 * @return bool true, if the request is a POST request.
 	 */
 	private function isPost(): bool {
-		return $_SERVER['REQUEST_METHOD'] === 'POST';
+		return $_SERVER[self::REQUEST_METHOD] === 'POST';
 	}
 }
