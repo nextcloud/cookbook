@@ -158,26 +158,6 @@ export default {
         unavailableKeywords() {
             return this.unselectedKeywords.filter((kw) => ! this.selectableKeywords.includes(kw))
         },
-        keywordsForButtons() {
-            return this.selectedKeywords.map((kw) => (
-                {
-                    'keywordObject': kw,
-                    'selected': true,
-                    'selectable': true
-                }
-            )).concat(
-                this.selectableKeywords.map((kw) => ({
-                    'keywordObject': kw,
-                    'selected': false,
-                    'selectable': true
-                })),
-                this.unavailableKeywords.map((kw) => ({
-                    'keywordObject': kw,
-                    'selected': false,
-                    'selectable': false
-                })),
-            )
-        },
         recipeObjects() {
             let filtered = this.filteredRecipes
             return this.recipes.map(function (r) {
