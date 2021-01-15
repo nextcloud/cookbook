@@ -137,11 +137,15 @@ export default {
             return ret
         },
         selectableKeywords() {
+            if (this.unselectedKeywords.length === 0) {
+                return []
+            }
+            
             let $this = this
             return this.unselectedKeywords.filter(function (kw) {
                 return $this.filteredRecipes.map(function (r) {
                     return r.keywords && r.keywords.split(',').includes(kw.name)
-                }).reduce((l,r) => l || r)
+                }).reduce((l,r) => l || r, false)
             })
         },
         unavailableKeywords() {
