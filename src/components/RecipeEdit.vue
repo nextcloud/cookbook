@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
+
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
@@ -160,50 +162,54 @@ export default {
         /**
          * Fetch and display recipe categories
          */
-        fetchCategories: function() {            
-            $.get(this.$window.baseUrl + '/categories').done((json) => {
-                json = json || []
-                this.allCategories = []
-                for (let i=0; i<json.length; i++) {
-                    if (json[i].name != '*') {
-                        this.allCategories.push(
-                            json[i].name,
-                        )
+        fetchCategories: function() {
+            let $this = this
+            axios.get(this.$window.baseUrl + '/categories')
+                .then(function(response) {
+                    let json = response.data || []
+                    $this.allCategories = []
+                    for (let i=0; i<json.length; i++) {
+                        if (json[i].name != '*') {
+                            $this.allCategories.push(
+                                json[i].name,
+                            )
+                        }
                     }
-                }
-                this.isFetchingCategories = false
-            })
-            .fail((e) => {
-                alert(t('cookbook', 'Failed to fetch categories'))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            })
+                    $this.isFetchingCategories = false
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Failed to fetch categories'))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
         },
         /**
          * Fetch and display recipe keywords
          */
         fetchKeywords: function() {
-            $.ajax(this.$window.baseUrl + '/keywords').done((json) => {
-                json = json || []
-                if (json) {
-                    this.allKeywords = []
-                    for (let i=0; i<json.length; i++) {
-                        if (json[i].name != '*') {
-                            this.allKeywords.push(
-                                json[i].name,
-                            )
+            let $this = this
+            axios.get(this.$window.baseUrl + '/keywords')
+                .then(function(response) {
+                    let json = response.data || []
+                    if (json) {
+                        $this.allKeywords = []
+                        for (let i=0; i<json.length; i++) {
+                            if (json[i].name != '*') {
+                                $this.allKeywords.push(
+                                    json[i].name,
+                                )
+                            }
                         }
                     }
-                }
-                this.isFetchingKeywords = false
-            })
-            .fail((e) => {
-                alert(t('cookbook', 'Failed to fetch keywords'))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            })
+                    $this.isFetchingKeywords = false
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Failed to fetch keywords'))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
         },
         loadRecipeData: function() {
             if (!this.$store.state.recipe) {
@@ -218,66 +224,81 @@ export default {
                 })
             }
             let $this = this
-            $.ajax({
-                url: this.$window.baseUrl + '/api/recipes/'+this.$route.params.id,
-                method: 'GET',
-                data: null,
-            }).done(function (recipe) {
-                if ('nutrition' in recipe && recipe.nutrition instanceof Array) {
-                    recipe.nutrition = {}
-                }
-                $this.$store.dispatch('setRecipe', { recipe: recipe })
-                $this.setup()
-            }).fail(function(e) {
-                alert(t('cookbook', 'Loading recipe failed'))
-                // Disable loading indicator
-                if ($this.$store.state.loadingRecipe) {
-                    $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
-                } else if ($this.$store.state.reloadingRecipe) {
-                    $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
-                }
-                // Browse to new recipe creation
-                $this.$window.goTo('/recipe/create')
-            })
+            axios.get(this.$window.baseUrl + '/api/recipes/'+this.$route.params.id)
+                .then(function (response) {
+                    let recipe = response.data
+                    if ('nutrition' in recipe && recipe.nutrition instanceof Array) {
+                        recipe.nutrition = {}
+                    }
+                    $this.$store.dispatch('setRecipe', { recipe: recipe })
+                    $this.setup()
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Loading recipe failed'))
+                    // Disable loading indicator
+                    if ($this.$store.state.loadingRecipe) {
+                        $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
+                    } else if ($this.$store.state.reloadingRecipe) {
+                        $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
+                    }
+                    // Browse to new recipe creation
+                    $this.$window.goTo('/recipe/create')
+                })
         },
         save: function() {
             this.savingRecipe = true
             this.$store.dispatch('setSavingRecipe', { saving: true })
             let $this = this
+
             if (this.recipe.id) {
                 // Update existing recipe
-                $.ajax({
-                    url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
+                axios({
                     method: 'PUT',
-                    data: this.recipe,
-                }).done(function (recipe) {
-                    $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    $this.$window.goTo('/recipe/'+recipe)
-                    // Refresh navigation to display changes
-                    $this.$root.$emit('refreshNavigation')
-                }).fail(function(e) {
-                    $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert(t('cookbook', 'Recipe could not be saved'))
-                }).always(() => {
-                    $this.savingRecipe = false
-                })
+                    url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
+                    data: this.recipe
+                    })
+                    .then(function (response) {
+                        // success
+                        let recipe = response.data
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
+                        $this.$window.goTo('/recipe/'+recipe)
+                        // Refresh navigation to display changes
+                        $this.$root.$emit('refreshNavigation')
+                    })
+                    .catch(function(e) {
+                        // error
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
+                        alert(t('cookbook', 'Recipe could not be saved'))
+                        console.log(e)
+                    })
+                    .then(() => {
+                        // finally
+                        $this.savingRecipe = false
+                    })
             } else {
                 // Create a new recipe
-                $.ajax({
+                axios({
                     url: this.$window.baseUrl + '/api/recipes',
                     method: 'POST',
                     data: this.recipe,
-                }).done(function (recipe) {
-                    $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    $this.$window.goTo('/recipe/'+recipe)
-                    // Refresh navigation to display changes
-                    $this.$root.$emit('refreshNavigation')
-                }).fail(function(e) {
-                    $this.$store.dispatch('setSavingRecipe', { saving: false })
-                    alert(t('cookbook', 'Recipe could not be saved'))
-                }).always(() => {
-                    $this.savingRecipe = false
-                })
+                    })
+                    .then(function(response) {
+                        // success
+                        let recipe = response.data
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
+                        $this.$window.goTo('/recipe/'+recipe)
+                        // Refresh navigation to display changes
+                        $this.$root.$emit('refreshNavigation')
+                    })
+                    .catch(function(e) {
+                        // error
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
+                        alert(t('cookbook', 'Recipe could not be saved'))
+                    })
+                    .then(() => {
+                        // finally
+                        $this.savingRecipe = false
+                    })
             }
         },
         setup: function() {

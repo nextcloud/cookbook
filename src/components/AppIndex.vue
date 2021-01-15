@@ -49,6 +49,7 @@
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
 import LazyPicture from './LazyPicture'
 import RecipeKeyword from './RecipeKeyword'
 
@@ -196,19 +197,18 @@ export default {
          * Load all recipes from the database
          */
         loadAll: function () {
-            var deferred = $.Deferred()
             var $this = this
-            $.get(this.$window.baseUrl + '/api/recipes').done(function (recipes) {
-                $this.recipes = recipes
-                deferred.resolve()
-                // Always set page name last
-                $this.$store.dispatch('setPage', { page: 'index' })
-            }).fail(function (jqXHR, textStatus, errorThrown) {
-                deferred.reject(new Error(jqXHR.responseText))
-                // Always set page name last
-                $this.$store.dispatch('setPage', { page: 'index' })
-            })
-            return deferred.promise()
+            axios.get(this.$window.baseUrl + '/api/recipes')
+                .then(function (response) {
+                    $this.recipes = response.data
+                    $this.setKeywords($this.recipes)
+                    // Always set page name last
+                    $this.$store.dispatch('setPage', { page: 'index' })
+                })
+                .catch(function (e) {
+                    // Always set page name last
+                    $this.$store.dispatch('setPage', { page: 'index' })
+                })
         },
     },
     mounted () {

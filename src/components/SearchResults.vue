@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import axios from '@nextcloud/axios'
+
 import LazyPicture from './LazyPicture'
 import RecipeKeyword from './RecipeKeyword'
 
@@ -131,48 +133,50 @@ export default {
                 // Search by tags
                 let $this = this
                 let tags = this.$route.params.value
-                $.get(this.$window.baseUrl + '/api/tags/'+tags).done(function(json) {
-                    $this.results = json
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    $this.results = []
-                    alert(t('cookbook', 'Failed to load recipes with keywords: ' + tags))
-                    if (errorThrown && errorThrown instanceof Error) {
-                        throw errorThrown
-                    }
-                })
+                axios.get(this.$window.baseUrl + '/api/tags/'+tags)
+                    .then(function(response) {
+                        $this.results = response.data
+                    })
+                    .catch(function (e) {
+                        $this.results = []
+                        alert(t('cookbook', 'Failed to load recipes with keywords: ' + tags))
+                        if (e && e instanceof Error) {
+                            throw e
+                        }
+                    })
             }
             else if (this.query === 'cat') {
                 // Search by category
                 let $this = this
                 let cat = this.$route.params.value
-                $.get(this.$window.baseUrl + '/api/category/'+cat).done(function(json) {
-                    $this.results = json
-                    $this.setKeywords($this.results)
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    $this.results = []
-                    alert(t('cookbook', 'Failed to load category '+cat+' recipes'))
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
+                axios.get(this.$window.baseUrl + '/api/category/'+cat)
+                    .then(function(response) {
+                        $this.results = response.data
+                        $this.setKeywords($this.results)
+                    })
+                    .catch(function (e) {
+                        $this.results = []
+                        alert(t('cookbook', 'Failed to load category '+cat+' recipes'))
+                        if (e && e instanceof Error) {
+                            throw e
+                        }
+                    })
             } else {
                 // General search
                 let $this = this
-                let deferred = $.Deferred()
-                $.get(this.$window.baseUrl + '/api/search/'+this.$route.params.value).done((recipes) => {
-                    $this.results = recipes
-                    $this.setKeywords($this.results)
-                    deferred.resolve()
-                }).fail((jqXHR, textStatus, errorThrown) => {
-                    this.results = []
-                    deferred.reject(new Error(jqXHR.responseText))
-                    alert(t('cookbook', 'Failed to load search results'))
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
+                axios.get(this.$window.baseUrl + '/api/search/'+this.$route.params.value)
+                    .then(function(response) {
+                        $this.results = response.data
+                        $this.setKeywords($this.results)
+                    })
+                    .catch((e) => {
+                        $this.results = []
+                        alert(t('cookbook', 'Failed to load search results'))
+                        if (e && e instanceof Error) {
+                            throw e
+                        }
+                    })
                 this.$store.dispatch('setPage', { page: 'search' })
-                return deferred.promise()
             }
 
             

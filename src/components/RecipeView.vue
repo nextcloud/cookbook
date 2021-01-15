@@ -87,6 +87,7 @@
 
 <script>
 
+import axios from '@nextcloud/axios'
 import moment from '@nextcloud/moment'
 
 import RecipeImages from './RecipeImages'
@@ -196,82 +197,79 @@ export default {
 
             let $this = this
 
-            $.ajax({
-                url: this.$window.baseUrl + '/api/recipes/' + this.$route.params.id,
-                method: 'GET',
-                data: null,
+            axios.get(this.$window.baseUrl + '/api/recipes/' + this.$route.params.id)
+                .then(function (response) {
+                    let recipe = response.data
+                    // Store recipe data in vuex
+                    $this.$store.dispatch('setRecipe', { recipe: recipe })
 
-            }).done(function (recipe) {
-                // Store recipe data in vuex
-                $this.$store.dispatch('setRecipe', { recipe: recipe })
+                    if ($this.$store.state.recipe.recipeIngredient) {
+                        $this.ingredients = Object.values($this.$store.state.recipe.recipeIngredient)
+                    }
 
-                if ($this.$store.state.recipe.recipeIngredient) {
-                    $this.ingredients = Object.values($this.$store.state.recipe.recipeIngredient)
-                }
+                    if ($this.$store.state.recipe.recipeInstructions) {
+                        $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
+                    }
 
-                if ($this.$store.state.recipe.recipeInstructions) {
-                    $this.instructions = Object.values($this.$store.state.recipe.recipeInstructions)
-                }
+                    if ($this.$store.state.recipe.keywords) {
+                        $this.keywords = String($this.$store.state.recipe.keywords).split(',')
+                    }
 
-                if ($this.$store.state.recipe.keywords) {
-                    $this.keywords = String($this.$store.state.recipe.keywords).split(',')
-                }
+                    if ($this.$store.state.recipe.cookTime) {
+                        let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
+                        $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
+                    }
 
-                if ($this.$store.state.recipe.cookTime) {
-                    let cookT = $this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
-                    $this.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
-                }
+                    if ($this.$store.state.recipe.prepTime) {
+                        let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
+                        $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
+                    }
 
-                if ($this.$store.state.recipe.prepTime) {
-                    let prepT = $this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
-                    $this.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
-                }
+                    if ($this.$store.state.recipe.totalTime) {
+                        let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
+                        $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
+                    }
 
-                if ($this.$store.state.recipe.totalTime) {
-                    let totalT = $this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
-                    $this.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
-                }
+                    if ($this.$store.state.recipe.tool) {
+                        $this.tools = $this.$store.state.recipe.tool
+                    }
 
-                if ($this.$store.state.recipe.tool) {
-                    $this.tools = $this.$store.state.recipe.tool
-                }
+                    if ($this.$store.state.recipe.dateCreated) {
+                        let date = $this.parseDateTime($this.$store.state.recipe.dateCreated)
+                        $this.dateCreated = (date != null ? date.format('L, LT').toString() : null)
+                    }
 
-                if ($this.$store.state.recipe.dateCreated) {
-                    let date = $this.parseDateTime($this.$store.state.recipe.dateCreated)
-                    $this.dateCreated = (date != null ? date.format('L, LT').toString() : null)
-                }
-                
-                if ($this.$store.state.recipe.dateModified) {
-                    let date = $this.parseDateTime($this.$store.state.recipe.dateModified)
-                    $this.dateModified = (date != null ? date.format('L, LT').toString() : null)
-                }
-                if ($this.$store.state.recipe.nutrition) {
-                    if ( $this.$store.state.recipe.nutrition instanceof Array) {
+                    if ($this.$store.state.recipe.dateModified) {
+                        let date = $this.parseDateTime($this.$store.state.recipe.dateModified)
+                        $this.dateModified = (date != null ? date.format('L, LT').toString() : null)
+                    }
+                    if ($this.$store.state.recipe.nutrition) {
+                        if ( $this.$store.state.recipe.nutrition instanceof Array) {
+                            $this.$store.state.recipe.nutrition = {}
+                        }
+                    } else {
                         $this.$store.state.recipe.nutrition = {}
                     }
-                } else {
-                    $this.$store.state.recipe.nutrition = {}
-                }
-                $this.nutrition = $this.$store.state.recipe.nutrition
-                
-                // Always set the active page last!
-                $this.$store.dispatch('setPage', { page: 'recipe' })
+                    $this.nutrition = $this.$store.state.recipe.nutrition
 
-            }).fail(function(e) {
-                if ($this.$store.state.loadingRecipe) {
-                    // Reset loading recipe
-                    $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
-                }
+                    // Always set the active page last!
+                    $this.$store.dispatch('setPage', { page: 'recipe' })
+                })
+                .catch(function(e) {
+                    if ($this.$store.state.loadingRecipe) {
+                        // Reset loading recipe
+                        $this.$store.dispatch('setLoadingRecipe', { recipe: 0 })
+                    }
 
-                if ($this.$store.state.reloadingRecipe) {
-                    // Reset reloading recipe
-                    $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
-                }
+                    if ($this.$store.state.reloadingRecipe) {
+                        // Reset reloading recipe
+                        $this.$store.dispatch('setReloadingRecipe', { recipe: 0 })
+                    }
 
-                $this.$store.dispatch('setPage', { page: 'recipe' })
+                    $this.$store.dispatch('setPage', { page: 'recipe' })
 
-                alert(t('cookbook', 'Loading recipe failed'))
-            })
+                    alert(t('cookbook', 'Loading recipe failed'))
+                })
         }
     },
     mounted () {

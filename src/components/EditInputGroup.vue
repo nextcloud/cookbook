@@ -1,11 +1,11 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <ul ref="list">
+        <ul>
             <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
                 <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
+                <input v-if="fieldType==='text'" type="text" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
+                <textarea v-else-if="fieldType==='textarea'" ref="list-field" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
                 <div class="controls">
                     <button class="icon-arrow-up" @click="moveEntryUp(idx)"></button>
                     <button class="icon-arrow-down" @click="moveEntryDown(idx)"></button>
@@ -66,15 +66,11 @@ export default {
             this.buffer.splice(index, 0, content)
 
             if (focusAfterInsert) {
-                let $ul = $(this.$refs['list'])
                 let $this = this
                 this.$nextTick(function() {
-                    if ($ul.children('li').length > index) {
-                        if ($this.fieldType === 'text') {
-                            $ul.children('li').eq(index).find('input').focus()
-                        } else if ($this.fieldType === 'textarea') {
-                            $ul.children('li').eq(index).find('textarea').focus()
-                        }
+                    let listFields = this.$refs['list-field']
+                    if (listFields.length > index) {
+                        listFields[index].focus()
                     }
                 })
             }
@@ -117,7 +113,6 @@ export default {
             // from the data pasted in the input field (e.target.value)
             var clipboardData = e.clipboardData || window.clipboardData
             var pastedData = clipboardData.getData('Text')
-
             let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
 
             if ( input_lines_array.length == 1) {
@@ -129,9 +124,9 @@ export default {
 
             e.preventDefault()
 
-            let $li = $(e.currentTarget).parents('li')
-            let $inserted_index = $li.index()
-            let $ul = $li.parents('ul')
+            let $li = e.currentTarget.closest('li')
+            let $ul = $li.closest('ul')
+            let $inserted_index = Array.prototype.indexOf.call($ul.childNodes, $li)
 
             // Remove empty lines
             for (let i = input_lines_array.length-1; i >= 0; --i)
@@ -153,7 +148,7 @@ export default {
                     this.deleteEntry($inserted_index)
                     indexToFocus--
                 }
-                $ul.children('li').eq(indexToFocus).find('input').focus()
+                this.$refs['list-field'][indexToFocus].focus()
                 this.contentPasted = false
             })
         },
@@ -164,12 +159,14 @@ export default {
             // Using keyup for trigger will prevent repeat triggering if key is held down
             if (e.keyCode === 13 || e.keyCode === 10) {
                 e.preventDefault()
-                let $li = $(e.currentTarget).parents('li')
-                let $ul = $li.parents('ul')
-                if ($li.index() >= $ul.children('li').length - 1) {
+                let $li = e.currentTarget.closest('li')
+                let $ul = $li.closest('ul')
+                let $pressed_li_index = Array.prototype.indexOf.call($ul.childNodes, $li)
+
+                if ($pressed_li_index >= this.$refs['list-field'].length - 1) {
                     this.addNewEntry ()
                 } else {
-                    $ul.children('li').eq($li.index() + 1).find('input').focus()
+                    $ul.children[$pressed_li_index+1].getElementsByTagName('input')[0].focus()
                 }
             }
         },
