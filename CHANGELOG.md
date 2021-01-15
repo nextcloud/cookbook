@@ -3,7 +3,8 @@
 ### Changed
 - Indentation of ingredients depends on existence of subgroups
   [#512](https://github.com/nextcloud/cookbook/pull/512/) @seyfeb
-
+- Speed up index of recipes by using computed properties
+  [#513](https://github.com/nextcloud/cookbook/pull/513) @christianlupus
 
 ### Fixed
 - Fixed keywords of shared recipes counted multiple times, fixes #491
