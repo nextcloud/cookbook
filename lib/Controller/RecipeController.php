@@ -12,6 +12,7 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Helper\RestParameterParser;
 
 class RecipeController extends Controller {
 	/**
@@ -27,13 +28,19 @@ class RecipeController extends Controller {
 	 * @var DbCacheService
 	 */
 	private $dbCacheService;
+	
+	/**
+	 * @var RestParameterParser
+	 */
+	private $restParser;
 
-	public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService) {
+	public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService, RestParameterParser $restParser) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
 		$this->urlGenerator = $urlGenerator;
 		$this->dbCacheService = $dbCacheService;
+		$this->restParser = $restParser;
 	}
 
 	/**
@@ -89,8 +96,7 @@ class RecipeController extends Controller {
 	public function update($id) {
 		$this->dbCacheService->triggerCheck();
 		
-		$recipeData = [];
-		parse_str(file_get_contents("php://input"), $recipeData);
+		$recipeData = $this->restParser->getParameters();
 		$file = $this->service->addRecipe($recipeData);
 		$this->dbCacheService->addRecipe($file);
 
@@ -110,7 +116,7 @@ class RecipeController extends Controller {
 	public function create() {
 		$this->dbCacheService->triggerCheck();
 		
-		$recipeData = $_POST;
+		$recipeData = $this->restParser->getParameters();
 		$file = $this->service->addRecipe($recipeData);
 		$this->dbCacheService->addRecipe($file);
 

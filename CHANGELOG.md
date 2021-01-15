@@ -5,6 +5,8 @@
   [#512](https://github.com/nextcloud/cookbook/pull/512/) @seyfeb
 - Speed up index of recipes by using computed properties
   [#513](https://github.com/nextcloud/cookbook/pull/513) @christianlupus
+- Central parsing of parameters for POST/PUT requests to simplify development
+  [#518](https://github.com/nextcloud/cookbook/pull/518) @christianlupus
 
 ### Fixed
 - Fixed keywords of shared recipes counted multiple times, fixes #491
