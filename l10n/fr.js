@@ -64,6 +64,7 @@ OC.L10N.register(
     "Ingredients" : "Ingrédients",
     "Instructions" : "Instructions",
     "Calories" : "Calories",
+    "Carbohydrate content" : "Teneur en glucides",
     "Cholesterol content" : "Contenu en cholestérol",
     "Fiber content" : "Contenu en fibres",
     "Protein content" : "Contenu en protéines",
