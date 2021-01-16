@@ -3,6 +3,8 @@
 ### Changed
 - Using computed property in recipe view
   [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb
+- Split off list/grid of recipes to separate Vue component
+  [#526](https://github.com/nextcloud/cookbook/pull/526/) @seyfeb
 
 ## 0.7.10 - 2021-01-16
 
