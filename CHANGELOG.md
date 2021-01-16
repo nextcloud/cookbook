@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## 0.7.10 - 2021-01-16
+
+### Fixed
+- Replaced function calls only available in PHP 8 with generic ones
+  [#524](https://github.com/nextcloud/cookbook/pull/524) @christianlupus
+
 ## 0.7.9 - 2021-01-15
 
 ### Changed

@@ -100,7 +100,8 @@ class RestParameterParser {
 			$key = $parts[0];
 			$value = urldecode($parts[1]);
 			
-			if (str_ends_with($key, '[]')) {
+			if (substr_compare($key, '[]', -2, 2)) {
+				// $key ends in []
 				// Drop '[]' at the end
 				$key = substr($key, 0, -2);
 				
@@ -129,7 +130,8 @@ class RestParameterParser {
 		$enc = 'UTF-8';
 		
 		for ($i = 1; $i < count($parts); $i++) {
-			if (str_starts_with(trim($parts[$i]), self::CHARSET)) {
+			if (substr_compare(trim($parts[$i]), self::CHARSET, 0, strlen(self::CHARSET))) {
+				// parts[$i] begins with charset=
 				// Drop string 'charset='
 				$enc = substr(trim($parts[1]), strlen(self::CHARSET) + 1);
 				break;
