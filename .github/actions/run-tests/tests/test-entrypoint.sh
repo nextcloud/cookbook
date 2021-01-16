@@ -121,7 +121,7 @@ else
 	
 	echo 'Copying the app code changes'
 	echo 'This might cause trouble when dependencies have changed'
-	rsync -a /app/ apps/cookbook/ --exclude /.git --exclude /build --exclude /.github
+	rsync -a /app/ apps/cookbook/ --exclude /.git --exclude /build --exclude /.github --exclude /vendor
 	
 fi
 

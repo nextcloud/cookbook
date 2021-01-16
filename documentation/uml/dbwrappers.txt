@@ -1,0 +1,216 @@
+@startuml
+
+namespace OCA.Cookbook {
+	
+	namespace Entity {
+		
+		interface Entity {
+			+ persist() : void
+			+ remove() : void
+			+ reload() : void
+		}
+		
+		interface RecipeEntity {
+			--
+			+ getId() : int
+			+ getName() : string
+			+ setName(string) : void
+			..
+			+ getCategory() : CategoryEntity
+			+ setCategory(CategoryEntity) : void
+			+ getKeywords() : array
+			+ addKeyword(KeywordEntity) : void
+			+ removeKeyword(KeywordEntity) : void
+		}
+		
+		interface CategoryEntity {
+			--
+			+ getName() : string
+			+ setName(string) : void
+			..
+			+ getRecipes() : array
+		}
+		
+		interface KeywordEntity {
+			--
+			+ getName() : string
+			+ setName(string) : void
+			..
+			+ getRecipes() : array
+		}
+		
+		
+		namespace impl {
+			
+			abstract class AbstractEntity {
+				- bool persisted
+				+ isPersisted() : bool
+				+ abstract clone() : ImplEntity
+				+ abstract isSame(AbstractEntity) : bool
+				+ abstract equals(AbstractEntity) : bool
+			}
+			
+			class RecipeEntityImpl {
+				#id
+				#name
+				#userId
+				# RecipeDbWrapper wrapper
+				# CategoryEntityImpl newCategory
+				# array newKeywords
+				# array removedKeywords
+				+ getNewCategory() : CategoryEntityImpl | null
+				+ getNewKeywords() : array
+				+ getRemovedKeywords() : array
+			}
+			
+			class CategoryEntityImpl {
+				#name
+				# CategoryDbWrapper wrapper
+			}
+			
+			class KeywordEntityImpl {
+				#name
+				# KeywordDbWrapper wrapper
+			}
+			
+			class CategoryMappingEntity {
+			}
+			
+			class KeywordMappingEntity {
+			}
+			
+			RecipeEntityImpl --|> AbstractEntity
+			CategoryEntityImpl --|> AbstractEntity
+			KeywordEntityImpl --|> AbstractEntity
+			
+			CategoryMappingEntity -|> AbstractEntity
+			AbstractEntity <|- KeywordMappingEntity
+			
+			RecipeEntityImpl "1" *--x CategoryMappingEntity
+			RecipeEntityImpl "1" *--x KeywordMappingEntity
+			CategoryEntityImpl "1" *--x CategoryMappingEntity
+			KeywordEntityImpl "1" *--x KeywordMappingEntity
+			
+		}
+		
+		RecipeEntity <|.. OCA.Cookbook.Entity.impl.RecipeEntityImpl
+		CategoryEntity <|.. OCA.Cookbook.Entity.impl.CategoryEntityImpl
+		KeywordEntity <|.. OCA.Cookbook.Entity.impl.KeywordEntityImpl
+		
+		Entity <|.. RecipeEntity
+		Entity <|.. CategoryEntity
+		Entity <|.. KeywordEntity
+		
+		namespace Collections {
+			
+			abstract class AbstractCollection<T extends Entity> {}
+			class Recipes {}
+			class Categories {}
+			class Keywords {}
+			
+			
+			AbstractCollection <|-- Recipes
+			AbstractCollection <|-- Categories
+			AbstractCollection <|-- Keywords
+		}
+		
+	}
+	
+	namespace Db {
+		
+		abstract class AbstractDbWrapper {
+			# IDbConnection db
+			- array cache
+			- bool cacheValid
+			+ abstract createEntity() : T
+			# abstract fetchDatabase() : array
+			+ getEntites() : array
+			# setCache(array) : void
+			+ getServiceLocator() : DbWrapperSerciveLocator
+		}
+		note right
+		Cache represents the current state
+		of the database tables as clones.
+		endnote
+		
+		class RecipeDbWrapper {
+'			- array idMap
+			--
+			+ createEntity() : RecipeEntityImpl
+			+ store(RecipeEntityImpl) : void
+			# storeNew(RecipeEntityImpl) : void
+			# update(RecipeEntityImpl) : void
+			+ remove(RecipeEntityImpl) : void
+			..
+			/'+ addKeyword(RecipeEntityImpl, KeywordEntityImpl) : KeywordMappingEntity
+			+ setCategory(RecipeEntityImpl, CategoryEntityImpl) : CategoryMappingEntity'/
+			+ getCategory(RecipeEntityImpl) : CategoryEntityImpl
+			+ getKeywords(RecipeEntityImpl) : array
+		}
+		class CategoryDbWrapper {
+			--
+			+ createEntity() : CategoryEntityImpl
+			+ store(CategoryEntityImpl) : void
+			# storeNew(CategoryEntityImpl) : void
+			# update(CategoryEntityImpl) : void
+			+ remove(CategoryEntityImpl) : void
+			..
+			+ getRecipes(CategoryEntityImpl) : array
+		}
+		class KeywordDbWrapper {
+			--
+			+ createEntity() : KeywordEntityImpl
+			+ store(KeywordEntityImpl) : void
+			# storeNew(KeywordEntityImpl) : void
+			# update(KeywordEntityImpl) : void
+			+ remove(KeywordEntityImpl) : void
+			..
+			+ getRecipes(KeywordEntityImpl) : array
+		}
+		
+		class CategoryMappingsDbWrapper {
+			+ createEntity() : CategoryMappingEntity
+			+ store(CategoryMappingEntity) : void
+			# storeNew(CategoryMappingEntity) : void
+			# update(CategoryMappingEntity) : void
+			+ remove(CategoryMappingEntity) : void
+		}
+		
+		class KeywordMappingsDbWrapper {
+			+ createEntity() : KeywordMappingEntity
+			+ store(KeywordMappingEntity) : void
+			# storeNew(KeywordMappingEntity) : void
+			# update(KeywordMappingEntity) : void
+			+ remove(KeywordMappingEntity) : void
+		}
+		
+		class DbWrapperSerciveLocator {
+			+ getRecipeDbWrapoper() : RecipeDbWrapper
+			+ getCategoryDbWrapper() : CategoryDbWrapper
+			+ getKeywordDbWrapper() : KeywordDbWrapper
+			+ getKeywordMappingDbWrapper() : KeywordMappingsDbWrapper
+			+ getCategoryMappingDbWrapper() : CategoryMappingsDbWrapper
+		}
+		
+		AbstractDbWrapper <|-- RecipeDbWrapper
+		AbstractDbWrapper <|-- CategoryDbWrapper
+		AbstractDbWrapper <|-- KeywordDbWrapper
+		
+		RecipeDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		CategoryDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		KeywordDbWrapper "1" o-- "1" DbWrapperSerciveLocator
+		
+		CategoryMappingsDbWrapper "1" o- "1" DbWrapperSerciveLocator
+		DbWrapperSerciveLocator "1" -o "1" KeywordMappingsDbWrapper
+		
+		AbstractDbWrapper <|--- CategoryMappingsDbWrapper
+		AbstractDbWrapper <|--- KeywordMappingsDbWrapper
+		
+		DbWrapperSerciveLocator -[hidden]-> AbstractDbWrapper
+	}
+	
+}
+
+ArrayIterator <|-- OCA.Cookbook.Entity.Collections.AbstractCollection
+
+@enduml
