@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+- Using computed property in recipe view
+  [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb
+
 ## 0.7.10 - 2021-01-16
 
 ### Fixed
