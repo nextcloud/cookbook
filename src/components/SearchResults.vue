@@ -1,133 +1,37 @@
 <template>
     <div>
-        <div class="kw">
-            <transition-group v-if="keywords.length" class="keywords" name="keyword-list" tag="ul">
-                <RecipeKeyword v-for="keyword in keywords"
-                    :key="keyword.name"
-                    :name="keyword.name"
-                    :count="keyword.count"
-                    :title="keywordContainedInVisibleRecipes(keyword) ? t('cookbook','Toggle keyword') : t('cookbook','Keyword not contained in visible recipes')"
-                    v-on:keyword-clicked="keywordClicked(keyword)"
-                    :class="{keyword, active : keywordFilter.includes(keyword.name), disabled : !keywordContainedInVisibleRecipes(keyword)}"
-                    />
-            </transition-group>
-        </div>
-        <ul class="recipes">
-            <li v-for="(result, index) in results" :key="result.recipe_id" v-show="recipeVisible(index)">
-                <router-link :to="'/recipe/'+result.recipe_id">
-                     <lazy-picture v-if="result.imageUrl"
-                        class="recipe-thumbnail"
-                        :lazy-src="result.imageUrl"
-                        :blurred-preview-src="result.imagePlaceholderUrl"
-                        :width="105" :height="105"/>
-
-                    <span>{{ result.name }}</span>
-                </router-link>
-            </li>
-        </ul>
+        <recipe-list :recipes="results"/>
     </div>
 </template>
 
 <script>
 import axios from '@nextcloud/axios'
 
-import LazyPicture from './LazyPicture'
-import RecipeKeyword from './RecipeKeyword'
+import RecipeList from './RecipeList'
 
 export default {
     name: "Search",
     components: {
-        LazyPicture,
-        RecipeKeyword
+        RecipeList
     },
     props: ['query'],
     data () {
         return {
-            results: [],
-            keywords: [],
-            keywordFilter: [],
+            results: []
         }
     },
-    computed: {
-    },
     watch: {
-
         $route(to, from) {
             this.keywordFilter = [];
         },
-        keywordFilter: {
-            handler: function() {
-                this.sortKeywords()
-            },
-            deep: true
-        }
     },
     methods: {
-        /**
-         * Callback for click on keyword, add to or remove from list
-         */
-        keywordClicked: function(keyword) {
-            const index = this.keywordFilter.indexOf(keyword.name)
-            if (index > -1) {
-                this.keywordFilter.splice(index, 1)
-            } else {
-                this.keywordFilter.push(keyword.name)
-            }
-        },
-        /**
-         * Check if a keyword exists in the currently visible recipes.
-         */
-        keywordContainedInVisibleRecipes: function(keyword) {
-            for (let i=0; i<this.results.length; ++i) {
-                if (this.recipeVisible(i) 
-                    && this.results[i].keywords
-                    && this.results[i].keywords.split(',').includes(keyword.name)) {
-                    return true
-                }
-            }
-            return false
-        },
-        /**
-         * Check if recipe should be displayed, depending on selected keyword filter.
-         * Returns true if recipe contains all selected keywords.
-         */
-        recipeVisible: function(index) {
-            if (this.keywordFilter.length == 0) {
-                return true
-            } else {
-                if (!this.results[index].keywords) {
-                    return false
-                }
-                let kw_array = this.results[index].keywords.split(',')
-                return this.keywordFilter.every(kw => kw_array.includes(kw))
-            }
-        },
-        /**
-         * Extract and set list of keywords from the returned recipes.
-         */
-        setKeywords: function(results) {
-            this.keywords = []
-            if ((results.length) > 0) {
-                results.forEach(recipe => {
-                    if(recipe['keywords']) {
-                        recipe['keywords'].split(',').forEach(kw => {
-                            const idx = this.keywords.findIndex(el => el.name == kw)
-                            if (idx > -1) {
-                                this.keywords[idx].count++
-                            } else {
-                                this.keywords.push({name: kw, count: 1})
-                            }
-                        })
-                    }
-                })
-                this.sortKeywords()
-            }
-        },
         setup: function() {
             
             // TODO: This is a mess of different implementation styles, needs cleanup
             if (this.query === 'name') {
                 // Search by name
+                // TODO
             }
             else if (this.query === 'tags') {
                 // Search by tags
@@ -152,7 +56,6 @@ export default {
                 axios.get(this.$window.baseUrl + '/api/category/'+cat)
                     .then(function(response) {
                         $this.results = response.data
-                        $this.setKeywords($this.results)
                     })
                     .catch(function (e) {
                         $this.results = []
@@ -161,13 +64,13 @@ export default {
                             throw e
                         }
                     })
-            } else {
+            }
+            else {
                 // General search
                 let $this = this
                 axios.get(this.$window.baseUrl + '/api/search/'+this.$route.params.value)
                     .then(function(response) {
                         $this.results = response.data
-                        $this.setKeywords($this.results)
                     })
                     .catch((e) => {
                         $this.results = []
@@ -178,32 +81,7 @@ export default {
                     })
                 this.$store.dispatch('setPage', { page: 'search' })
             }
-
-            
             this.$store.dispatch('setPage', { page: 'search' })
-        },
-
-        /**
-         * Sort keywords.
-         */
-        sortKeywords: function() {
-            // Sort by number of recipes containing keyword
-            this.keywords = this.keywords.sort((k1, k2) => k2.count - k1.count)
-
-            // Move selected keywords to the front and unselectable to the end
-            let selected_kw = [], selectable_kw = [], unavailable_kw = []
-            this.keywords.forEach(kw => {
-                if (this.keywordFilter.includes(kw.name)) {
-                    selected_kw.push(kw)
-                }
-                else if (this.keywordContainedInVisibleRecipes(kw)) {
-                    selectable_kw.push(kw)
-                }
-                else {
-                    unavailable_kw.push(kw)
-                }
-            })
-            this.keywords = selected_kw.concat(selectable_kw.concat(unavailable_kw))
         },
     },
     mounted () {
@@ -217,68 +95,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-
-div.kw {
-    width: 100%;
-    max-height: 6.7em;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    margin-bottom: 1em;
-    padding: .1em;
-}
-
-ul.keywords {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    padding: .5rem 1rem .5rem;
-}
-
-.keyword {
-  display: inline-block;
-}
-
-.keyword-list-move {
-  transition: transform .5s;
-}
-
-ul.recipes {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
-}
-
-    ul.recipes li {
-        width: 300px;
-        max-width: 100%;
-        margin: 0.5rem 1rem 1rem;
-    }
-        ul.recipes li a {
-            display: block;
-            height: 105px;
-            box-shadow: 0 0 3px #AAA;
-            border-radius: 3px;
-        }
-        ul.recipes li a:hover {
-            box-shadow: 0 0 5px #888;
-        }
-
-        ul.recipes li .recipe-thumbnail {
-            position: relative;
-            float: left;
-            height: 105px;
-            width: 105px;
-            border-radius: 3px 0 0 3px;
-            background-color: #bebdbd;
-            overflow: hidden;
-        }
-
-        ul.recipes li span {
-            display: block;
-            padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
-        }
-
-</style>
