@@ -310,45 +310,45 @@ export default {
 
 <style scoped>
 
-
-.wrapper {
-    width: 100%;
-}
-
-aside {
-    flex-basis: 20rem;
-    padding-right: 2rem;
-}
-    aside ul {
-        list-style-type: disc;
-    }
-
-.content {
-    width: 100%;
-    padding: 1rem;
-    flex-basis: 100%;
-}
-    .content aside {
-        width: 30%;
-        float: left;
-    }
-        @media screen and (max-width:1199px) { .content aside {
-            width: 100%;
-            float: none;
-        } }
-
-    main {
-        flex-basis: calc(100% - 22rem);
-        width: 70%;
-        float: left;
-        text-align: justify;
-    }
-
-    @media screen and (max-width:1199px) { main {
-        flex-basis: 100%;
+    .wrapper {
         width: 100%;
-    } }
+    }
 
+@media print {
+    #content {
+        display: block !important;
+        padding: 0 !important;
+        overflow: visible !important;
+    }
+
+    div.header {
+		display: flex;
+	}
+        div.header > div.image {
+            flex: 600px 0 0;
+        }
+        div.header > div.meta {
+            margin: 0 10px;
+        }
+        div.header a::after {
+            content: '';
+        }
+}
+
+@media only screen and (min-width: 1500px) {
+	div.header.responsive {
+		display: flex;
+	}
+
+	div.header.responsive > div.image {
+		flex: 700px 0 0;
+	}
+
+}
+
+    div.meta {
+        margin: 0 1rem;
+    }
         .dates {
             font-size: .9em;
         }
@@ -373,21 +373,113 @@ aside {
             margin: 0.5em 0
         }
 
+        .times {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        @media(max-width:991px) { .times {
+            flex-direction: column;
+        } }
+
+        @media print { .times {
+            flex-direction: row;
+        } }
+
+            div.times > div {
+                margin: 1rem 0.75rem;
+            }
+
+            .times .time {
+                position: relative;
+                flex-grow: 1;
+                border: 1px solid var(--color-border-dark);
+                border-radius: 3px;
+                margin: 1rem 2rem;
+                text-align: center;
+                font-size: 1.2rem;
+            }
+                .times .time button {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    transform: translate(-50%, -50%);
+                    height: 36px;
+                    width: 36px;
+                }
+                .times .time h4 {
+                    font-weight: bold;
+                    border-bottom: 1px solid var(--color-border-dark);
+                    background-color: var(--color-background-dark);
+                    padding: 0.5rem;
+                }
+
+                .times .time p {
+                    padding: 0.5rem;
+                }
+
     section {
         margin-bottom: 1rem;
     }
-
     section::after {
         content: '';
         display: table;
         clear: both;
     }
 
-    @media screen and (max-width:1199px) { .recipe-content aside {
-        display: block;
+    .content {
         width: 100%;
-        float: none;
-    }}
+        padding: 1rem;
+        flex-basis: 100%;
+    }
+        .content aside {
+            width: 30%;
+            float: left;
+        }
+            @media screen and (max-width:1199px) { .content aside {
+                width: 100%;
+                float: none;
+            } }
+
+    aside {
+        flex-basis: 20rem;
+        padding-right: 2rem;
+    }
+        aside ul {
+            list-style-type: disc;
+        }
+            aside ul li {
+                margin-left: 1em;
+            }
+                aside ul li span,
+                aside ul li input[type="checkbox"] {
+                    line-height: 1rem;
+                    margin: 0 0.5rem 0 0;
+                    padding: 0;
+                    height: auto;
+                    width: 1rem;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+        .nutrition-items {
+            list-style-type: none;
+        }
+
+    main {
+        display: inline-block;
+        flex-basis: calc(100% - 22rem);
+        width: 70%;
+        float: left;
+        text-align: justify;
+    }
+
+@media screen and (max-width:1199px) {
+    main {
+        flex-basis: 100%;
+        width: 100%;
+    }
+}
 
     .instructions {
         list-style: none;
@@ -395,56 +487,33 @@ aside {
         counter-reset: instruction-counter;
         margin-top: 2rem;
     }
-
-    .nutrition-items {
-        list-style-type: none;
-    }
-
-    .times {
-        display: flex;
-        margin-top: 10px;
-    }
-
-    div.meta {
-    	margin: 0 1rem;
-    }
-
-@media print {
-    #content {
-        display: block !important;
-        padding: 0 !important;
-        overflow: visible !important;
-    }
-
-    div.header {
-		display: flex;
-	}
-
-	div.header > div.image {
-		flex: 600px 0 0;
-	}
-
-	div.header > div.meta {
-		margin: 0 10px;
-	}
-
-	div.header a::after {
-		content: '';
-	}
-}
-
-@media only screen and (min-width: 1500px) {
-	div.header.responsive {
-		display: flex;
-	}
-
-	div.header.responsive > div.image {
-		flex: 700px 0 0;
-	}
-
-    #app-content-wrapper div.times > div {
-        margin: 1rem 0.75rem;
-    }
-}
-
+        .instructions .instruction {
+            cursor: pointer;
+            counter-increment: instruction-counter;
+            clear: both;
+            margin-bottom: 2rem;
+        }
+            .instructions .instruction::before {
+                content: counter(instruction-counter);
+                display: block;
+                float: left;
+                margin: 0 1rem 1rem 0;
+                height: 36px;
+                width: 36px;
+                border-radius: 50%;
+                border: 1px solid var(--color-border-dark);
+                outline: none;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-color: var(--color-background-dark);
+                line-height: 36px;
+                text-align: center;
+                margin-top: -6px;
+            }
+            .instructions .instruction:hover::before {
+                border-color: var(--color-primary-element);
+            }
+            .instructions .instruction.done::before {
+                content: '✔';
+            }
 </style>
