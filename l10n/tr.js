@@ -1,6 +1,9 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Cannot parse non-POST multipart encoding. This is a bug." : "POST olmayan çok parçalı kodlama işlenemedi. Bu bir hata olmalı. Lütfen bize bildirin.",
+    "Cannot detect type of transmitted data. This is a bug, please report it." : "Aktarılan verinin türü algılanamadı. Bu bir hata olmalı. Lütfen bize bildirin.",
+    "Invlaid URL-encoded string found. Please report a bug." : "Adres kodlamalı dizge geçersiz. Bu bir hata olmalı. Lütfen bize bildirin.",
     "Recipes" : "Tarifler",
     "Cookbook" : "Yemek kitabı",
     "An integrated cookbook using schema.org JSON files as recipes" : "Tarifler için schema.org JSON dosyaları kullanan bütünleşik bir yemek kitabı",

@@ -1,6 +1,9 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Cannot parse non-POST multipart encoding. This is a bug." : "无法解析非 post 多部分编码。这是一个 bug。",
+    "Cannot detect type of transmitted data. This is a bug, please report it." : "无法检测传输数据类型。这是一个 bug。请报告它。",
+    "Invlaid URL-encoded string found. Please report a bug." : "发现了无效的 URL 编码字符串。请报告一个 bug。",
     "Recipes" : "菜谱",
     "Cookbook" : "烹饪书",
     "An integrated cookbook using schema.org JSON files as recipes" : "一个使用schema.org JSON格式的文件作为菜谱的集成的烹饪书",

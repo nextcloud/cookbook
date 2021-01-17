@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Invlaid URL-encoded string found. Please report a bug." : "URL codée non valide trouvée. Veuillez signaler un bogue.",
     "Recipes" : "Recettes",
     "Cookbook" : "Livre de recettes",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un livre de recettes intégré utilisant les fichiers JSON de schema.org comme recettes",
@@ -25,7 +26,7 @@ OC.L10N.register(
     "Recipe name" : "Nom de la recette",
     "Tags" : "Étiquettes",
     "Search for recipes" : "Rechercher une recette",
-    "Are you sure you want to delete this recipe?" : "Êtes-vous sur de vouloir effacer cette recette ?",
+    "Are you sure you want to delete this recipe?" : "Êtes-vous sûr de vouloir effacer cette recette ?",
     "Delete failed" : "Échec de la suppression",
     "Hide navigation" : "Masquer la navigation",
     "Create recipe" : "Créer une recette",
