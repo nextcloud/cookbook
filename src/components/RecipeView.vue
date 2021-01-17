@@ -446,10 +446,12 @@ export default {
         padding-right: 2rem;
     }
         aside ul {
-            list-style-type: disc;
+            list-style-type: none;
         }
             aside ul li {
                 margin-left: 1em;
+                line-height: 2.5ex;
+                margin-bottom: .75ex;
             }
                 aside ul li span,
                 aside ul li input[type="checkbox"] {
