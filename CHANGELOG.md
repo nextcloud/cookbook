@@ -6,7 +6,7 @@
 - Split off list/grid of recipes to separate Vue component
   [#526](https://github.com/nextcloud/cookbook/pull/526/) @seyfeb
 - CSS Cleanup, removed central css styling
-  [#](https://github.com/nextcloud/cookbook/pull//) @seyfeb
+  [#528](https://github.com/nextcloud/cookbook/pull/528/) @seyfeb
 
 ## 0.7.10 - 2021-01-16
 
