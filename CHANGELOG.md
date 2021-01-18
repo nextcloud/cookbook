@@ -8,6 +8,10 @@
 - CSS Cleanup, removed central css styling
   [#528](https://github.com/nextcloud/cookbook/pull/528/) @seyfeb
 
+### Fixed
+- Added some documentation how to install GH action generated builds
+  [#538](https://github.com/nextcloud/cookbook/pull/538) @christianlupus
+
 ### Removed
 - Removal of old contoller no longer in use
   [#536](https://github.com/nextcloud/cookbook/pull/536) @christianlupus
