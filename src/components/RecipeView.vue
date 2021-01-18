@@ -469,7 +469,6 @@ export default {
         }
 
     main {
-        display: inline-block;
         flex-basis: calc(100% - 22rem);
         width: 70%;
         float: left;

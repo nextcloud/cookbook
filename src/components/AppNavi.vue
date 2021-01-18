@@ -370,6 +370,37 @@ export default {
 
 <style scoped>
 
+>>> .app-navigation-new button {
+    min-height: 44px;
+    background-image: var(--icon-add-000);
+    background-repeat: no-repeat;
+}
+
+>>> .app-navigation-entry *:not(.app-navigation-entry-icon) {
+    background: initial !important;
+}
+
+>>> .app-navigation-entry.recipe {
+    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
+    padding-left: 0px;
+}
+
+>>> .app-navigation-entry .app-navigation-entry__children .app-navigation-entry
+{
+    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
+    padding-left: 0px;
+}
+
+.app-navigation-entry:hover li.recipe {
+        box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
+    }
+
+>>> .app-navigation-entry.recipe:hover,
+>>> .app-navigation-entry.router-link-exact-active {
+    opacity: 1;
+    box-shadow: inset 4px 0 var(--color-primary);
+}
+
 #app-settings .button {
     padding: 0;
     height: 44px;
