@@ -1,7 +1,6 @@
 OC.L10N.register(
     "cookbook",
     {
-    "Invlaid URL-encoded string found. Please report a bug." : "URL codée non valide trouvée. Veuillez signaler un bogue.",
     "Recipes" : "Recettes",
     "Cookbook" : "Livre de recettes",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un livre de recettes intégré utilisant les fichiers JSON de schema.org comme recettes",

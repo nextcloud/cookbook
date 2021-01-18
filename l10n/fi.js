@@ -2,7 +2,6 @@ OC.L10N.register(
     "cookbook",
     {
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Siirretyn datan tyyppiä ei voitu tunnistaa. Raportoi tästä bugista.",
-    "Invlaid URL-encoded string found. Please report a bug." : "Virheellinen URL-merkkijono. Raportoi tästä bugista.",
     "Recipes" : "Reseptit",
     "Cookbook" : "Keittokirja",
     "An integrated cookbook using schema.org JSON files as recipes" : "Integroitu keittokirja, joka käyttää schema.org JSON-tiedostoja resepteissä",
@@ -62,7 +61,7 @@ OC.L10N.register(
     "Choose keywords" : "Valitse avainsanat",
     "Servings" : "Annokset",
     "Nutrition Information" : "Ravintoaineet",
-    "Tools" : "Työkalut",
+    "Tools" : "Työvälineet",
     "Ingredients" : "Ainesosat",
     "Instructions" : "Ohjeet",
     "Calories" : "Kalorit",

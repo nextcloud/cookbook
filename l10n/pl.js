@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Cannot parse non-POST multipart encoding. This is a bug." : "Nie można przeanalizować kodowania wieloczęściowego innego niż POST. To jest błąd.",
+    "Cannot detect type of transmitted data. This is a bug, please report it." : "Nie można wykryć rodzaju przesyłanych danych. To jest błąd, zgłoś go.",
     "Recipes" : "Przepisy",
     "Cookbook" : "Książka kucharska",
     "An integrated cookbook using schema.org JSON files as recipes" : "Zintegrowana książka kucharska wykorzystująca pliki JSON schema.org jako przepisy kulinarne",
@@ -27,8 +29,6 @@ OC.L10N.register(
     "Search for recipes" : "Wyszukaj przepisy",
     "Are you sure you want to delete this recipe?" : "Czy na pewno chcesz usunąć ten przepis?",
     "Delete failed" : "Usuwanie nie powiodło się",
-    "Toggle keyword" : "Przełącz słowo kluczowe",
-    "Keyword not contained in visible recipes" : "Słowo kluczowe nie występuje w widocznych przepisach",
     "Hide navigation" : "Ukryj nawigację",
     "Create recipe" : "Utwórz przepis",
     "Download recipe from URL" : "Pobierz przepis z adresu URL",
@@ -83,6 +83,8 @@ OC.L10N.register(
     "Failed to fetch keywords" : "Nie udało się pobrać słów kluczowych",
     "Loading recipe failed" : "Nieudane ładowanie przepisu",
     "Recipe could not be saved" : "Przepis nie mógł zostać zapisany",
+    "Toggle keyword" : "Przełącz słowo kluczowe",
+    "Keyword not contained in visible recipes" : "Słowo kluczowe nie występuje w widocznych przepisach",
     "Cooking time is up!" : "Czas gotowania minął!",
     "Search recipes with this keyword" : "Wyszukaj przepisy za pomocą tego słowa kluczowego",
     "Date created" : "Data utworzenia",

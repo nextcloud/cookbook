@@ -23,6 +23,7 @@ OC.L10N.register(
     "Page not found" : "Página não encontrada",
     "Category" : "Categoria",
     "Recipe name" : "Nome da receita",
+    "Tags" : "Tags",
     "Search for recipes" : "Pesquisar por receitas",
     "Are you sure you want to delete this recipe?" : "Quer realmente excluir esta receita?",
     "Delete failed" : "Erro na exclusão",
