@@ -8,6 +8,10 @@
 - CSS Cleanup, removed central css styling
   [#528](https://github.com/nextcloud/cookbook/pull/528/) @seyfeb
 
+### Removed
+- Removal of old contoller no longer in use
+  [#536](https://github.com/nextcloud/cookbook/pull/536) @christianlupus
+
 ## 0.7.10 - 2021-01-16
 
 ### Fixed
