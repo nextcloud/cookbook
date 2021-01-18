@@ -8,3 +8,4 @@ Instead we want to reference the official documentation on [docs.nextcloud.com](
 
 - [Automatic deployment of new releases](deployment)
 - [Documentation using github pages](docs)
+- [Using a committed version for testing](use-autobuild)
