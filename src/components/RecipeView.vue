@@ -143,17 +143,26 @@ export default {
 
             if (this.$store.state.recipe.cookTime) {
                 let cookT = this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
-                recipe.timerCook = { hours: parseInt(cookT[1]), minutes: parseInt(cookT[2]) }
+                let hh = parseInt(cookT[1]), mm = parseInt(cookT[2])
+                if (hh > 0 || mm > 0) {
+                    recipe.timerCook = { hours: hh, minutes: mm }
+                }
             }
 
             if (this.$store.state.recipe.prepTime) {
                 let prepT = this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
-                recipe.timerPrep = { hours: parseInt(prepT[1]), minutes: parseInt(prepT[2]) }
+                let hh = parseInt(prepT[1]), mm = parseInt(prepT[2])
+                if (hh > 0 || mm > 0) {
+                    recipe.timerPrep = { hours: hh, minutes: mm }
+                }
             }
 
             if (this.$store.state.recipe.totalTime) {
                 let totalT = this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
-                recipe.timerTotal = { hours: parseInt(totalT[1]), minutes: parseInt(totalT[2]) }
+                let hh = parseInt(totalT[1]), mm = parseInt(totalT[2])
+                if (hh > 0 || mm > 0) {
+                    recipe.timerTotal = { hours: hh, minutes: mm }
+                }
             }
 
             if (this.$store.state.recipe.tool) {
