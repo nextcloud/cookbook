@@ -350,8 +350,12 @@ export default {
         setLoadingRecipe: function(id) {
             this.$store.dispatch('setLoadingRecipe', { recipe: id })
         },
+
+        /**
+         * Toggle the left navigation pane
+         */
         toggleNavigation: function() {
-            document.getElementById("app-navigation").classList.toggle("show-navigation")
+            this.$store.dispatch('setAppNavigationVisible', { isVisible: !this.$store.state.appNavigationVisible })
         },
     },
     mounted () {

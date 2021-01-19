@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
-        <ActionButton id="show-navigation" icon="icon-menu" class="action-button" :ariaLabel="t('cookbook', 'Open navigation')" @click="toggleNavigation()" />
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
             <Breadcrumb :title="t('cookbook', 'Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
@@ -223,9 +222,6 @@ export default {
         search: function(e) {
             this.$window.goTo('/search/'+e.target[1].value)
         },
-        toggleNavigation: function() {
-            document.getElementById("app-navigation").classList.toggle("show-navigation")
-        },
         updateFilters: function(e) {
             this.filterValue = e
             this.$root.$emit('applyRecipeFilter', e)
@@ -258,20 +254,9 @@ export default {
     content: '' !important;
 }
 
-#show-navigation {
-    width: 60px;
-    height: 44px;
-    padding: 0;
-    display: none;
-    float: left;
-}
-    #show-navigation .action-button {
-        padding-right: 0 !important;
-    }
-
 @media only screen and (max-width: 1024px) {
-    #show-navigation {
-        display: block;
+    .breadcrumbs {
+        margin-left: 40px;
     }
 }
 

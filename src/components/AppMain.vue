@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <AppNavi id="app-navigation" />
+        <AppNavi id="app-navigation" :class="{'show-navigation': $store.state.appNavigationVisible}"/>
         <div id="app-content">
             <div id="app-content-wrapper">
                 <AppControls />
