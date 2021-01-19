@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Cannot detect type of transmitted data. This is a bug, please report it." : "No se pudo detectar el tipo de datos transmitidos. Esto es un error, por favor informe de esto.",
+    "Invalid URL-encoded string found. Please report a bug." : "Se ha encontrado una cadena inválida de codificación URL. Por favor informe de este error.",
     "Recipes" : "Recetas",
     "Cookbook" : "Recetario",
     "An integrated cookbook using schema.org JSON files as recipes" : "Recetario que utiliza archivos JSON para recetas según el estándar schema.org",

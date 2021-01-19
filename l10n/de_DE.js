@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "Cannot parse non-POST multipart encoding. This is a bug." : "Multipart-Kodierung von Nicht-POST kann nicht geparst werden. Dies ist ein Fehler.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Kann den Typ der übertragenen Daten nicht erkennen. Dies ist ein Fehler, bitte melden Sie diesen.",
+    "Invalid URL-encoded string found. Please report a bug." : "Ungültige URL-kodierte Zeichenfolge gefunden. Bitte melden Sie den Fehler.",
     "Recipes" : "Rezepte",
     "Cookbook" : "Kochbuch",
     "An integrated cookbook using schema.org JSON files as recipes" : "Ein integriertes Kochbuch, das schema.org-JSON-Dateien als Speicher für Rezepte verwendet",
