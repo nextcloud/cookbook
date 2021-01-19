@@ -7,12 +7,16 @@
   [#526](https://github.com/nextcloud/cookbook/pull/526/) @seyfeb
 - CSS Cleanup, removed central css styling
   [#528](https://github.com/nextcloud/cookbook/pull/528/) @seyfeb
+- Timers are hidden when time is zero (prep, cook, total time)
+  [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
 - Introduced left navigation pane visibility as Vuex state
   [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
 
 ### Fixed
 - Added some documentation how to install GH action generated builds
   [#538](https://github.com/nextcloud/cookbook/pull/538) @christianlupus
+- Fixed problem where timers are not updated after saving recipe edits
+  [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
 - Fixed overlapping misaligned navigation toggles (as in #534)
   [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
 

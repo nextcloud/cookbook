@@ -21,6 +21,11 @@ export default {
             showFullTime: false,
         }
     },
+    watch: {
+        value() {
+            this.resetTimeDisplay()
+        }
+    },
     computed: {
         displayTime: function() {
             let text = ''
