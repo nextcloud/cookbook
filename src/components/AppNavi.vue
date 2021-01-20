@@ -236,6 +236,8 @@ export default {
                     $this.downloading = false
                     $this.$window.goTo('/recipe/' + recipe.id)
                     e.target[1].value = ''
+                    // Refresh left navigation pane to display changes
+                    $this.$root.$emit('refreshNavigation')
                 })
                 .catch(function(e) {
                     $this.downloading = false
