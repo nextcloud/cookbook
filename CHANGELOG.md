@@ -19,6 +19,8 @@
   [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
 - Fixed overlapping misaligned navigation toggles (as in #534)
   [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
+- Refreshing left navigation pane after downloading recipe data, closes #465
+  [#547](https://github.com/nextcloud/cookbook/pull/547/) @seyfeb
 
 ### Removed
 - Removal of old contoller no longer in use
