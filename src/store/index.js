@@ -6,6 +6,7 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from '@nextcloud/axios'
 
 Vue.use(Vuex)
 
@@ -35,6 +36,8 @@ export default new Vuex.Store({
         reloadingRecipe: 0,
         // A recipe save is in progress
         savingRecipe: false,
+        // Updating the recipe directory is in progress
+        updatingRecipeDirectory: false,
     },
 
     mutations: {
@@ -61,6 +64,9 @@ export default new Vuex.Store({
         },
         setUser(s, { u }) {
             s.user = u
+        },
+        setUpdatingRecipeDirectory(s, { b }) {
+            s.updatingRecipeDirectory = b
         }
     },
 
@@ -85,6 +91,19 @@ export default new Vuex.Store({
         },
         setUser(c, { user }) {
             c.commit('setUser', { u: user })
+        },
+        updateRecipeDirectory(c, { dir }) {
+            c.commit('setUpdatingRecipeDirectory', { b: true })
+            c.dispatch('setRecipe', { recipe: null })
+            const request = axios({
+                url: window.baseUrl + '/config',
+                method: 'POST',
+                data: { 'folder': dir },
+            });
+
+            return request.then(() => {
+                    c.commit('setUpdatingRecipeDirectory', { b: false })
+                })
         },
     }
 

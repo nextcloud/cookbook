@@ -294,18 +294,13 @@ export default {
                 t('cookbook', 'Path to your recipe collection'),
                 (path) => {
                     let $this = this
-                    axios({
-                        url: this.$window.baseUrl + '/config',
-                        method: 'POST',
-                        data: { 'folder': path },
-                    })
+                    this.$store.dispatch('updateRecipeDirectory', { dir: path })
                         .then(() => {
-                            $this.loadAll()
-                            .then(() => {
-                                $this.$store.dispatch('setRecipe', { recipe: null })
-                                $this.$window.goTo('/')
-                                $this.recipeFolder = path
-                            })
+                            $this.recipeFolder = path
+                            $this.$root.$emit('refreshNavigation')
+                            if($this.$route.path != '/') {
+                                $this.$router.push('/')
+                            }
                         })
                         .catch((e) => {
                             alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))

@@ -18,6 +18,25 @@ export default {
             recipes: []
         }
     },
+    computed: {
+        /**
+         * Is the Cookbook recipe directory currently being changed?
+         */
+        updatingRecipeDirectory () {
+            return this.$store.state.updatingRecipeDirectory
+        }
+    },
+    watch: {
+        /**
+         * If the Cookbook recipe directory currently was changed, reload
+         * the recipes in the index component.
+         */
+        updatingRecipeDirectory(newVal, oldVal) {
+            if (newVal == false && newVal != oldVal) {
+                this.loadAll()
+            }
+        }
+    },
     methods: {
         /**
          * Load all recipes from the database
@@ -39,6 +58,6 @@ export default {
     },
     mounted () {
         this.loadAll()
-    },
+    }
 }
 </script>
