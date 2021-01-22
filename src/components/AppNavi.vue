@@ -267,16 +267,18 @@ export default {
                             })
                         }
                     }
-                    for (let i=0; i<$this.categories.length; i++) {
-                        // Reload recipes in open categories
-                        if (!$this.$refs['app-navi-cat-'+i]) {
-                            continue
+                    $this.$nextTick(() => {
+                        for (let i=0; i<$this.categories.length; i++) {
+                            // Reload recipes in open categories
+                            if (!$this.$refs['app-navi-cat-'+i]) {
+                                continue
+                            }
+                            if ($this.$refs['app-navi-cat-'+i][0].opened) {
+                                console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
+                                $this.categoryOpen(i)
+                            }
                         }
-                        if ($this.$refs['app-navi-cat-'+i][0].opened) {
-                            console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
-                            $this.categoryOpen(i)
-                        }
-                    }
+                    })
                 })
                 .catch(function(e) {
                     alert(t('cookbook', 'Failed to fetch categories'))
