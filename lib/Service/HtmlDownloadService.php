@@ -51,11 +51,19 @@ class HtmlDownloadService {
 	 */
 	private $dom;
 	
-	public function __construct(HTMLEntiryDecodeFilter $htmlEntityDecodeFilter, ILogger $logger, IL10N $l10n) {
+	/**
+	 * The parsed HTML content
+	 * @var string
+	 */
+	private $html;
+	
+	public function __construct(HTMLEntiryDecodeFilter $htmlEntityDecodeFilter,
+		ILogger $logger, IL10N $l10n) {
 		$this->htmlFilters = [ $htmlEntityDecodeFilter ];
 		$this->logger = $logger;
 		$this->l = $l10n;
 		$this->dom = null;
+		$this->html = null;
 	}
 	
 	/**
@@ -69,23 +77,34 @@ class HtmlDownloadService {
 	 * @throws ImportException
 	 */
 	public function downloadRecipe(string $url): int {
-		$html = $this->fetchHtmlPage($url);
+		// Reset in case of exception
+		$this->dom = null;
+		$this->html = null;
+		
+		$this->html = $this->fetchHtmlPage($url);
 		
 		// Filter the HTML code
 		/** @var AbstractHTMLFilter $filter */
 		foreach ($this->htmlFilters as $filter) {
-			$filter->apply($html);
+			$filter->apply($this->html);
 		}
 		
-		return $this->loadHtmlString($html, $url);
+		return $this->loadHtmlString($url);
 	}
 	
 	/**
 	 * Get the HTML docuemnt after it has been downloaded and parsed with downloadRecipe()
-	 * @return \DOMDocument The loaded HTML document
+	 * @return \DOMDocument The loaded HTML document or null if document could not be loaded successfully
 	 */
-	public function getDom(): \DOMDocument {
+	public function getDom(): ?\DOMDocument {
 		return $this->dom;
+	}
+
+	/**
+	 * @return string The parsed HTML or null if no parsing was successful
+	 */
+	public function getHtml(): ?string {
+		return $this->html;
 	}
 
 	/**
@@ -120,18 +139,17 @@ class HtmlDownloadService {
 	}
 	
 	/**
-	 * @param string $html The HTML code to parse
 	 * @param string $url The URL of the parsed recipe
 	 * @throws ImportException If the parsing of the HTML page failed completely
 	 * @return int Indicator of the parsing state
 	 */
-	private function loadHtmlString(string $html, string $url): int {
+	private function loadHtmlString(string $url): int {
 		$this->dom = new \DOMDocument();
 		
 		$libxml_previous_state = libxml_use_internal_errors(true);
 		
 		try {
-			$parsedSuccessfully = $this->dom->loadHTML($html);
+			$parsedSuccessfully = $this->dom->loadHTML($this->html);
 			
 			// Error handling
 			$errors = libxml_get_errors();
