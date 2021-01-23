@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+        <div class="overlay" :class="{hidden: !overlayVisible}" />
         <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
         <EditInputField :fieldType="'markdown'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
         <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
@@ -90,6 +91,11 @@ export default {
                 { key: 'sugarContent', label: t('cookbook', 'Sugar content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'transFatContent', label: t('cookbook', 'Trans-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }]
+        }
+    },
+    computed: {
+        overlayVisible() {
+            return (this.$store.state.loadingRecipe || this.$store.state.reloadingRecipe)
         }
     },
     watch: {
@@ -440,6 +446,19 @@ beforeRouteLeave (to, from, next) {
 .wrapper {
     width: 100%;
     padding: 1rem;
+}
+
+.overlay {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-main-background);
+    opacity: .75;
+    z-index: 1000;
+}
+.overlay.hidden {
+    display: none;
 }
 
 /* This is not used anywhere at the moment, but left here for future reference
