@@ -78,6 +78,21 @@ export default new Vuex.Store({
     },
 
     actions: {
+        /**
+         * Create new recipe on the server
+         */
+        createRecipe(c, { recipe }) {
+            const request = axios({
+                method: 'POST',
+                url: window.baseUrl + '/api/recipes',
+                data: recipe
+                });
+            request.then((response) => {
+                    // Refresh navigation to display changes
+                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
+                })
+            return request
+        },
         setAppNavigationVisible(c, { isVisible }) {
             c.commit('setAppNavigationVisible', { b: isVisible })
         },
@@ -114,6 +129,21 @@ export default new Vuex.Store({
             request.then(() => {
                     c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                     c.commit('setUpdatingRecipeDirectory', { b: false })
+                })
+            return request
+        },
+        /**
+         * Update existing recipe on the server
+         */
+        updateRecipe(c, { recipe }) {
+            const request = axios({
+                method: 'PUT',
+                url: window.baseUrl + '/api/recipes/' + recipe.id,
+                data: recipe
+                });
+            request.then((response) => {
+                    // Refresh navigation to display changes
+                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                 })
             return request
         },
