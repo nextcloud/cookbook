@@ -21,6 +21,8 @@
   [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
 - Refreshing left navigation pane after downloading recipe data, closes #465
   [#547](https://github.com/nextcloud/cookbook/pull/547/) @seyfeb
+- Check for existing `@context` setting in json checker
+  [#554](https://github.com/nextcloud/cookbook/pull/554) @christianlupus
 
 ### Removed
 - Removal of old contoller no longer in use
