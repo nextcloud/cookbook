@@ -74,7 +74,7 @@ class HtmlDownloadService {
 	 *
 	 * @param int The indicator if the HTML page was correctly parsed
 	 * @return array The included JSON data array, unfiltered
-	 * @throws ImportException
+	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
 		// Reset in case of exception

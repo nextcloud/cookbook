@@ -19,6 +19,8 @@ use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
+use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Exception\ImportException;
 
 /**
  * Main service class for the cookbook app.
@@ -36,6 +38,11 @@ class RecipeService {
 	 * @var HtmlDownloadService
 	 */
 	private $htmlDownloadService;
+	
+	/**
+	 * @var RecipeExtractionService
+	 */
+	private $recipeExtractionService;
 
 	/**
 	 * @var UserConfigHelper
@@ -55,7 +62,8 @@ class RecipeService {
 			ImageService $imageService,
 			IL10N $il10n,
 			LoggerInterface $logger,
-			HtmlDownloadService $downloadService
+			HtmlDownloadService $downloadService,
+			RecipeExtractionService $extractionService
 		) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -65,6 +73,7 @@ class RecipeService {
 		$this->userConfigHelper = $userConfigHelper;
 		$this->imageService = $imageService;
 		$this->htmlDownloadService = $downloadService;
+		$this->recipeExtractionService = $extractionService;
 	}
 
 	/**
@@ -468,6 +477,7 @@ class RecipeService {
 	 * @param string $html
 	 *
 	 * @return array
+	 * @deprecated
 	 */
 	private function parseRecipeHtml($url, $html) {
 		if (!$html) {
@@ -808,20 +818,27 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $url
+	 * Download a recipe from a url and store it in the files
 	 *
+	 * @param string $url The recipe URL
+	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe($url) {
+	public function downloadRecipe(string $url): File {
 		$this->htmlDownloadService->downloadRecipe($url);
 		
-		// FIXME this is no terminal solution.
-		$html = $this->htmlDownloadService->getHtml();
+		try {
+			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom());
+		} catch (HtmlParsingException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex);
+		}
 		
-		$json = $this->parseRecipeHtml($url, $html);
-
+		$json = $this->checkRecipe($json);
+		
 		if (!$json) {
-			throw new Exception('No recipe data found');
+			$this->logger->error('Importing parsers resulted in null recipe. ' .
+				'This is most probably a bug. Please report.');
+			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'));
 		}
 
 		$json['url'] = $url;
