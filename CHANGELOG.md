@@ -11,6 +11,8 @@
   [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
 - Introduced left navigation pane visibility as Vuex state
   [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
+- Centralized some recipe tasks (create, update, delete)
+  [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
 
 ### Fixed
 - Added some documentation how to install GH action generated builds
@@ -23,6 +25,8 @@
   [#547](https://github.com/nextcloud/cookbook/pull/547/) @seyfeb
 - Check for existing `@context` setting in json checker
   [#554](https://github.com/nextcloud/cookbook/pull/554) @christianlupus
+- Introduced updating recipe directory to Vuex state, fixes #542
+  [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
 
 ### Removed
 - Removal of old contoller no longer in use
