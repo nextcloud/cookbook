@@ -93,6 +93,17 @@ export default new Vuex.Store({
                 })
             return request
         },
+        /**
+         * Delete recipe on the server
+         */
+        deleteRecipe(c, { id }) {
+            const request = axios.delete (window.baseUrl + '/api/recipes/' + id);
+            request.then((response) => {
+                    // Refresh navigation to display changes
+                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
+                })
+            return request
+        },
         setAppNavigationVisible(c, { isVisible }) {
             c.commit('setAppNavigationVisible', { b: isVisible })
         },

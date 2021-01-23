@@ -192,13 +192,11 @@ export default {
             if (!confirm(t('cookbook', 'Are you sure you want to delete this recipe?'))) {
                 return
             }
-            let id = this.$store.state.recipe.id
             let $this = this
 
-            axios.delete(window.baseUrl + '/api/recipes/' + id)
+            this.$store.dispatch('deleteRecipe', { id: this.$store.state.recipe.id })
                 .then(function(response) {
                     $this.$window.goTo('/')
-                    $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                 })
                 .catch(function(e) {
                     alert(t('cookbook', 'Delete failed'))
