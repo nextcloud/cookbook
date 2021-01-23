@@ -25,7 +25,7 @@ class JsonService {
 			return false;
 		}
 		
-		if (!isset($obj['@context']) || preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
+		if (!isset($obj['@context']) || ! preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
 			// We have no correct context property
 			return false;
 		}
