@@ -354,7 +354,7 @@ export default {
          * Toggle the left navigation pane
          */
         toggleNavigation: function() {
-            this.$store.dispatch('setAppNavigationVisible', { isVisible: !this.$store.state.appNavigationVisible })
+            this.$store.dispatch('setAppNavigationVisible', { isVisible: !this.$store.state.appNavigation.visible })
         },
     },
     mounted () {

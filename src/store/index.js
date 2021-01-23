@@ -17,9 +17,12 @@ export default new Vuex.Store({
     //  state through a set mutation. You can process the data within
     //  the mutation if you want.
     state: {
-        // The left navigation pane (categories, settings, etc.) is visible.
-        // It can be hidden in small browser windows (e.g., on mobile phones)
-        appNavigationVisible: true,
+        // The left navigation pane (categories, settings, etc.)
+        appNavigation:
+            {
+                // It can be hidden in small browser windows (e.g., on mobile phones)
+                visible: true
+            },
         user: null,
         // Page is for keeping track of the page the user is on and
         //  setting the appropriate navigation entry active.
@@ -42,7 +45,7 @@ export default new Vuex.Store({
 
     mutations: {
         setAppNavigationVisible(s, { b }) {
-            s.appNavigationVisible = b
+            s.appNavigation.visible = b
         },
         setLoadingRecipe(s, { r }) {
             s.loadingRecipe = r
