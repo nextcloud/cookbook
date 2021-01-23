@@ -222,6 +222,34 @@ class MainController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 */
+	public function categoryUpdate($category) {
+		$this->dbCacheService->triggerCheck();
+
+		$json = $this->restParser->getParameters();
+		if (!$json || !isset($json['name']) || !$json['name']) {
+			throw new Exception('New category name not found');
+		}
+
+		$category = urldecode($category);
+		try {
+			$recipes = $this->service->getRecipesByCategory($category);
+			foreach ($recipes as $i => $recipe) {
+				$r = $this->service->getRecipeById($recipe['recipe_id']);
+				$r['recipeCategory'] = $json['name'];
+				$this->service->addRecipe($r);
+			}
+
+			return new DataResponse($json['name'], Http::STATUS_OK, ['Content-Type' => 'application/json']);
+		} catch (\Exception $e) {
+			error_log($e);
+			return new DataResponse($e->getMessage(), 500);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
 	public function tags($keywords) {
 		$this->dbCacheService->triggerCheck();
 		$keywords = urldecode($keywords);
