@@ -33,6 +33,9 @@
                 :allowCollapse="true"
                 :to="'/category/'+cat.name"
                 @update:open="categoryOpen(idx)"
+                :editable="true"
+                :editPlaceholder="t('cookbook','Enter new category name')"
+                @update:title="(val) => { categoryUpdateName(idx,val) }"
             >
                 <AppNavigationCounter slot="counter">{{ cat.recipeCount }}</AppNavigationCounter>
                 <template>
@@ -180,7 +183,7 @@ export default {
                     this.resetInterval = true
                     this.updateInterval = oldVal
                 })
-        },
+        }
     },
     methods: {
         /**
@@ -225,6 +228,31 @@ export default {
                 .catch(function(e) {
                     cat.recipes = []
                     alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat.name}))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
+        },
+
+        /**
+         * Updates the name of a category
+         */
+        categoryUpdateName: function(idx, newName) {
+            let cat = this.categories[idx]
+            let $this = this
+            if (!cat) {
+                return
+            }
+            axios({
+                method: 'PUT',
+                url: this.$window.baseUrl + '/api/category/' + encodeURIComponent(cat.name),
+                data: { name: newName }
+                })
+                .then(function (response) {
+                    $this.categories[idx].name = newName
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Failed to update name of category \"{category}\"', {"category": cat.name}))
                     if (e && e instanceof Error) {
                         throw e
                     }
@@ -385,9 +413,10 @@ export default {
     background-repeat: no-repeat;
 }
 
->>> .app-navigation-entry *:not(.app-navigation-entry-icon) {
+/* >>> .app-navigation-entry *:not(.app-navigation-entry-icon) {
     background: initial !important;
-}
+} */
+
 
 >>> .app-navigation-entry.recipe {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
