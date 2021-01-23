@@ -379,6 +379,10 @@ export default {
         this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })
+        this.$root.$off('categoryRenamed')
+        this.$root.$on('categoryRenamed', () => {
+            this.loadRecipeData()
+        })
         this.savingRecipe = false
     },
     beforeDestroy() {

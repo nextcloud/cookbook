@@ -250,6 +250,7 @@ export default {
                 })
                 .then(function (response) {
                     $this.categories[idx].name = newName
+                    $this.$root.$emit('categoryRenamed')
                 })
                 .catch(function(e) {
                     alert(t('cookbook', 'Failed to update name of category \"{category}\"', {"category": cat.name}))
