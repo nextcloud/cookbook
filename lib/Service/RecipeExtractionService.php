@@ -23,6 +23,7 @@ class RecipeExtractionService {
 	public function __construct(HttpJsonLdParser $jsonParser, HttpMicrodataParser $microdataParser,
 		IL10N $l10n) {
 		$this->parsers = [$jsonParser, $microdataParser];
+		$this->l = $l10n;
 	}
 	
 	/**

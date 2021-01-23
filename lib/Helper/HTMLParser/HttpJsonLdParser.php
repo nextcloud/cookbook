@@ -19,6 +19,8 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	
 	public function __construct(IL10N $l10n, JsonService $jsonService) {
 		parent::__construct($l10n);
+		
+		$this->jsonService = $jsonService;
 	}
 	
 	public function parse(\DOMDocument $document): array {

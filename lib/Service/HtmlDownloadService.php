@@ -199,32 +199,24 @@ class HtmlDownloadService {
 			/** @var \LibXMLError $error */
 			$error = $by_error_code[$code];
 			
-			// Collect data for translations
-			$params = [];
-			$params['code'] = $error->code;
-			$params['count'] = $count;
-			$params['url'] = $url;
-			$params['line'] = $error->line;
-			$params['column'] = $error->column;
-			
 			switch ($error->level) {
 				case LIBXML_ERR_WARNING:
-					$error_message = $this->l->t("Warning {code} occurred {count} times while parsing {url}.", $params);
+					$error_message = $this->l->t('Warning %u occurred %u times while parsing %s.', [$error->code, $count, $url]);
 					$return = max($return, self::PARSING_WARNING);
 					break;
 				case LIBXML_ERR_ERROR:
-					$error_message = $this->l->t("Error {code} occurred {count} times while parsing {url}.", $params);
+					$error_message = $this->l->t('Error %u occurred %u times while parsing %s.', [$error->code, $count, $url]);
 					$return = max($return, self::PARSING_ERROR);
 					break;
 				case LIBXML_ERR_FATAL:
-					$error_message = $this->l->t("Fatal error {code} occurred {count} times while parsing {url}.", $params);
+					$error_message = $this->l->t('Fatal error %u occurred %count$u times while parsing %s.', [$error->code, $count, $url]);
 					$return = max($return, self::PARSING_FATAL_ERROR);
 					break;
 				default:
 					throw new \Exception($this->l->t('Unsupported error level during parsing of XML output.'));
 			}
 			
-			$last_occurence = $this->l->t('Last time it occurred in line {line} and column {column}', $params);
+			$last_occurence = $this->l->t('Last time it occurred in line %u and column %u', [$error->line, $error->column]);
 			
 			$error_message = "libxml: $error_message $last_occurence: " . $error->message;
 			$this->logger->warning($error_message);
