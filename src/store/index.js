@@ -21,7 +21,8 @@ export default new Vuex.Store({
         appNavigation:
             {
                 // It can be hidden in small browser windows (e.g., on mobile phones)
-                visible: true
+                visible: true,
+                refreshRequired: false
             },
         user: null,
         // Page is for keeping track of the page the user is on and
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
 
     mutations: {
+        setAppNavigationRefreshRequired(s, { b }) {
+            s.appNavigation.refreshRequired = b
+        },
         setAppNavigationVisible(s, { b }) {
             s.appNavigation.visible = b
         },
@@ -77,6 +81,9 @@ export default new Vuex.Store({
         setAppNavigationVisible(c, { isVisible }) {
             c.commit('setAppNavigationVisible', { b: isVisible })
         },
+        setAppNavigationRefreshRequired(c, { isRequired }) {
+            c.commit('setAppNavigationRefreshRequired', {b: isRequired })
+        },
         setLoadingRecipe(c, { recipe }) {
             c.commit('setLoadingRecipe', { r: parseInt(recipe) })
         },
@@ -105,6 +112,7 @@ export default new Vuex.Store({
             });
 
             return request.then(() => {
+                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                     c.commit('setUpdatingRecipeDirectory', { b: false })
                 })
         },

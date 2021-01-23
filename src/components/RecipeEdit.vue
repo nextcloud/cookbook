@@ -263,7 +263,7 @@ export default {
                         $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.$window.goTo('/recipe/'+recipe)
                         // Refresh navigation to display changes
-                        $this.$root.$emit('refreshNavigation')
+                        $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                     })
                     .catch(function(e) {
                         // error
@@ -288,7 +288,7 @@ export default {
                         $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.$window.goTo('/recipe/'+recipe)
                         // Refresh navigation to display changes
-                        $this.$root.$emit('refreshNavigation')
+                        $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                     })
                     .catch(function(e) {
                         // error

@@ -127,6 +127,11 @@ export default {
                 total += this.categories[i].recipeCount
             }
             return total
+        },
+        // Computed property to watch the Vuex state. If there are more in the
+        // future, consider using the Vue mapState helper
+        refreshRequired () {
+            return this.$store.state.appNavigation.refreshRequired
         }
     },
     watch: {
@@ -149,6 +154,12 @@ export default {
                     this.resetPrintImage = true
                     this.printImage = oldVal
                 })
+        },
+        // Register a method hook for navigation refreshing
+        refreshRequired: function(newVal, oldVal) {
+            if (newVal != oldVal && newVal == true) {
+                this.getCategories()
+            }
         },
         updateInterval: function(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
@@ -237,7 +248,7 @@ export default {
                     $this.$window.goTo('/recipe/' + recipe.id)
                     e.target[1].value = ''
                     // Refresh left navigation pane to display changes
-                    $this.$root.$emit('refreshNavigation')
+                    $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                 })
                 .catch(function(e) {
                     $this.downloading = false
@@ -278,6 +289,8 @@ export default {
                                 $this.categoryOpen(i)
                             }
                         }
+                        // Refreshing component data has been finished
+                        $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: false })
                     })
                 })
                 .catch(function(e) {
@@ -299,7 +312,6 @@ export default {
                     this.$store.dispatch('updateRecipeDirectory', { dir: path })
                         .then(() => {
                             $this.recipeFolder = path
-                            $this.$root.$emit('refreshNavigation')
                             if($this.$route.path != '/') {
                                 $this.$router.push('/')
                             }
@@ -359,12 +371,6 @@ export default {
     },
     mounted () {
         this.setup()
-        // Register a method hook for navigation refreshing
-        // This component should only load once, but better safe than sorry...
-        this.$root.$off('refreshNavigation')
-        this.$root.$on('refreshNavigation', () => {
-            this.getCategories()
-        })
         this.getCategories()
     },
 }

@@ -198,7 +198,7 @@ export default {
             axios.delete(window.baseUrl + '/api/recipes/' + id)
                 .then(function(response) {
                     $this.$window.goTo('/')
-                    $this.$root.$emit('refreshNavigation')
+                    $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                 })
                 .catch(function(e) {
                     alert(t('cookbook', 'Delete failed'))
