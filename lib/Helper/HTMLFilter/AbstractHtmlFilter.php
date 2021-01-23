@@ -2,7 +2,7 @@
 
 namespace OCA\Cookbook\Helper\HTMLFilter;
 
-abstract class AbstractHTMLFilter {
+abstract class AbstractHtmlFilter {
 	
 	/**
 	 * Filter the HTML according to the rules of this class

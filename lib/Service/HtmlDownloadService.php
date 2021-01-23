@@ -3,8 +3,8 @@
 namespace OCA\Cookbook\Service;
 
 use OCA\Cookbook\Exception\ImportException;
-use OCA\Cookbook\Helper\HTMLFilter\AbstractHTMLFilter;
-use OCA\Cookbook\Helper\HTMLFilter\HTMLEntiryDecodeFilter;
+use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
+use OCA\Cookbook\Helper\HTMLFilter\HtmlEntiryDecodeFilter;
 use OCP\IL10N;
 use OCP\ILogger;
 
@@ -57,7 +57,7 @@ class HtmlDownloadService {
 	 */
 	private $html;
 	
-	public function __construct(HTMLEntiryDecodeFilter $htmlEntityDecodeFilter,
+	public function __construct(HtmlEntiryDecodeFilter $htmlEntityDecodeFilter,
 		ILogger $logger, IL10N $l10n) {
 		$this->htmlFilters = [ $htmlEntityDecodeFilter ];
 		$this->logger = $logger;
@@ -84,7 +84,7 @@ class HtmlDownloadService {
 		$this->html = $this->fetchHtmlPage($url);
 		
 		// Filter the HTML code
-		/** @var AbstractHTMLFilter $filter */
+		/** @var AbstractHtmlFilter $filter */
 		foreach ($this->htmlFilters as $filter) {
 			$filter->apply($this->html);
 		}
