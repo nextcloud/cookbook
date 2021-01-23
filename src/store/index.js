@@ -111,10 +111,11 @@ export default new Vuex.Store({
                 data: { 'folder': dir },
             });
 
-            return request.then(() => {
+            request.then(() => {
                     c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                     c.commit('setUpdatingRecipeDirectory', { b: false })
                 })
+            return request
         },
     }
 
