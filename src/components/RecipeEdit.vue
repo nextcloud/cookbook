@@ -380,8 +380,10 @@ export default {
             this.loadRecipeData()
         })
         this.$root.$off('categoryRenamed')
-        this.$root.$on('categoryRenamed', () => {
-            this.loadRecipeData()
+        this.$root.$on('categoryRenamed', (val) => {
+            if (!this._inactive && this.recipe['recipeCategory'] == val[1]) {
+                this.loadRecipeData()
+            }
         })
         this.savingRecipe = false
     },

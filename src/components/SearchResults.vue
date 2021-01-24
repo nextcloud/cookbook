@@ -86,6 +86,14 @@ export default {
     },
     mounted () {
         this.setup()
+        this.$root.$off('categoryRenamed')
+        this.$root.$on('categoryRenamed', (val) => {
+            if (!this._inactive
+                && this.query == 'cat'
+                && this.$route.params.value == val[1]) {
+                this.$window.goTo('/category/' + val[0])
+            }
+        })
     },
     beforeRouteUpdate (to, from, next) {
         // Move to next route as expected

@@ -254,22 +254,22 @@ export default {
          * Updates the name of a category
          */
         categoryUpdateName: function(idx, newName) {
-            let cat = this.categories[idx]
-            let $this = this
-            if (!cat) {
+            if (!this.categories[idx]) {
                 return
             }
+            let oldName = this.categories[idx].name
+            let $this = this
             axios({
                 method: 'PUT',
-                url: this.$window.baseUrl + '/api/category/' + encodeURIComponent(cat.name),
+                url: this.$window.baseUrl + '/api/category/' + encodeURIComponent(oldName),
                 data: { name: newName }
                 })
                 .then(function (response) {
                     $this.categories[idx].name = newName
-                    $this.$root.$emit('categoryRenamed')
+                    $this.$root.$emit('categoryRenamed', [newName, oldName])
                 })
                 .catch(function(e) {
-                    alert(t('cookbook', 'Failed to update name of category \"{category}\"', {"category": cat.name}))
+                    alert(t('cookbook', 'Failed to update name of category \"{category}\"', {"category": oldName}))
                     if (e && e instanceof Error) {
                         throw e
                     }
