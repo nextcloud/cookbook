@@ -127,6 +127,11 @@ export default {
                 total += this.categories[i].recipeCount
             }
             return total
+        },
+        // Computed property to watch the Vuex state. If there are more in the
+        // future, consider using the Vue mapState helper
+        refreshRequired () {
+            return this.$store.state.appNavigation.refreshRequired
         }
     },
     watch: {
@@ -149,6 +154,12 @@ export default {
                     this.resetPrintImage = true
                     this.printImage = oldVal
                 })
+        },
+        // Register a method hook for navigation refreshing
+        refreshRequired: function(newVal, oldVal) {
+            if (newVal != oldVal && newVal == true) {
+                this.getCategories()
+            }
         },
         updateInterval: function(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
@@ -237,7 +248,7 @@ export default {
                     $this.$window.goTo('/recipe/' + recipe.id)
                     e.target[1].value = ''
                     // Refresh left navigation pane to display changes
-                    $this.$root.$emit('refreshNavigation')
+                    $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
                 })
                 .catch(function(e) {
                     $this.downloading = false
@@ -267,16 +278,20 @@ export default {
                             })
                         }
                     }
-                    for (let i=0; i<$this.categories.length; i++) {
-                        // Reload recipes in open categories
-                        if (!$this.$refs['app-navi-cat-'+i]) {
-                            continue
+                    $this.$nextTick(() => {
+                        for (let i=0; i<$this.categories.length; i++) {
+                            // Reload recipes in open categories
+                            if (!$this.$refs['app-navi-cat-'+i]) {
+                                continue
+                            }
+                            if ($this.$refs['app-navi-cat-'+i][0].opened) {
+                                console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
+                                $this.categoryOpen(i)
+                            }
                         }
-                        if ($this.$refs['app-navi-cat-'+i][0].opened) {
-                            console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
-                            $this.categoryOpen(i)
-                        }
-                    }
+                        // Refreshing component data has been finished
+                        $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: false })
+                    })
                 })
                 .catch(function(e) {
                     alert(t('cookbook', 'Failed to fetch categories'))
@@ -294,18 +309,12 @@ export default {
                 t('cookbook', 'Path to your recipe collection'),
                 (path) => {
                     let $this = this
-                    axios({
-                        url: this.$window.baseUrl + '/config',
-                        method: 'POST',
-                        data: { 'folder': path },
-                    })
+                    this.$store.dispatch('updateRecipeDirectory', { dir: path })
                         .then(() => {
-                            $this.loadAll()
-                            .then(() => {
-                                $this.$store.dispatch('setRecipe', { recipe: null })
-                                $this.$window.goTo('/')
-                                $this.recipeFolder = path
-                            })
+                            $this.recipeFolder = path
+                            if($this.$route.path != '/') {
+                                $this.$router.push('/')
+                            }
                         })
                         .catch((e) => {
                             alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
@@ -357,17 +366,11 @@ export default {
          * Toggle the left navigation pane
          */
         toggleNavigation: function() {
-            this.$store.dispatch('setAppNavigationVisible', { isVisible: !this.$store.state.appNavigationVisible })
+            this.$store.dispatch('setAppNavigationVisible', { isVisible: !this.$store.state.appNavigation.visible })
         },
     },
     mounted () {
         this.setup()
-        // Register a method hook for navigation refreshing
-        // This component should only load once, but better safe than sorry...
-        this.$root.$off('refreshNavigation')
-        this.$root.$on('refreshNavigation', () => {
-            this.getCategories()
-        })
         this.getCategories()
     },
 }

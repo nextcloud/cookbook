@@ -251,52 +251,33 @@ export default {
             let $this = this
 
             if (this.recipe.id) {
-                // Update existing recipe
-                axios({
-                    method: 'PUT',
-                    url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
-                    data: this.recipe
-                    })
-                    .then(function (response) {
-                        // success
-                        let recipe = response.data
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
-                        $this.$window.goTo('/recipe/'+recipe)
-                        // Refresh navigation to display changes
-                        $this.$root.$emit('refreshNavigation')
+                this.$store.dispatch('updateRecipe', { recipe: this.recipe })
+                    .then((response) => {
+                        $this.$window.goTo('/recipe/'+response.data)
                     })
                     .catch(function(e) {
                         // error
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         alert(t('cookbook', 'Recipe could not be saved'))
                         console.log(e)
                     })
                     .then(() => {
                         // finally
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.savingRecipe = false
                     })
             } else {
-                // Create a new recipe
-                axios({
-                    url: this.$window.baseUrl + '/api/recipes',
-                    method: 'POST',
-                    data: this.recipe,
-                    })
-                    .then(function(response) {
-                        // success
-                        let recipe = response.data
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
-                        $this.$window.goTo('/recipe/'+recipe)
-                        // Refresh navigation to display changes
-                        $this.$root.$emit('refreshNavigation')
+                this.$store.dispatch('createRecipe', { recipe: this.recipe })
+                    .then((response) => {
+                        $this.$window.goTo('/recipe/'+response.data)
                     })
                     .catch(function(e) {
                         // error
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         alert(t('cookbook', 'Recipe could not be saved'))
+                        console.log(e)
                     })
                     .then(() => {
                         // finally
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.savingRecipe = false
                     })
             }
