@@ -37,7 +37,7 @@
                 :key="cat+idx"
                 :ref="'app-navi-cat-'+idx"
                 :title="cat.name"
-                icon="icon-category-files"
+                :icon="categoryUpdating[idx] ? 'icon-loading-small': 'icon-category-files'"
                 :allowCollapse="true"
                 :to="'/category/'+cat.name"
                 @update:open="categoryOpen(idx)"
@@ -101,6 +101,7 @@ import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
 import AppNavigationSettings from '@nextcloud/vue/dist/Components/AppNavigationSettings'
 import AppNavigationSpacer from '@nextcloud/vue/dist/Components/AppNavigationSpacer'
+import Vue from 'vue'
 
 import AppNavigationCaption from './AppNavigationCaption'
 
@@ -122,6 +123,7 @@ export default {
             catRenamingEnabled: false,
             categories: [],
             downloading: false,
+            isCategoryUpdating: [],
             printImage: false,
             recipeFolder: "",
             scanningLibrary: false,
@@ -145,6 +147,9 @@ export default {
         // future, consider using the Vue mapState helper
         refreshRequired () {
             return this.$store.state.appNavigation.refreshRequired
+        },
+        categoryUpdating () {
+            return this.isCategoryUpdating
         }
     },
     watch: {
@@ -236,6 +241,8 @@ export default {
                 return
             }
             let cat = this.categories[idx]
+            let $this = this
+            Vue.set(this.isCategoryUpdating, idx, true)
 
             axios.get(this.$window.baseUrl + '/api/category/'+cat.name)
                 .then(function(response) {
@@ -248,6 +255,10 @@ export default {
                         throw e
                     }
                 })
+                .then(() => {
+                    // finally
+                    Vue.set($this.isCategoryUpdating, idx, false)
+                })
         },
 
         /**
@@ -257,8 +268,10 @@ export default {
             if (!this.categories[idx]) {
                 return
             }
+            Vue.set(this.isCategoryUpdating, idx, true)
             let oldName = this.categories[idx].name
             let $this = this
+
             axios({
                 method: 'PUT',
                 url: this.$window.baseUrl + '/api/category/' + encodeURIComponent(oldName),
@@ -273,6 +286,10 @@ export default {
                     if (e && e instanceof Error) {
                         throw e
                     }
+                })
+                .then(() => {
+                    // finally
+                    Vue.set($this.isCategoryUpdating, idx, false)
                 })
         },
 
@@ -312,6 +329,8 @@ export default {
                     // Reset the old values
                     $this.uncatRecipes = 0
                     $this.categories = []
+                    $this.isCategoryUpdating = []
+
                     for (let i=0; i<json.length; i++) {
                         if (json[i].name === '*') {
                             $this.uncatRecipes = parseInt(json[i].recipe_count)
@@ -321,6 +340,7 @@ export default {
                                 recipeCount: parseInt(json[i].recipe_count),
                                 recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
                             })
+                            $this.isCategoryUpdating.push(false)
                         }
                     }
                     $this.$nextTick(() => {
