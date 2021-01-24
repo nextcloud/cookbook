@@ -19,12 +19,20 @@
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
                     {{ t('cookbook', 'Download recipe from URL') }}
             </ActionInput>
+
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/_/'">
                 <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
             </AppNavigationItem>
+            <AppNavigationCaption :title="t('cookbook', 'Categories')" >
+                <template slot="actions">
+                    <ActionButton icon="icon-rename" @click="toggleCategoryRenaming">
+                        Enable editing
+                    </ActionButton>
+                </template>
+            </AppNavigationCaption>
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
                 :ref="'app-navi-cat-'+idx"
@@ -33,7 +41,7 @@
                 :allowCollapse="true"
                 :to="'/category/'+cat.name"
                 @update:open="categoryOpen(idx)"
-                :editable="true"
+                :editable="catRenamingEnabled"
                 :editPlaceholder="t('cookbook','Enter new category name')"
                 @update:title="(val) => { categoryUpdateName(idx,val) }"
             >
@@ -88,12 +96,13 @@ import axios from '@nextcloud/axios'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
-import AppNavigationCaption from '@nextcloud/vue/dist/Components/AppNavigationCaption'
 import AppNavigationCounter from '@nextcloud/vue/dist/Components/AppNavigationCounter'
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
 import AppNavigationSettings from '@nextcloud/vue/dist/Components/AppNavigationSettings'
 import AppNavigationSpacer from '@nextcloud/vue/dist/Components/AppNavigationSpacer'
+
+import AppNavigationCaption from './AppNavigationCaption'
 
 export default {
     name: 'AppNavi',
@@ -110,6 +119,7 @@ export default {
     },
     data () {
         return {
+            catRenamingEnabled: false,
             categories: [],
             downloading: false,
             printImage: false,
@@ -186,6 +196,12 @@ export default {
         }
     },
     methods: {
+        /**
+         * Enable renaming of categories.
+         */
+        toggleCategoryRenaming: function() {
+            this.catRenamingEnabled = !this.catRenamingEnabled
+        },
         /**
          * Initial setup
          */
@@ -413,11 +429,6 @@ export default {
     background-image: var(--icon-add-000);
     background-repeat: no-repeat;
 }
-
-/* >>> .app-navigation-entry *:not(.app-navigation-entry-icon) {
-    background: initial !important;
-} */
-
 
 >>> .app-navigation-entry.recipe {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
