@@ -238,6 +238,8 @@ class MainController extends Controller {
 				$r['recipeCategory'] = $json['name'];
 				$this->service->addRecipe($r);
 			}
+			// Update cache
+			$this->dbCacheService->updateCache();
 
 			return new DataResponse($json['name'], Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
