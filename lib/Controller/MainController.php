@@ -227,13 +227,13 @@ class MainController extends Controller {
 
 		$json = $this->restParser->getParameters();
 		if (!$json || !isset($json['name']) || !$json['name']) {
-			throw new Exception('New category name not found');
+			return new DataResponse('New category name not found in data', 400);
 		}
 
 		$category = urldecode($category);
 		try {
 			$recipes = $this->service->getRecipesByCategory($category);
-			foreach ($recipes as $i => $recipe) {
+			foreach ($recipes as $recipe) {
 				$r = $this->service->getRecipeById($recipe['recipe_id']);
 				$r['recipeCategory'] = $json['name'];
 				$this->service->addRecipe($r);
@@ -241,7 +241,6 @@ class MainController extends Controller {
 
 			return new DataResponse($json['name'], Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			error_log($e);
 			return new DataResponse($e->getMessage(), 500);
 		}
 	}
