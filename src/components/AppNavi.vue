@@ -270,6 +270,7 @@ export default {
             }
             Vue.set(this.isCategoryUpdating, idx, true)
             let oldName = this.categories[idx].name
+            this.$store.dispatch('setCategoryUpdating', { category: oldName })
             let $this = this
 
             axios({
@@ -290,6 +291,7 @@ export default {
                 .then(() => {
                     // finally
                     Vue.set($this.isCategoryUpdating, idx, false)
+                    $this.$store.dispatch('setCategoryUpdating', { category: null })
                 })
         },
 

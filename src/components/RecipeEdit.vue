@@ -94,8 +94,13 @@ export default {
         }
     },
     computed: {
+        categoryUpdating() {
+            return this.$store.state.categoryUpdating
+        },
         overlayVisible() {
-            return (this.$store.state.loadingRecipe || this.$store.state.reloadingRecipe)
+            return (this.$store.state.loadingRecipe
+                || this.$store.state.reloadingRecipe
+                || (this.$store.state.categoryUpdating && this.$store.state.categoryUpdating == this.recipe['recipeCategory']))
         }
     },
     watch: {

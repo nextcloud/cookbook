@@ -42,6 +42,8 @@ export default new Vuex.Store({
         savingRecipe: false,
         // Updating the recipe directory is in progress
         updatingRecipeDirectory: false,
+        // Category which is being updated (name)
+        categoryUpdating: null,
     },
 
     mutations: {
@@ -50,6 +52,9 @@ export default new Vuex.Store({
         },
         setAppNavigationVisible(s, { b }) {
             s.appNavigation.visible = b
+        },
+        setCategoryUpdating(s, { c }) {
+            s.categoryUpdating = c
         },
         setLoadingRecipe(s, { r }) {
             s.loadingRecipe = r
@@ -127,6 +132,9 @@ export default new Vuex.Store({
         },
         setUser(c, { user }) {
             c.commit('setUser', { u: user })
+        },
+        setCategoryUpdating(c, { category }) {
+            c.commit('setCategoryUpdating', { c: category })
         },
         updateRecipeDirectory(c, { dir }) {
             c.commit('setUpdatingRecipeDirectory', { b: true })
