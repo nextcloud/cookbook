@@ -7,7 +7,7 @@ on:
 
 jobs:
   
-  lint:
+  php-lint:
      name: Run PHP Linter and Code Style checker
      runs-on: ubuntu-latest
      steps:
@@ -33,7 +33,7 @@ jobs:
               PHP_CS_FIXER_IGNORE_ENV: 1
            run: composer cs:check
   
-  test:
+  unit-tests:
     name: Run the unittests
     runs-on: ubuntu-latest
     
@@ -126,7 +126,9 @@ jobs:
 
   source-package:
     name: Create source code artifacts
-    needs: test
+    needs:
+        - uni-tests
+        - php-lint
     runs-on: ubuntu-latest
     
     steps:

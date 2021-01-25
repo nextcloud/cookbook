@@ -1,14 +1,10 @@
 version: "3.1"
 
-volumes:
-    mysql:
-    postgres:
-
 services:
     mysql:
-        image: mariadb:10.1
+        build: mysql
         volumes:
-            - mysql:/var/lib/mysql
+            - ./volumes/mysql:/var/lib/mysql
         environment:
             MYSQL_DATABASE: nc_test
             MYSQL_USER: tester
@@ -22,7 +18,7 @@ services:
             POSTGRES_PASSWORD: tester_pass
             POSTGRES_DB: nc_test
         volumes:
-            - postgres:/var/lib/postgresql/data
+            - ./volumes/postgres:/var/lib/postgresql/data
     
     dut:
         build:
