@@ -20,7 +20,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-
+import Vue from 'vue'
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
@@ -386,8 +386,15 @@ export default {
         })
         this.$root.$off('categoryRenamed')
         this.$root.$on('categoryRenamed', (val) => {
-            if (!this._inactive && this.recipe['recipeCategory'] == val[1]) {
-                this.loadRecipeData()
+            // Update selectable categories
+            let idx = this.allCategories.findIndex(c => c == val[1])
+            if (idx >= 0) {
+                Vue.set(this.allCategories, idx, val[0])
+                // this.allCategories[idx] = val[0]
+            }
+            // Update selected category if the currently selected was renamed
+            if (this.recipe['recipeCategory'] == val[1]) {
+                this.recipe.recipeCategory = val[0]
             }
         })
         this.savingRecipe = false
