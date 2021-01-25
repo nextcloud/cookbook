@@ -73,7 +73,7 @@ class MainController extends Controller {
 			'cookbook_version' => [0, 7, 10], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
 				'major' => 0,
-				'minor' => 1
+				'minor' => 2
 			]
 		];
 		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);
