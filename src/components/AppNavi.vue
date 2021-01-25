@@ -270,14 +270,9 @@ export default {
             }
             Vue.set(this.isCategoryUpdating, idx, true)
             let oldName = this.categories[idx].name
-            this.$store.dispatch('setCategoryUpdating', { category: oldName })
             let $this = this
 
-            axios({
-                method: 'PUT',
-                url: this.$window.baseUrl + '/api/category/' + encodeURIComponent(oldName),
-                data: { name: newName }
-                })
+            this.$store.dispatch('updateCategoryName', { categoryNames: [oldName, newName] })
                 .then(function (response) {
                     $this.categories[idx].name = newName
                     $this.$root.$emit('categoryRenamed', [newName, oldName])
@@ -291,7 +286,6 @@ export default {
                 .then(() => {
                     // finally
                     Vue.set($this.isCategoryUpdating, idx, false)
-                    $this.$store.dispatch('setCategoryUpdating', { category: null })
                 })
         },
 

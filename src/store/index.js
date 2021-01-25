@@ -136,6 +136,33 @@ export default new Vuex.Store({
         setCategoryUpdating(c, { category }) {
             c.commit('setCategoryUpdating', { c: category })
         },
+        updateCategoryName(c, { categoryNames }) {
+            let oldName = categoryNames[0], newName = categoryNames[1]
+            c.dispatch('setCategoryUpdating', { category: oldName })
+
+            const request = axios({
+                method: 'PUT',
+                url: window.baseUrl + '/api/category/' + encodeURIComponent(oldName),
+                data: { name: newName }
+                });
+
+            request.then(function (response) {
+                    if (c.state.recipe.recipeCategory == oldName) {
+                        c.state.recipe.recipeCategory = newName
+                    }
+                })
+                .catch(function(e) {
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
+                .then(() => {
+                    // finally
+                    c.dispatch('setCategoryUpdating', { category: null })
+                })
+
+            return request
+        },
         updateRecipeDirectory(c, { dir }) {
             c.commit('setUpdatingRecipeDirectory', { b: true })
             c.dispatch('setRecipe', { recipe: null })
