@@ -13,6 +13,8 @@
   [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
 - Centralized some recipe tasks (create, update, delete)
   [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
+- Added icon for recipes in navigation pane, closes #550
+  [#560](https://github.com/nextcloud/cookbook/pull/560/) @seyfeb
 
 ### Fixed
 - Added some documentation how to install GH action generated builds

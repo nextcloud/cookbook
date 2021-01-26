@@ -40,7 +40,7 @@
                         :key="idx+'-'+idy"
                         :title="rec.name"
                         :to="'/recipe/'+rec.recipe_id"
-                        :icon="$store.state.loadingRecipe===parseInt(rec.recipe_id) || !rec.recipe_id ? 'icon-loading-small' : null"
+                        :icon="$store.state.loadingRecipe===parseInt(rec.recipe_id) || !rec.recipe_id ? 'icon-loading-small' : 'icon-file'"
                     />
                 </template>
             </AppNavigationItem>
