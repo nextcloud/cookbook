@@ -5,7 +5,9 @@
   [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
 - Changing category name for all recipes in a category
   [#555](https://github.com/nextcloud/cookbook/pull/555/) @seyfeb
-  
+- Functionality to reference other recipes by id in description, tools, ingredients, and instructions
+  [#562](https://github.com/nextcloud/cookbook/pull/562/) @seyfeb
+
 ### Changed
 - Using computed property in recipe view
   [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb
