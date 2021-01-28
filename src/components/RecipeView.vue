@@ -141,10 +141,12 @@ export default {
 
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(this.$store.state.recipe.recipeIngredient)
+                    .map((i) => {return this.convertRecipeReferences(i)})
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(this.$store.state.recipe.recipeInstructions)
+                    .map((i) => {return this.convertRecipeReferences(i)})
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -176,7 +178,9 @@ export default {
             }
 
             if (this.$store.state.recipe.tool) {
-                recipe.tools = this.$store.state.recipe.tool
+                recipe.tools = this.$store.state.recipe.tool.map((i) => {
+                    return this.convertRecipeReferences(i)
+                    })
             }
 
             if (this.$store.state.recipe.dateCreated) {
@@ -563,4 +567,14 @@ export default {
             .instructions .instruction.done::before {
                 content: '✔';
             }
+</style>
+
+<style>
+.recipe-reference-inline {
+    color: var(--color-text-maxcontrast);
+    font-weight: 450;
+}
+.recipe-reference-inline:hover {
+    color: var(--color-main-text);
+}
 </style>

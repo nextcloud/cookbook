@@ -1,5 +1,5 @@
 <template>
-    <li :class="{ 'done': isDone }" @click="toggleDone">{{ instruction }}</li>
+    <li :class="{ 'done': isDone }" @click="toggleDone" v-html="instruction"></li>
 </template>
 
 <script>
