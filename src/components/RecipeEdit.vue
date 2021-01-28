@@ -2,7 +2,7 @@
     <div class="wrapper">
         <div class="overlay" :class="{hidden: !overlayVisible}" />
         <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
-        <EditInputField :fieldType="'markdown'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
+        <EditInputField :fieldType="'markdown'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" :referencePopupEnabled="true" />
         <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
         <EditImageField :fieldLabel="t('cookbook', 'Image')" v-model="recipe['image']" />
         <EditTimeField :fieldLabel="t('cookbook', 'Preparation time')" v-model="prepTime" />
@@ -15,6 +15,7 @@
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" />
+        <edit-multiselect-popup ref="referencesPopup" class="referencesPopup" :class="{visible: referencesPopupFocused}" :options="allrecipeOptions" track-by="recipe_id" label="name" :loading="loadingRecipeReferences" :focused="referencesPopupFocused" />
     </div>
 </template>
 
@@ -26,6 +27,7 @@ import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
 import EditMultiselect from './EditMultiselect'
 import EditMultiselectInputGroup from './EditMultiselectInputGroup'
+import EditMultiselectPopup from './EditMultiselectPopup'
 import EditTimeField from './EditTimeField'
 
 export default {
@@ -37,6 +39,7 @@ export default {
         EditMultiselect,
         EditTimeField,
         EditMultiselectInputGroup,
+        EditMultiselectPopup
     },
     props: ['id'],
     data () {
@@ -78,6 +81,7 @@ export default {
             isFetchingKeywords: true,
             allKeywords: [],
             selectedKeywords: [],
+            allRecipes: [],
             availableNutritionFields:
                 [{ key: 'calories', label: t('cookbook', 'Calories'), placeholder: t('cookbook', 'E.g.: 450 kcal (amount & unit)') },
                 { key: 'carbohydrateContent', label: t('cookbook', 'Carbohydrate content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
@@ -90,10 +94,19 @@ export default {
                 { key: 'sodiumContent',label: t('cookbook', 'Sodium content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'sugarContent', label: t('cookbook', 'Sugar content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'transFatContent', label: t('cookbook', 'Trans-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
-                { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }]
+                { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }],
+            referencesPopupFocused: false,
+            popupContext: undefined,
+            loadingRecipeReferences: true
         }
     },
     computed: {
+        allrecipeOptions() {
+            return this.allRecipes.map(r => {
+                    return {recipe_id: r.recipe_id, name: r.recipe_id + ": " + r.name}
+                })
+            
+        },
         categoryUpdating() {
             return this.$store.state.categoryUpdating
         },
@@ -368,6 +381,8 @@ export default {
         }
     },
     mounted () {
+        let $this = this
+
         // Store the initial recipe configuration for possible later use
         if (this.recipeInit === null) {
             this.recipeInit = this.recipe
@@ -397,7 +412,39 @@ export default {
                 this.recipe.recipeCategory = val[0]
             }
         })
+        // Register recipe-reference selection hook for showing popup when requested
+        // from a child element
+        this.$off('showRecipeReferencesPopup')
+        this.$on('showRecipeReferencesPopup', (val) => {
+            this.referencesPopupFocused = true
+            this.popupContext = val
+        })
+        // Register hook when recipe reference has been selected in popup
+        this.$off('ms-popup-selected')
+        this.$on('ms-popup-selected', (opt) => {
+            this.referencesPopupFocused = false
+            this.popupContext.context.pasteString('r/' + opt.recipe_id + ' ')
+        })
+        // Register hook when recipe reference has been selected in popup
+        this.$off('ms-popup-selection-canceled')
+        this.$on('ms-popup-selection-canceled', (opt) => {
+            this.referencesPopupFocused = false
+            this.popupContext.context.pasteCanceled()
+        })
         this.savingRecipe = false
+        
+        // Load data for all recipes to be used in recipe-reference popup suggestions
+        axios.get(this.$window.baseUrl + '/api/recipes')
+            .then(function (response) {
+                $this.allRecipes = response.data
+            })
+            .catch(function (e) {
+                console.log(e)
+            })
+            .then(() => {
+                // finally
+                $this.loadingRecipeReferences = false
+            })
     },
     beforeDestroy() {
       window.removeEventListener('beforeunload', this.beforeWindowUnload)
@@ -487,5 +534,14 @@ form fieldset ul label input[type="checkbox"] {
     vertical-align: middle;
     cursor: pointer;
 } */
+
+.referencesPopup {
+    position: fixed;
+    display: none;
+}
+
+.referencesPopup.visible {
+    display: block;
+}
 
 </style>
