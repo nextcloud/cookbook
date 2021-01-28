@@ -25,7 +25,12 @@
                         </span>
                     </p>
 
-	                <VueShowdown :markdown="$store.state.recipe.description" class="markdown-description"/>
+<!-- <<<<<<< HEAD -->
+	                <VueShowdown :markdown="recipe.description" class="markdown-description"/>
+	                <!-- <VueShowdown :markdown="$store.state.recipe.description" class="markdown-description"/> -->
+<!-- ======= -->
+	                <!-- <p class="description" v-html="recipe.description"></p> -->
+<!-- >>>>>>> 4855340 (Converting reference in recipe description to links) -->
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
 	                </p>
@@ -117,6 +122,7 @@ export default {
     computed: {
         recipe: function() {
             let recipe = {
+                description: '',
                 ingredients: [],
                 instructions: [],
                 keywords: [],
@@ -127,6 +133,10 @@ export default {
                 dateCreated: null,
                 dateModified: null,
                 nutrition: null
+            }
+
+            if (this.$store.state.recipe.description) {
+                recipe.description = this.convertRecipeReferences(this.$store.state.recipe.description)
             }
 
             if (this.$store.state.recipe.recipeIngredient) {
@@ -223,6 +233,11 @@ export default {
         }
     },
     methods: {
+        convertRecipeReferences: function(text) {
+            let re = /(^|\s)#r\/(\d+)(\s|$)/g
+            let converted = text.replace(re, '$1<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$2">#$2</a>$3')
+            return converted
+        },
         isNullOrEmpty: function(str) {
             return !str || typeof(str) === 'string' && 0 === str.trim().length;
         },

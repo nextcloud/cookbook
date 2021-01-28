@@ -176,7 +176,7 @@ fieldset > .editor {
 fieldset > .editor {
     min-height: 10em;
     resize: vertical;
-    radius: 2;
+    border-radius: 2;
 }
 
     @media(max-width:1199px) { fieldset > input, fieldset > textarea, fieldset > .editor {
