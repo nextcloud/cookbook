@@ -12,9 +12,9 @@
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" v-model="recipe['recipeYield']" />
         <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" :referencePopupEnabled="true" />
         <edit-multiselect-popup ref="referencesPopup" class="referencesPopup" :class="{visible: referencesPopupFocused}" :options="allrecipeOptions" track-by="recipe_id" label="name" :loading="loadingRecipeReferences" :focused="referencesPopupFocused" />
     </div>
 </template>
