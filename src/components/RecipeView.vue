@@ -25,12 +25,7 @@
                         </span>
                     </p>
 
-<!-- <<<<<<< HEAD -->
 	                <VueShowdown :markdown="recipe.description" class="markdown-description"/>
-	                <!-- <VueShowdown :markdown="$store.state.recipe.description" class="markdown-description"/> -->
-<!-- ======= -->
-	                <!-- <p class="description" v-html="recipe.description"></p> -->
-<!-- >>>>>>> 4855340 (Converting reference in recipe description to links) -->
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
 	                </p>
@@ -136,17 +131,23 @@ export default {
             }
 
             if (this.$store.state.recipe.description) {
-                recipe.description = this.convertRecipeReferences(this.$store.state.recipe.description)
+                recipe.description = this.convertRecipeReferences(
+                    this.escapeHtml(this.$store.state.recipe.description))
             }
 
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(this.$store.state.recipe.recipeIngredient)
-                    .map((i) => {return this.convertRecipeReferences(i)})
+                    .map((i) => {
+                        return this.convertRecipeReferences(this.escapeHtml(i))
+                        })
+                console.log(recipe.ingredients)
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(this.$store.state.recipe.recipeInstructions)
-                    .map((i) => {return this.convertRecipeReferences(i)})
+                    .map((i) => {
+                        return this.convertRecipeReferences(this.escapeHtml(i))
+                        })
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -179,8 +180,8 @@ export default {
 
             if (this.$store.state.recipe.tool) {
                 recipe.tools = this.$store.state.recipe.tool.map((i) => {
-                    return this.convertRecipeReferences(i)
-                    })
+                        return this.convertRecipeReferences(this.escapeHtml(i))
+                        })
             }
 
             if (this.$store.state.recipe.dateCreated) {
@@ -192,6 +193,7 @@ export default {
                 let date = this.parseDateTime(this.$store.state.recipe.dateModified)
                 recipe.dateModified = (date != null ? date.format('L, LT').toString() : null)
             }
+
             if (this.$store.state.recipe.nutrition) {
                 if ( this.$store.state.recipe.nutrition instanceof Array) {
                     this.$store.state.recipe.nutrition = {}
@@ -237,6 +239,15 @@ export default {
         }
     },
     methods: {
+        escapeHtml: function(unsafeString) {
+            return unsafeString
+                .replace(/&/g, "&amp;")
+                .replace(/\~/g, "&#732;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        },
         convertRecipeReferences: function(text) {
             let re = /(^|\s)#r\/(\d+)(\s|$)/g
             let converted = text.replace(re, '$1<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$2">#$2</a>$3')
