@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Invalid URL-encoded string found. Please report a bug." : "Zaznan je neveljavno zapisan naslov URL. Poslati je treba poročilo o napaki.",
     "Recipes" : "Recepti",
     "Cookbook" : "Kuhar'ca",
     "An integrated cookbook using schema.org JSON files as recipes" : "Kuharica v oblaku, ki omogoča prikaz datotek receptov schema.org JSON",
