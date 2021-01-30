@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <AppNavi id="app-navigation" />
+        <AppNavi id="app-navigation" :class="{'show-navigation': $store.state.appNavigation.visible}"/>
         <div id="app-content">
             <div id="app-content-wrapper">
                 <AppControls />
@@ -31,6 +31,10 @@ export default {
 
 <style>
 
+#app {
+    width: 100%;
+}
+
 #app-content {
     min-width: calc(100% - 300px);
 }
@@ -47,6 +51,13 @@ export default {
     }
     #app-content {
         margin-left: 0 !important;
+    }
+    #header {
+        display: none !important;
+    }
+    a:link:after,
+    a:visited:after {
+        content:" [" attr(href) "] ";
     }
 }
 

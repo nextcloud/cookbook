@@ -14,7 +14,7 @@
     "require-dev": {
         "phpunit/phpunit": ">=8.0",
         "nikic/php-parser": "4.2",
-        "nextcloud/coding-standard": "^0.4.0"
+        "nextcloud/coding-standard": "^0.5.0"
     },
     "scripts": {
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",

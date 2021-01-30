@@ -25,3 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Browser**
 Which browser are you using?
+
+**Versions**
+Nextcloud server version: ??
+Cookbook version: ??

@@ -40,7 +40,7 @@
                         :key="idx+'-'+idy"
                         :title="rec.name"
                         :to="'/recipe/'+rec.recipe_id"
-                        :icon="$store.state.loadingRecipe===parseInt(rec.recipe_id) || !rec.recipe_id ? 'icon-loading-small' : null"
+                        :icon="$store.state.loadingRecipe===parseInt(rec.recipe_id) || !rec.recipe_id ? 'icon-loading-small' : 'icon-file'"
                     />
                 </template>
             </AppNavigationItem>
@@ -65,10 +65,7 @@
                             <label class="settings-input">
                                 {{ t('cookbook', 'Update interval in minutes') }}
                             </label>
-                            <div class="update">
-                                <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
-                                <button class="icon-info" disabled="disabled" :title="t('cookbook', 'Last update: ')"></button>
-                            </div>
+                            <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
                         </li>
                         <li>
                             <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
@@ -84,7 +81,7 @@
 </template>
 
 <script>
-
+import axios from '@nextcloud/axios'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
@@ -130,6 +127,11 @@ export default {
                 total += this.categories[i].recipeCount
             }
             return total
+        },
+        // Computed property to watch the Vuex state. If there are more in the
+        // future, consider using the Vue mapState helper
+        refreshRequired () {
+            return this.$store.state.appNavigation.refreshRequired
         }
     },
     watch: {
@@ -139,17 +141,25 @@ export default {
                 this.resetPrintImage = false
                 return
             }
-            $.ajax({
+            axios({
                 url: this.$window.baseUrl + '/config',
                 method: 'POST',
                 data: { 'print_image': newVal ? 1 : 0 }
-            }).done((response) => {
-                // Should this check the response of the query? To catch some errors that redirect the page
-            }).fail((e) => {
-                alert(t('cookbook', 'Could not set preference for image printing'));
-                this.resetPrintImage = true
-                this.printImage = oldVal
             })
+                .then((response) => {
+                        // Should this check the response of the query? To catch some errors that redirect the page
+                })
+                .catch((e) => {
+                    alert(t('cookbook', 'Could not set preference for image printing'));
+                    this.resetPrintImage = true
+                    this.printImage = oldVal
+                })
+        },
+        // Register a method hook for navigation refreshing
+        refreshRequired: function(newVal, oldVal) {
+            if (newVal != oldVal && newVal == true) {
+                this.getCategories()
+            }
         },
         updateInterval: function(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
@@ -157,17 +167,19 @@ export default {
                 this.resetInterval = false
                 return
             }
-            $.ajax({
+            axios({
                 url: this.$window.baseUrl + '/config',
                 method: 'POST',
                 data: { 'update_interval': newVal }
-            }).done((response) => {
-                // Should this check the response of the query? To catch some errors that redirect the page
-            }).fail((e) => {
-                alert(t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
-                this.resetInterval = true
-                this.updateInterval = oldVal
-            })
+                })
+                .then((response) => {
+                    // Should this check the response of the query? To catch some errors that redirect the page
+                })
+                .catch((e) => {
+                    alert(t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
+                    this.resetInterval = true
+                    this.updateInterval = oldVal
+                })
         },
     },
     methods: {
@@ -175,19 +187,25 @@ export default {
          * Initial setup
          */
         setup: function() {
-            $.ajax({
+            axios({
                 url: this.$window.baseUrl + '/config',
                 method: 'GET',
                 data: null,
-            }).done((config) => {
-                this.resetPrintImage = false;
-                this.printImage = config['print_image'];
-                this.updateInterval = config['update_interval'];
-                this.recipeFolder = config['folder'];
-
-            }).fail((e) => {
-                alert(t('cookbook', 'Loading config failed'))
-            })
+                })
+                .then((response) => {
+                    let config = response.data
+                    this.resetPrintImage = false;
+                    if(config) {
+                        this.printImage = config['print_image'];
+                        this.updateInterval = config['update_interval'];
+                        this.recipeFolder = config['folder'];
+                    } else {
+                        alert(t('cookbook', 'Loading config failed'))
+                    }
+                })
+                .catch((e) => {
+                    alert(t('cookbook', 'Loading config failed'))
+                })
         },
 
         /**
@@ -199,77 +217,88 @@ export default {
                 return
             }
             let cat = this.categories[idx]
-            $.get(this.$window.baseUrl + '/category/'+cat.name).done(function(json) {
-                cat.recipes = json
-            }).fail((jqXHR, textStatus, errorThrown) => {
-                cat.recipes = []
-                alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat.name}))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            })
+
+            axios.get(this.$window.baseUrl + '/api/category/'+cat.name)
+                .then(function(response) {
+                    cat.recipes = response.data
+                })
+                .catch(function(e) {
+                    cat.recipes = []
+                    alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat.name}))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
         },
 
         /**
          * Download and import the recipe at given URL
          */
         downloadRecipe: function(e) {
-            let deferred = $.Deferred()
             this.downloading = true
-            $.ajax({
+            let $this = this
+            axios({
                 url: this.$window.baseUrl + '/import',
                 method: 'POST',
                 data: 'url=' + e.target[1].value
-            }).done((recipe) => {
-                this.downloading = false
-                this.$window.goTo('/recipe/' + recipe.id)
-                e.target[1].value = ''
-                deferred.resolve()
-            }).fail((jqXHR, textStatus, errorThrown) => {
-                this.downloading = false
-                deferred.reject(new Error(jqXHR.responseText))
-                alert(t('cookbook', jqXHR.responseJSON))
             })
-            return deferred.promise()
+                .then(function(response) {
+                    let recipe = response.data
+                    $this.downloading = false
+                    $this.$window.goTo('/recipe/' + recipe.id)
+                    e.target[1].value = ''
+                    // Refresh left navigation pane to display changes
+                    $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
+                })
+                .catch(function(e) {
+                    $this.downloading = false
+                    alert(t('cookbook', e.request.responseJSON))
+                })
         },
 
         /**
          * Fetch and display recipe categories
          */
         getCategories: function() {
-            $.get(this.$window.baseUrl + '/categories').done((json) => {
-                json = json || []
-                // Reset the old values
-                this.uncatRecipes = 0
-                this.categories = []
-                for (let i=0; i<json.length; i++) {
-                    if (json[i].name === '*') {
-                        this.uncatRecipes = parseInt(json[i].recipe_count)
-                    } else {
-                        this.categories.push({
-                            name: json[i].name,
-                            recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
-                        })
+            let $this = this
+            axios.get(this.$window.baseUrl + '/categories')
+                .then(function(response) {
+                    let json = response.data || []
+                    // Reset the old values
+                    $this.uncatRecipes = 0
+                    $this.categories = []
+                    for (let i=0; i<json.length; i++) {
+                        if (json[i].name === '*') {
+                            $this.uncatRecipes = parseInt(json[i].recipe_count)
+                        } else {
+                            $this.categories.push({
+                                name: json[i].name,
+                                recipeCount: parseInt(json[i].recipe_count),
+                                recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
+                            })
+                        }
                     }
-                }
-                for (let i=0; i<this.categories.length; i++) {
-                    // Reload recipes in open categories
-                    if (!this.$refs['app-navi-cat-'+i]) {
-                        continue
+                    $this.$nextTick(() => {
+                        for (let i=0; i<$this.categories.length; i++) {
+                            // Reload recipes in open categories
+                            if (!$this.$refs['app-navi-cat-'+i]) {
+                                continue
+                            }
+                            if ($this.$refs['app-navi-cat-'+i][0].opened) {
+                                console.log("Reloading recipes in "+$this.$refs['app-navi-cat-'+i][0].title)
+                                $this.categoryOpen(i)
+                            }
+                        }
+                        // Refreshing component data has been finished
+                        $this.$store.dispatch('setAppNavigationRefreshRequired', { isRequired: false })
+                    })
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Failed to fetch categories'))
+                    if (e && e instanceof Error) {
+                        throw e
                     }
-                    if (this.$refs['app-navi-cat-'+i][0].opened) {
-                        console.log("Reloading recipes in "+this.$refs['app-navi-cat-'+i][0].title)
-                        this.categoryOpen(i)
-                    }
-                }
-            })
-            .fail((e) => {
-                alert(t('cookbook', 'Failed to fetch categories'))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            })
+                })
         },
 
         /**
@@ -279,20 +308,17 @@ export default {
             OC.dialogs.filepicker(
                 t('cookbook', 'Path to your recipe collection'),
                 (path) => {
-                    $.ajax({
-                        url: this.$window.baseUrl + '/config',
-                        method: 'POST',
-                        data: { 'folder': path },
-                    }).done(() => {
-                        this.loadAll()
+                    let $this = this
+                    this.$store.dispatch('updateRecipeDirectory', { dir: path })
                         .then(() => {
-                            this.$store.dispatch('setRecipe', { recipe: null })
-                            this.$window.goTo('/')
-                            this.recipeFolder = path
+                            $this.recipeFolder = path
+                            if($this.$route.path != '/') {
+                                $this.$router.push('/')
+                            }
                         })
-                    }).fail((e) => {
-                        alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
-                    })
+                        .catch((e) => {
+                            alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
+                        })
                 },
                 false,
                 'httpd/unix-directory',
@@ -304,30 +330,29 @@ export default {
          * Reindex all recipes
          */
         reindex: function () {
+            let $this = this
             if (this.scanningLibrary) {
                 // No repeat clicks until we're done
                 return
             }
             this.scanningLibrary = true
-            var deferred = $.Deferred()
-            $.ajax({
+            axios({
                 url: this.$window.baseUrl + '/reindex',
                 method: 'POST'
-            }).done(() => {
-                deferred.resolve()
-                this.scanningLibrary = false
-                console.log("Library reindexing complete")
-                this.getCategories()
-                if (['index', 'search'].indexOf(this.$store.state.page) > -1) {
-                    // This refreshes the current router view in case items in it changed during reindex
-                    this.$router.go()
-                }
-            }).fail((jqXHR, textStatus, errorThrown) => {
-                deferred.reject(new Error(jqXHR.responseText))
-                this.scanningLibrary = false
-                console.log("Library reindexing failed!")
             })
-            return deferred.promise()
+                .then(() => {
+                    $this.scanningLibrary = false
+                    console.log("Library reindexing complete")
+                    $this.getCategories()
+                    if (['index', 'search'].indexOf(this.$store.state.page) > -1) {
+                        // This refreshes the current router view in case items in it changed during reindex
+                        $this.$router.go()
+                    }
+                })
+                .catch(function(e) {
+                    $this.scanningLibrary = false
+                    console.log("Library reindexing failed!")
+                })
         },
 
         /**
@@ -336,18 +361,16 @@ export default {
         setLoadingRecipe: function(id) {
             this.$store.dispatch('setLoadingRecipe', { recipe: id })
         },
+
+        /**
+         * Toggle the left navigation pane
+         */
         toggleNavigation: function() {
-            $("#app-navigation").toggleClass("show-navigation")
+            this.$store.dispatch('setAppNavigationVisible', { isVisible: !this.$store.state.appNavigation.visible })
         },
     },
     mounted () {
         this.setup()
-        // Register a method hook for navigation refreshing
-        // This component should only load once, but better safe than sorry...
-        this.$root.$off('refreshNavigation')
-        this.$root.$on('refreshNavigation', () => {
-            this.getCategories()
-        })
         this.getCategories()
     },
 }
@@ -355,6 +378,37 @@ export default {
 </script>
 
 <style scoped>
+
+>>> .app-navigation-new button {
+    min-height: 44px;
+    background-image: var(--icon-add-000);
+    background-repeat: no-repeat;
+}
+
+>>> .app-navigation-entry *:not(.app-navigation-entry-icon) {
+    background: initial !important;
+}
+
+>>> .app-navigation-entry.recipe {
+    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
+    padding-left: 0px;
+}
+
+>>> .app-navigation-entry .app-navigation-entry__children .app-navigation-entry
+{
+    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
+    padding-left: 0px;
+}
+
+.app-navigation-entry:hover li.recipe {
+        box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
+    }
+
+>>> .app-navigation-entry.recipe:hover,
+>>> .app-navigation-entry.router-link-exact-active {
+    opacity: 1;
+    box-shadow: inset 4px 0 var(--color-primary);
+}
 
 #app-settings .button {
     padding: 0;
@@ -368,18 +422,6 @@ export default {
 #app-settings .button {
     width: 100%;
     display: block;
-}
-
-.update > input {
-    width: calc(100% - 0.5rem - 34px) !important;
-    margin-right: 0.5rem;
-    float: left;
-}
-.update > button {
-    margin: 3px 0 !important;
-    width: 34px !important;
-    height: 34px !important;
-    float: left;
 }
 
 #hide-navigation {

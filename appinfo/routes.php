@@ -9,6 +9,7 @@
  */
 return [
 	'routes' => [
+		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
 		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
 		['name' => 'main#keywords', 'url' => '/keywords', 'verb' => 'GET'],

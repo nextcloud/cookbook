@@ -3,7 +3,7 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input type="text" v-model="content" />
+        <input type="text" :value="this.value" @input="$emit('input', $event.target.value)" />
         <button type="button" :title="t('cookbook', 'Pick a local image')" @click="pickImage"><span class="icon-category-multimedia"></span></button>
     </fieldset>
 </template>
@@ -12,16 +12,6 @@
 export default {
     name: "EditImageField",
     props: ['value','fieldLabel'],
-    data () {
-        return {
-            content: ''
-        }
-    },
-    watch: {
-        value: function() {
-            this.content = this.value
-        }
-    },
     methods: {
         pickImage: function(e) {
             e.preventDefault()

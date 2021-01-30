@@ -1,7 +1,6 @@
 <template>
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
-        <ActionButton id="show-navigation" icon="icon-menu" class="action-button" :ariaLabel="t('cookbook', 'Open navigation')" @click="toggleNavigation()" />
         <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
             <Breadcrumb :title="t('cookbook', 'Home')" :to="'/'" :disableDrop="true" />
             <!-- INDEX PAGE -->
@@ -88,6 +87,7 @@
 <script>
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
+import axios from '@nextcloud/axios'
 import Breadcrumbs from '@nextcloud/vue/dist/Components/Breadcrumbs'
 import Breadcrumb from '@nextcloud/vue/dist/Components/Breadcrumb'
 
@@ -192,22 +192,18 @@ export default {
             if (!confirm(t('cookbook', 'Are you sure you want to delete this recipe?'))) {
                 return
             }
-            let id = this.$store.state.recipe.id
             let $this = this
-            $.ajax({
-                url: window.baseUrl + '/api/recipes/' + id,
-                method: 'DELETE',
-            })
-            .done(function(reply) {
-                $this.$window.goTo('/')
-                $this.$root.$emit('refreshNavigation')
-            })
-            .fail(function(e) {
-                alert(t('cookbook', 'Delete failed'))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            })
+
+            this.$store.dispatch('deleteRecipe', { id: this.$store.state.recipe.id })
+                .then(function(response) {
+                    $this.$window.goTo('/')
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Delete failed'))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
         },
         printRecipe: function() {
             window.print()
@@ -223,9 +219,6 @@ export default {
         },
         search: function(e) {
             this.$window.goTo('/search/'+e.target[1].value)
-        },
-        toggleNavigation: function() {
-            $("#app-navigation").toggleClass("show-navigation")
         },
         updateFilters: function(e) {
             this.filterValue = e
@@ -259,20 +252,9 @@ export default {
     content: '' !important;
 }
 
-#show-navigation {
-    width: 60px;
-    height: 44px;
-    padding: 0;
-    display: none;
-    float: left;
-}
-    #show-navigation .action-button {
-        padding-right: 0 !important;
-    }
-
 @media only screen and (max-width: 1024px) {
-    #show-navigation {
-        display: block;
+    .breadcrumbs {
+        margin-left: 40px;
     }
 }
 

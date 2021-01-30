@@ -6,7 +6,7 @@
     <name>Cookbook</name>
     <summary>An integrated cookbook using schema.org JSON files as recipes</summary>
     <description><![CDATA[A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.]]></description>
-    <version>0.7.7</version>
+    <version>0.7.10</version>
     <licence>agpl</licence>
     <author mail="mrzapp@users.noreply.github.com">Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
@@ -15,7 +15,7 @@
     <bugs>https://github.com/nextcloud/cookbook/issues</bugs>
     <screenshot small-thumbnail="https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot-small.jpg">https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot-small.jpg</screenshot>
     <dependencies>
-        <php min-version="7.3"/>
+        <php min-version="7.2"/>
         <nextcloud min-version="17" max-version="20"/>
     </dependencies>
     <navigations>

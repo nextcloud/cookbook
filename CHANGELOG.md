@@ -1,6 +1,82 @@
 ## [Unreleased]
 
 ### Added
+- Markdown rendering for Description
+  [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
+
+### Changed
+- Using computed property in recipe view
+  [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb
+- Split off list/grid of recipes to separate Vue component
+  [#526](https://github.com/nextcloud/cookbook/pull/526/) @seyfeb
+- CSS Cleanup, removed central css styling
+  [#528](https://github.com/nextcloud/cookbook/pull/528/) @seyfeb
+- Timers are hidden when time is zero (prep, cook, total time)
+  [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
+- Introduced left navigation pane visibility as Vuex state
+  [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
+- Centralized some recipe tasks (create, update, delete)
+  [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
+- Added icon for recipes in navigation pane, closes #550
+  [#560](https://github.com/nextcloud/cookbook/pull/560/) @seyfeb
+
+### Fixed
+- Added some documentation how to install GH action generated builds
+  [#538](https://github.com/nextcloud/cookbook/pull/538) @christianlupus
+- Fixed problem where timers are not updated after saving recipe edits
+  [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
+- Fixed overlapping misaligned navigation toggles (as in #534)
+  [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
+- Refreshing left navigation pane after downloading recipe data, closes #465
+  [#547](https://github.com/nextcloud/cookbook/pull/547/) @seyfeb
+- Check for existing `@context` setting in json checker
+  [#554](https://github.com/nextcloud/cookbook/pull/554) @christianlupus
+- Introduced updating recipe directory to Vuex state, fixes #542
+  [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
+
+### Removed
+- Removal of old contoller no longer in use
+  [#536](https://github.com/nextcloud/cookbook/pull/536) @christianlupus
+
+## 0.7.10 - 2021-01-16
+
+### Fixed
+- Replaced function calls only available in PHP 8 with generic ones
+  [#524](https://github.com/nextcloud/cookbook/pull/524) @christianlupus
+
+## 0.7.9 - 2021-01-15
+
+### Changed
+- Indentation of ingredients depends on existence of subgroups
+  [#512](https://github.com/nextcloud/cookbook/pull/512/) @seyfeb
+- Speed up index of recipes by using computed properties
+  [#513](https://github.com/nextcloud/cookbook/pull/513) @christianlupus
+- Central parsing of parameters for POST/PUT requests to simplify development
+  [#518](https://github.com/nextcloud/cookbook/pull/518) @christianlupus
+- Removed dependencies on the global jQuery
+  [#497](https://github.com/nextcloud/cookbook/pull/497/) @seyfeb
+
+### Fixed
+- Fixed keywords of shared recipes counted multiple times, fixes #491
+  [#493](https://github.com/nextcloud/cookbook/pull/493/) @seyfeb
+- Added basic structure for documentation
+  [#499](https://github.com/nextcloud/cookbook/pull/499) @christianlupus
+- Make categories load recipes against
+  [#500](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
+- Handle recipes without category well
+  [#501](https://github.com/nextcloud/cookbook/pull/500) @christianlupus
+- Allow to save recipes with custom image URLs
+  [#505](https://github.com/nextcloud/cookbook/pull/505) @christianlupus
+- Allow pasting of instructions without newline again
+  [#503](https://github.com/nextcloud/cookbook/pull/503) @christianlupus
+- Updated color and bullets in nutrition information, fixes #510
+  [#511](https://github.com/nextcloud/cookbook/pull/511/) @seyfeb
+- Update README with more clients
+  [#457](https://github.com/nextcloud/cookbook/pull/457) @geeseven
+
+## 0.7.8 - 2021-01-08
+
+### Added
 - Parse a textual yield field in an imported recipe to a certain degree
   [#327](https://github.com/nextcloud/cookbook/pull/327) @zwoabier
 - Search and filter for recipes in the web interface
@@ -43,8 +119,8 @@
   [#416](https://github.com/nextcloud/cookbook/pull/416/) @seyfeb
 - Asking user for confirmation when leaving recipe-editor form with changes
   [#464](https://github.com/nextcloud/cookbook/pull/464/) @seyfeb
-- Markdown rendering for Description
-  [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
+- Exporting the maximal API endpoint version
+  [#487](https://github.com/nextcloud/cookbook/pull/487) @christianlupus
 
 ### Changed
 - Switch of project ownership to nextcloud organization in GitHub
@@ -108,10 +184,21 @@
   [#386](https://github.com/nextcloud/cookbook/pull/386/) @seyfeb
 - Fixed trying to remove already removed img DOM nodes in image lazyloading, fixes #462
   [#463](https://github.com/nextcloud/cookbook/pull/463/) @seyfeb
+- Fixed cooking time being removed if recipe is saved, fixes #472
+  [#473](https://github.com/nextcloud/cookbook/pull/473/) @seyfeb
+- Remove keywords from database when a recipe is removed
+  [#478](https://github.com/nextcloud/cookbook/pull/478) @christianlupus
+- Correct CI to allow creation of releases
+  [#482](https://github.com/nextcloud/cookbook/pull/482) @christianlupus
+- New version as reported in the API should be saved in the MainController file and thus checked in
+  [#488](https://github.com/nextcloud/cookbook/pull/488) @christianlupus
 
 ### Removed
 - Travis build system
 - Support for PHP 7.2
+- Removed info button (not) showing the last update time from settings menu, fixes #279
+  [#477](https://github.com/nextcloud/cookbook/pull/477/) @seyfeb
+
 
 
 ## 0.7.7 - 2020-12-10

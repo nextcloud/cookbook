@@ -1,0 +1,6 @@
+theme: jekyll-theme-slate
+exclude:
+    - "Makefile"
+    - "vendor/"
+    - Gemfile
+    - Gemfile.lock

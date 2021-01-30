@@ -10,6 +10,7 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Helper\RestParameterParser;
 
 class MainController extends Controller {
 	protected $appName;
@@ -26,14 +27,20 @@ class MainController extends Controller {
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
+	
+	/**
+	 * @var RestParameterParser
+	 */
+	private $restParser;
 
-	public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, IURLGenerator $urlGenerator) {
+	public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, IURLGenerator $urlGenerator, RestParameterParser $restParser) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
 		$this->urlGenerator = $urlGenerator;
 		$this->appName = $AppName;
 		$this->dbCacheService = $dbCacheService;
+		$this->restParser = $restParser;
 	}
 
 	/**
@@ -54,6 +61,22 @@ class MainController extends Controller {
 		];
 
 		return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
+	}
+	
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @return DataResponse
+	 */
+	public function getApiVersion(): DataResponse {
+		$response = [
+			'cookbook_version' => [0, 7, 10], /* VERSION_TAG do not change this line manually */
+			'api_version' => [
+				'major' => 0,
+				'minor' => 1
+			]
+		];
+		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);
 	}
 
 	/**
@@ -284,12 +307,14 @@ class MainController extends Controller {
 	public function import() {
 		$this->dbCacheService->triggerCheck();
 		
-		if (!isset($_POST['url'])) {
+		$data = $this->restParser->getParameters();
+		
+		if (!isset($data['url'])) {
 			return new DataResponse('Field "url" is required', 400);
 		}
 
 		try {
-			$recipe_file = $this->service->downloadRecipe($_POST['url']);
+			$recipe_file = $this->service->downloadRecipe($data['url']);
 			$recipe_json = $this->service->parseRecipeFile($recipe_file);
 			$this->dbCacheService->addRecipe($recipe_file);
 
@@ -307,7 +332,7 @@ class MainController extends Controller {
 		$this->dbCacheService->triggerCheck();
 		
 		try {
-			$recipe_data = $_POST;
+			$recipe_data = $this->restParser->getParameters();
 			$file = $this->service->addRecipe($recipe_data);
 			$this->dbCacheService->addRecipe($file);
 
@@ -354,9 +379,7 @@ class MainController extends Controller {
 		$this->dbCacheService->triggerCheck();
 		
 		try {
-			$recipe_data = [];
-
-			parse_str(file_get_contents("php://input"), $recipe_data);
+			$recipe_data = $this->restParser->getParameters();
 
 			$recipe_data['id'] = $id;
 
