@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Markdown rendering for Description
+  [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
+
 ### Changed
 - Using computed property in recipe view
   [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb

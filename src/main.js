@@ -14,6 +14,11 @@ import store from './store'
 //import AppNavi from './components/AppNavi'
 import AppMain from './components/AppMain'
 
+//Markdown
+import VueShowdown from 'vue-showdown'
+import Editor from 'v-markdown-editor'
+import 'v-markdown-editor/dist/v-markdown-editor.css'
+
 (function (OC, window) {
     'use strict'
 
@@ -169,6 +174,14 @@ import AppMain from './components/AppMain'
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
     Vue.prototype.OC = OC
+
+    //Markdown for Vue
+    Vue.use(VueShowdown, {
+        //set default flavor for Markdown
+        flavor: 'vanilla',
+    })
+    Vue.use(Editor);
+
 
     // Pass translation engine to Vue
     Vue.prototype.t = window.t

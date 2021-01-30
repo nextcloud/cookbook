@@ -25,7 +25,7 @@
                         </span>
                     </p>
 
-	                <p class="description">{{ $store.state.recipe.description }}</p>
+	                <VueShowdown :markdown="$store.state.recipe.description" class="markdown-description"/>
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
 	                </p>
@@ -473,9 +473,31 @@ export default {
                     vertical-align: middle;
                 }
 
-        .nutrition-items {
-            list-style-type: none;
-        }
+    div.meta {
+    	margin: 0 1rem;
+    }
+    
+    .markdown-description >>> ol > li {
+        list-style-type: numbered;
+    }
+        
+    .markdown-description >>> ul > li {
+        list-style-type: disc;
+    }
+    
+    .markdown-description >>> ol > li,
+    .markdown-description >>> ul > li {
+        margin-left: 20px;
+    }
+    
+    .markdown-description >>> a {
+        text-decoration: underline;
+    }
+
+    .nutrition-items {
+        list-style-type: none;
+    }
+
 
     main {
         flex-basis: calc(100% - 22rem);

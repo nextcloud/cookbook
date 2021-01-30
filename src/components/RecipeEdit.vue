@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
-        <EditInputField :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
+        <EditInputField :fieldType="'markdown'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
         <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
         <EditImageField :fieldLabel="t('cookbook', 'Image')" v-model="recipe['image']" />
         <EditTimeField :fieldLabel="t('cookbook', 'Preparation time')" v-model="prepTime" />
