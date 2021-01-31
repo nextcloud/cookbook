@@ -24,6 +24,7 @@ RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
 CREATE_COVERAGE_REPORT=n
 RUN_CODE_CHECKER=n
+INSTALL_COMPOSER_DEPS=n
 
 while [ $# -gt 0 ]
 do
@@ -40,14 +41,33 @@ do
 		--run-code-checker)
 			RUN_CODE_CHECKER=y
 			;;
+		--install-composer-deps)
+			INSTALL_COMPOSER_DEPS=y
+			;;
 		--)
 			# Stop processing here. The rest goes to phpunit directly
 			shift
 			break
 			;;
+		*)
+			echo "Unknown option found: $1"
+			exit 1
+			;;
 	esac
 	shift
 done
+
+pushd apps/cookbook
+
+echo "Cloning dependencies from main repo"
+rsync --archive --delete --delete-delay /cookbook/vendor/ vendor/
+
+if [ $INSTALL_COMPOSER_DEPS = 'y' ]; then
+	echo "Installing/updating composer dependencies"
+	composer install
+fi
+
+popd
 
 PARAM_COVERAGE_UNIT=''
 PARAM_COVERAGE_INTEGRATION=''

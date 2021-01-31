@@ -45,9 +45,11 @@ services:
             - mysql.env
             - postgres.env
         volumes:
+            - ../../..:/cookbook:ro
             - ./volumes/nextcloud:/nextcloud
             - ./volumes/data:/nextcloud/data
             - ../../..:/nextcloud/apps/cookbook:ro
+            - ./volumes/vendor/:/nextcloud/apps/cookbook/vendor
             - ./volumes/dumps:/dumps
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www

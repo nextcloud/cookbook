@@ -42,6 +42,7 @@ runs:
             --start-helpers
             --setup-environment ${{ inputs.coreVersion }}
             --create-env-dump
+            --install-composer-deps
             --run-tests
             --extract-code-coverage
             --shutdown-helpers

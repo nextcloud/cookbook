@@ -22,6 +22,7 @@ Possible options:
   --run-unit-tests
   --run-integration-tests
   --extract-code-coverage
+  --install-composer-deps
   --filter
   --help                            Show this help screen
   
@@ -38,12 +39,13 @@ EOF
 }
 
 pull_images() {
-	echo 'Pulling pre-built images'
+	echo 'Pulling pre-built images.'
 	docker-compose pull
+	echo 'Pulling images finished.'
 }
 
 build_images() {
-	echo 'Building the images'
+	echo 'Building the images.'
 	local uid=$(id -u)
 	docker-compose build --pull --force-rm \
 		--build-arg UID=$uid \
@@ -51,6 +53,7 @@ build_images() {
 		dut occ fpm
 	docker-compose build --pull --force-rm mysql
 	docker-compose pull www apache nginx
+	echo 'Building images finished.'
 }
 
 is_image_exists() {
@@ -66,11 +69,14 @@ push_images() {
 }
 
 create_file_structure() {
-	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps,coverage,www}
+	echo 'Creating the required file structure for the volumes'
+	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps,coverage,www,vendor}
 }
 
 start_helpers(){
-# 	TODO add further hosts for web server
+	echo 'Starting helper containers.'
+	
+	echo 'Starting the database.'
 	case "$INPUT_DB" in
 		mysql)
 			docker-compose up -d mysql
@@ -116,9 +122,14 @@ start_helpers(){
 			exit 1
 			;;
 	esac
+	echo 'Databse is started.'
+	
+	echo 'Service containers are started.'
 }
 
 start_helpers_post() {
+	echo "Starting helper containers (post-install)."
+	
 	docker-compose up -d www
 	
 	docker-compose up -d fpm
@@ -135,13 +146,18 @@ start_helpers_post() {
 			exit 1
 			;;
 	esac
+	
+	echo 'Finished installing helper containers (post-install).'
 }
 
 shutdown_helpers(){
+	echo 'Shutting down all containers.'
 	docker-compose down
 }
 
 setup_environment(){
+	echo 'Setup of the environment.'
+	
 	echo "Checking out nextcloud server repository"
 	git clone --depth=1 --branch "$ENV_BRANCH" https://github.com/nextcloud/server volumes/nextcloud
 	
@@ -194,9 +210,13 @@ setup_environment(){
 	
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
+	
+	echo 'Setup of the environment finished.'
 }
 
 drop_environment(){
+	echo 'Dropping the environment.'
+	
 	# Drop all tables
 	case "$INPUT_DB" in
 		mysql)
@@ -215,9 +235,13 @@ drop_environment(){
 	
 	# Remove any data in the volumes
 	rm -rf volumes/{data,nextcloud}/{*,.??*}
+	
+	echo 'Finished dropping the environment.'
 }
 
 dump_env_dump() {
+	echo 'Creating backup of the environment.'
+	
 	if [ -d "volumes/dumps/$ENV_DUMP_PATH" -a "$OVERWRITE_ENV_DUMP" != 'y' ]; then
 		echo "Cannot create dump $ENV_DUMP_PATH as it is already existing."
 		exit 1
@@ -252,9 +276,13 @@ dump_env_dump() {
 			exit 1
 			;;
 	esac
+	
+	echo 'Finished backup creation of the environment.'
 }
 
 restore_env_dump() {
+	echo 'Restoring the environment from backup.'
+	
 	if [ ! -d "volumes/dumps/$ENV_DUMP_PATH" ]; then
 		echo "Dump $ENV_DUMP_PATH was not found. Cannot restore it."
 		exit 1
@@ -286,9 +314,12 @@ restore_env_dump() {
 			exit 1
 			;;
 	esac
+	
+	echo 'Restoring the environment from backup finished.'
 }
 
 drop_env_dump() {
+	echo 'Dropping backup from environment.'
 	rm -rf "volumes/dumps/$ENV_DUMP_PATH"
 }
 
@@ -308,14 +339,20 @@ run_tests() {
 		PARAMS+=' --create-coverage-report'
 	fi
 	
+	if [ $INSTALL_COMPOSER_DEPS = 'y' ]; then
+		PARAMS+=' --install-composer-deps'
+	fi
+	
 	PARAMS+=' --run-code-checker'
 	
-	echo "Staring container to run the unit tests"
+	echo "Staring container to run the unit tests."
+	echo "Parameters for container: $PARAMS"
 	if [ -n "$FILTER_TESTS" ]; then
 		docker-compose run --rm -T dut $PARAMS -- --filter $FILTER_TESTS
 	else
 		docker-compose run --rm -T dut $PARAMS
 	fi
+	echo 'Test runs finished.'
 }
 
 function call_mysql() {
@@ -345,6 +382,7 @@ RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
 FILTER_TESTS=''
 EXTRACT_CODE_COVERAGE=n
+INSTALL_COMPOSER_DEPS=n
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
@@ -424,6 +462,9 @@ do
 		--extract-code-coverage)
 			EXTRACT_CODE_COVERAGE=y
 			;;
+		--install-composer-deps)
+			INSTALL_COMPOSER_DEPS=y
+			;;
 		--filter)
 			FILTER_TESTS="$2"
 			shift
@@ -457,6 +498,8 @@ export PS4='+ $0:$LINENO '
 
 ##### Do some sanity checks
 
+echo 'Doing some parameter checks.'
+
 if [ $CREATE_IMAGES = 'y' -a $CREATE_IMAGES_IF_NEEDED = 'y' ]; then
 	echo "You have both specified --create-images and --create-images-if-needed. These are exclusive options."
 	exit 1
@@ -478,6 +521,8 @@ if [ -z "$HTTP_SERVER" ]; then
 fi
 
 ##### Start processing the tasks at hand
+
+echo 'Starting process'
 
 if [ $DOCKER_PULL = 'y' ]; then
 	pull_images
