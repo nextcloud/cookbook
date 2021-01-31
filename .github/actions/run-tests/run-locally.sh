@@ -5,29 +5,28 @@ print_help() {
 Run the unittests
 
 Possible options:
-  --pull
-  --create-images
-  --create-images-if-needed
-  --push-images
-  --start-helpers
-  --shutdown-helpers
-  --setup-environment <BRANCH>
-  --drop-environment
-  --create-env-dump
-  --restore-env-dump
-  --drop-env-dump
-  --overwrite-env-dump
-  --env-dump-path <PATH>
-  --run-tests
-  --run-unit-tests
-  --run-integration-tests
-  --extract-code-coverage
-  --install-composer-deps
-  --filter
+  --pull                            Force pulling of the latest images from docker hub.
+  --create-images                   Force creation of custom docker images locally used for testing
+  --create-images-if-needed         Only build those images that are not existing currently
+  --push-images                     Push images to docker. Not yet working
+  --start-helpers                   Start helper containers (database, http server)
+  --shutdown-helpers                Shut down all containers running
+  --setup-environment <BRANCH>      Setup a development environment in current folder. BRANCH dictates the branch of the server to use (e.g. stable20).
+  --drop-environment                Reset the development environment and remove any files from it.
+  --create-env-dump                 Create a backup from the environment. This allows fast recovery during test setup.
+  --restore-env-dump                Restore an environment from a previous backup.
+  --drop-env-dump                   Remove a backup from an environment
+  --overwrite-env-dump              Allow to overwrite a backup of an environment
+  --env-dump-path <PATH>            The name of the environment to save. Multiple environment backups are possible.
+  --run-unit-tests                  Run only the unit tests
+  --run-integration-tests           Run only the integration tests
+  --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
+  --filter <FILTER>                 Pass the FILTER to the testing framework for filtering.
   --help                            Show this help screen
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
                                       --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump
+  --run-tests                       Run both unit as well as integration tests
   --run                             Run the unit tests themselves. This is a shorthand for
                                       --restore-env-dump --run-tests --extract-code-coverage
   
@@ -52,6 +51,8 @@ pull_images() {
 }
 
 build_images() {
+	pull_images
+	
 	echo 'Building the images.'
 	local PROGRESS=''
 	if [ -n "$CI" ]; then
@@ -62,7 +63,6 @@ build_images() {
 		--build-arg PHPVERSION=$PHP_VERSION \
 		dut occ php fpm
 	docker-compose build --pull --force-rm mysql
-	docker-compose pull www apache nginx
 	echo 'Building images finished.'
 }
 
