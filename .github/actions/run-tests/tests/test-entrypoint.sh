@@ -84,6 +84,15 @@ fi
 popd
 
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
+	echo 'Patching style in coverage report'
+	cd /coverage/tmp
+	for f in coverage-unit coverage-integration
+	do
+		if [ -f "$f/_css/style.css" ]; then
+			patch -i /helper/style.patch "$f/_css/style.css"
+		fi
+	done
+	
 	NAME="run-$(date "+%Y-%m-%d_%H-%M-%S")"
 	echo "Moving coverage report to final destination $NAME"
 	cd /coverage

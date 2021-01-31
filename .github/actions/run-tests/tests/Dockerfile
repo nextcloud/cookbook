@@ -17,6 +17,9 @@ COPY test-entrypoint.sh /
 COPY occ-entrypoint.sh /
 ENTRYPOINT ["/test-entrypoint.sh"]
 
+RUN mkdir /helper
+COPY style.patch /helper
+
 ARG UID
 RUN useradd -mU --uid ${UID} runner && chown runner /nextcloud
 USER runner
