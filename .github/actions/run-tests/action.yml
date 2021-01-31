@@ -32,6 +32,7 @@ runs:
     steps:
         - name: Trigger the tests
           run: >-
+            mkdir -p vendor &&
             cd .github/actions/run-tests &&
             export ALLOW_FAILURE=${{ inputs.allowFailure }} &&
             export INPUT_DB=${{ inputs.db }} &&
