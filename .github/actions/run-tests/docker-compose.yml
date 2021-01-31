@@ -58,6 +58,29 @@ services:
         <<: *dut
         entrypoint: ["/occ-entrypoint.sh"]
         
+    fpm:
+        <<: *dut
+        entrypoint: ["docker-php-entrypoint"]
+        command: ['php-fpm']
+        user: root
+    
+    apache:
+        image: httpd:alpine
+        volumes:
+            - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
+            - ./volumes/nextcloud:/nextcloud:ro
+            - ./volumes/data:/nextcloud/data:ro
+            - ../../..:/nextcloud/apps/cookbook:ro
+    
+    nginx:
+        image: nginx:alpine
+        #command: [nginx-debug, '-g', 'daemon off;']
+        volumes:
+            - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
+            - ./volumes/nextcloud:/nextcloud:ro
+            - ./volumes/data:/nextcloud/data:ro
+            - ../../..:/nextcloud/apps/cookbook:ro
+        
     www:
         image: nginx:alpine
         volumes:

@@ -33,6 +33,7 @@ Possible options:
   The following environment variables are taken into account:
     INPUT_DB            Defines which database to use for the integration tests. Can be mysql, pgsql or sqlite. Defaults to mysql.
     PHP_VERSION         Defines the PHP version to use, e.g. 7.4, 8. Defaults to 7.
+    HTTP_SERVER         Defines the HTTP deamon to use. Possible values are apache and nginx. Defaults to apache.
 EOF
 }
 
@@ -47,9 +48,9 @@ build_images() {
 	docker-compose build --pull --force-rm \
 		--build-arg UID=$uid \
 		--build-arg PHPVERSION=$PHP_VERSION \
-		dut occ
+		dut occ fpm
 	docker-compose build --pull --force-rm mysql
-	docker-compose pull www
+	docker-compose pull www apache nginx
 }
 
 is_image_exists() {
@@ -119,6 +120,21 @@ start_helpers(){
 
 start_helpers_post() {
 	docker-compose up -d www
+	
+	docker-compose up -d fpm
+	
+	case "$HTTP_SERVER" in
+		apache)
+			docker-compose up -d apache
+			;;
+		nginx)
+			docker-compose up -d nginx
+			;;
+		*)
+			echo "No known HTTP server requested: $HTTP_SERVER. Exiting"
+			exit 1
+			;;
+	esac
 }
 
 shutdown_helpers(){
@@ -444,7 +460,7 @@ do
 done
 
 export PS4='+ $0:$LINENO '
-set -x
+# set -x
 
 ##### Do some sanity checks
 
@@ -461,6 +477,11 @@ fi
 if echo "$ENV_DUMP_PATH" | grep ' ' > /dev/null; then
 	echo "The dump path '$ENV_DUMP_PATH' contains invalid characters. Please adjust"
 	exit 1
+fi
+
+if [ -z "$HTTP_SERVER" ]; then
+	echo "No HTTP server was given. Falling back to apache"
+	HTTP_SERVER=apache
 fi
 
 ##### Start processing the tasks at hand

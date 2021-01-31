@@ -10,6 +10,8 @@ RUN /install.sh ${PHPVERSION}
 COPY xdebug.config /tmp/xdebug.config
 RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
+COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
+
 RUN mkdir /nextcloud
 WORKDIR /nextcloud
 
