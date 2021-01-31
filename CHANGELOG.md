@@ -29,6 +29,8 @@
   [#458](https://github.com/nextcloud/cookbook/pull/458/) @seyfeb
 - Bump webpack-cli from 3.3.12 to 4.5.0
   [#565](https://github.com/nextcloud/cookbook/pull/565/)
+- Enhanced testing interface
+  [#564](https://github.com/nextcloud/cookbook/pull/564) @christianlupus
 
 ### Fixed
 - Added some documentation how to install GH action generated builds
