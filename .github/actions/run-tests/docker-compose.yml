@@ -28,7 +28,7 @@ services:
                 #UID: 1000
         environment:
             INPUT_DB:
-            GITHUB_WORKSPACE: /workdir
+            GITHUB_WORKSPACE:
             #GITHUB_ACTIONS
             #GITHUB_WORKFLOW
             #GITHUB_RUN_ID
@@ -47,10 +47,11 @@ services:
             #GITHUB_GRAPHQL_URL
             #CI
         volumes:
-            - ./workdir:/workdir
-            - ../../..:/app:ro
             - ./volumes/nextcloud:/nextcloud
+            - ./volumes/data:/nextcloud/data
+            - ../../..:/nextcloud/apps/cookbook:ro
             - ./volumes/dumps:/dumps
+            - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
     
     occ:

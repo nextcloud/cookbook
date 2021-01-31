@@ -43,14 +43,13 @@ pull_images() {
 
 build_images() {
 	echo 'Building the images'
-# 	FIXME Do the image building process
 	local uid=$(id -u)
 	docker-compose build --pull --force-rm \
 		--build-arg UID=$uid \
 		--build-arg PHPVERSION=$PHP_VERSION \
-		dut occ fpm
+		dut occ
 	docker-compose build --pull --force-rm mysql
-	dockre-compose pull www
+	docker-compose pull www
 }
 
 is_image_exists() {
@@ -66,7 +65,7 @@ push_images() {
 }
 
 create_file_structure() {
-	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps,www}
+	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps,coverage,www}
 }
 
 start_helpers(){
@@ -135,6 +134,11 @@ setup_environment(){
 	git submodule update --init
 	popd
 	
+	echo 'Creating cookbok folder for later bind-merge'
+	pushd volumes/nextcloud
+	mkdir apps/cookbook data
+	popd
+	
 	echo "Installing Nextcloud server instance"
 	case "$INPUT_DB" in
 		mysql)
@@ -174,11 +178,6 @@ setup_environment(){
 	
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
-	
-	# FIXME Install cookbook plugin
-# 	FIXME This needs to be implemented
-	echo "Not yet implemented."
-	exit 1
 }
 
 drop_environment(){
@@ -200,34 +199,34 @@ drop_environment(){
 	
 	# Remove any data in the volumes
 	rm -rf volumes/{data,nextcloud}/{*,.??*}
-# 	FIXME This needs to be implemented
 }
 
 dump_env_dump() {
-	if [ -d "dumps/$ENV_DUMP_PATH" -a "$OVERWRITE_ENV_DUMP" != 'y' ]; then
+	if [ -d "volumes/dumps/$ENV_DUMP_PATH" -a "$OVERWRITE_ENV_DUMP" != 'y' ]; then
 		echo "Cannot create dump $ENV_DUMP_PATH as it is already existing."
 		exit 1
 	fi
 	
-	mkdir -p "dumps/$ENV_DUMP_PATH/"{data,nextcloud,sql}
+	mkdir -p "volumes/dumps/$ENV_DUMP_PATH/"{data,nextcloud,sql}
 	
 	# Dump data
 	echo "Saving data files"
-	rsync $RSYNC_PARAMS volumes/data/ "dumps/$ENV_DUMP_PATH/data"
+	rsync $RSYNC_PARAMS volumes/data/ "volumes/dumps/$ENV_DUMP_PATH/data"
 	
 	# Dump server files
 	echo "Saving server files"
-	rsync $RSYNC_PARAMS volumes/nextcloud/ "dumps/$ENV_DUMP_PATH/nextcloud"
+	rsync $RSYNC_PARAMS volumes/nextcloud/ "volumes/dumps/$ENV_DUMP_PATH/nextcloud" \
+		--exclude /.git
 	
 	# Dump SQL
 	case "$INPUT_DB" in
 		mysql)
 			echo "Dumping MySQL database"
-			docker-compose exec -T mysql mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --add-drop-database --databases "$MYSQL_DATABASE" > "dumps/$ENV_DUMP_PATH/sql/dump.sql"
+			docker-compose exec -T mysql mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --add-drop-database --databases "$MYSQL_DATABASE" > "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql"
 			;;
 		pgsql)
 			echo "Dumping Postgres database"
-			docker-compose exec -T postgres pg_dump "$POSTGRES_DB" > "dumps/$ENV_DUMP_PATH/sql/dump.sql"
+			docker-compose exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" --clean --create --if-exists > "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql"
 			;;
 		sqlite)
 			echo "No sqlite dump is generates as it is saved with the regular files."
@@ -240,28 +239,28 @@ dump_env_dump() {
 }
 
 restore_env_dump() {
-	if [ ! -d "dumps/$ENV_DUMP_PATH" ]; then
+	if [ ! -d "volumes/dumps/$ENV_DUMP_PATH" ]; then
 		echo "Dump $ENV_DUMP_PATH was not found. Cannot restore it."
 		exit 1
 	fi
 	
 	# Restore data
 	echo "Restoring data files"
-	rsync $RSYNC_PARAMS "dumps/$ENV_DUMP_PATH/data/" volumes/data/
+	rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/data/" volumes/data/
 	
 	# Restore server files
 	echo "Restoring server files"
-	rsync $RSYNC_PARAMS "dumps/$ENV_DUMP_PATH/nextcloud/" volumes/nextcloud/
+	rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/nextcloud/" volumes/nextcloud/
 	
 	# Restore DB dump
 	case "$INPUT_DB" in
 		mysql)
 			echo "Restoring MySQL database from dump"
-			cat "dumps/$ENV_DUMP_PATH/sql/dump.sql" | docker-compose exec -T mysql mysql -u root -p"$MYSQL_ROOT_PASWORD"
+			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | docker-compose exec -T mysql mysql -u root -p"$MYSQL_ROOT_PASWORD"
 			;;
 		pgsql)
 			echo "Restoring Postgres database from dump"
-			cat "dumps/$ENV_DUMP_PATH/sql/dump.sql" | call_postgres
+			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | call_postgres
 			;;
 		sqlite)
 			echo "Restoring of sqlite not required as already covered by data restoring."
@@ -274,7 +273,7 @@ restore_env_dump() {
 }
 
 drop_env_dump() {
-	rm -rf "dumps/$ENV_DUMP_PATH"
+	rm -rf "volumes/dumps/$ENV_DUMP_PATH"
 }
 
 run_tests() {
@@ -301,10 +300,6 @@ run_tests() {
 	else
 		docker-compose run --rm -T dut $PARAMS
 	fi
-	
-# 	FIXME This needs to be implemented
-	echo "Not yet implemented."
-	exit 1
 }
 
 function call_mysql() {

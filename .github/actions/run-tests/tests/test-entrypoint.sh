@@ -49,14 +49,14 @@ do
 	shift
 done
 
-PARAM_COVERAGE=''
+PARAM_COVERAGE_UNIT=''
+PARAM_COVERAGE_INTEGRATION=''
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
-	rm -rf /dumps/tmp
-	mkdir /dumps/tmp
-	PARAM_COVERAGE='--coverage-clover /dumps/tmp/coverage.integration.xml --coverage-html /dumps/tmp/coverage-integration'
+	rm -rf /coverage/tmp
+	mkdir /coverage/tmp
+	PARAM_COVERAGE_UNIT='--coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
+	PARAM_COVERAGE_INTEGRATION='--coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
 fi
-
-cd nextcloud
 
 if [ $RUN_CODE_CHECKER = 'y' ]; then
 	echo 'Running the code checker'
@@ -71,22 +71,22 @@ pushd apps/cookbook
 
 if [ $RUN_UNIT_TESTS = 'y' ]; then
 	echo 'Starting unit testing.'
-	./vendor/phpunit/phpunit/phpunit -c phpunit.xml $PARAM_COVERAGE "$@"
+	./vendor/phpunit/phpunit/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@"
 	echo 'Unit testing done.'
 fi
 
 if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Starting integration testing.'
-	./vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml $PARAM_COVERAGE "$@"
+	./vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@"
 	echo 'Integration testing done.'
 fi
 
 popd
 
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
-	echo 'Moving coverage report to final destination'
-	cd /dumps
-	rm -rf latest
-	mv tmp latest
-	cp -a latest run-$(date "+%Y-%m-%d_%H-%M-%S")
+	NAME="run-$(date "+%Y-%m-%d_%H-%M-%S")"
+	echo "Moving coverage report to final destination $NAME"
+	cd /coverage
+	mv tmp "$NAME"
+	ln -snf "$NAME" ./latest
 fi

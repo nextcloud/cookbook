@@ -10,13 +10,13 @@ RUN /install.sh ${PHPVERSION}
 COPY xdebug.config /tmp/xdebug.config
 RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-RUN mkdir /workdir
-WORKDIR /workdir
+RUN mkdir /nextcloud
+WORKDIR /nextcloud
 
 COPY test-entrypoint.sh /
 COPY occ-entrypoint.sh /
 ENTRYPOINT ["/test-entrypoint.sh"]
 
 ARG UID
-RUN useradd -mU --uid ${UID} runner && chown runner /workdir
+RUN useradd -mU --uid ${UID} runner && chown runner /nextcloud
 USER runner
