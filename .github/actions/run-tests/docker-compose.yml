@@ -20,14 +20,14 @@ services:
         volumes:
             - ./volumes/postgres:/var/lib/postgresql/data
     
-    dut:
+    dut: &dut
         build:
             context: ./tests
-            args:
-                PHPVERSION: 7
-                UID: 1000
+            #args:
+                #PHPVERSION: 7
+                #UID: 1000
         environment:
-            INPUT_DB: mysql
+            INPUT_DB:
             GITHUB_WORKSPACE: /workdir
             #GITHUB_ACTIONS
             #GITHUB_WORKFLOW
@@ -49,3 +49,15 @@ services:
         volumes:
             - ./workdir:/workdir
             - ../../..:/app:ro
+            - ./volumes/nextcloud:/nextcloud
+            - ./volumes/dumps:/dumps
+            - ./volumes/www/:/www
+    
+    occ:
+        <<: *dut
+        entrypoint: ["/occ-entrypoint.sh"]
+        
+    www:
+        image: nginx:alpine
+        volumes:
+            - ./volumes/www/:/usr/share/nginx/html:ro

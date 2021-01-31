@@ -1,6 +1,6 @@
 
 ARG PHPVERSION
-FROM php:${PHPVERSION}-cli
+FROM php:${PHPVERSION}-fpm
 
 ARG PHPVERSION
 
@@ -14,6 +14,7 @@ RUN mkdir /workdir
 WORKDIR /workdir
 
 COPY test-entrypoint.sh /
+COPY occ-entrypoint.sh /
 ENTRYPOINT ["/test-entrypoint.sh"]
 
 ARG UID

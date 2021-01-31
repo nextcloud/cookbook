@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-set -x
+# set -x
 
 trap 'catch $? $LINENO' EXIT
 
@@ -20,143 +20,73 @@ catch()
 	fi
 }
 
-cd nextcloud
+RUN_UNIT_TESTS=n
+RUN_INTEGRATION_TESTS=n
+CREATE_COVERAGE_REPORT=n
+RUN_CODE_CHECKER=n
 
-if [ ! "$1" = '--test-only' ]; then
-
-	echo "Preparing the build system"
-
-	echo 'Cloning the app code'
-	mkdir -p apps/cookbook
-	rsync -a /app/ apps/cookbook/ --delete --exclude /.git --exclude /build --exclude /.github
-
-	echo 'Updating the submodules'
-	git submodule update --init
-
-	echo "Build the app"
-	pushd apps/cookbook
-	npm install
-	make
-	popd
-
-	echo "Prepare database"
-
-	function call_mysql()
-	{
-		mysql -u tester -h mysql -ptester_pass "$@"
-	}
-
-	function call_pgsql()
-	{
-		PGPASSWORD=tester_pass psql -h postgres "$@" nc_test tester
-	}
-
-	case "$INPUT_DB" in
-		mysql)
-			for i in `seq 1 10`
-			do
-				call_mysql -e 'SHOW PROCESSLIST;' && break || true
-				sleep 5
-			done
-			if [ $i -eq 10 ]; then
-				echo '::error ::Could not connect to mysql database'
-				exit 1
-			fi
+while [ $# -gt 0 ]
+do
+	case "$1" in
+		--run-unit-tests)
+			RUN_UNIT_TESTS=y
 			;;
-		pgsql)
-			for i in `seq 1 10`
-			do
-				call_pgsql -c '\q' && break || true
-				sleep 5
-			done
-			if [ $i -eq 10 ]; then
-				echo '::error ::Could not connect to postgres database'
-				exit 1
-			fi
+		--run-integration-tests)
+			RUN_INTEGRATION_TESTS=y
 			;;
-		sqlite)
+		--create-coverage-report)
+			CREATE_COVERAGE_REPORT=y
 			;;
-		*)
-			echo "::warning ::No database specific initilization in test script. This might be a bug."
+		--run-code-checker)
+			RUN_CODE_CHECKER=y
+			;;
+		--)
+			# Stop processing here. The rest goes to phpunit directly
+			shift
+			break
 			;;
 	esac
+	shift
+done
 
-	echo "Initialize nextcloud instance"
-	mkdir data
-
-	case "$INPUT_DB" in
-		mysql)
-			./occ maintenance:install \
-				--database mysql \
-				--database-host mysql \
-				--database-name nc_test \
-				--database-user tester \
-				--database-pass 'tester_pass' \
-				--admin-user admin \
-				--admin-pass admin
-			;;
-		pgsql)
-			./occ maintenance:install \
-				--database pgsql \
-				--database-host postgres \
-				--database-name nc_test \
-				--database-user tester \
-				--database-pass 'tester_pass' \
-				--admin-user admin \
-				--admin-pass admin
-			;;
-		sqlite)
-			./occ maintenance:install \
-				--database sqlite \
-				--admin-user admin \
-				--admin-pass admin
-			;;
-		*)
-			echo "::error ::No database specific initilization in test script. This might be a bug."
-			exit 1
-			;;
-	esac
-
-else
-	
-	echo 'Copying the app code changes'
-	echo 'This might cause trouble when dependencies have changed'
-	rsync -a /app/ apps/cookbook/ --exclude /.git --exclude /build --exclude /.github
-	
+PARAM_COVERAGE=''
+if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
+	rm -rf /dumps/tmp
+	mkdir /dumps/tmp
+	PARAM_COVERAGE='--coverage-clover /dumps/tmp/coverage.integration.xml --coverage-html /dumps/tmp/coverage-integration'
 fi
 
-echo 'Installing the cookbook app'
+cd nextcloud
 
-./occ app:enable cookbook
-
-echo 'Starting a temporary web server'
-php -S localhost:8080 &
-pid=$!
+if [ $RUN_CODE_CHECKER = 'y' ]; then
+	echo 'Running the code checker'
+	if ! ./occ app:check-code cookbook; then
+		echo '::error ::The code checker rejected the code base. See the logs of the action for further details.'
+		exit 1
+	fi
+	echo 'Code checker finished'
+fi
 
 pushd apps/cookbook
 
-echo 'Running the main tests'
-make test
-echo 'Tests finished'
+if [ $RUN_UNIT_TESTS = 'y' ]; then
+	echo 'Starting unit testing.'
+	./vendor/phpunit/phpunit/phpunit -c phpunit.xml $PARAM_COVERAGE "$@"
+	echo 'Unit testing done.'
+fi
 
-echo 'Copy code coverage in HTML format'
-cp -r coverage $GITHUB_WORKSPACE
-cp -r coverage-integration $GITHUB_WORKSPACE
-cp coverage.xml $GITHUB_WORKSPACE
-cp coverage.integration.xml $GITHUB_WORKSPACE
+if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
+	echo 'Starting integration testing.'
+	./vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml $PARAM_COVERAGE "$@"
+	echo 'Integration testing done.'
+fi
 
 popd
 
-echo 'Running the code checker'
-if ! ./occ app:check-code cookbook; then
-	echo '::error ::The code checker rejected the code base. See the logs of the action for further details.'
-	exit 1
+if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
+	echo 'Moving coverage report to final destination'
+	cd /dumps
+	rm -rf latest
+	mv tmp latest
+	cp -a latest run-$(date "+%Y-%m-%d_%H-%M-%S")
 fi
-echo 'Code checker finished'
-
-echo 'Shutting down temporary web server'
-kill $pid
-
-echo 'Make data folder readable again'
-chmod a+rx data
-chmod a+r data/nextcloud.log

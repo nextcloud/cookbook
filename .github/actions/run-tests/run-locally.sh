@@ -15,11 +15,14 @@ Possible options:
   --drop-environment
   --create-env-dump
   --restore-env-dump
-  --drop-dump
+  --drop-env-dump
   --overwrite-env-dump
   --env-dump-path <PATH>
   --run-tests
+  --run-unit-tests
+  --run-integration-tests
   --extract-code-coverage
+  --filter
   --help                            Show this help screen
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
@@ -29,6 +32,7 @@ Possible options:
   
   The following environment variables are taken into account:
     INPUT_DB            Defines which database to use for the integration tests. Can be mysql, pgsql or sqlite. Defaults to mysql.
+    PHP_VERSION         Defines the PHP version to use, e.g. 7.4, 8. Defaults to 7.
 EOF
 }
 
@@ -41,8 +45,12 @@ build_images() {
 	echo 'Building the images'
 # 	FIXME Do the image building process
 	local uid=$(id -u)
-	docker-compose build --pull --force-rm --build-arg UID=$uid dut
+	docker-compose build --pull --force-rm \
+		--build-arg UID=$uid \
+		--build-arg PHPVERSION=$PHP_VERSION \
+		dut occ fpm
 	docker-compose build --pull --force-rm mysql
+	dockre-compose pull www
 }
 
 is_image_exists() {
@@ -53,12 +61,12 @@ is_image_exists() {
 
 push_images() {
 # 	FIXME This needs to be implemented
-	echo "Not yet implented"
+	echo "Not yet implemented"
 	exit 1
 }
 
 create_file_structure() {
-	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps}
+	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps,www}
 }
 
 start_helpers(){
@@ -110,6 +118,10 @@ start_helpers(){
 	esac
 }
 
+start_helpers_post() {
+	docker-compose up -d www
+}
+
 shutdown_helpers(){
 	docker-compose down
 }
@@ -159,6 +171,9 @@ setup_environment(){
 			exit 1
 			;;
 	esac
+	
+	echo "Activating the cookbook app in the server"
+	docker-compose run --rm -T occ app:enable cookbook
 	
 	# FIXME Install cookbook plugin
 # 	FIXME This needs to be implemented
@@ -263,6 +278,30 @@ drop_env_dump() {
 }
 
 run_tests() {
+	
+	PARAMS=''
+	
+	if [ $RUN_UNIT_TESTS = 'y' ]; then
+		PARAMS+=' --run-unit-tests'
+	fi
+	
+	if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
+		PARAMS+=' --run-integration-tests'
+	fi
+	
+	if [ $EXTRACT_CODE_COVERAGE = 'y' ]; then
+		PARAMS+=' --create-coverage-report'
+	fi
+	
+	PARAMS+=' --run-code-checker'
+	
+	echo "Staring container to run the unit tests"
+	if [ -n "$FILTER_TESTS" ]; then
+		docker-compose run --rm -T dut $PARAMS -- --filter $FILTER_TESTS
+	else
+		docker-compose run --rm -T dut $PARAMS
+	fi
+	
 # 	FIXME This needs to be implemented
 	echo "Not yet implemented."
 	exit 1
@@ -291,12 +330,16 @@ CREATE_ENV_DUMP=n
 RESTORE_ENV_DUMP=n
 DROP_ENV_DUMP=n
 OVERWRITE_ENV_DUMP=n
-RUN_TESTS=n
+RUN_UNIT_TESTS=n
+RUN_INTEGRATION_TESTS=n
+FILTER_TESTS=''
 EXTRACT_CODE_COVERAGE=n
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
+PHP_VERSION="${PHP_VERSION:-7}"
 
+# TODO Import from env file
 MYSQL_DATABASE=nc_test
 MYSQL_USER=tester
 MYSQL_PASSWORD=tester_pass
@@ -365,10 +408,21 @@ do
 			shift
 			;;
 		--run-tests)
-			RUN_TESTS=y
+			RUN_UNIT_TESTS=y
+			RUN_INTEGRATION_TESTS=y
+			;;
+		--run-unit-tests)
+			RUN_UNIT_TESTS=y
+			;;
+		--run-integration-tests)
+			RUN_INTEGRATION_TESTS=y
 			;;
 		--extract-code-coverage)
 			EXTRACT_CODE_COVERAGE=y
+			;;
+		--filter)
+			FILTER_TESTS="$2"
+			shift
 			;;
 		--prepare)
 			CREATE_IMAGES_IF_NEEDED=y
@@ -380,7 +434,8 @@ do
 			;;
 		--run)
 			RESTORE_ENV_DUMP=y
-			RUN_TESTS=y
+			RUN_UNIT_TESTS=y
+			RUN_INTEGRATION_TESTS=y
 			EXTRACT_CODE_COVERAGE=y
 			;;
 		*)
@@ -463,51 +518,15 @@ if [ $RESTORE_ENV_DUMP = 'y' ]; then
 	restore_env_dump
 fi
 
-if [ $RUN_TESTS = 'y' ]; then
+if [ $START_HELPERS = 'y' ]; then
+	start_helpers_post
+fi
+
+if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
 	run_tests
 fi
 
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
 	shutdown_helpers
 fi
-
-exit 0
-#################################################################
-
-
-
-
-
-
-set -x
-
-cd $(dirname "$0")
-
-docker-compose up -d mysql postgres
-
-mkdir -p workdir
-
-cd workdir
-
-rm -rf nextcloud
-
-git clone --depth=1 --branch stable20 https://github.com/nextcloud/server nextcloud
-
-# git clone --depth=1 https://github.com/nextcloud/cookbook nextcloud/custom_apps/cookbook
-
-cd ..
-
-echo Dropping databases
-
-function call_mysql() {
-	docker-compose exec -T mysql mysql -u tester -ptester_pass nc_test
-}
-function call_postgres() {
-	docker-compose exec -T postgres psql -t nc_test tester
-}
-
-echo "SHOW TABLES;" | call_mysql | tail -n +2 | sed 's@.*@DROP TABLE \0;@' | call_mysql
-echo "SELECT tablename FROM pg_tables WHERE schemaname = 'public';" | call_postgres | head -n -1 | sed 's@.*@DROP TABLE \0;@' | call_postgres
-
-docker-compose run dut
 
