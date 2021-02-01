@@ -127,15 +127,18 @@ jobs:
             -X gcov
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
+      - name: Copy coverage-reports into non-link folder
+        shell: bash
+        run: >-
+            mkdir /tmp/coverage &&
+            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
+        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
+        
       - name: Upload the code coverage report (unit tests)
         uses: actions/upload-artifact@v2
         with:
             name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-            path: |
-                .github/actions/run-tests/volumes/coverage/latest/coverage-unit/
-                .github/actions/run-tests/volumes/coverage/latest/coverage-integration/
-                .github/actions/run-tests/volumes/coverage/latest/coverage.unit.xml
-                .github/actions/run-tests/volumes/coverage/latest/coverage.integration.xml
+            path: "/tmp/coverage"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
 
