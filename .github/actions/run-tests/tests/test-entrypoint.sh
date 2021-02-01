@@ -25,6 +25,7 @@ RUN_INTEGRATION_TESTS=n
 CREATE_COVERAGE_REPORT=n
 RUN_CODE_CHECKER=n
 INSTALL_COMPOSER_DEPS=n
+BUILD_NPM=n
 
 while [ $# -gt 0 ]
 do
@@ -44,6 +45,9 @@ do
 		--install-composer-deps)
 			INSTALL_COMPOSER_DEPS=y
 			;;
+		--build-npm)
+			BUILD_NPM=y
+			;;
 		--)
 			# Stop processing here. The rest goes to phpunit directly
 			shift
@@ -57,14 +61,22 @@ do
 	shift
 done
 
-pushd apps/cookbook
+echo "Synchronizing cookbook codebase"
+rsync -a /cookbook/ apps/cookbook/ --delete --delete-delay --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs
 
-echo "Cloning dependencies from main repo"
-rsync --archive --delete --delete-delay /cookbook/vendor/ vendor/
+pushd apps/cookbook
 
 if [ $INSTALL_COMPOSER_DEPS = 'y' ]; then
 	echo "Installing/updating composer dependencies"
 	composer install
+fi
+
+if [ $BUILD_NPM = 'y' ]; then
+	echo 'Installing NPM packages'
+	npm install
+	
+	echo 'Building JS folder'
+	npm run build
 fi
 
 popd

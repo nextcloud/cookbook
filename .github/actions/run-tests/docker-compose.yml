@@ -48,8 +48,7 @@ services:
             - ../../..:/cookbook:ro
             - ./volumes/nextcloud:/nextcloud
             - ./volumes/data:/nextcloud/data
-            - ../../..:/nextcloud/apps/cookbook:ro
-            - ./volumes/vendor/:/nextcloud/apps/cookbook/vendor
+            - ./volumes/cookbook:/nextcloud/apps/cookbook
             - ./volumes/dumps:/dumps
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
@@ -70,7 +69,7 @@ services:
             - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
             - ./volumes/nextcloud:/nextcloud:ro
             - ./volumes/data:/nextcloud/data:ro
-            - ../../..:/nextcloud/apps/cookbook:ro
+            - ./volumes/cookbook:/nextcloud/apps/cookbook:ro
     
     nginx:
         image: nginx:alpine
@@ -79,7 +78,7 @@ services:
             - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
             - ./volumes/nextcloud:/nextcloud:ro
             - ./volumes/data:/nextcloud/data:ro
-            - ../../..:/nextcloud/apps/cookbook:ro
+            - ./volumes/cookbook:/nextcloud/apps/cookbook:ro
         
     www:
         image: nginx:alpine

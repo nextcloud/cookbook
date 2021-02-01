@@ -77,7 +77,7 @@ push_images() {
 
 create_file_structure() {
 	echo 'Creating the required file structure for the volumes'
-	mkdir -p volumes/{mysql,postgres,nextcloud,data,dumps,coverage,www,vendor}
+	mkdir -p volumes/{mysql,postgres,nextcloud,cookbook,data,dumps,coverage,www}
 }
 
 start_helpers(){
@@ -159,7 +159,7 @@ start_helpers_post() {
 
 shutdown_helpers(){
 	echo 'Shutting down all containers.'
-	docker-compose down
+	docker-compose down -v
 }
 
 setup_environment(){
@@ -173,7 +173,7 @@ setup_environment(){
 	git submodule update --init
 	popd
 	
-	echo 'Creating cookbok folder for later bind-merge'
+	echo 'Creating cookbook folder for later bind-merge'
 	pushd volumes/nextcloud
 	mkdir apps/cookbook data
 	popd
@@ -214,6 +214,9 @@ setup_environment(){
 			exit 1
 			;;
 	esac
+	
+	echo "Synchronizing the cookbook codebase to volume"
+	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --delete --delete-delay
 	
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
@@ -350,6 +353,10 @@ run_tests() {
 		PARAMS+=' --install-composer-deps'
 	fi
 	
+	if [ $BUILD_NPM = 'y' ]; then
+		PARAMS+=' --build-npm'
+	fi
+	
 	PARAMS+=' --run-code-checker'
 	
 	echo "Staring container to run the unit tests."
@@ -390,6 +397,7 @@ RUN_INTEGRATION_TESTS=n
 FILTER_TESTS=''
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
+BUILD_NPM=n
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
@@ -471,6 +479,9 @@ do
 			;;
 		--install-composer-deps)
 			INSTALL_COMPOSER_DEPS=y
+			;;
+		--build-npm)
+			BUILD_NPM=y
 			;;
 		--filter)
 			FILTER_TESTS="$2"
