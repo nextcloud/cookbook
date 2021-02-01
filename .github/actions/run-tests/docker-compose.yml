@@ -23,6 +23,8 @@ services:
                 #UID: 1000
         environment:
             INPUT_DB:
+            ALLOW_FAILURE:
+            HTTP_SERVER:
             GITHUB_WORKSPACE:
             CI:
             #GITHUB_ACTIONS
