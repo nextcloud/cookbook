@@ -35,19 +35,26 @@ Possible options:
     INPUT_DB            Defines which database to use for the integration tests. Can be mysql, pgsql or sqlite. Defaults to mysql.
     PHP_VERSION         Defines the PHP version to use, e.g. 7.4, 8. Defaults to 7.
     HTTP_SERVER         Defines the HTTP deamon to use. Possible values are apache and nginx. Defaults to apache.
+    CI                  If the script is run in CI environment
 EOF
 }
 
 pull_images() {
 	echo 'Pulling pre-built images.'
-	docker-compose pull
+	docker-compose pull --quiet
 	echo 'Pulling images finished.'
 }
 
 build_images() {
 	echo 'Building the images.'
 	local uid=$(id -u)
-	docker-compose build --pull --force-rm \
+	
+	local PROGRESS=''
+	if [ -n "$CI" ]; then
+		PROGRESS='--progress plain'
+	fi
+	
+	docker-compose build --pull --force-rm $PROGRESS \
 		--build-arg UID=$uid \
 		--build-arg PHPVERSION=$PHP_VERSION \
 		dut occ fpm
