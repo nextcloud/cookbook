@@ -249,8 +249,8 @@ export default {
                 .replace(/'/g, "&#039;");
         },
         convertRecipeReferences: function(text) {
-            let re = /(^|\s)#r\/(\d+)(\s|$)/g
-            let converted = text.replace(re, '$1<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$2">#$2</a>$3')
+            let re = /(?<=^|\s)#r\/(\d+)(?=$|\s)(\s|$)/g
+            let converted = text.replace(re, '<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$1">#$1</a>$2')
             return converted
         },
         isNullOrEmpty: function(str) {
