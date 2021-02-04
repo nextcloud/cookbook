@@ -19,20 +19,31 @@
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
                     {{ t('cookbook', 'Download recipe from URL') }}
             </ActionInput>
+
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/_/'">
                 <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
             </AppNavigationItem>
+            <AppNavigationCaption :title="t('cookbook', 'Categories')" >
+                <template slot="actions">
+                    <ActionButton icon="icon-rename" @click="toggleCategoryRenaming">
+                        Enable editing
+                    </ActionButton>
+                </template>
+            </AppNavigationCaption>
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
                 :ref="'app-navi-cat-'+idx"
                 :title="cat.name"
-                icon="icon-category-files"
+                :icon="categoryUpdating[idx] ? 'icon-loading-small': 'icon-category-files'"
                 :allowCollapse="true"
                 :to="'/category/'+cat.name"
                 @update:open="categoryOpen(idx)"
+                :editable="catRenamingEnabled"
+                :editPlaceholder="t('cookbook','Enter new category name')"
+                @update:title="(val) => { categoryUpdateName(idx,val) }"
             >
                 <AppNavigationCounter slot="counter">{{ cat.recipeCount }}</AppNavigationCounter>
                 <template>
@@ -85,12 +96,14 @@ import axios from '@nextcloud/axios'
 import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
 import ActionInput from '@nextcloud/vue/dist/Components/ActionInput'
 import AppNavigation from '@nextcloud/vue/dist/Components/AppNavigation'
-import AppNavigationCaption from '@nextcloud/vue/dist/Components/AppNavigationCaption'
 import AppNavigationCounter from '@nextcloud/vue/dist/Components/AppNavigationCounter'
 import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
 import AppNavigationSettings from '@nextcloud/vue/dist/Components/AppNavigationSettings'
 import AppNavigationSpacer from '@nextcloud/vue/dist/Components/AppNavigationSpacer'
+import Vue from 'vue'
+
+import AppNavigationCaption from './AppNavigationCaption'
 
 export default {
     name: 'AppNavi',
@@ -107,8 +120,10 @@ export default {
     },
     data () {
         return {
+            catRenamingEnabled: false,
             categories: [],
             downloading: false,
+            isCategoryUpdating: [],
             printImage: false,
             recipeFolder: "",
             scanningLibrary: false,
@@ -132,6 +147,9 @@ export default {
         // future, consider using the Vue mapState helper
         refreshRequired () {
             return this.$store.state.appNavigation.refreshRequired
+        },
+        categoryUpdating () {
+            return this.isCategoryUpdating
         }
     },
     watch: {
@@ -180,9 +198,15 @@ export default {
                     this.resetInterval = true
                     this.updateInterval = oldVal
                 })
-        },
+        }
     },
     methods: {
+        /**
+         * Enable renaming of categories.
+         */
+        toggleCategoryRenaming: function() {
+            this.catRenamingEnabled = !this.catRenamingEnabled
+        },
         /**
          * Initial setup
          */
@@ -217,6 +241,8 @@ export default {
                 return
             }
             let cat = this.categories[idx]
+            let $this = this
+            Vue.set(this.isCategoryUpdating, idx, true)
 
             axios.get(this.$window.baseUrl + '/api/category/'+cat.name)
                 .then(function(response) {
@@ -228,6 +254,38 @@ export default {
                     if (e && e instanceof Error) {
                         throw e
                     }
+                })
+                .then(() => {
+                    // finally
+                    Vue.set($this.isCategoryUpdating, idx, false)
+                })
+        },
+
+        /**
+         * Updates the name of a category
+         */
+        categoryUpdateName: function(idx, newName) {
+            if (!this.categories[idx]) {
+                return
+            }
+            Vue.set(this.isCategoryUpdating, idx, true)
+            let oldName = this.categories[idx].name
+            let $this = this
+
+            this.$store.dispatch('updateCategoryName', { categoryNames: [oldName, newName] })
+                .then(function (response) {
+                    $this.categories[idx].name = newName
+                    $this.$root.$emit('categoryRenamed', [newName, oldName])
+                })
+                .catch(function(e) {
+                    alert(t('cookbook', 'Failed to update name of category \"{category}\"', {"category": oldName}))
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
+                .then(() => {
+                    // finally
+                    Vue.set($this.isCategoryUpdating, idx, false)
                 })
         },
 
@@ -267,6 +325,8 @@ export default {
                     // Reset the old values
                     $this.uncatRecipes = 0
                     $this.categories = []
+                    $this.isCategoryUpdating = []
+
                     for (let i=0; i<json.length; i++) {
                         if (json[i].name === '*') {
                             $this.uncatRecipes = parseInt(json[i].recipe_count)
@@ -276,6 +336,7 @@ export default {
                                 recipeCount: parseInt(json[i].recipe_count),
                                 recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
                             })
+                            $this.isCategoryUpdating.push(false)
                         }
                     }
                     $this.$nextTick(() => {
@@ -383,10 +444,6 @@ export default {
     min-height: 44px;
     background-image: var(--icon-add-000);
     background-repeat: no-repeat;
-}
-
->>> .app-navigation-entry *:not(.app-navigation-entry-icon) {
-    background: initial !important;
 }
 
 >>> .app-navigation-entry.recipe {

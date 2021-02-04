@@ -3,7 +3,9 @@
 ### Added
 - Markdown rendering for Description
   [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
-
+- Changing category name for all recipes in a category
+  [#555](https://github.com/nextcloud/cookbook/pull/555/) @seyfeb
+  
 ### Changed
 - Using computed property in recipe view
   [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb

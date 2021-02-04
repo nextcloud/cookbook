@@ -73,7 +73,7 @@ class MainController extends Controller {
 			'cookbook_version' => [0, 7, 10], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
 				'major' => 0,
-				'minor' => 1
+				'minor' => 2
 			]
 		];
 		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);
@@ -213,6 +213,35 @@ class MainController extends Controller {
 			}
 
 			return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
+		} catch (\Exception $e) {
+			return new DataResponse($e->getMessage(), 500);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function categoryUpdate($category) {
+		$this->dbCacheService->triggerCheck();
+
+		$json = $this->restParser->getParameters();
+		if (!$json || !isset($json['name']) || !$json['name']) {
+			return new DataResponse('New category name not found in data', 400);
+		}
+
+		$category = urldecode($category);
+		try {
+			$recipes = $this->service->getRecipesByCategory($category);
+			foreach ($recipes as $recipe) {
+				$r = $this->service->getRecipeById($recipe['recipe_id']);
+				$r['recipeCategory'] = $json['name'];
+				$this->service->addRecipe($r);
+			}
+			// Update cache
+			$this->dbCacheService->updateCache();
+
+			return new DataResponse($json['name'], Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}

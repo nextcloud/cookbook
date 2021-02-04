@@ -42,6 +42,8 @@ export default new Vuex.Store({
         savingRecipe: false,
         // Updating the recipe directory is in progress
         updatingRecipeDirectory: false,
+        // Category which is being updated (name)
+        categoryUpdating: null,
     },
 
     mutations: {
@@ -50,6 +52,9 @@ export default new Vuex.Store({
         },
         setAppNavigationVisible(s, { b }) {
             s.appNavigation.visible = b
+        },
+        setCategoryUpdating(s, { c }) {
+            s.categoryUpdating = c
         },
         setLoadingRecipe(s, { r }) {
             s.loadingRecipe = r
@@ -127,6 +132,36 @@ export default new Vuex.Store({
         },
         setUser(c, { user }) {
             c.commit('setUser', { u: user })
+        },
+        setCategoryUpdating(c, { category }) {
+            c.commit('setCategoryUpdating', { c: category })
+        },
+        updateCategoryName(c, { categoryNames }) {
+            let oldName = categoryNames[0], newName = categoryNames[1]
+            c.dispatch('setCategoryUpdating', { category: oldName })
+
+            const request = axios({
+                method: 'PUT',
+                url: window.baseUrl + '/api/category/' + encodeURIComponent(oldName),
+                data: { name: newName }
+                });
+
+            request.then(function (response) {
+                    if (c.state.recipe.recipeCategory == oldName) {
+                        c.state.recipe.recipeCategory = newName
+                    }
+                })
+                .catch(function(e) {
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                })
+                .then(() => {
+                    // finally
+                    c.dispatch('setCategoryUpdating', { category: null })
+                })
+
+            return request
         },
         updateRecipeDirectory(c, { dir }) {
             c.commit('setUpdatingRecipeDirectory', { b: true })

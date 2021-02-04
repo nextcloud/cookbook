@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+        <div class="overlay" :class="{hidden: !overlayVisible}" />
         <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
         <EditInputField :fieldType="'markdown'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
         <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
@@ -19,7 +20,7 @@
 
 <script>
 import axios from '@nextcloud/axios'
-
+import Vue from 'vue'
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
@@ -90,6 +91,16 @@ export default {
                 { key: 'sugarContent', label: t('cookbook', 'Sugar content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'transFatContent', label: t('cookbook', 'Trans-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }]
+        }
+    },
+    computed: {
+        categoryUpdating() {
+            return this.$store.state.categoryUpdating
+        },
+        overlayVisible() {
+            return (this.$store.state.loadingRecipe
+                || this.$store.state.reloadingRecipe
+                || (this.$store.state.categoryUpdating && this.$store.state.categoryUpdating == this.recipe['recipeCategory']))
         }
     },
     watch: {
@@ -373,6 +384,19 @@ export default {
         this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })
+        this.$root.$off('categoryRenamed')
+        this.$root.$on('categoryRenamed', (val) => {
+            // Update selectable categories
+            let idx = this.allCategories.findIndex(c => c == val[1])
+            if (idx >= 0) {
+                Vue.set(this.allCategories, idx, val[0])
+                // this.allCategories[idx] = val[0]
+            }
+            // Update selected category if the currently selected was renamed
+            if (this.recipe['recipeCategory'] == val[1]) {
+                this.recipe.recipeCategory = val[0]
+            }
+        })
         this.savingRecipe = false
     },
     beforeDestroy() {
@@ -440,6 +464,21 @@ beforeRouteLeave (to, from, next) {
 .wrapper {
     width: 100%;
     padding: 1rem;
+}
+
+.overlay {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: var(--color-main-background);
+    opacity: .75;
+    z-index: 1000;
+}
+.overlay.hidden {
+    display: none;
 }
 
 /* This is not used anywhere at the moment, but left here for future reference

@@ -56,6 +56,16 @@ module.exports = {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader'
             },
+            // this will apply to both plain `.scss` files
+            // AND `<style lang="scss">` blocks in `.vue` files
+            {
+                test: /\.scss$/,
+                use: [
+                'vue-style-loader',
+                'css-loader',
+                'sass-loader'
+                ]
+            }
         ],
     },
     plugins: [
@@ -65,7 +75,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.vue', '.json'],
         modules: [
-            path.resolve(__dirname, './node_modules')
+            'node_modules'
         ],
         symlinks: false,
     },
