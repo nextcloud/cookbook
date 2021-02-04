@@ -75,7 +75,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.vue', '.json'],
         modules: [
-            path.resolve(__dirname, './node_modules')
+            'node_modules'
         ],
         symlinks: false,
     },
