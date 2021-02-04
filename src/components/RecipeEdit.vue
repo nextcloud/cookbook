@@ -15,7 +15,7 @@
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" :referencePopupEnabled="true" />
-        <edit-multiselect-popup ref="referencesPopup" class="referencesPopup" :class="{visible: referencesPopupFocused}" :options="allrecipeOptions" track-by="recipe_id" label="name" :loading="loadingRecipeReferences" :focused="referencesPopupFocused" />
+        <edit-multiselect-popup ref="referencesPopup" class="referencesPopup" :class="{visible: referencesPopupFocused}" :options="allrecipeOptions" track-by="recipe_id" label="title" :loading="loadingRecipeReferences" :focused="referencesPopupFocused" />
     </div>
 </template>
 
@@ -103,9 +103,8 @@ export default {
     computed: {
         allrecipeOptions() {
             return this.allRecipes.map(r => {
-                    return {recipe_id: r.recipe_id, name: r.recipe_id + ": " + r.name}
+                    return {recipe_id: r.recipe_id, title: r.recipe_id + ": " + r.name}
                 })
-            
         },
         categoryUpdating() {
             return this.$store.state.categoryUpdating
