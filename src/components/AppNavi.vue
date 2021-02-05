@@ -21,10 +21,16 @@
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
             </AppNavigationItem>
+
             <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/_/'">
                 <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
             </AppNavigationItem>
-            <AppNavigationCaption :title="t('cookbook', 'Categories')" >
+
+            <AppNavigationCaption
+                :title="t('cookbook', 'Categories')"
+                v-if="loading.categories || categories.length > 0"
+                :loading="loading.categories"
+                >
                 <template slot="actions">
                     <ActionButton icon="icon-rename" @click="toggleCategoryRenaming">
                         {{ t('cookbook', 'Toggle editing') }}
@@ -36,15 +42,17 @@
                 :key="cat+idx"
                 :ref="'app-navi-cat-'+idx"
                 :title="cat.name"
-                :icon="categoryUpdating[idx] ? 'icon-loading-small': 'icon-category-files'"
+                :icon="categoryUpdating[idx] ? '' : 'icon-category-files'"
+                :loading="categoryUpdating[idx]"
                 :allowCollapse="true"
                 :to="'/category/'+cat.name"
-                @update:open="categoryOpen(idx)"
                 :editable="catRenamingEnabled"
-                :editPlaceholder="t('cookbook','Enter new category name')"
+                :edit-label="t('cookbook','Rename')"
+                :edit-placeholder="t('cookbook','Enter new category name')"
+                @update:open="categoryOpen(idx)"
                 @update:title="(val) => { categoryUpdateName(idx,val) }"
             >
-                <AppNavigationCounter slot="counter">{{ cat.recipeCount }}</AppNavigationCounter>
+                <AppNavigationCounter v-if="!catRenamingEnabled" slot="counter">{{ cat.recipeCount }}</AppNavigationCounter>
                 <template>
                     <AppNavigationItem class="recipe" v-for="(rec,idy) in cat.recipes"
                         :key="idx+'-'+idy"
@@ -97,6 +105,7 @@ export default {
             categories: [],
             downloading: false,
             isCategoryUpdating: [],
+            loading: { categories: true },
             scanningLibrary: false,
             uncatRecipes: 0,
         }
@@ -221,6 +230,7 @@ export default {
          */
         getCategories: function() {
             let $this = this
+            this.loading.categories = true
             axios.get(this.$window.baseUrl + '/categories')
                 .then(function(response) {
                     let json = response.data || []
@@ -261,6 +271,10 @@ export default {
                     if (e && e instanceof Error) {
                         throw e
                     }
+                })
+                .then(()=> {
+                    // finally
+                    $this.loading.categories = false
                 })
         },
 
