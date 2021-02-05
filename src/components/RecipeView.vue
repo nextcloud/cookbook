@@ -140,7 +140,6 @@ export default {
                     .map((i) => {
                         return this.convertRecipeReferences(this.escapeHtml(i))
                         })
-                console.log(recipe.ingredients)
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
@@ -249,8 +248,8 @@ export default {
                 .replace(/'/g, "&#039;");
         },
         convertRecipeReferences: function(text) {
-            let re = /(?<=^|\s)#r\/(\d+)(?=$|\s)(\s|$)/g
-            let converted = text.replace(re, '<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$1">#$1</a>$2')
+            let re = /(?<=^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
+            let converted = text.replace(re, '<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$1">#$1</a>')
             return converted
         },
         isNullOrEmpty: function(str) {
