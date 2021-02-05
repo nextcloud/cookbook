@@ -25,7 +25,7 @@
                         </span>
                     </p>
 
-	                <VueShowdown :markdown="$store.state.recipe.description" class="markdown-description"/>
+	                <VueShowdown :markdown="recipe.description" class="markdown-description"/>
 	                <p v-if="$store.state.recipe.url">
 	                    <strong>{{ t('cookbook', 'Source') }}: </strong><a target="_blank" :href="$store.state.recipe.url" class='source-url'>{{ $store.state.recipe.url }}</a>
 	                </p>
@@ -117,6 +117,7 @@ export default {
     computed: {
         recipe: function() {
             let recipe = {
+                description: '',
                 ingredients: [],
                 instructions: [],
                 keywords: [],
@@ -129,12 +130,23 @@ export default {
                 nutrition: null
             }
 
+            if (this.$store.state.recipe.description) {
+                recipe.description = this.convertRecipeReferences(
+                    this.escapeHtml(this.$store.state.recipe.description))
+            }
+
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(this.$store.state.recipe.recipeIngredient)
+                    .map((i) => {
+                        return this.convertRecipeReferences(this.escapeHtml(i))
+                        })
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(this.$store.state.recipe.recipeInstructions)
+                    .map((i) => {
+                        return this.convertRecipeReferences(this.escapeHtml(i))
+                        })
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -166,7 +178,9 @@ export default {
             }
 
             if (this.$store.state.recipe.tool) {
-                recipe.tools = this.$store.state.recipe.tool
+                recipe.tools = this.$store.state.recipe.tool.map((i) => {
+                        return this.convertRecipeReferences(this.escapeHtml(i))
+                        })
             }
 
             if (this.$store.state.recipe.dateCreated) {
@@ -178,6 +192,7 @@ export default {
                 let date = this.parseDateTime(this.$store.state.recipe.dateModified)
                 recipe.dateModified = (date != null ? date.format('L, LT').toString() : null)
             }
+
             if (this.$store.state.recipe.nutrition) {
                 if ( this.$store.state.recipe.nutrition instanceof Array) {
                     this.$store.state.recipe.nutrition = {}
@@ -223,6 +238,20 @@ export default {
         }
     },
     methods: {
+        escapeHtml: function(unsafeString) {
+            return unsafeString
+                .replace(/&/g, "&amp;")
+                .replace(/\~/g, "&#732;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        },
+        convertRecipeReferences: function(text) {
+            let re = /(?<=^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
+            let converted = text.replace(re, '<a class="recipe-reference-inline" href="'+this.$window.baseUrl+'/#/recipe/$1">#$1</a>')
+            return converted
+        },
         isNullOrEmpty: function(str) {
             return !str || typeof(str) === 'string' && 0 === str.trim().length;
         },
@@ -548,4 +577,14 @@ export default {
             .instructions .instruction.done::before {
                 content: '✔';
             }
+</style>
+
+<style>
+.recipe-reference-inline {
+    color: var(--color-text-maxcontrast);
+    font-weight: 450;
+}
+.recipe-reference-inline:hover {
+    color: var(--color-main-text);
+}
 </style>
