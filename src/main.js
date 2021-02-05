@@ -192,6 +192,6 @@ import 'v-markdown-editor/dist/v-markdown-editor.css'
         new App({
             store,
             router,
-        }).$mount("#app")
+        }).$mount("#content")
     })
 })(OC, window)

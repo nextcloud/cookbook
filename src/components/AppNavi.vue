@@ -1,17 +1,15 @@
 <template>
 <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <AppNavigation>
-        <ActionButton
-            id="hide-navigation"
-            icon="icon-menu"
-            class="action-button"
-            :ariaLabel="t('cookbook', 'Open navigation')"
-            @click="toggleNavigation()"
-        >{{ t('cookbook', 'Hide navigation') }}</ActionButton>
         <router-link :to="'/recipe/create'">
-            <AppNavigationNew class="create" :text="t('cookbook', 'Create recipe')" />
+            <AppNavigationNew class="create"
+                :text="t('cookbook', 'Create recipe')"
+                button-id="cookbook_new_cookbook"
+                :button-class="['create', 'icon-add']"
+            />
         </router-link>
-        <ul>
+
+        <template slot="list">
             <ActionInput
                 class="download"
                 @submit="downloadRecipe"
@@ -33,6 +31,7 @@
                     </ActionButton>
                 </template>
             </AppNavigationCaption>
+
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
                 :ref="'app-navi-cat-'+idx"
@@ -55,39 +54,11 @@
                     />
                 </template>
             </AppNavigationItem>
-        </ul>
-        <AppNavigationSettings :open="true">
-            <div id="app-settings">
-                <fieldset>
-                    <ul>
-                        <li>
-                            <ActionButton
-                                class="button"
-                                :icon="scanningLibrary ? 'icon-loading-small' : 'icon-history'"
-                                @click="reindex()"
-                                :title="t('cookbook', 'Rescan library')"
-                            />
-                        </li>
-                        <li>
-                            <label class="settings-input">{{ t('cookbook', 'Recipe folder') }}</label>
-                            <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="t('cookbook', 'Please pick a folder')">
-                        </li>
-                        <li>
-                            <label class="settings-input">
-                                {{ t('cookbook', 'Update interval in minutes') }}
-                            </label>
-                            <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
-                        </li>
-                        <li>
-                            <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
-                            <label for="recipe-print-image">
-                                {{ t('cookbook', 'Print image with recipe') }}
-                            </label>
-                        </li>
-                    </ul>
-                </fieldset>
-            </div>
-        </AppNavigationSettings>
+        </template>
+
+        <template slot="footer">
+            <AppSettings :scanningLibrary="scanningLibrary" @reindex="reindex" />
+        </template>
     </AppNavigation>
 </template>
 
@@ -101,6 +72,7 @@ import AppNavigationItem from '@nextcloud/vue/dist/Components/AppNavigationItem'
 import AppNavigationNew from '@nextcloud/vue/dist/Components/AppNavigationNew'
 import AppNavigationSettings from '@nextcloud/vue/dist/Components/AppNavigationSettings'
 import AppNavigationSpacer from '@nextcloud/vue/dist/Components/AppNavigationSpacer'
+import AppSettings from './AppSettings'
 import Vue from 'vue'
 
 import AppNavigationCaption from './AppNavigationCaption'
@@ -117,6 +89,7 @@ export default {
         AppNavigationNew,
         AppNavigationSettings,
         AppNavigationSpacer,
+        AppSettings
     },
     data () {
         return {
@@ -124,15 +97,8 @@ export default {
             categories: [],
             downloading: false,
             isCategoryUpdating: [],
-            printImage: false,
-            recipeFolder: "",
             scanningLibrary: false,
             uncatRecipes: 0,
-            // By setting the reset value initially to true, it will skip one watch event
-            // (the one when config is loaded at page load)
-            resetInterval: true,
-            resetPrintImage: true,
-            updateInterval: 0,
         }
     },
     computed: {
@@ -153,51 +119,11 @@ export default {
         }
     },
     watch: {
-        printImage: function(newVal, oldVal) {
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetPrintImage) {
-                this.resetPrintImage = false
-                return
-            }
-            axios({
-                url: this.$window.baseUrl + '/config',
-                method: 'POST',
-                data: { 'print_image': newVal ? 1 : 0 }
-            })
-                .then((response) => {
-                        // Should this check the response of the query? To catch some errors that redirect the page
-                })
-                .catch((e) => {
-                    alert(t('cookbook', 'Could not set preference for image printing'));
-                    this.resetPrintImage = true
-                    this.printImage = oldVal
-                })
-        },
         // Register a method hook for navigation refreshing
         refreshRequired: function(newVal, oldVal) {
             if (newVal != oldVal && newVal == true) {
                 this.getCategories()
             }
-        },
-        updateInterval: function(newVal, oldVal) {
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetInterval) {
-                this.resetInterval = false
-                return
-            }
-            axios({
-                url: this.$window.baseUrl + '/config',
-                method: 'POST',
-                data: { 'update_interval': newVal }
-                })
-                .then((response) => {
-                    // Should this check the response of the query? To catch some errors that redirect the page
-                })
-                .catch((e) => {
-                    alert(t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
-                    this.resetInterval = true
-                    this.updateInterval = oldVal
-                })
         }
     },
     methods: {
@@ -206,30 +132,6 @@ export default {
          */
         toggleCategoryRenaming: function() {
             this.catRenamingEnabled = !this.catRenamingEnabled
-        },
-        /**
-         * Initial setup
-         */
-        setup: function() {
-            axios({
-                url: this.$window.baseUrl + '/config',
-                method: 'GET',
-                data: null,
-                })
-                .then((response) => {
-                    let config = response.data
-                    this.resetPrintImage = false;
-                    if(config) {
-                        this.printImage = config['print_image'];
-                        this.updateInterval = config['update_interval'];
-                        this.recipeFolder = config['folder'];
-                    } else {
-                        alert(t('cookbook', 'Loading config failed'))
-                    }
-                })
-                .catch((e) => {
-                    alert(t('cookbook', 'Loading config failed'))
-                })
         },
 
         /**
@@ -363,31 +265,6 @@ export default {
         },
 
         /**
-         * Select a recipe folder using the Nextcloud file picker
-         */
-        pickRecipeFolder: function(e) {
-            OC.dialogs.filepicker(
-                t('cookbook', 'Path to your recipe collection'),
-                (path) => {
-                    let $this = this
-                    this.$store.dispatch('updateRecipeDirectory', { dir: path })
-                        .then(() => {
-                            $this.recipeFolder = path
-                            if($this.$route.path != '/') {
-                                $this.$router.push('/')
-                            }
-                        })
-                        .catch((e) => {
-                            alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
-                        })
-                },
-                false,
-                'httpd/unix-directory',
-                true
-            )
-        },
-
-        /**
          * Reindex all recipes
          */
         reindex: function () {
@@ -431,7 +308,6 @@ export default {
         },
     },
     mounted () {
-        this.setup()
         this.getCategories()
     },
 }
@@ -467,20 +343,6 @@ export default {
     box-shadow: inset 4px 0 var(--color-primary);
 }
 
-#app-settings .button {
-    padding: 0;
-    height: 44px;
-    border-radius: var(--border-radius);
-    z-index: 2;
-}
-
-#app-settings input[type="text"],
-#app-settings input[type="number"],
-#app-settings .button {
-    width: 100%;
-    display: block;
-}
-
 #hide-navigation {
     height: 44px;
     display: none;
@@ -500,4 +362,12 @@ export default {
     }
 }
 
+</style>
+
+<style>
+
+@media(min-width: 1024px) { .app-navigation-toggle {
+        display: none;
+    }
+}
 </style>
