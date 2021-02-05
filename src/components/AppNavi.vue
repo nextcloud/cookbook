@@ -29,7 +29,7 @@
             <AppNavigationCaption :title="t('cookbook', 'Categories')" >
                 <template slot="actions">
                     <ActionButton icon="icon-rename" @click="toggleCategoryRenaming">
-                        Enable editing
+                        {{ t('cookbook', 'Toggle editing') }}
                     </ActionButton>
                 </template>
             </AppNavigationCaption>
