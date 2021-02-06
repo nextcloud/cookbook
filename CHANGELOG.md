@@ -27,6 +27,8 @@
   [#561](https://github.com/nextcloud/cookbook/pull/561/) @seyfeb
 - Bump webpack-merge from 4.2.2 to 5.7.3
   [#458](https://github.com/nextcloud/cookbook/pull/458/) @seyfeb
+- Bump webpack-cli from 3.3.12 to 4.5.0
+  [#565](https://github.com/nextcloud/cookbook/pull/565/)
 
 ### Fixed
 - Added some documentation how to install GH action generated builds

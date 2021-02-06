@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "build": "node node_modules/webpack/bin/webpack.js --progress --hide-modules --config webpack.build.js",
+    "build": "node node_modules/webpack/bin/webpack.js --progress --config webpack.build.js",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --watch --config webpack.devel.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -48,7 +48,7 @@
     "vue-template-loader": "^1.1.0",
     "webpack": "^4.42.1",
     "webpack-bundle-analyzer": "^4.1.0",
-    "webpack-cli": "^3.3.11",
+    "webpack-cli": "^4.5.0",
     "webpack-merge": "^5.7.3",
     "compression-webpack-plugin": "^6.1.1"
   }
