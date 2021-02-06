@@ -43,20 +43,22 @@ EOF
 pull_images() {
 	echo 'Pulling pre-built images.'
 	docker-compose pull --quiet
+	
+	if docker pull "nextcloudcookbook/testci:php$PHP_VERSION"; then
+		docker tag "nextcloudcookbook/testci:php$PHP_VERSION" cookbook_unittesting_dut
+	fi
+	
 	echo 'Pulling images finished.'
 }
 
 build_images() {
 	echo 'Building the images.'
-	local uid=$(id -u)
-	
 	local PROGRESS=''
 	if [ -n "$CI" ]; then
 		PROGRESS='--progress plain'
 	fi
 	
 	docker-compose build --pull --force-rm $PROGRESS \
-		--build-arg UID=$uid \
 		--build-arg PHPVERSION=$PHP_VERSION \
 		dut occ php fpm
 	docker-compose build --pull --force-rm mysql
@@ -71,9 +73,9 @@ is_image_exists() {
 }
 
 push_images() {
-# 	FIXME This needs to be implemented
-	echo "Not yet implemented"
-	exit 1
+	echo "Retagging docker image"
+	docker tag cookbook_unittesting_dut "nextcloudcookbook/testci:php$PHP_VERSION"
+	docker push "nextcloudcookbook/testci:php$PHP_VERSION"
 }
 
 create_file_structure() {
@@ -494,6 +496,7 @@ do
 			shift
 			;;
 		--prepare)
+			DOCKER_PULL=y
 			CREATE_IMAGES_IF_NEEDED=y
 			START_HELPERS=y
 			SETUP_ENVIRONMENT=y

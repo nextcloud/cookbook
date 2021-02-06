@@ -39,6 +39,7 @@ runs:
             export PHP_VERSION=${{ inputs.phpVersion }} &&
             export HTTP_SERVER=${{ inputs.server }} &&
             ./run-locally.sh
+            --pull
             --create-images
             --start-helpers
             --setup-environment ${{ inputs.coreVersion }}
