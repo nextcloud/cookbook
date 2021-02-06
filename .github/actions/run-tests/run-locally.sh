@@ -21,6 +21,8 @@ Possible options:
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
+  --install-composer-deps           Install composer dependencies
+  --build-npm                       Install and build js packages
   --filter <FILTER>                 Pass the FILTER to the testing framework for filtering.
   --help                            Show this help screen
   
