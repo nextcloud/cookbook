@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Cannot parse non-POST multipart encoding. This is a bug." : "Ni mogoče razčleniti večdelnega kodiranja ne-POST. To je napaka za razhroščevanje.",
+    "Cannot detect type of transmitted data. This is a bug, please report it." : "Ni mogoče zaznati poslanih podatkov. To je napaka za razhroščevanje.",
     "Invalid URL-encoded string found. Please report a bug." : "Zaznan je neveljavno zapisan naslov URL. Poslati je treba poročilo o napaki.",
     "Recipes" : "Recepti",
     "Cookbook" : "Kuhar'ca",
@@ -32,6 +34,8 @@ OC.L10N.register(
     "Create recipe" : "Ustvari recept",
     "Download recipe from URL" : "Prejmi recept prek naslova URL",
     "Uncategorized recipes" : "Neopredeljeni recepti",
+    "Categories" : "Kategorije",
+    "Enter new category name" : "Vpis imena kategorije",
     "Rescan library" : "Ponovno preišči zbirko",
     "Recipe folder" : "Mapa receptov",
     "Please pick a folder" : "Izbrati je treba mapo",
@@ -41,6 +45,7 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Ni mogoče nastaviti posodobitve receptov na {interval}",
     "Loading config failed" : "Nalaganje nastavitev je spodletelo",
     "Failed to load category {category} recipes" : "Nalaganje kategorije {category} je spodletelo",
+    "Failed to update name of category \"{category}\"" : "Posodabljanje imena kategorije »{category}« je spodletelo.",
     "Loading category recipes …" : "Poteka nalaga receptov kategorije ...",
     "Failed to fetch categories" : "Pridobivanje kategorij je spodletelo",
     "Path to your recipe collection" : "Pot do zbirke receptov",
