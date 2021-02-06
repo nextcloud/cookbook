@@ -353,14 +353,9 @@ export default {
     }
 
 @media print {
-    #content {
-        display: block !important;
-        padding: 0 !important;
-        overflow: visible !important;
-    }
-
     div.header {
 		display: flex;
+        flex-wrap: wrap;
 	}
         div.header > div.image {
             flex: 600px 0 0;

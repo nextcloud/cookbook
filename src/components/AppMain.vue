@@ -1,23 +1,27 @@
 <template>
-    <div id="app">
-        <AppNavi id="app-navigation" :class="{'show-navigation': $store.state.appNavigation.visible}"/>
-        <div id="app-content">
-            <div id="app-content-wrapper">
+    <Content app-name="cookbook">
+        <AppNavi class="app-navigation" />
+        <AppContent>
+            <div>
                 <AppControls />
                 <router-view></router-view>
             </div>
-        </div>
-    </div>
+        </AppContent>
+    </Content>
 </template>
 
 <script>
+import AppContent from '@nextcloud/vue/dist/Components/AppContent'
 import AppControls from './AppControls'
 import AppNavi from './AppNavi'
+import Content from '@nextcloud/vue/dist/Components/Content'
 export default {
     name: 'Main',
     components: {
+        AppContent,
         AppControls,
         AppNavi,
+        Content
     },
     watch: {
         /* This is left here as an example in case the routes need to be debugged again
@@ -31,26 +35,15 @@ export default {
 
 <style>
 
-#app {
-    width: 100%;
-}
-
-#app-content {
-    min-width: calc(100% - 300px);
-}
-
-#app-content-wrapper {
-    flex-wrap: wrap;
-}
-
 @media print {
-    #app-content-wrapper {
+    #app-content-vue {
         display: block !important;
         padding: 0 !important;
         overflow: visible !important;
-    }
-    #app-content {
         margin-left: 0 !important;
+    }
+    #app-navigation-vue {
+        display: none !important;
     }
     #header {
         display: none !important;

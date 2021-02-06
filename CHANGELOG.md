@@ -23,6 +23,8 @@
   [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
 - Added icon for recipes in navigation pane, closes #550
   [#560](https://github.com/nextcloud/cookbook/pull/560/) @seyfeb
+- Bumped @nextcloud/vue to 3.5.4
+  [#561](https://github.com/nextcloud/cookbook/pull/561/) @seyfeb
 
 ### Fixed
 - Added some documentation how to install GH action generated builds
