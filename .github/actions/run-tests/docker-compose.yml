@@ -27,6 +27,8 @@ services:
             HTTP_SERVER:
             GITHUB_WORKSPACE:
             CI:
+            RUNNER_UID:
+            RUNNER_GID:
             #GITHUB_ACTIONS
             #GITHUB_WORKFLOW
             #GITHUB_RUN_ID
@@ -57,7 +59,7 @@ services:
     
     occ:
         <<: *dut
-        entrypoint: ["/occ-entrypoint.sh"]
+        entrypoint: ["/entrypoints/default-entrypoint.sh", "/entrypoints/occ.sh"]
         
     php:
         <<: *dut
@@ -65,7 +67,7 @@ services:
     
     fpm:
         <<: *dut
-        entrypoint: ["docker-php-entrypoint"]
+        entrypoint: ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "docker-php-entrypoint"]
         command: ['php-fpm']
         user: root
     

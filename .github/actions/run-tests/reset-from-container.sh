@@ -20,7 +20,7 @@ case "$INPUT_DB" in
 		echo "Doing nothing as it was already restored during data restoration."
 		;;
 	*)
-		echo "Unknown database name found. this needs to be implemented or is a bug."
+		echo "Unknown database name found ($INPUT_DB). this needs to be implemented or is a bug."
 		exit 1
 		;;
 esac

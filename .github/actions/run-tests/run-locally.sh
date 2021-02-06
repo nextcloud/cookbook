@@ -544,6 +544,16 @@ if [ -z "$HTTP_SERVER" ]; then
 	HTTP_SERVER=apache
 fi
 
+if [ -z "$RUNNER_UID" ]; then
+	RUNNER_UID=`id -u`
+fi
+export RUNNER_UID
+
+if [ -z "$RUNNER_GID" ]; then
+	RUNNER_GID=`id -g`
+fi
+export RUNNER_GID
+
 ##### Start processing the tasks at hand
 
 
@@ -583,18 +593,18 @@ if [ $CREATE_IMAGES_IF_NEEDED = 'y' ]; then
 	fi
 fi
 
-create_file_structure
-
-if [ $START_HELPERS = 'y' ]; then
-	start_helpers
-fi
-
 if [ $PUSH_IMAGES = 'y' ]; then
 	if ! is_image_exists; then
 		echo "Cannot push images as it does not exist"
 		exit 1
 	fi
 	push_images
+fi
+
+create_file_structure
+
+if [ $START_HELPERS = 'y' ]; then
+	start_helpers
 fi
 
 if [ $DROP_ENVIRONMENT = 'y' ]; then

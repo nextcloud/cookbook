@@ -32,7 +32,7 @@ apt-get -qq update
 apt-get -qq -y install --no-install-recommends \
 	npm make default-mysql-client postgresql-client \
 	unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev \
-	cmake libpq-dev libsqlite3-dev sudo rsync > /dev/null
+	cmake libpq-dev libsqlite3-dev sudo rsync tini > /dev/null
 apt-get clean
 
 echo 'Installing PHP gd'

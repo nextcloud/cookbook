@@ -15,13 +15,11 @@ COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
 RUN mkdir /nextcloud
 WORKDIR /nextcloud
 
-COPY test-entrypoint.sh /
-COPY occ-entrypoint.sh /
-ENTRYPOINT ["/test-entrypoint.sh"]
+COPY entrypoints /entrypoints
+ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "/entrypoints/test.sh"]
 
 RUN mkdir /helper
 COPY style.patch /helper
 
-ARG UID
-RUN useradd -mU --uid ${UID} runner && chown runner /nextcloud
-USER runner
+ARG UID=1000
+RUN useradd -mU --uid ${UID} runner
