@@ -1,6 +1,6 @@
 
 ARG PHPVERSION
-FROM php:${PHPVERSION}-cli
+FROM php:${PHPVERSION}-fpm
 
 ARG PHPVERSION
 
@@ -10,12 +10,16 @@ RUN /install.sh ${PHPVERSION}
 COPY xdebug.config /tmp/xdebug.config
 RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-RUN mkdir /workdir
-WORKDIR /workdir
+COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
 
-COPY test-entrypoint.sh /
-ENTRYPOINT ["/test-entrypoint.sh"]
+RUN mkdir /nextcloud
+WORKDIR /nextcloud
 
-ARG UID
-RUN useradd -mU --uid ${UID} runner && chown runner /workdir
-USER runner
+COPY entrypoints /entrypoints
+ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "/entrypoints/test.sh"]
+
+RUN mkdir /helper
+COPY style.patch /helper
+
+ARG UID=1000
+RUN useradd -mU --uid ${UID} runner

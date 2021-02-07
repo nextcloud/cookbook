@@ -7,7 +7,7 @@ on:
 
 jobs:
   
-  lint:
+  php-lint:
      name: Run PHP Linter and Code Style checker
      runs-on: ubuntu-latest
      steps:
@@ -33,7 +33,7 @@ jobs:
               PHP_CS_FIXER_IGNORE_ENV: 1
            run: composer cs:check
   
-  test:
+  unit-tests:
     name: Run the unittests
     runs-on: ubuntu-latest
     
@@ -47,9 +47,11 @@ jobs:
                 - pgsql
                 - sqlite
             coreVersion:
-                - stable19
+                - stable20
             phpVersion:
                 - "7"
+            httpServer:
+                - "apache"
             mayFail:
                 - false
             include:
@@ -57,118 +59,116 @@ jobs:
                 -   database: mysql
                     coreVersion: stable18
                     phpVersion: "7"
+                    httpServer: "apache"
                     mayFail: false
                 -   database: mysql
-                    coreVersion: stable20
+                    coreVersion: stable19
                     phpVersion: "7"
+                    httpServer: "apache"
                     mayFail: false
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable19
+                    coreVersion: stable20
                     phpVersion: "7.3"
+                    httpServer: "apache"
                     mayFail: false
-                    
+                
+                # Test different HTTP server
+                -   database: mysql
+                    coreVersion: stable20
+                    phpVersion: "7"
+                    httpServer: "nginx"
+                    mayFail: false
+                
                 # Test against master (optionally)
                 -   database: mysql
                     coreVersion: master
                     phpVersion: "7"
+                    httpServer: "apache"
                     mayFail: true
                     
     steps:
-      - name: Checkout the nextcloud server
-        uses: actions/checkout@v2
-        with:
-            repository: nextcloud/server
-            ref: ${{ matrix.coreVersion }}
-            path: nextcloud
       - name: Checkout the app
         uses: actions/checkout@v2
-        with:
-            path: cookbook
       
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
       - name: Run the tests in docker container
-        uses: ./cookbook/.github/actions/run-tests
+        uses: ./.github/actions/run-tests
         id: run-tests
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
             allowFailure: ${{ matrix.mayFail }}
+            server: ${{ matrix.httpServer }}
+            coreVersion: ${{ matrix.coreVersion }}
     
       - name: Upload the log file
         uses: actions/upload-artifact@v2
         with:
-            name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
-            path: nextcloud/data/nextcloud.log
+            name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: .github/actions/run-tests/volumes/data/nextcloud.log
       
       - name: Upload the coverage reports to codecov.io
         shell: bash
         run: >-
-            cd nextcloud/apps/cookbook &&
-            bash <(curl -s https://codecov.io/bash) -F unittests -f coverage.xml -R . &&
-            bash <(curl -s https://codecov.io/bash) -F integration -f coverage.integration.xml -R .
+            bash <(curl -s https://codecov.io/bash)
+            -F unittests
+            -f .github/actions/run-tests/volumes/coverage/latest/coverage.unit.xml
+            -R .
+            -X gcov
+            &&
+            bash <(curl -s https://codecov.io/bash)
+            -F integration
+            -f .github/actions/run-tests/volumes/coverage/latest/coverage.integration.xml
+            -R .
+            -X gcov
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
+      - name: Copy coverage-reports into non-link folder
+        shell: bash
+        run: >-
+            mkdir /tmp/coverage &&
+            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
+        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
+        
       - name: Upload the code coverage report (unit tests)
         uses: actions/upload-artifact@v2
         with:
-            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
-            path: |
-                coverage/
-                coverage-integration/
-                coverage.xml
-                coverage.integration.xml
+            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: "/tmp/coverage"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
 
   source-package:
     name: Create source code artifacts
-    needs: test
+    needs:
+        - unit-tests
+        - php-lint
     runs-on: ubuntu-latest
     
     steps:
-        -   name: Checkout the nextcloud server
-            uses: actions/checkout@v2
-            with:
-                repository: nextcloud/server
-                ref: ${{ matrix.coreVersion }}
-                path: nextcloud
         -   name: Checkout the app
             uses: actions/checkout@v2
-            with:
-                path: nextcloud/apps/cookbook
         
         -   name: Install the NPM dependencies
             shell: bash
             run: >-
-                cd nextcloud/apps/cookbook &&
                 npm install
         -   name: Install the dependencies for composer
             shell: bash
             run: >-
-                cd nextcloud/apps/cookbook &&
                 make npm composer_dist
         
-        -   name: Create the source package
-            shell: bash
-            run: >-
-                make -C nextcloud/apps/cookbook source_package_name=$(pwd)/source source
-        -   name: Publish the source package as artifact
-            uses: actions/upload-artifact@v2
-            with:
-                name: cookbook-source
-                path: source.tar.gz
-            
         -   name: Create the app store package
             shell: bash
             run: >-
-                make -C nextcloud/apps/cookbook appstore_package_name=$(pwd)/appstore appstore
+                make appstore_package_name=/tmp/appstore appstore
         -   name: Publish the app store package as artifact
             uses: actions/upload-artifact@v2
             with:
                 name: cookbook-appstore
-                path: appstore.tar.gz
+                path: /tmp/appstore.tar.gz
             
