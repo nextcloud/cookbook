@@ -539,3 +539,4 @@ if [ $SHUTDOWN_HELPERS = 'y' ]; then
 	shutdown_helpers
 fi
 
+echo "Processing finished"
