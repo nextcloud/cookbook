@@ -350,15 +350,8 @@ ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
 PHP_VERSION="${PHP_VERSION:-7}"
 
-# TODO Import from env file
-MYSQL_DATABASE=nc_test
-MYSQL_USER=tester
-MYSQL_PASSWORD=tester_pass
-MYSQL_ROOT_PASWORD=pass_root
-
-POSTGRES_USER=tester
-POSTGRES_PASSWORD=tester_pass
-POSTGRES_DB=nc_test
+source mysql.env
+source postgres.env
 
 RSYNC_PARAMS="--delete --delete-delay --archive"
 

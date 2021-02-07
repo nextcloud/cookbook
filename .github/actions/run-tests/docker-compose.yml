@@ -5,18 +5,13 @@ services:
         build: mysql
         volumes:
             - ./volumes/mysql:/var/lib/mysql
-        environment:
-            MYSQL_DATABASE: nc_test
-            MYSQL_USER: tester
-            MYSQL_PASSWORD: tester_pass
-            MYSQL_ROOT_PASSWORD: pass_root
+        env_file:
+            - mysql.env
             
     postgres:
         image: postgres:alpine
-        environment:
-            POSTGRES_USER: tester
-            POSTGRES_PASSWORD: tester_pass
-            POSTGRES_DB: nc_test
+        env_file:
+            - postgres.env
         volumes:
             - ./volumes/postgres:/var/lib/postgresql/data
     
@@ -46,6 +41,9 @@ services:
             #GITHUB_API_URL
             #GITHUB_GRAPHQL_URL
             #CI
+        env_file:
+            - mysql.env
+            - postgres.env
         volumes:
             - ./volumes/nextcloud:/nextcloud
             - ./volumes/data:/nextcloud/data
