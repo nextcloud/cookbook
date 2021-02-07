@@ -59,6 +59,10 @@ services:
         <<: *dut
         entrypoint: ["/occ-entrypoint.sh"]
         
+    php:
+        <<: *dut
+        entrypoint: ["php"]
+    
     fpm:
         <<: *dut
         entrypoint: ["docker-php-entrypoint"]

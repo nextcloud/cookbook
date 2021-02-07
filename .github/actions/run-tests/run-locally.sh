@@ -57,7 +57,7 @@ build_images() {
 	docker-compose build --pull --force-rm $PROGRESS \
 		--build-arg UID=$uid \
 		--build-arg PHPVERSION=$PHP_VERSION \
-		dut occ fpm
+		dut occ php fpm
 	docker-compose build --pull --force-rm mysql
 	docker-compose pull www apache nginx
 	echo 'Building images finished.'
