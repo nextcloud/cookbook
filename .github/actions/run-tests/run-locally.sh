@@ -36,6 +36,7 @@ Possible options:
     PHP_VERSION         Defines the PHP version to use, e.g. 7.4, 8. Defaults to 7.
     HTTP_SERVER         Defines the HTTP deamon to use. Possible values are apache and nginx. Defaults to apache.
     CI                  If the script is run in CI environment
+    ALLOW_FAILURE       Defines if the script is allowed to fail. Possible values are true and false (default)
 EOF
 }
 
@@ -214,6 +215,11 @@ setup_environment(){
 			exit 1
 			;;
 	esac
+	
+	if [ "$ALLOW_FAILURE" = 'true' ]; then
+		echo 'Add exception for app to install even if not officially supported'
+		cat scripts/enable_app_install_script.php | docker-compose run --rm -T php
+	fi
 	
 	echo "Synchronizing the cookbook codebase to volume"
 	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --delete --delete-delay
