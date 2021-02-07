@@ -176,5 +176,4 @@ appstore:
 
 .PHONY: test
 test: composer
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.xml --coverage-clover coverage.xml --coverage-html coverage
-	$(CURDIR)/vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml --coverage-clover coverage.integration.xml --coverage-html coverage-integration
+	@echo "This functionality has been move to the file .github/acrions/run-tests/run-locally.sh. See its output with parameter --help."
