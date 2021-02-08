@@ -31,6 +31,7 @@ OC.L10N.register(
     "Uncategorized recipes" : "Nezařazené recepty",
     "Categories" : "Kategorie",
     "Toggle editing" : "Přepnout do editace",
+    "Rename" : "Přejmenovat",
     "Enter new category name" : "Zadejte nový název jategorie",
     "Failed to load category {category} recipes" : "Nepodařilo se načíst recepty z katergorie {category}",
     "Failed to update name of category \"{category}\"" : "Nepodařilo se upravit název kategorie \"{category}\"",

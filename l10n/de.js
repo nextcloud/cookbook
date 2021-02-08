@@ -34,6 +34,7 @@ OC.L10N.register(
     "Uncategorized recipes" : "Nicht kategorisierte Rezepte",
     "Categories" : "Kategorien",
     "Toggle editing" : "Bearbeiten umschalten",
+    "Rename" : "Umbenennen",
     "Enter new category name" : "Bitte neuen Kategorienamen eingeben",
     "Failed to load category {category} recipes" : "Fehler beim Laden der Rezepte aus Kategorie {category} ",
     "Failed to update name of category \"{category}\"" : "Fehler beim Aktualisieren der Kategorie \"{category}\"",
