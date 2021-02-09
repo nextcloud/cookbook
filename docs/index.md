@@ -1,10 +1,10 @@
-# Nextcloud cookbook app documentation
+# Nextcloud Cookbook app documentation
 
-This is the documentation area for the nextcloud cookbook app.
+This is the documentation area for the Nextcloud Cookbook app.
 The documentation covers three different aspects of the app.
 
 - [Documentation for usage of the app as regular user](user/)
-- [Documentation for the administrator of a nextcloud instance](admin/)
+- [Documentation for the administrator of a Nextcloud instance](admin/)
 - [Documentation for developers](dev/)
 
 All the documentation can be found in the `/docs/` folder in the [app's repository]({{ site.github.url }}).
