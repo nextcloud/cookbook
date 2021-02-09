@@ -7,6 +7,8 @@
   [#555](https://github.com/nextcloud/cookbook/pull/555/) @seyfeb
 - Functionality to reference other recipes by id in description, tools, ingredients, and instructions
   [#562](https://github.com/nextcloud/cookbook/pull/562/) @seyfeb
+- Bundle Analyzer documentation
+  [#](https://github.com/nextcloud/cookbook/pull//) @seyfeb
 
 ### Changed
 - Using computed property in recipe view
