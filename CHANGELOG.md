@@ -9,6 +9,8 @@
   [#562](https://github.com/nextcloud/cookbook/pull/562/) @seyfeb
 - Bundle Analyzer documentation
   [#573](https://github.com/nextcloud/cookbook/pull/573/) @seyfeb
+- Added button to allow adding empty ingredient, instruction, and tool entries above existing ones in editor
+  [#575](https://github.com/nextcloud/cookbook/pull/575/) @seyfeb
 
 ### Changed
 - Using computed property in recipe view
