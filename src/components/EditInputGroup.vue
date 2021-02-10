@@ -7,13 +7,14 @@
                 <input v-if="fieldType==='text'" type="text" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
                 <textarea v-else-if="fieldType==='textarea'" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste"></textarea>
                 <div class="controls">
-                    <button class="icon-arrow-up" @click="moveEntryUp(idx)"></button>
-                    <button class="icon-arrow-down" @click="moveEntryDown(idx)"></button>
-                    <button class="icon-delete" @click="deleteEntry(idx)"></button>
+                    <button class="icon-arrow-up" @click="moveEntryUp(idx)" :title="t('cookbook', 'Move entry up')"></button>
+                    <button class="icon-arrow-down" @click="moveEntryDown(idx)" :title="t('cookbook', 'Move entry down')"></button>
+                    <button class="icon-add" @click="addNewEntry(idx)" :title="t('cookbook', 'Insert entry above')"></button>
+                    <button class="icon-delete" @click="deleteEntry(idx)" :title="t('cookbook', 'Delete entry')"></button>
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNewEntry ()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
+        <button class="button add-list-item" @click="addNewEntry()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
     </fieldset>
 </template>
 
