@@ -559,6 +559,8 @@ if [ -z "$RUNNER_GID" ]; then
 fi
 export RUNNER_GID
 
+echo "Using PHP version $PHP_VERSION"
+
 ##### Start processing the tasks at hand
 
 

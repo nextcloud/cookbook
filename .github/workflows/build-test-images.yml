@@ -28,4 +28,5 @@ jobs:
                 | docker login 
                 --username ${{ secrets.DOCKER_HUB_USERNAME }} 
                 --password-stdin &&
+                PHP_VERSION=${{ matrix.phpVersion }}
                 ./run-locally.sh --pull --create-images --push-images
