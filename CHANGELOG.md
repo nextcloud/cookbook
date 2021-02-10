@@ -45,6 +45,8 @@
   [#554](https://github.com/nextcloud/cookbook/pull/554) @christianlupus
 - Introduced updating recipe directory to Vuex state, fixes #542
   [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
+- Push docker images for different PHP versions
+  [#574](https://github.com/nextcloud/cookbook/pull/574) @christianlupus
 
 ### Removed
 - Removal of old contoller no longer in use
