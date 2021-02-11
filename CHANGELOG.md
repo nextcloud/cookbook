@@ -51,6 +51,8 @@
   [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
 - Push docker images for different PHP versions
   [#574](https://github.com/nextcloud/cookbook/pull/574) @christianlupus
+- Enhanced the CI scripts to be more verbose regarding issues
+  [#452](https://github.com/nextcloud/cookbook/pull/452) @christianlupus
 
 ### Removed
 - Removal of old contoller no longer in use
