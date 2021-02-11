@@ -89,8 +89,16 @@ jobs:
                 run: >-
                     CONTENT="{\"download\": \"${{ steps.upload_asset.outputs.browser_download_url }}\", \"signature\": \"$(cat /tmp/signature | tr -d '\n')\"}" &&
                     echo "$CONTENT" &&
-                    curl -X POST
+                    curl_out=$(curl -X POST
                     https://apps.nextcloud.com/api/v1/apps/releases
                     -H "Authorization: Token $TOKEN"
                     -H "Content-Type: application/json"
                     -d "$CONTENT"
+                    -w '\n%{http_code}\n');
+                    ret=$? &&
+                    code=$(echo "$curl_out" | tail -n 1) &&
+                    msg=$(echo "$curl_out" | head -n -1) &&
+                    echo "::set-output name=code::$code" &&
+                    echo "::set-output name=msg::$msg" &&
+                    echo "Result ($code): $msg" &&
+                    echo "$code" | grep '^\([^45][0-9][0-9]\)$'

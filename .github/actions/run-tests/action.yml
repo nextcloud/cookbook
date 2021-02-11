@@ -38,6 +38,7 @@ runs:
             export INPUT_DB=${{ inputs.db }} &&
             export PHP_VERSION=${{ inputs.phpVersion }} &&
             export HTTP_SERVER=${{ inputs.server }} &&
+            export COMPOSE_DOCKER_CLI_BUILD=1 &&
             ./run-locally.sh
             --pull
             --create-images

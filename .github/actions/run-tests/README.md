@@ -50,6 +50,8 @@ The following options are available to manage the docker images:
 
 Typically, one will use the `--create-images` flag which will pull any images and rebuild the existing images if anything has changed.
 
+It is hightly suggested to set the environment variable `COMPOSE_DOCKER_CLI_BUILD` to `1`. This will avoid building the images from scratch as a online cached version (nightly build) can be used instead. If your setup does not break, you can simply call `export COMPOSE_DOCKER_CLI_BUILD=1` before the first invocation of `run-locally.sh` once in each terminal you open.
+
 To push images credentials are needed. This is only required to speed up the the build prucess for other users. You will not have to do this unless you know exacly what it does.
 
 ### Handling the helper containers
