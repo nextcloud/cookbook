@@ -23,7 +23,16 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['vue-style-loader', 'css-loader'],
+                use: [{ loader: 'vue-style-loader' }, 
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false
+                        }
+                    },
+                    // [sass-loader](/loaders/sass-loader)
+                    { loader: 'sass-loader' }
+                ]
             },
             {
                 test: /\.html$/,
@@ -61,9 +70,14 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                'vue-style-loader',
-                'css-loader',
-                'sass-loader'
+                    { loader: 'vue-style-loader' },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false
+                        }
+                    },
+                    { loader: 'sass-loader' }
                 ]
             }
         ],
