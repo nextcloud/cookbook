@@ -64,6 +64,7 @@ class MainController extends Controller {
 		$response = [
 			'cookbook_version' => [0, 7, 10], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
+				'epoch' => 0,
 				'major' => 0,
 				'minor' => 2
 			]
