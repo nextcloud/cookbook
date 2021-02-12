@@ -59,7 +59,7 @@ export default {
                     })
                     .catch(function (e) {
                         $this.results = []
-                        alert(t('cookbook', 'Failed to load category '+cat+' recipes'))
+                        alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat}))
                         if (e && e instanceof Error) {
                             throw e
                         }

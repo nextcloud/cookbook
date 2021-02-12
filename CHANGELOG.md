@@ -53,6 +53,8 @@
   [#574](https://github.com/nextcloud/cookbook/pull/574) @christianlupus
 - Enhanced the CI scripts to be more verbose regarding issues
   [#452](https://github.com/nextcloud/cookbook/pull/452) @christianlupus
+- Code cleanup
+  [#579](https://github.com/nextcloud/cookbook/pull/579) @christianlupus
 
 ### Removed
 - Removal of old contoller no longer in use
