@@ -12,6 +12,7 @@ module.exports = {
 
     entry:{
         vue: path.join(__dirname, 'src', 'main.js'),
+        guest: path.join(__dirname, 'src', 'guest.js'),
     },
     output: {
         path: path.resolve(__dirname, './js'),
