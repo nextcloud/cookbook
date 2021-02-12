@@ -51,16 +51,8 @@ class MainController extends Controller {
 	 */
 	public function index(): TemplateResponse {
 		$this->dbCacheService->triggerCheck();
-		
-		$view_data = [
-			'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
-			'folder' => $this->service->getUserFolderPath(),
-			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
-			'last_update' => $this->dbCacheService->getSearchIndexLastUpdateTime(),
-			'print_image' => $this->service->getPrintImage(),
-		];
 
-		return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
+		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
 	
 	/**
