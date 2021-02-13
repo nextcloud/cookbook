@@ -6,7 +6,13 @@
   "scripts": {
     "build": "node node_modules/webpack/bin/webpack.js --progress --config webpack.build.js",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --watch --config webpack.devel.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "npx prettier --check src",
+    "prettier-fix": "npx prettier --write src",
+    "stylelint": "npx stylelint src",
+    "stylelint-fix": "npx stylelint --fix src",
+    "eslint": "npx eslint src",
+    "eslint-fix": "npx eslint --fix src"
   },
   "repository": {
     "type": "git",
