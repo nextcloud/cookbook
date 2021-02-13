@@ -2,6 +2,8 @@
 ARG PHPVERSION
 FROM php:${PHPVERSION}-fpm
 
+LABEL maintainer="Christian Wolf <github@christianwolf.email>"
+
 ARG PHPVERSION
 
 COPY install.sh /install.sh
