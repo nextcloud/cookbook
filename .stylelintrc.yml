@@ -1,0 +1,15 @@
+
+plugins:
+    - stylelint-scss
+
+rules:
+    "order/properties-alphabetical-order": null
+    "selector-no-qualifying-type":
+        - true
+        - ignore:
+            - attribute
+
+extends:
+    - stylelint-config-standard
+    - stylelint-config-sass-guidelines
+    - stylelint-config-prettier

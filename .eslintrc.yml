@@ -1,0 +1,10 @@
+
+plugins:
+    - vue
+
+extends:
+    - airbnb-base
+    - "plugin:vue/base"
+    - prettier
+    #- prettier/babel
+    - prettier/vue
