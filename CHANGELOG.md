@@ -55,6 +55,8 @@
   [#452](https://github.com/nextcloud/cookbook/pull/452) @christianlupus
 - Code cleanup
   [#579](https://github.com/nextcloud/cookbook/pull/579) @christianlupus
+- Added label to Dockerfile to be consistent with docker guidelines
+  [#582](https://github.com/nextcloud/cookbook/pull/582) @christianlupus
 
 ### Removed
 - Removal of old contoller no longer in use
