@@ -59,6 +59,8 @@
   [#579](https://github.com/nextcloud/cookbook/pull/579) @christianlupus
 - Added label to Dockerfile to be consistent with docker guidelines
   [#582](https://github.com/nextcloud/cookbook/pull/582) @christianlupus
+- Corrected jekyll documentation
+  [#584](https://github.com/nextcloud/cookbook/pull/584) @christianlupus
 
 ### Removed
 - Removal of old contoller no longer in use
