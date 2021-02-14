@@ -1,18 +1,17 @@
 <template>
     <Content app-name="cookbook">
-        <!-- <AppNavi class="app-navigation" /> -->
         <AppContent>
             <div class="main">
                 <div class="dialog">
                     <div class="message">
                         {{ t('cookbook', 'Cannot access recipe folder.') }}
                     </div>
-                    <div class="explanation">
+                    <div>
                         {{
-                            t('cookbook', 'You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this nextcloud instance. To be able to use the cookbook app as a guest account, you need to specify a folder where all recipes are stored. You will need write permission to this folder.')
+                            t('cookbook', 'You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder.')
                         }}
                     </div>
-                    <div class="explanation">
+                    <div>
                         <button
                             @click.prevent="selectFolder"
                         >
@@ -68,7 +67,6 @@ div.main {
 
     div.dialog {
         width: 50%;
-        height: 40%;
 
         padding: 20px;
         border: 1px solid;
