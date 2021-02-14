@@ -68,6 +68,10 @@ div.main {
     div.dialog {
         width: 50%;
 
+        @media screen and (max-width: 800px) {
+            width: 90%;
+        }
+
         padding: 20px;
         border: 1px solid;
         border-radius: 15px;
