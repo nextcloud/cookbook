@@ -11,6 +11,7 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Exception\UserFolderNotWritableException;
 
 class MainController extends Controller {
 	protected $appName;
@@ -50,17 +51,16 @@ class MainController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index(): TemplateResponse {
-		$this->dbCacheService->triggerCheck();
+		try {
+			// Check if the user folder can be accessed
+			$this->service->getFolderForUser();
+		} catch (UserFolderNotWritableException $ex) {
+			return new TemplateResponse($this->appName, 'invalid_guest');
+		}
 		
-		$view_data = [
-			'all_keywords' => $this->service->getAllKeywordsInSearchIndex(),
-			'folder' => $this->service->getUserFolderPath(),
-			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
-			'last_update' => $this->dbCacheService->getSearchIndexLastUpdateTime(),
-			'print_image' => $this->service->getPrintImage(),
-		];
+		$this->dbCacheService->triggerCheck();
 
-		return new TemplateResponse($this->appName, 'index', $view_data);  // templates/index.php
+		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
 	
 	/**
@@ -72,8 +72,9 @@ class MainController extends Controller {
 		$response = [
 			'cookbook_version' => [0, 7, 10], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
+				'epoch' => 0,
 				'major' => 0,
-				'minor' => 1
+				'minor' => 2
 			]
 		];
 		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);
@@ -213,6 +214,35 @@ class MainController extends Controller {
 			}
 
 			return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
+		} catch (\Exception $e) {
+			return new DataResponse($e->getMessage(), 500);
+		}
+	}
+
+	/**
+	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 */
+	public function categoryUpdate($category) {
+		$this->dbCacheService->triggerCheck();
+
+		$json = $this->restParser->getParameters();
+		if (!$json || !isset($json['name']) || !$json['name']) {
+			return new DataResponse('New category name not found in data', 400);
+		}
+
+		$category = urldecode($category);
+		try {
+			$recipes = $this->service->getRecipesByCategory($category);
+			foreach ($recipes as $recipe) {
+				$r = $this->service->getRecipeById($recipe['recipe_id']);
+				$r['recipeCategory'] = $json['name'];
+				$this->service->addRecipe($r);
+			}
+			// Update cache
+			$this->dbCacheService->updateCache();
+
+			return new DataResponse($json['name'], Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}

@@ -9,6 +9,11 @@
  */
 return [
 	'routes' => [
+		/*
+		 * Very important: Do not change anything here without updating the api version in MainController.
+		 * If you add new features here, invrese the minor version of the API.
+		 * If you change the behavior or remove functionality, increase the major version there.
+		 */
 		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
 		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
@@ -27,6 +32,7 @@ return [
 		['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
 		/* API routes */
 		['name' => 'main#category', 'url' => '/api/category/{category}', 'verb' => 'GET'],
+		['name' => 'main#categoryUpdate', 'url' => '/api/category/{category}', 'verb' => 'PUT'],
 		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
 		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
 	],

@@ -1,0 +1,33 @@
+
+name: Build images nightly for unit testing
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "30 2 * * *"
+
+jobs:
+    push:
+        name: Build and push the latest test images
+        runs-on: ubuntu-latest
+        
+        strategy:
+            matrix:
+                phpVersion:
+                    - "7"
+                    - "7.3"
+                    - "8"
+        steps:
+            - name: Checkout the app
+              uses: actions/checkout@v2
+              
+            - name: Build and push the image
+              shell: bash
+              run: >-
+                cd .github/actions/run-tests &&
+                echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
+                | docker login 
+                --username ${{ secrets.DOCKER_HUB_USERNAME }} 
+                --password-stdin &&
+                export COMPOSE_DOCKER_CLI_BUILD=1 &&
+                PHP_VERSION=${{ matrix.phpVersion }}
+                ./run-locally.sh --pull --create-images --push-images

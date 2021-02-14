@@ -1,7 +1,8 @@
 <template>
     <div class="wrapper">
+        <div class="overlay" :class="{hidden: !overlayVisible}" />
         <EditInputField :fieldType="'text'" :fieldLabel="t('cookbook', 'Name')" v-model="recipe['name']" />
-        <EditInputField :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" />
+        <EditInputField :fieldType="'markdown'" :fieldLabel="t('cookbook', 'Description')" v-model="recipe['description']" :referencePopupEnabled="true" />
         <EditInputField :fieldType="'url'" :fieldLabel="t('cookbook', 'URL')" v-model="recipe['url']" />
         <EditImageField :fieldLabel="t('cookbook', 'Image')" v-model="recipe['image']" />
         <EditTimeField :fieldLabel="t('cookbook', 'Preparation time')" v-model="prepTime" />
@@ -11,20 +12,22 @@
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" v-model="recipe['recipeYield']" />
         <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
-        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" />
-        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" />
+        <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
+        <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
+        <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" :referencePopupEnabled="true" />
+        <edit-multiselect-popup ref="referencesPopup" class="referencesPopup" :class="{visible: referencesPopupFocused}" :options="allrecipeOptions" track-by="recipe_id" label="title" :loading="loadingRecipeReferences" :focused="referencesPopupFocused" />
     </div>
 </template>
 
 <script>
 import axios from '@nextcloud/axios'
-
+import Vue from 'vue'
 import EditImageField from './EditImageField'
 import EditInputField from './EditInputField'
 import EditInputGroup from './EditInputGroup'
 import EditMultiselect from './EditMultiselect'
 import EditMultiselectInputGroup from './EditMultiselectInputGroup'
+import EditMultiselectPopup from './EditMultiselectPopup'
 import EditTimeField from './EditTimeField'
 
 export default {
@@ -36,6 +39,7 @@ export default {
         EditMultiselect,
         EditTimeField,
         EditMultiselectInputGroup,
+        EditMultiselectPopup
     },
     props: ['id'],
     data () {
@@ -77,6 +81,7 @@ export default {
             isFetchingKeywords: true,
             allKeywords: [],
             selectedKeywords: [],
+            allRecipes: [],
             availableNutritionFields:
                 [{ key: 'calories', label: t('cookbook', 'Calories'), placeholder: t('cookbook', 'E.g.: 450 kcal (amount & unit)') },
                 { key: 'carbohydrateContent', label: t('cookbook', 'Carbohydrate content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
@@ -89,7 +94,25 @@ export default {
                 { key: 'sodiumContent',label: t('cookbook', 'Sodium content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'sugarContent', label: t('cookbook', 'Sugar content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
                 { key: 'transFatContent', label: t('cookbook', 'Trans-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') },
-                { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }]
+                { key: 'unsaturatedFatContent', label: t('cookbook', 'Unsaturated-fat content'), placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)') }],
+            referencesPopupFocused: false,
+            popupContext: undefined,
+            loadingRecipeReferences: true
+        }
+    },
+    computed: {
+        allrecipeOptions() {
+            return this.allRecipes.map(r => {
+                    return {recipe_id: r.recipe_id, title: r.recipe_id + ": " + r.name}
+                })
+        },
+        categoryUpdating() {
+            return this.$store.state.categoryUpdating
+        },
+        overlayVisible() {
+            return (this.$store.state.loadingRecipe
+                || this.$store.state.reloadingRecipe
+                || (this.$store.state.categoryUpdating && this.$store.state.categoryUpdating == this.recipe['recipeCategory']))
         }
     },
     watch: {
@@ -251,52 +274,33 @@ export default {
             let $this = this
 
             if (this.recipe.id) {
-                // Update existing recipe
-                axios({
-                    method: 'PUT',
-                    url: this.$window.baseUrl + '/api/recipes/'+this.recipe.id,
-                    data: this.recipe
-                    })
-                    .then(function (response) {
-                        // success
-                        let recipe = response.data
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
-                        $this.$window.goTo('/recipe/'+recipe)
-                        // Refresh navigation to display changes
-                        $this.$root.$emit('refreshNavigation')
+                this.$store.dispatch('updateRecipe', { recipe: this.recipe })
+                    .then((response) => {
+                        $this.$window.goTo('/recipe/'+response.data)
                     })
                     .catch(function(e) {
                         // error
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         alert(t('cookbook', 'Recipe could not be saved'))
                         console.log(e)
                     })
                     .then(() => {
                         // finally
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.savingRecipe = false
                     })
             } else {
-                // Create a new recipe
-                axios({
-                    url: this.$window.baseUrl + '/api/recipes',
-                    method: 'POST',
-                    data: this.recipe,
-                    })
-                    .then(function(response) {
-                        // success
-                        let recipe = response.data
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
-                        $this.$window.goTo('/recipe/'+recipe)
-                        // Refresh navigation to display changes
-                        $this.$root.$emit('refreshNavigation')
+                this.$store.dispatch('createRecipe', { recipe: this.recipe })
+                    .then((response) => {
+                        $this.$window.goTo('/recipe/'+response.data)
                     })
                     .catch(function(e) {
                         // error
-                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         alert(t('cookbook', 'Recipe could not be saved'))
+                        console.log(e)
                     })
                     .then(() => {
                         // finally
+                        $this.$store.dispatch('setSavingRecipe', { saving: false })
                         $this.savingRecipe = false
                     })
             }
@@ -376,6 +380,8 @@ export default {
         }
     },
     mounted () {
+        let $this = this
+
         // Store the initial recipe configuration for possible later use
         if (this.recipeInit === null) {
             this.recipeInit = this.recipe
@@ -392,7 +398,52 @@ export default {
         this.$root.$on('reloadRecipeEdit', () => {
             this.loadRecipeData()
         })
+        this.$root.$off('categoryRenamed')
+        this.$root.$on('categoryRenamed', (val) => {
+            // Update selectable categories
+            let idx = this.allCategories.findIndex(c => c == val[1])
+            if (idx >= 0) {
+                Vue.set(this.allCategories, idx, val[0])
+                // this.allCategories[idx] = val[0]
+            }
+            // Update selected category if the currently selected was renamed
+            if (this.recipe['recipeCategory'] == val[1]) {
+                this.recipe.recipeCategory = val[0]
+            }
+        })
+        // Register recipe-reference selection hook for showing popup when requested
+        // from a child element
+        this.$off('showRecipeReferencesPopup')
+        this.$on('showRecipeReferencesPopup', (val) => {
+            this.referencesPopupFocused = true
+            this.popupContext = val
+        })
+        // Register hook when recipe reference has been selected in popup
+        this.$off('ms-popup-selected')
+        this.$on('ms-popup-selected', (opt) => {
+            this.referencesPopupFocused = false
+            this.popupContext.context.pasteString('r/' + opt.recipe_id + ' ')
+        })
+        // Register hook when recipe reference has been selected in popup
+        this.$off('ms-popup-selection-canceled')
+        this.$on('ms-popup-selection-canceled', (opt) => {
+            this.referencesPopupFocused = false
+            this.popupContext.context.pasteCanceled()
+        })
         this.savingRecipe = false
+        
+        // Load data for all recipes to be used in recipe-reference popup suggestions
+        axios.get(this.$window.baseUrl + '/api/recipes')
+            .then(function (response) {
+                $this.allRecipes = response.data
+            })
+            .catch(function (e) {
+                console.log(e)
+            })
+            .then(() => {
+                // finally
+                $this.loadingRecipeReferences = false
+            })
     },
     beforeDestroy() {
       window.removeEventListener('beforeunload', this.beforeWindowUnload)
@@ -461,11 +512,35 @@ beforeRouteLeave (to, from, next) {
     padding: 1rem;
 }
 
+.overlay {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: var(--color-main-background);
+    opacity: .75;
+    z-index: 1000;
+}
+.overlay.hidden {
+    display: none;
+}
+
 /* This is not used anywhere at the moment, but left here for future reference
 form fieldset ul label input[type="checkbox"] {
     margin-left: 1em;
     vertical-align: middle;
     cursor: pointer;
 } */
+
+.referencesPopup {
+    position: fixed;
+    display: none;
+}
+
+.referencesPopup.visible {
+    display: block;
+}
 
 </style>

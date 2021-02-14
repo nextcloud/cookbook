@@ -1,5 +1,73 @@
 ## [Unreleased]
 
+## 0.8.0 - 2021-02-14
+
+### Added
+- Markdown rendering for Description
+  [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
+- Changing category name for all recipes in a category
+  [#555](https://github.com/nextcloud/cookbook/pull/555/) @seyfeb
+- Functionality to reference other recipes by id in description, tools, ingredients, and instructions
+  [#562](https://github.com/nextcloud/cookbook/pull/562/) @seyfeb
+- Bundle Analyzer documentation
+  [#573](https://github.com/nextcloud/cookbook/pull/573/) @seyfeb
+- Added button to allow adding empty ingredient, instruction, and tool entries above existing ones in editor
+  [#575](https://github.com/nextcloud/cookbook/pull/575/) @seyfeb
+
+### Changed
+- Using computed property in recipe view
+  [#522](https://github.com/nextcloud/cookbook/pull/522/) @seyfeb
+- Split off list/grid of recipes to separate Vue component
+  [#526](https://github.com/nextcloud/cookbook/pull/526/) @seyfeb
+- CSS Cleanup, removed central css styling
+  [#528](https://github.com/nextcloud/cookbook/pull/528/) @seyfeb
+- Timers are hidden when time is zero (prep, cook, total time)
+  [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
+- Introduced left navigation pane visibility as Vuex state
+  [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
+- Centralized some recipe tasks (create, update, delete)
+  [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
+- Added icon for recipes in navigation pane, closes #550
+  [#560](https://github.com/nextcloud/cookbook/pull/560/) @seyfeb
+- Bumped @nextcloud/vue to 3.5.4
+  [#561](https://github.com/nextcloud/cookbook/pull/561/) @seyfeb
+- Bump webpack-merge from 4.2.2 to 5.7.3
+  [#458](https://github.com/nextcloud/cookbook/pull/458/) @seyfeb
+- Bump webpack-cli from 3.3.12 to 4.5.0
+  [#565](https://github.com/nextcloud/cookbook/pull/565/)
+- Enhanced testing interface
+  [#564](https://github.com/nextcloud/cookbook/pull/564) @christianlupus
+- Allow guest users to use the cookbook and avoid nextcloud exception handling
+  [#506](https://github.com/nextcloud/cookbook/pull/506) @christianlupus
+
+### Fixed
+- Added some documentation how to install GH action generated builds
+  [#538](https://github.com/nextcloud/cookbook/pull/538) @christianlupus
+- Fixed problem where timers are not updated after saving recipe edits
+  [#543](https://github.com/nextcloud/cookbook/pull/543/) @seyfeb
+- Fixed overlapping misaligned navigation toggles (as in #534)
+  [#544](https://github.com/nextcloud/cookbook/pull/544/) @seyfeb
+- Refreshing left navigation pane after downloading recipe data, closes #465
+  [#547](https://github.com/nextcloud/cookbook/pull/547/) @seyfeb
+- Check for existing `@context` setting in json checker
+  [#554](https://github.com/nextcloud/cookbook/pull/554) @christianlupus
+- Introduced updating recipe directory to Vuex state, fixes #542
+  [#546](https://github.com/nextcloud/cookbook/pull/546/) @seyfeb
+- Push docker images for different PHP versions
+  [#574](https://github.com/nextcloud/cookbook/pull/574) @christianlupus
+- Enhanced the CI scripts to be more verbose regarding issues
+  [#452](https://github.com/nextcloud/cookbook/pull/452) @christianlupus
+- Code cleanup
+  [#579](https://github.com/nextcloud/cookbook/pull/579) @christianlupus
+- Added label to Dockerfile to be consistent with docker guidelines
+  [#582](https://github.com/nextcloud/cookbook/pull/582) @christianlupus
+- Corrected jekyll documentation
+  [#584](https://github.com/nextcloud/cookbook/pull/584) @christianlupus
+
+### Removed
+- Removal of old contoller no longer in use
+  [#536](https://github.com/nextcloud/cookbook/pull/536) @christianlupus
+
 ## 0.7.10 - 2021-01-16
 
 ### Fixed

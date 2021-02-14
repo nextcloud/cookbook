@@ -12,6 +12,7 @@ module.exports = {
 
     entry:{
         vue: path.join(__dirname, 'src', 'main.js'),
+        guest: path.join(__dirname, 'src', 'guest.js'),
     },
     output: {
         path: path.resolve(__dirname, './js'),
@@ -23,7 +24,16 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                use: ['vue-style-loader', 'css-loader'],
+                use: [{ loader: 'vue-style-loader' }, 
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false
+                        }
+                    },
+                    // [sass-loader](/loaders/sass-loader)
+                    { loader: 'sass-loader' }
+                ]
             },
             {
                 test: /\.html$/,
@@ -56,6 +66,21 @@ module.exports = {
                 test: /\.svg$/,
                 loader: 'svg-inline-loader'
             },
+            // this will apply to both plain `.scss` files
+            // AND `<style lang="scss">` blocks in `.vue` files
+            {
+                test: /\.scss$/,
+                use: [
+                    { loader: 'vue-style-loader' },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            esModule: false
+                        }
+                    },
+                    { loader: 'sass-loader' }
+                ]
+            }
         ],
     },
     plugins: [
@@ -65,7 +90,7 @@ module.exports = {
     resolve: {
         extensions: ['*', '.js', '.vue', '.json'],
         modules: [
-            path.resolve(__dirname, './node_modules')
+            'node_modules'
         ],
         symlinks: false,
     },

@@ -5,19 +5,21 @@
             <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
                 <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
                 <input v-if="fieldType==='text'" type="text" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" ref="list-field" v-model="buffer[idx]" v-on:input="handleInput" @paste="handlePaste"></textarea>
+                <textarea v-else-if="fieldType==='textarea'" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste"></textarea>
                 <div class="controls">
-                    <button class="icon-arrow-up" @click="moveEntryUp(idx)"></button>
-                    <button class="icon-arrow-down" @click="moveEntryDown(idx)"></button>
-                    <button class="icon-delete" @click="deleteEntry(idx)"></button>
+                    <button class="icon-arrow-up" @click="moveEntryUp(idx)" :title="t('cookbook', 'Move entry up')"></button>
+                    <button class="icon-arrow-down" @click="moveEntryDown(idx)" :title="t('cookbook', 'Move entry down')"></button>
+                    <button class="icon-add" @click="addNewEntry(idx)" :title="t('cookbook', 'Insert entry above')"></button>
+                    <button class="icon-delete" @click="deleteEntry(idx)" :title="t('cookbook', 'Delete entry')"></button>
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNewEntry ()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
+        <button class="button add-list-item" @click="addNewEntry()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
     </fieldset>
 </template>
 
 <script>
+
 export default {
     name: "EditInputGroup",  
     props: {
@@ -26,7 +28,10 @@ export default {
           default: []
         },
         fieldType: String,
-        fieldName: String,
+        fieldName: {
+            type: String,
+            default: ''
+        },
         showStepNumber: {
             type: Boolean,
             default: false
@@ -37,13 +42,20 @@ export default {
             type: Boolean,
             default: false
         },
+        referencePopupEnabled: {
+            type: Boolean,
+            default: false
+        }
     },
     data () {
         return {
             // helper variables
             buffer: this.value.slice(),
             contentPasted: false,
-            singleLinePasted: false
+            singleLinePasted: false,
+            lastFocusedFieldIndex: null,
+            lastCursorPosition: -1,
+            ignoreNextKeyUp: false
         }
     },
     watch: {
@@ -156,17 +168,42 @@ export default {
          * Catches enter and key down presses and either adds a new row or focuses the one below
          */
         keyPressed(e) {
+            // If, e.g., enter has been pressed in the multiselect popup to select an option,
+            // ignore the following keyup event
+            if(this.ignoreNextKeyUp) {
+                this.ignoreNextKeyUp = false
+                return
+            }
             // Using keyup for trigger will prevent repeat triggering if key is held down
-            if (e.keyCode === 13 || e.keyCode === 10) {
+            if (e.keyCode === 13 ||
+                e.keyCode === 10 ||
+                (this.referencePopupEnabled && e.keyCode === 51)) {
                 e.preventDefault()
                 let $li = e.currentTarget.closest('li')
                 let $ul = $li.closest('ul')
                 let $pressed_li_index = Array.prototype.indexOf.call($ul.childNodes, $li)
 
-                if ($pressed_li_index >= this.$refs['list-field'].length - 1) {
-                    this.addNewEntry ()
-                } else {
-                    $ul.children[$pressed_li_index+1].getElementsByTagName('input')[0].focus()
+                if (e.keyCode === 13 || e.keyCode === 10) {
+                    if ($pressed_li_index >= this.$refs['list-field'].length - 1) {
+                        this.addNewEntry ()
+                    } else {
+                        $ul.children[$pressed_li_index+1].getElementsByTagName('input')[0].focus()
+                    }
+                }
+                else if (this.referencePopupEnabled && e.keyCode === 51) {
+                    e.preventDefault()
+                    let elm = this.$refs['list-field'][$pressed_li_index]
+                    // Check if the letter before the hash
+                    let cursorPos = elm.selectionStart
+                    let content = elm.value
+                    let prevChar = cursorPos > 1 ? content.charAt(cursorPos-2) : ''
+
+                    if (cursorPos === 1 || prevChar === ' ' || prevChar === '\n' || prevChar === '\r') {
+                        // Show dialog to select recipe
+                        this.$parent.$emit('showRecipeReferencesPopup', {context: this})
+                        this.lastFocusedFieldIndex = $pressed_li_index
+                        this.lastCursorPosition = cursorPos
+                    }
                 }
             }
         },
@@ -192,6 +229,39 @@ export default {
             this.buffer.splice(index - 1, 0, entry)
             this.$emit('input', this.buffer)
         },
+        pasteCanceled() {
+            let field = this.$refs['list-field'][this.lastFocusedFieldIndex]
+            // set cursor back to previous position
+            this.$nextTick(function() {
+                field.focus()
+                field.setSelectionRange (this.lastCursorPosition, this.lastCursorPosition)
+            })
+        },
+        /**
+         * Paste string at the last saved cursor position
+         */
+        pasteString(str, ignoreKeyup=true) {
+            let field = this.$refs['list-field'][this.lastFocusedFieldIndex]
+
+            // insert str
+            let content = field.value
+            let updatedContent = content.slice(0, this.lastCursorPosition)
+                + str
+                + content.slice(this.lastCursorPosition)
+            this.buffer[this.lastFocusedFieldIndex] = updatedContent
+            this.$emit('input', this.buffer)
+
+            // set cursor to position after pasted string. Waiting two ticks is necessary for
+            // the data to be updated in the field
+            this.$nextTick(function() {
+                this.$nextTick(function() {
+                    this.ignoreNextKeyUp = ignoreKeyup
+                    field.focus()
+                    let newCursorPos = this.lastCursorPosition + str.length
+                    field.setSelectionRange (newCursorPos, newCursorPos)
+                })
+            })
+        }
     },
 }
 </script>

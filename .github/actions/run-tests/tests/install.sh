@@ -27,25 +27,46 @@ function configure_gd()
 	fi
 }
 
-
-apt-get update
-apt-get install -y --no-install-recommends \
+echo 'Running apt-get'
+apt-get -qq update
+apt-get -qq -y install --no-install-recommends \
 	npm make default-mysql-client postgresql-client \
 	unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev \
-	cmake libpq-dev libsqlite3-dev sudo rsync
+	cmake libpq-dev libsqlite3-dev sudo rsync tini > /dev/null
 apt-get clean
 
-configure_gd "$1"
-docker-php-ext-install -j$(nproc) gd
+echo 'Installing PHP gd'
+configure_gd "$1" > /dev/null
+docker-php-ext-install -j$(nproc) gd > /dev/null
 
-docker-php-ext-configure zip
-docker-php-ext-install -j$(nproc) zip
+echo 'Installing PHP zip'
+docker-php-ext-configure zip > /dev/null
+docker-php-ext-install -j$(nproc) zip > /dev/null
 
-docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite
+echo 'Installing PHP pdo plus mysql, postgres and sqlite extensions'
+docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite > /dev/null
 
-pecl install xdebug
-docker-php-ext-enable xdebug
+echo 'Installing PHP xdebug'
+pecl install xdebug > /dev/null
+docker-php-ext-enable xdebug > /dev/null
+
+echo 'Installing PHP extensions done.'
 
 echo 'runner ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 
-npm install -g npm@latest
+echo 'Installing NPM globally'
+npm install -g --quiet --loglevel warn npm@latest
+
+# Install composer
+EXPECTED_CHECKSUM="$(php -r 'copy("https://composer.github.io/installer.sig", "php://stdout");')"
+php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');"
+ACTUAL_CHECKSUM="$(php -r "echo hash_file('sha384', '/tmp/composer-setup.php');")"
+
+if [ "$EXPECTED_CHECKSUM" != "$ACTUAL_CHECKSUM" ]
+then
+    >&2 echo 'ERROR: Invalid installer checksum'
+    exit 1
+fi
+
+php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
+rm /tmp/composer-setup.php

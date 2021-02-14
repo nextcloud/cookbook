@@ -94,7 +94,7 @@ class RestParameterParser {
 			$parts = explode('=', $assignment, 2);
 			
 			if (count($parts) < 2) {
-				throw new \Exception($this->l->t('Invlaid URL-encoded string found. Please report a bug.'));
+				throw new \Exception($this->l->t('Invalid URL-encoded string found. Please report a bug.'));
 			}
 			
 			$key = $parts[0];

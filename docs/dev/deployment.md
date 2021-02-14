@@ -58,8 +58,8 @@ You have to put a keyword on a line in the commit message to select a version ty
 | Keyword | Version type | Generated version |
 |---|---|---|
 | no keyword | patch version | 1.2.4 |
-| `%MINOR_VERSION%` | minor version | 1.3.0 |
-| `%MAJOR_VERSION%` | major version | 2.0.0 |
+| `%MINOR%` | minor version | 1.3.0 |
+| `%MAJOR%` | major version | 2.0.0 |
 
 The automatic deployment action will take over once you push to the `stable` branch.
 The following actions will take place after the merge:

@@ -263,7 +263,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name'])
+		$qb->select(['r.recipe_id', 'r.name', 'kk.name AS keywords'])
 		->from(self::DB_TABLE_KEYWORDS, 'k')
 		->where('k.name IN (:keywords)')
 		->andWhere('k.user_id = :user')
@@ -272,14 +272,18 @@ class RecipeDb {
 		->setParameter('keywords', $keywords_arr, IQueryBuilder::PARAM_STR_ARRAY)
 		->setParameter('keywordsCount', sizeof($keywords_arr), TYPE::INTEGER);
 		$qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
-		$qb->groupBy(['r.name', 'r.recipe_id']);
+		$qb->join('r', self::DB_TABLE_KEYWORDS, 'kk', 'kk.recipe_id = r.recipe_id');
+		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
-		return $this->unique($result);
+		// group recipes, convert keywords to comma-separated list
+		$recipesGroupedTags = $this->groupKeywordInResult($result);
+
+		return $this->unique($recipesGroupedTags);
 	}
 	
 	/**

@@ -60,8 +60,6 @@ class ConfigController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function config() {
-		$this->dbCacheService->triggerCheck();
-		
 		$data = $this->restParser->getParameters();
 		
 		if (isset($data['folder'])) {
@@ -77,6 +75,8 @@ class ConfigController extends Controller {
 			$this->service->setPrintImage((bool)$data['print_image']);
 		}
 
+		$this->dbCacheService->triggerCheck();
+		
 		return new DataResponse('OK', Http::STATUS_OK);
 	}
 	

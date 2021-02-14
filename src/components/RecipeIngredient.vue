@@ -1,7 +1,7 @@
 <template>
     <li :class="{ 'header': isHeader(), 'unindented': !recipeIngredientsHaveSubgroups}" @click="toggleDone">
-    	<div class="checkmark" :class="{ 'done': isDone }">✔</div>
-    	<div class="ingredient">{{ displayIngredient }}</div>
+        <div class="checkmark" :class="{ 'done': isDone }">✔</div>
+        <div class="ingredient" v-html="displayIngredient"></div>
 	</li>
 </template>
 
