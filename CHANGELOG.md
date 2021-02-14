@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.8.0 - 2021-02-14
+
 ### Added
 - Markdown rendering for Description
   [#381](https://github.com/nextcloud/cookbook/pull/381) @thembeat
