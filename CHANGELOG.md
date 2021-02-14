@@ -35,6 +35,8 @@
   [#565](https://github.com/nextcloud/cookbook/pull/565/)
 - Enhanced testing interface
   [#564](https://github.com/nextcloud/cookbook/pull/564) @christianlupus
+- Allow guest users to use the cookbook and avoid nextcloud exception handling
+  [#506](https://github.com/nextcloud/cookbook/pull/506) @christianlupus
 
 ### Fixed
 - Added some documentation how to install GH action generated builds

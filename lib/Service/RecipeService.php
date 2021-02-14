@@ -14,6 +14,7 @@ use OCP\Files\Folder;
 use OCA\Cookbook\Db\RecipeDb;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
+use OCA\Cookbook\Exception\UserFolderNotWritableException;
 
 /**
  * Main service class for the cookbook app.
@@ -862,7 +863,13 @@ class RecipeService {
 	 * @deprecated
 	 */
 	public function updateSearchIndex() {
-		$this->migrateFolderStructure();
+		try {
+			$this->migrateFolderStructure();
+		} catch (UserFolderNotWritableException $ex) {
+			// Ignore migration if not permitted.
+			$this->logger->warning("Cannot migrate cookbook file structure as not permitted.");
+			throw $ex;
+		}
 	}
 	
 	private function migrateFolderStructure() {
@@ -1030,7 +1037,11 @@ class RecipeService {
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
 		} else {
-			$folder = $this->root->newFolder($path);
+			try {
+				$folder = $this->root->newFolder($path);
+			} catch (NotPermittedException $ex) {
+				throw new UserFolderNotWritableException($this->il10n->t('User cannot create recipe folder'), null, $ex);
+			}
 		}
 		return $folder;
 	}

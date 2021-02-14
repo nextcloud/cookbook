@@ -11,6 +11,7 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Exception\UserFolderNotWritableException;
 
 class MainController extends Controller {
 	protected $appName;
@@ -50,6 +51,13 @@ class MainController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index(): TemplateResponse {
+		try {
+			// Check if the user folder can be accessed
+			$this->service->getFolderForUser();
+		} catch (UserFolderNotWritableException $ex) {
+			return new TemplateResponse($this->appName, 'invalid_guest');
+		}
+		
 		$this->dbCacheService->triggerCheck();
 
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
