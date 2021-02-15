@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.8.1 - 2021-02-15
+
 ### Added
 - Code style checker in Vue files
   [#581](https://github.com/nextcloud/cookbook/pull/581) @christianlupus
