@@ -1,0 +1,9 @@
+/build/
+/vendor/
+/.git/
+/.github/
+/docs/
+/l10n/
+/node_modules/
+/tests/
+/translationfiles/
