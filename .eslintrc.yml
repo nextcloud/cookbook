@@ -5,6 +5,9 @@ plugins:
 extends:
     - airbnb-base
     - "plugin:vue/base"
+    - "plugin:vue/essential"
+    - "plugin:vue/strongly-recommended"
+    - "plugin:vue/recommended"
     - prettier
     #- prettier/babel
     - prettier/vue
