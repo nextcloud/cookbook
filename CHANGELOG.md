@@ -1,5 +1,15 @@
 ## [Unreleased]
 
+## 0.8.1 - 2021-02-15
+
+### Added
+- Code style checker in Vue files
+  [#581](https://github.com/nextcloud/cookbook/pull/581) @christianlupus
+
+### Fixed
+- Remove look-behind to support Safari users as well
+  [#591](https://github.com/nextcloud/cookbook/pull/591) @christianlupus
+
 ## 0.8.0 - 2021-02-14
 
 ### Added

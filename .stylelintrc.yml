@@ -1,0 +1,18 @@
+
+plugins:
+    - stylelint-scss
+
+rules:
+    "order/properties-alphabetical-order": null
+    "selector-no-qualifying-type":
+        - true
+        - ignore:
+            - attribute
+    "selector-max-id": 1
+    "max-nesting-depth": 2
+
+extends:
+    - stylelint-config-standard
+    - stylelint-config-sass-guidelines
+    - stylelint-config-idiomatic-order
+    - stylelint-config-prettier
