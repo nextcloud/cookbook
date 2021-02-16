@@ -9,6 +9,7 @@
                     track-by="key"
                     label="label"
                     :multiple="false"
+                    :placeholder="labelSelectPlaceholder"
                     @change="e => optionUpdated(idx, e)"
                     :value="selectedOptions[idx][0]"
                     />
@@ -26,6 +27,7 @@
                     :options="selectableOptions(selectedOptions.length)"
                     track-by="key"
                     label="label"
+                    :placeholder="labelSelectPlaceholder"
                     :multiple="false"
                     @change="e => optionUpdated(selectedOptions.length, e)"
                     />
@@ -57,7 +59,11 @@ export default {
     props: {
         fieldLabel: {
             type: String,
-            default: ""
+            default: ''
+        },
+        labelSelectPlaceholder: {
+            type: String,
+            default: 'Select option'
         },
         /** Selectable options.
          * Array of option objects with keys: key, label, and placeholder
