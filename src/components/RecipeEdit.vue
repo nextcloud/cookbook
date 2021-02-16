@@ -11,7 +11,7 @@
         <EditMultiselect :fieldLabel="t('cookbook', 'Category')" :placeholder="t('cookbook', 'Choose category')" v-model="recipe['recipeCategory']" :options="allCategories" :taggable="true" :multiple="false" :loading="isFetchingCategories" @tag="addCategory" />
         <EditMultiselect :fieldLabel="t('cookbook', 'Keywords')" :placeholder="t('cookbook', 'Choose keywords')" v-model="selectedKeywords" :options="allKeywords" :taggable="true" :multiple="true" :tagWidth="60" :loading="isFetchingKeywords" @tag="addKeyword" />
         <EditInputField :fieldType="'number'" :fieldLabel="t('cookbook', 'Servings')" v-model="recipe['recipeYield']" />
-        <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" />
+        <EditMultiselectInputGroup :fieldLabel="t('cookbook', 'Nutrition Information')" v-model="recipe['nutrition']" :options="availableNutritionFields" :labelSelectPlaceholder="t('cookbook', 'Pick option')"/>
         <EditInputGroup :fieldName="'tool'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Tools')"  v-model="recipe['tool']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
         <EditInputGroup :fieldName="'recipeIngredient'" :fieldType="'text'" :fieldLabel="t('cookbook', 'Ingredients')" v-model="recipe['recipeIngredient']" v-bind:createFieldsOnNewlines="true" :referencePopupEnabled="true" />
         <EditInputGroup :fieldName="'recipeInstructions'" :fieldType="'textarea'" :fieldLabel="t('cookbook', 'Instructions')"  v-model="recipe['recipeInstructions']" v-bind:createFieldsOnNewlines="true" v-bind:showStepNumber="true" :referencePopupEnabled="true" />
