@@ -30,6 +30,7 @@ OC.L10N.register(
     "Create recipe" : "Créer une recette",
     "Download recipe from URL" : "Télécharger la recette depuis l'URL",
     "Uncategorized recipes" : "Recettes non catégorisées",
+    "Rename" : "Renommer",
     "Failed to load category {category} recipes" : "Impossible de charger les recette de la catégorie {category}",
     "Loading category recipes …" : "Chargement des recettes de la catégorie ...",
     "Failed to fetch categories" : "Impossible de récupérer les catégories",

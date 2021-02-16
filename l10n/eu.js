@@ -29,6 +29,7 @@ OC.L10N.register(
     "Path to your recipe collection" : "Zure errezeta bildumarako bidea",
     "Create recipe" : "Sortu errezeta",
     "Categories" : "Kategoriak",
+    "Rename" : "Berrizendatu",
     "Failed to fetch categories" : "Huts egin du kategoriak eskuratzen",
     "Rescan library" : "Bireskaneatu liburutegia",
     "Recipe folder" : "Errezeten karpeta",
