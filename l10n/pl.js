@@ -75,6 +75,7 @@ OC.L10N.register(
     "Choose keywords" : "Wybierz słowa kluczowe",
     "Servings" : "Porcje",
     "Nutrition Information" : "Informacje o wartości odżywczej",
+    "Pick option" : "Wybierz opcję",
     "Tools" : "Przybory",
     "Ingredients" : "Składniki",
     "Instructions" : "Instrukcje",

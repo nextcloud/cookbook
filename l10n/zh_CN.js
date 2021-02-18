@@ -75,6 +75,7 @@ OC.L10N.register(
     "Choose keywords" : "选择关键词",
     "Servings" : "份数",
     "Nutrition Information" : "营养信息",
+    "Pick option" : "挑选选项",
     "Tools" : "工具",
     "Ingredients" : "原料",
     "Instructions" : "说明",
