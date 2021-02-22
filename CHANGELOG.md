@@ -3,6 +3,7 @@
 ### Fixed
 - Added translation for nutritient-value label placeholder
   [#596](https://github.com/nextcloud/cookbook/pull/596) @seyfeb
+- Fixed compatiblity with Nextcloud 21 [#605](https://github.com/nextcloud/cookbook/pull/605) @icewind1991
 ## 0.8.1 - 2021-02-15
 
 ### Added
