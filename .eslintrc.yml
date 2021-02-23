@@ -9,5 +9,3 @@ extends:
     - "plugin:vue/strongly-recommended"
     - "plugin:vue/recommended"
     - prettier
-    #- prettier/babel
-    - prettier/vue

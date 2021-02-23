@@ -3,6 +3,9 @@
 ### Fixed
 - Added translation for nutritient-value label placeholder
   [#596](https://github.com/nextcloud/cookbook/pull/596) @seyfeb
+- Updated dependency of eslint-config-prettier
+  [#603](https://github.com/nextcloud/cookbook/pull/603) @christianlupus
+
 ## 0.8.1 - 2021-02-15
 
 ### Added
