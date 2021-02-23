@@ -41,10 +41,20 @@ jobs:
             
         -   name: Check for formatting issues with vue files (prettier)
             shell: bash
-            run: npm run prettier
+            run: >-
+                npm run prettier || {
+                echo '::error ::The prettier style checker failed.
+                Please run `npm run prettier-fix` in order to correct this.';
+                exit 1;
+                }
         -   name: Check for formatting issues with CSS files (stylelint)
             shell: bash
-            run: npm run stylelint
+            run: >-
+                npm run stylelint || {
+                echo '::error ::The stylelint checker failed.
+                Please run `npm run stylelint-fix` to help solving these issues if possible.';
+                exit 1;
+                }
         
   
   unit-tests:
