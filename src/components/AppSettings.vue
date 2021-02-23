@@ -6,25 +6,46 @@
                     <li>
                         <ActionButton
                             class="button"
-                            :icon="scanningLibrary ? 'icon-loading-small' : 'icon-history'"
+                            :icon="
+                                scanningLibrary
+                                    ? 'icon-loading-small'
+                                    : 'icon-history'
+                            "
                             @click="emit('reindex')"
                             :title="t('cookbook', 'Rescan library')"
                         />
                     </li>
                     <li>
-                        <label class="settings-input">{{ t('cookbook', 'Recipe folder') }}</label>
-                        <input type="text" :value="recipeFolder" @click="pickRecipeFolder" :placeholder="t('cookbook', 'Please pick a folder')">
+                        <label class="settings-input">{{
+                            t("cookbook", "Recipe folder")
+                        }}</label>
+                        <input
+                            type="text"
+                            :value="recipeFolder"
+                            @click="pickRecipeFolder"
+                            :placeholder="t('cookbook', 'Please pick a folder')"
+                        />
                     </li>
                     <li>
                         <label class="settings-input">
-                            {{ t('cookbook', 'Update interval in minutes') }}
+                            {{ t("cookbook", "Update interval in minutes") }}
                         </label>
-                        <input type="number" class="input settings-input" v-model="updateInterval" placeholder="0">
+                        <input
+                            type="number"
+                            class="input settings-input"
+                            v-model="updateInterval"
+                            placeholder="0"
+                        />
                     </li>
                     <li>
-                        <input type="checkbox" class="checkbox" v-model="printImage" id="recipe-print-image">
+                        <input
+                            type="checkbox"
+                            class="checkbox"
+                            v-model="printImage"
+                            id="recipe-print-image"
+                        />
                         <label for="recipe-print-image">
-                            {{ t('cookbook', 'Print image with recipe') }}
+                            {{ t("cookbook", "Print image with recipe") }}
                         </label>
                     </li>
                 </ul>
@@ -34,16 +55,16 @@
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
-import ActionButton from '@nextcloud/vue/dist/Components/ActionButton'
-import AppNavigationSettings from '@nextcloud/vue/dist/Components/AppNavigationSettings'
+import axios from "@nextcloud/axios"
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
+import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationSettings"
 
 export default {
-    name: 'AppSettings',
-    props: ['scanningLibrary'],
+    name: "AppSettings",
+    props: ["scanningLibrary"],
     components: {
         ActionButton,
-        AppNavigationSettings
+        AppNavigationSettings,
     },
     data() {
         return {
@@ -57,70 +78,87 @@ export default {
         }
     },
     watch: {
-
-        printImage: function(newVal, oldVal) {
+        printImage: function (newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetPrintImage) {
                 this.resetPrintImage = false
                 return
             }
             axios({
-                url: this.$window.baseUrl + '/config',
-                method: 'POST',
-                data: { 'print_image': newVal ? 1 : 0 }
+                url: this.$window.baseUrl + "/config",
+                method: "POST",
+                data: { print_image: newVal ? 1 : 0 },
             })
                 .then((response) => {
-                        // Should this check the response of the query? To catch some errors that redirect the page
+                    // Should this check the response of the query? To catch some errors that redirect the page
                 })
                 .catch((e) => {
-                    alert(t('cookbook', 'Could not set preference for image printing'));
+                    alert(
+                        t(
+                            "cookbook",
+                            "Could not set preference for image printing"
+                        )
+                    )
                     this.resetPrintImage = true
                     this.printImage = oldVal
                 })
         },
-        updateInterval: function(newVal, oldVal) {
+        updateInterval: function (newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetInterval) {
                 this.resetInterval = false
                 return
             }
             axios({
-                url: this.$window.baseUrl + '/config',
-                method: 'POST',
-                data: { 'update_interval': newVal }
-                })
+                url: this.$window.baseUrl + "/config",
+                method: "POST",
+                data: { update_interval: newVal },
+            })
                 .then((response) => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
                 .catch((e) => {
-                    alert(t('cookbook', 'Could not set recipe update interval to {interval}', { interval: newVal }))
+                    alert(
+                        t(
+                            "cookbook",
+                            "Could not set recipe update interval to {interval}",
+                            { interval: newVal }
+                        )
+                    )
                     this.resetInterval = true
                     this.updateInterval = oldVal
                 })
-        }
+        },
     },
     methods: {
         /**
          * Select a recipe folder using the Nextcloud file picker
          */
-        pickRecipeFolder: function(e) {
+        pickRecipeFolder: function (e) {
             OC.dialogs.filepicker(
-                t('cookbook', 'Path to your recipe collection'),
+                t("cookbook", "Path to your recipe collection"),
                 (path) => {
                     let $this = this
-                    this.$store.dispatch('updateRecipeDirectory', { dir: path })
+                    this.$store
+                        .dispatch("updateRecipeDirectory", { dir: path })
                         .then(() => {
                             $this.recipeFolder = path
-                            if($this.$route.path != '/') {
-                                $this.$router.push('/')
+                            if ($this.$route.path != "/") {
+                                $this.$router.push("/")
                             }
                         })
                         .catch((e) => {
-                            alert(t('cookbook', 'Could not set recipe folder to {path}', { path: path }))
+                            alert(
+                                t(
+                                    "cookbook",
+                                    "Could not set recipe folder to {path}",
+                                    { path: path }
+                                )
+                            )
                         })
                 },
                 false,
-                'httpd/unix-directory',
+                "httpd/unix-directory",
                 true
             )
         },
@@ -128,36 +166,35 @@ export default {
         /**
          * Initial setup
          */
-        setup: function() {
+        setup: function () {
             axios({
-                url: this.$window.baseUrl + '/config',
-                method: 'GET',
+                url: this.$window.baseUrl + "/config",
+                method: "GET",
                 data: null,
-                })
+            })
                 .then((response) => {
                     let config = response.data
-                    this.resetPrintImage = false;
-                    if(config) {
-                        this.printImage = config['print_image'];
-                        this.updateInterval = config['update_interval'];
-                        this.recipeFolder = config['folder'];
+                    this.resetPrintImage = false
+                    if (config) {
+                        this.printImage = config["print_image"]
+                        this.updateInterval = config["update_interval"]
+                        this.recipeFolder = config["folder"]
                     } else {
-                        alert(t('cookbook', 'Loading config failed'))
+                        alert(t("cookbook", "Loading config failed"))
                     }
                 })
                 .catch((e) => {
-                    alert(t('cookbook', 'Loading config failed'))
+                    alert(t("cookbook", "Loading config failed"))
                 })
-        }
+        },
     },
-    mounted () {
+    mounted() {
         this.setup()
     },
 }
 </script>
 
 <style>
-
 #app-settings input[type="text"],
 #app-settings input[type="number"],
 #app-settings .button {
@@ -171,9 +208,8 @@ export default {
     border-radius: var(--border-radius);
     z-index: 2;
 }
-    #app-settings .button p {
-        margin: auto;
-        font-size: 13px;
-    }
-
+#app-settings .button p {
+    margin: auto;
+    font-size: 13px;
+}
 </style>

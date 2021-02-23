@@ -1,101 +1,117 @@
 <template>
     <div>
-        <recipe-list :recipes="results"/>
+        <recipe-list :recipes="results" />
     </div>
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
+import axios from "@nextcloud/axios"
 
-import RecipeList from './RecipeList'
+import RecipeList from "./RecipeList"
 
 export default {
     name: "Search",
     components: {
-        RecipeList
+        RecipeList,
     },
-    props: ['query'],
-    data () {
+    props: ["query"],
+    data() {
         return {
-            results: []
+            results: [],
         }
     },
     watch: {
         $route(to, from) {
-            this.keywordFilter = [];
+            this.keywordFilter = []
         },
     },
     methods: {
-        setup: function() {
-            
+        setup: function () {
             // TODO: This is a mess of different implementation styles, needs cleanup
-            if (this.query === 'name') {
+            if (this.query === "name") {
                 // Search by name
                 // TODO
-            }
-            else if (this.query === 'tags') {
+            } else if (this.query === "tags") {
                 // Search by tags
                 let $this = this
                 let tags = this.$route.params.value
-                axios.get(this.$window.baseUrl + '/api/tags/'+tags)
-                    .then(function(response) {
+                axios
+                    .get(this.$window.baseUrl + "/api/tags/" + tags)
+                    .then(function (response) {
                         $this.results = response.data
                     })
                     .catch(function (e) {
                         $this.results = []
-                        alert(t('cookbook', 'Failed to load recipes with keywords: ' + tags))
+                        alert(
+                            t(
+                                "cookbook",
+                                "Failed to load recipes with keywords: " + tags
+                            )
+                        )
                         if (e && e instanceof Error) {
                             throw e
                         }
                     })
-            }
-            else if (this.query === 'cat') {
+            } else if (this.query === "cat") {
                 // Search by category
                 let $this = this
                 let cat = this.$route.params.value
-                axios.get(this.$window.baseUrl + '/api/category/'+cat)
-                    .then(function(response) {
+                axios
+                    .get(this.$window.baseUrl + "/api/category/" + cat)
+                    .then(function (response) {
                         $this.results = response.data
                     })
                     .catch(function (e) {
                         $this.results = []
-                        alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat}))
+                        alert(
+                            t(
+                                "cookbook",
+                                "Failed to load category {category} recipes",
+                                { category: cat }
+                            )
+                        )
                         if (e && e instanceof Error) {
                             throw e
                         }
                     })
-            }
-            else {
+            } else {
                 // General search
                 let $this = this
-                axios.get(this.$window.baseUrl + '/api/search/'+this.$route.params.value)
-                    .then(function(response) {
+                axios
+                    .get(
+                        this.$window.baseUrl +
+                            "/api/search/" +
+                            this.$route.params.value
+                    )
+                    .then(function (response) {
                         $this.results = response.data
                     })
                     .catch((e) => {
                         $this.results = []
-                        alert(t('cookbook', 'Failed to load search results'))
+                        alert(t("cookbook", "Failed to load search results"))
                         if (e && e instanceof Error) {
                             throw e
                         }
                     })
-                this.$store.dispatch('setPage', { page: 'search' })
+                this.$store.dispatch("setPage", { page: "search" })
             }
-            this.$store.dispatch('setPage', { page: 'search' })
+            this.$store.dispatch("setPage", { page: "search" })
         },
     },
-    mounted () {
+    mounted() {
         this.setup()
-        this.$root.$off('categoryRenamed')
-        this.$root.$on('categoryRenamed', (val) => {
-            if (!this._inactive
-                && this.query == 'cat'
-                && this.$route.params.value == val[1]) {
-                this.$window.goTo('/category/' + val[0])
+        this.$root.$off("categoryRenamed")
+        this.$root.$on("categoryRenamed", (val) => {
+            if (
+                !this._inactive &&
+                this.query == "cat" &&
+                this.$route.params.value == val[1]
+            ) {
+                this.$window.goTo("/category/" + val[0])
             }
         })
     },
-    beforeRouteUpdate (to, from, next) {
+    beforeRouteUpdate(to, from, next) {
         // Move to next route as expected
         next()
         // Reload view

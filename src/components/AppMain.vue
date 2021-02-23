@@ -11,17 +11,17 @@
 </template>
 
 <script>
-import AppContent from '@nextcloud/vue/dist/Components/AppContent'
-import AppControls from './AppControls'
-import AppNavi from './AppNavi'
-import Content from '@nextcloud/vue/dist/Components/Content'
+import AppContent from "@nextcloud/vue/dist/Components/AppContent"
+import AppControls from "./AppControls"
+import AppNavi from "./AppNavi"
+import Content from "@nextcloud/vue/dist/Components/Content"
 export default {
-    name: 'Main',
+    name: "Main",
     components: {
         AppContent,
         AppControls,
         AppNavi,
-        Content
+        Content,
     },
     watch: {
         /* This is left here as an example in case the routes need to be debugged again
@@ -34,7 +34,6 @@ export default {
 </script>
 
 <style>
-
 @media print {
     #app-content-vue {
         display: block !important;
@@ -50,8 +49,7 @@ export default {
     }
     a:link:after,
     a:visited:after {
-        content:" [" attr(href) "] ";
+        content: " [" attr(href) "] ";
     }
 }
-
 </style>

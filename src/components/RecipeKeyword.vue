@@ -2,61 +2,57 @@
     <a v-on:click="clicked" ref="link">
         <li>
             <span>{{ name }}</span>
-            <span v-if="count != null" class="count">({{count}})</span>
+            <span v-if="count != null" class="count">({{ count }})</span>
         </li>
     </a>
 </template>
 
 <script>
 export default {
-    name: 'RecipeKeyword',
+    name: "RecipeKeyword",
     props: {
         name: {
             type: String,
-            required: true
+            required: true,
         },
         count: {
             type: Number,
-            default: null
-        }
+            default: null,
+        },
     },
-    data () {
-        return {
-        }
+    data() {
+        return {}
     },
-    computed: {
-    },
+    computed: {},
     methods: {
         clicked() {
-            if(!this.$refs.link.classList.contains('disabled')) {
-                this.$emit('keyword-clicked')
+            if (!this.$refs.link.classList.contains("disabled")) {
+                this.$emit("keyword-clicked")
             }
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style scoped>
-
 li {
     display: inline-block;
-    margin-right: .3em;
-    margin-bottom: .3em;
-    padding: 0px .5em;
+    margin-right: 0.3em;
+    margin-bottom: 0.3em;
+    padding: 0px 0.5em;
     border: 1px solid var(--color-border-dark);
     border-radius: var(--border-radius-pill);
 
     /* prevent text selection - doesn't look good */
-    -webkit-user-select: none; /* Safari */        
+    -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
 
-
 li .count {
-    margin-left: .35em;
-    font-size: .8em;
+    margin-left: 0.35em;
+    font-size: 0.8em;
     color: var(--color-text-light);
 }
 
@@ -65,19 +61,19 @@ li .count {
     color: var(--color-primary-text);
 }
 
-    .active li .count {
-        color: var(--color-primary-text);
-    }
+.active li .count {
+    color: var(--color-primary-text);
+}
 
 .disabled li {
-    background-color: #FFF;
+    background-color: #fff;
     border-color: var(--color-border);
     color: var(--color-border);
 }
 
-    .disabled li .count {
-        color: var(--color-border);
-    }
+.disabled li .count {
+    color: var(--color-border);
+}
 
 .disabled li:hover {
     border-color: var(--color-border);
@@ -88,8 +84,8 @@ li .count {
     cursor: default;
 }
 
-li:hover, .active li:hover {
+li:hover,
+.active li:hover {
     border: 1px solid var(--color-primary);
 }
-
 </style>
