@@ -31,24 +31,24 @@ export default {
 div {
     display: block;
     width: 100%;
-    text-align: center;
     margin-bottom: 1rem;
+    text-align: center;
 }
 img {
-    cursor: pointer;
     width: 100%;
     max-width: 950px;
     background-color: #bebdbd;
+    cursor: pointer;
 }
-div.collapsed {
-    height: 40vh;
+.collapsed {
     overflow: hidden;
+    height: 40vh;
 }
-div.collapsed img {
+.collapsed img {
+    display: block;
     margin: 0 auto;
     margin-top: 20vh;
     transform: translateY(-50%);
-    display: block;
 }
 
 @media print {

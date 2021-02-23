@@ -219,8 +219,8 @@ export default {
 
 <style scoped>
 fieldset {
-    margin-bottom: 1em;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 fieldset > * {
@@ -236,11 +236,11 @@ fieldset > * {
 fieldset > label {
     display: inline-block;
     width: 16em;
-    line-height: 18px;
-    font-weight: bold;
-    word-spacing: initial;
-    vertical-align: top;
     margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 18px;
+    vertical-align: top;
+    word-spacing: initial;
 }
 
 fieldset > ul {
@@ -257,8 +257,8 @@ fieldset > ul > li .key {
 }
 
 fieldset > ul > li .val {
-    margin: 0px;
     width: 100%;
+    margin: 0;
 }
 
 .ms {

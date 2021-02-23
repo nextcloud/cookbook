@@ -255,20 +255,20 @@ export default {
 </script>
 
 <style scoped>
-div.kw {
+.kw {
     width: 100%;
     max-height: 6.7em;
+    padding: 0.1em;
+    margin-bottom: 1em;
     overflow-x: hidden;
     overflow-y: scroll;
-    margin-bottom: 1em;
-    padding: 0.1em;
 }
 
-ul.keywords {
+.keywords {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
-    padding: 0.5rem 1rem 0.5rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
 }
 
 .keyword {
@@ -279,39 +279,39 @@ ul.keywords {
     transition: transform 0.5s;
 }
 
-ul.recipes {
+.recipes {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
     width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-ul.recipes li {
+.recipes li {
     width: 300px;
     max-width: 100%;
     margin: 0.5rem 1rem 1rem;
 }
-ul.recipes li a {
+.recipes li a {
     display: block;
     height: 105px;
-    box-shadow: 0 0 3px #aaa;
     border-radius: 3px;
+    box-shadow: 0 0 3px #aaa;
 }
-ul.recipes li a:hover {
+.recipes li a:hover {
     box-shadow: 0 0 5px #888;
 }
 
-ul.recipes li .recipe-thumbnail {
+.recipes li .recipe-thumbnail {
     position: relative;
-    float: left;
-    height: 105px;
-    width: 105px;
-    border-radius: 3px 0 0 3px;
-    background-color: #bebdbd;
     overflow: hidden;
+    width: 105px;
+    height: 105px;
+    background-color: #bebdbd;
+    border-radius: 3px 0 0 3px;
+    float: left;
 }
 
-ul.recipes li span {
+.recipes li span {
     display: block;
     padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
 }

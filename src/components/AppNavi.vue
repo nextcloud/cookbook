@@ -413,29 +413,31 @@ export default {
 
 >>> .app-navigation-entry.recipe {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
-    padding-left: 0px;
+    padding-left: 0;
 }
 
+/* stylelint-disable selector-class-pattern */
 >>> .app-navigation-entry
     .app-navigation-entry__children
     .app-navigation-entry {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
-    padding-left: 0px;
+    padding-left: 0;
 }
+/* stylelint-enable selector-class-pattern */
 
-.app-navigation-entry:hover li.recipe {
+.app-navigation-entry:hover .recipe {
     box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
 }
 
 >>> .app-navigation-entry.recipe:hover,
 >>> .app-navigation-entry.router-link-exact-active {
-    opacity: 1;
     box-shadow: inset 4px 0 var(--color-primary);
+    opacity: 1;
 }
 
 #hide-navigation {
-    height: 44px;
     display: none;
+    height: 44px;
 }
 #hide-navigation .action-button {
     padding-right: 0 !important;

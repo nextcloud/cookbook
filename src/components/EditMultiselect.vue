@@ -27,8 +27,8 @@ export default {
 
 <style scoped>
 fieldset {
-    margin-bottom: 1em;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 fieldset > * {
@@ -44,10 +44,10 @@ fieldset > * {
 fieldset > label {
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
-    word-spacing: initial;
+    line-height: 18px;
     vertical-align: top;
+    word-spacing: initial;
 }
 
 .edit-multiselect {
@@ -62,17 +62,22 @@ fieldset > label {
 </style>
 
 <style>
+/* stylelint-disable selector-class-pattern */
 #app .edit-multiselect .multiselect__tags {
     height: auto;
     min-height: 34px;
 }
+/* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern */
 #app .edit-multiselect .multiselect__tags .multiselect__tags-wrap {
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
+/* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern,selector-max-compound-selectors */
 #app
     .edit-multiselect
     .multiselect__tags
@@ -81,4 +86,5 @@ fieldset > label {
     flex-basis: 50px;
     margin-bottom: 3px;
 }
+/* stylelint-enable selector-class-pattern,selector-max-compound-selectors */
 </style>

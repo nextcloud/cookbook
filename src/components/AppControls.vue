@@ -374,8 +374,8 @@ export default {
 }
 
 .active {
-    font-weight: bold;
     cursor: default !important;
+    font-weight: bold;
 }
 
 .breadcrumbs {

@@ -62,11 +62,11 @@ export default {
 
 <style scoped>
 .multiselect-popup-container {
-    display: flex;
     position: absolute;
     z-index: 1100;
-    left: 0px;
     top: 50px;
+    left: 0;
+    display: flex;
     width: 100%;
     height: calc(100% - 50px - 44px);
     padding: 0.5em;
@@ -75,47 +75,58 @@ export default {
 
 @media (min-width: 768px) {
     .multiselect-popup-container {
+        top: 50%;
+        left: 50%;
         width: 500px;
         height: 300px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
         border-radius: 5px;
+        transform: translate(-50%, -50%);
     }
 }
 
+/* stylelint-disable selector-class-pattern */
 .multiselect-popup-container__multiselect {
     width: 100%;
 }
+/* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern */
 .multiselect-popup-container__close-button {
-    height: 44px;
-    width: 100%;
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 44px;
     background: var(--color-main-background);
 }
+/* stylelint-enable selector-class-pattern */
+
 @media (min-width: 768px) {
+    /* stylelint-disable selector-class-pattern */
     .multiselect-popup-container__close-button {
         display: none;
     }
+    /* stylelint-enable selector-class-pattern */
 }
 
+/* stylelint-disable selector-class-pattern */
 .multiselect-popup-container__close-button > button {
-    height: 44px;
-    width: calc(100vw - 10px);
-    margin: 5px;
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
+    width: calc(100vw - 10px);
+    height: 44px;
+    margin: 5px;
     background: var(--color-main-background);
 }
+/* stylelint-enable selector-class-pattern */
 </style>
 
 <style>
 @media (max-width: 767px) {
-    .multiselect-popup-container .multiselect div.multiselect__content-wrapper {
+    /* stylelint-disable selector-class-pattern */
+    .multiselect-popup-container .multiselect .multiselect__content-wrapper {
         max-height: calc(100vh - 145px) !important;
     }
+    /* stylelint-enable selector-class-pattern */
 }
 </style>

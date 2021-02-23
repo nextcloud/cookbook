@@ -335,16 +335,21 @@ export default {
 </script>
 
 <style scoped>
+button {
+    width: auto !important;
+    padding: 0 1rem 0 0.75rem !important;
+}
+
 fieldset {
-    margin-bottom: 1em;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 fieldset > label {
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
+    line-height: 18px;
     word-spacing: initial;
 }
 
@@ -354,23 +359,23 @@ fieldset > ul {
 
 fieldset > ul + button {
     width: 36px;
-    text-align: center;
     padding: 0;
     float: right;
+    text-align: center;
 }
 
 fieldset > ul > li {
     display: flex;
     width: 100%;
-    margin: 0 0 1em 0;
     padding-right: 0.25em;
+    margin: 0 0 1em;
 }
 
-li.text > input {
+.text > input {
     width: 100%;
     margin: 0;
-    border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
 
 li .controls {
@@ -378,57 +383,57 @@ li .controls {
 }
 
 li .controls > button {
-    padding: 0;
-    margin: 0;
     width: 34px;
     height: 34px;
-    border-radius: 0;
-    border-left-color: transparent;
+    padding: 0;
     border-right-color: transparent;
+    border-left-color: transparent;
+    margin: 0;
+    border-radius: 0;
 }
 
 li .controls > button:last-child {
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
     border-right-width: 1px;
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 }
 li .controls > button:last-child:not(:hover):not(:focus) {
     border-right-color: var(--color-border-dark);
 }
 
-li.textarea {
-    float: right;
+.textarea {
     position: relative;
-    top: 1px;
     z-index: 1;
+    top: 1px;
+    float: right;
 }
 
-li.textarea > textarea {
-    min-height: 10em;
-    resize: vertical;
+.textarea > textarea {
     width: calc(100% - 44px);
+    min-height: 10em;
     margin: 0 0 0 44px;
     border-top-right-radius: 0;
+    resize: vertical;
 }
 
-li.textarea::after {
+.textarea::after {
     display: table;
-    content: "";
     clear: both;
+    content: "";
 }
 .step-number {
     position: absolute;
-    left: 0;
     top: 0;
-    height: 36px;
+    left: 0;
     width: 36px;
-    border-radius: 50%;
+    height: 36px;
     border: 1px solid var(--color-border-dark);
-    outline: none;
-    background-repeat: no-repeat;
-    background-position: center;
     background-color: var(--color-background-dark);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
     line-height: 36px;
+    outline: none;
     text-align: center;
 }
 
@@ -438,10 +443,5 @@ li.textarea::after {
 
 .icon-arrow-down {
     background-image: var(--icon-triangle-s-000);
-}
-
-button {
-    width: auto !important;
-    padding: 0 1rem 0 0.75rem !important;
 }
 </style>

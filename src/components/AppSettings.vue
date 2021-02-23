@@ -198,15 +198,15 @@ export default {
 #app-settings input[type="text"],
 #app-settings input[type="number"],
 #app-settings .button {
-    width: 100%;
     display: block;
+    width: 100%;
 }
 
 #app-settings .button {
-    padding: 0;
-    height: 44px;
-    border-radius: var(--border-radius);
     z-index: 2;
+    height: 44px;
+    padding: 0;
+    border-radius: var(--border-radius);
 }
 #app-settings .button p {
     margin: auto;

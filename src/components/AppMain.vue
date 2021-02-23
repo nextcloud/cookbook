@@ -37,8 +37,8 @@ export default {
 @media print {
     #app-content-vue {
         display: block !important;
-        padding: 0 !important;
         overflow: visible !important;
+        padding: 0 !important;
         margin-left: 0 !important;
     }
     #app-navigation-vue {
@@ -47,8 +47,8 @@ export default {
     #header {
         display: none !important;
     }
-    a:link:after,
-    a:visited:after {
+    a:link::after,
+    a:visited::after {
         content: " [" attr(href) "] ";
     }
 }

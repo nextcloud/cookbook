@@ -52,12 +52,12 @@ fieldset > * {
 }
 
 fieldset > label {
-    vertical-align: top;
     display: inline-block;
     width: 10em;
     height: 34px;
-    line-height: 17px;
     font-weight: bold;
+    line-height: 17px;
+    vertical-align: top;
 }
 @media (max-width: 1199px) {
     fieldset > label {
@@ -68,9 +68,9 @@ fieldset > label {
 
 fieldset > input {
     width: calc(100% - 14em);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     border-right: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
 @media (max-width: 1199px) {
     fieldset > input {
@@ -79,11 +79,11 @@ fieldset > input {
 }
 
 fieldset > input + button {
-    border-top-right-radius: var(--border-radius);
+    width: 3em;
+    border-bottom-left-radius: 0;
     border-bottom-right-radius: var(--border-radius);
     border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    width: 3em;
+    border-top-right-radius: var(--border-radius);
 }
 
 fieldset > input + button > * {

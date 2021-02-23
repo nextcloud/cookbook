@@ -21,44 +21,44 @@ export default {
 
 <style scoped>
 li {
-    cursor: pointer;
-    counter-increment: instruction-counter;
-    clear: both;
-    margin-bottom: 2rem;
-    white-space: pre-line;
     position: relative;
     padding-left: calc(36px + 1rem);
+    margin-bottom: 2rem;
+    clear: both;
+    counter-increment: instruction-counter;
+    cursor: pointer;
+    white-space: pre-line;
 }
-li:before {
-    content: counter(instruction-counter);
+li::before {
     position: absolute;
-    left: 0;
     top: 0;
-    height: 36px;
+    left: 0;
     width: 36px;
-    border-radius: 50%;
+    height: 36px;
     border: 1px solid var(--color-border-dark);
-    outline: none;
-    background-repeat: no-repeat;
-    background-position: center;
     background-color: var(--color-background-dark);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    content: counter(instruction-counter);
     line-height: 36px;
+    outline: none;
     text-align: center;
 }
 li:hover::before {
     border-color: var(--color-primary-element);
 }
-li.done::before {
+.done::before {
     content: "✔";
 }
 li span,
 li input[type="checkbox"] {
-    line-height: 1rem;
-    margin: 0 0.5rem 0 0;
-    padding: 0;
-    height: auto;
-    width: 1rem;
     display: inline-block;
+    width: 1rem;
+    height: auto;
+    padding: 0;
+    margin: 0 0.5rem 0 0;
+    line-height: 1rem;
     vertical-align: middle;
 }
 </style>

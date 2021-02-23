@@ -188,12 +188,12 @@ fieldset > * {
 }
 
 fieldset > label {
-    vertical-align: top;
     display: inline-block;
     width: 10em;
     height: 34px;
-    line-height: 17px;
     font-weight: bold;
+    line-height: 17px;
+    vertical-align: top;
 }
 @media (max-width: 1199px) {
     fieldset > label {
@@ -214,12 +214,9 @@ fieldset > textarea {
 
 fieldset > .editor {
     width: calc(100% - 11em);
-}
-
-fieldset > .editor {
     min-height: 10em;
-    resize: vertical;
     border-radius: 2;
+    resize: vertical;
 }
 
 @media (max-width: 1199px) {

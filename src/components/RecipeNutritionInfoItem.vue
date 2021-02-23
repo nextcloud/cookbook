@@ -27,12 +27,12 @@ export default {
 
 <style scoped>
 li {
-    margin-left: 1.25em;
     margin-bottom: 0.5em;
+    margin-left: 1.25em;
 }
 
 li .title {
-    margin-bottom: 0em;
+    margin-bottom: 0;
     color: var(--color-main-text);
     font-weight: bolder;
 }
