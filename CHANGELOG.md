@@ -6,6 +6,10 @@
 - Updated dependency of eslint-config-prettier
   [#603](https://github.com/nextcloud/cookbook/pull/603) @christianlupus
 
+## Deprecated
+- Obsolete routes to old user interface, see `appinfo/routes.php`
+  [#580](https://github.com/nextcloud/cookbook/pull/580) @christianlupus
+
 ## 0.8.1 - 2021-02-15
 
 ### Added
