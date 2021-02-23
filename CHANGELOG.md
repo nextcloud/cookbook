@@ -7,6 +7,8 @@
   [#603](https://github.com/nextcloud/cookbook/pull/603) @christianlupus
 - Enforce basic code styling using prettier in vue files
   [#607](https://github.com/nextcloud/cookbook/pull/607) @christianlupus
+- Enforce CSS styling using stylelint
+  [#608](https://github.com/nextcloud/cookbook/pull/608) @christianlupus
 
 ## Deprecated
 - Obsolete routes to old user interface, see `appinfo/routes.php`
