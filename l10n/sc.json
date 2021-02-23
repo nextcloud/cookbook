@@ -1,0 +1,9 @@
+{ "translations": {
+    "Loading…" : "Carrighende...",
+    "Add" : "Agiunghe",
+    "Close" : "Serra",
+    "Name" : "Nùmene",
+    "Description" : "Descritzione",
+    "URL" : "URL"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

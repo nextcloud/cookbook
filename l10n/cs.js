@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Recepty",
+    "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
     "Cookbook" : "Kuchařka",
     "An integrated cookbook using schema.org JSON files as recipes" : "Vestavěná kuchařka používající pro recepty JSON soubory schema.org",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Knihovna pro všechny vaše recepty. Používá JSON soubory podle formátu receptů schema.org. Recept přidáte do sbírky vložením URL adresy receptu a zadaná webová stránka bude zpracována a staženo do složky, kterou určíte v nastavení aplikace.",
@@ -26,6 +27,7 @@ OC.L10N.register(
     "Search for recipes" : "Hledat recepty",
     "Are you sure you want to delete this recipe?" : "Opravdu chcete tento recept smazat?",
     "Delete failed" : "Smazání se nezdařilo",
+    "Select recipe folder" : "Vybrat složku receptů",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Create recipe" : "Vytvořit recept",
     "Download recipe from URL" : "Stáhnout si recept z URL adresy",
@@ -64,6 +66,7 @@ OC.L10N.register(
     "Choose keywords" : "Vyberte klíčová slova",
     "Servings" : "Porce",
     "Nutrition Information" : "Výživové informace",
+    "Pick option" : "Vybrat možnost",
     "Tools" : "Nástroje",
     "Ingredients" : "Přísady",
     "Instructions" : "Pokyny",

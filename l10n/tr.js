@@ -75,6 +75,7 @@ OC.L10N.register(
     "Choose keywords" : "Anahtar sözcükleri seçin",
     "Servings" : "Kaç kişilik",
     "Nutrition Information" : "Beslenme Bilgileri",
+    "Pick option" : "Seçin",
     "Tools" : "Araçlar",
     "Ingredients" : "Malzemeler",
     "Instructions" : "Nasıl yapılır",

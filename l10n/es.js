@@ -75,6 +75,7 @@ OC.L10N.register(
     "Choose keywords" : "Escoge palabras clave",
     "Servings" : "Porciones",
     "Nutrition Information" : "Información de nutrición",
+    "Pick option" : "Elegir opción",
     "Tools" : "Herramientas",
     "Ingredients" : "Ingredientes",
     "Instructions" : "Instrucciones",

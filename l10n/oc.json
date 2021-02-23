@@ -5,6 +5,7 @@
     "Add" : "Ajustar",
     "Name" : "Nom",
     "Description" : "Descripcion",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Calories" : "Calorias"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

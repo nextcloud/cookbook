@@ -7,6 +7,7 @@ OC.L10N.register(
     "Add" : "Ajustar",
     "Name" : "Nom",
     "Description" : "Descripcion",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Calories" : "Calorias"
 },
 "nplurals=2; plural=(n > 1);");
