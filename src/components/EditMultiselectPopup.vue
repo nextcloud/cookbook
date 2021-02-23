@@ -84,10 +84,13 @@ export default {
     }
 }
 
+/* stylelint-disable selector-class-pattern */
 .multiselect-popup-container__multiselect {
     width: 100%;
 }
+/* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern */
 .multiselect-popup-container__close-button {
     position: fixed;
     bottom: 0;
@@ -96,12 +99,17 @@ export default {
     height: 44px;
     background: var(--color-main-background);
 }
+/* stylelint-enable selector-class-pattern */
+
 @media (min-width: 768px) {
+    /* stylelint-disable selector-class-pattern */
     .multiselect-popup-container__close-button {
         display: none;
     }
+    /* stylelint-enable selector-class-pattern */
 }
 
+/* stylelint-disable selector-class-pattern */
 .multiselect-popup-container__close-button > button {
     position: fixed;
     bottom: 0;
@@ -110,12 +118,15 @@ export default {
     margin: 5px;
     background: var(--color-main-background);
 }
+/* stylelint-enable selector-class-pattern */
 </style>
 
 <style>
 @media (max-width: 767px) {
-    .multiselect-popup-container .multiselect div.multiselect__content-wrapper {
+    /* stylelint-disable selector-class-pattern */
+    .multiselect-popup-container .multiselect .multiselect__content-wrapper {
         max-height: calc(100vh - 145px) !important;
     }
+    /* stylelint-enable selector-class-pattern */
 }
 </style>

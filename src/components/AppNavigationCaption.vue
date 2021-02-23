@@ -178,7 +178,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* stylelint-disable scss/at-import-partial-extension-blacklist */
 @import "@nextcloud/vue/src/assets/variables.scss";
+/* stylelint-enable scss/at-import-partial-extension-blacklist */
 
 .app-navigation-caption-mod {
     display: flex;
@@ -220,6 +222,7 @@ export default {
         justify-content: center;
         background-size: $icon-size $icon-size;
     }
+    /* stylelint-disable selector-class-pattern */
     .app-navigation-caption__title {
         overflow: hidden;
         max-width: 100%;
@@ -227,9 +230,11 @@ export default {
         white-space: nowrap;
         // padding-left: 6px;
     }
+    /* stylelint-enable selector-class-pattern */
 }
 
 /* counter and actions */
+/* stylelint-disable selector-class-pattern */
 .app-navigation-entry__utils {
     display: flex;
     flex: 0 1 auto;
@@ -240,4 +245,5 @@ export default {
         margin-right: 2px;
     }
 }
+/* stylelint-enable selector-class-pattern */
 </style>

@@ -92,7 +92,7 @@
         />
         <edit-multiselect-popup
             ref="referencesPopup"
-            class="referencesPopup"
+            class="references-popup"
             :class="{ visible: referencesPopupFocused }"
             :options="allrecipeOptions"
             track-by="recipe_id"
@@ -714,12 +714,12 @@ form fieldset ul label input[type="checkbox"] {
     cursor: pointer;
 } */
 
-.referencesPopup {
+.references-popup {
     position: fixed;
     display: none;
 }
 
-.referencesPopup.visible {
+.references-popup.visible {
     display: block;
 }
 </style>

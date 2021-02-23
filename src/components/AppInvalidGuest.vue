@@ -55,14 +55,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div.main {
+.main {
     display: flex;
     height: 100%;
     flex-direction: colummn;
     align-items: center;
     justify-content: center;
 
-    div.dialog {
+    .dialog {
         width: 50%;
         padding: 20px;
         border: 1px solid;
@@ -75,7 +75,7 @@ div.main {
         div {
             margin: 20px 5px;
         }
-        div.message {
+        .message {
             font-size: x-large;
             font-weight: bold;
         }

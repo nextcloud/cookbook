@@ -335,6 +335,11 @@ export default {
 </script>
 
 <style scoped>
+button {
+    width: auto !important;
+    padding: 0 1rem 0 0.75rem !important;
+}
+
 fieldset {
     width: 100%;
     margin-bottom: 1em;
@@ -366,7 +371,7 @@ fieldset > ul > li {
     margin: 0 0 1em;
 }
 
-li.text > input {
+.text > input {
     width: 100%;
     margin: 0;
     border-bottom-right-radius: 0;
@@ -396,14 +401,14 @@ li .controls > button:last-child:not(:hover):not(:focus) {
     border-right-color: var(--color-border-dark);
 }
 
-li.textarea {
+.textarea {
     position: relative;
     z-index: 1;
     top: 1px;
     float: right;
 }
 
-li.textarea > textarea {
+.textarea > textarea {
     width: calc(100% - 44px);
     min-height: 10em;
     margin: 0 0 0 44px;
@@ -411,7 +416,7 @@ li.textarea > textarea {
     resize: vertical;
 }
 
-li.textarea::after {
+.textarea::after {
     display: table;
     clear: both;
     content: "";
@@ -438,10 +443,5 @@ li.textarea::after {
 
 .icon-arrow-down {
     background-image: var(--icon-triangle-s-000);
-}
-
-button {
-    width: auto !important;
-    padding: 0 1rem 0 0.75rem !important;
 }
 </style>

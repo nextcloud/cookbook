@@ -255,7 +255,7 @@ export default {
 </script>
 
 <style scoped>
-div.kw {
+.kw {
     width: 100%;
     max-height: 6.7em;
     padding: 0.1em;
@@ -264,7 +264,7 @@ div.kw {
     overflow-y: scroll;
 }
 
-ul.keywords {
+.keywords {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -279,29 +279,29 @@ ul.keywords {
     transition: transform 0.5s;
 }
 
-ul.recipes {
+.recipes {
     display: flex;
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-ul.recipes li {
+.recipes li {
     width: 300px;
     max-width: 100%;
     margin: 0.5rem 1rem 1rem;
 }
-ul.recipes li a {
+.recipes li a {
     display: block;
     height: 105px;
     border-radius: 3px;
     box-shadow: 0 0 3px #aaa;
 }
-ul.recipes li a:hover {
+.recipes li a:hover {
     box-shadow: 0 0 5px #888;
 }
 
-ul.recipes li .recipe-thumbnail {
+.recipes li .recipe-thumbnail {
     position: relative;
     overflow: hidden;
     width: 105px;
@@ -311,7 +311,7 @@ ul.recipes li .recipe-thumbnail {
     float: left;
 }
 
-ul.recipes li span {
+.recipes li span {
     display: block;
     padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
 }

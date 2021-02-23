@@ -214,9 +214,6 @@ fieldset > textarea {
 
 fieldset > .editor {
     width: calc(100% - 11em);
-}
-
-fieldset > .editor {
     min-height: 10em;
     border-radius: 2;
     resize: vertical;

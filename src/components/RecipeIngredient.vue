@@ -47,7 +47,8 @@ export default {
 li {
     display: flex;
 }
-li.header {
+
+.header {
     position: relative;
     left: -1.25em;
     margin-top: 0.25em;
@@ -55,27 +56,27 @@ li.header {
     list-style-type: none;
 }
 
-li.unindented {
+.unindented {
     position: relative;
     left: -1.25em;
 }
 
-li > div.checkmark {
+li > .checkmark {
     display: inline;
     visibility: hidden;
 }
 
-li > div.done {
+li > .done {
     visibility: visible;
 }
 
-li:hover > div.checkmark {
+li:hover > .checkmark {
     color: var(--color-primary-element);
     opacity: 0.5;
     visibility: visible;
 }
 
-li > div.ingredient {
+li > .ingredient {
     display: inline;
     padding-left: 1em;
     margin-left: 0.3em;

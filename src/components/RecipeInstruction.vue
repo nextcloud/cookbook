@@ -48,7 +48,7 @@ li::before {
 li:hover::before {
     border-color: var(--color-primary-element);
 }
-li.done::before {
+.done::before {
     content: "✔";
 }
 li span,

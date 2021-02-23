@@ -40,11 +40,11 @@ img {
     background-color: #bebdbd;
     cursor: pointer;
 }
-div.collapsed {
+.collapsed {
     overflow: hidden;
     height: 40vh;
 }
-div.collapsed img {
+.collapsed img {
     display: block;
     margin: 0 auto;
     margin-top: 20vh;

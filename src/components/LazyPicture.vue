@@ -8,14 +8,14 @@
         <span v-if="isPreviewLoading" class="loading-indicator icon-loading" />
         <img
             class="low-resolution blurred"
-            :class="{ previewLoaded: !isPreviewLoading }"
+            :class="{ 'preview-loaded': !isPreviewLoading }"
             :width="width ? width + 'px' : ''"
             :height="height ? height + 'px' : ''"
         />
         <img
             class="full-resolution"
             imageLoaded
-            :class="{ imageLoaded: !isLoading }"
+            :class="{ 'image-loaded': !isLoading }"
             :width="width ? width + 'px' : ''"
             :height="height ? height + 'px' : ''"
         />
@@ -142,24 +142,21 @@ picture .loading-indicator {
     align-content: center;
 }
 
-picture img.blurred {
-    filter: blur(0.5rem);
+picture .blurred {
     filter: blur(0.5rem);
 }
 
-picture img.low-resolution.previewLoaded {
+picture .low-resolution.preview-loaded {
     display: inline;
     animation: fadeIn 1s linear 0s;
-    animation: fadeIn 1s linear 0s;
 }
 
-picture img.full-resolution {
+picture .full-resolution {
     display: none;
 }
 
-picture img.full-resolution.imageLoaded {
+picture .full-resolution.image-loaded {
     display: inline;
-    animation: unblur 1s linear 0s;
     animation: unblur 1s linear 0s;
 }
 

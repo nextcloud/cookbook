@@ -44,9 +44,6 @@ li {
     border-radius: var(--border-radius-pill);
 
     /* prevent text selection - doesn't look good */
-    user-select: none; /* Safari */
-    user-select: none; /* Firefox */
-    user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
 
@@ -75,6 +72,11 @@ li .count {
     color: var(--color-border);
 }
 
+li:hover,
+.active li:hover {
+    border: 1px solid var(--color-primary);
+}
+
 .disabled li:hover {
     border-color: var(--color-border);
     cursor: default;
@@ -82,10 +84,5 @@ li .count {
 
 .disabled :hover {
     cursor: default;
-}
-
-li:hover,
-.active li:hover {
-    border: 1px solid var(--color-primary);
 }
 </style>

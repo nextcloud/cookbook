@@ -62,17 +62,22 @@ fieldset > label {
 </style>
 
 <style>
+/* stylelint-disable selector-class-pattern */
 #app .edit-multiselect .multiselect__tags {
     height: auto;
     min-height: 34px;
 }
+/* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern */
 #app .edit-multiselect .multiselect__tags .multiselect__tags-wrap {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 0;
 }
+/* stylelint-enable selector-class-pattern */
 
+/* stylelint-disable selector-class-pattern,selector-max-compound-selectors */
 #app
     .edit-multiselect
     .multiselect__tags
@@ -81,4 +86,5 @@ fieldset > label {
     flex-basis: 50px;
     margin-bottom: 3px;
 }
+/* stylelint-enable selector-class-pattern,selector-max-compound-selectors */
 </style>

@@ -580,32 +580,32 @@ export default {
 }
 
 @media print {
-    div.header {
+    .header {
         display: flex;
         flex-wrap: wrap;
     }
-    div.header > div.image {
+    .header > .image {
         flex: 600px 0 0;
     }
-    div.header > div.meta {
+    .header > .meta {
         margin: 0 10px;
     }
-    div.header a::after {
+    .header a::after {
         content: "";
     }
 }
 
 @media only screen and (min-width: 1500px) {
-    div.header.responsive {
+    .header.responsive {
         display: flex;
     }
 
-    div.header.responsive > div.image {
+    .header.responsive > .image {
         flex: 700px 0 0;
     }
 }
 
-div.meta {
+.meta {
     margin: 0 1rem;
 }
 .dates {
@@ -649,7 +649,7 @@ div.meta {
     }
 }
 
-div.times > div {
+.times > div {
     margin: 1rem 0.75rem;
 }
 
@@ -695,6 +695,12 @@ section::after {
     flex-basis: 100%;
     padding: 1rem;
 }
+
+aside {
+    flex-basis: 20rem;
+    padding-right: 2rem;
+}
+
 .content aside {
     width: 30%;
     float: left;
@@ -706,10 +712,6 @@ section::after {
     }
 }
 
-aside {
-    flex-basis: 20rem;
-    padding-right: 2rem;
-}
 aside ul {
     list-style-type: none;
 }
@@ -727,10 +729,6 @@ aside ul li input[type="checkbox"] {
     margin: 0 0.5rem 0 0;
     line-height: 1rem;
     vertical-align: middle;
-}
-
-div.meta {
-    margin: 0 1rem;
 }
 
 .markdown-description >>> ol > li {
