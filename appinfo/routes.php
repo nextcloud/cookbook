@@ -29,9 +29,9 @@ return [
 		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
 		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
 		/* Unknown usage */
+		/* Deprecated routes */
 		['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
 		['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
-		/* Deprecated routes */
 		['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
 		['name' => 'main#error', 'url' => '/error', 'verb' => 'GET'],
 		['name' => 'main#create', 'url' => '/recipes/create', 'verb' => 'GET'],
