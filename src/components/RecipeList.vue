@@ -1,69 +1,85 @@
 <template>
-    <div>
-        <div class="kw">
-            <transition-group
-                v-if="uniqKeywords.length > 0"
-                class="keywords"
-                name="keyword-list"
-                tag="ul"
-            >
-                <RecipeKeyword
-                    v-for="keywordObj in selectedKeywords"
-                    :key="keywordObj.name"
-                    :name="keywordObj.name"
-                    :count="keywordObj.count"
-                    :title="t('cookbook', 'Toggle keyword')"
-                    class="keyword active"
-                    @keyword-clicked="keywordClicked(keywordObj)"
-                />
-                <RecipeKeyword
-                    v-for="keywordObj in selectableKeywords"
-                    :key="keywordObj.name"
-                    :name="keywordObj.name"
-                    :count="keywordObj.count"
-                    :title="t('cookbook', 'Toggle keyword')"
-                    class="keyword"
-                    @keyword-clicked="keywordClicked(keywordObj)"
-                />
-                <RecipeKeyword
-                    v-for="keywordObj in unavailableKeywords"
-                    :key="keywordObj.name"
-                    :name="keywordObj.name"
-                    :count="keywordObj.count"
-                    :title="
-                        // prettier-ignore
-                        t('cookbook','Keyword not contained in visible recipes')
-                    "
-                    class="keyword disabled"
-                    @keyword-clicked="keywordClicked(keywordObj)"
-                />
-            </transition-group>
-        </div>
-        <ul class="recipes">
-            <li
-                v-for="recipeObj in recipeObjects"
-                v-show="recipeObj.show"
-                :key="recipeObj.recipe.recipe_id"
-            >
-                <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
-                    <lazy-picture
-                        v-if="recipeObj.recipe.imageUrl"
-                        class="recipe-thumbnail"
-                        :lazy-src="recipeObj.recipe.imageUrl"
-                        :blurred-preview-src="
-                            recipeObj.recipe.imagePlaceholderUrl
-                        "
-                        :width="105"
-                        :height="105"
-                    />
-                    <span>{{ recipeObj.recipe.name }}</span>
-                </router-link>
-            </li>
-        </ul>
+  <div>
+    <div class="kw">
+      <transition-group
+        v-if="uniqKeywords.length > 0"
+        class="keywords"
+        name="keyword-list"
+        tag="ul"
+      >
+        <RecipeKeyword
+          v-for="keywordObj in selectedKeywords"
+          :key="keywordObj.name"
+          :name="keywordObj.name"
+          :count="keywordObj.count"
+          :title="t('cookbook', 'Toggle keyword')"
+          class="keyword active"
+          @keyword-clicked="keywordClicked(keywordObj)"
+        />
+        <RecipeKeyword
+          v-for="keywordObj in selectableKeywords"
+          :key="keywordObj.name"
+          :name="keywordObj.name"
+          :count="keywordObj.count"
+          :title="t('cookbook', 'Toggle keyword')"
+          class="keyword"
+          @keyword-clicked="keywordClicked(keywordObj)"
+        />
+        <RecipeKeyword
+          v-for="keywordObj in unavailableKeywords"
+          :key="keywordObj.name"
+          :name="keywordObj.name"
+          :count="keywordObj.count"
+          :title="
+            // prettier-ignore
+            t('cookbook','Keyword not contained in visible recipes')
+          "
+          class="keyword disabled"
+          @keyword-clicked="keywordClicked(keywordObj)"
+        />
+      </transition-group>
     </div>
+    <ul class="recipes">
+      <li
+        v-for="recipeObj in recipeObjects"
+        v-show="recipeObj.show"
+        :key="recipeObj.recipe.recipe_id"
+      >
+        <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
+          <lazy-picture
+            v-if="recipeObj.recipe.imageUrl"
+            class="recipe-thumbnail"
+            :lazy-src="recipeObj.recipe.imageUrl"
+            :blurred-preview-src="
+              recipeObj.recipe.imagePlaceholderUrl
+            "
+            :width="105"
+            :height="105"
+          />
+          <div class="recipe-info-container">
+            <span class="recipe-title">{{ recipeObj.recipe.name }}</span>
+            <div class="recipe-info-container-bottom">
+              <span
+                v-if="formatDateTime(recipeObj.recipe.dateCreated) != null"
+                class="recipe-date"
+              >{{ formatDateTime(recipeObj.recipe.dateCreated) }}
+              </span>
+              <span
+                v-if="(recipeObj.recipe.dateModified !== recipeObj.recipe.dateCreated ) &&
+                  formatDateTime(recipeObj.recipe.dateModified) != null"
+                class="recipe-date"
+              >{{ formatDateTime(recipeObj.recipe.dateModified) }}
+              </span>
+            </div>
+          </div>
+        </router-link>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
+import moment from "@nextcloud/moment"
 import LazyPicture from "./LazyPicture.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
 
@@ -71,7 +87,7 @@ export default {
     name: "RecipeList",
     components: {
         LazyPicture,
-        RecipeKeyword,
+        RecipeKeyword
     },
     props: {
         recipes: {
@@ -164,13 +180,12 @@ export default {
                 if (r.keywords === null) {
                     return false
                 }
-
-                function keywordInRecipePresent(kw, rec) {
-                    if (!rec.keywords) {
+                
+                function keywordInRecipePresent(kw, r2) {
+                    if (!r2.keywords) {
                         return false
                     }
-
-                    const keywords = rec.keywords.split(",")
+                    const keywords = r2.keywords.split(",")
                     return keywords.includes(kw.name)
                 }
 
@@ -187,9 +202,9 @@ export default {
             const $this = this
 
             if (this.filters) {
-                ret = ret.filter((r) =>
-                    r.name.toLowerCase().includes($this.filters.toLowerCase())
-                )
+                ret = ret.filter((r) => r.name
+                        .toLowerCase()
+                        .includes($this.filters.toLowerCase()))
             }
 
             return ret
@@ -203,15 +218,12 @@ export default {
             }
 
             const $this = this
-            return this.unselectedKeywords.filter((kw) =>
-                $this.filteredRecipes
-                    .map(
-                        (r) =>
+            return this.unselectedKeywords.filter((kw) => $this.filteredRecipes
+                    .map((r) => (
                             r.keywords &&
                             r.keywords.split(",").includes(kw.name)
-                    )
-                    .reduce((l, r) => l || r, false)
-            )
+                        ))
+                    .reduce((l, r) => l || r, false))
         },
         /**
          * An array of known keywords that are not associated with any visible recipe
@@ -241,13 +253,24 @@ export default {
         /**
          * Callback for click on keyword, add to or remove from list
          */
-        keywordClicked(keyword) {
+        keywordClicked (keyword) {
             const index = this.keywordFilter.indexOf(keyword.name)
             if (index > -1) {
                 this.keywordFilter.splice(index, 1)
             } else {
                 this.keywordFilter.push(keyword.name)
             }
+        },
+        /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
+         * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
+         */
+        formatDateTime (dt) {
+            if (!dt) return null
+            const date = moment(dt, moment.ISO_8601)
+            if (!date.isValid()) {
+                return null
+            }
+            return date.format("L, LT").toString()
         },
     },
 }
@@ -272,10 +295,6 @@ export default {
 
 .keyword {
     display: inline-block;
-}
-
-.keyword-list-move {
-    transition: transform 0.5s;
 }
 
 .recipes {
@@ -312,6 +331,27 @@ export default {
 
 .recipes li span {
     display: block;
-    padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
+}
+
+.recipe-info-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    padding: .5rem;
+}
+
+.recipe-title {
+    overflow: hidden;
+    flex-grow: 1;
+    font-weight: 500;
+    line-height: 2.6ex;
+    text-overflow: ellipsis;
+}
+
+.recipe-date {
+    height: 2.7ex;
+    color: var(--color-text-light);
+    font-size: 10px;
+    line-height: 2ex;
 }
 </style>
