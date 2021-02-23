@@ -258,17 +258,17 @@ export default {
 div.kw {
     width: 100%;
     max-height: 6.7em;
+    padding: 0.1em;
+    margin-bottom: 1em;
     overflow-x: hidden;
     overflow-y: scroll;
-    margin-bottom: 1em;
-    padding: 0.1em;
 }
 
 ul.keywords {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: row;
-    padding: 0.5rem 1rem 0.5rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 1rem;
 }
 
 .keyword {
@@ -281,9 +281,9 @@ ul.keywords {
 
 ul.recipes {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
     width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 ul.recipes li {
@@ -294,8 +294,8 @@ ul.recipes li {
 ul.recipes li a {
     display: block;
     height: 105px;
-    box-shadow: 0 0 3px #aaa;
     border-radius: 3px;
+    box-shadow: 0 0 3px #aaa;
 }
 ul.recipes li a:hover {
     box-shadow: 0 0 5px #888;
@@ -303,12 +303,12 @@ ul.recipes li a:hover {
 
 ul.recipes li .recipe-thumbnail {
     position: relative;
-    float: left;
-    height: 105px;
-    width: 105px;
-    border-radius: 3px 0 0 3px;
-    background-color: #bebdbd;
     overflow: hidden;
+    width: 105px;
+    height: 105px;
+    background-color: #bebdbd;
+    border-radius: 3px 0 0 3px;
+    float: left;
 }
 
 ul.recipes li span {

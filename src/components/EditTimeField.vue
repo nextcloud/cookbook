@@ -75,11 +75,11 @@ fieldset > * {
 }
 
 fieldset > label {
-    vertical-align: top;
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
+    line-height: 18px;
+    vertical-align: top;
 }
 @media (max-width: 1199px) {
     fieldset > label {

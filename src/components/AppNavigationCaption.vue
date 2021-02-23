@@ -182,9 +182,9 @@ export default {
 
 .app-navigation-caption-mod {
     display: flex;
+    overflow: hidden;
     flex: 0 0 auto;
     order: 1;
-    overflow: hidden;
     opacity: 0.7;
 }
 
@@ -195,37 +195,36 @@ export default {
 
 // Main entry link
 .app-navigation-caption-div {
-    z-index: 100; /* above the bullet to allow click*/
+    z-index: 100; /* above the bullet to allow click */
     display: flex;
     overflow: hidden;
-    flex: 1 1 0;
-    box-sizing: border-box;
     min-height: $clickable-area;
+    box-sizing: border-box;
+    flex: 1 1 0;
     padding: 0;
-    white-space: nowrap;
+    background-position: $icon-margin center;
+    background-repeat: no-repeat;
+    background-size: $icon-size $icon-size;
+    box-shadow: none !important;
     color: var(--color-text-maxcontrast);
     font-weight: bold;
-
-    background-repeat: no-repeat;
-    background-position: $icon-margin center;
-    background-size: $icon-size $icon-size;
     line-height: $clickable-area;
-    box-shadow: none !important;
+    white-space: nowrap;
 
     .app-navigation-caption-icon {
         display: flex;
-        align-items: center;
-        flex: 0 0 $clickable-area;
-        justify-content: center;
         width: $clickable-area;
         height: $clickable-area;
+        flex: 0 0 $clickable-area;
+        align-items: center;
+        justify-content: center;
         background-size: $icon-size $icon-size;
     }
     .app-navigation-caption__title {
         overflow: hidden;
         max-width: 100%;
-        white-space: nowrap;
         text-overflow: ellipsis;
+        white-space: nowrap;
         // padding-left: 6px;
     }
 }
@@ -233,8 +232,8 @@ export default {
 /* counter and actions */
 .app-navigation-entry__utils {
     display: flex;
-    align-items: center;
     flex: 0 1 auto;
+    align-items: center;
     // visually balance the menu so it's not
     // stuck to the scrollbar
     .action-item {

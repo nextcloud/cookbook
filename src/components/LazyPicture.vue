@@ -131,25 +131,25 @@ export default {
 
 <style scoped>
 .lazy-img {
+    overflow: hidden;
     max-width: 100%;
     max-height: 100%;
     vertical-align: middle;
-    overflow: hidden;
 }
 
 picture .loading-indicator {
-    align-content: center;
     display: contents;
+    align-content: center;
 }
 
 picture img.blurred {
     filter: blur(0.5rem);
-    -webkit-filter: blur(0.5rem);
+    filter: blur(0.5rem);
 }
 
 picture img.low-resolution.previewLoaded {
     display: inline;
-    -webkit-animation: fadeIn 1s linear 0s;
+    animation: fadeIn 1s linear 0s;
     animation: fadeIn 1s linear 0s;
 }
 
@@ -159,7 +159,7 @@ picture img.full-resolution {
 
 picture img.full-resolution.imageLoaded {
     display: inline;
-    -webkit-animation: unblur 1s linear 0s;
+    animation: unblur 1s linear 0s;
     animation: unblur 1s linear 0s;
 }
 
@@ -177,7 +177,7 @@ picture img.full-resolution.imageLoaded {
         filter: blur(0.5rem);
     }
     to {
-        filter: blur(0rem);
+        filter: blur(0);
     }
 }
 </style>

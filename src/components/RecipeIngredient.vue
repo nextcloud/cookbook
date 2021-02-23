@@ -51,8 +51,8 @@ li.header {
     position: relative;
     left: -1.25em;
     margin-top: 0.25em;
-    list-style-type: none;
     font-variant: small-caps;
+    list-style-type: none;
 }
 
 li.unindented {
@@ -70,15 +70,15 @@ li > div.done {
 }
 
 li:hover > div.checkmark {
-    visibility: visible;
-    opacity: 0.5;
     color: var(--color-primary-element);
+    opacity: 0.5;
+    visibility: visible;
 }
 
 li > div.ingredient {
     display: inline;
-    margin-left: 0.3em;
     padding-left: 1em;
+    margin-left: 0.3em;
     text-indent: -1em;
 }
 </style>

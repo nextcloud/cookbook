@@ -693,15 +693,15 @@ export default {
 }
 
 .overlay {
-    display: block;
     position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    display: block;
     width: 100%;
     height: 100%;
-    left: 0;
-    top: 0;
     background-color: var(--color-main-background);
     opacity: 0.75;
-    z-index: 1000;
 }
 .overlay.hidden {
     display: none;

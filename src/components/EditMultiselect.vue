@@ -27,8 +27,8 @@ export default {
 
 <style scoped>
 fieldset {
-    margin-bottom: 1em;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 fieldset > * {
@@ -44,10 +44,10 @@ fieldset > * {
 fieldset > label {
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
-    word-spacing: initial;
+    line-height: 18px;
     vertical-align: top;
+    word-spacing: initial;
 }
 
 .edit-multiselect {
@@ -70,7 +70,7 @@ fieldset > label {
 #app .edit-multiselect .multiselect__tags .multiselect__tags-wrap {
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 #app

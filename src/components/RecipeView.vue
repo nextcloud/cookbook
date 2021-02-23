@@ -616,10 +616,10 @@ div.meta {
 }
 .date-icon {
     display: inline-block;
-    background-size: 1em;
     margin-right: 0.2em;
-    vertical-align: middle;
     margin-bottom: 0.2em;
+    background-size: 1em;
+    vertical-align: middle;
 }
 .date-text {
     vertical-align: middle;
@@ -657,24 +657,24 @@ div.times > div {
     position: relative;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
-    border-radius: 3px;
     margin: 1rem 2rem;
-    text-align: center;
+    border-radius: 3px;
     font-size: 1.2rem;
+    text-align: center;
 }
 .times .time button {
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
-    height: 36px;
     width: 36px;
+    height: 36px;
+    transform: translate(-50%, -50%);
 }
 .times .time h4 {
-    font-weight: bold;
+    padding: 0.5rem;
     border-bottom: 1px solid var(--color-border-dark);
     background-color: var(--color-background-dark);
-    padding: 0.5rem;
+    font-weight: bold;
 }
 
 .times .time p {
@@ -685,15 +685,15 @@ section {
     margin-bottom: 1rem;
 }
 section::after {
-    content: "";
     display: table;
     clear: both;
+    content: "";
 }
 
 .content {
     width: 100%;
-    padding: 1rem;
     flex-basis: 100%;
+    padding: 1rem;
 }
 .content aside {
     width: 30%;
@@ -714,18 +714,18 @@ aside ul {
     list-style-type: none;
 }
 aside ul li {
+    margin-bottom: 0.75ex;
     margin-left: 1em;
     line-height: 2.5ex;
-    margin-bottom: 0.75ex;
 }
 aside ul li span,
 aside ul li input[type="checkbox"] {
-    line-height: 1rem;
-    margin: 0 0.5rem 0 0;
-    padding: 0;
-    height: auto;
-    width: 1rem;
     display: inline-block;
+    width: 1rem;
+    height: auto;
+    padding: 0;
+    margin: 0 0.5rem 0 0;
+    line-height: 1rem;
     vertical-align: middle;
 }
 
@@ -755,47 +755,47 @@ div.meta {
 }
 
 main {
-    flex-basis: calc(100% - 22rem);
     width: 70%;
+    flex-basis: calc(100% - 22rem);
     float: left;
     text-align: justify;
 }
 
 @media screen and (max-width: 1199px) {
     main {
-        flex-basis: 100%;
         width: 100%;
+        flex-basis: 100%;
     }
 }
 
 .instructions {
-    list-style: none;
     padding: 0;
-    counter-reset: instruction-counter;
     margin-top: 2rem;
+    counter-reset: instruction-counter;
+    list-style: none;
 }
 .instructions .instruction {
-    cursor: pointer;
-    counter-increment: instruction-counter;
-    clear: both;
     margin-bottom: 2rem;
+    clear: both;
+    counter-increment: instruction-counter;
+    cursor: pointer;
 }
 .instructions .instruction::before {
-    content: counter(instruction-counter);
     display: block;
-    float: left;
-    margin: 0 1rem 1rem 0;
-    height: 36px;
     width: 36px;
-    border-radius: 50%;
+    height: 36px;
     border: 1px solid var(--color-border-dark);
-    outline: none;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: var(--color-background-dark);
-    line-height: 36px;
-    text-align: center;
+    margin: 0 1rem 1rem 0;
     margin-top: -6px;
+    background-color: var(--color-background-dark);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    content: counter(instruction-counter);
+    float: left;
+    line-height: 36px;
+    outline: none;
+    text-align: center;
 }
 .instructions .instruction:hover::before {
     border-color: var(--color-primary-element);

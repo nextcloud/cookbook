@@ -56,29 +56,28 @@ export default {
 
 <style lang="scss" scoped>
 div.main {
-    height: 100%;
     display: flex;
+    height: 100%;
     flex-direction: colummn;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     div.dialog {
         width: 50%;
+        padding: 20px;
+        border: 1px solid;
+        border-radius: 15px;
 
         @media screen and (max-width: 800px) {
             width: 90%;
         }
 
-        padding: 20px;
-        border: 1px solid;
-        border-radius: 15px;
-
         div {
             margin: 20px 5px;
         }
         div.message {
-            font-weight: bold;
             font-size: x-large;
+            font-weight: bold;
         }
     }
 }

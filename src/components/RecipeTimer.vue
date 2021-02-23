@@ -117,24 +117,24 @@ export default {
     position: relative;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
-    border-radius: 3px;
     margin: 1rem 2rem;
-    text-align: center;
+    border-radius: 3px;
     font-size: 1.2rem;
+    text-align: center;
 }
 .time button {
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate(-50%, -50%);
-    height: 36px;
     width: 36px;
+    height: 36px;
+    transform: translate(-50%, -50%);
 }
 .time h4 {
-    font-weight: bold;
+    padding: 0.5rem;
     border-bottom: 1px solid var(--color-border-dark);
     background-color: var(--color-background-dark);
-    padding: 0.5rem;
+    font-weight: bold;
 }
 
 .time p {
