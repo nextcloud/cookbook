@@ -202,10 +202,11 @@ export default {
                 .catch(function (e) {
                     cat.recipes = []
                     alert(
-                        t(
-                            "cookbook",
-                            "Failed to load category {category} recipes",
-                            { category: cat.name }
+                        // prettier-ignore
+                        t("cookbook","Failed to load category {category} recipes",
+                            {
+                                category: cat.name,
+                            }
                         )
                     )
                     if (e && e instanceof Error) {
@@ -239,10 +240,11 @@ export default {
                 })
                 .catch(function (e) {
                     alert(
-                        t(
-                            "cookbook",
-                            'Failed to update name of category "{category}"',
-                            { category: oldName }
+                        // prettier-ignore
+                        t("cookbook",'Failed to update name of category "{category}"',
+                            {
+                                category: oldName,
+                            }
                         )
                     )
                     if (e && e instanceof Error) {
@@ -307,10 +309,8 @@ export default {
                                 recipes: [
                                     {
                                         id: 0,
-                                        name: t(
-                                            "cookbook",
-                                            "Loading category recipes …"
-                                        ),
+                                        // prettier-ignore
+                                        name: t("cookbook","Loading category recipes …"),
                                     },
                                 ],
                             })

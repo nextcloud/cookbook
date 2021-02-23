@@ -19,10 +19,8 @@
                                 :key="'keyw' + idx"
                                 :name="keyword"
                                 :title="
-                                    t(
-                                        'cookbook',
-                                        'Search recipes with this keyword'
-                                    )
+                                    // prettier-ignore
+                                    t('cookbook','Search recipes with this keyword')
                                 "
                                 v-on:keyword-clicked="keywordClicked(keyword)"
                             />

@@ -8,10 +8,8 @@
                     </div>
                     <div>
                         {{
-                            t(
-                                "cookbook",
-                                "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder."
-                            )
+                            // prettier-ignore
+                            t("cookbook", "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder."                            )
                         }}
                     </div>
                     <div>

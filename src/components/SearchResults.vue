@@ -43,9 +43,11 @@ export default {
                     .catch(function (e) {
                         $this.results = []
                         alert(
-                            t(
-                                "cookbook",
-                                "Failed to load recipes with keywords: " + tags
+                            // prettier-ignore
+                            t("cookbook","Failed to load recipes with keywords: {tags}", 
+                                {
+                                    tags: tags
+                                }
                             )
                         )
                         if (e && e instanceof Error) {
@@ -64,10 +66,11 @@ export default {
                     .catch(function (e) {
                         $this.results = []
                         alert(
-                            t(
-                                "cookbook",
-                                "Failed to load category {category} recipes",
-                                { category: cat }
+                            // prettier-ignore
+                            t("cookbook","Failed to load category {category} recipes",
+                                {
+                                    category: cat,
+                                }
                             )
                         )
                         if (e && e instanceof Error) {

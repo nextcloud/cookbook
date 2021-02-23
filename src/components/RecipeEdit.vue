@@ -170,10 +170,8 @@ export default {
                 {
                     key: "calories",
                     label: t("cookbook", "Calories"),
-                    placeholder: t(
-                        "cookbook",
-                        "E.g.: 450 kcal (amount & unit)"
-                    ),
+                    // prettier-ignore
+                    placeholder: t("cookbook","E.g.: 450 kcal (amount & unit)"),
                 },
                 {
                     key: "carbohydrateContent",
@@ -208,10 +206,8 @@ export default {
                 {
                     key: "servingSize",
                     label: t("cookbook", "Serving size"),
-                    placeholder: t(
-                        "cookbook",
-                        "Enter serving size (volume or mass)"
-                    ),
+                    // prettier-ignore
+                    placeholder: t("cookbook","Enter serving size (volume or mass)"),
                 },
                 {
                     key: "sodiumContent",

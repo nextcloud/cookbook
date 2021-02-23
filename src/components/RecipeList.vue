@@ -31,10 +31,8 @@
                     :name="keywordObj.name"
                     :count="keywordObj.count"
                     :title="
-                        t(
-                            'cookbook',
-                            'Keyword not contained in visible recipes'
-                        )
+                        // prettier-ignore
+                        t('cookbook','Keyword not contained in visible recipes')
                     "
                     @keyword-clicked="keywordClicked(keywordObj)"
                     class="keyword disabled"

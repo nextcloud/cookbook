@@ -94,10 +94,8 @@ export default {
                 })
                 .catch((e) => {
                     alert(
-                        t(
-                            "cookbook",
-                            "Could not set preference for image printing"
-                        )
+                        // prettier-ignore
+                        t("cookbook","Could not set preference for image printing")
                     )
                     this.resetPrintImage = true
                     this.printImage = oldVal
@@ -119,10 +117,11 @@ export default {
                 })
                 .catch((e) => {
                     alert(
-                        t(
-                            "cookbook",
-                            "Could not set recipe update interval to {interval}",
-                            { interval: newVal }
+                        // prettier-ignore
+                        t("cookbook","Could not set recipe update interval to {interval}",
+                            {
+                                interval: newVal,
+                            }
                         )
                     )
                     this.resetInterval = true
@@ -149,10 +148,11 @@ export default {
                         })
                         .catch((e) => {
                             alert(
-                                t(
-                                    "cookbook",
-                                    "Could not set recipe folder to {path}",
-                                    { path: path }
+                                // prettier-ignore
+                                t("cookbook","Could not set recipe folder to {path}",
+                                    {
+                                        path: path,
+                                    }
                                 )
                             )
                         })
