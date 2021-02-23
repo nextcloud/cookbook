@@ -32,6 +32,10 @@ jobs:
             env:
                 PHP_CS_FIXER_IGNORE_ENV: 1
             run: composer cs:check
+        -   name: Check for formatting issues with vue files
+            shell: bash
+            run: npm run prettier
+        
   
   unit-tests:
     name: Run the unittests
