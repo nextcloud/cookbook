@@ -8,30 +8,34 @@ on:
 jobs:
   
   php-lint:
-     name: Run PHP Linter and Code Style checker
-     runs-on: ubuntu-latest
-     steps:
-        -  name: Checkout the project
-           uses: actions/checkout@v2
-        -  name: Get PHP version
-           shell: bash
-           run: php -v
-        -  name: Install Composer
-           shell: bash
-           run: >-
-              wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
-              php -- --quiet
-        -  name: Install packages
-           shell: bash
-           run: composer install
-        -  name: Run linter
-           shell: bash
-           run: composer lint:lint
-        -  name: Run code style checker
-           shell: bash
-           env:
-              PHP_CS_FIXER_IGNORE_ENV: 1
-           run: composer cs:check
+    name: Run PHP Linter and Code Style checker
+    runs-on: ubuntu-latest
+    steps:
+        -   name: Checkout the project
+            uses: actions/checkout@v2
+        -   name: Get PHP version
+            shell: bash
+            run: php -v
+        -   name: Install Composer
+            shell: bash
+            run: >-
+                wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
+                php -- --quiet
+        -   name: Install packages
+            shell: bash
+            run: composer install
+        -   name: Run linter
+            shell: bash
+            run: composer lint:lint
+        -   name: Run code style checker
+            shell: bash
+            env:
+                PHP_CS_FIXER_IGNORE_ENV: 1
+            run: composer cs:check
+        -   name: Check for formatting issues with vue files
+            shell: bash
+            run: npm run prettier
+        
   
   unit-tests:
     name: Run the unittests

@@ -2,7 +2,7 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
-            <li v-for="(entry,idx) in selectedOpts" :key="fieldLabel+idx">
+            <li v-for="(entry, idx) in selectedOpts" :key="fieldLabel + idx">
                 <multiselect
                     class="key"
                     :options="selectableOptions(idx)"
@@ -10,18 +10,21 @@
                     label="label"
                     :multiple="false"
                     :placeholder="labelSelectPlaceholder"
-                    @change="e => optionUpdated(idx, e)"
+                    @change="(e) => optionUpdated(idx, e)"
                     :value="selectedOptions[idx][0]"
-                    />
-                <input 
+                />
+                <input
                     type="text"
                     class="val"
                     :placeholder="placeholder(idx)"
-                    @input="e => fieldValueUpdated(idx, e)"
+                    @input="(e) => fieldValueUpdated(idx, e)"
                     :value="filledValues[idx]"
-                    />
-            </li>            
-            <li v-if="selectedOptions.length < options.length" :key="fieldLabel+selectedOptions.length">
+                />
+            </li>
+            <li
+                v-if="selectedOptions.length < options.length"
+                :key="fieldLabel + selectedOptions.length"
+            >
                 <multiselect
                     class="key"
                     :options="selectableOptions(selectedOptions.length)"
@@ -29,41 +32,41 @@
                     label="label"
                     :placeholder="labelSelectPlaceholder"
                     :multiple="false"
-                    @change="e => optionUpdated(selectedOptions.length, e)"
-                    />
-                <input 
+                    @change="(e) => optionUpdated(selectedOptions.length, e)"
+                />
+                <input
                     type="text"
                     class="val"
                     :placeholder="placeholder(selectedOptions.length)"
-                    @input="e => fieldValueUpdated(selectedOptions.length, e)"
-                    />
+                    @input="(e) => fieldValueUpdated(selectedOptions.length, e)"
+                />
             </li>
         </ul>
     </fieldset>
 </template>
 
 <script>
-import Multiselect from '@nextcloud/vue/dist/Components/Multiselect'
+import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
 
 export default {
     name: "EditMultiselectInputGroup",
     components: {
-        Multiselect
+        Multiselect,
     },
-    // Define which prop and which event is used here, for binding to the 
+    // Define which prop and which event is used here, for binding to the
     // v-model used in the parent (the one using this component)
     model: {
-        prop: 'value',
-        event: 'change'
+        prop: "value",
+        event: "change",
     },
     props: {
         fieldLabel: {
             type: String,
-            default: ''
+            default: "",
         },
         labelSelectPlaceholder: {
             type: String,
-            default: 'Select option'
+            default: "Select option",
         },
         /** Selectable options.
          * Array of option objects with keys: key, label, and placeholder
@@ -74,95 +77,106 @@ export default {
         options: {
             type: Array,
             default: [],
-            required: true
+            required: true,
         },
         // Value (passed in v-model)
         value: {
             type: Object,
             default: () => ({}),
-            required: true
+            required: true,
         },
     },
-    data () {
+    data() {
         return {
             selectedOptions: {
                 type: Array,
-                default: []
+                default: [],
             },
             filledValues: {
                 type: Array,
-                default: null
+                default: null,
             },
             localValue: {
                 type: Object,
-                default: JSON.parse(JSON.stringify(this.value))
+                default: JSON.parse(JSON.stringify(this.value)),
             },
         }
     },
     computed: {
         selectedOpts() {
-            if(!(this.selectedOptions instanceof Array))
-            {
+            if (!(this.selectedOptions instanceof Array)) {
                 return []
             }
             return this.selectedOptions
-        }
+        },
     },
     watch: {
         // Update local value when value property is updated
-        value (val) {
+        value(val) {
             this.localValue = JSON.parse(JSON.stringify(val))
             this.updateLocalValues()
         },
         options: {
             deep: true,
-            handler (val, oldVal) {
+            handler(val, oldVal) {
                 this.updateLocalValues()
-            }
-        }
+            },
+        },
     },
     methods: {
         /**
          * Emit locally updated value to parent component.
          */
-        emitUpdate: function() {
-            this.$emit('change', JSON.parse(JSON.stringify(this.localValue)))
+        emitUpdate: function () {
+            this.$emit("change", JSON.parse(JSON.stringify(this.localValue)))
         },
         /**
          * Called when input-fields content is changed.
          */
         fieldValueUpdated: function (idx, e) {
             this.filledValues[idx] = e.target.value
-            this.localValue[this.selectedOptions[idx][0][0].key] = e.target.value
+            this.localValue[this.selectedOptions[idx][0][0].key] =
+                e.target.value
             this.emitUpdate()
         },
         /**
          * Called when a new option is chosen in one of the `Multiselect`s.
          */
         optionUpdated: function (idx, val) {
-            if (idx == this.selectedOptions.length && (typeof this.filledValues[idx]) === 'undefined') {
-                this.filledValues[idx] = ''
+            if (
+                idx == this.selectedOptions.length &&
+                typeof this.filledValues[idx] === "undefined"
+            ) {
+                this.filledValues[idx] = ""
             }
             // Entry exists
-            if (this.selectedOptions[idx] != null && (typeof this.selectedOptions[idx] !== 'undefined')) {
+            if (
+                this.selectedOptions[idx] != null &&
+                typeof this.selectedOptions[idx] !== "undefined"
+            ) {
                 delete this.localValue[this.selectedOptions[idx][0][0].key]
             }
             this.localValue[val.key] = this.filledValues[idx]
-            this.$set(this.selectedOptions, idx, [val]);
+            this.$set(this.selectedOptions, idx, [val])
             this.emitUpdate()
         },
         /**
          * Get content of the descriptive placeholder for an input field.
          */
         placeholder: function (idx) {
-            if (idx >= this.selectedOptions.length || idx >= this.options.length) {
-                return ''
+            if (
+                idx >= this.selectedOptions.length ||
+                idx >= this.options.length
+            ) {
+                return ""
             }
-            let optionIdx = this.options.map(o => o.key).indexOf(this.selectedOptions[idx][0][0].key)
-            if (optionIdx > -1 && 'placeholder' in this.options[optionIdx]) {
+            let optionIdx = this.options
+                .map((o) => o.key)
+                .indexOf(this.selectedOptions[idx][0][0].key)
+            if (optionIdx > -1 && "placeholder" in this.options[optionIdx]) {
                 return this.options[optionIdx].placeholder
             }
-            return ''
+            return ""
         },
         /**
          * Get a list of not yet selected options.
@@ -172,14 +186,13 @@ export default {
                 return []
             }
             let selectable_Opts = []
-            let selected_keys = this.selectedOptions.map(m => m[0][0].key)
+            let selected_keys = this.selectedOptions.map((m) => m[0][0].key)
             for (let i = 0; i < this.options.length; i++) {
                 let option = this.options[i]
-                if (!('label' in option)) {
+                if (!("label" in option)) {
                     option.label = option.key
                 }
-                if ( !(selected_keys.includes(option.key)) )
-                {
+                if (!selected_keys.includes(option.key)) {
                     selectable_Opts.push(option)
                 }
             }
@@ -188,16 +201,16 @@ export default {
         /**
          * Update the helper fields with the localValue.
          */
-        updateLocalValues: function() {
+        updateLocalValues: function () {
             // show only fields made available in passed `options`
             this.selectedOptions = []
             this.filledValues = []
             for (let key in this.localValue) {
-                if (this.options.map(o => o.key).includes(key)) {
-                    let opt = this.options.filter(o => o.key == key)
+                if (this.options.map((o) => o.key).includes(key)) {
+                    let opt = this.options.filter((o) => o.key == key)
                     this.selectedOptions.push([opt])
                     this.filledValues.push(this.localValue[key])
-                }                    
+                }
             }
         },
     },
@@ -205,7 +218,6 @@ export default {
 </script>
 
 <style scoped>
-
 fieldset {
     margin-bottom: 1em;
     width: 100%;
@@ -215,10 +227,12 @@ fieldset > * {
     margin: 0;
     float: left;
 }
-    @media(max-width:1199px) { fieldset > label {
+@media (max-width: 1199px) {
+    fieldset > label {
         display: block;
         float: none;
-    }}
+    }
+}
 fieldset > label {
     display: inline-block;
     width: 16em;
@@ -235,7 +249,7 @@ fieldset > ul {
 
 fieldset > ul > li {
     display: flex;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
 fieldset > ul > li .key {
@@ -251,8 +265,9 @@ fieldset > ul > li .val {
     width: 20em;
 }
 
-    @media(max-width:1199px) { .ms {
+@media (max-width: 1199px) {
+    .ms {
         width: 100%;
-    }}
-
+    }
+}
 </style>

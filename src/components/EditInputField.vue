@@ -3,49 +3,66 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <markdown-editor ref="inputField" class='editor' v-if="fieldType==='markdown'" v-model="content" @input="handleInput" toolbar='' />
-        <input ref="inputField" v-else-if="fieldType!=='textarea'" :type="fieldType" v-model="content" @input="handleInput" />
-        <textarea ref="inputField" v-if="fieldType==='textarea'" v-model="content" @input="handleInput" />
+        <markdown-editor
+            ref="inputField"
+            class="editor"
+            v-if="fieldType === 'markdown'"
+            v-model="content"
+            @input="handleInput"
+            toolbar=""
+        />
+        <input
+            ref="inputField"
+            v-else-if="fieldType !== 'textarea'"
+            :type="fieldType"
+            v-model="content"
+            @input="handleInput"
+        />
+        <textarea
+            ref="inputField"
+            v-if="fieldType === 'textarea'"
+            v-model="content"
+            @input="handleInput"
+        />
     </fieldset>
 </template>
 
 <script>
-
 export default {
     name: "EditInputField",
     props: {
         fieldLabel: {
             type: String,
-            default: ''
+            default: "",
         },
         fieldType: {
             type: String,
-            default: ''
+            default: "",
         },
         referencePopupEnabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         // Value (passed in v-model)
         value: {
-            default: '',
-            required: true
-        }
+            default: "",
+            required: true,
+        },
     },
-    data () {
+    data() {
         return {
-            content: '',
-            lastCursorPosition: -1
+            content: "",
+            lastCursorPosition: -1,
         }
     },
     watch: {
-        value: function() {
+        value: function () {
             this.content = this.value
-        }
+        },
     },
     methods: {
-        handleInput (e) {
-            this.$emit('input', this.content)
+        handleInput(e) {
+            this.$emit("input", this.content)
         },
         /**
          * Catches # key down presses and opens recipe-references dialog
@@ -55,40 +72,62 @@ export default {
             if (this.referencePopupEnabled && e.keyCode === 51) {
                 e.preventDefault()
                 // Check if the letter before the hash
-                if (this.fieldType === 'markdown') {
+                if (this.fieldType === "markdown") {
                     // for reference: https://codemirror.net/doc/manual.html#api
-                    let cursorPos = JSON.parse(JSON.stringify(this.$refs.inputField.editor.getCursor('start')))
+                    let cursorPos = JSON.parse(
+                        JSON.stringify(
+                            this.$refs.inputField.editor.getCursor("start")
+                        )
+                    )
                     let prevChar = this.$refs.inputField.editor.getRange(
-                        {line: cursorPos.line, ch: cursorPos.ch-2}, 
-                        {line: cursorPos.line, ch: cursorPos.ch-1})
-                    if (cursorPos.ch === 1 || prevChar === ' ' || prevChar === '\n' || prevChar === '\r') {
+                        { line: cursorPos.line, ch: cursorPos.ch - 2 },
+                        { line: cursorPos.line, ch: cursorPos.ch - 1 }
+                    )
+                    if (
+                        cursorPos.ch === 1 ||
+                        prevChar === " " ||
+                        prevChar === "\n" ||
+                        prevChar === "\r"
+                    ) {
                         // beginning of line
-                        this.$parent.$emit('showRecipeReferencesPopup', {context: this})
+                        this.$parent.$emit("showRecipeReferencesPopup", {
+                            context: this,
+                        })
                         this.lastCursorPosition = cursorPos
                     }
                 } else {
-                    this.$refs['inputField'].selectionStart
-                    let content = this.$refs['inputField'].value
-                    let prevChar = cursorPos > 1 ? content.charAt(cursorPos-2) : ''
-                    if (cursorPos === 1 || prevChar === ' ' || prevChar === '\n' || prevChar === '\r') {
+                    this.$refs["inputField"].selectionStart
+                    let content = this.$refs["inputField"].value
+                    let prevChar =
+                        cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
+                    if (
+                        cursorPos === 1 ||
+                        prevChar === " " ||
+                        prevChar === "\n" ||
+                        prevChar === "\r"
+                    ) {
                         // Show dialog to select recipe
-                        this.$parent.$emit('showRecipeReferencesPopup', {context: this})
+                        this.$parent.$emit("showRecipeReferencesPopup", {
+                            context: this,
+                        })
                         this.lastCursorPosition = cursorPos
                     }
                 }
-
             }
         },
         pasteCanceled() {
             // set cursor to position after pasted string
-            this.$nextTick(function() {
-                let field = this.$refs['inputField']
-                if (this.fieldType === 'markdown') {
+            this.$nextTick(function () {
+                let field = this.$refs["inputField"]
+                if (this.fieldType === "markdown") {
                     field.editor.setCursor(this.lastCursorPosition)
-                    field.editor.focus()                    
+                    field.editor.focus()
                 } else {
                     field.focus()
-                    field.setSelectionRange (this.lastCursorPosition, this.lastCursorPosition)
+                    field.setSelectionRange(
+                        this.lastCursorPosition,
+                        this.lastCursorPosition
+                    )
                 }
             })
         },
@@ -96,47 +135,49 @@ export default {
          * Paste string at the last saved cursor position
          */
         pasteString(str) {
-            let field = this.$refs['inputField']
+            let field = this.$refs["inputField"]
 
-            if (this.fieldType == 'markdown') {
+            if (this.fieldType == "markdown") {
                 // insert at last cursor position
-                field.editor.replaceRange(str, 
-                    {line: this.lastCursorPosition.line, ch: this.lastCursorPosition.ch} 
-                    )
-                this.$emit('input', this.content)
+                field.editor.replaceRange(str, {
+                    line: this.lastCursorPosition.line,
+                    ch: this.lastCursorPosition.ch,
+                })
+                this.$emit("input", this.content)
                 this.$nextTick(() => {
                     this.$nextTick(() => {
                         field.editor.focus()
-                        field.editor.setCursor({line: this.lastCursorPosition.line, ch: this.lastCursorPosition.ch + str.length})
+                        field.editor.setCursor({
+                            line: this.lastCursorPosition.line,
+                            ch: this.lastCursorPosition.ch + str.length,
+                        })
                     })
                 })
-
             } else {
                 // insert str
-                this.content = this.content.slice(0, this.lastCursorPosition)
-                    + str + this.content.slice(this.lastCursorPosition)
-                this.$emit('input', this.content)
-    
+                this.content =
+                    this.content.slice(0, this.lastCursorPosition) +
+                    str +
+                    this.content.slice(this.lastCursorPosition)
+                this.$emit("input", this.content)
+
                 // set cursor to position after pasted string. Waiting two ticks is necessary for
                 // the data to be updated in the field
                 this.$nextTick(() => {
                     this.$nextTick(() => {
                         field.focus()
                         let newCursorPos = this.lastCursorPosition + str.length
-                        field.setSelectionRange( newCursorPos, newCursorPos)
+                        field.setSelectionRange(newCursorPos, newCursorPos)
                     })
                 })
             }
-
-        }
+        },
     },
-    mounted() {
-    }
+    mounted() {},
 }
 </script>
 
 <style scoped>
-
 fieldset {
     margin-bottom: 1em;
 }
@@ -154,10 +195,12 @@ fieldset > label {
     line-height: 17px;
     font-weight: bold;
 }
-    @media(max-width:1199px) { fieldset > label {
+@media (max-width: 1199px) {
+    fieldset > label {
         display: block;
         float: none;
-    }}
+    }
+}
 
 fieldset > input,
 fieldset > textarea {
@@ -179,9 +222,11 @@ fieldset > .editor {
     border-radius: 2;
 }
 
-    @media(max-width:1199px) { fieldset > input, fieldset > textarea, fieldset > .editor {
+@media (max-width: 1199px) {
+    fieldset > input,
+    fieldset > textarea,
+    fieldset > .editor {
         width: 100%;
-    }}
-
-
+    }
+}
 </style>

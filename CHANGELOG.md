@@ -5,6 +5,8 @@
   [#596](https://github.com/nextcloud/cookbook/pull/596) @seyfeb
 - Updated dependency of eslint-config-prettier
   [#603](https://github.com/nextcloud/cookbook/pull/603) @christianlupus
+- Enforce basic code styling using prettier in vue files
+  [#607](https://github.com/nextcloud/cookbook/pull/607) @christianlupus
 
 ## Deprecated
 - Obsolete routes to old user interface, see `appinfo/routes.php`

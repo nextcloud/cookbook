@@ -45,123 +45,135 @@ button will be automatically created.
 </docs>
 
 <template>
-	<li class="app-navigation-caption-mod">
-		<div class="app-navigation-caption-div">
-			<!-- icon if not collapsible -->
-			<!-- never show the icon over the collapsible if mobile -->
-			<div :class="{ 'icon-loading-small': loading, [icon]: icon && isIconShown }"
-				class="app-navigation-caption-icon">
-				<slot v-if="!loading" v-show="isIconShown" name="icon" />
-			</div>
-			<span  class="app-navigation-caption__title" :title="title">
-				{{ title }}
-			</span>
-		</div>
-		<!-- Actions -->
-		<div v-if="hasUtils" class="app-navigation-entry__utils">
-			<Actions menu-align="right"
-				:placement="menuPlacement"
-				:open="menuOpen"
-				:force-menu="forceMenu"
-				:default-icon="menuIcon"
-				@update:open="onMenuToggle">
-				<slot name="actions" />
-			</Actions>
-		</div>
-	</li>
+    <li class="app-navigation-caption-mod">
+        <div class="app-navigation-caption-div">
+            <!-- icon if not collapsible -->
+            <!-- never show the icon over the collapsible if mobile -->
+            <div
+                :class="{
+                    'icon-loading-small': loading,
+                    [icon]: icon && isIconShown,
+                }"
+                class="app-navigation-caption-icon"
+            >
+                <slot v-if="!loading" v-show="isIconShown" name="icon" />
+            </div>
+            <span class="app-navigation-caption__title" :title="title">
+                {{ title }}
+            </span>
+        </div>
+        <!-- Actions -->
+        <div v-if="hasUtils" class="app-navigation-entry__utils">
+            <Actions
+                menu-align="right"
+                :placement="menuPlacement"
+                :open="menuOpen"
+                :force-menu="forceMenu"
+                :default-icon="menuIcon"
+                @update:open="onMenuToggle"
+            >
+                <slot name="actions" />
+            </Actions>
+        </div>
+    </li>
 </template>
 
 <script>
-import Actions from '@nextcloud/vue/dist/Components/Actions'
-import isMobile from '@nextcloud/vue/dist/Mixins/isMobile'
+import Actions from "@nextcloud/vue/dist/Components/Actions"
+import isMobile from "@nextcloud/vue/dist/Mixins/isMobile"
 
 export default {
-	name: "AppNavigationCaption",
+    name: "AppNavigationCaption",
 
-	components: {
-		Actions
-	},
-	mixins: [isMobile],
+    components: {
+        Actions,
+    },
+    mixins: [isMobile],
     props: {
-		/**
-		 * The title of the element.
-		 */
-		title: {
-			type: String,
-			required: true,
-		},
-		/**
-		* Refers to the icon on the left, this prop accepts a class
-		* like 'icon-category-enabled'.
-		*/
-		icon: {
-			type: String,
-			default: '',
-		},
-		/**
-		* Displays a loading animated icon on the left of the element
-		* instead of the icon.
-		*/
-		loading: {
-			type: Boolean,
-			default: false,
-		},
-		/**
-		 * The actions menu open state (synced)
-		 */
-		menuOpen: {
-			type: Boolean,
-			default: false,
-		},
-		/**
-		 * Force the actions to display in a three dot menu
-		 */
-		forceMenu: {
-			type: Boolean,
-			default: false,
-		},
-		/**
-		 * The action's menu default icon
-		 */
-		menuIcon: {
-			type: String,
-			default: undefined,
-		},
-		/**
-		 * The action's menu direction
-		 */
-		menuPlacement: {
-			type: String,
-			default: 'bottom',
-		},
-	},
-	computed: {
-		hasUtils() {
-			if (this.editing) {
-				return false
-			} else if (this.$slots.actions || this.$slots.counter || this.editable || this.undo) {
-				return true
-			} else {
-				return false
-			}
-		},
-		// is the icon shown?
-		// we don't show it on mobile if the entry is collapsible
-		// we show the collapse toggle directly!
-		isIconShown() {
-			return !this.collapsible || (this.collapsible && !this.isMobile)
-		},
-	},
-	methods: {
-		// sync opened menu state with prop
-		onMenuToggle(state) {
-			this.$emit('update:menuOpen', state)
-		},
-		// forward click event
-		onClick(event) {
-			this.$emit('click', event)
-		},
-	}
+        /**
+         * The title of the element.
+         */
+        title: {
+            type: String,
+            required: true,
+        },
+        /**
+         * Refers to the icon on the left, this prop accepts a class
+         * like 'icon-category-enabled'.
+         */
+        icon: {
+            type: String,
+            default: "",
+        },
+        /**
+         * Displays a loading animated icon on the left of the element
+         * instead of the icon.
+         */
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         * The actions menu open state (synced)
+         */
+        menuOpen: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         * Force the actions to display in a three dot menu
+         */
+        forceMenu: {
+            type: Boolean,
+            default: false,
+        },
+        /**
+         * The action's menu default icon
+         */
+        menuIcon: {
+            type: String,
+            default: undefined,
+        },
+        /**
+         * The action's menu direction
+         */
+        menuPlacement: {
+            type: String,
+            default: "bottom",
+        },
+    },
+    computed: {
+        hasUtils() {
+            if (this.editing) {
+                return false
+            } else if (
+                this.$slots.actions ||
+                this.$slots.counter ||
+                this.editable ||
+                this.undo
+            ) {
+                return true
+            } else {
+                return false
+            }
+        },
+        // is the icon shown?
+        // we don't show it on mobile if the entry is collapsible
+        // we show the collapse toggle directly!
+        isIconShown() {
+            return !this.collapsible || (this.collapsible && !this.isMobile)
+        },
+    },
+    methods: {
+        // sync opened menu state with prop
+        onMenuToggle(state) {
+            this.$emit("update:menuOpen", state)
+        },
+        // forward click event
+        onClick(event) {
+            this.$emit("click", event)
+        },
+    },
 }
 </script>
 
@@ -169,65 +181,64 @@ export default {
 @import "@nextcloud/vue/src/assets/variables.scss";
 
 .app-navigation-caption-mod {
-	display: flex;
-	flex: 0 0 auto;
-	order: 1;
-	overflow: hidden;
-	opacity: 0.7;
+    display: flex;
+    flex: 0 0 auto;
+    order: 1;
+    overflow: hidden;
+    opacity: 0.7;
 }
 
 // extra top space if it's not the first item on the list
 .app-navigation-caption-mod:not(:first-child) {
-	margin-top: $clickable-area / 2;
+    margin-top: $clickable-area / 2;
 }
 
 // Main entry link
 .app-navigation-caption-div {
-	z-index: 100; /* above the bullet to allow click*/
-	display: flex;
-	overflow: hidden;
-	flex: 1 1 0;
-	box-sizing: border-box;
-	min-height: $clickable-area;
-	padding: 0;
-	white-space: nowrap;
-	color: var(--color-text-maxcontrast);
-	font-weight: bold;
+    z-index: 100; /* above the bullet to allow click*/
+    display: flex;
+    overflow: hidden;
+    flex: 1 1 0;
+    box-sizing: border-box;
+    min-height: $clickable-area;
+    padding: 0;
+    white-space: nowrap;
+    color: var(--color-text-maxcontrast);
+    font-weight: bold;
 
-	background-repeat: no-repeat;
-	background-position: $icon-margin center;
-	background-size: $icon-size $icon-size;
-	line-height: $clickable-area;
-	box-shadow: none !important;
+    background-repeat: no-repeat;
+    background-position: $icon-margin center;
+    background-size: $icon-size $icon-size;
+    line-height: $clickable-area;
+    box-shadow: none !important;
 
-	.app-navigation-caption-icon {
-		display: flex;
-		align-items: center;
-		flex: 0 0 $clickable-area;
-		justify-content: center;
-		width: $clickable-area;
-		height: $clickable-area;
-		background-size: $icon-size $icon-size;
-	}
-	.app-navigation-caption__title {
-		overflow: hidden;
-		max-width: 100%;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		// padding-left: 6px;
-	}
+    .app-navigation-caption-icon {
+        display: flex;
+        align-items: center;
+        flex: 0 0 $clickable-area;
+        justify-content: center;
+        width: $clickable-area;
+        height: $clickable-area;
+        background-size: $icon-size $icon-size;
+    }
+    .app-navigation-caption__title {
+        overflow: hidden;
+        max-width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        // padding-left: 6px;
+    }
 }
 
 /* counter and actions */
 .app-navigation-entry__utils {
-	display: flex;
-	align-items: center;
-	flex: 0 1 auto;
-	// visually balance the menu so it's not
-	// stuck to the scrollbar
-	.action-item {
-		margin-right: 2px;
-	}
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    // visually balance the menu so it's not
+    // stuck to the scrollbar
+    .action-item {
+        margin-right: 2px;
+    }
 }
 </style>
-

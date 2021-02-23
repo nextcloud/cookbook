@@ -1,30 +1,30 @@
 <template>
-    <recipe-list :recipes="recipes"/>
+    <recipe-list :recipes="recipes" />
 </template>
 
 <script>
-import axios from '@nextcloud/axios'
+import axios from "@nextcloud/axios"
 
-import RecipeList from './RecipeList'
+import RecipeList from "./RecipeList"
 
 export default {
-    name: 'Index',
+    name: "Index",
     components: {
-        RecipeList
+        RecipeList,
     },
-    data () {
+    data() {
         return {
             // The known recipes in the cookbook
-            recipes: []
+            recipes: [],
         }
     },
     computed: {
         /**
          * Is the Cookbook recipe directory currently being changed?
          */
-        updatingRecipeDirectory () {
+        updatingRecipeDirectory() {
             return this.$store.state.updatingRecipeDirectory
-        }
+        },
     },
     watch: {
         /**
@@ -35,7 +35,7 @@ export default {
             if (newVal == false && newVal != oldVal) {
                 this.loadAll()
             }
-        }
+        },
     },
     methods: {
         /**
@@ -43,21 +43,22 @@ export default {
          */
         loadAll: function () {
             var $this = this
-            axios.get(this.$window.baseUrl + '/api/recipes')
+            axios
+                .get(this.$window.baseUrl + "/api/recipes")
                 .then(function (response) {
                     $this.recipes = response.data
 
                     // Always set page name last
-                    $this.$store.dispatch('setPage', { page: 'index' })
+                    $this.$store.dispatch("setPage", { page: "index" })
                 })
                 .catch(function (e) {
                     // Always set page name last
-                    $this.$store.dispatch('setPage', { page: 'index' })
+                    $this.$store.dispatch("setPage", { page: "index" })
                 })
         },
     },
-    mounted () {
+    mounted() {
         this.loadAll()
-    }
+    },
 }
 </script>
