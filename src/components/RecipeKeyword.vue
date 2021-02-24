@@ -1,5 +1,5 @@
 <template>
-    <a v-on:click="clicked" ref="link">
+    <a ref="link" @click="clicked">
         <li>
             <span>{{ name }}</span>
             <span v-if="count != null" class="count">({{ count }})</span>

@@ -5,7 +5,7 @@
             class="header"
             :class="{ responsive: $store.state.recipe.image }"
         >
-            <div class="image" v-if="$store.state.recipe.image">
+            <div v-if="$store.state.recipe.image" class="image">
                 <RecipeImages />
             </div>
 
@@ -22,7 +22,7 @@
                                     // prettier-ignore
                                     t('cookbook','Search recipes with this keyword')
                                 "
-                                v-on:keyword-clicked="keywordClicked(keyword)"
+                                @keyword-clicked="keywordClicked(keyword)"
                             />
                         </ul>
                     </div>
@@ -106,7 +106,7 @@
                                 v-for="(ingredient, idx) in recipe.ingredients"
                                 :key="'ingr' + idx"
                                 :ingredient="ingredient"
-                                :recipeIngredientsHaveSubgroups="
+                                :recipe-ingredients-have-subgroups="
                                     recipeIngredientsHaveSubgroups
                                 "
                             />
@@ -274,13 +274,13 @@
 import axios from "@nextcloud/axios"
 import moment from "@nextcloud/moment"
 
-import RecipeImages from "./RecipeImages"
-import RecipeIngredient from "./RecipeIngredient"
-import RecipeInstruction from "./RecipeInstruction"
-import RecipeKeyword from "./RecipeKeyword"
-import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem"
-import RecipeTimer from "./RecipeTimer"
-import RecipeTool from "./RecipeTool"
+import RecipeImages from "./RecipeImages.vue"
+import RecipeIngredient from "./RecipeIngredient.vue"
+import RecipeInstruction from "./RecipeInstruction.vue"
+import RecipeKeyword from "./RecipeKeyword.vue"
+import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem.vue"
+import RecipeTimer from "./RecipeTimer.vue"
+import RecipeTool from "./RecipeTool.vue"
 
 export default {
     name: "RecipeView",
@@ -299,7 +299,7 @@ export default {
         }
     },
     computed: {
-        recipe: function () {
+        recipe() {
             let recipe = {
                 description: "",
                 ingredients: [],
@@ -343,33 +343,33 @@ export default {
             }
 
             if (this.$store.state.recipe.cookTime) {
-                let cookT = this.$store.state.recipe.cookTime.match(
+                const cookT = this.$store.state.recipe.cookTime.match(
                     /PT(\d+?)H(\d+?)M/
                 )
-                let hh = parseInt(cookT[1]),
-                    mm = parseInt(cookT[2])
+                const hh = parseInt(cookT[1], 10)
+                const mm = parseInt(cookT[2], 10)
                 if (hh > 0 || mm > 0) {
                     recipe.timerCook = { hours: hh, minutes: mm }
                 }
             }
 
             if (this.$store.state.recipe.prepTime) {
-                let prepT = this.$store.state.recipe.prepTime.match(
+                const prepT = this.$store.state.recipe.prepTime.match(
                     /PT(\d+?)H(\d+?)M/
                 )
-                let hh = parseInt(prepT[1]),
-                    mm = parseInt(prepT[2])
+                const hh = parseInt(prepT[1], 10)
+                const mm = parseInt(prepT[2], 10)
                 if (hh > 0 || mm > 0) {
                     recipe.timerPrep = { hours: hh, minutes: mm }
                 }
             }
 
             if (this.$store.state.recipe.totalTime) {
-                let totalT = this.$store.state.recipe.totalTime.match(
+                const totalT = this.$store.state.recipe.totalTime.match(
                     /PT(\d+?)H(\d+?)M/
                 )
-                let hh = parseInt(totalT[1]),
-                    mm = parseInt(totalT[2])
+                const hh = parseInt(totalT[1], 10)
+                const mm = parseInt(totalT[2], 10)
                 if (hh > 0 || mm > 0) {
                     recipe.timerTotal = { hours: hh, minutes: mm }
                 }
@@ -382,7 +382,7 @@ export default {
             }
 
             if (this.$store.state.recipe.dateCreated) {
-                let date = this.parseDateTime(
+                const date = this.parseDateTime(
                     this.$store.state.recipe.dateCreated
                 )
                 recipe.dateCreated =
@@ -390,7 +390,7 @@ export default {
             }
 
             if (this.$store.state.recipe.dateModified) {
-                let date = this.parseDateTime(
+                const date = this.parseDateTime(
                     this.$store.state.recipe.dateModified
                 )
                 recipe.dateModified =
@@ -408,7 +408,7 @@ export default {
 
             return recipe
         },
-        recipeIngredientsHaveSubgroups: function () {
+        recipeIngredientsHaveSubgroups() {
             if (this.recipe.ingredients && this.recipe.ingredients.length > 0) {
                 for (let idx = 0; idx < this.recipe.ingredients.length; ++idx) {
                     if (
@@ -422,16 +422,17 @@ export default {
             }
             return false
         },
-        showCreatedDate: function () {
+        showCreatedDate() {
             if (!this.recipe.dateCreated) {
                 return false
             }
             return true
         },
-        showModifiedDate: function () {
+        showModifiedDate() {
             if (!this.recipe.dateModified) {
                 return false
-            } else if (
+            }
+            if (
                 this.$store.state.recipe.dateCreated &&
                 this.$store.state.recipe.dateModified &&
                 this.$store.state.recipe.dateCreated ===
@@ -442,7 +443,7 @@ export default {
             }
             return true
         },
-        showNutritions: function () {
+        showNutritions() {
             return (
                 this.recipe.nutrition &&
                 !(this.recipe.nutrition instanceof Array) &&
@@ -450,8 +451,16 @@ export default {
             )
         },
     },
+    mounted() {
+        this.setup()
+        // Register data load method hook for access from the controls components
+        this.$root.$off("reloadRecipeView")
+        this.$root.$on("reloadRecipeView", () => {
+            this.setup()
+        })
+    },
     methods: {
-        escapeHtml: function (unsafeString) {
+        escapeHtml(unsafeString) {
             return unsafeString
                 .replace(/&/g, "&amp;")
                 .replace(/\~/g, "&#732;")
@@ -460,9 +469,9 @@ export default {
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;")
         },
-        convertRecipeReferences: function (text) {
-            let re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
-            let converted = text.replace(
+        convertRecipeReferences(text) {
+            const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
+            const converted = text.replace(
                 re,
                 '$1<a class="recipe-reference-inline" href="' +
                     this.$window.baseUrl +
@@ -470,13 +479,13 @@ export default {
             )
             return converted
         },
-        isNullOrEmpty: function (str) {
+        isNullOrEmpty(str) {
             return !str || (typeof str === "string" && 0 === str.trim().length)
         },
         /**
          * Callback for click on keyword
          */
-        keywordClicked: function (keyword) {
+        keywordClicked(keyword) {
             if (keyword) {
                 this.$router.push("/tags/" + keyword)
             }
@@ -484,15 +493,15 @@ export default {
         /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
          * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
          */
-        parseDateTime: function (dt) {
+        parseDateTime(dt) {
             if (!dt) return null
-            var date = moment(dt, moment.ISO_8601)
+            const date = moment(dt, moment.ISO_8601)
             if (!date.isValid()) {
                 return null
             }
             return date
         },
-        setup: function () {
+        setup() {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
                 this.$store.dispatch("setLoadingRecipe", { recipe: -1 })
@@ -512,7 +521,7 @@ export default {
                 })
             }
 
-            let $this = this
+            const $this = this
 
             axios
                 .get(
@@ -521,9 +530,9 @@ export default {
                         this.$route.params.id
                 )
                 .then(function (response) {
-                    let recipe = response.data
+                    const recipe = response.data
                     // Store recipe data in vuex
-                    $this.$store.dispatch("setRecipe", { recipe: recipe })
+                    $this.$store.dispatch("setRecipe", { recipe })
 
                     // Always set the active page last!
                     $this.$store.dispatch("setPage", { page: "recipe" })
@@ -546,14 +555,6 @@ export default {
                     alert(t("cookbook", "Loading recipe failed"))
                 })
         },
-    },
-    mounted() {
-        this.setup()
-        // Register data load method hook for access from the controls components
-        this.$root.$off("reloadRecipeView")
-        this.$root.$on("reloadRecipeView", () => {
-            this.setup()
-        })
     },
     /**
      * This is one tricky feature of Vue router. If different paths lead to
@@ -783,8 +784,7 @@ main {
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
-    margin: 0 1rem 1rem 0;
-    margin-top: -6px;
+    margin: -6px 1rem 1rem 0;
     background-color: var(--color-background-dark);
     background-position: center;
     background-repeat: no-repeat;

@@ -7,14 +7,19 @@
 <script>
 import axios from "@nextcloud/axios"
 
-import RecipeList from "./RecipeList"
+import RecipeList from "./RecipeList.vue"
 
 export default {
     name: "Search",
     components: {
         RecipeList,
     },
-    props: ["query"],
+    props: {
+        query: {
+            type: String,
+            default: "",
+        },
+    },
     data() {
         return {
             results: [],
@@ -25,28 +30,41 @@ export default {
             this.keywordFilter = []
         },
     },
+    mounted() {
+        this.setup()
+        this.$root.$off("categoryRenamed")
+        this.$root.$on("categoryRenamed", (val) => {
+            if (
+                !this._inactive &&
+                this.query === "cat" &&
+                this.$route.params.value === val[1]
+            ) {
+                this.$window.goTo("/category/" + val[0])
+            }
+        })
+    },
     methods: {
-        setup: function () {
+        setup() {
             // TODO: This is a mess of different implementation styles, needs cleanup
             if (this.query === "name") {
                 // Search by name
                 // TODO
             } else if (this.query === "tags") {
                 // Search by tags
-                let $this = this
-                let tags = this.$route.params.value
+                const $this = this
+                const tags = this.$route.params.value
                 axios
                     .get(this.$window.baseUrl + "/api/tags/" + tags)
-                    .then(function (response) {
+                    .then((response) => {
                         $this.results = response.data
                     })
-                    .catch(function (e) {
+                    .catch((e) => {
                         $this.results = []
                         alert(
                             // prettier-ignore
-                            t("cookbook","Failed to load recipes with keywords: {tags}", 
+                            t("cookbook","Failed to load recipes with keywords: {tags}",
                                 {
-                                    tags: tags
+                                    tags
                                 }
                             )
                         )
@@ -56,14 +74,14 @@ export default {
                     })
             } else if (this.query === "cat") {
                 // Search by category
-                let $this = this
-                let cat = this.$route.params.value
+                const $this = this
+                const cat = this.$route.params.value
                 axios
                     .get(this.$window.baseUrl + "/api/category/" + cat)
-                    .then(function (response) {
+                    .then((response) => {
                         $this.results = response.data
                     })
-                    .catch(function (e) {
+                    .catch((e) => {
                         $this.results = []
                         alert(
                             // prettier-ignore
@@ -79,14 +97,14 @@ export default {
                     })
             } else {
                 // General search
-                let $this = this
+                const $this = this
                 axios
                     .get(
                         this.$window.baseUrl +
                             "/api/search/" +
                             this.$route.params.value
                     )
-                    .then(function (response) {
+                    .then((response) => {
                         $this.results = response.data
                     })
                     .catch((e) => {
@@ -100,19 +118,6 @@ export default {
             }
             this.$store.dispatch("setPage", { page: "search" })
         },
-    },
-    mounted() {
-        this.setup()
-        this.$root.$off("categoryRenamed")
-        this.$root.$on("categoryRenamed", (val) => {
-            if (
-                !this._inactive &&
-                this.query == "cat" &&
-                this.$route.params.value == val[1]
-            ) {
-                this.$window.goTo("/category/" + val[0])
-            }
-        })
     },
     beforeRouteUpdate(to, from, next) {
         // Move to next route as expected

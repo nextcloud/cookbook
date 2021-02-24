@@ -1,30 +1,30 @@
 <template>
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
-        <Breadcrumbs class="breadcrumbs" rootIcon="icon-category-organization">
+        <Breadcrumbs class="breadcrumbs" root-icon="icon-category-organization">
             <Breadcrumb
                 :title="t('cookbook', 'Home')"
                 :to="'/'"
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <!-- INDEX PAGE -->
             <Breadcrumb
                 v-if="isIndex"
                 class="active no-arrow"
                 :title="t('cookbook', 'All recipes')"
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <Breadcrumb
                 v-if="isIndex"
                 class="no-arrow"
                 title=""
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
                 <ActionInput
                     icon="icon-quota"
-                    @update:value="updateFilters"
                     :value="filterValue"
+                    @update:value="updateFilters"
                     >{{ t("cookbook", "Filter") }}</ActionInput
                 >
                 <ActionInput icon="icon-search" @submit="search">{{
@@ -36,17 +36,17 @@
                 v-if="isSearch"
                 class="not-link"
                 :title="searchTitle"
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <Breadcrumb
                 v-if="isSearch && $route.params.value"
                 class="active"
                 :title="
-                    $route.params.value == '_'
+                    $route.params.value === '_'
                         ? 'None'
                         : decodeURIComponent($route.params.value)
                 "
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <!-- RECIPE PAGES -->
             <!-- Edit recipe -->
@@ -54,13 +54,13 @@
                 v-if="isEdit"
                 class="not-link"
                 :title="t('cookbook', 'Edit recipe')"
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <Breadcrumb
                 v-if="isEdit"
                 class="active"
                 :title="$store.state.recipe.name"
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     :icon="
@@ -70,7 +70,7 @@
                             : 'icon-history'
                     "
                     class="action-button"
-                    :ariaLabel="t('cookbook', 'Reload recipe')"
+                    :aria-label="t('cookbook', 'Reload recipe')"
                     @click="reloadRecipeEdit()"
                     >{{ t("cookbook", "Reload recipe") }}</ActionButton
                 >
@@ -80,13 +80,13 @@
                 v-else-if="isCreate"
                 class="active"
                 :title="t('cookbook', 'New recipe')"
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <Breadcrumb
                 v-if="isEdit || isCreate"
                 class="no-arrow"
                 title=""
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     :icon="
@@ -95,7 +95,7 @@
                             : 'icon-checkmark'
                     "
                     class="action-button"
-                    :ariaLabel="t('cookbook', 'Save changes')"
+                    :aria-label="t('cookbook', 'Save changes')"
                     @click="saveChanges()"
                     >{{ t("cookbook", "Save changes") }}</ActionButton
                 >
@@ -105,7 +105,7 @@
                 v-if="isRecipe"
                 class="active"
                 :title="$store.state.recipe.name"
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     :icon="
@@ -115,7 +115,7 @@
                             : 'icon-history'
                     "
                     class="action-button"
-                    :ariaLabel="t('cookbook', 'Reload recipe')"
+                    :aria-label="t('cookbook', 'Reload recipe')"
                     @click="reloadRecipeView()"
                     >{{ t("cookbook", "Reload recipe") }}</ActionButton
                 >
@@ -124,12 +124,12 @@
                 v-if="isRecipe"
                 class="no-arrow"
                 title=""
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-rename"
                     class="action-button"
-                    :ariaLabel="t('cookbook', 'Edit recipe')"
+                    :aria-label="t('cookbook', 'Edit recipe')"
                     @click="
                         $window.goTo(
                             '/recipe/' + $store.state.recipe.id + '/edit'
@@ -142,12 +142,12 @@
                 v-if="isRecipe"
                 class="no-arrow"
                 title=""
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-category-office"
                     class="action-button"
-                    :ariaLabel="t('cookbook', 'Print recipe')"
+                    :aria-label="t('cookbook', 'Print recipe')"
                     @click="printRecipe()"
                     >{{ t("cookbook", "Print recipe") }}</ActionButton
                 >
@@ -156,12 +156,12 @@
                 v-if="isRecipe"
                 class="no-arrow"
                 title=""
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-delete"
                     class="action-button"
-                    :ariaLabel="t('cookbook', 'Delete recipe')"
+                    :aria-label="t('cookbook', 'Delete recipe')"
                     @click="deleteRecipe()"
                     >{{ t("cookbook", "Delete recipe") }}</ActionButton
                 >
@@ -171,11 +171,11 @@
                 v-if="isLoading"
                 class="active no-arrow"
                 :title="t('cookbook', 'App is loading')"
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-loading-small"
-                    :ariaLabel="t('cookbook', 'Loading…')"
+                    :aria-label="t('cookbook', 'Loading…')"
                 />
             </Breadcrumb>
             <!-- Is a recipe loading? -->
@@ -183,11 +183,11 @@
                 v-else-if="isLoadingRecipe"
                 class="active no-arrow"
                 :title="t('cookbook', 'Loading recipe')"
-                :disableDrop="true"
+                :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-loading-small"
-                    :ariaLabel="t('cookbook', 'Loading…')"
+                    :aria-label="t('cookbook', 'Loading…')"
                 />
             </Breadcrumb>
             <!-- No recipe found -->
@@ -195,14 +195,14 @@
                 v-else-if="recipeNotFound"
                 class="active no-arrow"
                 :title="t('cookbook', 'Recipe not found')"
-                :disableDrop="true"
+                :disable-drop="true"
             />
             <!-- No page found -->
             <Breadcrumb
                 v-else-if="pageNotFound"
                 class="active no-arrow"
                 :title="t('cookbook', 'Page not found')"
-                :disableDrop="true"
+                :disable-drop="true"
             />
         </Breadcrumbs>
     </div>
@@ -211,7 +211,6 @@
 <script>
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
-import axios from "@nextcloud/axios"
 import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
 import Breadcrumb from "@nextcloud/vue/dist/Components/Breadcrumb"
 
@@ -230,96 +229,71 @@ export default {
     },
     computed: {
         isCreate() {
-            if (this.$store.state.page === "create") {
-                return true
-            }
-            return false
+            return this.$store.state.page === "create"
         },
         isEdit() {
             if (this.isLoadingRecipe) {
                 return false // Do not show both at the same time
             }
             // Editing requires that a recipe was found
-            if (this.$store.state.page === "edit" && this.$store.state.recipe) {
-                return true
-            }
-            return false
+            return !!(
+                this.$store.state.page === "edit" && this.$store.state.recipe
+            )
         },
         isIndex() {
             if (this.isLoadingRecipe) {
                 return false // Do not show both at the same time
             }
-            if (this.$store.state.page === "index") {
-                return true
-            }
-            return false
+            return this.$store.state.page === "index"
         },
         isLoading() {
             //  The page is being loaded
-            if (this.$store.state.page === null) {
-                return true
-            }
-            return false
+            return this.$store.state.page === null
         },
         isLoadingRecipe() {
             //  A recipe is being loaded
-            if (this.$store.state.loadingRecipe) {
-                return true
-            }
-            return false
+            return !!this.$store.state.loadingRecipe
         },
         isRecipe() {
             if (this.isLoadingRecipe) {
                 return false // Do not show both at the same time
             }
             // Viewing recipe requires that one was found
-            if (
-                this.$store.state.page === "recipe" &&
-                this.$store.state.recipe
-            ) {
-                return true
-            }
-            return false
+            return !!(
+                this.$store.state.page === "recipe" && this.$store.state.recipe
+            )
         },
         isSearch() {
             if (this.isLoadingRecipe) {
                 return false // Do not show both at the same time
             }
-            if (this.$store.state.page === "search") {
-                return true
-            }
-            return false
+            return this.$store.state.page === "search"
         },
         pageNotFound() {
-            if (this.$store.state.page === "notfound") {
-                return true
-            }
-            return false
+            return this.$store.state.page === "notfound"
         },
         recipeNotFound() {
             // Editing or viewing recipe was attempted, but no recipe was found
-            if (
+            return (
                 ["edit", "recipe"].indexOf(this.$store.state.page) !== -1 &&
                 !this.$store.state.recipe
-            ) {
-                return true
-            }
-            return false
+            )
         },
         searchTitle() {
             if (this.$route.name === "search-category") {
                 return t("cookbook", "Category")
-            } else if (this.$route.name === "search-name") {
-                return t("cookbook", "Recipe name")
-            } else if (this.$route.name === "search-tags") {
-                return t("cookbook", "Tags")
-            } else {
-                return t("cookbook", "Search for recipes")
             }
+            if (this.$route.name === "search-name") {
+                return t("cookbook", "Recipe name")
+            }
+            if (this.$route.name === "search-tags") {
+                return t("cookbook", "Tags")
+            }
+            return t("cookbook", "Search for recipes")
         },
     },
     methods: {
-        deleteRecipe: function () {
+        deleteRecipe() {
             // Confirm delete
             if (
                 !confirm(
@@ -329,41 +303,40 @@ export default {
             ) {
                 return
             }
-            let $this = this
+            const $this = this
 
             this.$store
                 .dispatch("deleteRecipe", { id: this.$store.state.recipe.id })
-                .then(function (response) {
+                .then((response) => {
                     $this.$window.goTo("/")
                 })
-                .catch(function (e) {
+                .catch((e) => {
                     alert(t("cookbook", "Delete failed"))
                     if (e && e instanceof Error) {
                         throw e
                     }
                 })
         },
-        printRecipe: function () {
+        printRecipe() {
             window.print()
         },
-        reloadRecipeEdit: function () {
+        reloadRecipeEdit() {
             this.$root.$emit("reloadRecipeEdit")
         },
-        reloadRecipeView: function () {
+        reloadRecipeView() {
             this.$root.$emit("reloadRecipeView")
         },
-        saveChanges: function () {
+        saveChanges() {
             this.$root.$emit("saveRecipe")
         },
-        search: function (e) {
+        search(e) {
             this.$window.goTo("/search/" + e.target[1].value)
         },
-        updateFilters: function (e) {
+        updateFilters(e) {
             this.filterValue = e
             this.$root.$emit("applyRecipeFilter", e)
         },
     },
-    mounted() {},
 }
 </script>
 

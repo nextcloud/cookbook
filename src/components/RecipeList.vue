@@ -13,8 +13,8 @@
                     :name="keywordObj.name"
                     :count="keywordObj.count"
                     :title="t('cookbook', 'Toggle keyword')"
-                    @keyword-clicked="keywordClicked(keywordObj)"
                     class="keyword active"
+                    @keyword-clicked="keywordClicked(keywordObj)"
                 />
                 <RecipeKeyword
                     v-for="keywordObj in selectableKeywords"
@@ -22,8 +22,8 @@
                     :name="keywordObj.name"
                     :count="keywordObj.count"
                     :title="t('cookbook', 'Toggle keyword')"
-                    @keyword-clicked="keywordClicked(keywordObj)"
                     class="keyword"
+                    @keyword-clicked="keywordClicked(keywordObj)"
                 />
                 <RecipeKeyword
                     v-for="keywordObj in unavailableKeywords"
@@ -34,16 +34,16 @@
                         // prettier-ignore
                         t('cookbook','Keyword not contained in visible recipes')
                     "
-                    @keyword-clicked="keywordClicked(keywordObj)"
                     class="keyword disabled"
+                    @keyword-clicked="keywordClicked(keywordObj)"
                 />
             </transition-group>
         </div>
         <ul class="recipes">
             <li
                 v-for="recipeObj in recipeObjects"
-                :key="recipeObj.recipe.recipe_id"
                 v-show="recipeObj.show"
+                :key="recipeObj.recipe.recipe_id"
             >
                 <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
                     <lazy-picture
@@ -64,15 +64,20 @@
 </template>
 
 <script>
-import LazyPicture from "./LazyPicture"
-import RecipeKeyword from "./RecipeKeyword"
+import LazyPicture from "./LazyPicture.vue"
+import RecipeKeyword from "./RecipeKeyword.vue"
 
 export default {
     name: "RecipeList",
-    props: ["recipes"],
     components: {
         LazyPicture,
         RecipeKeyword,
+    },
+    props: {
+        recipes: {
+            type: Array,
+            default: () => [],
+        },
     },
     data() {
         return {
@@ -87,15 +92,14 @@ export default {
          * An array of all keywords in all recipes. These are neither sorted nor unique
          */
         rawKeywords() {
-            var keywordArray = this.recipes.map(function (r) {
-                if (!"keywords" in r) {
+            const keywordArray = this.recipes.map((r) => {
+                if (!("keywords" in r)) {
                     return []
                 }
                 if (r.keywords != null) {
                     return r.keywords.split(",")
-                } else {
-                    return []
                 }
+                return []
             })
             return [].concat(...keywordArray)
         },
@@ -112,17 +116,14 @@ export default {
          * An array of objects that contain the keywords plus a count of recipes asociated with these keywords
          */
         keywordsWithCount() {
-            let $this = this
+            const $this = this
             return this.uniqKeywords
-                .map(function (kw) {
-                    return {
-                        name: kw,
-                        count: $this.rawKeywords.filter((kw2) => kw === kw2)
-                            .length,
-                    }
-                })
-                .sort(function (k1, k2) {
-                    if (k1.count != k2.count) {
+                .map((kw) => ({
+                    name: kw,
+                    count: $this.rawKeywords.filter((kw2) => kw === kw2).length,
+                }))
+                .sort((k1, k2) => {
+                    if (k1.count !== k2.count) {
                         // Distinguish by number
                         return k2.count - k1.count
                     }
@@ -152,9 +153,9 @@ export default {
          * An array of all recipes that are part in all filtered keywords
          */
         recipesFilteredByKeywords() {
-            let $this = this
-            return this.recipes.filter(function (r) {
-                if ($this.keywordFilter.length == 0) {
+            const $this = this
+            return this.recipes.filter((r) => {
+                if ($this.keywordFilter.length === 0) {
                     // No filtering, keep all
                     return true
                 }
@@ -163,18 +164,18 @@ export default {
                     return false
                 }
 
-                function keywordInRecipePresent(kw, r) {
-                    if (!r.keywords) {
+                function keywordInRecipePresent(kw, rec) {
+                    if (!rec.keywords) {
                         return false
                     }
 
-                    let keywords = r.keywords.split(",")
+                    const keywords = rec.keywords.split(",")
                     return keywords.includes(kw.name)
                 }
 
                 return $this.selectedKeywords
                     .map((kw) => keywordInRecipePresent(kw, r))
-                    .reduce((l, r) => l && r)
+                    .reduce((l, rec) => l && rec)
             })
         },
         /**
@@ -182,14 +183,12 @@ export default {
          */
         filteredRecipes() {
             let ret = this.recipesFilteredByKeywords
-            let $this = this
+            const $this = this
 
             if (this.filters) {
-                ret = ret.filter(function (r) {
-                    return r.name
-                        .toLowerCase()
-                        .includes($this.filters.toLowerCase())
-                })
+                ret = ret.filter((r) =>
+                    r.name.toLowerCase().includes($this.filters.toLowerCase())
+                )
             }
 
             return ret
@@ -202,17 +201,16 @@ export default {
                 return []
             }
 
-            let $this = this
-            return this.unselectedKeywords.filter(function (kw) {
-                return $this.filteredRecipes
-                    .map(function (r) {
-                        return (
+            const $this = this
+            return this.unselectedKeywords.filter((kw) =>
+                $this.filteredRecipes
+                    .map(
+                        (r) =>
                             r.keywords &&
                             r.keywords.split(",").includes(kw.name)
-                        )
-                    })
+                    )
                     .reduce((l, r) => l || r, false)
-            })
+            )
         },
         /**
          * An array of known keywords that are not associated with any visible recipe
@@ -232,11 +230,17 @@ export default {
             }, this)
         },
     },
+    mounted() {
+        this.$root.$off("applyRecipeFilter")
+        this.$root.$on("applyRecipeFilter", (value) => {
+            this.filters = value
+        })
+    },
     methods: {
         /**
          * Callback for click on keyword, add to or remove from list
          */
-        keywordClicked: function (keyword) {
+        keywordClicked(keyword) {
             const index = this.keywordFilter.indexOf(keyword.name)
             if (index > -1) {
                 this.keywordFilter.splice(index, 1)
@@ -244,12 +248,6 @@ export default {
                 this.keywordFilter.push(keyword.name)
             }
         },
-    },
-    mounted() {
-        this.$root.$off("applyRecipeFilter")
-        this.$root.$on("applyRecipeFilter", (value) => {
-            this.filters = value
-        })
     },
 }
 </script>

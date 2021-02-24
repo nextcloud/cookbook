@@ -4,12 +4,11 @@
             ref="ms"
             class="multiselect-popup-container__multiselect"
             v-bind="$attrs"
-            v-on="$listeners"
             open-direction="bottom"
             :multiple="false"
+            v-on="$listeners"
             @select="optionSelected"
             @close="closePopup"
-            @keyup="keyUp"
         />
         <div class="multiselect-popup-container__close-button">
             <button
@@ -26,35 +25,31 @@
 
 <script>
 import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+
 export default {
     name: "EditMultiselectPopup",
     components: {
         Multiselect,
     },
     props: {
-        focused: false,
+        focused: {
+            type: Boolean,
+            default: false,
+        },
     },
     watch: {
         focused() {
-            if (this.focused == true) {
-                this.$refs["ms"].$el.focus()
+            if (this.focused === true) {
+                this.$refs.ms.$el.focus()
             }
         },
     },
     methods: {
-        closePopup: function (opt) {
+        closePopup(opt) {
             this.$parent.$emit("ms-popup-selection-canceled")
         },
-        optionSelected: function (opt) {
+        optionSelected(opt) {
             this.$parent.$emit("ms-popup-selected", opt)
-        },
-        keyUp: function (e) {
-            if (e.keyCode === 13) {
-                console.log("13")
-            }
-            if (e.keyCode === 10) {
-                console.log("10")
-            }
         },
     },
 }

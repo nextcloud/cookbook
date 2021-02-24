@@ -5,7 +5,7 @@
 <script>
 import axios from "@nextcloud/axios"
 
-import RecipeList from "./RecipeList"
+import RecipeList from "./RecipeList.vue"
 
 export default {
     name: "Index",
@@ -32,33 +32,33 @@ export default {
          * the recipes in the index component.
          */
         updatingRecipeDirectory(newVal, oldVal) {
-            if (newVal == false && newVal != oldVal) {
+            if (newVal === false && newVal !== oldVal) {
                 this.loadAll()
             }
         },
+    },
+    mounted() {
+        this.loadAll()
     },
     methods: {
         /**
          * Load all recipes from the database
          */
-        loadAll: function () {
-            var $this = this
+        loadAll() {
+            const $this = this
             axios
                 .get(this.$window.baseUrl + "/api/recipes")
-                .then(function (response) {
+                .then((response) => {
                     $this.recipes = response.data
 
                     // Always set page name last
                     $this.$store.dispatch("setPage", { page: "index" })
                 })
-                .catch(function (e) {
+                .catch((e) => {
                     // Always set page name last
                     $this.$store.dispatch("setPage", { page: "index" })
                 })
         },
-    },
-    mounted() {
-        this.loadAll()
     },
 }
 </script>

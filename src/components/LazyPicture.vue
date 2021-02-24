@@ -14,7 +14,6 @@
         />
         <img
             class="full-resolution"
-            imageLoaded
             :class="{ 'image-loaded': !isLoading }"
             :width="width ? width + 'px' : ''"
             :height="height ? height + 'px' : ''"
@@ -79,15 +78,15 @@ export default {
         },
     },
     mounted() {
-        let $this = this
+        const $this = this
 
         // init lozad
         const observer = lozad(this.$el, {
             enableAutoReload: true,
-            load: function (el) {
-                let loadingIndicator = el.querySelector(".loading-indicator")
-                let imgPlaceholder = el.querySelector(".low-resolution")
-                let img = el.querySelector(".full-resolution")
+            load(el) {
+                const loadingIndicator = el.querySelector(".loading-indicator")
+                const imgPlaceholder = el.querySelector(".low-resolution")
+                const img = el.querySelector(".full-resolution")
 
                 // callback for fully-loaded image event
                 const onThumbnailFullyLoaded = () => {

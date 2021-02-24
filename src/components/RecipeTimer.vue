@@ -1,7 +1,7 @@
 <template>
     <div class="time">
         <button
-            v-if="this.timer"
+            v-if="timer"
             type="button"
             :class="countdown === null ? 'icon-play' : 'icon-pause'"
             @click="timerToggle"
@@ -14,7 +14,26 @@
 <script>
 export default {
     name: "RecipeTimer",
-    props: ["value", "phase", "label", "timer"],
+    props: {
+        value: {
+            type: Object,
+            default() {
+                return { hours: 0, minutes: 0 }
+            },
+        },
+        phase: {
+            type: String,
+            default: "",
+        },
+        label: {
+            type: String,
+            default: "",
+        },
+        timer: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data() {
         return {
             countdown: null,
@@ -23,11 +42,6 @@ export default {
             seconds: 0,
             showFullTime: false,
         }
-    },
-    watch: {
-        value() {
-            this.resetTimeDisplay()
-        },
     },
     computed: {
         displayTime: function () {
@@ -44,11 +58,19 @@ export default {
             return text
         },
     },
+    watch: {
+        value() {
+            this.resetTimeDisplay()
+        },
+    },
+    mounted() {
+        this.resetTimeDisplay()
+    },
     methods: {
-        onTimerEnd: function (button) {
+        onTimerEnd(button) {
             window.clearInterval(this.countdown)
             // I'll just use an alert until this functionality is finished
-            let $this = this
+            const $this = this
             window.setTimeout(function () {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
@@ -59,20 +81,20 @@ export default {
                 $this.resetTimeDisplay()
             }, 100)
         },
-        resetTimeDisplay: function () {
+        resetTimeDisplay() {
             if (this.value.hours) {
-                this.hours = parseInt(this.value.hours)
+                this.hours = parseInt(this.value.hours, 10)
             } else {
                 this.hours = 0
             }
             if (this.value.minutes) {
-                this.minutes = parseInt(this.value.minutes)
+                this.minutes = parseInt(this.value.minutes, 10)
             } else {
                 this.minutes = 0
             }
             this.seconds = 0
         },
-        timerToggle: function () {
+        timerToggle() {
             // We will switch to full time display the first time this method is invoked.
             // There should probably also be a way to reset the timer other than by letting
             //  it run its course...
@@ -81,7 +103,7 @@ export default {
             }
             if (this.countdown === null) {
                 // Pass this to callback function
-                let $this = this
+                const $this = this
                 this.countdown = window.setInterval(function () {
                     $this.seconds--
                     if ($this.seconds < 0) {
@@ -105,9 +127,6 @@ export default {
                 this.countdown = null
             }
         },
-    },
-    mounted() {
-        this.resetTimeDisplay()
     },
 }
 </script>

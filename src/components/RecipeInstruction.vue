@@ -5,14 +5,19 @@
 <script>
 export default {
     name: "RecipeInstruction",
-    props: ["instruction"],
+    props: {
+        instruction: {
+            type: String,
+            default: "",
+        },
+    },
     data() {
         return {
             isDone: false,
         }
     },
     methods: {
-        toggleDone: function () {
+        toggleDone() {
             this.isDone = !this.isDone
         },
     },

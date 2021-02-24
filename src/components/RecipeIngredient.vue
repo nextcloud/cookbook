@@ -14,7 +14,15 @@
 <script>
 export default {
     name: "RecipeIngredient",
-    props: ["ingredient", "recipeIngredientsHaveSubgroups"],
+    props: {
+        ingredient: {
+            type: String,
+            default: "",
+        },
+        recipeIngredientsHaveSubgroups: {
+            type: Boolean,
+        },
+    },
     data() {
         return {
             headerPrefix: "## ",
@@ -22,7 +30,7 @@ export default {
         }
     },
     computed: {
-        displayIngredient: function () {
+        displayIngredient() {
             if (this.isHeader()) {
                 return this.ingredient.substring(this.headerPrefix.length)
             }
@@ -30,13 +38,10 @@ export default {
         },
     },
     methods: {
-        isHeader: function () {
-            if (this.ingredient.startsWith(this.headerPrefix)) {
-                return true
-            }
-            return false
+        isHeader() {
+            return this.ingredient.startsWith(this.headerPrefix)
         },
-        toggleDone: function () {
+        toggleDone() {
             this.isDone = !this.isDone
         },
     },

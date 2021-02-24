@@ -8,7 +8,7 @@
 import Vue from "vue"
 import store from "./store"
 
-import AppInvalidGuest from "./components/AppInvalidGuest"
+import AppInvalidGuest from "./components/AppInvalidGuest.vue"
 ;(function (OC, window) {
     "use strict"
 
@@ -25,7 +25,7 @@ import AppInvalidGuest from "./components/AppInvalidGuest"
     Vue.prototype.t = window.t
 
     // Start the app once document is done loading
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener("DOMContentLoaded", (event) => {
         const App = Vue.extend(AppInvalidGuest)
         new App({
             store,

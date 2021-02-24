@@ -5,19 +5,16 @@
  * @license AGPL3 or later
  */
 
-// TODO: Agree on a markdown parser
+// Markdown
+import VueShowdown from "vue-showdown"
+import Editor from "v-markdown-editor"
+import "v-markdown-editor/dist/v-markdown-editor.css"
 
 import Vue from "vue"
 import router from "./router"
 import store from "./store"
 
-//import AppNavi from './components/AppNavi'
-import AppMain from "./components/AppMain"
-
-//Markdown
-import VueShowdown from "vue-showdown"
-import Editor from "v-markdown-editor"
-import "v-markdown-editor/dist/v-markdown-editor.css"
+import AppMain from "./components/AppMain.vue"
 ;(function (OC, window) {
     "use strict"
 
@@ -32,8 +29,8 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
             return false // Obviously should not if both routes are the same
         }
 
-        let comps1 = url1.split("/")
-        let comps2 = url2.split("/")
+        const comps1 = url1.split("/")
+        const comps2 = url2.split("/")
 
         if (comps1.length < 2 || comps2.length < 2) {
             return false // Just a failsafe, this should never happen
@@ -57,7 +54,8 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
             }
 
             return false
-        } else if (comps1.pop() === "create") {
+        }
+        if (comps1.pop() === "create") {
             // But, if we are moving from create to view, do not reload
             // the create component
             return false
@@ -74,8 +72,8 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
         if (url1 === url2) {
             return true // Obviously true if the routes are the same
         }
-        let comps1 = url1.split("/")
-        let comps2 = url2.split("/")
+        const comps1 = url1.split("/")
+        const comps2 = url2.split("/")
         if (comps1.length < 2 || comps2.length < 2) {
             return false // Just a failsafe, this should never happen
         }
@@ -89,16 +87,12 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
             // either of the urls have less than three components
             return false
         }
-        if (comps1[2] !== comps2[2]) {
-            // Different IDs, not same instance
-            return false
-        }
-        return true
+        return comps1[2] === comps2[2]
     }
 
     // A simple function to sanitize HTML tags
     window.escapeHTML = function (text) {
-        return text.replace(/[\"&'\/<>]/g, function (a) {
+        return text.replace(/[\"&'\/<>]/g, (a) => {
             return {
                 "&": "&amp;",
                 '"': "&quot;",
@@ -124,9 +118,11 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
             } else {
                 return value.replace(",", ".")
             }
-        } else if (io === "o") {
+        }
+        if (io === "o") {
             return value.toString().replace(".", ",")
         }
+        return ""
     }
 
     // This will replace the PHP function nl2br in Vue components
@@ -172,9 +168,9 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
     Vue.prototype.$window = window
     Vue.prototype.OC = OC
 
-    //Markdown for Vue
+    // Markdown for Vue
     Vue.use(VueShowdown, {
-        //set default flavor for Markdown
+        // set default flavor for Markdown
         flavor: "vanilla",
     })
     Vue.use(Editor)
@@ -183,7 +179,7 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
     Vue.prototype.t = window.t
 
     // Start the app once document is done loading
-    document.addEventListener("DOMContentLoaded", function (event) {
+    document.addEventListener("DOMContentLoaded", (event) => {
         const App = Vue.extend(AppMain)
         new App({
             store,

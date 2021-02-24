@@ -6,7 +6,11 @@
             printable: $store.state.recipe.printImage,
         }"
     >
-        <img :src="$store.state.recipe.imageUrl" @click="toggleCollapsed()" />
+        <img
+            :alt="t('cookbook', 'Recipe image')"
+            :src="$store.state.recipe.imageUrl"
+            @click="toggleCollapsed()"
+        />
     </div>
 </template>
 
@@ -19,11 +23,10 @@ export default {
         }
     },
     methods: {
-        toggleCollapsed: function () {
+        toggleCollapsed() {
             this.collapsed = !this.collapsed
         },
     },
-    mounted() {},
 }
 </script>
 

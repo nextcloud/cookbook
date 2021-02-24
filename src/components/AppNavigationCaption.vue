@@ -146,16 +146,16 @@ export default {
         hasUtils() {
             if (this.editing) {
                 return false
-            } else if (
+            }
+            if (
                 this.$slots.actions ||
                 this.$slots.counter ||
                 this.editable ||
                 this.undo
             ) {
                 return true
-            } else {
-                return false
             }
+            return false
         },
         // is the icon shown?
         // we don't show it on mobile if the entry is collapsible

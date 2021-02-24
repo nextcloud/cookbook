@@ -4,23 +4,23 @@
             {{ fieldLabel }}
         </label>
         <markdown-editor
-            ref="inputField"
-            class="editor"
             v-if="fieldType === 'markdown'"
+            ref="inputField"
             v-model="content"
-            @input="handleInput"
+            class="editor"
             toolbar=""
+            @input="handleInput"
         />
         <input
-            ref="inputField"
             v-else-if="fieldType !== 'textarea'"
-            :type="fieldType"
+            ref="inputField"
             v-model="content"
+            :type="fieldType"
             @input="handleInput"
         />
         <textarea
-            ref="inputField"
             v-if="fieldType === 'textarea'"
+            ref="inputField"
             v-model="content"
             @input="handleInput"
         />
@@ -56,7 +56,7 @@ export default {
         }
     },
     watch: {
-        value: function () {
+        value() {
             this.content = this.value
         },
     },
@@ -74,12 +74,12 @@ export default {
                 // Check if the letter before the hash
                 if (this.fieldType === "markdown") {
                     // for reference: https://codemirror.net/doc/manual.html#api
-                    let cursorPos = JSON.parse(
+                    const cursorPos = JSON.parse(
                         JSON.stringify(
                             this.$refs.inputField.editor.getCursor("start")
                         )
                     )
-                    let prevChar = this.$refs.inputField.editor.getRange(
+                    const prevChar = this.$refs.inputField.editor.getRange(
                         { line: cursorPos.line, ch: cursorPos.ch - 2 },
                         { line: cursorPos.line, ch: cursorPos.ch - 1 }
                     )
@@ -96,9 +96,9 @@ export default {
                         this.lastCursorPosition = cursorPos
                     }
                 } else {
-                    this.$refs["inputField"].selectionStart
-                    let content = this.$refs["inputField"].value
-                    let prevChar =
+                    const cursorPos = this.$refs.inputField.selectionStart
+                    const content = this.$refs.inputField.value
+                    const prevChar =
                         cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
                     if (
                         cursorPos === 1 ||
@@ -118,7 +118,7 @@ export default {
         pasteCanceled() {
             // set cursor to position after pasted string
             this.$nextTick(function () {
-                let field = this.$refs["inputField"]
+                const field = this.$refs.inputField
                 if (this.fieldType === "markdown") {
                     field.editor.setCursor(this.lastCursorPosition)
                     field.editor.focus()
@@ -135,9 +135,9 @@ export default {
          * Paste string at the last saved cursor position
          */
         pasteString(str) {
-            let field = this.$refs["inputField"]
+            const field = this.$refs.inputField
 
-            if (this.fieldType == "markdown") {
+            if (this.fieldType === "markdown") {
                 // insert at last cursor position
                 field.editor.replaceRange(str, {
                     line: this.lastCursorPosition.line,
@@ -166,14 +166,14 @@ export default {
                 this.$nextTick(() => {
                     this.$nextTick(() => {
                         field.focus()
-                        let newCursorPos = this.lastCursorPosition + str.length
+                        const newCursorPos =
+                            this.lastCursorPosition + str.length
                         field.setSelectionRange(newCursorPos, newCursorPos)
                     })
                 })
             }
         },
     },
-    mounted() {},
 }
 </script>
 
@@ -215,7 +215,7 @@ fieldset > textarea {
 fieldset > .editor {
     width: calc(100% - 11em);
     min-height: 10em;
-    border-radius: 2;
+    border-radius: 2px;
     resize: vertical;
 }
 

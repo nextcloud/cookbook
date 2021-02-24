@@ -11,13 +11,17 @@
 
 <script>
 import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+
 export default {
     name: "EditMultiselect",
     components: {
         Multiselect,
     },
     props: {
-        fieldLabel: String,
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
     },
     data() {
         return {}
