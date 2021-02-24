@@ -1,0 +1,85 @@
+<?php
+
+namespace OCA\Cookbook\Search;
+
+use OCA\Cookbook\AppInfo\Application;
+use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Service\RecipeService;
+use OCP\IL10N;
+use OCP\IUser;
+use OCP\IUrlGenerator;
+use OCP\Search\IProvider;
+use OCP\Search\ISearchQuery;
+use OCP\Search\SearchResult;
+use OCP\Search\SearchResultEntry;
+
+class Provider implements IProvider {
+
+	/** @var IL10N */
+	private $l;
+
+	/** @var IUrlGenerator */
+	private $urlGenerator;
+
+	/** @var RecipeDb */
+	private $recipeDb;
+
+	/** @var RecipeService */
+	private $recipeService;
+
+	public function __construct(IL10n $il10n, IUrlGenerator $urlGenerator, RecipeDb $recipeDb, RecipeService $recipeService) {
+		$this->l = $il10n;
+		$this->urlGenerator = $urlGenerator;
+		$this->recipeDb = $recipeDb;
+		$this->recipeService = $recipeService;
+	}
+
+	public function getId(): string {
+		return Application::APP_ID;
+	}
+
+	public function getName(): string {
+		return $this->l->t('Recipes');
+	}
+
+	public function getOrder(string $route, array $routeParameters): int {
+		if (strpos($route, 'files' . '.') === 0) {
+			return 25;
+		} elseif (strpos($route, Application::APP_ID . '.') === 0) {
+			return -1;
+		}
+		return 4;
+	}
+
+	public function search(IUser $user, ISearchQuery $query): SearchResult {
+		$recipes = $this->recipeService->findRecipesInSearchIndex($query->getTerm());
+		$result = array_map(
+			function (array $recipe) use ($user) : SearchResultEntry {
+				$id = $recipe['recipe_id'];
+
+				$subline = '';
+				$category = $this->recipeDb->getCategoryOfRecipe($id, $user->getUID());
+				if ($category !== null) {
+					// TRANSLATORS Will be shown in search results, listing the recipe category, e.g., 'in Salads'
+					$subline = $this->l->t('in %s', [$category]);
+				}
+
+				return new SearchResultEntry(
+					// Thumb image
+					$this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $id, 'size' => 'thumb']),
+					// Name as title
+					$recipe['name'],
+					// Category as subline
+					$subline,
+					// Link to Vue route of recipe
+					$this->urlGenerator->linkToRouteAbsolute('cookbook.main.index') . '#/recipe/' . $id
+				);
+			}, $recipes
+		);
+
+		return SearchResult::complete(
+			$this->getName(),
+			$result
+		);
+	}
+}
