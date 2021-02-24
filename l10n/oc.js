@@ -2,8 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Domicili",
-    "Search" : "Search",
     "Loading…" : "Cargament...",
+    "Search" : "Search",
     "Add" : "Ajustar",
     "Name" : "Nom",
     "Description" : "Descripcion",

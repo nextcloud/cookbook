@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Loading…" : "Carrighende...",
+    "Rename" : "Torra a numenare",
     "Add" : "Agiunghe",
     "Close" : "Serra",
     "Name" : "Nùmene",

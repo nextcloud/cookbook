@@ -2,11 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "სახლი",
-    "Filter" : "ფილტრი",
-    "Search" : "ძიება",
     "Save changes" : "ცვილებების შენახვა",
     "Loading…" : "იტვირთება…",
     "Page not found" : "გვერდი არაა ნაპოვნი",
+    "Filter" : "ფილტრი",
+    "Search" : "ძიება",
     "Category" : "კატეგორია",
     "Add" : "დამატება",
     "Name" : "სახელი",

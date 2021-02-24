@@ -2,10 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Hejmo",
-    "Search" : "Serĉi",
     "Save changes" : "Konservi ŝanĝojn",
     "Loading…" : "Ŝargado...",
     "Page not found" : "Paĝo ne trovita",
+    "Search" : "Serĉi",
     "Category" : "Kategorio",
     "Recipe name" : "Nomo de la recepto",
     "Tags" : "Etikedoj",

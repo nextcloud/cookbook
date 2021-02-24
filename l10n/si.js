@@ -2,11 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "මුල් පිටුව",
-    "Filter" : "පෙරහන",
-    "Search" : "සොයන්න",
     "Save changes" : "වෙනස්කම් සුරකින්න",
     "App is loading" : "යෙදුම පූරණය වෙමින්",
     "Loading…" : "පූරණය වෙමින්…",
+    "Filter" : "පෙරහන",
+    "Search" : "සොයන්න",
     "Rename" : "නැවත නම් කරන්න",
     "Add" : "එකතු කරන්න",
     "Close" : "වසන්න",
