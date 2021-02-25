@@ -90,7 +90,7 @@
     "Sodium content" : "Contido de sodio",
     "Sugar content" : "Contido de azucre",
     "Trans-fat content" : "Contido de graxas trans",
-    "Unsaturated-fat content" : "Contido de graxas non saturadas",
+    "Unsaturated-fat content" : "Contido de graxa insaturada",
     "Failed to fetch keywords" : "Produciuse un fallo ao obter as palabras clave",
     "Loading recipe failed" : "Produciuse un fallo ao cargar a receita",
     "Recipe could not be saved" : "Non foi posíbel gardar a receita",
@@ -100,6 +100,20 @@
     "Search recipes with this keyword" : "Buscar receitas con esta palabra clave",
     "Date created" : "Data de creación",
     "Last modified" : "Última modificación",
-    "Source" : "Orixe"
+    "Serving Size" : "Tamaño da ración",
+    "Energy" : "Calorias",
+    "Sugar" : "Azucre",
+    "Carbohydrate" : "Carbohidratos",
+    "Cholesterol" : "Colesterol",
+    "Fiber" : "Fibra",
+    "Protein" : "Proteinas",
+    "Sodium" : "Sodio",
+    "Fat total" : "Graxa total",
+    "Saturated Fat" : "Grasas saturadas",
+    "Unsaturated Fat" : "Graxa insaturada",
+    "Trans Fat" : "Graxa trans",
+    "Source" : "Orixe",
+    "Failed to load recipes with keywords: {tags}" : "Produciuse un fallo ao cargar as receitas coas palabras clave: {tags}",
+    "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

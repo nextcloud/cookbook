@@ -100,6 +100,20 @@
     "Search recipes with this keyword" : "Wyszukaj przepisy za pomocą tego słowa kluczowego",
     "Date created" : "Data utworzenia",
     "Last modified" : "Ostatnio zmodyfikowany",
-    "Source" : "Źródło"
+    "Serving Size" : "Wielkość porcji",
+    "Energy" : "Energia",
+    "Sugar" : "Cukier",
+    "Carbohydrate" : "Węglowodan",
+    "Cholesterol" : "Cholesterol",
+    "Fiber" : "Błonnik",
+    "Protein" : "Białko",
+    "Sodium" : "Sód",
+    "Fat total" : "Całkowity tłuszcz",
+    "Saturated Fat" : "Tłuszcz nasycony",
+    "Unsaturated Fat" : "Tłuszcz nienasycony",
+    "Trans Fat" : "Tłuszcz trans",
+    "Source" : "Źródło",
+    "Failed to load recipes with keywords: {tags}" : "Nie udało się załadować przepisów ze słowami kluczowymi: {tags}",
+    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }
