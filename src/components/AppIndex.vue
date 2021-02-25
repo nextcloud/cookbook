@@ -47,14 +47,14 @@ export default {
         loadAll() {
             const $this = this
             axios
-                .get(this.$window.baseUrl + "/api/recipes")
+                .get(`${this.$window.baseUrl}/api/recipes`)
                 .then((response) => {
                     $this.recipes = response.data
 
                     // Always set page name last
                     $this.$store.dispatch("setPage", { page: "index" })
                 })
-                .catch((e) => {
+                .catch(() => {
                     // Always set page name last
                     $this.$store.dispatch("setPage", { page: "index" })
                 })

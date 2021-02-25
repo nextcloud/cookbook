@@ -7,6 +7,7 @@
         @click="toggleDone"
     >
         <div class="checkmark" :class="{ done: isDone }">✔</div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="ingredient" v-html="displayIngredient"></div>
     </li>
 </template>
@@ -32,9 +33,11 @@ export default {
     computed: {
         displayIngredient() {
             if (this.isHeader()) {
-                return this.ingredient.substring(this.headerPrefix.length)
+                return window.escapeHTML(
+                    this.ingredient.substring(this.headerPrefix.length)
+                )
             }
-            return this.ingredient
+            return window.escapeHTML(this.ingredient)
         },
     },
     methods: {

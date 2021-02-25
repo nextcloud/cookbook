@@ -126,7 +126,7 @@
                         </ul>
                     </section>
 
-                    <section v-if="showNutritions">
+                    <section v-if="showNutritionData">
                         <h3>{{ t("cookbook", "Nutrition Information") }}</h3>
                         <ul class="nutrition-items">
                             <recipe-nutrition-info-item
@@ -293,6 +293,22 @@ export default {
         RecipeTimer,
         RecipeTool,
     },
+    /**
+     * This is one tricky feature of Vue router. If different paths lead to
+     * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
+     * the component will not automatically reload. So we have to manually
+     * reload the page contents.
+     * This can also be used to confirm that the user wants to leave the page
+     * if there are unsaved changes.
+     */
+    beforeRouteUpdate(to, from, next) {
+        // beforeRouteUpdate is called when the static route stays the same
+        next()
+        // Check if we should reload the component content
+        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+            this.setup()
+        }
+    },
     data() {
         return {
             headerPrefix: "## ",
@@ -300,7 +316,7 @@ export default {
     },
     computed: {
         recipe() {
-            let recipe = {
+            const recipe = {
                 description: "",
                 ingredients: [],
                 instructions: [],
@@ -323,17 +339,13 @@ export default {
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(
                     this.$store.state.recipe.recipeIngredient
-                ).map((i) => {
-                    return this.convertRecipeReferences(this.escapeHtml(i))
-                })
+                ).map((i) => this.convertRecipeReferences(this.escapeHtml(i)))
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(
                     this.$store.state.recipe.recipeInstructions
-                ).map((i) => {
-                    return this.convertRecipeReferences(this.escapeHtml(i))
-                })
+                ).map((i) => this.convertRecipeReferences(this.escapeHtml(i)))
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -376,9 +388,9 @@ export default {
             }
 
             if (this.$store.state.recipe.tool) {
-                recipe.tools = this.$store.state.recipe.tool.map((i) => {
-                    return this.convertRecipeReferences(this.escapeHtml(i))
-                })
+                recipe.tools = this.$store.state.recipe.tool.map((i) =>
+                    this.convertRecipeReferences(this.escapeHtml(i))
+                )
             }
 
             if (this.$store.state.recipe.dateCreated) {
@@ -399,12 +411,13 @@ export default {
 
             if (this.$store.state.recipe.nutrition) {
                 if (this.$store.state.recipe.nutrition instanceof Array) {
-                    this.$store.state.recipe.nutrition = {}
+                    recipe.nutrition = {}
+                } else {
+                    recipe.nutrition = this.$store.state.recipe.nutrition
                 }
             } else {
-                this.$store.state.recipe.nutrition = {}
+                recipe.nutrition = {}
             }
-            recipe.nutrition = this.$store.state.recipe.nutrition
 
             return recipe
         },
@@ -423,27 +436,20 @@ export default {
             return false
         },
         showCreatedDate() {
-            if (!this.recipe.dateCreated) {
-                return false
-            }
-            return true
+            return this.recipe.dateCreated
         },
         showModifiedDate() {
             if (!this.recipe.dateModified) {
                 return false
             }
-            if (
+            return !(
                 this.$store.state.recipe.dateCreated &&
                 this.$store.state.recipe.dateModified &&
                 this.$store.state.recipe.dateCreated ===
                     this.$store.state.recipe.dateModified
-            ) {
-                // don't show modified date if create and modified timestamp are the same
-                return false
-            }
-            return true
+            )
         },
-        showNutritions() {
+        showNutritionData() {
             return (
                 this.recipe.nutrition &&
                 !(this.recipe.nutrition instanceof Array) &&
@@ -463,7 +469,7 @@ export default {
         escapeHtml(unsafeString) {
             return unsafeString
                 .replace(/&/g, "&amp;")
-                .replace(/\~/g, "&#732;")
+                .replace(/~/g, "&#732;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
@@ -473,21 +479,19 @@ export default {
             const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
             const converted = text.replace(
                 re,
-                '$1<a class="recipe-reference-inline" href="' +
-                    this.$window.baseUrl +
-                    '/#/recipe/$2">#$2</a>'
+                `$1<a class="recipe-reference-inline" href="${this.$window.baseUrl}/#/recipe/$2">#$2</a>`
             )
             return converted
         },
         isNullOrEmpty(str) {
-            return !str || (typeof str === "string" && 0 === str.trim().length)
+            return !str || (typeof str === "string" && str.trim().length === 0)
         },
         /**
          * Callback for click on keyword
          */
         keywordClicked(keyword) {
             if (keyword) {
-                this.$router.push("/tags/" + keyword)
+                this.$router.push(`/tags/${keyword}`)
             }
         },
         /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
@@ -508,7 +512,8 @@ export default {
 
                 // Make the control row show that the recipe is reloading
             } else if (
-                this.$store.state.recipe.id === parseInt(this.$route.params.id)
+                this.$store.state.recipe.id ===
+                parseInt(this.$route.params.id, 10)
             ) {
                 this.$store.dispatch("setReloadingRecipe", {
                     recipe: this.$route.params.id,
@@ -525,11 +530,9 @@ export default {
 
             axios
                 .get(
-                    this.$window.baseUrl +
-                        "/api/recipes/" +
-                        this.$route.params.id
+                    `${this.$window.baseUrl}/api/recipes/${this.$route.params.id}`
                 )
-                .then(function (response) {
+                .then((response) => {
                     const recipe = response.data
                     // Store recipe data in vuex
                     $this.$store.dispatch("setRecipe", { recipe })
@@ -537,7 +540,7 @@ export default {
                     // Always set the active page last!
                     $this.$store.dispatch("setPage", { page: "recipe" })
                 })
-                .catch(function (e) {
+                .catch(() => {
                     if ($this.$store.state.loadingRecipe) {
                         // Reset loading recipe
                         $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
@@ -552,25 +555,10 @@ export default {
 
                     $this.$store.dispatch("setPage", { page: "recipe" })
 
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Loading recipe failed"))
                 })
         },
-    },
-    /**
-     * This is one tricky feature of Vue router. If different paths lead to
-     * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
-     * the component will not automatically reload. So we have to manually
-     * reload the page contents.
-     * This can also be used to confirm that the user wants to leave the page
-     * if there are unsaved changes.
-     */
-    beforeRouteUpdate(to, from, next) {
-        // beforeRouteUpdate is called when the static route stays the same
-        next()
-        // Check if we should reload the component content
-        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
-            this.setup()
-        }
     },
 }
 </script>

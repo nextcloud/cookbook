@@ -84,7 +84,6 @@ export default {
         const observer = lozad(this.$el, {
             enableAutoReload: true,
             load(el) {
-                const loadingIndicator = el.querySelector(".loading-indicator")
                 const imgPlaceholder = el.querySelector(".low-resolution")
                 const img = el.querySelector(".full-resolution")
 

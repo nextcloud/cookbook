@@ -63,7 +63,7 @@ export default {
     props: {
         value: {
             type: Array,
-            default: [],
+            default: () => [],
         },
         fieldType: {
             type: String,
@@ -116,17 +116,18 @@ export default {
          * the content is inserted into the newly created field
          * */
         addNewEntry(index = -1, focusAfterInsert = true, content = "") {
-            if (index === -1) {
-                index = this.buffer.length
+            let entryIdx = index
+            if (entryIdx === -1) {
+                entryIdx = this.buffer.length
             }
-            this.buffer.splice(index, 0, content)
+            this.buffer.splice(entryIdx, 0, content)
 
             if (focusAfterInsert) {
                 // const $this = this
-                this.$nextTick(function () {
+                this.$nextTick(function foc() {
                     const listFields = this.$refs["list-field"]
-                    if (listFields.length > index) {
-                        listFields[index].focus()
+                    if (listFields.length > entryIdx) {
+                        listFields[entryIdx].focus()
                     }
                 })
             }
@@ -141,9 +142,9 @@ export default {
         /**
          * Handle typing in input or field or textarea
          */
-        handleInput(e) {
+        handleInput() {
             // wait a tick to check if content was typed or pasted
-            this.$nextTick(function () {
+            this.$nextTick(function handlePastedOrTyped() {
                 if (this.contentPasted) {
                     this.contentPasted = false
 
@@ -167,16 +168,15 @@ export default {
 
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
-            var clipboardData = e.clipboardData || window.clipboardData
-            var pastedData = clipboardData.getData("Text")
+            const clipboardData = e.clipboardData || window.clipboardData
+            const pastedData = clipboardData.getData("Text")
             const inputLinesArray = pastedData.split(/\r\n|\r|\n/g)
 
             if (inputLinesArray.length === 1) {
                 this.singleLinePasted = true
                 return
-            } else {
-                this.singleLinePasted = false
             }
+            this.singleLinePasted = false
 
             e.preventDefault()
 
@@ -202,12 +202,12 @@ export default {
             }
             this.$emit("input", this.buffer)
 
-            this.$nextTick(function () {
+            this.$nextTick(function foc() {
                 let indexToFocus = $insertedIndex + inputLinesArray.length
                 // Delete field if it's empty
                 if (this.buffer[$insertedIndex].trim() === "") {
                     this.deleteEntry($insertedIndex)
-                    indexToFocus--
+                    indexToFocus -= 1
                 }
                 this.$refs["list-field"][indexToFocus].focus()
                 this.contentPasted = false
@@ -232,18 +232,21 @@ export default {
                 e.preventDefault()
                 const $li = e.currentTarget.closest("li")
                 const $ul = $li.closest("ul")
-                let $pressed_li_index = Array.prototype.indexOf.call(
+                // eslint-disable-next-line camelcase
+                const $pressed_li_index = Array.prototype.indexOf.call(
                     $ul.childNodes,
                     $li
                 )
 
                 if (e.keyCode === 13 || e.keyCode === 10) {
                     if (
+                        // eslint-disable-next-line camelcase
                         $pressed_li_index >=
                         this.$refs["list-field"].length - 1
                     ) {
                         this.addNewEntry()
                     } else {
+                        // eslint-disable-next-line camelcase
                         $ul.children[$pressed_li_index + 1]
                             .getElementsByTagName("input")[0]
                             .focus()
@@ -267,6 +270,7 @@ export default {
                         this.$parent.$emit("showRecipeReferencesPopup", {
                             context: this,
                         })
+                        // eslint-disable-next-line camelcase
                         this.lastFocusedFieldIndex = $pressed_li_index
                         this.lastCursorPosition = cursorPos
                     }
@@ -298,7 +302,7 @@ export default {
         pasteCanceled() {
             const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
             // set cursor back to previous position
-            this.$nextTick(function () {
+            this.$nextTick(function foc() {
                 field.focus()
                 field.setSelectionRange(
                     this.lastCursorPosition,
@@ -323,8 +327,8 @@ export default {
 
             // set cursor to position after pasted string. Waiting two ticks is necessary for
             // the data to be updated in the field
-            this.$nextTick(function () {
-                this.$nextTick(function () {
+            this.$nextTick(function delayedFocus() {
+                this.$nextTick(function foc() {
                     this.ignoreNextKeyUp = ignoreKeyup
                     field.focus()
                     const newCursorPos = this.lastCursorPosition + str.length

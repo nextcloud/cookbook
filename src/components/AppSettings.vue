@@ -90,14 +90,15 @@ export default {
                 return
             }
             axios({
-                url: this.$window.baseUrl + "/config",
+                url: `${this.$window.baseUrl}/config`,
                 method: "POST",
                 data: { print_image: newVal ? 1 : 0 },
             })
-                .then((response) => {
+                .then(() => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook","Could not set preference for image printing")
@@ -113,14 +114,15 @@ export default {
                 return
             }
             axios({
-                url: this.$window.baseUrl + "/config",
+                url: `${this.$window.baseUrl}/config`,
                 method: "POST",
                 data: { update_interval: newVal },
             })
-                .then((response) => {
+                .then(() => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook","Could not set recipe update interval to {interval}",
@@ -141,7 +143,7 @@ export default {
         /**
          * Select a recipe folder using the Nextcloud file picker
          */
-        pickRecipeFolder(e) {
+        pickRecipeFolder() {
             OC.dialogs.filepicker(
                 t("cookbook", "Path to your recipe collection"),
                 (path) => {
@@ -154,7 +156,8 @@ export default {
                                 $this.$router.push("/")
                             }
                         })
-                        .catch((e) => {
+                        .catch(() => {
+                            // eslint-disable-next-line no-alert
                             alert(
                                 // prettier-ignore
                                 t("cookbook","Could not set recipe folder to {path}",
@@ -166,7 +169,7 @@ export default {
                         })
                 },
                 false,
-                "httpd/unix-directory",
+                ["httpd/unix-directory"],
                 true
             )
         },
@@ -176,7 +179,7 @@ export default {
          */
         setup() {
             axios({
-                url: this.$window.baseUrl + "/config",
+                url: `${this.$window.baseUrl}/config`,
                 method: "GET",
                 data: null,
             })
@@ -184,14 +187,16 @@ export default {
                     const config = response.data
                     this.resetPrintImage = false
                     if (config) {
-                        this.printImage = config["print_image"]
-                        this.updateInterval = config["update_interval"]
-                        this.recipeFolder = config["folder"]
+                        this.printImage = config.print_image
+                        this.updateInterval = config.update_interval
+                        this.recipeFolder = config.folder
                     } else {
+                        // eslint-disable-next-line no-alert
                         alert(t("cookbook", "Loading config failed"))
                     }
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Loading config failed"))
                 })
         },

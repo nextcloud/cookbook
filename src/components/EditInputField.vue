@@ -44,6 +44,7 @@ export default {
             default: false,
         },
         // Value (passed in v-model)
+        // eslint-disable-next-line vue/require-prop-types
         value: {
             default: "",
             required: true,
@@ -61,7 +62,7 @@ export default {
         },
     },
     methods: {
-        handleInput(e) {
+        handleInput() {
             this.$emit("input", this.content)
         },
         /**
@@ -117,7 +118,7 @@ export default {
         },
         pasteCanceled() {
             // set cursor to position after pasted string
-            this.$nextTick(function () {
+            this.$nextTick(function foc() {
                 const field = this.$refs.inputField
                 if (this.fieldType === "markdown") {
                     field.editor.setCursor(this.lastCursorPosition)

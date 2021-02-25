@@ -118,6 +118,7 @@ export default {
         },
         options: {
             deep: true,
+            // eslint-disable-next-line no-unused-vars
             handler(val, oldVal) {
                 this.updateLocalValues()
             },
@@ -144,7 +145,7 @@ export default {
          */
         optionUpdated(idx, val) {
             if (
-                idx == this.selectedOptions.length &&
+                idx === this.selectedOptions.length &&
                 typeof this.filledValues[idx] === "undefined"
             ) {
                 this.filledValues[idx] = ""
@@ -181,7 +182,7 @@ export default {
         /**
          * Get a list of not yet selected options.
          */
-        selectableOptions(idx) {
+        selectableOptions() {
             if (!(this.selectedOptions instanceof Array)) {
                 return []
             }
@@ -205,6 +206,7 @@ export default {
             // show only fields made available in passed `options`
             this.selectedOptions = []
             this.filledValues = []
+            // eslint-disable-next-line no-restricted-syntax, prefer-const
             for (let key in this.localValue) {
                 if (this.options.map((o) => o.key).includes(key)) {
                     const opt = this.options.filter((o) => o.key === key)

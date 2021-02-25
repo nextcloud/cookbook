@@ -44,16 +44,16 @@ export default {
         }
     },
     computed: {
-        displayTime: function () {
+        displayTime() {
             let text = ""
             if (this.showFullTime) {
-                text += this.hours.toString().padStart(2, "0") + ":"
+                text += `${this.hours.toString().padStart(2, "0")}:`
             } else {
-                text += this.hours.toString() + ":"
+                text += `${this.hours.toString()}:`
             }
             text += this.minutes.toString().padStart(2, "0")
             if (this.showFullTime) {
-                text += ":" + this.seconds.toString().padStart(2, "0")
+                text += `:${this.seconds.toString().padStart(2, "0")}`
             }
             return text
         },
@@ -67,15 +67,16 @@ export default {
         this.resetTimeDisplay()
     },
     methods: {
-        onTimerEnd(button) {
+        onTimerEnd() {
             window.clearInterval(this.countdown)
             // I'll just use an alert until this functionality is finished
             const $this = this
-            window.setTimeout(function () {
+            window.setTimeout(() => {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
+                // eslint-disable-next-line no-alert
                 alert(t("cookbook", "Cooking time is up!"))
-                //cookbook.notify(t('cookbook', 'Cooking time is up!'))
+                // cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false
                 $this.resetTimeDisplay()
@@ -104,15 +105,15 @@ export default {
             if (this.countdown === null) {
                 // Pass this to callback function
                 const $this = this
-                this.countdown = window.setInterval(function () {
-                    $this.seconds--
+                this.countdown = window.setInterval(() => {
+                    $this.seconds -= 1
                     if ($this.seconds < 0) {
                         $this.seconds = 59
-                        $this.minutes--
+                        $this.minutes -= 1
                     }
                     if ($this.minutes < 0) {
                         $this.minutes = 59
-                        $this.hours--
+                        $this.hours -= 1
                     }
                     if (
                         $this.hours === 0 &&

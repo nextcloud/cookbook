@@ -15,16 +15,19 @@ import router from "./router"
 import store from "./store"
 
 import AppMain from "./components/AppMain.vue"
-;(function (OC, window) {
-    "use strict"
 
+// eslint-disable-next-line func-names, import/newline-after-import
+;(function (OC, window) {
     // Fetch Nextcloud nonce identifier for dynamic script loading
+    // eslint-disable-next-line camelcase,no-undef
     __webpack_nonce__ = btoa(OC.requestToken)
 
+    // eslint-disable-next-line no-param-reassign
     window.baseUrl = OC.generateUrl("apps/cookbook")
 
     // Check if two routes point to the same component but have different content
-    window.shouldReloadContent = function (url1, url2) {
+    // eslint-disable-next-line no-param-reassign
+    window.shouldReloadContent = function shouldReloadContent(url1, url2) {
         if (url1 === url2) {
             return false // Obviously should not if both routes are the same
         }
@@ -49,11 +52,7 @@ import AppMain from "./components/AppMain.vue"
         // If one of the routes is edit and the other is not
         if (comps1.length !== comps2.length) {
             // Only reload if changing from edit to create
-            if (comps1.pop() === "create" || comps2.pop() === "create") {
-                return true
-            }
-
-            return false
+            return comps1.pop() === "create" || comps2.pop() === "create"
         }
         if (comps1.pop() === "create") {
             // But, if we are moving from create to view, do not reload
@@ -68,7 +67,8 @@ import AppMain from "./components/AppMain.vue"
     }
 
     // Check if the two urls point to the same item instance
-    window.isSameItemInstance = function (url1, url2) {
+    // eslint-disable-next-line no-param-reassign
+    window.isSameItemInstance = function isSameItemInstance(url1, url2) {
         if (url1 === url2) {
             return true // Obviously true if the routes are the same
         }
@@ -91,20 +91,24 @@ import AppMain from "./components/AppMain.vue"
     }
 
     // A simple function to sanitize HTML tags
-    window.escapeHTML = function (text) {
-        return text.replace(/[\"&'\/<>]/g, (a) => {
-            return {
-                "&": "&amp;",
-                '"': "&quot;",
-                "'": "&apos;",
-                "<": "&lt;",
-                ">": "&gt;",
-            }[a]
-        })
+    // eslint-disable-next-line no-param-reassign
+    window.escapeHTML = function escapeHTML(text) {
+        return text.replace(
+            /["&'/<>]/g,
+            (a) =>
+                ({
+                    "&": "&amp;",
+                    '"': "&quot;",
+                    "'": "&apos;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                }[a])
+        )
     }
 
     // Fix the decimal separator for languages that use a comma instead of dot
-    window.fixDecimalSeparator = function (value, io) {
+    // eslint-disable-next-line no-param-reassign
+    window.fixDecimalSeparator = function fixDecimalSeparator(value, io) {
         // value is the string value of the number to process
         // io is either 'i' as in input or 'o' as in output
         if (!value) {
@@ -115,9 +119,8 @@ import AppMain from "./components/AppMain.vue"
             //  e.g. 12,500.25
             if (value.indexOf(".") > value.indexOf(",")) {
                 return value.replace(",", "")
-            } else {
-                return value.replace(",", ".")
             }
+            return value.replace(",", ".")
         }
         if (io === "o") {
             return value.toString().replace(".", ",")
@@ -126,38 +129,45 @@ import AppMain from "./components/AppMain.vue"
     }
 
     // This will replace the PHP function nl2br in Vue components
-    window.nl2br = function (text) {
+    // eslint-disable-next-line no-param-reassign
+    window.nl2br = function nl2br(text) {
         return text.replace(/\n/g, "<br />")
     }
 
     // A simple function that converts a MySQL datetime into a timestamp.
-    window.getTimestamp = function (date) {
+    // eslint-disable-next-line no-param-reassign
+    window.getTimestamp = function getTimestamp(date) {
         if (date) {
             return new Date(date)
-        } else {
-            return null
         }
+        return null
     }
 
     // Push a new URL to the router, essentially navigating to that page.
-    window.goTo = function (url) {
+    // eslint-disable-next-line no-param-reassign
+    window.goTo = function goTo(url) {
         router.push(url)
     }
 
     // Notify the user if notifications are allowed
+    // eslint-disable-next-line no-param-reassign
     window.notify = function notify(title, options) {
         if (!("Notification" in window)) {
             return
-        } else if (Notification.permission === "granted") {
-            var notification = new Notification(title, options)
+        }
+        if (Notification.permission === "granted") {
+            // eslint-disable-next-line no-unused-vars
+            const notification = new Notification(title, options)
         } else if (Notification.permission !== "denied") {
-            Notification.requestPermission(function (permission) {
+            Notification.requestPermission((permission) => {
                 if (!("permission" in Notification)) {
                     Notification.permission = permission
                 }
                 if (permission === "granted") {
-                    var notification = new Notification(title, options)
+                    // eslint-disable-next-line no-unused-vars
+                    const notification = new Notification(title, options)
                 } else {
+                    // eslint-disable-next-line no-alert
                     alert(title)
                 }
             })
@@ -179,7 +189,7 @@ import AppMain from "./components/AppMain.vue"
     Vue.prototype.t = window.t
 
     // Start the app once document is done loading
-    document.addEventListener("DOMContentLoaded", (event) => {
+    document.addEventListener("DOMContentLoaded", () => {
         const App = Vue.extend(AppMain)
         new App({
             store,

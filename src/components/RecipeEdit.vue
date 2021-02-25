@@ -94,7 +94,7 @@
             ref="referencesPopup"
             class="references-popup"
             :class="{ visible: referencesPopupFocused }"
-            :options="allrecipeOptions"
+            :options="allRecipeOptions"
             track-by="recipe_id"
             label="title"
             :loading="loadingRecipeReferences"
@@ -180,7 +180,12 @@ export default {
             this.setup()
         }
     },
-    props: ["id"],
+    props: {
+        id: {
+            type: String,
+            default: "",
+        },
+    },
     data() {
         return {
             // Initialize the recipe schema, otherwise v-models in child components may not work
@@ -291,7 +296,7 @@ export default {
         }
     },
     computed: {
-        allrecipeOptions() {
+        allRecipeOptions() {
             return this.allRecipes.map((r) => ({
                 recipe_id: r.recipe_id,
                 title: `${r.recipe_id}: ${r.name}`,
@@ -365,13 +370,14 @@ export default {
         this.$root.$off("categoryRenamed")
         this.$root.$on("categoryRenamed", (val) => {
             // Update selectable categories
-            const idx = this.allCategories.findIndex((c) => c == val[1])
+            const idx = this.allCategories.findIndex((c) => c === val[1])
             if (idx >= 0) {
                 Vue.set(this.allCategories, idx, val[0])
                 // this.allCategories[idx] = val[0]
             }
             // Update selected category if the currently selected was renamed
             if (this.recipe.recipeCategory === val[1]) {
+                // eslint-disable-next-line prefer-destructuring
                 this.recipe.recipeCategory = val[0]
             }
         })
@@ -390,7 +396,7 @@ export default {
         })
         // Register hook when recipe reference has been selected in popup
         this.$off("ms-popup-selection-canceled")
-        this.$on("ms-popup-selection-canceled", (opt) => {
+        this.$on("ms-popup-selection-canceled", () => {
             this.referencesPopupFocused = false
             this.popupContext.context.pasteCanceled()
         })
@@ -403,6 +409,7 @@ export default {
                 $this.allRecipes = response.data
             })
             .catch((e) => {
+                // eslint-disable-next-line no-console
                 console.log(e)
             })
             .then(() => {
@@ -442,6 +449,7 @@ export default {
             }
         },
         confirmLeavingPage() {
+            // eslint-disable-next-line no-alert
             return window.confirm(
                 "You have unsaved changes! Do you still want to leave?"
             )
@@ -474,6 +482,7 @@ export default {
                     $this.isFetchingCategories = false
                 })
                 .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Failed to fetch categories"))
                     if (e && e instanceof Error) {
                         throw e
@@ -500,6 +509,7 @@ export default {
                     $this.isFetchingKeywords = false
                 })
                 .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Failed to fetch keywords"))
                     if (e && e instanceof Error) {
                         throw e
@@ -513,7 +523,8 @@ export default {
                     recipe: -1,
                 })
             } else if (
-                this.$store.state.recipe.id === parseInt(this.$route.params.id)
+                this.$store.state.recipe.id ===
+                parseInt(this.$route.params.id, 10)
             ) {
                 // Make the control row show that the recipe is reloading
                 this.$store.dispatch("setReloadingRecipe", {
@@ -536,7 +547,8 @@ export default {
                     $this.$store.dispatch("setRecipe", { recipe })
                     $this.setup()
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Loading recipe failed"))
                     // Disable loading indicator
                     if ($this.$store.state.loadingRecipe) {
@@ -563,7 +575,9 @@ export default {
                     })
                     .catch((e) => {
                         // error
+                        // eslint-disable-next-line no-alert
                         alert(t("cookbook", "Recipe could not be saved"))
+                        // eslint-disable-next-line no-console
                         console.log(e)
                     })
                     .then(() => {
@@ -581,7 +595,9 @@ export default {
                     })
                     .catch((e) => {
                         // error
+                        // eslint-disable-next-line no-alert
                         alert(t("cookbook", "Recipe could not be saved"))
+                        // eslint-disable-next-line no-console
                         console.log(e)
                     })
                     .then(() => {
@@ -646,7 +662,7 @@ export default {
                 this.$store.dispatch("setPage", { page: "create" })
             }
             this.recipeInit = JSON.parse(JSON.stringify(this.recipe))
-            this.$nextTick(function () {
+            this.$nextTick(function markDirty() {
                 this.formDirty = false
             })
         },

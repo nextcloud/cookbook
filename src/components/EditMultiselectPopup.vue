@@ -45,7 +45,7 @@ export default {
         },
     },
     methods: {
-        closePopup(opt) {
+        closePopup() {
             this.$parent.$emit("ms-popup-selection-canceled")
         },
         optionSelected(opt) {

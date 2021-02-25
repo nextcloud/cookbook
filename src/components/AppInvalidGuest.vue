@@ -34,18 +34,18 @@ export default {
         AppContent,
     },
     methods: {
-        selectFolder(e) {
+        selectFolder() {
             OC.dialogs.filepicker(
                 t("cookbook", "Path to your recipe collection"),
                 (path) => {
                     this.$store
                         .dispatch("updateRecipeDirectory", { dir: path })
                         .then(() => {
-                            location.reload()
+                            window.location.reload()
                         })
                 },
                 false, // Single result
-                "httpd/unix-directory", // Desired MIME type
+                ["httpd/unix-directory"], // Desired MIME type
                 true // Make modal dialog
             )
         },

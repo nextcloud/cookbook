@@ -110,10 +110,11 @@ export default {
             function uniqFilter(value, index, self) {
                 return self.indexOf(value) === index
             }
-            return this.rawKeywords.sort().filter(uniqFilter)
+            const rawKWs = [...this.rawKeywords]
+            return rawKWs.sort().filter(uniqFilter)
         },
         /**
-         * An array of objects that contain the keywords plus a count of recipes asociated with these keywords
+         * An array of objects that contain the keywords plus a count of recipes associated with these keywords
          */
         keywordsWithCount() {
             const $this = this
@@ -222,7 +223,7 @@ export default {
         },
         // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
         recipeObjects() {
-            return this.recipes.map(function (r) {
+            return this.recipes.map(function makeObject(r) {
                 return {
                     recipe: r,
                     show: this.filteredRecipes.includes(r),

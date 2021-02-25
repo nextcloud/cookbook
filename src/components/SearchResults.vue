@@ -14,6 +14,12 @@ export default {
     components: {
         RecipeList,
     },
+    beforeRouteUpdate(to, from, next) {
+        // Move to next route as expected
+        next()
+        // Reload view
+        this.setup()
+    },
     props: {
         query: {
             type: String,
@@ -26,6 +32,7 @@ export default {
         }
     },
     watch: {
+        // eslint-disable-next-line no-unused-vars
         $route(to, from) {
             this.keywordFilter = []
         },
@@ -35,11 +42,12 @@ export default {
         this.$root.$off("categoryRenamed")
         this.$root.$on("categoryRenamed", (val) => {
             if (
+                // eslint-disable-next-line no-underscore-dangle
                 !this._inactive &&
                 this.query === "cat" &&
                 this.$route.params.value === val[1]
             ) {
-                this.$window.goTo("/category/" + val[0])
+                this.$window.goTo(`/category/${val[0]}`)
             }
         })
     },
@@ -54,12 +62,13 @@ export default {
                 const $this = this
                 const tags = this.$route.params.value
                 axios
-                    .get(this.$window.baseUrl + "/api/tags/" + tags)
+                    .get(`${this.$window.baseUrl}/api/tags/${tags}`)
                     .then((response) => {
                         $this.results = response.data
                     })
                     .catch((e) => {
                         $this.results = []
+                        // eslint-disable-next-line no-alert
                         alert(
                             // prettier-ignore
                             t("cookbook","Failed to load recipes with keywords: {tags}",
@@ -77,12 +86,13 @@ export default {
                 const $this = this
                 const cat = this.$route.params.value
                 axios
-                    .get(this.$window.baseUrl + "/api/category/" + cat)
+                    .get(`${this.$window.baseUrl}/api/category/${cat}`)
                     .then((response) => {
                         $this.results = response.data
                     })
                     .catch((e) => {
                         $this.results = []
+                        // eslint-disable-next-line no-alert
                         alert(
                             // prettier-ignore
                             t("cookbook","Failed to load category {category} recipes",
@@ -100,15 +110,14 @@ export default {
                 const $this = this
                 axios
                     .get(
-                        this.$window.baseUrl +
-                            "/api/search/" +
-                            this.$route.params.value
+                        `${this.$window.baseUrl}/api/search/${this.$route.params.value}`
                     )
                     .then((response) => {
                         $this.results = response.data
                     })
                     .catch((e) => {
                         $this.results = []
+                        // eslint-disable-next-line no-alert
                         alert(t("cookbook", "Failed to load search results"))
                         if (e && e instanceof Error) {
                             throw e
@@ -118,12 +127,6 @@ export default {
             }
             this.$store.dispatch("setPage", { page: "search" })
         },
-    },
-    beforeRouteUpdate(to, from, next) {
-        // Move to next route as expected
-        next()
-        // Reload view
-        this.setup()
     },
 }
 </script>

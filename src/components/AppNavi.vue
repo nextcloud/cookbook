@@ -193,12 +193,13 @@ export default {
             Vue.set(this.isCategoryUpdating, idx, true)
 
             axios
-                .get(this.$window.baseUrl + "/api/category/" + cat.name)
+                .get(`${this.$window.baseUrl}/api/category/${cat.name}`)
                 .then((response) => {
                     cat.recipes = response.data
                 })
                 .catch((e) => {
                     cat.recipes = []
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook","Failed to load category {category} recipes",
@@ -232,11 +233,12 @@ export default {
                 .dispatch("updateCategoryName", {
                     categoryNames: [oldName, newName],
                 })
-                .then((response) => {
+                .then(() => {
                     $this.categories[idx].name = newName
                     $this.$root.$emit("categoryRenamed", [newName, oldName])
                 })
                 .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook",'Failed to update name of category "{category}"',
@@ -262,23 +264,23 @@ export default {
             this.downloading = true
             const $this = this
             axios({
-                url: this.$window.baseUrl + "/import",
+                url: `${this.$window.baseUrl}/import`,
                 method: "POST",
-                data: "url=" + e.target[1].value,
+                data: `url=${e.target[1].value}`,
             })
                 .then((response) => {
                     const recipe = response.data
                     $this.downloading = false
-                    $this.$window.goTo("/recipe/" + recipe.id)
-                    e.target[1].value = ""
+                    $this.$window.goTo(`/recipe/${recipe.id}`)
                     // Refresh left navigation pane to display changes
                     $this.$store.dispatch("setAppNavigationRefreshRequired", {
                         isRequired: true,
                     })
                 })
-                .catch((e) => {
+                .catch((e2) => {
                     $this.downloading = false
-                    alert(t("cookbook", e.request.responseJSON))
+                    // eslint-disable-next-line no-alert
+                    alert(t("cookbook", e2.request.responseJSON))
                 })
         },
 
@@ -289,7 +291,7 @@ export default {
             const $this = this
             this.loading.categories = true
             axios
-                .get(this.$window.baseUrl + "/categories")
+                .get(`${this.$window.baseUrl}/categories`)
                 .then((response) => {
                     const json = response.data || []
                     // Reset the old values
@@ -321,14 +323,17 @@ export default {
                     $this.$nextTick(() => {
                         for (let i = 0; i < $this.categories.length; i++) {
                             // Reload recipes in open categories
-                            if (!$this.$refs["app-navi-cat-" + i]) {
+                            if (!$this.$refs[`app-navi-cat-${i}`]) {
+                                // eslint-disable-next-line no-continue
                                 continue
                             }
-                            if ($this.$refs["app-navi-cat-" + i][0].opened) {
+                            if ($this.$refs[`app-navi-cat-${i}`][0].opened) {
+                                // eslint-disable-next-line no-console
                                 console.log(
-                                    "Reloading recipes in " +
-                                        $this.$refs["app-navi-cat-" + i][0]
+                                    `Reloading recipes in ${
+                                        $this.$refs[`app-navi-cat-${i}`][0]
                                             .title
+                                    }`
                                 )
                                 $this.categoryOpen(i)
                             }
@@ -341,6 +346,7 @@ export default {
                     })
                 })
                 .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Failed to fetch categories"))
                     if (e && e instanceof Error) {
                         throw e
@@ -363,11 +369,12 @@ export default {
             }
             this.scanningLibrary = true
             axios({
-                url: this.$window.baseUrl + "/reindex",
+                url: `${this.$window.baseUrl}/reindex`,
                 method: "POST",
             })
                 .then(() => {
                     $this.scanningLibrary = false
+                    // eslint-disable-next-line no-console
                     console.log("Library reindexing complete")
                     $this.getCategories()
                     if (
@@ -377,8 +384,9 @@ export default {
                         $this.$router.go()
                     }
                 })
-                .catch((e) => {
+                .catch(() => {
                     $this.scanningLibrary = false
+                    // eslint-disable-next-line no-console
                     console.log("Library reindexing failed!")
                 })
         },
