@@ -9,3 +9,12 @@ extends:
     - "plugin:vue/strongly-recommended"
     - "plugin:vue/recommended"
     - prettier
+
+globals:
+    OC:
+    t:
+
+rules:
+    no-plusplus:
+        - error
+        - allowForLoopAfterthoughts: true
