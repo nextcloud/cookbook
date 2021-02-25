@@ -9,6 +9,8 @@
   [#607](https://github.com/nextcloud/cookbook/pull/607) @christianlupus
 - Enforce CSS styling using stylelint
   [#608](https://github.com/nextcloud/cookbook/pull/608) @christianlupus
+- More code styling, cleanup & minor bugfixes
+  [#615](https://github.com/nextcloud/cookbook/pull/615) @seyfeb
 
 ## Deprecated
 - Obsolete routes to old user interface, see `appinfo/routes.php`
