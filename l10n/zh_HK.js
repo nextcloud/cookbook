@@ -102,6 +102,20 @@ OC.L10N.register(
     "Search recipes with this keyword" : "用這個關鍵詞搜索食譜",
     "Date created" : "創建日期",
     "Last modified" : "最後更改",
-    "Source" : "來源"
+    "Serving Size" : "份量",
+    "Energy" : "熱量",
+    "Sugar" : "糖份",
+    "Carbohydrate" : "澱粉質",
+    "Cholesterol" : "膽固醇",
+    "Fiber" : "纖維",
+    "Protein" : "蛋白質",
+    "Sodium" : "鈉",
+    "Fat total" : "總脂肪",
+    "Saturated Fat" : "飽和脂肪",
+    "Unsaturated Fat" : "不飽和脂肪",
+    "Trans Fat" : "反式脂肪",
+    "Source" : "來源",
+    "Failed to load recipes with keywords: {tags}" : "無法加載帶有關鍵字的食譜：{tags}",
+    "Failed to load search results" : "無法加載搜尋結果"
 },
 "nplurals=1; plural=0;");

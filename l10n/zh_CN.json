@@ -100,6 +100,20 @@
     "Search recipes with this keyword" : "用这个关键词搜索菜谱",
     "Date created" : "创建日期",
     "Last modified" : "最后更改",
-    "Source" : "来源"
+    "Serving Size" : "食用份量",
+    "Energy" : "能量",
+    "Sugar" : "糖",
+    "Carbohydrate" : "碳水化合物 ",
+    "Cholesterol" : "胆固醇 ",
+    "Fiber" : "纤维",
+    "Protein" : "蛋白质",
+    "Sodium" : "钠 ",
+    "Fat total" : "总脂肪",
+    "Saturated Fat" : "饱和脂肪 ",
+    "Unsaturated Fat" : "不饱和脂肪",
+    "Trans Fat" : "反式脂肪 ",
+    "Source" : "来源",
+    "Failed to load recipes with keywords: {tags}" : "未能加载带这些关键词的菜谱：{tags}",
+    "Failed to load search results" : "未能加载搜索结果"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

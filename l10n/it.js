@@ -102,6 +102,20 @@ OC.L10N.register(
     "Search recipes with this keyword" : "Cerca ricette con questa parola chiave",
     "Date created" : "Data di creazione",
     "Last modified" : "Ultima modifica",
-    "Source" : "Fonte"
+    "Serving Size" : "Dimensioni della porzione",
+    "Energy" : "Energia",
+    "Sugar" : "Zuccheri",
+    "Carbohydrate" : "Carboidrati",
+    "Cholesterol" : "Colesterolo",
+    "Fiber" : "Fibre",
+    "Protein" : "Proteine",
+    "Sodium" : "Sodio",
+    "Fat total" : "Grassi totali",
+    "Saturated Fat" : "Grassi saturi",
+    "Unsaturated Fat" : "Grassi insaturi",
+    "Trans Fat" : "Grassi trans",
+    "Source" : "Fonte",
+    "Failed to load recipes with keywords: {tags}" : "Caricamento delle ricette con parole chiave non riuscito: {tags}",
+    "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito"
 },
 "nplurals=2; plural=(n != 1);");

@@ -57,6 +57,7 @@ OC.L10N.register(
     "Tools" : "Tresnak",
     "Ingredients" : "Osagaiak",
     "Instructions" : "Jarraibideak",
+    "Calories" : "Kaloriak",
     "Loading recipe failed" : "Errezeta kargatzeak huts egin du",
     "Recipe could not be saved" : "Ezin izan da errezeta gorde",
     "Cooking time is up!" : "Sukaldatzeko denbora amaitu da!",
