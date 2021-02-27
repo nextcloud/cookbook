@@ -17,8 +17,21 @@ jobs:
                     - "7.3"
                     - "8"
         steps:
+            - name: Check if secret is known
+              shell: bash
+              id: check
+              run: |
+                echo "::set-output name=skip::false"
+                if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
+                    echo "::set-output name=skip::true"
+                fi
+                if [ -z "${{ secrets.DOCKER_HUB_USERNAME }}" ]; then
+                    echo "::set-output name=skip::true"
+                fi
+            
             - name: Checkout the app
               uses: actions/checkout@v2
+              if: ${{ steps.check.outputs.skip == 'false' }}
               
             - name: Build and push the image
               shell: bash
@@ -31,3 +44,4 @@ jobs:
                 export COMPOSE_DOCKER_CLI_BUILD=1 &&
                 PHP_VERSION=${{ matrix.phpVersion }}
                 ./run-locally.sh --pull --create-images --push-images
+              if: ${{ steps.check.outputs.skip == 'false' }}
