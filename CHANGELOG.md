@@ -11,6 +11,8 @@
   [#608](https://github.com/nextcloud/cookbook/pull/608) @christianlupus
 - More code styling, cleanup & minor bugfixes
   [#615](https://github.com/nextcloud/cookbook/pull/615) @seyfeb
+- Avoid daily issues in personal forks due to missing secrets
+  [#620](https://github.com/nextcloud/cookbook/pull/620) @christianlupus
 
 ## Deprecated
 - Obsolete routes to old user interface, see `appinfo/routes.php`
