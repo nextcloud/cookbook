@@ -26,7 +26,6 @@
 <script>
 import Content from "@nextcloud/vue/dist/Components/Content"
 import AppContent from "@nextcloud/vue/dist/Components/AppContent"
-import axios from "@nextcloud/axios"
 
 export default {
     name: "InvalidGuest",
@@ -35,18 +34,18 @@ export default {
         AppContent,
     },
     methods: {
-        selectFolder: function (e) {
+        selectFolder() {
             OC.dialogs.filepicker(
                 t("cookbook", "Path to your recipe collection"),
                 (path) => {
                     this.$store
                         .dispatch("updateRecipeDirectory", { dir: path })
-                        .then(function () {
-                            location.reload()
+                        .then(() => {
+                            window.location.reload()
                         })
                 },
                 false, // Single result
-                "httpd/unix-directory", // Desired MIME type
+                ["httpd/unix-directory"], // Desired MIME type
                 true // Make modal dialog
             )
         },
@@ -58,7 +57,7 @@ export default {
 .main {
     display: flex;
     height: 100%;
-    flex-direction: colummn;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
 

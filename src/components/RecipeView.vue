@@ -5,7 +5,7 @@
             class="header"
             :class="{ responsive: $store.state.recipe.image }"
         >
-            <div class="image" v-if="$store.state.recipe.image">
+            <div v-if="$store.state.recipe.image" class="image">
                 <RecipeImages />
             </div>
 
@@ -22,7 +22,7 @@
                                     // prettier-ignore
                                     t('cookbook','Search recipes with this keyword')
                                 "
-                                v-on:keyword-clicked="keywordClicked(keyword)"
+                                @keyword-clicked="keywordClicked(keyword)"
                             />
                         </ul>
                     </div>
@@ -106,7 +106,7 @@
                                 v-for="(ingredient, idx) in recipe.ingredients"
                                 :key="'ingr' + idx"
                                 :ingredient="ingredient"
-                                :recipeIngredientsHaveSubgroups="
+                                :recipe-ingredients-have-subgroups="
                                     recipeIngredientsHaveSubgroups
                                 "
                             />
@@ -126,7 +126,7 @@
                         </ul>
                     </section>
 
-                    <section v-if="showNutritions">
+                    <section v-if="showNutritionData">
                         <h3>{{ t("cookbook", "Nutrition Information") }}</h3>
                         <ul class="nutrition-items">
                             <recipe-nutrition-info-item
@@ -274,13 +274,13 @@
 import axios from "@nextcloud/axios"
 import moment from "@nextcloud/moment"
 
-import RecipeImages from "./RecipeImages"
-import RecipeIngredient from "./RecipeIngredient"
-import RecipeInstruction from "./RecipeInstruction"
-import RecipeKeyword from "./RecipeKeyword"
-import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem"
-import RecipeTimer from "./RecipeTimer"
-import RecipeTool from "./RecipeTool"
+import RecipeImages from "./RecipeImages.vue"
+import RecipeIngredient from "./RecipeIngredient.vue"
+import RecipeInstruction from "./RecipeInstruction.vue"
+import RecipeKeyword from "./RecipeKeyword.vue"
+import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem.vue"
+import RecipeTimer from "./RecipeTimer.vue"
+import RecipeTool from "./RecipeTool.vue"
 
 export default {
     name: "RecipeView",
@@ -293,14 +293,30 @@ export default {
         RecipeTimer,
         RecipeTool,
     },
+    /**
+     * This is one tricky feature of Vue router. If different paths lead to
+     * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
+     * the component will not automatically reload. So we have to manually
+     * reload the page contents.
+     * This can also be used to confirm that the user wants to leave the page
+     * if there are unsaved changes.
+     */
+    beforeRouteUpdate(to, from, next) {
+        // beforeRouteUpdate is called when the static route stays the same
+        next()
+        // Check if we should reload the component content
+        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+            this.setup()
+        }
+    },
     data() {
         return {
             headerPrefix: "## ",
         }
     },
     computed: {
-        recipe: function () {
-            let recipe = {
+        recipe() {
+            const recipe = {
                 description: "",
                 ingredients: [],
                 instructions: [],
@@ -323,17 +339,13 @@ export default {
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(
                     this.$store.state.recipe.recipeIngredient
-                ).map((i) => {
-                    return this.convertRecipeReferences(this.escapeHtml(i))
-                })
+                ).map((i) => this.convertRecipeReferences(this.escapeHtml(i)))
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(
                     this.$store.state.recipe.recipeInstructions
-                ).map((i) => {
-                    return this.convertRecipeReferences(this.escapeHtml(i))
-                })
+                ).map((i) => this.convertRecipeReferences(this.escapeHtml(i)))
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -343,46 +355,46 @@ export default {
             }
 
             if (this.$store.state.recipe.cookTime) {
-                let cookT = this.$store.state.recipe.cookTime.match(
+                const cookT = this.$store.state.recipe.cookTime.match(
                     /PT(\d+?)H(\d+?)M/
                 )
-                let hh = parseInt(cookT[1]),
-                    mm = parseInt(cookT[2])
+                const hh = parseInt(cookT[1], 10)
+                const mm = parseInt(cookT[2], 10)
                 if (hh > 0 || mm > 0) {
                     recipe.timerCook = { hours: hh, minutes: mm }
                 }
             }
 
             if (this.$store.state.recipe.prepTime) {
-                let prepT = this.$store.state.recipe.prepTime.match(
+                const prepT = this.$store.state.recipe.prepTime.match(
                     /PT(\d+?)H(\d+?)M/
                 )
-                let hh = parseInt(prepT[1]),
-                    mm = parseInt(prepT[2])
+                const hh = parseInt(prepT[1], 10)
+                const mm = parseInt(prepT[2], 10)
                 if (hh > 0 || mm > 0) {
                     recipe.timerPrep = { hours: hh, minutes: mm }
                 }
             }
 
             if (this.$store.state.recipe.totalTime) {
-                let totalT = this.$store.state.recipe.totalTime.match(
+                const totalT = this.$store.state.recipe.totalTime.match(
                     /PT(\d+?)H(\d+?)M/
                 )
-                let hh = parseInt(totalT[1]),
-                    mm = parseInt(totalT[2])
+                const hh = parseInt(totalT[1], 10)
+                const mm = parseInt(totalT[2], 10)
                 if (hh > 0 || mm > 0) {
                     recipe.timerTotal = { hours: hh, minutes: mm }
                 }
             }
 
             if (this.$store.state.recipe.tool) {
-                recipe.tools = this.$store.state.recipe.tool.map((i) => {
-                    return this.convertRecipeReferences(this.escapeHtml(i))
-                })
+                recipe.tools = this.$store.state.recipe.tool.map((i) =>
+                    this.convertRecipeReferences(this.escapeHtml(i))
+                )
             }
 
             if (this.$store.state.recipe.dateCreated) {
-                let date = this.parseDateTime(
+                const date = this.parseDateTime(
                     this.$store.state.recipe.dateCreated
                 )
                 recipe.dateCreated =
@@ -390,7 +402,7 @@ export default {
             }
 
             if (this.$store.state.recipe.dateModified) {
-                let date = this.parseDateTime(
+                const date = this.parseDateTime(
                     this.$store.state.recipe.dateModified
                 )
                 recipe.dateModified =
@@ -399,16 +411,17 @@ export default {
 
             if (this.$store.state.recipe.nutrition) {
                 if (this.$store.state.recipe.nutrition instanceof Array) {
-                    this.$store.state.recipe.nutrition = {}
+                    recipe.nutrition = {}
+                } else {
+                    recipe.nutrition = this.$store.state.recipe.nutrition
                 }
             } else {
-                this.$store.state.recipe.nutrition = {}
+                recipe.nutrition = {}
             }
-            recipe.nutrition = this.$store.state.recipe.nutrition
 
             return recipe
         },
-        recipeIngredientsHaveSubgroups: function () {
+        recipeIngredientsHaveSubgroups() {
             if (this.recipe.ingredients && this.recipe.ingredients.length > 0) {
                 for (let idx = 0; idx < this.recipe.ingredients.length; ++idx) {
                     if (
@@ -422,27 +435,21 @@ export default {
             }
             return false
         },
-        showCreatedDate: function () {
-            if (!this.recipe.dateCreated) {
-                return false
-            }
-            return true
+        showCreatedDate() {
+            return this.recipe.dateCreated
         },
-        showModifiedDate: function () {
+        showModifiedDate() {
             if (!this.recipe.dateModified) {
                 return false
-            } else if (
+            }
+            return !(
                 this.$store.state.recipe.dateCreated &&
                 this.$store.state.recipe.dateModified &&
                 this.$store.state.recipe.dateCreated ===
                     this.$store.state.recipe.dateModified
-            ) {
-                // don't show modified date if create and modified timestamp are the same
-                return false
-            }
-            return true
+            )
         },
-        showNutritions: function () {
+        showNutritionData() {
             return (
                 this.recipe.nutrition &&
                 !(this.recipe.nutrition instanceof Array) &&
@@ -450,56 +457,63 @@ export default {
             )
         },
     },
+    mounted() {
+        this.setup()
+        // Register data load method hook for access from the controls components
+        this.$root.$off("reloadRecipeView")
+        this.$root.$on("reloadRecipeView", () => {
+            this.setup()
+        })
+    },
     methods: {
-        escapeHtml: function (unsafeString) {
+        escapeHtml(unsafeString) {
             return unsafeString
                 .replace(/&/g, "&amp;")
-                .replace(/\~/g, "&#732;")
+                .replace(/~/g, "&#732;")
                 .replace(/</g, "&lt;")
                 .replace(/>/g, "&gt;")
                 .replace(/"/g, "&quot;")
                 .replace(/'/g, "&#039;")
         },
-        convertRecipeReferences: function (text) {
-            let re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
-            let converted = text.replace(
+        convertRecipeReferences(text) {
+            const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
+            const converted = text.replace(
                 re,
-                '$1<a class="recipe-reference-inline" href="' +
-                    this.$window.baseUrl +
-                    '/#/recipe/$2">#$2</a>'
+                `$1<a class="recipe-reference-inline" href="${this.$window.baseUrl}/#/recipe/$2">#$2</a>`
             )
             return converted
         },
-        isNullOrEmpty: function (str) {
-            return !str || (typeof str === "string" && 0 === str.trim().length)
+        isNullOrEmpty(str) {
+            return !str || (typeof str === "string" && str.trim().length === 0)
         },
         /**
          * Callback for click on keyword
          */
-        keywordClicked: function (keyword) {
+        keywordClicked(keyword) {
             if (keyword) {
-                this.$router.push("/tags/" + keyword)
+                this.$router.push(`/tags/${keyword}`)
             }
         },
         /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
          * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
          */
-        parseDateTime: function (dt) {
+        parseDateTime(dt) {
             if (!dt) return null
-            var date = moment(dt, moment.ISO_8601)
+            const date = moment(dt, moment.ISO_8601)
             if (!date.isValid()) {
                 return null
             }
             return date
         },
-        setup: function () {
+        setup() {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
                 this.$store.dispatch("setLoadingRecipe", { recipe: -1 })
 
                 // Make the control row show that the recipe is reloading
             } else if (
-                this.$store.state.recipe.id === parseInt(this.$route.params.id)
+                this.$store.state.recipe.id ===
+                parseInt(this.$route.params.id, 10)
             ) {
                 this.$store.dispatch("setReloadingRecipe", {
                     recipe: this.$route.params.id,
@@ -512,23 +526,21 @@ export default {
                 })
             }
 
-            let $this = this
+            const $this = this
 
             axios
                 .get(
-                    this.$window.baseUrl +
-                        "/api/recipes/" +
-                        this.$route.params.id
+                    `${this.$window.baseUrl}/api/recipes/${this.$route.params.id}`
                 )
-                .then(function (response) {
-                    let recipe = response.data
+                .then((response) => {
+                    const recipe = response.data
                     // Store recipe data in vuex
-                    $this.$store.dispatch("setRecipe", { recipe: recipe })
+                    $this.$store.dispatch("setRecipe", { recipe })
 
                     // Always set the active page last!
                     $this.$store.dispatch("setPage", { page: "recipe" })
                 })
-                .catch(function (e) {
+                .catch(() => {
                     if ($this.$store.state.loadingRecipe) {
                         // Reset loading recipe
                         $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
@@ -543,33 +555,10 @@ export default {
 
                     $this.$store.dispatch("setPage", { page: "recipe" })
 
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Loading recipe failed"))
                 })
         },
-    },
-    mounted() {
-        this.setup()
-        // Register data load method hook for access from the controls components
-        this.$root.$off("reloadRecipeView")
-        this.$root.$on("reloadRecipeView", () => {
-            this.setup()
-        })
-    },
-    /**
-     * This is one tricky feature of Vue router. If different paths lead to
-     * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
-     * the component will not automatically reload. So we have to manually
-     * reload the page contents.
-     * This can also be used to confirm that the user wants to leave the page
-     * if there are unsaved changes.
-     */
-    beforeRouteUpdate(to, from, next) {
-        // beforeRouteUpdate is called when the static route stays the same
-        next()
-        // Check if we should reload the component content
-        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
-            this.setup()
-        }
     },
 }
 </script>
@@ -783,8 +772,7 @@ main {
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
-    margin: 0 1rem 1rem 0;
-    margin-top: -6px;
+    margin: -6px 1rem 1rem 0;
     background-color: var(--color-background-dark);
     background-position: center;
     background-repeat: no-repeat;

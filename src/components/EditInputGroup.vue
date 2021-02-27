@@ -3,20 +3,20 @@
         <label>{{ fieldLabel }}</label>
         <ul>
             <li
-                :class="fieldType"
                 v-for="(entry, idx) in buffer"
                 :key="fieldName + idx"
+                :class="fieldType"
             >
                 <div v-if="showStepNumber" class="step-number">
                     {{ parseInt(idx) + 1 }}
                 </div>
                 <input
                     v-if="fieldType === 'text'"
-                    type="text"
                     ref="list-field"
                     v-model="buffer[idx]"
+                    type="text"
                     @keyup="keyPressed"
-                    v-on:input="handleInput"
+                    @input="handleInput"
                     @paste="handlePaste"
                 />
                 <textarea
@@ -24,29 +24,29 @@
                     ref="list-field"
                     v-model="buffer[idx]"
                     @keyup="keyPressed"
-                    v-on:input="handleInput"
+                    @input="handleInput"
                     @paste="handlePaste"
                 ></textarea>
                 <div class="controls">
                     <button
                         class="icon-arrow-up"
-                        @click="moveEntryUp(idx)"
                         :title="t('cookbook', 'Move entry up')"
+                        @click="moveEntryUp(idx)"
                     ></button>
                     <button
                         class="icon-arrow-down"
-                        @click="moveEntryDown(idx)"
                         :title="t('cookbook', 'Move entry down')"
+                        @click="moveEntryDown(idx)"
                     ></button>
                     <button
                         class="icon-add"
-                        @click="addNewEntry(idx)"
                         :title="t('cookbook', 'Insert entry above')"
+                        @click="addNewEntry(idx)"
                     ></button>
                     <button
                         class="icon-delete"
-                        @click="deleteEntry(idx)"
                         :title="t('cookbook', 'Delete entry')"
+                        @click="deleteEntry(idx)"
                     ></button>
                 </div>
             </li>
@@ -63,9 +63,12 @@ export default {
     props: {
         value: {
             type: Array,
-            default: [],
+            default: () => [],
         },
-        fieldType: String,
+        fieldType: {
+            type: String,
+            default: "text",
+        },
         fieldName: {
             type: String,
             default: "",
@@ -74,7 +77,10 @@ export default {
             type: Boolean,
             default: false,
         },
-        fieldLabel: String,
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
         // If true, add new fields, for newlines in pasted data
         createFieldsOnNewlines: {
             type: Boolean,
@@ -108,23 +114,20 @@ export default {
         /* if index = -1, element is added at the end
          * if focusAfterInsert=true, the element is focussed after inserting
          * the content is inserted into the newly created field
-         **/
-        addNewEntry: function (
-            index = -1,
-            focusAfterInsert = true,
-            content = ""
-        ) {
-            if (index === -1) {
-                index = this.buffer.length
+         * */
+        addNewEntry(index = -1, focusAfterInsert = true, content = "") {
+            let entryIdx = index
+            if (entryIdx === -1) {
+                entryIdx = this.buffer.length
             }
-            this.buffer.splice(index, 0, content)
+            this.buffer.splice(entryIdx, 0, content)
 
             if (focusAfterInsert) {
-                let $this = this
-                this.$nextTick(function () {
-                    let listFields = this.$refs["list-field"]
-                    if (listFields.length > index) {
-                        listFields[index].focus()
+                // const $this = this
+                this.$nextTick(function foc() {
+                    const listFields = this.$refs["list-field"]
+                    if (listFields.length > entryIdx) {
+                        listFields[entryIdx].focus()
                     }
                 })
             }
@@ -132,16 +135,16 @@ export default {
         /**
          * Delete an entry from the list
          */
-        deleteEntry: function (index) {
+        deleteEntry(index) {
             this.buffer.splice(index, 1)
             this.$emit("input", this.buffer)
         },
         /**
          * Handle typing in input or field or textarea
          */
-        handleInput: function (e) {
+        handleInput() {
             // wait a tick to check if content was typed or pasted
-            this.$nextTick(function () {
+            this.$nextTick(function handlePastedOrTyped() {
                 if (this.contentPasted) {
                     this.contentPasted = false
 
@@ -157,7 +160,7 @@ export default {
         /**
          * Handle paste in input field or textarea
          */
-        handlePaste: function (e) {
+        handlePaste(e) {
             this.contentPasted = true
             if (!this.createFieldsOnNewlines) {
                 return
@@ -165,47 +168,46 @@ export default {
 
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
-            var clipboardData = e.clipboardData || window.clipboardData
-            var pastedData = clipboardData.getData("Text")
-            let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
+            const clipboardData = e.clipboardData || window.clipboardData
+            const pastedData = clipboardData.getData("Text")
+            const inputLinesArray = pastedData.split(/\r\n|\r|\n/g)
 
-            if (input_lines_array.length == 1) {
+            if (inputLinesArray.length === 1) {
                 this.singleLinePasted = true
                 return
-            } else {
-                this.singleLinePasted = false
             }
+            this.singleLinePasted = false
 
             e.preventDefault()
 
-            let $li = e.currentTarget.closest("li")
-            let $ul = $li.closest("ul")
-            let $inserted_index = Array.prototype.indexOf.call(
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $insertedIndex = Array.prototype.indexOf.call(
                 $ul.childNodes,
                 $li
             )
 
             // Remove empty lines
-            for (let i = input_lines_array.length - 1; i >= 0; --i) {
-                if (input_lines_array[i].trim() == "") {
-                    input_lines_array.splice(i, 1)
+            for (let i = inputLinesArray.length - 1; i >= 0; --i) {
+                if (inputLinesArray[i].trim() === "") {
+                    inputLinesArray.splice(i, 1)
                 }
             }
-            for (let i = 0; i < input_lines_array.length; ++i) {
+            for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
-                    $inserted_index + i + 1,
+                    $insertedIndex + i + 1,
                     false,
-                    input_lines_array[i]
+                    inputLinesArray[i]
                 )
             }
             this.$emit("input", this.buffer)
 
-            this.$nextTick(function () {
-                let indexToFocus = $inserted_index + input_lines_array.length
+            this.$nextTick(function foc() {
+                let indexToFocus = $insertedIndex + inputLinesArray.length
                 // Delete field if it's empty
-                if (this.buffer[$inserted_index].trim() == "") {
-                    this.deleteEntry($inserted_index)
-                    indexToFocus--
+                if (this.buffer[$insertedIndex].trim() === "") {
+                    this.deleteEntry($insertedIndex)
+                    indexToFocus -= 1
                 }
                 this.$refs["list-field"][indexToFocus].focus()
                 this.contentPasted = false
@@ -228,31 +230,34 @@ export default {
                 (this.referencePopupEnabled && e.keyCode === 51)
             ) {
                 e.preventDefault()
-                let $li = e.currentTarget.closest("li")
-                let $ul = $li.closest("ul")
-                let $pressed_li_index = Array.prototype.indexOf.call(
+                const $li = e.currentTarget.closest("li")
+                const $ul = $li.closest("ul")
+                // eslint-disable-next-line camelcase
+                const $pressed_li_index = Array.prototype.indexOf.call(
                     $ul.childNodes,
                     $li
                 )
 
                 if (e.keyCode === 13 || e.keyCode === 10) {
                     if (
+                        // eslint-disable-next-line camelcase
                         $pressed_li_index >=
                         this.$refs["list-field"].length - 1
                     ) {
                         this.addNewEntry()
                     } else {
+                        // eslint-disable-next-line camelcase
                         $ul.children[$pressed_li_index + 1]
                             .getElementsByTagName("input")[0]
                             .focus()
                     }
                 } else if (this.referencePopupEnabled && e.keyCode === 51) {
                     e.preventDefault()
-                    let elm = this.$refs["list-field"][$pressed_li_index]
+                    const elm = this.$refs["list-field"][$pressed_li_index]
                     // Check if the letter before the hash
-                    let cursorPos = elm.selectionStart
-                    let content = elm.value
-                    let prevChar =
+                    const cursorPos = elm.selectionStart
+                    const content = elm.value
+                    const prevChar =
                         cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
 
                     if (
@@ -265,18 +270,19 @@ export default {
                         this.$parent.$emit("showRecipeReferencesPopup", {
                             context: this,
                         })
+                        // eslint-disable-next-line camelcase
                         this.lastFocusedFieldIndex = $pressed_li_index
                         this.lastCursorPosition = cursorPos
                     }
                 }
             }
         },
-        moveEntryDown: function (index) {
+        moveEntryDown(index) {
             if (index >= this.buffer.length - 1) {
                 // Already at the end of array
                 return
             }
-            let entry = this.buffer.splice(index, 1)[0]
+            const entry = this.buffer.splice(index, 1)[0]
             if (index + 1 < this.buffer.length) {
                 this.buffer.splice(index + 1, 0, entry)
             } else {
@@ -284,19 +290,19 @@ export default {
             }
             this.$emit("input", this.buffer)
         },
-        moveEntryUp: function (index) {
+        moveEntryUp(index) {
             if (index < 1) {
                 // Already at the start of array
                 return
             }
-            let entry = this.buffer.splice(index, 1)[0]
+            const entry = this.buffer.splice(index, 1)[0]
             this.buffer.splice(index - 1, 0, entry)
             this.$emit("input", this.buffer)
         },
         pasteCanceled() {
-            let field = this.$refs["list-field"][this.lastFocusedFieldIndex]
+            const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
             // set cursor back to previous position
-            this.$nextTick(function () {
+            this.$nextTick(function foc() {
                 field.focus()
                 field.setSelectionRange(
                     this.lastCursorPosition,
@@ -308,11 +314,11 @@ export default {
          * Paste string at the last saved cursor position
          */
         pasteString(str, ignoreKeyup = true) {
-            let field = this.$refs["list-field"][this.lastFocusedFieldIndex]
+            const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
 
             // insert str
-            let content = field.value
-            let updatedContent =
+            const content = field.value
+            const updatedContent =
                 content.slice(0, this.lastCursorPosition) +
                 str +
                 content.slice(this.lastCursorPosition)
@@ -321,11 +327,11 @@ export default {
 
             // set cursor to position after pasted string. Waiting two ticks is necessary for
             // the data to be updated in the field
-            this.$nextTick(function () {
-                this.$nextTick(function () {
+            this.$nextTick(function delayedFocus() {
+                this.$nextTick(function foc() {
                     this.ignoreNextKeyUp = ignoreKeyup
                     field.focus()
-                    let newCursorPos = this.lastCursorPosition + str.length
+                    const newCursorPos = this.lastCursorPosition + str.length
                     field.setSelectionRange(newCursorPos, newCursorPos)
                 })
             })

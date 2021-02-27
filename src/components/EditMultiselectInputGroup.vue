@@ -10,15 +10,15 @@
                     label="label"
                     :multiple="false"
                     :placeholder="labelSelectPlaceholder"
-                    @change="(e) => optionUpdated(idx, e)"
                     :value="selectedOptions[idx][0]"
+                    @change="(e) => optionUpdated(idx, e)"
                 />
                 <input
                     type="text"
                     class="val"
                     :placeholder="placeholder(idx)"
-                    @input="(e) => fieldValueUpdated(idx, e)"
                     :value="filledValues[idx]"
+                    @input="(e) => fieldValueUpdated(idx, e)"
                 />
             </li>
             <li
@@ -76,7 +76,7 @@ export default {
          */
         options: {
             type: Array,
-            default: [],
+            default: () => [],
             required: true,
         },
         // Value (passed in v-model)
@@ -118,6 +118,7 @@ export default {
         },
         options: {
             deep: true,
+            // eslint-disable-next-line no-unused-vars
             handler(val, oldVal) {
                 this.updateLocalValues()
             },
@@ -127,13 +128,13 @@ export default {
         /**
          * Emit locally updated value to parent component.
          */
-        emitUpdate: function () {
+        emitUpdate() {
             this.$emit("change", JSON.parse(JSON.stringify(this.localValue)))
         },
         /**
          * Called when input-fields content is changed.
          */
-        fieldValueUpdated: function (idx, e) {
+        fieldValueUpdated(idx, e) {
             this.filledValues[idx] = e.target.value
             this.localValue[this.selectedOptions[idx][0][0].key] =
                 e.target.value
@@ -142,9 +143,9 @@ export default {
         /**
          * Called when a new option is chosen in one of the `Multiselect`s.
          */
-        optionUpdated: function (idx, val) {
+        optionUpdated(idx, val) {
             if (
-                idx == this.selectedOptions.length &&
+                idx === this.selectedOptions.length &&
                 typeof this.filledValues[idx] === "undefined"
             ) {
                 this.filledValues[idx] = ""
@@ -163,14 +164,14 @@ export default {
         /**
          * Get content of the descriptive placeholder for an input field.
          */
-        placeholder: function (idx) {
+        placeholder(idx) {
             if (
                 idx >= this.selectedOptions.length ||
                 idx >= this.options.length
             ) {
                 return ""
             }
-            let optionIdx = this.options
+            const optionIdx = this.options
                 .map((o) => o.key)
                 .indexOf(this.selectedOptions[idx][0][0].key)
             if (optionIdx > -1 && "placeholder" in this.options[optionIdx]) {
@@ -181,33 +182,34 @@ export default {
         /**
          * Get a list of not yet selected options.
          */
-        selectableOptions: function (idx) {
+        selectableOptions() {
             if (!(this.selectedOptions instanceof Array)) {
                 return []
             }
-            let selectable_Opts = []
-            let selected_keys = this.selectedOptions.map((m) => m[0][0].key)
+            const selectableOpts = []
+            const selectedKeys = this.selectedOptions.map((m) => m[0][0].key)
             for (let i = 0; i < this.options.length; i++) {
-                let option = this.options[i]
+                const option = this.options[i]
                 if (!("label" in option)) {
                     option.label = option.key
                 }
-                if (!selected_keys.includes(option.key)) {
-                    selectable_Opts.push(option)
+                if (!selectedKeys.includes(option.key)) {
+                    selectableOpts.push(option)
                 }
             }
-            return selectable_Opts
+            return selectableOpts
         },
         /**
          * Update the helper fields with the localValue.
          */
-        updateLocalValues: function () {
+        updateLocalValues() {
             // show only fields made available in passed `options`
             this.selectedOptions = []
             this.filledValues = []
+            // eslint-disable-next-line no-restricted-syntax, prefer-const
             for (let key in this.localValue) {
                 if (this.options.map((o) => o.key).includes(key)) {
-                    let opt = this.options.filter((o) => o.key == key)
+                    const opt = this.options.filter((o) => o.key === key)
                     this.selectedOptions.push([opt])
                     this.filledValues.push(this.localValue[key])
                 }
@@ -261,7 +263,7 @@ fieldset > ul > li .val {
     margin: 0;
 }
 
-.ms {
+/* .ms {
     width: 20em;
 }
 
@@ -269,5 +271,5 @@ fieldset > ul > li .val {
     .ms {
         width: 100%;
     }
-}
+} */
 </style>
