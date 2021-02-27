@@ -13,6 +13,8 @@
   [#615](https://github.com/nextcloud/cookbook/pull/615) @seyfeb
 - Avoid daily issues in personal forks due to missing secrets
   [#620](https://github.com/nextcloud/cookbook/pull/620) @christianlupus
+- Avoid descending of CS_fixer into non-code folders
+  [#621](https://github.com/nextcloud/cookbook/pull/621) @christianlupus
 
 ## Deprecated
 - Obsolete routes to old user interface, see `appinfo/routes.php`
