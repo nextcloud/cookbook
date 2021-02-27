@@ -285,6 +285,8 @@ export default {
                     r.name.toLowerCase().includes($this.filters.toLowerCase())
                 )
             }
+            console.log('num filtered recipes')
+            console.log(ret.length)
 
             return ret
         },
@@ -315,41 +317,55 @@ export default {
                 (kw) => !this.selectableKeywords.includes(kw)
             )
         },
+        // Recipes ordered ascending by creation date
+        recipesDateCreatedAsc() {
+            return this.sortRecipes(this.recipes, "dateCreated", "ascending")
+        },
+        // Recipes ordered descending by creation date
+        recipesDateCreatedDesc() {
+            return this.sortRecipes(this.recipes, "dateCreated", "descending")
+        },
+        // Recipes ordered ascending by modification date
+        recipesDateModifiedAsc() {
+            return this.sortRecipes(this.recipes, "dateModified", "ascending")
+        },
+        // Recipes ordered descending by modification date
+        recipesDateModifiedDesc() {
+            return this.sortRecipes(this.recipes, "dateModified", "descending")
+        },
         // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
         recipeObjects() {
-            return this.recipes
-                .map(function makeObject(r) {
-                    return {
-                        recipe: r,
-                        show: this.filteredRecipes.includes(r),
-                    }
-                }, this)
-                .sort((r1, r2) => {
-                    if (
-                        this.orderBy === null ||
-                        (this.orderBy.order !== "ascending" &&
-                            this.orderBy.order !== "descending")
-                    )
-                        return 0
-                    if (
-                        this.orderBy.recipeProperty === "dateCreated" ||
-                        this.orderBy.recipeProperty === "dateModified"
-                    ) {
-                        if (this.orderBy.order === "ascending") {
-                            return (
-                                new Date(
-                                    r1.recipe[this.orderBy.recipeProperty]
-                                ) -
-                                new Date(r2.recipe[this.orderBy.recipeProperty])
-                            )
-                        }
-                        return (
-                            new Date(r2[this.orderBy.recipeProperty]) -
-                            new Date(r1[this.orderBy.recipeProperty])
-                        )
-                    }
-                    return 0
-                })
+            console.log('filtered ids')
+            console.log(this.filteredRecipes.map((r) => r.recipe_id))
+            function makeObject(rec) {
+                return {
+                    recipe: rec,
+                    show: this.filteredRecipes
+                        .map((r) => r.recipe_id)
+                        .includes(rec.recipe_id),
+                }
+            }
+
+            if (
+                this.orderBy === null ||
+                (this.orderBy.order !== "ascending" &&
+                    this.orderBy.order !== "descending")
+            ) {
+                return this.recipes.map(makeObject, this)
+            }
+            if (this.orderBy.recipeProperty === "dateCreated") {
+                if (this.orderBy.order === "ascending") {
+                    return this.recipesDateCreatedAsc.map(makeObject, this)
+                }
+                return this.recipesDateCreatedDesc.map(makeObject, this)
+            }
+            if (this.orderBy.recipeProperty === "dateModified") {
+                if (this.orderBy.order === "ascending") {
+                    return this.recipesDateModifiedAsc.map(makeObject, this)
+                }
+                return this.recipesDateModifiedDesc.map(makeObject, this)
+            }
+            return this.recipes.map(makeObject, this)
         },
     },
     mounted() {
@@ -380,6 +396,73 @@ export default {
                 return null
             }
             return date.format("L, LT").toString()
+        },
+        /*
+         * Compare function for sorting recipes
+         */
+        compareRecipes(r1, r2) {
+            if (
+                this.orderBy === null ||
+                (this.orderBy.order !== "ascending" &&
+                    this.orderBy.order !== "descending")
+            )
+                return 0
+            if (
+                this.orderBy.recipeProperty === "dateCreated" ||
+                this.orderBy.recipeProperty === "dateModified"
+            ) {
+                if (this.orderBy.order === "ascending") {
+                    return (
+                        new Date(r1.recipe[this.orderBy.recipeProperty]) -
+                        new Date(r2.recipe[this.orderBy.recipeProperty])
+                    )
+                }
+                return (
+                    new Date(r2[this.orderBy.recipeProperty]) -
+                    new Date(r1[this.orderBy.recipeProperty])
+                )
+            }
+            return 0
+        },
+        /* Sort recipes according to the property of the recipe ascending or
+         * descending
+         */
+        sortRecipes(recipes, recipeProperty, order) {
+            const rec = JSON.parse(JSON.stringify(recipes))
+            return rec.sort((r1, r2) => {
+                if (order !== "ascending" && order !== "descending") return 0
+                if (order === "ascending") {
+                    if (
+                        recipeProperty === "dateCreated" ||
+                        recipeProperty === "dateModified"
+                    ) {
+                        return (
+                            new Date(r1[recipeProperty]) -
+                            new Date(r2[recipeProperty])
+                        )
+                    }
+                    if (
+                        !Number.isNaN(r1[recipeProperty] - r2[recipeProperty])
+                    ) {
+                        return r1[recipeProperty] - r2[recipeProperty]
+                    }
+                    return 0
+                }
+
+                if (
+                    recipeProperty === "dateCreated" ||
+                    recipeProperty === "dateModified"
+                ) {
+                    return (
+                        new Date(r2[recipeProperty]) -
+                        new Date(r1[recipeProperty])
+                    )
+                }
+                if (!Number.isNaN(r2[recipeProperty] - r1[recipeProperty])) {
+                    return r2[recipeProperty] - r1[recipeProperty]
+                }
+                return 0
+            })
         },
     },
 }
