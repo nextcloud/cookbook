@@ -1,85 +1,136 @@
 <template>
-  <div>
-    <div class="kw">
-      <transition-group
-        v-if="uniqKeywords.length > 0"
-        class="keywords"
-        name="keyword-list"
-        tag="ul"
-      >
-        <RecipeKeyword
-          v-for="keywordObj in selectedKeywords"
-          :key="keywordObj.name"
-          :name="keywordObj.name"
-          :count="keywordObj.count"
-          :title="t('cookbook', 'Toggle keyword')"
-          class="keyword active"
-          @keyword-clicked="keywordClicked(keywordObj)"
-        />
-        <RecipeKeyword
-          v-for="keywordObj in selectableKeywords"
-          :key="keywordObj.name"
-          :name="keywordObj.name"
-          :count="keywordObj.count"
-          :title="t('cookbook', 'Toggle keyword')"
-          class="keyword"
-          @keyword-clicked="keywordClicked(keywordObj)"
-        />
-        <RecipeKeyword
-          v-for="keywordObj in unavailableKeywords"
-          :key="keywordObj.name"
-          :name="keywordObj.name"
-          :count="keywordObj.count"
-          :title="
-            // prettier-ignore
-            t('cookbook','Keyword not contained in visible recipes')
-          "
-          class="keyword disabled"
-          @keyword-clicked="keywordClicked(keywordObj)"
-        />
-      </transition-group>
+    <div>
+        <div class="kw">
+            <transition-group
+                v-if="uniqKeywords.length > 0"
+                class="keywords"
+                name="keyword-list"
+                tag="ul"
+            >
+                <RecipeKeyword
+                    v-for="keywordObj in selectedKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook', 'Toggle keyword')"
+                    class="keyword active"
+                    @keyword-clicked="keywordClicked(keywordObj)"
+                />
+                <RecipeKeyword
+                    v-for="keywordObj in selectableKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook', 'Toggle keyword')"
+                    class="keyword"
+                    @keyword-clicked="keywordClicked(keywordObj)"
+                />
+                <RecipeKeyword
+                    v-for="keywordObj in unavailableKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="
+                        // prettier-ignore
+                        t('cookbook','Keyword not contained in visible recipes')
+                    "
+                    class="keyword disabled"
+                    @keyword-clicked="keywordClicked(keywordObj)"
+                />
+            </transition-group>
+        </div>
+        <div id="recipes-submenu" class="recipes-submenu-container">
+            <Multiselect
+                v-model="orderBy"
+                class="recipes-sorting-dropdown"
+                :multiple="false"
+                :searchable="false"
+                :placeholder="t('cookbook', 'Select order')"
+                :options="recipeOrderingOptions"
+            >
+                <template
+                    slot="placeholder"
+                    class="recipe-sorting-item-placeholder"
+                >
+                    <span class="icon-triangle-n" style="margin-right: -8px" />
+                    <span class="ordering-item-icon icon-triangle-s" />
+                    {{ t("cookbook", "Select order") }}
+                </template>
+                <template #singleLabel="props">
+                    <span
+                        class="ordering-item-icon"
+                        :class="props.option.icon"
+                    />
+                    <span class="option__title">{{ props.option.label }}</span>
+                </template>
+                <template #option="props">
+                    <span
+                        class="ordering-item-icon"
+                        :class="props.option.icon"
+                    />
+                    <span class="option__title">{{ props.option.label }}</span>
+                </template>
+            </Multiselect>
+        </div>
+        <ul class="recipes">
+            <li
+                v-for="recipeObj in recipeObjects"
+                v-show="recipeObj.show"
+                :key="recipeObj.recipe.recipe_id"
+            >
+                <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
+                    <lazy-picture
+                        v-if="recipeObj.recipe.imageUrl"
+                        class="recipe-thumbnail"
+                        :lazy-src="recipeObj.recipe.imageUrl"
+                        :blurred-preview-src="
+                            recipeObj.recipe.imagePlaceholderUrl
+                        "
+                        :width="105"
+                        :height="105"
+                    />
+                    <div class="recipe-info-container">
+                        <span class="recipe-title">{{
+                            recipeObj.recipe.name
+                        }}</span>
+                        <div class="recipe-info-container-bottom">
+                            <span
+                                v-if="
+                                    formatDateTime(
+                                        recipeObj.recipe.dateCreated
+                                    ) != null
+                                "
+                                class="recipe-date"
+                                >{{
+                                    formatDateTime(recipeObj.recipe.dateCreated)
+                                }}
+                            </span>
+                            <span
+                                v-if="
+                                    recipeObj.recipe.dateModified !==
+                                        recipeObj.recipe.dateCreated &&
+                                    formatDateTime(
+                                        recipeObj.recipe.dateModified
+                                    ) != null
+                                "
+                                class="recipe-date"
+                                >{{
+                                    formatDateTime(
+                                        recipeObj.recipe.dateModified
+                                    )
+                                }}
+                            </span>
+                        </div>
+                    </div>
+                </router-link>
+            </li>
+        </ul>
     </div>
-    <ul class="recipes">
-      <li
-        v-for="recipeObj in recipeObjects"
-        v-show="recipeObj.show"
-        :key="recipeObj.recipe.recipe_id"
-      >
-        <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
-          <lazy-picture
-            v-if="recipeObj.recipe.imageUrl"
-            class="recipe-thumbnail"
-            :lazy-src="recipeObj.recipe.imageUrl"
-            :blurred-preview-src="
-              recipeObj.recipe.imagePlaceholderUrl
-            "
-            :width="105"
-            :height="105"
-          />
-          <div class="recipe-info-container">
-            <span class="recipe-title">{{ recipeObj.recipe.name }}</span>
-            <div class="recipe-info-container-bottom">
-              <span
-                v-if="formatDateTime(recipeObj.recipe.dateCreated) != null"
-                class="recipe-date"
-              >{{ formatDateTime(recipeObj.recipe.dateCreated) }}
-              </span>
-              <span
-                v-if="(recipeObj.recipe.dateModified !== recipeObj.recipe.dateCreated ) &&
-                  formatDateTime(recipeObj.recipe.dateModified) != null"
-                class="recipe-date"
-              >{{ formatDateTime(recipeObj.recipe.dateModified) }}
-              </span>
-            </div>
-          </div>
-        </router-link>
-      </li>
-    </ul>
-  </div>
 </template>
 
 <script>
 import moment from "@nextcloud/moment"
+import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
 import LazyPicture from "./LazyPicture.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
 
@@ -87,7 +138,8 @@ export default {
     name: "RecipeList",
     components: {
         LazyPicture,
-        RecipeKeyword
+        Multiselect,
+        RecipeKeyword,
     },
     props: {
         recipes: {
@@ -101,6 +153,33 @@ export default {
             filters: "",
             // All keywords to filter the recipes for (conjunctively)
             keywordFilter: [],
+            orderBy: null,
+            recipeOrderingOptions: [
+                {
+                    label: t("cookbook", "Creation date"),
+                    icon: "icon-triangle-n",
+                    recipeProperty: "dateCreated",
+                    order: "ascending",
+                },
+                {
+                    label: t("cookbook", "Creation date"),
+                    icon: "icon-triangle-s",
+                    recipeProperty: "dateCreated",
+                    order: "descending",
+                },
+                {
+                    label: t("cookbook", "Modification date"),
+                    icon: "icon-triangle-n",
+                    recipeProperty: "dateModified",
+                    order: "ascending",
+                },
+                {
+                    label: t("cookbook", "Modification date"),
+                    icon: "icon-triangle-s",
+                    recipeProperty: "dateModified",
+                    order: "descending",
+                },
+            ],
         }
     },
     computed: {
@@ -180,7 +259,7 @@ export default {
                 if (r.keywords === null) {
                     return false
                 }
-                
+
                 function keywordInRecipePresent(kw, r2) {
                     if (!r2.keywords) {
                         return false
@@ -202,9 +281,9 @@ export default {
             const $this = this
 
             if (this.filters) {
-                ret = ret.filter((r) => r.name
-                        .toLowerCase()
-                        .includes($this.filters.toLowerCase()))
+                ret = ret.filter((r) =>
+                    r.name.toLowerCase().includes($this.filters.toLowerCase())
+                )
             }
 
             return ret
@@ -218,12 +297,15 @@ export default {
             }
 
             const $this = this
-            return this.unselectedKeywords.filter((kw) => $this.filteredRecipes
-                    .map((r) => (
+            return this.unselectedKeywords.filter((kw) =>
+                $this.filteredRecipes
+                    .map(
+                        (r) =>
                             r.keywords &&
                             r.keywords.split(",").includes(kw.name)
-                        ))
-                    .reduce((l, r) => l || r, false))
+                    )
+                    .reduce((l, r) => l || r, false)
+            )
         },
         /**
          * An array of known keywords that are not associated with any visible recipe
@@ -235,12 +317,39 @@ export default {
         },
         // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
         recipeObjects() {
-            return this.recipes.map(function makeObject(r) {
-                return {
-                    recipe: r,
-                    show: this.filteredRecipes.includes(r),
-                }
-            }, this)
+            return this.recipes
+                .map(function makeObject(r) {
+                    return {
+                        recipe: r,
+                        show: this.filteredRecipes.includes(r),
+                    }
+                }, this)
+                .sort((r1, r2) => {
+                    if (
+                        this.orderBy === null ||
+                        (this.orderBy.order !== "ascending" &&
+                            this.orderBy.order !== "descending")
+                    )
+                        return 0
+                    if (
+                        this.orderBy.recipeProperty === "dateCreated" ||
+                        this.orderBy.recipeProperty === "dateModified"
+                    ) {
+                        if (this.orderBy.order === "ascending") {
+                            return (
+                                new Date(
+                                    r1.recipe[this.orderBy.recipeProperty]
+                                ) -
+                                new Date(r2.recipe[this.orderBy.recipeProperty])
+                            )
+                        }
+                        return (
+                            new Date(r2[this.orderBy.recipeProperty]) -
+                            new Date(r1[this.orderBy.recipeProperty])
+                        )
+                    }
+                    return 0
+                })
         },
     },
     mounted() {
@@ -253,7 +362,7 @@ export default {
         /**
          * Callback for click on keyword, add to or remove from list
          */
-        keywordClicked (keyword) {
+        keywordClicked(keyword) {
             const index = this.keywordFilter.indexOf(keyword.name)
             if (index > -1) {
                 this.keywordFilter.splice(index, 1)
@@ -264,7 +373,7 @@ export default {
         /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
          * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
          */
-        formatDateTime (dt) {
+        formatDateTime(dt) {
             if (!dt) return null
             const date = moment(dt, moment.ISO_8601)
             if (!date.isValid()) {
@@ -275,6 +384,12 @@ export default {
     },
 }
 </script>
+
+<style>
+#recipes-submenu .multiselect .multiselect__tags {
+    border: 0;
+}
+</style>
 
 <style scoped>
 .kw {
@@ -295,6 +410,21 @@ export default {
 
 .keyword {
     display: inline-block;
+}
+
+.recipes-submenu-container {
+    padding-left: 16px;
+    margin-bottom: 0.75ex;
+}
+
+.recipe-sorting-dropdown {
+    width: 300px;
+}
+.recipe-sorting-item-placeholder {
+    display: block;
+}
+.ordering-item-icon {
+    margin-right: 0.5em;
 }
 
 .recipes {
@@ -337,7 +467,7 @@ export default {
     display: flex;
     height: 100%;
     flex-direction: column;
-    padding: .5rem;
+    padding: 0.5rem;
 }
 
 .recipe-title {
