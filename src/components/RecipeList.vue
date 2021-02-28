@@ -285,8 +285,6 @@ export default {
                     r.name.toLowerCase().includes($this.filters.toLowerCase())
                 )
             }
-            console.log('num filtered recipes')
-            console.log(ret.length)
 
             return ret
         },
@@ -335,8 +333,6 @@ export default {
         },
         // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
         recipeObjects() {
-            console.log('filtered ids')
-            console.log(this.filteredRecipes.map((r) => r.recipe_id))
             function makeObject(rec) {
                 return {
                     recipe: rec,
