@@ -93,7 +93,10 @@
                         <span class="recipe-title">{{
                             recipeObj.recipe.name
                         }}</span>
-                        <div class="recipe-info-container-bottom">
+                        <div
+                            v-if="orderBy"
+                            class="recipe-info-container-bottom"
+                        >
                             <span
                                 v-if="
                                     formatDateTime(
@@ -393,33 +396,6 @@ export default {
             }
             return date.format("L, LT").toString()
         },
-        /*
-         * Compare function for sorting recipes
-         */
-        compareRecipes(r1, r2) {
-            if (
-                this.orderBy === null ||
-                (this.orderBy.order !== "ascending" &&
-                    this.orderBy.order !== "descending")
-            )
-                return 0
-            if (
-                this.orderBy.recipeProperty === "dateCreated" ||
-                this.orderBy.recipeProperty === "dateModified"
-            ) {
-                if (this.orderBy.order === "ascending") {
-                    return (
-                        new Date(r1.recipe[this.orderBy.recipeProperty]) -
-                        new Date(r2.recipe[this.orderBy.recipeProperty])
-                    )
-                }
-                return (
-                    new Date(r2[this.orderBy.recipeProperty]) -
-                    new Date(r1[this.orderBy.recipeProperty])
-                )
-            }
-            return 0
-        },
         /* Sort recipes according to the property of the recipe ascending or
          * descending
          */
@@ -465,9 +441,11 @@ export default {
 </script>
 
 <style>
+/* stylelint-disable selector-class-pattern */
 #recipes-submenu .multiselect .multiselect__tags {
     border: 0;
 }
+/* stylelint-enable selector-class-pattern */
 </style>
 
 <style scoped>
@@ -559,7 +537,7 @@ export default {
 
 .recipe-date {
     height: 2.7ex;
-    color: var(--color-text-light);
+    color: var(--color-text-lighter);
     font-size: 10px;
     line-height: 2ex;
 }

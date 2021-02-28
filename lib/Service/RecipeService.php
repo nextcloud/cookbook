@@ -921,18 +921,18 @@ class RecipeService {
 
 
 
-    /** Adds modification and creation date to each recipe in the list
-     *
-     * @param array $recipes
-     */
-    private function addDatesToRecipes(array &$recipes) {
-        foreach ($recipes as $i => $recipe) {
-            // TODO Add data to database instead of reading from files
-            $r = $this->getRecipeById($recipe['recipe_id']);
-            $recipes[$i]['dateCreated'] = $r['dateCreated'];
-            $recipes[$i]['dateModified'] = $r['dateModified'];
-        }
-    }
+	/** Adds modification and creation date to each recipe in the list
+	 *
+	 * @param array $recipes
+	 */
+	private function addDatesToRecipes(array &$recipes) {
+		foreach ($recipes as $i => $recipe) {
+			// TODO Add data to database instead of reading from files
+			$r = $this->getRecipeById($recipe['recipe_id']);
+			$recipes[$i]['dateCreated'] = $r['dateCreated'];
+			$recipes[$i]['dateModified'] = $r['dateModified'];
+		}
+	}
 
 	/**
 	 * Gets all recipes from the index
@@ -940,9 +940,9 @@ class RecipeService {
 	 * @return array
 	 */
 	public function getAllRecipesInSearchIndex(): array {
-        $recipes = $this->db->findAllRecipes($this->user_id);
-        $this->addDatesToRecipes($recipes);
-        return $recipes;
+		$recipes = $this->db->findAllRecipes($this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
@@ -954,8 +954,8 @@ class RecipeService {
 	 */
 	public function getRecipesByCategory($category): array {
 		$recipes = $this->db->getRecipesByCategory($category, $this->user_id);
-        $this->addDatesToRecipes($recipes);
-        return $recipes;
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
@@ -964,21 +964,21 @@ class RecipeService {
 	 * @param string $keywords Keywords/tags as a comma-separated string.
 	 *
 	 * @return array
-     * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws \OCP\AppFramework\Db\DoesNotExistException
 	 */
 	public function getRecipesByKeywords($keywords): array {
-        $recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
-        $this->addDatesToRecipes($recipes);
-        return $recipes;
+		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
-    /**
-     * Search for recipes by keywords
-     *
-     * @param $keywords_string
-     * @return array
-     * @throws \OCP\AppFramework\Db\DoesNotExistException
-     */
+	/**
+	 * Search for recipes by keywords
+	 *
+	 * @param $keywords_string
+	 * @return array
+	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 */
 	public function findRecipesInSearchIndex($keywords_string): array {
 		$keywords_string = strtolower($keywords_string);
 		$keywords_array = [];
@@ -988,9 +988,9 @@ class RecipeService {
 			$keywords_array = $keywords_array[0];
 		}
 
-        $recipes = $this->db->findRecipes($keywords_array, $this->user_id);
-        $this->addDatesToRecipes($recipes);
-        return $recipes;
+		$recipes = $this->db->findRecipes($keywords_array, $this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
