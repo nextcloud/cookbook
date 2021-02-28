@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Cannot detect type of transmitted data. This is a bug, please report it." : "Nezjištěn typ přenášených dat. Toto je chyba, prosíme, nahlašte ji.",
     "Recipes" : "Recepty",
     "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
     "Cookbook" : "Kuchařka",
@@ -27,6 +28,7 @@ OC.L10N.register(
     "Search for recipes" : "Hledat recepty",
     "Are you sure you want to delete this recipe?" : "Opravdu chcete tento recept smazat?",
     "Delete failed" : "Smazání se nezdařilo",
+    "Cannot access recipe folder." : "Bez přístupu ke složce receptů.",
     "Select recipe folder" : "Vybrat složku receptů",
     "Path to your recipe collection" : "Popis umístění sbírky receptů",
     "Create recipe" : "Vytvořit recept",
@@ -93,6 +95,8 @@ OC.L10N.register(
     "Search recipes with this keyword" : "Vyhledat recepty s tímto klíčovým slovem",
     "Date created" : "Datum vytvoření",
     "Last modified" : "Naposledy změněno",
-    "Source" : "Zdroj"
+    "Source" : "Zdroj",
+    "Failed to load recipes with keywords: {tags}" : "Nepodařilo se načíst recepty s klíčovými slovy: {tags}",
+    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

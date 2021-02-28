@@ -100,6 +100,20 @@
     "Search recipes with this keyword" : "Buscar recetas con esta palabra clave",
     "Date created" : "Fecha de creación",
     "Last modified" : "Última modificación",
-    "Source" : "Origen"
+    "Serving Size" : "Tamaño de la porción",
+    "Energy" : "Energía",
+    "Sugar" : "Azúcar",
+    "Carbohydrate" : "Carbohidratos",
+    "Cholesterol" : "Colesterol",
+    "Fiber" : "Fibra",
+    "Protein" : "Proteínas",
+    "Sodium" : "Sodio",
+    "Fat total" : "Grasas totales",
+    "Saturated Fat" : "Grasas saturadas",
+    "Unsaturated Fat" : "Grasas no saturadas",
+    "Trans Fat" : "Grasas trans",
+    "Source" : "Origen",
+    "Failed to load recipes with keywords: {tags}" : "Fallo al cargar recetas con palabras clave: {tags}",
+    "Failed to load search results" : "Fallo al cargar los resultados de la búsqueda"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
