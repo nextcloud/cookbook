@@ -96,6 +96,7 @@ OC.L10N.register(
     "Failed to fetch keywords" : "Produciuse un fallo ao obter as palabras clave",
     "Loading recipe failed" : "Produciuse un fallo ao cargar a receita",
     "Recipe could not be saved" : "Non foi posíbel gardar a receita",
+    "Recipe image" : "Imaxe da receita",
     "Toggle keyword" : "Alternar a palabra clave",
     "Keyword not contained in visible recipes" : "A palabra clave non está contida nas receitas visíbeis",
     "Cooking time is up!" : "Rematou o tempo de cociñado!",

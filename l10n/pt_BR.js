@@ -96,6 +96,7 @@ OC.L10N.register(
     "Failed to fetch keywords" : "Falha na busca de palavras-chave",
     "Loading recipe failed" : "Erro ao carregar receita",
     "Recipe could not be saved" : "A receita não pôde ser salva",
+    "Recipe image" : "Imagem da receita",
     "Toggle keyword" : "Alternar palavra-chave",
     "Keyword not contained in visible recipes" : "Palavra-chave não encontrada nas receitas visíveis",
     "Cooking time is up!" : "O tempo de cozimento acabou!",
@@ -116,6 +117,6 @@ OC.L10N.register(
     "Trans Fat" : "Gordura Trans",
     "Source" : "Fonte",
     "Failed to load recipes with keywords: {tags}" : "Falhou em carregar receitas com palavras-chave: {tags}",
-    "Failed to load search results" : "Falha ao carregar resultados de pesquisa"
+    "Failed to load search results" : "Falha ao carregar os resultados da pesquisa"
 },
 "nplurals=2; plural=(n > 1);");

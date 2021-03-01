@@ -94,6 +94,7 @@
     "Failed to fetch keywords" : "获取关键词失败",
     "Loading recipe failed" : "菜谱加载失败",
     "Recipe could not be saved" : "菜谱无法被保存",
+    "Recipe image" : "食谱图片",
     "Toggle keyword" : "切换关键词",
     "Keyword not contained in visible recipes" : "关键词未包含在可见的菜谱中",
     "Cooking time is up!" : "烹饪时间已到！",
