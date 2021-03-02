@@ -96,6 +96,7 @@ OC.L10N.register(
     "Failed to fetch keywords" : "Recupero delle parole chiave non riuscito",
     "Loading recipe failed" : "Caricamento della ricetta non riuscito",
     "Recipe could not be saved" : "La ricetta non può essere salvata",
+    "Recipe image" : "Immagine della ricetta",
     "Toggle keyword" : "Scegli la parola chiave",
     "Keyword not contained in visible recipes" : "Parola chiave non contenuta nelle ricette visibili",
     "Cooking time is up!" : "Il tempo di cottura è scaduto!",
