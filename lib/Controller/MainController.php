@@ -70,7 +70,7 @@ class MainController extends Controller {
 	 */
 	public function getApiVersion(): DataResponse {
 		$response = [
-			'cookbook_version' => [0, 8, 2], /* VERSION_TAG do not change this line manually */
+			'cookbook_version' => [0, 8, 3], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 0,
