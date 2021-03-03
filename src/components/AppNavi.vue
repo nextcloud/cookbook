@@ -13,9 +13,9 @@
         <template slot="list">
             <ActionInput
                 class="download"
-                @submit="downloadRecipe"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'"
+                @submit="downloadRecipe"
             >
                 {{ t("cookbook", "Download recipe from URL") }}
             </ActionInput>
@@ -41,8 +41,8 @@
             </AppNavigationItem>
 
             <AppNavigationCaption
-                :title="t('cookbook', 'Categories')"
                 v-if="loading.categories || categories.length > 0"
+                :title="t('cookbook', 'Categories')"
                 :loading="loading.categories"
             >
                 <template slot="actions">
@@ -62,7 +62,7 @@
                 :title="cat.name"
                 :icon="categoryUpdating[idx] ? '' : 'icon-category-files'"
                 :loading="categoryUpdating[idx]"
-                :allowCollapse="true"
+                :allow-collapse="true"
                 :to="'/category/' + cat.name"
                 :editable="catRenamingEnabled"
                 :edit-label="t('cookbook', 'Rename')"
@@ -81,9 +81,9 @@
                 >
                 <template>
                     <AppNavigationItem
-                        class="recipe"
                         v-for="(rec, idy) in cat.recipes"
                         :key="idx + '-' + idy"
+                        class="recipe"
                         :title="rec.name"
                         :to="'/recipe/' + rec.recipe_id"
                         :icon="
@@ -99,7 +99,7 @@
 
         <template slot="footer">
             <AppSettings
-                :scanningLibrary="scanningLibrary"
+                :scanning-library="scanningLibrary"
                 @reindex="reindex"
             />
         </template>
@@ -114,12 +114,9 @@ import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation"
 import AppNavigationCounter from "@nextcloud/vue/dist/Components/AppNavigationCounter"
 import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem"
 import AppNavigationNew from "@nextcloud/vue/dist/Components/AppNavigationNew"
-import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationSettings"
-import AppNavigationSpacer from "@nextcloud/vue/dist/Components/AppNavigationSpacer"
-import AppSettings from "./AppSettings"
 import Vue from "vue"
-
-import AppNavigationCaption from "./AppNavigationCaption"
+import AppSettings from "./AppSettings.vue"
+import AppNavigationCaption from "./AppNavigationCaption.vue"
 
 export default {
     name: "AppNavi",
@@ -127,13 +124,11 @@ export default {
         ActionButton,
         ActionInput,
         AppNavigation,
-        AppNavigationCaption,
         AppNavigationCounter,
         AppNavigationItem,
         AppNavigationNew,
-        AppNavigationSettings,
-        AppNavigationSpacer,
         AppSettings,
+        AppNavigationCaption,
     },
     data() {
         return {
@@ -165,24 +160,27 @@ export default {
     },
     watch: {
         // Register a method hook for navigation refreshing
-        refreshRequired: function (newVal, oldVal) {
-            if (newVal != oldVal && newVal == true) {
+        refreshRequired(newVal, oldVal) {
+            if (newVal !== oldVal && newVal === true) {
                 this.getCategories()
             }
         },
+    },
+    mounted() {
+        this.getCategories()
     },
     methods: {
         /**
          * Enable renaming of categories.
          */
-        toggleCategoryRenaming: function () {
+        toggleCategoryRenaming() {
             this.catRenamingEnabled = !this.catRenamingEnabled
         },
 
         /**
          * Opens a category
          */
-        categoryOpen: function (idx) {
+        categoryOpen(idx) {
             if (
                 !this.categories[idx].recipes.length ||
                 this.categories[idx].recipes[0].id
@@ -190,17 +188,18 @@ export default {
                 // Recipes have already been loaded
                 return
             }
-            let cat = this.categories[idx]
-            let $this = this
+            const cat = this.categories[idx]
+            const $this = this
             Vue.set(this.isCategoryUpdating, idx, true)
 
             axios
-                .get(this.$window.baseUrl + "/api/category/" + cat.name)
-                .then(function (response) {
+                .get(`${this.$window.baseUrl}/api/category/${cat.name}`)
+                .then((response) => {
                     cat.recipes = response.data
                 })
-                .catch(function (e) {
+                .catch((e) => {
                     cat.recipes = []
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook","Failed to load category {category} recipes",
@@ -222,23 +221,24 @@ export default {
         /**
          * Updates the name of a category
          */
-        categoryUpdateName: function (idx, newName) {
+        categoryUpdateName(idx, newName) {
             if (!this.categories[idx]) {
                 return
             }
             Vue.set(this.isCategoryUpdating, idx, true)
-            let oldName = this.categories[idx].name
-            let $this = this
+            const oldName = this.categories[idx].name
+            const $this = this
 
             this.$store
                 .dispatch("updateCategoryName", {
                     categoryNames: [oldName, newName],
                 })
-                .then(function (response) {
+                .then(() => {
                     $this.categories[idx].name = newName
                     $this.$root.$emit("categoryRenamed", [newName, oldName])
                 })
-                .catch(function (e) {
+                .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook",'Failed to update name of category "{category}"',
@@ -260,40 +260,40 @@ export default {
         /**
          * Download and import the recipe at given URL
          */
-        downloadRecipe: function (e) {
+        downloadRecipe(e) {
             this.downloading = true
-            let $this = this
+            const $this = this
             axios({
-                url: this.$window.baseUrl + "/import",
+                url: `${this.$window.baseUrl}/import`,
                 method: "POST",
-                data: "url=" + e.target[1].value,
+                data: `url=${e.target[1].value}`,
             })
-                .then(function (response) {
-                    let recipe = response.data
+                .then((response) => {
+                    const recipe = response.data
                     $this.downloading = false
-                    $this.$window.goTo("/recipe/" + recipe.id)
-                    e.target[1].value = ""
+                    $this.$window.goTo(`/recipe/${recipe.id}`)
                     // Refresh left navigation pane to display changes
                     $this.$store.dispatch("setAppNavigationRefreshRequired", {
                         isRequired: true,
                     })
                 })
-                .catch(function (e) {
+                .catch((e2) => {
                     $this.downloading = false
-                    alert(t("cookbook", e.request.responseJSON))
+                    // eslint-disable-next-line no-alert
+                    alert(t("cookbook", e2.request.responseJSON))
                 })
         },
 
         /**
          * Fetch and display recipe categories
          */
-        getCategories: function () {
-            let $this = this
+        getCategories() {
+            const $this = this
             this.loading.categories = true
             axios
-                .get(this.$window.baseUrl + "/categories")
-                .then(function (response) {
-                    let json = response.data || []
+                .get(`${this.$window.baseUrl}/categories`)
+                .then((response) => {
+                    const json = response.data || []
                     // Reset the old values
                     $this.uncatRecipes = 0
                     $this.categories = []
@@ -301,11 +301,14 @@ export default {
 
                     for (let i = 0; i < json.length; i++) {
                         if (json[i].name === "*") {
-                            $this.uncatRecipes = parseInt(json[i].recipe_count)
+                            $this.uncatRecipes = parseInt(
+                                json[i].recipe_count,
+                                10
+                            )
                         } else {
                             $this.categories.push({
                                 name: json[i].name,
-                                recipeCount: parseInt(json[i].recipe_count),
+                                recipeCount: parseInt(json[i].recipe_count, 10),
                                 recipes: [
                                     {
                                         id: 0,
@@ -320,14 +323,17 @@ export default {
                     $this.$nextTick(() => {
                         for (let i = 0; i < $this.categories.length; i++) {
                             // Reload recipes in open categories
-                            if (!$this.$refs["app-navi-cat-" + i]) {
+                            if (!$this.$refs[`app-navi-cat-${i}`]) {
+                                // eslint-disable-next-line no-continue
                                 continue
                             }
-                            if ($this.$refs["app-navi-cat-" + i][0].opened) {
+                            if ($this.$refs[`app-navi-cat-${i}`][0].opened) {
+                                // eslint-disable-next-line no-console
                                 console.log(
-                                    "Reloading recipes in " +
-                                        $this.$refs["app-navi-cat-" + i][0]
+                                    `Reloading recipes in ${
+                                        $this.$refs[`app-navi-cat-${i}`][0]
                                             .title
+                                    }`
                                 )
                                 $this.categoryOpen(i)
                             }
@@ -339,7 +345,8 @@ export default {
                         )
                     })
                 })
-                .catch(function (e) {
+                .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Failed to fetch categories"))
                     if (e && e instanceof Error) {
                         throw e
@@ -354,19 +361,20 @@ export default {
         /**
          * Reindex all recipes
          */
-        reindex: function () {
-            let $this = this
+        reindex() {
+            const $this = this
             if (this.scanningLibrary) {
                 // No repeat clicks until we're done
                 return
             }
             this.scanningLibrary = true
             axios({
-                url: this.$window.baseUrl + "/reindex",
+                url: `${this.$window.baseUrl}/reindex`,
                 method: "POST",
             })
                 .then(() => {
                     $this.scanningLibrary = false
+                    // eslint-disable-next-line no-console
                     console.log("Library reindexing complete")
                     $this.getCategories()
                     if (
@@ -376,8 +384,9 @@ export default {
                         $this.$router.go()
                     }
                 })
-                .catch(function (e) {
+                .catch(() => {
                     $this.scanningLibrary = false
+                    // eslint-disable-next-line no-console
                     console.log("Library reindexing failed!")
                 })
         },
@@ -385,21 +394,18 @@ export default {
         /**
          * Set loading recipe index to show the loading icon
          */
-        setLoadingRecipe: function (id) {
+        setLoadingRecipe(id) {
             this.$store.dispatch("setLoadingRecipe", { recipe: id })
         },
 
         /**
          * Toggle the left navigation pane
          */
-        toggleNavigation: function () {
+        toggleNavigation() {
             this.$store.dispatch("setAppNavigationVisible", {
                 isVisible: !this.$store.state.appNavigation.visible,
             })
         },
-    },
-    mounted() {
-        this.getCategories()
     },
 }
 </script>

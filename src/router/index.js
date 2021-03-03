@@ -7,11 +7,11 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-import Index from "../components/AppIndex"
-import NotFound from "../components/NotFound"
-import RecipeView from "../components/RecipeView"
-import RecipeEdit from "../components/RecipeEdit"
-import Search from "../components/SearchResults"
+import Index from "../components/AppIndex.vue"
+import NotFound from "../components/NotFound.vue"
+import RecipeView from "../components/RecipeView.vue"
+import RecipeEdit from "../components/RecipeEdit.vue"
+import Search from "../components/SearchResults.vue"
 
 Vue.use(VueRouter)
 

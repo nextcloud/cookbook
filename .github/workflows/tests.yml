@@ -47,6 +47,16 @@ jobs:
                 Please run `npm run prettier-fix` in order to correct this.';
                 exit 1;
                 }
+
+        -   name: Check for issues with vue and js files (eslint)
+            shell: bash
+            run: >-
+                npm run eslint || {
+                echo '::error ::The eslint style checker failed.
+                Please run `npm run eslint-fix` in order to correct this.';
+                exit 1;
+                }
+
         -   name: Check for formatting issues with CSS files (stylelint)
             shell: bash
             run: >-

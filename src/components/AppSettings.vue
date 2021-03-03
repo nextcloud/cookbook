@@ -11,8 +11,8 @@
                                     ? 'icon-loading-small'
                                     : 'icon-history'
                             "
-                            @click="emit('reindex')"
                             :title="t('cookbook', 'Rescan library')"
+                            @click="emit('reindex')"
                         />
                     </li>
                     <li>
@@ -22,8 +22,8 @@
                         <input
                             type="text"
                             :value="recipeFolder"
-                            @click="pickRecipeFolder"
                             :placeholder="t('cookbook', 'Please pick a folder')"
+                            @click="pickRecipeFolder"
                         />
                     </li>
                     <li>
@@ -31,18 +31,18 @@
                             {{ t("cookbook", "Update interval in minutes") }}
                         </label>
                         <input
+                            v-model="updateInterval"
                             type="number"
                             class="input settings-input"
-                            v-model="updateInterval"
                             placeholder="0"
                         />
                     </li>
                     <li>
                         <input
+                            id="recipe-print-image"
+                            v-model="printImage"
                             type="checkbox"
                             class="checkbox"
-                            v-model="printImage"
-                            id="recipe-print-image"
                         />
                         <label for="recipe-print-image">
                             {{ t("cookbook", "Print image with recipe") }}
@@ -61,10 +61,15 @@ import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationS
 
 export default {
     name: "AppSettings",
-    props: ["scanningLibrary"],
     components: {
         ActionButton,
         AppNavigationSettings,
+    },
+    props: {
+        scanningLibrary: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -78,21 +83,22 @@ export default {
         }
     },
     watch: {
-        printImage: function (newVal, oldVal) {
+        printImage(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetPrintImage) {
                 this.resetPrintImage = false
                 return
             }
             axios({
-                url: this.$window.baseUrl + "/config",
+                url: `${this.$window.baseUrl}/config`,
                 method: "POST",
                 data: { print_image: newVal ? 1 : 0 },
             })
-                .then((response) => {
+                .then(() => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook","Could not set preference for image printing")
@@ -101,21 +107,22 @@ export default {
                     this.printImage = oldVal
                 })
         },
-        updateInterval: function (newVal, oldVal) {
+        updateInterval(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetInterval) {
                 this.resetInterval = false
                 return
             }
             axios({
-                url: this.$window.baseUrl + "/config",
+                url: `${this.$window.baseUrl}/config`,
                 method: "POST",
                 data: { update_interval: newVal },
             })
-                .then((response) => {
+                .then(() => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(
                         // prettier-ignore
                         t("cookbook","Could not set recipe update interval to {interval}",
@@ -129,36 +136,40 @@ export default {
                 })
         },
     },
+    mounted() {
+        this.setup()
+    },
     methods: {
         /**
          * Select a recipe folder using the Nextcloud file picker
          */
-        pickRecipeFolder: function (e) {
+        pickRecipeFolder() {
             OC.dialogs.filepicker(
                 t("cookbook", "Path to your recipe collection"),
                 (path) => {
-                    let $this = this
+                    const $this = this
                     this.$store
                         .dispatch("updateRecipeDirectory", { dir: path })
                         .then(() => {
                             $this.recipeFolder = path
-                            if ($this.$route.path != "/") {
+                            if ($this.$route.path !== "/") {
                                 $this.$router.push("/")
                             }
                         })
-                        .catch((e) => {
+                        .catch(() => {
+                            // eslint-disable-next-line no-alert
                             alert(
                                 // prettier-ignore
                                 t("cookbook","Could not set recipe folder to {path}",
                                     {
-                                        path: path,
+                                        path
                                     }
                                 )
                             )
                         })
                 },
                 false,
-                "httpd/unix-directory",
+                ["httpd/unix-directory"],
                 true
             )
         },
@@ -166,30 +177,29 @@ export default {
         /**
          * Initial setup
          */
-        setup: function () {
+        setup() {
             axios({
-                url: this.$window.baseUrl + "/config",
+                url: `${this.$window.baseUrl}/config`,
                 method: "GET",
                 data: null,
             })
                 .then((response) => {
-                    let config = response.data
+                    const config = response.data
                     this.resetPrintImage = false
                     if (config) {
-                        this.printImage = config["print_image"]
-                        this.updateInterval = config["update_interval"]
-                        this.recipeFolder = config["folder"]
+                        this.printImage = config.print_image
+                        this.updateInterval = config.update_interval
+                        this.recipeFolder = config.folder
                     } else {
+                        // eslint-disable-next-line no-alert
                         alert(t("cookbook", "Loading config failed"))
                     }
                 })
-                .catch((e) => {
+                .catch(() => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Loading config failed"))
                 })
         },
-    },
-    mounted() {
-        this.setup()
     },
 }
 </script>

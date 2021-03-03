@@ -10,13 +10,13 @@ $config = new Config();
 $config
 	->getFinder()
 	->ignoreVCSIgnored(true)
-	->notPath('build')
-	->notPath('l10n')
+	->exclude('build')
+	->exclude('l10n')
 //	->notPath('lib/Vendor')
-	->notPath('src')
-	->notPath('node_modules')
-	->notPath('vendor')
-	->notPath('.github')
+	->exclude('src')
+	->exclude('node_modules')
+	->exclude('vendor')
+	->exclude('.github')
 	->in(__DIR__);
 return $config;
 

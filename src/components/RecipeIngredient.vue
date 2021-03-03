@@ -7,6 +7,7 @@
         @click="toggleDone"
     >
         <div class="checkmark" :class="{ done: isDone }">✔</div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="ingredient" v-html="displayIngredient"></div>
     </li>
 </template>
@@ -14,7 +15,15 @@
 <script>
 export default {
     name: "RecipeIngredient",
-    props: ["ingredient", "recipeIngredientsHaveSubgroups"],
+    props: {
+        ingredient: {
+            type: String,
+            default: "",
+        },
+        recipeIngredientsHaveSubgroups: {
+            type: Boolean,
+        },
+    },
     data() {
         return {
             headerPrefix: "## ",
@@ -22,21 +31,20 @@ export default {
         }
     },
     computed: {
-        displayIngredient: function () {
+        displayIngredient() {
             if (this.isHeader()) {
-                return this.ingredient.substring(this.headerPrefix.length)
+                return window.escapeHTML(
+                    this.ingredient.substring(this.headerPrefix.length)
+                )
             }
-            return this.ingredient
+            return window.escapeHTML(this.ingredient)
         },
     },
     methods: {
-        isHeader: function () {
-            if (this.ingredient.startsWith(this.headerPrefix)) {
-                return true
-            }
-            return false
+        isHeader() {
+            return this.ingredient.startsWith(this.headerPrefix)
         },
-        toggleDone: function () {
+        toggleDone() {
             this.isDone = !this.isDone
         },
     },

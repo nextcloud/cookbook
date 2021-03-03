@@ -1,18 +1,23 @@
 <template>
-    <li :class="{ done: isDone }" @click="toggleDone" v-html="instruction"></li>
+    <li :class="{ done: isDone }" @click="toggleDone">{{ instruction }}</li>
 </template>
 
 <script>
 export default {
     name: "RecipeInstruction",
-    props: ["instruction"],
+    props: {
+        instruction: {
+            type: String,
+            default: "",
+        },
+    },
     data() {
         return {
             isDone: false,
         }
     },
     methods: {
-        toggleDone: function () {
+        toggleDone() {
             this.isDone = !this.isDone
         },
     },

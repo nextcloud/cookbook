@@ -5,7 +5,7 @@
         </label>
         <input
             type="text"
-            :value="this.value"
+            :value="value"
             @input="$emit('input', $event.target.value)"
         />
         <button
@@ -21,14 +21,23 @@
 <script>
 export default {
     name: "EditImageField",
-    props: ["value", "fieldLabel"],
+    props: {
+        value: {
+            type: String,
+            default: "",
+        },
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
+    },
     methods: {
-        pickImage: function (e) {
+        pickImage(e) {
             e.preventDefault()
-            let $this = this
+            const $this = this
             OC.dialogs.filepicker(
                 t("cookbook", "Path to your recipe image"),
-                function (path) {
+                (path) => {
                     $this.$emit("input", path)
                 },
                 false,
@@ -80,10 +89,7 @@ fieldset > input {
 
 fieldset > input + button {
     width: 3em;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: var(--border-radius);
-    border-top-left-radius: 0;
-    border-top-right-radius: var(--border-radius);
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 fieldset > input + button > * {

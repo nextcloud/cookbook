@@ -2,8 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Cartref",
-    "Search" : "Chwilio",
     "Loading…" : "Yn llwytho…",
+    "Search" : "Chwilio",
     "Category" : "Categori",
     "Add" : "Ychwanegu",
     "Name" : "Enw",
