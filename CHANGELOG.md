@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.8.2 - 2021-03-03
+
 ### Fixed
 - Added translation for nutritient-value label placeholder
   [#596](https://github.com/nextcloud/cookbook/pull/596) @seyfeb
