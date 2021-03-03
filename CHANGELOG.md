@@ -15,6 +15,8 @@
   [#620](https://github.com/nextcloud/cookbook/pull/620) @christianlupus
 - Avoid descending of CS_fixer into non-code folders
   [#621](https://github.com/nextcloud/cookbook/pull/621) @christianlupus
+- Fixed compatiblity with Nextcloud 21
+  [#605](https://github.com/nextcloud/cookbook/pull/605) @icewind1991
 
 ## Deprecated
 - Obsolete routes to old user interface, see `appinfo/routes.php`
