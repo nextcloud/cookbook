@@ -91,11 +91,6 @@ jobs:
             include:
                 # Test different core versions additionally
                 -   database: mysql
-                    coreVersion: stable18
-                    phpVersion: "7"
-                    httpServer: "apache"
-                    mayFail: false
-                -   database: mysql
                     coreVersion: stable19
                     phpVersion: "7"
                     httpServer: "apache"

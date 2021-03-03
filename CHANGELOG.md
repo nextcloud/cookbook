@@ -22,6 +22,10 @@
 - Obsolete routes to old user interface, see `appinfo/routes.php`
   [#580](https://github.com/nextcloud/cookbook/pull/580) @christianlupus
 
+## Removed
+- Dropped support for NC core version <= 18
+  [#630](https://github.com/nextcloud/cookbook/pull/630) @christianlupus
+
 ## 0.8.1 - 2021-02-15
 
 ### Added
