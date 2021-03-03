@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.8.3 - 2021-03-03
+
 ### Fixed
 - Corrected compatibility list
   [#632](https://github.com/nextcloud/cookbook/pull/632) @christianlupus
