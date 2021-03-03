@@ -1,5 +1,33 @@
 ## [Unreleased]
 
+## 0.8.2 - 2021-03-03
+
+### Fixed
+- Added translation for nutritient-value label placeholder
+  [#596](https://github.com/nextcloud/cookbook/pull/596) @seyfeb
+- Updated dependency of eslint-config-prettier
+  [#603](https://github.com/nextcloud/cookbook/pull/603) @christianlupus
+- Enforce basic code styling using prettier in vue files
+  [#607](https://github.com/nextcloud/cookbook/pull/607) @christianlupus
+- Enforce CSS styling using stylelint
+  [#608](https://github.com/nextcloud/cookbook/pull/608) @christianlupus
+- More code styling, cleanup & minor bugfixes
+  [#615](https://github.com/nextcloud/cookbook/pull/615) @seyfeb
+- Avoid daily issues in personal forks due to missing secrets
+  [#620](https://github.com/nextcloud/cookbook/pull/620) @christianlupus
+- Avoid descending of CS_fixer into non-code folders
+  [#621](https://github.com/nextcloud/cookbook/pull/621) @christianlupus
+- Fixed compatiblity with Nextcloud 21
+  [#605](https://github.com/nextcloud/cookbook/pull/605) @icewind1991
+
+## Deprecated
+- Obsolete routes to old user interface, see `appinfo/routes.php`
+  [#580](https://github.com/nextcloud/cookbook/pull/580) @christianlupus
+
+## Removed
+- Dropped support for NC core version <= 18
+  [#630](https://github.com/nextcloud/cookbook/pull/630) @christianlupus
+
 ## 0.8.1 - 2021-02-15
 
 ### Added

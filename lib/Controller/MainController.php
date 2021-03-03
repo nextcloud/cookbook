@@ -105,6 +105,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @deprecated
 	 */
 	public function home() {
 		$this->dbCacheService->triggerCheck();
@@ -135,6 +136,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @deprecated
 	 */
 	public function error() {
 		$this->dbCacheService->triggerCheck();
@@ -286,6 +288,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @deprecated
 	 */
 	public function recipe($id) {
 		$this->dbCacheService->triggerCheck();
@@ -314,6 +317,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @deprecated
 	 */
 	public function create() {
 		$this->dbCacheService->triggerCheck();
@@ -375,6 +379,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @deprecated
 	 */
 	public function edit($id) {
 		$this->dbCacheService->triggerCheck();

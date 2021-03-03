@@ -3,36 +3,54 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input type="text" :value="this.value" @input="$emit('input', $event.target.value)" />
-        <button type="button" :title="t('cookbook', 'Pick a local image')" @click="pickImage"><span class="icon-category-multimedia"></span></button>
+        <input
+            type="text"
+            :value="value"
+            @input="$emit('input', $event.target.value)"
+        />
+        <button
+            type="button"
+            :title="t('cookbook', 'Pick a local image')"
+            @click="pickImage"
+        >
+            <span class="icon-category-multimedia"></span>
+        </button>
     </fieldset>
 </template>
 
 <script>
 export default {
     name: "EditImageField",
-    props: ['value','fieldLabel'],
+    props: {
+        value: {
+            type: String,
+            default: "",
+        },
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
+    },
     methods: {
-        pickImage: function(e) {
+        pickImage(e) {
             e.preventDefault()
-            let $this = this
-            OC.dialogs.filepicker (
-                t('cookbook', 'Path to your recipe image'),
-                function (path) {
-                    $this.$emit('input', path)
+            const $this = this
+            OC.dialogs.filepicker(
+                t("cookbook", "Path to your recipe image"),
+                (path) => {
+                    $this.$emit("input", path)
                 },
                 false,
-                ['image/jpeg', 'image/png'],
+                ["image/jpeg", "image/png"],
                 true,
                 OC.dialogs.FILEPICKER_TYPE_CHOOSE
             )
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style scoped>
-
 fieldset {
     margin-bottom: 1em;
 }
@@ -43,38 +61,38 @@ fieldset > * {
 }
 
 fieldset > label {
-    vertical-align: top;
     display: inline-block;
     width: 10em;
     height: 34px;
-    line-height: 17px;
     font-weight: bold;
+    line-height: 17px;
+    vertical-align: top;
 }
-    @media(max-width:1199px) { fieldset > label {
+@media (max-width: 1199px) {
+    fieldset > label {
         display: block;
         float: none;
-    }}
+    }
+}
 
 fieldset > input {
     width: calc(100% - 14em);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
     border-right: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }
-    @media(max-width:1199px) { fieldset > input {
+@media (max-width: 1199px) {
+    fieldset > input {
         width: calc(100% - 3em);
-    }}
-
-    fieldset > input + button {
-        border-top-right-radius: var(--border-radius);
-        border-bottom-right-radius: var(--border-radius);
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        width: 3em;
     }
+}
 
-        fieldset > input + button > * {
-            pointer-events: none;
-        }
+fieldset > input + button {
+    width: 3em;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
 
+fieldset > input + button > * {
+    pointer-events: none;
+}
 </style>

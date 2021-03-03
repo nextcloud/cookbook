@@ -4,14 +4,14 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue"
+import VueRouter from "vue-router"
 
-import Index from '../components/AppIndex'
-import NotFound from '../components/NotFound'
-import RecipeView from '../components/RecipeView'
-import RecipeEdit from '../components/RecipeEdit'
-import Search from '../components/SearchResults'
+import Index from "../components/AppIndex.vue"
+import NotFound from "../components/NotFound.vue"
+import RecipeView from "../components/RecipeView.vue"
+import RecipeEdit from "../components/RecipeEdit.vue"
+import Search from "../components/SearchResults.vue"
 
 Vue.use(VueRouter)
 
@@ -25,10 +25,30 @@ Vue.use(VueRouter)
 //  /section/:id
 const routes = [
     // Search routes
-    { path: '/category/:value', name: 'search-category', component: Search, props: { query: 'cat' } },
-    { path: '/name/:value', name: 'search-name', component: Search, props: { query: 'name' } },
-    { path: '/search/:value', name: 'search-general', component: Search, props: { query: 'general' } },
-    { path: '/tags/:value', name: 'search-tags', component: Search, props: { query: 'tags' } },
+    {
+        path: "/category/:value",
+        name: "search-category",
+        component: Search,
+        props: { query: "cat" },
+    },
+    {
+        path: "/name/:value",
+        name: "search-name",
+        component: Search,
+        props: { query: "name" },
+    },
+    {
+        path: "/search/:value",
+        name: "search-general",
+        component: Search,
+        props: { query: "general" },
+    },
+    {
+        path: "/tags/:value",
+        name: "search-tags",
+        component: Search,
+        props: { query: "tags" },
+    },
 
     // Recipe routes
     // Vue router has a strange way of determining when it renders a component again and when not.
@@ -39,17 +59,17 @@ const routes = [
     // - View: /{item}/:id
     // - Edit: /{item}/:id/edit
     // - Create: /{item}/create
-    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
-    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
-    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
+    { path: "/recipe/create", name: "recipe-create", component: RecipeEdit },
+    { path: "/recipe/:id/edit", name: "recipe-edit", component: RecipeEdit },
+    { path: "/recipe/:id", name: "recipe-view", component: RecipeView },
 
     // Index is the last defined route
-    { path: '/', name:'index', component: Index },
+    { path: "/", name: "index", component: Index },
 
     // Anything not matched goes to NotFound
-    { path: '*', name:'not-found', component: NotFound },
-];
+    { path: "*", name: "not-found", component: NotFound },
+]
 
 export default new VueRouter({
-    routes
+    routes,
 })

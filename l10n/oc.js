@@ -2,11 +2,12 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Domicili",
-    "Search" : "Search",
     "Loading…" : "Cargament...",
+    "Search" : "Search",
     "Add" : "Ajustar",
     "Name" : "Nom",
     "Description" : "Descripcion",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Calories" : "Calorias"
 },
 "nplurals=2; plural=(n > 1);");

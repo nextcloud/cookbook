@@ -2,52 +2,96 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <ul>
-            <li :class="fieldType" v-for="(entry,idx) in buffer" :key="fieldName+idx">
-                <div v-if="showStepNumber" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" ref="list-field" v-model="buffer[idx]" @keyup="keyPressed" v-on:input="handleInput" @paste="handlePaste"></textarea>
+            <li
+                v-for="(entry, idx) in buffer"
+                :key="fieldName + idx"
+                :class="fieldType"
+            >
+                <div v-if="showStepNumber" class="step-number">
+                    {{ parseInt(idx) + 1 }}
+                </div>
+                <input
+                    v-if="fieldType === 'text'"
+                    ref="list-field"
+                    v-model="buffer[idx]"
+                    type="text"
+                    @keyup="keyPressed"
+                    @input="handleInput"
+                    @paste="handlePaste"
+                />
+                <textarea
+                    v-else-if="fieldType === 'textarea'"
+                    ref="list-field"
+                    v-model="buffer[idx]"
+                    @keyup="keyPressed"
+                    @input="handleInput"
+                    @paste="handlePaste"
+                ></textarea>
                 <div class="controls">
-                    <button class="icon-arrow-up" @click="moveEntryUp(idx)" :title="t('cookbook', 'Move entry up')"></button>
-                    <button class="icon-arrow-down" @click="moveEntryDown(idx)" :title="t('cookbook', 'Move entry down')"></button>
-                    <button class="icon-add" @click="addNewEntry(idx)" :title="t('cookbook', 'Insert entry above')"></button>
-                    <button class="icon-delete" @click="deleteEntry(idx)" :title="t('cookbook', 'Delete entry')"></button>
+                    <button
+                        class="icon-arrow-up"
+                        :title="t('cookbook', 'Move entry up')"
+                        @click="moveEntryUp(idx)"
+                    ></button>
+                    <button
+                        class="icon-arrow-down"
+                        :title="t('cookbook', 'Move entry down')"
+                        @click="moveEntryDown(idx)"
+                    ></button>
+                    <button
+                        class="icon-add"
+                        :title="t('cookbook', 'Insert entry above')"
+                        @click="addNewEntry(idx)"
+                    ></button>
+                    <button
+                        class="icon-delete"
+                        :title="t('cookbook', 'Delete entry')"
+                        @click="deleteEntry(idx)"
+                    ></button>
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNewEntry()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
+        <button class="button add-list-item" @click="addNewEntry()">
+            <span class="icon-add"></span> {{ t("cookbook", "Add") }}
+        </button>
     </fieldset>
 </template>
 
 <script>
-
 export default {
-    name: "EditInputGroup",  
+    name: "EditInputGroup",
     props: {
         value: {
-          type: Array,
-          default: []
+            type: Array,
+            default: () => [],
         },
-        fieldType: String,
+        fieldType: {
+            type: String,
+            default: "text",
+        },
         fieldName: {
             type: String,
-            default: ''
+            default: "",
         },
         showStepNumber: {
             type: Boolean,
-            default: false
+            default: false,
         },
-        fieldLabel: String,
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
         // If true, add new fields, for newlines in pasted data
         createFieldsOnNewlines: {
             type: Boolean,
-            default: false
+            default: false,
         },
         referencePopupEnabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
-    data () {
+    data() {
         return {
             // helper variables
             buffer: this.value.slice(),
@@ -55,7 +99,7 @@ export default {
             singleLinePasted: false,
             lastFocusedFieldIndex: null,
             lastCursorPosition: -1,
-            ignoreNextKeyUp: false
+            ignoreNextKeyUp: false,
         }
     },
     watch: {
@@ -63,26 +107,27 @@ export default {
             handler() {
                 this.buffer = this.value.slice()
             },
-            deep: true
-        }
+            deep: true,
+        },
     },
     methods: {
         /* if index = -1, element is added at the end
          * if focusAfterInsert=true, the element is focussed after inserting
          * the content is inserted into the newly created field
-         **/
-        addNewEntry: function(index = -1, focusAfterInsert = true, content = '') {
-            if (index === -1) {
-                index = this.buffer.length
+         * */
+        addNewEntry(index = -1, focusAfterInsert = true, content = "") {
+            let entryIdx = index
+            if (entryIdx === -1) {
+                entryIdx = this.buffer.length
             }
-            this.buffer.splice(index, 0, content)
+            this.buffer.splice(entryIdx, 0, content)
 
             if (focusAfterInsert) {
-                let $this = this
-                this.$nextTick(function() {
-                    let listFields = this.$refs['list-field']
-                    if (listFields.length > index) {
-                        listFields[index].focus()
+                // const $this = this
+                this.$nextTick(function foc() {
+                    const listFields = this.$refs["list-field"]
+                    if (listFields.length > entryIdx) {
+                        listFields[entryIdx].focus()
                     }
                 })
             }
@@ -90,32 +135,32 @@ export default {
         /**
          * Delete an entry from the list
          */
-        deleteEntry: function(index) {
+        deleteEntry(index) {
             this.buffer.splice(index, 1)
-            this.$emit('input', this.buffer)
+            this.$emit("input", this.buffer)
         },
-        /** 
+        /**
          * Handle typing in input or field or textarea
          */
-        handleInput: function(e) {  
+        handleInput() {
             // wait a tick to check if content was typed or pasted
-            this.$nextTick(function() {
+            this.$nextTick(function handlePastedOrTyped() {
                 if (this.contentPasted) {
                     this.contentPasted = false
 
-                    if(this.singleLinePasted) {
-                        this.$emit('input', this.buffer)
+                    if (this.singleLinePasted) {
+                        this.$emit("input", this.buffer)
                     }
 
                     return
                 }
-                this.$emit('input', this.buffer)
+                this.$emit("input", this.buffer)
             })
         },
-        /** 
+        /**
          * Handle paste in input field or textarea
          */
-        handlePaste: function(e) {
+        handlePaste(e) {
             this.contentPasted = true
             if (!this.createFieldsOnNewlines) {
                 return
@@ -123,44 +168,48 @@ export default {
 
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
-            var clipboardData = e.clipboardData || window.clipboardData
-            var pastedData = clipboardData.getData('Text')
-            let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
+            const clipboardData = e.clipboardData || window.clipboardData
+            const pastedData = clipboardData.getData("Text")
+            const inputLinesArray = pastedData.split(/\r\n|\r|\n/g)
 
-            if ( input_lines_array.length == 1) {
+            if (inputLinesArray.length === 1) {
                 this.singleLinePasted = true
                 return
-            } else {
-                this.singleLinePasted = false
             }
+            this.singleLinePasted = false
 
             e.preventDefault()
 
-            let $li = e.currentTarget.closest('li')
-            let $ul = $li.closest('ul')
-            let $inserted_index = Array.prototype.indexOf.call($ul.childNodes, $li)
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $insertedIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
 
             // Remove empty lines
-            for (let i = input_lines_array.length-1; i >= 0; --i)
-            {
-                if (input_lines_array[i].trim() == '') {
-                    input_lines_array.splice(i, 1)
+            for (let i = inputLinesArray.length - 1; i >= 0; --i) {
+                if (inputLinesArray[i].trim() === "") {
+                    inputLinesArray.splice(i, 1)
                 }
             }
-            for (let i = 0; i < input_lines_array.length; ++i)
-            {
-                this.addNewEntry ($inserted_index+i+1, false, input_lines_array[i])
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                this.addNewEntry(
+                    $insertedIndex + i + 1,
+                    false,
+                    inputLinesArray[i]
+                )
             }
-            this.$emit('input', this.buffer)
+            this.$emit("input", this.buffer)
 
-            this.$nextTick(function() {
-                let indexToFocus = $inserted_index+input_lines_array.length
+            this.$nextTick(function foc() {
+                let indexToFocus = $insertedIndex + inputLinesArray.length
                 // Delete field if it's empty
-                if (this.buffer[$inserted_index].trim() == "" ) {
-                    this.deleteEntry($inserted_index)
-                    indexToFocus--
+                if (this.buffer[$insertedIndex].trim() === "") {
+                    this.deleteEntry($insertedIndex)
+                    indexToFocus -= 1
                 }
-                this.$refs['list-field'][indexToFocus].focus()
+                this.$refs["list-field"][indexToFocus].focus()
                 this.contentPasted = false
             })
         },
@@ -170,114 +219,143 @@ export default {
         keyPressed(e) {
             // If, e.g., enter has been pressed in the multiselect popup to select an option,
             // ignore the following keyup event
-            if(this.ignoreNextKeyUp) {
+            if (this.ignoreNextKeyUp) {
                 this.ignoreNextKeyUp = false
                 return
             }
             // Using keyup for trigger will prevent repeat triggering if key is held down
-            if (e.keyCode === 13 ||
+            if (
+                e.keyCode === 13 ||
                 e.keyCode === 10 ||
-                (this.referencePopupEnabled && e.keyCode === 51)) {
+                (this.referencePopupEnabled && e.keyCode === 51)
+            ) {
                 e.preventDefault()
-                let $li = e.currentTarget.closest('li')
-                let $ul = $li.closest('ul')
-                let $pressed_li_index = Array.prototype.indexOf.call($ul.childNodes, $li)
+                const $li = e.currentTarget.closest("li")
+                const $ul = $li.closest("ul")
+                // eslint-disable-next-line camelcase
+                const $pressed_li_index = Array.prototype.indexOf.call(
+                    $ul.childNodes,
+                    $li
+                )
 
                 if (e.keyCode === 13 || e.keyCode === 10) {
-                    if ($pressed_li_index >= this.$refs['list-field'].length - 1) {
-                        this.addNewEntry ()
+                    if (
+                        // eslint-disable-next-line camelcase
+                        $pressed_li_index >=
+                        this.$refs["list-field"].length - 1
+                    ) {
+                        this.addNewEntry()
                     } else {
-                        $ul.children[$pressed_li_index+1].getElementsByTagName('input')[0].focus()
+                        // eslint-disable-next-line camelcase
+                        $ul.children[$pressed_li_index + 1]
+                            .getElementsByTagName("input")[0]
+                            .focus()
                     }
-                }
-                else if (this.referencePopupEnabled && e.keyCode === 51) {
+                } else if (this.referencePopupEnabled && e.keyCode === 51) {
                     e.preventDefault()
-                    let elm = this.$refs['list-field'][$pressed_li_index]
+                    const elm = this.$refs["list-field"][$pressed_li_index]
                     // Check if the letter before the hash
-                    let cursorPos = elm.selectionStart
-                    let content = elm.value
-                    let prevChar = cursorPos > 1 ? content.charAt(cursorPos-2) : ''
+                    const cursorPos = elm.selectionStart
+                    const content = elm.value
+                    const prevChar =
+                        cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
 
-                    if (cursorPos === 1 || prevChar === ' ' || prevChar === '\n' || prevChar === '\r') {
+                    if (
+                        cursorPos === 1 ||
+                        prevChar === " " ||
+                        prevChar === "\n" ||
+                        prevChar === "\r"
+                    ) {
                         // Show dialog to select recipe
-                        this.$parent.$emit('showRecipeReferencesPopup', {context: this})
+                        this.$parent.$emit("showRecipeReferencesPopup", {
+                            context: this,
+                        })
+                        // eslint-disable-next-line camelcase
                         this.lastFocusedFieldIndex = $pressed_li_index
                         this.lastCursorPosition = cursorPos
                     }
                 }
             }
         },
-        moveEntryDown: function(index) {
+        moveEntryDown(index) {
             if (index >= this.buffer.length - 1) {
                 // Already at the end of array
                 return
             }
-            let entry = this.buffer.splice(index, 1)[0]
+            const entry = this.buffer.splice(index, 1)[0]
             if (index + 1 < this.buffer.length) {
                 this.buffer.splice(index + 1, 0, entry)
             } else {
                 this.buffer.push(entry)
             }
-            this.$emit('input', this.buffer)
+            this.$emit("input", this.buffer)
         },
-        moveEntryUp: function(index) {
+        moveEntryUp(index) {
             if (index < 1) {
                 // Already at the start of array
                 return
             }
-            let entry = this.buffer.splice(index, 1)[0]
+            const entry = this.buffer.splice(index, 1)[0]
             this.buffer.splice(index - 1, 0, entry)
-            this.$emit('input', this.buffer)
+            this.$emit("input", this.buffer)
         },
         pasteCanceled() {
-            let field = this.$refs['list-field'][this.lastFocusedFieldIndex]
+            const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
             // set cursor back to previous position
-            this.$nextTick(function() {
+            this.$nextTick(function foc() {
                 field.focus()
-                field.setSelectionRange (this.lastCursorPosition, this.lastCursorPosition)
+                field.setSelectionRange(
+                    this.lastCursorPosition,
+                    this.lastCursorPosition
+                )
             })
         },
         /**
          * Paste string at the last saved cursor position
          */
-        pasteString(str, ignoreKeyup=true) {
-            let field = this.$refs['list-field'][this.lastFocusedFieldIndex]
+        pasteString(str, ignoreKeyup = true) {
+            const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
 
             // insert str
-            let content = field.value
-            let updatedContent = content.slice(0, this.lastCursorPosition)
-                + str
-                + content.slice(this.lastCursorPosition)
+            const content = field.value
+            const updatedContent =
+                content.slice(0, this.lastCursorPosition) +
+                str +
+                content.slice(this.lastCursorPosition)
             this.buffer[this.lastFocusedFieldIndex] = updatedContent
-            this.$emit('input', this.buffer)
+            this.$emit("input", this.buffer)
 
             // set cursor to position after pasted string. Waiting two ticks is necessary for
             // the data to be updated in the field
-            this.$nextTick(function() {
-                this.$nextTick(function() {
+            this.$nextTick(function delayedFocus() {
+                this.$nextTick(function foc() {
                     this.ignoreNextKeyUp = ignoreKeyup
                     field.focus()
-                    let newCursorPos = this.lastCursorPosition + str.length
-                    field.setSelectionRange (newCursorPos, newCursorPos)
+                    const newCursorPos = this.lastCursorPosition + str.length
+                    field.setSelectionRange(newCursorPos, newCursorPos)
                 })
             })
-        }
+        },
     },
 }
 </script>
 
 <style scoped>
+button {
+    width: auto !important;
+    padding: 0 1rem 0 0.75rem !important;
+}
 
 fieldset {
-    margin-bottom: 1em;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 fieldset > label {
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
+    line-height: 18px;
     word-spacing: initial;
 }
 
@@ -287,83 +365,83 @@ fieldset > ul {
 
 fieldset > ul + button {
     width: 36px;
-    text-align: center;
     padding: 0;
     float: right;
+    text-align: center;
 }
 
 fieldset > ul > li {
     display: flex;
     width: 100%;
-    margin: 0 0 1em 0;
     padding-right: 0.25em;
+    margin: 0 0 1em;
 }
 
-    li.text > input {
-        width: 100%;
-        margin: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
+.text > input {
+    width: 100%;
+    margin: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
 
-    li .controls {
-        display: flex;
-    }
+li .controls {
+    display: flex;
+}
 
-        li .controls > button {
-            padding: 0;
-            margin: 0;
-            width: 34px;
-            height: 34px;
-            border-radius: 0;
-            border-left-color: transparent;
-            border-right-color: transparent;
-        }
+li .controls > button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    margin: 0;
+    border-radius: 0;
+}
 
-        li .controls > button:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            border-right-width: 1px;
-        }
-            li .controls > button:last-child:not(:hover):not(:focus) {
-                border-right-color: var(--color-border-dark);
-            }
+li .controls > button:last-child {
+    border-right-width: 1px;
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+li .controls > button:last-child:not(:hover):not(:focus) {
+    border-right-color: var(--color-border-dark);
+}
 
-li.textarea {
-    float: right;
+.textarea {
     position: relative;
-    top: 1px;
     z-index: 1;
+    top: 1px;
+    float: right;
 }
 
-    li.textarea > textarea {
-        min-height: 10em;
-        resize: vertical;
-        width: calc(100% - 44px);
-        margin: 0 0 0 44px;
-        border-top-right-radius: 0;
-    }
+.textarea > textarea {
+    width: calc(100% - 44px);
+    min-height: 10em;
+    margin: 0 0 0 44px;
+    border-top-right-radius: 0;
+    resize: vertical;
+}
 
-    li.textarea::after {
-        display: table;
-        content: '';
-        clear: both;
-    }
-    .step-number {
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 36px;
-        width: 36px;
-        border-radius: 50%;
-        border: 1px solid var(--color-border-dark);
-        outline: none;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-color: var(--color-background-dark);
-        line-height: 36px;
-        text-align: center;
-    }
+.textarea::after {
+    display: table;
+    clear: both;
+    content: "";
+}
+.step-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border-dark);
+    background-color: var(--color-background-dark);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    line-height: 36px;
+    outline: none;
+    text-align: center;
+}
 
 .icon-arrow-up {
     background-image: var(--icon-triangle-n-000);
@@ -372,10 +450,4 @@ li.textarea {
 .icon-arrow-down {
     background-image: var(--icon-triangle-s-000);
 }
-
-button {
-    width: auto !important;
-    padding: 0 1rem 0 0.75rem !important;
-}
-
 </style>

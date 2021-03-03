@@ -2,10 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Нүүр",
-    "Filter" : "Шүүлтүүр",
-    "Search" : "Хайх",
     "Save changes" : "Өөрчлөлтийг хадгалах",
     "Loading…" : "уншиж байна",
+    "Filter" : "Шүүлтүүр",
+    "Search" : "Хайх",
     "Category" : "Ангилал",
     "Add" : "нэмэх",
     "Name" : "Нэр",

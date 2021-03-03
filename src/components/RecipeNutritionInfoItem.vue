@@ -11,32 +11,29 @@
 
 <script>
 export default {
-    name: 'RecipeNutritionInfoItem',
+    name: "RecipeNutritionInfoItem",
     props: {
         title: {
             type: String,
-            required: true
+            required: true,
         },
         data: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
-
 }
 </script>
 
 <style scoped>
-
 li {
+    margin-bottom: 0.5em;
     margin-left: 1.25em;
-    margin-bottom: .5em;
 }
 
 li .title {
-    margin-bottom: 0em;
+    margin-bottom: 0;
     color: var(--color-main-text);
     font-weight: bolder;
 }
-
 </style>

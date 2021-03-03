@@ -2,10 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "الرئيسية",
-    "Filter" : "فلتر",
-    "Search" : "البحث",
     "Save changes" : "حفظ التعديلات",
     "Loading…" : "التحميل جارٍ…",
+    "Filter" : "فلتر",
+    "Search" : "البحث",
     "Category" : "الفئة",
     "Uncategorized recipes" : "وصفات غير مصنفة",
     "Add" : "إضافة",

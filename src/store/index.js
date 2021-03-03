@@ -4,9 +4,9 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from '@nextcloud/axios'
+import Vue from "vue"
+import Vuex from "vuex"
+import axios from "@nextcloud/axios"
 
 Vue.use(Vuex)
 
@@ -18,12 +18,11 @@ export default new Vuex.Store({
     //  the mutation if you want.
     state: {
         // The left navigation pane (categories, settings, etc.)
-        appNavigation:
-            {
-                // It can be hidden in small browser windows (e.g., on mobile phones)
-                visible: true,
-                refreshRequired: false
-            },
+        appNavigation: {
+            // It can be hidden in small browser windows (e.g., on mobile phones)
+            visible: true,
+            refreshRequired: false,
+        },
         user: null,
         // Page is for keeping track of the page the user is on and
         //  setting the appropriate navigation entry active.
@@ -47,39 +46,42 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        setAppNavigationRefreshRequired(s, { b }) {
-            s.appNavigation.refreshRequired = b
+        setAppNavigationRefreshRequired(state, { b }) {
+            state.appNavigation.refreshRequired = b
         },
-        setAppNavigationVisible(s, { b }) {
-            s.appNavigation.visible = b
+        setAppNavigationVisible(state, { b }) {
+            state.appNavigation.visible = b
         },
-        setCategoryUpdating(s, { c }) {
-            s.categoryUpdating = c
+        setCategoryUpdating(state, { c }) {
+            state.categoryUpdating = c
         },
-        setLoadingRecipe(s, { r }) {
-            s.loadingRecipe = r
+        setLoadingRecipe(state, { r }) {
+            state.loadingRecipe = r
         },
-        setPage(s, { p }) {
-            s.page = p
+        setPage(state, { p }) {
+            state.page = p
         },
-        setRecipe(s, { r }) {
-            s.recipe = r
+        setRecipe(state, { r }) {
+            state.recipe = r
             // Setting recipe also means that loading/reloading the recipe has finished
-            s.loadingRecipe = 0
-            s.reloadingRecipe = 0
+            state.loadingRecipe = 0
+            state.reloadingRecipe = 0
         },
-        setReloadingRecipe(s, { r }) {
-            s.reloadingRecipe = r
+        setRecipeCategory(state, { c }) {
+            state.recipe.category = c
         },
-        setSavingRecipe(s, { b }) {
-            s.savingRecipe = b
+        setReloadingRecipe(state, { r }) {
+            state.reloadingRecipe = r
         },
-        setUser(s, { u }) {
-            s.user = u
+        setSavingRecipe(state, { b }) {
+            state.savingRecipe = b
         },
-        setUpdatingRecipeDirectory(s, { b }) {
-            s.updatingRecipeDirectory = b
-        }
+        setUser(state, { u }) {
+            state.user = u
+        },
+        setUpdatingRecipeDirectory(state, { b }) {
+            state.updatingRecipeDirectory = b
+        },
     },
 
     actions: {
@@ -88,94 +90,104 @@ export default new Vuex.Store({
          */
         createRecipe(c, { recipe }) {
             const request = axios({
-                method: 'POST',
-                url: window.baseUrl + '/api/recipes',
-                data: recipe
-                });
-            request.then((response) => {
-                    // Refresh navigation to display changes
-                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
+                method: "POST",
+                url: `${window.baseUrl}/api/recipes`,
+                data: recipe,
+            })
+            request.then(() => {
+                // Refresh navigation to display changes
+                c.dispatch("setAppNavigationRefreshRequired", {
+                    isRequired: true,
                 })
+            })
             return request
         },
         /**
          * Delete recipe on the server
          */
         deleteRecipe(c, { id }) {
-            const request = axios.delete (window.baseUrl + '/api/recipes/' + id);
-            request.then((response) => {
-                    // Refresh navigation to display changes
-                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
+            const request = axios.delete(`${window.baseUrl}/api/recipes/${id}`)
+            request.then(() => {
+                // Refresh navigation to display changes
+                c.dispatch("setAppNavigationRefreshRequired", {
+                    isRequired: true,
                 })
+            })
             return request
         },
         setAppNavigationVisible(c, { isVisible }) {
-            c.commit('setAppNavigationVisible', { b: isVisible })
+            c.commit("setAppNavigationVisible", { b: isVisible })
         },
         setAppNavigationRefreshRequired(c, { isRequired }) {
-            c.commit('setAppNavigationRefreshRequired', {b: isRequired })
+            c.commit("setAppNavigationRefreshRequired", { b: isRequired })
         },
         setLoadingRecipe(c, { recipe }) {
-            c.commit('setLoadingRecipe', { r: parseInt(recipe) })
+            c.commit("setLoadingRecipe", { r: parseInt(recipe, 10) })
         },
         setPage(c, { page }) {
-            c.commit('setPage', { p: page })
+            c.commit("setPage", { p: page })
         },
         setRecipe(c, { recipe }) {
-            c.commit('setRecipe', { r: recipe })
+            c.commit("setRecipe", { r: recipe })
         },
         setReloadingRecipe(c, { recipe }) {
-            c.commit('setReloadingRecipe', { r: parseInt(recipe) })
+            c.commit("setReloadingRecipe", { r: parseInt(recipe, 10) })
         },
         setSavingRecipe(c, { saving }) {
-            c.commit('setSavingRecipe', { b: saving })
+            c.commit("setSavingRecipe", { b: saving })
         },
         setUser(c, { user }) {
-            c.commit('setUser', { u: user })
+            c.commit("setUser", { u: user })
         },
         setCategoryUpdating(c, { category }) {
-            c.commit('setCategoryUpdating', { c: category })
+            c.commit("setCategoryUpdating", { c: category })
         },
         updateCategoryName(c, { categoryNames }) {
-            let oldName = categoryNames[0], newName = categoryNames[1]
-            c.dispatch('setCategoryUpdating', { category: oldName })
+            const oldName = categoryNames[0]
+            const newName = categoryNames[1]
+            c.dispatch("setCategoryUpdating", { category: oldName })
 
             const request = axios({
-                method: 'PUT',
-                url: window.baseUrl + '/api/category/' + encodeURIComponent(oldName),
-                data: { name: newName }
-                });
+                method: "PUT",
+                url: `${window.baseUrl}/api/category/${encodeURIComponent(
+                    oldName
+                )}`,
+                data: { name: newName },
+            })
 
-            request.then(function (response) {
-                    if (c.state.recipe.recipeCategory == oldName) {
-                        c.state.recipe.recipeCategory = newName
+            request
+                .then(() => {
+                    if (c.state.recipe.recipeCategory === oldName) {
+                        c.commit("setRecipeCategory", { c: newName })
                     }
                 })
-                .catch(function(e) {
+                .catch((e) => {
                     if (e && e instanceof Error) {
                         throw e
                     }
                 })
                 .then(() => {
                     // finally
-                    c.dispatch('setCategoryUpdating', { category: null })
+                    c.dispatch("setCategoryUpdating", { category: null })
                 })
 
             return request
         },
         updateRecipeDirectory(c, { dir }) {
-            c.commit('setUpdatingRecipeDirectory', { b: true })
-            c.dispatch('setRecipe', { recipe: null })
+            c.commit("setUpdatingRecipeDirectory", { b: true })
+            c.dispatch("setRecipe", { recipe: null })
             const request = axios({
-                url: window.baseUrl + '/config',
-                method: 'POST',
-                data: { 'folder': dir },
-            });
+                url: `${window.baseUrl}/config`,
+                method: "POST",
+                data: { folder: dir },
+            })
 
             request.then(() => {
-                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
-                    c.commit('setUpdatingRecipeDirectory', { b: false })
+                c.dispatch("setAppNavigationRefreshRequired", {
+                    isRequired: true,
                 })
+                c.commit("setUpdatingRecipeDirectory", { b: false })
+            })
             return request
         },
         /**
@@ -183,16 +195,17 @@ export default new Vuex.Store({
          */
         updateRecipe(c, { recipe }) {
             const request = axios({
-                method: 'PUT',
-                url: window.baseUrl + '/api/recipes/' + recipe.id,
-                data: recipe
-                });
-            request.then((response) => {
-                    // Refresh navigation to display changes
-                    c.dispatch('setAppNavigationRefreshRequired', { isRequired: true })
+                method: "PUT",
+                url: `${window.baseUrl}/api/recipes/${recipe.id}`,
+                data: recipe,
+            })
+            request.then(() => {
+                // Refresh navigation to display changes
+                c.dispatch("setAppNavigationRefreshRequired", {
+                    isRequired: true,
                 })
+            })
             return request
         },
-    }
-
+    },
 })

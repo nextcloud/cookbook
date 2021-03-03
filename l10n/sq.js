@@ -2,11 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Kryefaqja",
-    "Filter" : "Filtro",
-    "Search" : "Kërko",
     "Save changes" : "Ruaj ndryshimet",
     "Loading…" : "Duke u ngarkuar…",
     "Page not found" : "Faqja nuk u gjet ",
+    "Filter" : "Filtro",
+    "Search" : "Kërko",
     "Category" : "Kategori",
     "Add" : "Shto",
     "Name" : "Emri",

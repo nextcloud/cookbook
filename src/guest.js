@@ -3,21 +3,21 @@
  * Vue frontend entry file
  * ---------------------------
  * @license AGPL3 or later
-*/
+ */
 
-import Vue from 'vue'
-import store from './store'
+import Vue from "vue"
+import store from "./store"
 
-import AppInvalidGuest from './components/AppInvalidGuest'
+import AppInvalidGuest from "./components/AppInvalidGuest.vue"
 
-(function (OC, window) {
-    'use strict'
-
+// eslint-disable-next-line func-names, import/newline-after-import
+;(function (OC, window) {
     // Fetch Nextcloud nonce identifier for dynamic script loading
+    // eslint-disable-next-line camelcase,no-undef
     __webpack_nonce__ = btoa(OC.requestToken)
 
-    window.baseUrl = OC.generateUrl('apps/cookbook')
-
+    // eslint-disable-next-line no-param-reassign
+    window.baseUrl = OC.generateUrl("apps/cookbook")
 
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
@@ -27,7 +27,7 @@ import AppInvalidGuest from './components/AppInvalidGuest'
     Vue.prototype.t = window.t
 
     // Start the app once document is done loading
-    document.addEventListener("DOMContentLoaded", function(event) {
+    document.addEventListener("DOMContentLoaded", () => {
         const App = Vue.extend(AppInvalidGuest)
         new App({
             store,

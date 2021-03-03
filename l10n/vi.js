@@ -2,10 +2,10 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Trang nhất",
-    "Search" : "Tìm",
     "Save changes" : "Lưu thay đổi",
     "Loading…" : "Đang tải…",
     "Page not found" : "Trang không tìm thấy",
+    "Search" : "Tìm",
     "Category" : "Các hạng mục",
     "Add" : "Thêm",
     "Name" : "Tên",

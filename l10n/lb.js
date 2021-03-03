@@ -2,9 +2,9 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Doheem",
-    "Search" : "Search",
     "Save changes" : "Ännerunge späicheren",
     "Loading…" : "Et gëtt gelueden",
+    "Search" : "Search",
     "Add" : "Derbäimaachen",
     "Name" : "Numm",
     "Description" : "Beschreiwung",
