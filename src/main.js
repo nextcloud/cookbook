@@ -94,7 +94,7 @@ import AppMain from "./components/AppMain.vue"
     // eslint-disable-next-line no-param-reassign
     window.escapeHTML = function escapeHTML(text) {
         return text.replace(
-            /["&'/<>]/g,
+            /["&'<>]/g,
             (a) =>
                 ({
                     "&": "&amp;",
