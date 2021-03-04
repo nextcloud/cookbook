@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- Minor errors in displaying ingredients and instructions
+  [#642](https://github.com/nextcloud/cookbook/pull/642) @seyfeb
+
 ## 0.8.3 - 2021-03-03
 
 ### Fixed
