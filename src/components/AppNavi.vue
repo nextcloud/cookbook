@@ -280,7 +280,7 @@ export default {
                 .catch((e2) => {
                     $this.downloading = false
                     // eslint-disable-next-line no-alert
-                    alert(t("cookbook", e2.request.responseJSON))
+                    alert(t("cookbook", e2.response.data))
                 })
         },
 
