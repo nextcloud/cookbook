@@ -93,6 +93,7 @@ OC.L10N.register(
     "Sugar content" : "Şeker miktarı",
     "Trans-fat content" : "Trans yağ miktarı",
     "Unsaturated-fat content" : "Doymamış yağ miktarı",
+    "You have unsaved changes! Do you still want to leave?" : "Kaydedilmemiş değişiklikleriniz var. Gene de ayrılmak istiyor musunuz?",
     "Failed to fetch keywords" : "Anahtar sözcükler alınamadı",
     "Loading recipe failed" : "Tarif yüklenemedi",
     "Recipe could not be saved" : "Tarif kaydedilemedi",
