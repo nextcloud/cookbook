@@ -94,35 +94,45 @@
                             recipeObj.recipe.name
                         }}</span>
                         <div
-                            v-if="orderBy"
                             class="recipe-info-container-bottom"
                         >
-                            <span
+                            <span class="recipe-info-date"
                                 v-if="
                                     formatDateTime(
                                         recipeObj.recipe.dateCreated
                                     ) != null
-                                "
-                                class="recipe-date"
-                                >{{
-                                    formatDateTime(recipeObj.recipe.dateCreated)
-                                }}
+                                ">
+                                <span class="icon-calendar-dark recipe-info-date-icon" />
+                                <span
+                                    class="recipe-date"
+                                    >{{
+                                        formatDateTime(recipeObj.recipe.dateCreated)
+                                    }}
+                                </span>
                             </span>
-                            <span
+                            <span class="recipe-info-date"
                                 v-if="
                                     recipeObj.recipe.dateModified !==
                                         recipeObj.recipe.dateCreated &&
                                     formatDateTime(
                                         recipeObj.recipe.dateModified
                                     ) != null
-                                "
-                                class="recipe-date"
-                                >{{
-                                    formatDateTime(
-                                        recipeObj.recipe.dateModified
-                                    )
-                                }}
+                                ">
+                                <span class="icon-rename recipe-info-date-icon" />
+                                <span class="recipe-date">{{
+                                        formatDateTime(
+                                            recipeObj.recipe.dateModified
+                                        )
+                                    }}
+                                </span>
                             </span>
+
+
+
+
+
+
+
                         </div>
                     </div>
                 </router-link>
@@ -568,6 +578,15 @@ export default {
     font-weight: 500;
     line-height: 2.6ex;
     text-overflow: ellipsis;
+}
+
+.recipes li .recipe-info-date {
+    display: flex;
+}
+.recipe-info-date-icon {
+    height: 1.4ex;
+    min-height: 0;
+    background-size: contain;
 }
 
 .recipe-date {
