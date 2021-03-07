@@ -1,57 +1,44 @@
 <template>
-        <div class="recipe-card" v-if="recipe !== null">
-            <router-link :to="'/recipe/' + recipe.recipe_id">
-                <lazy-picture
-                    v-if="recipe.imageUrl"
-                    class="recipe-thumbnail"
-                    :lazy-src="recipe.imageUrl"
-                    :blurred-preview-src="
-                        recipe.imagePlaceholderUrl
-                    "
-                    :width="105"
-                    :height="105"
-                />
-                <div class="recipe-info-container">
-                    <span class="recipe-title">{{
-                        recipe.name
-                    }}</span>
-                    <div
-                        class="recipe-info-container-bottom"
+    <div class="recipe-card" v-if="recipe !== null">
+        <router-link :to="'/recipe/' + recipe.recipe_id">
+            <lazy-picture
+                v-if="recipe.imageUrl"
+                class="recipe-thumbnail"
+                :lazy-src="recipe.imageUrl"
+                :blurred-preview-src="recipe.imagePlaceholderUrl"
+                :width="105"
+                :height="105"
+            />
+            <div class="recipe-info-container">
+                <span class="recipe-title">{{ recipe.name }}</span>
+                <div class="recipe-info-container-bottom">
+                    <span
+                        class="recipe-info-date"
+                        v-if="formatDateTime(recipe.dateCreated) != null"
                     >
-                        <span class="recipe-info-date"
-                            v-if="
-                                formatDateTime(
-                                    recipe.dateCreated
-                                ) != null
-                            ">
-                            <span class="icon-calendar-dark recipe-info-date-icon" />
-                            <span
-                                class="recipe-date"
-                                >{{
-                                    formatDateTime(recipe.dateCreated)
-                                }}
-                            </span>
+                        <span
+                            class="icon-calendar-dark recipe-info-date-icon"
+                        />
+                        <span class="recipe-date"
+                            >{{ formatDateTime(recipe.dateCreated) }}
                         </span>
-                        <span class="recipe-info-date"
-                            v-if="
-                                recipe.dateModified !==
-                                    recipe.dateCreated &&
-                                formatDateTime(
-                                    recipe.dateModified
-                                ) != null
-                            ">
-                            <span class="icon-rename recipe-info-date-icon" />
-                            <span class="recipe-date">{{
-                                    formatDateTime(
-                                        recipe.dateModified
-                                    )
-                                }}
-                            </span>
+                    </span>
+                    <span
+                        class="recipe-info-date"
+                        v-if="
+                            recipe.dateModified !== recipe.dateCreated &&
+                            formatDateTime(recipe.dateModified) != null
+                        "
+                    >
+                        <span class="icon-rename recipe-info-date-icon" />
+                        <span class="recipe-date"
+                            >{{ formatDateTime(recipe.dateModified) }}
                         </span>
-                    </div>
+                    </span>
                 </div>
-            </router-link>
-        </div>
+            </div>
+        </router-link>
+    </div>
 </template>
 
 <script>
@@ -86,7 +73,6 @@ export default {
 </script>
 
 <style scoped>
-
 .recipe-card {
     width: 300px;
     max-width: 100%;

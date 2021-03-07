@@ -386,7 +386,9 @@ export default {
                         )
                     }
                     if (recipeProperty === "name") {
-                        return r1[recipeProperty].localeCompare(r2[recipeProperty])
+                        return r1[recipeProperty].localeCompare(
+                            r2[recipeProperty]
+                        )
                     }
                     if (
                         !Number.isNaN(r1[recipeProperty] - r2[recipeProperty])
@@ -465,5 +467,4 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
 }
-
 </style>
