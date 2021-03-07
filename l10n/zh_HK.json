@@ -91,6 +91,7 @@
     "Sugar content" : "糖含量",
     "Trans-fat content" : "反式脂肪含量",
     "Unsaturated-fat content" : "不飽和脂肪含量",
+    "You have unsaved changes! Do you still want to leave?" : "您有未保存的更改！你還要離開嗎？",
     "Failed to fetch keywords" : "獲取關鍵詞失敗",
     "Loading recipe failed" : "食譜加載失敗",
     "Recipe could not be saved" : "食譜無法被保存",
