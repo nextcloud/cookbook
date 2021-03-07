@@ -70,7 +70,7 @@ export default {
          */
         keyPressed(e) {
             // Using keyup for trigger will prevent repeat triggering if key is held down
-            if (this.referencePopupEnabled && e.keyCode === 51) {
+            if (this.referencePopupEnabled && e.key === "#") {
                 e.preventDefault()
                 // Check if the letter before the hash
                 if (this.fieldType === "markdown") {
