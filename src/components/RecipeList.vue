@@ -159,6 +159,18 @@ export default {
             orderBy: null,
             recipeOrderingOptions: [
                 {
+                    label: t("cookbook", "Name"),
+                    icon: "icon-triangle-n",
+                    recipeProperty: "name",
+                    order: "ascending",
+                },
+                {
+                    label: t("cookbook", "Name"),
+                    icon: "icon-triangle-s",
+                    recipeProperty: "name",
+                    order: "descending",
+                },
+                {
                     label: t("cookbook", "Creation date"),
                     icon: "icon-triangle-n",
                     recipeProperty: "dateCreated",
@@ -318,6 +330,14 @@ export default {
                 (kw) => !this.selectableKeywords.includes(kw)
             )
         },
+        // Recipes ordered ascending by name
+        recipesNameAsc() {
+            return this.sortRecipes(this.recipes, "name", "ascending")
+        },
+        // Recipes ordered descending by name
+        recipesNameDesc() {
+            return this.sortRecipes(this.recipes, "name", "descending")
+        },
         // Recipes ordered ascending by creation date
         recipesDateCreatedAsc() {
             return this.sortRecipes(this.recipes, "dateCreated", "ascending")
@@ -364,6 +384,12 @@ export default {
                 }
                 return this.recipesDateModifiedDesc.map(makeObject, this)
             }
+            if (this.orderBy.recipeProperty === "name") {
+                if (this.orderBy.order === "ascending") {
+                    return this.recipesNameAsc.map(makeObject, this)
+                }
+                return this.recipesNameDesc.map(makeObject, this)
+            }
             return this.recipes.map(makeObject, this)
         },
     },
@@ -372,6 +398,9 @@ export default {
         this.$root.$on("applyRecipeFilter", (value) => {
             this.filters = value
         })
+        // Set default order for recipe
+        // eslint-disable-next-line prefer-destructuring
+        this.orderBy = this.recipeOrderingOptions[0]
     },
     methods: {
         /**
@@ -413,6 +442,9 @@ export default {
                             new Date(r2[recipeProperty])
                         )
                     }
+                    if (recipeProperty === "name") {
+                        return r1[recipeProperty].localeCompare(r2[recipeProperty])
+                    }
                     if (
                         !Number.isNaN(r1[recipeProperty] - r2[recipeProperty])
                     ) {
@@ -429,6 +461,9 @@ export default {
                         new Date(r2[recipeProperty]) -
                         new Date(r1[recipeProperty])
                     )
+                }
+                if (recipeProperty === "name") {
+                    return r2[recipeProperty].localeCompare(r1[recipeProperty])
                 }
                 if (!Number.isNaN(r2[recipeProperty] - r1[recipeProperty])) {
                     return r2[recipeProperty] - r1[recipeProperty]
