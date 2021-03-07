@@ -41,6 +41,7 @@
         </div>
         <div id="recipes-submenu" class="recipes-submenu-container">
             <Multiselect
+                v-if="recipes.length > 0"
                 v-model="orderBy"
                 class="recipes-sorting-dropdown"
                 :multiple="false"
@@ -78,64 +79,7 @@
                 v-show="recipeObj.show"
                 :key="recipeObj.recipe.recipe_id"
             >
-                <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
-                    <lazy-picture
-                        v-if="recipeObj.recipe.imageUrl"
-                        class="recipe-thumbnail"
-                        :lazy-src="recipeObj.recipe.imageUrl"
-                        :blurred-preview-src="
-                            recipeObj.recipe.imagePlaceholderUrl
-                        "
-                        :width="105"
-                        :height="105"
-                    />
-                    <div class="recipe-info-container">
-                        <span class="recipe-title">{{
-                            recipeObj.recipe.name
-                        }}</span>
-                        <div
-                            class="recipe-info-container-bottom"
-                        >
-                            <span class="recipe-info-date"
-                                v-if="
-                                    formatDateTime(
-                                        recipeObj.recipe.dateCreated
-                                    ) != null
-                                ">
-                                <span class="icon-calendar-dark recipe-info-date-icon" />
-                                <span
-                                    class="recipe-date"
-                                    >{{
-                                        formatDateTime(recipeObj.recipe.dateCreated)
-                                    }}
-                                </span>
-                            </span>
-                            <span class="recipe-info-date"
-                                v-if="
-                                    recipeObj.recipe.dateModified !==
-                                        recipeObj.recipe.dateCreated &&
-                                    formatDateTime(
-                                        recipeObj.recipe.dateModified
-                                    ) != null
-                                ">
-                                <span class="icon-rename recipe-info-date-icon" />
-                                <span class="recipe-date">{{
-                                        formatDateTime(
-                                            recipeObj.recipe.dateModified
-                                        )
-                                    }}
-                                </span>
-                            </span>
-
-
-
-
-
-
-
-                        </div>
-                    </div>
-                </router-link>
+                <RecipeCard :recipe="recipeObj.recipe" />
             </li>
         </ul>
     </div>
@@ -144,14 +88,14 @@
 <script>
 import moment from "@nextcloud/moment"
 import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
-import LazyPicture from "./LazyPicture.vue"
+import RecipeCard from "./RecipeCard.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
 
 export default {
     name: "RecipeList",
     components: {
-        LazyPicture,
         Multiselect,
+        RecipeCard,
         RecipeKeyword,
     },
     props: {
@@ -424,17 +368,6 @@ export default {
                 this.keywordFilter.push(keyword.name)
             }
         },
-        /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
-         * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
-         */
-        formatDateTime(dt) {
-            if (!dt) return null
-            const date = moment(dt, moment.ISO_8601)
-            if (!date.isValid()) {
-                return null
-            }
-            return date.format("L, LT").toString()
-        },
         /* Sort recipes according to the property of the recipe ascending or
          * descending
          */
@@ -519,9 +452,6 @@ export default {
     margin-bottom: 0.75ex;
 }
 
-.recipe-sorting-dropdown {
-    width: 300px;
-}
 .recipe-sorting-item-placeholder {
     display: block;
 }
@@ -536,63 +466,4 @@ export default {
     flex-wrap: wrap;
 }
 
-.recipes li {
-    width: 300px;
-    max-width: 100%;
-    margin: 0.5rem 1rem 1rem;
-}
-.recipes li a {
-    display: block;
-    height: 105px;
-    border-radius: 3px;
-    box-shadow: 0 0 3px #aaa;
-}
-.recipes li a:hover {
-    box-shadow: 0 0 5px #888;
-}
-
-.recipes li .recipe-thumbnail {
-    position: relative;
-    overflow: hidden;
-    width: 105px;
-    height: 105px;
-    background-color: #bebdbd;
-    border-radius: 3px 0 0 3px;
-    float: left;
-}
-
-.recipes li span {
-    display: block;
-}
-
-.recipe-info-container {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-    padding: 0.5rem;
-}
-
-.recipe-title {
-    overflow: hidden;
-    flex-grow: 1;
-    font-weight: 500;
-    line-height: 2.6ex;
-    text-overflow: ellipsis;
-}
-
-.recipes li .recipe-info-date {
-    display: flex;
-}
-.recipe-info-date-icon {
-    height: 1.4ex;
-    min-height: 0;
-    background-size: contain;
-}
-
-.recipe-date {
-    height: 2.7ex;
-    color: var(--color-text-lighter);
-    font-size: 10px;
-    line-height: 2ex;
-}
 </style>
