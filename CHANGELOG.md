@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Sorting recipes in list by creation and modification date   
+  [#623](https://github.com/nextcloud/cookbook/pull/623) @seyfeb
+
 ### Fixed
 - Minor errors in displaying ingredients and instructions
   [#642](https://github.com/nextcloud/cookbook/pull/642) @seyfeb
