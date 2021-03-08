@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.8.4 - 2021-03-08
+
 ### Added
 - Sorting recipes in list by creation and modification date   
   [#623](https://github.com/nextcloud/cookbook/pull/623) @seyfeb
