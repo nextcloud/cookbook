@@ -1,11 +1,13 @@
 <template>
-    <li :class="{ done: isDone }" @click="toggleDone">{{ instruction }}</li>
+    <li :class="{ done: isDone }" @click="toggleDone" v-html="instruction"></li>
 </template>
 
 <script>
 export default {
     name: "RecipeInstruction",
     props: {
+        /* Instruction HTML string to display. Content should be sanitized.
+         */
         instruction: {
             type: String,
             default: "",

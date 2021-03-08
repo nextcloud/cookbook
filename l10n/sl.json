@@ -94,12 +94,27 @@
     "Failed to fetch keywords" : "Pridobivanje ključnih besed je spodletelo",
     "Loading recipe failed" : "Nalaganje receptov je spodletelo",
     "Recipe could not be saved" : "Recepta ni mogoče shraniti",
+    "Recipe image" : "Slika jedi",
     "Toggle keyword" : "Preklopi izbor ključnih besed",
     "Keyword not contained in visible recipes" : "Beseda ni vključena v opis recepta",
     "Cooking time is up!" : "Čas kuhanja je končan!",
     "Search recipes with this keyword" : "Poišči recepte s ključno besedo",
     "Date created" : "Datum zapisa",
     "Last modified" : "Zadnjič spremenjeno",
-    "Source" : "Vir"
+    "Serving Size" : "Velikost porcije",
+    "Energy" : "Energijska vrednost",
+    "Sugar" : "Sladkor",
+    "Carbohydrate" : "Ogljikovi hidrati",
+    "Cholesterol" : "Holesterol",
+    "Fiber" : "Vlaknine",
+    "Protein" : "Beljakovine",
+    "Sodium" : "Natrij",
+    "Fat total" : "Skupno maščobe",
+    "Saturated Fat" : "Nasičene maščobe",
+    "Unsaturated Fat" : "Nenasičene maščobe",
+    "Trans Fat" : "Trans maščobne",
+    "Source" : "Vir",
+    "Failed to load recipes with keywords: {tags}" : "Spodletelo je nalaganje receptov za ključne besede: {tags}",
+    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo"
 },"pluralForm" :"nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);"
 }

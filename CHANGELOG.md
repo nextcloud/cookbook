@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+## 0.8.4 - 2021-03-08
+
+### Added
+- Sorting recipes in list by creation and modification date   
+  [#623](https://github.com/nextcloud/cookbook/pull/623) @seyfeb
+
+### Fixed
+- Minor errors in displaying ingredients and instructions
+  [#642](https://github.com/nextcloud/cookbook/pull/642) @seyfeb
+- Missing translation
+  [#644](https://github.com/nextcloud/cookbook/pull/644) @seyfeb
+- Recipe-reference popup being shown on the wrong input depending on keyboard layout
+  [#648](https://github.com/nextcloud/cookbook/pull/648) @seyfeb
+
 ## 0.8.3 - 2021-03-03
 
 ### Fixed

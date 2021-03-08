@@ -39,38 +39,63 @@
                 />
             </transition-group>
         </div>
+        <div id="recipes-submenu" class="recipes-submenu-container">
+            <Multiselect
+                v-if="recipes.length > 0"
+                v-model="orderBy"
+                class="recipes-sorting-dropdown"
+                :multiple="false"
+                :searchable="false"
+                :placeholder="t('cookbook', 'Select order')"
+                :options="recipeOrderingOptions"
+            >
+                <template
+                    slot="placeholder"
+                    class="recipe-sorting-item-placeholder"
+                >
+                    <span class="icon-triangle-n" style="margin-right: -8px" />
+                    <span class="ordering-item-icon icon-triangle-s" />
+                    {{ t("cookbook", "Select order") }}
+                </template>
+                <template #singleLabel="props">
+                    <span
+                        class="ordering-item-icon"
+                        :class="props.option.icon"
+                    />
+                    <span class="option__title">{{ props.option.label }}</span>
+                </template>
+                <template #option="props">
+                    <span
+                        class="ordering-item-icon"
+                        :class="props.option.icon"
+                    />
+                    <span class="option__title">{{ props.option.label }}</span>
+                </template>
+            </Multiselect>
+        </div>
         <ul class="recipes">
             <li
                 v-for="recipeObj in recipeObjects"
                 v-show="recipeObj.show"
                 :key="recipeObj.recipe.recipe_id"
             >
-                <router-link :to="'/recipe/' + recipeObj.recipe.recipe_id">
-                    <lazy-picture
-                        v-if="recipeObj.recipe.imageUrl"
-                        class="recipe-thumbnail"
-                        :lazy-src="recipeObj.recipe.imageUrl"
-                        :blurred-preview-src="
-                            recipeObj.recipe.imagePlaceholderUrl
-                        "
-                        :width="105"
-                        :height="105"
-                    />
-                    <span>{{ recipeObj.recipe.name }}</span>
-                </router-link>
+                <RecipeCard :recipe="recipeObj.recipe" />
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import LazyPicture from "./LazyPicture.vue"
+import moment from "@nextcloud/moment"
+import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+import RecipeCard from "./RecipeCard.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
 
 export default {
     name: "RecipeList",
     components: {
-        LazyPicture,
+        Multiselect,
+        RecipeCard,
         RecipeKeyword,
     },
     props: {
@@ -85,6 +110,45 @@ export default {
             filters: "",
             // All keywords to filter the recipes for (conjunctively)
             keywordFilter: [],
+            orderBy: null,
+            recipeOrderingOptions: [
+                {
+                    label: t("cookbook", "Name"),
+                    icon: "icon-triangle-n",
+                    recipeProperty: "name",
+                    order: "ascending",
+                },
+                {
+                    label: t("cookbook", "Name"),
+                    icon: "icon-triangle-s",
+                    recipeProperty: "name",
+                    order: "descending",
+                },
+                {
+                    label: t("cookbook", "Creation date"),
+                    icon: "icon-triangle-n",
+                    recipeProperty: "dateCreated",
+                    order: "ascending",
+                },
+                {
+                    label: t("cookbook", "Creation date"),
+                    icon: "icon-triangle-s",
+                    recipeProperty: "dateCreated",
+                    order: "descending",
+                },
+                {
+                    label: t("cookbook", "Modification date"),
+                    icon: "icon-triangle-n",
+                    recipeProperty: "dateModified",
+                    order: "ascending",
+                },
+                {
+                    label: t("cookbook", "Modification date"),
+                    icon: "icon-triangle-s",
+                    recipeProperty: "dateModified",
+                    order: "descending",
+                },
+            ],
         }
     },
     computed: {
@@ -165,12 +229,11 @@ export default {
                     return false
                 }
 
-                function keywordInRecipePresent(kw, rec) {
-                    if (!rec.keywords) {
+                function keywordInRecipePresent(kw, r2) {
+                    if (!r2.keywords) {
                         return false
                     }
-
-                    const keywords = rec.keywords.split(",")
+                    const keywords = r2.keywords.split(",")
                     return keywords.includes(kw.name)
                 }
 
@@ -221,14 +284,67 @@ export default {
                 (kw) => !this.selectableKeywords.includes(kw)
             )
         },
+        // Recipes ordered ascending by name
+        recipesNameAsc() {
+            return this.sortRecipes(this.recipes, "name", "ascending")
+        },
+        // Recipes ordered descending by name
+        recipesNameDesc() {
+            return this.sortRecipes(this.recipes, "name", "descending")
+        },
+        // Recipes ordered ascending by creation date
+        recipesDateCreatedAsc() {
+            return this.sortRecipes(this.recipes, "dateCreated", "ascending")
+        },
+        // Recipes ordered descending by creation date
+        recipesDateCreatedDesc() {
+            return this.sortRecipes(this.recipes, "dateCreated", "descending")
+        },
+        // Recipes ordered ascending by modification date
+        recipesDateModifiedAsc() {
+            return this.sortRecipes(this.recipes, "dateModified", "ascending")
+        },
+        // Recipes ordered descending by modification date
+        recipesDateModifiedDesc() {
+            return this.sortRecipes(this.recipes, "dateModified", "descending")
+        },
         // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
         recipeObjects() {
-            return this.recipes.map(function makeObject(r) {
+            function makeObject(rec) {
                 return {
-                    recipe: r,
-                    show: this.filteredRecipes.includes(r),
+                    recipe: rec,
+                    show: this.filteredRecipes
+                        .map((r) => r.recipe_id)
+                        .includes(rec.recipe_id),
                 }
-            }, this)
+            }
+
+            if (
+                this.orderBy === null ||
+                (this.orderBy.order !== "ascending" &&
+                    this.orderBy.order !== "descending")
+            ) {
+                return this.recipes.map(makeObject, this)
+            }
+            if (this.orderBy.recipeProperty === "dateCreated") {
+                if (this.orderBy.order === "ascending") {
+                    return this.recipesDateCreatedAsc.map(makeObject, this)
+                }
+                return this.recipesDateCreatedDesc.map(makeObject, this)
+            }
+            if (this.orderBy.recipeProperty === "dateModified") {
+                if (this.orderBy.order === "ascending") {
+                    return this.recipesDateModifiedAsc.map(makeObject, this)
+                }
+                return this.recipesDateModifiedDesc.map(makeObject, this)
+            }
+            if (this.orderBy.recipeProperty === "name") {
+                if (this.orderBy.order === "ascending") {
+                    return this.recipesNameAsc.map(makeObject, this)
+                }
+                return this.recipesNameDesc.map(makeObject, this)
+            }
+            return this.recipes.map(makeObject, this)
         },
     },
     mounted() {
@@ -236,6 +352,9 @@ export default {
         this.$root.$on("applyRecipeFilter", (value) => {
             this.filters = value
         })
+        // Set default order for recipe
+        // eslint-disable-next-line prefer-destructuring
+        this.orderBy = this.recipeOrderingOptions[0]
     },
     methods: {
         /**
@@ -249,9 +368,65 @@ export default {
                 this.keywordFilter.push(keyword.name)
             }
         },
+        /* Sort recipes according to the property of the recipe ascending or
+         * descending
+         */
+        sortRecipes(recipes, recipeProperty, order) {
+            const rec = JSON.parse(JSON.stringify(recipes))
+            return rec.sort((r1, r2) => {
+                if (order !== "ascending" && order !== "descending") return 0
+                if (order === "ascending") {
+                    if (
+                        recipeProperty === "dateCreated" ||
+                        recipeProperty === "dateModified"
+                    ) {
+                        return (
+                            new Date(r1[recipeProperty]) -
+                            new Date(r2[recipeProperty])
+                        )
+                    }
+                    if (recipeProperty === "name") {
+                        return r1[recipeProperty].localeCompare(
+                            r2[recipeProperty]
+                        )
+                    }
+                    if (
+                        !Number.isNaN(r1[recipeProperty] - r2[recipeProperty])
+                    ) {
+                        return r1[recipeProperty] - r2[recipeProperty]
+                    }
+                    return 0
+                }
+
+                if (
+                    recipeProperty === "dateCreated" ||
+                    recipeProperty === "dateModified"
+                ) {
+                    return (
+                        new Date(r2[recipeProperty]) -
+                        new Date(r1[recipeProperty])
+                    )
+                }
+                if (recipeProperty === "name") {
+                    return r2[recipeProperty].localeCompare(r1[recipeProperty])
+                }
+                if (!Number.isNaN(r2[recipeProperty] - r1[recipeProperty])) {
+                    return r2[recipeProperty] - r1[recipeProperty]
+                }
+                return 0
+            })
+        },
     },
 }
 </script>
+
+<style>
+/* stylelint-disable selector-class-pattern */
+#recipes-submenu .multiselect .multiselect__tags {
+    border: 0;
+}
+/* stylelint-enable selector-class-pattern */
+</style>
 
 <style scoped>
 .kw {
@@ -274,8 +449,16 @@ export default {
     display: inline-block;
 }
 
-.keyword-list-move {
-    transition: transform 0.5s;
+.recipes-submenu-container {
+    padding-left: 16px;
+    margin-bottom: 0.75ex;
+}
+
+.recipe-sorting-item-placeholder {
+    display: block;
+}
+.ordering-item-icon {
+    margin-right: 0.5em;
 }
 
 .recipes {
@@ -283,35 +466,5 @@ export default {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.recipes li {
-    width: 300px;
-    max-width: 100%;
-    margin: 0.5rem 1rem 1rem;
-}
-.recipes li a {
-    display: block;
-    height: 105px;
-    border-radius: 3px;
-    box-shadow: 0 0 3px #aaa;
-}
-.recipes li a:hover {
-    box-shadow: 0 0 5px #888;
-}
-
-.recipes li .recipe-thumbnail {
-    position: relative;
-    overflow: hidden;
-    width: 105px;
-    height: 105px;
-    background-color: #bebdbd;
-    border-radius: 3px 0 0 3px;
-    float: left;
-}
-
-.recipes li span {
-    display: block;
-    padding: 0.5rem 0.5em 0.5rem calc(105px + 0.5rem);
 }
 </style>

@@ -93,6 +93,7 @@ OC.L10N.register(
     "Sugar content" : "Contido de azucre",
     "Trans-fat content" : "Contido de graxas trans",
     "Unsaturated-fat content" : "Contido de graxa insaturada",
+    "You have unsaved changes! Do you still want to leave?" : "Ten cambios sen gardar. Está seguro de querer marchar?",
     "Failed to fetch keywords" : "Produciuse un fallo ao obter as palabras clave",
     "Loading recipe failed" : "Produciuse un fallo ao cargar a receita",
     "Recipe could not be saved" : "Non foi posíbel gardar a receita",

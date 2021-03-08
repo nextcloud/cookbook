@@ -93,6 +93,7 @@ OC.L10N.register(
     "Sugar content" : "Zuckergehalt",
     "Trans-fat content" : "Gehalt an Transfetten",
     "Unsaturated-fat content" : "Gehalt an ungesättigten Fettsäuren",
+    "You have unsaved changes! Do you still want to leave?" : "Sie haben nicht gespeicherte Änderungen! Wollen Sie immer noch gehen?",
     "Failed to fetch keywords" : "Schlüsselwörter konnten nicht abgerufen werden",
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Recipe could not be saved" : "Rezept konnte nicht gespeichert werden",

@@ -332,20 +332,20 @@ export default {
 
             if (this.$store.state.recipe.description) {
                 recipe.description = this.convertRecipeReferences(
-                    this.escapeHtml(this.$store.state.recipe.description)
+                    window.escapeHTML(this.$store.state.recipe.description)
                 )
             }
 
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(
                     this.$store.state.recipe.recipeIngredient
-                ).map((i) => this.convertRecipeReferences(this.escapeHtml(i)))
+                ).map((i) => this.convertRecipeReferences(window.escapeHTML(i)))
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(
                     this.$store.state.recipe.recipeInstructions
-                ).map((i) => this.convertRecipeReferences(this.escapeHtml(i)))
+                ).map((i) => this.convertRecipeReferences(window.escapeHTML(i)))
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -389,7 +389,7 @@ export default {
 
             if (this.$store.state.recipe.tool) {
                 recipe.tools = this.$store.state.recipe.tool.map((i) =>
-                    this.convertRecipeReferences(this.escapeHtml(i))
+                    this.convertRecipeReferences(window.escapeHTML(i))
                 )
             }
 
@@ -466,15 +466,6 @@ export default {
         })
     },
     methods: {
-        escapeHtml(unsafeString) {
-            return unsafeString
-                .replace(/&/g, "&amp;")
-                .replace(/~/g, "&#732;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;")
-        },
         convertRecipeReferences(text) {
             const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
             const converted = text.replace(

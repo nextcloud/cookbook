@@ -16,6 +16,8 @@
 export default {
     name: "RecipeIngredient",
     props: {
+        /* Ingredient HTML string to display. Content should be sanitized.
+         */
         ingredient: {
             type: String,
             default: "",
@@ -33,11 +35,9 @@ export default {
     computed: {
         displayIngredient() {
             if (this.isHeader()) {
-                return window.escapeHTML(
-                    this.ingredient.substring(this.headerPrefix.length)
-                )
+                return this.ingredient.substring(this.headerPrefix.length)
             }
-            return window.escapeHTML(this.ingredient)
+            return this.ingredient
         },
     },
     methods: {
