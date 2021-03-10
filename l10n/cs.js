@@ -68,7 +68,7 @@ OC.L10N.register(
     "Image" : "Obrázek",
     "Preparation time" : "Doba přípravy",
     "Cooking time" : "Doba vaření",
-    "Total time" : "Celkový čas",
+    "Total time" : "Celková doba",
     "Choose category" : "Vyberte kategorii",
     "Keywords" : "Klíčová slova",
     "Choose keywords" : "Vyberte klíčová slova",
