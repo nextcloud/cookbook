@@ -12,7 +12,7 @@
                                     : 'icon-history'
                             "
                             :title="t('cookbook', 'Rescan library')"
-                            @click="emit('reindex')"
+                            @click="$emit('reindex')"
                         />
                     </li>
                     <li>
