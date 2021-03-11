@@ -541,12 +541,6 @@ export default {
                 )
                 .then((response) => {
                     const recipe = response.data
-                    if (
-                        "nutrition" in recipe &&
-                        recipe.nutrition instanceof Array
-                    ) {
-                        recipe.nutrition = {}
-                    }
                     $this.$store.dispatch("setRecipe", { recipe })
                     $this.setup()
                 })
