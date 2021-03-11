@@ -63,10 +63,7 @@ export default new Vuex.Store({
         },
         setRecipe(state, { r }) {
             const rec = JSON.parse(JSON.stringify(r))
-            if (
-                "nutrition" in rec &&
-                rec.nutrition instanceof Array
-            ) {
+            if ("nutrition" in rec && rec.nutrition instanceof Array) {
                 rec.nutrition = {}
             }
             state.recipe = rec

@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+### Fixed
+- Calling reindex
+  [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
+- Setting nutrition information on recipes with an array assigned for nutrition
+  [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
+  
 ## 0.8.4 - 2021-03-08
 
 ### Added
