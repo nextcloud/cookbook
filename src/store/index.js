@@ -62,7 +62,12 @@ export default new Vuex.Store({
             state.page = p
         },
         setRecipe(state, { r }) {
-            state.recipe = r
+            const rec = JSON.parse(JSON.stringify(r))
+            if ("nutrition" in rec && rec.nutrition instanceof Array) {
+                rec.nutrition = {}
+            }
+            state.recipe = rec
+
             // Setting recipe also means that loading/reloading the recipe has finished
             state.loadingRecipe = 0
             state.reloadingRecipe = 0
