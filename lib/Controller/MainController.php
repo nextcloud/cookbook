@@ -354,7 +354,7 @@ class MainController extends Controller {
 
 			return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
+			return new DataResponse($e->getMessage(), 400);
 		}
 	}
 
