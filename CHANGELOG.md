@@ -5,6 +5,8 @@
   [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
 - Setting nutrition information on recipes with an array assigned for nutrition
   [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
+- Fix empty error message upon import
+  [#647](https://github.com/nextcloud/cookbook/pull/647) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
