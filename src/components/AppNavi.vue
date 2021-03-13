@@ -280,17 +280,26 @@ export default {
                 .catch((e2) => {
                     $this.downloading = false
 
-                    if(e2.response) {
-                        if(e2.response.status >= 400 && e2.response.status < 500) {
+                    if (e2.response) {
+                        if (
+                            e2.response.status >= 400 &&
+                            e2.response.status < 500
+                        ) {
                             // eslint-disable-next-line no-alert
                             alert(e2.response.data)
                         } else {
                             console.error(e2)
-                            alert(t("cookbook", "The server reported an error. Please check."))
+                            alert(
+                                // prettier-ignore
+                                t("cookbook","The server reported an error. Please check.")
+                            )
                         }
                     } else {
                         console.error(e2)
-                        alert(t('cookbook', 'Could not query the server. This might be a network problem.'))
+                        alert(
+                            // prettier-ignore
+                            t("cookbook", "Could not query the server. This might be a network problem.")
+                        )
                     }
                 })
         },
