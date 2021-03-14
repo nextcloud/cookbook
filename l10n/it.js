@@ -99,6 +99,8 @@ OC.L10N.register(
     "Recipe image" : "Immagine della ricetta",
     "Toggle keyword" : "Scegli la parola chiave",
     "Keyword not contained in visible recipes" : "Parola chiave non contenuta nelle ricette visibili",
+    "Creation date" : "Data di creazione",
+    "Modification date" : "Data di modifica",
     "Cooking time is up!" : "Il tempo di cottura è scaduto!",
     "Search recipes with this keyword" : "Cerca ricette con questa parola chiave",
     "Date created" : "Data di creazione",
