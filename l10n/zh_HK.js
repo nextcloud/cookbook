@@ -42,6 +42,8 @@ OC.L10N.register(
     "Download recipe from URL" : "從 URL 下載食譜",
     "Toggle editing" : "切換編輯",
     "Failed to load category {category} recipes" : "加載{category}分類的食譜失敗",
+    "The server reported an error. Please check." : "伺服器報告了錯誤。請檢查。",
+    "Could not query the server. This might be a network problem." : "無法查詢伺服器。 這可能是網絡問題。",
     "Loading category recipes …" : "加載分類食譜中 ......",
     "Failed to fetch categories" : "獲取分類失敗",
     "Rescan library" : "重新掃描書庫",

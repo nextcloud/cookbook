@@ -40,6 +40,8 @@
     "Download recipe from URL" : "从 URL 下载菜谱",
     "Toggle editing" : "切换编辑",
     "Failed to load category {category} recipes" : "加载{category}分类的菜谱失败",
+    "The server reported an error. Please check." : "服务器报告了一个错误。请检查。",
+    "Could not query the server. This might be a network problem." : "无法查询服务器。这可能是网络问题。 ",
     "Loading category recipes …" : "加载分类菜谱中 ......",
     "Failed to fetch categories" : "获取分类失败",
     "Rescan library" : "重新扫描书库",

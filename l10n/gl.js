@@ -42,6 +42,8 @@ OC.L10N.register(
     "Download recipe from URL" : "Descargar a receita do URL",
     "Toggle editing" : "Cambiar a edición",
     "Failed to load category {category} recipes" : "Produciuse un fallo ao cargar as receitas da categoría {category}",
+    "The server reported an error. Please check." : "O servidor informou dun erro. Comprobeo.",
+    "Could not query the server. This might be a network problem." : "Non foi posíbel consultar o servidor. Pode ser un problema de rede.",
     "Loading category recipes …" : "Cargando receitas da categoría…",
     "Failed to fetch categories" : "Produciuse un fallo ao obter as categorías",
     "Rescan library" : "Volver escanear a biblioteca",

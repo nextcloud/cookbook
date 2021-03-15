@@ -40,6 +40,8 @@
     "Download recipe from URL" : "Yemek tarifini adresten indir",
     "Toggle editing" : "Düzenlemeyi aç/kapat",
     "Failed to load category {category} recipes" : "{category} kategorisindeki tarifler yüklenemedi",
+    "The server reported an error. Please check." : "Sunucu bir sorun bildirdi. Lütfen denetleyin.",
+    "Could not query the server. This might be a network problem." : "Sunucu sorgulanamadı. Bir ağ sorunu olabilir.",
     "Loading category recipes …" : "Kategorinin tarifleri yükleniyor …",
     "Failed to fetch categories" : "Kategoriler alınamadı",
     "Rescan library" : "Kitaplığı yeniden tara",
