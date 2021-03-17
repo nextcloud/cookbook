@@ -60,6 +60,8 @@ OC.L10N.register(
     "Calories" : "Kaloriak",
     "Loading recipe failed" : "Errezeta kargatzeak huts egin du",
     "Recipe could not be saved" : "Ezin izan da errezeta gorde",
+    "Creation date" : "Sorrera-data",
+    "Modification date" : "Aldaketa-data",
     "Cooking time is up!" : "Sukaldatzeko denbora amaitu da!",
     "Date created" : "Sorrera-data",
     "Last modified" : "Azken aldaketa",
