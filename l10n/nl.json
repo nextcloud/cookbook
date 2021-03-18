@@ -40,6 +40,8 @@
     "Download recipe from URL" : "Recept downloaden van URL",
     "Toggle editing" : "Omschakelen bewerken",
     "Failed to load category {category} recipes" : "Kon de categorie {category} recepten niet laden",
+    "The server reported an error. Please check." : "De server meldde een fout. Graag verifiëren.",
+    "Could not query the server. This might be a network problem." : "Kan de server niet opvragen. Dit kan een netwerkprobleem zijn.",
     "Loading category recipes …" : "Laden categorie recepten ...",
     "Failed to fetch categories" : "Categorieën ophalen niet gelukt",
     "Rescan library" : "Bibliotheek opnieuw inladen",
