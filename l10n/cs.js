@@ -42,6 +42,8 @@ OC.L10N.register(
     "Download recipe from URL" : "Stáhnout si recept z URL adresy",
     "Toggle editing" : "Přepnout do upravování",
     "Failed to load category {category} recipes" : "Nepodařilo se načíst recepty z katergorie {category}",
+    "The server reported an error. Please check." : "Tento server ohlásil chybu – podívejte se na to.",
+    "Could not query the server. This might be a network problem." : "Nepodařilo se dotázat serveru. To může být způsobeno problémem na síti.",
     "Loading category recipes …" : "Načítání receptů v této kategorii…",
     "Failed to fetch categories" : "Nepodařilo se získat kategorie",
     "Rescan library" : "Znovu projít knihovnu",
