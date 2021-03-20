@@ -29,7 +29,7 @@
     "Are you sure you want to delete this recipe?" : "您確定要刪除此食譜嗎？",
     "Delete failed" : "刪除失敗",
     "Cannot access recipe folder." : "無法存取食譜資料夾。",
-    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "您使用來賓賬戶登入。 因此，不允許您在此Nextcloud實例上生成任意檔案和資料夾。為了能夠以訪客身份使用Cookbook應用程序，您需要指定一個用於存儲食譜的資料夾。您需要有寫入此資料夾的權限。",
+    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "您使用來賓賬戶登入。 因此，不允許您在此Nextcloud實例上生成任意檔案和資料夾。為了能夠以訪客身分使用Cookbook應用程序，您需要指定一個用於存儲食譜的資料夾。您需要有寫入此資料夾的權限。",
     "Select recipe folder" : "選擇食譜資料夾",
     "Path to your recipe collection" : "食譜收藏的路徑",
     "Create recipe" : "創建食譜",
