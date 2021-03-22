@@ -26,4 +26,12 @@ if (Util::getVersion()[0] >= 20) {
 		public function boot(IBootContext $context): void {
 		}
 	}
+} else {
+	class Application extends App {
+		public const APP_ID = 'cookbook';
+		
+		public function __construct(array $urlParams = []) {
+			parent::__construct(self::APP_ID, $urlParams);
+		}
+	}
 }

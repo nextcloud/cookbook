@@ -87,4 +87,7 @@ if (Util::getVersion()[0] >= 20) {
 			);
 		}
 	}
+} else {
+	class Provider {
+	}
 }
