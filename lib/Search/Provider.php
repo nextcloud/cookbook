@@ -7,7 +7,7 @@ use OCA\Cookbook\Db\RecipeDb;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IL10N;
 use OCP\IUser;
-use OCP\IUrlGenerator;
+use OCP\IURLGenerator;
 use OCP\Search\IProvider;
 use OCP\Search\ISearchQuery;
 use OCP\Search\SearchResult;
@@ -22,7 +22,7 @@ if (Util::getVersion()[0] >= 20) {
 		/** @var IL10N */
 		private $l;
 
-		/** @var IUrlGenerator */
+		/** @var IURLGenerator */
 		private $urlGenerator;
 
 		/** @var RecipeDb */
@@ -31,7 +31,8 @@ if (Util::getVersion()[0] >= 20) {
 		/** @var RecipeService */
 		private $recipeService;
 
-		public function __construct(IL10n $il10n, IUrlGenerator $urlGenerator, RecipeDb $recipeDb, RecipeService $recipeService) {
+		public function __construct(IL10n $il10n, IURLGenerator $urlGenerator,
+			RecipeDb $recipeDb, RecipeService $recipeService) {
 			$this->l = $il10n;
 			$this->urlGenerator = $urlGenerator;
 			$this->recipeDb = $recipeDb;
