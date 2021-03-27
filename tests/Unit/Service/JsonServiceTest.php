@@ -5,7 +5,8 @@ namespace OCA\Cookbook;
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Service\JsonService;
 
-class JsonServiceTest extends TestCase {
+class JsonServiceTest extends TestCase
+{
 	
 	/**
 	 * @var JsonService

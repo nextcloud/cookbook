@@ -16,7 +16,8 @@ use Test\TestCase;
  *
  * @package OCA\Cookbook\Tests\Unit\Service
  */
-class ValidateDurationTest extends TestCase {
+class ValidateDurationTest extends TestCase
+{
 	/**
 	 * @var RecipeService
 	 */

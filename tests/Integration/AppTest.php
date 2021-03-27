@@ -11,7 +11,8 @@ use Test\TestCase;
  * directly from the container, only pass in mocks if needed and run your tests
  * against the database
  */
-class AppTest extends TestCase {
+class AppTest extends TestCase
+{
 	private $container;
 
 	public function setUp(): void {

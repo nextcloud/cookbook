@@ -5,7 +5,8 @@ namespace OCA\Cookbook\Helper;
 use function GuzzleHttp\json_decode;
 use OCP\IL10N;
 
-class RestParameterParser {
+class RestParameterParser
+{
 	private const CHARSET = 'charset';
 	private const CONTENT_TYPE = 'CONTENT_TYPE';
 	private const REQUEST_METHOD = 'REQUEST_METHOD';
