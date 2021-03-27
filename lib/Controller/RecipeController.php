@@ -14,7 +14,8 @@ use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 
-class RecipeController extends Controller {
+class RecipeController extends Controller
+{
 	/**
 	 * @var RecipeService
 	 */

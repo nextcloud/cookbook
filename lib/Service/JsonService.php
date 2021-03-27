@@ -8,7 +8,8 @@ namespace OCA\Cookbook\Service;
  * @author Christian Wolf <github@christianwolf.email>
  *
  */
-class JsonService {
+class JsonService
+{
 	
 	/**
 	 * Check if an object is a JSON representation of a schema.org object
