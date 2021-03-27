@@ -7,6 +7,8 @@
   [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
 - Fix empty error message upon import
   [#647](https://github.com/nextcloud/cookbook/pull/647) @christianlupus
+- Update code styling to match with current version of php-cs-fixer
+  [#668](https://github.com/nextcloud/cookbook/pull/668) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
