@@ -12,7 +12,8 @@ use OCP\Util;
 // IBootstrap requies NC >= 20
 // Remove conditional once we end support for NC 19
 if (Util::getVersion()[0] >= 20) {
-	class Application extends App implements IBootstrap {
+	class Application extends App implements IBootstrap
+{
 		public const APP_ID = 'cookbook';
 		
 		public function __construct(array $urlParams = []) {
@@ -27,7 +28,8 @@ if (Util::getVersion()[0] >= 20) {
 		}
 	}
 } else {
-	class Application extends App {
+	class Application extends App
+{
 		public const APP_ID = 'cookbook';
 		
 		public function __construct(array $urlParams = []) {
