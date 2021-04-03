@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Make recipes searchable through unified search
+  [#611](https://github.com/nextcloud/cookbook/pull/611) @PFischbeck
+
 ### Fixed
 - Calling reindex
   [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
