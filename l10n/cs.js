@@ -5,6 +5,7 @@ OC.L10N.register(
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Nezjištěn typ přenášených dat. Toto je chyba, prosíme, nahlašte ji.",
     "Invalid URL-encoded string found. Please report a bug." : "Nalezen neplatný řetězec v URL. Prosím nahlaste chybu.",
     "Recipes" : "Recepty",
+    "in %s" : "v %s",
     "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
     "Cookbook" : "Kuchařka",
     "An integrated cookbook using schema.org JSON files as recipes" : "Vestavěná kuchařka používající pro recepty JSON soubory schema.org",
