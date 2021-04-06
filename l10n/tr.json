@@ -3,6 +3,7 @@
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Aktarılan verinin türü algılanamadı. Bu bir hata olmalı. Lütfen bize bildirin.",
     "Invalid URL-encoded string found. Please report a bug." : "Adres kodlamalı dizge bulundu. Lütfen bize hata olarak bildirin.",
     "Recipes" : "Tarifler",
+    "in %s" : "%s içinde",
     "User cannot create recipe folder" : "Kullanıcı yemek tarifi klasörü ekleyemez",
     "Cookbook" : "Yemek kitabı",
     "An integrated cookbook using schema.org JSON files as recipes" : "Tarifler için schema.org JSON dosyaları kullanan bütünleşik bir yemek kitabı",

@@ -3,6 +3,7 @@
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Kan het type van de overgedragen gegevens vaststellen. Dit is een bug, graag melden.",
     "Invalid URL-encoded string found. Please report a bug." : "Ongeldige URL-gecodeerde string gevonden. Graag een bug melden..",
     "Recipes" : "Recepten",
+    "in %s" : "in %s",
     "User cannot create recipe folder" : "Gebruiker kan receptenmap niet aanmaken",
     "Cookbook" : "Kookboek",
     "An integrated cookbook using schema.org JSON files as recipes" : "Een geïntegreerd kookboek dat gebruikt maakt van JSON-bestanden volgens het schema.org-formaat voor recepten",
