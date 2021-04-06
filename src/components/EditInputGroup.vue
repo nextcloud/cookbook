@@ -227,7 +227,7 @@ export default {
             if (
                 e.keyCode === 13 ||
                 e.keyCode === 10 ||
-                (this.referencePopupEnabled && e.keyCode === 51)
+                (this.referencePopupEnabled && e.key === "#")
             ) {
                 e.preventDefault()
                 const $li = e.currentTarget.closest("li")
@@ -251,7 +251,7 @@ export default {
                             .getElementsByTagName("input")[0]
                             .focus()
                     }
-                } else if (this.referencePopupEnabled && e.keyCode === 51) {
+                } else if (this.referencePopupEnabled && e.key === "#") {
                     e.preventDefault()
                     const elm = this.$refs["list-field"][$pressed_li_index]
                     // Check if the letter before the hash
