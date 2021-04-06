@@ -1,43 +1,48 @@
 <template>
-  <div class="kw">
-    <transition-group
-        v-if="uniqKeywords.length > 0"
-        class="keywords"
-        name="keyword-list"
-        tag="ul"
-    >
-      <RecipeKeyword
-          v-for="keywordObj in selectedKeywordsWithCount"
-          :key="keywordObj.name"
-          :name="keywordObj.name"
-          :count="keywordObj.count"
-          :title="t('cookbook', 'Toggle keyword')"
-          class="keyword active"
-          @keyword-clicked="keywordClicked(keywordObj)"
-      />
-      <RecipeKeyword
-          v-for="keywordObj in selectableKeywords"
-          :key="keywordObj.name"
-          :name="keywordObj.name"
-          :count="keywordObj.count"
-          :title="t('cookbook', 'Toggle keyword')"
-          class="keyword"
-          @keyword-clicked="keywordClicked(keywordObj)"
-      />
-      <RecipeKeyword
-          v-for="keywordObj in unavailableKeywords"
-          :key="keywordObj.name"
-          :name="keywordObj.name"
-          :count="keywordObj.count"
-          :title="
-                        // prettier-ignore
-                        t('cookbook','Keyword not contained in visible recipes')
-                    "
-          class="keyword disabled"
-          @keyword-clicked="keywordClicked(keywordObj)"
-      />
-    </transition-group>
-  </div>
+    <div class="kw-container">
+        <div class="kw" :class="{ max: isMaximized }">
+            <transition-group
+                v-if="uniqKeywords.length > 0"
+                class="keywords"
+                name="keyword-list"
+                tag="ul"
+            >
+                <RecipeKeyword
+                  v-for="keywordObj in selectedKeywordsWithCount"
+                  :key="keywordObj.name"
+                  :name="keywordObj.name"
+                  :count="keywordObj.count"
+                  :title="t('cookbook', 'Toggle keyword')"
+                  class="keyword active"
+                  @keyword-clicked="keywordClicked(keywordObj)"
+                />
+                <RecipeKeyword
+                  v-for="keywordObj in selectableKeywords"
+                  :key="keywordObj.name"
+                  :name="keywordObj.name"
+                  :count="keywordObj.count"
+                  :title="t('cookbook', 'Toggle keyword')"
+                  class="keyword"
+                  @keyword-clicked="keywordClicked(keywordObj)"
+                />
+                <RecipeKeyword
+                  v-for="keywordObj in unavailableKeywords"
+                  :key="keywordObj.name"
+                  :name="keywordObj.name"
+                  :count="keywordObj.count"
+                  :title="
+                                // prettier-ignore
+                                t('cookbook','Keyword not contained in visible recipes')
+                            "
+                  class="keyword disabled"
+                  @keyword-clicked="keywordClicked(keywordObj)"
+                />
+            </transition-group>
+        </div>
+        <button class="resize-button"
+                :class="toggleSizeIcon"
+                @click="toggleCloudSize"></button>
+    </div>
 </template>
 
 <script>
@@ -65,10 +70,14 @@ export default {
     },
     data(){
         return {
+            isMaximized: false,
             selectedKeywordsBuffer: []
         }
     },
     computed: {
+        toggleSizeIcon() {
+          return this.isMaximized ? "icon-triangle-n" : "icon-triangle-s"
+        },
         /**
          * An array of sorted and unique keywords over all the recipes
          */
@@ -165,11 +174,19 @@ export default {
             }
             this.$emit("input", this.selectedKeywordsBuffer)
         },
+        toggleCloudSize() {
+            this.isMaximized = !this.isMaximized
+        }
     }
 }
 </script>
 
 <style scoped>
+
+.kw-container {
+    position: relative;
+}
+
 .kw {
     width: 100%;
     max-height: 6.7em;
@@ -177,6 +194,10 @@ export default {
     margin-bottom: 1em;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+.kw.max {
+    max-height: 100vh;
 }
 
 .keywords {
@@ -188,5 +209,11 @@ export default {
 
 .keyword {
     display: inline-block;
+}
+
+.resize-button {
+    position: absolute;
+    right: 10px;
+    bottom: -8px;
 }
 </style>
