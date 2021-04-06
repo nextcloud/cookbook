@@ -15,6 +15,8 @@
   [#668](https://github.com/nextcloud/cookbook/pull/668) @christianlupus
 - Fix version of `@nextcloud/capabilities` to `1.0.2`
   [#672](https://github.com/nextcloud/cookbook/pull/672) @christianlupus
+- Really only show recipe-reference popup on '#'
+  [#676](https://github.com/nextcloud/cookbook/pull/676) @seyfeb
   
 ## 0.8.4 - 2021-03-08
 
