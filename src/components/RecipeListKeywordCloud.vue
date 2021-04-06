@@ -8,46 +8,51 @@
                 tag="ul"
             >
                 <RecipeKeyword
-                  v-for="keywordObj in selectedKeywordsWithCount"
-                  :key="keywordObj.name"
-                  :name="keywordObj.name"
-                  :count="keywordObj.count"
-                  :title="t('cookbook', 'Toggle keyword')"
-                  class="keyword active"
-                  @keyword-clicked="keywordClicked(keywordObj)"
+                    v-for="keywordObj in selectedKeywordsWithCount"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook', 'Toggle keyword')"
+                    class="keyword active"
+                    @keyword-clicked="keywordClicked(keywordObj)"
                 />
                 <RecipeKeyword
-                  v-for="keywordObj in selectableKeywords"
-                  :key="keywordObj.name"
-                  :name="keywordObj.name"
-                  :count="keywordObj.count"
-                  :title="t('cookbook', 'Toggle keyword')"
-                  class="keyword"
-                  @keyword-clicked="keywordClicked(keywordObj)"
+                    v-for="keywordObj in selectableKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="t('cookbook', 'Toggle keyword')"
+                    class="keyword"
+                    @keyword-clicked="keywordClicked(keywordObj)"
                 />
                 <RecipeKeyword
-                  v-for="keywordObj in unavailableKeywords"
-                  :key="keywordObj.name"
-                  :name="keywordObj.name"
-                  :count="keywordObj.count"
-                  :title="
-                                // prettier-ignore
-                                t('cookbook','Keyword not contained in visible recipes')
-                            "
-                  class="keyword disabled"
-                  @keyword-clicked="keywordClicked(keywordObj)"
+                    v-for="keywordObj in unavailableKeywords"
+                    :key="keywordObj.name"
+                    :name="keywordObj.name"
+                    :count="keywordObj.count"
+                    :title="
+                        // prettier-ignore
+                        t('cookbook','Keyword not contained in visible recipes')
+                    "
+                    class="keyword disabled"
+                    @keyword-clicked="keywordClicked(keywordObj)"
                 />
             </transition-group>
         </div>
         <div class="settings-buttons">
-            <button class="ordering-button"
-                    :title="orderButtonTitle"
-                    @click="toggleOrderCriterium">{{ orderButtonText }}</button>
-            <button :class="toggleSizeIcon"
-                    :title="t('cookbook','Toggle keyword area size')"
-                    @click="toggleCloudSize" />
+            <button
+                class="ordering-button"
+                :title="orderButtonTitle"
+                @click="toggleOrderCriterium"
+            >
+                {{ orderButtonText }}
+            </button>
+            <button
+                :class="toggleSizeIcon"
+                :title="t('cookbook', 'Toggle keyword area size')"
+                @click="toggleCloudSize"
+            />
         </div>
-
     </div>
 </template>
 
@@ -57,7 +62,7 @@ import RecipeKeyword from "./RecipeKeyword.vue"
 export default {
     name: "RecipeListKeywordCloud",
     components: {
-      RecipeKeyword
+        RecipeKeyword,
     },
     props: {
         /** String-array of all available keywords */
@@ -75,11 +80,11 @@ export default {
             default: () => [],
         },
     },
-    data(){
+    data() {
         return {
             isMaximized: false,
             isOrderedAlphabetically: false,
-            selectedKeywordsBuffer: []
+            selectedKeywordsBuffer: [],
         }
     },
     computed: {
@@ -89,97 +94,98 @@ export default {
         },
         /** Title of the button for ordering the keywords */
         orderButtonTitle() {
-            return this.isOrderedAlphabetically ? t('cookbook','Order keywords by number of recipes') : t('cookbook','Order keywords alphabetically')
+            return this.isOrderedAlphabetically
+                ? t("cookbook", "Order keywords by number of recipes")
+                : t("cookbook", "Order keywords alphabetically")
         },
         /**
          * Which icon to show for the size-toggle button
          */
         toggleSizeIcon() {
-          return this.isMaximized ? "icon-triangle-n" : "icon-triangle-s"
+            return this.isMaximized ? "icon-triangle-n" : "icon-triangle-s"
         },
         /**
          * An array of sorted and unique keywords over all the recipes
          */
         uniqKeywords() {
-          function uniqFilter(value, index, self) {
-            return self.indexOf(value) === index
-          }
-          const rawKWs = [...this.keywords]
-          return rawKWs.sort().filter(uniqFilter)
+            function uniqFilter(value, index, self) {
+                return self.indexOf(value) === index
+            }
+            const rawKWs = [...this.keywords]
+            return rawKWs.sort().filter(uniqFilter)
         },
         /**
          * An array of objects that contain the keywords plus a count of recipes associated with these keywords
          */
         keywordsWithCount() {
-          const $this = this
-          return this.uniqKeywords
-              .map((kw) => ({
-                name: kw,
-                count: $this.keywords.filter((kw2) => kw === kw2).length,
-              }))
-              .sort((k1, k2) => {
-                  if(this.isOrderedAlphabetically){
-                      return k1.name.toLowerCase() > k2.name.toLowerCase()
-                          ? 1
-                          : -1
-                  }
-                  // else: order by number of recipe with this keyword (decreasing)
-                  if (k1.count !== k2.count) {
-                      // Distinguish by number
-                      return k2.count - k1.count
-                  }
-                  // Distinguish by keyword name
-                  return k1.name.toLowerCase() > k2.name.toLowerCase()
-                      ? 1
-                      : -1
-
-              })
+            const $this = this
+            return this.uniqKeywords
+                .map((kw) => ({
+                    name: kw,
+                    count: $this.keywords.filter((kw2) => kw === kw2).length,
+                }))
+                .sort((k1, k2) => {
+                    if (this.isOrderedAlphabetically) {
+                        return k1.name.toLowerCase() > k2.name.toLowerCase()
+                            ? 1
+                            : -1
+                    }
+                    // else: order by number of recipe with this keyword (decreasing)
+                    if (k1.count !== k2.count) {
+                        // Distinguish by number
+                        return k2.count - k1.count
+                    }
+                    // Distinguish by keyword name
+                    return k1.name.toLowerCase() > k2.name.toLowerCase()
+                        ? 1
+                        : -1
+                })
         },
         /**
          * An array of keywords that are yet unselected but some visible recipes are associated
          */
         selectableKeywords() {
-          if (this.unselectedKeywords.length === 0) {
-            return []
-          }
+            if (this.unselectedKeywords.length === 0) {
+                return []
+            }
 
-          const $this = this
-          return this.unselectedKeywords.filter((kw) =>
-              $this.filteredRecipes
-                  .map(
-                      (r) =>
-                          r.keywords &&
-                          r.keywords.split(",").includes(kw.name)
-                  )
-                  .reduce((l, r) => l || r, false)
-          )
+            const $this = this
+            return this.unselectedKeywords.filter((kw) =>
+                $this.filteredRecipes
+                    .map(
+                        (r) =>
+                            r.keywords &&
+                            r.keywords.split(",").includes(kw.name)
+                    )
+                    .reduce((l, r) => l || r, false)
+            )
         },
         /**
          * An array of keyword objects that are currently in use for filtering
          */
         selectedKeywordsWithCount() {
-          return this.keywordsWithCount.filter((kw) =>
-              this.selectedKeywordsBuffer.includes(kw.name)
-          )
+            return this.keywordsWithCount.filter((kw) =>
+                this.selectedKeywordsBuffer.includes(kw.name)
+            )
         },
         /**
          * An array of known keywords that are not associated with any visible recipe
          */
         unavailableKeywords() {
-          return this.unselectedKeywords.filter(
-              (kw) => !this.selectableKeywords.includes(kw)
-          )
+            return this.unselectedKeywords.filter(
+                (kw) => !this.selectableKeywords.includes(kw)
+            )
         },
         /**
          * An array of those keyword objects that are currently not in use for filtering
          */
         unselectedKeywords() {
-          return this.keywordsWithCount.filter(
-              (kw) => !this.selectedKeywordsWithCount.includes(kw)
-          )
+            return this.keywordsWithCount.filter(
+                (kw) => !this.selectedKeywordsWithCount.includes(kw)
+            )
         },
     },
-    watch:{
+    watch: {
         /**
          * Watch array of selected keywords for changes
          */
@@ -188,7 +194,7 @@ export default {
                 this.selectedKeywordsBuffer = this.value.slice()
             },
             deep: true,
-        }
+        },
     },
     methods: {
         /**
@@ -208,13 +214,12 @@ export default {
         },
         toggleOrderCriterium() {
             this.isOrderedAlphabetically = !this.isOrderedAlphabetically
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-
 .kw-container {
     position: relative;
 }

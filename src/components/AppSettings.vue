@@ -56,7 +56,12 @@
                             class="checkbox"
                         />
                         <label for="tag-cloud">
-                            {{ t("cookbook", "Show keyword cloud in recipe lists") }}
+                            {{
+                                t(
+                                    "cookbook",
+                                    "Show keyword cloud in recipe lists"
+                                )
+                            }}
                         </label>
                     </li>
                 </ul>
@@ -122,7 +127,9 @@ export default {
         },
         // eslint-disable-next-line no-unused-vars
         showTagCloudInRecipeList(newVal, oldVal) {
-            this.$store.dispatch("setShowTagCloudInRecipeList", { showTagCloud: newVal })
+            this.$store.dispatch("setShowTagCloudInRecipeList", {
+                showTagCloud: newVal,
+            })
         },
         updateInterval(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit

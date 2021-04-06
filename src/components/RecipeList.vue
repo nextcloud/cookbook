@@ -2,7 +2,8 @@
     <div>
         <RecipeListKeywordCloud
             v-if="showTagCloudInRecipeList"
-            v-model="keywordFilter" :keywords="rawKeywords"
+            v-model="keywordFilter"
+            :keywords="rawKeywords"
             :filteredRecipes="filteredRecipes"
         />
         <div id="recipes-submenu" class="recipes-submenu-container">
@@ -62,7 +63,7 @@ export default {
     components: {
         Multiselect,
         RecipeCard,
-        RecipeListKeywordCloud
+        RecipeListKeywordCloud,
     },
     props: {
         recipes: {
@@ -240,7 +241,7 @@ export default {
         },
         showTagCloudInRecipeList() {
             return this.$store.state.localSettings.showTagCloudInRecipeList
-        }
+        },
     },
     mounted() {
         this.$root.$off("applyRecipeFilter")
@@ -313,7 +314,6 @@ export default {
 </style>
 
 <style scoped>
-
 .recipes-submenu-container {
     padding-left: 16px;
     margin-bottom: 0.75ex;
