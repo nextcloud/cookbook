@@ -39,9 +39,15 @@
                 />
             </transition-group>
         </div>
-        <button class="resize-button"
-                :class="toggleSizeIcon"
-                @click="toggleCloudSize"></button>
+        <div class="settings-buttons">
+            <button class="ordering-button"
+                    :title="orderButtonTitle"
+                    @click="toggleOrderCriterium">{{ orderButtonText }}</button>
+            <button :class="toggleSizeIcon"
+                    :title="t('cookbook','Toggle keyword area size')"
+                    @click="toggleCloudSize" />
+        </div>
+
     </div>
 </template>
 
@@ -54,11 +60,12 @@ export default {
       RecipeKeyword
     },
     props: {
+        /** String-array of all available keywords */
         keywords: {
             type: Array,
             default: () => [],
         },
-        /** List of selected keywords */
+        /** String-array of selected keywords */
         value: {
             type: Array,
             default: () => [],
@@ -71,10 +78,22 @@ export default {
     data(){
         return {
             isMaximized: false,
+            isOrderedAlphabetically: false,
             selectedKeywordsBuffer: []
         }
     },
     computed: {
+        /** Text shown on the button for ordering the keywords */
+        orderButtonText() {
+            return this.isOrderedAlphabetically ? "321" : "ABC"
+        },
+        /** Title of the button for ordering the keywords */
+        orderButtonTitle() {
+            return this.isOrderedAlphabetically ? t('cookbook','Order keywords by number of recipes') : t('cookbook','Order keywords alphabetically')
+        },
+        /**
+         * Which icon to show for the size-toggle button
+         */
         toggleSizeIcon() {
           return this.isMaximized ? "icon-triangle-n" : "icon-triangle-s"
         },
@@ -99,14 +118,21 @@ export default {
                 count: $this.keywords.filter((kw2) => kw === kw2).length,
               }))
               .sort((k1, k2) => {
-                if (k1.count !== k2.count) {
-                  // Distinguish by number
-                  return k2.count - k1.count
-                }
-                // Distinguish by keyword name
-                return k1.name.toLowerCase() > k2.name.toLowerCase()
-                    ? 1
-                    : -1
+                  if(this.isOrderedAlphabetically){
+                      return k1.name.toLowerCase() > k2.name.toLowerCase()
+                          ? 1
+                          : -1
+                  }
+                  // else: order by number of recipe with this keyword (decreasing)
+                  if (k1.count !== k2.count) {
+                      // Distinguish by number
+                      return k2.count - k1.count
+                  }
+                  // Distinguish by keyword name
+                  return k1.name.toLowerCase() > k2.name.toLowerCase()
+                      ? 1
+                      : -1
+
               })
         },
         /**
@@ -154,6 +180,9 @@ export default {
         },
     },
     watch:{
+        /**
+         * Watch array of selected keywords for changes
+         */
         value: {
             handler() {
                 this.selectedKeywordsBuffer = this.value.slice()
@@ -176,12 +205,15 @@ export default {
         },
         toggleCloudSize() {
             this.isMaximized = !this.isMaximized
+        },
+        toggleOrderCriterium() {
+            this.isOrderedAlphabetically = !this.isOrderedAlphabetically
         }
     }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .kw-container {
     position: relative;
@@ -211,9 +243,18 @@ export default {
     display: inline-block;
 }
 
-.resize-button {
+.settings-buttons {
     position: absolute;
     right: 10px;
     bottom: -8px;
+
+    button {
+        min-height: 8px;
+        font-size: 8px;
+        vertical-align: bottom;
+    }
+    .ordering-button {
+        padding: 2px 6px;
+    }
 }
 </style>
