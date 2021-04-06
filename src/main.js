@@ -194,6 +194,9 @@ import AppMain from "./components/AppMain.vue"
         new App({
             store,
             router,
+            beforeCreate() {
+                this.$store.commit('initializeStore')
+            },
         }).$mount("#content")
     })
 })(OC, window)

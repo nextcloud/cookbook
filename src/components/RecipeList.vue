@@ -1,6 +1,10 @@
 <template>
     <div>
-        <RecipeListKeywordCloud v-model="keywordFilter" :keywords="rawKeywords" :filteredRecipes="filteredRecipes"/>
+        <RecipeListKeywordCloud
+            v-if="showTagCloudInRecipeList"
+            v-model="keywordFilter" :keywords="rawKeywords"
+            :filteredRecipes="filteredRecipes"
+        />
         <div id="recipes-submenu" class="recipes-submenu-container">
             <Multiselect
                 v-if="recipes.length > 0"
@@ -234,6 +238,9 @@ export default {
             }
             return this.recipes.map(makeObject, this)
         },
+        showTagCloudInRecipeList() {
+            return this.$store.state.localSettings.showTagCloudInRecipeList
+        }
     },
     mounted() {
         this.$root.$off("applyRecipeFilter")

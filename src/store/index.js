@@ -43,9 +43,19 @@ export default new Vuex.Store({
         updatingRecipeDirectory: false,
         // Category which is being updated (name)
         categoryUpdating: null,
+        localSettings: {
+            showTagCloudInRecipeList: true
+        }
     },
 
     mutations: {
+        initializeStore(state) {
+            if (localStorage.getItem('showTagCloudInRecipeList')) {
+                state.localSettings.showTagCloudInRecipeList = JSON.parse(localStorage.getItem('showTagCloudInRecipeList'))
+            } else {
+                state.localSettings.showTagCloudInRecipeList = true
+            }
+        },
         setAppNavigationRefreshRequired(state, { b }) {
             state.appNavigation.refreshRequired = b
         },
@@ -80,6 +90,10 @@ export default new Vuex.Store({
         },
         setSavingRecipe(state, { b }) {
             state.savingRecipe = b
+        },
+        setShowTagCloudInRecipeList(state, { b }) {
+            localStorage.setItem("showTagCloudInRecipeList", JSON.stringify(b));
+            state.localSettings.showTagCloudInRecipeList = b
         },
         setUser(state, { u }) {
             state.user = u
@@ -146,6 +160,9 @@ export default new Vuex.Store({
         },
         setCategoryUpdating(c, { category }) {
             c.commit("setCategoryUpdating", { c: category })
+        },
+        setShowTagCloudInRecipeList(c, { showTagCloud }){
+            c.commit("setShowTagCloudInRecipeList", { b: showTagCloud})
         },
         updateCategoryName(c, { categoryNames }) {
             const oldName = categoryNames[0]
