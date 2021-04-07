@@ -3,6 +3,7 @@
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Não é possível detectar o tipo dos dados transmitidos. Isso é um erro, por favor, informe-o.",
     "Invalid URL-encoded string found. Please report a bug." : "String codificada por URL inválida encontrada. Por favor, comunique o erro.",
     "Recipes" : "Receitas",
+    "in %s" : "em %s",
     "User cannot create recipe folder" : "O usuário não pode criar uma pasta de receitas",
     "Cookbook" : "Livro de Receitas",
     "An integrated cookbook using schema.org JSON files as recipes" : "Um livro de receitas integrado usando arquivos JSON do schema.org como receitas",
