@@ -5,6 +5,7 @@ OC.L10N.register(
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Ezin da transmititutako datu mota detektatu. Hau akats bat da, jakinarazi, mesedez.",
     "Invalid URL-encoded string found. Please report a bug." : "URLan kodetutako kate baliogabea aurkitu da. Mesedez, jakinarazi akatsa.",
     "Recipes" : "Errezetak",
+    "in %s" : "%s(e)an",
     "User cannot create recipe folder" : "Erabiltzaileak ezin du errezeta karpetarik sortu",
     "Cookbook" : "Errezeta-liburua",
     "An integrated cookbook using schema.org JSON files as recipes" : "Errezeta-liburu integratua schema.org-eko JSON fitxategiak erabiliz errezeta gisa",
