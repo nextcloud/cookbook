@@ -5,6 +5,7 @@ OC.L10N.register(
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Non é posíbel detectar o tipo de datos transmitidos. Agradecémoslle que informe deste erro.",
     "Invalid URL-encoded string found. Please report a bug." : "Atopouse unha cadea URL codificada non válida. Agradecémoslle que informe deste erro.",
     "Recipes" : "Receitas",
+    "in %s" : "en %s",
     "User cannot create recipe folder" : "O usuario non pode crear un cartafol de receitas",
     "Cookbook" : "Libro de cociña",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un libro de receitas integrado que usa os ficheiros JSON de schema.org como receitas",
