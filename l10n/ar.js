@@ -8,6 +8,7 @@ OC.L10N.register(
     "Search" : "البحث",
     "Category" : "الفئة",
     "Uncategorized recipes" : "وصفات غير مصنفة",
+    "Rename" : "إعادة تسمية",
     "Add" : "إضافة",
     "Name" : "الاسم",
     "Description" : "الوصف",
