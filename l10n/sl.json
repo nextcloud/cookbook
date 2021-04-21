@@ -3,6 +3,7 @@
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Ni mogoče zaznati poslanih podatkov. To je napaka za razhroščevanje.",
     "Invalid URL-encoded string found. Please report a bug." : "Zaznan je neveljavno zapisan naslov URL. Poslati je treba poročilo o napaki.",
     "Recipes" : "Recepti",
+    "in %s" : "v kategoriji %s",
     "User cannot create recipe folder" : "Uporabnik ne more ustvariti mape z recepti",
     "Cookbook" : "Kuhar'ca",
     "An integrated cookbook using schema.org JSON files as recipes" : "Kuharica v oblaku, ki omogoča prikaz datotek receptov schema.org JSON",
