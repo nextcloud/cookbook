@@ -19,6 +19,8 @@
   [#676](https://github.com/nextcloud/cookbook/pull/676) @seyfeb
 - Correct styling of PHP files accoring to php-cs-fixer
   [#692](https://github.com/nextcloud/cookbook/pull/692) @christianlupus
+- Removed explicit dependency of @nextcloud/capabilities
+  [#693](https://github.com/nextcloud/cookbook/pull/693) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
