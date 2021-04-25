@@ -6,8 +6,7 @@ use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
 
-class RecipeDb
-{
+class RecipeDb {
 	private const DB_TABLE_RECIPES = 'cookbook_names';
 	private const DB_TABLE_KEYWORDS = 'cookbook_keywords';
 	private const DB_TABLE_CATEGORIES = 'cookbook_categories';

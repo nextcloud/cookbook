@@ -21,8 +21,7 @@ use OCA\Cookbook\Exception\UserFolderNotWritableException;
  *
  * @package OCA\Cookbook\Service
  */
-class RecipeService
-{
+class RecipeService {
 	private $root;
 	private $user_id;
 	private $db;

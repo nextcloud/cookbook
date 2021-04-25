@@ -4,8 +4,7 @@ namespace OCA\Cookbook\Db;
 
 use OCP\Util;
 
-class DbTypesPolyfillHelper
-{
+class DbTypesPolyfillHelper {
 	/**
 	 * @var String
 	 */

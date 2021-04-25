@@ -8,8 +8,7 @@ use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\IConfig;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 
-class DbCacheService
-{
+class DbCacheService {
 	private $userId;
 	//     var $root;
 	

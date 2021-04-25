@@ -17,6 +17,8 @@
   [#672](https://github.com/nextcloud/cookbook/pull/672) @christianlupus
 - Really only show recipe-reference popup on '#'
   [#676](https://github.com/nextcloud/cookbook/pull/676) @seyfeb
+- Correct styling of PHP files accoring to php-cs-fixer
+  [#692](https://github.com/nextcloud/cookbook/pull/692) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
