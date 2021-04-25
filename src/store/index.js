@@ -75,6 +75,10 @@ export default new Vuex.Store({
         },
         setRecipe(state, { r }) {
             const rec = JSON.parse(JSON.stringify(r))
+            if (rec === null) {
+                state.recipe = null
+                return
+            }
             if ("nutrition" in rec && rec.nutrition instanceof Array) {
                 rec.nutrition = {}
             }
