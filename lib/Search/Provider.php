@@ -17,8 +17,7 @@ use OCP\Util;
 // IProvider requies NC >= 20
 // Remove conditional once we end support for NC 19
 if (Util::getVersion()[0] >= 20) {
-	class Provider implements IProvider
-{
+	class Provider implements IProvider {
 
 		/** @var IL10N */
 		private $l;
@@ -90,7 +89,6 @@ if (Util::getVersion()[0] >= 20) {
 		}
 	}
 } else {
-	class Provider
-{
+	class Provider {
 	}
 }

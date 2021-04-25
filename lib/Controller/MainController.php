@@ -13,8 +13,7 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 
-class MainController extends Controller
-{
+class MainController extends Controller {
 	protected $appName;
 
 	/**
