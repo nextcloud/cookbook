@@ -25,6 +25,8 @@
   [#698](https://github.com/nextcloud/cookbook/pull/698) @christianlupus
 - Codebase maintenance
   [#699](https://github.com/nextcloud/cookbook/pull/699) @christianlupus
+- Enable stalebot
+  [#700](https://github.com/nextcloud/cookbook/pull/700) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
