@@ -20,6 +20,9 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
+**Actual behavior**
+Please describe in clear statements what is happening in reality.
+
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
@@ -29,3 +32,4 @@ Which browser are you using?
 **Versions**
 Nextcloud server version: ??
 Cookbook version: ??
+Database system: MySQL/MariaDB/PostgreSQL/Sqlite
