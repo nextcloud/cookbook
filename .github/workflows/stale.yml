@@ -1,0 +1,33 @@
+
+name: Stale bot
+on:
+    schedule:
+      - cron: '0 3 * * *'
+
+jobs:
+    stale:
+        runs-on: ubuntu-latest
+        name: Run stale action
+        
+        steps:
+        
+          - uses: actions/stale@v3.0.18
+            name: Close stale issues
+            with:
+                days_before_stale: 45
+                stale-issue-message: <
+                    This issue was not updated for 45 days.
+                    It is therefore marked as stale.
+                    When no update occurs within the next 7 days, this issue will be closed automatically in the next 7 days.
+                stale-pr-message: <
+                    This pull request was not updated for 45 days.
+                    It is therefore marked as stale.
+                    When no update occurs within the next 7 days, this pull request will be closed automatically in the next 7 days.
+                close-issue-message: <
+                    This issue was not updated since it was marked as stale.
+                    It will be closed now.
+                close-pr-message: <
+                    This pull request was not updated since it was marked as stale.
+                    It will be closed now.
+                stale-issue-label: 'stale'
+                only-labels: 'stalebot-enabled'
