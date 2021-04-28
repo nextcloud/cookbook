@@ -580,7 +580,18 @@ export default {
 
                     if(e.response){
                         // Non 2xx state returned
-                        console.log("error on the server.") // TODO This must be implemented correctly
+
+                        switch(e.response.status){
+                            case 409:
+                                alert(e.response.data.msg)
+                                break
+
+                            default:
+                                // eslint-disable-next-line no-alert
+                                alert(t('cookbook', 'Unknown answer returned from server. See logs.'))
+                                // eslint-disable-next-line no-console
+                                console.log(e.response)
+                        }
                     } else if(e.request) {
                         // eslint-disable-next-line no-alert
                         alert(t("cookbook", "No answer for request was received."))

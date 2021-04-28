@@ -15,6 +15,7 @@ use OCA\Cookbook\Db\RecipeDb;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\RecipeExistsException;
 
 /**
  * Main service class for the cookbook app.
@@ -687,7 +688,7 @@ class RecipeService {
 			// The recipe is being renamed, move the folder
 			if ($old_path !== $new_path) {
 				if ($user_folder->nodeExists($json['name'])) {
-					throw new Exception('Another recipe with that name already exists');
+					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
 				
 				$recipe_folder->move($new_path);
@@ -698,7 +699,7 @@ class RecipeService {
 			$json['dateCreated'] = $now;
 
 			if ($user_folder->nodeExists($json['name'])) {
-				throw new Exception('Another recipe with that name already exists');
+			    throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 			}
 
 			$recipe_folder = $user_folder->newFolder($json['name']);

@@ -12,7 +12,9 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCP\AppFramework\Http\JSONResponse;
 
 class RecipeController extends Controller {
 	/**
@@ -117,10 +119,19 @@ class RecipeController extends Controller {
 		$this->dbCacheService->triggerCheck();
 		
 		$recipeData = $this->restParser->getParameters();
-		$file = $this->service->addRecipe($recipeData);
-		$this->dbCacheService->addRecipe($file);
-
-		return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
+		try {
+    		$file = $this->service->addRecipe($recipeData);
+    		$this->dbCacheService->addRecipe($file);
+    
+    		return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
+		} catch (RecipeExistsException $ex) {
+		    $json = [
+		        'msg' => $ex->getMessage(),
+		        'file' => $ex->getFile(),
+		        'line' => $ex->getLine(),
+		    ];
+		    return new JSONResponse($json, Http::STATUS_CONFLICT);
+		}
 	}
 
 	/**
