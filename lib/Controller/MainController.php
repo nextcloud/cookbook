@@ -356,12 +356,12 @@ class MainController extends Controller {
 
 			return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (RecipeExistsException $ex) {
-		    $json = [
-		        'msg' => $ex->getMessage(),
-		        'line' => $ex->getLine(),
-		        'file' => $ex->getFile(),
-		    ];
-		    return new JSONResponse($json, Http::STATUS_CONFLICT);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'line' => $ex->getLine(),
+				'file' => $ex->getFile(),
+			];
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 400);
 		}

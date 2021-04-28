@@ -120,17 +120,17 @@ class RecipeController extends Controller {
 		
 		$recipeData = $this->restParser->getParameters();
 		try {
-    		$file = $this->service->addRecipe($recipeData);
-    		$this->dbCacheService->addRecipe($file);
-    
-    		return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
+			$file = $this->service->addRecipe($recipeData);
+			$this->dbCacheService->addRecipe($file);
+	
+			return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (RecipeExistsException $ex) {
-		    $json = [
-		        'msg' => $ex->getMessage(),
-		        'file' => $ex->getFile(),
-		        'line' => $ex->getLine(),
-		    ];
-		    return new JSONResponse($json, Http::STATUS_CONFLICT);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		}
 	}
 

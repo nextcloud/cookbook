@@ -699,7 +699,7 @@ class RecipeService {
 			$json['dateCreated'] = $now;
 
 			if ($user_folder->nodeExists($json['name'])) {
-			    throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
+				throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 			}
 
 			$recipe_folder = $user_folder->newFolder($json['name']);
