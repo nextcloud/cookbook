@@ -3,6 +3,8 @@
 ### Added
 - Make recipes searchable through unified search
   [#611](https://github.com/nextcloud/cookbook/pull/611) @PFischbeck
+- Enhanced keyword cloud in recipe list with option to hide/show keywords, enlarge area, and ordering alphabetically
+  [#678](https://github.com/nextcloud/cookbook/pull/678) @seyfeb
 
 ### Fixed
 - Calling reindex

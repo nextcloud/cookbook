@@ -1,44 +1,11 @@
 <template>
     <div>
-        <div class="kw">
-            <transition-group
-                v-if="uniqKeywords.length > 0"
-                class="keywords"
-                name="keyword-list"
-                tag="ul"
-            >
-                <RecipeKeyword
-                    v-for="keywordObj in selectedKeywords"
-                    :key="keywordObj.name"
-                    :name="keywordObj.name"
-                    :count="keywordObj.count"
-                    :title="t('cookbook', 'Toggle keyword')"
-                    class="keyword active"
-                    @keyword-clicked="keywordClicked(keywordObj)"
-                />
-                <RecipeKeyword
-                    v-for="keywordObj in selectableKeywords"
-                    :key="keywordObj.name"
-                    :name="keywordObj.name"
-                    :count="keywordObj.count"
-                    :title="t('cookbook', 'Toggle keyword')"
-                    class="keyword"
-                    @keyword-clicked="keywordClicked(keywordObj)"
-                />
-                <RecipeKeyword
-                    v-for="keywordObj in unavailableKeywords"
-                    :key="keywordObj.name"
-                    :name="keywordObj.name"
-                    :count="keywordObj.count"
-                    :title="
-                        // prettier-ignore
-                        t('cookbook','Keyword not contained in visible recipes')
-                    "
-                    class="keyword disabled"
-                    @keyword-clicked="keywordClicked(keywordObj)"
-                />
-            </transition-group>
-        </div>
+        <RecipeListKeywordCloud
+            v-if="showTagCloudInRecipeList"
+            v-model="keywordFilter"
+            :keywords="rawKeywords"
+            :filteredRecipes="filteredRecipes"
+        />
         <div id="recipes-submenu" class="recipes-submenu-container">
             <Multiselect
                 v-if="recipes.length > 0"
@@ -89,14 +56,14 @@
 import moment from "@nextcloud/moment"
 import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
 import RecipeCard from "./RecipeCard.vue"
-import RecipeKeyword from "./RecipeKeyword.vue"
+import RecipeListKeywordCloud from "./RecipeListKeywordCloud.vue"
 
 export default {
     name: "RecipeList",
     components: {
         Multiselect,
         RecipeCard,
-        RecipeKeyword,
+        RecipeListKeywordCloud,
     },
     props: {
         recipes: {
@@ -168,53 +135,6 @@ export default {
             return [].concat(...keywordArray)
         },
         /**
-         * An array of sorted and unique keywords over all the recipes
-         */
-        uniqKeywords() {
-            function uniqFilter(value, index, self) {
-                return self.indexOf(value) === index
-            }
-            const rawKWs = [...this.rawKeywords]
-            return rawKWs.sort().filter(uniqFilter)
-        },
-        /**
-         * An array of objects that contain the keywords plus a count of recipes associated with these keywords
-         */
-        keywordsWithCount() {
-            const $this = this
-            return this.uniqKeywords
-                .map((kw) => ({
-                    name: kw,
-                    count: $this.rawKeywords.filter((kw2) => kw === kw2).length,
-                }))
-                .sort((k1, k2) => {
-                    if (k1.count !== k2.count) {
-                        // Distinguish by number
-                        return k2.count - k1.count
-                    }
-                    // Distinguish by keyword name
-                    return k1.name.toLowerCase() > k2.name.toLowerCase()
-                        ? 1
-                        : -1
-                })
-        },
-        /**
-         * An array of keyword objects that are currently in use for filtering
-         */
-        selectedKeywords() {
-            return this.keywordsWithCount.filter((kw) =>
-                this.keywordFilter.includes(kw.name)
-            )
-        },
-        /**
-         * An array of those keyword objects that are currently not in use for filtering
-         */
-        unselectedKeywords() {
-            return this.keywordsWithCount.filter(
-                (kw) => !this.selectedKeywords.includes(kw)
-            )
-        },
-        /**
          * An array of all recipes that are part in all filtered keywords
          */
         recipesFilteredByKeywords() {
@@ -234,10 +154,10 @@ export default {
                         return false
                     }
                     const keywords = r2.keywords.split(",")
-                    return keywords.includes(kw.name)
+                    return keywords.includes(kw)
                 }
 
-                return $this.selectedKeywords
+                return $this.keywordFilter
                     .map((kw) => keywordInRecipePresent(kw, r))
                     .reduce((l, rec) => l && rec)
             })
@@ -256,33 +176,6 @@ export default {
             }
 
             return ret
-        },
-        /**
-         * An array of keywords that are yet unselected but some visible recipes are associated
-         */
-        selectableKeywords() {
-            if (this.unselectedKeywords.length === 0) {
-                return []
-            }
-
-            const $this = this
-            return this.unselectedKeywords.filter((kw) =>
-                $this.filteredRecipes
-                    .map(
-                        (r) =>
-                            r.keywords &&
-                            r.keywords.split(",").includes(kw.name)
-                    )
-                    .reduce((l, r) => l || r, false)
-            )
-        },
-        /**
-         * An array of known keywords that are not associated with any visible recipe
-         */
-        unavailableKeywords() {
-            return this.unselectedKeywords.filter(
-                (kw) => !this.selectableKeywords.includes(kw)
-            )
         },
         // Recipes ordered ascending by name
         recipesNameAsc() {
@@ -346,6 +239,9 @@ export default {
             }
             return this.recipes.map(makeObject, this)
         },
+        showTagCloudInRecipeList() {
+            return this.$store.state.localSettings.showTagCloudInRecipeList
+        },
     },
     mounted() {
         this.$root.$off("applyRecipeFilter")
@@ -357,17 +253,6 @@ export default {
         this.orderBy = this.recipeOrderingOptions[0]
     },
     methods: {
-        /**
-         * Callback for click on keyword, add to or remove from list
-         */
-        keywordClicked(keyword) {
-            const index = this.keywordFilter.indexOf(keyword.name)
-            if (index > -1) {
-                this.keywordFilter.splice(index, 1)
-            } else {
-                this.keywordFilter.push(keyword.name)
-            }
-        },
         /* Sort recipes according to the property of the recipe ascending or
          * descending
          */
@@ -429,26 +314,6 @@ export default {
 </style>
 
 <style scoped>
-.kw {
-    width: 100%;
-    max-height: 6.7em;
-    padding: 0.1em;
-    margin-bottom: 1em;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
-
-.keywords {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    padding: 0.5rem 1rem;
-}
-
-.keyword {
-    display: inline-block;
-}
-
 .recipes-submenu-container {
     padding-left: 16px;
     margin-bottom: 0.75ex;
