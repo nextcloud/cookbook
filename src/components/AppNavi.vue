@@ -285,8 +285,15 @@ export default {
                             e2.response.status >= 400 &&
                             e2.response.status < 500
                         ) {
-                            // eslint-disable-next-line no-alert
-                            alert(e2.response.data)
+                            if (e2.response.status == 409) {
+                                // There was a recipe found with the same name
+                                
+                                // eslint-disable-next-line no-alert
+                                alert(e2.response.data.msg)
+                            } else {
+                                // eslint-disable-next-line no-alert
+                                alert(e2.response.data)
+                            }
                         } else {
                             console.error(e2)
                             alert(
