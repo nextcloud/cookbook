@@ -565,41 +565,54 @@ export default {
             const $this = this
 
             const request = (() => {
-                if(this.recipe_id) {
-                    return this.$store.dispatch("updateRecipe", { recipe: this.recipe })
+                if (this.recipe_id) {
+                    return this.$store.dispatch("updateRecipe", {
+                        recipe: this.recipe,
+                    })
                 } else {
-                    return this.$store.dispatch("createRecipe", { recipe: this.recipe })
+                    return this.$store.dispatch("createRecipe", {
+                        recipe: this.recipe,
+                    })
                 }
             })()
 
-            request.then((response) => {
+            request
+                .then((response) => {
                     $this.$window.goTo(`/recipe/${response.data}`)
                 })
                 .catch((e) => {
                     // error
 
-                    if(e.response){
+                    if (e.response) {
                         // Non 2xx state returned
 
-                        switch(e.response.status){
+                        switch (e.response.status) {
                             case 409:
                                 alert(e.response.data.msg)
                                 break
 
                             default:
                                 // eslint-disable-next-line no-alert
-                                alert(t('cookbook', 'Unknown answer returned from server. See logs.'))
+                                alert(
+                                    // prettier-ignore
+                                    t("cookbook","Unknown answer returned from server. See logs.")
+                                )
                                 // eslint-disable-next-line no-console
                                 console.log(e.response)
                         }
-                    } else if(e.request) {
+                    } else if (e.request) {
                         // eslint-disable-next-line no-alert
-                        alert(t("cookbook", "No answer for request was received."))
+                        alert(
+                            t("cookbook", "No answer for request was received.")
+                        )
                         // eslint-disable-next-line no-console
                         console.log(e)
                     } else {
                         // eslint-disable-next-line no-alert
-                        alert(t("cookbook", "Could not start request to save recipe."))
+                        alert(
+                            // prettier-ignore
+                            t("cookbook","Could not start request to save recipe.")
+                        )
                         // eslint-disable-next-line no-console
                         console.log(e)
                     }
@@ -612,7 +625,7 @@ export default {
                     $this.savingRecipe = false
                 })
                 .catch((e) => {
-                    console.log('terminal catch')
+                    console.log("terminal catch")
                     console.log(e)
                 })
         },

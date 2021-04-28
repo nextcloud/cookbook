@@ -287,7 +287,7 @@ export default {
                         ) {
                             if (e2.response.status == 409) {
                                 // There was a recipe found with the same name
-                                
+
                                 // eslint-disable-next-line no-alert
                                 alert(e2.response.data.msg)
                             } else {
