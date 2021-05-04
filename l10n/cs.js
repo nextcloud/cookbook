@@ -106,6 +106,8 @@ OC.L10N.register(
     "Modification date" : "Datum změny",
     "Toggle keyword" : "Přepnout klíčové slovo",
     "Keyword not contained in visible recipes" : "Klíčové slovo není obsaženo ve viditelných receptech",
+    "Order keywords by number of recipes" : "Seřadit klíčová slova podle počtu receptů",
+    "Order keywords alphabetically" : "Seřadit klíčová slova abecedně",
     "Cooking time is up!" : "Čas vaření je u konce!",
     "Search recipes with this keyword" : "Vyhledat recepty s tímto klíčovým slovem",
     "Date created" : "Datum vytvoření",
