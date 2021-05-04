@@ -5,6 +5,8 @@
   [#611](https://github.com/nextcloud/cookbook/pull/611) @PFischbeck
 - Enhanced keyword cloud in recipe list with option to hide/show keywords, enlarge area, and ordering alphabetically
   [#678](https://github.com/nextcloud/cookbook/pull/678) @seyfeb
+- User documentation
+  [#709](https://github.com/nextcloud/cookbook/pull/709) @seyfeb
 
 ### Fixed
 - Calling reindex
