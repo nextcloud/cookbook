@@ -106,7 +106,7 @@ OC.L10N.register(
     "Modification date" : "Data di modifica",
     "Toggle keyword" : "Scegli la parola chiave",
     "Keyword not contained in visible recipes" : "Parola chiave non contenuta nelle ricette visibili",
-    "Toggle keyword area size" : "Cambia dimensione area parole chiave",
+    "Toggle keyword area size" : "Cambia dimensione area delle parole chiave",
     "Order keywords by number of recipes" : "Ordina le parole chiave per numero di ricette",
     "Order keywords alphabetically" : "Ordina le parole chiave alfabeticamente",
     "Cooking time is up!" : "Il tempo di cottura è scaduto!",
