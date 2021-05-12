@@ -212,7 +212,8 @@ export default {
                     this.resetPrintImage = false
                     if (config) {
                         this.printImage = config.print_image
-                        this.showTagCloudInRecipeList = this.$store.state.localSettings.showTagCloudInRecipeList
+                        this.showTagCloudInRecipeList =
+                            this.$store.state.localSettings.showTagCloudInRecipeList
                         this.updateInterval = config.update_interval
                         this.recipeFolder = config.folder
                     } else {
