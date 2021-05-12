@@ -179,7 +179,7 @@ jobs:
     name: Create source code artifacts
     needs:
         - unit-tests
-        - php-lint
+        - lint
     runs-on: ubuntu-latest
     
     steps:
