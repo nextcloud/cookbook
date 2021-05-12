@@ -564,47 +564,66 @@ export default {
             this.$store.dispatch("setSavingRecipe", { saving: true })
             const $this = this
 
-            if (this.recipe.id) {
-                this.$store
-                    .dispatch("updateRecipe", { recipe: this.recipe })
-                    .then((response) => {
-                        $this.$window.goTo(`/recipe/${response.data}`)
+            const request = (() => {
+                if (this.recipe_id) {
+                    return this.$store.dispatch("updateRecipe", {
+                        recipe: this.recipe,
                     })
-                    .catch((e) => {
-                        // error
+                } else {
+                    return this.$store.dispatch("createRecipe", {
+                        recipe: this.recipe,
+                    })
+                }
+            })()
+
+            request
+                .then((response) => {
+                    $this.$window.goTo(`/recipe/${response.data}`)
+                })
+                .catch((e) => {
+                    // error
+
+                    if (e.response) {
+                        // Non 2xx state returned
+
+                        switch (e.response.status) {
+                            case 409:
+                                alert(e.response.data.msg)
+                                break
+
+                            default:
+                                // eslint-disable-next-line no-alert
+                                alert(
+                                    // prettier-ignore
+                                    t("cookbook","Unknown answer returned from server. See logs.")
+                                )
+                                // eslint-disable-next-line no-console
+                                console.log(e.response)
+                        }
+                    } else if (e.request) {
                         // eslint-disable-next-line no-alert
-                        alert(t("cookbook", "Recipe could not be saved"))
+                        alert(
+                            t("cookbook", "No answer for request was received.")
+                        )
                         // eslint-disable-next-line no-console
                         console.log(e)
-                    })
-                    .then(() => {
-                        // finally
-                        $this.$store.dispatch("setSavingRecipe", {
-                            saving: false,
-                        })
-                        $this.savingRecipe = false
-                    })
-            } else {
-                this.$store
-                    .dispatch("createRecipe", { recipe: this.recipe })
-                    .then((response) => {
-                        $this.$window.goTo(`/recipe/${response.data}`)
-                    })
-                    .catch((e) => {
-                        // error
+                    } else {
                         // eslint-disable-next-line no-alert
-                        alert(t("cookbook", "Recipe could not be saved"))
+                        alert(
+                            // prettier-ignore
+                            t("cookbook","Could not start request to save recipe.")
+                        )
                         // eslint-disable-next-line no-console
                         console.log(e)
+                    }
+                })
+                .then(() => {
+                    // finally
+                    $this.$store.dispatch("setSavingRecipe", {
+                        saving: false,
                     })
-                    .then(() => {
-                        // finally
-                        $this.$store.dispatch("setSavingRecipe", {
-                            saving: false,
-                        })
-                        $this.savingRecipe = false
-                    })
-            }
+                    $this.savingRecipe = false
+                })
         },
         setup() {
             this.fetchCategories()

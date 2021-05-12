@@ -119,13 +119,14 @@ export default new Vuex.Store({
                 url: `${window.baseUrl}/api/recipes`,
                 data: recipe,
             })
-            request.then(() => {
+            return request.then((v) => {
                 // Refresh navigation to display changes
                 c.dispatch("setAppNavigationRefreshRequired", {
                     isRequired: true,
                 })
+
+                return v
             })
-            return request
         },
         /**
          * Delete recipe on the server

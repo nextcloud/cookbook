@@ -31,6 +31,8 @@
   [#699](https://github.com/nextcloud/cookbook/pull/699) @christianlupus
 - Enable stalebot
   [#700](https://github.com/nextcloud/cookbook/pull/700) @christianlupus
+- Correct error messages when recipe already exists
+  [#702](https://github.com/nextcloud/cookbook/pull/702) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
