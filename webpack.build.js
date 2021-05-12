@@ -20,7 +20,7 @@ module.exports = merge(common, {
                         comments: false
                     }
                 },
-                sourceMap: true
+                parallel: true
             })
         ],
     },

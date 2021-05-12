@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "build": "node node_modules/webpack/bin/webpack.js --progress --config webpack.build.js",
-    "build-dev": "node node_modules/webpack/bin/webpack.js --progress --config webpack.devel.js",
+    "build-dev": "node node_modules/webpack/bin/webpack.js --progress --config webpack.build-dev.js",
     "dev": "node node_modules/webpack/bin/webpack.js --progress --watch --config webpack.devel.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "npx prettier --check src",
