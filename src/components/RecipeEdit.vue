@@ -624,10 +624,6 @@ export default {
                     })
                     $this.savingRecipe = false
                 })
-                .catch((e) => {
-                    console.log("terminal catch")
-                    console.log(e)
-                })
         },
         setup() {
             this.fetchCategories()
