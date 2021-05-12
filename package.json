@@ -32,7 +32,7 @@
     "@nextcloud/moment": "^1.1.1",
     "@nextcloud/vue": "^3.5.4",
     "lozad": "^1.16.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "sass-loader": "^10.1.1",
     "v-markdown-editor": "^1.2.6",
     "vue": "^2.6.11",
