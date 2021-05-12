@@ -1,14 +1,13 @@
 
-name: CI-tests
+name: Continuous integration testing
 
 on:
   push:
-  pull_request:
 
 jobs:
   
-  php-lint:
-    name: Run PHP Linter and Code Style checker
+  lint:
+    name: Run Linter and Code Style checker
     runs-on: ubuntu-latest
     steps:
         -   name: Checkout the project
