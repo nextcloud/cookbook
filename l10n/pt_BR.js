@@ -100,7 +100,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Você tem alterações não salvas! Você ainda quer sair?",
     "Failed to fetch keywords" : "Falha na busca de palavras-chave",
     "Loading recipe failed" : "Erro ao carregar receita",
-    "Recipe could not be saved" : "A receita não pôde ser salva",
     "Recipe image" : "Imagem da receita",
     "Select order" : "Selecione o pedido",
     "Creation date" : "Data de criação",

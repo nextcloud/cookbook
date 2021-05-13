@@ -79,7 +79,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "保存されていない変更があります！離れるつもりですか？",
     "Failed to fetch keywords" : "キーワードの取得に失敗しました",
     "Loading recipe failed" : "レシピの読み込みに失敗しました",
-    "Recipe could not be saved" : "レシピを保存できませんでした",
     "Recipe image" : "レシピ画像",
     "Creation date" : "作成日時",
     "Modification date" : "変更日時",

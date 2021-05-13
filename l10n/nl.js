@@ -100,7 +100,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Je hebt niet-opgeslagen wijzigingen! Wil je toch weg?",
     "Failed to fetch keywords" : "Kan trefwoorden niet ophalen",
     "Loading recipe failed" : "Laden recept mislukt",
-    "Recipe could not be saved" : "Recept kon niet worden opgeslagen",
     "Recipe image" : "Afbeelding recept",
     "Select order" : "Selecteer volgorde",
     "Creation date" : "Aanmaakdatum",

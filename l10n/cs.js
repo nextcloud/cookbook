@@ -100,7 +100,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Jsou zde neuložené změny! Opravdu chcete odejít?",
     "Failed to fetch keywords" : "Načtení klíčových slov se nezdařilo",
     "Loading recipe failed" : "Načítání receptu se nezdařilo",
-    "Recipe could not be saved" : "Recept se nepodařilo uložit",
     "Recipe image" : "Obrázek receptu",
     "Select order" : "Vyberte pořadí",
     "Creation date" : "Datum vytvoření",

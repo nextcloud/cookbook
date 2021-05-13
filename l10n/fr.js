@@ -99,7 +99,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Vous avez des modifications non enregistrées. Voulez-vous malgré tout quitter ?",
     "Failed to fetch keywords" : "Impossible de récupérer les mots-clef",
     "Loading recipe failed" : "Erreur lors du chargement de la recette",
-    "Recipe could not be saved" : "La recette n'a pas pu être enregistrée",
     "Recipe image" : "Image de la recette",
     "Select order" : "Choisir l'ordre",
     "Creation date" : "Date de création",

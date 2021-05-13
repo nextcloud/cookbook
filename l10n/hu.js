@@ -98,7 +98,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Nem mentett módosításai vannak! Elhagyja az oldalt?",
     "Failed to fetch keywords" : "Nem sikerült beolvasni a kulcsszavakat",
     "Loading recipe failed" : "A recept betöltése sikertelen",
-    "Recipe could not be saved" : "A receptet nem sikerült menteni",
     "Recipe image" : "Recept kép",
     "Select order" : "Válassza ki a rendelést",
     "Creation date" : "Létrehozás dátuma",

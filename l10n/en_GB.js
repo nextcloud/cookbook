@@ -58,7 +58,6 @@ OC.L10N.register(
     "Ingredients" : "Ingredients",
     "Instructions" : "Instructions",
     "Loading recipe failed" : "Loading recipe failed",
-    "Recipe could not be saved" : "Recipe could not be saved",
     "Cooking time is up!" : "Cooking time is up!",
     "Source" : "Source"
 },

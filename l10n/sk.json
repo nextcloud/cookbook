@@ -56,7 +56,6 @@
     "Ingredients" : "Prísady",
     "Instructions" : "Postup",
     "Loading recipe failed" : "Načítanie receptu zlyhalo",
-    "Recipe could not be saved" : "Recept nemohol byť uložený",
     "Cooking time is up!" : "Čas varenia vypršal!",
     "Source" : "Zdroj"
 },"pluralForm" :"nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);"

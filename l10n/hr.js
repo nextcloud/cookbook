@@ -98,7 +98,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Postoje nespremljene promjene! Želite li još uvijek izaći?",
     "Failed to fetch keywords" : "Dohvaćanje ključnih riječi nije uspjelo",
     "Loading recipe failed" : "Učitavanje recepta nije uspjelo",
-    "Recipe could not be saved" : "Recept nije moguće spremiti",
     "Recipe image" : "Slika recepta",
     "Select order" : "Odaberi redoslijed",
     "Creation date" : "Datum stvaranja",

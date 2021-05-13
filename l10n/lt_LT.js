@@ -73,7 +73,6 @@ OC.L10N.register(
     "Instructions" : "Instrukcija",
     "Calories" : "Kalorijos",
     "Loading recipe failed" : "Recepto įkėlimas nepavyko",
-    "Recipe could not be saved" : "Nepavyko įrašyti recepto",
     "Toggle keyword" : "Perjungti raktažodį",
     "Keyword not contained in visible recipes" : "Raktažodžio matomuose receptuose nėra",
     "Cooking time is up!" : "Gaminimo laikas baigėsi!",

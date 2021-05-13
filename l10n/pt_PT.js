@@ -81,7 +81,6 @@ OC.L10N.register(
     "Unsaturated-fat content" : "Lípidos insaturados",
     "Failed to fetch keywords" : "Falhou ao obter palavras-chave",
     "Loading recipe failed" : "Falhou ao carregar a receita",
-    "Recipe could not be saved" : "Não foi possível guardar a receita",
     "Toggle keyword" : "Comutar palavra-chave",
     "Keyword not contained in visible recipes" : "A palavra-passe não consta nas receitas visíveis",
     "Cooking time is up!" : "Terminou o tempo de cozedura!",

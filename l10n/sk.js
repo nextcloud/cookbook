@@ -58,7 +58,6 @@ OC.L10N.register(
     "Ingredients" : "Prísady",
     "Instructions" : "Postup",
     "Loading recipe failed" : "Načítanie receptu zlyhalo",
-    "Recipe could not be saved" : "Recept nemohol byť uložený",
     "Cooking time is up!" : "Čas varenia vypršal!",
     "Source" : "Zdroj"
 },

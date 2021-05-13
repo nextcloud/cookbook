@@ -96,7 +96,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Du har ikke-gemte ændringer! Vil du stadig lukke?",
     "Failed to fetch keywords" : "Kunne ikke indhente nøgleord",
     "Loading recipe failed" : "Indlæsning af opskrift fejlede.",
-    "Recipe could not be saved" : "Opskriften kunne ikke gemmes.",
     "Recipe image" : "Opskriftbillede",
     "Select order" : "Vælg ordning",
     "Creation date" : "Oprettelsesdato",

@@ -99,7 +99,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "У вас есть несохранённые изменения! Вы всё ещё хотите уйти?",
     "Failed to fetch keywords" : "Не удалось получить ключевые слова",
     "Loading recipe failed" : "Не удалась загрузить рецепт",
-    "Recipe could not be saved" : "Не удалось сохранить рецепт",
     "Recipe image" : "Изображение рецепта",
     "Select order" : "Выбрать порядок",
     "Creation date" : "Дата создания",

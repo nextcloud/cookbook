@@ -94,7 +94,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Sinulla on tallentamattomia muutoksia! Haluatko silti poistua?",
     "Failed to fetch keywords" : "Avainsanojen haku epäonnistui",
     "Loading recipe failed" : "Reseptin lataus epäonnistui",
-    "Recipe could not be saved" : "Reseptiä ei voitu tallentaa",
     "Recipe image" : "Reseptin kuva",
     "Select order" : "Valitse järjestys",
     "Creation date" : "Luontipäivämäärä",

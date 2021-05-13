@@ -99,7 +99,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "No as sarvadu is modìficas! A beru boles essire?",
     "Failed to fetch keywords" : "Non faghet a recuperare is faeddos crae",
     "Loading recipe failed" : "Non faghet a carrigare sa retzeta",
-    "Recipe could not be saved" : "Non faghet a sarvare sa retzeta",
     "Recipe image" : "Immàgine de sa retzeta",
     "Select order" : "Seletziona òrdine",
     "Creation date" : "Data de creatzione",

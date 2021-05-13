@@ -100,7 +100,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "您有未保存的更改！你還要離開嗎？",
     "Failed to fetch keywords" : "獲取關鍵詞失敗",
     "Loading recipe failed" : "食譜加載失敗",
-    "Recipe could not be saved" : "食譜無法被保存",
     "Recipe image" : "食譜圖像",
     "Select order" : "選擇排序",
     "Creation date" : "建立時間",

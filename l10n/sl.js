@@ -100,7 +100,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Zaznane so neshranjene spremembe! Ali vseeno želite zapustiti stran?",
     "Failed to fetch keywords" : "Pridobivanje ključnih besed je spodletelo",
     "Loading recipe failed" : "Nalaganje receptov je spodletelo",
-    "Recipe could not be saved" : "Recepta ni mogoče shraniti",
     "Recipe image" : "Slika jedi",
     "Select order" : "Izbor razvrstitve",
     "Creation date" : "Datum ustvarjanja",

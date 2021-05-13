@@ -100,7 +100,6 @@ OC.L10N.register(
     "You have unsaved changes! Do you still want to leave?" : "Gorde gabeko aldaketak dauzkazu! Atera nahi duzu hala ere?",
     "Failed to fetch keywords" : "Gako-hitzak eskuratzeak huts egin du",
     "Loading recipe failed" : "Errezeta kargatzeak huts egin du",
-    "Recipe could not be saved" : "Ezin izan da errezeta gorde",
     "Recipe image" : "Errezetaren irudia",
     "Select order" : "Hautatu ordena",
     "Creation date" : "Sorrera-data",
