@@ -33,6 +33,8 @@
   [#700](https://github.com/nextcloud/cookbook/pull/700) @christianlupus
 - Correct error messages when recipe already exists
   [#702](https://github.com/nextcloud/cookbook/pull/702) @christianlupus
+- Update webpack version to 5.x
+  [#717](https://github.com/nextcloud/cookbook/pull/717) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 

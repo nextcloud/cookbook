@@ -23,6 +23,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+            },
+            {
                 test: /\.css$/,
                 use: [{ loader: 'vue-style-loader' }, 
                     {
@@ -40,10 +44,6 @@ module.exports = {
                 loader: 'vue-template-loader',
             },
             {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-            },
-            {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 exclude: /node_modules/,
@@ -57,7 +57,7 @@ module.exports = {
             },
             {
                 test: /\.(eot|woff|woff2|ttf)$/,
-                loaders: 'file-loader',
+                loader: 'file-loader',
                 options: {
                     name: '[path][name].[ext]?[hash]'
                 },

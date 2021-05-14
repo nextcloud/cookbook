@@ -194,7 +194,11 @@ jobs:
         -   name: Install the dependencies for composer
             shell: bash
             run: >-
-                make npm composer_dist
+                make composer_dist
+        -   name: Build node app
+            shell: bash
+            run: >-
+                make npm
         
         -   name: Create the app store package
             shell: bash
