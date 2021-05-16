@@ -33,7 +33,7 @@ OC.L10N.register(
     "Are you sure you want to delete this recipe?" : "Möchtest Du wirklich dieses Rezept löschen?",
     "Delete failed" : "Löschen fehlgeschlagen",
     "Cannot access recipe folder." : "Auf den Rezeptordner konnte nicht zugegriffen werden.",
-    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Du bist mit einem Gastkonto eingeloggt. Daher ist es dir nicht erlaubt, beliebige Dateien und Ordner auf dieser Nextcloud-Instanz zu erzeugen. Um die Cookbook-App als Gast nutzen zu können, musst Du einen Ordner angeben, in dem alle Rezepte gespeichert werden. Du benötigst Schreibrechte für diesen Ordner.",
+    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Du bist mit einem Gastkonto eingeloggt. Daher ist es Dir nicht erlaubt, beliebige Dateien und Ordner auf dieser Nextcloud-Instanz zu erzeugen. Um die Cookbook-App als Gast nutzen zu können, musst Du einen Ordner angeben, in dem alle Rezepte gespeichert werden. Du benötigst Schreibrechte für diesen Ordner.",
     "Select recipe folder" : "Rezeptordner auswählen",
     "Path to your recipe collection" : "Pfad zur Rezept-Sammlung",
     "Create recipe" : "Neues Rezept anlegen",
