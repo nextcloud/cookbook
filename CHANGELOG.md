@@ -37,6 +37,8 @@
   [#717](https://github.com/nextcloud/cookbook/pull/717) @christianlupus
 - Update sass-loader
   [#720](https://github.com/nextcloud/cookbook/pull/720) @christianlupus
+- Update compression-webpack-plugin
+  [#721](https://github.com/nextcloud/cookbook/pull/721) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
