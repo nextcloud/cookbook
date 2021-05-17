@@ -35,6 +35,8 @@
   [#702](https://github.com/nextcloud/cookbook/pull/702) @christianlupus
 - Update webpack version to 5.x
   [#717](https://github.com/nextcloud/cookbook/pull/717) @christianlupus
+- Update sass-loader
+  [#720](https://github.com/nextcloud/cookbook/pull/720) @christianlupus
   
 ## 0.8.4 - 2021-03-08
 
