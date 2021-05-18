@@ -103,7 +103,7 @@ OC.L10N.register(
     "Loading recipe failed" : "Caricamento della ricetta non riuscito",
     "Unknown answer returned from server. See logs." : "Il server ha restituito una risposta sconosciuta. Controlla i log.",
     "No answer for request was received." : "La richiesta non ha ricevuto alcuna risposta.",
-    "Could not start request to save recipe." : "Impossibile inviare la richiesta di salvataggio della ricetta.",
+    "Could not start request to save recipe." : "Impossibile iniziare la richiesta di salvataggio della ricetta.",
     "Recipe image" : "Immagine della ricetta",
     "Select order" : "Ordine di selezione",
     "Creation date" : "Data di creazione",
