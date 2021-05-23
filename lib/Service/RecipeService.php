@@ -215,6 +215,17 @@ class RecipeService {
 		
 		// Make sure that "recipeYield" is an integer which is at least 1
 		if (isset($json['recipeYield']) && $json['recipeYield']) {
+			
+			// Check if "recipeYield is an array
+			if (is_array($json['recipeYield'])) {
+				if (count($json['recipeYield']) === 1) {
+					$json['recipeYield'] = $json['recipeYield'][0];
+				} else {
+					// XXX How to parse an array correctly?
+					$json['recipeYield'] = join(' ', $json['recipeYield']);
+				}
+			}
+			
 			$regex_matches = [];
 			preg_match('/(\d*)/', $json['recipeYield'], $regex_matches);
 			if (count($regex_matches) >= 1) {
