@@ -39,7 +39,9 @@
   [#720](https://github.com/nextcloud/cookbook/pull/720) @christianlupus
 - Update compression-webpack-plugin
   [#721](https://github.com/nextcloud/cookbook/pull/721) @christianlupus
-  
+- Fix array in recipeYields field according to #722
+  [#725](https://github.com/nextcloud/cookbook/pull/725) @christianlupus
+
 ## 0.8.4 - 2021-03-08
 
 ### Added
