@@ -218,7 +218,7 @@ class RecipeService {
 			
 			// Check if "recipeYield is an array
 			if (is_array($json['recipeYield'])) {
-				if (count($json['recipeYield']) == 1) {
+				if (count($json['recipeYield']) === 1) {
 					$json['recipeYield'] = $json['recipeYield'][0];
 				} else {
 					// XXX How to parse an array correctly?
