@@ -180,12 +180,19 @@ export default {
 
 <style scoped>
 fieldset {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 1em;
+}
+
+@media (min-width: 1200px) {
+    fieldset {
+        flex-direction: row;
+    }
 }
 
 fieldset > * {
     margin: 0;
-    float: left;
 }
 
 fieldset > label {
@@ -196,16 +203,15 @@ fieldset > label {
     line-height: 17px;
     vertical-align: top;
 }
-@media (max-width: 1199px) {
-    fieldset > label {
-        display: block;
-        float: none;
-    }
-}
 
 fieldset > input,
 fieldset > textarea {
-    width: calc(100% - 11em);
+    flex: 1;
+}
+
+fieldset > input[type="number"] {
+    width: 5em;
+    flex-grow: 0;
 }
 
 fieldset > textarea {
@@ -214,17 +220,9 @@ fieldset > textarea {
 }
 
 fieldset > .editor {
-    width: calc(100% - 11em);
     min-height: 10em;
+    flex: 1;
     border-radius: 2px;
     resize: vertical;
-}
-
-@media (max-width: 1199px) {
-    fieldset > input,
-    fieldset > textarea,
-    fieldset > .editor {
-        width: 100%;
-    }
 }
 </style>
