@@ -41,6 +41,9 @@
   [#721](https://github.com/nextcloud/cookbook/pull/721) @christianlupus
 - Fix array in recipeYields field according to #722
   [#725](https://github.com/nextcloud/cookbook/pull/725) @christianlupus
+- Fix recipe-editor layout as in #729
+  [#725](https://github.com/nextcloud/cookbook/pull/732) @seyfeb
+
 
 ## 0.8.4 - 2021-03-08
 

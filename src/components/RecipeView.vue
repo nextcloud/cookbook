@@ -355,8 +355,9 @@ export default {
             }
 
             if (this.$store.state.recipe.cookTime) {
-                const cookT =
-                    this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
+                const cookT = this.$store.state.recipe.cookTime.match(
+                    /PT(\d+?)H(\d+?)M/
+                )
                 const hh = parseInt(cookT[1], 10)
                 const mm = parseInt(cookT[2], 10)
                 if (hh > 0 || mm > 0) {
@@ -365,8 +366,9 @@ export default {
             }
 
             if (this.$store.state.recipe.prepTime) {
-                const prepT =
-                    this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
+                const prepT = this.$store.state.recipe.prepTime.match(
+                    /PT(\d+?)H(\d+?)M/
+                )
                 const hh = parseInt(prepT[1], 10)
                 const mm = parseInt(prepT[2], 10)
                 if (hh > 0 || mm > 0) {
@@ -375,8 +377,9 @@ export default {
             }
 
             if (this.$store.state.recipe.totalTime) {
-                const totalT =
-                    this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
+                const totalT = this.$store.state.recipe.totalTime.match(
+                    /PT(\d+?)H(\d+?)M/
+                )
                 const hh = parseInt(totalT[1], 10)
                 const mm = parseInt(totalT[2], 10)
                 if (hh > 0 || mm > 0) {
