@@ -25,7 +25,7 @@ OC.L10N.register(
     "Recipe not found" : "Nie znaleziono przepisu",
     "Page not found" : "Nie znaleziono strony",
     "Filter" : "Filtr",
-    "Search" : "Wyszukiwanie",
+    "Search" : "Szukaj",
     "Category" : "Kategoria",
     "Recipe name" : "Nazwa przepisu",
     "Tags" : "Etykiety",
