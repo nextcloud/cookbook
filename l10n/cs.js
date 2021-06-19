@@ -55,7 +55,7 @@ OC.L10N.register(
     "Print image with recipe" : "Vytisknout obrázek s receptem",
     "Show keyword cloud in recipe lists" : "V seznamech receptů zobrazovat mrak klíčových slov",
     "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
-    "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptu na {interval}",
+    "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptů na {interval}",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
     "Loading config failed" : "Načítání nastavení se nezdařilo",
     "Pick a local image" : "Vyberte místní obrázek",
