@@ -43,6 +43,8 @@
   [#725](https://github.com/nextcloud/cookbook/pull/725) @christianlupus
 - Fix recipe-editor layout as in #729
   [#725](https://github.com/nextcloud/cookbook/pull/732) @seyfeb
+- Corrected style of stale bot messages
+  [#749](https://github.com/nextcloud/cookbook/pull/749) @christianlupus
 
 
 ## 0.8.4 - 2021-03-08
