@@ -15,18 +15,18 @@ jobs:
             name: Close stale issues
             with:
                 days-before-stale: 45
-                stale-issue-message: <
+                stale-issue-message: >-
                     This issue was not updated for 45 days.
                     It is therefore marked as stale.
                     When no update occurs within the next 7 days, this issue will be closed automatically in the next 7 days.
-                stale-pr-message: <
+                stale-pr-message: >-
                     This pull request was not updated for 45 days.
                     It is therefore marked as stale.
                     When no update occurs within the next 7 days, this pull request will be closed automatically in the next 7 days.
-                close-issue-message: <
+                close-issue-message: >-
                     This issue was not updated since it was marked as stale.
                     It will be closed now.
-                close-pr-message: <
+                close-pr-message: >-
                     This pull request was not updated since it was marked as stale.
                     It will be closed now.
                 stale-issue-label: 'stale'
