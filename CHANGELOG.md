@@ -45,6 +45,8 @@
   [#725](https://github.com/nextcloud/cookbook/pull/732) @seyfeb
 - Corrected style of stale bot messages
   [#749](https://github.com/nextcloud/cookbook/pull/749) @christianlupus
+- Update the screenshots in the appstore
+  [#747](https://github.com/nextcloud/cookbook/pull/747) @mMuck
 
 
 ## 0.8.4 - 2021-03-08
