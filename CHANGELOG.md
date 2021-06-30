@@ -49,7 +49,9 @@
   [#747](https://github.com/nextcloud/cookbook/pull/747) @mMuck
 - Fix visual issues at device width of 1024px #689
   [#751](https://github.com/nextcloud/cookbook/pull/751) @christianlupus
-
+- Removed obsolete dependency on @nextcloud/event-bus
+  [#719](https://github.com/nextcloud/cookbook/pull/719) @christianlupus
+  
 
 ## 0.8.4 - 2021-03-08
 
