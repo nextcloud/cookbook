@@ -178,9 +178,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* stylelint-disable scss/at-import-partial-extension-blacklist */
-@import "@nextcloud/vue/src/assets/variables.scss";
-/* stylelint-enable scss/at-import-partial-extension-blacklist */
+// Taken from @nextcloud/vue/src/assets/variables.scss
+// https://uxplanet.org/7-rules-for-mobile-ui-button-design-e9cf2ea54556
+// recommended is 48px
+// 44px is what we choose and have very good visual-to-usability ratio
+$clickable-area: 44px;
+
+// background icon size
+// also used for the scss icon font
+$icon-size: 16px;
+
+// icon padding for a $clickable-area width and a $icon-size icon
+// ( 44px - 16px ) / 2
+$icon-margin: ($clickable-area - $icon-size) / 2;
 
 .app-navigation-caption-mod {
     display: flex;
