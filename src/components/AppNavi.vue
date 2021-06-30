@@ -468,30 +468,9 @@ export default {
     opacity: 1;
 }
 
-#hide-navigation {
-    display: none;
-    height: 44px;
-}
-#hide-navigation .action-button {
-    padding-right: 0 !important;
-}
-
-@media only screen and (max-width: 1024px) {
-    #hide-navigation {
-        display: block;
-    }
-}
 @media print {
     * {
         display: none !important;
-    }
-}
-</style>
-
-<style>
-@media (min-width: 1024px) {
-    .app-navigation-toggle {
-        display: none;
     }
 }
 </style>
