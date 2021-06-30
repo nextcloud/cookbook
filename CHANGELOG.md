@@ -47,6 +47,8 @@
   [#749](https://github.com/nextcloud/cookbook/pull/749) @christianlupus
 - Update the screenshots in the appstore
   [#747](https://github.com/nextcloud/cookbook/pull/747) @mMuck
+- Fix visual issues at device width of 1024px #689
+  [#751](https://github.com/nextcloud/cookbook/pull/751) @christianlupus
 
 
 ## 0.8.4 - 2021-03-08
