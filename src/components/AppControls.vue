@@ -354,16 +354,11 @@ export default {
 .breadcrumbs {
     width: calc(100% - 60px);
     flex-basis: 100%;
+    margin-left: 40px;
 }
 
 .no-arrow::before {
     content: "" !important;
-}
-
-@media only screen and (max-width: 1024px) {
-    .breadcrumbs {
-        margin-left: 40px;
-    }
 }
 
 @media print {
