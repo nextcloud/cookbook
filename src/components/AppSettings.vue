@@ -12,7 +12,7 @@
                                     : 'icon-history'
                             "
                             :title="t('cookbook', 'Rescan library')"
-                            @click="emit('reindex')"
+                            @click="$emit('reindex')"
                         />
                     </li>
                     <li>
@@ -48,6 +48,22 @@
                             {{ t("cookbook", "Print image with recipe") }}
                         </label>
                     </li>
+                    <li>
+                        <input
+                            id="tag-cloud"
+                            v-model="showTagCloudInRecipeList"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                        <label for="tag-cloud">
+                            {{
+                                t(
+                                    "cookbook",
+                                    "Show keyword cloud in recipe lists"
+                                )
+                            }}
+                        </label>
+                    </li>
                 </ul>
             </fieldset>
         </div>
@@ -76,6 +92,8 @@ export default {
             printImage: false,
             recipeFolder: "",
             resetPrintImage: true,
+            showTagCloudInRecipeList: true,
+            resetTagCloud: true,
             // By setting the reset value initially to true, it will skip one watch event
             // (the one when config is loaded at page load)
             resetInterval: true,
@@ -106,6 +124,12 @@ export default {
                     this.resetPrintImage = true
                     this.printImage = oldVal
                 })
+        },
+        // eslint-disable-next-line no-unused-vars
+        showTagCloudInRecipeList(newVal, oldVal) {
+            this.$store.dispatch("setShowTagCloudInRecipeList", {
+                showTagCloud: newVal,
+            })
         },
         updateInterval(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
@@ -188,6 +212,8 @@ export default {
                     this.resetPrintImage = false
                     if (config) {
                         this.printImage = config.print_image
+                        this.showTagCloudInRecipeList =
+                            this.$store.state.localSettings.showTagCloudInRecipeList
                         this.updateInterval = config.update_interval
                         this.recipeFolder = config.folder
                     } else {

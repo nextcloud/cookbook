@@ -43,9 +43,21 @@ export default new Vuex.Store({
         updatingRecipeDirectory: false,
         // Category which is being updated (name)
         categoryUpdating: null,
+        localSettings: {
+            showTagCloudInRecipeList: true,
+        },
     },
 
     mutations: {
+        initializeStore(state) {
+            if (localStorage.getItem("showTagCloudInRecipeList")) {
+                state.localSettings.showTagCloudInRecipeList = JSON.parse(
+                    localStorage.getItem("showTagCloudInRecipeList")
+                )
+            } else {
+                state.localSettings.showTagCloudInRecipeList = true
+            }
+        },
         setAppNavigationRefreshRequired(state, { b }) {
             state.appNavigation.refreshRequired = b
         },
@@ -62,7 +74,16 @@ export default new Vuex.Store({
             state.page = p
         },
         setRecipe(state, { r }) {
-            state.recipe = r
+            const rec = JSON.parse(JSON.stringify(r))
+            if (rec === null) {
+                state.recipe = null
+                return
+            }
+            if ("nutrition" in rec && rec.nutrition instanceof Array) {
+                rec.nutrition = {}
+            }
+            state.recipe = rec
+
             // Setting recipe also means that loading/reloading the recipe has finished
             state.loadingRecipe = 0
             state.reloadingRecipe = 0
@@ -75,6 +96,10 @@ export default new Vuex.Store({
         },
         setSavingRecipe(state, { b }) {
             state.savingRecipe = b
+        },
+        setShowTagCloudInRecipeList(state, { b }) {
+            localStorage.setItem("showTagCloudInRecipeList", JSON.stringify(b))
+            state.localSettings.showTagCloudInRecipeList = b
         },
         setUser(state, { u }) {
             state.user = u
@@ -94,13 +119,14 @@ export default new Vuex.Store({
                 url: `${window.baseUrl}/api/recipes`,
                 data: recipe,
             })
-            request.then(() => {
+            return request.then((v) => {
                 // Refresh navigation to display changes
                 c.dispatch("setAppNavigationRefreshRequired", {
                     isRequired: true,
                 })
+
+                return v
             })
-            return request
         },
         /**
          * Delete recipe on the server
@@ -141,6 +167,9 @@ export default new Vuex.Store({
         },
         setCategoryUpdating(c, { category }) {
             c.commit("setCategoryUpdating", { c: category })
+        },
+        setShowTagCloudInRecipeList(c, { showTagCloud }) {
+            c.commit("setShowTagCloudInRecipeList", { b: showTagCloud })
         },
         updateCategoryName(c, { categoryNames }) {
             const oldName = categoryNames[0]

@@ -19,6 +19,6 @@
     "scripts": {
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
         "cs:fix": "./vendor/bin/php-cs-fixer fix",
-        "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -print0 | xargs -0 -n1 php -l"
+        "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -not -path './node_modules/*' -print0 | xargs -0 -n1 php -l"
     }
 }

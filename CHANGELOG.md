@@ -1,9 +1,65 @@
 ## [Unreleased]
 
+
+## 0.9.0 - 2021-07-01
+
+### Added
+- Make recipes searchable through unified search
+  [#611](https://github.com/nextcloud/cookbook/pull/611) @PFischbeck
+- Enhanced keyword cloud in recipe list with option to hide/show keywords, enlarge area, and ordering alphabetically
+  [#678](https://github.com/nextcloud/cookbook/pull/678) @seyfeb
+- User documentation
+  [#709](https://github.com/nextcloud/cookbook/pull/709) @seyfeb
+
+### Fixed
+- Calling reindex
+  [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
+- Setting nutrition information on recipes with an array assigned for nutrition
+  [#653](https://github.com/nextcloud/cookbook/pull/653) @seyfeb
+- Fix empty error message upon import
+  [#647](https://github.com/nextcloud/cookbook/pull/647) @christianlupus
+- Update code styling to match with current version of php-cs-fixer
+  [#668](https://github.com/nextcloud/cookbook/pull/668) @christianlupus
+- Fix version of `@nextcloud/capabilities` to `1.0.2`
+  [#672](https://github.com/nextcloud/cookbook/pull/672) @christianlupus
+- Really only show recipe-reference popup on '#'
+  [#676](https://github.com/nextcloud/cookbook/pull/676) @seyfeb
+- Correct styling of PHP files accoring to php-cs-fixer
+  [#692](https://github.com/nextcloud/cookbook/pull/692) @christianlupus
+- Removed explicit dependency of @nextcloud/capabilities
+  [#693](https://github.com/nextcloud/cookbook/pull/693) @christianlupus
+- Add indices to database for all tables
+  [#698](https://github.com/nextcloud/cookbook/pull/698) @christianlupus
+- Codebase maintenance
+  [#699](https://github.com/nextcloud/cookbook/pull/699) @christianlupus
+- Enable stalebot
+  [#700](https://github.com/nextcloud/cookbook/pull/700) @christianlupus
+- Correct error messages when recipe already exists
+  [#702](https://github.com/nextcloud/cookbook/pull/702) @christianlupus
+- Update webpack version to 5.x
+  [#717](https://github.com/nextcloud/cookbook/pull/717) @christianlupus
+- Update sass-loader
+  [#720](https://github.com/nextcloud/cookbook/pull/720) @christianlupus
+- Update compression-webpack-plugin
+  [#721](https://github.com/nextcloud/cookbook/pull/721) @christianlupus
+- Fix array in recipeYields field according to #722
+  [#725](https://github.com/nextcloud/cookbook/pull/725) @christianlupus
+- Fix recipe-editor layout as in #729
+  [#725](https://github.com/nextcloud/cookbook/pull/732) @seyfeb
+- Corrected style of stale bot messages
+  [#749](https://github.com/nextcloud/cookbook/pull/749) @christianlupus
+- Update the screenshots in the appstore
+  [#747](https://github.com/nextcloud/cookbook/pull/747) @mMuck
+- Fix visual issues at device width of 1024px #689
+  [#751](https://github.com/nextcloud/cookbook/pull/751) @christianlupus
+- Removed obsolete dependency on @nextcloud/event-bus
+  [#719](https://github.com/nextcloud/cookbook/pull/719) @christianlupus
+  
+
 ## 0.8.4 - 2021-03-08
 
 ### Added
-- Sorting recipes in list by creation and modification date   
+- Sorting recipes in list by creation and modification date
   [#623](https://github.com/nextcloud/cookbook/pull/623) @seyfeb
 
 ### Fixed

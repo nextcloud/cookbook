@@ -279,8 +279,35 @@ export default {
                 })
                 .catch((e2) => {
                     $this.downloading = false
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", e2.request.responseJSON))
+
+                    if (e2.response) {
+                        if (
+                            e2.response.status >= 400 &&
+                            e2.response.status < 500
+                        ) {
+                            if (e2.response.status == 409) {
+                                // There was a recipe found with the same name
+
+                                // eslint-disable-next-line no-alert
+                                alert(e2.response.data.msg)
+                            } else {
+                                // eslint-disable-next-line no-alert
+                                alert(e2.response.data)
+                            }
+                        } else {
+                            console.error(e2)
+                            alert(
+                                // prettier-ignore
+                                t("cookbook","The server reported an error. Please check.")
+                            )
+                        }
+                    } else {
+                        console.error(e2)
+                        alert(
+                            // prettier-ignore
+                            t("cookbook", "Could not query the server. This might be a network problem.")
+                        )
+                    }
                 })
         },
 
@@ -441,30 +468,9 @@ export default {
     opacity: 1;
 }
 
-#hide-navigation {
-    display: none;
-    height: 44px;
-}
-#hide-navigation .action-button {
-    padding-right: 0 !important;
-}
-
-@media only screen and (max-width: 1024px) {
-    #hide-navigation {
-        display: block;
-    }
-}
 @media print {
     * {
         display: none !important;
-    }
-}
-</style>
-
-<style>
-@media (min-width: 1024px) {
-    .app-navigation-toggle {
-        display: none;
     }
 }
 </style>

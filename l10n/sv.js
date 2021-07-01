@@ -57,7 +57,6 @@ OC.L10N.register(
     "Ingredients" : "Ingredienser",
     "Instructions" : "Instruktioner",
     "Loading recipe failed" : "Kunde inte läsa in recept",
-    "Recipe could not be saved" : "Kunde inte spara recept",
     "Cooking time is up!" : "Tillagningstiden är slut!",
     "Source" : "Källa"
 },

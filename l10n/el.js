@@ -78,7 +78,6 @@ OC.L10N.register(
     "Unsaturated-fat content" : "Περιεκτικότητα σε ακόρεστα λιπαρά",
     "Failed to fetch keywords" : "Αποτυχία ανάκτησης λέξεων-κλειδιών",
     "Loading recipe failed" : "Η φόρτωση των συνταγής απέτυχε",
-    "Recipe could not be saved" : "Η συνταγή δεν μπορεί να αποθηκευτεί",
     "Toggle keyword" : "Εναλλαγή λέξης-κλειδιού",
     "Keyword not contained in visible recipes" : "Η λέξη-κλειδί δεν περιέχεται σε ορατές συνταγές",
     "Cooking time is up!" : "Ο χρόνος μαγειρέματος έχει φτάσει!",

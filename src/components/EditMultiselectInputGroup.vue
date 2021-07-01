@@ -82,7 +82,7 @@ export default {
         // Value (passed in v-model)
         value: {
             type: Object,
-            default: () => ({}),
+            default: () => {},
             required: true,
         },
     },

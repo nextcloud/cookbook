@@ -12,6 +12,8 @@ use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\RecipeExistsException;
+use OCP\AppFramework\Http\JSONResponse;
 
 class MainController extends Controller {
 	protected $appName;
@@ -353,8 +355,15 @@ class MainController extends Controller {
 			$this->dbCacheService->addRecipe($recipe_file);
 
 			return new DataResponse($recipe_json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
+		} catch (RecipeExistsException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'line' => $ex->getLine(),
+				'file' => $ex->getFile(),
+			];
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
+			return new DataResponse($e->getMessage(), 400);
 		}
 	}
 

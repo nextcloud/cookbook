@@ -54,7 +54,6 @@ OC.L10N.register(
     "Ingredients" : "Састојци",
     "Instructions" : "Упутства",
     "Loading recipe failed" : "Грешка приликом учитавања рецепта",
-    "Recipe could not be saved" : "Рецепт не може да се сачува",
     "Cooking time is up!" : "Време за кување!",
     "Source" : "Извор"
 },

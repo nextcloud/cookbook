@@ -3,18 +3,20 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <input
-            type="text"
-            :value="value"
-            @input="$emit('input', $event.target.value)"
-        />
-        <button
-            type="button"
-            :title="t('cookbook', 'Pick a local image')"
-            @click="pickImage"
-        >
-            <span class="icon-category-multimedia"></span>
-        </button>
+        <div class="input-container">
+            <input
+                type="text"
+                :value="value"
+                @input="$emit('input', $event.target.value)"
+            />
+            <button
+                type="button"
+                :title="t('cookbook', 'Pick a local image')"
+                @click="pickImage"
+            >
+                <span class="icon-category-multimedia"></span>
+            </button>
+        </div>
     </fieldset>
 </template>
 
@@ -52,12 +54,25 @@ export default {
 
 <style scoped>
 fieldset {
+    display: flex;
+    flex-direction: column;
     margin-bottom: 1em;
 }
 
-fieldset > * {
+@media (min-width: 1200px) {
+    fieldset {
+        flex-direction: row;
+    }
+}
+
+.input-container > * {
     margin: 0;
-    float: left;
+}
+
+fieldset > .input-container {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
 }
 
 fieldset > label {
@@ -71,28 +86,22 @@ fieldset > label {
 @media (max-width: 1199px) {
     fieldset > label {
         display: block;
-        float: none;
     }
 }
 
-fieldset > input {
-    width: calc(100% - 14em);
+.input-container > input {
+    flex: 1;
     border-right: 0;
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
 }
-@media (max-width: 1199px) {
-    fieldset > input {
-        width: calc(100% - 3em);
-    }
-}
 
-fieldset > input + button {
+.input-container > input + button {
     width: 3em;
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
-fieldset > input + button > * {
+.input-container > input + button > * {
     pointer-events: none;
 }
 </style>

@@ -58,7 +58,6 @@ OC.L10N.register(
     "Ingredients" : "Ingredients",
     "Instructions" : "Instruccions",
     "Loading recipe failed" : "Ha fallat la càrrega de la recepta",
-    "Recipe could not be saved" : "No s'ha pogut desar la recepta",
     "Cooking time is up!" : "S'ha acabat el temps de cocció!",
     "Source" : "Origen"
 },

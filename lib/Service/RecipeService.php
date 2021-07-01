@@ -15,6 +15,7 @@ use OCA\Cookbook\Db\RecipeDb;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\RecipeExistsException;
 
 /**
  * Main service class for the cookbook app.
@@ -214,6 +215,17 @@ class RecipeService {
 		
 		// Make sure that "recipeYield" is an integer which is at least 1
 		if (isset($json['recipeYield']) && $json['recipeYield']) {
+			
+			// Check if "recipeYield is an array
+			if (is_array($json['recipeYield'])) {
+				if (count($json['recipeYield']) === 1) {
+					$json['recipeYield'] = $json['recipeYield'][0];
+				} else {
+					// XXX How to parse an array correctly?
+					$json['recipeYield'] = join(' ', $json['recipeYield']);
+				}
+			}
+			
 			$regex_matches = [];
 			preg_match('/(\d*)/', $json['recipeYield'], $regex_matches);
 			if (count($regex_matches) >= 1) {
@@ -687,7 +699,7 @@ class RecipeService {
 			// The recipe is being renamed, move the folder
 			if ($old_path !== $new_path) {
 				if ($user_folder->nodeExists($json['name'])) {
-					throw new Exception('Another recipe with that name already exists');
+					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
 				
 				$recipe_folder->move($new_path);
@@ -698,7 +710,7 @@ class RecipeService {
 			$json['dateCreated'] = $now;
 
 			if ($user_folder->nodeExists($json['name'])) {
-				throw new Exception('Another recipe with that name already exists');
+				throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 			}
 
 			$recipe_folder = $user_folder->newFolder($json['name']);
