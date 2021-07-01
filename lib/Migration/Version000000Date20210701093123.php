@@ -21,23 +21,22 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 	 * @return null|ISchemaWrapper
 	 */
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
-	    /**
-	     * @var ISchemaWrapper $schema
-	     */
-	    $schema = $schemaClosure();
-	    
-	    $namesTable = $schema->getTable('cookbook_names');
-	    if ($namesTable->hasPrimaryKey()) {
-	        $namesTable->dropPrimaryKey();
-	    }
-	    if (! $namesTable->hasIndex('names_recipe_idx')) {
-	        $namesTable->addUniqueIndex([
-	            'recipe_id',
-	            'user_id'
-	        ], 'names_recipe_idx');
-	    }
-	    
-	    return $schema;
+		/**
+		 * @var ISchemaWrapper $schema
+		 */
+		$schema = $schemaClosure();
+		
+		$namesTable = $schema->getTable('cookbook_names');
+		if ($namesTable->hasPrimaryKey()) {
+			$namesTable->dropPrimaryKey();
+		}
+		if (! $namesTable->hasIndex('names_recipe_idx')) {
+			$namesTable->addUniqueIndex([
+				'recipe_id',
+				'user_id'
+			], 'names_recipe_idx');
+		}
+		
+		return $schema;
 	}
-
 }
