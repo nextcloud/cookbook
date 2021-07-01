@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.0 - 2021-07-01
+
 ### Added
 - Make recipes searchable through unified search
   [#611](https://github.com/nextcloud/cookbook/pull/611) @PFischbeck
@@ -56,7 +59,7 @@
 ## 0.8.4 - 2021-03-08
 
 ### Added
-- Sorting recipes in list by creation and modification date   
+- Sorting recipes in list by creation and modification date
   [#623](https://github.com/nextcloud/cookbook/pull/623) @seyfeb
 
 ### Fixed
