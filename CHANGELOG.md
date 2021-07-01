@@ -9,6 +9,8 @@
   [#758](https://github.com/nextcloud/cookbook/pull/758) @christianlupus
 - Added issue template and documentation regarding website support
   [#759](https://github.com/nextcloud/cookbook/pull/759) @christianlupus
+- Avoid sharing of recipes does break the database upgrade process
+  [#755](https://github.com/nextcloud/cookbook/pull/755) @christianlupus
 
 ### Removed
 - Obsolete API routes that are no longer working due to missing files
