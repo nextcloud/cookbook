@@ -15,3 +15,8 @@ Instead we want to reference the official documentation on [docs.nextcloud.com](
 ## Frontend
 
 - [Webpack `BundleAnalyzer` Plugin](frontend/webpack-bundle-analyzer)
+
+
+## Backend
+
+- [API endpoint documentation](api/index)
