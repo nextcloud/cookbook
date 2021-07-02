@@ -125,6 +125,8 @@ jobs:
     steps:
       - name: Checkout the app
         uses: actions/checkout@v2
+        with:
+            fetch-depth: 2
       
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
