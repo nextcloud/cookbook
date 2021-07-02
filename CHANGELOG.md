@@ -1,8 +1,16 @@
 ## [Unreleased]
 
+### Added
+- OpenAPI specification and documentation of the valid API endpoints
+  [#757](https://github.com/nextcloud/cookbook/pull/757)
+
 ### Fixed
 - Correct handling of uploads to codecov
   [#758](https://github.com/nextcloud/cookbook/pull/758) @christianlupus
+
+### Removed
+- Obsolete API routes that are no longer working due to missing files
+  [#757](https://github.com/nextcloud/cookbook/pull/757)
 
 
 ## 0.9.0 - 2021-07-01
