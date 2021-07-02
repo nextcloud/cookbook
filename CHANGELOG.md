@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- Correct handling of uploads to codecov
+  [#758](https://github.com/nextcloud/cookbook/pull/758) @christianlupus
+
 
 ## 0.9.0 - 2021-07-01
 
