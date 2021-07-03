@@ -25,7 +25,7 @@ For more information see https://nextcloud.github.io/cookbook/user/metadata.html
 -->
 Yes, I check the source code of the website and found metadata.
 
-**Cookbook version: **
+**Cookbook version:**
 
 
 **Problem description (if applicable):**
