@@ -21,7 +21,7 @@ You must know that we cannot parse any website. The website must publish machine
 <!--
 Please check the page manually if there is data available. We cannot create data from nothing. 
 
-For more information see https://nextcloud.github.io/cookbook/user/metadata.html
+For more information see https://nextcloud.github.io/cookbook/user/metadata.html#manually-checking-websites-for-metadata
 -->
 Yes, I check the source code of the website and found metadata.
 
