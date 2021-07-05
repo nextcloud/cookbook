@@ -26,11 +26,6 @@ class Version000000Date20210427082010 extends SimpleMigrationStep {
 		 */
 		$schema = $schemaClosure();
 		
-		$namesTable = $schema->getTable('cookbook_names');
-		if (! $namesTable->hasPrimaryKey()) {
-			$namesTable->setPrimaryKey(['recipe_id']);
-		}
-		
 		$categoriesTable = $schema->getTable('cookbook_categories');
 		if (! $categoriesTable->hasIndex('categories_recipe_idx')) {
 			$categoriesTable->addIndex([

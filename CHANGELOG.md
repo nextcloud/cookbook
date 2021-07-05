@@ -1,5 +1,23 @@
 ## [Unreleased]
 
+## 0.9.1 - 2021-07-05
+
+### Added
+- OpenAPI specification and documentation of the valid API endpoints
+  [#757](https://github.com/nextcloud/cookbook/pull/757) @christianlupus
+
+### Fixed
+- Correct handling of uploads to codecov
+  [#758](https://github.com/nextcloud/cookbook/pull/758) @christianlupus
+- Added issue template and documentation regarding website support
+  [#759](https://github.com/nextcloud/cookbook/pull/759) @christianlupus
+- Avoid sharing of recipes does break the database upgrade process
+  [#755](https://github.com/nextcloud/cookbook/pull/755) @christianlupus
+
+### Removed
+- Obsolete API routes that are no longer working due to missing files
+  [#757](https://github.com/nextcloud/cookbook/pull/757) @christianlupus
+
 
 ## 0.9.0 - 2021-07-01
 

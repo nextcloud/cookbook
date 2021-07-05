@@ -107,51 +107,6 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @deprecated
-	 */
-	public function home() {
-		$this->dbCacheService->triggerCheck();
-		
-		try {
-			$recipes = $this->service->getAllRecipesInSearchIndex();
-
-			foreach ($recipes as $i => $recipe) {
-				$recipes[$i]['image_url'] = $this->urlGenerator->linkToRoute(
-					'cookbook.recipe.image',
-					[
-						'id' => $recipe['recipe_id'],
-						'size' => 'thumb',
-						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
-					]
-				);
-			}
-
-			$response = new TemplateResponse($this->appName, 'content/search', ['recipes' => $recipes]);
-			$response->renderAs('blank');
-
-			return $response;
-		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @deprecated
-	 */
-	public function error() {
-		$this->dbCacheService->triggerCheck();
-		
-		$response = new TemplateResponse($this->appName, 'navigation/error');
-		$response->renderAs('blank');
-
-		return $response;
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 */
 	public function search($query) {
 		$this->dbCacheService->triggerCheck();
@@ -290,55 +245,6 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
-	 * @deprecated
-	 */
-	public function recipe($id) {
-		$this->dbCacheService->triggerCheck();
-		
-		try {
-			$recipe = $this->service->getRecipeById($id);
-			$recipe['image_url'] = $this->urlGenerator->linkToRoute(
-				'cookbook.recipe.image',
-				[
-					'id' => $id,
-					'size' => 'full',
-					't' => $recipe['dateModified']
-				]
-			);
-			$recipe['id'] = $id;
-			$recipe['print_image'] = $this->service->getPrintImage();
-			$response = new TemplateResponse($this->appName, 'content/recipe_vue', $recipe);
-			$response->renderAs('blank');
-
-			return $response;
-		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @deprecated
-	 */
-	public function create() {
-		$this->dbCacheService->triggerCheck();
-		
-		try {
-			$recipe = [];
-
-			$response = new TemplateResponse($this->appName, 'content/edit', $recipe);
-			$response->renderAs('blank');
-
-			return $response;
-		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 */
 	public function import() {
 		$this->dbCacheService->triggerCheck();
@@ -380,36 +286,6 @@ class MainController extends Controller {
 			$this->dbCacheService->addRecipe($file);
 
 			return new DataResponse($file->getParent()->getId());
-		} catch (\Exception $e) {
-			return new DataResponse($e->getMessage(), 500);
-		}
-	}
-
-	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @deprecated
-	 */
-	public function edit($id) {
-		$this->dbCacheService->triggerCheck();
-		
-		try {
-			$recipe = [];
-
-			if ($id !== null) {
-				$recipe = $this->service->getRecipeById($id);
-
-				if (!$recipe) {
-					throw new \Exception('Recipe ' . $id . ' not found');
-				}
-
-				$recipe['id'] = $id;
-			}
-
-			$response = new TemplateResponse($this->appName, 'content/edit', $recipe);
-			$response->renderAs('blank');
-
-			return $response;
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}

@@ -32,11 +32,6 @@ return [
 		/* Deprecated routes */
 		['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
 		['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
-		['name' => 'main#home', 'url' => '/home', 'verb' => 'GET'],
-		['name' => 'main#error', 'url' => '/error', 'verb' => 'GET'],
-		['name' => 'main#create', 'url' => '/recipes/create', 'verb' => 'GET'],
-		['name' => 'main#edit', 'url' => '/recipes/{id}/edit', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
-		['name' => 'main#recipe', 'url' => '/recipes/{id}', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
 	],
 
 	/* API resources */
