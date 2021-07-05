@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.9.1 - 2021-07-05
+
 ### Added
 - OpenAPI specification and documentation of the valid API endpoints
   [#757](https://github.com/nextcloud/cookbook/pull/757) @christianlupus
