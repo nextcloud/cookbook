@@ -12,7 +12,7 @@ use OCP\Migration\SimpleMigrationStep;
 /**
  * Auto-generated migration step: Please modify to your needs!
  */
-class Version000000Date20210427082010 extends SimpleMigrationStep {
+class Version000000Date20210701093123 extends SimpleMigrationStep {
 
 	/**
 	 * @param IOutput $output
@@ -26,20 +26,15 @@ class Version000000Date20210427082010 extends SimpleMigrationStep {
 		 */
 		$schema = $schemaClosure();
 		
-		$categoriesTable = $schema->getTable('cookbook_categories');
-		if (! $categoriesTable->hasIndex('categories_recipe_idx')) {
-			$categoriesTable->addIndex([
-				'user_id',
-				'recipe_id',
-			], 'categories_recipe_idx');
+		$namesTable = $schema->getTable('cookbook_names');
+		if ($namesTable->hasPrimaryKey()) {
+			$namesTable->dropPrimaryKey();
 		}
-		
-		$keywordsTable = $schema->getTable('cookbook_keywords');
-		if (! $keywordsTable->hasIndex('keywords_recipe_idx')) {
-			$keywordsTable->addIndex([
-				'user_id',
+		if (! $namesTable->hasIndex('names_recipe_idx')) {
+			$namesTable->addUniqueIndex([
 				'recipe_id',
-			], 'keywords_recipe_idx');
+				'user_id'
+			], 'names_recipe_idx');
 		}
 		
 		return $schema;
