@@ -1,4 +1,9 @@
-<phpunit bootstrap="tests/bootstrap.php" colors="true">
+<phpunit 
+	bootstrap="tests/bootstrap.php"
+	colors="true"
+	backupGlobals="false"
+	backupStaticAttributes="false"
+	>
     <testsuites>
         <testsuite name="integration">
             <directory>./tests/Integration</directory>
