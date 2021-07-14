@@ -37,7 +37,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
                 ->selectAlias('n.recipe_id', 'recipe')
                 ->from('cookbook_names', 'n')
                 ->groupBy('n.user_id', 'n.recipe_id')
-                ->having('cnt > 1');
+                ->having('COUNT(n.user_id) > 1');
             //echo $qb->getSQL() . "\n";
             
             $cursor = $qb->execute();
