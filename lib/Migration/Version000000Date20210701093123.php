@@ -9,6 +9,7 @@ use OCP\DB\ISchemaWrapper;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
 use Closure;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 
 /**
  * Auto-generated migration step: Please modify to your needs!
@@ -33,6 +34,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
             // Fetch all rows that are non-unique
             $qb->selectAlias('n.user_id', 'user')
                 ->selectAlias($qb->createFunction('COUNT(n.user_id)'), 'cnt')
+                ->selectAlias('n.recipe_id', 'recipe')
                 ->from('cookbook_names', 'n')
                 ->groupBy('n.user_id', 'n.recipe_id')
                 ->having('cnt > 1');
@@ -43,7 +45,35 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
             
             if(sizeof($result) > 0){
                 // We have to fix the database
-                throw new \Exception('This is not yet implemented.');
+                
+                // Drop all redundant rows
+                $qb = $this->db->getQueryBuilder();
+                $qb->delete('cookbook_names')
+                    ->where(
+                        'user_id = :user',
+                        'recipe_id = :recipe'
+                        );
+                
+                $qb2 = $this->db->getQueryBuilder();
+                $qb2->update('preferences')
+                    ->set('configvalue', $qb->expr()->literal('1', IQueryBuilder::PARAM_STR))
+                    ->where(
+                        'userid = :user',
+                        'appid = :app',
+                        'configkey = :property'
+                        );
+                $qb2->setParameter('app', 'cookbook');
+                $qb2->setParameter('property', 'last_index_update');
+                
+                foreach($result as $r) {
+                    $qb->setParameter('user', $r['user']);
+                    $qb->setParameter('recipe', $r['recipe']);
+                    $qb->execute();
+                    
+                    $qb2->setParameter('user', $r['user']);
+                    $qb2->execute();
+                }
+                
             }
             
             // Finish the transaction
