@@ -47,7 +47,7 @@ class Version000000Date20210701093123Test extends TestCase {
 		$schema = $this->container->query(SchemaWrapper::class);
 		$this->assertIsObject($schema);
 		
-		$connection = $this->container->query(Connection::class);
+		$connection = \OC::$server->get(Connection::class);
 		$this->migrationService = new MigrationService('cookbook', $connection);
 		
 		// undo all migrations of cookbook app
