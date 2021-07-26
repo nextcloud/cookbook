@@ -33,11 +33,10 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
             
             // Fetch all rows that are non-unique
             $qb->selectAlias('n.user_id', 'user')
-                ->selectAlias($qb->createFunction('COUNT(n.user_id)'), 'cnt')
                 ->selectAlias('n.recipe_id', 'recipe')
                 ->from('cookbook_names', 'n')
                 ->groupBy('n.user_id', 'n.recipe_id')
-                ->having('COUNT(n.user_id) > 1');
+                ->having('COUNT(*) > 1');
             //echo $qb->getSQL() . "\n";
             
             $cursor = $qb->execute();
