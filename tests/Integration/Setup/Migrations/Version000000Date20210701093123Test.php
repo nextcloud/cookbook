@@ -8,6 +8,8 @@ use OCP\AppFramework\IAppContainer;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OC\DB\SchemaWrapper;
 use PHPUnit\Framework\TestCase;
+use OC\DB\MigrationService;
+use OC\DB\Connection;
 
 class Version000000Date20210701093123Test extends TestCase {
     
@@ -20,6 +22,11 @@ class Version000000Date20210701093123Test extends TestCase {
      * @var IDBConnection
      */
     private $db;
+    
+    /**
+     * @var MigrationService
+     */
+    private $migrationService;
     
     public function setUp(): void {
         resetEnvironmentToBackup('default');
@@ -39,6 +46,9 @@ class Version000000Date20210701093123Test extends TestCase {
          */
         $schema = $this->container->query(SchemaWrapper::class);
         $this->assertIsObject($schema);
+        
+        $connection = $this->container->query(Connection::class);
+        $this->migrationService = new MigrationService('cookbook', $connection);
         
         // undo all migrations of cookbook app
         $qb = $this->db->getQueryBuilder();
@@ -64,6 +74,7 @@ class Version000000Date20210701093123Test extends TestCase {
     protected function tearDown(): void {
         unset($this->container);
         unset($this->db);
+        unset($this->migrationService);
     }
     
     /**
@@ -110,7 +121,7 @@ class Version000000Date20210701093123Test extends TestCase {
         }
         
         // Run the migration under test
-        runOCCCommand(['migration:migrate', 'cookbook', '000000Date20210701093123']);
+        $this->migrationService->migrate('000000Date20210701093123');
         
         // Get the (updated) reindex timestamps
         $qb = $this->db->getQueryBuilder();
