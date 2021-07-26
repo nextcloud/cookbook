@@ -68,7 +68,7 @@ class Version000000Date20210701093123Test extends TestCase {
 		$schema->performDropTableCalls();
 		
 		// Reinstall app partially (just before the migration)
-		runOCCCommand(['migration:migrate', 'cookbook', '000000Date20210427082010']);
+		$this->migrationService->migrate('000000Date20210427082010');
 	}
 	
 	protected function tearDown(): void {
