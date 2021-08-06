@@ -274,10 +274,12 @@ drop_environment(){
 			fi
 			;;
 		pgsql)
-			local tables=$(echo "SELECT tablename FROM pg_tables WHERE schemaname = 'public';" | call_postgres | head -n -1 )
-			if [ -n "$tables" ]; then
-				echo "$tables" | sed 's@.*@DROP TABLE \0;@' | call_postgres
-			fi
+			call_postgres <<- EOF
+				DROP SCHEMA public CASCADE;
+				CREATE SCHEMA public;
+				GRANT ALL ON SCHEMA public TO $POSTGRES_USER;
+				GRANT ALL ON SCHEMA public TO public;
+				EOF
 			;;
 	esac
 	
@@ -337,6 +339,12 @@ restore_env_dump() {
 			;;
 		pgsql)
 			echo "Restoring Postgres database from dump"
+			call_postgres <<- EOF
+				DROP SCHEMA public CASCADE;
+				CREATE SCHEMA public;
+				GRANT ALL ON SCHEMA public TO $POSTGRES_USER;
+				GRANT ALL ON SCHEMA public TO public;
+				EOF
 			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | call_postgres
 			;;
 		sqlite)
@@ -424,7 +432,7 @@ function call_mysql() {
 
 function call_postgres() {
 	#docker-compose exec -T postgres psql -t nc_test tester
-	docker-compose exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB"
+	docker-compose exec -T postgres psql -U "$POSTGRES_USER" "$POSTGRES_DB" -v 'ON_ERROR_STOP=1' --quiet "$@"
 }
 
 ##### Parameters as extracted from the CLI
