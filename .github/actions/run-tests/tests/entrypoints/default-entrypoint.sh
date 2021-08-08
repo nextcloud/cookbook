@@ -1,12 +1,17 @@
 #! /bin/bash
 
 if [ `whoami` = root ]; then
-	echo "Setting uid and gid to $RUNNER_UID/$RUNNER_GID"
-	usermod -u $RUNNER_UID runner
-	groupmod -g $RUNNER_GID runner
 	
-	echo "Changing ownership of files to runner"
-	chown -R runner: /nextcloud
+	if [ -z "$QUICK_MODE" -o "$QUCK_MODE" = n ]; then
+		echo "Setting uid and gid to $RUNNER_UID/$RUNNER_GID"
+		usermod -u $RUNNER_UID runner
+		groupmod -g $RUNNER_GID runner
+		
+		echo "Changing ownership of files to runner"
+		chown -R runner: /nextcloud
+	else
+		echo "Quick mode activated. No permission update is carried out"
+	fi
 	
 	if [ -n "$DEBUG" -a "$DEBUG" = y ]; then
 		echo "Activating step debugging mode in container"

@@ -25,6 +25,7 @@ Possible options:
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
   --install-composer-deps           Install composer dependencies
   --build-npm                       Install and build js packages
+  -q / --quick                      Test in quick mode. This will not update the permissions on successive (local) test runs.
   --debug                           Enable step debugging during the testing
   --debug-port <PORT>               Select the port on the host machine to attach during debugging sessions using xdebug (default 9000)
   --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
@@ -441,6 +442,7 @@ DEBUG_PORT=''
 DEBUG_HOST=''
 DEBUG_UPON_ERROR=''
 DEBUG_START_MODE=''
+QUICK_MODE=''
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
@@ -533,6 +535,9 @@ do
 			;;
 		--build-npm)
 			BUILD_NPM=y
+			;;
+		--quick|-q)
+			QUICK_MODE=y
 			;;
 		--filter)
 			echo 'The --filter parameter is no longer supported. Please use it after --. See also the help (-h).'
@@ -629,6 +634,7 @@ fi
 export RUNNER_GID
 
 export DEBUG DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE
+export QUICK_MODE
 
 echo "Using PHP version $PHP_VERSION"
 

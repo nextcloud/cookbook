@@ -50,6 +50,7 @@ services:
             DEBUG_HOST:
             DEBUG_UPON_ERROR:
             DEBUG_START_MODE:
+            QUICK_MODE:
         env_file:
             - mysql.env
             - postgres.env
