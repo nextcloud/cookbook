@@ -14,6 +14,7 @@ Possible options:
   --setup-environment <BRANCH>      Setup a development environment in current folder. BRANCH dictates the branch of the server to use (e.g. stable20).
   --drop-environment                Reset the development environment and remove any files from it.
   --create-env-dump                 Create a backup from the environment. This allows fast recovery during test setup.
+  --create-plain-dump <NAME>        Create a backup of the environment before the cookbook app is installed. This only works with --setup-environment. <NAME> is the name of the dump.
   --restore-env-dump                Restore an environment from a previous backup.
   --drop-env-dump                   Remove a backup from an environment
   --overwrite-env-dump              Allow to overwrite a backup of an environment
@@ -167,8 +168,8 @@ shutdown_helpers(){
 	docker-compose down -v
 }
 
-setup_environment(){
-	echo 'Setup of the environment.'
+setup_server(){
+	echo 'Setup of the server environment.'
 	
 	echo "Checking out nextcloud server repository"
 	git clone --depth=1 --branch "$ENV_BRANCH" https://github.com/nextcloud/server volumes/nextcloud
@@ -220,6 +221,12 @@ setup_environment(){
 			;;
 	esac
 	
+	echo 'Server installed successfully.'
+}
+
+setup_app () {
+	echo 'Installing cookbook app.'
+	
 	if [ "$ALLOW_FAILURE" = 'true' ]; then
 		echo 'Add exception for app to install even if not officially supported'
 		cat scripts/enable_app_install_script.php | docker-compose run --rm -T php
@@ -231,7 +238,7 @@ setup_environment(){
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
 	
-	echo 'Setup of the environment finished.'
+	echo 'Installation of cookbook app finished.'
 }
 
 drop_environment(){
@@ -259,45 +266,30 @@ drop_environment(){
 	echo 'Finished dropping the environment.'
 }
 
-dump_env_dump() {
-	echo 'Creating backup of the environment.'
+dump_new_dump () {
 	
-	if [ -d "volumes/dumps/$ENV_DUMP_PATH" -a "$OVERWRITE_ENV_DUMP" != 'y' ]; then
-		echo "Cannot create dump $ENV_DUMP_PATH as it is already existing."
+	echo "Creating backup of the environemnt to $1"
+	
+	if [ -d "volumes/dumps/$1" -a "$2" != 'y' ]; then
+		echo "Cannot create dump $1 as it is already existing."
 		exit 1
 	fi
 	
-	mkdir -p "volumes/dumps/$ENV_DUMP_PATH/"{data,nextcloud,sql}
+	mkdir -p "volumes/dumps/$1/"{data,nextcloud,sql}
 	
 	# Dump data
 	echo "Saving data files"
-	rsync $RSYNC_PARAMS volumes/data/ "volumes/dumps/$ENV_DUMP_PATH/data"
+	rsync $RSYNC_PARAMS volumes/data/ "volumes/dumps/$1/data"
 	
 	# Dump server files
 	echo "Saving server files"
-	rsync $RSYNC_PARAMS volumes/nextcloud/ "volumes/dumps/$ENV_DUMP_PATH/nextcloud" \
+	rsync $RSYNC_PARAMS volumes/nextcloud/ "volumes/dumps/$1/nextcloud" \
 		--exclude /.git
 	
 	# Dump SQL
-	case "$INPUT_DB" in
-		mysql)
-			echo "Dumping MySQL database"
-			docker-compose exec -T mysql mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --add-drop-database --databases "$MYSQL_DATABASE" > "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql"
-			;;
-		pgsql)
-			echo "Dumping Postgres database"
-			docker-compose exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" --clean --create --if-exists > "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql"
-			;;
-		sqlite)
-			echo "No sqlite dump is generates as it is saved with the regular files."
-			;;
-		*)
-			echo "Unknown database type: $INPUT_DB. Aborting."
-			exit 1
-			;;
-	esac
+	create_db_dump "$1"
 	
-	echo 'Finished backup creation of the environment.'
+	echo 'Finished backup creation.'
 }
 
 restore_env_dump() {
@@ -320,7 +312,7 @@ restore_env_dump() {
 	case "$INPUT_DB" in
 		mysql)
 			echo "Restoring MySQL database from dump"
-			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | docker-compose exec -T mysql mysql -u root -p"$MYSQL_ROOT_PASWORD"
+			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | docker-compose exec -T mysql mysql -u root -p"$MYSQL_ROOT_PASSWORD"
 			;;
 		pgsql)
 			echo "Restoring Postgres database from dump"
@@ -379,6 +371,26 @@ run_tests() {
 	echo 'Test runs finished.'
 }
 
+function create_db_dump() {
+	case "$INPUT_DB" in
+		mysql)
+			echo "Dumping MySQL database"
+			docker-compose exec -T mysql mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --add-drop-database --databases "$MYSQL_DATABASE" > "volumes/dumps/$1/sql/dump.sql"
+			;;
+		pgsql)
+			echo "Dumping Postgres database"
+			docker-compose exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" --clean --if-exists > "volumes/dumps/$1/sql/dump.sql"
+			;;
+		sqlite)
+			echo "No sqlite dump is generates as it is saved with the regular files."
+			;;
+		*)
+			echo "Unknown database type: $INPUT_DB. Aborting."
+			exit 1
+			;;
+	esac
+}
+
 function call_mysql() {
 	docker-compose exec -T mysql mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE"
 }
@@ -399,6 +411,7 @@ SHUTDOWN_HELPERS=n
 SETUP_ENVIRONMENT=n
 DROP_ENVIRONMENT=n
 CREATE_ENV_DUMP=n
+CREATE_PLAIN_DUMP=''
 RESTORE_ENV_DUMP=n
 DROP_ENV_DUMP=n
 OVERWRITE_ENV_DUMP=n
@@ -461,6 +474,10 @@ do
 		--create-env-dump)
 			CREATE_ENV_DUMP=y
 			;;
+		--create-plain-dump)
+			CREATE_PLAIN_DUMP="$2"
+			shift
+			;;
 		--restore-env-dump)
 			RESTORE_ENV_DUMP=y
 			;;
@@ -504,6 +521,7 @@ do
 			SETUP_ENVIRONMENT=y
 			ENV_BRANCH="$2"
 			CREATE_ENV_DUMP=y
+			CREATE_PLAIN_DUMP=plain
 			shift
 			;;
 		--run)
@@ -541,6 +559,11 @@ fi
 
 if echo "$ENV_DUMP_PATH" | grep ' ' > /dev/null; then
 	echo "The dump path '$ENV_DUMP_PATH' contains invalid characters. Please adjust"
+	exit 1
+fi
+
+if [ "$SETUP_ENVIRONMENT" = 'n' -a -n "$CREATE_PLAIN_DUMP" ]; then
+	echo "Cannot create a plain dump without reinstalling the environment."
 	exit 1
 fi
 
@@ -619,7 +642,13 @@ if [ $DROP_ENVIRONMENT = 'y' ]; then
 fi
 
 if [ $SETUP_ENVIRONMENT = 'y' ]; then
-	setup_environment
+	setup_server
+	
+	if [ -n "$CREATE_PLAIN_DUMP" ]; then
+		dump_new_dump "$CREATE_PLAIN_DUMP" "$OVERWRITE_ENV_DUMP"
+	fi
+	
+	setup_app
 fi
 
 if [ $DROP_ENV_DUMP = 'y' ]; then
@@ -627,7 +656,7 @@ if [ $DROP_ENV_DUMP = 'y' ]; then
 fi
 
 if [ $CREATE_ENV_DUMP = 'y' ]; then
-	dump_env_dump
+	dump_new_dump "$ENV_DUMP_PATH" "$OVERWRITE_ENV_DUMP"
 fi
 
 if [ $RESTORE_ENV_DUMP = 'y' ]; then
