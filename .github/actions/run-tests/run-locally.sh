@@ -35,7 +35,7 @@ Possible options:
   --                                Pass any further parameters to the phpunit program
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
-                                      --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump
+                                      --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump --create-plain-dump plain
   --run-tests                       Run both unit as well as integration tests
   --run                             Run the unit tests themselves. This is a shorthand for
                                       --restore-env-dump --run-tests --extract-code-coverage
