@@ -19,6 +19,7 @@ Possible options:
   --drop-env-dump                   Remove a backup from an environment
   --overwrite-env-dump              Allow to overwrite a backup of an environment
   --env-dump-path <PATH>            The name of the environment to save. Multiple environment backups are possible.
+  --list-env-dumps                  List all environment dumps stored in the docker volume
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
@@ -40,6 +41,12 @@ Possible options:
     CI                  If the script is run in CI environment
     ALLOW_FAILURE       Defines if the script is allowed to fail. Possible values are true and false (default)
 EOF
+}
+
+list_env_dumps() {
+	echo "Available environemnt dumps:"
+	find volumes/dumps -maxdepth 1 -mindepth 1 -type d | sed 's@^volumes/dumps/@ - @'
+	exit 0
 }
 
 pull_images() {
@@ -490,6 +497,10 @@ do
 		--env-dump-path)
 			ENV_DUMP_PATH="$2"
 			shift
+			;;
+		--list-env-dumps)
+			list_env_dumps
+			exit 0
 			;;
 		--run-tests)
 			RUN_UNIT_TESTS=y
