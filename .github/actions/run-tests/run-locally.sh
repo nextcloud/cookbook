@@ -25,8 +25,8 @@ Possible options:
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
   --install-composer-deps           Install composer dependencies
   --build-npm                       Install and build js packages
-  --filter <FILTER>                 Pass the FILTER to the testing framework for filtering.
   --help                            Show this help screen
+  --                                Pass any further parameters to the phpunit program
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
                                       --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump
@@ -34,6 +34,9 @@ Possible options:
   --run                             Run the unit tests themselves. This is a shorthand for
                                       --restore-env-dump --run-tests --extract-code-coverage
   
+  You can provide parameters for phpunit after a double dash (--). For example you can filter like so:
+    run-locally.sh <other options> -- --filter <filter string>
+
   The following environment variables are taken into account:
     INPUT_DB            Defines which database to use for the integration tests. Can be mysql, pgsql or sqlite. Defaults to mysql.
     PHP_VERSION         Defines the PHP version to use, e.g. 7.4, 8. Defaults to 7.
@@ -370,11 +373,8 @@ run_tests() {
 	
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
-	if [ -n "$FILTER_TESTS" ]; then
-		docker-compose run --rm -T dut $PARAMS -- --filter $FILTER_TESTS
-	else
-		docker-compose run --rm -T dut $PARAMS
-	fi
+	echo "Additional parameters for phpunit: $@"
+	docker-compose run --rm -T dut $PARAMS -- "$@"
 	echo 'Test runs finished.'
 }
 
@@ -424,7 +424,6 @@ DROP_ENV_DUMP=n
 OVERWRITE_ENV_DUMP=n
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
-FILTER_TESTS=''
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
@@ -522,8 +521,8 @@ do
 			BUILD_NPM=y
 			;;
 		--filter)
-			FILTER_TESTS="$2"
-			shift
+			echo 'The --filter parameter is no longer supported. Please use it after --. See also the help (-h).'
+			exit 1
 			;;
 		--prepare)
 			DOCKER_PULL=y
@@ -540,6 +539,10 @@ do
 			RUN_UNIT_TESTS=y
 			RUN_INTEGRATION_TESTS=y
 			EXTRACT_CODE_COVERAGE=y
+			;;
+		--)
+			shift
+			break
 			;;
 		*)
 			echo "Unknown parameter $1. Exiting."
@@ -679,7 +682,7 @@ if [ $START_HELPERS = 'y' ]; then
 fi
 
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
-	run_tests
+	run_tests "$@"
 fi
 
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
