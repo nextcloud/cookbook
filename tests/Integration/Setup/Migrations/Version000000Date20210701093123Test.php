@@ -131,8 +131,6 @@ class Version000000Date20210701093123Test extends TestCase {
         sort($updatedUsers);
         
         $this->assertEquals($updatedUsers, $changedUsers);
-        
-        $this->markTestIncomplete('Not yet implemented');
     }
     
     public function dataProvider() {
