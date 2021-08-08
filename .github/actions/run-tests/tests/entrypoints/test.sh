@@ -121,7 +121,7 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	for f in coverage-unit coverage-integration
 	do
 		if [ -f "$f/_css/style.css" ]; then
-			patch -i /helper/style.patch "$f/_css/style.css"
+			sed -i -f /helper/style.sed "$f/_css/style.css"
 		fi
 	done
 	
