@@ -375,10 +375,6 @@ run_tests() {
 		PARAMS+=' --build-npm'
 	fi
 	
-	if [ $DEBUG = y ]; then
-		PARAMS+=" --debug --debug-port $DEBUG_PORT"
-	fi
-	
 	PARAMS+=' --run-code-checker'
 	
 	echo "Staring container to run the unit tests."
@@ -438,10 +434,10 @@ EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
 DEBUG=n
-DEBUG_PORT=''
-DEBUG_HOST=''
-DEBUG_UPON_ERROR=''
-DEBUG_START_MODE=''
+DEBUG_PORT='9000'
+DEBUG_HOST='172.17.0.1'
+DEBUG_UPON_ERROR='default'
+DEBUG_START_MODE='yes'
 QUICK_MODE=''
 
 ENV_BRANCH=stable20
