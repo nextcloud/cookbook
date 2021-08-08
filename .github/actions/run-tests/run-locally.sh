@@ -25,6 +25,11 @@ Possible options:
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
   --install-composer-deps           Install composer dependencies
   --build-npm                       Install and build js packages
+  --debug                           Enable step debugging during the testing
+  --debug-port <PORT>               Select the port on the host machine to attach during debugging sessions using xdebug (default 9000)
+  --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
+  --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
+  --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
   --help                            Show this help screen
   --                                Pass any further parameters to the phpunit program
   
@@ -369,6 +374,10 @@ run_tests() {
 		PARAMS+=' --build-npm'
 	fi
 	
+	if [ $DEBUG = y ]; then
+		PARAMS+=" --debug --debug-port $DEBUG_PORT"
+	fi
+	
 	PARAMS+=' --run-code-checker'
 	
 	echo "Staring container to run the unit tests."
@@ -427,6 +436,11 @@ RUN_INTEGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
+DEBUG=n
+DEBUG_PORT=''
+DEBUG_HOST=''
+DEBUG_UPON_ERROR=''
+DEBUG_START_MODE=''
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
@@ -524,6 +538,24 @@ do
 			echo 'The --filter parameter is no longer supported. Please use it after --. See also the help (-h).'
 			exit 1
 			;;
+		--debug)
+			DEBUG=y
+			;;
+		--debug-port)
+			DEBUG_PORT="$2"
+			shift
+			;;
+		--debug-host)
+			DEBUG_HOST="$2"
+			shift
+			;;
+		--debug-up-error)
+			DEBUG_UPON_ERROR=yes
+			;;
+		--debug-start-with-request)
+			DEBUG_START_MODE="$2"
+			shift
+			;;
 		--prepare)
 			DOCKER_PULL=y
 			CREATE_IMAGES_IF_NEEDED=y
@@ -595,6 +627,8 @@ if [ -z "$RUNNER_GID" ]; then
 	RUNNER_GID=`id -g`
 fi
 export RUNNER_GID
+
+export DEBUG DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE
 
 echo "Using PHP version $PHP_VERSION"
 
