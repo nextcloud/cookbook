@@ -2,18 +2,6 @@
 
 # set -x
 
-if [ `whoami` = root ]; then
-	echo "Setting uid and gid to $RUNNER_UID/$RUNNER_GID"
-	usermod -u $RUNNER_UID runner
-	groupmod -g $RUNNER_GID runner
-	
-	echo "Changing ownership of files to runner"
-	chown -R runner: /nextcloud
-	
-	echo "Running the main script as user runner"
-	exec sudo -u runner -E "$0" "$@"
-fi
-
 trap 'catch $? $LINENO' EXIT
 
 catch()
@@ -133,7 +121,7 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	for f in coverage-unit coverage-integration
 	do
 		if [ -f "$f/_css/style.css" ]; then
-			patch -i /helper/style.patch "$f/_css/style.css"
+			sed -i -f /helper/style.sed "$f/_css/style.css"
 		fi
 	done
 	

@@ -21,7 +21,7 @@ COPY entrypoints /entrypoints
 ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "/entrypoints/test.sh"]
 
 RUN mkdir /helper
-COPY style.patch /helper
+COPY style.sed /helper
 
 ARG UID=1000
 RUN useradd -mU --uid ${UID} runner

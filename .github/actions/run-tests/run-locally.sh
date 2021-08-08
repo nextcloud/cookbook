@@ -14,24 +14,35 @@ Possible options:
   --setup-environment <BRANCH>      Setup a development environment in current folder. BRANCH dictates the branch of the server to use (e.g. stable20).
   --drop-environment                Reset the development environment and remove any files from it.
   --create-env-dump                 Create a backup from the environment. This allows fast recovery during test setup.
+  --create-plain-dump <NAME>        Create a backup of the environment before the cookbook app is installed. This only works with --setup-environment. <NAME> is the name of the dump.
   --restore-env-dump                Restore an environment from a previous backup.
   --drop-env-dump                   Remove a backup from an environment
   --overwrite-env-dump              Allow to overwrite a backup of an environment
   --env-dump-path <PATH>            The name of the environment to save. Multiple environment backups are possible.
+  --list-env-dumps                  List all environment dumps stored in the docker volume
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
   --install-composer-deps           Install composer dependencies
   --build-npm                       Install and build js packages
-  --filter <FILTER>                 Pass the FILTER to the testing framework for filtering.
+  -q / --quick                      Test in quick mode. This will not update the permissions on successive (local) test runs.
+  --debug                           Enable step debugging during the testing
+  --debug-port <PORT>               Select the port on the host machine to attach during debugging sessions using xdebug (default 9000)
+  --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
+  --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
+  --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
   --help                            Show this help screen
+  --                                Pass any further parameters to the phpunit program
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
-                                      --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump
+                                      --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump --create-plain-dump plain
   --run-tests                       Run both unit as well as integration tests
   --run                             Run the unit tests themselves. This is a shorthand for
                                       --restore-env-dump --run-tests --extract-code-coverage
   
+  You can provide parameters for phpunit after a double dash (--). For example you can filter like so:
+    run-locally.sh <other options> -- --filter <filter string>
+
   The following environment variables are taken into account:
     INPUT_DB            Defines which database to use for the integration tests. Can be mysql, pgsql or sqlite. Defaults to mysql.
     PHP_VERSION         Defines the PHP version to use, e.g. 7.4, 8. Defaults to 7.
@@ -39,6 +50,12 @@ Possible options:
     CI                  If the script is run in CI environment
     ALLOW_FAILURE       Defines if the script is allowed to fail. Possible values are true and false (default)
 EOF
+}
+
+list_env_dumps() {
+	echo "Available environemnt dumps:"
+	find volumes/dumps -maxdepth 1 -mindepth 1 -type d | sed 's@^volumes/dumps/@ - @'
+	exit 0
 }
 
 pull_images() {
@@ -167,8 +184,8 @@ shutdown_helpers(){
 	docker-compose down -v
 }
 
-setup_environment(){
-	echo 'Setup of the environment.'
+setup_server(){
+	echo 'Setup of the server environment.'
 	
 	echo "Checking out nextcloud server repository"
 	git clone --depth=1 --branch "$ENV_BRANCH" https://github.com/nextcloud/server volumes/nextcloud
@@ -220,6 +237,12 @@ setup_environment(){
 			;;
 	esac
 	
+	echo 'Server installed successfully.'
+}
+
+setup_app () {
+	echo 'Installing cookbook app.'
+	
 	if [ "$ALLOW_FAILURE" = 'true' ]; then
 		echo 'Add exception for app to install even if not officially supported'
 		cat scripts/enable_app_install_script.php | docker-compose run --rm -T php
@@ -231,7 +254,7 @@ setup_environment(){
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
 	
-	echo 'Setup of the environment finished.'
+	echo 'Installation of cookbook app finished.'
 }
 
 drop_environment(){
@@ -259,45 +282,30 @@ drop_environment(){
 	echo 'Finished dropping the environment.'
 }
 
-dump_env_dump() {
-	echo 'Creating backup of the environment.'
+dump_new_dump () {
 	
-	if [ -d "volumes/dumps/$ENV_DUMP_PATH" -a "$OVERWRITE_ENV_DUMP" != 'y' ]; then
-		echo "Cannot create dump $ENV_DUMP_PATH as it is already existing."
+	echo "Creating backup of the environemnt to $1"
+	
+	if [ -d "volumes/dumps/$1" -a "$2" != 'y' ]; then
+		echo "Cannot create dump $1 as it is already existing."
 		exit 1
 	fi
 	
-	mkdir -p "volumes/dumps/$ENV_DUMP_PATH/"{data,nextcloud,sql}
+	mkdir -p "volumes/dumps/$1/"{data,nextcloud,sql}
 	
 	# Dump data
 	echo "Saving data files"
-	rsync $RSYNC_PARAMS volumes/data/ "volumes/dumps/$ENV_DUMP_PATH/data"
+	rsync $RSYNC_PARAMS volumes/data/ "volumes/dumps/$1/data"
 	
 	# Dump server files
 	echo "Saving server files"
-	rsync $RSYNC_PARAMS volumes/nextcloud/ "volumes/dumps/$ENV_DUMP_PATH/nextcloud" \
+	rsync $RSYNC_PARAMS volumes/nextcloud/ "volumes/dumps/$1/nextcloud" \
 		--exclude /.git
 	
 	# Dump SQL
-	case "$INPUT_DB" in
-		mysql)
-			echo "Dumping MySQL database"
-			docker-compose exec -T mysql mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --add-drop-database --databases "$MYSQL_DATABASE" > "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql"
-			;;
-		pgsql)
-			echo "Dumping Postgres database"
-			docker-compose exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" --clean --create --if-exists > "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql"
-			;;
-		sqlite)
-			echo "No sqlite dump is generates as it is saved with the regular files."
-			;;
-		*)
-			echo "Unknown database type: $INPUT_DB. Aborting."
-			exit 1
-			;;
-	esac
+	create_db_dump "$1"
 	
-	echo 'Finished backup creation of the environment.'
+	echo 'Finished backup creation.'
 }
 
 restore_env_dump() {
@@ -320,7 +328,7 @@ restore_env_dump() {
 	case "$INPUT_DB" in
 		mysql)
 			echo "Restoring MySQL database from dump"
-			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | docker-compose exec -T mysql mysql -u root -p"$MYSQL_ROOT_PASWORD"
+			cat "volumes/dumps/$ENV_DUMP_PATH/sql/dump.sql" | docker-compose exec -T mysql mysql -u root -p"$MYSQL_ROOT_PASSWORD"
 			;;
 		pgsql)
 			echo "Restoring Postgres database from dump"
@@ -367,16 +375,37 @@ run_tests() {
 		PARAMS+=' --build-npm'
 	fi
 	
+	if [ $DEBUG = y ]; then
+		PARAMS+=" --debug --debug-port $DEBUG_PORT"
+	fi
+	
 	PARAMS+=' --run-code-checker'
 	
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
-	if [ -n "$FILTER_TESTS" ]; then
-		docker-compose run --rm -T dut $PARAMS -- --filter $FILTER_TESTS
-	else
-		docker-compose run --rm -T dut $PARAMS
-	fi
+	echo "Additional parameters for phpunit: $@"
+	docker-compose run --rm -T dut $PARAMS -- "$@"
 	echo 'Test runs finished.'
+}
+
+function create_db_dump() {
+	case "$INPUT_DB" in
+		mysql)
+			echo "Dumping MySQL database"
+			docker-compose exec -T mysql mysqldump -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" --add-drop-database --databases "$MYSQL_DATABASE" > "volumes/dumps/$1/sql/dump.sql"
+			;;
+		pgsql)
+			echo "Dumping Postgres database"
+			docker-compose exec -T postgres pg_dump -U "$POSTGRES_USER" "$POSTGRES_DB" --clean --if-exists > "volumes/dumps/$1/sql/dump.sql"
+			;;
+		sqlite)
+			echo "No sqlite dump is generates as it is saved with the regular files."
+			;;
+		*)
+			echo "Unknown database type: $INPUT_DB. Aborting."
+			exit 1
+			;;
+	esac
 }
 
 function call_mysql() {
@@ -399,15 +428,21 @@ SHUTDOWN_HELPERS=n
 SETUP_ENVIRONMENT=n
 DROP_ENVIRONMENT=n
 CREATE_ENV_DUMP=n
+CREATE_PLAIN_DUMP=''
 RESTORE_ENV_DUMP=n
 DROP_ENV_DUMP=n
 OVERWRITE_ENV_DUMP=n
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
-FILTER_TESTS=''
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
+DEBUG=n
+DEBUG_PORT=''
+DEBUG_HOST=''
+DEBUG_UPON_ERROR=''
+DEBUG_START_MODE=''
+QUICK_MODE=''
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
@@ -461,6 +496,10 @@ do
 		--create-env-dump)
 			CREATE_ENV_DUMP=y
 			;;
+		--create-plain-dump)
+			CREATE_PLAIN_DUMP="$2"
+			shift
+			;;
 		--restore-env-dump)
 			RESTORE_ENV_DUMP=y
 			;;
@@ -473,6 +512,10 @@ do
 		--env-dump-path)
 			ENV_DUMP_PATH="$2"
 			shift
+			;;
+		--list-env-dumps)
+			list_env_dumps
+			exit 0
 			;;
 		--run-tests)
 			RUN_UNIT_TESTS=y
@@ -493,8 +536,29 @@ do
 		--build-npm)
 			BUILD_NPM=y
 			;;
+		--quick|-q)
+			QUICK_MODE=y
+			;;
 		--filter)
-			FILTER_TESTS="$2"
+			echo 'The --filter parameter is no longer supported. Please use it after --. See also the help (-h).'
+			exit 1
+			;;
+		--debug)
+			DEBUG=y
+			;;
+		--debug-port)
+			DEBUG_PORT="$2"
+			shift
+			;;
+		--debug-host)
+			DEBUG_HOST="$2"
+			shift
+			;;
+		--debug-up-error)
+			DEBUG_UPON_ERROR=yes
+			;;
+		--debug-start-with-request)
+			DEBUG_START_MODE="$2"
 			shift
 			;;
 		--prepare)
@@ -504,6 +568,7 @@ do
 			SETUP_ENVIRONMENT=y
 			ENV_BRANCH="$2"
 			CREATE_ENV_DUMP=y
+			CREATE_PLAIN_DUMP=plain
 			shift
 			;;
 		--run)
@@ -511,6 +576,10 @@ do
 			RUN_UNIT_TESTS=y
 			RUN_INTEGRATION_TESTS=y
 			EXTRACT_CODE_COVERAGE=y
+			;;
+		--)
+			shift
+			break
 			;;
 		*)
 			echo "Unknown parameter $1. Exiting."
@@ -544,6 +613,11 @@ if echo "$ENV_DUMP_PATH" | grep ' ' > /dev/null; then
 	exit 1
 fi
 
+if [ "$SETUP_ENVIRONMENT" = 'n' -a -n "$CREATE_PLAIN_DUMP" ]; then
+	echo "Cannot create a plain dump without reinstalling the environment."
+	exit 1
+fi
+
 if [ -z "$HTTP_SERVER" ]; then
 	echo "No HTTP server was given. Falling back to apache"
 	HTTP_SERVER=apache
@@ -558,6 +632,9 @@ if [ -z "$RUNNER_GID" ]; then
 	RUNNER_GID=`id -g`
 fi
 export RUNNER_GID
+
+export DEBUG DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE
+export QUICK_MODE
 
 echo "Using PHP version $PHP_VERSION"
 
@@ -619,7 +696,13 @@ if [ $DROP_ENVIRONMENT = 'y' ]; then
 fi
 
 if [ $SETUP_ENVIRONMENT = 'y' ]; then
-	setup_environment
+	setup_server
+	
+	if [ -n "$CREATE_PLAIN_DUMP" ]; then
+		dump_new_dump "$CREATE_PLAIN_DUMP" "$OVERWRITE_ENV_DUMP"
+	fi
+	
+	setup_app
 fi
 
 if [ $DROP_ENV_DUMP = 'y' ]; then
@@ -627,7 +710,7 @@ if [ $DROP_ENV_DUMP = 'y' ]; then
 fi
 
 if [ $CREATE_ENV_DUMP = 'y' ]; then
-	dump_env_dump
+	dump_new_dump "$ENV_DUMP_PATH" "$OVERWRITE_ENV_DUMP"
 fi
 
 if [ $RESTORE_ENV_DUMP = 'y' ]; then
@@ -639,7 +722,7 @@ if [ $START_HELPERS = 'y' ]; then
 fi
 
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
-	run_tests
+	run_tests "$@"
 fi
 
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
