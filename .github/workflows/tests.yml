@@ -81,7 +81,7 @@ jobs:
                 - pgsql
                 - sqlite
             coreVersion:
-                - stable21
+                - stable22
             phpVersion:
                 - "7"
             httpServer:
@@ -100,17 +100,27 @@ jobs:
                     phpVersion: "7"
                     httpServer: "apache"
                     mayFail: false
+                -   database: mysql
+                    coreVersion: stable21
+                    phpVersion: "7"
+                    httpServer: "apache"
+                    mayFail: false
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable21
+                    coreVersion: stable22
                     phpVersion: "7.3"
+                    httpServer: "apache"
+                    mayFail: false
+                -   database: mysql
+                    coreVersion: stable22
+                    phpVersion: "8"
                     httpServer: "apache"
                     mayFail: false
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: stable21
+                    coreVersion: stable22
                     phpVersion: "7"
                     httpServer: "nginx"
                     mayFail: false
