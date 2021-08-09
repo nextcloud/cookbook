@@ -7,6 +7,8 @@
 ### Fixed
 - Fixed changes from #774 and minor extensions
   [#775](https://github.com/nextcloud/cookbook/pull/775) @christianlupus
+- Clean tables from old, redundant, and non-unique data to allow migrations (see #762 #763)
+  [#776](https://github.com/nextcloud/cookbook/pull/776) @christianlupus
 
 
 ## 0.9.1 - 2021-07-05
