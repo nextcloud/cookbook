@@ -19,7 +19,9 @@ Possible options:
   --drop-env-dump                   Remove a backup from an environment
   --overwrite-env-dump              Allow to overwrite a backup of an environment
   --env-dump-path <PATH>            The name of the environment to save. Multiple environment backups are possible.
+  --copy-env-dump <SRC> <DST>       Copy the environment dump in <SRC> to <DST>
   --list-env-dumps                  List all environment dumps stored in the docker volume
+  --run-code-checker                Run the cod checker
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
@@ -31,12 +33,15 @@ Possible options:
   --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
   --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
   --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
+  --enable-tracing                  Enable the tracing feature of xdebug
+  --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration)
+  --enable-profiling                Enable the profiling function of xdebug
   --help                            Show this help screen
   --                                Pass any further parameters to the phpunit program
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
                                       --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump --create-plain-dump plain
-  --run-tests                       Run both unit as well as integration tests
+  --run-tests                       Run both unit as well as integration tests and code checking
   --run                             Run the unit tests themselves. This is a shorthand for
                                       --restore-env-dump --run-tests --extract-code-coverage
   
@@ -99,7 +104,7 @@ push_images() {
 
 create_file_structure() {
 	echo 'Creating the required file structure for the volumes'
-	mkdir -p volumes/{mysql,postgres,nextcloud,cookbook,data,dumps,coverage,www}
+	mkdir -p volumes/{mysql,postgres,nextcloud,cookbook,data,dumps,coverage,www,output}
 }
 
 start_helpers(){
@@ -351,6 +356,13 @@ drop_env_dump() {
 	rm -rf "volumes/dumps/$ENV_DUMP_PATH"
 }
 
+copy_environment() {
+	echo "Copying dump $COPY_ENV_SRC to new name $COPY_ENV_DST"
+	
+	rm -rf "volumes/dumps/$COPY_ENV_DST"
+	cp -a "volumes/dumps/$COPY_ENV_SRC" "volumes/dumps/$COPY_ENV_DST"
+}
+
 run_tests() {
 	
 	PARAMS=''
@@ -375,11 +387,9 @@ run_tests() {
 		PARAMS+=' --build-npm'
 	fi
 	
-	if [ $DEBUG = y ]; then
-		PARAMS+=" --debug --debug-port $DEBUG_PORT"
+	if [ "$RUN_CODE_CHECKER" = 'y' ]; then
+		PARAMS+=' --run-code-checker'
 	fi
-	
-	PARAMS+=' --run-code-checker'
 	
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
@@ -432,21 +442,30 @@ CREATE_PLAIN_DUMP=''
 RESTORE_ENV_DUMP=n
 DROP_ENV_DUMP=n
 OVERWRITE_ENV_DUMP=n
+RUN_CODE_CHECKER=n
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
-DEBUG=n
-DEBUG_PORT=''
-DEBUG_HOST=''
-DEBUG_UPON_ERROR=''
-DEBUG_START_MODE=''
 QUICK_MODE=''
+
+DEBUG=n
+DEBUG_PORT='9000'
+DEBUG_HOST='172.17.0.1'
+DEBUG_UPON_ERROR='default'
+DEBUG_START_MODE='yes'
+DEBUG_MODE_STEP=n
+DEBUG_MODE_TRACE=n
+DEBUG_MODE_PROFILE=n
+DEBUG_TRACE_FORMAT=1
 
 ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
 PHP_VERSION="${PHP_VERSION:-7}"
+
+COPY_ENV_SRC=''
+COPY_ENV_DST=''
 
 source mysql.env
 source postgres.env
@@ -517,6 +536,14 @@ do
 			list_env_dumps
 			exit 0
 			;;
+		--copy-env-dump)
+			COPY_ENV_SRC="$2"
+			COPY_ENV_DST="$3"
+			shift 2
+			;;
+		--run-code-checker)
+			RUN_CODE_CHECKER=y
+			;;
 		--run-tests)
 			RUN_UNIT_TESTS=y
 			RUN_INTEGRATION_TESTS=y
@@ -544,7 +571,7 @@ do
 			exit 1
 			;;
 		--debug)
-			DEBUG=y
+			DEBUG_MODE_STEP=y
 			;;
 		--debug-port)
 			DEBUG_PORT="$2"
@@ -561,6 +588,16 @@ do
 			DEBUG_START_MODE="$2"
 			shift
 			;;
+		--enable-tracing)
+			DEBUG_MODE_TRACE=y
+			;;
+		--trace-format)
+			DEBUG_TRACE_FORMAT="$2"
+			shift
+			;;
+		--enable-profiling)
+			DEBUG_MODE_PROFILE=y
+			;;
 		--prepare)
 			DOCKER_PULL=y
 			CREATE_IMAGES_IF_NEEDED=y
@@ -573,6 +610,7 @@ do
 			;;
 		--run)
 			RESTORE_ENV_DUMP=y
+			RUN_CODE_CHECKER=y
 			RUN_UNIT_TESTS=y
 			RUN_INTEGRATION_TESTS=y
 			EXTRACT_CODE_COVERAGE=y
@@ -633,7 +671,50 @@ if [ -z "$RUNNER_GID" ]; then
 fi
 export RUNNER_GID
 
-export DEBUG DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE
+if [ "$DEBUG_MODE_STEP" = y -o "$DEBUG_MODE_TRACE" = y -o "$DEBUG_MODE_PROFILE" = y ]; then
+	DEBUG=y
+	
+	DEBUG_MODE=''
+	
+	if [ "$DEBUG_MODE_STEP" = y ]; then
+		DEBUG_MODE=',debug'
+	fi
+	
+	if [ "$DEBUG_MODE_TRACE" = y ]; then
+		DEBUG_MODE="$DEBUG_MODE,trace"
+	fi
+	
+	if [ "$DEBUG_MODE_PROFILE" = y ]; then
+		DEBUG_MODE="$DEBUG_MODE,profile"
+	fi
+	
+	DEBUG_MODE=$(echo "$DEBUG_MODE" | cut -c 2-)
+fi
+
+export DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE DEBUG_MODE DEBUG_TRACE_FORMAT
+
+if [ -z "$COPY_ENV_SRC" -a -n "$COPY_ENV_DST" ]; then
+	echo "You need to specify a source environment name. Nothing found."
+	exit 1
+fi
+
+if [ -n "$COPY_ENV_SRC" ]; then
+	if [ -z "$COPY_ENV_DST" ]; then
+		echo "You need to specify a destination environment name."
+		exit 1
+	fi
+	
+	if [ ! -d "volumes/dumps/$COPY_ENV_SRC" ]; then
+		echo "The source environment $COPY_ENV_SRC is not found."
+		exit 1
+	fi
+	
+	if [ -d "volumes/dumps/$COPY_ENV_DST" -a "$OVERWRITE_ENV_DUMP" != y ]; then
+		echo "The destination env dump $COPY_ENV_DST is already existing. No overwrite was specified. Aborting."
+		exit 1
+	fi
+fi
+
 export QUICK_MODE
 
 echo "Using PHP version $PHP_VERSION"
@@ -662,6 +743,10 @@ catch()
 }
 
 echo 'Starting process'
+
+if [ -n "$COPY_ENV_SRC" ]; then
+	copy_environment
+fi
 
 if [ $DOCKER_PULL = 'y' ]; then
 	pull_images

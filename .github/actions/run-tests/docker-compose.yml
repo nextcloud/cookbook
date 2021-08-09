@@ -45,11 +45,12 @@ services:
             #GITHUB_SERVER_URL
             #GITHUB_API_URL
             #GITHUB_GRAPHQL_URL
-            DEBUG:
+            DEBUG_MODE:
             DEBUG_PORT:
             DEBUG_HOST:
             DEBUG_UPON_ERROR:
             DEBUG_START_MODE:
+            DEBUG_TRACE_FORMAT:
             QUICK_MODE:
         env_file:
             - mysql.env
@@ -62,6 +63,7 @@ services:
             - ./volumes/dumps:/dumps
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
+            - ./volumes/output:/output
     
     occ:
         <<: *dut
