@@ -13,6 +13,9 @@ jobs:
     steps:
         -   name: Checkout the project
             uses: actions/checkout@v2
+        -   name: Make sure the appinfo is built
+            shell: bash
+            run: make appinfo/info.xml
         -   name: Get PHP version
             shell: bash
             run: php -v
@@ -138,6 +141,10 @@ jobs:
         with:
             fetch-depth: 2
       
+      - name: Ensure the appinfo is built
+        shell: bash
+        run: make appinfo/info.xml
+      
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
@@ -198,6 +205,10 @@ jobs:
     steps:
         -   name: Checkout the app
             uses: actions/checkout@v2
+        
+        -   name: Ensure the appinfo is built
+            shell: bash
+            run: make appinfo/info.xml
         
         -   name: Install the NPM dependencies
             shell: bash
