@@ -10,6 +10,7 @@ use OC\DB\SchemaWrapper;
 use PHPUnit\Framework\TestCase;
 use OC\DB\MigrationService;
 use OC\DB\Connection;
+use OCP\Util;
 
 class Version000000Date20210701093123Test extends TestCase {
 	
@@ -47,7 +48,12 @@ class Version000000Date20210701093123Test extends TestCase {
 		$schema = $this->container->query(SchemaWrapper::class);
 		$this->assertIsObject($schema);
 		
-		$connection = \OC::$server->query(Connection::class);
+		if(Util::getVersion()[0] >= 21){
+    		$connection = \OC::$server->query(Connection::class);		    
+		} else
+		{
+		    $connection = $this->db;
+		}
 		$this->migrationService = new MigrationService('cookbook', $connection);
 		
 		// undo all migrations of cookbook app
