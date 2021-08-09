@@ -20,6 +20,7 @@ Possible options:
   --overwrite-env-dump              Allow to overwrite a backup of an environment
   --env-dump-path <PATH>            The name of the environment to save. Multiple environment backups are possible.
   --list-env-dumps                  List all environment dumps stored in the docker volume
+  --run-code-checker                Run the cod checker
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
@@ -375,7 +376,9 @@ run_tests() {
 		PARAMS+=' --build-npm'
 	fi
 	
-	PARAMS+=' --run-code-checker'
+	if [ "$RUN_CODE_CHECKER" = 'y' ]; then
+		PARAMS+=' --run-code-checker'
+	fi
 	
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
@@ -428,6 +431,7 @@ CREATE_PLAIN_DUMP=''
 RESTORE_ENV_DUMP=n
 DROP_ENV_DUMP=n
 OVERWRITE_ENV_DUMP=n
+RUN_CODE_CHECKER=n
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
@@ -512,6 +516,9 @@ do
 		--list-env-dumps)
 			list_env_dumps
 			exit 0
+			;;
+		--run-code-checker)
+			RUN_CODE_CHECKER=y
 			;;
 		--run-tests)
 			RUN_UNIT_TESTS=y
