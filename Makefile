@@ -177,3 +177,6 @@ appstore:
 .PHONY: test
 test: composer
 	@echo "This functionality has been move to the file .github/acrions/run-tests/run-locally.sh. See its output with parameter --help."
+
+appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major
+	.github/actions/deploy/update-data.sh
