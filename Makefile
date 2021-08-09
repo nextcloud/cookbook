@@ -56,13 +56,13 @@ all: build
 .PHONY: build
 build:
 ifneq (,$(wildcard $(CURDIR)/composer.json))
-	make composer
+	$(MAKE) composer
 endif
 ifneq (,$(wildcard $(CURDIR)/package.json))
-	make npm
+	$(MAKE) npm
 endif
 ifneq (,$(wildcard $(CURDIR)/js/package.json))
-	make npm
+	$(MAKE) npm
 endif
 
 
@@ -121,8 +121,8 @@ distclean: clean
 # Builds the source and appstore package
 .PHONY: dist
 dist:
-	make source
-	make appstore
+	$(MAKE) source
+	$(MAKE) appstore
 
 # Builds the source package
 .PHONY: source
