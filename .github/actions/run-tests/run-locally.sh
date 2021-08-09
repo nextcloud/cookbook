@@ -19,6 +19,7 @@ Possible options:
   --drop-env-dump                   Remove a backup from an environment
   --overwrite-env-dump              Allow to overwrite a backup of an environment
   --env-dump-path <PATH>            The name of the environment to save. Multiple environment backups are possible.
+  --copy-env-dump <SRC> <DST>       Copy the environment dump in <SRC> to <DST>
   --list-env-dumps                  List all environment dumps stored in the docker volume
   --run-code-checker                Run the cod checker
   --run-unit-tests                  Run only the unit tests
@@ -355,6 +356,13 @@ drop_env_dump() {
 	rm -rf "volumes/dumps/$ENV_DUMP_PATH"
 }
 
+copy_environment() {
+	echo "Copying dump $COPY_ENV_SRC to new name $COPY_ENV_DST"
+	
+	rm -rf "volumes/dumps/$COPY_ENV_DST"
+	cp -a "volumes/dumps/$COPY_ENV_SRC" "volumes/dumps/$COPY_ENV_DST"
+}
+
 run_tests() {
 	
 	PARAMS=''
@@ -456,6 +464,9 @@ ENV_BRANCH=stable20
 ENV_DUMP_PATH=default
 PHP_VERSION="${PHP_VERSION:-7}"
 
+COPY_ENV_SRC=''
+COPY_ENV_DST=''
+
 source mysql.env
 source postgres.env
 
@@ -524,6 +535,11 @@ do
 		--list-env-dumps)
 			list_env_dumps
 			exit 0
+			;;
+		--copy-env-dump)
+			COPY_ENV_SRC="$2"
+			COPY_ENV_DST="$3"
+			shift 2
 			;;
 		--run-code-checker)
 			RUN_CODE_CHECKER=y
@@ -676,6 +692,29 @@ if [ "$DEBUG_MODE_STEP" = y -o "$DEBUG_MODE_TRACE" = y -o "$DEBUG_MODE_PROFILE" 
 fi
 
 export DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE DEBUG_MODE DEBUG_TRACE_FORMAT
+
+if [ -z "$COPY_ENV_SRC" -a -n "$COPY_ENV_DST" ]; then
+	echo "You need to specify a source environment name. Nothing found."
+	exit 1
+fi
+
+if [ -n "$COPY_ENV_SRC" ]; then
+	if [ -z "$COPY_ENV_DST" ]; then
+		echo "You need to specify a destination environment name."
+		exit 1
+	fi
+	
+	if [ ! -d "volumes/dumps/$COPY_ENV_SRC" ]; then
+		echo "The source environment $COPY_ENV_SRC is not found."
+		exit 1
+	fi
+	
+	if [ -d "volumes/dumps/$COPY_ENV_DST" -a "$OVERWRITE_ENV_DUMP" != y ]; then
+		echo "The destination env dump $COPY_ENV_DST is already existing. No overwrite was specified. Aborting."
+		exit 1
+	fi
+fi
+
 export QUICK_MODE
 
 echo "Using PHP version $PHP_VERSION"
@@ -704,6 +743,10 @@ catch()
 }
 
 echo 'Starting process'
+
+if [ -n "$COPY_ENV_SRC" ]; then
+	copy_environment
+fi
 
 if [ $DOCKER_PULL = 'y' ]; then
 	pull_images
