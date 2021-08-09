@@ -27,6 +27,9 @@
     "Path to your recipe collection" : "Διαδρομή για την συλλογή συνταγών σας",
     "Create recipe" : "Δημιουργία συνταγής",
     "Uncategorized recipes" : "Μη κατηγοριοποιημένες συνταγές",
+    "Categories" : "Κατηγορίες",
+    "Rename" : "Μετονομασία",
+    "Enter new category name" : "Εισαγωγή ονόματος νέας κατηγορίας",
     "Download recipe from URL" : "Λήψη συνταγής από τη διεύθυνση URL",
     "Failed to load category {category} recipes" : "Αποτυχία φόρτωσης συνταγών κατηγορίας {κατηγορία}",
     "Loading category recipes …" : "Φόρτωση συνταγών κατηγορίας…",
@@ -43,6 +46,7 @@
     "Pick a local image" : "Επιλογή τοπικής εικόνας",
     "Path to your recipe image" : "Διαδρομή της εικόνας της συνταγής σας",
     "Add" : "Προσθήκη",
+    "Close" : "Κλείσιμο",
     "The page was not found" : "Δεν βρέθηκε η σελίδα",
     "Name" : "Όνομα",
     "Description" : "Περιγραφή",
@@ -76,12 +80,14 @@
     "Unsaturated-fat content" : "Περιεκτικότητα σε ακόρεστα λιπαρά",
     "Failed to fetch keywords" : "Αποτυχία ανάκτησης λέξεων-κλειδιών",
     "Loading recipe failed" : "Η φόρτωση των συνταγής απέτυχε",
+    "Recipe image" : "Εικόνα συνταγής",
     "Toggle keyword" : "Εναλλαγή λέξης-κλειδιού",
     "Keyword not contained in visible recipes" : "Η λέξη-κλειδί δεν περιέχεται σε ορατές συνταγές",
     "Cooking time is up!" : "Ο χρόνος μαγειρέματος έχει φτάσει!",
     "Search recipes with this keyword" : "Αναζήτηση συνταγών με αυτήν τη λέξη-κλειδί",
     "Date created" : "Ημερομηνία Δημιουργίας",
     "Last modified" : "Τελευταία τροποποίηση",
+    "Cholesterol" : "Χολιστερόλη",
     "Source" : "Πηγή"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

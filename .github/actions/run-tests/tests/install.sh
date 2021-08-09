@@ -50,6 +50,12 @@ echo 'Installing PHP xdebug'
 pecl install xdebug > /dev/null
 docker-php-ext-enable xdebug > /dev/null
 
+echo 'Installing php.ini for development'
+cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
+cat > /usr/local/etc/php/conf.d/memory_limit.ini << EOF
+memory_limit = 512M
+EOF
+
 echo 'Installing PHP extensions done.'
 
 echo 'runner ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers

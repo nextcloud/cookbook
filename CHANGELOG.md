@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+
+## 0.9.2 - 2021-08-09
+
+### Added
+- Added debugging helpers in the CI scripts
+  [#774](https://github.com/nextcloud/cookbook/pull/774) @christianlupus
+
+### Fixed
+- Fixed changes from #774 and minor extensions
+  [#775](https://github.com/nextcloud/cookbook/pull/775) @christianlupus
+- Clean tables from old, redundant, and non-unique data to allow migrations (see #762 #763)
+  [#776](https://github.com/nextcloud/cookbook/pull/776) @christianlupus
+
+
 ## 0.9.1 - 2021-07-05
 
 ### Added

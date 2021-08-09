@@ -102,7 +102,7 @@ OC.L10N.register(
     "Failed to fetch keywords" : "Načtení klíčových slov se nezdařilo",
     "Loading recipe failed" : "Načítání receptu se nezdařilo",
     "Unknown answer returned from server. See logs." : "Ze serveru byla přijata neznámá odpověď. Prohlédněte si záznamy událostí.",
-    "No answer for request was received." : "Na požadavek nebyla přijata žádná odpověď",
+    "No answer for request was received." : "Na požadavek nebyla obdržena žádná odpověď",
     "Could not start request to save recipe." : "Požadavek na uložení receptu nebyl odeslán.",
     "Recipe image" : "Obrázek receptu",
     "Select order" : "Vyberte pořadí",
