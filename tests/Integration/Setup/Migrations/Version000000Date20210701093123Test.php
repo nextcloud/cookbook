@@ -190,6 +190,16 @@ class Version000000Date20210701093123Test extends TestCase {
 				],
 				['bob']
 			],
+			'caseD' => [
+				[
+					['alice', 124],
+					['alice', 124],
+					['bob', 124],
+					['bob', 124],
+					['bob', 125],
+				],
+				['alice', 'bob']
+			],
 		];
 	}
 }
