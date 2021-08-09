@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.2 - 2021-08-09
+
 ### Added
 - Added debugging helpers in the CI scripts
   [#774](https://github.com/nextcloud/cookbook/pull/774) @christianlupus
