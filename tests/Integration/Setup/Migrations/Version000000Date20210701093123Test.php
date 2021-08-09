@@ -48,11 +48,10 @@ class Version000000Date20210701093123Test extends TestCase {
 		$schema = $this->container->query(SchemaWrapper::class);
 		$this->assertIsObject($schema);
 		
-		if(Util::getVersion()[0] >= 21){
-    		$connection = \OC::$server->query(Connection::class);		    
-		} else
-		{
-		    $connection = $this->db;
+		if (Util::getVersion()[0] >= 21) {
+			$connection = \OC::$server->query(Connection::class);
+		} else {
+			$connection = $this->db;
 		}
 		$this->migrationService = new MigrationService('cookbook', $connection);
 		
