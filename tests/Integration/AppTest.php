@@ -1,10 +1,10 @@
 <?php
 
-namespace OCA\Cookbook\Tests\Integration\Controller;
+namespace OCA\Cookbook\tests\Integration;
 
 use OCP\App\IAppManager;
 use OCP\AppFramework\App;
-use Test\TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * This test shows how to make a small Integration Test. Query your class

@@ -2,15 +2,15 @@
 
 if [ `whoami` = root ]; then
 	
-	if [ -z "$QUICK_MODE" -o "$QUCK_MODE" = n ]; then
+	if [ "$QUCK_MODE" = y ]; then
+		echo "Quick mode activated. No permission update is carried out"
+	else
 		echo "Setting uid and gid to $RUNNER_UID/$RUNNER_GID"
 		usermod -u $RUNNER_UID runner
 		groupmod -g $RUNNER_GID runner
 		
 		echo "Changing ownership of files to runner"
 		chown -R runner: /nextcloud
-	else
-		echo "Quick mode activated. No permission update is carried out"
 	fi
 	
 	if [ -n "$DEBUG_MODE" ]; then

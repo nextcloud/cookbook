@@ -254,7 +254,7 @@ setup_app () {
 	fi
 	
 	echo "Synchronizing the cookbook codebase to volume"
-	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --delete --delete-delay
+	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /node_modules/ --delete --delete-delay
 	
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
@@ -328,8 +328,12 @@ restore_env_dump() {
 	rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/data/" volumes/data/
 	
 	# Restore server files
-	echo "Restoring server files"
-	rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/nextcloud/" volumes/nextcloud/
+	if [ "$QUICK_MODE" = y ]; then
+		echo 'Quick mode activated. Does not restore server core files.'
+	else
+		echo "Restoring server files"
+		rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/nextcloud/" volumes/nextcloud/
+	fi
 	
 	# Restore DB dump
 	case "$INPUT_DB" in
@@ -456,7 +460,7 @@ RUN_INTEGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
-QUICK_MODE=''
+QUICK_MODE=n
 
 DEBUG=n
 DEBUG_PORT='9000'
@@ -478,7 +482,7 @@ COPY_ENV_DST=''
 source mysql.env
 source postgres.env
 
-RSYNC_PARAMS="--delete --delete-delay --archive"
+RSYNC_PARAMS="--delete --delete-delay --delete-excluded --archive"
 
 ##### Extract CLI parameters into internal variables
 

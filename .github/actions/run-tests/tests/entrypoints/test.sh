@@ -62,7 +62,7 @@ do
 done
 
 echo "Synchronizing cookbook codebase"
-rsync -a /cookbook/ apps/cookbook/ --delete --delete-delay --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs
+rsync -a /cookbook/ apps/cookbook/ --delete --delete-delay --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
 
 pushd apps/cookbook
 
@@ -103,13 +103,13 @@ pushd apps/cookbook
 
 if [ $RUN_UNIT_TESTS = 'y' ]; then
 	echo 'Starting unit testing.'
-	./vendor/phpunit/phpunit/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@"
+	/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@"
 	echo 'Unit testing done.'
 fi
 
 if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Starting integration testing.'
-	./vendor/phpunit/phpunit/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@"
+	/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@"
 	echo 'Integration testing done.'
 fi
 

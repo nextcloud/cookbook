@@ -3,6 +3,8 @@
 ### Fixed
 - Mark app as compatible with Nextcloud 22
   [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
+- Usage of PHAR-based PHPUnit to avoid dependency on nikic/php-parser and dependency conflicts
+  [#780](https://github.com/nextcloud/cookbook/pull/780) @christianlupus
 
 ### Removed
 - Removed app info XML file to avoid confusion
