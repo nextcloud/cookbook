@@ -1,6 +1,6 @@
 <?php
 
-namespace tests\Integration\Setup\Migrations;
+namespace OCA\Cookbook\tests\Integration\Setup\Migrations;
 
 use OCP\IDBConnection;
 use OCP\AppFramework\App;
