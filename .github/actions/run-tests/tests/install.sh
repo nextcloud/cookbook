@@ -76,3 +76,7 @@ fi
 
 php /tmp/composer-setup.php --install-dir=/usr/local/bin --filename=composer
 rm /tmp/composer-setup.php
+
+echo 'Installing phpunit PHAR'
+wget -O /phpunit https://phar.phpunit.de/phpunit-9.phar
+chmod +x /phpunit
