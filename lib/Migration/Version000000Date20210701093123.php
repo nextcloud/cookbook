@@ -96,6 +96,9 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 		
 		$namesTable = $schema->getTable('cookbook_names');
 		if ($namesTable->hasPrimaryKey()) {
+			if ($namesTable->hasUniqueConstraint('oc_cookbook_names_pkey')) {
+				$namesTable->removeUniqueConstraint('oc_cookbook_names_pkey');
+			}
 			$namesTable->dropPrimaryKey();
 		}
 		if (! $namesTable->hasIndex('names_recipe_idx')) {
