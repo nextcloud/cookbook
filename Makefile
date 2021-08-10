@@ -56,13 +56,13 @@ all: build
 .PHONY: build
 build:
 ifneq (,$(wildcard $(CURDIR)/composer.json))
-	make composer
+	$(MAKE) composer
 endif
 ifneq (,$(wildcard $(CURDIR)/package.json))
-	make npm
+	$(MAKE) npm
 endif
 ifneq (,$(wildcard $(CURDIR)/js/package.json))
-	make npm
+	$(MAKE) npm
 endif
 
 
@@ -121,8 +121,8 @@ distclean: clean
 # Builds the source and appstore package
 .PHONY: dist
 dist:
-	make source
-	make appstore
+	$(MAKE) source
+	$(MAKE) appstore
 
 # Builds the source package
 .PHONY: source
@@ -177,3 +177,6 @@ appstore:
 .PHONY: test
 test: composer
 	@echo "This functionality has been move to the file .github/acrions/run-tests/run-locally.sh. See its output with parameter --help."
+
+appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major
+	.github/actions/deploy/update-data.sh

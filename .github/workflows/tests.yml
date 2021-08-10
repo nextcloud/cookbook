@@ -13,6 +13,9 @@ jobs:
     steps:
         -   name: Checkout the project
             uses: actions/checkout@v2
+        -   name: Make sure the appinfo is built
+            shell: bash
+            run: make appinfo/info.xml
         -   name: Get PHP version
             shell: bash
             run: php -v
@@ -81,7 +84,7 @@ jobs:
                 - pgsql
                 - sqlite
             coreVersion:
-                - stable21
+                - stable22
             phpVersion:
                 - "7"
             httpServer:
@@ -100,17 +103,27 @@ jobs:
                     phpVersion: "7"
                     httpServer: "apache"
                     mayFail: false
+                -   database: mysql
+                    coreVersion: stable21
+                    phpVersion: "7"
+                    httpServer: "apache"
+                    mayFail: false
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable21
+                    coreVersion: stable22
                     phpVersion: "7.3"
+                    httpServer: "apache"
+                    mayFail: false
+                -   database: mysql
+                    coreVersion: stable22
+                    phpVersion: "8"
                     httpServer: "apache"
                     mayFail: false
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: stable21
+                    coreVersion: stable22
                     phpVersion: "7"
                     httpServer: "nginx"
                     mayFail: false
@@ -127,6 +140,10 @@ jobs:
         uses: actions/checkout@v2
         with:
             fetch-depth: 2
+      
+      - name: Ensure the appinfo is built
+        shell: bash
+        run: make appinfo/info.xml
       
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
@@ -188,6 +205,10 @@ jobs:
     steps:
         -   name: Checkout the app
             uses: actions/checkout@v2
+        
+        -   name: Ensure the appinfo is built
+            shell: bash
+            run: make appinfo/info.xml
         
         -   name: Install the NPM dependencies
             shell: bash

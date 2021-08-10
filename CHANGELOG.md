@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+### Fixed
+- Mark app as compatible with Nextcloud 22
+  [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
+
+### Removed
+- Removed app info XML file to avoid confusion
+  [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
+
 
 ## 0.9.2 - 2021-08-09
 

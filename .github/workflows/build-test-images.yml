@@ -32,6 +32,9 @@ jobs:
             - name: Checkout the app
               uses: actions/checkout@v2
               if: ${{ steps.check.outputs.skip == 'false' }}
+            - name: Make sure the appinfo is built
+              shell: bash
+              run: make appinfo/info.xml
               
             - name: Build and push the image
               shell: bash

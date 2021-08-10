@@ -47,9 +47,9 @@ echo "New version is $version."
 git config user.name 'Github actions bot'
 git config user.email 'bot@noreply.github.com'
 
-"$deploy_path/fill-in-data.sh" "$version" "$major" "$minor" "$patch"
+"$deploy_path/update-data.sh"
 
-git add appinfo/info.xml package.json lib/Controller/MainController.php
+git add package.json lib/Controller/MainController.php
 
 git commit -s -m "Bump to version $version"
 git tag "v$version"
