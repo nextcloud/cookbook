@@ -27,14 +27,24 @@ abstract class AbstractMigrationTestCase extends TestCase {
      */
     protected $migrationService;
     
+    /**
+     * @var SchemaWrapper
+     */
+    protected $schema;
+    
     protected $connection;
     
     protected abstract function getPreviousMigrationName(): ?string;
+    
+    private const TMP_MIGRATIONS = '/tmp/old-migrations';
     
     public function setUp(): void {
         resetEnvironmentToBackup('plain');
         
         parent::setUp();
+        
+        $this->hideMigrations();
+        $this->enableApp();
         
         $app = new App('cookbook');
         $this->container = $app->getContainer();
@@ -47,8 +57,8 @@ abstract class AbstractMigrationTestCase extends TestCase {
         /**
          * @var SchemaWrapper $schema
          */
-        $schema = $this->container->query(SchemaWrapper::class);
-        $this->assertIsObject($schema);
+        $this->schema = $this->container->query(SchemaWrapper::class);
+        $this->assertIsObject($this->schema);
         
         if (Util::getVersion()[0] >= 21) {
             $this->connection = \OC::$server->query(Connection::class);
@@ -59,9 +69,10 @@ abstract class AbstractMigrationTestCase extends TestCase {
         $this->assertIsObject($this->migrationService);
         
         // Reinstall app partially (just before the migration)
-        $migrationBefore = 'Version'.$this->getPreviousMigrationName();
+        $this->restoreMigrations();
+        $migrationBefore = $this->getPreviousMigrationName();
         if(! empty($migrationBefore)) {
-            runOCCCommand(['migrations:migrate', 'cookbook', $migrationBefore], true);
+            runOCCCommand(['migrations:migrate', 'cookbook', $migrationBefore]);
         }
     }
     
@@ -70,6 +81,22 @@ abstract class AbstractMigrationTestCase extends TestCase {
         unset($this->db);
         unset($this->migrationService);
         unset($this->connection);
+    }
+    
+    private function enableApp() {
+        runOCCCommand(['app:enable', 'cookbook']);
+    }
+    
+    private function hideMigrations() {
+        if(! file_exists(self::TMP_MIGRATIONS)) {
+            mkdir(self::TMP_MIGRATIONS);
+        }
+        
+        exec('mv lib/Migration/* ' . self::TMP_MIGRATIONS);
+    }
+    
+    private function restoreMigrations() {
+        exec('mv ' . self::TMP_MIGRATIONS . '/* lib/Migration');
     }
     
 }
