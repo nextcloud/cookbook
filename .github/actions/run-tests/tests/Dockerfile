@@ -30,8 +30,8 @@ RUN docker-php-ext-configure zip > /dev/null && \
 
 RUN npm install -g --quiet --loglevel warn npm@latest
 
-COPY install-composer.sh /install-composer.sh
-RUN /install-composer.sh
+COPY install-composer.sh /tmp/install-composer.sh
+RUN /tmp/install-composer.sh
 
 RUN wget -O /phpunit https://phar.phpunit.de/phpunit-9.phar && \
 	chmod +x /phpunit
