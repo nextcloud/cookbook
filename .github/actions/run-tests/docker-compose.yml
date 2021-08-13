@@ -76,7 +76,7 @@ services:
     
     fpm:
         <<: *dut
-        entrypoint: ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "docker-php-entrypoint"]
+        entrypoint: ["/usr/bin/tini", "--", "/entrypoints/minimal-default-entrypoint.sh", "docker-php-entrypoint"]
         command: ['php-fpm']
         user: root
     
