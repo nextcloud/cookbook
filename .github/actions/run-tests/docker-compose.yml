@@ -60,7 +60,7 @@ services:
             - ../../..:/cookbook:ro
             - ./volumes/nextcloud:/nextcloud
             - ./volumes/data:/nextcloud/data
-            - ./volumes/cookbook:/nextcloud/apps/cookbook
+            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook
             - ./volumes/dumps:/dumps
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www

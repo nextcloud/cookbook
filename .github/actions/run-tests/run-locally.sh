@@ -203,7 +203,7 @@ setup_server(){
 	
 	echo 'Creating cookbook folder for later bind-merge'
 	pushd volumes/nextcloud
-	mkdir apps/cookbook data
+	mkdir -p custom_apps/cookbook data
 	popd
 	
 	echo "Installing Nextcloud server instance"
@@ -253,6 +253,8 @@ setup_app () {
 		echo 'Add exception for app to install even if not officially supported'
 		cat scripts/enable_app_install_script.php | docker-compose run --rm -T php
 	fi
+	
+	cat scripts/set_custom_apps_path.php | docker-compose run --rm -T php
 	
 	echo "Synchronizing the cookbook codebase to volume"
 	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /node_modules/ --delete --delete-delay
