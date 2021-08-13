@@ -36,6 +36,10 @@ if [ `whoami` = root ]; then
 			DEBUG_TRACE_FORMAT=1
 		fi
 		
+		if [ -z "$XDEBUG_LOG_LEVEL" ]; then
+			XDEBUG_LOG_LEVEL=3
+		fi
+		
 		mode="develop,coverage,$DEBUG_MODE"
 		
 		cat >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini <<- EOF
@@ -46,6 +50,7 @@ if [ `whoami` = root ]; then
 			xdebug.client_port = $DEBUG_PORT
 			xdebug.client_host = $DEBUG_HOST
 			xdebug.trace_format = $DEBUG_TRACE_FORMAT
+			xdebug.log_level = $XDEBUG_LOG_LEVEL
 			EOF
 		
 	fi

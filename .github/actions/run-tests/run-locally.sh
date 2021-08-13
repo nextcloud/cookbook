@@ -33,6 +33,7 @@ Possible options:
   --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
   --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
   --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
+  --xdebug-log-level <LEVEL>        Set the log level of xdebug to <LEVEL>
   --enable-tracing                  Enable the tracing feature of xdebug
   --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration)
   --enable-profiling                Enable the profiling function of xdebug
@@ -615,6 +616,10 @@ do
 		--enable-profiling)
 			DEBUG_MODE_PROFILE=y
 			;;
+		--xdebug-log-level)
+			XDEBUG_LOG_LEVEL="$2"
+			shift
+			;;
 		--prepare)
 			DOCKER_PULL=y
 			CREATE_IMAGES_IF_NEEDED=y
@@ -708,7 +713,7 @@ if [ "$DEBUG_MODE_STEP" = y -o "$DEBUG_MODE_TRACE" = y -o "$DEBUG_MODE_PROFILE" 
 	DEBUG_MODE=$(echo "$DEBUG_MODE" | cut -c 2-)
 fi
 
-export DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE DEBUG_MODE DEBUG_TRACE_FORMAT
+export DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE DEBUG_MODE DEBUG_TRACE_FORMAT XDEBUG_LOG_LEVEL
 
 if [ -z "$COPY_ENV_SRC" -a -n "$COPY_ENV_DST" ]; then
 	echo "You need to specify a source environment name. Nothing found."
