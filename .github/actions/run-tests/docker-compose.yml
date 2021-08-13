@@ -86,7 +86,7 @@ services:
             - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
             - ./volumes/nextcloud:/nextcloud:ro
             - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/apps/cookbook:ro
+            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
     
     nginx:
         image: nginx:alpine
@@ -95,7 +95,7 @@ services:
             - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
             - ./volumes/nextcloud:/nextcloud:ro
             - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/apps/cookbook:ro
+            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
         
     www:
         image: nginx:alpine
