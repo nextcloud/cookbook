@@ -72,7 +72,8 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		$this->restoreMigrations();
 		$migrationBefore = $this->getPreviousMigrationName();
 		if (! empty($migrationBefore)) {
-			runOCCCommand(['migrations:migrate', 'cookbook', $migrationBefore]);
+			// We need to run a migration beforehand
+			$this->migrationService->migrate($migrationBefore);
 		}
 	}
 	
