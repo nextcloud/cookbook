@@ -24,8 +24,10 @@ RUN /tmp/install-gd.sh ${PHPVERSION}
 
 RUN docker-php-ext-configure zip > /dev/null && \
 	docker-php-ext-install -j$(nproc) zip > /dev/null && \
-	docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite > /dev/null && \
-	pecl install xdebug > /dev/null && \
+	docker-php-ext-install -j$(nproc) pdo pdo_mysql pdo_pgsql pdo_sqlite > /dev/null
+
+RUN pecl update-channels && \
+	pecl install xdebug >/dev/null && \
 	docker-php-ext-enable xdebug > /dev/null
 
 RUN npm install -g --quiet --loglevel warn npm@latest
