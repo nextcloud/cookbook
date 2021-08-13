@@ -5,7 +5,7 @@
   [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
 - Usage of PHAR-based PHPUnit to avoid dependency on nikic/php-parser and dependency conflicts
   [#780](https://github.com/nextcloud/cookbook/pull/780) @christianlupus
-- Extracted abstract class for migration testing
+- Extracted abstract class for migration testing and added tests code for existing migrations
   [#783](https://github.com/nextcloud/cookbook/pull/783) @christianlupus
 - Reactivate step debugging in automated testing
   [#784](https://github.com/nextcloud/cookbook/pull/784) @christianlupus
