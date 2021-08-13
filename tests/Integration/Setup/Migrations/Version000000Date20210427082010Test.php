@@ -23,6 +23,8 @@ class Version000000Date20210427082010Test extends AbstractMigrationTestCase {
 		$this->migrationService->migrate('000000Date20210427082010');
 		$this->renewSchema();
 		
+		$categoriesTable = $this->schema->getTable('cookbook_categories');
+		$keywordsTable = $this->schema->getTable('cookbook_keywords');
 		$this->assertTrue($categoriesTable->hasIndex('categories_recipe_idx'));
 		$this->assertTrue($keywordsTable->hasIndex('keywords_recipe_idx'));
 	}
