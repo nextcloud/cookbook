@@ -35,7 +35,7 @@ RUN npm install -g --quiet --loglevel warn npm@latest
 COPY install-composer.sh /tmp/install-composer.sh
 RUN /tmp/install-composer.sh
 
-RUN wget -O /phpunit https://phar.phpunit.de/phpunit-9.phar && \
+RUN wget -O /phpunit -q https://phar.phpunit.de/phpunit-9.phar && \
 	chmod +x /phpunit
 
 COPY xdebug.config /tmp/xdebug.config
