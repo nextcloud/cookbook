@@ -52,6 +52,7 @@ services:
             DEBUG_START_MODE:
             DEBUG_TRACE_FORMAT:
             QUICK_MODE:
+            XDEBUG_LOG_LEVEL:
         env_file:
             - mysql.env
             - postgres.env
@@ -59,7 +60,7 @@ services:
             - ../../..:/cookbook:ro
             - ./volumes/nextcloud:/nextcloud
             - ./volumes/data:/nextcloud/data
-            - ./volumes/cookbook:/nextcloud/apps/cookbook
+            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook
             - ./volumes/dumps:/dumps
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
@@ -75,7 +76,7 @@ services:
     
     fpm:
         <<: *dut
-        entrypoint: ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "docker-php-entrypoint"]
+        entrypoint: ["/usr/bin/tini", "--", "/entrypoints/minimal-default-entrypoint.sh", "docker-php-entrypoint"]
         command: ['php-fpm']
         user: root
     
@@ -85,7 +86,7 @@ services:
             - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
             - ./volumes/nextcloud:/nextcloud:ro
             - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/apps/cookbook:ro
+            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
     
     nginx:
         image: nginx:alpine
@@ -94,7 +95,7 @@ services:
             - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
             - ./volumes/nextcloud:/nextcloud:ro
             - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/apps/cookbook:ro
+            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
         
     www:
         image: nginx:alpine

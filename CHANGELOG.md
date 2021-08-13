@@ -7,6 +7,8 @@
   [#780](https://github.com/nextcloud/cookbook/pull/780) @christianlupus
 - Extracted abstract class for migration testing
   [#783](https://github.com/nextcloud/cookbook/pull/783) @christianlupus
+- Reactivate step debugging in automated testing
+  [#784](https://github.com/nextcloud/cookbook/pull/784) @christianlupus
 
 ### Removed
 - Removed app info XML file to avoid confusion

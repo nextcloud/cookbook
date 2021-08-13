@@ -1,14 +1,12 @@
 #! /bin/bash
 
+/entrypoints/minimal-default-entrypoint.sh
+
 if [ `whoami` = root ]; then
 	
 	if [ "$QUCK_MODE" = y ]; then
 		echo "Quick mode activated. No permission update is carried out"
 	else
-		echo "Setting uid and gid to $RUNNER_UID/$RUNNER_GID"
-		usermod -u $RUNNER_UID runner
-		groupmod -g $RUNNER_GID runner
-		
 		echo "Changing ownership of files to runner"
 		chown -R runner: /nextcloud
 	fi
@@ -36,6 +34,10 @@ if [ `whoami` = root ]; then
 			DEBUG_TRACE_FORMAT=1
 		fi
 		
+		if [ -z "$XDEBUG_LOG_LEVEL" ]; then
+			XDEBUG_LOG_LEVEL=3
+		fi
+		
 		mode="develop,coverage,$DEBUG_MODE"
 		
 		cat >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini <<- EOF
@@ -46,6 +48,7 @@ if [ `whoami` = root ]; then
 			xdebug.client_port = $DEBUG_PORT
 			xdebug.client_host = $DEBUG_HOST
 			xdebug.trace_format = $DEBUG_TRACE_FORMAT
+			xdebug.log_level = $XDEBUG_LOG_LEVEL
 			EOF
 		
 	fi

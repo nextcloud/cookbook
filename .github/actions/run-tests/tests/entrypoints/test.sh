@@ -62,9 +62,9 @@ do
 done
 
 echo "Synchronizing cookbook codebase"
-rsync -a /cookbook/ apps/cookbook/ --delete --delete-delay --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
+rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-delay --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
 
-pushd apps/cookbook
+pushd custom_apps/cookbook
 
 if [ $INSTALL_COMPOSER_DEPS = 'y' ]; then
 	echo "Installing/updating composer dependencies"
@@ -99,7 +99,7 @@ if [ $RUN_CODE_CHECKER = 'y' ]; then
 	echo 'Code checker finished'
 fi
 
-pushd apps/cookbook
+pushd custom_apps/cookbook
 
 make appinfo/info.xml
 
