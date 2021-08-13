@@ -14,15 +14,10 @@ class Version000000Date20190312140601Test extends AbstractMigrationTestCase {
 		
 		// Run the migration under test
 		$this->migrationService->migrate('000000Date20190312140601');
+		$this->renewSchema();
 		
 		$this->postTestAsserts('cookbook_recipes');
 		$this->postTestAsserts('cookbook_keywords');
-	}
-	
-	private function preTestAsserts(string $tableName): void {
-		$this->assertTrue($this->schema->hasTable($tableName));
-		$table = $this->schema->getTable($tableName);
-		$this->assertFalse($table->hasColumn('user_id'));
 	}
 	
 	private function postTestAsserts(string $tableName): void {
@@ -32,7 +27,7 @@ class Version000000Date20190312140601Test extends AbstractMigrationTestCase {
 		$this->assertTrue($table->hasColumn('recipe_id'));
 		$this->assertTrue($table->hasColumn('name'));
 		
-		$this->assertTrue($table->getColumn('user_id')->getNotnull());
+		$this->assertTrue($table->getColumn('recipe_id')->getNotnull());
 		$this->assertTrue($table->getColumn('name')->getNotnull());
 	}
 	

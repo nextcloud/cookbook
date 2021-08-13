@@ -21,6 +21,7 @@ class Version000000Date20210427082010Test extends AbstractMigrationTestCase {
 		
 		// Run the migration under test
 		$this->migrationService->migrate('000000Date20210427082010');
+		$this->renewSchema();
 		
 		$this->assertTrue($categoriesTable->hasIndex('categories_recipe_idx'));
 		$this->assertTrue($keywordsTable->hasIndex('keywords_recipe_idx'));

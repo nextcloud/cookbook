@@ -74,6 +74,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		if (! empty($migrationBefore)) {
 			// We need to run a migration beforehand
 			$this->migrationService->migrate($migrationBefore);
+			$this->renewSchema();
 		}
 	}
 	
@@ -82,6 +83,10 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		unset($this->db);
 		unset($this->migrationService);
 		unset($this->connection);
+	}
+	
+	protected function renewSchema(): void {
+	    $this->schema = new SchemaWrapper($this->connection);
 	}
 	
 	private function enableApp() {

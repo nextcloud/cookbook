@@ -15,6 +15,7 @@ class Version000000Date20200315121603Test extends AbstractMigrationTestCase {
 		
 		// Run the migration under test
 		$this->migrationService->migrate('000000Date20210427082010');
+		$this->renewSchema();
 		
 		$this->assertTrue($this->schema->hasTable('cookbook_categories'));
 		

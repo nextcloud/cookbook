@@ -16,6 +16,7 @@ class Version000000Date20190910100911Test extends AbstractMigrationTestCase {
 		
 		// Run the migration under test
 		$this->migrationService->migrate('000000Date20190910100911');
+		$this->renewSchema();
 		
 		$this->postTestAsserts('cookbook_recipes');
 		$this->postTestAsserts('cookbook_keywords');
