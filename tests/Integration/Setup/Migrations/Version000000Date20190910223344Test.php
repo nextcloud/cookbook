@@ -10,7 +10,7 @@ class Version000000Date20190910223344Test extends AbstractMigrationTestCase {
 	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20190910223344
 	 */
-	public function testRedundantEntriesInDB($data, $updatedUsers) {
+	public function testDropPrimaryKeyFromTables() {
 		$this->assertTrue($this->schema->hasTable('cookbook_recipes'));
 		$this->assertFalse($this->schema->hasTable('cookbook_names'));
 		

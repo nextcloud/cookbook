@@ -10,7 +10,7 @@ class Version000000Date20190312140601Test extends AbstractMigrationTestCase {
 	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20190312140601
 	 */
-	public function testRedundantEntriesInDB($data, $updatedUsers) {
+	public function testCreatedTables() {
 		
 		// Run the migration under test
 		$this->migrationService->migrate('000000Date20190312140601');
@@ -36,7 +36,7 @@ class Version000000Date20190312140601Test extends AbstractMigrationTestCase {
 		$this->assertTrue($table->getColumn('name')->getNotnull());
 	}
 	
-	protected function getPreviousMigrationName(): string {
+	protected function getPreviousMigrationName(): ?string {
 		return null;
 	}
 }

@@ -10,7 +10,7 @@ class Version000000Date20200315121603Test extends AbstractMigrationTestCase {
 	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20200315121603
 	 */
-	public function testRedundantEntriesInDB($data, $updatedUsers) {
+	public function testAddCategoriesTable() {
 		$this->assertFalse($this->schema->hasTable('cookbook_categories'));
 		
 		// Run the migration under test

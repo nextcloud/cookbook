@@ -10,7 +10,7 @@ class Version000000Date20190910100911Test extends AbstractMigrationTestCase {
 	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20190910100911
 	 */
-	public function testRedundantEntriesInDB($data, $updatedUsers) {
+	public function testAddedUserIdToTables() {
 		$this->preTestAsserts('cookbook_recipes');
 		$this->preTestAsserts('cookbook_keywords');
 		

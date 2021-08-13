@@ -10,7 +10,7 @@ class Version000000Date20210427082010Test extends AbstractMigrationTestCase {
 	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20210427082010
 	 */
-	public function testRedundantEntriesInDB($data, $updatedUsers) {
+	public function testAddIndexToTables() {
 		$categoriesTable = $this->schema->getTable('cookbook_categories');
 		$this->assertFalse($categoriesTable->hasIndex('categories_recipe_idx'));
 		$this->assertEquals([], $categoriesTable->getIndexes());
