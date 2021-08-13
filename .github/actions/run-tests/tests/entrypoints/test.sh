@@ -101,6 +101,8 @@ fi
 
 pushd apps/cookbook
 
+make appinfo/info.xml
+
 if [ $RUN_UNIT_TESTS = 'y' ]; then
 	echo 'Starting unit testing.'
 	/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@"

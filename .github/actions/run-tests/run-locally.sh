@@ -256,6 +256,11 @@ setup_app () {
 	echo "Synchronizing the cookbook codebase to volume"
 	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /node_modules/ --delete --delete-delay
 	
+	echo "Ensuring the appinfo is present"
+	pushd volumes/cookbook > /dev/null
+	make appinfo/info.xml
+	popd > /dev/null
+	
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
 	
