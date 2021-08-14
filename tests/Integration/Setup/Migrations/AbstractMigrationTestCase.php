@@ -86,7 +86,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	}
 	
 	protected function renewSchema(): void {
-	    $this->schema = new SchemaWrapper($this->connection);
+		$this->schema = new SchemaWrapper($this->connection);
 	}
 	
 	private function enableApp() {
