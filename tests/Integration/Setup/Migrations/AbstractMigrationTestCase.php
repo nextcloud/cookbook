@@ -11,6 +11,9 @@ use OCP\AppFramework\App;
 use OC\DB\MigrationService;
 use OCP\AppFramework\IAppContainer;
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 abstract class AbstractMigrationTestCase extends TestCase {
 	/**
 	 * @var IAppContainer
@@ -39,12 +42,14 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	private const TMP_MIGRATIONS = '/tmp/old-migrations';
 	
 	public function setUp(): void {
-		resetEnvironmentToBackup('plain');
 		
 		parent::setUp();
 		
+		resetEnvironmentToBackup('plain');
+		
 		$this->hideMigrations();
 		$this->enableApp();
+		$this->restoreMigrations();
 		
 		$app = new App('cookbook');
 		$this->container = $app->getContainer();
@@ -69,7 +74,6 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		$this->assertIsObject($this->migrationService);
 		
 		// Reinstall app partially (just before the migration)
-		$this->restoreMigrations();
 		$migrationBefore = $this->getPreviousMigrationName();
 		if (! empty($migrationBefore)) {
 			// We need to run a migration beforehand
