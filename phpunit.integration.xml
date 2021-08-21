@@ -19,4 +19,7 @@
 			<directory suffix=".php">lib</directory>
 		</include>
 	</coverage>
+	<php>
+		<env name="INPUT_DB" value="unknown" />
+	</php>
 </phpunit>

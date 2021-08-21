@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\tests\Integration\Setup\Migrations;
 
+use Doctrine\DBAL\Schema\Table;
 use OCP\IDBConnection;
 use OCP\Util;
 use OC\DB\Connection;
@@ -42,7 +43,6 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	private const TMP_MIGRATIONS = '/tmp/old-migrations';
 	
 	public function setUp(): void {
-		
 		parent::setUp();
 		
 		resetEnvironmentToBackup('plain');
@@ -70,6 +70,11 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		} else {
 			$this->connection = $this->db;
 		}
+		
+		if ($_ENV['INPUT_DB'] === 'sqlite') {
+			$this->resetSQLite();
+		}
+		
 		$this->migrationService = new MigrationService('cookbook', $this->connection);
 		$this->assertIsObject($this->migrationService);
 		
@@ -107,5 +112,28 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	
 	private function restoreMigrations() {
 		exec('mv ' . self::TMP_MIGRATIONS . '/* lib/Migration');
+	}
+	
+	private function resetSQLite(): void {
+		$allTables = $this->schema->getTables();
+		$tables = array_filter($allTables, function (Table $t) {
+			return str_starts_with($t->getName(), 'oc_cookbook');
+		});
+		
+		/**
+		 * @var Table $t
+		 */
+		foreach ($tables as $t) {
+			$this->schema->dropTable(preg_replace('/^oc_/', '', $t->getName()));
+		}
+		
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete('migrations')->where('app = :app');
+		$qb->setParameter('app', 'cookbook');
+		$qb->execute();
+		
+		$this->schema->performDropTableCalls();
+		
+		$this->renewSchema();
 	}
 }
