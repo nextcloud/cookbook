@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\tests\Integration\Setup\Migrations;
 
+use Doctrine\DBAL\Schema\Table;
 use OCP\IDBConnection;
 use OCP\Util;
 use OC\DB\Connection;
@@ -11,6 +12,9 @@ use OCP\AppFramework\App;
 use OC\DB\MigrationService;
 use OCP\AppFramework\IAppContainer;
 
+/**
+ * @runTestsInSeparateProcesses
+ */
 abstract class AbstractMigrationTestCase extends TestCase {
 	/**
 	 * @var IAppContainer
@@ -39,12 +43,13 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	private const TMP_MIGRATIONS = '/tmp/old-migrations';
 	
 	public function setUp(): void {
-		resetEnvironmentToBackup('plain');
-		
 		parent::setUp();
+		
+		resetEnvironmentToBackup('plain');
 		
 		$this->hideMigrations();
 		$this->enableApp();
+		$this->restoreMigrations();
 		
 		$app = new App('cookbook');
 		$this->container = $app->getContainer();
@@ -65,15 +70,20 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		} else {
 			$this->connection = $this->db;
 		}
+		
+		if ($_ENV['INPUT_DB'] === 'sqlite') {
+			$this->resetSQLite();
+		}
+		
 		$this->migrationService = new MigrationService('cookbook', $this->connection);
 		$this->assertIsObject($this->migrationService);
 		
 		// Reinstall app partially (just before the migration)
-		$this->restoreMigrations();
 		$migrationBefore = $this->getPreviousMigrationName();
 		if (! empty($migrationBefore)) {
 			// We need to run a migration beforehand
 			$this->migrationService->migrate($migrationBefore);
+			$this->renewSchema();
 		}
 	}
 	
@@ -82,6 +92,10 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		unset($this->db);
 		unset($this->migrationService);
 		unset($this->connection);
+	}
+	
+	protected function renewSchema(): void {
+		$this->schema = new SchemaWrapper($this->connection);
 	}
 	
 	private function enableApp() {
@@ -98,5 +112,28 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	
 	private function restoreMigrations() {
 		exec('mv ' . self::TMP_MIGRATIONS . '/* lib/Migration');
+	}
+	
+	private function resetSQLite(): void {
+		$allTables = $this->schema->getTables();
+		$tables = array_filter($allTables, function (Table $t) {
+			return str_starts_with($t->getName(), 'oc_cookbook');
+		});
+		
+		/**
+		 * @var Table $t
+		 */
+		foreach ($tables as $t) {
+			$this->schema->dropTable(preg_replace('/^oc_/', '', $t->getName()));
+		}
+		
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete('migrations')->where('app = :app');
+		$qb->setParameter('app', 'cookbook');
+		$qb->execute();
+		
+		$this->schema->performDropTableCalls();
+		
+		$this->renewSchema();
 	}
 }
