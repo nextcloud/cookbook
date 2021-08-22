@@ -86,8 +86,8 @@ PARAM_COVERAGE_INTEGRATION=''
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	rm -rf /coverage/tmp
 	mkdir /coverage/tmp
-	PARAM_COVERAGE_UNIT='--coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
-	PARAM_COVERAGE_INTEGRATION='--coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
+	PARAM_COVERAGE_UNIT='--coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit --log-junit /coverage/junit.xml'
+	PARAM_COVERAGE_INTEGRATION='--coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration --log-junit /coverage/junit-integration.xml'
 fi
 
 if [ $RUN_CODE_CHECKER = 'y' ]; then
