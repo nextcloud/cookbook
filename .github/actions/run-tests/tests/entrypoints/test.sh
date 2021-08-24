@@ -81,13 +81,14 @@ fi
 
 popd
 
-PARAM_COVERAGE_UNIT=''
-PARAM_COVERAGE_INTEGRATION=''
+PARAM_COVERAGE_UNIT='--log-junit /coverage/junit.xml --log-teamcity /coverage/teamcity.log'
+PARAM_COVERAGE_INTEGRATION='--log-junit /coverage/junit-integration.xml --log-teamcity /coverage/teamcity.integration.log'
+
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	rm -rf /coverage/tmp
 	mkdir /coverage/tmp
-	PARAM_COVERAGE_UNIT='--coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit --log-junit /coverage/junit.xml'
-	PARAM_COVERAGE_INTEGRATION='--coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration --log-junit /coverage/junit-integration.xml'
+	PARAM_COVERAGE_UNIT+=' --coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
+	PARAM_COVERAGE_INTEGRATION+=' --coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
 fi
 
 if [ $RUN_CODE_CHECKER = 'y' ]; then
