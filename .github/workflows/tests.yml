@@ -140,8 +140,6 @@ jobs:
         uses: actions/checkout@v2
         with:
             fetch-depth: 2
-      - name: Register unit test annotation matcher
-        uses: mheap/phpunit-matcher-action@v1
       
       - name: Ensure the appinfo is built
         shell: bash
@@ -166,6 +164,12 @@ jobs:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
       
+      - name: Failing in case the tests failed
+        shell: bash
+        run: >-
+            echo "Exiting with ${{ env.test_result }}" ;
+            exit "${{ env.test_result }}"
+            
       - name: Upload the coverage reports to codecov.io
         shell: bash
         run: >-
@@ -202,11 +206,6 @@ jobs:
             name: Junit test log files (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
         if: always()
-      
-      - name: Trigger annotations
-        shell: bash
-        if: always()
-        run: cat .github/actions/run-tests/volumes/coverage/teamcity*.log
       
 
   source-package:

@@ -9,7 +9,7 @@ catch()
 	echo '::set-output name=silent-fail::false';
 	
 	if [ "$1" != '0' ]; then
-		echo "::error line=$LINENO::Error during the test run: $1"
+# 		echo "::error line=$LINENO::Error during the test run: $1"
 		
 		if [ "$ALLOW_FAILURE" = 'true' ]; then
 			echo '::set-output name=silent-fail::true'
