@@ -849,13 +849,11 @@ if [ $START_HELPERS = 'y' ]; then
 fi
 
 printCI "::endgroup::"
-printCI "::group::Run the tests"
 
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
 	run_tests "$@"
 fi
 
-printCI "::endgroup::"
 printCI "::group::Clean-Up"
 
 if [ $SHUTDOWN_HELPERS = 'y' ]; then

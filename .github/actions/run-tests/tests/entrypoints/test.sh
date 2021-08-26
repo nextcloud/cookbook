@@ -20,6 +20,12 @@ catch()
 	fi
 }
 
+printCI() {
+	if [ "$CI" = 'true' ]; then
+		echo "$@"
+	fi
+}
+
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
 CREATE_COVERAGE_REPORT=n
@@ -61,6 +67,8 @@ do
 	shift
 done
 
+printCI "::group::Test prepatation in container"
+
 echo "Synchronizing cookbook codebase"
 rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-delay --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
 
@@ -81,6 +89,8 @@ fi
 
 popd
 
+printCI "::endgroup::"
+
 PARAM_COVERAGE_UNIT='--log-junit /coverage/junit.xml --log-teamcity /coverage/teamcity.log'
 PARAM_COVERAGE_INTEGRATION='--log-junit /coverage/junit-integration.xml --log-teamcity /coverage/teamcity.integration.log'
 
@@ -92,15 +102,17 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 fi
 
 if [ $RUN_CODE_CHECKER = 'y' ]; then
+	printCI "::group::Code checker"
 	echo 'Running the code checker'
 	if ! ./occ app:check-code cookbook; then
 		echo '::error ::The code checker rejected the code base. See the logs of the action for further details.'
 		exit 1
 	fi
 	echo 'Code checker finished'
+	printCI "::endgroup::"
 fi
 
-pushd custom_apps/cookbook
+pushd custom_apps/cookbook > /dev/null
 
 make appinfo/info.xml
 
@@ -116,7 +128,9 @@ if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Integration testing done.'
 fi
 
-popd
+popd > /dev/null
+
+printCI "::group::Postprocessing output"
 
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	echo 'Patching style in coverage report'
@@ -134,3 +148,5 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	mv tmp "$NAME"
 	ln -snf "$NAME" ./latest
 fi
+
+printCI "::endgroup::"
