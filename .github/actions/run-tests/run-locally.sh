@@ -767,7 +767,15 @@ catch()
 	fi
 }
 
+printCI() {
+	if [ "$CI" = 'true' ]; then
+		echo "$@"
+	fi
+}
+
 echo 'Starting process'
+
+printCI "::group::Prepare docker"
 
 if [ -n "$COPY_ENV_SRC" ]; then
 	copy_environment
@@ -795,6 +803,9 @@ if [ $PUSH_IMAGES = 'y' ]; then
 	push_images
 fi
 
+printCI "::endgroup::"
+printCI "::group::Preparing environment"
+
 create_file_structure
 
 if [ $START_HELPERS = 'y' ]; then
@@ -815,6 +826,9 @@ if [ $SETUP_ENVIRONMENT = 'y' ]; then
 	setup_app
 fi
 
+printCI "::endgroup::"
+printCI "::group::Environment dump handling"
+
 if [ $DROP_ENV_DUMP = 'y' ]; then
 	drop_env_dump
 fi
@@ -827,16 +841,25 @@ if [ $RESTORE_ENV_DUMP = 'y' ]; then
 	restore_env_dump
 fi
 
+printCI "::endgroup::"
+printCI "::group::Postprocessing environemnt preparation"
+
 if [ $START_HELPERS = 'y' ]; then
 	start_helpers_post
 fi
+
+printCI "::endgroup::"
 
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
 	run_tests "$@"
 fi
 
+printCI "::group::Clean-Up"
+
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
 	shutdown_helpers
 fi
+
+printCI "::endgroup::"
 
 echo "Processing finished"

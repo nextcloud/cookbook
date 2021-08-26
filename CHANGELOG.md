@@ -9,6 +9,8 @@
   [#783](https://github.com/nextcloud/cookbook/pull/783) @christianlupus
 - Reactivate step debugging in automated testing
   [#784](https://github.com/nextcloud/cookbook/pull/784) @christianlupus
+- Added test result to PR messages
+  [#788](https://github.com/nextcloud/cookbook/pull/788) @christianlupus
 
 ### Removed
 - Removed app info XML file to avoid confusion

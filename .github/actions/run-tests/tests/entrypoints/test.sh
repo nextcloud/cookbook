@@ -9,7 +9,7 @@ catch()
 	echo '::set-output name=silent-fail::false';
 	
 	if [ "$1" != '0' ]; then
-		echo "::error line=$LINENO::Error during the test run: $1"
+# 		echo "::error line=$LINENO::Error during the test run: $1"
 		
 		if [ "$ALLOW_FAILURE" = 'true' ]; then
 			echo '::set-output name=silent-fail::true'
@@ -17,6 +17,12 @@ catch()
 		else
 			exit $1
 		fi
+	fi
+}
+
+printCI() {
+	if [ "$CI" = 'true' ]; then
+		echo "$@"
 	fi
 }
 
@@ -61,6 +67,8 @@ do
 	shift
 done
 
+printCI "::group::Test prepatation in container"
+
 echo "Synchronizing cookbook codebase"
 rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-delay --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
 
@@ -81,25 +89,30 @@ fi
 
 popd
 
-PARAM_COVERAGE_UNIT=''
-PARAM_COVERAGE_INTEGRATION=''
+printCI "::endgroup::"
+
+PARAM_COVERAGE_UNIT='--log-junit /coverage/junit.xml --log-teamcity /coverage/teamcity.log'
+PARAM_COVERAGE_INTEGRATION='--log-junit /coverage/junit-integration.xml --log-teamcity /coverage/teamcity.integration.log'
+
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	rm -rf /coverage/tmp
 	mkdir /coverage/tmp
-	PARAM_COVERAGE_UNIT='--coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
-	PARAM_COVERAGE_INTEGRATION='--coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
+	PARAM_COVERAGE_UNIT+=' --coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
+	PARAM_COVERAGE_INTEGRATION+=' --coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
 fi
 
 if [ $RUN_CODE_CHECKER = 'y' ]; then
+	printCI "::group::Code checker"
 	echo 'Running the code checker'
 	if ! ./occ app:check-code cookbook; then
 		echo '::error ::The code checker rejected the code base. See the logs of the action for further details.'
 		exit 1
 	fi
 	echo 'Code checker finished'
+	printCI "::endgroup::"
 fi
 
-pushd custom_apps/cookbook
+pushd custom_apps/cookbook > /dev/null
 
 make appinfo/info.xml
 
@@ -115,7 +128,9 @@ if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Integration testing done.'
 fi
 
-popd
+popd > /dev/null
+
+printCI "::group::Postprocessing output"
 
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	echo 'Patching style in coverage report'
@@ -133,3 +148,5 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	mv tmp "$NAME"
 	ln -snf "$NAME" ./latest
 fi
+
+printCI "::endgroup::"

@@ -164,6 +164,12 @@ jobs:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
       
+      - name: Failing in case the tests failed
+        shell: bash
+        run: >-
+            echo "Exiting with ${{ env.test_result }}" ;
+            exit "${{ env.test_result }}"
+            
       - name: Upload the coverage reports to codecov.io
         shell: bash
         run: >-
@@ -193,6 +199,13 @@ jobs:
             name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
+      
+      - name: Upload the junit log file artifact
+        uses: actions/upload-artifact@v2
+        with:
+            name: Junit test log files (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: .github/actions/run-tests/volumes/coverage/junit*.xml
+        if: always()
       
 
   source-package:
@@ -233,3 +246,29 @@ jobs:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
             
+
+  annotate-test-results:
+    name: Annotate the test results
+    needs:
+        - unit-tests
+    runs-on: ubuntu-latest
+    if: success() || failure()
+      
+    steps:
+        -   name: Download artifact
+            uses: actions/download-artifact@v2
+            #with:
+                #name: Junit test log files
+                #path: .
+        -   name: List files
+            shell: bash
+            run: ls -lR
+            #if: always()
+        -   name: Publish Unit Test Results
+            uses: EnricoMi/publish-unit-test-result-action@v1.19
+            with:
+                files: "Junit test log files*/*.xml"
+            #if: always()
+            
+
+        
