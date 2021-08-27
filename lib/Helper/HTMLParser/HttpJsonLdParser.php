@@ -117,7 +117,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 */
 	private function mapGraphField(array &$json) {
 		if (isset($json['@graph']) && is_array($json['@graph'])) {
-			$tmp = $this->searchForRecipeInArray($json[@graph]);
+			$tmp = $this->searchForRecipeInArray($json['@graph']);
 			
 			if ($tmp !== null) {
 				$json = $tmp;
