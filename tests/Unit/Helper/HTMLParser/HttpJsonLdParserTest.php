@@ -19,14 +19,14 @@ class HttpJsonLdParserTest extends TestCase {
     
     public function dataProvider(): array {
         return [
-            'caseA' => ['res/caseA.html', true, 'res/caseA.json'],
-            'caseB' => ['res/caseB.html', true, 'res/caseB.json'],
-            'caseC' => ['res/caseC.html', false, null],
-            'caseD' => ['res/caseD.html', false, null],
-            'caseE' => ['res/caseE.html', false, null],
-            'caseF' => ['res/caseF.html', true, 'res/caseF.json'],
-            'caseG' => ['res/caseG.html', true, 'res/caseG.json'],
-            'caseH' => ['res/caseH.html', true, 'res/caseH.json'],
+            'caseA' => ['caseA.html', true, 'caseA.json'],
+            'caseB' => ['caseB.html', true, 'caseB.json'],
+            'caseC' => ['caseC.html', false, null],
+            'caseD' => ['caseD.html', false, null],
+            'caseE' => ['caseE.html', false, null],
+            'caseF' => ['caseF.html', true, 'caseF.json'],
+            'caseG' => ['caseG.html', true, 'caseG.json'],
+            'caseH' => ['caseH.html', true, 'caseH.json'],
         ];
     }
     
@@ -57,7 +57,7 @@ class HttpJsonLdParserTest extends TestCase {
         
         $parser = new HttpJsonLdParser($l, $jsonService);
         
-        $content = file_get_contents(__DIR__ . "/$file");
+        $content = file_get_contents(__DIR__ . "/res_JsonLd/$file");
         
         $document = new \DOMDocument();
         $document->loadHTML($content);
@@ -65,7 +65,7 @@ class HttpJsonLdParserTest extends TestCase {
         try {
             $res = $parser->parse($document);
             
-            $jsonDest = file_get_contents(__DIR__ . "/$jsonFile");
+            $jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
             $expected = json_decode($jsonDest, true);
             
             $this->assertTrue($valid);
