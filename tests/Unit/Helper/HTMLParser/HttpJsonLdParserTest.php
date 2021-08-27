@@ -49,7 +49,6 @@ class HttpJsonLdParserTest extends TestCase {
     /**
      * @dataProvider dataProvider
      * @covers ::parse
-     * @param string $file
      */
     public function testHTMLFile($file, $valid, $jsonFile): void {
         $jsonService = new JsonService();

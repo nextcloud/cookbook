@@ -31,8 +31,8 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	public function parse(\DOMDocument $document): array {
 		$this->xpath = new \DOMXPath($document);
 		
-		$selectorHttp = "*[@itemtype='http://schema.org/Recipe']";
-		$selectorHttps = "*[@itemtype='https://schema.org/Recipe']";
+		$selectorHttp = "//*[@itemtype='http://schema.org/Recipe']";
+		$selectorHttps = "//*[@itemtype='https://schema.org/Recipe']";
 		$xpathSelector = "$selectorHttp | $selectorHttps";
 		
 		$recipes = $this->xpath->query($xpathSelector);
@@ -120,8 +120,8 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private function parseInstructions(\DOMNode $recipeNode) {
 		return $this->searchMultipleProperties($recipeNode,
-			['content'],
 			['recipeInstructions', 'instructions', 'steps', 'guide'],
+			['content'],
 			'recipeInstructions');
 	}
 	
@@ -142,22 +142,21 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private function searchMultipleProperties(\DOMNode $recipeNode, array $properties,
 		array $attributes, string $dst) {
-		$arrayObtained = [];
 		
 		foreach ($properties as $prop) {
 			$entries = $this->searchChildEntries($recipeNode, $prop);
 			
 			try {
-				$arrayObtained[] = $this->extractAttribute($entries, $attributes);
+				$arrayObtained = $this->extractAttribute($entries, $attributes);
+				
+        		if (count($arrayObtained) > 0) {
+        			$this->recipe[$dst] = $arrayObtained;
+        			return true;
+        		}
 			} catch (AttributeNotFoundException $ex) {
 				// Test with the next property name
 				continue;
 			}
-		}
-		
-		if (count($arrayObtained) > 0) {
-			$this->recipe[$dst] = $arrayObtained;
-			return true;
 		}
 		
 		return false;
@@ -177,12 +176,16 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		$entries = $this->searchChildEntries($recipeNode, $property);
 		
 		try {
-			$value = $this->extractAttribute($entries, ['content']);
+			$values = $this->extractAttribute($entries, ['content']);
+			
+			if (count($values) === 1) {
+			    $values = $values[0];
+			}
 		} catch (AttributeNotFoundException $ex) {
 			return false;
 		}
 		
-		$this->recipe[$property] = $value;
+		$this->recipe[$property] = $values;
 		return true;
 	}
 	
@@ -195,46 +198,6 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private function searchChildEntries(\DOMNode $recipeNode, string $prop): \DOMNodeList {
 		return $this->xpath->query("//*[@itemprop='$prop']", $recipeNode);
-	}
-	
-	/**
-	 * Extract the value from a HTML attribute and set the correspondig value in the internal recipe cache.
-	 *
-	 * This method checks a set of notes if any of these nodes contain an attribute that can be used
-	 * to extract some microdata. The nodes are iterated one-by-one. As soon as a match is found,
-	 * the method saved the corresponding value and terminates.
-	 *
-	 * In each node each attribute is checked (in order of occurence) if the node has such an attribute.
-	 * If it has such an attribute that attribute is assumed to be the searched value and is used.
-	 * If no attribute is found, the content of the node is checked and if it is non-empty, the content
-	 * of the node is used instead.
-	 *
-	 * If a value is found, it is stored in the internal structure under the key given by $dst.
-	 *
-	 * @param \DOMNodeList $nodes The list of all nodes to look for corresponding attributes
-	 * @param array $attributes The attributes to check
-	 * @param string $dst The name of the property in the internal recipe object
-	 * @return bool true, if an attribute has been found and saved
-	 * @deprecated Do not use as overridden with better structure
-	 */
-	private function extractAndSaveAttribute(\DOMNodeList $nodes, array $attributes,
-		string $dst): bool {
-		/** @var $node \DOMElement */
-		foreach ($nodes as $node) {
-			foreach ($attributes as $attr) {
-				if ($node->hasAttribute($attr) && !empty($node->getAttribute($attr))) {
-					$this->recipe[$dst] = $node->getAttribute($attr);
-					return true;
-				}
-			}
-			
-			if (!empty(trim($node->textContent))) {
-				$this->recipe[$dst] = trim($node->textContent);
-				return true;
-			}
-		}
-		
-		return false;
 	}
 	
 	/**
@@ -255,22 +218,49 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @param \DOMNodeList $nodes The list of all nodes to look for corresponding attributes
 	 * @param array $attributes The attributes to check
 	 * @throws AttributeNotFoundException If the property was not found in any node
-	 * @return string The value of the property found
+	 * @return array The values of the property found
 	 */
-	private function extractAttribute(\DOMNodeList $nodes, array $attributes): string {
-		/** @var $node \DOMElement */
+	private function extractAttribute(\DOMNodeList $nodes, array $attributes): array {
+		$foundEntries = [];
+		
+	    /** @var $node \DOMElement */
 		foreach ($nodes as $node) {
-			foreach ($attributes as $attr) {
-				if ($node->hasAttribute($attr) && !empty($node->getAttribute($attr))) {
-					return $node->getAttribute($attr);
-				}
-			}
-			
-			if (!empty(trim($node->textContent))) {
-				return trim($node->textContent);
-			}
+		    try {
+		        $foundEntries[] = $this->extractSingeAttribute($node, $attributes);
+		    } catch (AttributeNotFoundException $ex) {
+                continue;
+	        }
 		}
 		
-		throw new AttributeNotFoundException();
+		if(count($foundEntries) === 0) {
+    		throw new AttributeNotFoundException();
+		} else {
+		    return $foundEntries;
+		}
+	}
+	
+	/**
+	 * Checks if any of the given attributes is found on the given node.
+	 * 
+	 * This can be used to extract a single attribute from the DOM tree.
+	 * The attributes are evaluated first to last and the first found attribute is returned.
+	 * 
+	 * @param \DOMNode $node The  node to evaluate
+	 * @param array $attributes The possible attributes to check
+	 * @throws AttributeNotFoundException If none of the named attributes is found
+	 * @return string The value of the attribute
+	 */
+	private function extractSingeAttribute(\DOMNode $node, array $attributes): string {
+	    foreach ($attributes as $attr) {
+	        if ($node->hasAttribute($attr) && !empty($node->getAttribute($attr))) {
+	            return $node->getAttribute($attr);
+	        }
+	    }
+	    
+	    if (!empty(trim($node->textContent))) {
+	        return trim($node->textContent);
+	    }
+	    
+	    throw new AttributeNotFoundException();
 	}
 }

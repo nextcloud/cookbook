@@ -1,0 +1,9 @@
+{
+	"@type": "Recipe",
+	"@context": "http://schema.org",
+	"recipeInstructions": ["A", "B", "C"],
+	"name": "MyName",
+	"keywords": "foo,bar,baz",
+	"category": "MyCat",
+	"recipeYield": "5"
+}
