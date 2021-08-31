@@ -35,7 +35,13 @@ class HttpJsonLdParserTest extends TestCase {
      * @covers \OCA\Cookbook\Helper\HTMLParser\AbstractHtmlParser::__construct
      */
     public function testConstructor(): void {
+        /**
+         * @var JsonService $jsonService
+         */
         $jsonService = $this->createStub(JsonService::class);
+        /**
+         * @var IL10N $l
+         */
         $l = $this->createStub(IL10N::class);
         
         $parser = new HttpJsonLdParser($l, $jsonService);
@@ -44,6 +50,7 @@ class HttpJsonLdParserTest extends TestCase {
         $lProperty->setAccessible(true);
         $lSaved = $lProperty->getValue($parser);
         $this->assertSame($l, $lSaved);
+        
     }
     
     /**
@@ -52,6 +59,9 @@ class HttpJsonLdParserTest extends TestCase {
      */
     public function testHTMLFile($file, $valid, $jsonFile): void {
         $jsonService = new JsonService();
+        /**
+         * @var IL10N $l
+         */
         $l = $this->createStub(IL10N::class);
         
         $parser = new HttpJsonLdParser($l, $jsonService);
