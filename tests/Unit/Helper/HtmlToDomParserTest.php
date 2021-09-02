@@ -30,9 +30,14 @@ use OCA\Cookbook\Helper\HtmlToDomParser;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class XMLMocking {
-	public function useInternalErrors(bool $prev): bool { return $prev; }
-	public function getErrors(): array { return []; }
-	public function clearErrors(): void {}
+	public function useInternalErrors(bool $prev): bool {
+		return $prev;
+	}
+	public function getErrors(): array {
+		return [];
+	}
+	public function clearErrors(): void {
+	}
 }
 
 /**
@@ -117,7 +122,7 @@ class HtmlToDomParserTest extends TestCase {
 			->method('getErrors')
 			->willReturn($errors);
 			
-		if($expectsError) {
+		if ($expectsError) {
 			$this->expectException(Exception::class);
 		} else {
 			$this->xmlMock->expects($this->once())
@@ -298,5 +303,4 @@ class HtmlToDomParserTest extends TestCase {
 	public function triggerXmlClearErrors(): void {
 		$this->xmlMock->clearErrors();
 	}
-
 }

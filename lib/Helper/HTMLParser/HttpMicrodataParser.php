@@ -142,17 +142,16 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private function searchMultipleProperties(\DOMNode $recipeNode, array $properties,
 		array $attributes, string $dst) {
-		
 		foreach ($properties as $prop) {
 			$entries = $this->searchChildEntries($recipeNode, $prop);
 			
 			try {
 				$arrayObtained = $this->extractAttribute($entries, $attributes);
 				
-        		if (count($arrayObtained) > 0) {
-        			$this->recipe[$dst] = $arrayObtained;
-        			return true;
-        		}
+				if (count($arrayObtained) > 0) {
+					$this->recipe[$dst] = $arrayObtained;
+					return true;
+				}
 			} catch (AttributeNotFoundException $ex) {
 				// Test with the next property name
 				continue;
@@ -179,7 +178,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 			$values = $this->extractAttribute($entries, ['content']);
 			
 			if (count($values) === 1) {
-			    $values = $values[0];
+				$values = $values[0];
 			}
 		} catch (AttributeNotFoundException $ex) {
 			return false;
@@ -223,44 +222,44 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	private function extractAttribute(\DOMNodeList $nodes, array $attributes): array {
 		$foundEntries = [];
 		
-	    /** @var $node \DOMElement */
+		/** @var $node \DOMElement */
 		foreach ($nodes as $node) {
-		    try {
-		        $foundEntries[] = $this->extractSingeAttribute($node, $attributes);
-		    } catch (AttributeNotFoundException $ex) {
-                continue;
-	        }
+			try {
+				$foundEntries[] = $this->extractSingeAttribute($node, $attributes);
+			} catch (AttributeNotFoundException $ex) {
+				continue;
+			}
 		}
 		
-		if(count($foundEntries) === 0) {
-    		throw new AttributeNotFoundException();
+		if (count($foundEntries) === 0) {
+			throw new AttributeNotFoundException();
 		} else {
-		    return $foundEntries;
+			return $foundEntries;
 		}
 	}
 	
 	/**
 	 * Checks if any of the given attributes is found on the given node.
-	 * 
+	 *
 	 * This can be used to extract a single attribute from the DOM tree.
 	 * The attributes are evaluated first to last and the first found attribute is returned.
-	 * 
+	 *
 	 * @param \DOMNode $node The  node to evaluate
 	 * @param array $attributes The possible attributes to check
 	 * @throws AttributeNotFoundException If none of the named attributes is found
 	 * @return string The value of the attribute
 	 */
 	private function extractSingeAttribute(\DOMNode $node, array $attributes): string {
-	    foreach ($attributes as $attr) {
-	        if ($node->hasAttribute($attr) && !empty($node->getAttribute($attr))) {
-	            return $node->getAttribute($attr);
-	        }
-	    }
-	    
-	    if (!empty(trim($node->textContent))) {
-	        return trim($node->textContent);
-	    }
-	    
-	    throw new AttributeNotFoundException();
+		foreach ($attributes as $attr) {
+			if ($node->hasAttribute($attr) && !empty($node->getAttribute($attr))) {
+				return $node->getAttribute($attr);
+			}
+		}
+		
+		if (!empty(trim($node->textContent))) {
+			return trim($node->textContent);
+		}
+		
+		throw new AttributeNotFoundException();
 	}
 }

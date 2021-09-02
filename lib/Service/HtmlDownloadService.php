@@ -107,5 +107,4 @@ class HtmlDownloadService {
 		
 		return $html;
 	}
-	
 }

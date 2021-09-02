@@ -7,11 +7,10 @@ use OCP\IL10N;
 use LibXMLError;
 use OCP\ILogger;
 use OCA\Cookbook\Exception\ImportException;
-use OCA\User_LDAP\LogWrapper;
 
 /**
  * This class allows to parse a HTML document into a DOMDocuemnt.
- * 
+ *
  * Its main purpose is to handle the very verbose libxml extension better.
  */
 class HtmlToDomParser {
@@ -51,15 +50,14 @@ class HtmlToDomParser {
 	 */
 	private $l;
 
-	public function __construct(ILogger $logger, IL10N $il10n)
-	{
+	public function __construct(ILogger $logger, IL10N $il10n) {
 		$this->logger = $logger;
 		$this->l = $il10n;
 	}
 
 	/**
 	 * Parse a HTML file logging any error in the syntax
-	 * 
+	 *
 	 * @param DOMDocument $dom The dom docuemnt to use. Just give a new document in doubt.
 	 * @param string $url The URL of the parsed recipe
 	 * @param string $html The string representation of the HTML file to parse
@@ -89,13 +87,12 @@ class HtmlToDomParser {
 
 	/**
 	 * Get the error state of the last parsing routine.
-	 * 
+	 *
 	 * See the constants in the class for possible values.
 	 *
 	 * @return int
 	 */
-	public function getState()
-	{
+	public function getState() {
 		return $this->state;
 	}
 
@@ -119,13 +116,13 @@ class HtmlToDomParser {
 
 	/**
 	 * Group the errors by the error code
-	 * 
+	 *
 	 * This will iterate over all errors and count for each error code how often the code is present in the errors.
 	 * Also the first error of each code will be stored.
-	 * 
+	 *
 	 * The returned array will contain an entry for each found error code.
 	 * The error code is the corresponding key in the array.
-	 * 
+	 *
 	 * Each entry in the array is itself an array containing the following entries:
 	 * First, there is the key `count` that contains the number of occurences of the corresponding error code.
 	 * Second, there is the key `first` thst contains the first error that was found with this error code.
@@ -140,17 +137,16 @@ class HtmlToDomParser {
 		/**
 		 * @var LibXMLError $error
 		 */
-		foreach($errors as $error) {
-			if(isset($ret[$error->code])) {
+		foreach ($errors as $error) {
+			if (isset($ret[$error->code])) {
 				$ret[$error->code]['count'] ++;
 			} else {
-				$ret[$error->code] = array(
+				$ret[$error->code] = [
 					'count' => 1,
 					'first' => $error,
 					'level' => $error->level,
-				);
+				];
 			}
-
 		}
 
 		return $ret;
@@ -158,7 +154,7 @@ class HtmlToDomParser {
 	
 	/**
 	 * Log the found error groups to the NC core error logger.
-	 * 
+	 *
 	 * As a side effect, the property $state will be updated to the most severe error found.
 	 *
 	 * @param array $groupedErrors The grouped errors as defined in groupErrors
@@ -166,7 +162,7 @@ class HtmlToDomParser {
 	 * @return void
 	 */
 	private function logAllErrors(array $groupedErrors, string $url) {
-		foreach($groupedErrors as $code => $group) {
+		foreach ($groupedErrors as $code => $group) {
 			switch ($group['level']) {
 				case LIBXML_ERR_WARNING:
 					$this->logWarning($code, $group,$url);
@@ -207,6 +203,4 @@ class HtmlToDomParser {
 		$msg = "libxml: $errorMessage $firstOccurence: {$error->message}";
 		return $msg;
 	}
-
-	
 }
