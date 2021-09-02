@@ -62,7 +62,7 @@ class HtmlDownloadServiceTest extends TestCase {
     /**
      * @var boolean
      */
-    private bool $runRealFunction;
+    private $runRealFunction;
 
     /**
      * @var MockFileGetter|MockObject
