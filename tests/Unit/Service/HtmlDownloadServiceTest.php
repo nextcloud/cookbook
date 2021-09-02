@@ -131,6 +131,7 @@ class HtmlDownloadServiceTest extends TestCase {
      * @dataProvider dataProviderFakeDownload
      * @covers ::downloadRecipe
      * @covers ::getDom
+     * @covers \OCA\Cookbook\Exception\ImportException
      */
     public function testFakeDownload($url, $urlValid, $fetchedValue, $parserState, $fetchValid): void {
         $this->runRealFunction = false;
