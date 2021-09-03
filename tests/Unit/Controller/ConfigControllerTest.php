@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\tests\Unit\Controller;
 
 use OCP\IRequest;
-use OCP\IURLGenerator;
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
@@ -31,10 +30,6 @@ class ConfigControllerTest extends TestCase {
 	 */
 	private $recipeService;
 	/**
-	 * @var IURLGenerator|MockObject
-	 */
-	private $urlGenerator;
-	/**
 	 * @var DbCacheService|MockObject
 	 */
 	private $dbCacheService;
@@ -52,11 +47,10 @@ class ConfigControllerTest extends TestCase {
 
 		$this->request = $this->createMock(IRequest::class);
 		$this->recipeService = $this->createMock(RecipeService::class);
-		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
 
-		$this->sut = new ConfigController('cookbook', $this->request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser);
+		$this->sut = new ConfigController('cookbook', $this->request, $this->recipeService, $this->dbCacheService, $this->restParser);
 	}
 
 	/**
@@ -64,7 +58,6 @@ class ConfigControllerTest extends TestCase {
 	 */
 	public function testConstructor(): void {
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
-		$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
 		$this->ensurePropertyIsCorrect('dbCacheService', $this->dbCacheService);
 		$this->ensurePropertyIsCorrect('restParser', $this->restParser);
 	}
