@@ -24,8 +24,7 @@ use OCA\Cookbook\Exception\RecipeExistsException;
  * @covers ::<private>
  * @covers ::<protected>
  */
-class RecipeControllerTest extends TestCase
-{
+class RecipeControllerTest extends TestCase {
 	/**
 	 * @var RecipeService|MockObject
 	 */
@@ -48,8 +47,7 @@ class RecipeControllerTest extends TestCase
 	 */
 	private $sut;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->recipeService = $this->createMock(RecipeService::class);
@@ -64,16 +62,14 @@ class RecipeControllerTest extends TestCase
 	/**
 	 * @covers ::__construct
 	 */
-	public function testConstructor(): void
-	{
+	public function testConstructor(): void {
 		$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
 		$this->ensurePropertyIsCorrect('dbCacheService', $this->dbCacheService);
 		$this->ensurePropertyIsCorrect('restParser', $this->restParser);
 	}
 
-	private function ensurePropertyIsCorrect(string $name, &$val)
-	{
+	private function ensurePropertyIsCorrect(string $name, &$val) {
 		$property = new ReflectionProperty(RecipeController::class, $name);
 		$property->setAccessible(true);
 		$this->assertSame($val, $property->getValue($this->sut));
@@ -255,7 +251,7 @@ class RecipeControllerTest extends TestCase
 	public function testImage($setSize, $size): void {
 		$this->ensureCacheCheckTriggered();
 
-		if($setSize) {
+		if ($setSize) {
 			$_GET['size'] = $size;
 		}
 
@@ -304,7 +300,7 @@ class RecipeControllerTest extends TestCase
 		$this->recipeService->method('getAllRecipesInSearchIndex')->willReturn($recipes);
 		$this->recipeService->method('findRecipesInSearchIndex')->willReturn($recipes);
 
-		if($setKeywords) {
+		if ($setKeywords) {
 			$_GET['keywords'] = $keywords;
 			$this->recipeService->expects($this->once())->method('findRecipesInSearchIndex')->with($keywords);
 		} else {
@@ -312,7 +308,7 @@ class RecipeControllerTest extends TestCase
 		}
 
 		$this->urlGenerator->method('linkToRoute')->will($this->returnCallback(function ($name, $params) {
-			if($name !== 'cookbook.recipe.image') {
+			if ($name !== 'cookbook.recipe.image') {
 				throw new Exception('Must use correct controller');
 			}
 
@@ -334,7 +330,7 @@ class RecipeControllerTest extends TestCase
 
 	private function updateIndexRecipesAsExpected($recipes): array {
 		$ret = $recipes;
-		for($i=0; $i<count($ret); $i++){
+		for ($i = 0; $i < count($ret); $i++) {
 			$id = $ret[$i]['recipe_id'];
 			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb";
 			$ret[$i]['imagePlaceholderUrl'] = "/path/to/controller/$id/thumb16";

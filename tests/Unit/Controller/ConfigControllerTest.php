@@ -10,7 +10,6 @@ use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Controller\ConfigController;
 use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use ReflectionProperty;
 
@@ -89,7 +88,7 @@ class ConfigControllerTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 
 		$folder = '/the/folder/to/check';
-		$interval = 5*60;
+		$interval = 5 * 60;
 		$printImage = true;
 
 		$expectedData = [
@@ -120,7 +119,7 @@ class ConfigControllerTest extends TestCase {
 
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 
-		if(is_null($folderPath)){
+		if (is_null($folderPath)) {
 			$this->recipeService->expects($this->never())->method('setUserFolderPath');
 			$this->dbCacheService->expects($this->never())->method('updateCache');
 		} else {
@@ -128,13 +127,13 @@ class ConfigControllerTest extends TestCase {
 			$this->dbCacheService->expects($this->once())->method('updateCache');
 		}
 
-		if(is_null($interval)){
+		if (is_null($interval)) {
 			$this->recipeService->expects($this->never())->method('setSearchIndexUpdateInterval');
 		} else {
 			$this->recipeService->expects($this->once())->method('setSearchIndexUpdateInterval')->with($interval);
 		}
 
-		if(is_null($printImage)) {
+		if (is_null($printImage)) {
 			$this->recipeService->expects($this->never())->method('setPrintImage');
 		} else {
 			$this->recipeService->expects($this->once())->method('setPrintImage')->with($printImage);
@@ -171,5 +170,4 @@ class ConfigControllerTest extends TestCase {
 			],
 		];
 	}
-
 }

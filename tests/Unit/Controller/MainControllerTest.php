@@ -47,8 +47,7 @@ class MainControllerTest extends TestCase {
 	 */
 	private $sut;
 
-	public function setUp(): void
-	{
+	public function setUp(): void {
 		parent::setUp();
 
 		$this->recipeService = $this->createMock(RecipeService::class);
@@ -63,16 +62,14 @@ class MainControllerTest extends TestCase {
 	/**
 	 * @covers ::__construct
 	 */
-	public function testConstructor(): void
-	{
+	public function testConstructor(): void {
 		$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
 		$this->ensurePropertyIsCorrect('dbCacheService', $this->dbCacheService);
 		$this->ensurePropertyIsCorrect('restParser', $this->restParser);
 	}
 
-	private function ensurePropertyIsCorrect(string $name, &$val)
-	{
+	private function ensurePropertyIsCorrect(string $name, &$val) {
 		$property = new ReflectionProperty(MainController::class, $name);
 		$property->setAccessible(true);
 		$this->assertSame($val, $property->getValue($this->sut));
@@ -370,7 +367,7 @@ class MainControllerTest extends TestCase {
 		$ret = $recipes;
 
 		$ids = [];
-		for($i=0; $i<count($recipes); $i++){
+		for ($i = 0; $i < count($recipes); $i++) {
 			$id = $recipes[$i]['recipe_id'];
 			$ids[] = $id;
 			$ret[$i]['imageUrl'] = "/path/to/image/$id/thumb";
@@ -602,9 +599,11 @@ class MainControllerTest extends TestCase {
 		$this->restParser->expects($this->once())->method('getParameters')->willReturn(['name' => $cat]);
 
 		$n = count($recipes);
-		$indices = array_map(function ($v) {return [$v['recipe_id']];}, $recipes);
+		$indices = array_map(function ($v) {
+			return [$v['recipe_id']];
+		}, $recipes);
 		$this->recipeService->expects($this->exactly($n))->method('getRecipeById')->withConsecutive(...$indices);
-		$this->recipeService->expects($this->exactly($n))->method('addRecipe')->with($this->callback(function ($p) use ($cat){
+		$this->recipeService->expects($this->exactly($n))->method('addRecipe')->with($this->callback(function ($p) use ($cat) {
 			return $p['recipeCategory'] === $cat;
 		}));
 
