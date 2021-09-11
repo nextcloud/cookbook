@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Added unit tests for controllers
+  [#790](https://github.com/nextcloud/cookbook/pull/790) @christianlupus
+
 ### Fixed
 - Mark app as compatible with Nextcloud 22
   [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
