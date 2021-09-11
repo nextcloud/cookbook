@@ -69,6 +69,22 @@ jobs:
                 exit 1;
                 }
         
+        -   name: Check for open todos in lib folder
+            uses: ./.github/actions/check-todo
+            with:
+                path: lib
+                
+        -   name: Check for open todos in unit test folder
+            uses: ./.github/actions/check-todo
+            with:
+                path: tests/Unit
+                
+        -   name: Check for open todos in integration test folder
+            uses: ./.github/actions/check-todo
+            with:
+                path: tests/Integration
+                
+        
   
   unit-tests:
     name: Run the unittests
