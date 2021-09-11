@@ -3,6 +3,8 @@
 ### Added
 - Added unit tests for controllers
   [#790](https://github.com/nextcloud/cookbook/pull/790) @christianlupus
+- Added CI test to check for open todo tags in the source code
+  [#791](https://github.com/nextcloud/cookbook/pull/791) @christianlupus
 
 ### Fixed
 - Mark app as compatible with Nextcloud 22
