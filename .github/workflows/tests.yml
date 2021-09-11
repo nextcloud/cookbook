@@ -69,6 +69,22 @@ jobs:
                 exit 1;
                 }
         
+        -   name: Check for open todos in lib folder
+            uses: ./.github/actions/check-todo
+            with:
+                path: lib
+                
+        -   name: Check for open todos in unit test folder
+            uses: ./.github/actions/check-todo
+            with:
+                path: tests/Unit
+                
+        -   name: Check for open todos in integration test folder
+            uses: ./.github/actions/check-todo
+            with:
+                path: tests/Integration
+                
+        
   
   unit-tests:
     name: Run the unittests
@@ -268,6 +284,7 @@ jobs:
             uses: EnricoMi/publish-unit-test-result-action@v1.19
             with:
                 files: "Junit test log files*/*.xml"
+                test_changes_limit: 100
             #if: always()
             
 

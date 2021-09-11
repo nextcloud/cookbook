@@ -1,0 +1,23 @@
+name: Check for todo comments in the codebase
+author: Christian Wolf <github@christianwolf.email>
+description: <
+  This is a github action to look out for any remaining todos in the code base.
+  Any todo will be marked with a warning.
+
+inputs:
+  path:
+    description: The path to look for source files
+    required: false
+    default: '.'
+  extension:
+    description: The file extension to look for
+    required: true
+    default: php
+
+runs:
+  using: 'composite'
+  
+  steps:
+    - name: Add annotations
+      shell: bash
+      run: ./.github/actions/check-todo/check.sh "${{ inputs.path }}" "${{ inputs.extension }}"
