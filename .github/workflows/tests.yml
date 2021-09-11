@@ -268,6 +268,7 @@ jobs:
             uses: EnricoMi/publish-unit-test-result-action@v1.19
             with:
                 files: "Junit test log files*/*.xml"
+                test_changes_limit: 100
             #if: always()
             
 
