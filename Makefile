@@ -126,7 +126,7 @@ dist:
 
 # Builds the source package
 .PHONY: source
-source:
+source: appinfo/info.xml
 	rm -rf $(source_build_directory)
 	mkdir -p $(source_build_directory)
 	tar cvzf $(source_package_name).tar.gz \
@@ -140,7 +140,7 @@ source:
 
 # Builds the source package for the app store, ignores php and js tests
 .PHONY: appstore
-appstore:
+appstore: appinfo/info.xml
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
 	tar cvzf $(appstore_package_name).tar.gz \
@@ -178,5 +178,5 @@ appstore:
 test: composer
 	@echo "This functionality has been move to the file .github/acrions/run-tests/run-locally.sh. See its output with parameter --help."
 
-appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major
+appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major .github/actions/deploy/appinfo/info.xml.dist
 	.github/actions/deploy/update-data.sh
