@@ -136,6 +136,7 @@ source: appinfo/info.xml
 	--exclude="../$(app_name)/node_modules" \
 	--exclude="../$(app_name)/*.log" \
 	--exclude="../$(app_name)/js/*.log" \
+	--exclude="../$(app_name)/.hooks" \
 	../$(app_name)
 
 # Builds the source package for the app store, ignores php and js tests
@@ -172,6 +173,7 @@ appstore: appinfo/info.xml
 	--exclude="../$(app_name)/.*" \
 	--exclude="../$(app_name)/webpack.*.js" \
 	--exclude="../$(app_name)/js/.*" \
+	--exclude="../$(app_name)/.hooks" \
 	../$(app_name)
 
 .PHONY: test

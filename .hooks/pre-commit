@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -e 'vendor/bin/php-cs-fixer' ]; then
+	git stash push --keep-index
+	composer cs:check || { echo "The PHP code is not validly formatted."; exit 1; }
+	git stash pop
+fi
+
