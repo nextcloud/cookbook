@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+
+
+## 0.9.3 - 2021-09-26
+
 ### Added
 - Added unit tests for controllers
   [#790](https://github.com/nextcloud/cookbook/pull/790) @christianlupus
