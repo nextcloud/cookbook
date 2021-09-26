@@ -265,7 +265,7 @@ class DbCacheService {
 
 	/**
 	 * Get the category of a recipe.
-	 * 
+	 *
 	 * This will only return the very first category if there are multiple registered.
 	 *
 	 * @param array $json The recipe
