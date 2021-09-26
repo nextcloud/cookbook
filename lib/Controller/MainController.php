@@ -134,11 +134,6 @@ class MainController extends Controller {
 			}
 
 			return new DataResponse($recipes, 200, ['Content-Type' => 'application/json']);
-			// TODO: Remove obsolete code below when this is ready
-			$response = new TemplateResponse($this->appName, 'content/search', ['query' => $query, 'recipes' => $recipes]);
-			$response->renderAs('blank');
-
-			return $response;
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);
 		}
@@ -237,7 +232,7 @@ class MainController extends Controller {
 
 			return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			error_log($e->getMessage());
+			// error_log($e->getMessage());
 			return new DataResponse($e->getMessage(), 500);
 		}
 	}

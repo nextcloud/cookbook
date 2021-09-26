@@ -31,7 +31,9 @@ The currently available clients are
 ## F.A.Q.
 
 #### I can't see my recipes
-They probably haven't been indexed. Try clicking the Settings > Rescan library button.
+Recipes are only shown in the UI if they are present in the database. It is likely you have recipes that haven't been indexed/added to the database yet. Try clicking the Settings > Rescan library button to compare the database with what is in your recipes folder and apply any differences to the database. 
+
+If this still doesnt work, a full, non-incremental resync might help. This can be done by setting your recipes folder to a different (ideally empty) folder to clear the database. Setting the recipes folder back to what it was before should cause all your recipes to sync again, effectively refreshing the database
 
 #### "Could not load recipe" when trying to download recipes?
 A lot of websites are unfortunately not following the schema.org/Recipe standard, which makes their recipes impossible to read by this app.

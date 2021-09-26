@@ -1,6 +1,32 @@
 ## [Unreleased]
 
 
+
+## 0.9.3 - 2021-09-26
+
+### Added
+- Added unit tests for controllers
+  [#790](https://github.com/nextcloud/cookbook/pull/790) @christianlupus
+- Added CI test to check for open todo tags in the source code
+  [#791](https://github.com/nextcloud/cookbook/pull/791) @christianlupus
+
+### Fixed
+- Mark app as compatible with Nextcloud 22
+  [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
+- Usage of PHAR-based PHPUnit to avoid dependency on nikic/php-parser and dependency conflicts
+  [#780](https://github.com/nextcloud/cookbook/pull/780) @christianlupus
+- Extracted abstract class for migration testing and added tests code for existing migrations
+  [#783](https://github.com/nextcloud/cookbook/pull/783) @christianlupus
+- Reactivate step debugging in automated testing
+  [#784](https://github.com/nextcloud/cookbook/pull/784) @christianlupus
+- Added test result to PR messages
+  [#788](https://github.com/nextcloud/cookbook/pull/788) @christianlupus
+
+### Removed
+- Removed app info XML file to avoid confusion
+  [#778](https://github.com/nextcloud/cookbook/pull/778) @christianlupus
+
+
 ## 0.9.2 - 2021-08-09
 
 ### Added

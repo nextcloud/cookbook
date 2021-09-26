@@ -33,6 +33,7 @@ Possible options:
   --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
   --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
   --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
+  --xdebug-log-level <LEVEL>        Set the log level of xdebug to <LEVEL>
   --enable-tracing                  Enable the tracing feature of xdebug
   --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration)
   --enable-profiling                Enable the profiling function of xdebug
@@ -196,14 +197,14 @@ setup_server(){
 	git clone --depth=1 --branch "$ENV_BRANCH" https://github.com/nextcloud/server volumes/nextcloud
 	
 	echo "Updating the submodules"
-	pushd volumes/nextcloud
+	pushd volumes/nextcloud > /dev/null
 	git submodule update --init
-	popd
+	popd > /dev/null
 	
 	echo 'Creating cookbook folder for later bind-merge'
-	pushd volumes/nextcloud
-	mkdir apps/cookbook data
-	popd
+	pushd volumes/nextcloud > /dev/null
+	mkdir -p custom_apps/cookbook data
+	popd > /dev/null
 	
 	echo "Installing Nextcloud server instance"
 	case "$INPUT_DB" in
@@ -242,6 +243,9 @@ setup_server(){
 			;;
 	esac
 	
+	cat scripts/set_debug_mode.php | docker-compose run --rm -T php
+	cat scripts/set_custom_apps_path.php | docker-compose run --rm -T php
+	
 	echo 'Server installed successfully.'
 }
 
@@ -254,7 +258,12 @@ setup_app () {
 	fi
 	
 	echo "Synchronizing the cookbook codebase to volume"
-	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --delete --delete-delay
+	rsync -a ../../../ volumes/cookbook --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /node_modules/ --delete --delete-delay
+	
+	echo "Ensuring the appinfo is present"
+	pushd volumes/cookbook > /dev/null
+	make appinfo/info.xml
+	popd > /dev/null
 	
 	echo "Activating the cookbook app in the server"
 	docker-compose run --rm -T occ app:enable cookbook
@@ -328,8 +337,12 @@ restore_env_dump() {
 	rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/data/" volumes/data/
 	
 	# Restore server files
-	echo "Restoring server files"
-	rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/nextcloud/" volumes/nextcloud/
+	if [ "$QUICK_MODE" = y ]; then
+		echo 'Quick mode activated. Does not restore server core files.'
+	else
+		echo "Restoring server files"
+		rsync $RSYNC_PARAMS "volumes/dumps/$ENV_DUMP_PATH/nextcloud/" volumes/nextcloud/
+	fi
 	
 	# Restore DB dump
 	case "$INPUT_DB" in
@@ -456,7 +469,7 @@ RUN_INTEGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
-QUICK_MODE=''
+QUICK_MODE=n
 
 DEBUG=n
 DEBUG_PORT='9000'
@@ -478,7 +491,7 @@ COPY_ENV_DST=''
 source mysql.env
 source postgres.env
 
-RSYNC_PARAMS="--delete --delete-delay --archive"
+RSYNC_PARAMS="--delete --delete-delay --delete-excluded --archive"
 
 ##### Extract CLI parameters into internal variables
 
@@ -606,6 +619,10 @@ do
 		--enable-profiling)
 			DEBUG_MODE_PROFILE=y
 			;;
+		--xdebug-log-level)
+			XDEBUG_LOG_LEVEL="$2"
+			shift
+			;;
 		--prepare)
 			DOCKER_PULL=y
 			CREATE_IMAGES_IF_NEEDED=y
@@ -699,7 +716,7 @@ if [ "$DEBUG_MODE_STEP" = y -o "$DEBUG_MODE_TRACE" = y -o "$DEBUG_MODE_PROFILE" 
 	DEBUG_MODE=$(echo "$DEBUG_MODE" | cut -c 2-)
 fi
 
-export DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE DEBUG_MODE DEBUG_TRACE_FORMAT
+export DEBUG_PORT DEBUG_HOST DEBUG_UPON_ERROR DEBUG_START_MODE DEBUG_MODE DEBUG_TRACE_FORMAT XDEBUG_LOG_LEVEL
 
 if [ -z "$COPY_ENV_SRC" -a -n "$COPY_ENV_DST" ]; then
 	echo "You need to specify a source environment name. Nothing found."
@@ -750,7 +767,15 @@ catch()
 	fi
 }
 
+printCI() {
+	if [ "$CI" = 'true' ]; then
+		echo "$@"
+	fi
+}
+
 echo 'Starting process'
+
+printCI "::group::Prepare docker"
 
 if [ -n "$COPY_ENV_SRC" ]; then
 	copy_environment
@@ -778,6 +803,9 @@ if [ $PUSH_IMAGES = 'y' ]; then
 	push_images
 fi
 
+printCI "::endgroup::"
+printCI "::group::Preparing environment"
+
 create_file_structure
 
 if [ $START_HELPERS = 'y' ]; then
@@ -798,6 +826,9 @@ if [ $SETUP_ENVIRONMENT = 'y' ]; then
 	setup_app
 fi
 
+printCI "::endgroup::"
+printCI "::group::Environment dump handling"
+
 if [ $DROP_ENV_DUMP = 'y' ]; then
 	drop_env_dump
 fi
@@ -810,16 +841,25 @@ if [ $RESTORE_ENV_DUMP = 'y' ]; then
 	restore_env_dump
 fi
 
+printCI "::endgroup::"
+printCI "::group::Postprocessing environemnt preparation"
+
 if [ $START_HELPERS = 'y' ]; then
 	start_helpers_post
 fi
+
+printCI "::endgroup::"
 
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
 	run_tests "$@"
 fi
 
+printCI "::group::Clean-Up"
+
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
 	shutdown_helpers
 fi
+
+printCI "::endgroup::"
 
 echo "Processing finished"

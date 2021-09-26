@@ -1,86 +1,12 @@
 <?php
 
-namespace tests\Integration\Setup\Migrations;
+namespace OCA\Cookbook\tests\Integration\Setup\Migrations;
 
-use OCP\IDBConnection;
-use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
 use OCP\DB\QueryBuilder\IQueryBuilder;
-use OC\DB\SchemaWrapper;
-use PHPUnit\Framework\TestCase;
-use OC\DB\MigrationService;
-use OC\DB\Connection;
-use OCP\Util;
 
-class Version000000Date20210701093123Test extends TestCase {
-	
-	/**
-	 * @var IAppContainer
-	 */
-	private $container;
-	
-	/**
-	 * @var IDBConnection
-	 */
-	private $db;
-	
-	/**
-	 * @var MigrationService
-	 */
-	private $migrationService;
-	
-	public function setUp(): void {
-		resetEnvironmentToBackup('default');
-		
-		parent::setUp();
-		
-		$app = new App('cookbook');
-		$this->container = $app->getContainer();
-		
-		/**
-		 * @var IDBConnection $db
-		 */
-		$this->db = $this->container->query(IDBConnection::class);
-		$this->assertIsObject($this->db);
-		/**
-		 * @var SchemaWrapper $schema
-		 */
-		$schema = $this->container->query(SchemaWrapper::class);
-		$this->assertIsObject($schema);
-		
-		if (Util::getVersion()[0] >= 21) {
-			$connection = \OC::$server->query(Connection::class);
-		} else {
-			$connection = $this->db;
-		}
-		$this->migrationService = new MigrationService('cookbook', $connection);
-		
-		// undo all migrations of cookbook app
-		$qb = $this->db->getQueryBuilder();
-		$numRows = $qb->delete('migrations')
-			->where('app=:app')
-			->setParameter('app', 'cookbook')
-			->execute();
-		$this->assertGreaterThan(0, $numRows);
-		
-		$schema->dropTable('cookbook_names');
-		$this->assertFalse($schema->hasTable('cookbook_names'));
-		$schema->dropTable('cookbook_categories');
-		$this->assertFalse($schema->hasTable('cookbook_categories'));
-		$schema->dropTable('cookbook_keywords');
-		$this->assertFalse($schema->hasTable('cookbook_keywords'));
-		
-		$schema->performDropTableCalls();
-		
-		// Reinstall app partially (just before the migration)
-		$this->migrationService->migrate('000000Date20210427082010');
-	}
-	
-	protected function tearDown(): void {
-		unset($this->container);
-		unset($this->db);
-		unset($this->migrationService);
-	}
+include_once __DIR__ . '/AbstractMigrationTestCase.php';
+
+class Version000000Date20210701093123Test extends AbstractMigrationTestCase {
 	
 	/**
 	 * @dataProvider dataProvider
@@ -201,5 +127,9 @@ class Version000000Date20210701093123Test extends TestCase {
 				['alice', 'bob']
 			],
 		];
+	}
+	
+	protected function getPreviousMigrationName(): string {
+		return '000000Date20210427082010';
 	}
 }

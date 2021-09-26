@@ -49,6 +49,25 @@ runs:
             --install-composer-deps
             --run-tests
             --extract-code-coverage
-            --shutdown-helpers
+            --shutdown-helpers || { failed=$?; } ;
+            if [ -n "$failed" ]; then 
+            echo "test_result=$failed" >> $GITHUB_ENV;
+            else 
+            echo "test_result=0" >> $GITHUB_ENV;
+            fi;
           shell: bash
           id: run
+        
+        - name: Export the annotations of unit tests to github
+          shell: bash
+          run: >-
+            if [ -r .github/actions/run-tests/volumes/coverage/teamcity.log ]; then
+            python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.log ;
+            fi
+        - name: Export the annotations of integration tests to github
+          shell: bash
+          run: >-
+            if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
+            python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log ;
+            fi
+        

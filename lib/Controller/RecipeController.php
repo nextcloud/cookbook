@@ -94,6 +94,7 @@ class RecipeController extends Controller {
 	 * @param $id
 	 *
 	 * @return DataResponse
+	 * @todo Parameter id is never used. Fix that
 	 */
 	public function update($id) {
 		$this->dbCacheService->triggerCheck();
@@ -145,7 +146,7 @@ class RecipeController extends Controller {
 		
 		try {
 			$this->service->deleteRecipe($id);
-			return new DataResponse('Recipe ' . $_GET['id'] . ' deleted successfully', Http::STATUS_OK);
+			return new DataResponse('Recipe ' . $id . ' deleted successfully', Http::STATUS_OK);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 502);
 		}

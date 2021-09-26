@@ -1,6 +1,8 @@
 *.swp
 *.swo
 
+/appinfo/info.xml
+
 cookbook.tar.gz
 
 .idea/

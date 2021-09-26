@@ -8,7 +8,6 @@ use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Controller;
 
 use OCA\Cookbook\Service\RecipeService;
-use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 
@@ -17,10 +16,6 @@ class ConfigController extends Controller {
 	 * @var RecipeService
 	 */
 	private $service;
-	/**
-	 * @var IURLGenerator
-	 */
-	private $urlGenerator;
 	
 	/**
 	 * @var DbCacheService
@@ -32,11 +27,10 @@ class ConfigController extends Controller {
 	 */
 	private $restParser;
 
-	public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService, RestParameterParser $restParser) {
+	public function __construct($AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, RestParameterParser $restParser) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
-		$this->urlGenerator = $urlGenerator;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
 	}
