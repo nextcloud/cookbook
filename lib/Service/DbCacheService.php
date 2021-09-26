@@ -236,7 +236,7 @@ class DbCacheService {
 			if ($this->hasJSONCategory($json)) {
 				// There is a category in the JSON file present.
 				
-				$category = trim($json['recipeCategory']);
+				$category = trim($this->getJSONCategory($json));
 				
 				if (isset($this->dbCategories[$rid])) {
 					// There is a category present. Update needed?
@@ -259,8 +259,32 @@ class DbCacheService {
 	 * @param array $json
 	 * @return boolean
 	 */
-	private function hasJSONCategory(array $json) {
-		return isset($json['recipeCategory']) && strlen(trim($json['recipeCategory'])) > 0;
+	private function hasJSONCategory(array $json): bool {
+		return ! is_null($this->getJSONCategory($json));
+	}
+
+	/**
+	 * Get the category of a recipe.
+	 *
+	 * This will only return the very first category if there are multiple registered.
+	 *
+	 * @param array $json The recipe
+	 * @return string|null The category name of null if no category was found.
+	 */
+	private function getJSONCategory(array $json): ?string {
+		if (!isset($json['recipeCategory'])) {
+			return null;
+		}
+
+		$category = $json['recipeCategory'];
+		if (is_array($category)) {
+			if (count($category) > 0) {
+				$category = $category[0];
+			} else {
+				$category = null;
+			}
+		}
+		return $category;
 	}
 	
 	private function updateKeywords() {
@@ -268,7 +292,8 @@ class DbCacheService {
 		$obsoletePairs = [];
 		
 		foreach ($this->jsonFiles as $rid => $json) {
-			$keywords = explode(',', $json['keywords']);
+			$textKeywords = $json['keywords'] ?? '';
+			$keywords = explode(',', $textKeywords);
 			$keywords = array_map(function ($v) {
 				return trim($v);
 			}, $keywords);
