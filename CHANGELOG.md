@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Fail database caching in case of ill-formatted json file (category/keyword)
+  [#797](https://github.com/nextcloud/cookbook/pull/797) @christianlupus
 
 
 ## 0.9.3 - 2021-09-26
