@@ -1,7 +1,10 @@
 ## [Unreleased]
 
+
+## 0.9.4 - 2021-09-29
+
 ### Fixed
-- Fail database caching in case of ill-formatted json file (category/keyword)
+- Failed database caching in case of ill-formatted json file (category/keyword)
   [#797](https://github.com/nextcloud/cookbook/pull/797) @christianlupus
 - Added Nook app in README
   [#798](https://github.com/nextcloud/cookbook/pull/798) @christianlupus
