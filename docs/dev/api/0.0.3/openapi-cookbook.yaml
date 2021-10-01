@@ -298,6 +298,35 @@ paths:
       responses:
         200:
           description: Image was obtained and will be inresponse either as image/jpeg or image/svg+xml
+    post:
+      tags: [ Recipes ]
+      summary: Upload the image for a given recipe.
+      parameters:
+        - in: path
+          name: id
+          description: The id of the recipe to alter
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                imageFile:
+                  type: string
+                  format: binary
+                  description: The image to be used as new image of the recipe
+      responses:
+        204:
+          description: The image was sucessfully stored
+        406:
+          description: The image could not be saved or parsed.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
   /api/search/{query}:
     parameters:
       - in: path
