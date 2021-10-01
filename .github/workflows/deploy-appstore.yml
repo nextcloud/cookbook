@@ -17,6 +17,8 @@ jobs:
                 shell: bash
                 working-directory: cookbook
         
+        if: github.actor != 'nextcloud-cookbook-bot'
+
         steps:
             -   name: Checkout the project
                 uses: actions/checkout@v2
@@ -33,6 +35,7 @@ jobs:
             
             -   name: Install the NPM packages
                 run: npm install
+
             -   name: Build NPM
                 run: npm run build
                 
