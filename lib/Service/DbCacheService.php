@@ -272,7 +272,7 @@ class DbCacheService {
 	 * @return string|null The category name of null if no category was found.
 	 */
 	private function getJSONCategory(array $json): ?string {
-		if (!isset($json['recipeCategory'])) {
+		if (!isset($json['recipeCategory']) || strlen(trim($json['recipeCategory'])) == 0) {
 			return null;
 		}
 

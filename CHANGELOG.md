@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Fix empty Category
+  [#805](https://github.com/nextcloud/cookbook/pull/805) @jotoeri
 
 ## 0.9.4 - 2021-09-29
 
