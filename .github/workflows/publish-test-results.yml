@@ -10,12 +10,13 @@ jobs:
   test-results:
     runs-on: ubuntu-latest
     name: Test results
-    if: github.event.workflow_run.conclusion != 'skipped'
+    if: >-
+      github.event.workflow_run.conclusion != 'skipped'
 
     steps:
       - name: Download and Extract Artifacts
-        #env:
-          #GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
            mkdir -p artifacts && cd artifacts
 
