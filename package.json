@@ -46,7 +46,7 @@
     "babel-loader": "^8.1.0",
     "compression-webpack-plugin": "^9.0.0",
     "css-loader": "^6.0.0",
-    "eslint": "^7.20.0",
+    "eslint": "^8.0.1",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-import": "^2.22.1",
