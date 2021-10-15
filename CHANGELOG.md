@@ -11,6 +11,8 @@
   [#811](https://github.com/nextcloud/cookbook/pull/811) @christianlupus
 - Updated codecov parser to binary version (fix #810)
   [#813](https://github.com/nextcloud/cookbook/pull/813) @christianlupus
+- Allow bot user to push to stable branch
+  [#812](https://github.com/nextcloud/cookbook/pull/812) @christianlupus
 
 
 ## 0.9.4 - 2021-09-29
