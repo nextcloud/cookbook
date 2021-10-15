@@ -244,6 +244,7 @@ export default {
     padding: 0;
     border-radius: var(--border-radius);
 }
+
 #app-settings .button p {
     margin: auto;
     font-size: 13px;

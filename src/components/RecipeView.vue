@@ -561,12 +561,15 @@ export default {
         display: flex;
         flex-wrap: wrap;
     }
+
     .header > .image {
         flex: 600px 0 0;
     }
+
     .header > .meta {
         margin: 0 10px;
     }
+
     .header a::after {
         content: "";
     }
@@ -585,12 +588,15 @@ export default {
 .meta {
     margin: 0 1rem;
 }
+
 .dates {
     font-size: 0.9em;
 }
+
 .date {
     margin-right: 1.5em;
 }
+
 .date-icon {
     display: inline-block;
     margin-right: 0.2em;
@@ -598,13 +604,16 @@ export default {
     background-size: 1em;
     vertical-align: middle;
 }
+
 .date-text {
     vertical-align: middle;
 }
+
 .description {
     font-style: italic;
     white-space: pre-line;
 }
+
 .details p {
     margin: 0.5em 0;
 }
@@ -639,6 +648,7 @@ export default {
     font-size: 1.2rem;
     text-align: center;
 }
+
 .times .time button {
     position: absolute;
     top: 0;
@@ -647,6 +657,7 @@ export default {
     height: 36px;
     transform: translate(-50%, -50%);
 }
+
 .times .time h4 {
     padding: 0.5rem;
     border-bottom: 1px solid var(--color-border-dark);
@@ -661,6 +672,7 @@ export default {
 section {
     margin-bottom: 1rem;
 }
+
 section::after {
     display: table;
     clear: both;
@@ -692,11 +704,13 @@ aside {
 aside ul {
     list-style-type: none;
 }
+
 aside ul li {
     margin-bottom: 0.75ex;
     margin-left: 1em;
     line-height: 2.5ex;
 }
+
 aside ul li span,
 aside ul li input[type="checkbox"] {
     display: inline-block;
@@ -749,12 +763,14 @@ main {
     counter-reset: instruction-counter;
     list-style: none;
 }
+
 .instructions .instruction {
     margin-bottom: 2rem;
     clear: both;
     counter-increment: instruction-counter;
     cursor: pointer;
 }
+
 .instructions .instruction::before {
     display: block;
     width: 36px;
@@ -771,9 +787,11 @@ main {
     outline: none;
     text-align: center;
 }
+
 .instructions .instruction:hover::before {
     border-color: var(--color-primary-element);
 }
+
 .instructions .instruction.done::before {
     content: "✔";
 }
@@ -784,6 +802,7 @@ main {
     color: var(--color-text-maxcontrast);
     font-weight: 450;
 }
+
 .recipe-reference-inline:hover {
     color: var(--color-main-text);
 }

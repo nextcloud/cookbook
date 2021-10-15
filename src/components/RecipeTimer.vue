@@ -142,6 +142,7 @@ export default {
     font-size: 1.2rem;
     text-align: center;
 }
+
 .time button {
     position: absolute;
     top: 0;
@@ -150,6 +151,7 @@ export default {
     height: 36px;
     transform: translate(-50%, -50%);
 }
+
 .time h4 {
     padding: 0.5rem;
     border-bottom: 1px solid var(--color-border-dark);

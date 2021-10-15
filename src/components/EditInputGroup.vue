@@ -403,6 +403,7 @@ li .controls > button:last-child {
     border-bottom-right-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
 }
+
 li .controls > button:last-child:not(:hover):not(:focus) {
     border-right-color: var(--color-border-dark);
 }
@@ -427,6 +428,7 @@ li .controls > button:last-child:not(:hover):not(:focus) {
     clear: both;
     content: "";
 }
+
 .step-number {
     position: absolute;
     top: 0;

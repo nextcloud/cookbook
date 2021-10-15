@@ -322,6 +322,7 @@ export default {
 .recipe-sorting-item-placeholder {
     display: block;
 }
+
 .ordering-item-icon {
     margin-right: 0.5em;
 }

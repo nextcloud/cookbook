@@ -162,6 +162,7 @@ picture .full-resolution.image-loaded {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -171,6 +172,7 @@ picture .full-resolution.image-loaded {
     from {
         filter: blur(0.5rem);
     }
+
     to {
         filter: blur(0);
     }

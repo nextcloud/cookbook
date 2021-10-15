@@ -36,6 +36,7 @@ li {
     cursor: pointer;
     white-space: pre-line;
 }
+
 li::before {
     position: absolute;
     top: 0;
@@ -52,12 +53,15 @@ li::before {
     outline: none;
     text-align: center;
 }
+
 li:hover::before {
     border-color: var(--color-primary-element);
 }
+
 .done::before {
     content: "✔";
 }
+
 li span,
 li input[type="checkbox"] {
     display: inline-block;

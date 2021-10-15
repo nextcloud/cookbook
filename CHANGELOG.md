@@ -5,6 +5,8 @@
   [#805](https://github.com/nextcloud/cookbook/pull/805) @jotoeri
 - Fix CI test scripts
   [#809](https://github.com/nextcloud/cookbook/pull/809) @christianlupus
+- Update stylelint-config-prettier
+  [#807](https://github.com/nextcloud/cookbook/pull/807) @christianlupus
 
 
 ## 0.9.4 - 2021-09-29

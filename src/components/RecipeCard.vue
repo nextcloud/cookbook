@@ -78,12 +78,14 @@ export default {
     max-width: 100%;
     margin: 0.5rem 1rem 1rem;
 }
+
 .recipe-card a {
     display: block;
     height: 105px;
     border-radius: 3px;
     box-shadow: 0 0 3px #aaa;
 }
+
 .recipe-card a:hover {
     box-shadow: 0 0 5px #888;
 }
@@ -120,6 +122,7 @@ export default {
 .recipe-card .recipe-info-date {
     display: flex;
 }
+
 .recipe-info-date-icon {
     height: 1.4ex;
     min-height: 0;
