@@ -7,6 +7,8 @@
   [#809](https://github.com/nextcloud/cookbook/pull/809) @christianlupus
 - Update stylelint-config-prettier
   [#807](https://github.com/nextcloud/cookbook/pull/807) @christianlupus
+- Correct unit testing for dependabot and forked branches
+  [#811](https://github.com/nextcloud/cookbook/pull/811) @christianlupus
 
 
 ## 0.9.4 - 2021-09-29
