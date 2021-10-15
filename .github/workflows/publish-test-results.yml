@@ -13,9 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     name: Test results
     if: >-
-      github.event.workflow_run.conclusion != 'skipped'
+      github.event.workflow_run.conclusion != 'skipped' &&
+      github.event.workflow_run.event == 'pull_request'
 
     steps:
+      # - name: Debug output
+      #   env:
+      #     EVENT: ${{ toJSON(github.event) }}
+      #   run: |
+      #     echo "$EVENT"
+
       - name: Download and Extract Artifacts
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
