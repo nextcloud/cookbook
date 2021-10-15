@@ -258,6 +258,7 @@ export default {
         font-size: 8px;
         vertical-align: bottom;
     }
+
     .ordering-button {
         padding: 2px 6px;
     }

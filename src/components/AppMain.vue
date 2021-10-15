@@ -42,12 +42,15 @@ export default {
         padding: 0 !important;
         margin-left: 0 !important;
     }
+
     #app-navigation-vue {
         display: none !important;
     }
+
     #header {
         display: none !important;
     }
+
     a:link::after,
     a:visited::after {
         content: " [" attr(href) "] ";
