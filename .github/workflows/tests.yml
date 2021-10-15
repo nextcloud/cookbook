@@ -23,7 +23,7 @@ jobs:
         -   name: Install Composer
             shell: bash
             run: >-
-                wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
+                wget https://github.com/composer/getcomposer.org/raw/main/web/installer -O - -q |
                 php -- --quiet
         
         -   name: Install PHP packages
