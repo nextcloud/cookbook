@@ -1,5 +1,5 @@
 
-name: CI-tests
+name: CI
 
 on:
   push:
@@ -262,30 +262,15 @@ jobs:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
             
-
-  annotate-test-results:
-    name: Annotate the test results
-    needs:
-        - unit-tests
+  event_file:
+    name: "Upload Event File"
     runs-on: ubuntu-latest
-    if: success() || failure()
-      
     steps:
-        -   name: Download artifact
-            uses: actions/download-artifact@v2
-            #with:
-                #name: Junit test log files
-                #path: .
-        -   name: List files
-            shell: bash
-            run: ls -lR
-            #if: always()
-        -   name: Publish Unit Test Results
-            uses: EnricoMi/publish-unit-test-result-action@v1.19
-            with:
-                files: "Junit test log files*/*.xml"
-                test_changes_limit: 100
-            #if: always()
-            
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: Event File
+        path: ${{ github.event_path }}
+        retention-days: 1
 
-        
+
