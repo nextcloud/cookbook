@@ -5,6 +5,8 @@ on:
   workflow_run:
     workflows:
       - "CI"
+    types:
+      - completed
 
 jobs:
   test-results:
