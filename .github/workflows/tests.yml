@@ -186,22 +186,6 @@ jobs:
             echo "Exiting with ${{ env.test_result }}" ;
             exit "${{ env.test_result }}"
             
-      - name: Upload the coverage reports to codecov.io
-        shell: bash
-        run: >-
-            bash <(curl -s https://codecov.io/bash)
-            -F unittests
-            -f .github/actions/run-tests/volumes/coverage/latest/coverage.unit.xml
-            -R .
-            -X gcov
-            &&
-            bash <(curl -s https://codecov.io/bash)
-            -F integration
-            -f .github/actions/run-tests/volumes/coverage/latest/coverage.integration.xml
-            -R .
-            -X gcov
-        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
-      
       - name: Copy coverage-reports into non-link folder
         shell: bash
         run: >-
@@ -224,6 +208,54 @@ jobs:
         if: always()
       
 
+  upload-codecov:
+    name: Upload artifacts to codecov.io
+    needs: 
+        - unit-tests
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Create folder structure
+          run: mkdir artifacts code
+        - name: Download artifacts
+          uses: actions/download-artifact@v2.0.10
+          with:
+            path: artifacts
+        - name: Checkout of code base
+          uses: actions/checkout@v2
+          with:
+            path: code
+            fetch-depth: 2
+        
+        - name: Download the uploader
+          run: |
+            curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig
+
+            gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+            shasum -a 256 -c codecov.SHA256SUM
+
+            chmod +x codecov
+        
+        - name: Upload unit test codecov reports
+          run: >-
+            ./codecov
+            -F unittests
+            -f artifacts/Code coverage*/coverage.unit.xml
+            -R code
+            -X gcov
+        - name: Upload integration test codecov reports
+          run: >-
+            ./codecov
+            -F integration
+            -f artifacts/Code coverage*/coverage.integration.xml
+            -R code
+            -X gcov
+
+          
+    
   source-package:
     name: Create source code artifacts
     needs:
