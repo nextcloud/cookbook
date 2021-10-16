@@ -9,6 +9,8 @@
   [#807](https://github.com/nextcloud/cookbook/pull/807) @christianlupus
 - Correct unit testing for dependabot and forked branches
   [#811](https://github.com/nextcloud/cookbook/pull/811) @christianlupus
+- Updated codecov parser to binary version (fix #810)
+  [#813](https://github.com/nextcloud/cookbook/pull/813) @christianlupus
 
 
 ## 0.9.4 - 2021-09-29
