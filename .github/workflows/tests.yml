@@ -216,7 +216,7 @@ jobs:
 
     steps:
         - name: Create folder structure
-          run: mkdir artifacts code
+          run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
           uses: actions/download-artifact@v2.0.10
           with:
@@ -239,20 +239,40 @@ jobs:
 
             chmod +x codecov
         
+        - name: Copy Coverage reports to separate folders
+          run: |
+            cd artifacts
+
+            for i in Code*
+            do
+              if [ -f "$i/coverage.unit.xml" ]; then
+                mkdir -p "../unit-coverage/$i"
+                cp "$i/coverage.unit.xml" "../unit-coverage/$i/coverage.xml"
+              fi
+              if [ -f "$i/coverage.integration.xml" ]; then
+                mkdir -p "../integration-coverage/$i"
+                cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
+              fi
+            done
+        - name: Show file structure
+          run: ls -lR unit-coverage integration-coverage
+        
         - name: Upload unit test codecov reports
           run: >-
             ./codecov
             -F unittests
-            -f artifacts/Code coverage*/coverage.unit.xml
+            -s unit-coverage
             -R code
             -X gcov
+            -v
         - name: Upload integration test codecov reports
           run: >-
             ./codecov
             -F integration
-            -f artifacts/Code coverage*/coverage.integration.xml
+            -s integration-coverage
             -R code
             -X gcov
+            -v
 
           
     
