@@ -1,6 +1,6 @@
 {
   "name": "nextcloud-cookbook",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "",
   "main": "src/main.js",
   "scripts": {
