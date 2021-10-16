@@ -1,5 +1,5 @@
 
-name: Deploy testing
+name: Deploy to Appstore
 
 on:
     push:
@@ -17,6 +17,8 @@ jobs:
                 shell: bash
                 working-directory: cookbook
         
+        if: github.actor != 'nextcloud-cookbook-bot'
+
         steps:
             -   name: Checkout the project
                 uses: actions/checkout@v2
@@ -28,9 +30,12 @@ jobs:
             -   name: Bump the version
                 id: bump
                 run: ./.github/actions/deploy/create-version.sh
+                env:
+                    BOT_TOKEN: ${{ secrets.COOKBOOK_BOT_TOKEN }}
             
             -   name: Install the NPM packages
                 run: npm install
+
             -   name: Build NPM
                 run: npm run build
                 
