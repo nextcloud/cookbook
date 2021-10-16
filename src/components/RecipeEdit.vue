@@ -727,6 +727,7 @@ export default {
     background-color: var(--color-main-background);
     opacity: 0.75;
 }
+
 .overlay.hidden {
     display: none;
 }

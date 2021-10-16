@@ -1,8 +1,11 @@
 
-name: CI-tests
+name: CI
 
 on:
   push:
+    paths-ignore:
+      - 'docs/**'
+      - 'l10n/**'
   pull_request:
 
 jobs:
@@ -23,7 +26,7 @@ jobs:
         -   name: Install Composer
             shell: bash
             run: >-
-                wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
+                wget https://github.com/composer/getcomposer.org/raw/main/web/installer -O - -q |
                 php -- --quiet
         
         -   name: Install PHP packages
@@ -174,7 +177,7 @@ jobs:
             server: ${{ matrix.httpServer }}
             coreVersion: ${{ matrix.coreVersion }}
     
-      - name: Upload the log file
+      - name: Upload the log file as artifact
         uses: actions/upload-artifact@v2
         with:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
@@ -186,22 +189,6 @@ jobs:
             echo "Exiting with ${{ env.test_result }}" ;
             exit "${{ env.test_result }}"
             
-      - name: Upload the coverage reports to codecov.io
-        shell: bash
-        run: >-
-            bash <(curl -s https://codecov.io/bash)
-            -F unittests
-            -f .github/actions/run-tests/volumes/coverage/latest/coverage.unit.xml
-            -R .
-            -X gcov
-            &&
-            bash <(curl -s https://codecov.io/bash)
-            -F integration
-            -f .github/actions/run-tests/volumes/coverage/latest/coverage.integration.xml
-            -R .
-            -X gcov
-        if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
-      
       - name: Copy coverage-reports into non-link folder
         shell: bash
         run: >-
@@ -209,14 +196,14 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
         
-      - name: Upload the code coverage report (unit tests)
+      - name: Upload the code coverage report (unit tests) as artifacts
         uses: actions/upload-artifact@v2
         with:
             name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
-      - name: Upload the junit log file artifact
+      - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@v2
         with:
             name: Junit test log files (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
@@ -224,6 +211,74 @@ jobs:
         if: always()
       
 
+  upload-codecov:
+    name: Upload artifacts to codecov.io
+    needs: 
+        - unit-tests
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Create folder structure
+          run: mkdir artifacts code unit-coverage integration-coverage
+        - name: Download artifacts
+          uses: actions/download-artifact@v2.0.10
+          with:
+            path: artifacts
+        - name: Checkout of code base
+          uses: actions/checkout@v2
+          with:
+            path: code
+            fetch-depth: 2
+        
+        - name: Download the uploader
+          run: |
+            curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig
+
+            gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+            shasum -a 256 -c codecov.SHA256SUM
+
+            chmod +x codecov
+        
+        - name: Copy Coverage reports to separate folders
+          run: |
+            cd artifacts
+
+            for i in Code*
+            do
+              if [ -f "$i/coverage.unit.xml" ]; then
+                mkdir -p "../unit-coverage/$i"
+                cp "$i/coverage.unit.xml" "../unit-coverage/$i/coverage.xml"
+              fi
+              if [ -f "$i/coverage.integration.xml" ]; then
+                mkdir -p "../integration-coverage/$i"
+                cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
+              fi
+            done
+        - name: Show file structure
+          run: ls -lR unit-coverage integration-coverage
+        
+        - name: Upload unit test codecov reports
+          run: >-
+            ./codecov
+            -F unittests
+            -s unit-coverage
+            -R code
+            -X gcov
+            -v
+        - name: Upload integration test codecov reports
+          run: >-
+            ./codecov
+            -F integration
+            -s integration-coverage
+            -R code
+            -X gcov
+            -v
+
+          
+    
   source-package:
     name: Create source code artifacts
     needs:
@@ -262,30 +317,15 @@ jobs:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
             
-
-  annotate-test-results:
-    name: Annotate the test results
-    needs:
-        - unit-tests
+  event_file:
+    name: "Upload Event File"
     runs-on: ubuntu-latest
-    if: success() || failure()
-      
     steps:
-        -   name: Download artifact
-            uses: actions/download-artifact@v2
-            #with:
-                #name: Junit test log files
-                #path: .
-        -   name: List files
-            shell: bash
-            run: ls -lR
-            #if: always()
-        -   name: Publish Unit Test Results
-            uses: EnricoMi/publish-unit-test-result-action@v1.19
-            with:
-                files: "Junit test log files*/*.xml"
-                test_changes_limit: 100
-            #if: always()
-            
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: Event File
+        path: ${{ github.event_path }}
+        retention-days: 1
 
-        
+

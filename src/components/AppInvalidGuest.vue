@@ -74,6 +74,7 @@ export default {
         div {
             margin: 20px 5px;
         }
+
         .message {
             font-size: x-large;
             font-weight: bold;

@@ -37,16 +37,19 @@ div {
     margin-bottom: 1rem;
     text-align: center;
 }
+
 img {
     width: 100%;
     max-width: 950px;
     background-color: #bebdbd;
     cursor: pointer;
 }
+
 .collapsed {
     overflow: hidden;
     height: 40vh;
 }
+
 .collapsed img {
     display: block;
     margin: 0 auto;

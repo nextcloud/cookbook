@@ -235,6 +235,7 @@ fieldset > * {
         float: none;
     }
 }
+
 fieldset > label {
     display: inline-block;
     width: 16em;

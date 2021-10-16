@@ -1,5 +1,21 @@
 ## [Unreleased]
 
+## 0.9.5 - 2021-10-15
+
+### Fixed
+- Fix empty Category
+  [#805](https://github.com/nextcloud/cookbook/pull/805) @jotoeri
+- Fix CI test scripts
+  [#809](https://github.com/nextcloud/cookbook/pull/809) @christianlupus
+- Update stylelint-config-prettier
+  [#807](https://github.com/nextcloud/cookbook/pull/807) @christianlupus
+- Correct unit testing for dependabot and forked branches
+  [#811](https://github.com/nextcloud/cookbook/pull/811) @christianlupus
+- Updated codecov parser to binary version (fix #810)
+  [#813](https://github.com/nextcloud/cookbook/pull/813) @christianlupus
+- Allow bot user to push to stable branch
+  [#812](https://github.com/nextcloud/cookbook/pull/812) @christianlupus
+
 
 ## 0.9.4 - 2021-09-29
 
