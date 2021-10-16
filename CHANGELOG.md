@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+### Fixed
+- Usage of PAT for deployment action
+  [#815](https://github.com/nextcloud/cookbook/pull/815) @christianlupus
+
+
 ## 0.9.5 - 2021-10-15
 
 ### Fixed
