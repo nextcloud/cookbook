@@ -1245,11 +1245,12 @@ class RecipeService {
 			$str = str_replace(["\r", "\n"], ' ', $str);
 		}
 
+		$str = str_replace("\t", ' ', $str);
+		$str = str_replace("\\", '_', $str);
+
 		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
 		if ($remove_slashes) {
-			$str = str_replace(["\t", "\\", "/"], '_', $str);
-		} else {
-			$str = str_replace(["\t", "\\"], '_', $str);
+			$str = str_replace('/', '_', $str);
 		}
 		
 		$str = html_entity_decode($str);
