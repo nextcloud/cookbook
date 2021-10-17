@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Save button at the bottom of the edit page
+  [#818](https://github.com/nextcloud/cookbook/pull/818) @christianlupus
+
 ### Fixed
 - Usage of PAT for deployment action
   [#815](https://github.com/nextcloud/cookbook/pull/815) @christianlupus
