@@ -3,6 +3,8 @@
 ### Fixed
 - Usage of PAT for deployment action
   [#815](https://github.com/nextcloud/cookbook/pull/815) @christianlupus
+- Correct usage of EXIF data to rotate thumb images accordingly
+  [#816](https://github.com/nextcloud/cookbook/pull/816) @christianlupus
 
 
 ## 0.9.5 - 2021-10-15
