@@ -91,7 +91,7 @@
             :reference-popup-enabled="true"
         />
         <div class="cookbook-footer">
-            <button class="button" @click="saveChanges()">
+            <button class="button" @click="save()">
                 <span
                     :class="
                         $store.state.savingRecipe
