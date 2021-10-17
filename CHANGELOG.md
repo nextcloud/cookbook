@@ -5,6 +5,8 @@
   [#815](https://github.com/nextcloud/cookbook/pull/815) @christianlupus
 - Correct usage of EXIF data to rotate thumb images accordingly
   [#816](https://github.com/nextcloud/cookbook/pull/816) @christianlupus
+- Trim spaces from names of imported recipes
+  [#817](https://github.com/nextcloud/cookbook/pull/817) @christianlupus
 
 
 ## 0.9.5 - 2021-10-15
