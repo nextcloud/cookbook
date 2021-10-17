@@ -90,6 +90,18 @@
             :show-step-number="true"
             :reference-popup-enabled="true"
         />
+        <div class="cookbook-footer">
+            <button class="button" @click="saveChanges()">
+                <span
+                    :class="
+                        $store.state.savingRecipe
+                            ? 'icon-loading-small'
+                            : 'icon-checkmark'
+                    "
+                ></span>
+                {{ t("cookbook", "Save changes") }}
+            </button>
+        </div>
         <edit-multiselect-popup
             ref="referencesPopup"
             class="references-popup"
@@ -113,6 +125,7 @@ import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
 import EditMultiselectPopup from "./EditMultiselectPopup.vue"
 import EditTimeField from "./EditTimeField.vue"
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 
 export default {
     name: "RecipeEdit",
@@ -124,6 +137,7 @@ export default {
         EditTimeField,
         EditMultiselectInputGroup,
         EditMultiselectPopup,
+        ActionButton,
     },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
@@ -746,5 +760,10 @@ form fieldset ul label input[type="checkbox"] {
 
 .references-popup.visible {
     display: block;
+}
+
+.cookbook-footer {
+    margin-top: 3.5em;
+    text-align: end;
 }
 </style>
