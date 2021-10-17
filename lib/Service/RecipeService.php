@@ -775,9 +775,15 @@ class RecipeService {
 
 			$full_image_file->putContent($full_image_data);
 
+			// Temp file to load data from
+			$tmp = tmpfile();
+			$tmpPath = stream_get_meta_data($tmp)['uri'];
+			fwrite($tmp, $full_image_data);
+			fflush($tmp);
+
 			// Write the thumbnail
 			$thumb_image = new Image();
-			$thumb_image->loadFromData($full_image_data);
+			$thumb_image->loadFromFile($tmpPath);
 			$thumb_image->fixOrientation();
 			$thumb_image->resize(256);
 			$thumb_image->centerCrop();
