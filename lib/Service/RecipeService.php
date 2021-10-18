@@ -775,9 +775,15 @@ class RecipeService {
 
 			$full_image_file->putContent($full_image_data);
 
+			// Temp file to load data from
+			$tmp = tmpfile();
+			$tmpPath = stream_get_meta_data($tmp)['uri'];
+			fwrite($tmp, $full_image_data);
+			fflush($tmp);
+
 			// Write the thumbnail
 			$thumb_image = new Image();
-			$thumb_image->loadFromData($full_image_data);
+			$thumb_image->loadFromFile($tmpPath);
 			$thumb_image->fixOrientation();
 			$thumb_image->resize(256);
 			$thumb_image->centerCrop();
@@ -1236,17 +1242,22 @@ class RecipeService {
 		$str = strip_tags($str);
 
 		if (!$preserve_newlines) {
-			$str = str_replace(["\r", "\n"], '', $str);
+			$str = str_replace(["\r", "\n"], ' ', $str);
 		}
+
+		$str = str_replace("\t", ' ', $str);
+		$str = str_replace("\\", '_', $str);
 
 		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
 		if ($remove_slashes) {
-			$str = str_replace(["\t", "\\", "/"], '', $str);
-		} else {
-			$str = str_replace(["\t", "\\"], '', $str);
+			$str = str_replace('/', '_', $str);
 		}
 		
 		$str = html_entity_decode($str);
+
+		// Remove duplicated spaces
+		$str = preg_replace('/  */', ' ', $str);
+		$str = trim($str);
 
 		return $str;
 	}

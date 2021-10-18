@@ -35,6 +35,7 @@ jobs:
             - name: Make sure the appinfo is built
               shell: bash
               run: make appinfo/info.xml
+              if: ${{ steps.check.outputs.skip == 'false' }}
               
             - name: Build and push the image
               shell: bash

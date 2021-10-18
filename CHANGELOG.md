@@ -1,5 +1,23 @@
 ## [Unreleased]
 
+
+## 0.9.6 - 2021-10-18
+
+### Added
+- Save button at the bottom of the edit page
+  [#818](https://github.com/nextcloud/cookbook/pull/818) @christianlupus
+
+### Fixed
+- Usage of PAT for deployment action
+  [#815](https://github.com/nextcloud/cookbook/pull/815) @christianlupus
+- Correct usage of EXIF data to rotate thumb images accordingly
+  [#816](https://github.com/nextcloud/cookbook/pull/816) @christianlupus
+- Trim spaces from names of imported recipes
+  [#817](https://github.com/nextcloud/cookbook/pull/817) @christianlupus
+- Fixed regression in #805
+  [#820](https://github.com/nextcloud/cookbook/pull/820) @christianlupus
+
+
 ## 0.9.5 - 2021-10-15
 
 ### Fixed

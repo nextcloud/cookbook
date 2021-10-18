@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bash -e
 
 # set -x
 
@@ -59,8 +59,8 @@ git merge --no-ff $stable_branch
 
 git remote add tokenized "https://nextcloud-cookbook-bot:$BOT_TOKEN@github.com/nextcloud/cookbook.git"
 
-git push tokenized $stable_branch
-git push tokenized $master_branch
+git -c "http.https://github.com/.extraheader=" push tokenized $stable_branch
+git -c "http.https://github.com/.extraheader=" push tokenized $master_branch
 git push origin "v$version"
 
 echo "::set-output name=version::$version"
