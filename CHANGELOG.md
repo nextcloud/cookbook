@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.6 - 2021-10-18
+
 ### Added
 - Save button at the bottom of the edit page
   [#818](https://github.com/nextcloud/cookbook/pull/818) @christianlupus
