@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\Controller;
+namespace OCA\Cookbook\Controller\v1;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http;
@@ -58,8 +58,8 @@ class RecipeController extends Controller {
 			$recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
 		}
 		foreach ($recipes as $i => $recipe) {
-			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
-			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
+			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe_v1.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe_v1.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
 		}
 		return new DataResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 	}
@@ -80,7 +80,7 @@ class RecipeController extends Controller {
 		}
 
 		$json['printImage'] = $this->service->getPrintImage();
-		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
+		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe_v1.image', ['id' => $json['id'], 'size' => 'full']);
 		
 		return new DataResponse($json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 	}
@@ -168,7 +168,7 @@ class RecipeController extends Controller {
 
 			return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {
-			$file = file_get_contents(dirname(__FILE__) . '/../../img/recipe.svg');
+			$file = file_get_contents(dirname(__FILE__) . '/../../../img/recipe.svg');
 
 			return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/svg+xml']);
 		}

@@ -16,26 +16,47 @@ return [
 		 */
 		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
 		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
-		['name' => 'main#keywords', 'url' => '/keywords', 'verb' => 'GET'],
-		['name' => 'main#categories', 'url' => '/categories', 'verb' => 'GET'],
-		['name' => 'main#import', 'url' => '/import', 'verb' => 'POST'],
-		['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
-		['name' => 'config#reindex', 'url' => '/reindex', 'verb' => 'POST'],
-		['name' => 'config#list', 'url' => '/config', 'verb' => 'GET'],
-		['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
+
+		/*
+		 * legacy routes -- deprecated
+		 */
+		['name' => 'main_v1#keywords', 'url' => '/keywords', 'verb' => 'GET', 'postfix' => '-legacy'],
+		['name' => 'main_v1#categories', 'url' => '/categories', 'verb' => 'GET', 'postfix' => '-legacy'],
+		['name' => 'main_v1#import', 'url' => '/import', 'verb' => 'POST', 'postfix' => '-legacy'],
+		['name' => 'recipe_v1#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+'], 'postfix' => '-legacy'],
+		['name' => 'config_v1#reindex', 'url' => '/reindex', 'verb' => 'POST', 'postfix' => '-legacy'],
+		['name' => 'config_v1#list', 'url' => '/config', 'verb' => 'GET', 'postfix' => '-legacy'],
+		['name' => 'config_v1#config', 'url' => '/config', 'verb' => 'POST', 'postfix' => '-legacy'],
 		/* API routes */
-		['name' => 'main#category', 'url' => '/api/category/{category}', 'verb' => 'GET'],
-		['name' => 'main#categoryUpdate', 'url' => '/api/category/{category}', 'verb' => 'PUT'],
-		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
-		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
+		['name' => 'main_v1#category', 'url' => '/api/category/{category}', 'verb' => 'GET', 'postfix' => '-legacy'],
+		['name' => 'main_v1#categoryUpdate', 'url' => '/api/category/{category}', 'verb' => 'PUT', 'postfix' => '-legacy'],
+		['name' => 'main_v1#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET', 'postfix' => '-legacy'],
+		['name' => 'main_v1#search', 'url' => '/api/search/{query}', 'verb' => 'GET', 'postfix' => '-legacy'],
 		/* Unknown usage */
 		/* Deprecated routes */
-		['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
-		['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
+		['name' => 'main_v1#new', 'url' => '/recipes/create', 'verb' => 'POST', 'postfix' => '-legacy'],
+		['name' => 'main_v1#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+'], 'postfix' => '-legacy'],
+
+		/*
+		 * API v1
+		 */
+		['name' => 'main_v1#keywords', 'url' => '/api/v1/keywords', 'verb' => 'GET'],
+		['name' => 'main_v1#categories', 'url' => '/api/v1/categories', 'verb' => 'GET'],
+		['name' => 'main_v1#import', 'url' => '/api/v1/import', 'verb' => 'POST'],
+		['name' => 'recipe_v1#image', 'url' => '/api/v1/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'config_v1#reindex', 'url' => '/api/v1/reindex', 'verb' => 'POST'],
+		['name' => 'config_v1#list', 'url' => '/api/v1/config', 'verb' => 'GET'],
+		['name' => 'config_v1#config', 'url' => '/api/v1/config', 'verb' => 'POST'],
+		/* API routes */
+		['name' => 'main_v1#category', 'url' => '/api/v1/category/{category}', 'verb' => 'GET'],
+		['name' => 'main_v1#categoryUpdate', 'url' => '/api/v1/category/{category}', 'verb' => 'PUT'],
+		['name' => 'main_v1#tags', 'url' => '/api/v1/tags/{keywords}', 'verb' => 'GET'],
+		['name' => 'main_v1#search', 'url' => '/api/v1/search/{query}', 'verb' => 'GET'],
 	],
 
 	/* API resources */
 	'resources' => [
-		'recipe' => ['url' => '/api/recipes']
+		'recipe_legacy' => ['url' => '/api/recipes'],
+		'recipe_v1' => ['url' => '/api/v1/recipes'],
 	]
 ];

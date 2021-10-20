@@ -71,7 +71,7 @@ if (Util::getVersion()[0] >= 20) {
 
 					return new SearchResultEntry(
 						// Thumb image
-						$this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $id, 'size' => 'thumb']),
+						$this->urlGenerator->linkToRoute('cookbook.recipe_v1.image', ['id' => $id, 'size' => 'thumb']),
 						// Name as title
 						$recipe['name'],
 						// Category as subline

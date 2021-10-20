@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\Controller;
+namespace OCA\Cookbook\Controller\v1;
 
 use OCP\IRequest;
 use OCP\AppFramework\Http;

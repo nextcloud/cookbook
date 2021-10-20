@@ -5,10 +5,16 @@ if [ -e 'vendor/bin/php-cs-fixer' ]; then
 	git stash push --keep-index
 	lines_after=`git stash list | wc -l`
 
-	composer cs:check || { echo "The PHP code is not validly formatted."; exit 1; }
+	composer cs:check
+	RET=$?
 	
 	if [ $lines_before -lt $lines_after ]; then
 		git stash pop
+	fi
+
+	if [ $RET -ne 0 ]; then
+		echo "The PHP code is not validly formatted."
+		exit $RET
 	fi
 fi
 
