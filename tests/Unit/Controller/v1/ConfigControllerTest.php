@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\tests\Unit\Controller;
+namespace OCA\Cookbook\tests\Unit\Controller\v1;
 
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
@@ -8,13 +8,13 @@ use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Controller\ConfigController;
+use OCA\Cookbook\Controller\v1\ConfigController;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\Response;
 use ReflectionProperty;
 
 /**
- * @coversDefaultClass OCA\Cookbook\Controller\ConfigController
+ * @coversDefaultClass OCA\Cookbook\Controller\v1\ConfigController
  * @covers ::<private>
  * @covers ::<protected>
  */

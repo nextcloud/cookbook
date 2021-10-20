@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\tests\Unit\Controller;
+namespace OCA\Cookbook\tests\Unit\Controller\v1;
 
 use Exception;
 use OCP\IRequest;
@@ -15,12 +15,12 @@ use OCP\AppFramework\Http\DataResponse;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Controller\RecipeController;
+use OCA\Cookbook\Controller\v1\RecipeController;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCA\Cookbook\Exception\RecipeExistsException;
 
 /**
- * @coversDefaultClass \OCA\Cookbook\Controller\RecipeController
+ * @coversDefaultClass \OCA\Cookbook\Controller\v1\RecipeController
  * @covers ::<private>
  * @covers ::<protected>
  */
@@ -173,7 +173,7 @@ class RecipeControllerTest extends TestCase {
 		$imageUrl = "/path/to/image/of/id/123";
 
 		$this->urlGenerator->method('linkToRoute')->with(
-			'cookbook.recipe.image',
+			'cookbook.recipe_v1.image',
 			$this->callback(function ($p) use ($id) {
 				return isset($p['size']) && $p['id'] === $id;
 			})
@@ -308,8 +308,8 @@ class RecipeControllerTest extends TestCase {
 		}
 
 		$this->urlGenerator->method('linkToRoute')->will($this->returnCallback(function ($name, $params) {
-			if ($name !== 'cookbook.recipe.image') {
-				throw new Exception('Must use correct controller');
+			if ($name !== 'cookbook.recipe_v1.image') {
+				throw new Exception('Must use correct image route');
 			}
 
 			$id = $params['id'];
