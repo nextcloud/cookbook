@@ -70,6 +70,9 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		
 		// Look for an array of recipes
 		$this->mapArray($json);
+
+		// Ensure the type of the object is never an array
+		$this->checkForArrayType($json);
 		
 		if ($this->jsonService->isSchemaObject($json, 'Recipe')) {
 			// We found our recipe
@@ -164,5 +167,23 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		
 		// No recipe was found
 		return null;
+	}
+
+	/**
+	 * Check if the JSON element is a schema.org object but malformed.
+	 *
+	 * This checks if the '@type' entry is an array and corrects that.
+	 *
+	 * @param array $json The JSON object to parse
+	 * @return void
+	 */
+	private function checkForArrayType(array &$json) {
+		if (! $this->jsonService->isSchemaObject($json)) {
+			return;
+		}
+
+		if (is_array($json['@type'])) {
+			$json['@type'] = $json['@type'][0];
+		}
 	}
 }
