@@ -67,17 +67,19 @@ list_env_dumps() {
 pull_images() {
 	echo 'Pulling pre-built images.'
 	docker-compose pull --quiet
+
+	toc
 	
-	if docker pull "nextcloudcookbook/testci:php$PHP_VERSION"; then
+	if docker pull --quiet "nextcloudcookbook/testci:php$PHP_VERSION"; then
 		docker tag "nextcloudcookbook/testci:php$PHP_VERSION" cookbook_unittesting_dut
 	fi
+
+	toc
 	
 	echo 'Pulling images finished.'
 }
 
 build_images() {
-	pull_images
-	
 	echo 'Building the images.'
 	local PROGRESS=''
 	if [ -n "$CI" ]; then
@@ -192,6 +194,7 @@ shutdown_helpers(){
 
 setup_server(){
 	echo 'Setup of the server environment.'
+	toc
 	
 	echo "Checking out nextcloud server repository"
 	git clone --depth=1 --branch "$ENV_BRANCH" https://github.com/nextcloud/server volumes/nextcloud
@@ -201,6 +204,8 @@ setup_server(){
 	git submodule update --init
 	popd > /dev/null
 	
+	toc
+
 	echo 'Creating cookbook folder for later bind-merge'
 	pushd volumes/nextcloud > /dev/null
 	mkdir -p custom_apps/cookbook data
@@ -793,7 +798,7 @@ if [ -n "$COPY_ENV_SRC" ]; then
 	copy_environment
 fi
 
-if [ $DOCKER_PULL = 'y' ]; then
+if [ $DOCKER_PULL = 'y' -o $CREATE_IMAGES = 'y' -o $CREATE_IMAGES_IF_NEEDED = 'y' ]; then
 	pull_images
 fi
 
