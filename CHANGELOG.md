@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- CI build always builds docker images from scratch
+  [#823](https://github.com/nextcloud/cookbook/pull/823) @christianlupus
+
 
 ## 0.9.6 - 2021-10-18
 
