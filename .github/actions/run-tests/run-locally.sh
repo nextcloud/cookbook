@@ -773,9 +773,21 @@ printCI() {
 	fi
 }
 
+tic() {
+	TIC=$(date +%s.%3N)
+}
+
+toc() {
+	local TOC=$(date +%s.3N)
+	local diff=$(echo "scale=3; $TOC - $TIC" | bc)
+	# return "$diff"
+	printCI "Elapsed time: $diff seconds"
+}
+
 echo 'Starting process'
 
 printCI "::group::Prepare docker"
+tic
 
 if [ -n "$COPY_ENV_SRC" ]; then
 	copy_environment
@@ -804,7 +816,9 @@ if [ $PUSH_IMAGES = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+toc
 printCI "::group::Preparing environment"
+tic
 
 create_file_structure
 
@@ -827,7 +841,9 @@ if [ $SETUP_ENVIRONMENT = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+toc
 printCI "::group::Environment dump handling"
+tic
 
 if [ $DROP_ENV_DUMP = 'y' ]; then
 	drop_env_dump
@@ -842,24 +858,31 @@ if [ $RESTORE_ENV_DUMP = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+toc
 printCI "::group::Postprocessing environemnt preparation"
+tic
 
 if [ $START_HELPERS = 'y' ]; then
 	start_helpers_post
 fi
 
 printCI "::endgroup::"
+toc
 
+tic
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
 	run_tests "$@"
 fi
+toc
 
 printCI "::group::Clean-Up"
+tic
 
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
 	shutdown_helpers
 fi
 
 printCI "::endgroup::"
+toc
 
 echo "Processing finished"
