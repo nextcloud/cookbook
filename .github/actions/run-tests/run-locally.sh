@@ -420,7 +420,7 @@ run_tests() {
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
 	echo "Additional parameters for phpunit: $@"
-	docker-compose run --rm -T dut $PARAMS -- "$@"
+	docker-compose run --rm dut $PARAMS -- "$@"
 	echo 'Test runs finished.'
 }
 
@@ -497,6 +497,9 @@ source mysql.env
 source postgres.env
 
 RSYNC_PARAMS="--delete --delete-delay --delete-excluded --archive"
+
+# Use old styled docker-compose names with underscores instead of dashes
+export COMPOSE_COMPATIBILITY=true
 
 ##### Extract CLI parameters into internal variables
 
