@@ -32,10 +32,10 @@ Possible options:
   --debug-port <PORT>               Select the port on the host machine to attach during debugging sessions using xdebug (default 9000)
   --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
   --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
-  --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
+  --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration, 'yes' by default)
   --xdebug-log-level <LEVEL>        Set the log level of xdebug to <LEVEL>
   --enable-tracing                  Enable the tracing feature of xdebug
-  --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration)
+  --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration, default 1)
   --enable-profiling                Enable the profiling function of xdebug
   --help                            Show this help screen
   --                                Pass any further parameters to the phpunit program
@@ -420,7 +420,7 @@ run_tests() {
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
 	echo "Additional parameters for phpunit: $@"
-	docker-compose run --rm -T dut $PARAMS -- "$@"
+	docker-compose run --rm dut $PARAMS -- "$@"
 	echo 'Test runs finished.'
 }
 
@@ -497,6 +497,9 @@ source mysql.env
 source postgres.env
 
 RSYNC_PARAMS="--delete --delete-delay --delete-excluded --archive"
+
+# Use old styled docker-compose names with underscores instead of dashes
+export COMPOSE_COMPATIBILITY=true
 
 ##### Extract CLI parameters into internal variables
 
