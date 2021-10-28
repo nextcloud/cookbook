@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Add placeholder text to make clear URLs can be used as image source
+  [#835](https://github.com/nextcloud/cookbook/pull/835) @seyfeb
+
 ### Fixed
 - CI build always builds docker images from scratch
   [#823](https://github.com/nextcloud/cookbook/pull/823) @christianlupus
