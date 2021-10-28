@@ -7,6 +7,12 @@
             <input
                 type="text"
                 :value="value"
+                :placeholder="
+                    t(
+                        'cookbook',
+                        'Enter URL or select from your Nextcloud instance on the right'
+                    )
+                "
                 @input="$emit('input', $event.target.value)"
             />
             <button
