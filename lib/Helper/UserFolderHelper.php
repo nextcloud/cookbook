@@ -2,9 +2,13 @@
 
 namespace OCA\Cookbook\Helper;
 
+use OCA\Cookbook\Exception\UserFolderNotValidException;
+use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\WrongFileTypeException;
 use OCP\IConfig;
 use OCP\Files\Folder;
 use OCP\Files\Node;
+use OCP\Files\NotPermittedException;
 use OCP\IL10N;
 
 /**
@@ -72,8 +76,8 @@ class UserFolderHelper {
 	 * @return string The relative path name
 	 */
 	public function getPath(): string {
-		$path = $this->config->getUserValue($this->userId, 'cookbook', 'folder');
-		if ($path === false) {
+		$path = $this->config->getUserValue($this->userId, 'cookbook', 'folder', null);
+		if ($path === null) {
 			$path = '/' . $this->l->t('Recipes');
 			$this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
 		}
@@ -85,6 +89,8 @@ class UserFolderHelper {
 	 * Get the current folder where all recipes are stored of the user
 	 *
 	 * @return Folder The folder containing all recipes
+	 * @throws UserFolderNotValidException If the saved user folder is a file or could not be generated
+	 * @throws UserFolderNotWritableException The the saved user folder is not writable.
 	 */
 	public function getFolder(): Folder {
 		// Ensure the cache is built.
@@ -95,7 +101,27 @@ class UserFolderHelper {
 			$path = '/' . $this->userId . '/files/' . $path;
 			$path = str_replace('//', '/', $path);
 			
-			$this->cache = $this->filesystem->ensureFolderExists($path);
+			try {
+				$this->cache = $this->filesystem->ensureFolderExists($path);
+			} catch (WrongFileTypeException $ex) {
+				throw new UserFolderNotValidException(
+					$this->l->t('The configured user folder is a file.'),
+					null,
+					$ex
+				);
+			} catch (NotPermittedException $ex) {
+				throw new UserFolderNotValidException(
+					$this->l->t('The user folder cannot be created due to missing permissions.'),
+					null,
+					$ex
+				);
+			}
+
+			if (! $this->filesystem->folderHasFullPermissions($this->cache)) {
+				throw new UserFolderNotWritableException(
+					$this->l->t('The user folder %s is not writable by the user.', [$this->cache->getPath()])
+				);
+			}
 		}
 
 		return $this->cache;
