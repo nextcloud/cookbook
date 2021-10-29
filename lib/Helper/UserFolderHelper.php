@@ -46,14 +46,14 @@ class UserFolderHelper {
 	private $cache;
 
 	public function __construct(
-		string $user_id,
+		string $UserId,
 		IConfig $config,
 		IL10N $l,
 		FilesystemHelper $filesystem
 	) {
 		$this->config = $config;
 		$this->l = $l;
-		$this->userId = $user_id;
+		$this->userId = $UserId;
 		$this->filesystem = $filesystem;
 
 		$this->cache = null;
