@@ -14,6 +14,7 @@ use OCP\Files\NotFoundException;
 use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Helper\FilesystemHelper;
 use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
 use ReflectionClass;
 
@@ -39,8 +40,13 @@ class FilesystemHelperTest extends TestCase {
 		parent::setUp();
 
 		$this->root = $this->createMock(IRootFolder::class);
+		/**
+		 * @var MockObject|IL10N $l
+		 */
+		$l = $this->createMock(IL10N::class);
+		$l->method('t')->willReturnArgument(0);
 
-		$this->dut = new FilesystemHelper($this->root);
+		$this->dut = new FilesystemHelper($this->root, $l);
 	}
 
 	/**
@@ -144,12 +150,12 @@ class FilesystemHelperTest extends TestCase {
 	
 	/**
 	 * @dataProvider dpPermissions
-	 * @covers ::folderHasReadPermissions
+	 * @covers ::nodeHasReadPermissions
 	 */
 	public function testCheckReadPermissions($permissions, $expectedRead, $expectedWrite, $expectedAll) {
 		$this->assertEquals(
 			$expectedRead,
-			$this->dut->folderHasReadPermissions($this->createPermissionFolderStub($permissions))
+			$this->dut->nodeHasReadPermissions($this->createPermissionFolderStub($permissions))
 		);
 	}
 
