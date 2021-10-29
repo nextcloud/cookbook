@@ -13,6 +13,7 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\AppFramework\Http\JSONResponse;
 
 class MainController extends Controller {
@@ -36,7 +37,20 @@ class MainController extends Controller {
 	 */
 	private $restParser;
 
-	public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, IURLGenerator $urlGenerator, RestParameterParser $restParser) {
+	/**
+	 * @var UserFolderHelper
+	 */
+	private $userFolder;
+
+	public function __construct(
+		string $AppName,
+		IRequest $request,
+		RecipeService $recipeService,
+		DbCacheService $dbCacheService,
+		IURLGenerator $urlGenerator,
+		RestParameterParser $restParser,
+		UserFolderHelper $userFolder
+	) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
@@ -44,6 +58,7 @@ class MainController extends Controller {
 		$this->appName = $AppName;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
+		$this->userFolder = $userFolder;
 	}
 
 	/**
@@ -55,7 +70,7 @@ class MainController extends Controller {
 	public function index(): TemplateResponse {
 		try {
 			// Check if the user folder can be accessed
-			$this->service->getFolderForUser();
+			$this->userFolder->getFolder();
 		} catch (UserFolderNotWritableException $ex) {
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}

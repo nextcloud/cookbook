@@ -16,6 +16,7 @@ use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Helper\UserFolderHelper;
 
 /**
  * Main service class for the cookbook app.
@@ -28,14 +29,27 @@ class RecipeService {
 	private $db;
 	private $config;
 	private $il10n;
+	/**
+	 * @var UserFolderHelper $userFolder
+	 */
+	private $userFolder;
 	private $logger;
 
-	public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config, IL10N $il10n, LoggerInterface $logger) {
+	public function __construct(
+		?string $UserId,
+		IRootFolder $root,
+		RecipeDb $db,
+		IConfig $config,
+		IL10N $il10n,
+		UserFolderHelper $userFolder,
+		LoggerInterface $logger
+	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
 		$this->db = $db;
 		$this->config = $config;
 		$this->il10n = $il10n;
+		$this->userFolder = $userFolder;
 		$this->logger = $logger;
 	}
 
@@ -81,7 +95,7 @@ class RecipeService {
 	 * @return File|null
 	 */
 	public function getRecipeFileByFolderId(int $id) {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if (count($recipe_folder) <= 0) {
@@ -661,7 +675,7 @@ class RecipeService {
 	 * @param int $id
 	 */
 	public function deleteRecipe(int $id) {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if ($recipe_folder && count($recipe_folder) > 0) {
@@ -691,7 +705,7 @@ class RecipeService {
 		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = null;
 
 		// Recipe already has an id, update it
@@ -864,7 +878,7 @@ class RecipeService {
 	 * @return array
 	 */
 	public function getRecipeFiles() {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folders = $user_folder->getDirectoryListing();
 		$recipe_files = [];
 
@@ -904,7 +918,7 @@ class RecipeService {
 		}
 		
 		// Restructure files if needed
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		
 		foreach ($user_folder->getDirectoryListing() as $node) {
 			// Move JSON files from the user directory into its own folder
@@ -1017,42 +1031,11 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $path
-	 */
-	public function setUserFolderPath(string $path) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUserFolderPath() {
-		$path = $this->config->getUserValue($this->user_id, 'cookbook', 'folder');
-
-		if (!$path) {
-			$path = '/' . $this->il10n->t('Recipes');
-			$this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
-		}
-
-		return $path;
-	}
-
-	/**
 	 * @param int $interval
 	 * @throws PreConditionNotMetException
 	 */
 	public function setSearchIndexUpdateInterval(int $interval) {
 		$this->config->setUserValue($this->user_id, 'cookbook', 'update_interval', $interval);
-	}
-
-	/**
-	 * @return Folder
-	 */
-	public function getFolderForUser() {
-		$path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
-		$path = str_replace('//', '/', $path);
-
-		return $this->getOrCreateFolder($path);
 	}
 
 	/**
