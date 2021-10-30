@@ -4,7 +4,7 @@
             v-if="showTagCloudInRecipeList"
             v-model="keywordFilter"
             :keywords="rawKeywords"
-            :filteredRecipes="filteredRecipes"
+            :filtered-recipes="filteredRecipes"
         />
         <div id="recipes-submenu" class="recipes-submenu-container">
             <Multiselect
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import moment from "@nextcloud/moment"
 import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
 import RecipeCard from "./RecipeCard.vue"
 import RecipeListKeywordCloud from "./RecipeListKeywordCloud.vue"

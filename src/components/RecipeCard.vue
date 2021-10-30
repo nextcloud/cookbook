@@ -1,5 +1,5 @@
 <template>
-    <div class="recipe-card" v-if="recipe !== null">
+    <div v-if="recipe !== null" class="recipe-card">
         <router-link :to="'/recipe/' + recipe.recipe_id">
             <lazy-picture
                 v-if="recipe.imageUrl"
@@ -13,8 +13,8 @@
                 <span class="recipe-title">{{ recipe.name }}</span>
                 <div class="recipe-info-container-bottom">
                     <span
-                        class="recipe-info-date"
                         v-if="formatDateTime(recipe.dateCreated) != null"
+                        class="recipe-info-date"
                     >
                         <span
                             class="icon-calendar-dark recipe-info-date-icon"
@@ -24,11 +24,11 @@
                         </span>
                     </span>
                     <span
-                        class="recipe-info-date"
                         v-if="
                             recipe.dateModified !== recipe.dateCreated &&
                             formatDateTime(recipe.dateModified) != null
                         "
+                        class="recipe-info-date"
                     >
                         <span class="icon-rename recipe-info-date-icon" />
                         <span class="recipe-date"
