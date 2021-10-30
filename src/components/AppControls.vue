@@ -296,7 +296,8 @@ export default {
         deleteRecipe() {
             // Confirm delete
             if (
-                !confirm(
+                // eslint-disable-next-line no-alert
+                !window.confirm(
                     // prettier-ignore
                     t("cookbook","Are you sure you want to delete this recipe?")
                 )
@@ -307,10 +308,11 @@ export default {
 
             this.$store
                 .dispatch("deleteRecipe", { id: this.$store.state.recipe.id })
-                .then((response) => {
+                .then(() => {
                     $this.$window.goTo("/")
                 })
                 .catch((e) => {
+                    // eslint-disable-next-line no-alert
                     alert(t("cookbook", "Delete failed"))
                     if (e && e instanceof Error) {
                         throw e
@@ -330,7 +332,7 @@ export default {
             this.$root.$emit("saveRecipe")
         },
         search(e) {
-            this.$window.goTo("/search/" + e.target[1].value)
+            this.$window.goTo(`/search/${e.target[1].value}`)
         },
         updateFilters(e) {
             this.filterValue = e

@@ -285,7 +285,7 @@ export default {
                             e2.response.status >= 400 &&
                             e2.response.status < 500
                         ) {
-                            if (e2.response.status == 409) {
+                            if (e2.response.status === 409) {
                                 // There was a recipe found with the same name
 
                                 // eslint-disable-next-line no-alert
@@ -295,14 +295,18 @@ export default {
                                 alert(e2.response.data)
                             }
                         } else {
+                            // eslint-disable-next-line no-console
                             console.error(e2)
+                            // eslint-disable-next-line no-alert
                             alert(
                                 // prettier-ignore
                                 t("cookbook","The server reported an error. Please check.")
                             )
                         }
                     } else {
+                        // eslint-disable-next-line no-console
                         console.error(e2)
+                        // eslint-disable-next-line no-alert
                         alert(
                             // prettier-ignore
                             t("cookbook", "Could not query the server. This might be a network problem.")
