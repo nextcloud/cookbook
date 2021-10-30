@@ -9,6 +9,12 @@
   [#823](https://github.com/nextcloud/cookbook/pull/823) @christianlupus
 - Fix test script after update in docker-compose
   [#833](https://github.com/nextcloud/cookbook/pull/833) @christianlupus
+- Update NPM during automatic building to latest version ([#837](https://github.com/nextcloud/cookbook/issues/837))
+  [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
+- Downgrade eslint to meet peer dependencies ([#838](https://github.com/nextcloud/cookbook/issues/838))
+  [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
+- Fix bug in Makefile to simplify development
+  [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
 
 
 ## 0.9.6 - 2021-10-18
