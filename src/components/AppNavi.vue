@@ -79,6 +79,7 @@
                     slot="counter"
                     >{{ cat.recipeCount }}</AppNavigationCounter
                 >
+                <!-- eslint-disable-next-line vue/no-lone-template -->
                 <template>
                     <AppNavigationItem
                         v-for="(rec, idy) in cat.recipes"

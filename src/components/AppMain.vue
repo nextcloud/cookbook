@@ -17,7 +17,7 @@ import AppControls from "./AppControls.vue"
 import AppNavi from "./AppNavi.vue"
 
 export default {
-    name: "Main",
+    name: "AppMain",
     components: {
         AppContent,
         AppControls,
