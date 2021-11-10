@@ -18,7 +18,6 @@
             >
                 <template
                     slot="placeholder"
-                    class="recipe-sorting-item-placeholder"
                 >
                     <span class="icon-triangle-n" style="margin-right: -8px" />
                     <span class="ordering-item-icon icon-triangle-s" />
@@ -316,10 +315,6 @@ export default {
 .recipes-submenu-container {
     padding-left: 16px;
     margin-bottom: 0.75ex;
-}
-
-.recipe-sorting-item-placeholder {
-    display: block;
 }
 
 .ordering-item-icon {

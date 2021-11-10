@@ -8,7 +8,7 @@ import axios from "@nextcloud/axios"
 import RecipeList from "./RecipeList.vue"
 
 export default {
-    name: "Index",
+    name: "AppIndex",
     components: {
         RecipeList,
     },
