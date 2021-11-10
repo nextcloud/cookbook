@@ -16,9 +16,7 @@
                 :placeholder="t('cookbook', 'Select order')"
                 :options="recipeOrderingOptions"
             >
-                <template
-                    slot="placeholder"
-                >
+                <template slot="placeholder">
                     <span class="icon-triangle-n" style="margin-right: -8px" />
                     <span class="ordering-item-icon icon-triangle-s" />
                     {{ t("cookbook", "Select order") }}
