@@ -17,6 +17,8 @@
   [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
 - Update eslint and dependencies
   [#848](https://github.com/nextcloud/cookbook/pull/848) @christianlupus
+- Update PHP CS-Fixer
+  [#849](https://github.com/nextcloud/cookbook/pull/849) @christianlupus
 
 
 ## 0.9.6 - 2021-10-18

@@ -7,7 +7,7 @@ cookbook.tar.gz
 
 .idea/
 
-/.php_cs.cache
+/.php-cs-fixer.cache
 
 # Built js package
 js/*
