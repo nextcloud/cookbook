@@ -19,6 +19,8 @@
   [#848](https://github.com/nextcloud/cookbook/pull/848) @christianlupus
 - Update PHP CS-Fixer
   [#849](https://github.com/nextcloud/cookbook/pull/849) @christianlupus
+- Update git hooks to not delay commits too much
+  [#851](https://github.com/nextcloud/cookbook/pull/851) @christianlupus
 
 
 ## 0.9.6 - 2021-10-18
