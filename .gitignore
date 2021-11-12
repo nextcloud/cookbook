@@ -8,6 +8,7 @@ cookbook.tar.gz
 .idea/
 
 /.php-cs-fixer.cache
+/.eslintcache
 
 # Built js package
 js/*

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# set -x
+
+lines_before=`git stash list | wc -l`
+git stash push --keep-index -q
+lines_after=`git stash list | wc -l`
+
+cleanup() {
+	if [ $lines_before -lt $lines_after ]; then
+		git stash pop -q
+	fi
+}
+
+trap cleanup EXIT
+
+if [ -e 'vendor/bin/php-cs-fixer' ]; then
+
+	composer cs:check || { echo "The PHP code is not validly formatted."; exit 1; }
+	
+fi
+
+if [ -e 'node_modules/.bin/eslint' ]; then
+	npm run eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; exit 2; }
+fi
+
+if [ -e 'node_modules/.bin/prettier' ]; then
+	npm run prettier || { echo 'The javascript code seems to be not satifying the prettier code styler.'; exit 3; }
+fi
+
+if [ -e 'node_modules/.bin/stylelint' ]; then
+	npm run stylelint || { echo 'The CSS code seems to be not satifying the stylelint linter.'; exit 4; }
+fi
