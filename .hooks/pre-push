@@ -14,20 +14,24 @@ cleanup() {
 
 trap cleanup EXIT
 
+retVal=0
+
 if [ -e 'vendor/bin/php-cs-fixer' ]; then
 
-	composer cs:check || { echo "The PHP code is not validly formatted."; exit 1; }
+	composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
 	
 fi
 
 if [ -e 'node_modules/.bin/eslint' ]; then
-	npm run eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; exit 2; }
+	npm run eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
 fi
 
 if [ -e 'node_modules/.bin/prettier' ]; then
-	npm run prettier || { echo 'The javascript code seems to be not satifying the prettier code styler.'; exit 3; }
+	npm run prettier || { echo 'The javascript code seems to be not satifying the prettier code styler.'; (( retVal |= 4 )); }
 fi
 
 if [ -e 'node_modules/.bin/stylelint' ]; then
-	npm run stylelint || { echo 'The CSS code seems to be not satifying the stylelint linter.'; exit 4; }
+	npm run stylelint || { echo 'The CSS code seems to be not satifying the stylelint linter.'; (( retVal |= 8 )); }
 fi
+
+exit $retVal

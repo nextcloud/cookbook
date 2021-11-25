@@ -14,6 +14,14 @@ cleanup() {
 
 trap cleanup EXIT
 
-if [ -e 'node_modules/.bin/eslint' ]; then
-	npm run --silent eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; exit 1; }
+retVal=0
+
+if [ -e 'vendor/bin/php-cs-fixer' ]; then
+	composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
 fi
+
+if [ -e 'node_modules/.bin/eslint' ]; then
+	npm run --silent eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
+fi
+
+exit $retVal
