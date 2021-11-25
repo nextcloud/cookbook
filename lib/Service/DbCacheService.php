@@ -297,7 +297,11 @@ class DbCacheService {
 		
 		foreach ($this->jsonFiles as $rid => $json) {
 			$textKeywords = $json['keywords'] ?? '';
-			$keywords = explode(',', $textKeywords);
+			if (is_array($textKeywords)) {
+				$keywords = $textKeywords;
+			} else {
+				$keywords = explode(',', $textKeywords);
+			}
 			$keywords = array_map(function ($v) {
 				return trim($v);
 			}, $keywords);
