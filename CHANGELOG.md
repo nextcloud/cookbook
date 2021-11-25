@@ -25,6 +25,8 @@
   [#856](https://github.com/nextcloud/cookbook/pull/856) @christianlupus
 - Make strings recoverable by transifex parser
   [#860](https://github.com/nextcloud/cookbook/pull/860) @christianlupus
+- Allow arrays in stored JSON recipe files for the keywords
+  [#859](https://github.com/nextcloud/cookbook/pull/859) @christianlupus
 
 
 ## 0.9.6 - 2021-10-18
