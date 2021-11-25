@@ -2,8 +2,10 @@
 
 namespace OCA\Cookbook\Service;
 
+use Icewind\SMB\Exception\InvalidTypeException;
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
 use OCA\Cookbook\Exception\RecipeImageExistsException;
+use OCA\Cookbook\Helper\FilesystemHelper;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
@@ -19,18 +21,28 @@ class ImageService {
 	public const THUMB_MAIN = 1;
 	public const THUMB_16 = 2;
 
+	private const NAME_MAIN = 'full.jpg';
+	private const NAME_THUMB = 'thumb.jpg';
+	private const NAME_MINI = 'thumb16.jpg';
+
 	/**
 	 * @var ThumbnailService
 	 */
 	private $thumbnailService;
 
 	/**
+	 * @var FilesystemHelper
+	 */
+	private $fs;
+
+	/**
 	 * @var IL10N
 	 */
 	private $l;
 
-	public function __construct(ThumbnailService $thumbnailService, IL10N $l) {
+	public function __construct(ThumbnailService $thumbnailService, FilesystemHelper $fsHelper, IL10N $l) {
 		$this->thumbnailService = $thumbnailService;
+		$this->fs = $fsHelper;
 		$this->l = $l;
 	}
 
@@ -40,33 +52,37 @@ class ImageService {
 	 * @param Folder $recipeFolder The folder of the recipe
 	 * @return File The image file
 	 * @throws NotFoundException if no image has been found
+	 * @todo Do not use low-level functions of NC core here.
 	 */
 	public function getImage(Folder $recipeFolder): File {
-		return $recipeFolder->get('full.jpg');
+		return $recipeFolder->get(self::NAME_MAIN);
 	}
 
 	/**
-	 * Get a thumnail of a recipe
+	 * Check if a recipe has a folder attached
 	 *
-	 * The type of the thumbnail can be THUMB_MAIN and THUMB_16.
-	 * Any other value will trigger a InvalidThumbnailTypeException.
-	 *
-	 * If the requested thumbnail is not present, it will be generated.
-	 *
-	 * @param Folder $recipeFolder The folder of the recipe
-	 * @param integer $type The type of the requested thumbnail
-	 * @return File The thumbnail file
-	 * @throws InvalidThumbnailTypeException if the requested thumbaail type is not known.
-	 * @throws NotFoundException if there is no image associated with the recipe.
+	 * @param Folder $recipeFolder The folder of the recipe to check
+	 * @return boolean true, if there is an image present
 	 */
-	public function getThumbnail(Folder $recipeFolder, int $type): File {
-		$fileName = $this->getFileName($type);
+	public function hasImage(Folder $recipeFolder): bool {
+		return $this->fs->nodeExists(self::NAME_MAIN, $recipeFolder);
+	}
 
-		try {
-			return $recipeFolder->get($fileName);
-		} catch (NotFoundException $ex) {
-			return $this->generateThumb($recipeFolder, $type, $fileName);
+	/**
+	 * Ensure that a thumbnail for a certain size exists
+	 *
+	 * @param Folder $recipeFolder The folder of the recipe to check for
+	 * @param integer $type The type of the thumbnail to generate
+	 * @return File The thumbnail file
+	 */
+	public function ensureThumbnailExists(Folder $recipeFolder, int $type): File {
+		$filename = $this->getFileName($type);
+		$file = $this->fs->ensureFileExists($filename, $recipeFolder);
+		if ($file->getSize() === 0) {
+			// Build thumbnail
+			$this->generateThumb($recipeFolder, $type, $file);
 		}
+		return $file;
 	}
 
 	/**
@@ -77,13 +93,15 @@ class ImageService {
 	 * @throws RecipeImageExistsException if the folder has already a image file present.
 	 */
 	public function createImage(Folder $recipeFolder): File {
-		if ($recipeFolder->nodeExists('full.jpg')) {
+		$file = $this->fs->ensureFileExists(self::NAME_MAIN, $recipeFolder);
+
+		if ($file->getSize() > 0) {
 			throw new RecipeImageExistsException(
 				$this->l->t('The recipe has already an image file. Cannot create a new one.')
 			);
 		}
 
-		return $recipeFolder->get('full.jpg');
+		return $file;
 	}
 
 	/**
@@ -96,39 +114,26 @@ class ImageService {
 	 * @throws NotFoundException If no full-scale image was found.
 	 */
 	public function recreateThumbnails(Folder $recipeFolder): void {
-		$fullImg = $this->getImage($recipeFolder);
-		$fullContent = $fullImg->getContent();
+		$this->fs->ensureNodeDeleted(self::NAME_THUMB, $recipeFolder);
+		$this->fs->ensureNodeDeleted(self::NAME_MINI, $recipeFolder);
 
-		$thumbContent = $this->thumbnailService->getThumbnailMainSize($fullContent);
-		$miniContent = $this->thumbnailService->getThumbnailMiniSize($thumbContent);
-
-		if ($recipeFolder->nodeExists('thumb.jpg')) {
-			/**
-			 * @var File $file
-			 */
-			$file = $recipeFolder->get('thumb.jpg');
-			$file->putContent($thumbContent);
-		} else {
-			$recipeFolder->newFile('thumb.jpg')->putContent($thumbContent);
-		}
-		
-		if ($recipeFolder->nodeExists('thumb16.jpg')) {
-			/**
-			 * @var File $file
-			 */
-			$file = $recipeFolder->get('thumb16.jpg');
-			$file->putContent($miniContent);
-		} else {
-			$recipeFolder->newFile('thumb16.jpg')->putContent($miniContent);
-		}
+		$this->ensureThumbnailExists($recipeFolder, self::THUMB_MAIN);
+		$this->ensureThumbnailExists($recipeFolder, self::THUMB_16);
 	}
 
+	/**
+	 * Get the name of the image stored relative to the recipe folder for the given thumbnail size
+	 *
+	 * @param integer $type The thumbnail size as defined in the class' constants
+	 * @return string The name of the file
+	 * @throws InvalidTypeException If the named type is unknown
+	 */
 	private function getFileName(int $type): string {
 		switch ($type) {
 			case self::THUMB_MAIN:
-				return 'thumb.jpg';
+				return self::NAME_THUMB;
 			case self::THUMB_16:
-				return 'thumb16.jpg';
+				return self::NAME_MINI;
 			default:
 				throw new InvalidThumbnailTypeException(
 					$this->l->t('Unknown type %d found.', [$type])
@@ -136,7 +141,7 @@ class ImageService {
 		}
 	}
 
-	private function generateThumb(Folder $recipeFolder, int $type, string $fileName): File {
+	protected function generateThumb(Folder $recipeFolder, int $type, File $dstFile): void {
 		$full = $this->getImage($recipeFolder);
 		$fullContent = $full->getContent();
 
@@ -149,9 +154,6 @@ class ImageService {
 				break;
 		}
 		
-		$thumb = $recipeFolder->newFile($fileName);
-		$thumb->putContent($thumbContent);
-		
-		return $thumb;
+		$dstFile->putContent($thumbContent);
 	}
 }

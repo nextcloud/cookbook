@@ -4,6 +4,7 @@ namespace OCA\Cookbook\tests\Unit\Service;
 
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
 use OCA\Cookbook\Exception\RecipeImageExistsException;
+use OCA\Cookbook\Helper\FilesystemHelper;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use PHPUnit\Framework\TestCase;
@@ -30,7 +31,12 @@ class ImageServiceTest extends TestCase {
 	private $l;
 
 	/**
-	 * @var ImageService
+	 * @var FilesystemHelper|MockObject
+	 */
+	private $fs;
+
+	/**
+	 * @var ImageService|MockObject
 	 */
 	private $dut;
 
@@ -39,10 +45,16 @@ class ImageServiceTest extends TestCase {
 
 		$this->thumbnailService = $this->createMock(ThumbnailService::class);
 		$this->l = $this->createMock(IL10N::class);
+		$this->fs = $this->createMock(FilesystemHelper::class);
 
 		$this->l->method('t')->willReturnArgument(0);
 
-		$this->dut = new ImageService($this->thumbnailService, $this->l);
+		$this->dut = $this->getMockBuilder(ImageService::class)
+			->onlyMethods(['generateThumb'])
+			->enableOriginalConstructor()
+			->setConstructorArgs([$this->thumbnailService, $this->fs, $this->l])
+			->getMock();
+		// $this->dut = new ImageService($this->thumbnailService, $this->fs, $this->l);
 	}
 
 	public function dpGetImage() {
@@ -88,25 +100,76 @@ class ImageServiceTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @dataProvider dpTypesValid
-	 */
-	public function testGetThumbnailDirect($type, $fileName) {
+	private function ensureThumbnailExists(
+		string $fileName,
+		bool $fileExists,
+		int $type
+	) {
 		/**
 		 * @var MockObject|Folder $folder
 		 */
 		$folder = $this->createMock(Folder::class);
-		$img = $this->createStub(File::class);
+		/**
+		 * @var MockObject|File $img
+		 */
+		$img = $this->createMock(File::class);
 
-		$folder->expects($this->once())->method('get')->with($fileName)->willReturn($img);
+		$this->fs->expects($this->once())->method('ensureFileExists')
+			->with($fileName, $folder)
+			->willReturn($img);
+		
+		$size = $fileExists ? 10 : 0;
+		$img->expects($this->once())->method('getSize')->willReturn($size);
 
-		$res = $this->dut->getThumbnail($folder, $type);
+		if ($fileExists) {
+			$this->dut->expects($this->never())->method('generateThumb');
+		// $img->expects($this->once())->method('putContent');
+		} else {
+			$this->dut->expects($this->once())->method('generateThumb')->with($folder, $type, $img);
+			// $img->expects($this->never())->method('putContent');
+		}
+
+		$res = $this->dut->ensureThumbnailExists($folder, $type);
 
 		$this->assertSame($img, $res);
 	}
 
 	/**
+	 * @dataProvider dpTypesValid
+	 */
+	public function testGetThumbnailDirect($type, $fileName) {
+		// /**
+		//  * @var MockObject|Folder $folder
+		//  */
+		// $folder = $this->createMock(Folder::class);
+		// /**
+		//  * @var MockObject|File $img
+		//  */
+		// $img = $this->createMock(File::class);
+
+		// $this->fs->expects($this->once())->method('ensureFileExists')
+		// 	->with($fileName, $folder)
+		// 	->willReturn($img);
+		
+		// $img->expects($this->once())->method('getSize')->willReturn(10);
+		// $img->expects($this->never())->method('putContent');
+
+		// $res = $this->dut->ensureThumbnailExists($folder, $type);
+
+		// $this->assertSame($img, $res);
+		$this->ensureThumbnailExists($fileName, true, $type);
+	}
+
+	/**
+	 * @dataProvider dpTypesValid
+	 */
+	public function testGetThumbnailNonExisting($type, $fileName) {
+		$this->ensureThumbnailExists($fileName, false, $type);
+	}
+
+	/**
 	 * @dataProvider dpTypesInvalid
+	 * @group disabled
 	 */
 	public function testGetThumbnailsInvalid($type) {
 		/**
@@ -122,6 +185,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpTypesValid
+	 * @group disabled
 	 */
 	public function testGetThumbnailCreate($type, $fileName) {
 		/**
@@ -156,7 +220,7 @@ class ImageServiceTest extends TestCase {
 		$countMatcher = $this->exactly(2);
 		$folder->expects($countMatcher)
 			->method('get')
-			->withConsecutive([$fileName],['full.jpg'])
+			->withConsecutive([$fileName], ['full.jpg'])
 			->willReturnCallback(function ($p) use ($countMatcher, $fullImg) {
 				if ($countMatcher->getInvocationCount() === 1) {
 					throw new NotFoundException();
@@ -178,6 +242,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpTypesValid
+	 * @group disabled
 	 */
 	public function testGetThumbnailCreateNoImage($type, $fileName) {
 		/**
@@ -203,7 +268,7 @@ class ImageServiceTest extends TestCase {
 
 		$folder->expects($this->exactly(2))
 			->method('get')
-			->withConsecutive([$fileName],['full.jpg'])
+			->withConsecutive([$fileName], ['full.jpg'])
 			->willThrowException(new NotFoundException());
 
 		$this->expectException(NotFoundException::class);
@@ -216,6 +281,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpCreateImage
+	 * @group disabled
 	 */
 	public function testCreateImage($exists) {
 		//
@@ -246,6 +312,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpRecreateThumbs
+	 * @group disabled
 	 */
 	public function testRecreateThumbs($thumbExists, $miniExists) {
 		/**
@@ -294,5 +361,18 @@ class ImageServiceTest extends TestCase {
 			->withConsecutive(...$newArgs)->willReturnOnConsecutiveCalls($thumbFile, $miniFile);
 
 		$this->dut->recreateThumbnails($folder);
+	}
+
+	/**
+	 * @testWith [true]
+	 * 				[false]
+	 */
+	public function testHasImage($exists) {
+		/**
+		 * @var Folder $recipeFolder
+		 */
+		$recipeFolder = $this->createStub(Folder::class);
+		$this->fs->method('nodeExists')->with('full.jpg', $recipeFolder)->willReturn($exists);
+		$this->assertEquals($exists, $this->dut->hasImage($recipeFolder));
 	}
 }

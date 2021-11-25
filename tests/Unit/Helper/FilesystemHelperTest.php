@@ -20,6 +20,7 @@ use ReflectionClass;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\FilesystemHelper
+ * @covers \OCA\Cookbook\Helper\FilesystemHelper
  * @covers ::<private>
  * @covers ::<protected>
  * @covers \OCA\Cookbook\Exception\WrongFileTypeException
@@ -169,6 +170,7 @@ class FilesystemHelperTest extends TestCase {
 			$this->dut->folderHasWritePermissions($this->createPermissionFolderStub($permissions))
 		);
 	}
+
 	/**
 	 * @dataProvider dpPermissions
 	 * @covers ::folderHasFullPermissions
@@ -179,122 +181,6 @@ class FilesystemHelperTest extends TestCase {
 			$this->dut->folderHasFullPermissions($this->createPermissionFolderStub($permissions))
 		);
 	}
-
-	public function dpEnsureFileExists() {
-		$folder = $this->createMock(Folder::class);
-
-		return [
-			'existing_root' => ['/Recipes Folder/a', true, null, false],
-			'non-existing_root' => ['/Recipes Folder/a', false, null, false],
-			'existing_path' => ['/Recipes Folder/a', true, $folder, false],
-			'non-existing_path' => ['/Recipes Folder/a', false, $folder, false],
-			'existing_root_folder' => ['/Recipes Folder/a', true, null, true],
-			'non-existing_root_folder' => ['/Recipes Folder/a', false, null, true],
-			'existing_path_folder' => ['/Recipes Folder/a', true, $folder, true],
-			'non-existing_path_folder' => ['/Recipes Folder/a', false, $folder, true],
-		];
-	}
-
-	/**
-	 * @dataProvider dpEnsureFileExists
-	 * @covers ::ensureFileExists
-	 */
-	public function estEnsureFileExists($name, $exists, $root, $isFolder) {
-		if ($root === null) {
-			$rootNode = $this->root;
-		} else {
-			$root = clone $root;
-			$rootNode = $root;
-		}
-
-		/**
-		 * @var MockObject $rootNode
-		 */
-
-		$retFile = $this->createStub(File::class);
-		$type = $isFolder ? FileInfo::TYPE_FOLDER : FileInfo::TYPE_FILE;
-		$retFile->method('getType')->willReturn($type);
-		$getCall = $rootNode->expects($this->once())->method('get')->with($name);
-
-		if ($exists) {
-			$getCall->willReturn($retFile);
-			$rootNode->expects($this->never())->method('newFile');
-		} else {
-			$getCall->willThrowException(new NotFoundException());
-			$rootNode->expects($this->once())->method('newFile')->with($name)->willReturn($retFile);
-		}
-
-		try {
-			if ($root === null) {
-				$ret = $this->dut->ensureFileExists($name);
-			} else {
-				$ret = $this->dut->ensureFileExists($name, $root);
-			}
-	
-			$this->assertSame($retFile, $ret);
-		} catch (WrongFileTypeException $ex) {
-			$this->assertTrue($isFolder);
-		}
-	}
-
-	public function dpEnsureFolderExists() {
-		$folder = $this->createMock(Folder::class);
-
-		return [
-			'existing_root' => ['/Recipes Folder', true, null, false],
-			'non-existing_root' => ['/Recipes Folder', false, null, false],
-			'existing_path' => ['/Recipes Folder', true, $folder, false],
-			'non-existing_path' => ['/Recipes Folder', false, $folder, false],
-			'existing_root_folder' => ['/Recipes Folder', true, null, true],
-			'non-existing_root_folder' => ['/Recipes Folder', false, null, true],
-			'existing_path_folder' => ['/Recipes Folder', true, $folder, true],
-			'non-existing_path_folder' => ['/Recipes Folder', false, $folder, true],
-		];
-	}
-
-	/**
-	 * @dataProvider dpEnsureFolderExists
-	 * @covers ::ensureFolderExists
-	 */
-	public function estEnsureFolderExists($name, $exists, $root, $isFolder) {
-		if ($root === null) {
-			$rootNode = $this->root;
-		} else {
-			$rootNode = clone $root;
-		}
-		/**
-		 * @var MockObject $root
-		 */
-		
-		/**
-		 * @var Stub $retFolder
-		 */
-		$retFolder = $this->createStub(Folder::class);
-		$type = $isFolder ? FileInfo::TYPE_FOLDER : FileInfo::TYPE_FILE;
-		$retFolder->method('getType')->willReturn($type);
-		$getCall = $rootNode->expects($this->once())->method('get')->with($name);
-
-		if ($exists) {
-			$getCall->willReturn($retFolder);
-			$rootNode->expects($this->never())->method('newFolder');
-		} else {
-			$getCall->willThrowException(new NotFoundException());
-			$rootNode->expects($this->once())->method('newFolder')->with($name)->willReturn($retFolder);
-		}
-
-		try {
-			if ($root === null) {
-				$ret = $this->dut->ensureFolderExists($name);
-			} else {
-				$ret = $this->dut->ensureFolderExists($name, $rootNode);
-			}
-	
-			$this->assertSame($retFolder, $ret);
-		} catch (WrongFileTypeException $ex) {
-			$this->assertFalse($isFolder);
-		}
-	}
-
 
 	private function getRootForEnsureNode($useRoot): MockObject {
 		if ($useRoot) {
@@ -443,5 +329,53 @@ class FilesystemHelperTest extends TestCase {
 		$node->method('getType')->willReturn($type);
 
 		$this->assertEquals($isFolder, $this->dut->isFolder($node));
+	}
+
+	public function dpEnsureNodeDeleted() {
+		return [
+			['recipe.json', true],
+			['recipe.json', false],
+		];
+	}
+
+	private function ensureNodeDeleted(
+		string $name,
+		bool $useRoot,
+		bool $nodeExists
+	) {
+		$root = $this->getRootForEnsureNode($useRoot);
+		/**
+		 * @var MockObject|File $node
+		 */
+		$node = $this->createMock(File::class);
+		
+		$root->expects($this->once())->method('nodeExists')->with($name)->willReturn($nodeExists);
+
+		if ($nodeExists) {
+			$root->expects($this->once())->method('get')->with($name)->willReturn($node);
+			$node->expects($this->once())->method('delete');
+		} else {
+			$root->expects($this->never())->method('get');
+		}
+
+		$this->root = $root;
+	}
+
+	/**
+	 * @dataProvider dpEnsureNodeDeleted
+	 */
+	public function testEnsureNodeDeletedRoot(string $name, bool $nodeExists) {
+		$this->ensureNodeDeleted($name, true, $nodeExists);
+
+		$this->dut->ensureNodeDeleted($name);
+	}
+
+	/**
+	 * @dataProvider dpEnsureNodeDeleted
+	 */
+	public function testEnsureNodeDeletedNoRoot(string $name, bool $nodeExists) {
+		$this->ensureNodeDeleted($name, false, $nodeExists);
+
+		$this->dut->ensureNodeDeleted($name, $this->root);
 	}
 }

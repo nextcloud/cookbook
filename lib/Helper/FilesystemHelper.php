@@ -129,6 +129,23 @@ class FilesystemHelper {
 	}
 
 	/**
+	 * Remove a file/folder if is already existing.
+	 *
+	 * If no node with the given name exists, nothing happens
+	 *
+	 * @param string $name The file or folder to remove
+	 * @param Folder|null $parent The parent to look for if not looking in the root folder of the data
+	 * @return void
+	 */
+	public function ensureNodeDeleted(string $name, ?Folder $parent = null): void {
+		$root = $parent ?? $this->root;
+
+		if ($root->nodeExists($name)) {
+			$root->get($name)->delete();
+		}
+	}
+
+	/**
 	 * Check if a given node is a folder
 	 *
 	 * @param Node $node The node to check
