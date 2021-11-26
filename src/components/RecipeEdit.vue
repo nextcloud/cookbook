@@ -463,10 +463,8 @@ export default {
         confirmLeavingPage() {
             // eslint-disable-next-line no-alert
             return window.confirm(
-                t(
-                    "cookbook",
-                    "You have unsaved changes! Do you still want to leave?"
-                )
+                // prettier-ignore
+                t("cookbook", "You have unsaved changes! Do you still want to leave?")
             )
         },
         confirmStayInEditedForm() {

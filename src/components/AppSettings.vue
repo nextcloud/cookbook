@@ -57,10 +57,8 @@
                         />
                         <label for="tag-cloud">
                             {{
-                                t(
-                                    "cookbook",
-                                    "Show keyword cloud in recipe lists"
-                                )
+                                // prettier-ignore
+                                t("cookbook", "Show keyword cloud in recipe lists")
                             }}
                         </label>
                     </li>

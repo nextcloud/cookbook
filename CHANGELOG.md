@@ -23,6 +23,8 @@
   [#851](https://github.com/nextcloud/cookbook/pull/851) @christianlupus
 - Update git hooks to run all tests even if some fail
   [#856](https://github.com/nextcloud/cookbook/pull/856) @christianlupus
+- Make strings recoverable by transifex parser
+  [#860](https://github.com/nextcloud/cookbook/pull/860) @christianlupus
 
 
 ## 0.9.6 - 2021-10-18
