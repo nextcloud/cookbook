@@ -32,10 +32,10 @@ Possible options:
   --debug-port <PORT>               Select the port on the host machine to attach during debugging sessions using xdebug (default 9000)
   --debug-host <HOST>               Host to connect the debugging session to (default to local docker host)
   --debug-up-error                  Enable the debugger in case of an error (see xdebug's start_upon_error configuration)
-  --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration)
+  --debug-start-with-request <MODE> Set the starting mode of xdebug to <MODE> (see xdebug's start_with_request configuration, 'yes' by default)
   --xdebug-log-level <LEVEL>        Set the log level of xdebug to <LEVEL>
   --enable-tracing                  Enable the tracing feature of xdebug
-  --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration)
+  --trace-format <FORMAT>           Set the trace format to the <FORMAT> (see xdebug's trace_format configuration, default 1)
   --enable-profiling                Enable the profiling function of xdebug
   --help                            Show this help screen
   --                                Pass any further parameters to the phpunit program
@@ -67,17 +67,19 @@ list_env_dumps() {
 pull_images() {
 	echo 'Pulling pre-built images.'
 	docker-compose pull --quiet
+
+	toc
 	
-	if docker pull "nextcloudcookbook/testci:php$PHP_VERSION"; then
+	if docker pull --quiet "nextcloudcookbook/testci:php$PHP_VERSION"; then
 		docker tag "nextcloudcookbook/testci:php$PHP_VERSION" cookbook_unittesting_dut
 	fi
+
+	toc
 	
 	echo 'Pulling images finished.'
 }
 
 build_images() {
-	pull_images
-	
 	echo 'Building the images.'
 	local PROGRESS=''
 	if [ -n "$CI" ]; then
@@ -192,6 +194,7 @@ shutdown_helpers(){
 
 setup_server(){
 	echo 'Setup of the server environment.'
+	toc
 	
 	echo "Checking out nextcloud server repository"
 	git clone --depth=1 --branch "$ENV_BRANCH" https://github.com/nextcloud/server volumes/nextcloud
@@ -201,6 +204,8 @@ setup_server(){
 	git submodule update --init
 	popd > /dev/null
 	
+	toc
+
 	echo 'Creating cookbook folder for later bind-merge'
 	pushd volumes/nextcloud > /dev/null
 	mkdir -p custom_apps/cookbook data
@@ -415,7 +420,7 @@ run_tests() {
 	echo "Staring container to run the unit tests."
 	echo "Parameters for container: $PARAMS"
 	echo "Additional parameters for phpunit: $@"
-	docker-compose run --rm -T dut $PARAMS -- "$@"
+	docker-compose run --rm dut $PARAMS -- "$@"
 	echo 'Test runs finished.'
 }
 
@@ -492,6 +497,9 @@ source mysql.env
 source postgres.env
 
 RSYNC_PARAMS="--delete --delete-delay --delete-excluded --archive"
+
+# Use old styled docker-compose names with underscores instead of dashes
+export COMPOSE_COMPATIBILITY=true
 
 ##### Extract CLI parameters into internal variables
 
@@ -773,15 +781,27 @@ printCI() {
 	fi
 }
 
+tic() {
+	TIC=$(date +%s.%3N)
+}
+
+toc() {
+	local TOC=$(date +%s.3N)
+	local diff=$(echo "scale=3; $TOC - $TIC" | bc)
+	# return "$diff"
+	printCI "Elapsed time: $diff seconds"
+}
+
 echo 'Starting process'
 
 printCI "::group::Prepare docker"
+tic
 
 if [ -n "$COPY_ENV_SRC" ]; then
 	copy_environment
 fi
 
-if [ $DOCKER_PULL = 'y' ]; then
+if [ $DOCKER_PULL = 'y' -o $CREATE_IMAGES = 'y' -o $CREATE_IMAGES_IF_NEEDED = 'y' ]; then
 	pull_images
 fi
 
@@ -804,7 +824,9 @@ if [ $PUSH_IMAGES = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+toc
 printCI "::group::Preparing environment"
+tic
 
 create_file_structure
 
@@ -827,7 +849,9 @@ if [ $SETUP_ENVIRONMENT = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+toc
 printCI "::group::Environment dump handling"
+tic
 
 if [ $DROP_ENV_DUMP = 'y' ]; then
 	drop_env_dump
@@ -842,24 +866,31 @@ if [ $RESTORE_ENV_DUMP = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+toc
 printCI "::group::Postprocessing environemnt preparation"
+tic
 
 if [ $START_HELPERS = 'y' ]; then
 	start_helpers_post
 fi
 
 printCI "::endgroup::"
+toc
 
+tic
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
 	run_tests "$@"
 fi
+toc
 
 printCI "::group::Clean-Up"
+tic
 
 if [ $SHUTDOWN_HELPERS = 'y' ]; then
 	shutdown_helpers
 fi
 
 printCI "::endgroup::"
+toc
 
 echo "Processing finished"

@@ -11,8 +11,8 @@ extends:
     - prettier
 
 globals:
-    OC:
-    t:
+    OC: readonly
+    t: readonly
 
 rules:
     no-plusplus:

@@ -232,28 +232,25 @@ export default {
                 e.preventDefault()
                 const $li = e.currentTarget.closest("li")
                 const $ul = $li.closest("ul")
-                // eslint-disable-next-line camelcase
-                const $pressed_li_index = Array.prototype.indexOf.call(
+                const $pressedLiIndex = Array.prototype.indexOf.call(
                     $ul.childNodes,
                     $li
                 )
 
                 if (e.keyCode === 13 || e.keyCode === 10) {
                     if (
-                        // eslint-disable-next-line camelcase
-                        $pressed_li_index >=
+                        $pressedLiIndex >=
                         this.$refs["list-field"].length - 1
                     ) {
                         this.addNewEntry()
                     } else {
-                        // eslint-disable-next-line camelcase
-                        $ul.children[$pressed_li_index + 1]
+                        $ul.children[$pressedLiIndex + 1]
                             .getElementsByTagName("input")[0]
                             .focus()
                     }
                 } else if (this.referencePopupEnabled && e.key === "#") {
                     e.preventDefault()
-                    const elm = this.$refs["list-field"][$pressed_li_index]
+                    const elm = this.$refs["list-field"][$pressedLiIndex]
                     // Check if the letter before the hash
                     const cursorPos = elm.selectionStart
                     const content = elm.value
@@ -270,8 +267,7 @@ export default {
                         this.$parent.$emit("showRecipeReferencesPopup", {
                             context: this,
                         })
-                        // eslint-disable-next-line camelcase
-                        this.lastFocusedFieldIndex = $pressed_li_index
+                        this.lastFocusedFieldIndex = $pressedLiIndex
                         this.lastCursorPosition = cursorPos
                     }
                 }

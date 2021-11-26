@@ -125,7 +125,6 @@ import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
 import EditMultiselectPopup from "./EditMultiselectPopup.vue"
 import EditTimeField from "./EditTimeField.vue"
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 
 export default {
     name: "RecipeEdit",
@@ -137,7 +136,6 @@ export default {
         EditTimeField,
         EditMultiselectInputGroup,
         EditMultiselectPopup,
-        ActionButton,
     },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
@@ -465,10 +463,8 @@ export default {
         confirmLeavingPage() {
             // eslint-disable-next-line no-alert
             return window.confirm(
-                t(
-                    "cookbook",
-                    "You have unsaved changes! Do you still want to leave?"
-                )
+                // prettier-ignore
+                t("cookbook", "You have unsaved changes! Do you still want to leave?")
             )
         },
         confirmStayInEditedForm() {
@@ -583,11 +579,10 @@ export default {
                     return this.$store.dispatch("updateRecipe", {
                         recipe: this.recipe,
                     })
-                } else {
-                    return this.$store.dispatch("createRecipe", {
-                        recipe: this.recipe,
-                    })
                 }
+                return this.$store.dispatch("createRecipe", {
+                    recipe: this.recipe,
+                })
             })()
 
             request
@@ -602,6 +597,7 @@ export default {
 
                         switch (e.response.status) {
                             case 409:
+                                // eslint-disable-next-line no-alert
                                 alert(e.response.data.msg)
                                 break
 

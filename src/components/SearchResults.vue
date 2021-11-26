@@ -10,7 +10,7 @@ import axios from "@nextcloud/axios"
 import RecipeList from "./RecipeList.vue"
 
 export default {
-    name: "Search",
+    name: "SearchResult",
     components: {
         RecipeList,
     },

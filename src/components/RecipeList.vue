@@ -4,7 +4,7 @@
             v-if="showTagCloudInRecipeList"
             v-model="keywordFilter"
             :keywords="rawKeywords"
-            :filteredRecipes="filteredRecipes"
+            :filtered-recipes="filteredRecipes"
         />
         <div id="recipes-submenu" class="recipes-submenu-container">
             <Multiselect
@@ -16,10 +16,7 @@
                 :placeholder="t('cookbook', 'Select order')"
                 :options="recipeOrderingOptions"
             >
-                <template
-                    slot="placeholder"
-                    class="recipe-sorting-item-placeholder"
-                >
+                <template slot="placeholder">
                     <span class="icon-triangle-n" style="margin-right: -8px" />
                     <span class="ordering-item-icon icon-triangle-s" />
                     {{ t("cookbook", "Select order") }}
@@ -53,7 +50,6 @@
 </template>
 
 <script>
-import moment from "@nextcloud/moment"
 import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
 import RecipeCard from "./RecipeCard.vue"
 import RecipeListKeywordCloud from "./RecipeListKeywordCloud.vue"
@@ -317,10 +313,6 @@ export default {
 .recipes-submenu-container {
     padding-left: 16px;
     margin-bottom: 0.75ex;
-}
-
-.recipe-sorting-item-placeholder {
-    display: block;
 }
 
 .ordering-item-icon {

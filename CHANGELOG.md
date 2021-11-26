@@ -1,6 +1,37 @@
 ## [Unreleased]
 
 
+## 0.9.7 - 2021-11-26
+
+### Added
+- Add placeholder text to make clear URLs can be used as image source
+  [#835](https://github.com/nextcloud/cookbook/pull/835) @seyfeb
+
+### Fixed
+- CI build always builds docker images from scratch
+  [#823](https://github.com/nextcloud/cookbook/pull/823) @christianlupus
+- Fix test script after update in docker-compose
+  [#833](https://github.com/nextcloud/cookbook/pull/833) @christianlupus
+- Update NPM during automatic building to latest version ([#837](https://github.com/nextcloud/cookbook/issues/837))
+  [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
+- Downgrade eslint to meet peer dependencies ([#838](https://github.com/nextcloud/cookbook/issues/838))
+  [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
+- Fix bug in Makefile to simplify development
+  [#839](https://github.com/nextcloud/cookbook/pull/839) @christianlupus
+- Update eslint and dependencies
+  [#848](https://github.com/nextcloud/cookbook/pull/848) @christianlupus
+- Update PHP CS-Fixer
+  [#849](https://github.com/nextcloud/cookbook/pull/849) @christianlupus
+- Update git hooks to not delay commits too much
+  [#851](https://github.com/nextcloud/cookbook/pull/851) @christianlupus
+- Update git hooks to run all tests even if some fail
+  [#856](https://github.com/nextcloud/cookbook/pull/856) @christianlupus
+- Make strings recoverable by transifex parser
+  [#860](https://github.com/nextcloud/cookbook/pull/860) @christianlupus
+- Allow arrays in stored JSON recipe files for the keywords
+  [#859](https://github.com/nextcloud/cookbook/pull/859) @christianlupus
+
+
 ## 0.9.6 - 2021-10-18
 
 ### Added

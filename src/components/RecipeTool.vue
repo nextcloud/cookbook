@@ -1,11 +1,17 @@
 <template>
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <li v-html="tool"></li>
 </template>
 
 <script>
 export default {
     name: "RecipeTool",
-    props: ["tool"],
+    props: {
+        tool: {
+            type: String,
+            default: "",
+        },
+    },
 }
 </script>
 

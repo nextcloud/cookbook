@@ -1,4 +1,5 @@
 <template>
+    <!-- eslint-disable-next-line vue/no-v-html -->
     <li :class="{ done: isDone }" @click="toggleDone" v-html="instruction"></li>
 </template>
 

@@ -241,6 +241,11 @@ class RecipeService {
 			$json['recipeYield'] = 1;
 		}
 
+		// Make sure the keyword is a string and no array
+		if (isset($json['keywords']) && is_array($json['keywords'])) {
+			$json['keywords'] = implode(',', $json['keywords']);
+		}
+
 		// Make sure that "keywords" is an array of unique strings
 		if (isset($json['keywords']) && is_string($json['keywords'])) {
 			$keywords = trim($json['keywords'], " \0\t\n\x0B\r,");

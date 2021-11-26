@@ -294,6 +294,10 @@ jobs:
             shell: bash
             run: make appinfo/info.xml
         
+        -   name: Update NPM
+            shell: bash
+            run: sudo npm install -g npm
+        
         -   name: Install the NPM dependencies
             shell: bash
             run: >-
