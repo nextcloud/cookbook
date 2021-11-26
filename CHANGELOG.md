@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.7 - 2021-11-26
+
 ### Added
 - Add placeholder text to make clear URLs can be used as image source
   [#835](https://github.com/nextcloud/cookbook/pull/835) @seyfeb
