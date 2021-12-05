@@ -141,7 +141,7 @@ jobs:
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable23
-                    phpVersion: "8"
+                    phpVersion: "8.0"
                     httpServer: "apache"
                     mayFail: false
                 
