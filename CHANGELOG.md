@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- Update comaptible version to contain v23
+  [#864](https://github.com/nextcloud/cookbook/pull/864) @christianlupus
+
 
 ## 0.9.7 - 2021-11-26
 
