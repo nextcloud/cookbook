@@ -37,14 +37,33 @@ jobs:
               run: make appinfo/info.xml
               if: ${{ steps.check.outputs.skip == 'false' }}
               
+            - name: Log into docker
+              shell: bash
+              run: >-
+                echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
+                | docker login 
+                --username ${{ secrets.DOCKER_HUB_USERNAME }} 
+                --password-stdin
+              if: steps.check.outputs.skip == 'false'
+            
+            - name: Build php-base image
+              shell: bash
+              if: steps.check.outputs.skip == 'false'
+              run: >-
+                docker build
+                --target php-base
+                -t nextcloudcookbook/php-base:${{ matrix.phpVersion }}
+                --build-arg ${{ matrix.phpVersion }}
+                .github/actions/run-tests/tests
+            - name: Push the image
+              shell: bash
+              if: steps.check.outputs.skip == 'false'
+              run: docker push nextcloudcookbook/php-base:${{ matrix.phpVersion }}
+
             - name: Build and push the image
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
-                echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
-                | docker login 
-                --username ${{ secrets.DOCKER_HUB_USERNAME }} 
-                --password-stdin &&
                 export COMPOSE_DOCKER_CLI_BUILD=1 &&
                 PHP_VERSION=${{ matrix.phpVersion }}
                 ./run-locally.sh --pull --create-images --push-images

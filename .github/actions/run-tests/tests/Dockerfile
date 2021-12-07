@@ -1,6 +1,6 @@
 
 ARG PHPVERSION
-FROM php:${PHPVERSION}-fpm
+FROM php:${PHPVERSION}-fpm as php-base
 
 LABEL maintainer="Christian Wolf <github@christianwolf.email>"
 
@@ -30,8 +30,6 @@ RUN pecl update-channels && \
 	pecl install xdebug >/dev/null && \
 	docker-php-ext-enable xdebug > /dev/null
 
-RUN npm install -g --quiet --loglevel warn npm@latest
-
 COPY install-composer.sh /tmp/install-composer.sh
 RUN /tmp/install-composer.sh
 
@@ -42,6 +40,11 @@ COPY xdebug.config /tmp/xdebug.config
 RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
+
+
+FROM php-base
+
+RUN npm install -g --quiet --loglevel warn npm@latest
 
 RUN mkdir /nextcloud
 WORKDIR /nextcloud
