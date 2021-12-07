@@ -44,6 +44,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
 		"babel-loader": "^8.1.0",
+		"clean-webpack-plugin": "^4.0.0",
 		"compression-webpack-plugin": "^9.0.0",
 		"css-loader": "^6.0.0",
 		"eslint": "^8.2.0",
@@ -53,6 +54,7 @@
 		"eslint-plugin-vue": "^8.0.3",
 		"file-loader": "^6.0.0",
 		"lodash-webpack-plugin": "^0.11.5",
+		"mini-css-extract-plugin": "^2.4.5",
 		"prettier": "^2.2.1",
 		"stylelint": "^13.12.0",
 		"stylelint-config-idiomatic-order": "^8.1.0",

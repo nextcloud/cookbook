@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Update NPM plugins to enhance build process
+  [#868](https://github.com/nextcloud/cookbook/pull/868) @christianlupus
 
 
 ## 0.9.8 - 2021-12-05
