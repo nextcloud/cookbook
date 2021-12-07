@@ -7,7 +7,8 @@
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
 
@@ -29,7 +30,10 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [{ loader: 'vue-style-loader' }, 
+                use: [
+                    process.env.NODE_ENV !== 'production' ?
+                    MiniCssExtractPlugin.loader :
+                    { loader: 'vue-style-loader' },
                     {
                         loader: 'css-loader',
                         options: {
@@ -72,6 +76,8 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
+                    process.env.NODE_ENV !== 'production' ?
+                    MiniCssExtractPlugin.loader :
                     { loader: 'vue-style-loader' },
                     {
                         loader: 'css-loader',
@@ -86,8 +92,14 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: "[name].css",
+            // chunkFilename: "[id].css",
+          }),
         new VueLoaderPlugin(),
-        new LodashModuleReplacementPlugin
+        new LodashModuleReplacementPlugin,
     ],
     resolve: {
         extensions: ['*', '.js', '.vue', '.json'],
