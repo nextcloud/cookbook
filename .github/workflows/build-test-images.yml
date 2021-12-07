@@ -53,7 +53,7 @@ jobs:
                 docker build
                 --target php-base
                 -t nextcloudcookbook/php-base:${{ matrix.phpVersion }}
-                --build-arg ${{ matrix.phpVersion }}
+                --build-arg PHPVERSION=${{ matrix.phpVersion }}
                 .github/actions/run-tests/tests
             - name: Push the image
               shell: bash
