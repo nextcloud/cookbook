@@ -6,11 +6,12 @@
  */
 const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 
-    entry:{
+    entry: {
         vue: path.join(__dirname, 'src', 'main.js'),
         guest: path.join(__dirname, 'src', 'guest.js'),
     },
@@ -84,6 +85,7 @@ module.exports = {
         ],
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new VueLoaderPlugin(),
         new LodashModuleReplacementPlugin
     ],
