@@ -3,6 +3,8 @@
 ### Fixed
 - Update NPM plugins to enhance build process
   [#868](https://github.com/nextcloud/cookbook/pull/868) @christianlupus
+- Removed missing CSS link in guest template
+  [#869](https://github.com/nextcloud/cookbook/pull/869) @christianlupus
 
 
 ## 0.9.8 - 2021-12-05
