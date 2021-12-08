@@ -46,20 +46,6 @@ jobs:
                 --password-stdin
               if: steps.check.outputs.skip == 'false'
             
-            - name: Build php-base image
-              shell: bash
-              if: steps.check.outputs.skip == 'false'
-              run: >-
-                docker build
-                --target php-base
-                -t nextcloudcookbook/php-base:${{ matrix.phpVersion }}
-                --build-arg PHPVERSION=${{ matrix.phpVersion }}
-                .github/actions/run-tests/tests
-            - name: Push the image
-              shell: bash
-              if: steps.check.outputs.skip == 'false'
-              run: docker push nextcloudcookbook/php-base:${{ matrix.phpVersion }}
-
             - name: Build and push the image
               shell: bash
               run: >-
@@ -68,3 +54,54 @@ jobs:
                 PHP_VERSION=${{ matrix.phpVersion }}
                 ./run-locally.sh --pull --create-images --push-images
               if: ${{ steps.check.outputs.skip == 'false' }}
+
+    php-base:
+        name: Build and push the latest php-base images
+        runs-on: ubuntu-latest
+        
+        strategy:
+            matrix:
+                phpVersion:
+                    - "7"
+                    - "7.3"
+                    - "8"
+        steps:
+            - name: Check if secret is known
+              shell: bash
+              id: check
+              run: |
+                echo "::set-output name=skip::false"
+                if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
+                    echo "::set-output name=skip::true"
+                fi
+                if [ -z "${{ secrets.DOCKER_HUB_USERNAME }}" ]; then
+                    echo "::set-output name=skip::true"
+                fi
+            
+            - name: Checkout the app
+              uses: actions/checkout@v2
+              if: ${{ steps.check.outputs.skip == 'false' }}
+            - name: Make sure the appinfo is built
+              shell: bash
+              run: make appinfo/info.xml
+              if: ${{ steps.check.outputs.skip == 'false' }}
+              
+            - name: Log into docker
+              shell: bash
+              run: >-
+                echo "${{ secrets.DOCKER_HUB_TOKEN }}"
+                | docker login
+                --username ${{ secrets.DOCKER_HUB_USERNAME }}
+                --password-stdin
+              if: steps.check.outputs.skip == 'false'
+            
+            - name: Build and push php-base image
+              shell: bash
+              if: steps.check.outputs.skip == 'false'
+              run: >-
+                cd .github/actions/run-tests &&
+                ./run-locally.sh
+                --pull
+                --build-base-image
+                --push-images
+
