@@ -105,3 +105,88 @@ jobs:
                 --build-base-image
                 --push-images
 
+    all-images:
+      name: Build the intermediate test images
+      runs-on: ubuntu-latest
+      # defaults:
+      #   shell: bash
+      needs:
+        - php-base
+      strategy:
+        matrix:
+          phpVersion:
+            # - "7.3"
+            - "7"
+            # - "8"
+          database:
+            - mysql
+            # - pgsql
+            # - sqlite
+          coreVersion:
+            - stable19
+            - stable20
+            - stable21
+            - stable22
+            - stable23
+            # - master
+          httpServer:
+            - "apache"
+            # - "nginx"
+          forceInstall:
+            - false
+          include:
+            # Put different database systems here
+            - phpVersion: "7"
+              database: pgsql
+              coreVersion: stable23
+              httpServer: apache
+            - phpVersion: "7"
+              database: sqlite
+              coreVersion: stable23
+              httpServer: apache
+            
+            # Put different PHP versions here
+            - phpVersion: "7.3"
+              database: mysql
+              coreVersion: stable23
+              httpServer: apache
+            - phpVersion: "8.0"
+              database: mysql
+              coreVersion: stable23
+              httpServer: apache
+
+            # Put different HTTP servers here
+            - phpVersion: "7"
+              database: mysql
+              coreVersion: stable23
+              httpServer: nginx
+            
+            # Put master version here
+            - phpVersion: "7"
+              database: mysql
+              coreVersion: master
+              httpServer: apache
+              forceInstall: true
+
+
+      steps:
+        - name: Check if secret is known
+          id: check
+          run: |
+            echo "::set-output name=skip::false"
+            if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
+                echo "::set-output name=skip::true"
+            fi
+            if [ -z "${{ secrets.DOCKER_HUB_USERNAME }}" ]; then
+                echo "::set-output name=skip::true"
+            fi
+        
+        - name: Checkout the app
+          uses: actions/checkout@v2
+          if: ${{ steps.check.outputs.skip == 'false' }}
+        - name: Make sure the appinfo is built
+          run: make appinfo/info.xml
+          if: ${{ steps.check.outputs.skip == 'false' }}
+
+        - name: Install MySQL database
+        - name: Trigger force install
