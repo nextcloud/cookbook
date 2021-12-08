@@ -10,12 +10,13 @@ import VueShowdown from "vue-showdown"
 import Editor from "v-markdown-editor"
 import "v-markdown-editor/dist/v-markdown-editor.css"
 
+import { generateUrl } from "@nextcloud/router"
+
 import Vue from "vue"
 import router from "./router"
 import store from "./store"
 
 import AppMain from "./components/AppMain.vue"
-import { generateUrl } from "@nextcloud/router"
 
 // eslint-disable-next-line func-names, import/newline-after-import
 ;(function (OC, window) {
