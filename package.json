@@ -43,6 +43,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
+		"@nextcloud/router": "^2.0.0",
 		"babel-loader": "^8.1.0",
 		"clean-webpack-plugin": "^4.0.0",
 		"compression-webpack-plugin": "^9.0.0",

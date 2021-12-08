@@ -15,6 +15,7 @@ import router from "./router"
 import store from "./store"
 
 import AppMain from "./components/AppMain.vue"
+import { generateUrl } from "@nextcloud/router"
 
 // eslint-disable-next-line func-names, import/newline-after-import
 ;(function (OC, window) {
@@ -23,7 +24,7 @@ import AppMain from "./components/AppMain.vue"
     __webpack_nonce__ = btoa(OC.requestToken)
 
     // eslint-disable-next-line no-param-reassign
-    window.baseUrl = OC.generateUrl("apps/cookbook")
+    window.baseUrl = generateUrl("apps/cookbook")
 
     // Check if two routes point to the same component but have different content
     // eslint-disable-next-line no-param-reassign
