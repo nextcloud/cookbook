@@ -82,6 +82,16 @@ services:
         command: ['php-fpm']
         user: root
     
+    php-base:
+        <<: *dut
+        build:
+            context: ./tests
+            cache_from:
+                - cookbook_unittesting_php-base
+                - cookbook_unittesting_dut
+            target: php-base
+
+    
     apache:
         image: httpd:alpine
         volumes:

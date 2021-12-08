@@ -9,6 +9,7 @@ Possible options:
   --create-images                   Force creation of custom docker images locally used for testing
   --create-images-if-needed         Only build those images that are not existing currently
   --push-images                     Push images to docker. Not yet working
+  --build-base-images               Build the base images containing PHP and the required libraries
   --start-helpers                   Start helper containers (database, http server)
   --shutdown-helpers                Shut down all containers running
   --setup-environment <BRANCH>      Setup a development environment in current folder. BRANCH dictates the branch of the server to use (e.g. stable20).
@@ -108,6 +109,30 @@ push_images() {
 create_file_structure() {
 	echo 'Creating the required file structure for the volumes'
 	mkdir -p volumes/{mysql,postgres,nextcloud,cookbook,data,dumps,coverage,www,output}
+}
+
+pull_base_image() {
+	echo "Pulling the base image"
+	docker pull "nextcloudcookbook/php-base:$PHP_VERSION"
+	docker tag "nextcloudcookbook/php-base:$PHP_VERSION" cookbook_unittesting_php-base
+	echo "Done."
+}
+
+build_base_images() {
+	echo 'Building the base image.'
+	local PROGRESS=''
+	if [ -n "$CI" ]; then
+		PROGRESS='--progress plain'
+	fi
+	
+	docker-compose build --pull --force-rm $PROGRESS \
+		--build-arg PHPVERSION=$PHP_VERSION \
+		php-base
+	
+	echo "Retagging image"
+	docker tag cookbook_unittesting_php-base "nextcloudcookbook/php-base:$PHP_VERSION"
+	# docker-compose build --pull --force-rm mysql
+	echo 'Building images finished.'
 }
 
 start_helpers(){
@@ -459,6 +484,7 @@ DOCKER_PULL=n
 CREATE_IMAGES=n
 CREATE_IMAGES_IF_NEEDED=n
 PUSH_IMAGES=n
+BUILD_BASE_IMAGES=n
 START_HELPERS=n
 SHUTDOWN_HELPERS=n
 SETUP_ENVIRONMENT=n
@@ -526,6 +552,9 @@ do
 			;;
 		--push-images)
 			PUSH_IMAGES=y
+			;;
+		--build-base-images)
+			BUILD_BASE_IMAGES=y
 			;;
 		--start-helpers)
 			START_HELPERS=y
@@ -791,6 +820,27 @@ toc() {
 	# return "$diff"
 	printCI "Elapsed time: $diff seconds"
 }
+
+if [ $BUILD_BASE_IMAGES = y ]; then
+	echo "You have selected to build the php base images. No action apart from the base image generation will be carried out."
+
+	if [ $DOCKER_PULL = y ]; then
+		tic
+		pull_base_image
+		toc
+	fi
+
+	tic
+	build_base_images
+	toc
+
+	if [ $PUSH_IMAGES = y ]; then
+		echo "Pushing the images"
+		docker push "nextcloudcookbook/php-base:$PHP_VERSION"
+	fi
+
+	exit 0
+fi
 
 echo 'Starting process'
 
