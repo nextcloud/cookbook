@@ -31,4 +31,14 @@ class CookbookTest extends TestCase {
 
 		$this->assertSame($folder, $this->dut->getFolder());
 	}
+
+	public function testCache() {
+		$folderName = "This is the folder name";
+		$folder = $this->createStub(Folder::class);
+
+		$this->assertNull($this->dut->getRecipeFolder($folderName));
+
+		$this->dut->cacheRecipeFolder($folderName, $folder);
+		$this->assertSame($folder, $this->dut->getRecipeFolder($folderName));
+	}
 }

@@ -17,6 +17,8 @@ class Cookbook {
 
 	public function __construct(UserFolderHelper $userFolderHelper) {
 		$this->userFolderHelper = $userFolderHelper;
+		
+		$this->recipeFolderCache = [];
 	}
 
 	public function getFolder(): Folder {
