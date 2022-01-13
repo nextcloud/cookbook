@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "食譜",
     "Cookbook" : "食譜",
     "Home" : "家",
     "All recipes" : "全部食譜",

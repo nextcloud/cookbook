@@ -49,6 +49,7 @@ OC.L10N.register(
     "Loading config failed" : "設定の読み込みに失敗しました",
     "Pick a local image" : "ローカル画像を選択",
     "Path to your recipe image" : "あなたのレシピ画像へのパス",
+    "Delete entry" : "エントリーを削除",
     "Add" : "追加",
     "Close" : "閉じる",
     "The page was not found" : "ページがみつかりませんでした",
