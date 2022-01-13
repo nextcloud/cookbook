@@ -23,7 +23,7 @@ OC.L10N.register(
     "Loading…" : "Načítání…",
     "Loading recipe" : "Načítání receptu",
     "Recipe not found" : "Recept nenalezen",
-    "Page not found" : "Stránka nebyla nalezena",
+    "Page not found" : "Stránka nenalezena",
     "Filter" : "Filtr",
     "Search" : "Hledat",
     "Category" : "Kategorie",

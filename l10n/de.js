@@ -45,7 +45,7 @@ OC.L10N.register(
     "Toggle editing" : "Bearbeiten umschalten",
     "Failed to load category {category} recipes" : "Fehler beim Laden der Rezepte aus Kategorie {category} ",
     "The server reported an error. Please check." : "Der Server meldete einen Fehler. Bitte prüfen.",
-    "Could not query the server. This might be a network problem." : "Server kann nicht erreicht werden. Dies könnte ein Netzwerkproblem sein.",
+    "Could not query the server. This might be a network problem." : "Server konnte nicht erreicht werden. Dies könnte ein Netzwerkproblem sein.",
     "Loading category recipes …" : "Lade Kategorie-Rezepte …",
     "Failed to fetch categories" : "Kategorien konnten nicht abgerufen werden.",
     "Rescan library" : "Bibliothek neu einlesen",
