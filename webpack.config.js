@@ -8,7 +8,7 @@ const path = require('path')
 const { VueLoaderPlugin } = require('vue-loader')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin").default
 
 module.exports = {
 
