@@ -3,6 +3,8 @@
 ### Fixed
 - Added app info XML back to allow automatic translations
   [#878](https://github.com/nextcloud/cookbook/pull/878) @christianlupus
+- Added unit hints in the labels of the timers
+  [#879](https://github.com/nextcloud/cookbook/pull/879) @christianlupus
 
 
 ## 0.9.9 - 2022-01-13
