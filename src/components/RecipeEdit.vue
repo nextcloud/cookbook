@@ -23,15 +23,15 @@
         />
         <EditTimeField
             v-model="prepTime"
-            :field-label="t('cookbook', 'Preparation time')"
+            :field-label="t('cookbook', 'Preparation time (hours:minutes)')"
         />
         <EditTimeField
             v-model="cookTime"
-            :field-label="t('cookbook', 'Cooking time')"
+            :field-label="t('cookbook', 'Cooking time (hours:minutes)')"
         />
         <EditTimeField
             v-model="totalTime"
-            :field-label="t('cookbook', 'Total time')"
+            :field-label="t('cookbook', 'Total time (hours:minutes)')"
         />
         <EditMultiselect
             v-model="recipe['recipeCategory']"
