@@ -72,23 +72,20 @@
                     <RecipeTimer
                         v-if="recipe.timerPrep"
                         :value="recipe.timerPrep"
-                        :phase="'prep'"
                         :timer="false"
-                        :label="'Preparation time'"
+                        :label="t('cookbook', 'Preparation time (H:MM)')"
                     />
                     <RecipeTimer
                         v-if="recipe.timerCook"
                         :value="recipe.timerCook"
-                        :phase="'prep'"
                         :timer="true"
-                        :label="'Cooking time'"
+                        :label="t('cookbook', 'Cooking time (H:MM)')"
                     />
                     <RecipeTimer
                         v-if="recipe.timerTotal"
                         :value="recipe.timerTotal"
-                        :phase="'total'"
                         :timer="false"
-                        :label="'Total time'"
+                        :label="t('cookbook', 'Total time (H:MM)')"
                     />
                 </div>
             </div>

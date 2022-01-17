@@ -6,7 +6,7 @@
             :class="countdown === null ? 'icon-play' : 'icon-pause'"
             @click="timerToggle"
         ></button>
-        <h4>{{ t("cookbook", label) }}</h4>
+        <h4>{{ label }}</h4>
         <p>{{ displayTime }}</p>
     </div>
 </template>
@@ -20,10 +20,6 @@ export default {
             default() {
                 return { hours: 0, minutes: 0 }
             },
-        },
-        phase: {
-            type: String,
-            default: "",
         },
         label: {
             type: String,
