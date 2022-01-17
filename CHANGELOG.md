@@ -7,6 +7,8 @@
   [#879](https://github.com/nextcloud/cookbook/pull/879) @christianlupus
 - Allow for multiline text in instructions
   [#880](https://github.com/nextcloud/cookbook/pull/880) @christianlupus
+- Usage of caches for NPM speedup
+  [#883](https://github.com/nextcloud/cookbook/pull/883) @christianlupus
 
 
 ## 0.9.9 - 2022-01-13
