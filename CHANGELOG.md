@@ -1,12 +1,21 @@
 ## [Unreleased]
 
 ### Fixed
+- Added app info XML back to allow automatic translations
+  [#878](https://github.com/nextcloud/cookbook/pull/878) @christianlupus
+
+
+## 0.9.9 - 2022-01-13
+
+### Fixed
 - Update NPM plugins to enhance build process
   [#868](https://github.com/nextcloud/cookbook/pull/868) @christianlupus
 - Removed missing CSS link in guest template
   [#869](https://github.com/nextcloud/cookbook/pull/869) @christianlupus
 - Avoid usage of deprecated JS function
   [#870](https://github.com/nextcloud/cookbook/pull/870) @christianlupus
+- Added some translations manually
+  (see also [#875](https://github.com/nextcloud/cookbook/issues/875)) @nickvergessen
 
 
 ## 0.9.8 - 2021-12-05
