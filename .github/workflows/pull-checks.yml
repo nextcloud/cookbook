@@ -1,0 +1,65 @@
+
+name: Additinoal tests for pull requests
+
+on:
+    pull_request:
+
+jobs:
+    
+    changelog:
+        name: Check if the changelog was updated
+        runs-on: ubuntu-latest
+        
+        steps:
+            -   name: Checkout the app
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 2
+            
+            -   name: Get the diff
+                id: diff
+                run: |
+                    git diff HEAD~1 -- CHANGELOG.md
+                    lines=$(git diff HEAD~1 -- CHANGELOG.md | wc -l)
+                    echo "::set-output name=lines::$lines"
+            
+            -   name: Error if the number of diff lines is zero
+                run: |
+                    echo "::error file=CHANGELOG.md::There was no change in the changelog detected. Please fill in a valid entry into that file."
+                    exit 1
+                if: ${{ steps.diff.outputs.lines == 0 }}
+    
+    appinfo:
+        name: Check for matching app info file
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 1
+                
+            -   name: Install dependencies
+                run: |
+                    sudo apt-get update
+                    sudo apt-get install jq
+                    pip install yq
+
+            -   name: Perform the test
+                env:
+                    MAIN_FILE: appinfo/info.xml
+                    DIST_FILE: .github/actions/deploy/appinfo/info.xml.dist
+                run: |
+                    echo "Normalize the actual appinfo file"    
+                    xq -x 'del(.info.version)' "$MAIN_FILE" > /tmp/main-info.xml
+                    xq -x 'del(.info.version)' "$DIST_FILE" > /tmp/dist-info.xml
+
+                    echo '::group::Debug output'
+                    tail -n 100 /tmp/main-info.xml /tmp/dist-info.xml
+                    echo '::endgroup::'
+
+                    if ! diff -q /tmp/main-info.xml /tmp/dist-info.xml > /dev/null; then
+                    echo '::error::The app info file differs from the dist file. Please check manually!'
+                    exit 1
+                    fi
+
