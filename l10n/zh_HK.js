@@ -58,6 +58,7 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "無法將食譜更新間距設置為 {interval}",
     "Could not set recipe folder to {path}" : "無法將食譜資料夾路徑設置為 {path}",
     "Loading config failed" : "加載配置失敗",
+    "Enter URL or select from your Nextcloud instance on the right" : "輸入 URL 或從右側的 Nextcloud 實例中選擇",
     "Pick a local image" : "挑選一張近端圖像",
     "Path to your recipe image" : "食譜圖像的路徑",
     "Move entry up" : "向上移動",

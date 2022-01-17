@@ -58,6 +58,7 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Interval aktualizácie receptu sa nepodarilo nastaviť na {interval}",
     "Could not set recipe folder to {path}" : "Priečinok receptov sa nepodarilo nastaviť na {path}",
     "Loading config failed" : "Načítanie nastavenia zlyhalo",
+    "Enter URL or select from your Nextcloud instance on the right" : "Zadajte URL alebo vyberte z vašu inštanciu Nextcloud vpravo",
     "Pick a local image" : "Vyberte miestny obrázok",
     "Path to your recipe image" : "Cesta k obrázku receptu",
     "Move entry up" : "Presunúť položku vyššie",

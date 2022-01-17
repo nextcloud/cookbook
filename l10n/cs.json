@@ -56,6 +56,7 @@
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptů na {interval}",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
     "Loading config failed" : "Načítání nastavení se nezdařilo",
+    "Enter URL or select from your Nextcloud instance on the right" : "Zadejte URL adresu nebo napravo vyberte z vámi využívané instance Nextcloud",
     "Pick a local image" : "Vyberte místní obrázek",
     "Path to your recipe image" : "Popis umístění obrázku k receptu",
     "Move entry up" : "Přesunout položku nahoru",

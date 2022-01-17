@@ -58,6 +58,7 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Nie można ustawić interwału aktualizacji przepisu na {interval}",
     "Could not set recipe folder to {path}" : "Nie można ustawić katalogu przepisów na {path}",
     "Loading config failed" : "Wczytywanie konfiguracji nie powiodło się",
+    "Enter URL or select from your Nextcloud instance on the right" : "Wpisz adres URL lub wybierz z instancji Nextcloud po prawej stronie",
     "Pick a local image" : "Wybierz obraz lokalny",
     "Path to your recipe image" : "Ścieżka do obrazka przepisu",
     "Move entry up" : "Przesuń wpis w górę",
