@@ -5,6 +5,8 @@
   [#878](https://github.com/nextcloud/cookbook/pull/878) @christianlupus
 - Added unit hints in the labels of the timers
   [#879](https://github.com/nextcloud/cookbook/pull/879) @christianlupus
+- Allow for multiline text in instructions
+  [#880](https://github.com/nextcloud/cookbook/pull/880) @christianlupus
 
 
 ## 0.9.9 - 2022-01-13
