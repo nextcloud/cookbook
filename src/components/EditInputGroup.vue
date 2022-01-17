@@ -223,6 +223,13 @@ export default {
                 this.ignoreNextKeyUp = false
                 return
             }
+
+            // Allow new lines with shift key
+            if ((e.keyCode === 13 || e.keyCode === 10) && e.shiftKey) {
+                // Do nothing here, user wants a line break
+                return
+            }
+
             // Using keyup for trigger will prevent repeat triggering if key is held down
             if (
                 e.keyCode === 13 ||
