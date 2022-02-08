@@ -58,6 +58,20 @@
 </template>
 
 <script>
+const findCommonPrefix = lines => {
+    // Find the substring common to the array of strings
+    // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
+
+    // Check border cases size 1 array and empty first word)
+    if (!lines[0] || lines.length ===  1) return lines[0] || ""
+
+    // While all lines have the same character at position i, increment i
+    for (let i = 0; lines[0][i] && lines.every(w => w[i] === lines[0][i]); i++) {}
+
+    // prefix is the substring from the beginning to the last successfully checked i
+    return lines[0].substr(0, i)
+}
+
 export default {
     name: "EditInputGroup",
     props: {
@@ -189,6 +203,24 @@ export default {
                 $ul.childNodes,
                 $li
             )
+
+            // Remove the common prefix from each line of the pasted text
+            // For example, if the pasted text uses - for a bullet list
+            let prefix = findCommonPrefix(inputLinesArray)
+
+            // Inspired from https://stackoverflow.com/a/25575009
+            // Ensure that we are only removing common punctuation
+            // For example, if many lines start with the same word, keep that
+            // This is more robust than filtering our [a-zA-Z] in the prefix
+            // as it should work for any alphabet
+            const re = /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g
+            const prefixLength = re.test(prefix)
+                ? prefix.search(re)
+                : prefix.length
+
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i].slice(prefixLength)
+            }
 
             for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
