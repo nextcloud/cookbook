@@ -171,6 +171,8 @@ export default {
             const clipboardData = e.clipboardData || window.clipboardData
             const pastedData = clipboardData.getData("Text")
             const inputLinesArray = pastedData.split(/\r\n|\r|\n/g)
+                // Remove empty lines
+                .filter(line => line.trim() !== "")
 
             if (inputLinesArray.length === 1) {
                 this.singleLinePasted = true
@@ -187,12 +189,6 @@ export default {
                 $li
             )
 
-            // Remove empty lines
-            for (let i = inputLinesArray.length - 1; i >= 0; --i) {
-                if (inputLinesArray[i].trim() === "") {
-                    inputLinesArray.splice(i, 1)
-                }
-            }
             for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
                     $insertedIndex + i + 1,
