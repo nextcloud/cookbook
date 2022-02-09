@@ -346,6 +346,15 @@ export default {
 .wrapper {
     width: 100%;
     padding-left: 4px;
+    /* Sticky is better than fixed because fixed takes the element out of flow,
+     which breaks the height, putting elements underneath */
+    position: sticky;
+    /* The height of the nextcloud header */
+    top: 50px;
+    /* This is competing with the recipe instructions which have z-index: 1 */
+    z-index: 2;
+    background-color: var(--color-main-background);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .active {
