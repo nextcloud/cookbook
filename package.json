@@ -30,7 +30,7 @@
 		"@nextcloud/axios": "^1.6.0",
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^2.0.0",
-		"@nextcloud/vue": "^4.0.2",
+		"@nextcloud/vue": "^5.0.0",
 		"linkifyjs": "^3.0.1",
 		"lozad": "^1.16.0",
 		"node-sass": "^7.0.0",
