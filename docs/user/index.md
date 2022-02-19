@@ -31,7 +31,7 @@ At the moment it is not possible to share a public link to a recipe.
 
 The use of keywords and categories is entirely up to you.
 
-The primary difference between the two is that a recipe can only have on category,
+The primary difference between the two is that a recipe can only have a single category,
 but may have many keywords.
 In other words,
 categories are a 1:N relationship while keywords are an N:M relationship.
