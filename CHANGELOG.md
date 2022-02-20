@@ -13,6 +13,8 @@
   [#888](https://github.com/nextcloud/cookbook/pull/888) @MarcelRobitaille
 - Cleanup code related to pasting
   [#886](https://github.com/nextcloud/cookbook/pull/886) @MarcelRobitaille
+- Make height of control header dependant on server CSS variable
+  [#897](https://github.com/nextcloud/cookbook/pull/897) @MarcelRobitaille
 
 ### Documentation
 - Added clarification between categories and keywords for users
