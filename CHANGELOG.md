@@ -10,6 +10,9 @@
 - Usage of caches for NPM speedup
   [#883](https://github.com/nextcloud/cookbook/pull/883) @christianlupus
 
+### Documentation
+- Added clarification between categories and keywords for users
+  [#889](https://github.com/nextcloud/cookbook/pull/889) @MarcelRobitaille
 
 ## 0.9.9 - 2022-01-13
 
