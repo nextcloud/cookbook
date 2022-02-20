@@ -170,9 +170,10 @@ export default {
             // from the data pasted in the input field (e.target.value)
             const clipboardData = e.clipboardData || window.clipboardData
             const pastedData = clipboardData.getData("Text")
-            const inputLinesArray = pastedData.split(/\r\n|\r|\n/g)
+            const inputLinesArray = pastedData
+                .split(/\r\n|\r|\n/g)
                 // Remove empty lines
-                .filter(line => line.trim() !== "")
+                .filter((line) => line.trim() !== "")
 
             if (inputLinesArray.length === 1) {
                 this.singleLinePasted = true
