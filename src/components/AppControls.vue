@@ -352,7 +352,7 @@ export default {
     z-index: 2;
 
     /* The height of the nextcloud header */
-    top: 50px;
+    top: var(--header-height);
     width: 100%;
     padding-left: 4px;
     border-bottom: 1px solid var(--color-border);
