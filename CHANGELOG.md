@@ -11,6 +11,8 @@
   [#883](https://github.com/nextcloud/cookbook/pull/883) @christianlupus
 - Make the controls sticky on top
   [#888](https://github.com/nextcloud/cookbook/pull/888) @MarcelRobitaille
+- Cleanup code related to pasting
+  [#886](https://github.com/nextcloud/cookbook/pull/886) @MarcelRobitaille
 
 ### Documentation
 - Added clarification between categories and keywords for users
