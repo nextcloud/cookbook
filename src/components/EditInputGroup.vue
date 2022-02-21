@@ -213,7 +213,7 @@ export default {
             // For example, if many lines start with the same word, keep that
             // This is more robust than filtering our [a-zA-Z] in the prefix
             // as it should work for any alphabet
-            const re = /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-.\/:;<=>?@\[\]^_`{|}~]/g
+            const re = /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/g
             const prefixLength = re.test(prefix)
                 ? prefix.search(re)
                 : prefix.length
