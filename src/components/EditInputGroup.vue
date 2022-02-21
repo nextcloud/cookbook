@@ -58,13 +58,14 @@
 </template>
 
 <script>
-const linesMatchAtPosition = (lines, i) => lines.every((line) => line[i] === lines[0][i])
-const findCommonPrefix = lines => {
+const linesMatchAtPosition = (lines, i) =>
+    lines.every((line) => line[i] === lines[0][i])
+const findCommonPrefix = (lines) => {
     // Find the substring common to the array of strings
     // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
 
     // Check border cases size 1 array and empty first word)
-    if (!lines[0] || lines.length ===  1) return lines[0] || ""
+    if (!lines[0] || lines.length === 1) return lines[0] || ""
 
     // Loop up index until the characters do not match
     for (let i = 0; ; i++) {
@@ -218,7 +219,8 @@ export default {
             // For example, if many lines start with the same word, keep that
             // This is more robust than filtering our [a-zA-Z] in the prefix
             // as it should work for any alphabet
-            const re = /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/g
+            const re =
+                /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/g
             const prefixLength = re.test(prefix)
                 ? prefix.search(re)
                 : prefix.length
