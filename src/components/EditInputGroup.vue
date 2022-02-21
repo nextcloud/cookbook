@@ -58,6 +58,7 @@
 </template>
 
 <script>
+const linesMatchAtPosition = (lines, i) => lines.every((line) => line[i] === lines[0][i])
 const findCommonPrefix = lines => {
     // Find the substring common to the array of strings
     // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
@@ -65,11 +66,15 @@ const findCommonPrefix = lines => {
     // Check border cases size 1 array and empty first word)
     if (!lines[0] || lines.length ===  1) return lines[0] || ""
 
-    // While all lines have the same character at position i, increment i
-    for (let i = 0; lines[0][i] && lines.every(w => w[i] === lines[0][i]); i++) {}
-
-    // prefix is the substring from the beginning to the last successfully checked i
-    return lines[0].substr(0, i)
+    // Loop up index until the characters do not match
+    for (let i = 0; ; i++) {
+        // If first line has fewer than i characters
+        // or the character of each line at position i is not identical
+        if (!lines[0][i] || !linesMatchAtPosition(lines, i)) {
+            // Then the desired prefix is the substring from the beginning to i
+            return lines[0].substr(0, i)
+        }
+    }
 }
 
 export default {
