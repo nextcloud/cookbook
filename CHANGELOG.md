@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Remove prefix of pasted content for better formatting
+  [#887](https://github.com/nextcloud/cookbook/pull/887) @MarcelRobitaille
+
 ### Fixed
 - Added app info XML back to allow automatic translations
   [#878](https://github.com/nextcloud/cookbook/pull/878) @christianlupus
