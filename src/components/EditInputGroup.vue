@@ -206,7 +206,7 @@ export default {
 
             // Remove the common prefix from each line of the pasted text
             // For example, if the pasted text uses - for a bullet list
-            let prefix = findCommonPrefix(inputLinesArray)
+            const prefix = findCommonPrefix(inputLinesArray)
 
             // Inspired from https://stackoverflow.com/a/25575009
             // Ensure that we are only removing common punctuation
