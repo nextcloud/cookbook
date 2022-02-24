@@ -669,12 +669,12 @@ export default {
 
                 this.selectedKeywords = this.recipe.keywords
                     .split(",")
-                    .map(kw => kw.trim())
+                    .map((kw) => kw.trim())
                     // Remove any empty keywords
                     // If the response from the server is just an empty
                     // string, split will create an array of a single empty
                     // string
-                    .filter(kw => kw !== "")
+                    .filter((kw) => kw !== "")
 
                 // fallback if fetching all keywords fails
                 this.selectedKeywords.forEach((kw) => {
