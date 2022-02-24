@@ -19,6 +19,8 @@
   [#886](https://github.com/nextcloud/cookbook/pull/886) @MarcelRobitaille
 - Make height of control header dependant on server CSS variable
   [#897](https://github.com/nextcloud/cookbook/pull/897) @MarcelRobitaille
+- Fix UI glitch when keyword list is empty
+  [#892](https://github.com/nextcloud/cookbook/pull/892) @MarcelRobitaille
 
 ### Documentation
 - Added clarification between categories and keywords for users
