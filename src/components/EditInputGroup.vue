@@ -287,8 +287,11 @@ export default {
                     ) {
                         this.addNewEntry()
                     } else {
+                        // Focus the next input or textarea
+                        // We have to check for both, as inputs are used for
+                        // ingredients and textareas are used for instructions
                         $ul.children[$pressedLiIndex + 1]
-                            .getElementsByTagName("input")[0]
+                            .querySelector("input, textarea")
                             .focus()
                     }
                 } else if (this.referencePopupEnabled && e.key === "#") {
