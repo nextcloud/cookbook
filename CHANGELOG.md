@@ -21,6 +21,8 @@
   [#897](https://github.com/nextcloud/cookbook/pull/897) @MarcelRobitaille
 - Fix UI glitch when keyword list is empty
   [#892](https://github.com/nextcloud/cookbook/pull/892) @MarcelRobitaille
+- Allow switching to new instruction line with Enter key
+  [#890](https://github.com/nextcloud/cookbook/pull/890) @MarcelRobitaille
 
 ### Documentation
 - Added clarification between categories and keywords for users
