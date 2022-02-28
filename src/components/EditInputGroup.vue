@@ -271,54 +271,57 @@ export default {
                 return
             }
 
+            // Only do anything for enter or # keys
             if (
-                e.key === "Enter" ||
-                (this.referencePopupEnabled && e.key === "#")
+                e.key !== "Enter" &&
+                !(this.referencePopupEnabled && e.key === "#")
             ) {
-                e.preventDefault()
-                const $li = e.currentTarget.closest("li")
-                const $ul = $li.closest("ul")
-                const $pressedLiIndex = Array.prototype.indexOf.call(
-                    $ul.childNodes,
-                    $li
-                )
+                return
+            }
 
-                if (e.key === "Enter") {
-                    if (
-                        $pressedLiIndex >=
-                        this.$refs["list-field"].length - 1
-                    ) {
-                        this.addNewEntry()
-                    } else {
-                        // Focus the next input or textarea
-                        // We have to check for both, as inputs are used for
-                        // ingredients and textareas are used for instructions
-                        $ul.children[$pressedLiIndex + 1]
-                            .querySelector("input, textarea")
-                            .focus()
-                    }
-                } else if (this.referencePopupEnabled && e.key === "#") {
-                    e.preventDefault()
-                    const elm = this.$refs["list-field"][$pressedLiIndex]
-                    // Check if the letter before the hash
-                    const cursorPos = elm.selectionStart
-                    const content = elm.value
-                    const prevChar =
-                        cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
+            // If it is one of those keys, prevent the browser's default action
+            e.preventDefault()
 
-                    if (
-                        cursorPos === 1 ||
-                        prevChar === " " ||
-                        prevChar === "\n" ||
-                        prevChar === "\r"
-                    ) {
-                        // Show dialog to select recipe
-                        this.$parent.$emit("showRecipeReferencesPopup", {
-                            context: this,
-                        })
-                        this.lastFocusedFieldIndex = $pressedLiIndex
-                        this.lastCursorPosition = cursorPos
-                    }
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            if (e.key === "Enter") {
+                if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+                    this.addNewEntry()
+                } else {
+                    // Focus the next input or textarea
+                    // We have to check for both, as inputs are used for
+                    // ingredients and textareas are used for instructions
+                    $ul.children[$pressedLiIndex + 1]
+                        .querySelector("input, textarea")
+                        .focus()
+                }
+            }
+            if (this.referencePopupEnabled && e.key === "#") {
+                const elm = this.$refs["list-field"][$pressedLiIndex]
+                // Check if the letter before the hash
+                const cursorPos = elm.selectionStart
+                const content = elm.value
+                const prevChar =
+                    cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
+
+                if (
+                    cursorPos === 1 ||
+                    prevChar === " " ||
+                    prevChar === "\n" ||
+                    prevChar === "\r"
+                ) {
+                    // Show dialog to select recipe
+                    this.$parent.$emit("showRecipeReferencesPopup", {
+                        context: this,
+                    })
+                    this.lastFocusedFieldIndex = $pressedLiIndex
+                    this.lastCursorPosition = cursorPos
                 }
             }
         },
