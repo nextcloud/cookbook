@@ -15,7 +15,7 @@
                     ref="list-field"
                     v-model="buffer[idx]"
                     type="text"
-                    @keyup="keyPressed"
+                    @keydown="keyDown"
                     @input="handleInput"
                     @paste="handlePaste"
                 />
@@ -23,7 +23,7 @@
                     v-else-if="fieldType === 'textarea'"
                     ref="list-field"
                     v-model="buffer[idx]"
-                    @keyup="keyPressed"
+                    @keydown="keyDown"
                     @input="handleInput"
                     @paste="handlePaste"
                 ></textarea>
@@ -252,7 +252,7 @@ export default {
         /**
          * Catches enter and key down presses and either adds a new row or focuses the one below
          */
-        keyPressed(e) {
+        keyDown(e) {
             // If, e.g., enter has been pressed in the multiselect popup to select an option,
             // ignore the following keyup event
             if (this.ignoreNextKeyUp) {
