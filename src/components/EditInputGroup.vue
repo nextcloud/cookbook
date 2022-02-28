@@ -261,7 +261,7 @@ export default {
             }
 
             // Allow new lines with shift key
-            if ((e.keyCode === 13 || e.keyCode === 10) && e.shiftKey) {
+            if (e.key === "Enter" && e.shiftKey) {
                 // Do nothing here, user wants a line break
                 return
             }
@@ -270,9 +270,9 @@ export default {
             if (e.repeat) {
                 return
             }
+
             if (
-                e.keyCode === 13 ||
-                e.keyCode === 10 ||
+                e.key === "Enter" ||
                 (this.referencePopupEnabled && e.key === "#")
             ) {
                 e.preventDefault()
@@ -283,7 +283,7 @@ export default {
                     $li
                 )
 
-                if (e.keyCode === 13 || e.keyCode === 10) {
+                if (e.key === "Enter") {
                     if (
                         $pressedLiIndex >=
                         this.$refs["list-field"].length - 1
