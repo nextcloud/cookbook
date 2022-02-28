@@ -266,7 +266,10 @@ export default {
                 return
             }
 
-            // Using keyup for trigger will prevent repeat triggering if key is held down
+            // Repeat events should be ignored
+            if (e.repeat) {
+                return
+            }
             if (
                 e.keyCode === 13 ||
                 e.keyCode === 10 ||
