@@ -311,14 +311,12 @@ export default {
                 // was pressed
                 const cursorPos = elm.selectionStart
                 const content = elm.value
-                const prevChar =
-                    cursorPos > 0 ? content.charAt(cursorPos - 1) : ""
 
+                // Show the popup only if the # was inserted at the very
+                // beggining of the input or after any whitespace character
                 if (
                     cursorPos === 0 ||
-                    prevChar === " " ||
-                    prevChar === "\n" ||
-                    prevChar === "\r"
+                    /\s/.test(content.charAt(cursorPos - 1))
                 ) {
                     // Show dialog to select recipe
                     this.$parent.$emit("showRecipeReferencesPopup", {
