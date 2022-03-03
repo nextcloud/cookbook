@@ -279,9 +279,6 @@ export default {
                 return
             }
 
-            // If it is one of those keys, prevent the browser's default action
-            e.preventDefault()
-
             // Get the index of the pressed list item
             const $li = e.currentTarget.closest("li")
             const $ul = $li.closest("ul")
@@ -291,6 +288,8 @@ export default {
             )
 
             if (e.key === "Enter") {
+                e.preventDefault()
+
                 if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
                     this.addNewEntry()
                 } else {
@@ -318,6 +317,7 @@ export default {
                     cursorPos === 0 ||
                     /\s/.test(content.charAt(cursorPos - 1))
                 ) {
+                    e.preventDefault()
                     // Show dialog to select recipe
                     this.$parent.$emit("showRecipeReferencesPopup", {
                         context: this,
