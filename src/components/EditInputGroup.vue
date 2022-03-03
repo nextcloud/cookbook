@@ -305,13 +305,17 @@ export default {
             if (this.referencePopupEnabled && e.key === "#") {
                 const elm = this.$refs["list-field"][$pressedLiIndex]
                 // Check if the letter before the hash
+                // This is a keydown event listener, so the `#` does not
+                // exist in the input yet
+                // `cursorPos` will be the index in the textfield before the #
+                // was pressed
                 const cursorPos = elm.selectionStart
                 const content = elm.value
                 const prevChar =
-                    cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
+                    cursorPos > 0 ? content.charAt(cursorPos - 1) : ""
 
                 if (
-                    cursorPos === 1 ||
+                    cursorPos === 0 ||
                     prevChar === " " ||
                     prevChar === "\n" ||
                     prevChar === "\r"
