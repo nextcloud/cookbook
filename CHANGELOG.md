@@ -23,6 +23,8 @@
   [#892](https://github.com/nextcloud/cookbook/pull/892) @MarcelRobitaille
 - Allow switching to new instruction line with Enter key
   [#890](https://github.com/nextcloud/cookbook/pull/890) @MarcelRobitaille
+- Prevent inserting newline characters in instructions/ingredients/tools when pressing enter
+  [#900](https://github.com/nextcloud/cookbook/pull/900) @MarcelRobitaille
 
 ### Documentation
 - Added clarification between categories and keywords for users
