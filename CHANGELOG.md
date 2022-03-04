@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.10 - 2022-03-04
+
 ### Added
 - Remove prefix of pasted content for better formatting
   [#887](https://github.com/nextcloud/cookbook/pull/887) @MarcelRobitaille
