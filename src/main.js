@@ -10,6 +10,8 @@ import VueShowdown from "vue-showdown"
 import Editor from "v-markdown-editor"
 import "v-markdown-editor/dist/v-markdown-editor.css"
 
+import { generateUrl } from "@nextcloud/router"
+
 import Vue from "vue"
 import router from "./router"
 import store from "./store"
@@ -23,7 +25,7 @@ import AppMain from "./components/AppMain.vue"
     __webpack_nonce__ = btoa(OC.requestToken)
 
     // eslint-disable-next-line no-param-reassign
-    window.baseUrl = OC.generateUrl("apps/cookbook")
+    window.baseUrl = generateUrl("apps/cookbook")
 
     // Check if two routes point to the same component but have different content
     // eslint-disable-next-line no-param-reassign

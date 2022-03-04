@@ -16,9 +16,20 @@ jobs:
     steps:
         -   name: Checkout the project
             uses: actions/checkout@v2
-        -   name: Make sure the appinfo is built
-            shell: bash
-            run: make appinfo/info.xml
+            
+        -   name: Get the date
+            id: date
+            run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+        -   name: Cache NPM cache
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    ~/.npm
+                    node_modules
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package.json') }}
+                restore-keys: |
+                    ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-node-
         -   name: Get PHP version
             shell: bash
             run: php -v
@@ -295,9 +306,19 @@ jobs:
         -   name: Checkout the app
             uses: actions/checkout@v2
         
-        -   name: Ensure the appinfo is built
-            shell: bash
-            run: make appinfo/info.xml
+        -   name: Get the date
+            id: date
+            run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+        -   name: Use cache for NPM
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    ~/.npm
+                    node_modules
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package.json') }}
+                restore-keys: |
+                    ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-node-
         
         -   name: Update NPM
             shell: bash

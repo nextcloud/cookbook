@@ -23,15 +23,15 @@
         />
         <EditTimeField
             v-model="prepTime"
-            :field-label="t('cookbook', 'Preparation time')"
+            :field-label="t('cookbook', 'Preparation time (hours:minutes)')"
         />
         <EditTimeField
             v-model="cookTime"
-            :field-label="t('cookbook', 'Cooking time')"
+            :field-label="t('cookbook', 'Cooking time (hours:minutes)')"
         />
         <EditTimeField
             v-model="totalTime"
-            :field-label="t('cookbook', 'Total time')"
+            :field-label="t('cookbook', 'Total time (hours:minutes)')"
         />
         <EditMultiselect
             v-model="recipe['recipeCategory']"
@@ -667,7 +667,14 @@ export default {
                     paddedTime: this.recipe.totalTime,
                 }
 
-                this.selectedKeywords = this.recipe.keywords.split(",")
+                this.selectedKeywords = this.recipe.keywords
+                    .split(",")
+                    .map((kw) => kw.trim())
+                    // Remove any empty keywords
+                    // If the response from the server is just an empty
+                    // string, split will create an array of a single empty
+                    // string
+                    .filter((kw) => kw !== "")
 
                 // fallback if fetching all keywords fails
                 this.selectedKeywords.forEach((kw) => {

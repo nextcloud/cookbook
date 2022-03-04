@@ -3,6 +3,7 @@ const base = require('./webpack.build-dev.js')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = merge(base, {
+    mode: "development",
     plugins: [
         new BundleAnalyzerPlugin(
             {

@@ -58,9 +58,6 @@
     "Description" : "Aprašas",
     "URL" : "URL",
     "Image" : "Paveikslas",
-    "Preparation time" : "Pasiruošimo laikas",
-    "Cooking time" : "Gaminimo laikas",
-    "Total time" : "Bendras laikas",
     "Choose category" : "Pasirinkti kategoriją",
     "Keywords" : "Raktažodžiai",
     "Choose keywords" : "Pasirinkti raktažodžius",
@@ -70,11 +67,15 @@
     "Ingredients" : "Ingredientai",
     "Instructions" : "Instrukcija",
     "Calories" : "Kalorijos",
+    "Failed to fetch keywords" : "Nepavyko gauti raktažodžių",
     "Loading recipe failed" : "Recepto įkėlimas nepavyko",
     "Toggle keyword" : "Perjungti raktažodį",
     "Keyword not contained in visible recipes" : "Raktažodžio matomuose receptuose nėra",
+    "Order keywords alphabetically" : "Rikiuoti raktažodžius pagal abėcėlę",
     "Cooking time is up!" : "Gaminimo laikas baigėsi!",
     "Date created" : "Sukūrimo data",
-    "Source" : "Šaltinis"
+    "Source" : "Šaltinis",
+    "Failed to load recipes with keywords: {tags}" : "Nepavyko įkelti receptų, kuriuose būtų raktažodžiai: {tags}",
+    "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }

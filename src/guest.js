@@ -5,6 +5,8 @@
  * @license AGPL3 or later
  */
 
+import { generateUrl } from "@nextcloud/router"
+
 import Vue from "vue"
 import store from "./store"
 
@@ -17,7 +19,7 @@ import AppInvalidGuest from "./components/AppInvalidGuest.vue"
     __webpack_nonce__ = btoa(OC.requestToken)
 
     // eslint-disable-next-line no-param-reassign
-    window.baseUrl = OC.generateUrl("apps/cookbook")
+    window.baseUrl = generateUrl("apps/cookbook")
 
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
