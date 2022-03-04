@@ -15,7 +15,7 @@
                     ref="list-field"
                     v-model="buffer[idx]"
                     type="text"
-                    @keyup="keyPressed"
+                    @keydown="keyDown"
                     @input="handleInput"
                     @paste="handlePaste"
                 />
@@ -23,7 +23,7 @@
                     v-else-if="fieldType === 'textarea'"
                     ref="list-field"
                     v-model="buffer[idx]"
-                    @keyup="keyPressed"
+                    @keydown="keyDown"
                     @input="handleInput"
                     @paste="handlePaste"
                 ></textarea>
@@ -252,7 +252,7 @@ export default {
         /**
          * Catches enter and key down presses and either adds a new row or focuses the one below
          */
-        keyPressed(e) {
+        keyDown(e) {
             // If, e.g., enter has been pressed in the multiselect popup to select an option,
             // ignore the following keyup event
             if (this.ignoreNextKeyUp) {
@@ -261,61 +261,69 @@ export default {
             }
 
             // Allow new lines with shift key
-            if ((e.keyCode === 13 || e.keyCode === 10) && e.shiftKey) {
+            if (e.key === "Enter" && e.shiftKey) {
                 // Do nothing here, user wants a line break
                 return
             }
 
-            // Using keyup for trigger will prevent repeat triggering if key is held down
+            // Repeat events should be ignored
+            if (e.repeat) {
+                return
+            }
+
+            // Only do anything for enter or # keys
             if (
-                e.keyCode === 13 ||
-                e.keyCode === 10 ||
-                (this.referencePopupEnabled && e.key === "#")
+                e.key !== "Enter" &&
+                !(this.referencePopupEnabled && e.key === "#")
             ) {
+                return
+            }
+
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            if (e.key === "Enter") {
                 e.preventDefault()
-                const $li = e.currentTarget.closest("li")
-                const $ul = $li.closest("ul")
-                const $pressedLiIndex = Array.prototype.indexOf.call(
-                    $ul.childNodes,
-                    $li
-                )
 
-                if (e.keyCode === 13 || e.keyCode === 10) {
-                    if (
-                        $pressedLiIndex >=
-                        this.$refs["list-field"].length - 1
-                    ) {
-                        this.addNewEntry()
-                    } else {
-                        // Focus the next input or textarea
-                        // We have to check for both, as inputs are used for
-                        // ingredients and textareas are used for instructions
-                        $ul.children[$pressedLiIndex + 1]
-                            .querySelector("input, textarea")
-                            .focus()
-                    }
-                } else if (this.referencePopupEnabled && e.key === "#") {
+                if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+                    this.addNewEntry()
+                } else {
+                    // Focus the next input or textarea
+                    // We have to check for both, as inputs are used for
+                    // ingredients and textareas are used for instructions
+                    $ul.children[$pressedLiIndex + 1]
+                        .querySelector("input, textarea")
+                        .focus()
+                }
+            }
+            if (this.referencePopupEnabled && e.key === "#") {
+                const elm = this.$refs["list-field"][$pressedLiIndex]
+                // Check if the letter before the hash
+                // This is a keydown event listener, so the `#` does not
+                // exist in the input yet
+                // `cursorPos` will be the index in the textfield before the #
+                // was pressed
+                const cursorPos = elm.selectionStart
+                const content = elm.value
+
+                // Show the popup only if the # was inserted at the very
+                // beggining of the input or after any whitespace character
+                if (
+                    cursorPos === 0 ||
+                    /\s/.test(content.charAt(cursorPos - 1))
+                ) {
                     e.preventDefault()
-                    const elm = this.$refs["list-field"][$pressedLiIndex]
-                    // Check if the letter before the hash
-                    const cursorPos = elm.selectionStart
-                    const content = elm.value
-                    const prevChar =
-                        cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
-
-                    if (
-                        cursorPos === 1 ||
-                        prevChar === " " ||
-                        prevChar === "\n" ||
-                        prevChar === "\r"
-                    ) {
-                        // Show dialog to select recipe
-                        this.$parent.$emit("showRecipeReferencesPopup", {
-                            context: this,
-                        })
-                        this.lastFocusedFieldIndex = $pressedLiIndex
-                        this.lastCursorPosition = cursorPos
-                    }
+                    // Show dialog to select recipe
+                    this.$parent.$emit("showRecipeReferencesPopup", {
+                        context: this,
+                    })
+                    this.lastFocusedFieldIndex = $pressedLiIndex
+                    this.lastCursorPosition = cursorPos
                 }
             }
         },
