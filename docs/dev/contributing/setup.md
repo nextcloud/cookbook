@@ -82,9 +82,6 @@ npm run dev
 
 ## Enable the app
 
-You need to make sure the app is enabled in the NC server. You can use the occ interface if you have access.
+By default, the Cookbook app will be disabled. You need to make sure the app is enabled in the NC server. You can use the occ interface if you have access.
 
-By default, the Cookbook app will be disabled.
-Open the Nextcloud web interface and login.
-Click your avatar, then Apps.
-Find the Cookbook app and click enable.
+Alternatively, open the Nextcloud web interface and login. Click your avatar, then Apps. Find the cookbook app and click on _Enable_.
