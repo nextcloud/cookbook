@@ -344,8 +344,19 @@ export default {
 
 <style scoped>
 .wrapper {
+    /* Sticky is better than fixed because fixed takes the element out of flow,
+     which breaks the height, putting elements underneath */
+    position: sticky;
+
+    /* This is competing with the recipe instructions which have z-index: 1 */
+    z-index: 2;
+
+    /* The height of the nextcloud header */
+    top: var(--header-height);
     width: 100%;
     padding-left: 4px;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-main-background);
 }
 
 .active {

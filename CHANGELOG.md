@@ -1,6 +1,17 @@
 ## [Unreleased]
 
 ### Fixed
+- Reduce complex coupling between event handlers in EditInputGroup.vue
+  [#901](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
+
+
+## 0.9.10 - 2022-03-04
+
+### Added
+- Remove prefix of pasted content for better formatting
+  [#887](https://github.com/nextcloud/cookbook/pull/887) @MarcelRobitaille
+
+### Fixed
 - Added app info XML back to allow automatic translations
   [#878](https://github.com/nextcloud/cookbook/pull/878) @christianlupus
 - Added unit hints in the labels of the timers
@@ -9,6 +20,22 @@
   [#880](https://github.com/nextcloud/cookbook/pull/880) @christianlupus
 - Usage of caches for NPM speedup
   [#883](https://github.com/nextcloud/cookbook/pull/883) @christianlupus
+- Make the controls sticky on top
+  [#888](https://github.com/nextcloud/cookbook/pull/888) @MarcelRobitaille
+- Cleanup code related to pasting
+  [#886](https://github.com/nextcloud/cookbook/pull/886) @MarcelRobitaille
+- Make height of control header dependant on server CSS variable
+  [#897](https://github.com/nextcloud/cookbook/pull/897) @MarcelRobitaille
+- Fix UI glitch when keyword list is empty
+  [#892](https://github.com/nextcloud/cookbook/pull/892) @MarcelRobitaille
+- Allow switching to new instruction line with Enter key
+  [#890](https://github.com/nextcloud/cookbook/pull/890) @MarcelRobitaille
+- Prevent inserting newline characters in instructions/ingredients/tools when pressing enter
+  [#900](https://github.com/nextcloud/cookbook/pull/900) @MarcelRobitaille
+
+### Documentation
+- Added clarification between categories and keywords for users
+  [#889](https://github.com/nextcloud/cookbook/pull/889) @MarcelRobitaille
 
 
 ## 0.9.9 - 2022-01-13

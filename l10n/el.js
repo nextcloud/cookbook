@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Δεν είναι δυνατή η ανίχνευση τύπου μεταδιδόμενων δεδομένων. Αυτό είναι ένα σφάλμα, αναφέρετέ το.",
+    "Invalid URL-encoded string found. Please report a bug." : "Βρέθηκε μη-έγκυρη ακολουθία χαρακτήρων κωδικοποιημένου-υπερσυνδέσμου. Παρακαλώ αναφέρετε το σφάλμα.",
     "Recipes" : "Συνταγές",
     "Another recipe with that name already exists" : "Υπάρχει άλλη συνταγή με το ίδιο όνομα",
     "Cookbook" : "Βιβλίο συνταγών",

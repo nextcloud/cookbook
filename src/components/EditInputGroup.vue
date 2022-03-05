@@ -15,7 +15,7 @@
                     ref="list-field"
                     v-model="buffer[idx]"
                     type="text"
-                    @keyup="keyPressed"
+                    @keydown="keyDown"
                     @input="handleInput"
                     @paste="handlePaste"
                 />
@@ -23,7 +23,7 @@
                     v-else-if="fieldType === 'textarea'"
                     ref="list-field"
                     v-model="buffer[idx]"
-                    @keyup="keyPressed"
+                    @keydown="keyDown"
                     @input="handleInput"
                     @paste="handlePaste"
                 ></textarea>
@@ -58,6 +58,26 @@
 </template>
 
 <script>
+const linesMatchAtPosition = (lines, i) =>
+    lines.every((line) => line[i] === lines[0][i])
+const findCommonPrefix = (lines) => {
+    // Find the substring common to the array of strings
+    // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
+
+    // Check border cases size 1 array and empty first word)
+    if (!lines[0] || lines.length === 1) return lines[0] || ""
+
+    // Loop up index until the characters do not match
+    for (let i = 0; ; i++) {
+        // If first line has fewer than i characters
+        // or the character of each line at position i is not identical
+        if (!lines[0][i] || !linesMatchAtPosition(lines, i)) {
+            // Then the desired prefix is the substring from the beginning to i
+            return lines[0].substr(0, i)
+        }
+    }
+}
+
 export default {
     name: "EditInputGroup",
     props: {
@@ -95,8 +115,6 @@ export default {
         return {
             // helper variables
             buffer: this.value.slice(),
-            contentPasted: false,
-            singleLinePasted: false,
             lastFocusedFieldIndex: null,
             lastCursorPosition: -1,
             ignoreNextKeyUp: false,
@@ -142,41 +160,43 @@ export default {
         /**
          * Handle typing in input or field or textarea
          */
-        handleInput() {
-            // wait a tick to check if content was typed or pasted
-            this.$nextTick(function handlePastedOrTyped() {
-                if (this.contentPasted) {
-                    this.contentPasted = false
-
-                    if (this.singleLinePasted) {
-                        this.$emit("input", this.buffer)
-                    }
-
-                    return
-                }
-                this.$emit("input", this.buffer)
-            })
+        handleInput(e) {
+            // Exit early if input was pasted. Let `handlePaste` handle this.
+            // References:
+            // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
+            // https://rawgit.com/w3c/input-events/v1/index.html#interface-InputEvent-Attributes
+            if (
+                e.inputType === "insertFromPaste" ||
+                e.inputType === "insertFromPasteAsQuotation"
+            ) {
+                return
+            }
+            this.$emit("input", this.buffer)
         },
         /**
          * Handle paste in input field or textarea
          */
         handlePaste(e) {
-            this.contentPasted = true
-            if (!this.createFieldsOnNewlines) {
-                return
-            }
-
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
             const clipboardData = e.clipboardData || window.clipboardData
             const pastedData = clipboardData.getData("Text")
-            const inputLinesArray = pastedData.split(/\r\n|\r|\n/g)
+            const inputLinesArray = pastedData
+                .split(/\r\n|\r|\n/g)
+                // Remove empty lines
+                .filter((line) => line.trim() !== "")
 
+            // If only a single line pasted, emit that line and exit
+            // Treat it as if that single line was typed
             if (inputLinesArray.length === 1) {
-                this.singleLinePasted = true
+                this.$emit("input", this.buffer)
                 return
             }
-            this.singleLinePasted = false
+
+            // From here on, multiple lines pasted
+            if (!this.createFieldsOnNewlines) {
+                return
+            }
 
             e.preventDefault()
 
@@ -187,12 +207,25 @@ export default {
                 $li
             )
 
-            // Remove empty lines
-            for (let i = inputLinesArray.length - 1; i >= 0; --i) {
-                if (inputLinesArray[i].trim() === "") {
-                    inputLinesArray.splice(i, 1)
-                }
+            // Remove the common prefix from each line of the pasted text
+            // For example, if the pasted text uses - for a bullet list
+            const prefix = findCommonPrefix(inputLinesArray)
+
+            // Inspired from https://stackoverflow.com/a/25575009
+            // Ensure that we are only removing common punctuation
+            // For example, if many lines start with the same word, keep that
+            // This is more robust than filtering our [a-zA-Z] in the prefix
+            // as it should work for any alphabet
+            const re =
+                /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/g
+            const prefixLength = re.test(prefix)
+                ? prefix.search(re)
+                : prefix.length
+
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i].slice(prefixLength)
             }
+
             for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
                     $insertedIndex + i + 1,
@@ -210,13 +243,12 @@ export default {
                     indexToFocus -= 1
                 }
                 this.$refs["list-field"][indexToFocus].focus()
-                this.contentPasted = false
             })
         },
         /**
          * Catches enter and key down presses and either adds a new row or focuses the one below
          */
-        keyPressed(e) {
+        keyDown(e) {
             // If, e.g., enter has been pressed in the multiselect popup to select an option,
             // ignore the following keyup event
             if (this.ignoreNextKeyUp) {
@@ -225,58 +257,69 @@ export default {
             }
 
             // Allow new lines with shift key
-            if ((e.keyCode === 13 || e.keyCode === 10) && e.shiftKey) {
+            if (e.key === "Enter" && e.shiftKey) {
                 // Do nothing here, user wants a line break
                 return
             }
 
-            // Using keyup for trigger will prevent repeat triggering if key is held down
+            // Repeat events should be ignored
+            if (e.repeat) {
+                return
+            }
+
+            // Only do anything for enter or # keys
             if (
-                e.keyCode === 13 ||
-                e.keyCode === 10 ||
-                (this.referencePopupEnabled && e.key === "#")
+                e.key !== "Enter" &&
+                !(this.referencePopupEnabled && e.key === "#")
             ) {
+                return
+            }
+
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            if (e.key === "Enter") {
                 e.preventDefault()
-                const $li = e.currentTarget.closest("li")
-                const $ul = $li.closest("ul")
-                const $pressedLiIndex = Array.prototype.indexOf.call(
-                    $ul.childNodes,
-                    $li
-                )
 
-                if (e.keyCode === 13 || e.keyCode === 10) {
-                    if (
-                        $pressedLiIndex >=
-                        this.$refs["list-field"].length - 1
-                    ) {
-                        this.addNewEntry()
-                    } else {
-                        $ul.children[$pressedLiIndex + 1]
-                            .getElementsByTagName("input")[0]
-                            .focus()
-                    }
-                } else if (this.referencePopupEnabled && e.key === "#") {
+                if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+                    this.addNewEntry()
+                } else {
+                    // Focus the next input or textarea
+                    // We have to check for both, as inputs are used for
+                    // ingredients and textareas are used for instructions
+                    $ul.children[$pressedLiIndex + 1]
+                        .querySelector("input, textarea")
+                        .focus()
+                }
+            }
+            if (this.referencePopupEnabled && e.key === "#") {
+                const elm = this.$refs["list-field"][$pressedLiIndex]
+                // Check if the letter before the hash
+                // This is a keydown event listener, so the `#` does not
+                // exist in the input yet
+                // `cursorPos` will be the index in the textfield before the #
+                // was pressed
+                const cursorPos = elm.selectionStart
+                const content = elm.value
+
+                // Show the popup only if the # was inserted at the very
+                // beggining of the input or after any whitespace character
+                if (
+                    cursorPos === 0 ||
+                    /\s/.test(content.charAt(cursorPos - 1))
+                ) {
                     e.preventDefault()
-                    const elm = this.$refs["list-field"][$pressedLiIndex]
-                    // Check if the letter before the hash
-                    const cursorPos = elm.selectionStart
-                    const content = elm.value
-                    const prevChar =
-                        cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
-
-                    if (
-                        cursorPos === 1 ||
-                        prevChar === " " ||
-                        prevChar === "\n" ||
-                        prevChar === "\r"
-                    ) {
-                        // Show dialog to select recipe
-                        this.$parent.$emit("showRecipeReferencesPopup", {
-                            context: this,
-                        })
-                        this.lastFocusedFieldIndex = $pressedLiIndex
-                        this.lastCursorPosition = cursorPos
-                    }
+                    // Show dialog to select recipe
+                    this.$parent.$emit("showRecipeReferencesPopup", {
+                        context: this,
+                    })
+                    this.lastFocusedFieldIndex = $pressedLiIndex
+                    this.lastCursorPosition = cursorPos
                 }
             }
         },
