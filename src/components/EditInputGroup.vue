@@ -115,8 +115,6 @@ export default {
         return {
             // helper variables
             buffer: this.value.slice(),
-            contentPasted: false,
-            singleLinePasted: false,
             lastFocusedFieldIndex: null,
             lastCursorPosition: -1,
             ignoreNextKeyUp: false,
@@ -162,30 +160,23 @@ export default {
         /**
          * Handle typing in input or field or textarea
          */
-        handleInput() {
-            // wait a tick to check if content was typed or pasted
-            this.$nextTick(function handlePastedOrTyped() {
-                if (this.contentPasted) {
-                    this.contentPasted = false
-
-                    if (this.singleLinePasted) {
-                        this.$emit("input", this.buffer)
-                    }
-
-                    return
-                }
-                this.$emit("input", this.buffer)
-            })
+        handleInput(e) {
+            // Exit early if input was pasted. Let `handlePaste` handle this.
+            // References:
+            // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
+            // https://rawgit.com/w3c/input-events/v1/index.html#interface-InputEvent-Attributes
+            if (
+                e.inputType === "insertFromPaste" ||
+                e.inputType === "insertFromPasteAsQuotation"
+            ) {
+                return
+            }
+            this.$emit("input", this.buffer)
         },
         /**
          * Handle paste in input field or textarea
          */
         handlePaste(e) {
-            this.contentPasted = true
-            if (!this.createFieldsOnNewlines) {
-                return
-            }
-
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
             const clipboardData = e.clipboardData || window.clipboardData
@@ -195,11 +186,17 @@ export default {
                 // Remove empty lines
                 .filter((line) => line.trim() !== "")
 
+            // If only a single line pasted, emit that line and exit
+            // Treat it as if that single line was typed
             if (inputLinesArray.length === 1) {
-                this.singleLinePasted = true
+                this.$emit("input", this.buffer)
                 return
             }
-            this.singleLinePasted = false
+
+            // From here on, multiple lines pasted
+            if (!this.createFieldsOnNewlines) {
+                return
+            }
 
             e.preventDefault()
 
@@ -246,7 +243,6 @@ export default {
                     indexToFocus -= 1
                 }
                 this.$refs["list-field"][indexToFocus].focus()
-                this.contentPasted = false
             })
         },
         /**
