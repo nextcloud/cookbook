@@ -4,6 +4,10 @@
 - Reduce complex coupling between event handlers in EditInputGroup.vue
   [#901](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
 
+### Documentation
+- Introduction about how to start coding
+  [#891](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
+
 
 ## 0.9.10 - 2022-03-04
 
