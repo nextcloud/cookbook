@@ -4,6 +4,7 @@ namespace OCA\Cookbook\Controller;
 
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use OCP\Util;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Http\DataResponse;
@@ -57,11 +58,13 @@ class MainController extends Controller {
 			// Check if the user folder can be accessed
 			$this->service->getFolderForUser();
 		} catch (UserFolderNotWritableException $ex) {
+			Util::addScript('cookbook', 'nextcloud-cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}
 		
 		$this->dbCacheService->triggerCheck();
 
+		Util::addScript('cookbook', 'nextcloud-cookbook-main');
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
 	
