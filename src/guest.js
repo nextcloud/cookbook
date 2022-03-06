@@ -13,9 +13,10 @@ import store from "./store"
 import AppInvalidGuest from "./components/AppInvalidGuest.vue"
 
 // eslint-disable-next-line camelcase,no-undef
-if(__webpack_use_dev_server__ || false){
+if (__webpack_use_dev_server__ || false) {
     // eslint-disable-next-line camelcase,no-undef
-    __webpack_public_path__ = 'http://127.0.0.1:3000/apps/nextcloud-cookbook/js/'
+    __webpack_public_path__ =
+        "http://127.0.0.1:3000/apps/nextcloud-cookbook/js/"
 }
 
 // eslint-disable-next-line func-names, import/newline-after-import
