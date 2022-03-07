@@ -10,7 +10,7 @@ on:
 
 jobs:
   
-  php-lint:
+  code-lint:
     name: Run PHP Linter and Code Style checker
     runs-on: ubuntu-latest
     steps:
@@ -299,7 +299,7 @@ jobs:
     name: Create source code artifacts
     needs:
         - unit-tests
-        - php-lint
+        - code-lint
     runs-on: ubuntu-latest
     
     steps:
