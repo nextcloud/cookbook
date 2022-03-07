@@ -50,9 +50,10 @@ jobs:
         -   name: Install PHP packages
             shell: bash
             run: composer install
+        
         -   name: Install Node packages
             shell: bash
-            run: npm -q install
+            run: npm -q install || { cat ~/.npm/eresolve-report.txt ; exit 1; }
         
         -   name: Run PHP linter
             shell: bash
