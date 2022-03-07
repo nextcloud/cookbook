@@ -31,7 +31,6 @@
 		"@nextcloud/moment": "^1.1.1",
 		"@nextcloud/router": "^2.0.0",
 		"@nextcloud/vue": "^5.1.0",
-		"@nextcloud/webpack-vue-config": "^5.0.0",
 		"linkifyjs": "^3.0.1",
 		"lozad": "^1.16.0",
 		"node-sass": "^7.0.0",
@@ -45,6 +44,8 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
+		"@nextcloud/stylelint-config": "^2.1.2",
+		"@nextcloud/webpack-vue-config": "^5.0.0",
 		"babel-loader": "^8.1.0",
 		"clean-webpack-plugin": "^4.0.0",
 		"compression-webpack-plugin": "^9.0.0",
