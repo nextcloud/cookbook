@@ -84,10 +84,10 @@ fieldset > label {
 
 /* stylelint-disable selector-class-pattern,selector-max-compound-selectors */
 #app
-.edit-multiselect
-.multiselect__tags
-.multiselect__tags-wrap
-.multiselect__tag {
+    .edit-multiselect
+    .multiselect__tags
+    .multiselect__tags-wrap
+    .multiselect__tag {
     flex-basis: 50px;
     margin-bottom: 3px;
 }
