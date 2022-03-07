@@ -4,9 +4,10 @@
 	"description": "",
 	"main": "src/main.js",
 	"scripts": {
-		"build": "node node_modules/webpack/bin/webpack.js --progress --config webpack.build.js",
-		"build-dev": "node node_modules/webpack/bin/webpack.js --progress --config webpack.build-dev.js",
-		"dev": "node node_modules/webpack/bin/webpack.js --progress --watch --config webpack.devel.js",
+		"build": "npx webpack --node-env production --progress --config webpack.config.js",
+		"build-dev": "npx webpack --node-env development --progress --config webpack.config.js",
+		"dev": "npx webpack --node-env development --progress --watch --config webpack.devel.js",
+		"serve": "npx webpack serve --node-env development --progress --config webpack.config.js --env dev_server",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"prettier": "npx prettier --check src",
 		"prettier-fix": "npx prettier --write src",

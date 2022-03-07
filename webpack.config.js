@@ -16,6 +16,10 @@ module.exports = (env) => { return merge(webpackConfig, {
     entry: {
         guest: path.resolve(path.join('src', 'guest.js')),
     },
+    // You can add this to allow acces in the network. You will have to adopt the public path in main.js as well!
+    // devServer: {
+    //     host: "0.0.0.0",
+    // },
     plugins: [
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
