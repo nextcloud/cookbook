@@ -225,4 +225,25 @@ fieldset > .editor {
     border-radius: 2px;
     resize: vertical;
 }
+
+/*
+Hack to overwrite the heavy-handed global unscoped styles of Nextcloud core
+that cause our markdown editor CodeMirror to behave strangely on mobile
+See: https://github.com/nextcloud/cookbook/issues/908
+
+Use /deep/ because >>> did not work for some reason
+*/
+.editor /deep/ div[contenteditable="true"] {
+    width: revert;
+    min-height: revert;
+    margin: revert;
+    padding: revert;
+    font-size: revert;
+    background-color: revert;
+    color: revert;
+    border: revert;
+    outline: revert;
+    border-radius: revert;
+}
+
 </style>
