@@ -385,7 +385,6 @@ export default {
 }
 
 .breadcrumbs {
-    width: calc(100% - 60px);
     flex-basis: 100%;
     margin-left: 40px;
 }
@@ -402,6 +401,11 @@ export default {
 </style>
 
 <style>
+/* Hack to increase specificity to overwrite the scoped `width: 100%` on
+  `.breadcrumb` in `@nextcloud/vue` Breadcrumbs */
+.wrapper .breadcrumbs.breadcrumb {
+    width: calc(100% - 60px);
+}
 @media print {
     .vue-tooltip {
         display: none !important;
