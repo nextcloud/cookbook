@@ -7,6 +7,9 @@
   [#910](https://github.com/nextcloud/cookbook/pull/910) @MarcelRobitaille
 - Enable hot reloading feature of Vue for simpler development
   [#909](https://github.com/nextcloud/cookbook/pull/909) @christianlupus
+- Remove some packages from the dependencies to keep the footprint smaller
+  [#912](https://github.com/nextcloud/cookbook/pull/912) @christianlupus
+
 
 ### Documentation
 - Introduction about how to start coding
