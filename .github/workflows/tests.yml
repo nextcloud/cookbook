@@ -33,7 +33,7 @@ jobs:
                 path: |
                     ~/.npm
                     node_modules
-                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package.json') }}
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
@@ -330,7 +330,7 @@ jobs:
                 path: |
                     ~/.npm
                     node_modules
-                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package.json') }}
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
