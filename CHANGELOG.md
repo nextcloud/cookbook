@@ -5,6 +5,8 @@
   [#901](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
 - Fix bug in NC Vue config that switches input fields to be not full width on mobile
   [#910](https://github.com/nextcloud/cookbook/pull/910) @MarcelRobitaille
+- Enable hot reloading feature of Vue for simpler development
+  [#909](https://github.com/nextcloud/cookbook/pull/909) @christianlupus
 
 ### Documentation
 - Introduction about how to start coding
