@@ -3,6 +3,8 @@
 ### Fixed
 - Reduce complex coupling between event handlers in EditInputGroup.vue
   [#901](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
+- Fix bug in NC Vue config that switches input fields to be not full width on mobile
+  [#910](https://github.com/nextcloud/cookbook/pull/910) @MarcelRobitaille
 
 ### Documentation
 - Introduction about how to start coding
