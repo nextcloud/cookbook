@@ -10,12 +10,19 @@ on:
 
 jobs:
   
-  php-lint:
+  code-lint:
     name: Run PHP Linter and Code Style checker
     runs-on: ubuntu-latest
     steps:
         -   name: Checkout the project
             uses: actions/checkout@v2
+        -   name: Setup node and NPM
+            uses: actions/setup-node@v2
+            with:
+                node-version: '14'
+        -   name: Install npm
+            shell: bash
+            run: npm install -g npm@^7
             
         -   name: Get the date
             id: date
@@ -26,7 +33,7 @@ jobs:
                 path: |
                     ~/.npm
                     node_modules
-                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package.json') }}
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
@@ -43,9 +50,10 @@ jobs:
         -   name: Install PHP packages
             shell: bash
             run: composer install
+        
         -   name: Install Node packages
             shell: bash
-            run: npm -q install
+            run: npm -q install || { cat ~/.npm/eresolve-report.txt ; exit 1; }
         
         -   name: Run PHP linter
             shell: bash
@@ -299,13 +307,20 @@ jobs:
     name: Create source code artifacts
     needs:
         - unit-tests
-        - php-lint
+        - code-lint
     runs-on: ubuntu-latest
     
     steps:
         -   name: Checkout the app
             uses: actions/checkout@v2
-        
+        -   name: Setup node and NPM
+            uses: actions/setup-node@v2
+            with:
+                node-version: '14'
+        -   name: Install npm
+            shell: bash
+            run: npm install -g npm@^7
+            
         -   name: Get the date
             id: date
             run: echo "::set-output name=date::$(date +%Y-%m-%d)"
@@ -315,7 +330,7 @@ jobs:
                 path: |
                     ~/.npm
                     node_modules
-                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package.json') }}
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
