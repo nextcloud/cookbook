@@ -206,8 +206,8 @@ fieldset > label {
 
 fieldset > input,
 fieldset > textarea {
-    flex: 1;
     width: revert;
+    flex: 1;
 }
 
 fieldset > input[type="number"] {
@@ -237,14 +237,13 @@ Use /deep/ because >>> did not work for some reason
 .editor /deep/ div[contenteditable="true"] {
     width: revert;
     min-height: revert;
-    margin: revert;
     padding: revert;
-    font-size: revert;
-    background-color: revert;
-    color: revert;
     border: revert;
-    outline: revert;
+    margin: revert;
+    background-color: revert;
     border-radius: revert;
+    color: revert;
+    font-size: revert;
+    outline: revert;
 }
-
 </style>
