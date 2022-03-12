@@ -206,6 +206,7 @@ fieldset > label {
 
 fieldset > input,
 fieldset > textarea {
+    width: revert;
     flex: 1;
 }
 
@@ -224,5 +225,25 @@ fieldset > .editor {
     flex: 1;
     border-radius: 2px;
     resize: vertical;
+}
+
+/*
+Hack to overwrite the heavy-handed global unscoped styles of Nextcloud core
+that cause our markdown editor CodeMirror to behave strangely on mobile
+See: https://github.com/nextcloud/cookbook/issues/908
+
+Use /deep/ because >>> did not work for some reason
+*/
+.editor /deep/ div[contenteditable="true"] {
+    width: revert;
+    min-height: revert;
+    padding: revert;
+    border: revert;
+    margin: revert;
+    background-color: revert;
+    border-radius: revert;
+    color: revert;
+    font-size: revert;
+    outline: revert;
 }
 </style>
