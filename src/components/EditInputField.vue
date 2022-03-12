@@ -207,6 +207,7 @@ fieldset > label {
 fieldset > input,
 fieldset > textarea {
     flex: 1;
+    width: revert;
 }
 
 fieldset > input[type="number"] {
