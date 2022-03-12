@@ -313,7 +313,6 @@ export default {
                     cursorPos === 0 ||
                     /\s/.test(content.charAt(cursorPos - 1))
                 ) {
-                    e.preventDefault()
                     // Show dialog to select recipe
                     this.$parent.$emit("showRecipeReferencesPopup", {
                         context: this,
