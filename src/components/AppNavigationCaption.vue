@@ -178,6 +178,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+
 // Taken from @nextcloud/vue/src/assets/variables.scss
 // https://uxplanet.org/7-rules-for-mobile-ui-button-design-e9cf2ea54556
 // recommended is 48px
@@ -190,7 +192,7 @@ $icon-size: 16px;
 
 // icon padding for a $clickable-area width and a $icon-size icon
 // ( 44px - 16px ) / 2
-$icon-margin: ($clickable-area - $icon-size) / 2;
+$icon-margin: math.div($clickable-area - $icon-size, 2);
 
 .app-navigation-caption-mod {
     display: flex;
@@ -202,7 +204,7 @@ $icon-margin: ($clickable-area - $icon-size) / 2;
 
 // extra top space if it's not the first item on the list
 .app-navigation-caption-mod:not(:first-child) {
-    margin-top: $clickable-area / 2;
+    margin-top: math.div($clickable-area, 2);
 }
 
 // Main entry link
