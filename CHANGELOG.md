@@ -9,7 +9,8 @@
   [#909](https://github.com/nextcloud/cookbook/pull/909) @christianlupus
 - Remove some packages from the dependencies to keep the footprint smaller
   [#912](https://github.com/nextcloud/cookbook/pull/912) @christianlupus
-
+- Remove deprecation in preparation for Sass 2.0.0
+  [#915](https://github.com/nextcloud/cookbook/pull/915) @MarcelRobitaille
 
 ### Documentation
 - Introduction about how to start coding
