@@ -16,6 +16,7 @@
                     v-model="buffer[idx]"
                     type="text"
                     @keydown="keyDown"
+                    @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
                 />
@@ -24,6 +25,7 @@
                     ref="list-field"
                     v-model="buffer[idx]"
                     @keydown="keyDown"
+                    @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
                 ></textarea>
@@ -257,7 +259,7 @@ export default {
             }
 
             // Allow new lines with shift key
-            if (e.key === "Enter" && e.shiftKey) {
+            if (e.shiftKey) {
                 // Do nothing here, user wants a line break
                 return
             }
@@ -267,11 +269,47 @@ export default {
                 return
             }
 
+            // Only do anything for enter
+            if (e.key !== "Enter") {
+                return
+            }
+
+            // At this point, we are sure that we want to modify the default
+            // behaviour
+            e.preventDefault()
+
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+                this.addNewEntry()
+            } else {
+                // Focus the next input or textarea
+                // We have to check for both, as inputs are used for
+                // ingredients and textareas are used for instructions
+                $ul.children[$pressedLiIndex + 1]
+                    .querySelector("input, textarea")
+                    .focus()
+            }
+        },
+        /**
+         * Shows the recipe linking popup when # is pressed
+         */
+        keyUp(e) {
+            // If, e.g., enter has been pressed in the multiselect popup to select an option,
+            // ignore the following keyup event
+            if (this.ignoreNextKeyUp) {
+                this.ignoreNextKeyUp = false
+                return
+            }
+
             // Only do anything for enter or # keys
-            if (
-                e.key !== "Enter" &&
-                !(this.referencePopupEnabled && e.key === "#")
-            ) {
+            if (!(this.referencePopupEnabled && e.key === "#")) {
                 return
             }
 
@@ -283,44 +321,25 @@ export default {
                 $li
             )
 
-            if (e.key === "Enter") {
-                e.preventDefault()
+            // Get the position of the cursor and the content of the input
+            const elm = this.$refs["list-field"][$pressedLiIndex]
+            const cursorPos = elm.selectionStart
+            const content = elm.value
 
-                if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
-                    this.addNewEntry()
-                } else {
-                    // Focus the next input or textarea
-                    // We have to check for both, as inputs are used for
-                    // ingredients and textareas are used for instructions
-                    $ul.children[$pressedLiIndex + 1]
-                        .querySelector("input, textarea")
-                        .focus()
-                }
+            // Show the popup only if the # was inserted at the very
+            // beggining of the input or after any whitespace character
+            if (
+                !(cursorPos === 1 || /\s/.test(content.charAt(cursorPos - 2)))
+            ) {
+                return
             }
-            if (this.referencePopupEnabled && e.key === "#") {
-                const elm = this.$refs["list-field"][$pressedLiIndex]
-                // Check if the letter before the hash
-                // This is a keydown event listener, so the `#` does not
-                // exist in the input yet
-                // `cursorPos` will be the index in the textfield before the #
-                // was pressed
-                const cursorPos = elm.selectionStart
-                const content = elm.value
 
-                // Show the popup only if the # was inserted at the very
-                // beggining of the input or after any whitespace character
-                if (
-                    cursorPos === 0 ||
-                    /\s/.test(content.charAt(cursorPos - 1))
-                ) {
-                    // Show dialog to select recipe
-                    this.$parent.$emit("showRecipeReferencesPopup", {
-                        context: this,
-                    })
-                    this.lastFocusedFieldIndex = $pressedLiIndex
-                    this.lastCursorPosition = cursorPos
-                }
-            }
+            // Show dialog to select recipe
+            this.$parent.$emit("showRecipeReferencesPopup", {
+                context: this,
+            })
+            this.lastFocusedFieldIndex = $pressedLiIndex
+            this.lastCursorPosition = cursorPos
         },
         moveEntryDown(index) {
             if (index >= this.buffer.length - 1) {
