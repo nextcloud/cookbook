@@ -11,6 +11,8 @@
   [#912](https://github.com/nextcloud/cookbook/pull/912) @christianlupus
 - Remove deprecation in preparation for Sass 2.0.0
   [#915](https://github.com/nextcloud/cookbook/pull/915) @MarcelRobitaille
+- Fix regression in #900 to allow inserting links to other recipes again
+  [#914](https://github.com/nextcloud/cookbook/pull/914) @MarcelRobitaille
 
 ### Documentation
 - Introduction about how to start coding
