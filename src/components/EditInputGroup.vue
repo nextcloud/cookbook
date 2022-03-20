@@ -233,7 +233,9 @@ export default {
             // to accidentally replace all newlines with spaces before splitting
             // Fixes #713
             for (let i = 0; i < inputLinesArray.length; ++i) {
-                inputLinesArray[i] = inputLinesArray[i].replaceAll(/\s+/g, " ")
+                inputLinesArray[i] = inputLinesArray[i]
+                    .trim()
+                    .replaceAll(/\s+/g, " ")
             }
 
             for (let i = 0; i < inputLinesArray.length; ++i) {
