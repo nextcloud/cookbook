@@ -229,6 +229,10 @@ export default {
             }
 
             for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i].replaceAll(/\s+/g, " ")
+            }
+
+            for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
                     $insertedIndex + i + 1,
                     false,
