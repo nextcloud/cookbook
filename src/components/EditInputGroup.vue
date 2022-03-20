@@ -228,6 +228,16 @@ export default {
                 inputLinesArray[i] = inputLinesArray[i].slice(prefixLength)
             }
 
+            // Replace multiple whitespace characters with a single space
+            // This has to be applied to each item in the list if we don't want
+            // to accidentally replace all newlines with spaces before splitting
+            // Fixes #713
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i]
+                    .trim()
+                    .replaceAll(/\s+/g, " ")
+            }
+
             for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
                     $insertedIndex + i + 1,

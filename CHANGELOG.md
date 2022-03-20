@@ -13,6 +13,8 @@
   [#915](https://github.com/nextcloud/cookbook/pull/915) @MarcelRobitaille
 - Fix regression in #900 to allow inserting links to other recipes again
   [#914](https://github.com/nextcloud/cookbook/pull/914) @MarcelRobitaille
+- Replace multiple spaces with a single one when pasting
+  [#924](https://github.com/nextcloud/cookbook/pull/924) @MarcelRobitaille
 
 ### Documentation
 - Introduction about how to start coding
@@ -256,7 +258,7 @@
   [#751](https://github.com/nextcloud/cookbook/pull/751) @christianlupus
 - Removed obsolete dependency on @nextcloud/event-bus
   [#719](https://github.com/nextcloud/cookbook/pull/719) @christianlupus
-  
+
 
 ## 0.8.4 - 2021-03-08
 
