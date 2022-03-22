@@ -48,5 +48,5 @@ if (__webpack_use_dev_server__ || false) {
     //     }).$mount("#content")
     // })
 
-    app.mount('#content')
+    app.mount("#content")
 })(OC, window)

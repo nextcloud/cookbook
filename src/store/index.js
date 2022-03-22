@@ -7,7 +7,6 @@
 import { createStore } from "vuex"
 import axios from "@nextcloud/axios"
 
-
 // We are using the vuex store linking changes within the components to updates in the navigation panel.
 const store = createStore({
     // Vuex store handles value changes through actions and mutations.

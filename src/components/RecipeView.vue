@@ -719,7 +719,7 @@ aside ul li input[type="checkbox"] {
     vertical-align: middle;
 }
 
-.markdown-description :deep( ol > li) {
+.markdown-description :deep(ol > li) {
     list-style-type: numbered;
 }
 
@@ -727,7 +727,7 @@ aside ul li input[type="checkbox"] {
     list-style-type: disc;
 }
 
-.markdown-description :deep( ol > li),
+.markdown-description :deep(ol > li),
 .markdown-description :deep(ul > li) {
     margin-left: 20px;
 }

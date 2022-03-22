@@ -216,6 +216,6 @@ if (__webpack_use_dev_server__ || false) {
     // })
 
     // app.
-    
+
     app.mount("#content")
 })(OC, window)
