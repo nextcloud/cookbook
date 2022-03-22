@@ -64,7 +64,7 @@ const routes = [
     { path: "/", name: "index", component: Index },
 
     // Anything not matched goes to NotFound
-    { path: "*", name: "not-found", component: NotFound },
+    { path: "/:pm(.*)*", name: "not-found", component: NotFound },
 ]
 
 const router = createRouter({
