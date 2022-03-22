@@ -4,14 +4,12 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from "vue"
-import Vuex from "vuex"
+import { createStore } from "vuex"
 import axios from "@nextcloud/axios"
 
-Vue.use(Vuex)
 
 // We are using the vuex store linking changes within the components to updates in the navigation panel.
-export default new Vuex.Store({
+const store = createStore({
     // Vuex store handles value changes through actions and mutations.
     // From the App, you trigger an action, that changes the store
     //  state through a set mutation. You can process the data within
@@ -238,3 +236,5 @@ export default new Vuex.Store({
         },
     },
 })
+
+export default store
