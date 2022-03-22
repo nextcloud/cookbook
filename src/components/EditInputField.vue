@@ -234,7 +234,7 @@ See: https://github.com/nextcloud/cookbook/issues/908
 
 Use /deep/ because >>> did not work for some reason
 */
-.editor /deep/ div[contenteditable="true"] {
+.editor :deep(div[contenteditable="true"]) {
     width: revert;
     min-height: revert;
     padding: revert;

@@ -56,7 +56,7 @@ button will be automatically created.
                 }"
                 class="app-navigation-caption-icon"
             >
-                <slot v-if="!loading" v-show="isIconShown" name="icon" />
+                <slot v-if="!loading && isIconShown" name="icon" />
             </div>
             <span class="app-navigation-caption__title" :title="title">
                 {{ title }}
