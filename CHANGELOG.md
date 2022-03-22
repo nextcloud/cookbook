@@ -15,6 +15,8 @@
   [#914](https://github.com/nextcloud/cookbook/pull/914) @MarcelRobitaille
 - Replace multiple spaces with a single one when pasting
   [#924](https://github.com/nextcloud/cookbook/pull/924) @MarcelRobitaille
+- Create abstraction class for access to user configuration
+  [#926](https://github.com/nextcloud/cookbook/pull/926) @christianlupus
 
 ### Documentation
 - Introduction about how to start coding
