@@ -7,7 +7,7 @@
 
 import { generateUrl } from "@nextcloud/router"
 
-import Vue from "vue"
+import { createApp } from "vue"
 import store from "./store"
 
 import AppInvalidGuest from "./components/AppInvalidGuest.vue"
@@ -28,19 +28,25 @@ if (__webpack_use_dev_server__ || false) {
     // eslint-disable-next-line no-param-reassign
     window.baseUrl = generateUrl("apps/cookbook")
 
+    const app = createApp(AppInvalidGuest)
+
     // Also make the injections available in Vue components
-    Vue.prototype.$window = window
-    Vue.prototype.OC = OC
+    app.config.globalProperties.$window = window
+    app.config.globalProperties.OC = OC
 
     // Pass translation engine to Vue
-    Vue.prototype.t = window.t
+    app.config.globalProperties.t = window.t
+
+    app.use(store)
 
     // Start the app once document is done loading
-    document.addEventListener("DOMContentLoaded", () => {
-        const App = Vue.extend(AppInvalidGuest)
-        new App({
-            store,
-            // router,
-        }).$mount("#content")
-    })
+    // document.addEventListener("DOMContentLoaded", () => {
+    //     const App = Vue.extend(AppInvalidGuest)
+    //     new App({
+    //         store,
+    //         // router,
+    //     }).$mount("#content")
+    // })
+
+    app.mount('#content')
 })(OC, window)
