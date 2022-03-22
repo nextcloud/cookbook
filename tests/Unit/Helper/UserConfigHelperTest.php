@@ -13,9 +13,15 @@ use PHPUnit\Framework\TestCase;
  * @covers \OCA\Cookbook\Helper\UserConfigHelper
  */
 class UserConfigHelperTest extends TestCase {
-	private UserConfigHelper $dut;
+	/**
+	 * @var UserConfigHelper
+	 */
+	private $dut;
 
-	private string $userId;
+	/**
+	 * @var string
+	 */
+	private $userId;
 	
 	/**
 	 * @var MockObject

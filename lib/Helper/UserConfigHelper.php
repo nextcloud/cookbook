@@ -9,9 +9,20 @@ use OCP\IL10N;
  * This class allows access to the per-user configuration of the app
  */
 class UserConfigHelper {
-	private string $userId;
-	private IConfig $config;
-	private IL10N $l;
+	/**
+	 * @var string
+	 */
+	private $userId;
+
+	/**
+	 * @var IConfig
+	 */
+	private $config;
+	
+	/**
+	 * @var IL10N
+	 */
+	private $l;
 
 	public function __construct(
 		string $UserId,
