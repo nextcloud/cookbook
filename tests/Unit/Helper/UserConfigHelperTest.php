@@ -83,7 +83,7 @@ class UserConfigHelperTest extends TestCase {
 			->with($this->userId, 'cookbook', 'update_interval')
 			->willReturn('');
 		
-		$this->assertEquals(600, $this->dut->getUpdateInterval());
+		$this->assertEquals(5, $this->dut->getUpdateInterval());
 	}
 	
 	public function testPrintImage() {

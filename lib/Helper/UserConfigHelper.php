@@ -76,7 +76,7 @@ class UserConfigHelper {
 	public function getUpdateInterval(): int {
 		$rawValue = $this->getRawValue('update_interval');
 		if ($rawValue === '') {
-			return 60 * 10;
+			return 5;
 		}
 
 		return intval($rawValue);
