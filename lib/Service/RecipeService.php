@@ -6,7 +6,6 @@ use Exception;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Image;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\File;
@@ -16,6 +15,7 @@ use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Helper\UserConfigHelper;
 
 /**
  * Main service class for the cookbook app.
@@ -26,17 +26,21 @@ class RecipeService {
 	private $root;
 	private $user_id;
 	private $db;
-	private $config;
 	private $il10n;
 	private $logger;
 
-	public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config, IL10N $il10n, LoggerInterface $logger) {
+	/**
+	 * @var UserConfigHelper
+	 */
+	private $userConfigHelper;
+
+	public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, UserConfigHelper $userConfigHelper, IL10N $il10n, LoggerInterface $logger) {
 		$this->user_id = $UserId;
 		$this->root = $root;
 		$this->db = $db;
-		$this->config = $config;
 		$this->il10n = $il10n;
 		$this->logger = $logger;
+		$this->userConfigHelper = $userConfigHelper;
 	}
 
 	/**
@@ -1020,21 +1024,14 @@ class RecipeService {
 	 * @param string $path
 	 */
 	public function setUserFolderPath(string $path) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
+		$this->userConfigHelper->setFolderName($path);
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getUserFolderPath() {
-		$path = $this->config->getUserValue($this->user_id, 'cookbook', 'folder');
-
-		if (!$path) {
-			$path = '/' . $this->il10n->t('Recipes');
-			$this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
-		}
-
-		return $path;
+		return $this->userConfigHelper->getFolderName();
 	}
 
 	/**
@@ -1042,7 +1039,7 @@ class RecipeService {
 	 * @throws PreConditionNotMetException
 	 */
 	public function setSearchIndexUpdateInterval(int $interval) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'update_interval', $interval);
+		$this->userConfigHelper->setUpdateInterval($interval);
 	}
 
 	/**
@@ -1060,7 +1057,7 @@ class RecipeService {
 	 * @throws PreConditionNotMetException
 	 */
 	public function setPrintImage(bool $printImage) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'print_image', (int) $printImage);
+		$this->userConfigHelper->setPrintImage($printImage);
 	}
 
 	/**
@@ -1068,7 +1065,7 @@ class RecipeService {
 	 * @return bool
 	 */
 	public function getPrintImage() {
-		return (bool) $this->config->getUserValue($this->user_id, 'cookbook', 'print_image');
+		return $this->userConfigHelper->getPrintImage();
 	}
 
 	/**
