@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Helper;
 
+use OCA\Cookbook\AppInfo\Application;
 use OCP\IConfig;
 use OCP\IL10N;
 
@@ -34,6 +35,11 @@ class UserConfigHelper {
 		$this->l = $l;
 	}
 
+	protected const KEY_LAST_INDEX_UPDATE = 'last_index_update';
+	protected const KEY_UPDATE_INTERVAL = 'update_interval';
+	protected const KEY_PRINT_IMAGE = 'print_image';
+	protected const KEY_FOLDER = 'folder';
+
 	/**
 	 * Get a config value from the database
 	 *
@@ -41,7 +47,7 @@ class UserConfigHelper {
 	 * @return string The resulting value or '' if the key was not found
 	 */
 	private function getRawValue(string $key): string {
-		return $this->config->getUserValue($this->userId, 'cookbook', $key);
+		return $this->config->getUserValue($this->userId, Application::APP_ID, $key);
 	}
 
 	/**
@@ -52,7 +58,7 @@ class UserConfigHelper {
 	 * @return void
 	 */
 	private function setRawValue(string $key, string $value): void {
-		$this->config->setUserValue($this->userId, 'cookbook', $key, $value);
+		$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 	}
 
 	/**
@@ -61,7 +67,7 @@ class UserConfigHelper {
 	 * @return integer The timestamp of the last index rebuild
 	 */
 	public function getLastIndexUpdate(): int {
-		$rawValue = $this->getRawValue('last_index_update');
+		$rawValue = $this->getRawValue(self::KEY_LAST_INDEX_UPDATE);
 		if ($rawValue === '') {
 			return 0;
 		}
@@ -76,7 +82,7 @@ class UserConfigHelper {
 	 * @return void
 	 */
 	public function setLastIndexUpdate(int $value): void {
-		$this->setRawValue('last_index_update', strval($value));
+		$this->setRawValue(self::KEY_LAST_INDEX_UPDATE, strval($value));
 	}
 
 	/**
@@ -85,7 +91,7 @@ class UserConfigHelper {
 	 * @return integer The number of seconds to wait before a new rescan is triggered
 	 */
 	public function getUpdateInterval(): int {
-		$rawValue = $this->getRawValue('update_interval');
+		$rawValue = $this->getRawValue(self::KEY_UPDATE_INTERVAL);
 		if ($rawValue === '') {
 			return 5;
 		}
@@ -100,7 +106,7 @@ class UserConfigHelper {
 	 * @return void
 	 */
 	public function setUpdateInterval(int $value): void {
-		$this->setRawValue('update_interval', $value);
+		$this->setRawValue(self::KEY_UPDATE_INTERVAL, $value);
 	}
 
 	/**
@@ -109,7 +115,7 @@ class UserConfigHelper {
 	 * @return boolean true, if the image should be printed
 	 */
 	public function getPrintImage(): bool {
-		$rawValue = $this->getRawValue('print_image');
+		$rawValue = $this->getRawValue(self::KEY_PRINT_IMAGE);
 		if ($rawValue === '') {
 			return true;
 		}
@@ -124,9 +130,9 @@ class UserConfigHelper {
 	 */
 	public function setPrintImage(bool $value): void {
 		if ($value) {
-			$this->setRawValue('print_image', '1');
+			$this->setRawValue(self::KEY_PRINT_IMAGE, '1');
 		} else {
-			$this->setRawValue('print_image', '0');
+			$this->setRawValue(self::KEY_PRINT_IMAGE, '0');
 		}
 	}
 
@@ -138,7 +144,8 @@ class UserConfigHelper {
 	 * @return string The name of the folder within the users files
 	 */
 	public function getFolderName(): string {
-		$rawValue = $this->getRawValue('folder');
+		$rawValue = $this->getRawValue(self::KEY_FOLDER);
+
 		if ($rawValue === '') {
 			$path = '/' . $this->l->t('Recipes');
 			$this->setFolderName($path);
@@ -155,6 +162,6 @@ class UserConfigHelper {
 	 * @return void
 	 */
 	public function setFolderName(string $value): void {
-		$this->setRawValue('folder', $value);
+		$this->setRawValue(self::KEY_FOLDER, $value);
 	}
 }
