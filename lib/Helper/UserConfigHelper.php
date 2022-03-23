@@ -106,7 +106,7 @@ class UserConfigHelper {
 	/**
 	 * Check if the primary imgae should be printed or not
 	 *
-	 * @return boolean true, if the imgae shoudl be printed
+	 * @return boolean true, if the image should be printed
 	 */
 	public function getPrintImage(): bool {
 		$rawValue = $this->getRawValue('print_image');
@@ -117,7 +117,7 @@ class UserConfigHelper {
 	}
 
 	/**
-	 * Set if the imgae should be printed
+	 * Set if the image should be printed
 	 *
 	 * @param boolean $value true if the image should be printed
 	 * @return void
@@ -151,7 +151,7 @@ class UserConfigHelper {
 	/**
 	 * Set the folder for the user's cookbook.
 	 *
-	 * @param string $value The name of the folder withon the user's files
+	 * @param string $value The name of the folder within the user's files
 	 * @return void
 	 */
 	public function setFolderName(string $value): void {
