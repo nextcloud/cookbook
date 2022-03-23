@@ -17,6 +17,8 @@
   [#924](https://github.com/nextcloud/cookbook/pull/924) @MarcelRobitaille
 - Create abstraction class for access to user configuration
   [#926](https://github.com/nextcloud/cookbook/pull/926) @christianlupus
+- Allow unit test to run against webserver with PHP support
+  [#927](https://github.com/nextcloud/cookbook/pull/927) @christianlupus
 
 ### Documentation
 - Introduction about how to start coding
