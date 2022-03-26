@@ -116,15 +116,17 @@ pushd custom_apps/cookbook > /dev/null
 
 make appinfo/info.xml
 
+FAILED=0
+
 if [ $RUN_UNIT_TESTS = 'y' ]; then
 	echo 'Starting unit testing.'
-	/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@"
+	/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@" || { FAILED=$?; true; }
 	echo 'Unit testing done.'
 fi
 
 if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Starting integration testing.'
-	/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@"
+	/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@" || { FAILED=$?; true; }
 	echo 'Integration testing done.'
 fi
 
@@ -150,3 +152,8 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 fi
 
 printCI "::endgroup::"
+
+if [ $FAILED != 0 ]; then
+	echo "Failing as testing failed"
+	exit $FAILED
+fi

@@ -25,6 +25,7 @@ Possible options:
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
+  --keep-code-coverage				Normally, the last code coverage is removed to avoid filling up the disk. This flag keeps the old one.
   --install-composer-deps           Install composer dependencies
   --build-npm                       Install and build js packages
   -q / --quick                      Test in quick mode. This will not update the permissions on successive (local) test runs.
@@ -389,6 +390,12 @@ copy_environment() {
 	cp -a "volumes/dumps/$COPY_ENV_SRC" "volumes/dumps/$COPY_ENV_DST"
 }
 
+rotate_code_coverage() {
+	if [ $EXTRACT_CODE_COVERAGE = 'y' -a $KEEP_CODE_COVERAGE = 'n' ]; then
+		rm -rf "$(readlink -f volumes/coverage/latest)"
+	fi
+}
+
 run_tests() {
 	
 	PARAMS=''
@@ -472,6 +479,7 @@ RUN_CODE_CHECKER=n
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
+KEEP_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
 BUILD_NPM=n
 QUICK_MODE=n
@@ -585,6 +593,9 @@ do
 			;;
 		--extract-code-coverage)
 			EXTRACT_CODE_COVERAGE=y
+			;;
+		--keep-code-coverage)
+			KEEP_CODE_COVERAGE=y
 			;;
 		--install-composer-deps)
 			INSTALL_COMPOSER_DEPS=y
@@ -876,6 +887,8 @@ fi
 
 printCI "::endgroup::"
 toc
+
+rotate_code_coverage
 
 tic
 if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then

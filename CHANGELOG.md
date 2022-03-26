@@ -19,6 +19,8 @@
   [#926](https://github.com/nextcloud/cookbook/pull/926) @christianlupus
 - Allow unit test to run against webserver with PHP support
   [#927](https://github.com/nextcloud/cookbook/pull/927) @christianlupus
+- Enhance the unit test script for more user convinience
+  [#931](https://github.com/nextcloud/cookbook/pull/931) @christianlupus
 
 ### Documentation
 - Introduction about how to start coding
