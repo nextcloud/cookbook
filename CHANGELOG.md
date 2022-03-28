@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Documentation
+- Enhanced the user doumentation by adding some starter's information
+  [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
+
 
 ## 0.9.11 - 2022-03-28
 
