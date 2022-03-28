@@ -87,7 +87,7 @@ class ThumbnailFileHelper {
 	private function recreateSingleThumbnail(Folder $recipeFolder, int $type): void {
 		$filename = ImageSize::NAME_MAP[$type];
 		
-		if ($this->fileHelper->hasImage($filename)) {
+		if ($this->fileHelper->hasImage($recipeFolder)) {
 			$full = $this->fileHelper->getImage($recipeFolder);
 			$file = $recipeFolder->get($filename);
 

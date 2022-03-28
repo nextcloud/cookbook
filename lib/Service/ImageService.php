@@ -100,7 +100,7 @@ class ImageService {
 	 * @return File The file of the thumbnail
 	 */
 	public function getThumbnailAsFile(Folder $recipeFolder, int $type): File {
-		return $this->thumbnailHelper->ensureThumbnailExists($recipeFolder, $type);
+		return $this->thumbnailHelper->getThumbnail($recipeFolder, $type);
 	}
 
 	/**

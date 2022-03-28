@@ -1115,8 +1115,6 @@ class RecipeService {
 			default:
 				throw new Exception($this->il10n->t('Image size "%s" is not recognized.', [$size]));
 		}
-
-		throw new Exception($this->il10n->t('Image file not recognised'));
 	}
 
 	/**

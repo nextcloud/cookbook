@@ -74,7 +74,7 @@ class ImageServiceTest extends TestCase {
 	public function testGetThumbnailAsFile($type) {
 		$recipeFolder = $this->createStub(Folder::class);
 		$file = $this->createStub(File::class);
-		$this->thumbnailHelper->method('ensureThumbnailExists')->with($recipeFolder, $type)->willReturn($file);
+		$this->thumbnailHelper->method('getThumbnail')->with($recipeFolder, $type)->willReturn($file);
 		$this->assertSame($file, $this->dut->getThumbnailAsFile($recipeFolder, $type));
 	}
 
@@ -89,7 +89,7 @@ class ImageServiceTest extends TestCase {
 		$file = $this->createStub(File::class);
 		$content = 'This is the content of the file.';
 		$file->method('getContent')->willReturn($content);
-		$this->thumbnailHelper->method('ensureThumbnailExists')->with($recipeFolder, $type)->willReturn($file);
+		$this->thumbnailHelper->method('getThumbnail')->with($recipeFolder, $type)->willReturn($file);
 
 		$this->assertEquals($content, $this->dut->getThumbnail($recipeFolder, $type));
 	}

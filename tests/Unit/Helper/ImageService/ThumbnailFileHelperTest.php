@@ -67,7 +67,7 @@ class ThumbnailFileHelperTest extends TestCase {
 	/**
 	 * @dataProvider dpFilename
 	 */
-	public function testEnsureThumbnailExistsWithExistingThumbnail($type, $filename) {
+	public function testGetThumbnailWithExistingThumbnail($type, $filename) {
 		/**
 		 * @var MockObject|Folder $f
 		 */
@@ -77,13 +77,13 @@ class ThumbnailFileHelperTest extends TestCase {
 		$file = $this->createStub(File::class);
 		$f->method('get')->with($filename)->willReturn($file);
 
-		$this->assertSame($file, $this->dut->ensureThumbnailExists($f, $type));
+		$this->assertSame($file, $this->dut->getThumbnail($f, $type));
 	}
 
 	/**
 	 * @dataProvider dpFilename
 	 */
-	public function testEnsureThumbnailExistsWithNonExistingThumbnail($type, $filename) {
+	public function testGetThumbnailWithNonExistingThumbnail($type, $filename) {
 		/**
 		 * @var MockObject|Folder $f
 		 */
@@ -101,13 +101,13 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->generationHelper->expects($this->once())->method('generateThumbnail')
 			->with($full, $type, $file);
 
-		$this->assertSame($file, $this->dut->ensureThumbnailExists($f, $type));
+		$this->assertSame($file, $this->dut->getThumbnail($f, $type));
 	}
 
 	/**
 	 * @dataProvider dpFilename
 	 */
-	public function testEnsureThumbnailExistsWithNonExistingMainImage($type, $filename) {
+	public function testGetThumbnailWithNonExistingMainImage($type, $filename) {
 		/**
 		 * @var MockObject|Folder $f
 		 */
@@ -122,7 +122,7 @@ class ThumbnailFileHelperTest extends TestCase {
 
 		$this->expectException(NoRecipeImageFoundException::class);
 
-		$this->dut->ensureThumbnailExists($f, $type);
+		$this->dut->getThumbnail($f, $type);
 	}
 
 	public function dpDrop() {
