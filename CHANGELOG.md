@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- Refactor the code for image handling to make it testable
+  [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
+
 
 ## 0.9.11 - 2022-03-28
 
