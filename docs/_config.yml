@@ -1,4 +1,5 @@
 theme: jekyll-theme-slate
+repository: nextcloud/cookbook
 exclude:
     - "Makefile"
     - "vendor/"
