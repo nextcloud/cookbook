@@ -1,6 +1,35 @@
 ## [Unreleased]
 
 
+## 0.9.11 - 2022-03-28
+
+### Fixed
+- Reduce complex coupling between event handlers in EditInputGroup.vue
+  [#901](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
+- Fix bug in NC Vue config that switches input fields to be not full width on mobile
+  [#910](https://github.com/nextcloud/cookbook/pull/910) @MarcelRobitaille
+- Enable hot reloading feature of Vue for simpler development
+  [#909](https://github.com/nextcloud/cookbook/pull/909) @christianlupus
+- Remove some packages from the dependencies to keep the footprint smaller
+  [#912](https://github.com/nextcloud/cookbook/pull/912) @christianlupus
+- Remove deprecation in preparation for Sass 2.0.0
+  [#915](https://github.com/nextcloud/cookbook/pull/915) @MarcelRobitaille
+- Fix regression in #900 to allow inserting links to other recipes again
+  [#914](https://github.com/nextcloud/cookbook/pull/914) @MarcelRobitaille
+- Replace multiple spaces with a single one when pasting
+  [#924](https://github.com/nextcloud/cookbook/pull/924) @MarcelRobitaille
+- Create abstraction class for access to user configuration
+  [#926](https://github.com/nextcloud/cookbook/pull/926) @christianlupus
+- Allow unit test to run against webserver with PHP support
+  [#927](https://github.com/nextcloud/cookbook/pull/927) @christianlupus
+- Enhance the unit test script for more user convinience
+  [#931](https://github.com/nextcloud/cookbook/pull/931) @christianlupus
+
+### Documentation
+- Introduction about how to start coding
+  [#891](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
+
+
 ## 0.9.10 - 2022-03-04
 
 ### Added
@@ -238,7 +267,7 @@
   [#751](https://github.com/nextcloud/cookbook/pull/751) @christianlupus
 - Removed obsolete dependency on @nextcloud/event-bus
   [#719](https://github.com/nextcloud/cookbook/pull/719) @christianlupus
-  
+
 
 ## 0.8.4 - 2021-03-08
 

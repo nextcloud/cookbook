@@ -5,8 +5,8 @@ namespace OCA\Cookbook\Service;
 use OCA\Cookbook\Db\RecipeDb;
 use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
-use OCP\IConfig;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
+use OCA\Cookbook\Helper\UserConfigHelper;
 
 class DbCacheService {
 	private $userId;
@@ -23,9 +23,9 @@ class DbCacheService {
 	private $recipeService;
 	
 	/**
-	 * @var IConfig
+	 * @var UserConfigHelper
 	 */
-	private $config;
+	private $userConfigHelper;
 	
 	private $jsonFiles;
 	private $dbReceipeFiles;
@@ -36,11 +36,11 @@ class DbCacheService {
 	private $obsoleteRecipes;
 	private $updatedRecipes;
 	
-	public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService, IConfig $config) {
+	public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService, UserConfigHelper $userConfigHelper) {
 		$this->userId = $UserId;
 		$this->db = $db;
 		$this->recipeService = $recipeService;
-		$this->config = $config;
+		$this->userConfigHelper = $userConfigHelper;
 	}
 	
 	public function updateCache() {
@@ -340,14 +340,14 @@ class DbCacheService {
 	 * Gets the last time the search index was updated
 	 */
 	public function getSearchIndexLastUpdateTime() {
-		return (int) $this->config->getUserValue($this->userId, 'cookbook', 'last_index_update');
+		return $this->userConfigHelper->getLastIndexUpdate();
 	}
 	
 	/**
 	 * @return int
 	 */
 	public function getSearchIndexUpdateInterval(): int {
-		$interval = (int)$this->config->getUserValue($this->userId, 'cookbook', 'update_interval');
+		$interval = $this->userConfigHelper->getUpdateInterval();
 		
 		if ($interval < 1) {
 			$interval = 5;
@@ -373,7 +373,7 @@ class DbCacheService {
 			$this->updateCache();
 			
 			// Cache the last index update
-			$this->config->setUserValue($this->userId, 'cookbook', 'last_index_update', time());
+			$this->userConfigHelper->setLastIndexUpdate(time());
 			
 			// TODO Make triggers more general, need refactoring of *all* Services
 			$this->recipeService->updateSearchIndex();

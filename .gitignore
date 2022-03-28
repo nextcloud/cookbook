@@ -15,8 +15,6 @@ js/*
 
 # Node modules
 node_modules
-# Package lock
-package-lock.json
 
 ### Composer ###
 

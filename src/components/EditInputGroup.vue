@@ -16,6 +16,7 @@
                     v-model="buffer[idx]"
                     type="text"
                     @keydown="keyDown"
+                    @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
                 />
@@ -24,6 +25,7 @@
                     ref="list-field"
                     v-model="buffer[idx]"
                     @keydown="keyDown"
+                    @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
                 ></textarea>
@@ -115,8 +117,6 @@ export default {
         return {
             // helper variables
             buffer: this.value.slice(),
-            contentPasted: false,
-            singleLinePasted: false,
             lastFocusedFieldIndex: null,
             lastCursorPosition: -1,
             ignoreNextKeyUp: false,
@@ -162,30 +162,23 @@ export default {
         /**
          * Handle typing in input or field or textarea
          */
-        handleInput() {
-            // wait a tick to check if content was typed or pasted
-            this.$nextTick(function handlePastedOrTyped() {
-                if (this.contentPasted) {
-                    this.contentPasted = false
-
-                    if (this.singleLinePasted) {
-                        this.$emit("input", this.buffer)
-                    }
-
-                    return
-                }
-                this.$emit("input", this.buffer)
-            })
+        handleInput(e) {
+            // Exit early if input was pasted. Let `handlePaste` handle this.
+            // References:
+            // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
+            // https://rawgit.com/w3c/input-events/v1/index.html#interface-InputEvent-Attributes
+            if (
+                e.inputType === "insertFromPaste" ||
+                e.inputType === "insertFromPasteAsQuotation"
+            ) {
+                return
+            }
+            this.$emit("input", this.buffer)
         },
         /**
          * Handle paste in input field or textarea
          */
         handlePaste(e) {
-            this.contentPasted = true
-            if (!this.createFieldsOnNewlines) {
-                return
-            }
-
             // get data from clipboard to keep newline characters, which are stripped
             // from the data pasted in the input field (e.target.value)
             const clipboardData = e.clipboardData || window.clipboardData
@@ -195,11 +188,17 @@ export default {
                 // Remove empty lines
                 .filter((line) => line.trim() !== "")
 
+            // If only a single line pasted, emit that line and exit
+            // Treat it as if that single line was typed
             if (inputLinesArray.length === 1) {
-                this.singleLinePasted = true
+                this.$emit("input", this.buffer)
                 return
             }
-            this.singleLinePasted = false
+
+            // From here on, multiple lines pasted
+            if (!this.createFieldsOnNewlines) {
+                return
+            }
 
             e.preventDefault()
 
@@ -229,6 +228,16 @@ export default {
                 inputLinesArray[i] = inputLinesArray[i].slice(prefixLength)
             }
 
+            // Replace multiple whitespace characters with a single space
+            // This has to be applied to each item in the list if we don't want
+            // to accidentally replace all newlines with spaces before splitting
+            // Fixes #713
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i]
+                    .trim()
+                    .replaceAll(/\s+/g, " ")
+            }
+
             for (let i = 0; i < inputLinesArray.length; ++i) {
                 this.addNewEntry(
                     $insertedIndex + i + 1,
@@ -246,7 +255,6 @@ export default {
                     indexToFocus -= 1
                 }
                 this.$refs["list-field"][indexToFocus].focus()
-                this.contentPasted = false
             })
         },
         /**
@@ -261,7 +269,7 @@ export default {
             }
 
             // Allow new lines with shift key
-            if (e.key === "Enter" && e.shiftKey) {
+            if (e.shiftKey) {
                 // Do nothing here, user wants a line break
                 return
             }
@@ -271,11 +279,47 @@ export default {
                 return
             }
 
+            // Only do anything for enter
+            if (e.key !== "Enter") {
+                return
+            }
+
+            // At this point, we are sure that we want to modify the default
+            // behaviour
+            e.preventDefault()
+
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+                this.addNewEntry()
+            } else {
+                // Focus the next input or textarea
+                // We have to check for both, as inputs are used for
+                // ingredients and textareas are used for instructions
+                $ul.children[$pressedLiIndex + 1]
+                    .querySelector("input, textarea")
+                    .focus()
+            }
+        },
+        /**
+         * Shows the recipe linking popup when # is pressed
+         */
+        keyUp(e) {
+            // If, e.g., enter has been pressed in the multiselect popup to select an option,
+            // ignore the following keyup event
+            if (this.ignoreNextKeyUp) {
+                this.ignoreNextKeyUp = false
+                return
+            }
+
             // Only do anything for enter or # keys
-            if (
-                e.key !== "Enter" &&
-                !(this.referencePopupEnabled && e.key === "#")
-            ) {
+            if (!(this.referencePopupEnabled && e.key === "#")) {
                 return
             }
 
@@ -287,45 +331,25 @@ export default {
                 $li
             )
 
-            if (e.key === "Enter") {
-                e.preventDefault()
+            // Get the position of the cursor and the content of the input
+            const elm = this.$refs["list-field"][$pressedLiIndex]
+            const cursorPos = elm.selectionStart
+            const content = elm.value
 
-                if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
-                    this.addNewEntry()
-                } else {
-                    // Focus the next input or textarea
-                    // We have to check for both, as inputs are used for
-                    // ingredients and textareas are used for instructions
-                    $ul.children[$pressedLiIndex + 1]
-                        .querySelector("input, textarea")
-                        .focus()
-                }
+            // Show the popup only if the # was inserted at the very
+            // beggining of the input or after any whitespace character
+            if (
+                !(cursorPos === 1 || /\s/.test(content.charAt(cursorPos - 2)))
+            ) {
+                return
             }
-            if (this.referencePopupEnabled && e.key === "#") {
-                const elm = this.$refs["list-field"][$pressedLiIndex]
-                // Check if the letter before the hash
-                // This is a keydown event listener, so the `#` does not
-                // exist in the input yet
-                // `cursorPos` will be the index in the textfield before the #
-                // was pressed
-                const cursorPos = elm.selectionStart
-                const content = elm.value
 
-                // Show the popup only if the # was inserted at the very
-                // beggining of the input or after any whitespace character
-                if (
-                    cursorPos === 0 ||
-                    /\s/.test(content.charAt(cursorPos - 1))
-                ) {
-                    e.preventDefault()
-                    // Show dialog to select recipe
-                    this.$parent.$emit("showRecipeReferencesPopup", {
-                        context: this,
-                    })
-                    this.lastFocusedFieldIndex = $pressedLiIndex
-                    this.lastCursorPosition = cursorPos
-                }
-            }
+            // Show dialog to select recipe
+            this.$parent.$emit("showRecipeReferencesPopup", {
+                context: this,
+            })
+            this.lastFocusedFieldIndex = $pressedLiIndex
+            this.lastCursorPosition = cursorPos
         },
         moveEntryDown(index) {
             if (index >= this.buffer.length - 1) {
