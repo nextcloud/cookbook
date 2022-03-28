@@ -7,12 +7,15 @@ use OCA\Cookbook\Helper\ImageService\ThumbnailFileHelper;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\Lock\LockedException;
 
 /**
  * This class provides an interface to access the images of the recipes.
  * This simplifies/abstracts the access of the images to avoid low-level file system access.
  *
  * @todo Use Abstract Filesystem
+ * @todo Rework the exeption passing
  */
 class ImageService {
 
@@ -40,6 +43,8 @@ class ImageService {
 	 * @param Folder $recipeFolder The folder of the recipe
 	 * @return string The image file data
 	 * @throws NotFoundException if no image has been found
+	 * @throws LockedException if the image cannot be used currently
+	 * @throws NotPermittedException if the user is not allowed to ge the file content of the image
 	 */
 	public function getImage(Folder $recipeFolder): string {
 		return $this->getImageAsFile($recipeFolder)->getContent();
@@ -86,6 +91,10 @@ class ImageService {
 	 * @param integer $type The type of the thumbnail to obtain
 	 * @see OCA\Cookbook\Helper\ImageService\ImageSize for a list of possible image sizes
 	 * @return string The image data
+	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create a thumbnail from
+	 * @throws NotPermittedException if the thumbnail generation could not write the thumbnail to the correct location
+	 * @throws LockedException if the image file is currently locked
+	 * @throws NotPermittedException if the user is not permitted to read the file content of the thumbnail
 	 */
 	public function getThumbnail(Folder $recipeFolder, int $type): string {
 		return $this->getThumbnailAsFile($recipeFolder, $type)->getContent();
@@ -98,6 +107,8 @@ class ImageService {
 	 * @param integer $type The type of the thumbnail to obtain
 	 * @see OCA\Cookbook\Helper\ImageService\ImageSize for a list of possible image sizes
 	 * @return File The file of the thumbnail
+	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create a thumbnail from
+	 * @throws NotPermittedException if the thumbnail generation could not write the thumbnail to the correct location
 	 */
 	public function getThumbnailAsFile(Folder $recipeFolder, int $type): File {
 		return $this->thumbnailHelper->getThumbnail($recipeFolder, $type);
@@ -111,6 +122,14 @@ class ImageService {
 	 * @param Folder $recipeFolder The recipe folder to store the image to
 	 * @param string $data The image data
 	 * @return void
+	 * @throws NotFoundException
+	 * @throws GenericFileException
+	 * @throws LockedException
+	 * @throws InvalidPathException
+	 * @throws RecipeImageExistsException if the folder has already a image file present.
+	 * @throws NotPermittedException if the image file could not be generated.
+	 * @throws InvalidThumbnailTypeException if the requested thumbnail type is not known or is useless
+	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create the thumbnails from
 	 */
 	public function setImageData(Folder $recipeFolder, string $data): void {
 		if ($this->fileHelper->hasImage($recipeFolder)) {
