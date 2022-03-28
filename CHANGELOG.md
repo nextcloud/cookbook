@@ -4,6 +4,10 @@
 - Refactor the code for image handling to make it testable
   [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
 
+### Documentation
+- Enhanced the user doumentation by adding some starter's information
+  [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
+
 
 ## 0.9.11 - 2022-03-28
 
