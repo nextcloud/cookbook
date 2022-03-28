@@ -1097,8 +1097,7 @@ class RecipeService {
 	 *
 	 * @return File
 	 */
-	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File
-	{
+	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File {
 		$recipe_folders = $this->root->getById($id);
 		if (count($recipe_folders) < 1) {
 			throw new Exception($this->il10n->t('Recipe with id %d not found.', [$id]));
