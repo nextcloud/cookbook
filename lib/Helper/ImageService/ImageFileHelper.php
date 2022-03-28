@@ -35,7 +35,7 @@ class ImageFileHelper {
 	}
 
 	/**
-	 * Check if a recipe has a folder attached
+	 * Check if a recipe folder contains an image
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe to check
 	 * @return boolean true, if there is an image present
@@ -47,7 +47,7 @@ class ImageFileHelper {
 	/**
 	 * Drop the image of a recipe
 	 *
-	 * @param Folder $recipeFolder The folder contraining the recipe
+	 * @param Folder $recipeFolder The folder containing the recipe
 	 * @return void
 	 */
 	public function dropImage(Folder $recipeFolder): void {

@@ -7,7 +7,7 @@ use OCP\Files\Folder;
 use OCA\Cookbook\Service\ThumbnailService;
 
 /**
- * This class provides heler function to generate appropriate thumbnails according to the needs.
+ * This class provides helper function to generate appropriate thumbnails according to the needs.
  */
 class ImageGenerationHelper {
 	private const MAP = [
@@ -31,7 +31,7 @@ class ImageGenerationHelper {
 	 * Calculate the image data of a thumbnail of defined size and store it in the nextcloud server storage.
 	 *
 	 * @param File $fullImage The full-sized image to use as a starting point
-	 * @param int $type The requested size of the thunbmail
+	 * @param int $type The requested size of the thumbnail
 	 * @param File $dstFile The name of the file to store the thumbnail to
 	 * @return void
 	 */
@@ -51,7 +51,7 @@ class ImageGenerationHelper {
 	/**
 	 * Ensure that a thumbnail is not existing in the file system.
 	 *
-	 * This method checks if a certain thumbail size is present in the recipe folder and removes the file accordingly.
+	 * This method checks if a certain thumbnail size is present in the recipe folder and removes the file accordingly.
 	 * Note: If the thumbnail is not present, this method does nothing.
 	 *
 	 * The main image will not be dropped.

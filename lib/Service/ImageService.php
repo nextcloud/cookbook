@@ -35,7 +35,7 @@ class ImageService {
 	}
 
 	/**
-	 * Get the main image from a recipe
+	 * Get the main image of a recipe
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe
 	 * @return string The image file data
@@ -57,7 +57,7 @@ class ImageService {
 	}
 
 	/**
-	 * Check if a recipe has a folder attached
+	 * Check if a recipe folder contains an image
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe to check
 	 * @return boolean true, if there is an image present
@@ -92,7 +92,7 @@ class ImageService {
 	}
 
 	/**
-	 * Obtain a thumbnail from a recipe as a file for further processing
+	 * Obtain a thumbnail of a recipe's primary image as a file for further processing
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
 	 * @param integer $type The type of the thumbnail to obtain
@@ -106,7 +106,7 @@ class ImageService {
 	/**
 	 * Store a new image in the recipe folder.
 	 *
-	 * This will store the datan and recreate the thumbnails to keep them up to date.
+	 * This will store the data and recreate the thumbnails to keep them up to date.
 	 *
 	 * @param Folder $recipeFolder The recipe folder to store the image to
 	 * @param string $data The image data

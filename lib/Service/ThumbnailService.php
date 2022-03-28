@@ -10,8 +10,8 @@ use OCP\Image;
 /**
  * This class carries out the creation of the thumbnail images for the recipes.
  *
- * It uses only the in memory representations to avoid file IO if not needed.
- * You need to store the images if they should be prreserved.
+ * It uses only the in-memory representations to avoid file IO if not needed.
+ * You need to store the images if they should be preserved.
  */
 class ThumbnailService {
 	
