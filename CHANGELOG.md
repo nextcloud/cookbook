@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.11 - 2022-03-28
+
 ### Fixed
 - Reduce complex coupling between event handlers in EditInputGroup.vue
   [#901](https://github.com/nextcloud/cookbook/pull/901) @MarcelRobitaille
