@@ -7,6 +7,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
 use OCA\Cookbook\Exception\NoRecipeImageFoundException;
+use OCP\Files\NotPermittedException;
 
 /**
  * This class allows to handle the files of the thumbnails
@@ -39,14 +40,15 @@ class ThumbnailFileHelper {
 	}
 
 	/**
-	 * Ensure that a thumbnail for a certain size exists
+	 * Ensure that a thumbnail for a certain size exists and returns it
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe to check for
 	 * @param integer $type The type of the thumbnail to generate
 	 * @return File The thumbnail file
 	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create a thumbnail from
+	 * @throws NotPermittedException if the thumbnail generation could not write the thumbnail to the correct location
 	 */
-	public function ensureThumbnailExists(Folder $recipeFolder, int $type): File {
+	public function getThumbnail(Folder $recipeFolder, int $type): File {
 		$filename = ImageSize::NAME_MAP[$type];
 
 		if ($recipeFolder->nodeExists($filename)) {
@@ -74,20 +76,27 @@ class ThumbnailFileHelper {
 	 * @param Folder $recipeFolder The folder containing the recipe
 	 * @param integer $type The thumbnail type to generate
 	 * @return void
+	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create the thumbnails from
+	 * @throws NotFoundException If no full-scale image was found.
+	 * @throws NotPermittedException if the IO to read or write the image file was not allowed
+	 * @throws LockedException if the image file was locked and thus could not be read or written
+	 * @throws GenericFileException if the writing fails for some reason
+	 * @throws InvalidPathException
+	 * @throws InvalidThumbnailTypeException if the requested thumbnail type is not known or is useless
 	 */
 	private function recreateSingleThumbnail(Folder $recipeFolder, int $type): void {
 		$filename = ImageSize::NAME_MAP[$type];
-
-		if ($recipeFolder->nodeExists($filename)) {
+		
+		if ($this->fileHelper->hasImage($filename)) {
 			$full = $this->fileHelper->getImage($recipeFolder);
 			$file = $recipeFolder->get($filename);
 
 			$this->generationHelper->generateThumbnail($full, $type, $file);
 		} else {
-			$this->ensureThumbnailExists($recipeFolder, $type);
+			$this->getThumbnail($recipeFolder, $type);
 		}
 	}
-
+	
 	/**
 	 * Recreate all thumbnails in the recipe.
 	 *
@@ -95,7 +104,13 @@ class ThumbnailFileHelper {
 	 *
 	 * @param Folder $recipeFolder The folder containing the files of a recipe.
 	 * @return void
+	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create the thumbnails from
 	 * @throws NotFoundException If no full-scale image was found.
+	 * @throws NotPermittedException if the IO to read or write the image file was not allowed
+	 * @throws LockedException if the image file was locked and thus could not be read or written
+	 * @throws GenericFileException if the writing fails for some reason
+	 * @throws InvalidPathException
+	 * @throws InvalidThumbnailTypeException if the requested thumbnail type is not known or is useless
 	 */
 	public function recreateThumbnails(Folder $recipeFolder): void {
 		$this->recreateSingleThumbnail($recipeFolder, ImageSize::THUMBNAIL);

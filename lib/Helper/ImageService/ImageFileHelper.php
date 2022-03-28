@@ -7,6 +7,7 @@ use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
 use OCA\Cookbook\Exception\RecipeImageExistsException;
+use OCP\Files\NotPermittedException;
 
 class ImageFileHelper {
 	private const NAME_MAIN = ImageSize::NAME_MAP[ImageSize::PRIMARY_IMAGE];
@@ -62,6 +63,7 @@ class ImageFileHelper {
 	 * @param Folder $recipeFolder The folder containing the recipe files.
 	 * @return File The image object for the recipe
 	 * @throws RecipeImageExistsException if the folder has already a image file present.
+	 * @throws NotPermittedException If the image file could not be generated.
 	 */
 	public function createImage(Folder $recipeFolder): File {
 		if ($this->hasImage($recipeFolder)) {

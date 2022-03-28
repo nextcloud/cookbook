@@ -2,9 +2,15 @@
 
 namespace OCA\Cookbook\Helper\ImageService;
 
+use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCA\Cookbook\Service\ThumbnailService;
+use OCP\Files\GenericFileException;
+use OCP\Files\InvalidPathException;
+use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\Lock\LockedException;
 
 /**
  * This class provides helper function to generate appropriate thumbnails according to the needs.
@@ -34,6 +40,12 @@ class ImageGenerationHelper {
 	 * @param int $type The requested size of the thumbnail
 	 * @param File $dstFile The name of the file to store the thumbnail to
 	 * @return void
+	 * @throws NotPermittedException if the IO to read or write the image file was not allowed
+	 * @throws LockedException if the image file was locked and thus could not be read or written
+	 * @throws GenericFileException if the writing fails for some reason
+	 * @throws NotFoundException
+	 * @throws InvalidPathException
+	 * @throws InvalidThumbnailTypeException if the requested thumbnail type is not known or is useless
 	 */
 	public function generateThumbnail(File $fullImage, int $type, File $dstFile): void {
 		if ($type === ImageSize::PRIMARY_IMAGE) {
@@ -59,6 +71,8 @@ class ImageGenerationHelper {
 	 * @param Folder $recipeFolder The folder containing the recipe
 	 * @param integer $type The type of the thumbnail to remove
 	 * @return void
+	 * @throws NotPermittedException if the image could not be removed
+	 * @throws InvalidPathException
 	 */
 	public function drop(Folder $recipeFolder, int $type): void {
 		if ($type === ImageSize::PRIMARY_IMAGE) {
@@ -67,8 +81,10 @@ class ImageGenerationHelper {
 		
 		$filename = ImageSize::NAME_MAP[$type];
 
-		if ($recipeFolder->nodeExists($filename)) {
+		try {
 			$recipeFolder->get($filename)->delete();
+		} catch (NotFoundException $ex) {
+			// This is ok, the file was not found, so it is already removed
 		}
 	}
 }
