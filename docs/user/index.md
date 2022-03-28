@@ -2,18 +2,22 @@
 
 ## Starting with Cookbook
 
-Before creating your first recipe, you should decide where your recipes and pictures will be stored. All files will be accessible in your Nextcloud file manager.
+Before creating your first recipe, you should decide where your recipes and pictures will be stored.
+All files will be accessible in your Nextcloud file manager.
 
-- Recipe's directory : check in the *Parameters* of Cookbook, in the low left corner, in which directory they will be stored on Nextcloud. 
-- Pictures directory : it's also a good idea to create a directory to gather all Cookbook pictures in one place.
+- Recipe's directory: check in the *Parameters* of Cookbook, in the low left corner, in which directory they will be stored on Nextcloud.
+- Pictures directory: it's also a good idea to create a directory to gather all Cookbook pictures in one place.
 
 ## Adding a recipe
 
-Click on the button *Create a recipe* and add a title and any useful information. If a block of information is empty, it won't be displayed in Cookbook.
+Click on the button *Create a recipe* and add a title and any useful information.
+If a block of information is empty, it won't be displayed in Cookbook.
   
-An image may be added to the recipe : the image must be previously stored on your Nextcloud instance. Click on the icon on the right of the image field, and select the image.
+An image may be added to the recipe. There are multiple ways to get this done:
+- The image can be previously stored on your Nextcloud instance. Click on the icon on the right of the image field, and select the image.
+- The image can be loaded from a URL. Just type or paste the URL in the field. The cookbokk app will download and use the image.
 
-Links may be added to other recipes in *Description*, *Tools*, *Ingredients* or *Instructions* :
+Links may be added to other recipes in the fields of *Description*, *Tools*, *Ingredients*, and *Instructions*:
 
 - Type a `#` and select, in the pop up list, the recipe to be linked.
 
