@@ -1,4 +1,6 @@
 { "translations": {
+    "The recipe has already an image file. Cannot create a new one." : "Recept už obsahuje obrázek. Není možné vytvořit další.",
+    "There is no primary image for the recipe present." : "U receptu se nenachází žádný primární obrázek.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nedaří se zpracovat ne-POST znakovou sadu z více částí. Toto je chyba.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Nezjištěn typ přenášených dat. Toto je chyba, prosíme, nahlašte ji.",
     "Invalid URL-encoded string found. Please report a bug." : "Nalezen neplatný řetězec v URL. Prosím nahlaste chybu.",
@@ -6,6 +8,8 @@
     "in %s" : "v %s",
     "Another recipe with that name already exists" : "Pod tímto názvem už existuje jiný recept",
     "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
+    "Image size \"%s\" is not recognized." : "Velikost obrázku „%s“ nerozpoznána.",
+    "The thumbnail type %d is not known." : "Typ náhledového obrázku %d není znám.",
     "Cookbook" : "Kuchařka",
     "An integrated cookbook using schema.org JSON files as recipes" : "Vestavěná kuchařka používající pro recepty JSON soubory schema.org",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Knihovna pro všechny vaše recepty. Používá JSON soubory podle formátu receptů schema.org. Recept přidáte do sbírky vložením URL adresy receptu a zadaná webová stránka bude zpracována a staženo do složky, kterou určíte v nastavení aplikace.",
