@@ -35,7 +35,7 @@ On peut accéder aux catégories de façon plus directe qu'aux mots-clés car el
 En cliquant sur une catégorie dans le panneau latéral, vous pouvez filtrer rapidement des recettes comme "Plat principal" ou "Dessert". Les mots-clés peuvent ensuite être utilisés pour réduire la sélection avec des étiquettes comme "végétarien" ou "facile". De cette façon, les catégories opérent un filtrage large, et les mots-clés vont permettre d'affiner ce filtrage.
 
 
-![Exemple utilisant les catégories pour un filtrage large, et les mots-clés pour affiner ce filtrage](assets/keywords-and-categories.png)
+![Exemple utilisant les catégories pour un filtrage large, et les mots-clés pour affiner ce filtrage](assets/mots-clés-et-catégories.png)
 
 
 ## Importer des Recettes
@@ -44,7 +44,7 @@ En cliquant sur une catégorie dans le panneau latéral, vous pouvez filtrer rap
 
 Les recettes peuvent être importées en entrant une URL de recette dans le champ texte en haut à gauche de l'écran.
 
-<img src="assets/create_import.png" alt="Recipe-import field" width="200px" />
+<img src="assets/créer_importer.png" alt="Champs pour importer une recette" width="200px" />
 
 Cependant l'application Cookbook nécessite que le site de recettes respecte les méta données JSON+LD du [standard des recettes schema.org](https://www.schema.org/Recipe). Les sites ne respectant pas ce standard ne sont à l'heure actuelle pas supportés.
 
@@ -55,7 +55,7 @@ Cependant l'application Cookbook nécessite que le site de recettes respecte les
 
 Pour l'instant, la seule façon de partager des recettes est de partager, avec un autre utilisateur Nextcloud, le répertoire Nextcloud qui contient les recettes. À cette fin, le répertoire doit d'abord être partagé depuis le gestionnaire de fichiers de Nextcloud.Ensuite, il peut être indiqué comme répertoire de recette dans les *Paramètres* de l'application Cookbook.
 
-<img src="assets/settings.png" alt="Recipe-import field" width="200px" />
+<img src="assets/paramètres.png" alt="Paramètres de Cookbook" width="200px" />
 
 
 ### Partage public
