@@ -5,8 +5,10 @@
   [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
 
 ### Documentation
-- Enhanced the user doumentation by adding some starter's information
+- Enhanced the user documentation by adding some starter's information
   [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
+- Translate user documentation to French
+  [#936](https://github.com/nextcloud/cookbook/pull/947) @zorglubu
 
 
 ## 0.9.11 - 2022-03-28
