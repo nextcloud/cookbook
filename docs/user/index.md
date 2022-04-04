@@ -59,7 +59,7 @@ However, the Cookbook app requires the recipe site to support the [schema.org re
 
 Currently, the only way to share recipes is by sharing the Nextcloud folder that contains all recipes with another Nextcloud user. To this end, the folder first needs to be shared from the Nextcloud Files app. Afterwards it can be set as the recipe directory in the Cookbook app’s `Settings` section
 
-<img src="assets/settings.png" alt="Recipe-import field" width="200px" />
+<img src="assets/settings.png" alt="Cookbook settings" width="200px" />
 
 ### Public Sharing
 
