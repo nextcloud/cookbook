@@ -1,8 +1,12 @@
 # Usage Documentation
+*Other languages : [french](index-fr.md)*
+
+*Warning : the translated documentation could be outdated !* 
 
 ## Starting with Cookbook
 
 Before creating your first recipe, you should decide where your recipes and pictures will be stored.
+
 All files will be accessible in your Nextcloud file manager.
 That allows you to access your files with 3rd party applications by using the usual Nextcloud file synchronization app/client.
 
@@ -15,7 +19,8 @@ Click on the button *Create a recipe* and add a title and any useful information
 If a block of information is empty, it won't be displayed in Cookbook.
   
 An image may be added to the recipe. There are multiple ways to get this done:
-- The image can be previously stored on your Nextcloud instance. Click on the icon on the right of the image field, and select the image.
+
+- The image can be previously stored on your Nextcloud instance. Click on the icon on the right of the image field, and select the image. Doing that, the image will be copied in the recipe's directory.
 - The image can be loaded from a URL. Just type or paste the URL in the field. The cookbook app will download and use the image.
 
 Links may be added to other recipes in the fields of *Description*, *Tools*, *Ingredients*, and *Instructions*:
@@ -42,11 +47,11 @@ In this way, categories are used for rough filtering and keywords are used for f
 
 ### Importing from a Website
 
-Recipes can be imported by entering the URL to a recipe in the text-input field in the top right area of the Cookbook app.
+Recipes can be imported by entering the URL to a recipe in the text-input field in the top left area of the Cookbook app.
 
 <img src="assets/create_import.png" alt="Recipe-import field" width="200px" />
 
-However, the Cookbook app requires the recipe site to support the [schema.org recipe standard](http://www.schema.org/Recipe)’s JSON+LD meta data. Those websites which don't provide the required data are currently not supported.
+However, the Cookbook app requires the recipe site to support the [schema.org recipe standard](https://www.schema.org/Recipe)’s JSON+LD meta data. Those websites which don't provide the required data are currently not supported.
 
 ## Sharing Recipes
 
@@ -54,7 +59,7 @@ However, the Cookbook app requires the recipe site to support the [schema.org re
 
 Currently, the only way to share recipes is by sharing the Nextcloud folder that contains all recipes with another Nextcloud user. To this end, the folder first needs to be shared from the Nextcloud Files app. Afterwards it can be set as the recipe directory in the Cookbook app’s `Settings` section
 
-<img src="assets/settings.png" alt="Recipe-import field" width="200px" />
+<img src="assets/settings.png" alt="Cookbook settings" width="200px" />
 
 ### Public Sharing
 
