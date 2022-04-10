@@ -3,6 +3,8 @@
 ### Fixed
 - Refactor the code for image handling to make it testable
   [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
+- Allow merging of PRs from dependabot with only changes to package-lock.json
+  [#952](https://github.com/nextcloud/cookbook/pull/952) @christianlupus
 
 ### Documentation
 - Enhanced the user documentation by adding some starter's information
