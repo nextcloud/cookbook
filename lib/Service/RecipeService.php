@@ -15,6 +15,7 @@ use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 
@@ -1012,6 +1013,7 @@ class RecipeService {
 
 	/**
 	 * @return Folder
+	 * @throws UserNotLoggedInException if no user is logged in to get the path from
 	 */
 	public function getFolderForUser() {
 		$path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
