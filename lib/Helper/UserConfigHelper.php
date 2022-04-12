@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\Helper;
 
 use OCA\Cookbook\AppInfo\Application;
+use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCP\IConfig;
 use OCP\IL10N;
 
@@ -11,7 +12,7 @@ use OCP\IL10N;
  */
 class UserConfigHelper {
 	/**
-	 * @var string
+	 * @var ?string
 	 */
 	private $userId;
 
@@ -26,7 +27,7 @@ class UserConfigHelper {
 	private $l;
 
 	public function __construct(
-		string $UserId,
+		?string $UserId,
 		IConfig $config,
 		IL10N $l
 	) {
@@ -41,12 +42,26 @@ class UserConfigHelper {
 	protected const KEY_FOLDER = 'folder';
 
 	/**
+	 * Checks if the user is logged in and the configuration can be obtained at all
+	 *
+	 * @return void
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	private function ensureUserIsLoggedIn(): void {
+		if (is_null($this->userId)) {
+			throw new UserNotLoggedInException($this->l->t('The user is not logged in. No user configuration can be obtained.'));
+		}
+	}
+
+	/**
 	 * Get a config value from the database
 	 *
 	 * @param string $key The key to get
 	 * @return string The resulting value or '' if the key was not found
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	private function getRawValue(string $key): string {
+		$this->ensureUserIsLoggedIn();
 		return $this->config->getUserValue($this->userId, Application::APP_ID, $key);
 	}
 
@@ -56,8 +71,10 @@ class UserConfigHelper {
 	 * @param string $key The key of the configuration
 	 * @param string $value The value of the config entry
 	 * @return void
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	private function setRawValue(string $key, string $value): void {
+		$this->ensureUserIsLoggedIn();
 		$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 	}
 
@@ -65,6 +82,7 @@ class UserConfigHelper {
 	 * Get the timestamp of the last rescan of the library
 	 *
 	 * @return integer The timestamp of the last index rebuild
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getLastIndexUpdate(): int {
 		$rawValue = $this->getRawValue(self::KEY_LAST_INDEX_UPDATE);
@@ -80,6 +98,7 @@ class UserConfigHelper {
 	 *
 	 * @param integer $value The timestamp of the last index rebuild
 	 * @return void
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setLastIndexUpdate(int $value): void {
 		$this->setRawValue(self::KEY_LAST_INDEX_UPDATE, strval($value));
@@ -89,6 +108,7 @@ class UserConfigHelper {
 	 * Get the number of seconds between rescans of the library
 	 *
 	 * @return integer The number of seconds to wait before a new rescan is triggered
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getUpdateInterval(): int {
 		$rawValue = $this->getRawValue(self::KEY_UPDATE_INTERVAL);
@@ -104,6 +124,7 @@ class UserConfigHelper {
 	 *
 	 * @param integer $value The number of seconds to wait at least between rescans
 	 * @return void
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setUpdateInterval(int $value): void {
 		$this->setRawValue(self::KEY_UPDATE_INTERVAL, $value);
@@ -113,6 +134,7 @@ class UserConfigHelper {
 	 * Check if the primary imgae should be printed or not
 	 *
 	 * @return boolean true, if the image should be printed
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getPrintImage(): bool {
 		$rawValue = $this->getRawValue(self::KEY_PRINT_IMAGE);
@@ -127,6 +149,7 @@ class UserConfigHelper {
 	 *
 	 * @param boolean $value true if the image should be printed
 	 * @return void
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setPrintImage(bool $value): void {
 		if ($value) {
@@ -142,6 +165,7 @@ class UserConfigHelper {
 	 * If no folder is stored in the config yet, a default setting will be generated and saved.
 	 *
 	 * @return string The name of the folder within the users files
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getFolderName(): string {
 		$rawValue = $this->getRawValue(self::KEY_FOLDER);
@@ -160,6 +184,7 @@ class UserConfigHelper {
 	 *
 	 * @param string $value The name of the folder within the user's files
 	 * @return void
+	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setFolderName(string $value): void {
 		$this->setRawValue(self::KEY_FOLDER, $value);

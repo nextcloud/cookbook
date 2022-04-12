@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper;
 
+use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IConfig;
 use OCP\IL10N;
@@ -11,6 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Helper\UserConfigHelper
+ * @covers \OCA\Cookbook\Exception\UserNotLoggedInException
  */
 class UserConfigHelperTest extends TestCase {
 	/**
@@ -24,7 +26,7 @@ class UserConfigHelperTest extends TestCase {
 	private $userId;
 	
 	/**
-	 * @var MockObject
+	 * @var MockObject|IConfig
 	 */
 	private $config;
 
@@ -143,5 +145,15 @@ class UserConfigHelperTest extends TestCase {
 			->with($this->userId, 'cookbook', 'folder', '/Recipes');
 		
 		$this->assertEquals('/Recipes', $this->dut->getFolderName());
+	}
+
+	public function testNoUser() {
+		$this->dut = new UserConfigHelper(null, $this->config, $this->l);
+
+		$this->config->expects($this->never())->method('getUserValue');
+		$this->config->expects($this->never())->method('setUserValue');
+		
+		$this->expectException(UserNotLoggedInException::class);
+		$this->dut->getFolderName();
 	}
 }
