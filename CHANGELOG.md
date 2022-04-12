@@ -9,6 +9,8 @@
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
 
 ### Documentation
+- Corrected some spelling issues
+  [#941](https://github.com/nextcloud/cookbook/pull/941) @Valdnet
 - Enhanced the user documentation by adding some starter's information
   [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
 - Translate user documentation to French
