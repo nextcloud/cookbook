@@ -19,9 +19,8 @@ use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 
 /**
- * @coversDefaultClass \OCA\Cookbook\Controller\MainController
- * @covers ::<private>
- * @covers ::<protected>
+ * @covers \OCA\Cookbook\Controller\MainController
+ * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
  */
 class MainControllerTest extends TestCase {
 	
@@ -59,9 +58,6 @@ class MainControllerTest extends TestCase {
 		$this->sut = new MainController('cookbook', $request, $this->recipeService, $this->dbCacheService, $this->urlGenerator, $this->restParser);
 	}
 
-	/**
-	 * @covers ::__construct
-	 */
 	public function testConstructor(): void {
 		$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
@@ -79,9 +75,6 @@ class MainControllerTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
 
-	/**
-	 * @covers ::index
-	 */
 	public function testIndex(): void {
 		$this->ensureCacheCheckTriggered();
 		$ret = $this->sut->index();
@@ -89,9 +82,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals('index', $ret->getTemplateName());
 	}
 
-	/**
-	 * @covers ::index
-	 */
 	public function testIndexInvalidUser(): void {
 		$this->recipeService->method('getFolderForUser')->willThrowException(new UserFolderNotWritableException());
 		$ret = $this->sut->index();
@@ -99,9 +89,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals('invalid_guest', $ret->getTemplateName());
 	}
 
-	/**
-	 * @covers ::getApiVersion
-	 */
 	public function testGetAPIVersion(): void {
 		$ret = $this->sut->getApiVersion();
 		$this->assertEquals(200, $ret->getStatus());
@@ -115,9 +102,6 @@ class MainControllerTest extends TestCase {
 		$this->assertTrue(isset($retData['api_version']['minor']));
 	}
 
-	/**
-	 * @covers ::categories
-	 */
 	public function testGetCategories(): void {
 		$this->ensureCacheCheckTriggered();
 		
@@ -129,9 +113,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals($cat, $ret->getData());
 	}
 
-	/**
-	 * @covers ::keywords
-	 */
 	public function testGetKeywords(): void {
 		$this->ensureCacheCheckTriggered();
 		
@@ -144,7 +125,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::new
 	 * @dataProvider dataProviderNew
 	 */
 	public function testNew($data, $id): void {
@@ -176,7 +156,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::new
 	 * @dataProvider dataProviderNew
 	 */
 	public function testNewFailed($data, $id): void {
@@ -197,7 +176,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::update
 	 * @dataProvider dataProviderUpdate
 	 */
 	public function testUpdate($data, $id): void {
@@ -229,7 +207,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::update
 	 * @dataProvider dataProviderUpdate
 	 */
 	public function testUpdateFailed($data, $id): void {
@@ -249,9 +226,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals($errMsg, $ret->getData());
 	}
 
-	/**
-	 * @covers ::import
-	 */
 	public function testImportFailed(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -265,9 +239,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals(400, $ret->getStatus());
 	}
 
-	/**
-	 * @covers ::import
-	 */
 	public function testImport(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -292,9 +263,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals($json, $ret->getData());
 	}
 
-	/**
-	 * @covers ::import
-	 */
 	public function testImportExisting(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -320,9 +288,6 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals($expected, $ret->getData());
 	}
 
-	/**
-	 * @covers ::import
-	 */
 	public function testImportOther(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -344,7 +309,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::category
 	 * @dataProvider dataProviderCategory
 	 */
 	public function testCategory($cat, $recipes): void {
@@ -411,9 +375,6 @@ class MainControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @covers ::category
-	 */
 	public function testCategoryFailed(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -431,7 +392,6 @@ class MainControllerTest extends TestCase {
 	}
 	
 	/**
-	 * @covers ::tags
 	 * @dataProvider dataProviderTags
 	 */
 	public function testTags($keywords, $recipes): void {
@@ -485,9 +445,6 @@ class MainControllerTest extends TestCase {
 		];
 	}
 	
-	/**
-	 * @covers ::tags
-	 */
 	public function testTagsFailed(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -505,7 +462,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::search
 	 * @dataProvider dpSearch
 	 * @todo no implementation in controller
 	 */
@@ -543,9 +499,6 @@ class MainControllerTest extends TestCase {
 		];
 	}
 	
-	/**
-	 * @covers ::search
-	 */
 	public function testSearchFailed(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -563,7 +516,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::categoryUpdate
 	 * @dataProvider dataProviderCategoryUpdateNoName
 	 */
 	public function testCategoryUpdateNoName($requestParams): void {
@@ -586,7 +538,6 @@ class MainControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::categoryUpdate
 	 * @dataProvider dpCategoryUpdate
 	 * @todo No business logic in controller
 	 */
@@ -642,9 +593,6 @@ class MainControllerTest extends TestCase {
 		];
 	}
 
-	/**
-	 * @covers ::categoryUpdate
-	 */
 	public function testCategoryUpdateFailure(): void {
 		$this->ensureCacheCheckTriggered();
 
