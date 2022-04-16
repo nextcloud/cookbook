@@ -4,6 +4,7 @@
     "Cannot parse non-POST multipart encoding. This is a bug." : "無法解析非 post 多部分編碼。這是一個 bug。",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "無法檢測傳輸數據類型。這是一個 bug。請報告它。",
     "Invalid URL-encoded string found. Please report a bug." : "找到了無效的 URL 編碼的字符串。請報告一個 bug。",
+    "The user is not logged in. No user configuration can be obtained." : "用戶未登錄，無法獲取用戶配置。",
     "Recipes" : "食譜",
     "in %s" : "在 %s",
     "Another recipe with that name already exists" : "另一個同名的食譜已經存在",

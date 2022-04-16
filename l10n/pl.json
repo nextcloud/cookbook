@@ -4,6 +4,7 @@
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nie można przeanalizować kodowania wieloczęściowego innego niż POST. To jest błąd.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Nie można wykryć rodzaju przesyłanych danych. To jest błąd, zgłoś go.",
     "Invalid URL-encoded string found. Please report a bug." : "Znaleziono nieprawidłowy ciąg zakodowany w adresie URL. Zgłoś ten błąd.",
+    "The user is not logged in. No user configuration can be obtained." : "Użytkownik nie jest zalogowany. Nie można uzyskać konfiguracji użytkownika.",
     "Recipes" : "Przepisy",
     "in %s" : "w %s",
     "Another recipe with that name already exists" : "Istnieje już inny przepis o tej nazwie",
