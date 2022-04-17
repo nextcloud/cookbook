@@ -6,6 +6,7 @@ OC.L10N.register(
     "Cannot parse non-POST multipart encoding. This is a bug." : "Не може да се анализира  multipart кодиране, различно от POST. Това е грешка.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Не може да се открие типът на предавани данни. Това е грешка, моля, докладвайте.",
     "Invalid URL-encoded string found. Please report a bug." : "Намерен е невалиден низ, с кодиран URL адрес. Моля, докладвайте грешка.",
+    "The user is not logged in. No user configuration can be obtained." : "Потребителят не се е вписал. Не може да бъде получена потребителска конфигурация.",
     "Recipes" : "Рецепти",
     "in %s" : "в %s",
     "Another recipe with that name already exists" : "Друга рецепта с това име вече съществува",

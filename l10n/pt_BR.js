@@ -6,6 +6,7 @@ OC.L10N.register(
     "Cannot parse non-POST multipart encoding. This is a bug." : "Não é possível analisar a codificação non-POST multipart. Isso é um bug.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Não é possível detectar o tipo dos dados transmitidos. Isso é um erro, por favor, informe-o.",
     "Invalid URL-encoded string found. Please report a bug." : "String codificada por URL inválida encontrada. Por favor, comunique o erro.",
+    "The user is not logged in. No user configuration can be obtained." : "O usuário não está conectado. Nenhuma configuração de usuário pode ser obtida.",
     "Recipes" : "Receitas",
     "in %s" : "em %s",
     "Another recipe with that name already exists" : "Já existe outra receita com esse nome ",
