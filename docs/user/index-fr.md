@@ -40,7 +40,6 @@ Cliquer sur le bouton *Créer une recette* et ajouter un titre et toute informat
 Une image peut être ajoutée à la recette. Il y a plusieurs façons de faire cela :
 
 - L'image peut être auparavant stockée sur votre instance Nextcloud. Cliquez sur l'icône à droite du champ image, et sélectionnez l'image. Cette dernière sera alors recopiée dans le répertoire de la recette.
-
 - L'image peut être chargée depuis une URL. Saisissez ou copiez l'URL dans le champ. L'application Cookbook téléchargera l'image et l'utilisera.
 
 ### Ajouter un lien
