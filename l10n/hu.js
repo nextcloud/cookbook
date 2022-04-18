@@ -6,6 +6,7 @@ OC.L10N.register(
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nem elemezhető a nem POST többrészes kódolás. Ez egy hiba.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Az átadott adatok típusa nem érzékelhető. Ez egy hiba, kérjük, jelezze.",
     "Invalid URL-encoded string found. Please report a bug." : "Érvénytelen URL-kódolású karakterlánc található. Jelentse be a hibát.",
+    "The user is not logged in. No user configuration can be obtained." : "A felhasználó nincs bejelentkezve. Nem szerezhetők meg a felhasználói beállítások.",
     "Recipes" : "Receptek",
     "in %s" : "itt:  %s",
     "Another recipe with that name already exists" : "Ezzel a névvel már létezik egy másik recept",

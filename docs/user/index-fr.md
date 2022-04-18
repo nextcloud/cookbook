@@ -17,7 +17,6 @@
 1. Liste déroulante pour différents ordres de tri des recettes
 1. Les recettes avec leurs dates de création et de dernière modification
 
-
 ### Où sont mes fichiers
 
 Avant de créer votre première recette, vous devriez décider où seront stockées les recettes et images.
@@ -68,7 +67,6 @@ On peut accéder aux catégories de façon plus directe qu'aux mots-clés car el
 
 En cliquant sur une catégorie dans le panneau latéral, vous pouvez filtrer rapidement des recettes comme "Légumes" ou "Pâtisserie". Les mots-clés peuvent ensuite être utilisés pour réduire la sélection avec des étiquettes comme "amandes" ou "facile". De cette façon, les catégories opérent un filtrage large, et les mots-clés vont permettre d'affiner ce filtrage.
 
-
 ![Exemple utilisant les catégories pour un filtrage large, et les mots-clés pour affiner ce filtrage](assets/keywords-and-categories-fr.png)
 
 ## Importer des Recettes
@@ -87,7 +85,7 @@ Cependant l'application Cookbook nécessite que le site de recettes respecte les
 
 Pour l'instant, la seule façon de partager des recettes est de partager, avec un autre utilisateur Nextcloud, le répertoire Nextcloud qui contient les recettes. À cette fin, le répertoire doit d'abord être partagé depuis le gestionnaire de fichiers de Nextcloud.Ensuite, il peut être indiqué comme répertoire de recette dans les *Paramètres* de l'application Cookbook.
 
-![Settings](assets/settings-fr.png)
+![Paramètres de Cookbook](assets/settings-fr.png)
 
 ### Partage public
 

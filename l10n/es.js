@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "The recipe has already an image file. Cannot create a new one." : "La receta ya tiene un archivo de imagen. No se puede crear una nueva.",
+    "There is no primary image for the recipe present." : "No hay imagen primaria para la presente recete.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "No se puede analizar la codificación multiparte que no es POST. Esto es un error.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "No se pudo detectar el tipo de datos transmitidos. Esto es un error, por favor informe de esto.",
     "Invalid URL-encoded string found. Please report a bug." : "Se ha encontrado una cadena no válida de codificación URL. Por favor, informe de este error.",
@@ -8,6 +10,10 @@ OC.L10N.register(
     "in %s" : "en %s",
     "Another recipe with that name already exists" : "Ya existe otra receta con ese nombre",
     "User cannot create recipe folder" : "El usuario no puede crear la carpeta de recetas",
+    "Recipe with ID %d not found." : "No se ha encontrado la receta con ID%d.",
+    "Image size \"%s\" is not recognized." : "No se reconoce el tamaño «%s» de la imagen.",
+    "The full-sized image is no thumbnail." : "La imagen de tamaño completo no es una vista previa.",
+    "The thumbnail type %d is not known." : "No se conoce el tipo de vista previa %d. ",
     "Cookbook" : "Recetario",
     "An integrated cookbook using schema.org JSON files as recipes" : "Recetario que utiliza archivos JSON para recetas según el estándar schema.org",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Una biblioteca para todas tus recetas. Utiliza archivos en formato JSON, según el estándar schema.org. Para añadir una receta a la colección puedes copiar  y pegar el URL de la receta, de manera que la página web es analizada y descargada en la carpeta especificada en la configuración de la aplicación.",

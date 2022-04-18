@@ -45,7 +45,7 @@ An image may be added to the recipe. There are multiple ways to get this done:
 
 - The image can be previously stored on your Nextcloud instance. Click on the icon on the right of the image field, and select the image. Doing that, the image will be copied in the recipe's directory.
 
-- The image can be loaded from a URL. Just type or paste the URL in the image field. The cookbook app will download and use the image.
+- The image can be loaded from a URL. Just type or paste the URL in the field. The cookbook app will download and use the image.
 
 ### Adding a link
 

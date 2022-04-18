@@ -6,6 +6,7 @@ OC.L10N.register(
     "Cannot parse non-POST multipart encoding. This is a bug." : "POST olmayan çok parçalı kodlama işlenemedi. Bu bir hata olmalı. Lütfen bize bildirin.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Aktarılan verinin türü algılanamadı. Bu bir hata olmalı. Lütfen bize bildirin.",
     "Invalid URL-encoded string found. Please report a bug." : "Adres kodlamalı dizge bulundu. Lütfen bize hata olarak bildirin.",
+    "The user is not logged in. No user configuration can be obtained." : "Kullanıcı oturum açmamış. Hehrangi bir kullanıcı yapılandırması alınamadı.",
     "Recipes" : "Tarifler",
     "in %s" : "%s içinde",
     "Another recipe with that name already exists" : "Aynı adlı bir yemek tarifi zaten var",

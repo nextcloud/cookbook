@@ -4,6 +4,7 @@
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nedaří se zpracovat ne-POST znakovou sadu z více částí. Toto je chyba.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Nezjištěn typ přenášených dat. Toto je chyba, prosíme, nahlašte ji.",
     "Invalid URL-encoded string found. Please report a bug." : "Nalezen neplatný řetězec v URL. Prosím nahlaste chybu.",
+    "The user is not logged in. No user configuration can be obtained." : "Uživatel není přihlášený. Není proto možné získat žádná nastavení pro něho.",
     "Recipes" : "Recepty",
     "in %s" : "v %s",
     "Another recipe with that name already exists" : "Pod tímto názvem už existuje jiný recept",
