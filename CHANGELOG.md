@@ -15,6 +15,8 @@
   [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
 - Translate user documentation to French
   [#936](https://github.com/nextcloud/cookbook/pull/947) @zorglubu
+- Updated French translation
+  [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
 
 
 ## 0.9.11 - 2022-03-28
