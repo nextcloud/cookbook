@@ -7,6 +7,7 @@ OC.L10N.register(
     "Loading…" : "පූරණය වෙමින්…",
     "Filter" : "පෙරහන",
     "Search" : "සොයන්න",
+    "Category" : "ප්‍රවර්ගය",
     "Rename" : "නැවත නම් කරන්න",
     "Add" : "එකතු කරන්න",
     "Close" : "වසන්න",

@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "en %s",
     "Home" : "Aniciu",
     "Save changes" : "Guardar camudancies",
     "Loading…" : "Cargando...",
@@ -8,7 +9,11 @@ OC.L10N.register(
     "Filter" : "Peñerar",
     "Search" : "Search",
     "Category" : "Estaya",
+    "Tags" : "Etiquetes",
+    "Categories" : "Estayes",
+    "Rename" : "Renomar",
     "Add" : "Amestar",
+    "Close" : "Zarrar",
     "Name" : "Nome",
     "Description" : "Descripción",
     "URL" : "Url",

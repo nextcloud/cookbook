@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Receptai",
+    "in %s" : "per %s",
     "User cannot create recipe folder" : "Naudotojas negali sukurti receptų aplanko",
     "Cookbook" : "Receptų knyga",
     "An integrated cookbook using schema.org JSON files as recipes" : "Integruota receptų knyga, kaip receptus naudojanti schema.org JSON failus",
@@ -71,11 +72,13 @@ OC.L10N.register(
     "Calories" : "Kalorijos",
     "Failed to fetch keywords" : "Nepavyko gauti raktažodžių",
     "Loading recipe failed" : "Recepto įkėlimas nepavyko",
+    "Creation date" : "Sukūrimo data",
     "Toggle keyword" : "Perjungti raktažodį",
     "Keyword not contained in visible recipes" : "Raktažodžio matomuose receptuose nėra",
     "Order keywords alphabetically" : "Rikiuoti raktažodžius pagal abėcėlę",
     "Cooking time is up!" : "Gaminimo laikas baigėsi!",
     "Date created" : "Sukūrimo data",
+    "Last modified" : "Paskutinis modifikavimas",
     "Source" : "Šaltinis",
     "Failed to load recipes with keywords: {tags}" : "Nepavyko įkelti receptų, kuriuose būtų raktažodžiai: {tags}",
     "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"

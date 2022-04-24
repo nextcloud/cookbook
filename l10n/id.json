@@ -1,4 +1,5 @@
 { "translations": {
+    "in %s" : "dalam %s",
     "Home" : "Beranda",
     "Save changes" : "Simpan perubahan",
     "Loading…" : "Memuat…",
@@ -6,9 +7,15 @@
     "Filter" : "Filter",
     "Search" : "Cari",
     "Category" : "Kategori",
+    "Tags" : "Tag",
+    "Categories" : "Kategori",
+    "Rename" : "Ubah nama",
     "Add" : "Masukkan",
+    "Close" : "Tutup",
     "Name" : "Nama",
     "Description" : "Deskrisi",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Creation date" : "Tanggal pembuatan",
+    "Last modified" : "Terakhir diubah"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -1,4 +1,5 @@
 { "translations": {
+    "in %s" : "në %s",
     "Home" : "Kryefaqja",
     "Save changes" : "Ruaj ndryshimet",
     "Loading…" : "Duke u ngarkuar…",
@@ -6,10 +7,15 @@
     "Filter" : "Filtro",
     "Search" : "Kërko",
     "Category" : "Kategori",
+    "Tags" : "Etiketat",
+    "Categories" : "Kategoritë",
+    "Rename" : "Rename",
     "Add" : "Shto",
+    "Close" : "Mbylleni",
     "Name" : "Emri",
     "Description" : "Përshkrim",
     "URL" : "Url",
-    "Tools" : "Mjete"
+    "Tools" : "Mjete",
+    "Last modified" : "Ndryshuar së fundmi"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

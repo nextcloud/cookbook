@@ -1,4 +1,5 @@
 { "translations": {
+    "in %s" : "en %s",
     "Home" : "Inicio",
     "Save changes" : "Guardar cambios",
     "Loading…" : "Cargando...",
@@ -6,10 +7,15 @@
     "Filter" : "Filtrar",
     "Search" : "Buscar",
     "Category" : "Categoría",
+    "Tags" : "Etiquetas",
+    "Categories" : "Categorías",
+    "Rename" : "Renombrar",
     "Add" : "Agregar",
+    "Close" : "Cerrar",
     "Name" : "Nombre",
     "Description" : "Descripción",
     "URL" : "URL",
-    "Tools" : "Herramientas"
+    "Tools" : "Herramientas",
+    "Last modified" : "Última modificación"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
