@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "i %s",
     "Home" : "Heim",
     "Loading…" : "Laster...",
+    "Page not found" : "Fann ikkje sida",
     "Filter" : "Filter",
     "Search" : "Search",
     "Category" : "Kategori",
