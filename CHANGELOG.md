@@ -7,6 +7,8 @@
   [#952](https://github.com/nextcloud/cookbook/pull/952) @christianlupus
 - Redirect to login in case of logged out user
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
+- Removed typo in exception description
+  [#965](https://github.com/nextcloud/cookbook/pull/965) @christianlupus
 
 ### Documentation
 - Corrected some spelling issues
