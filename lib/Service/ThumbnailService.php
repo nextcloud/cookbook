@@ -50,7 +50,7 @@ class ThumbnailService {
 			case ImageSize::MINI_THUMBNAIL:
 				return $this->createThumbnail($data, 16);
 			case ImageSize::PRIMARY_IMAGE:
-				throw new InvalidThumbnailTypeException($this->l->t("The full-sized image is no thumbnail."));
+				throw new InvalidThumbnailTypeException($this->l->t('The full-sized image is not a thumbnail.'));
 			default:
 				throw new InvalidThumbnailTypeException($this->l->t('The thumbnail type %d is not known.', [$type]));
 		}
