@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Controller;
 
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\IRequest;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
@@ -100,7 +101,16 @@ class RecipeController extends Controller {
 		$this->dbCacheService->triggerCheck();
 		
 		$recipeData = $this->restParser->getParameters();
-		$file = $this->service->addRecipe($recipeData);
+		try {
+			$file = $this->service->addRecipe($recipeData);
+		} catch (NoRecipeNameGivenException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_NOT_ACCEPTABLE);
+		}
 		$this->dbCacheService->addRecipe($file);
 
 		return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
@@ -132,6 +142,13 @@ class RecipeController extends Controller {
 				'line' => $ex->getLine(),
 			];
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
+		} catch (NoRecipeNameGivenException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_NOT_ACCEPTABLE);
 		}
 	}
 
