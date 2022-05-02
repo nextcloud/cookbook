@@ -596,10 +596,12 @@ export default {
                         // Non 2xx state returned
 
                         switch (e.response.status) {
+                            case 406:
                             case 409:
                                 // eslint-disable-next-line no-alert
                                 alert(e.response.data.msg)
                                 break
+
 
                             default:
                                 // eslint-disable-next-line no-alert
