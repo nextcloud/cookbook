@@ -602,7 +602,6 @@ export default {
                                 alert(e.response.data.msg)
                                 break
 
-
                             default:
                                 // eslint-disable-next-line no-alert
                                 alert(
