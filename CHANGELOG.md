@@ -17,6 +17,8 @@
   [#936](https://github.com/nextcloud/cookbook/pull/947) @zorglubu
 - Updated French translation
   [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
+- Add example to OpenAPI specification
+  [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
 
 
 ## 0.9.11 - 2022-03-28
