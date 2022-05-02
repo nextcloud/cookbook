@@ -392,7 +392,29 @@ paths:
     post:
       tags: [ Recipes ]
       summary: Create a new recipe
-      #requestBody:
+      requestBody:
+        description: |
+          A JSON representation of the recipe to be saved.
+          
+          See also the structure at https://schema.org/Recipe
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required: [ "name" ]
+              additionalProperties: true
+              example:
+                name: "Chips"
+                description: "A very delicious way of getting kids quiet"
+                ingredients:
+                  - "1 pack of pre-fried chips"
+                tools: ["common oven"]
+                instructions:
+                  - "Put the chips in the oven"
+                  - "Wait until the are due"
       responses:
         200:
           description: Successfully created new recipe
