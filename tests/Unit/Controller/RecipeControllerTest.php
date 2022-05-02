@@ -16,6 +16,7 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Controller\RecipeController;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCA\Cookbook\Exception\RecipeExistsException;
 
@@ -105,6 +106,28 @@ class RecipeControllerTest extends TestCase {
 	}
 
 	/**
+	 * @covers ::update
+	 * @todo Foo
+	 */
+	public function testUpdateNoName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$data = ['a', 'new', 'array'];
+
+		$errorMsg = "No name was given for the recipe.";
+		$ex = new NoRecipeNameGivenException($errorMsg);
+
+		$this->restParser->method('getParameters')->willReturn($data);
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($data)->willThrowException($ex);
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->update(1);
+
+		$this->assertEquals(406, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
+	/**
 	 * @covers ::create
 	 */
 	public function testCreate(): void {
@@ -129,6 +152,28 @@ class RecipeControllerTest extends TestCase {
 
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals($id, $ret->getData());
+	}
+
+	/**
+	 * @covers ::create
+	 */
+	public function testCreateNoName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['a', 'recipe', 'as', 'array'];
+		$this->restParser->method('getParameters')->willReturn($recipe);
+
+		$errorMsg = "The error that was triggered";
+		$ex = new NoRecipeNameGivenException($errorMsg);
+
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($recipe)->willThrowException($ex);
+
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->create();
+
+		$this->assertEquals(406, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 
 	/**
