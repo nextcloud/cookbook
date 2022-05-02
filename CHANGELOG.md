@@ -7,6 +7,8 @@
   [#952](https://github.com/nextcloud/cookbook/pull/952) @christianlupus
 - Redirect to login in case of logged out user
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
+- Correct handling of empty recipe name in the backend
+  [#973](https://github.com/nextcloud/cookbook/pull/973) @christianlupus
 
 ### Documentation
 - Corrected some spelling issues
