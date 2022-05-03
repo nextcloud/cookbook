@@ -9,6 +9,8 @@
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
 - Correct handling of empty recipe name in the backend
   [#973](https://github.com/nextcloud/cookbook/pull/973) @christianlupus
+- Fix problem with git pre-commit hook dropping files unintentionally
+  [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
 
 ### Documentation
 - Corrected some spelling issues
@@ -19,6 +21,8 @@
   [#936](https://github.com/nextcloud/cookbook/pull/947) @zorglubu
 - Updated French translation
   [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
+- Add example to OpenAPI specification
+  [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
 
 
 ## 0.9.11 - 2022-03-28

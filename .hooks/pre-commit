@@ -3,7 +3,7 @@
 # set -x
 
 lines_before=`git stash list | wc -l`
-git stash push --keep-index -q
+git stash push --keep-index --include-untracked -q --message "You should never see this commit message. If you do, please repair your git setup manully!"
 lines_after=`git stash list | wc -l`
 
 cleanup() {
