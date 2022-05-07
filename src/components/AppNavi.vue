@@ -115,7 +115,6 @@ import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation"
 import AppNavigationCounter from "@nextcloud/vue/dist/Components/AppNavigationCounter"
 import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem"
 import AppNavigationNew from "@nextcloud/vue/dist/Components/AppNavigationNew"
-import Vue from "vue"
 import AppSettings from "./AppSettings.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
 
@@ -191,7 +190,7 @@ export default {
             }
             const cat = this.categories[idx]
             const $this = this
-            Vue.set(this.isCategoryUpdating, idx, true)
+            this.isCategoryUpdating[idx] = true
 
             axios
                 .get(`${this.$window.baseUrl}/api/category/${cat.name}`)
@@ -215,7 +214,7 @@ export default {
                 })
                 .then(() => {
                     // finally
-                    Vue.set($this.isCategoryUpdating, idx, false)
+                    $this.isCategoryUpdating[idx] = false
                 })
         },
 
@@ -226,7 +225,7 @@ export default {
             if (!this.categories[idx]) {
                 return
             }
-            Vue.set(this.isCategoryUpdating, idx, true)
+            this.isCategoryUpdating[idx] = true
             const oldName = this.categories[idx].name
             const $this = this
 
@@ -254,7 +253,7 @@ export default {
                 })
                 .then(() => {
                     // finally
-                    Vue.set($this.isCategoryUpdating, idx, false)
+                    $this.isCategoryUpdating[idx] = false
                 })
         },
 
@@ -443,21 +442,21 @@ export default {
 </script>
 
 <style scoped>
->>> .app-navigation-new button {
+:deep(.app-navigation-new button) {
     min-height: 44px;
     background-image: var(--icon-add-000);
     background-repeat: no-repeat;
 }
 
->>> .app-navigation-entry.recipe {
+:deep(.app-navigation-entry.recipe) {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
     padding-left: 0;
 }
 
 /* stylelint-disable selector-class-pattern */
->>> .app-navigation-entry
-    .app-navigation-entry__children
-    .app-navigation-entry {
+:deep(.app-navigation-entry
+        .app-navigation-entry__children
+        .app-navigation-entry) {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
     padding-left: 0;
 }
@@ -467,8 +466,8 @@ export default {
     box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
 }
 
->>> .app-navigation-entry.recipe:hover,
->>> .app-navigation-entry.router-link-exact-active {
+:deep(.app-navigation-entry.recipe:hover),
+:deep(.app-navigation-entry.router-link-exact-active) {
     box-shadow: inset 4px 0 var(--color-primary);
     opacity: 1;
 }

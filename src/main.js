@@ -12,7 +12,7 @@ import "v-markdown-editor/dist/v-markdown-editor.css"
 
 import { generateUrl } from "@nextcloud/router"
 
-import Vue from "vue"
+import { createApp } from "vue"
 import router from "./router"
 import store from "./store"
 
@@ -183,29 +183,39 @@ if (__webpack_use_dev_server__ || false) {
         }
     }
 
+    const app = createApp(AppMain)
+
     // Also make the injections available in Vue components
-    Vue.prototype.$window = window
-    Vue.prototype.OC = OC
+    app.config.globalProperties.$window = window
+    app.config.globalProperties.OC = OC
 
     // Markdown for Vue
-    Vue.use(VueShowdown, {
+    app.use(VueShowdown, {
         // set default flavor for Markdown
         flavor: "vanilla",
     })
-    Vue.use(Editor)
+    app.use(Editor)
 
     // Pass translation engine to Vue
-    Vue.prototype.t = window.t
+    app.config.globalProperties.t = window.t
+
+    app.use(router)
+    app.use(store)
+
+    store.commit("initializeStore")
+    // const App = app.ex
 
     // Start the app once document is done loading
-    document.addEventListener("DOMContentLoaded", () => {
-        const App = Vue.extend(AppMain)
-        new App({
-            store,
-            router,
-            beforeCreate() {
-                this.$store.commit("initializeStore")
-            },
-        }).$mount("#content")
-    })
+    // const App = Vue.extend(AppMain)
+    // new App({
+    //     store,
+    //     router,
+    //     beforeCreate() {
+    //         this.$store.commit("initializeStore")
+    //     },
+    // })
+
+    // app.
+
+    app.mount("#content")
 })(OC, window)

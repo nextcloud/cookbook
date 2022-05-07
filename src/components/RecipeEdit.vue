@@ -117,7 +117,6 @@
 
 <script>
 import axios from "@nextcloud/axios"
-import Vue from "vue"
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"
 import EditInputGroup from "./EditInputGroup.vue"
@@ -384,8 +383,8 @@ export default {
             // Update selectable categories
             const idx = this.allCategories.findIndex((c) => c === val[1])
             if (idx >= 0) {
-                Vue.set(this.allCategories, idx, val[0])
-                // this.allCategories[idx] = val[0]
+                // eslint-disable-next-line prefer-destructuring
+                this.allCategories[idx] = val[0]
             }
             // Update selected category if the currently selected was renamed
             if (this.recipe.recipeCategory === val[1]) {
