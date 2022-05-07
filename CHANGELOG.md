@@ -9,6 +9,8 @@
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
 - Fix problem with git pre-commit hook dropping files unintentionally
   [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
+- Mark cookbook app as compatible with NC24
+  [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
 
 ### Documentation
 - Corrected some spelling issues
