@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Add IDE configuration to codebase to prevent small issues
+  [#978](https://github.com/nextcloud/cookbook/pull/978) @christianlupus
+
 ### Fixed
 - Refactor the code for image handling to make it testable
   [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
