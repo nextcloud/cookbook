@@ -165,7 +165,7 @@ class HtmlToDomParser {
 		foreach ($groupedErrors as $code => $group) {
 			switch ($group['level']) {
 				case LIBXML_ERR_WARNING:
-					$this->logWarning($code, $group,$url);
+					$this->logWarning($code, $group, $url);
 					break;
 				case LIBXML_ERR_ERROR:
 					$this->logError($code, $group, $url);
