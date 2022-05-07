@@ -122,7 +122,7 @@ jobs:
                 - pgsql
                 - sqlite
             coreVersion:
-                - stable23
+                - stable24
             phpVersion:
                 - "7"
             httpServer:
@@ -148,6 +148,11 @@ jobs:
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable22
+                    phpVersion: "7"
+                    httpServer: "apache"
+                    mayFail: false
+                -   database: mysql
+                    coreVersion: stable23
                     phpVersion: "7"
                     httpServer: "apache"
                     mayFail: false
