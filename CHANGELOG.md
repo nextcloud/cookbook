@@ -7,6 +7,8 @@
   [#952](https://github.com/nextcloud/cookbook/pull/952) @christianlupus
 - Redirect to login in case of logged out user
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
+- Fix problem with git pre-commit hook dropping files unintentionally
+  [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
 - Removed typo in exception description
   [#965](https://github.com/nextcloud/cookbook/pull/965) @christianlupus
 
@@ -19,6 +21,8 @@
   [#936](https://github.com/nextcloud/cookbook/pull/947) @zorglubu
 - Updated French translation
   [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
+- Add example to OpenAPI specification
+  [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
 
 
 ## 0.9.11 - 2022-03-28
