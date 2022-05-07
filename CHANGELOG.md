@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Add IDE configuration to codebase to prevent small issues
+  [#978](https://github.com/nextcloud/cookbook/pull/978) @christianlupus
+
 ### Fixed
 - Refactor the code for image handling to make it testable
   [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
@@ -9,6 +13,8 @@
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
 - Fix problem with git pre-commit hook dropping files unintentionally
   [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
+- Removed typo in exception description
+  [#965](https://github.com/nextcloud/cookbook/pull/965) @christianlupus
 - Mark cookbook app as compatible with NC24
   [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
 
