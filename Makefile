@@ -13,17 +13,9 @@
 # * tar: for building the archive
 # * npm: for building and testing everything JS
 #
-# If no composer.json is in the app root directory, the Composer step
-# will be skipped. The same goes for the package.json which can be located in
-# the app root or the js/ directory.
-#
 # The npm command by launches the npm build script:
 #
 #    npm run build
-#
-# The npm test command launches the npm test script:
-#
-#    npm run test
 #
 # The idea behind this is to be completely testing and build tool agnostic. All
 # build tools and additional package managers should be installed locally in
@@ -48,23 +40,19 @@ appstore_package_name=$(appstore_build_directory)/$(app_name)
 npm=$(shell which npm 2> /dev/null)
 composer=$(shell which composer 2> /dev/null)
 
+ifeq (, $(composer))
+	composer_bin:=php $(build_tools_directory)/composer.phar
+else
+	composer_bin:=composer
+endif
+
 all: build appinfo/info.xml
 
 # Fetches the PHP and JS dependencies and compiles the JS. If no composer.json
 # is present, the composer step is skipped, if no package.json or js/package.json
 # is present, the npm step is skipped
 .PHONY: build
-build:
-ifneq (,$(wildcard $(CURDIR)/composer.json))
-	$(MAKE) composer
-endif
-ifneq (,$(wildcard $(CURDIR)/package.json))
-	$(MAKE) npm
-endif
-ifneq (,$(wildcard $(CURDIR)/js/package.json))
-	$(MAKE) npm
-endif
-
+build: prepare_phpunit composer npm
 
 .PHONY: install_composer
 install_composer:
@@ -75,34 +63,25 @@ ifeq (, $(composer))
 	mv composer.phar $(build_tools_directory)
 endif
 
+.PHONY: prepare_phpunit
+prepare_phpunit: install_composer
+	cd tests/phpunit && $(composer_bin) install --prefer-dist
+
 # Installs and updates the composer dependencies. If composer is not installed
 # a copy is fetched from the web
 .PHONY: composer
 composer: install_composer
-ifeq (, $(composer))
-	php $(build_tools_directory)/composer.phar install --prefer-dist
-	php $(build_tools_directory)/composer.phar update --prefer-dist
-else
-	composer install --prefer-dist
-	composer update --prefer-dist
-endif
+	$(composer_bin) install --prefer-dist
+	$(composer_bin) update --prefer-dist
 
 .PHONY: composer_dist
 composer_dist: install_composer
-ifeq (, $(composer))
-	php $(build_tools_directory)/composer.phar install --prefer-dist --no-dev
-else
-	composer install --prefer-dist --no-dev
-endif
+	$(composer_bin) install --prefer-dist --no-dev
 
 # Installs npm dependencies
 .PHONY: npm
 npm:
-ifeq (,$(wildcard $(CURDIR)/package.json))
-	cd js && $(npm) run build
-else
 	npm run build
-endif
 
 # Removes the appstore build
 .PHONY: clean
@@ -113,10 +92,7 @@ clean:
 # npm
 .PHONY: distclean
 distclean: clean
-	rm -rf vendor
-	rm -rf node_modules
-	rm -rf js/vendor
-	rm -rf js/node_modules
+	rm -rf vendor node_modules tests/phpunit/vendor
 
 # Builds the source and appstore package
 .PHONY: dist
@@ -137,6 +113,8 @@ source: appinfo/info.xml
 	--exclude="../$(app_name)/*.log" \
 	--exclude="../$(app_name)/js/*.log" \
 	--exclude="../$(app_name)/.hooks" \
+	--exclude="../$(app_name)/.github/actions/run-tests/volumes" \
+	--exclude="../$(app_name)/cookbook.code-workspace" \
 	../$(app_name)
 
 # Builds the source package for the app store, ignores php and js tests
@@ -147,20 +125,13 @@ appstore: appinfo/info.xml
 	tar cvzf $(appstore_package_name).tar.gz \
 	--exclude-vcs \
 	--exclude="../$(app_name)/build" \
+	--exclude="../$(app_name)/docs" \
 	--exclude="../$(app_name)/documentation" \
 	--exclude="../$(app_name)/tests" \
 	--exclude="../$(app_name)/Makefile" \
 	--exclude="../$(app_name)/*.log" \
 	--exclude="../$(app_name)/phpunit*xml" \
 	--exclude="../$(app_name)/composer.*" \
-	--exclude="../$(app_name)/js/node_modules" \
-	--exclude="../$(app_name)/js/tests" \
-	--exclude="../$(app_name)/js/test" \
-	--exclude="../$(app_name)/js/*.log" \
-	--exclude="../$(app_name)/js/package.json" \
-	--exclude="../$(app_name)/js/bower.json" \
-	--exclude="../$(app_name)/js/karma.*" \
-	--exclude="../$(app_name)/js/protractor.*" \
 	--exclude="../$(app_name)/node_modules" \
 	--exclude="../$(app_name)/src" \
 	--exclude="../$(app_name)/translationfiles" \
@@ -172,13 +143,21 @@ appstore: appinfo/info.xml
 	--exclude="../$(app_name)/protractor\.*" \
 	--exclude="../$(app_name)/.*" \
 	--exclude="../$(app_name)/webpack.*.js" \
+	--exclude="../$(app_name)/stylelint.config.js" \
 	--exclude="../$(app_name)/js/.*" \
 	--exclude="../$(app_name)/.hooks" \
+	--exclude="../$(app_name)/cookbook.code-workspace" \
 	../$(app_name)
 
 .PHONY: test
 test: composer
 	@echo "This functionality has been move to the file .github/acrions/run-tests/run-locally.sh. See its output with parameter --help."
+
+.PHONY: code_style
+code_style:
+	$(composer_bin) cs:fix
+	npm run stylelint-fix
+	npm run prettier-fix
 
 appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major .github/actions/deploy/appinfo/info.xml.dist
 	.github/actions/deploy/update-data.sh

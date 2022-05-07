@@ -1,0 +1,46 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Xdebug on 9000 for PHPUnit",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "pathMappings": {
+                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}"
+            }
+        },
+        {
+            "name": "Xdebug on 9000 for Live-Test",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "pathMappings": {
+                "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
+                "/var/www/html": "${workspaceFolder:base}"
+            }
+        },
+        {
+            "name": "Xdebug on 9003 for PHPUnit",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}"
+            }
+        },
+        {
+            "name": "Xdebug on 9003 for Live-Test",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
+                "/var/www/html": "${workspaceFolder:base}"
+            }
+        }
+    ]
+}
