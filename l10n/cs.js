@@ -13,7 +13,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
     "Recipe with ID %d not found." : "Recept s identif. %d nenalezen.",
     "Image size \"%s\" is not recognized." : "Velikost obrázku „%s“ nerozpoznána.",
-    "The full-sized image is no thumbnail." : "Obrázek v plné velikosti není náhled.",
     "The thumbnail type %d is not known." : "Typ náhledového obrázku %d není znám.",
     "Cookbook" : "Kuchařka",
     "An integrated cookbook using schema.org JSON files as recipes" : "Vestavěná kuchařka používající pro recepty JSON soubory schema.org",

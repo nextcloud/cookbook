@@ -11,7 +11,6 @@
     "User cannot create recipe folder" : "Użytkownik nie może utworzyć katalogu z przepisami",
     "Recipe with ID %d not found." : "Nie znaleziono przepisu o ID %d.",
     "Image size \"%s\" is not recognized." : "Rozmiar obrazu \"%s\" nie jest rozpoznawany.",
-    "The full-sized image is no thumbnail." : "Pełnowymiarowy obraz nie jest miniaturą.",
     "The thumbnail type %d is not known." : "Typ miniatury %d nie jest znany.",
     "Cookbook" : "Książka kucharska",
     "An integrated cookbook using schema.org JSON files as recipes" : "Zintegrowana książka kucharska wykorzystująca pliki JSON schema.org jako przepisy kulinarne",

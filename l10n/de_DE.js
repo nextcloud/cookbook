@@ -13,7 +13,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Benutzer konnte Rezeptordner nicht erstellen",
     "Recipe with ID %d not found." : "Rezept mit der ID %d wurde nicht gefunden.",
     "Image size \"%s\" is not recognized." : "Bildgröße \"%s\" wurde nicht erkannt.",
-    "The full-sized image is no thumbnail." : "Das Bild in voller Größe ist kein Vorschaubild.",
     "The thumbnail type %d is not known." : "Der Typ des Vorschaubilds %d ist unbekannt.",
     "Cookbook" : "Kochbuch",
     "An integrated cookbook using schema.org JSON files as recipes" : "Ein integriertes Kochbuch, das schema.org-JSON-Dateien als Speicher für Rezepte verwendet",
