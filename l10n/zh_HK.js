@@ -13,6 +13,7 @@ OC.L10N.register(
     "User cannot create recipe folder" : "用戶無法創建食譜資料夾",
     "Recipe with ID %d not found." : "沒有找到 ID 為「%d」的食譜。",
     "Image size \"%s\" is not recognized." : "無法識別圖像大小“%s”。",
+    "The full-sized image is not a thumbnail." : "全尺寸圖像不是縮略圖。",
     "The thumbnail type %d is not known." : "縮略圖類型 %d 未知。",
     "Cookbook" : "食譜",
     "An integrated cookbook using schema.org JSON files as recipes" : "一個使用schema.org JSON格式的文件作為食譜的集成食譜",
