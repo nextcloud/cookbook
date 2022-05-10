@@ -3,6 +3,8 @@
 ### Added
 - Add IDE configuration to codebase to prevent small issues
   [#978](https://github.com/nextcloud/cookbook/pull/978) @christianlupus
+- Allow client to specify accepted image types
+  [#982](https://github.com/nextcloud/cookbook/pull/982) @christianlupus
 
 ### Fixed
 - Refactor the code for image handling to make it testable
