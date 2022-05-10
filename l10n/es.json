@@ -10,7 +10,6 @@
     "User cannot create recipe folder" : "El usuario no puede crear la carpeta de recetas",
     "Recipe with ID %d not found." : "No se ha encontrado la receta con ID%d.",
     "Image size \"%s\" is not recognized." : "No se reconoce el tamaño «%s» de la imagen.",
-    "The full-sized image is no thumbnail." : "La imagen de tamaño completo no es una vista previa.",
     "The thumbnail type %d is not known." : "No se conoce el tipo de vista previa %d. ",
     "Cookbook" : "Recetario",
     "An integrated cookbook using schema.org JSON files as recipes" : "Recetario que utiliza archivos JSON para recetas según el estándar schema.org",

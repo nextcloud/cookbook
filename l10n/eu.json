@@ -11,7 +11,6 @@
     "User cannot create recipe folder" : "Erabiltzaileak ezin du errezeta karpetarik sortu",
     "Recipe with ID %d not found." : "Ez da aurkitu ID %d duen errezeta.",
     "Image size \"%s\" is not recognized." : "\"%s\" irudiaren tamaina ez da ezagutzen.",
-    "The full-sized image is no thumbnail." : "Tamaina osoko irudia ez da miniatura.",
     "The thumbnail type %d is not known." : "%d miniatura mota ez da ezagutzen.",
     "Cookbook" : "Errezeta-liburua",
     "An integrated cookbook using schema.org JSON files as recipes" : "Errezeta-liburu integratua schema.org-eko JSON fitxategiak erabiliz errezeta gisa",

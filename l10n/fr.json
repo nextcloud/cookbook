@@ -10,7 +10,6 @@
     "User cannot create recipe folder" : "L'utilisateur ne peut pas créer le dossier des recettes",
     "Recipe with ID %d not found." : "Recette avec identifiant %d non trouvée.",
     "Image size \"%s\" is not recognized." : "Taille d'image \"%s\" inconnue.",
-    "The full-sized image is no thumbnail." : "L'image pleine taille n'est pas une vignette.",
     "The thumbnail type %d is not known." : "Le type de vignette %d est inconnu.",
     "Cookbook" : "Livre de recettes",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un livre de recettes intégré utilisant les fichiers JSON de schema.org pour stocker les recettes",

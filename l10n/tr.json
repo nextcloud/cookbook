@@ -11,7 +11,7 @@
     "User cannot create recipe folder" : "Kullanıcı yemek tarifi klasörü ekleyemez",
     "Recipe with ID %d not found." : "%d kodlu tarif bulunamadı.",
     "Image size \"%s\" is not recognized." : "\"%s\" görsel boyutu anlaşılamadı.",
-    "The full-sized image is no thumbnail." : "Tam boyutlu görselin küçük görseli yok.",
+    "The full-sized image is not a thumbnail." : "Tam boyutlu görsel bir küçük görsel değil.",
     "The thumbnail type %d is not known." : "%d küçük görsel türü bilinmiyor.",
     "Cookbook" : "Yemek kitabı",
     "An integrated cookbook using schema.org JSON files as recipes" : "Tarifler için schema.org JSON dosyaları kullanan bütünleşik bir yemek kitabı",

@@ -13,7 +13,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Потребител не може да създаде папка с рецепти",
     "Recipe with ID %d not found." : "Няма намерена рецепта с  ID %d.",
     "Image size \"%s\" is not recognized." : "Размерът на изображение \"%s\" не е разпознат.",
-    "The full-sized image is no thumbnail." : "Пълният размер на изображение не е миниатюра.",
     "The thumbnail type %d is not known." : "Типът миниатюра %d не е известен.",
     "Cookbook" : "Готварска книга",
     "An integrated cookbook using schema.org JSON files as recipes" : "Интегрирана готварска книга, използваща JSON файлове schema.org като рецепти",

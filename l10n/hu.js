@@ -13,7 +13,7 @@ OC.L10N.register(
     "User cannot create recipe folder" : "A felhasználó nem hozhat létre receptmappát",
     "Recipe with ID %d not found." : "A(z) „%d” azonosítójú recept nem található.",
     "Image size \"%s\" is not recognized." : "A(z) „%s” képméret nem ismerhető fel.",
-    "The full-sized image is no thumbnail." : "A teljes méretű kép nem bélyegkép.",
+    "The full-sized image is not a thumbnail." : "A teljes méretű kép nem bélyegkép.",
     "The thumbnail type %d is not known." : "A(z) „%d” bélyegképtípus nem ismerhető fel.",
     "Cookbook" : "Receptkönyv",
     "An integrated cookbook using schema.org JSON files as recipes" : "Egy integrát receptkönyv schema.org JSON fájlok használatával",

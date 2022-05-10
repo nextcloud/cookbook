@@ -11,7 +11,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Käyttäjä ei voi luoda reseptikansiota",
     "Recipe with ID %d not found." : "Reseptiä ei löytynyt ID:llä %d.",
     "Image size \"%s\" is not recognized." : "Kuvan kokoa \"%s\" ei ole tunnistettu.",
-    "The full-sized image is no thumbnail." : "Täysikokoinen kuva ei ole pienoiskuva.",
     "The thumbnail type %d is not known." : "Tuntematon pienoiskuvan tyyppi %d.",
     "Cookbook" : "Keittokirja",
     "An integrated cookbook using schema.org JSON files as recipes" : "Integroitu keittokirja, joka käyttää schema.org JSON-tiedostoja resepteissä",
