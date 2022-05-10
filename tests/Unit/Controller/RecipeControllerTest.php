@@ -19,6 +19,9 @@ use OCA\Cookbook\Controller\RecipeController;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
  * @covers \OCA\Cookbook\Controller\RecipeController
@@ -47,6 +50,16 @@ class RecipeControllerTest extends TestCase {
 	 */
 	private $sut;
 
+	/**
+	 * @var IRequest|MockObject
+	 */
+	private $request;
+
+	/**
+	 * @var AcceptHeaderParsingHelper|Stub
+	 */
+	private $acceptHeaderParser;
+
 	public function setUp(): void {
 		parent::setUp();
 
@@ -54,9 +67,16 @@ class RecipeControllerTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
-		$request = $this->createStub(IRequest::class);
+		$this->request = $this->createMock(IRequest::class);
+		$this->acceptHeaderParser = $this->createStub(AcceptHeaderParsingHelper::class);
 
-		$this->sut = new RecipeController('cookbook', $request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser);
+		/**
+		 * @var Stub|IL10N $l
+		 */
+		$l = $this->createStub(IL10N::class);
+		$l->method('t')->willReturnArgument(0);
+
+		$this->sut = new RecipeController('cookbook', $this->request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser, $this->acceptHeaderParser, $l);
 	}
 
 	public function testConstructor(): void {
@@ -298,6 +318,31 @@ class RecipeControllerTest extends TestCase {
 			[true, null],
 			[true, 'full'],
 		];
+	}
+
+	public function dpImageNotFound() {
+		yield [['jpg', 'png'], 406];
+		yield [['jpg', 'png', 'svg'], 200];
+	}
+
+	/**
+	 * @dataProvider dpImageNotFound
+	 */
+	public function testImageNotFound($accept, $expectedStatus) {
+		$id = 123;
+
+		$ex = new Exception();
+		$this->recipeService->method('getRecipeImageFileByFolderId')->willThrowException($ex);
+
+		$headerContent = 'The content of the header as supposed by teh framework';
+		$this->request->method('getHeader')->with('Accept')->willReturn($headerContent);
+		$this->acceptHeaderParser->method('parseHeader')->willReturnMap([
+			[$headerContent, $accept],
+		]);
+
+		$ret = $this->sut->image($id);
+
+		$this->assertEquals($expectedStatus, $ret->getStatus());
 	}
 
 	/**
