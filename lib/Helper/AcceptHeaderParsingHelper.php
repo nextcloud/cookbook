@@ -72,14 +72,6 @@ class AcceptHeaderParsingHelper {
 		return $weightedParts;
 	}
 
-	private function addWeightedPart($weight, $part, &$weightedParts): void {
-		if (! array_key_exists($weight, $weightedParts)) {
-			$weightedParts[$weight] = [];
-		}
-
-		array_push($weightedParts[$weight], $part);
-	}
-
 	private function parsePart($part): array {
 		if (preg_match('/\s*(.+?)\s*;q=([0-9.]+)\s*$/', $part, $matches) === 0) {
 			// No qualifier was found
