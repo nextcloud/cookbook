@@ -11,6 +11,7 @@ use OCP\Files\IRootFolder;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
@@ -698,8 +699,7 @@ class RecipeService {
 	 */
 	public function addRecipe($json) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
-			// XXX More specific Exception better?
-			throw new Exception('Recipe name not found');
+			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}
 
 		$now = date(DATE_ISO8601);

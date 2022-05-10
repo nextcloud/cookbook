@@ -86,7 +86,7 @@ class MainController extends Controller {
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 0,
-				'minor' => 2
+				'minor' => 3
 			]
 		];
 		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);

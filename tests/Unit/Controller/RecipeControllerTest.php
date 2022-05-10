@@ -16,13 +16,13 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Controller\RecipeController;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCA\Cookbook\Exception\RecipeExistsException;
 
 /**
- * @coversDefaultClass \OCA\Cookbook\Controller\RecipeController
- * @covers ::<private>
- * @covers ::<protected>
+ * @covers \OCA\Cookbook\Controller\RecipeController
+ * @covers \OCA\Cookbook\Exception\NoRecipeNameGivenException
  */
 class RecipeControllerTest extends TestCase {
 	/**
@@ -59,9 +59,6 @@ class RecipeControllerTest extends TestCase {
 		$this->sut = new RecipeController('cookbook', $request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser);
 	}
 
-	/**
-	 * @covers ::__construct
-	 */
 	public function testConstructor(): void {
 		$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
@@ -79,10 +76,6 @@ class RecipeControllerTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
 
-	/**
-	 * @covers ::update
-	 * @todo Foo
-	 */
 	public function testUpdate(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -104,9 +97,24 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals(50, $ret->getData());
 	}
 
-	/**
-	 * @covers ::create
-	 */
+	public function testUpdateNoName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$data = ['a', 'new', 'array'];
+
+		$errorMsg = "No name was given for the recipe.";
+		$ex = new NoRecipeNameGivenException($errorMsg);
+
+		$this->restParser->method('getParameters')->willReturn($data);
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($data)->willThrowException($ex);
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->update(1);
+
+		$this->assertEquals(422, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
 	public function testCreate(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -131,9 +139,25 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals($id, $ret->getData());
 	}
 
-	/**
-	 * @covers ::create
-	 */
+	public function testCreateNoName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['a', 'recipe', 'as', 'array'];
+		$this->restParser->method('getParameters')->willReturn($recipe);
+
+		$errorMsg = "The error that was triggered";
+		$ex = new NoRecipeNameGivenException($errorMsg);
+
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($recipe)->willThrowException($ex);
+
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->create();
+
+		$this->assertEquals(422, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
 	public function testCreateExisting(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -156,9 +180,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals($expected, $ret->getData());
 	}
 
-	/**
-	 * @covers ::show
-	 */
 	public function testShow(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -191,9 +212,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals($expected, $ret->getData());
 	}
 
-	/**
-	 * @covers ::show
-	 */
 	public function testShowFailure(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -208,9 +226,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals(404, $ret->getStatus());
 	}
 
-	/**
-	 * @covers ::destroy
-	 */
 	public function testDestroy(): void {
 		$this->ensureCacheCheckTriggered();
 		$id = 123;
@@ -224,9 +239,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals(200, $ret->getStatus());
 	}
 
-	/**
-	 * @covers ::destroy
-	 */
 	public function testDestroyFailed(): void {
 		$this->ensureCacheCheckTriggered();
 		$id = 123;
@@ -243,10 +255,9 @@ class RecipeControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::image
 	 * @dataProvider dataProviderImage
 	 * @todo Assert on image data/file name
-	 * @todo Avoid business codde in controller
+	 * @todo Avoid business code in controller
 	 */
 	public function testImage($setSize, $size): void {
 		$this->ensureCacheCheckTriggered();
@@ -268,7 +279,7 @@ class RecipeControllerTest extends TestCase {
 
 		// Hack: Get output via IOutput mockup
 		/**
-		 * @var MockObject|Ioutput $output
+		 * @var MockObject|IOutput $output
 		 */
 		$output = $this->createMock(IOutput::class);
 		$file->method('getSize')->willReturn(100);
@@ -290,7 +301,6 @@ class RecipeControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::index
 	 * @dataProvider dataProviderIndex
 	 * @todo no work on controller
 	 */

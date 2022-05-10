@@ -11,6 +11,8 @@
   [#952](https://github.com/nextcloud/cookbook/pull/952) @christianlupus
 - Redirect to login in case of logged out user
   [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
+- Correct handling of empty recipe name in the backend
+  [#973](https://github.com/nextcloud/cookbook/pull/973) @christianlupus
 - Fix problem with git pre-commit hook dropping files unintentionally
   [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
 - Removed typo in exception description
