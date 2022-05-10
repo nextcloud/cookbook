@@ -15,6 +15,8 @@
   [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
 - Removed typo in exception description
   [#965](https://github.com/nextcloud/cookbook/pull/965) @christianlupus
+- Mark cookbook app as compatible with NC24
+  [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
 
 ### Documentation
 - Corrected some spelling issues
