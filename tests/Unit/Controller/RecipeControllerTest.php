@@ -111,7 +111,7 @@ class RecipeControllerTest extends TestCase {
 
 		$ret = $this->sut->update(1);
 
-		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(422, $ret->getStatus());
 		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 
@@ -154,7 +154,7 @@ class RecipeControllerTest extends TestCase {
 
 		$ret = $this->sut->create();
 
-		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(422, $ret->getStatus());
 		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 

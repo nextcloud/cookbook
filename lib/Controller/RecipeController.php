@@ -109,7 +109,7 @@ class RecipeController extends Controller {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
-			return new JSONResponse($json, Http::STATUS_BAD_REQUEST);
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 		$this->dbCacheService->addRecipe($file);
 
@@ -148,7 +148,7 @@ class RecipeController extends Controller {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
-			return new JSONResponse($json, Http::STATUS_BAD_REQUEST);
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 	}
 
