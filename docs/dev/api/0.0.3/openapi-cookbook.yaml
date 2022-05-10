@@ -424,7 +424,7 @@ paths:
                 type: integer
                 example: 2462
                 description: The id of the newly created recipe
-        406:
+        400:
           description: There was no name in the request given for the recipe. Cannot save the recipe.
           content:
             application/json:
@@ -479,7 +479,7 @@ paths:
                 type: integer
                 description: The id of the updated recipe
                 example: 2345
-        406:
+        400:
           description: There was no name in the request given for the recipe. Cannot save the recipe.
           content:
             application/json:

@@ -111,7 +111,7 @@ class RecipeControllerTest extends TestCase {
 
 		$ret = $this->sut->update(1);
 
-		$this->assertEquals(406, $ret->getStatus());
+		$this->assertEquals(400, $ret->getStatus());
 		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 
@@ -154,7 +154,7 @@ class RecipeControllerTest extends TestCase {
 
 		$ret = $this->sut->create();
 
-		$this->assertEquals(406, $ret->getStatus());
+		$this->assertEquals(400, $ret->getStatus());
 		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 
@@ -279,7 +279,7 @@ class RecipeControllerTest extends TestCase {
 
 		// Hack: Get output via IOutput mockup
 		/**
-		 * @var MockObject|Ioutput $output
+		 * @var MockObject|IOutput $output
 		 */
 		$output = $this->createMock(IOutput::class);
 		$file->method('getSize')->willReturn(100);
