@@ -19,6 +19,8 @@
   [#965](https://github.com/nextcloud/cookbook/pull/965) @christianlupus
 - Mark cookbook app as compatible with NC24
   [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
+- Fix bug that prevent generation of thumbnails when no previous thumbnails are present
+  [#985](https://github.com/nextcloud/cookbook/pull/985) @christianlupus
 
 ### Documentation
 - Corrected some spelling issues
