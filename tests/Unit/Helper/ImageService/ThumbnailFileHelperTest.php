@@ -198,11 +198,18 @@ class ThumbnailFileHelperTest extends TestCase {
 		];
 		$f->method('get')->willReturnMap($fileMap);
 		
+		$cnt = 0;
+		if (! $thumbExists) {
+			$cnt ++;
+		}
+		if (! $miniExists) {
+			$cnt ++;
+		}
 		$newFileMap = [
 			['thumb.jpg', null, $thumb],
 			['thumb16.jpg', null, $mini],
 		];
-		$f->method('newFile')->willReturnMap($newFileMap);
+		$f->expects($this->exactly($cnt))->method('newFile')->willReturnMap($newFileMap);
 
 		$full = $this->createStub(File::class);
 		$this->fileHelper->method('hasImage')->willReturn(true);
