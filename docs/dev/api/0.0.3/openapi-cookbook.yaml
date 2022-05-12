@@ -297,7 +297,18 @@ paths:
             type: integer
       responses:
         200:
-          description: Image was obtained and will be inresponse either as image/jpeg or image/svg+xml
+          description: Image was obtained and will be in response either as image/jpeg or image/svg+xml
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/svg+xml:
+              schema:
+                type: string
+                format: binary
+        406:
+          description: The recipe has no image whose MIME type matches the Accept header
   /api/search/{query}:
     parameters:
       - in: path
