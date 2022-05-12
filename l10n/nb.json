@@ -1,4 +1,5 @@
 { "translations": {
+    "in %s" : "om %s",
     "Home" : "Hjem",
     "Save changes" : "Lagre endringer",
     "Loading…" : "Laster…",
@@ -6,10 +7,17 @@
     "Filter" : "Filter",
     "Search" : "Søk",
     "Category" : "Kategori",
+    "Tags" : "Merkelapper",
+    "Categories" : "Kategorier",
+    "Rename" : "Endre navn",
+    "Delete entry" : "Slett oppføring",
     "Add" : "Legg til",
+    "Close" : "Lukk",
     "Name" : "Navn",
     "Description" : "Beskrivelse",
     "URL" : "URL",
-    "Tools" : "Verktøy"
+    "Tools" : "Verktøy",
+    "Creation date" : "Opprettelses dato",
+    "Last modified" : "Sist redigert"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

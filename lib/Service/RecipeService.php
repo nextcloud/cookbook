@@ -11,10 +11,13 @@ use OCP\Files\IRootFolder;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Exception\UserNotLoggedInException;
+use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 
 /**
@@ -34,13 +37,27 @@ class RecipeService {
 	 */
 	private $userConfigHelper;
 
-	public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, UserConfigHelper $userConfigHelper, IL10N $il10n, LoggerInterface $logger) {
+	/**
+	 * @var ImageService
+	 */
+	private $imageService;
+
+	public function __construct(
+			?string $UserId,
+			IRootFolder $root,
+			RecipeDb $db,
+			UserConfigHelper $userConfigHelper,
+			ImageService $imageService,
+			IL10N $il10n,
+			LoggerInterface $logger
+		) {
 		$this->user_id = $UserId;
 		$this->root = $root;
 		$this->db = $db;
 		$this->il10n = $il10n;
 		$this->logger = $logger;
 		$this->userConfigHelper = $userConfigHelper;
+		$this->imageService = $imageService;
 	}
 
 	/**
@@ -682,8 +699,7 @@ class RecipeService {
 	 */
 	public function addRecipe($json) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
-			// XXX More specific Exception better?
-			throw new Exception('Recipe name not found');
+			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}
 
 		$now = date(DATE_ISO8601);
@@ -760,59 +776,12 @@ class RecipeService {
 
 			// The image field was empty, remove images in the recipe folder
 		} else {
-			if ($recipe_folder->nodeExists('full.jpg')) {
-				$recipe_folder->get('full.jpg')->delete();
-			}
-
-			if ($recipe_folder->nodeExists('thumb.jpg')) {
-				$recipe_folder->get('thumb.jpg')->delete();
-			}
-
-			if ($recipe_folder->nodeExists('thumb16.jpg')) {
-				$recipe_folder->get('thumb16.jpg')->delete();
-			}
+			$this->imageService->dropImage($recipe_folder);
 		}
 
 		// If image data was fetched, write it to disk
 		if ($full_image_data) {
-			// Write the full image
-			try {
-				$full_image_file = $recipe_folder->get('full.jpg');
-			} catch (NotFoundException $e) {
-				$full_image_file = $recipe_folder->newFile('full.jpg');
-			}
-
-			$full_image_file->putContent($full_image_data);
-
-			// Temp file to load data from
-			$tmp = tmpfile();
-			$tmpPath = stream_get_meta_data($tmp)['uri'];
-			fwrite($tmp, $full_image_data);
-			fflush($tmp);
-
-			// Write the thumbnail
-			$thumb_image = new Image();
-			$thumb_image->loadFromFile($tmpPath);
-			$thumb_image->fixOrientation();
-			$thumb_image->resize(256);
-			$thumb_image->centerCrop();
-
-			try {
-				$thumb_image_file = $recipe_folder->get('thumb.jpg');
-			} catch (NotFoundException $e) {
-				$thumb_image_file = $recipe_folder->newFile('thumb.jpg');
-			}
-
-			$thumb_image_file->putContent($thumb_image->data());
-
-			// Create low-resolution thumbnail preview
-			$low_res_thumb_image = $thumb_image->resizeCopy(16);
-			try {
-				$low_res_thumb_image_file = $recipe_folder->get('thumb16.jpg');
-			} catch (NotFoundException $e) {
-				$low_res_thumb_image_file = $recipe_folder->newFile('thumb16.jpg');
-			}
-			$low_res_thumb_image_file->putContent($low_res_thumb_image->data());
+			$this->imageService->setImageData($recipe_folder, $full_image_data);
 		}
 
 		// Write .nomedia file to avoid gallery indexing
@@ -1044,6 +1013,7 @@ class RecipeService {
 
 	/**
 	 * @return Folder
+	 * @throws UserNotLoggedInException if no user is logged in to get the path from
 	 */
 	public function getFolderForUser() {
 		$path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
@@ -1129,62 +1099,24 @@ class RecipeService {
 	 *
 	 * @return File
 	 */
-	public function getRecipeImageFileByFolderId($id, $size = 'thumb') {
-		if (!$size) {
-			$size = 'thumb';
+	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File {
+		$recipe_folders = $this->root->getById($id);
+		if (count($recipe_folders) < 1) {
+			throw new Exception($this->il10n->t('Recipe with ID %d not found.', [$id]));
 		}
-		if ($size !== 'full' && $size !== 'thumb' && $size !== 'thumb16') {
-			throw new Exception('Image size "' . $size . '" not recognised');
+		$recipe_folder = $recipe_folders[0];
+
+		// TODO: Check that file is really an image
+		switch ($size) {
+			case 'full':
+				return $this->imageService->getImageAsFile($recipe_folder);
+			case 'thumb':
+				return $this->imageService->getThumbnailAsFile($recipe_folder, ImageSize::THUMBNAIL);
+			case 'thumb16':
+				return $this->imageService->getThumbnailAsFile($recipe_folder, ImageSize::MINI_THUMBNAIL);
+			default:
+				throw new Exception($this->il10n->t('Image size "%s" is not recognized.', [$size]));
 		}
-
-		$recipe_folder = $this->root->getById($id);
-
-		if (count($recipe_folder) < 1) {
-			throw new Exception('Recipe ' . $id . ' not found');
-		}
-
-		$recipe_folder = $recipe_folder[0];
-
-		$image_file = null;
-		$image_filename = $size . '.jpg';
-
-		if (($size === 'thumb16' || $size === 'thumb') && !$recipe_folder->nodeExists($image_filename)) {
-			if ($recipe_folder->nodeExists('full.jpg')) {
-				// Write the thumbnail
-				$recipe_full_image_file = $recipe_folder->get('full.jpg');
-				$full_image_data = $recipe_full_image_file->getContent();
-				$thumb_image = new Image();
-				$thumb_image->loadFromData($full_image_data);
-				$thumb_image->fixOrientation();
-				$thumb_image->resize(256);
-				$thumb_image->centerCrop();
-
-				try {
-					$thumb_image_file = $recipe_folder->get('thumb.jpg');
-				} catch (NotFoundException $e) {
-					$thumb_image_file = $recipe_folder->newFile('thumb.jpg');
-				}
-
-				$thumb_image_file->putContent($thumb_image->data());
-
-				// Create low-resolution thumbnail preview
-				$low_res_thumb_image = $thumb_image->resizeCopy(16);
-				try {
-					$low_res_thumb_image_file = $recipe_folder->get('thumb16.jpg');
-				} catch (NotFoundException $e) {
-					$low_res_thumb_image_file = $recipe_folder->newFile('thumb16.jpg');
-				}
-				$low_res_thumb_image_file->putContent($low_res_thumb_image->data());
-			}
-		}
-
-		$image_file = $recipe_folder->get($image_filename);
-
-		if ($image_file && $this->isImage($image_file)) {
-			return $image_file;
-		}
-
-		throw new Exception('Image file not recognised');
 	}
 
 	/**

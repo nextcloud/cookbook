@@ -597,6 +597,7 @@ export default {
 
                         switch (e.response.status) {
                             case 409:
+                            case 422:
                                 // eslint-disable-next-line no-alert
                                 alert(e.response.data.msg)
                                 break

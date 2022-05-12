@@ -1,0 +1,24 @@
+{
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false,
+    "intelephense.environment.includePaths": [
+        "../../base/lib",
+    ],
+    "intelephense.files.exclude": [
+        "**/.git/**",
+        "**/.svn/**",
+        "**/.hg/**",
+        "**/CVS/**",
+        "**/.DS_Store/**",
+        "**/node_modules/**",
+        "**/bower_components/**",
+        "**/vendor/**/{Tests,tests}/**",
+        "**/.history/**",
+        "**/vendor/**/vendor/**",
+        ".github/actions/run-tests/volumes/nextcloud/custom_apps/cookbook/**",
+        ".github/actions/run-tests/volumes/nextcloud/3rdparty/**",
+        ".github/actions/run-tests/volumes/**",
+        ".github/actions/run-tests/volumes"
+    ]
+}

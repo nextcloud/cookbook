@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Рецепти",
+    "in %s" : "в %s",
     "Another recipe with that name already exists" : "Вже існує рецепт з такою назвою",
     "User cannot create recipe folder" : "Користувач не може створити теку рецептів",
     "Cookbook" : "Кулінарна книга",
@@ -32,6 +33,7 @@ OC.L10N.register(
     "Categories" : "Категорії",
     "Rename" : "Перейменувати",
     "Add" : "Додати",
+    "Close" : "закрити",
     "Name" : "Ім'я",
     "Description" : "Опис",
     "URL" : "URL-адреса",

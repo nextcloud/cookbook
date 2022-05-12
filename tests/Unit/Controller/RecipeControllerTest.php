@@ -16,13 +16,16 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Controller\RecipeController;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\Stub;
 
 /**
- * @coversDefaultClass \OCA\Cookbook\Controller\RecipeController
- * @covers ::<private>
- * @covers ::<protected>
+ * @covers \OCA\Cookbook\Controller\RecipeController
+ * @covers \OCA\Cookbook\Exception\NoRecipeNameGivenException
  */
 class RecipeControllerTest extends TestCase {
 	/**
@@ -47,6 +50,16 @@ class RecipeControllerTest extends TestCase {
 	 */
 	private $sut;
 
+	/**
+	 * @var IRequest|MockObject
+	 */
+	private $request;
+
+	/**
+	 * @var AcceptHeaderParsingHelper|Stub
+	 */
+	private $acceptHeaderParser;
+
 	public function setUp(): void {
 		parent::setUp();
 
@@ -54,14 +67,18 @@ class RecipeControllerTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
-		$request = $this->createStub(IRequest::class);
+		$this->request = $this->createMock(IRequest::class);
+		$this->acceptHeaderParser = $this->createStub(AcceptHeaderParsingHelper::class);
 
-		$this->sut = new RecipeController('cookbook', $request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser);
+		/**
+		 * @var Stub|IL10N $l
+		 */
+		$l = $this->createStub(IL10N::class);
+		$l->method('t')->willReturnArgument(0);
+
+		$this->sut = new RecipeController('cookbook', $this->request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser, $this->acceptHeaderParser, $l);
 	}
 
-	/**
-	 * @covers ::__construct
-	 */
 	public function testConstructor(): void {
 		$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
@@ -79,10 +96,6 @@ class RecipeControllerTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
 
-	/**
-	 * @covers ::update
-	 * @todo Foo
-	 */
 	public function testUpdate(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -104,9 +117,24 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals(50, $ret->getData());
 	}
 
-	/**
-	 * @covers ::create
-	 */
+	public function testUpdateNoName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$data = ['a', 'new', 'array'];
+
+		$errorMsg = "No name was given for the recipe.";
+		$ex = new NoRecipeNameGivenException($errorMsg);
+
+		$this->restParser->method('getParameters')->willReturn($data);
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($data)->willThrowException($ex);
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->update(1);
+
+		$this->assertEquals(422, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
 	public function testCreate(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -131,9 +159,25 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals($id, $ret->getData());
 	}
 
-	/**
-	 * @covers ::create
-	 */
+	public function testCreateNoName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['a', 'recipe', 'as', 'array'];
+		$this->restParser->method('getParameters')->willReturn($recipe);
+
+		$errorMsg = "The error that was triggered";
+		$ex = new NoRecipeNameGivenException($errorMsg);
+
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($recipe)->willThrowException($ex);
+
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->create();
+
+		$this->assertEquals(422, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
 	public function testCreateExisting(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -156,9 +200,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals($expected, $ret->getData());
 	}
 
-	/**
-	 * @covers ::show
-	 */
 	public function testShow(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -191,9 +232,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals($expected, $ret->getData());
 	}
 
-	/**
-	 * @covers ::show
-	 */
 	public function testShowFailure(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -208,9 +246,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals(404, $ret->getStatus());
 	}
 
-	/**
-	 * @covers ::destroy
-	 */
 	public function testDestroy(): void {
 		$this->ensureCacheCheckTriggered();
 		$id = 123;
@@ -224,9 +259,6 @@ class RecipeControllerTest extends TestCase {
 		$this->assertEquals(200, $ret->getStatus());
 	}
 
-	/**
-	 * @covers ::destroy
-	 */
 	public function testDestroyFailed(): void {
 		$this->ensureCacheCheckTriggered();
 		$id = 123;
@@ -243,10 +275,9 @@ class RecipeControllerTest extends TestCase {
 	}
 
 	/**
-	 * @covers ::image
 	 * @dataProvider dataProviderImage
 	 * @todo Assert on image data/file name
-	 * @todo Avoid business codde in controller
+	 * @todo Avoid business code in controller
 	 */
 	public function testImage($setSize, $size): void {
 		$this->ensureCacheCheckTriggered();
@@ -268,7 +299,7 @@ class RecipeControllerTest extends TestCase {
 
 		// Hack: Get output via IOutput mockup
 		/**
-		 * @var MockObject|Ioutput $output
+		 * @var MockObject|IOutput $output
 		 */
 		$output = $this->createMock(IOutput::class);
 		$file->method('getSize')->willReturn(100);
@@ -289,8 +320,32 @@ class RecipeControllerTest extends TestCase {
 		];
 	}
 
+	public function dpImageNotFound() {
+		yield [['jpg', 'png'], 406];
+		yield [['jpg', 'png', 'svg'], 200];
+	}
+
 	/**
-	 * @covers ::index
+	 * @dataProvider dpImageNotFound
+	 */
+	public function testImageNotFound($accept, $expectedStatus) {
+		$id = 123;
+
+		$ex = new Exception();
+		$this->recipeService->method('getRecipeImageFileByFolderId')->willThrowException($ex);
+
+		$headerContent = 'The content of the header as supposed by teh framework';
+		$this->request->method('getHeader')->with('Accept')->willReturn($headerContent);
+		$this->acceptHeaderParser->method('parseHeader')->willReturnMap([
+			[$headerContent, $accept],
+		]);
+
+		$ret = $this->sut->image($id);
+
+		$this->assertEquals($expectedStatus, $ret->getStatus());
+	}
+
+	/**
 	 * @dataProvider dataProviderIndex
 	 * @todo no work on controller
 	 */

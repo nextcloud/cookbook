@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "en %s",
     "Home" : "Inicio",
     "Save changes" : "Guardar cambios",
     "Loading…" : "Cargando...",
@@ -8,10 +9,15 @@ OC.L10N.register(
     "Filter" : "Filtrar",
     "Search" : "Buscar",
     "Category" : "Categoría",
+    "Tags" : "Etiquetas",
+    "Categories" : "Categorías",
+    "Rename" : "Renombrar",
     "Add" : "Agregar",
+    "Close" : "Cerrar",
     "Name" : "Nombre",
     "Description" : "Descripción",
     "URL" : "URL",
-    "Tools" : "Herramientas"
+    "Tools" : "Herramientas",
+    "Last modified" : "Última modificación"
 },
 "nplurals=2; plural=(n != 1);");

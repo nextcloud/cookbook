@@ -14,6 +14,7 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCP\AppFramework\Http\JSONResponse;
 
 class MainController extends Controller {
@@ -52,6 +53,7 @@ class MainController extends Controller {
 	 *
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @throws UserNotLoggedInException never
 	 */
 	public function index(): TemplateResponse {
 		try {
@@ -61,6 +63,11 @@ class MainController extends Controller {
 			Util::addScript('cookbook', 'nextcloud-cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}
+		/*
+		 * The UserNotLoggedInException will not be caught here. It should never happen as the middleware of NC
+		 * will prevent the controller to be called. If this does not happen for some reason, let the exception be
+		 * thrown and the user most probably has found a bug. A stack trace might help there.
+		 */
 		
 		$this->dbCacheService->triggerCheck();
 
@@ -79,7 +86,7 @@ class MainController extends Controller {
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 0,
-				'minor' => 2
+				'minor' => 3
 			]
 		];
 		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);

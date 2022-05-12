@@ -1,6 +1,46 @@
 ## [Unreleased]
 
 
+
+## 0.9.12 - 2022-05-12
+
+### Added
+- Add IDE configuration to codebase to prevent small issues
+  [#978](https://github.com/nextcloud/cookbook/pull/978) @christianlupus
+- Allow client to specify accepted image types
+  [#982](https://github.com/nextcloud/cookbook/pull/982) @christianlupus
+
+### Fixed
+- Refactor the code for image handling to make it testable
+  [#933](https://github.com/nextcloud/cookbook/pull/933) @christianlupus
+- Allow merging of PRs from dependabot with only changes to package-lock.json
+  [#952](https://github.com/nextcloud/cookbook/pull/952) @christianlupus
+- Redirect to login in case of logged out user
+  [#956](https://github.com/nextcloud/cookbook/pull/956) @christianlupus
+- Correct handling of empty recipe name in the backend
+  [#973](https://github.com/nextcloud/cookbook/pull/973) @christianlupus
+- Fix problem with git pre-commit hook dropping files unintentionally
+  [#974](https://github.com/nextcloud/cookbook/pull/974) @christianlupus
+- Removed typo in exception description
+  [#965](https://github.com/nextcloud/cookbook/pull/965) @christianlupus
+- Mark cookbook app as compatible with NC24
+  [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
+- Fix bug that prevent generation of thumbnails when no previous thumbnails are present
+  [#985](https://github.com/nextcloud/cookbook/pull/985) @christianlupus
+
+### Documentation
+- Corrected some spelling issues
+  [#941](https://github.com/nextcloud/cookbook/pull/941) @Valdnet
+- Enhanced the user documentation by adding some starter's information
+  [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
+- Translate user documentation to French
+  [#936](https://github.com/nextcloud/cookbook/pull/947) @zorglubu
+- Updated French translation
+  [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
+- Add example to OpenAPI specification
+  [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
+
+
 ## 0.9.11 - 2022-03-28
 
 ### Fixed

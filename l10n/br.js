@@ -1,12 +1,17 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "e %s",
     "Home" : "Degemer",
     "Save changes" : "Enrollañ ar cheñchamantoù",
     "Loading…" : "O Kargañ...",
     "Filter" : "Filtre",
     "Search" : "Klask",
+    "Tags" : "Klavioù",
+    "Categories" : "Rummadoù",
+    "Rename" : "Adenvel",
     "Add" : "Ouzhpennañ",
+    "Close" : "Seriñ",
     "Name" : "Anv",
     "Description" : "Diskrivadur",
     "URL" : "URL"

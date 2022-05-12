@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Recipes",
+    "in %s" : "in %s",
     "Cookbook" : "Cookbook",
     "An integrated cookbook using schema.org JSON files as recipes" : "An integrated cookbook using schema.org JSON files as recipes",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.",
@@ -29,6 +30,8 @@ OC.L10N.register(
     "Path to your recipe collection" : "Path to your recipe collection",
     "Create recipe" : "Create recipe",
     "Uncategorized recipes" : "Uncategorised recipes",
+    "Categories" : "Categories",
+    "Rename" : "Rename",
     "Download recipe from URL" : "Download recipe from URL",
     "Failed to load category {category} recipes" : "Failed to load category {category} recipes",
     "Loading category recipes …" : "Loading category recipes …",
@@ -44,7 +47,9 @@ OC.L10N.register(
     "Loading config failed" : "Loading configuration failed",
     "Pick a local image" : "Pick a local image",
     "Path to your recipe image" : "Path to your recipe image",
+    "Delete entry" : "Delete entry",
     "Add" : "Add",
+    "Close" : "Close",
     "The page was not found" : "The page was not found",
     "Name" : "Name",
     "Description" : "Description",
@@ -56,6 +61,8 @@ OC.L10N.register(
     "Instructions" : "Instructions",
     "Loading recipe failed" : "Loading recipe failed",
     "Cooking time is up!" : "Cooking time is up!",
-    "Source" : "Source"
+    "Last modified" : "Last modified",
+    "Source" : "Source",
+    "Failed to load search results" : "Failed to load search results"
 },
 "nplurals=2; plural=(n != 1);");

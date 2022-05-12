@@ -31,7 +31,10 @@ OC.L10N.register(
     "Search for recipes" : "Căutați rețete",
     "Are you sure you want to delete this recipe?" : "Sigur doriți să ștergeți această rețetă?",
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Sunteți autentificat cu un cont de invitat. Prin urmare, nu aveți voie să generați fișiere și foldere arbitrare pe această instanță Nextcloud. Pentru a utiliza aplicația Carte de bucate ca invitat, trebuie să specificați un folder în care sunt stocate toate rețetele. Veți avea nevoie de permisiunea de scriere pentru acest folder.",
+    "Categories" : "Categorii",
+    "Rename" : "Redenumire",
     "Add" : "Adaugă",
+    "Close" : "Închide",
     "Name" : "Nume",
     "Description" : "Descriere",
     "URL" : "URL"

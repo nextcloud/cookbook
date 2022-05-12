@@ -4,6 +4,7 @@ OC.L10N.register(
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Δεν είναι δυνατή η ανίχνευση τύπου μεταδιδόμενων δεδομένων. Αυτό είναι ένα σφάλμα, αναφέρετέ το.",
     "Invalid URL-encoded string found. Please report a bug." : "Βρέθηκε μη-έγκυρη ακολουθία χαρακτήρων κωδικοποιημένου-υπερσυνδέσμου. Παρακαλώ αναφέρετε το σφάλμα.",
     "Recipes" : "Συνταγές",
+    "in %s" : "σε %s",
     "Another recipe with that name already exists" : "Υπάρχει άλλη συνταγή με το ίδιο όνομα",
     "Cookbook" : "Βιβλίο συνταγών",
     "An integrated cookbook using schema.org JSON files as recipes" : "Ένα ενσωματωμένο βιβλίο μαγειρικής χρησιμοποιώντας αρχεία JSON του schema.org ως συνταγές",

@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Controller;
 
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\IRequest;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
@@ -13,8 +14,10 @@ use OCA\Cookbook\Service\RecipeService;
 use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
 
 class RecipeController extends Controller {
 	/**
@@ -36,13 +39,34 @@ class RecipeController extends Controller {
 	 */
 	private $restParser;
 
-	public function __construct($AppName, IRequest $request, IURLGenerator $urlGenerator, RecipeService $recipeService, DbCacheService $dbCacheService, RestParameterParser $restParser) {
+	/**
+	 * @var AcceptHeaderParsingHelper
+	 */
+	private $acceptHeaderParser;
+
+	/**
+	 * @var IL10N
+	 */
+	private $l;
+
+	public function __construct(
+			$AppName,
+			IRequest $request,
+			IURLGenerator $urlGenerator,
+			RecipeService $recipeService,
+			DbCacheService $dbCacheService,
+			RestParameterParser $restParser,
+			AcceptHeaderParsingHelper $acceptHeaderParser,
+			IL10N $l
+			) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
 		$this->urlGenerator = $urlGenerator;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
+		$this->acceptHeaderParser = $acceptHeaderParser;
+		$this->l = $l;
 	}
 
 	/**
@@ -100,7 +124,16 @@ class RecipeController extends Controller {
 		$this->dbCacheService->triggerCheck();
 		
 		$recipeData = $this->restParser->getParameters();
-		$file = $this->service->addRecipe($recipeData);
+		try {
+			$file = $this->service->addRecipe($recipeData);
+		} catch (NoRecipeNameGivenException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+		}
 		$this->dbCacheService->addRecipe($file);
 
 		return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
@@ -132,6 +165,13 @@ class RecipeController extends Controller {
 				'line' => $ex->getLine(),
 			];
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
+		} catch (NoRecipeNameGivenException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 	}
 
@@ -161,6 +201,9 @@ class RecipeController extends Controller {
 	public function image($id) {
 		$this->dbCacheService->triggerCheck();
 		
+		$acceptHeader = $this->request->getHeader('Accept');
+		$acceptedExtensions = $this->acceptHeaderParser->parseHeader($acceptHeader);
+
 		$size = isset($_GET['size']) ? $_GET['size'] : null;
 
 		try {
@@ -168,9 +211,18 @@ class RecipeController extends Controller {
 
 			return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {
-			$file = file_get_contents(dirname(__FILE__) . '/../../img/recipe.svg');
-
-			return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/svg+xml']);
+			if (array_search('svg', $acceptedExtensions, true) === false) {
+				// We may not serve a SVG image. Tell the client about the missing image.
+				$json = [
+					'msg' => $this->l->t('No image with the matching mime type was found on the server.'),
+				];
+				return new JSONResponse($json, Http::STATUS_NOT_ACCEPTABLE);
+			} else {
+				// The client accepts the SVG file. Send it.
+				$file = file_get_contents(dirname(__FILE__) . '/../../img/recipe.svg');
+	
+				return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/svg+xml']);
+			}
 		}
 	}
 }
