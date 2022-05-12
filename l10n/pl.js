@@ -9,6 +9,7 @@ OC.L10N.register(
     "The user is not logged in. No user configuration can be obtained." : "Użytkownik nie jest zalogowany. Nie można uzyskać konfiguracji użytkownika.",
     "Recipes" : "Przepisy",
     "in %s" : "w %s",
+    "No recipe name was given. A unique name is required to store the recipe." : "Nie podano nazwy przepisu. Do przechowywania przepisu wymagana jest unikalna nazwa.",
     "Another recipe with that name already exists" : "Istnieje już inny przepis o tej nazwie",
     "User cannot create recipe folder" : "Użytkownik nie może utworzyć katalogu z przepisami",
     "Recipe with ID %d not found." : "Nie znaleziono przepisu o ID %d.",

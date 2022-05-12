@@ -1,7 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
-    "The recipe has already an image file. Cannot create a new one." : "Das Rezept hat bereits ein Bilddatei, eine neue Bilddatei kann nicht erstellt werden",
+    "The recipe has already an image file. Cannot create a new one." : "Das Rezept hat bereits ein Bilddatei, eine neue Bilddatei kann nicht erstellt werden.",
     "There is no primary image for the recipe present." : "Es ist kein primäres Bild für das Rezept vorhanden.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Multipart-Kodierung von Nicht-POST kann nicht geparst werden. Dies ist ein Fehler.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Kann den Typ der übertragenen Daten nicht erkennen. Dies ist ein Fehler, bitte melden Sie diesen.",
@@ -9,6 +9,7 @@ OC.L10N.register(
     "The user is not logged in. No user configuration can be obtained." : "Der Benutzer ist nicht angemeldet. Es kann keine Benutzerkonfiguration abgerufen werden.",
     "Recipes" : "Rezepte",
     "in %s" : "in %s",
+    "No recipe name was given. A unique name is required to store the recipe." : "Es wurde kein Name für das Rezept angegeben. Zum Speichern wird ein eindeutiger Name benötigt.",
     "Another recipe with that name already exists" : "Ein Rezept mit diesem Namen existiert bereits",
     "User cannot create recipe folder" : "Benutzer konnte Rezeptordner nicht erstellen",
     "Recipe with ID %d not found." : "Rezept mit der ID %d wurde nicht gefunden.",

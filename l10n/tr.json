@@ -7,6 +7,7 @@
     "The user is not logged in. No user configuration can be obtained." : "Kullanıcı oturum açmamış. Hehrangi bir kullanıcı yapılandırması alınamadı.",
     "Recipes" : "Tarifler",
     "in %s" : "%s içinde",
+    "No recipe name was given. A unique name is required to store the recipe." : "Tarif adı belirtilmemiş. Tarifi kaydetmek için eşsiz bir ad vermelisiniz.",
     "Another recipe with that name already exists" : "Aynı adlı bir yemek tarifi zaten var",
     "User cannot create recipe folder" : "Kullanıcı yemek tarifi klasörü ekleyemez",
     "Recipe with ID %d not found." : "%d kodlu tarif bulunamadı.",

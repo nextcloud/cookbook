@@ -9,6 +9,7 @@ OC.L10N.register(
     "The user is not logged in. No user configuration can be obtained." : "用戶未登錄，無法獲取用戶配置。",
     "Recipes" : "食譜",
     "in %s" : "在 %s",
+    "No recipe name was given. A unique name is required to store the recipe." : "未提供食譜名稱。存儲食譜需要唯一的名稱。",
     "Another recipe with that name already exists" : "另一個同名的食譜已經存在",
     "User cannot create recipe folder" : "用戶無法創建食譜資料夾",
     "Recipe with ID %d not found." : "沒有找到 ID 為「%d」的食譜。",
