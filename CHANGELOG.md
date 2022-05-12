@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+
+
+## 0.9.12 - 2022-05-12
+
 ### Added
 - Add IDE configuration to codebase to prevent small issues
   [#978](https://github.com/nextcloud/cookbook/pull/978) @christianlupus
