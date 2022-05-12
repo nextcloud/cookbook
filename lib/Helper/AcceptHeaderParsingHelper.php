@@ -3,9 +3,9 @@
 namespace OCA\Cookbook\Helper;
 
 /**
- * This class parses the Accepts header from a HTTP request and returns an array of accepted file extensions.
+ * This class parses the Accepts header of an HTTP request and returns an array of accepted file extensions.
  *
- * The return values is a list of extensions that the client is willing to accept.
+ * The return value is a list of extensions that the client is willing to accept.
  * Higher priorities are sorted first in the array.
  */
 class AcceptHeaderParsingHelper {
