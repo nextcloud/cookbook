@@ -89,7 +89,11 @@ class ThumbnailFileHelper {
 		
 		if ($this->fileHelper->hasImage($recipeFolder)) {
 			$full = $this->fileHelper->getImage($recipeFolder);
-			$file = $recipeFolder->get($filename);
+			if ($recipeFolder->nodeExists($filename)) {
+				$file = $recipeFolder->get($filename);
+			} else {
+				$file = $recipeFolder->newFile($filename);
+			}
 
 			$this->generationHelper->generateThumbnail($full, $type, $file);
 		} else {
