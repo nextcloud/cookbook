@@ -214,7 +214,7 @@ class RecipeController extends Controller {
 			if (array_search('svg', $acceptedExtensions, true) === false) {
 				// We may not serve a SVG image. Tell the client about the missing image.
 				$json = [
-					'msg' => $this->l->t('No image with the matching mime type was found on the server.'),
+					'msg' => $this->l->t('No image with the matching MIME type was found on the server.'),
 				];
 				return new JSONResponse($json, Http::STATUS_NOT_ACCEPTABLE);
 			} else {
