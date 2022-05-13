@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- l10n: Changed spelling of MIME
+  [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 
 
 ## 0.9.12 - 2022-05-12
@@ -27,7 +30,6 @@
   [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
 - Fix bug that prevent generation of thumbnails when no previous thumbnails are present
   [#985](https://github.com/nextcloud/cookbook/pull/985) @christianlupus
-- l10n: Changed spelling of MIME [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 
 ### Documentation
 - l10n: Corrected some spelling issues
