@@ -1,6 +1,8 @@
 ## [Unreleased]
 
 ### Fixed
+- Fix visual regression in edit mode to prevent overflow of breadcrumbs
+  [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
 - l10n: Changed spelling of MIME
   [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 
