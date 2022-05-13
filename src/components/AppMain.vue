@@ -4,7 +4,9 @@
         <AppContent>
             <div>
                 <AppControls />
-                <router-view></router-view>
+                <div class="cookbook-app-content">
+                    <router-view></router-view>
+                </div>
             </div>
         </AppContent>
     </Content>
@@ -33,6 +35,17 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+    .app-navigation {
+        z-index: 1;
+    }
+
+    .cookbook-app-content {
+        z-index: 0;
+        position: relative;
+    }
+</style>
 
 <style>
 @media print {
