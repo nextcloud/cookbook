@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Fix visual regression in edit mode to prevent overflow of breadcrumbs
+  [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
 
 
 ## 0.9.12 - 2022-05-12
