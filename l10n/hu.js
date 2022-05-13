@@ -9,6 +9,7 @@ OC.L10N.register(
     "The user is not logged in. No user configuration can be obtained." : "A felhasználó nincs bejelentkezve. Nem szerezhetők meg a felhasználói beállítások.",
     "Recipes" : "Receptek",
     "in %s" : "itt:  %s",
+    "No recipe name was given. A unique name is required to store the recipe." : "Nincs receptnév megadva. Egyedi név szükséges a recept tárolásához.",
     "Another recipe with that name already exists" : "Ezzel a névvel már létezik egy másik recept",
     "User cannot create recipe folder" : "A felhasználó nem hozhat létre receptmappát",
     "Recipe with ID %d not found." : "A(z) „%d” azonosítójú recept nem található.",
