@@ -37,14 +37,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .app-navigation {
-        z-index: 1;
-    }
+.app-navigation {
+    z-index: 1;
+}
 
-    .cookbook-app-content {
-        z-index: 0;
-        position: relative;
-    }
+.cookbook-app-content {
+    position: relative;
+    z-index: 0;
+}
 </style>
 
 <style>
