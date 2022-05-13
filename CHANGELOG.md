@@ -27,9 +27,10 @@
   [#977](https://github.com/nextcloud/cookbook/pull/977) @christianlupus
 - Fix bug that prevent generation of thumbnails when no previous thumbnails are present
   [#985](https://github.com/nextcloud/cookbook/pull/985) @christianlupus
+- l10n: Changed spelling of MIME [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 
 ### Documentation
-- Corrected some spelling issues
+- l10n: Corrected some spelling issues
   [#941](https://github.com/nextcloud/cookbook/pull/941) @Valdnet
 - Enhanced the user documentation by adding some starter's information
   [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
