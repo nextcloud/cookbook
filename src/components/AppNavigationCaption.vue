@@ -198,7 +198,6 @@ $icon-margin: math.div($clickable-area - $icon-size, 2);
     display: flex;
     overflow: hidden;
     flex: 0 0 auto;
-    order: 1;
     opacity: 0.7;
 }
 
