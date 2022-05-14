@@ -5,6 +5,8 @@
   [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
 - l10n: Changed spelling of MIME
   [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
+- Move "Categories" caption above list of categories
+  [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
 
 
 ## 0.9.12 - 2022-05-12
