@@ -6,6 +6,9 @@
 - l10n: Changed spelling of MIME
   [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 
+### Documentation
+- Add documentation on updates of the API endpoints
+  [#1001](https://github.com/nextcloud/cookbook/pull/1001) @christianlupus
 
 ## 0.9.12 - 2022-05-12
 
