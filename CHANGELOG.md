@@ -8,6 +8,9 @@
 - Move "Categories" caption above list of categories
   [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
 
+### Documentation
+- Add documentation on updates of the API endpoints
+  [#1001](https://github.com/nextcloud/cookbook/pull/1001) @christianlupus
 
 ## 0.9.12 - 2022-05-12
 
