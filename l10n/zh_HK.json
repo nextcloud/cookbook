@@ -1,4 +1,5 @@
 { "translations": {
+    "No image with the matching MIME type was found on the server." : "在伺服器上找不到具有匹配 MIME 類型的圖像。",
     "The recipe has already an image file. Cannot create a new one." : "食譜已經有一個圖像檔案。無法創建新的。",
     "There is no primary image for the recipe present." : "沒有當前食譜的主圖像。",
     "Cannot parse non-POST multipart encoding. This is a bug." : "無法解析非 post 多部分編碼。這是一個 bug。",

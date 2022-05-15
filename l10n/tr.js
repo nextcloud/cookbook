@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "No image with the matching MIME type was found on the server." : "Sunucu üzerinde eşleşen MIME türünde bir görsel bulunamadı. ",
     "The recipe has already an image file. Cannot create a new one." : "Tarifin zaten bir görsel dosyası var. Yeni bir dosya oluşturulamadı.",
     "There is no primary image for the recipe present." : "Tarifin birincil görseli yok.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "POST olmayan çok parçalı kodlama işlenemedi. Bu bir hata olmalı. Lütfen bize bildirin.",
