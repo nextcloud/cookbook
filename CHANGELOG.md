@@ -11,6 +11,8 @@
 ### Documentation
 - Add documentation on updates of the API endpoints
   [#1001](https://github.com/nextcloud/cookbook/pull/1001) @christianlupus
+- Fix API specification in accordance with real implementation
+  [#1006](https://github.com/nextcloud/cookbook/pull/1006) @christianlupus
 
 ## 0.9.12 - 2022-05-12
 
