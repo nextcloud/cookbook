@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "No image with the matching MIME type was found on the server." : "Na serwerze nie znaleziono obrazu o zgodnym typie MIME.",
     "The recipe has already an image file. Cannot create a new one." : "Przepis ma już plik graficzny. Nie można utworzyć nowego.",
     "There is no primary image for the recipe present." : "Nie ma podstawowego obrazu dla obecnego przepisu.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nie można przeanalizować kodowania wieloczęściowego innego niż POST. To jest błąd.",

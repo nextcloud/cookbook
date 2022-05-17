@@ -1,4 +1,5 @@
 { "translations": {
+    "No image with the matching MIME type was found on the server." : "Na serveru nebyl nalezen žádný obrázek s odpovídajícím MIME typem.",
     "The recipe has already an image file. Cannot create a new one." : "Recept už obsahuje obrázek. Není možné vytvořit další.",
     "There is no primary image for the recipe present." : "U receptu se nenachází žádný primární obrázek.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nedaří se zpracovat ne-POST znakovou sadu z více částí. Toto je chyba.",
