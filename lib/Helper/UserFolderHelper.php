@@ -82,6 +82,9 @@ class UserFolderHelper {
 			$this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
 		}
 
+		// TODO This was in the original code. Is it still needed?
+		// $path = str_replace('//', '/', $path);
+
 		return $path;
 	}
 

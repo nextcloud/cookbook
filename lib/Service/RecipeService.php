@@ -4,7 +4,6 @@ namespace OCA\Cookbook\Service;
 
 use Exception;
 use OCP\Files\NotFoundException;
-use OCP\Files\NotPermittedException;
 use OCP\Image;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
@@ -16,9 +15,9 @@ use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
-use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
+use OCA\Cookbook\Helper\UserFolderHelper;
 
 /**
  * Main service class for the cookbook app.
@@ -30,6 +29,10 @@ class RecipeService {
 	private $user_id;
 	private $db;
 	private $il10n;
+	/**
+	 * @var UserFolderHelper $userFolder
+	 */
+	private $userFolder;
 	private $logger;
 
 	/**
@@ -47,6 +50,7 @@ class RecipeService {
 			IRootFolder $root,
 			RecipeDb $db,
 			UserConfigHelper $userConfigHelper,
+			UserFolderHelper $userFolder,
 			ImageService $imageService,
 			IL10N $il10n,
 			LoggerInterface $logger
@@ -55,6 +59,7 @@ class RecipeService {
 		$this->root = $root;
 		$this->db = $db;
 		$this->il10n = $il10n;
+		$this->userFolder = $userFolder;
 		$this->logger = $logger;
 		$this->userConfigHelper = $userConfigHelper;
 		$this->imageService = $imageService;
@@ -102,7 +107,7 @@ class RecipeService {
 	 * @return File|null
 	 */
 	public function getRecipeFileByFolderId(int $id) {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if (count($recipe_folder) <= 0) {
@@ -682,7 +687,7 @@ class RecipeService {
 	 * @param int $id
 	 */
 	public function deleteRecipe(int $id) {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if ($recipe_folder && count($recipe_folder) > 0) {
@@ -711,7 +716,7 @@ class RecipeService {
 		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = null;
 
 		// Recipe already has an id, update it
@@ -837,7 +842,7 @@ class RecipeService {
 	 * @return array
 	 */
 	public function getRecipeFiles() {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folders = $user_folder->getDirectoryListing();
 		$recipe_files = [];
 
@@ -877,7 +882,7 @@ class RecipeService {
 		}
 		
 		// Restructure files if needed
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		
 		foreach ($user_folder->getDirectoryListing() as $node) {
 			// Move JSON files from the user directory into its own folder
@@ -990,36 +995,11 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $path
-	 */
-	public function setUserFolderPath(string $path) {
-		$this->userConfigHelper->setFolderName($path);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUserFolderPath() {
-		return $this->userConfigHelper->getFolderName();
-	}
-
-	/**
 	 * @param int $interval
 	 * @throws PreConditionNotMetException
 	 */
 	public function setSearchIndexUpdateInterval(int $interval) {
 		$this->userConfigHelper->setUpdateInterval($interval);
-	}
-
-	/**
-	 * @return Folder
-	 * @throws UserNotLoggedInException if no user is logged in to get the path from
-	 */
-	public function getFolderForUser() {
-		$path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
-		$path = str_replace('//', '/', $path);
-
-		return $this->getOrCreateFolder($path);
 	}
 
 	/**
@@ -1036,28 +1016,6 @@ class RecipeService {
 	 */
 	public function getPrintImage() {
 		return $this->userConfigHelper->getPrintImage();
-	}
-
-	/**
-	 * Finds a folder and creates it if non-existent
-	 * @param string $path path to the folder
-	 *
-	 * @return Folder
-	 *
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 */
-	private function getOrCreateFolder($path) {
-		if ($this->root->nodeExists($path)) {
-			$folder = $this->root->get($path);
-		} else {
-			try {
-				$folder = $this->root->newFolder($path);
-			} catch (NotPermittedException $ex) {
-				throw new UserFolderNotWritableException($this->il10n->t('User cannot create recipe folder'), null, $ex);
-			}
-		}
-		return $folder;
 	}
 
 	/**
