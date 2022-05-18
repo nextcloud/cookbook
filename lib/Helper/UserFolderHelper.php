@@ -2,14 +2,16 @@
 
 namespace OCA\Cookbook\Helper;
 
+use OCP\IL10N;
+use OCP\Files\Node;
+use OCP\Files\Folder;
+use OCP\Files\NotPermittedException;
 use OCA\Cookbook\Exception\UserFolderNotValidException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
-use OCA\Cookbook\Exception\WrongFileTypeException;
-use OCP\IConfig;
-use OCP\Files\Folder;
-use OCP\Files\Node;
-use OCP\Files\NotPermittedException;
-use OCP\IL10N;
+use OCA\Cookbook\Exception\UserNotLoggedInException;
+use OCP\Files\FileInfo;
+use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
 
 /**
  * This class caches the access to the user folder throughout the app.
@@ -19,7 +21,7 @@ use OCP\IL10N;
 class UserFolderHelper {
 
 	/**
-	 * @var IConfig
+	 * @var UserConfigHelper
 	 */
 	private $config;
 
@@ -29,14 +31,14 @@ class UserFolderHelper {
 	private $l;
 
 	/**
-	 * @var string
+	 * @var ?string
 	 */
 	private $userId;
 
 	/**
-	 * @var FilesystemHelper
+	 * @var IRootFolder
 	 */
-	private $filesystem;
+	private $root;
 
 	/**
 	 * The folder with all recipes or null if this is not yet cached
@@ -46,15 +48,15 @@ class UserFolderHelper {
 	private $cache;
 
 	public function __construct(
-		string $UserId,
-		IConfig $config,
+		?string $UserId,
+		IRootFolder $root,
 		IL10N $l,
-		FilesystemHelper $filesystem
+		UserConfigHelper $configHelper
 	) {
-		$this->config = $config;
-		$this->l = $l;
 		$this->userId = $UserId;
-		$this->filesystem = $filesystem;
+		$this->root = $root;
+		$this->l = $l;
+		$this->config = $configHelper;
 
 		$this->cache = null;
 	}
@@ -66,7 +68,7 @@ class UserFolderHelper {
 	 * @return void
 	 */
 	public function setPath(string $path) {
-		$this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
+		$this->config->setFolderName($path);
 		$this->cache = null;
 	}
 
@@ -74,13 +76,10 @@ class UserFolderHelper {
 	 * Get the path of the recipes relative to the user's root folder
 	 *
 	 * @return string The relative path name
+	 * @throws UserNotLoggedInException If there is currently no logged in user
 	 */
 	public function getPath(): string {
-		$path = $this->config->getUserValue($this->userId, 'cookbook', 'folder', null);
-		if ($path === null) {
-			$path = '/' . $this->l->t('Recipes');
-			$this->config->setUserValue($this->userId, 'cookbook', 'folder', $path);
-		}
+		$path = $this->config->getFolderName();
 
 		// TODO This was in the original code. Is it still needed?
 		// $path = str_replace('//', '/', $path);
@@ -93,40 +92,51 @@ class UserFolderHelper {
 	 *
 	 * @return Folder The folder containing all recipes
 	 * @throws UserFolderNotValidException If the saved user folder is a file or could not be generated
-	 * @throws UserFolderNotWritableException The the saved user folder is not writable.
+	 * @throws UserNotLoggedInException If there is no logged-in user at that time
 	 */
 	public function getFolder(): Folder {
 		// Ensure the cache is built.
 		if (is_null($this->cache)) {
 			$path = $this->getPath();
 
-			// Correct path to be realtice to nc root
+			// Correct path to be relative to nc root
 			$path = '/' . $this->userId . '/files/' . $path;
 			$path = str_replace('//', '/', $path);
 			
+
+			$this->cache = $this->getOrCreateFolder($path);
+		}
+
+		return $this->cache;
+	}
+
+	private function getOrCreateFolder($path): Folder {
+		try {
+			$node = $this->root->get($path);
+		} catch (NotFoundException $ex) {
 			try {
-				$this->cache = $this->filesystem->ensureFolderExists($path);
-			} catch (WrongFileTypeException $ex) {
-				throw new UserFolderNotValidException(
-					$this->l->t('The configured user folder is a file.'),
-					null,
-					$ex
-				);
-			} catch (NotPermittedException $ex) {
+				$node = $this->root->newFolder($path);
+			} catch (NotPermittedException $ex1) {
 				throw new UserFolderNotValidException(
 					$this->l->t('The user folder cannot be created due to missing permissions.'),
 					null,
-					$ex
-				);
-			}
-
-			if (! $this->filesystem->folderHasFullPermissions($this->cache)) {
-				throw new UserFolderNotWritableException(
-					$this->l->t('The user folder %s is not writable by the user.', [$this->cache->getPath()])
+					$ex1
 				);
 			}
 		}
 
-		return $this->cache;
+		if ($node->getType() !== FileInfo::TYPE_FOLDER) {
+			throw new UserFolderNotValidException(
+				$this->l->t('The configured user folder is a file.')
+			);
+		}
+
+		if (! $node->isCreatable()) {
+			throw new UserFolderNotWritableException(
+				$this->l->t('User cannot create recipe folder')
+			);
+		}
+
+		return $node;
 	}
 }
