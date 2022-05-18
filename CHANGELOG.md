@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+- Extracted user folder handling into its own helper class
+  [#1007](https://github.com/nextcloud/cookbook/pull/1007) @christianlupus
+
 ### Fixed
 - Fix visual regression in edit mode to prevent overflow of breadcrumbs
   [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
