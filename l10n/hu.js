@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "No image with the matching MIME type was found on the server." : "Nem található egyező MIME-típusú kép a kiszolgálón.",
     "The recipe has already an image file. Cannot create a new one." : "A receptnek már van képfájlja. Nem hozhat létre újat.",
     "There is no primary image for the recipe present." : "Nincs elsődleges kép a recepthez.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nem elemezhető a nem POST többrészes kódolás. Ez egy hiba.",
