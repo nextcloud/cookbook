@@ -149,6 +149,11 @@ class RecipeService {
 		// Make sure that "name" doesn't have any funky characters in it
 		$json['name'] = $this->cleanUpString($json['name'], false, true);
 
+		// Restrict the length of the name to be not longer than what the DB can store
+		if (strlen($json['name']) > 256) {
+			$json['name'] = substr($json['name'], 0, 256);
+		}
+
 		// Make sure that "image" is a string of the highest resolution image available
 		if (isset($json['image']) && $json['image']) {
 			if (is_array($json['image'])) {
