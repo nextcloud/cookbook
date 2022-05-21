@@ -7,6 +7,7 @@
   [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 - Move "Categories" caption above list of categories
   [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
+- Update eslint-plugin-vue
 
 ### Documentation
 - Add documentation on updates of the API endpoints
