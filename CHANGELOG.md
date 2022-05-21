@@ -9,6 +9,8 @@
   [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
 - Reenable the fixup action after deprecation in central repository
   [#1012](https://github.com/nextcloud/cookbook/pull/1012) @christianlupus
+- Trim recipe name to a maximum length to fit in the database
+  [#1014](https://github.com/nextcloud/cookbook/pull/1014) @christianlupus
 - Update eslint-plugin-vue
 
 ### Documentation
