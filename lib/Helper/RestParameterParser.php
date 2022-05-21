@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\Helper;
 
 use OCP\IL10N;
-use function GuzzleHttp\json_decode;
 
 class RestParameterParser {
 	private const CHARSET = 'charset';
