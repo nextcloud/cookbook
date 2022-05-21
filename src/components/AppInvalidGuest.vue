@@ -30,6 +30,7 @@ import AppContent from "@nextcloud/vue/dist/Components/AppContent"
 export default {
     name: "InvalidGuest",
     components: {
+        // eslint-disable-next-line vue/no-reserved-component-names
         Content,
         AppContent,
     },
