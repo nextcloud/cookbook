@@ -14,7 +14,12 @@ class CookbookConfig extends Config {
 	public function getRules() : array {
 		$parentRules = parent::getRules();
 		$additionalRules = [
-			// 'no_whitespace_in_blank_line' => true,
+			'phpdoc_add_missing_param_annotation' => true,
+			'phpdoc_indent' => true,
+			'phpdoc_no_empty_return' => true,
+			'phpdoc_scalar' => true,
+			'phpdoc_single_line_var_spacing' => true,
+			'phpdoc_var_without_name' => true
 		];
 		return array_merge(['@PSR12' => true], $parentRules, $additionalRules);
 	}
