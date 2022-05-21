@@ -7,7 +7,7 @@ abstract class AbstractHtmlFilter {
 	/**
 	 * Filter the HTML according to the rules of this class
 	 *
-	 * This class operates on the original HTML code as passed by reference.
+	 * This class operates on the original HTML code as passed by reference and may therefore modify the HTML string.
 	 *
 	 * @param string $html The HTML code to be filtered
 	 */

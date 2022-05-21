@@ -71,14 +71,14 @@ class HtmlDownloadService {
 	
 	/**
 	 * Get the HTML docuemnt after it has been downloaded and parsed with downloadRecipe()
-	 * @return \DOMDocument The loaded HTML document or null if document could not be loaded successfully
+	 * @return ?DOMDocument The loaded HTML document or null if document could not be loaded successfully
 	 */
-	public function getDom(): ?\DOMDocument {
+	public function getDom(): ?DOMDocument {
 		return $this->dom;
 	}
 
 	/**
-	 * Fetch a HTML page from the internet
+	 * Fetch an HTML page from the internet
 	 * @param string $url The URL of the page to fetch
 	 * @throws ImportException If the given URL was not fetched
 	 * @return string The content of the page as a plain string

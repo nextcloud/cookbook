@@ -7,7 +7,7 @@ use OCP\IL10N;
 use OCA\Cookbook\Service\JsonService;
 
 /**
- * This class is an AbsractHtmlParser that tries to extract a JSON+LD script from the HTML page.
+ * This class is an AbstractHtmlParser which tries to extract a JSON+LD script from the HTML page.
  * @author Christian Wolf
  */
 class HttpJsonLdParser extends AbstractHtmlParser {

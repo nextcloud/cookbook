@@ -6,7 +6,7 @@ use OCA\Cookbook\Exception\HtmlParsingException;
 use OCP\IL10N;
 
 /**
- * This class is an AbsractHtmlParser that tries to extract microdata from the HTML page.
+ * This class is an AbstractHtmlParser which tries to extract microdata from the HTML page.
  * @author Christian Wolf
  * @todo Nutrition data is missing
  * @todo Category needs checking
@@ -69,7 +69,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	}
 	
 	/**
-	 * Make one final desparate attempt at getting the instructions
+	 * Make one final desperate attempt at getting the instructions
 	 * @param \DOMNode $recipeNode The recipe node to use
 	 */
 	private function fixupInstructions(\DOMNode $recipeNode) {
@@ -128,7 +128,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	/**
 	 * Search for microdata properties under various names in the recipe and save as a list
 	 *
-	 * If a property can be named differntly and found under differnt property names within
+	 * If a property can be named differently and found under different property names within
 	 * the DOM tree, this method looks for all these options.
 	 * It is similar to the searchSimpleProperties() method but allows to search for different
 	 * names within the DOM tree. This can be useful when a property is superseeded and the code
@@ -200,13 +200,13 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	}
 	
 	/**
-	 * Extract the value from a HTML attribute
+	 * Extract the value from an HTML attribute
 	 *
 	 * This method checks a set of notes if any of these nodes contain an attribute that can be used
 	 * to extract some microdata. The nodes are iterated one-by-one. As soon as a match is found,
-	 * the method retunes the corresponding value and terminates.
+	 * the method returns the corresponding value and terminates.
 	 *
-	 * In each node each attribute is checked (in order of occurence) if the node has such an attribute.
+	 * In each node each attribute is checked (in order of occurrence) if the node has such an attribute.
 	 * If it has such an attribute that attribute is assumed to be the searched value and is used.
 	 * If no attribute is found, the content of the node is checked and if it is non-empty, the content
 	 * of the node is used instead.

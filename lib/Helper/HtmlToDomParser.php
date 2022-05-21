@@ -9,7 +9,7 @@ use OCP\ILogger;
 use OCA\Cookbook\Exception\ImportException;
 
 /**
- * This class allows to parse a HTML document into a DOMDocuemnt.
+ * This class allows to parse an HTML document into a DOMDocument.
  *
  * Its main purpose is to handle the very verbose libxml extension better.
  */
@@ -56,9 +56,9 @@ class HtmlToDomParser {
 	}
 
 	/**
-	 * Parse a HTML file logging any error in the syntax
+	 * Parse an HTML file logging any error in the syntax
 	 *
-	 * @param DOMDocument $dom The dom docuemnt to use. Just give a new document in doubt.
+	 * @param DOMDocument $dom The dom document to use. Just give a new document in doubt.
 	 * @param string $url The URL of the parsed recipe
 	 * @param string $html The string representation of the HTML file to parse
 	 * @throws ImportException If the parsing of the HTML page failed completely
@@ -124,8 +124,8 @@ class HtmlToDomParser {
 	 * The error code is the corresponding key in the array.
 	 *
 	 * Each entry in the array is itself an array containing the following entries:
-	 * First, there is the key `count` that contains the number of occurences of the corresponding error code.
-	 * Second, there is the key `first` thst contains the first error that was found with this error code.
+	 * First, there is the key `count` that contains the number of occurrences of the corresponding error code.
+	 * Second, there is the key `first` that contains the first error that was found with this error code.
 	 * Third, the `level` entry contains the severity level of the error reported.
 	 *
 	 * @param array $errors The errors to parse
