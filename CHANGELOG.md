@@ -28,6 +28,10 @@
   [#1033](https://github.com/nextcloud/cookbook/pull/1033) @MarcelRobitaille
 - Reenable PR checks from foreign forks
   [#1045](https://github.com/nextcloud/cookbook/pull/1045) @christianlupus
+- Prevent access to guzzle client without explicit dependency
+  [#1011](https://github.com/nextcloud/cookbook/pull/1011) @christianlupus
+- Make PHP code styling more strict
+  [#1011](https://github.com/nextcloud/cookbook/pull/1011) @christianlupus
 
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests [#1028](https://github.com/nextcloud/cookbook/issues/1028)
