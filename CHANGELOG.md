@@ -7,6 +7,8 @@
   [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 - Move "Categories" caption above list of categories
   [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
+- Trim recipe name to a maximum length to fit in the database
+  [#1014](https://github.com/nextcloud/cookbook/pull/1014) @christianlupus
 
 ### Documentation
 - Add documentation on updates of the API endpoints
