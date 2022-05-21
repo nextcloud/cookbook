@@ -9,6 +9,7 @@
   [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
 - Reenable the fixup action after deprecation in central repository
   [#1012](https://github.com/nextcloud/cookbook/pull/1012) @christianlupus
+- Update eslint-plugin-vue
 
 ### Documentation
 - Add documentation on updates of the API endpoints
