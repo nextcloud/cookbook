@@ -1,5 +1,5 @@
 
-name: Additinoal tests for pull requests
+name: Additional tests for pull requests
 
 on:
     pull_request:
@@ -73,3 +73,21 @@ jobs:
                     exit 1
                     fi
 
+            -   name: Download schema
+                run: wget https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd
+
+            -   name: Lint info.xml
+                uses: ChristophWurst/xmllint-action@v1
+                with:
+                    xml-file: ./appinfo/info.xml
+                    xml-schema-file: ./info.xsd
+
+    fixup-check:
+        name: Block fixup and squash commits
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Run check
+                uses: xt0rted/block-autosquash-commits-action@v2
+                with:
+                    repo-token: ${{ secrets.GITHUB_TOKEN }}
