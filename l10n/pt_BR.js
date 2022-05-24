@@ -144,4 +144,4 @@ OC.L10N.register(
     "Failed to load recipes with keywords: {tags}" : "Falhou em carregar receitas com palavras-chave: {tags}",
     "Failed to load search results" : "Falha ao carregar os resultados da pesquisa"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
