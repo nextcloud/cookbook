@@ -124,7 +124,6 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 			
 			if ($tmp !== null) {
 				$json = $tmp;
-				return;
 			}
 		}
 	}
@@ -145,7 +144,6 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 			
 			if ($tmp !== null) {
 				$json = $tmp;
-				return;
 			}
 		}
 	}

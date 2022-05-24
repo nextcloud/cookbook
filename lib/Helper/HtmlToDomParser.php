@@ -92,7 +92,7 @@ class HtmlToDomParser {
 	 *
 	 * @return int
 	 */
-	public function getState() {
+	public function getState(): int {
 		return $this->state;
 	}
 
@@ -105,6 +105,7 @@ class HtmlToDomParser {
 	 * @param array $errors The array of all parsed errors
 	 * @param string $url The parsed URL
 	 * @return int Indicator what the most severe issue was
+	 * @throws \Exception
 	 */
 	private function checkXMLErrors(array $errors, string $url): void {
 		$grouped = $this->groupErrors($errors);
@@ -160,8 +161,9 @@ class HtmlToDomParser {
 	 * @param array $groupedErrors The grouped errors as defined in groupErrors
 	 * @param string $url The URL to import
 	 * @return void
+	 * @throws \Exception
 	 */
-	private function logAllErrors(array $groupedErrors, string $url) {
+	private function logAllErrors(array $groupedErrors, string $url): void {
 		foreach ($groupedErrors as $code => $group) {
 			switch ($group['level']) {
 				case LIBXML_ERR_WARNING:
@@ -179,20 +181,20 @@ class HtmlToDomParser {
 		}
 	}
 
-	private function logWarning(int $code, array $group, string $url) {
+	private function logWarning(int $code, array $group, string $url): void {
 		$msg = $this->l->t('Warning %u occurred %u times while parsing %s.', [$code, $group['count'], $url]);
 		$this->logger->notice($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_WARNING);
 	}
 
 	
-	private function logError(int $code, array $group, string $url) {
+	private function logError(int $code, array $group, string $url): void {
 		$msg = $this->l->t('Error %u occurred %u times while parsing %s.', [$code, $group['count'], $url]);
 		$this->logger->warning($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_ERROR);
 	}
 
-	private function logFatalError(int $code, array $group, string $url) {
+	private function logFatalError(int $code, array $group, string $url): void {
 		$msg = $this->l->t('Fatal error %u occurred %u times while parsing %s.', [$code, $group['count'], $url]);
 		$this->logger->error($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_FATAL_ERROR);

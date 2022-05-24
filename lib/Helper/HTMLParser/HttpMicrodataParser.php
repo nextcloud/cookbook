@@ -56,10 +56,10 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @param \DOMNode $recipeNode The DOM node to parse
 	 */
 	private function parseRecipe(\DOMNode $recipeNode) {
-		$this->seachSimpleProperties($recipeNode, 'name');
-		$this->seachSimpleProperties($recipeNode, 'keywords');
-		$this->seachSimpleProperties($recipeNode, 'category');
-		$this->seachSimpleProperties($recipeNode, 'recipeYield');
+		$this->searchSimpleProperties($recipeNode, 'name');
+		$this->searchSimpleProperties($recipeNode, 'keywords');
+		$this->searchSimpleProperties($recipeNode, 'category');
+		$this->searchSimpleProperties($recipeNode, 'recipeYield');
 		
 		$this->parseImage($recipeNode);
 		$this->parseIngredients($recipeNode);
@@ -141,7 +141,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @return boolean true, if the property was found
 	 */
 	private function searchMultipleProperties(\DOMNode $recipeNode, array $properties,
-		array $attributes, string $dst) {
+		array $attributes, string $dst): bool {
 		foreach ($properties as $prop) {
 			$entries = $this->searchChildEntries($recipeNode, $prop);
 			
@@ -171,7 +171,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @param string $property The property name to look for
 	 * @return bool true, if the property was found
 	 */
-	private function seachSimpleProperties(\DOMNode $recipeNode, string $property): bool {
+	private function searchSimpleProperties(\DOMNode $recipeNode, string $property): bool {
 		$entries = $this->searchChildEntries($recipeNode, $property);
 		
 		try {
