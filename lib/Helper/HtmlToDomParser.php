@@ -2,8 +2,9 @@
 
 namespace OCA\Cookbook\Helper;
 
-use DOMDocument;
+use Exception;
 use OCP\IL10N;
+use DOMDocument;
 use LibXMLError;
 use OCP\ILogger;
 use OCA\Cookbook\Exception\ImportException;
@@ -72,7 +73,11 @@ class HtmlToDomParser {
 			
 			// Error handling
 			$errors = libxml_get_errors();
-			$this->checkXMLErrors($errors, $url);
+			try {
+				$this->checkXMLErrors($errors, $url);
+			} catch (Exception $ex) {
+				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex);
+			}
 			libxml_clear_errors();
 			
 			if (!$parsedSuccessfully) {
@@ -104,7 +109,6 @@ class HtmlToDomParser {
 	 *
 	 * @param array $errors The array of all parsed errors
 	 * @param string $url The parsed URL
-	 * @return int Indicator what the most severe issue was
 	 * @throws \Exception
 	 */
 	private function checkXMLErrors(array $errors, string $url): void {

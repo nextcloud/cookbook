@@ -52,7 +52,7 @@ class HtmlDownloadService {
 	 * PARSE_ERROR, or PARSE_FATAL_ERROR.
 	 *
 	 * @param int The indicator if the HTML page was correctly parsed
-	 * @return array The included JSON data array, unfiltered
+	 * @return int The state indicating the result of the parsing (@see HtmlToDomParser)
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {

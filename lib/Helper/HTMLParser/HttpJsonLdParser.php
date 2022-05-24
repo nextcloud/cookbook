@@ -136,7 +136,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 *
 	 * When an array of recipes is found, the first found recipe will be used and written over the
 	 * input parameter.
-	 * @param array $json The JSON object to insprect
+	 * @param array $json The JSON object to inspect
 	 */
 	private function mapArray(array &$json) {
 		if (isset($json[0])) {
