@@ -139,7 +139,7 @@ class HtmlToDomParserTest extends TestCase {
 		$url = 'http://example.com/recipe';
 		$html = 'Foo Bar Baz';
 		
-		$this->assertNull($this->sut->getState());
+		$this->assertEquals(4, $this->sut->getState());
 
 		try {
 			$this->sut->loadHtmlString($dom, $url, $html);
@@ -228,12 +228,12 @@ class HtmlToDomParserTest extends TestCase {
 			],
 			"parsingWithWrongXMLError" => [
 				true,
-				HtmlToDomParser::PARSING_ERROR,
+				HtmlToDomParser::PARSING_SUCCESS,
 				[
 					$this->getXMLError(2, LIBXML_ERR_NONE, '/file', 1, 2, 'The message'),
 				],
-				[0,2,3],
-				true,
+				[0,0,0],
+				false,
 			],
 		];
 	}
@@ -287,7 +287,7 @@ class HtmlToDomParserTest extends TestCase {
 
 		$html = 'Foo Bar Baz';
 		
-		$this->assertNull($this->sut->getState());
+		$this->assertEquals(4, $this->sut->getState());
 
 		$this->sut->loadHtmlString($dom, $url, $html);
 	}

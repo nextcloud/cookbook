@@ -37,6 +37,12 @@ class HtmlToDomParser {
 	public const PARSING_FATAL_ERROR = 3;
 
 	/**
+	 * Indicates that no document was yet parsed.
+	 * @var int
+	 */
+	public const PARSING_NOT_DONE = 4;
+
+	/**
 	 * @var int
 	 */
 	private $state;
@@ -54,6 +60,7 @@ class HtmlToDomParser {
 	public function __construct(ILogger $logger, IL10N $il10n) {
 		$this->logger = $logger;
 		$this->l = $il10n;
+		$this->state = self::PARSING_NOT_DONE;
 	}
 
 	/**
@@ -178,6 +185,8 @@ class HtmlToDomParser {
 					break;
 				case LIBXML_ERR_FATAL:
 					$this->logFatalError($code, $group, $url);
+					break;
+				case LIBXML_ERR_NONE:
 					break;
 				default:
 				throw new \Exception($this->l->t('Unsupported error level during parsing of XML output.'));
