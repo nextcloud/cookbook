@@ -19,6 +19,8 @@ use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
+use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Exception\ImportException;
 
 /**
  * Main service class for the cookbook app.
@@ -31,6 +33,16 @@ class RecipeService {
 	private $db;
 	private $il10n;
 	private $logger;
+	
+	/**
+	 * @var HtmlDownloadService
+	 */
+	private $htmlDownloadService;
+	
+	/**
+	 * @var RecipeExtractionService
+	 */
+	private $recipeExtractionService;
 
 	/**
 	 * @var UserConfigHelper
@@ -49,7 +61,9 @@ class RecipeService {
 			UserConfigHelper $userConfigHelper,
 			ImageService $imageService,
 			IL10N $il10n,
-			LoggerInterface $logger
+			LoggerInterface $logger,
+			HtmlDownloadService $downloadService,
+			RecipeExtractionService $extractionService
 		) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -58,6 +72,8 @@ class RecipeService {
 		$this->logger = $logger;
 		$this->userConfigHelper = $userConfigHelper;
 		$this->imageService = $imageService;
+		$this->htmlDownloadService = $downloadService;
+		$this->recipeExtractionService = $extractionService;
 	}
 
 	/**
@@ -461,6 +477,7 @@ class RecipeService {
 	 * @param string $html
 	 *
 	 * @return array
+	 * @deprecated
 	 */
 	private function parseRecipeHtml($url, $html) {
 		if (!$html) {
@@ -801,36 +818,27 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $url
+	 * Download a recipe from a url and store it in the files
 	 *
+	 * @param string $url The recipe URL
+	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe($url) {
-		$host = parse_url($url);
-
-		if (!$host) {
-			throw new Exception('Could not parse URL');
+	public function downloadRecipe(string $url): File {
+		$this->htmlDownloadService->downloadRecipe($url);
+		
+		try {
+			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom());
+		} catch (HtmlParsingException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex);
 		}
-
-		$opts = [
-			"http" => [
-				"method" => "GET",
-				"header" => "User-Agent: Nextcloud Cookbook App"
-			]
-		];
-
-		$context = stream_context_create($opts);
-
-		$html = file_get_contents($url, false, $context);
-
-		if (!$html) {
-			throw new Exception('Could not fetch site ' . $url);
-		}
-
-		$json = $this->parseRecipeHtml($url, $html);
-
+		
+		$json = $this->checkRecipe($json);
+		
 		if (!$json) {
-			throw new Exception('No recipe data found');
+			$this->logger->error('Importing parsers resulted in null recipe.' .
+				'This is most probably a bug. Please report.');
+			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'));
 		}
 
 		$json['url'] = $url;

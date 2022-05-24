@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Create service class for downloading and extracting JSON
+  [#553](https://github.com/nextcloud/cookbook/pull/553) @christianlupus
+  
 ### Fixed
 - Fix visual regression in edit mode to prevent overflow of breadcrumbs
   [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
@@ -56,6 +60,9 @@
   [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
 - Add example to OpenAPI specification
   [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
+
+### Deprecated
+- Method RecipeService::parseRecipeHtml()
 
 
 ## 0.9.11 - 2022-03-28
