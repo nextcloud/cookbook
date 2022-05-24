@@ -24,6 +24,7 @@ export default {
         AppContent,
         AppControls,
         AppNavi,
+        // eslint-disable-next-line vue/no-reserved-component-names
         Content,
     },
     watch: {

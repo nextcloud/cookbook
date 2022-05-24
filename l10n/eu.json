@@ -1,4 +1,5 @@
 { "translations": {
+    "No image with the matching MIME type was found on the server." : "Ez da bat datorren MIME mota duen irudirik aurkitu zerbitzarian.",
     "The recipe has already an image file. Cannot create a new one." : "Errezetak dagoeneko irudi fitxategi bat du. Ezin da berririk sortu.",
     "There is no primary image for the recipe present." : "Ez dago errezetaren irudi nagusirik.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Ezin da ez-POST zati anitzeko kodeketa analizatu. Hau akatsa da.",
@@ -7,10 +8,12 @@
     "The user is not logged in. No user configuration can be obtained." : "Erabiltzaileak ez du saioa hasi. Ezin da erabiltzaile-konfiguraziorik lortu.",
     "Recipes" : "Errezetak",
     "in %s" : "%s(e)an",
+    "No recipe name was given. A unique name is required to store the recipe." : "Ez zen errezetaren izenik eman. Izen bakarra behar da errezeta gordetzeko.",
     "Another recipe with that name already exists" : "Badago izen hori duen beste errezeta bat",
     "User cannot create recipe folder" : "Erabiltzaileak ezin du errezeta karpetarik sortu",
     "Recipe with ID %d not found." : "Ez da aurkitu ID %d duen errezeta.",
     "Image size \"%s\" is not recognized." : "\"%s\" irudiaren tamaina ez da ezagutzen.",
+    "The full-sized image is not a thumbnail." : "Tamaina osoko irudia ez da miniatura bat.",
     "The thumbnail type %d is not known." : "%d miniatura mota ez da ezagutzen.",
     "Cookbook" : "Errezeta-liburua",
     "An integrated cookbook using schema.org JSON files as recipes" : "Errezeta-liburu integratua schema.org-eko JSON fitxategiak erabiliz errezeta gisa",

@@ -1,9 +1,13 @@
 ## [Unreleased]
 
+### Added
+- Create service class for downloading and extracting JSON
+  [#553](https://github.com/nextcloud/cookbook/pull/553) @christianlupus
+
 ### Changed
 - Extracted user folder handling into its own helper class
   [#1007](https://github.com/nextcloud/cookbook/pull/1007) @christianlupus
-
+  
 ### Fixed
 - Fix visual regression in edit mode to prevent overflow of breadcrumbs
   [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
@@ -11,6 +15,11 @@
   [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
 - Move "Categories" caption above list of categories
   [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
+- Reenable the fixup action after deprecation in central repository
+  [#1012](https://github.com/nextcloud/cookbook/pull/1012) @christianlupus
+- Trim recipe name to a maximum length to fit in the database
+  [#1014](https://github.com/nextcloud/cookbook/pull/1014) @christianlupus
+- Update eslint-plugin-vue
 
 ### Documentation
 - Add documentation on updates of the API endpoints
@@ -55,6 +64,9 @@
   [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
 - Add example to OpenAPI specification
   [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
+
+### Deprecated
+- Method RecipeService::parseRecipeHtml()
 
 
 ## 0.9.11 - 2022-03-28

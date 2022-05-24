@@ -1,5 +1,5 @@
 
-name: Additinoal tests for pull requests
+name: Additional tests for pull requests
 
 on:
     pull_request:
@@ -39,6 +39,29 @@ jobs:
                     exit 1
                 if: ${{ steps.diff.outputs.lines == 0 && steps.file-names.outputs.num > 0 }}
     
+    todo-checker:
+        name: Check for added todo messages
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Manual checkout of the app
+                run: |
+                    REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+                    BRANCH="${GITHUB_REF/#refs\/heads\//}"
+
+                    git version
+
+                    git clone --filter=tree:0 "$REPO" .
+                    git checkout ${{ github.head_ref }}
+
+                    # git init $GITHUB_WORKSPACE
+                    # git remote add origin https://github.com/$GITHUB_REPOSITORY
+                    # git config --local gc.auto 0
+
+                    # git fetch --filter tree:none origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH} +${GITHUB_BASE_REF}
+                    # git checkout --progress --force -B ${BRANCH} refs/remotes/origin/${BRANCH}
+            -   name: Check for open TODO annotations in source code
+                uses: ./.github/actions/check-todo
+
     appinfo:
         name: Check for matching app info file
         runs-on: ubuntu-latest
@@ -73,3 +96,21 @@ jobs:
                     exit 1
                     fi
 
+            -   name: Download schema
+                run: wget https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd
+
+            -   name: Lint info.xml
+                uses: ChristophWurst/xmllint-action@v1
+                with:
+                    xml-file: ./appinfo/info.xml
+                    xml-schema-file: ./info.xsd
+
+    fixup-check:
+        name: Block fixup and squash commits
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Run check
+                uses: xt0rted/block-autosquash-commits-action@v2
+                with:
+                    repo-token: ${{ secrets.GITHUB_TOKEN }}

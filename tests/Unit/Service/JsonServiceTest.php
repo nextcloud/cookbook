@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook;
+namespace OCA\Cookbook\tests\Unit\Service;
 
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Service\JsonService;
