@@ -39,6 +39,17 @@ jobs:
                     exit 1
                 if: ${{ steps.diff.outputs.lines == 0 && steps.file-names.outputs.num > 0 }}
     
+    todo-checker:
+        name: Check for added todo messages
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 1
+            -   name: Check for open TODO annotations in source code
+                uses: ./.github/actions/check-todo
+
     appinfo:
         name: Check for matching app info file
         runs-on: ubuntu-latest

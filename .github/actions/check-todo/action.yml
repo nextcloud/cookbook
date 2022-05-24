@@ -20,4 +20,4 @@ runs:
   steps:
     - name: Add annotations
       shell: bash
-      run: ./.github/actions/check-todo/check.sh "${{ inputs.path }}" "${{ inputs.extension }}"
+      run: ./.github/actions/check-todo/check.sh HEAD $GITHUB_BASE_REF
