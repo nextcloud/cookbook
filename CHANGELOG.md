@@ -15,6 +15,8 @@
   [#1012](https://github.com/nextcloud/cookbook/pull/1012) @christianlupus
 - Trim recipe name to a maximum length to fit in the database
   [#1014](https://github.com/nextcloud/cookbook/pull/1014) @christianlupus
+- Correct transifex translations
+  [#1024](https://github.com/nextcloud/cookbook/pull/1024) @christianlupus
 - Update eslint-plugin-vue
 
 ### Documentation
