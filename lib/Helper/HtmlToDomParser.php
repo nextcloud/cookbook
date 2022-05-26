@@ -195,20 +195,20 @@ class HtmlToDomParser {
 	}
 
 	private function logWarning(int $code, array $group, string $url): void {
-		$msg = $this->l->t('Warning %u occurred %u times while parsing %s.', [$code, $group['count'], $url]);
+		$msg = $this->l->n('Warning %u occurred while parsing %s', 'Warning %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
 		$this->logger->notice($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_WARNING);
 	}
 
 	
 	private function logError(int $code, array $group, string $url): void {
-		$msg = $this->l->t('Error %u occurred %u times while parsing %s.', [$code, $group['count'], $url]);
+		$msg = $this->l->n('Error %u occurred while parsing %s', 'Error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
 		$this->logger->warning($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_ERROR);
 	}
 
 	private function logFatalError(int $code, array $group, string $url): void {
-		$msg = $this->l->t('Fatal error %u occurred %u times while parsing %s.', [$code, $group['count'], $url]);
+		$this->l->n('Fatal error %u occurred while parsing %s', 'Fatal error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
 		$this->logger->error($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_FATAL_ERROR);
 	}
