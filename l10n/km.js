@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Home" : "ទំព័រដើម",
     "Search" : "Search",
     "Tags" : "ស្លាក",
     "Rename" : "ប្ដូរ​ឈ្មោះ",
