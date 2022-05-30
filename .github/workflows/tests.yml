@@ -144,7 +144,8 @@ jobs:
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable24
+                    # stable24 branch needs PHP 7.4
+                    coreVersion: stable23
                     phpVersion: "7.3"
                     httpServer: "apache"
                     mayFail: false
