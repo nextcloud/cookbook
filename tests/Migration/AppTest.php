@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\tests\Integration;
+namespace OCA\Cookbook\tests\Migration;
 
 use OCP\App\IAppManager;
 use OCP\AppFramework\App;

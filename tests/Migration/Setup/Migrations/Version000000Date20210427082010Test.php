@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\tests\Integration\Setup\Migrations;
+namespace OCA\Cookbook\tests\Migration\Setup\Migrations;
 
 include_once __DIR__ . '/AbstractMigrationTestCase.php';
 
