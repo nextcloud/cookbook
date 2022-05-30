@@ -144,19 +144,19 @@ jobs:
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable23
+                    coreVersion: stable24
                     phpVersion: "7.3"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
-                    coreVersion: stable23
+                    coreVersion: stable24
                     phpVersion: "8.0"
                     httpServer: "apache"
                     mayFail: false
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: stable23
+                    coreVersion: stable24
                     phpVersion: "7"
                     httpServer: "nginx"
                     mayFail: false
