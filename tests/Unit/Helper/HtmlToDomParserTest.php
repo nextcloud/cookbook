@@ -129,7 +129,7 @@ class HtmlToDomParserTest extends TestCase {
 				->method('clearErrors');
 			
 			$this->logger->expects($this->exactly($numErrors[2]))
-				->method('notice');
+				->method('info');
 			$this->logger->expects($this->exactly($numErrors[1]))
 				->method('warning');
 			$this->logger->expects($this->exactly($numErrors[0]))
@@ -274,13 +274,15 @@ class HtmlToDomParserTest extends TestCase {
 		
 		$url = 'http://example.com/recipe';
 
+		$this->l->method('n')->willReturnArgument(1);
+
 		$this->logger->expects($this->exactly(3))
-			->method('notice');
+			->method('info');
 		$this->logger->expects($this->exactly(2))
 			->method('warning')
 			->withConsecutive(
-				["libxml: Error %u occurred %u times while parsing %s. First time it occurred in line %u and column %u: The message"],
-				["libxml: Error %u occurred %u times while parsing %s. First time it occurred in line %u and column %u: The message"]
+				["libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message"],
+				["libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message"]
 			);
 		$this->logger->expects($this->exactly(0))
 			->method('error');
@@ -290,6 +292,125 @@ class HtmlToDomParserTest extends TestCase {
 		$this->assertEquals(4, $this->sut->getState());
 
 		$this->sut->loadHtmlString($dom, $url, $html);
+	}
+
+	public function dpSingleLogging() {
+		return [
+			[LIBXML_ERR_WARNING, true, false, false],
+			[LIBXML_ERR_ERROR, false, true, false],
+			[LIBXML_ERR_FATAL, false, false, true],
+		];
+	}
+
+	/**
+	 * @dataProvider dpSingleLogging
+	 */
+	public function testSingleLogging($errorLevel, $logWarn, $logErr, $logCrit) {
+		/**
+		 * @var MockObject|DOMDocument $dom
+		 */
+		$dom = $this->createMock(DOMDocument::class);
+		$dom->method('loadHtml')->willReturn(true);
+
+		$this->xmlMock->method('getErrors')->willReturn([
+			$this->getXMLError(2, $errorLevel, '/file', 1, 2, 'The message'),
+		]);
+		
+		$url = 'http://example.com/recipe';
+
+		$this->l->method('n')->willReturnArgument(0);
+
+		if ($logWarn) {
+			$this->logger->expects($this->once())->method('info')
+				->with(
+					'libxml: Warning %u occurred while parsing %s. '.
+					'First time it occurred in line %u and column %u: The message',
+					[]
+				);
+			$this->logger->expects($this->never())->method('warning');
+			$this->logger->expects($this->never())->method('error');
+		}
+		if ($logErr) {
+			$this->logger->expects($this->never())->method('info');
+			$this->logger->expects($this->once())->method('warning')
+				->with(
+					'libxml: Error %u occurred while parsing %s. '.
+					'First time it occurred in line %u and column %u: The message',
+					[]
+				);
+			$this->logger->expects($this->never())->method('error');
+		}
+		if ($logCrit) {
+			$this->logger->expects($this->never())->method('info');
+			$this->logger->expects($this->never())->method('warning');
+			$this->logger->expects($this->once())->method('error')
+				->with(
+					'libxml: Fatal error %u occurred while parsing %s. '.
+					'First time it occurred in line %u and column %u: The message',
+					[]
+				);
+		}
+
+		$html = 'Foo Bar Baz';
+		
+		$this->sut->loadHtmlString($dom, $url, $html);
+		$this->assertEquals($errorLevel, $this->sut->getState());
+	}
+
+	/**
+	 * @dataProvider dpSingleLogging
+	 */
+	public function testMultipleLogging($errorLevel, $logWarn, $logErr, $logCrit) {
+		/**
+		 * @var MockObject|DOMDocument $dom
+		 */
+		$dom = $this->createMock(DOMDocument::class);
+		$dom->method('loadHtml')->willReturn(true);
+
+		$this->xmlMock->method('getErrors')->willReturn([
+			$this->getXMLError(2, $errorLevel, '/file', 1, 2, 'The message'),
+			$this->getXMLError(2, $errorLevel, '/file', 10, 20, 'The new message'),
+		]);
+		
+		$url = 'http://example.com/recipe';
+
+		$this->l->method('n')->willReturnArgument(1);
+
+		if ($logWarn) {
+			$this->logger->expects($this->once())->method('info')
+				->with(
+					'libxml: Warning %u occurred %n times while parsing %s. '.
+					'First time it occurred in line %u and column %u: The message',
+					[]
+				);
+			$this->logger->expects($this->never())->method('warning');
+			$this->logger->expects($this->never())->method('error');
+		}
+		if ($logErr) {
+			$this->logger->expects($this->never())->method('info');
+			$this->logger->expects($this->once())->method('warning')
+				->with(
+					'libxml: Error %u occurred %n times while parsing %s. '.
+					'First time it occurred in line %u and column %u: The message',
+					[]
+				);
+			$this->logger->expects($this->never())->method('error');
+		}
+		if ($logCrit) {
+			$this->logger->expects($this->never())->method('info');
+			$this->logger->expects($this->never())->method('warning');
+			$this->logger->expects($this->once())->method('error')
+				->with(
+					'libxml: Fatal error %u occurred %n times while parsing %s. '.
+					'First time it occurred in line %u and column %u: The message',
+					[]
+				);
+		}
+
+		$html = 'Foo Bar Baz';
+		
+		$this->sut->loadHtmlString($dom, $url, $html);
+		$this->assertEquals($errorLevel, $this->sut->getState());
 	}
 
 	public function triggerXmlInternalErrors(bool $param): bool {

@@ -17,6 +17,8 @@
   [#1014](https://github.com/nextcloud/cookbook/pull/1014) @christianlupus
 - Correct transifex translations
   [#1024](https://github.com/nextcloud/cookbook/pull/1024) @christianlupus
+- Correct singular/plural translations
+  [#1026](https://github.com/nextcloud/cookbook/pull/1026) @christianlupus
 - Update eslint-plugin-vue
 
 ### Documentation
