@@ -28,6 +28,7 @@ printCI() {
 
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
+RUN_MIGRATION_TESTS=n
 CREATE_COVERAGE_REPORT=n
 RUN_CODE_CHECKER=n
 INSTALL_COMPOSER_DEPS=n
@@ -41,6 +42,9 @@ do
 			;;
 		--run-integration-tests)
 			RUN_INTEGRATION_TESTS=y
+			;;
+		--run-migration-tests)
+			RUN_MIGRATION_TESTS=y
 			;;
 		--create-coverage-report)
 			CREATE_COVERAGE_REPORT=y
@@ -93,12 +97,14 @@ printCI "::endgroup::"
 
 PARAM_COVERAGE_UNIT='--log-junit /coverage/junit.xml --log-teamcity /coverage/teamcity.log'
 PARAM_COVERAGE_INTEGRATION='--log-junit /coverage/junit-integration.xml --log-teamcity /coverage/teamcity.integration.log'
+PARAM_COVERAGE_MIGRATION='--log-junit /coverage/junit-migration.xml --log-teamcity /coverage/teamcity.migration.log'
 
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	rm -rf /coverage/tmp
 	mkdir /coverage/tmp
 	PARAM_COVERAGE_UNIT+=' --coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
 	PARAM_COVERAGE_INTEGRATION+=' --coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
+	PARAM_COVERAGE_MIGRATION+=' --coverage-clover /coverage/tmp/coverage.migration.xml --coverage-html /coverage/tmp/coverage-migration'
 fi
 
 if [ $RUN_CODE_CHECKER = 'y' ]; then
@@ -130,6 +136,12 @@ if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Integration testing done.'
 fi
 
+if [ $RUN_MIGRATION_TESTS = 'y' ]; then
+	echo 'Starting migration testing.'
+	/phpunit -c phpunit.migration.xml $PARAM_COVERAGE_MIGRATION "$@" || { FAILED=$?; true; }
+	echo 'Migration testing done.'
+fi
+
 popd > /dev/null
 
 printCI "::group::Postprocessing output"
@@ -137,7 +149,7 @@ printCI "::group::Postprocessing output"
 if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	echo 'Patching style in coverage report'
 	cd /coverage/tmp
-	for f in coverage-unit coverage-integration
+	for f in coverage-unit coverage-integration coverage-migration
 	do
 		if [ -f "$f/_css/style.css" ]; then
 			sed -i -f /helper/style.sed "$f/_css/style.css"

@@ -47,7 +47,7 @@ runs:
             --create-env-dump
             --create-plain-dump plain
             --install-composer-deps
-            --run-tests
+            --run-unit-tests --run-migration-tests
             --extract-code-coverage
             --shutdown-helpers || { failed=$?; } ;
             if [ -n "$failed" ]; then 
@@ -69,5 +69,11 @@ runs:
           run: >-
             if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
             python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log ;
+            fi
+        - name: Export the annotations of migration tests to github
+          shell: bash
+          run: >-
+            if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
+            python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log ;
             fi
         

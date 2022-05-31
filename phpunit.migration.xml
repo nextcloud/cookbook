@@ -10,8 +10,8 @@
 	xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 	>
 	<testsuites>
-		<testsuite name="unit">
-			<directory>./tests/Unit</directory>
+		<testsuite name="migration">
+			<directory>./tests/Migration</directory>
 		</testsuite>
 	</testsuites>
 	<coverage includeUncoveredFiles="true" processUncoveredFiles="true">
@@ -19,4 +19,7 @@
 			<directory suffix=".php">lib</directory>
 		</include>
 	</coverage>
+	<php>
+		<env name="INPUT_DB" value="unknown" />
+	</php>
 </phpunit>
