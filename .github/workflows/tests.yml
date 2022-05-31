@@ -231,22 +231,24 @@ jobs:
     needs: 
         - unit-tests
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
 
     steps:
         - name: Create folder structure
           run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
+          if: ${{ github.event_name == 'push' }}
           uses: actions/download-artifact@v2.0.10
           with:
             path: artifacts
         - name: Checkout of code base
+          if: ${{ github.event_name == 'push' }}
           uses: actions/checkout@v2
           with:
             path: code
             fetch-depth: 2
         
         - name: Download the uploader
+          if: ${{ github.event_name == 'push' }}
           run: |
             curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
             curl -Os https://uploader.codecov.io/latest/linux/codecov
@@ -259,6 +261,7 @@ jobs:
             chmod +x codecov
         
         - name: Copy Coverage reports to separate folders
+          if: ${{ github.event_name == 'push' }}
           run: |
             cd artifacts
 
@@ -275,8 +278,10 @@ jobs:
             done
         - name: Show file structure
           run: ls -lR unit-coverage integration-coverage
+          if: ${{ github.event_name == 'push' }}
         
         - name: Upload unit test codecov reports
+          if: ${{ github.event_name == 'push' }}
           run: >-
             ./codecov
             -F unittests
@@ -285,6 +290,7 @@ jobs:
             -X gcov
             -v
         - name: Upload integration test codecov reports
+          if: ${{ github.event_name == 'push' }}
           run: >-
             ./codecov
             -F integration
