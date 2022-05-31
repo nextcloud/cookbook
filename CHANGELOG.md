@@ -25,6 +25,7 @@
 - Removed codecov.io upload of intermediate merge commits during pull requests [#1028](https://github.com/nextcloud/cookbook/issues/1028)
 - Use latest possible NC core for CI tests
 - Introduce migration tests
+- Enable automatically merging of dependabot PRs
 
 ### Documentation
 - Add documentation on updates of the API endpoints
