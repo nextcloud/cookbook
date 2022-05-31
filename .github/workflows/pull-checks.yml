@@ -52,13 +52,6 @@ jobs:
 
                     git clone --filter=tree:0 "$REPO" .
                     git checkout ${{ github.head_ref }}
-
-                    # git init $GITHUB_WORKSPACE
-                    # git remote add origin https://github.com/$GITHUB_REPOSITORY
-                    # git config --local gc.auto 0
-
-                    # git fetch --filter tree:none origin +${GITHUB_SHA}:refs/remotes/origin/${BRANCH} +${GITHUB_BASE_REF}
-                    # git checkout --progress --force -B ${BRANCH} refs/remotes/origin/${BRANCH}
             -   name: Check for open TODO annotations in source code
                 uses: ./.github/actions/check-todo
 

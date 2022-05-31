@@ -275,10 +275,14 @@ jobs:
                 mkdir -p "../integration-coverage/$i"
                 cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
               fi
+              if [ -f "$i/coverage.migration.xml" ]; then
+                mkdir -p "../migration-coverage/$i"
+                cp "$i/coverage.migration.xml" "../migration-coverage/$i/coverage.xml"
+              fi
             done
         - name: Show file structure
-          run: ls -lR unit-coverage integration-coverage
           if: ${{ github.event_name == 'push' }}
+          run: ls -lR *-coverage
         
         - name: Upload unit test codecov reports
           if: ${{ github.event_name == 'push' }}
@@ -295,6 +299,15 @@ jobs:
             ./codecov
             -F integration
             -s integration-coverage
+            -R code
+            -X gcov
+            -v
+        - name: Upload migration test codecov reports
+          if: ${{ github.event_name == 'push' }}
+          run: >-
+            ./codecov
+            -F migration
+            -s migration-coverage
             -R code
             -X gcov
             -v
