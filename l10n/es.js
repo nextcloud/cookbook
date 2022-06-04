@@ -8,6 +8,7 @@ OC.L10N.register(
     "Parsing of HTML failed." : "Fallo en el análisis de HTML.",
     "Unsupported error level during parsing of XML output." : "Nivel de error no soportado durante el análisis de la salida XML.",
     "_Warning %u occurred while parsing %s._::_Warning %u occurred %n times while parsing %s._" : ["El aviso %u ha saltado al analizar %s.","El aviso %u ha saltado %n veces al analizar %s.","El aviso %u ha saltado %n veces al analizar %s."],
+    "_Error %u occurred while parsing %s._::_Error %u occurred %n times while parsing %s._" : ["El error %u ha sucedido al analizar %s.","El error %u ha ocurrido %n veces al analizar %s.","El error %u ha ocurrido %n veces al analizar %s."],
     "First time it occurred in line %u and column %u" : "La primera vez que ocurrió en la línea %u y la columna %u",
     "The recipe has already an image file. Cannot create a new one." : "La receta ya tiene un archivo de imagen. No se puede crear una nueva.",
     "There is no primary image for the recipe present." : "No hay imagen primaria para la presente recete.",
