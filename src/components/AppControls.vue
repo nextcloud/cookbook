@@ -63,6 +63,13 @@
                 :disable-drop="true"
             >
             </Breadcrumb>
+            <Breadcrumb
+                v-if="isLoading || isLoadingRecipe"
+                class="active"
+                :title="t('cookbook', 'Loading…')"
+                :disable-drop="true"
+            >
+            </Breadcrumb>
             <!-- Create new recipe -->
             <Breadcrumb
                 v-else-if="isCreate"
@@ -184,24 +191,24 @@
             <Breadcrumb
                 v-if="isLoading"
                 class="active no-arrow"
-                :title="t('cookbook', 'App is loading')"
+                title=""
                 :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-loading-small"
-                    :aria-label="t('cookbook', 'Loading…')"
+                    :aria-label="t('cookbook', 'Loading app')"
                 />
             </Breadcrumb>
             <!-- Is a recipe loading? -->
             <Breadcrumb
                 v-else-if="isLoadingRecipe"
                 class="active no-arrow"
-                :title="t('cookbook', 'Loading recipe')"
+                title=""
                 :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-loading-small"
-                    :aria-label="t('cookbook', 'Loading…')"
+                    :aria-label="t('cookbook', 'Loading recipe')"
                 />
             </Breadcrumb>
             <!-- No recipe found -->
