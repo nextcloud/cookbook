@@ -2,8 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Asnubeg",
-    "Save changes" : "Sekles asnifel",
     "Loading…" : "Asali...",
+    "Save changes" : "Sekles asnifel",
     "Search" : "Nadi",
     "Tags" : "Tibzimin",
     "Rename" : "Beddel isem",

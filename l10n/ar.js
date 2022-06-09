@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "في %s",
     "Home" : "الرئيسية",
-    "Save changes" : "حفظ التعديلات",
     "Loading…" : "التحميل جارٍ…",
+    "Save changes" : "حفظ التعديلات",
     "Filter" : "فلتر",
     "Search" : "البحث",
     "Category" : "الفئة",

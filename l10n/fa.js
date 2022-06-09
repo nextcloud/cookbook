@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "در %s",
     "Home" : "خانه ",
-    "Save changes" : "ذخیره تغییرات",
     "Loading…" : "بار کردن…",
+    "Save changes" : "ذخیره تغییرات",
     "Page not found" : "صفحه یافت نشد",
     "Filter" : "فیلتر",
     "Search" : "جستجو کردن",

@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "dins %s",
     "Home" : "Domicili",
-    "Save changes" : "Salvar modificacions",
     "Loading…" : "Cargament…",
+    "Save changes" : "Salvar modificacions",
     "Search" : "Search",
     "Category" : "Categoria",
     "Tags" : "Etiquetas",

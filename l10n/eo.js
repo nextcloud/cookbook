@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "en %s",
     "Home" : "Hejmo",
-    "Save changes" : "Konservi ŝanĝojn",
     "Loading…" : "Ŝargado...",
+    "Save changes" : "Konservi ŝanĝojn",
     "Page not found" : "Paĝo ne trovita",
     "Search" : "Serĉi",
     "Category" : "Kategorio",
