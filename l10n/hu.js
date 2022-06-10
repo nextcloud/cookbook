@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "Recept újratöltése",
     "Print recipe" : "Recept nyomtatása",
     "Delete recipe" : "Recept törlése",
+    "Loading app" : "Alkalmazás betöltése",
     "Loading recipe" : "Recept betöltése",
     "Recipe not found" : "A recept nem található",
     "Page not found" : "Az oldal nem található",

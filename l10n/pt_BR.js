@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "Recarregar receita",
     "Print recipe" : "Imprimir receita",
     "Delete recipe" : "Excluir receita",
+    "Loading app" : "Carregando aplicativo",
     "Loading recipe" : "Carregando receita",
     "Recipe not found" : "Receita não encontrada",
     "Page not found" : "Página não encontrada",

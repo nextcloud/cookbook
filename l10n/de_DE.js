@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "Rezept neu laden",
     "Print recipe" : "Rezept drucken",
     "Delete recipe" : "Rezept löschen",
+    "Loading app" : "Lade App",
     "Loading recipe" : "Rezept wird geladen",
     "Recipe not found" : "Rezept nicht gefunden",
     "Page not found" : "Seite nicht gefunden",

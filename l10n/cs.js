@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "Načíst recept znovu",
     "Print recipe" : "Vytisknout recept",
     "Delete recipe" : "Smazat recept",
+    "Loading app" : "Načítá se aplikace",
     "Loading recipe" : "Načítání receptu",
     "Recipe not found" : "Recept nenalezen",
     "Page not found" : "Stránka nenalezena",

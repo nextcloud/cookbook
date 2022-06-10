@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "重新加載食譜",
     "Print recipe" : "打印食譜",
     "Delete recipe" : "刪除食譜",
+    "Loading app" : "正在載入應用程式",
     "Loading recipe" : "正在載入食譜",
     "Recipe not found" : "未找到食譜",
     "Page not found" : "沒有找到頁面",

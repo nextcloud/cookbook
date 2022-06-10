@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "Kargatu berriro errezeta",
     "Print recipe" : "Inprimatu errezeta",
     "Delete recipe" : "Ezabatu errezeta",
+    "Loading app" : "Aplikazioa kargatzen",
     "Loading recipe" : "Errezeta kargatzea",
     "Recipe not found" : "Ez da aurkitu errezeta",
     "Page not found" : "Orria ez da topatu",
