@@ -42,6 +42,7 @@ OC.L10N.register(
     "Reload recipe" : "Yemek tarifini yeniden yükle",
     "Print recipe" : "Yemek tarifini yazdır",
     "Delete recipe" : "Yemek tarifini sil",
+    "Loading app" : "Uygulama yükleniyor",
     "Loading recipe" : "Yemek tarifi yükleniyor",
     "Recipe not found" : "Yemek tarifi bulunamadı",
     "Page not found" : "Sayfa bulunamadı",
