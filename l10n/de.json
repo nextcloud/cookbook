@@ -119,7 +119,7 @@
     "Sugar content" : "Zuckergehalt",
     "Trans-fat content" : "Gehalt an Transfetten",
     "Unsaturated-fat content" : "Gehalt an ungesättigten Fettsäuren",
-    "You have unsaved changes! Do you still want to leave?" : "Du hast nicht gespeicherte Änderungen! Willst Du immer noch gehen?",
+    "You have unsaved changes! Do you still want to leave?" : "Du hast noch nicht gespeicherte Änderungen! Willst Du diese Seite wirklich verlassen?",
     "Failed to fetch keywords" : "Schlüsselwörter konnten nicht abgerufen werden",
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Unknown answer returned from server. See logs." : "Unbekannte Antwort vom Server zurückgegeben. Siehe Protokolle.",
