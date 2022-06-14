@@ -1,6 +1,11 @@
 OC.L10N.register(
     "cookbook",
     {
+    "No image with the matching MIME type was found on the server." : "Na serveri sa nenašiel žiadny obrázok so zodpovedajúcim typom MIME.",
+    "Could not find recipe in HTML code." : "Nemôžem nájisť recept v HTML kóde.",
+    "JSON cannot be decoded." : "Nemôžem dekódovať JSON.",
+    "No recipe was found." : "Nenašiel sa žiadny recept.",
+    "Parsing of HTML failed." : "Spracovanie HTML zlyhalo.",
     "The recipe has already an image file. Cannot create a new one." : "Recept už má súbor s obrázkom. Nemôžete vytvoriť nový.",
     "There is no primary image for the recipe present." : "Neexistuje žiadny primárny obrázok pre tento recept.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nemôžem parsovať non-POST multipart encoding. Toto je chyba.",
@@ -9,6 +14,7 @@ OC.L10N.register(
     "The user is not logged in. No user configuration can be obtained." : "Užívateľ nie je prihlásený. Nemôže byť získaná žiadna užívateľská konfigurácia.",
     "Recipes" : "Recepty",
     "in %s" : "v %s",
+    "Could not parse URL" : "Nemôžem spracovať adresu URL",
     "Another recipe with that name already exists" : "Iný recept s tým istým menom už existuje",
     "User cannot create recipe folder" : "Užívateľ nemôže vytvoriť priečinok receptov",
     "Recipe with ID %d not found." : "Recept s ID %d nebol nájdený.",
@@ -26,6 +32,7 @@ OC.L10N.register(
     "Reload recipe" : "Znovu načítať recept",
     "Print recipe" : "Vytlačiť recept",
     "Delete recipe" : "Vymazať recept",
+    "Loading app" : "Nahrávam aplikáciu",
     "Loading recipe" : "Recept sa nahráva",
     "Recipe not found" : "Recept nebol nájdený",
     "Page not found" : "Stránka nenájdená",
