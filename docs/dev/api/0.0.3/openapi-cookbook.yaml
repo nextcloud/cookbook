@@ -1,0 +1,723 @@
+openapi: 3.0.1
+info:
+  title: Nextcloud cookbook app
+  description: >-
+    This is the API definition of the [cookbook app](https://github.com/nextcloud/cookbook) for the [nextcloud server](http://nextcloud.com).
+    
+    
+    Further contact can be found on the matrix.org server in the room [#nextcloud-cookbook:matrix.org](https://matrix.to/#/#nextcloud-cookbook:matrix.org).
+  #contact:
+    #email: apiteam@swagger.io
+  license:
+    name: AGPL-3
+    url: 'http://www.gnu.org/licenses/agpl-3.0.de.html'
+  version: 0.0.3
+
+#externalDocs:
+#  description: Find out more about Swagger
+#  url: 'http://swagger.io'
+
+servers:
+  - url: 'http://localhost:8000/apps/cookbook'
+  - url: '{protocol}://{server}'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: https
+      server:
+        default: 'example.com'
+
+tags:
+  - name: Recipes
+    description: Everything related to recipes and their usage
+  - name: Categories
+    description: Access to the categories of the recipes
+  - name: Tags
+    description: Access to tags/keywords of recipes
+  - name: Misc
+    description: Other API endpoints
+
+
+
+components:
+  schemas:
+    
+    Recipe:
+      type: object
+      description: A recipe according to [schema.org](http://schema.org/Recipe)
+      properties:
+        name:
+          type: string
+      additionalProperties: true
+      example:
+        name: Baked bananas
+        description: A very delightful recipe of the best baked bananas ever
+        image: http://example.com/path/to/image.jpg
+        recipeYield: 5
+        prepTime: PT0H15M
+        recipeIngredient:
+          - 3 ripe bananas
+          - 100g sugar
+          - 20 teaspoons of cinamon
+        resipeInstructions:
+          - Peel the bananas
+          - Dip the bananas in the pot of sugar
+          - Put the banans in the oven and let the cinamon soak in for 10 minutes
+          - After 5 hours of baking, they are ready
+        recipeCategory: Dessert
+        keywords: banana,cinnamon,sweet,untested recipe
+          
+    
+    RecipeList:
+      type: array
+      items:
+        $ref: "#/components/schemas/Recipe"
+      example:
+        - name: Baked bananas
+          description: A very delightful recipe of the best baked bananas ever
+          image: http://example.com/path/to/image.jpg
+          recipeYield: 5
+          prepTime: PT0H15M
+          recipeIngredient:
+            - 3 ripe bananas
+            - 100g sugar
+            - 20 teaspoons of cinamon
+          resipeInstructions:
+            - Peel the bananas
+            - Dip the bananas in the pot of sugar
+            - Put the banans in the oven and let the cinamon soak in for 10 minutes
+            - After 5 hours of baking, they are ready
+          recipeCategory: Dessert
+          keywords: banana,cinnamon,sweet,untested recipe
+        - name: "Homemade Apple Butter"
+          author:
+            "@type": Person
+            name: "Julie Clark"
+          description: "A simple recipe for Homemade Apple Butter that you can make in the slow cooker. Use as a spread, a syrup or in your fall recipes!"
+          datePublished: "2016-09-01T01:58:54+00:00"
+          image: "https://www.tastesoflizzyt.com/wp-content/uploads/2016/08/homemade-apple-butter-2-480x270.jpg"
+          recipeYield: 20
+          prepTime: "PT0H25M"
+          cookTime: "PT10H0M"
+          totalTime: "PT10H25M"
+          recipeIngredient:
+            - 6 1/2 pounds apples (peeled, cored and sliced)
+            - 1/2 cup granulated sugar
+            - 1/2 cup packed brown sugar
+            - 1 1/2 tablespoons ground cinnamon
+            - 1/4 teaspoon salt
+            - 1 tablespoon vanilla extract
+          recipeInstructions:
+            - Place the apples in a slow cooker.
+            - Add the sugars, cinnamon, salt and vanilla to the crockpot. Mix well.
+            - Cook in slow cooker on low for about 10 hours, stirring every couple hours. The apple butter should be thick and dark brown.
+            - If desired, use a blender to puree the apple butter until smooth.
+            - Cover and refrigerate for up to two weeks or freeze in small containers.
+          aggregateRating:
+            "@type": "AggregateRating"
+            ratingValue: "4.87"
+            ratingCount: "38"
+          recipeCategory: "Breakfast"
+          keywords: "apple butter recipes,apple recipes,fall recipes"
+          nutrition:
+            "@type": "NutritionInformation"
+            calories: "120 kcal"
+            carbohydrateContent: "31 g"
+            sodiumContent: "32 mg"
+            fiberContent: "3 g"
+            sugarContent: "25 g"
+            servingSize: "1 serving"
+          tool: []
+          url: "https://www.tastesoflizzyt.com/homemade-apple-butter/"
+          dateModified: "2021-05-23T17:10:25+0000"
+          dateCreated: "2021-05-23T17:10:25+0000"
+      
+    Config:
+      type: object
+      description: An object describing the configuration of the web app
+      properties:
+        folder:
+          type: string
+          example: /Recipes
+          description: The folder in the user's files that contains the recipes
+        update_interval:
+          type: integer
+          example: 10
+          description: The interval between automatic rescans to rebuild the database cache in minutes
+        print_image:
+          type: boolean
+          example: true
+          description: True, if the user wished to print the recipe images with the rest of the recipes
+      required:
+        - folder
+        - update_interval
+        - print_image
+    
+    Error:
+      type: object
+      description: An error description
+      properties:
+        msg:
+          type: string
+          description: The error message
+          example: Recipe could not be found
+        file:
+          type: string
+          description: The file in which the exception was thrown
+          example: /var/www/custom_apps/cookbook/Service/RecipeService.php
+        line:
+          type: integer
+          description: The line where the exception is thrown
+          example: 223
+    
+    RecipeStub:
+      type: object
+      description: A stub of a recipe with some basic information present
+      properties:
+        name:
+          type: string
+          description: The name of the recipe
+          example: Baked bananas
+        recipe_id:
+          type: integer
+          description: The index of the recipe
+          example: 1
+        keywords:
+          type: string
+          description: A comma-separated list of recipe keywords
+          example: sweets,fruit
+        dateCreated:
+          type: string
+          description: The date the recipe was created in the app
+          example: "2022-01-02T16:12:41+0000"
+        dateModified:
+          type: string
+          description: The date the recipe was modified lastly in the app
+          example: "2022-01-10T10:02:52+0000"
+        imageUrl:
+          type: string
+          description: The URL of the recipe image
+          example: http://example.com/path/to/image.jpg
+        imagePlaceholderUrl:
+          type: string
+          description: The URL of the placeholder of the recipe image
+          example: http://example.com/path/to/image_thumb.jpg
+      required:
+        - "name"
+        - "recipe_id"
+        - "imageUrl"
+        - "imagePlaceholderUrl"
+        - "dateCreated"
+
+    StubList:
+      type: array
+      items:
+        $ref: "#/components/schemas/RecipeStub"
+    
+  securitySchemes:
+    app_password:
+      type: http
+      scheme: basic
+      description: Use username and app password
+
+security:
+  - app_password: []
+
+paths:
+  
+  /api/version:
+    get:
+      tags: [ Misc ]
+      summary: Get the version of the API endpoint
+      responses:
+        '200':
+          description: API version
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cookbook_version:
+                    type: array
+                    items:
+                      type: integer
+                    minItems: 3
+                    maxItems: 3
+                    description: The installed version of the app
+                  api_version:
+                    type: object
+                    properties:
+                      epoch:
+                        type: integer
+                        description: An epoch to cope with bad API versions
+                      major:
+                        type: integer
+                        description: The major number of the API
+                      minor:
+                        type: integer
+                        description: The minor number of the API
+  /reindex:
+    post:
+      tags: [ Misc ]
+      summary: Trigger a rescan of all recipes into the caching database
+      responses:
+        200:
+          description: The reindex process was done.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Search index rebuilt successfully
+  /config:
+    get:
+      tags: [ Misc ]
+      summary: Get the current configuration of the app
+      responses:
+        200:
+          description: The config was read successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Config"
+    post:
+      tags: [ Misc ]
+      summary: Set the configuration for the current user
+      responses:
+        200:
+          description: The configuration was successfully saved.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: OK
+  
+  /import:
+    post:
+      tags: [ Recipes ]
+      summary: Import a recipe using schema.org metadata from a website
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: 'http://www.chefkoch.de/2345'
+              required:
+                - url
+      responses:
+        200:
+          description: Successfully imported recipe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        400:
+          description: The URL to be imported was not inserted in the request or any other issue was rosen.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Field "url" is required
+        409:
+          description: There exists a recipe with that name already. Import was aborted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /recipes/{id}/image:
+    get:
+      tags: [ Recipes ]
+      summary: Get the main image of a recipe. If no image is stored a fallback image is delivered.
+      parameters:
+        - in: path
+          name: id
+          description: The id of the recipe to obtain the image for.
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Image was obtained and will be in response either as image/jpeg or image/svg+xml
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/svg+xml:
+              schema:
+                type: string
+                format: binary
+        406:
+          description: The recipe has no image whose MIME type matches the Accept header
+  /api/search/{query}:
+    parameters:
+      - in: path
+        name: query
+        required: true
+        description: The search string, urlencoded, separated with spaces and/or commas
+        schema:
+          type: string
+    get:
+      tags: [ Recipes ]
+      summary: Search for recipes for keywords, tags and categories with the named search string
+      responses:
+        200:
+          description: The recipes were obtained successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeList"
+        500:
+          description: An error has been thrown
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error message
+  /recipes/create:
+    post:
+      tags: [ Recipes ]
+      summary: Create a new recipe
+      deprecated: true
+      responses:
+        200:
+          description: The recipe was added successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: The id of the newly created recipe
+                example: 2367
+        500:
+          description: Some error was triggered
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error description
+  /recipes/{id}/edit:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: The id of the recipe addressed
+        schema:
+          type: integer
+    put:
+      tags: [ Recipes ]
+      summary: Update an existing recipe
+      deprecated: true
+      requestBody:
+        description: The new value of the recipe content
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Recipe"
+      responses:
+        200:
+          description: The recipe was updated successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: The id of the recipe
+                example: 2367
+        500:
+          description: Some error was triggered
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error description
+  /api/recipes:
+    get:
+      tags: [ Recipes ]
+      summary: Get all recipes in the database
+      responses:
+        200:
+          description: Successfully obtained all recipes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StubList"
+    post:
+      tags: [ Recipes ]
+      summary: Create a new recipe
+      requestBody:
+        description: |
+          A JSON representation of the recipe to be saved.
+          
+          See also the structure at https://schema.org/Recipe
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required: [ "name" ]
+              additionalProperties: true
+              example:
+                name: "Chips"
+                description: "A very delicious way of getting kids quiet"
+                ingredients:
+                  - "1 pack of pre-fried chips"
+                tools: ["common oven"]
+                instructions:
+                  - "Put the chips in the oven"
+                  - "Wait until the are due"
+      responses:
+        200:
+          description: Successfully created new recipe
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 2462
+                description: The id of the newly created recipe
+        409:
+          description: A recipe with the name was already found on the server. No recipe is created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        422:
+          description: There was no name in the request given for the recipe. Cannot save the recipe.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/recipes/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: The id of the recipe
+        schema:
+          type: integer
+    get:
+      tags: [ Recipes ]
+      summary: Get a single recipe from the server
+      responses:
+        200:
+          description: Recipe was sucessfully obtained
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        404:
+          description: The given recipe id was not found
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 2345
+                description: The id of the recipe that was not found
+    put:
+      tags: [ Recipes ]
+      summary: Update a recipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Recipe"
+      responses:
+        200:
+          description: The recipe was sucessfully updated
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: The id of the updated recipe
+                example: 2345
+        422:
+          description: There was no name in the request given for the recipe. Cannot save the recipe.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        
+    delete:
+      tags: [ Recipes ]
+      summary: Delete an existing recipe
+      responses:
+        200:
+          description: The recipe was deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Recipe 2345 was deletes successfully
+        502:
+          description: An Exception was thrown
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Recipe with id 2345 was not found.
+                description: Error message
+  
+  /keywords:
+    get:
+      tags: [ Tags ]
+      summary: Get all known keywords
+      responses:
+        '200':
+          description: Successfully obtained all keywords
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    recipe_count:
+                      type: integer
+                  required:
+                    - name
+                    - recipe_count
+              example:
+                - name: vegetarian
+                  recipe_count: 5
+                - name: sugar-free
+                  recipe_count: 2
+  /api/tags/{keywords}:
+    get:
+      tags: [ Tags ]
+      summary: Get all recipes associated with certain keywords
+      parameters:
+        - in: path
+          name: keywords
+          required: true
+          description: Comma separated list of keywords, urlencoded
+          schema:
+            type: string
+            example: vegetarian,sweet
+      responses:
+        200:
+          description: Recipes were successfully obtained
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeList"
+        500:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "SQLException: Something went wrong."
+  
+  /categories:
+    get:
+      tags: [ Categories ]
+      summary: Get all known categories
+      responses:
+        200:
+          description: >-
+            Sucessfully obtained all categories
+            
+            
+            Please note: A category name of `*` indicates the number of
+            recipes with no category associated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    recipe_count:
+                      type: integer
+                  required:
+                    - name
+                    - recipe_count
+              example:
+                - name: Dinner
+                  recipe_count: 21
+                - name: Lunch
+                  recipe_count: 10
+                - name: '*'
+                  recipe_count: 3
+  /api/category/{category}:
+    get:
+      tags: [ Categories ]
+      summary: Get all recipes of a certain category
+      parameters:
+        - in: path
+          name: category
+          required: true
+          description: >-
+            The name of the category to be queried as urlencoded string
+            
+            
+            Put the string `_` to obtain all recipes with no category
+          schema:
+            type: string
+      responses:
+        200:
+          description: The filtered recipes belonging to the category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecipeList"
+        500:
+          description: An exception was issued.
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error message
+                example: Could not find category foo.
+    put:
+      tags: [ Categories ]
+      summary: Rename a category
+      parameters:
+        - in: path
+          name: category
+          required: true
+          description: >-
+            The name of the category to be queried as urlencoded string
+            
+            
+            Put the string `_` to obtain all recipes with no category
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Lunch
+                  description: The new name to rename the category to
+              required:
+                - name
+      responses:
+        200:
+          description: The category was renamed successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Lunch
+        400:
+          description: The new category name was not included during the request.
+        500:
+          description: The renaming did not succeed.
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error message
+                example: There exists already a category of that name.

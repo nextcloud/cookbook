@@ -25,6 +25,11 @@ class JsonService {
 			return false;
 		}
 		
+		if (!isset($obj['@context']) || ! preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
+			// We have no correct context property
+			return false;
+		}
+		
 		if (!isset($obj['@type'])) {
 			// Objects must have a property @type
 			return false;
@@ -38,7 +43,7 @@ class JsonService {
 		}
 		
 		// Check if type matches
-		return (strcmp($obj['@type'], $type) == 0);
+		return (strcmp($obj['@type'], $type) === 0);
 	}
 	
 	/**

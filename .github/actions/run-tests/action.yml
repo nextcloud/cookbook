@@ -12,6 +12,12 @@ inputs:
     db:
         description: The db type to use
         required: true
+    server:
+        description: The http server to use for integration testing (apache, nginx)
+        required: true
+    coreVersion:
+        description: The version of the NC server core to test against.
+        required: true
     allowFailure:
         description: The test may fail
         required: false
@@ -19,82 +25,55 @@ inputs:
 outputs:
     silentFail:
         description: If the test failed but was allowed to do so
-        value: ${{ steps.run-docker.outputs.silent-fail }}
+        value: ${{ steps.run.outputs.silent-fail }}
 
 runs:
     using: 'composite'
     steps:
-        -   run: >-
-                docker build
-                -t docker-tests
-                --build-arg PHPVERSION=${{ inputs.phpVersion }}
-                --build-arg UID=$(id -u)
-                $(pwd)/cookbook/.github/actions/run-tests/tests
-            name: Build the test image
-            shell: bash
+        - name: Trigger the tests
+          run: >-
+            mkdir -p vendor &&
+            cd .github/actions/run-tests &&
+            export ALLOW_FAILURE=${{ inputs.allowFailure }} &&
+            export INPUT_DB=${{ inputs.db }} &&
+            export PHP_VERSION=${{ inputs.phpVersion }} &&
+            export HTTP_SERVER=${{ inputs.server }} &&
+            export COMPOSE_DOCKER_CLI_BUILD=1 &&
+            ./run-locally.sh
+            --pull
+            --create-images
+            --start-helpers
+            --setup-environment ${{ inputs.coreVersion }}
+            --create-env-dump
+            --create-plain-dump plain
+            --install-composer-deps
+            --run-unit-tests --run-migration-tests
+            --extract-code-coverage
+            --shutdown-helpers || { failed=$?; } ;
+            if [ -n "$failed" ]; then 
+            echo "test_result=$failed" >> $GITHUB_ENV;
+            else 
+            echo "test_result=0" >> $GITHUB_ENV;
+            fi;
+          shell: bash
+          id: run
         
-        -   name: Create docker network
-            run: >-
-                docker network
-                create net_cookbook
-            shell: bash
-                
-        -   name: Run MySQL service container
-            run: >-
-                docker run -d --rm
-                --name service-mysql
-                --network net_cookbook
-                --network-alias mysql
-                -e MYSQL_ROOT_PASSWORD=my-secret-root
-                -e MYSQL_DATABASE=nc_test
-                -e MYSQL_USER=tester
-                -e MYSQL_PASSWORD=tester_pass
-                mariadb:10.1
-            shell: bash
-            
-        -   name: Run PostgresSQL container
-            run: >-
-                docker run -d --rm
-                --name service-pgsql
-                --network net_cookbook
-                --network-alias postgres
-                -e POSTGRES_USER=tester
-                -e POSTGRES_PASSWORD=tester_pass
-                -e POSTGRES_DB=nc_test
-                postgres:alpine
-            shell: bash
-            
-        -   run: >-
-                docker run --rm
-                -e INPUT_DB=${{ inputs.db }}
-                -e GITHUB_ACTIONS
-                -e GITHUB_WORKFLOW
-                -e GITHUB_RUN_ID
-                -e GITHUB_RUN_NUMBER
-                -e GITHUB_ACTION
-                -e GITHUB_ACTOR
-                -e GITHUB_REPOSIITORY
-                -e GITHUB_EVENT_NAME
-                -e GITHUB_EVENT_PATH
-                -e GITHUB_WORKSPACE=/workdir
-                -e GITHUB_SHA
-                -e GITHUB_REF
-                -e GITGUB_HEAD_REF
-                -e GITHUB_BASE_REF
-                -e GITHUB_SERVER_URL
-                -e GITHUB_API_URL
-                -e GITHUB_GRAPHQL_URL
-                -e CI
-                -e ALLOW_FAILURE=${{ inputs.allowFailure }}
-                --network net_cookbook
-                -v "$GITHUB_WORKSPACE":/workdir
-                -v "$GITHUB_WORKSPACE/cookbook":/app:ro
-                docker-tests
-            name: Run the test container
-            id: run-docker
-            shell: bash
-            
-        -   name: Stop helper containers
-            run: docker stop service-mysql service-pgsql
-            shell: bash
-            
+        - name: Export the annotations of unit tests to github
+          shell: bash
+          run: >-
+            if [ -r .github/actions/run-tests/volumes/coverage/teamcity.log ]; then
+            python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.log ;
+            fi
+        - name: Export the annotations of integration tests to github
+          shell: bash
+          run: >-
+            if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
+            python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log ;
+            fi
+        - name: Export the annotations of migration tests to github
+          shell: bash
+          run: >-
+            if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
+            python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log ;
+            fi
+        

@@ -5,61 +5,26 @@
  *  are located in the appropriate files.
  */
 const path = require('path')
-const { VueLoaderPlugin } = require('vue-loader')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-module.exports = {
+const webpack = require('webpack')
+const webpackConfig = require('@nextcloud/webpack-vue-config')
+const { merge } = require('webpack-merge')
+const { env } = require('process')
 
-    entry:{
-        vue: path.join(__dirname, 'src', 'main.js'),
+module.exports = (env) => { return merge(webpackConfig, {
+    entry: {
+        guest: path.resolve(path.join('src', 'guest.js')),
     },
-    output: {
-        path: path.resolve(__dirname, './js'),
-        publicPath: '/js/',
-        filename: '[name].js',
-        chunkFilename: '[name].js?v=[contenthash]',
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                use: ['vue-style-loader', 'css-loader'],
-            },
-            {
-                test: /\.html$/,
-                loader: 'vue-template-loader',
-            },
-            {
-                test: /\.vue$/,
-                loader: 'vue-loader',
-            },
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-            },
-            {
-                test: /\.(png|jpg|gif)$/,
-                loader: 'file-loader',
-                options: {
-                    name: '[name].[ext]?[hash]'
-                },
-            },
-            {
-                test: /\.(eot|woff|woff2|ttf|svg)$/,
-                loaders: 'file-loader',
-                options: {
-                    name: '[path][name].[ext]?[hash]'
-                },
-            },
-        ],
-    },
-    plugins: [new VueLoaderPlugin()],
-    resolve: {
-        extensions: ['*', '.js', '.vue', '.json'],
-        modules: [
-            path.resolve(__dirname, './node_modules')
-        ],
-        symlinks: false,
-    },
+    // You can add this to allow acces in the network. You will have to adopt the public path in main.js as well!
+    // devServer: {
+    //     host: "0.0.0.0",
+    // },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new webpack.DefinePlugin({
+            '__webpack_use_dev_server__': env.dev_server || false,
+        }),
+    ],
+}) }
 
-}

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# set -x
+
+lines_before=`git stash list | wc -l`
+git stash push --keep-index --include-untracked -q --message "You should never see this commit message. If you do, please repair your git setup manully!"
+lines_after=`git stash list | wc -l`
+
+cleanup() {
+	if [ $lines_before -lt $lines_after ]; then
+		git stash pop -q
+	fi
+}
+
+trap cleanup EXIT
+
+retVal=0
+
+if [ -e 'vendor/bin/php-cs-fixer' ]; then
+	composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
+fi
+
+if [ -e 'node_modules/.bin/eslint' ]; then
+	npm run --silent eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
+fi
+
+exit $retVal

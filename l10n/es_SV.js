@@ -1,17 +1,23 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "en %s",
     "Home" : "Inicio",
+    "Loading…" : "Cargando...",
+    "Save changes" : "Guardar cambios",
+    "Page not found" : "Página no encontrada",
     "Filter" : "Filtrar",
     "Search" : "Buscar",
-    "Save changes" : "Guardar cambios",
-    "Loading…" : "Cargando...",
-    "Page not found" : "Página no encontrada",
     "Category" : "Categoría",
+    "Tags" : "Etiquetas",
+    "Categories" : "Categorías",
+    "Rename" : "Renombrar",
     "Add" : "Agregar",
+    "Close" : "Cerrar",
     "Name" : "Nombre",
     "Description" : "Descripción",
     "URL" : "URL",
-    "Tools" : "Herramientas"
+    "Tools" : "Herramientas",
+    "Last modified" : "Última modificación"
 },
-"nplurals=2; plural=(n != 1);");
+"nplurals=2; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

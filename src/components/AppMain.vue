@@ -1,23 +1,31 @@
 <template>
-    <div id="app">
-        <AppNavi id="app-navigation" />
-        <div id="app-content">
-            <div id="app-content-wrapper">
+    <Content app-name="cookbook">
+        <AppNavi class="app-navigation" />
+        <AppContent>
+            <div>
                 <AppControls />
-                <router-view></router-view>
+                <div class="cookbook-app-content">
+                    <router-view></router-view>
+                </div>
             </div>
-        </div>
-    </div>
+        </AppContent>
+    </Content>
 </template>
 
 <script>
-import AppControls from './AppControls'
-import AppNavi from './AppNavi'
+import AppContent from "@nextcloud/vue/dist/Components/AppContent"
+import Content from "@nextcloud/vue/dist/Components/Content"
+import AppControls from "./AppControls.vue"
+import AppNavi from "./AppNavi.vue"
+
 export default {
-    name: 'Main',
+    name: "AppMain",
     components: {
+        AppContent,
         AppControls,
         AppNavi,
+        // eslint-disable-next-line vue/no-reserved-component-names
+        Content,
     },
     watch: {
         /* This is left here as an example in case the routes need to be debugged again
@@ -29,25 +37,37 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+.app-navigation {
+    z-index: 1;
+}
+
+.cookbook-app-content {
+    position: relative;
+    z-index: 0;
+}
+</style>
+
 <style>
-
-#app-content {
-    min-width: calc(100% - 300px);
-}
-
-#app-content-wrapper {
-    flex-wrap: wrap;
-}
-
 @media print {
-    #app-content-wrapper {
+    #app-content-vue {
         display: block !important;
-        padding: 0 !important;
         overflow: visible !important;
-    }
-    #app-content {
+        padding: 0 !important;
         margin-left: 0 !important;
     }
-}
 
+    #app-navigation-vue {
+        display: none !important;
+    }
+
+    #header {
+        display: none !important;
+    }
+
+    a:link::after,
+    a:visited::after {
+        content: " [" attr(href) "] ";
+    }
+}
 </style>

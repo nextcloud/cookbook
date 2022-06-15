@@ -6,14 +6,21 @@ use Exception;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Image;
-use OCP\IConfig;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
+use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Exception\UserNotLoggedInException;
+use OCA\Cookbook\Helper\ImageService\ImageSize;
+use OCA\Cookbook\Helper\UserConfigHelper;
+use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Exception\ImportException;
 
 /**
  * Main service class for the cookbook app.
@@ -24,17 +31,49 @@ class RecipeService {
 	private $root;
 	private $user_id;
 	private $db;
-	private $config;
 	private $il10n;
 	private $logger;
+	
+	/**
+	 * @var HtmlDownloadService
+	 */
+	private $htmlDownloadService;
+	
+	/**
+	 * @var RecipeExtractionService
+	 */
+	private $recipeExtractionService;
 
-	public function __construct(?string $UserId, IRootFolder $root, RecipeDb $db, IConfig $config, IL10N $il10n, LoggerInterface $logger) {
+	/**
+	 * @var UserConfigHelper
+	 */
+	private $userConfigHelper;
+
+	/**
+	 * @var ImageService
+	 */
+	private $imageService;
+
+	public function __construct(
+			?string $UserId,
+			IRootFolder $root,
+			RecipeDb $db,
+			UserConfigHelper $userConfigHelper,
+			ImageService $imageService,
+			IL10N $il10n,
+			LoggerInterface $logger,
+			HtmlDownloadService $downloadService,
+			RecipeExtractionService $extractionService
+		) {
 		$this->user_id = $UserId;
 		$this->root = $root;
 		$this->db = $db;
-		$this->config = $config;
 		$this->il10n = $il10n;
 		$this->logger = $logger;
+		$this->userConfigHelper = $userConfigHelper;
+		$this->imageService = $imageService;
+		$this->htmlDownloadService = $downloadService;
+		$this->recipeExtractionService = $extractionService;
 	}
 
 	/**
@@ -126,6 +165,11 @@ class RecipeService {
 		// Make sure that "name" doesn't have any funky characters in it
 		$json['name'] = $this->cleanUpString($json['name'], false, true);
 
+		// Restrict the length of the name to be not longer than what the DB can store
+		if (strlen($json['name']) > 256) {
+			$json['name'] = substr($json['name'], 0, 256);
+		}
+
 		// Make sure that "image" is a string of the highest resolution image available
 		if (isset($json['image']) && $json['image']) {
 			if (is_array($json['image'])) {
@@ -213,6 +257,17 @@ class RecipeService {
 		
 		// Make sure that "recipeYield" is an integer which is at least 1
 		if (isset($json['recipeYield']) && $json['recipeYield']) {
+			
+			// Check if "recipeYield is an array
+			if (is_array($json['recipeYield'])) {
+				if (count($json['recipeYield']) === 1) {
+					$json['recipeYield'] = $json['recipeYield'][0];
+				} else {
+					// XXX How to parse an array correctly?
+					$json['recipeYield'] = join(' ', $json['recipeYield']);
+				}
+			}
+			
 			$regex_matches = [];
 			preg_match('/(\d*)/', $json['recipeYield'], $regex_matches);
 			if (count($regex_matches) >= 1) {
@@ -226,6 +281,11 @@ class RecipeService {
 			}
 		} else {
 			$json['recipeYield'] = 1;
+		}
+
+		// Make sure the keyword is a string and no array
+		if (isset($json['keywords']) && is_array($json['keywords'])) {
+			$json['keywords'] = implode(',', $json['keywords']);
 		}
 
 		// Make sure that "keywords" is an array of unique strings
@@ -353,7 +413,7 @@ class RecipeService {
 		// Make sure the 'url' is a URL, or blank
 		if (isset($json['url']) && $json['url']) {
 			$url = filter_var($json['url'], FILTER_SANITIZE_URL);
-			if (filter_var($url, FILTER_VALIDATE_URL) == false) {
+			if (filter_var($url, FILTER_VALIDATE_URL) === false) {
 				$url = "";
 			}
 			$json['url'] = $url;
@@ -403,6 +463,13 @@ class RecipeService {
 			$json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
 		}
 
+		// Nutrition information
+		if (isset($json['nutrition']) && is_array($json['nutrition'])) {
+			$json['nutrition'] = array_filter($json['nutrition']);
+		} else {
+			$json['nutrition'] = [];
+		}
+		
 		return $json;
 	}
 
@@ -410,6 +477,7 @@ class RecipeService {
 	 * @param string $html
 	 *
 	 * @return array
+	 * @deprecated
 	 */
 	private function parseRecipeHtml($url, $html) {
 		if (!$html) {
@@ -653,12 +721,16 @@ class RecipeService {
 	 */
 	public function addRecipe($json) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
-			// XXX More specific Exception better?
-			throw new Exception('Recipe name not found');
+			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}
+
+		$now = date(DATE_ISO8601);
 
 		// Sanity check
 		$json = $this->checkRecipe($json);
+
+		// Update modification date
+		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
 		$user_folder = $this->getFolderForUser();
@@ -674,7 +746,7 @@ class RecipeService {
 			// The recipe is being renamed, move the folder
 			if ($old_path !== $new_path) {
 				if ($user_folder->nodeExists($json['name'])) {
-					throw new Exception('Another recipe with that name already exists');
+					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
 				
 				$recipe_folder->move($new_path);
@@ -682,8 +754,10 @@ class RecipeService {
 
 			// This is a new recipe, create it
 		} else {
+			$json['dateCreated'] = $now;
+
 			if ($user_folder->nodeExists($json['name'])) {
-				throw new Exception('Another recipe with that name already exists');
+				throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 			}
 
 			$recipe_folder = $user_folder->newFolder($json['name']);
@@ -724,40 +798,12 @@ class RecipeService {
 
 			// The image field was empty, remove images in the recipe folder
 		} else {
-			if ($recipe_folder->nodeExists('full.jpg')) {
-				$recipe_folder->get('full.jpg')->delete();
-			}
-
-			if ($recipe_folder->nodeExists('thumb.jpg')) {
-				$recipe_folder->get('thumb.jpg')->delete();
-			}
+			$this->imageService->dropImage($recipe_folder);
 		}
 
 		// If image data was fetched, write it to disk
 		if ($full_image_data) {
-			// Write the full image
-			try {
-				$full_image_file = $recipe_folder->get('full.jpg');
-			} catch (NotFoundException $e) {
-				$full_image_file = $recipe_folder->newFile('full.jpg');
-			}
-
-			$full_image_file->putContent($full_image_data);
-
-			// Write the thumbnail
-			$thumb_image = new Image();
-			$thumb_image->loadFromData($full_image_data);
-			$thumb_image->fixOrientation();
-			$thumb_image->resize(128);
-			$thumb_image->centerCrop();
-
-			try {
-				$thumb_image_file = $recipe_folder->get('thumb.jpg');
-			} catch (NotFoundException $e) {
-				$thumb_image_file = $recipe_folder->newFile('thumb.jpg');
-			}
-
-			$thumb_image_file->putContent($thumb_image->data());
+			$this->imageService->setImageData($recipe_folder, $full_image_data);
 		}
 
 		// Write .nomedia file to avoid gallery indexing
@@ -772,36 +818,27 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $url
+	 * Download a recipe from a url and store it in the files
 	 *
+	 * @param string $url The recipe URL
+	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe($url) {
-		$host = parse_url($url);
-
-		if (!$host) {
-			throw new Exception('Could not parse URL');
+	public function downloadRecipe(string $url): File {
+		$this->htmlDownloadService->downloadRecipe($url);
+		
+		try {
+			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom());
+		} catch (HtmlParsingException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex);
 		}
-
-		$opts = [
-			"http" => [
-				"method" => "GET",
-				"header" => "User-Agent: Nextcloud Cookbook App"
-			]
-		];
-
-		$context = stream_context_create($opts);
-
-		$html = file_get_contents($url, false, $context);
-
-		if (!$html) {
-			throw new Exception('Could not fetch site ' . $url);
-		}
-
-		$json = $this->parseRecipeHtml($url, $html);
-
+		
+		$json = $this->checkRecipe($json);
+		
 		if (!$json) {
-			throw new Exception('No recipe data found');
+			$this->logger->error('Importing parsers resulted in null recipe.' .
+				'This is most probably a bug. Please report.');
+			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'));
 		}
 
 		$json['url'] = $url;
@@ -835,7 +872,13 @@ class RecipeService {
 	 * @deprecated
 	 */
 	public function updateSearchIndex() {
-		$this->migrateFolderStructure();
+		try {
+			$this->migrateFolderStructure();
+		} catch (UserFolderNotWritableException $ex) {
+			// Ignore migration if not permitted.
+			$this->logger->warning("Cannot migrate cookbook file structure as not permitted.");
+			throw $ex;
+		}
 	}
 	
 	private function migrateFolderStructure() {
@@ -885,13 +928,30 @@ class RecipeService {
 		return $this->db->findAllCategories($this->user_id);
 	}
 
+
+
+	/** Adds modification and creation date to each recipe in the list
+	 *
+	 * @param array $recipes
+	 */
+	private function addDatesToRecipes(array &$recipes) {
+		foreach ($recipes as $i => $recipe) {
+			// TODO Add data to database instead of reading from files
+			$r = $this->getRecipeById($recipe['recipe_id']);
+			$recipes[$i]['dateCreated'] = $r['dateCreated'];
+			$recipes[$i]['dateModified'] = $r['dateModified'];
+		}
+	}
+
 	/**
 	 * Gets all recipes from the index
 	 *
 	 * @return array
 	 */
-	public function getAllRecipesInSearchIndex() {
-		return $this->db->findAllRecipes($this->user_id);
+	public function getAllRecipesInSearchIndex(): array {
+		$recipes = $this->db->findAllRecipes($this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
@@ -901,8 +961,10 @@ class RecipeService {
 	 *
 	 * @return array
 	 */
-	public function getRecipesByCategory($category) {
-		return $this->db->getRecipesByCategory($category, $this->user_id);
+	public function getRecipesByCategory($category): array {
+		$recipes = $this->db->getRecipesByCategory($category, $this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
@@ -911,19 +973,22 @@ class RecipeService {
 	 * @param string $keywords Keywords/tags as a comma-separated string.
 	 *
 	 * @return array
+	 * @throws \OCP\AppFramework\Db\DoesNotExistException
 	 */
-	public function getRecipesByKeywords($keywords) {
-		return $this->db->getRecipesByKeywords($keywords, $this->user_id);
+	public function getRecipesByKeywords($keywords): array {
+		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
 	 * Search for recipes by keywords
 	 *
-	 * @param string $keywords
-	 *
+	 * @param $keywords_string
 	 * @return array
+	 * @throws \OCP\AppFramework\Db\DoesNotExistException
 	 */
-	public function findRecipesInSearchIndex($keywords_string) {
+	public function findRecipesInSearchIndex($keywords_string): array {
 		$keywords_string = strtolower($keywords_string);
 		$keywords_array = [];
 		preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -932,28 +997,23 @@ class RecipeService {
 			$keywords_array = $keywords_array[0];
 		}
 
-		return $this->db->findRecipes($keywords_array, $this->user_id);
+		$recipes = $this->db->findRecipes($keywords_array, $this->user_id);
+		$this->addDatesToRecipes($recipes);
+		return $recipes;
 	}
 
 	/**
 	 * @param string $path
 	 */
 	public function setUserFolderPath(string $path) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
+		$this->userConfigHelper->setFolderName($path);
 	}
 
 	/**
 	 * @return string
 	 */
 	public function getUserFolderPath() {
-		$path = $this->config->getUserValue($this->user_id, 'cookbook', 'folder');
-
-		if (!$path) {
-			$path = '/' . $this->il10n->t('Recipes');
-			$this->config->setUserValue($this->user_id, 'cookbook', 'folder', $path);
-		}
-
-		return $path;
+		return $this->userConfigHelper->getFolderName();
 	}
 
 	/**
@@ -961,11 +1021,12 @@ class RecipeService {
 	 * @throws PreConditionNotMetException
 	 */
 	public function setSearchIndexUpdateInterval(int $interval) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'update_interval', $interval);
+		$this->userConfigHelper->setUpdateInterval($interval);
 	}
 
 	/**
 	 * @return Folder
+	 * @throws UserNotLoggedInException if no user is logged in to get the path from
 	 */
 	public function getFolderForUser() {
 		$path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
@@ -979,7 +1040,7 @@ class RecipeService {
 	 * @throws PreConditionNotMetException
 	 */
 	public function setPrintImage(bool $printImage) {
-		$this->config->setUserValue($this->user_id, 'cookbook', 'print_image', (int) $printImage);
+		$this->userConfigHelper->setPrintImage($printImage);
 	}
 
 	/**
@@ -987,7 +1048,7 @@ class RecipeService {
 	 * @return bool
 	 */
 	public function getPrintImage() {
-		return (bool) $this->config->getUserValue($this->user_id, 'cookbook', 'print_image');
+		return $this->userConfigHelper->getPrintImage();
 	}
 
 	/**
@@ -1003,7 +1064,11 @@ class RecipeService {
 		if ($this->root->nodeExists($path)) {
 			$folder = $this->root->get($path);
 		} else {
-			$folder = $this->root->newFolder($path);
+			try {
+				$folder = $this->root->newFolder($path);
+			} catch (NotPermittedException $ex) {
+				throw new UserFolderNotWritableException($this->il10n->t('User cannot create recipe folder'), null, $ex);
+			}
 		}
 		return $folder;
 	}
@@ -1028,11 +1093,13 @@ class RecipeService {
 
 		$json['id'] = $file->getParent()->getId();
 
-		if (method_exists($file, 'getCreationTime')) {
+
+		if (!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')) {
 			$json['dateCreated'] = $file->getCreationTime();
 		}
-		
-		$json['dateModified'] = $file->getMTime();
+		if (!array_key_exists('dateModified', $json)) {
+			$json['dateModified'] = $file->getMTime();
+		}
 
 		return $this->checkRecipe($json);
 	}
@@ -1045,32 +1112,24 @@ class RecipeService {
 	 *
 	 * @return File
 	 */
-	public function getRecipeImageFileByFolderId($id, $size = 'thumb') {
-		if (!$size) {
-			$size = 'thumb';
+	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File {
+		$recipe_folders = $this->root->getById($id);
+		if (count($recipe_folders) < 1) {
+			throw new Exception($this->il10n->t('Recipe with ID %d not found.', [$id]));
 		}
-		if ($size !== 'full' && $size !== 'thumb') {
-			throw new Exception('Image size "' . $size . '" not recognised');
+		$recipe_folder = $recipe_folders[0];
+
+		// TODO: Check that file is really an image
+		switch ($size) {
+			case 'full':
+				return $this->imageService->getImageAsFile($recipe_folder);
+			case 'thumb':
+				return $this->imageService->getThumbnailAsFile($recipe_folder, ImageSize::THUMBNAIL);
+			case 'thumb16':
+				return $this->imageService->getThumbnailAsFile($recipe_folder, ImageSize::MINI_THUMBNAIL);
+			default:
+				throw new Exception($this->il10n->t('Image size "%s" is not recognized.', [$size]));
 		}
-
-		$recipe_folder = $this->root->getById($id);
-
-		if (count($recipe_folder) < 1) {
-			throw new Exception('Recipe ' . $id . ' not found');
-		}
-
-		$recipe_folder = $recipe_folder[0];
-
-		$image_file = null;
-		$image_filename = $size . '.jpg';
-
-		$image_file = $recipe_folder->get($image_filename);
-
-		if ($image_file && $this->isImage($image_file)) {
-			return $image_file;
-		}
-
-		throw new Exception('Image file not recognised');
 	}
 
 	/**
@@ -1130,17 +1189,22 @@ class RecipeService {
 		$str = strip_tags($str);
 
 		if (!$preserve_newlines) {
-			$str = str_replace(["\r", "\n"], '', $str);
+			$str = str_replace(["\r", "\n"], ' ', $str);
 		}
+
+		$str = str_replace("\t", ' ', $str);
+		$str = str_replace("\\", '_', $str);
 
 		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
 		if ($remove_slashes) {
-			$str = str_replace(["\t", "\\", "/"], '', $str);
-		} else {
-			$str = str_replace(["\t", "\\"], '', $str);
+			$str = str_replace('/', '_', $str);
 		}
 		
 		$str = html_entity_decode($str);
+
+		// Remove duplicated spaces
+		$str = preg_replace('/  */', ' ', $str);
+		$str = trim($str);
 
 		return $str;
 	}

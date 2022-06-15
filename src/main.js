@@ -3,34 +3,46 @@
  * Vue frontend entry file
  * ---------------------------
  * @license AGPL3 or later
-*/
+ */
 
-// TODO: Agree on a markdown parser
-// TODO: Remove dependency on jQuery
+// Markdown
+import VueShowdown from "vue-showdown"
+import Editor from "v-markdown-editor"
+import "v-markdown-editor/dist/v-markdown-editor.css"
 
-import Vue from 'vue'
-import router from './router'
-import store from './store'
+import { generateUrl } from "@nextcloud/router"
 
-//import AppNavi from './components/AppNavi'
-import AppMain from './components/AppMain'
+import Vue from "vue"
+import router from "./router"
+import store from "./store"
 
-(function (OC, window, $, undefined) {
-    'use strict'
+import AppMain from "./components/AppMain.vue"
 
+// eslint-disable-next-line camelcase,no-undef
+if (__webpack_use_dev_server__ || false) {
+    // eslint-disable-next-line camelcase,no-undef
+    __webpack_public_path__ =
+        "http://127.0.0.1:3000/apps/nextcloud-cookbook/js/"
+}
+
+// eslint-disable-next-line func-names, import/newline-after-import
+;(function (OC, window) {
     // Fetch Nextcloud nonce identifier for dynamic script loading
+    // eslint-disable-next-line camelcase,no-undef
     __webpack_nonce__ = btoa(OC.requestToken)
 
-    window.baseUrl = OC.generateUrl('apps/cookbook')
+    // eslint-disable-next-line no-param-reassign
+    window.baseUrl = generateUrl("apps/cookbook")
 
     // Check if two routes point to the same component but have different content
-    window.shouldReloadContent = function(url1, url2) {
+    // eslint-disable-next-line no-param-reassign
+    window.shouldReloadContent = function shouldReloadContent(url1, url2) {
         if (url1 === url2) {
             return false // Obviously should not if both routes are the same
         }
 
-        let comps1 = url1.split('/')
-        let comps2 = url2.split('/')
+        const comps1 = url1.split("/")
+        const comps2 = url2.split("/")
 
         if (comps1.length < 2 || comps2.length < 2) {
             return false // Just a failsafe, this should never happen
@@ -49,17 +61,12 @@ import AppMain from './components/AppMain'
         // If one of the routes is edit and the other is not
         if (comps1.length !== comps2.length) {
             // Only reload if changing from edit to create
-            if (comps1.pop() === 'create' || comps2.pop() === 'create') {
-                return true
-            }
-
-            return false
-
-        } else if (comps1.pop() === 'create') {
+            return comps1.pop() === "create" || comps2.pop() === "create"
+        }
+        if (comps1.pop() === "create") {
             // But, if we are moving from create to view, do not reload
             // the create component
             return false
-
         }
 
         // Only options left are that both of the routes are edit or view,
@@ -69,12 +76,13 @@ import AppMain from './components/AppMain'
     }
 
     // Check if the two urls point to the same item instance
-    window.isSameItemInstance = function(url1, url2) {
+    // eslint-disable-next-line no-param-reassign
+    window.isSameItemInstance = function isSameItemInstance(url1, url2) {
         if (url1 === url2) {
             return true // Obviously true if the routes are the same
         }
-        let comps1 = url1.split('/')
-        let comps2 = url2.split('/')
+        const comps1 = url1.split("/")
+        const comps2 = url2.split("/")
         if (comps1.length < 2 || comps2.length < 2) {
             return false // Just a failsafe, this should never happen
         }
@@ -88,98 +96,116 @@ import AppMain from './components/AppMain'
             // either of the urls have less than three components
             return false
         }
-        if (comps1[2] !== comps2[2]) {
-            // Different IDs, not same instance
-            return false
-        }
-        return true
+        return comps1[2] === comps2[2]
     }
 
     // A simple function to sanitize HTML tags
-    window.escapeHTML = function(text) {
-        return text.replace(/[\"&'\/<>]/g, function (a) {
-            return {
-                '&': '&amp;',
-                '"': '&quot;',
-                "'": '&apos;',
-                '<': '&lt;',
-                '>': '&gt;'
-            }[a]
-        })
+    // eslint-disable-next-line no-param-reassign
+    window.escapeHTML = function escapeHTML(text) {
+        return text.replace(
+            /["&'<>]/g,
+            (a) =>
+                ({
+                    "&": "&amp;",
+                    '"': "&quot;",
+                    "'": "&apos;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                }[a])
+        )
     }
 
     // Fix the decimal separator for languages that use a comma instead of dot
-    window.fixDecimalSeparator = function(value, io) {
+    // eslint-disable-next-line no-param-reassign
+    window.fixDecimalSeparator = function fixDecimalSeparator(value, io) {
         // value is the string value of the number to process
         // io is either 'i' as in input or 'o' as in output
         if (!value) {
-            return ''
+            return ""
         }
-        if (io === 'i') {
+        if (io === "i") {
             // Check if it's an American number where a comma precedes a dot
             //  e.g. 12,500.25
-            if (value.indexOf('.') > value.indexOf(',')) {
-                return value.replace(',', '')
-            } else {
-                return value.replace(',', '.')
+            if (value.indexOf(".") > value.indexOf(",")) {
+                return value.replace(",", "")
             }
-        } else if (io === 'o') {
-            return value.toString().replace('.', ',')
+            return value.replace(",", ".")
         }
+        if (io === "o") {
+            return value.toString().replace(".", ",")
+        }
+        return ""
     }
 
     // This will replace the PHP function nl2br in Vue components
-    window.nl2br = function(text) {
-        return text.replace(/\n/g, '<br />')
+    // eslint-disable-next-line no-param-reassign
+    window.nl2br = function nl2br(text) {
+        return text.replace(/\n/g, "<br />")
     }
 
     // A simple function that converts a MySQL datetime into a timestamp.
-    window.getTimestamp = function(date) {
+    // eslint-disable-next-line no-param-reassign
+    window.getTimestamp = function getTimestamp(date) {
         if (date) {
             return new Date(date)
-        } else {
-            return null
         }
+        return null
     }
 
     // Push a new URL to the router, essentially navigating to that page.
-    window.goTo = function(url) {
+    // eslint-disable-next-line no-param-reassign
+    window.goTo = function goTo(url) {
         router.push(url)
     }
 
     // Notify the user if notifications are allowed
-	window.notify = function notify(title, options) {
-		if (!('Notification' in window)) {
-			return
-		} else if (Notification.permission === "granted") {
-			var notification = new Notification(title, options)
-		} else if (Notification.permission !== 'denied') {
-			Notification.requestPermission(function(permission) {
-				if (!('permission' in Notification)) {
-					Notification.permission = permission
-				}
-				if (permission === "granted") {
-					var notification = new Notification(title, options)
-				} else {
-					alert(title)
-				}
-			})
-		}
-	}
+    // eslint-disable-next-line no-param-reassign
+    window.notify = function notify(title, options) {
+        if (!("Notification" in window)) {
+            return
+        }
+        if (Notification.permission === "granted") {
+            // eslint-disable-next-line no-unused-vars
+            const notification = new Notification(title, options)
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission((permission) => {
+                if (!("permission" in Notification)) {
+                    Notification.permission = permission
+                }
+                if (permission === "granted") {
+                    // eslint-disable-next-line no-unused-vars
+                    const notification = new Notification(title, options)
+                } else {
+                    // eslint-disable-next-line no-alert
+                    alert(title)
+                }
+            })
+        }
+    }
 
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
     Vue.prototype.OC = OC
 
+    // Markdown for Vue
+    Vue.use(VueShowdown, {
+        // set default flavor for Markdown
+        flavor: "vanilla",
+    })
+    Vue.use(Editor)
+
     // Pass translation engine to Vue
     Vue.prototype.t = window.t
 
     // Start the app once document is done loading
-    $(document).ready(function () {
+    document.addEventListener("DOMContentLoaded", () => {
         const App = Vue.extend(AppMain)
         new App({
             store,
             router,
-        }).$mount("#app")
+            beforeCreate() {
+                this.$store.commit("initializeStore")
+            },
+        }).$mount("#content")
     })
-})(OC, window, jQuery)
+})(OC, window)

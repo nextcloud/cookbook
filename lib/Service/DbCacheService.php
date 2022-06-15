@@ -5,8 +5,8 @@ namespace OCA\Cookbook\Service;
 use OCA\Cookbook\Db\RecipeDb;
 use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
-use OCP\IConfig;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
+use OCA\Cookbook\Helper\UserConfigHelper;
 
 class DbCacheService {
 	private $userId;
@@ -23,9 +23,9 @@ class DbCacheService {
 	private $recipeService;
 	
 	/**
-	 * @var IConfig
+	 * @var UserConfigHelper
 	 */
-	private $config;
+	private $userConfigHelper;
 	
 	private $jsonFiles;
 	private $dbReceipeFiles;
@@ -36,11 +36,11 @@ class DbCacheService {
 	private $obsoleteRecipes;
 	private $updatedRecipes;
 	
-	public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService, IConfig $config) {
+	public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService, UserConfigHelper $userConfigHelper) {
 		$this->userId = $UserId;
 		$this->db = $db;
 		$this->recipeService = $recipeService;
-		$this->config = $config;
+		$this->userConfigHelper = $userConfigHelper;
 	}
 	
 	public function updateCache() {
@@ -170,7 +170,9 @@ class DbCacheService {
 		foreach ($recipeIds as $rid) {
 			// XXX Enhancement by selecting all keywords/categories and associating in RAM into data structure
 			$this->dbKeywords[$rid] = $this->db->getKeywordsOfRecipe($rid, $this->userId);
-			$this->dbCategories[$rid] = $this->db->getCategoryOfRecipe($rid, $this->userId);
+			$category = $this->db->getCategoryOfRecipe($rid, $this->userId);
+			
+			$this->dbCategories[$rid] = $category;
 		}
 	}
 	
@@ -202,7 +204,7 @@ class DbCacheService {
 		$dbEntry = $this->dbReceipeFiles[$id];
 		$fileEntry = $this->jsonFiles[$id];
 		
-		if ($dbEntry['name'] != $fileEntry['name']) {
+		if ($dbEntry['name'] !== $fileEntry['name']) {
 			return false;
 		}
 		
@@ -234,11 +236,11 @@ class DbCacheService {
 			if ($this->hasJSONCategory($json)) {
 				// There is a category in the JSON file present.
 				
-				$category = trim($json['recipeCategory']);
+				$category = trim($this->getJSONCategory($json));
 				
 				if (isset($this->dbCategories[$rid])) {
 					// There is a category present. Update needed?
-					if ($this->dbCategories[$rid] != trim($category)) {
+					if ($this->dbCategories[$rid] !== trim($category)) {
 						$this->db->updateCategoryOfRecipe($rid, $category, $this->userId);
 					}
 				} else {
@@ -257,8 +259,36 @@ class DbCacheService {
 	 * @param array $json
 	 * @return boolean
 	 */
-	private function hasJSONCategory(array $json) {
-		return isset($json['recipeCategory']) && strlen(trim($json['recipeCategory'])) > 0;
+	private function hasJSONCategory(array $json): bool {
+		return ! is_null($this->getJSONCategory($json));
+	}
+
+	/**
+	 * Get the category of a recipe.
+	 *
+	 * This will only return the very first category if there are multiple registered.
+	 *
+	 * @param array $json The recipe
+	 * @return string|null The category name of null if no category was found.
+	 */
+	private function getJSONCategory(array $json): ?string {
+		if (!isset($json['recipeCategory'])) {
+			return null;
+		}
+
+		$category = $json['recipeCategory'];
+		if (is_array($category)) {
+			if (count($category) > 0) {
+				$category = $category[0];
+			} else {
+				$category = null;
+			}
+		}
+
+		if (strlen(trim($category)) == 0) {
+			return null;
+		}
+		return $category;
 	}
 	
 	private function updateKeywords() {
@@ -266,7 +296,12 @@ class DbCacheService {
 		$obsoletePairs = [];
 		
 		foreach ($this->jsonFiles as $rid => $json) {
-			$keywords = explode(',', $json['keywords']);
+			$textKeywords = $json['keywords'] ?? '';
+			if (is_array($textKeywords)) {
+				$keywords = $textKeywords;
+			} else {
+				$keywords = explode(',', $textKeywords);
+			}
 			$keywords = array_map(function ($v) {
 				return trim($v);
 			}, $keywords);
@@ -305,14 +340,14 @@ class DbCacheService {
 	 * Gets the last time the search index was updated
 	 */
 	public function getSearchIndexLastUpdateTime() {
-		return (int) $this->config->getUserValue($this->user_id, 'cookbook', 'last_index_update');
+		return $this->userConfigHelper->getLastIndexUpdate();
 	}
 	
 	/**
 	 * @return int
 	 */
 	public function getSearchIndexUpdateInterval(): int {
-		$interval = (int)$this->config->getUserValue($this->user_id, 'cookbook', 'update_interval');
+		$interval = $this->userConfigHelper->getUpdateInterval();
 		
 		if ($interval < 1) {
 			$interval = 5;
@@ -338,7 +373,7 @@ class DbCacheService {
 			$this->updateCache();
 			
 			// Cache the last index update
-			$this->config->setUserValue($this->user_id, 'cookbook', 'last_index_update', time());
+			$this->userConfigHelper->setLastIndexUpdate(time());
 			
 			// TODO Make triggers more general, need refactoring of *all* Services
 			$this->recipeService->updateSearchIndex();

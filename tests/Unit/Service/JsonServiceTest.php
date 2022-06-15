@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook;
+namespace OCA\Cookbook\tests\Unit\Service;
 
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Service\JsonService;
@@ -22,6 +22,31 @@ class JsonServiceTest extends TestCase {
 		$result = $this->service->isSchemaObject($testData);
 		self::assertFalse($result, 'The object must be an array');
 
+		// Objects must have a property @context
+		$testData = [
+			"@type" => "Recipe",
+			"name" => "Schema.org Ontology",
+			"subjectOf" => [
+				"@type" => "Book",
+				"name" => "The Complete History of Schema.org"
+			]
+		];
+		$result = $this->service->isSchemaObject($testData);
+		self::assertFalse($result, 'The object must have a context');
+		
+		// Context must be in schema.org domain
+		$testData = [
+			"@context" => "https://schema.com/",
+			'@type' => 'Recipe',
+			"name" => "Schema.org Ontology",
+			"subjectOf" => [
+				"@type" => "Book",
+				"name" => "The Complete History of Schema.org"
+			]
+		];
+		$result = $this->service->isSchemaObject($testData);
+		self::assertFalse($result, 'The object must be in the correct context');
+		
 		// Objects must have a property @type
 		$testData = [
 			"@context" => "https://schema.org/",
@@ -33,7 +58,7 @@ class JsonServiceTest extends TestCase {
 		];
 		$result = $this->service->isSchemaObject($testData);
 		self::assertFalse($result, 'The object must have the property @type');
-
+		
 		// No typecheck will be requested
 		$testData = [
 			"@context" => "https://schema.org/",

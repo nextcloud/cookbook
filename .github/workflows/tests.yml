@@ -1,34 +1,99 @@
 
-name: CI-tests
+name: CI
 
 on:
   push:
+    paths-ignore:
+      - 'docs/**'
+      - 'l10n/**'
+      - 'CHANGELOG.md'
   pull_request:
 
 jobs:
   
-  lint:
-     name: Run PHP Linter and Code Style checker
-     runs-on: ubuntu-latest
-     steps:
-        -  name: Checkout the project
-           uses: actions/checkout@v2
-        -  name: Install Composer
-           shell: bash
-           run: >-
-              wget https://github.com/composer/getcomposer.org/raw/master/web/installer -O - -q |
-              php -- --quiet
-        -  name: Install packages
-           shell: bash
-           run: composer install
-        -  name: Run linter
-           shell: bash
-           run: composer lint:lint
-        -  name: Run code style checker
-           shell: bash
-           run: composer cs:check
+  code-lint:
+    name: Run PHP Linter and Code Style checker
+    runs-on: ubuntu-latest
+    steps:
+        -   name: Checkout the project
+            uses: actions/checkout@v2
+        -   name: Setup node and NPM
+            uses: actions/setup-node@v2
+            with:
+                node-version: '14'
+        -   name: Install npm
+            shell: bash
+            run: npm install -g npm@^7
+            
+        -   name: Get the date
+            id: date
+            run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+        -   name: Cache NPM cache
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    ~/.npm
+                    node_modules
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+                restore-keys: |
+                    ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-node-
+        -   name: Get PHP version
+            shell: bash
+            run: php -v
+        
+        -   name: Install Composer
+            shell: bash
+            run: >-
+                wget https://github.com/composer/getcomposer.org/raw/main/web/installer -O - -q |
+                php -- --quiet
+        
+        -   name: Install PHP packages
+            shell: bash
+            run: composer install
+        
+        -   name: Install Node packages
+            shell: bash
+            run: npm -q install || { cat ~/.npm/eresolve-report.txt ; exit 1; }
+        
+        -   name: Run PHP linter
+            shell: bash
+            run: composer lint:lint
+        -   name: Run PHP code style checker
+            shell: bash
+            env:
+                PHP_CS_FIXER_IGNORE_ENV: 1
+            run: composer cs:check
+            
+        -   name: Check for formatting issues with vue files (prettier)
+            shell: bash
+            run: >-
+                npm run prettier || {
+                echo '::error ::The prettier style checker failed.
+                Please run `npm run prettier-fix` in order to correct this.';
+                exit 1;
+                }
+
+        -   name: Check for issues with vue and js files (eslint)
+            shell: bash
+            run: >-
+                npm run eslint || {
+                echo '::error ::The eslint style checker failed.
+                Please run `npm run eslint-fix` in order to correct this.';
+                exit 1;
+                }
+
+        -   name: Check for formatting issues with CSS files (stylelint)
+            shell: bash
+            run: >-
+                npm run stylelint || {
+                echo '::error ::The stylelint checker failed.
+                Please run `npm run stylelint-fix` to help solving these issues if possible.';
+                exit 1;
+                }
+        
   
-  test:
+  unit-tests:
     name: Run the unittests
     runs-on: ubuntu-latest
     
@@ -42,128 +107,281 @@ jobs:
                 - pgsql
                 - sqlite
             coreVersion:
-                - stable19
+                - stable24
             phpVersion:
                 - "7"
+            httpServer:
+                - "apache"
             mayFail:
                 - false
             include:
                 # Test different core versions additionally
                 -   database: mysql
-                    coreVersion: stable18
+                    coreVersion: stable19
                     phpVersion: "7"
+                    httpServer: "apache"
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable20
                     phpVersion: "7"
+                    httpServer: "apache"
+                    mayFail: false
+                -   database: mysql
+                    coreVersion: stable21
+                    phpVersion: "7"
+                    httpServer: "apache"
+                    mayFail: false
+                -   database: mysql
+                    coreVersion: stable22
+                    phpVersion: "7"
+                    httpServer: "apache"
+                    mayFail: false
+                -   database: mysql
+                    coreVersion: stable23
+                    phpVersion: "7"
+                    httpServer: "apache"
                     mayFail: false
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable19
-                    phpVersion: "7.2"
+                    # stable24 branch needs PHP 7.4
+                    coreVersion: stable23
+                    phpVersion: "7.3"
+                    httpServer: "apache"
                     mayFail: false
-                    
+                -   database: mysql
+                    coreVersion: stable24
+                    phpVersion: "8.0"
+                    httpServer: "apache"
+                    mayFail: false
+                
+                # Test different HTTP server
+                -   database: mysql
+                    coreVersion: stable24
+                    phpVersion: "7"
+                    httpServer: "nginx"
+                    mayFail: false
+                
                 # Test against master (optionally)
                 -   database: mysql
                     coreVersion: master
                     phpVersion: "7"
+                    httpServer: "apache"
                     mayFail: true
                     
     steps:
-      - name: Checkout the nextcloud server
-        uses: actions/checkout@v2
-        with:
-            repository: nextcloud/server
-            ref: ${{ matrix.coreVersion }}
-            path: nextcloud
       - name: Checkout the app
         uses: actions/checkout@v2
         with:
-            path: cookbook
+            fetch-depth: 2
+      
+      - name: Ensure the appinfo is built
+        shell: bash
+        run: make appinfo/info.xml
       
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
       - name: Run the tests in docker container
-        uses: ./cookbook/.github/actions/run-tests
+        uses: ./.github/actions/run-tests
         id: run-tests
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
             allowFailure: ${{ matrix.mayFail }}
+            server: ${{ matrix.httpServer }}
+            coreVersion: ${{ matrix.coreVersion }}
     
-      - name: Upload the log file
+      - name: Upload the log file as artifact
         uses: actions/upload-artifact@v2
         with:
-            name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
-            path: nextcloud/data/nextcloud.log
+            name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: .github/actions/run-tests/volumes/data/nextcloud.log
       
-      - name: Upload the coverage reports to codecov.io
+      - name: Failing in case the tests failed
         shell: bash
         run: >-
-            cd nextcloud/apps/cookbook &&
-            bash <(curl -s https://codecov.io/bash) -F unittests -f coverage.xml -R . &&
-            bash <(curl -s https://codecov.io/bash) -F integration -f coverage.integration.xml -R .
+            echo "Exiting with ${{ env.test_result }}" ;
+            exit "${{ env.test_result }}"
+            
+      - name: Copy coverage-reports into non-link folder
+        shell: bash
+        run: >-
+            mkdir /tmp/coverage &&
+            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
-      
-      - name: Upload the code coverage report (unit tests)
+        
+      - name: Upload the code coverage report (unit tests) as artifacts
         uses: actions/upload-artifact@v2
         with:
-            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.phpVersion}})
-            path: |
-                coverage/
-                coverage-integration/
-                coverage.xml
-                coverage.integration.xml
+            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: "/tmp/coverage"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
+      - name: Upload the junit log file artifact as artifact
+        uses: actions/upload-artifact@v2
+        with:
+            name: Junit test log files (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: .github/actions/run-tests/volumes/coverage/junit*.xml
+        if: always()
+      
 
+  upload-codecov:
+    name: Upload artifacts to codecov.io
+    needs: 
+        - unit-tests
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Create folder structure
+          run: mkdir artifacts code unit-coverage integration-coverage
+        - name: Download artifacts
+          if: ${{ github.event_name == 'push' }}
+          uses: actions/download-artifact@v2.0.10
+          with:
+            path: artifacts
+        - name: Checkout of code base
+          if: ${{ github.event_name == 'push' }}
+          uses: actions/checkout@v2
+          with:
+            path: code
+            fetch-depth: 2
+        
+        - name: Download the uploader
+          if: ${{ github.event_name == 'push' }}
+          run: |
+            curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
+            curl -Os https://uploader.codecov.io/latest/linux/codecov
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM
+            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig
+
+            gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
+            shasum -a 256 -c codecov.SHA256SUM
+
+            chmod +x codecov
+        
+        - name: Copy Coverage reports to separate folders
+          if: ${{ github.event_name == 'push' }}
+          run: |
+            cd artifacts
+
+            for i in Code*
+            do
+              if [ -f "$i/coverage.unit.xml" ]; then
+                mkdir -p "../unit-coverage/$i"
+                cp "$i/coverage.unit.xml" "../unit-coverage/$i/coverage.xml"
+              fi
+              if [ -f "$i/coverage.integration.xml" ]; then
+                mkdir -p "../integration-coverage/$i"
+                cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
+              fi
+              if [ -f "$i/coverage.migration.xml" ]; then
+                mkdir -p "../migration-coverage/$i"
+                cp "$i/coverage.migration.xml" "../migration-coverage/$i/coverage.xml"
+              fi
+            done
+        - name: Show file structure
+          if: ${{ github.event_name == 'push' }}
+          run: ls -lR *-coverage
+        
+        - name: Upload unit test codecov reports
+          if: ${{ github.event_name == 'push' }}
+          run: >-
+            ./codecov
+            -F unittests
+            -s unit-coverage
+            -R code
+            -X gcov
+            -v
+        - name: Upload integration test codecov reports
+          if: ${{ github.event_name == 'push' }}
+          run: >-
+            ./codecov
+            -F integration
+            -s integration-coverage
+            -R code
+            -X gcov
+            -v
+        - name: Upload migration test codecov reports
+          if: ${{ github.event_name == 'push' }}
+          run: >-
+            ./codecov
+            -F migration
+            -s migration-coverage
+            -R code
+            -X gcov
+            -v
+
+          
+    
   source-package:
     name: Create source code artifacts
-    needs: test
+    needs:
+        - unit-tests
+        - code-lint
     runs-on: ubuntu-latest
     
     steps:
-        -   name: Checkout the nextcloud server
-            uses: actions/checkout@v2
-            with:
-                repository: nextcloud/server
-                ref: ${{ matrix.coreVersion }}
-                path: nextcloud
         -   name: Checkout the app
             uses: actions/checkout@v2
+        -   name: Setup node and NPM
+            uses: actions/setup-node@v2
             with:
-                path: nextcloud/apps/cookbook
+                node-version: '14'
+        -   name: Install npm
+            shell: bash
+            run: npm install -g npm@^7
+            
+        -   name: Get the date
+            id: date
+            run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+        -   name: Use cache for NPM
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    ~/.npm
+                    node_modules
+                key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+                restore-keys: |
+                    ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-node-
+        
+        -   name: Update NPM
+            shell: bash
+            run: sudo npm install -g npm
         
         -   name: Install the NPM dependencies
             shell: bash
             run: >-
-                cd nextcloud/apps/cookbook &&
                 npm install
         -   name: Install the dependencies for composer
             shell: bash
             run: >-
-                cd nextcloud/apps/cookbook &&
-                make
-        
-        -   name: Create the source package
+                make composer_dist
+        -   name: Build node app
             shell: bash
             run: >-
-                make -C nextcloud/apps/cookbook source_package_name=$(pwd)/source source
-        -   name: Publish the source package as artifact
-            uses: actions/upload-artifact@v2
-            with:
-                name: cookbook-source
-                path: source.tar.gz
-            
+                make npm
+        
         -   name: Create the app store package
             shell: bash
             run: >-
-                make -C nextcloud/apps/cookbook appstore_package_name=$(pwd)/appstore appstore
+                make appstore_package_name=/tmp/appstore appstore
         -   name: Publish the app store package as artifact
             uses: actions/upload-artifact@v2
             with:
                 name: cookbook-appstore
-                path: appstore.tar.gz
+                path: /tmp/appstore.tar.gz
             
+  event_file:
+    name: "Upload Event File"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: Event File
+        path: ${{ github.event_path }}
+        retention-days: 1
+
+

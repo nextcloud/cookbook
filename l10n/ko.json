@@ -1,15 +1,24 @@
 { "translations": {
+    "in %s" : "%s",
     "Home" : "집",
+    "Loading…" : "불러오는 중…",
+    "Save changes" : "변경 사항 저장",
+    "Page not found" : "페이지를 찾을 수 없음",
     "Filter" : "필터",
     "Search" : "검색",
-    "Save changes" : "변경 사항 저장",
-    "Loading…" : "불러오는 중…",
-    "Page not found" : "페이지를 찾을 수 없음",
     "Category" : "분류",
+    "Tags" : "태그",
+    "Categories" : "분류",
+    "Rename" : "이름 바꾸기",
     "Add" : "추가",
+    "Close" : "닫기",
     "Name" : "이름",
     "Description" : "설명",
     "URL" : "URL",
-    "Tools" : "도구"
+    "Keywords" : "키워드",
+    "Tools" : "도구",
+    "Calories" : "칼로리",
+    "Modification date" : "수정일",
+    "Last modified" : "수정한 날짜"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

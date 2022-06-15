@@ -1,62 +1,153 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <ul ref="list">
-            <li :class="fieldType" v-for="(entry,idx) in $parent.recipe[fieldName]" :key="fieldName+idx">
-                <div v-if="fieldName==='recipeInstructions'" class="step-number">{{ parseInt(idx) + 1 }}</div>
-                <input v-if="fieldType==='text'" type="text" @keyup="keyPressed" :value="$parent.recipe[fieldName][idx]" v-on:input="handleFieldChange" @paste="handlePaste" />
-                <textarea v-else-if="fieldType==='textarea'" :value="$parent.recipe[fieldName][idx]" v-on:input="handleFieldChange" @paste="handlePaste"></textarea>
+        <ul>
+            <li
+                v-for="(entry, idx) in buffer"
+                :key="fieldName + idx"
+                :class="fieldType"
+            >
+                <div v-if="showStepNumber" class="step-number">
+                    {{ parseInt(idx) + 1 }}
+                </div>
+                <input
+                    v-if="fieldType === 'text'"
+                    ref="list-field"
+                    v-model="buffer[idx]"
+                    type="text"
+                    @keydown="keyDown"
+                    @keyup="keyUp"
+                    @input="handleInput"
+                    @paste="handlePaste"
+                />
+                <textarea
+                    v-else-if="fieldType === 'textarea'"
+                    ref="list-field"
+                    v-model="buffer[idx]"
+                    @keydown="keyDown"
+                    @keyup="keyUp"
+                    @input="handleInput"
+                    @paste="handlePaste"
+                ></textarea>
                 <div class="controls">
-                    <button class="icon-arrow-up" @click="moveUp(idx)"></button>
-                    <button class="icon-arrow-down" @click="moveDown(idx)"></button>
-                    <button class="icon-delete" @click="deleteEntry(idx)"></button>
+                    <button
+                        class="icon-arrow-up"
+                        :title="t('cookbook', 'Move entry up')"
+                        @click="moveEntryUp(idx)"
+                    ></button>
+                    <button
+                        class="icon-arrow-down"
+                        :title="t('cookbook', 'Move entry down')"
+                        @click="moveEntryDown(idx)"
+                    ></button>
+                    <button
+                        class="icon-add"
+                        :title="t('cookbook', 'Insert entry above')"
+                        @click="addNewEntry(idx)"
+                    ></button>
+                    <button
+                        class="icon-delete"
+                        :title="t('cookbook', 'Delete entry')"
+                        @click="deleteEntry(idx)"
+                    ></button>
                 </div>
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNew()"><span class="icon-add"></span> {{ t('cookbook', 'Add') }}</button>
+        <button class="button add-list-item" @click="addNewEntry()">
+            <span class="icon-add"></span> {{ t("cookbook", "Add") }}
+        </button>
     </fieldset>
 </template>
 
 <script>
+const linesMatchAtPosition = (lines, i) =>
+    lines.every((line) => line[i] === lines[0][i])
+const findCommonPrefix = (lines) => {
+    // Find the substring common to the array of strings
+    // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
+
+    // Check border cases size 1 array and empty first word)
+    if (!lines[0] || lines.length === 1) return lines[0] || ""
+
+    // Loop up index until the characters do not match
+    for (let i = 0; ; i++) {
+        // If first line has fewer than i characters
+        // or the character of each line at position i is not identical
+        if (!lines[0][i] || !linesMatchAtPosition(lines, i)) {
+            // Then the desired prefix is the substring from the beginning to i
+            return lines[0].substr(0, i)
+        }
+    }
+}
+
 export default {
-    name: "EditInputGroup",  
+    name: "EditInputGroup",
     props: {
-        fieldType: String,
-        fieldName: String,
-        fieldLabel: String,
+        value: {
+            type: Array,
+            default: () => [],
+        },
+        fieldType: {
+            type: String,
+            default: "text",
+        },
+        fieldName: {
+            type: String,
+            default: "",
+        },
+        showStepNumber: {
+            type: Boolean,
+            default: false,
+        },
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
         // If true, add new fields, for newlines in pasted data
         createFieldsOnNewlines: {
             type: Boolean,
-            default: false
+            default: false,
+        },
+        referencePopupEnabled: {
+            type: Boolean,
+            default: false,
         },
     },
-    data () {
+    data() {
         return {
             // helper variables
-            contentPasted: false
+            buffer: this.value.slice(),
+            lastFocusedFieldIndex: null,
+            lastCursorPosition: -1,
+            ignoreNextKeyUp: false,
         }
+    },
+    watch: {
+        value: {
+            handler() {
+                this.buffer = this.value.slice()
+            },
+            deep: true,
+        },
     },
     methods: {
         /* if index = -1, element is added at the end
          * if focusAfterInsert=true, the element is focussed after inserting
          * the content is inserted into the newly created field
-         **/
-        addNew: function(index = -1, focusAfterInsert = true, content = '') {
-            if (index === -1) {
-                index = this.$parent.recipe[this.fieldName].length
+         * */
+        addNewEntry(index = -1, focusAfterInsert = true, content = "") {
+            let entryIdx = index
+            if (entryIdx === -1) {
+                entryIdx = this.buffer.length
             }
-            this.$parent.addEntry(this.fieldName, index, content)
+            this.buffer.splice(entryIdx, 0, content)
 
             if (focusAfterInsert) {
-                let $ul = $(this.$refs['list'])
-                let $this = this
-                this.$nextTick(function() {
-                    if ($ul.children('li').length > index) {
-                        if ($this.fieldType === 'text') {
-                            $ul.children('li').eq(index).find('input').focus()
-                        } else if ($this.fieldType === 'textarea') {
-                            $ul.children('li').eq(index).find('textarea').focus()
-                        }
+                // const $this = this
+                this.$nextTick(function foc() {
+                    const listFields = this.$refs["list-field"]
+                    if (listFields.length > entryIdx) {
+                        listFields[entryIdx].focus()
                     }
                 })
             }
@@ -64,107 +155,281 @@ export default {
         /**
          * Delete an entry from the list
          */
-        deleteEntry: function(idx) {
-            this.$parent.deleteEntry(this.fieldName, idx)
+        deleteEntry(index) {
+            this.buffer.splice(index, 1)
+            this.$emit("input", this.buffer)
         },
-        /** 
+        /**
          * Handle typing in input or field or textarea
          */
-        handleFieldChange: function(e) {  
-            // wait a tick to check if content was typed or pasted
-            this.$nextTick(function() {
-                if (this.contentPasted) {
-                    this.contentPasted = false
-                    return
-                }
-                let $li = $(e.currentTarget).parents('li')
-                this.$parent.recipe[this.fieldName][$li.index()] = e.target.value
-            })
+        handleInput(e) {
+            // Exit early if input was pasted. Let `handlePaste` handle this.
+            // References:
+            // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
+            // https://rawgit.com/w3c/input-events/v1/index.html#interface-InputEvent-Attributes
+            if (
+                e.inputType === "insertFromPaste" ||
+                e.inputType === "insertFromPasteAsQuotation"
+            ) {
+                return
+            }
+            this.$emit("input", this.buffer)
         },
-        /** 
+        /**
          * Handle paste in input field or textarea
          */
-        handlePaste: function(e) {
-            this.contentPasted = true
+        handlePaste(e) {
+            // get data from clipboard to keep newline characters, which are stripped
+            // from the data pasted in the input field (e.target.value)
+            const clipboardData = e.clipboardData || window.clipboardData
+            const pastedData = clipboardData.getData("Text")
+            const inputLinesArray = pastedData
+                .split(/\r\n|\r|\n/g)
+                // Remove empty lines
+                .filter((line) => line.trim() !== "")
+
+            // If only a single line pasted, emit that line and exit
+            // Treat it as if that single line was typed
+            if (inputLinesArray.length === 1) {
+                this.$emit("input", this.buffer)
+                return
+            }
+
+            // From here on, multiple lines pasted
             if (!this.createFieldsOnNewlines) {
                 return
             }
 
-            // get data from clipboard to keep newline characters, which are stripped
-            // from the data pasted in the input field (e.target.value)
-            var clipboardData = e.clipboardData || window.clipboardData
-            var pastedData = clipboardData.getData('Text')
-
-            let input_lines_array = pastedData.split(/\r\n|\r|\n/g)
-            if ( input_lines_array.length == 1) {
-                return
-            }
             e.preventDefault()
 
-            let $li = $(e.currentTarget).parents('li')
-            let $inserted_index = $li.index()
-            let $ul = $li.parents('ul')
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $insertedIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
 
-            // Remove empty lines
-            for (let i = input_lines_array.length-1; i >= 0; --i)
-            {
-                if (input_lines_array[i].trim() == '') {
-                    input_lines_array.splice(i, 1)
-                }
+            // Remove the common prefix from each line of the pasted text
+            // For example, if the pasted text uses - for a bullet list
+            const prefix = findCommonPrefix(inputLinesArray)
+
+            // Inspired from https://stackoverflow.com/a/25575009
+            // Ensure that we are only removing common punctuation
+            // For example, if many lines start with the same word, keep that
+            // This is more robust than filtering our [a-zA-Z] in the prefix
+            // as it should work for any alphabet
+            const re =
+                /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/g
+            const prefixLength = re.test(prefix)
+                ? prefix.search(re)
+                : prefix.length
+
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i].slice(prefixLength)
             }
-            for (let i = 0; i < input_lines_array.length; ++i)
-            {
-                this.addNew($inserted_index+i+1, false, input_lines_array[i])
+
+            // Replace multiple whitespace characters with a single space
+            // This has to be applied to each item in the list if we don't want
+            // to accidentally replace all newlines with spaces before splitting
+            // Fixes #713
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                inputLinesArray[i] = inputLinesArray[i]
+                    .trim()
+                    .replaceAll(/\s+/g, " ")
             }
-            this.$nextTick(function() {
-                let indexToFocus = $inserted_index+input_lines_array.length
+
+            for (let i = 0; i < inputLinesArray.length; ++i) {
+                this.addNewEntry(
+                    $insertedIndex + i + 1,
+                    false,
+                    inputLinesArray[i]
+                )
+            }
+            this.$emit("input", this.buffer)
+
+            this.$nextTick(function foc() {
+                let indexToFocus = $insertedIndex + inputLinesArray.length
                 // Delete field if it's empty
-                if (this.$parent.recipe[this.fieldName][$inserted_index].trim() == "" ) {
-                    this.deleteEntry($inserted_index)
-                    indexToFocus--
+                if (this.buffer[$insertedIndex].trim() === "") {
+                    this.deleteEntry($insertedIndex)
+                    indexToFocus -= 1
                 }
-                $ul.children('li').eq(indexToFocus).find('input').focus()
-                this.contentPasted = false
+                this.$refs["list-field"][indexToFocus].focus()
             })
         },
         /**
          * Catches enter and key down presses and either adds a new row or focuses the one below
          */
-        keyPressed(e) {
-            // Using keyup for trigger will prevent repeat triggering if key is held down
-            if (e.keyCode === 13 || e.keyCode === 10) {
-                e.preventDefault()
-                let $li = $(e.currentTarget).parents('li')
-                let $ul = $li.parents('ul')
-                if ($li.index() >= $ul.children('li').length - 1) {
-                    this.addNew()
-                } else {
-                    $ul.children('li').eq($li.index() + 1).find('input').focus()
-                }
+        keyDown(e) {
+            // If, e.g., enter has been pressed in the multiselect popup to select an option,
+            // ignore the following keyup event
+            if (this.ignoreNextKeyUp) {
+                this.ignoreNextKeyUp = false
+                return
+            }
+
+            // Allow new lines with shift key
+            if (e.shiftKey) {
+                // Do nothing here, user wants a line break
+                return
+            }
+
+            // Repeat events should be ignored
+            if (e.repeat) {
+                return
+            }
+
+            // Only do anything for enter
+            if (e.key !== "Enter") {
+                return
+            }
+
+            // At this point, we are sure that we want to modify the default
+            // behaviour
+            e.preventDefault()
+
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+                this.addNewEntry()
+            } else {
+                // Focus the next input or textarea
+                // We have to check for both, as inputs are used for
+                // ingredients and textareas are used for instructions
+                $ul.children[$pressedLiIndex + 1]
+                    .querySelector("input, textarea")
+                    .focus()
             }
         },
-        moveDown: function(idx) {
-            this.$parent.moveEntryDown(this.fieldName, idx)
+        /**
+         * Shows the recipe linking popup when # is pressed
+         */
+        keyUp(e) {
+            // If, e.g., enter has been pressed in the multiselect popup to select an option,
+            // ignore the following keyup event
+            if (this.ignoreNextKeyUp) {
+                this.ignoreNextKeyUp = false
+                return
+            }
+
+            // Only do anything for enter or # keys
+            if (!(this.referencePopupEnabled && e.key === "#")) {
+                return
+            }
+
+            // Get the index of the pressed list item
+            const $li = e.currentTarget.closest("li")
+            const $ul = $li.closest("ul")
+            const $pressedLiIndex = Array.prototype.indexOf.call(
+                $ul.childNodes,
+                $li
+            )
+
+            // Get the position of the cursor and the content of the input
+            const elm = this.$refs["list-field"][$pressedLiIndex]
+            const cursorPos = elm.selectionStart
+            const content = elm.value
+
+            // Show the popup only if the # was inserted at the very
+            // beggining of the input or after any whitespace character
+            if (
+                !(cursorPos === 1 || /\s/.test(content.charAt(cursorPos - 2)))
+            ) {
+                return
+            }
+
+            // Show dialog to select recipe
+            this.$parent.$emit("showRecipeReferencesPopup", {
+                context: this,
+            })
+            this.lastFocusedFieldIndex = $pressedLiIndex
+            this.lastCursorPosition = cursorPos
         },
-        moveUp: function(idx) {
-            this.$parent.moveEntryUp(this.fieldName, idx)
+        moveEntryDown(index) {
+            if (index >= this.buffer.length - 1) {
+                // Already at the end of array
+                return
+            }
+            const entry = this.buffer.splice(index, 1)[0]
+            if (index + 1 < this.buffer.length) {
+                this.buffer.splice(index + 1, 0, entry)
+            } else {
+                this.buffer.push(entry)
+            }
+            this.$emit("input", this.buffer)
+        },
+        moveEntryUp(index) {
+            if (index < 1) {
+                // Already at the start of array
+                return
+            }
+            const entry = this.buffer.splice(index, 1)[0]
+            this.buffer.splice(index - 1, 0, entry)
+            this.$emit("input", this.buffer)
+        },
+        pasteCanceled() {
+            const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
+            // set cursor back to previous position
+            this.$nextTick(function foc() {
+                field.focus()
+                field.setSelectionRange(
+                    this.lastCursorPosition,
+                    this.lastCursorPosition
+                )
+            })
+        },
+        /**
+         * Paste string at the last saved cursor position
+         */
+        pasteString(str, ignoreKeyup = true) {
+            const field = this.$refs["list-field"][this.lastFocusedFieldIndex]
+
+            // insert str
+            const content = field.value
+            const updatedContent =
+                content.slice(0, this.lastCursorPosition) +
+                str +
+                content.slice(this.lastCursorPosition)
+            this.buffer[this.lastFocusedFieldIndex] = updatedContent
+            this.$emit("input", this.buffer)
+
+            // set cursor to position after pasted string. Waiting two ticks is necessary for
+            // the data to be updated in the field
+            this.$nextTick(function delayedFocus() {
+                this.$nextTick(function foc() {
+                    this.ignoreNextKeyUp = ignoreKeyup
+                    field.focus()
+                    const newCursorPos = this.lastCursorPosition + str.length
+                    field.setSelectionRange(newCursorPos, newCursorPos)
+                })
+            })
         },
     },
 }
 </script>
 
 <style scoped>
+button {
+    width: auto !important;
+    padding: 0 1rem 0 0.75rem !important;
+}
 
 fieldset {
-    margin-bottom: 1em;
     width: 100%;
+    margin-bottom: 1em;
 }
 
 fieldset > label {
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
+    line-height: 18px;
     word-spacing: initial;
 }
 
@@ -174,83 +439,85 @@ fieldset > ul {
 
 fieldset > ul + button {
     width: 36px;
-    text-align: center;
     padding: 0;
     float: right;
+    text-align: center;
 }
 
 fieldset > ul > li {
     display: flex;
     width: 100%;
-    margin: 0 0 1em 0;
     padding-right: 0.25em;
+    margin: 0 0 1em;
 }
 
-    li.text > input {
-        width: 100%;
-        margin: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
+.text > input {
+    width: 100%;
+    margin: 0;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
 
-    li .controls {
-        display: flex;
-    }
+li .controls {
+    display: flex;
+}
 
-        li .controls > button {
-            padding: 0;
-            margin: 0;
-            width: 34px;
-            height: 34px;
-            border-radius: 0;
-            border-left-color: transparent;
-            border-right-color: transparent;
-        }
+li .controls > button {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    margin: 0;
+    border-radius: 0;
+}
 
-        li .controls > button:last-child {
-            border-top-right-radius: var(--border-radius);
-            border-bottom-right-radius: var(--border-radius);
-            border-right-width: 1px;
-        }
-            li .controls > button:last-child:not(:hover):not(:focus) {
-                border-right-color: var(--color-border-dark);
-            }
+li .controls > button:last-child {
+    border-right-width: 1px;
+    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
 
-li.textarea {
-    float: right;
+li .controls > button:last-child:not(:hover):not(:focus) {
+    border-right-color: var(--color-border-dark);
+}
+
+.textarea {
     position: relative;
-    top: 1px;
     z-index: 1;
+    top: 1px;
+    float: right;
 }
 
-    li.textarea > textarea {
-        min-height: 10em;
-        resize: vertical;
-        width: calc(100% - 44px);
-        margin: 0 0 0 44px;
-        border-top-right-radius: 0;
-    }
+.textarea > textarea {
+    width: calc(100% - 44px);
+    min-height: 10em;
+    margin: 0 0 0 44px;
+    border-top-right-radius: 0;
+    resize: vertical;
+}
 
-    li.textarea::after {
-        display: table;
-        content: '';
-        clear: both;
-    }
-    .step-number {
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 36px;
-        width: 36px;
-        border-radius: 50%;
-        border: 1px solid var(--color-border-dark);
-        outline: none;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-color: var(--color-background-dark);
-        line-height: 36px;
-        text-align: center;
-    }
+.textarea::after {
+    display: table;
+    clear: both;
+    content: "";
+}
+
+.step-number {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--color-border-dark);
+    background-color: var(--color-background-dark);
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    line-height: 36px;
+    outline: none;
+    text-align: center;
+}
 
 .icon-arrow-up {
     background-image: var(--icon-triangle-n-000);
@@ -259,10 +526,4 @@ li.textarea {
 .icon-arrow-down {
     background-image: var(--icon-triangle-s-000);
 }
-
-button {
-    width: auto !important;
-    padding: 0 1rem 0 0.75rem !important;
-}
-
 </style>

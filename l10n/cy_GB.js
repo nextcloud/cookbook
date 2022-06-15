@@ -2,12 +2,16 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Cartref",
-    "Search" : "Chwilio",
     "Loading…" : "Yn llwytho…",
+    "Search" : "Chwilio",
     "Category" : "Categori",
+    "Tags" : "Tagiau",
+    "Rename" : "Ailenwi",
     "Add" : "Ychwanegu",
+    "Close" : "Cau",
     "Name" : "Enw",
     "Description" : "Disgrifiad",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Last modified" : "Newidiwyd diwethaf"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

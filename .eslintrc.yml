@@ -1,0 +1,20 @@
+
+plugins:
+    - vue
+
+extends:
+    - airbnb-base
+    - "plugin:vue/base"
+    - "plugin:vue/essential"
+    - "plugin:vue/strongly-recommended"
+    - "plugin:vue/recommended"
+    - prettier
+
+globals:
+    OC: readonly
+    t: readonly
+
+rules:
+    no-plusplus:
+        - error
+        - allowForLoopAfterthoughts: true

@@ -1,31 +1,72 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <input type="number" min="0" v-model="$parent[fieldName][0]" placeholder="00">
+        <input
+            v-model="hours"
+            type="number"
+            min="0"
+            placeholder="00"
+            @input="handleInput"
+        />
         <span>:</span>
-        <input type="number" min="0" max="59" v-model="$parent[fieldName][1]" placeholder="00">
+        <input
+            v-model="minutes"
+            type="number"
+            min="0"
+            max="59"
+            placeholder="00"
+            @input="handleInput"
+        />
     </fieldset>
 </template>
 
 <script>
 export default {
     name: "EditTimeField",
-    props: ['fieldName','fieldLabel'],
-    data () {
+    props: {
+        value: {
+            type: Object,
+            required: true,
+            default: () => ({
+                time: [null, null],
+                paddedTime: null,
+            }),
+        },
+        fieldLabel: {
+            type: String,
+            default: "",
+        },
+    },
+    data() {
         return {
+            minutes: null,
+            hours: null,
         }
     },
-    computed: {
+    watch: {
+        value() {
+            ;[this.hours, this.minutes] = this.value.time
+        },
     },
     methods: {
-    },
-    mounted () {
+        handleInput() {
+            this.minutes = this.minutes ? this.minutes : 0
+            this.hours = this.hours ? this.hours : 0
+
+            // create padded time string
+            const hoursPadded = this.hours.toString().padStart(2, "0")
+            const minutesPadded = this.minutes.toString().padStart(2, "0")
+
+            this.$emit("input", {
+                time: [this.hours, this.minutes],
+                paddedTime: `PT${hoursPadded}H${minutesPadded}M`,
+            })
+        },
     },
 }
 </script>
 
 <style scoped>
-
 fieldset {
     margin-bottom: 1em;
 }
@@ -36,16 +77,18 @@ fieldset > * {
 }
 
 fieldset > label {
-    vertical-align: top;
     display: inline-block;
     width: 10em;
-    line-height: 18px;
     font-weight: bold;
+    line-height: 18px;
+    vertical-align: top;
 }
-    @media(max-width:1199px) { fieldset > label {
+@media (max-width: 1199px) {
+    fieldset > label {
         display: block;
         float: none;
-    }}
+    }
+}
 
 fieldset > span {
     margin: 0 0.5rem;
@@ -56,5 +99,4 @@ fieldset > input {
     width: 50px !important;
     text-align: center;
 }
-
 </style>

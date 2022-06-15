@@ -1,15 +1,21 @@
 { "translations": {
+    "in %s" : "kaustas %s",
     "Home" : "Avaleht",
+    "Loading…" : "Laadimine…",
+    "Save changes" : "Salvesta muudatused",
+    "Page not found" : "Lehekülge ei leitud",
     "Filter" : "Filter",
     "Search" : "Otsi",
-    "Save changes" : "Salvesta muudatused",
-    "Loading…" : "Laadimine…",
-    "Page not found" : "Lehekülge ei leitud",
     "Category" : "Kategooria",
+    "Tags" : "Sildid",
+    "Categories" : "Kategooriad",
+    "Rename" : "Nimeta ümber",
     "Add" : "Lisa",
+    "Close" : "Sulge",
     "Name" : "Nimi",
     "Description" : "Kirjeldus",
     "URL" : "URL",
-    "Tools" : "Tööriistad"
+    "Tools" : "Tööriistad",
+    "Last modified" : "Viimati muudetud"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

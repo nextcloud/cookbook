@@ -1,0 +1,12 @@
+{ "translations": {
+    "Home" : "Asnubeg",
+    "Loading…" : "Asali...",
+    "Save changes" : "Sekles asnifel",
+    "Search" : "Nadi",
+    "Tags" : "Tibzimin",
+    "Rename" : "Beddel isem",
+    "Add" : "Rnu",
+    "Close" : "Mdel",
+    "Name" : "Nom"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

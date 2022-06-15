@@ -3,7 +3,10 @@ OC.L10N.register(
     {
     "Home" : "ئۆي",
     "Search" : "Search",
+    "Tags" : "بەلگەلەر",
+    "Rename" : "ئات ئۆزگەرت",
     "Add" : "قوش",
+    "Close" : "ياپ",
     "Name" : "ئاتى",
     "Description" : "چۈشەندۈرۈش",
     "URL" : "URL"

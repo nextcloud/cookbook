@@ -1,42 +1,56 @@
 <template>
-    <a v-on:click="clicked" ref="link"><li>{{ keyword }}</li></a>
+    <a ref="link" @click="clicked">
+        <li>
+            <span>{{ name }}</span>
+            <span v-if="count != null" class="count">({{ count }})</span>
+        </li>
+    </a>
 </template>
 
 <script>
 export default {
-    name: 'RecipeKeyword',
-    props: ['keyword'],
-    data () {
-        return {
-        }
+    name: "RecipeKeyword",
+    props: {
+        name: {
+            type: String,
+            required: true,
+        },
+        count: {
+            type: Number,
+            default: null,
+        },
     },
-    computed: {
+    data() {
+        return {}
     },
+    computed: {},
     methods: {
         clicked() {
-            if(!this.$refs.link.classList.contains('disabled')) {
-                this.$emit('keyword-clicked')
+            if (!this.$refs.link.classList.contains("disabled")) {
+                this.$emit("keyword-clicked")
             }
-        }
-    }
+        },
+    },
 }
 </script>
 
 <style scoped>
-
 li {
     display: inline-block;
-    margin-right: .3em;
-    margin-bottom: .3em;
-    padding: 0px .5em;
+    padding: 0 0.5em;
     border: 1px solid var(--color-border-dark);
+    margin-right: 0.3em;
+    margin-bottom: 0.3em;
     border-radius: var(--border-radius-pill);
 
     /* prevent text selection - doesn't look good */
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
+}
+
+li .count {
+    margin-left: 0.35em;
+    color: var(--color-text-light);
+    font-size: 0.8em;
 }
 
 .active li {
@@ -44,10 +58,23 @@ li {
     color: var(--color-primary-text);
 }
 
+.active li .count {
+    color: var(--color-primary-text);
+}
+
 .disabled li {
-    background-color: #FFF;
     border-color: var(--color-border);
+    background-color: #fff;
     color: var(--color-border);
+}
+
+.disabled li .count {
+    color: var(--color-border);
+}
+
+li:hover,
+.active li:hover {
+    border: 1px solid var(--color-primary);
 }
 
 .disabled li:hover {
@@ -55,7 +82,7 @@ li {
     cursor: default;
 }
 
-li:hover, .active li:hover {
-    border: 1px solid var(--color-primary);
+.disabled :hover {
+    cursor: default;
 }
 </style>

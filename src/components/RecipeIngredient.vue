@@ -1,18 +1,39 @@
 <template>
-    <li :class="{ 'header': isHeader() }">{{ displayIngredient }}</li>
+    <li
+        :class="{
+            header: isHeader(),
+            unindented: !recipeIngredientsHaveSubgroups,
+        }"
+        @click="toggleDone"
+    >
+        <div class="checkmark" :class="{ done: isDone }">✔</div>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div class="ingredient" v-html="displayIngredient"></div>
+    </li>
 </template>
 
 <script>
 export default {
-    name: 'RecipeIngredient',
-    props: ['ingredient'],
-    data () {
+    name: "RecipeIngredient",
+    props: {
+        /* Ingredient HTML string to display. Content should be sanitized.
+         */
+        ingredient: {
+            type: String,
+            default: "",
+        },
+        recipeIngredientsHaveSubgroups: {
+            type: Boolean,
+        },
+    },
+    data() {
         return {
             headerPrefix: "## ",
+            isDone: false,
         }
     },
     computed: {
-        displayIngredient: function() {
+        displayIngredient() {
             if (this.isHeader()) {
                 return this.ingredient.substring(this.headerPrefix.length)
             }
@@ -20,28 +41,53 @@ export default {
         },
     },
     methods: {
-        isHeader: function() {
-            if (this.ingredient.startsWith(this.headerPrefix)) {
-                return true
-            }
-            return false
-        }
-    }
-
+        isHeader() {
+            return this.ingredient.startsWith(this.headerPrefix)
+        },
+        toggleDone() {
+            this.isDone = !this.isDone
+        },
+    },
 }
 </script>
 
 <style scoped>
-
 li {
-    margin-left: 1.25em;
+    display: flex;
 }
-    li.header {
-        position: relative;
-        left: -1.25em;
-        margin-top: 0.25em;
-        list-style-type: none;
-        font-variant: small-caps;
-    }
 
+.header {
+    position: relative;
+    left: -1.25em;
+    margin-top: 0.25em;
+    font-variant: small-caps;
+    list-style-type: none;
+}
+
+.unindented {
+    position: relative;
+    left: -1.25em;
+}
+
+li > .checkmark {
+    display: inline;
+    visibility: hidden;
+}
+
+li > .done {
+    visibility: visible;
+}
+
+li:hover > .checkmark {
+    color: var(--color-primary-element);
+    opacity: 0.5;
+    visibility: visible;
+}
+
+li > .ingredient {
+    display: inline;
+    padding-left: 1em;
+    margin-left: 0.3em;
+    text-indent: -1em;
+}
 </style>

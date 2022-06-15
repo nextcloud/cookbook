@@ -1,0 +1,5 @@
+docs/dev/api/
+docs/_site/
+docs/vendor/
+tests/
+vendor/
