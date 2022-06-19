@@ -20,7 +20,7 @@ class UserConfigHelper {
 	 * @var IConfig
 	 */
 	private $config;
-	
+
 	/**
 	 * @var IL10N
 	 */
@@ -164,6 +164,10 @@ class UserConfigHelper {
 	 *
 	 * If no folder is stored in the config yet, a default setting will be generated and saved.
 	 *
+	 * **Note:**
+	 * Do not use this method directly.
+	 * Instead use the methods of the UserFolderHelper class
+	 *
 	 * @return string The name of the folder within the users files
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
@@ -181,6 +185,10 @@ class UserConfigHelper {
 
 	/**
 	 * Set the folder for the user's cookbook.
+	 *
+	 * **Note:**
+	 * Do not use this method directly.
+	 * Instead use the methods of the UserFolderHelper class
 	 *
 	 * @param string $value The name of the folder within the user's files
 	 * @return void

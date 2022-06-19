@@ -17,6 +17,7 @@ use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Helper\UserFolderHelper;
 
 /**
  * @covers \OCA\Cookbook\Controller\MainController
@@ -40,6 +41,10 @@ class MainControllerTest extends TestCase {
 	 * @var RestParameterParser|MockObject
 	 */
 	private $restParser;
+	/**
+	 * @var UserFolderHelper|MockObject
+	 */
+	private $userFolder;
 
 	/**
 	 * @var MainController
@@ -53,9 +58,10 @@ class MainControllerTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
+		$this->userFolder = $this->createMock(UserFolderHelper::class);
 		$request = $this->createStub(IRequest::class);
 
-		$this->sut = new MainController('cookbook', $request, $this->recipeService, $this->dbCacheService, $this->urlGenerator, $this->restParser);
+		$this->sut = new MainController('cookbook', $request, $this->recipeService, $this->dbCacheService, $this->urlGenerator, $this->restParser, $this->userFolder);
 	}
 
 	public function testConstructor(): void {
@@ -83,7 +89,7 @@ class MainControllerTest extends TestCase {
 	}
 
 	public function testIndexInvalidUser(): void {
-		$this->recipeService->method('getFolderForUser')->willThrowException(new UserFolderNotWritableException());
+		$this->userFolder->method('getFolder')->willThrowException(new UserFolderNotWritableException());
 		$ret = $this->sut->index();
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals('invalid_guest', $ret->getTemplateName());

@@ -20,5 +20,9 @@
         ".github/actions/run-tests/volumes/nextcloud/3rdparty/**",
         ".github/actions/run-tests/volumes/**",
         ".github/actions/run-tests/volumes"
+    ],
+    "intelephense.references.exclude": [
+        "**/vendor/**",
+        ".github/actions/run-tests/volumes/**"
     ]
 }
