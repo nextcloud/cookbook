@@ -22,6 +22,8 @@
 - Update eslint-plugin-vue
 - Fix refresh-icon overlays name of recipe
   [#1033](https://github.com/nextcloud/cookbook/pull/1033) @MarcelRobitaille
+- Reenable PR checks from foreign forks
+  [#1045](https://github.com/nextcloud/cookbook/pull/1045) @christianlupus
 
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests [#1028](https://github.com/nextcloud/cookbook/issues/1028)
