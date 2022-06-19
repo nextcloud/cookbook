@@ -15,11 +15,20 @@ if [ $# -gt 0 ]; then
 	shift
 fi
 
-git diff --name-only "$BASE_REF...$BRANCH_REF" | grep -E '[.](php|phpt|vue|js)$' | while read line
+echo "Base Reference: $BASE_REF"
+echo "Head Reference: $BRANCH_REF"
+
+files="$(git diff --name-only "$BASE_REF...$BRANCH_REF")"
+
+echo '::group::Updated files'
+echo "$files"
+echo '::endgroup::'
+
+echo "$files" | grep -E '[.](php|phpt|vue|js)$' | while read line
 do
 	file=$(echo "$line" | sed 's@^\./@@')
 
-	grep -noE '(TODO|ToDo|@todo|XXX|FIXME|FixMe)([^a-zA-Z].*)?$' "$line" | while read match
+	grep -noE '(TODO|ToDo|@todo|XXX|FIXME|FixMe)([^a-zA-Z0-9].*)?$' "$line" | while read match
 	do
 		IFS=: read lineno msg <<< "$match"
 		echo "::warning file=$file,line=$lineno::Found $msg"

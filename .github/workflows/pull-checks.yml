@@ -43,15 +43,24 @@ jobs:
         name: Check for added todo messages
         runs-on: ubuntu-latest
         steps:
-            -   name: Manual checkout of the app
+            -   name: Git version output
+                run: git version
+            -   name: Manual checkout of the app (base repo)
                 run: |
                     REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
                     BRANCH="${GITHUB_REF/#refs\/heads\//}"
 
-                    git version
-
                     git clone --filter=tree:0 "$REPO" .
-                    git checkout ${{ github.head_ref }}
+            -   name: Manual checkout of the app (PR head)
+                run: |
+                    git remote add head "${{ github.event.pull_request.head.repo.html_url }}"
+                    git fetch head --filter=tree:0
+                    
+                    git checkout -b head-branch head/${{ github.head_ref }}
+            -   name: Status of current git workspace
+                run: |
+                    git branch
+                    git status
             -   name: Check for open TODO annotations in source code
                 uses: ./.github/actions/check-todo
 
