@@ -19,7 +19,6 @@ use OCP\Files\NotFoundException;
  * The user folder is the path, were all recipes are stored.
  */
 class UserFolderHelper {
-
 	/**
 	 * @var UserConfigHelper
 	 */
@@ -60,7 +59,7 @@ class UserFolderHelper {
 
 		$this->cache = null;
 	}
-	
+
 	/**
 	 * Set the current path in the settings relative to the user's root folder
 	 *
@@ -102,7 +101,7 @@ class UserFolderHelper {
 			// Correct path to be relative to nc root
 			$path = '/' . $this->userId . '/files/' . $path;
 			$path = str_replace('//', '/', $path);
-			
+
 
 			$this->cache = $this->getOrCreateFolder($path);
 		}

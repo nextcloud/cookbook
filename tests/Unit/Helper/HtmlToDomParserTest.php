@@ -46,7 +46,6 @@ class XMLMocking {
  * @covers ::<protected>
  */
 class HtmlToDomParserTest extends TestCase {
-
 	/**
 	 * @var ILogger|MockObject
 	 */
@@ -84,7 +83,7 @@ class HtmlToDomParserTest extends TestCase {
 
 		$this->sut = new HtmlToDomParser($this->logger, $this->l);
 	}
-	
+
 	/**
 	 * @covers ::__construct
 	 */
@@ -116,18 +115,18 @@ class HtmlToDomParserTest extends TestCase {
 			->method('useInternalErrors')
 			->withConsecutive([true], [false])
 			->willReturnOnConsecutiveCalls(false, true);
-		
-			
+
+
 		$this->xmlMock->expects($this->once())
 			->method('getErrors')
 			->willReturn($errors);
-			
+
 		if ($expectsError) {
 			$this->expectException(Exception::class);
 		} else {
 			$this->xmlMock->expects($this->once())
 				->method('clearErrors');
-			
+
 			$this->logger->expects($this->exactly($numErrors[2]))
 				->method('info');
 			$this->logger->expects($this->exactly($numErrors[1]))
@@ -138,7 +137,7 @@ class HtmlToDomParserTest extends TestCase {
 
 		$url = 'http://example.com/recipe';
 		$html = 'Foo Bar Baz';
-		
+
 		$this->assertEquals(4, $this->sut->getState());
 
 		try {
@@ -271,7 +270,7 @@ class HtmlToDomParserTest extends TestCase {
 				$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 			]);
-		
+
 		$url = 'http://example.com/recipe';
 
 		$this->l->method('n')->willReturnArgument(1);
@@ -288,7 +287,7 @@ class HtmlToDomParserTest extends TestCase {
 			->method('error');
 
 		$html = 'Foo Bar Baz';
-		
+
 		$this->assertEquals(4, $this->sut->getState());
 
 		$this->sut->loadHtmlString($dom, $url, $html);
@@ -315,7 +314,7 @@ class HtmlToDomParserTest extends TestCase {
 		$this->xmlMock->method('getErrors')->willReturn([
 			$this->getXMLError(2, $errorLevel, '/file', 1, 2, 'The message'),
 		]);
-		
+
 		$url = 'http://example.com/recipe';
 
 		$this->l->method('n')->willReturnArgument(0);
@@ -352,7 +351,7 @@ class HtmlToDomParserTest extends TestCase {
 		}
 
 		$html = 'Foo Bar Baz';
-		
+
 		$this->sut->loadHtmlString($dom, $url, $html);
 		$this->assertEquals($errorLevel, $this->sut->getState());
 	}
@@ -371,7 +370,7 @@ class HtmlToDomParserTest extends TestCase {
 			$this->getXMLError(2, $errorLevel, '/file', 1, 2, 'The message'),
 			$this->getXMLError(2, $errorLevel, '/file', 10, 20, 'The new message'),
 		]);
-		
+
 		$url = 'http://example.com/recipe';
 
 		$this->l->method('n')->willReturnArgument(1);
@@ -408,7 +407,7 @@ class HtmlToDomParserTest extends TestCase {
 		}
 
 		$html = 'Foo Bar Baz';
-		
+
 		$this->sut->loadHtmlString($dom, $url, $html);
 		$this->assertEquals($errorLevel, $this->sut->getState());
 	}

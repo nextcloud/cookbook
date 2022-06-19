@@ -33,7 +33,7 @@ class MainController extends Controller {
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
-	
+
 	/**
 	 * @var RestParameterParser
 	 */
@@ -83,13 +83,13 @@ class MainController extends Controller {
 		 * will prevent the controller to be called. If this does not happen for some reason, let the exception be
 		 * thrown and the user most probably has found a bug. A stack trace might help there.
 		 */
-		
+
 		$this->dbCacheService->triggerCheck();
 
 		Util::addScript('cookbook', 'nextcloud-cookbook-main');
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
-	
+
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
@@ -113,7 +113,7 @@ class MainController extends Controller {
 	 */
 	public function categories() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$categories = $this->service->getAllCategoriesInSearchIndex();
 		return new DataResponse($categories, 200, ['Content-Type' => 'application/json']);
 	}
@@ -124,7 +124,7 @@ class MainController extends Controller {
 	 */
 	public function keywords() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$keywords = $this->service->getAllKeywordsInSearchIndex();
 		return new DataResponse($keywords, 200, ['Content-Type' => 'application/json']);
 	}
@@ -135,7 +135,7 @@ class MainController extends Controller {
 	 */
 	public function search($query) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$query = urldecode($query);
 		try {
 			$recipes = $this->service->findRecipesInSearchIndex($query);
@@ -170,7 +170,7 @@ class MainController extends Controller {
 	 */
 	public function category($category) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$category = urldecode($category);
 		try {
 			$recipes = $this->service->getRecipesByCategory($category);
@@ -268,9 +268,9 @@ class MainController extends Controller {
 	 */
 	public function import() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$data = $this->restParser->getParameters();
-		
+
 		if (!isset($data['url'])) {
 			return new DataResponse('Field "url" is required', 400);
 		}
@@ -299,7 +299,7 @@ class MainController extends Controller {
 	 */
 	public function new() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		try {
 			$recipe_data = $this->restParser->getParameters();
 			$file = $this->service->addRecipe($recipe_data);
@@ -317,7 +317,7 @@ class MainController extends Controller {
 	 */
 	public function update($id) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		try {
 			$recipe_data = $this->restParser->getParameters();
 
@@ -325,7 +325,7 @@ class MainController extends Controller {
 
 			$file = $this->service->addRecipe($recipe_data);
 			$this->dbCacheService->addRecipe($file);
-			
+
 			return new DataResponse($id);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);

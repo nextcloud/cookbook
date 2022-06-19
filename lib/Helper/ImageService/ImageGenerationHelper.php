@@ -55,7 +55,7 @@ class ImageGenerationHelper {
 		$fullContent = $fullImage->getContent();
 
 		$thumbContent = $this->thumbnailService->getThumbnail($fullContent, $type);
-		
+
 		$dstFile->putContent($thumbContent);
 		$dstFile->touch();
 	}
@@ -78,7 +78,7 @@ class ImageGenerationHelper {
 		if ($type === ImageSize::PRIMARY_IMAGE) {
 			return;
 		}
-		
+
 		$filename = ImageSize::NAME_MAP[$type];
 
 		try {

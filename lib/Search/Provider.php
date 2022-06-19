@@ -18,7 +18,6 @@ use OCP\Util;
 // Remove conditional once we end support for NC 19
 if (Util::getVersion()[0] >= 20) {
 	class Provider implements IProvider {
-
 		/** @var IL10N */
 		private $l;
 
@@ -59,7 +58,7 @@ if (Util::getVersion()[0] >= 20) {
 		public function search(IUser $user, ISearchQuery $query): SearchResult {
 			$recipes = $this->recipeService->findRecipesInSearchIndex($query->getTerm());
 			$result = array_map(
-				function (array $recipe) use ($user) : SearchResultEntry {
+				function (array $recipe) use ($user): SearchResultEntry {
 					$id = $recipe['recipe_id'];
 
 					$subline = '';

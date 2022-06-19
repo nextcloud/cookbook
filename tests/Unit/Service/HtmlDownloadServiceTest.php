@@ -33,7 +33,6 @@ class MockFileGetter {
  * @covers ::<private>
  */
 class HtmlDownloadServiceTest extends TestCase {
-
 	/**
 	 * @var HtmlEntityDecodeFilter|MockObject
 	 */

@@ -17,7 +17,6 @@ use OCP\Files\NotFoundException;
  * @covers OCA\Cookbook\Exception\RecipeImageExistsException
  */
 class ImageFileHelperTest extends TestCase {
-	
 	/**
 	 * @var ImageFileHelper
 	 */
@@ -69,7 +68,7 @@ class ImageFileHelperTest extends TestCase {
 		 */
 		$file = $this->createMock(File::class);
 		$this->folder->method('nodeExists')->with('full.jpg')->willReturn($existing);
-		
+
 		if ($existing) {
 			$this->folder->method('get')->with('full.jpg')->willReturn($file);
 			$file->expects($this->once())->method('delete');

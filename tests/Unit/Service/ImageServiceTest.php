@@ -16,7 +16,6 @@ use PHPUnit\Framework\MockObject\Stub;
  * @covers \OCA\Cookbook\Service\ImageService
  */
 class ImageServiceTest extends TestCase {
-
 	/**
 	 * @var MockObject|ImageFileHelper
 	 */

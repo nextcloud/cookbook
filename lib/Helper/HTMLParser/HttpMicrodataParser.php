@@ -17,7 +17,6 @@ use OCA\Cookbook\Exception\HtmlParsingException;
  * @todo Tools need to be imported
  */
 class HttpMicrodataParser extends AbstractHtmlParser {
-
 	/**
 	 * @var \DOMXPath
 	 */

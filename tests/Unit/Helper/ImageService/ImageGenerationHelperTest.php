@@ -16,7 +16,6 @@ use PHPUnit\Framework\MockObject\Stub;
  * @covers OCA\Cookbook\Helper\ImageService\ImageGenerationHelper
  */
 class ImageGenerationHelperTest extends TestCase {
-
 	/**
 	 * @var ThumbnailService|MockObject
 	 */

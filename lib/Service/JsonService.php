@@ -9,7 +9,6 @@ namespace OCA\Cookbook\Service;
  *
  */
 class JsonService {
-	
 	/**
 	 * Check if an object is a JSON representation of a schema.org object
 	 *
@@ -19,33 +18,33 @@ class JsonService {
 	 * @param string $type The type to check for. If null or '' no type chek is performed
 	 * @return bool true, if $obj is an object and optionally satisfies the type check
 	 */
-	public function isSchemaObject($obj, string $type = null) : bool {
+	public function isSchemaObject($obj, string $type = null): bool {
 		if (! is_array($obj)) {
 			// Objects must bve encoded as arrays in JSON
 			return false;
 		}
-		
+
 		if (!isset($obj['@context']) || ! preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
 			// We have no correct context property
 			return false;
 		}
-		
+
 		if (!isset($obj['@type'])) {
 			// Objects must have a property @type
 			return false;
 		}
-		
+
 		// We have an object
-		
+
 		if ($type === null || $type === '') {
 			// No typecheck was requested. So return true
 			return true;
 		}
-		
+
 		// Check if type matches
 		return (strcmp($obj['@type'], $type) === 0);
 	}
-	
+
 	/**
 	 * Check if $obj is a schema.org object and contains a named property.
 	 *
@@ -53,11 +52,11 @@ class JsonService {
 	 * @param string $property The name of the property to check for
 	 * @return bool true, if $obj is a object and has the property given
 	 */
-	public function hasProperty($obj, string $property) : bool {
+	public function hasProperty($obj, string $property): bool {
 		if (!$this->isSchemaObject($obj)) {
 			return false;
 		}
-		
+
 		return array_key_exists($property, $obj);
 	}
 }

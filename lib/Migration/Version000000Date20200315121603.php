@@ -8,7 +8,6 @@ use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
 
 class Version000000Date20200315121603 extends SimpleMigrationStep {
-
 	/**
 	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
@@ -37,14 +36,14 @@ class Version000000Date20200315121603 extends SimpleMigrationStep {
 				'length' => 256,
 			]);
 		}
-		
+
 		if (!$table->hasColumn('user_id')) {
 			$table->addColumn('user_id', 'string', [
 				'notnull' => true,
 				'length' => 64,
 			]);
 		}
-		
+
 		return $schema;
 	}
 }

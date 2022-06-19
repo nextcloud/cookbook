@@ -28,12 +28,12 @@ class RecipeController extends Controller {
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
-	
+
 	/**
 	 * @var DbCacheService
 	 */
 	private $dbCacheService;
-	
+
 	/**
 	 * @var RestParameterParser
 	 */
@@ -75,7 +75,7 @@ class RecipeController extends Controller {
 	 */
 	public function index() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		if (empty($_GET['keywords'])) {
 			$recipes = $this->service->getAllRecipesInSearchIndex();
 		} else {
@@ -96,7 +96,7 @@ class RecipeController extends Controller {
 	 */
 	public function show($id) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$json = $this->service->getRecipeById($id);
 
 		if (null === $json) {
@@ -105,7 +105,7 @@ class RecipeController extends Controller {
 
 		$json['printImage'] = $this->service->getPrintImage();
 		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
-		
+
 		return new DataResponse($json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 	}
 
@@ -122,7 +122,7 @@ class RecipeController extends Controller {
 	 */
 	public function update($id) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$recipeData = $this->restParser->getParameters();
 		try {
 			$file = $this->service->addRecipe($recipeData);
@@ -151,12 +151,12 @@ class RecipeController extends Controller {
 	 */
 	public function create() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$recipeData = $this->restParser->getParameters();
 		try {
 			$file = $this->service->addRecipe($recipeData);
 			$this->dbCacheService->addRecipe($file);
-	
+
 			return new DataResponse($file->getParent()->getId(), Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (RecipeExistsException $ex) {
 			$json = [
@@ -183,7 +183,7 @@ class RecipeController extends Controller {
 	 */
 	public function destroy($id) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		try {
 			$this->service->deleteRecipe($id);
 			return new DataResponse('Recipe ' . $id . ' deleted successfully', Http::STATUS_OK);
@@ -200,7 +200,7 @@ class RecipeController extends Controller {
 	 */
 	public function image($id) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$acceptHeader = $this->request->getHeader('Accept');
 		$acceptedExtensions = $this->acceptHeaderParser->parseHeader($acceptHeader);
 
@@ -220,7 +220,7 @@ class RecipeController extends Controller {
 			} else {
 				// The client accepts the SVG file. Send it.
 				$file = file_get_contents(dirname(__FILE__) . '/../../img/recipe.svg');
-	
+
 				return new DataDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/svg+xml']);
 			}
 		}

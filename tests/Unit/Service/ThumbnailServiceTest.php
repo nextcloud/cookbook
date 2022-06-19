@@ -17,7 +17,6 @@ use ReflectionClass;
  * @covers OCA\Cookbook\Exception\InvalidThumbnailTypeException
  */
 class ThumbnailServiceTest extends TestCase {
-
 	/**
 	 * @var ThumbnailService|MockObject
 	 */

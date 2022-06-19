@@ -10,12 +10,11 @@ use OCP\IL10N;
 use OCA\Cookbook\Service\RecipeExtractionService;
 
 class RecipeExtractionServiceTest extends TestCase {
-
 	/**
 	 * @var IL10N
 	 */
 	private $l;
-	
+
 	protected function setUp(): void {
 		$this->l = $this->createStub(IL10N::class);
 	}
@@ -29,7 +28,7 @@ class RecipeExtractionServiceTest extends TestCase {
 	public function testParsingDelegation($jsonSuccess, $microdataSuccess, $exceptionExpected): void {
 		$jsonParser = $this->createMock(HttpJsonLdParser::class);
 		$microdataParser = $this->createMock(HttpMicrodataParser::class);
-		
+
 		$document = $this->createStub(\DOMDocument::class);
 		$expectedObject = [new \stdClass()];
 
@@ -38,14 +37,14 @@ class RecipeExtractionServiceTest extends TestCase {
 				->method('parse')
 				->with($document)
 				->willReturn($expectedObject);
-			
+
 			$microdataParser->expects($this->never())->method('parse');
 		} else {
 			$jsonParser->expects($this->once())
 				->method('parse')
 				->with($document)
 				->willThrowException(new HtmlParsingException());
-			
+
 			if ($microdataSuccess) {
 				$microdataParser->expects($this->once())
 					->method('parse')
@@ -58,18 +57,18 @@ class RecipeExtractionServiceTest extends TestCase {
 					->willThrowException(new HtmlParsingException());
 			}
 		}
-		
+
 		$sut = new RecipeExtractionService($jsonParser, $microdataParser, $this->l);
-		
+
 		try {
 			$ret = $sut->parse($document);
-			
+
 			$this->assertEquals($expectedObject, $ret);
 		} catch (HtmlParsingException $ex) {
 			$this->assertTrue($exceptionExpected);
 		}
 	}
-	
+
 	public function dataProvider() {
 		return [
 			[true, false, false],

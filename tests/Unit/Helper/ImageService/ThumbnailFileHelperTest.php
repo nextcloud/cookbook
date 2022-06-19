@@ -20,7 +20,6 @@ use OCP\Files\NotFoundException;
  * @covers OCA\Cookbook\Exception\NoRecipeImageFoundException
  */
 class ThumbnailFileHelperTest extends TestCase {
-	
 	/**
 	 * @var ThumbnailFileHelper
 	 */
@@ -93,7 +92,7 @@ class ThumbnailFileHelperTest extends TestCase {
 
 		$file = $this->createStub(File::class);
 		$f->method('newFile')->with($filename)->willReturn($file);
-		
+
 		$this->fileHelper->method('hasImage')->willReturn(true);
 		$full = $this->createStub(File::class);
 		$this->fileHelper->method('getImage')->willReturn($full);
@@ -197,7 +196,7 @@ class ThumbnailFileHelperTest extends TestCase {
 			['thumb16.jpg', $mini],
 		];
 		$f->method('get')->willReturnMap($fileMap);
-		
+
 		$cnt = 0;
 		if (! $thumbExists) {
 			$cnt ++;

@@ -29,7 +29,7 @@ class HttpJsonLdParserTest extends TestCase {
 			'caseI' => ['caseI.html', true, 'caseI.json'],
 		];
 	}
-	
+
 	/**
 	 * @covers ::__construct
 	 * @covers \OCA\Cookbook\Helper\HTMLParser\AbstractHtmlParser::__construct
@@ -43,15 +43,15 @@ class HttpJsonLdParserTest extends TestCase {
 		 * @var IL10N $l
 		 */
 		$l = $this->createStub(IL10N::class);
-		
+
 		$parser = new HttpJsonLdParser($l, $jsonService);
-		
+
 		$lProperty = new \ReflectionProperty(HttpJsonLdParser::class, 'l');
 		$lProperty->setAccessible(true);
 		$lSaved = $lProperty->getValue($parser);
 		$this->assertSame($l, $lSaved);
 	}
-	
+
 	/**
 	 * @dataProvider dataProvider
 	 * @covers ::parse
@@ -62,20 +62,20 @@ class HttpJsonLdParserTest extends TestCase {
 		 * @var IL10N $l
 		 */
 		$l = $this->createStub(IL10N::class);
-		
+
 		$parser = new HttpJsonLdParser($l, $jsonService);
-		
+
 		$content = file_get_contents(__DIR__ . "/res_JsonLd/$file");
-		
+
 		$document = new \DOMDocument();
 		$document->loadHTML($content);
-		
+
 		try {
 			$res = $parser->parse($document);
-			
+
 			$jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
 			$expected = json_decode($jsonDest, true);
-			
+
 			$this->assertTrue($valid);
 			$this->assertEquals($expected, $res);
 		} catch (HtmlParsingException $ex) {

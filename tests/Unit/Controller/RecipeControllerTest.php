@@ -237,7 +237,7 @@ class RecipeControllerTest extends TestCase {
 
 		$id = 123;
 		$this->recipeService->method('getRecipeById')->with($id)->willReturn(null);
-		
+
 		/**
 		 * @var DataResponse $ret
 		 */

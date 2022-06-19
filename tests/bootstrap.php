@@ -25,9 +25,9 @@ function runOCCCommand(array $args, bool $forceprint = false) {
 	$params = join(' ', array_map(function ($x) {
 		return escapeshellarg($x);
 	}, $args));
-	
+
 	$cmd = "./.github/actions/run-tests/run-occ.sh $params 2>&1";
-	
+
 	exec($cmd, $output, $ret);
 	if ($ret !== 0 || $forceprint) {
 		echo "\nStandard output:\n";

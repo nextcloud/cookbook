@@ -18,7 +18,6 @@ use OCP\Lock\LockedException;
  * @todo Rework the exeption passing
  */
 class ImageService {
-
 	/**
 	 * @var ThumbnailFileHelper
 	 */

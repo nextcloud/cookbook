@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
  * @covers \OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter
  */
 class HtmlEntityDecodeFilterTest extends TestCase {
-	
 	/**
 	 * @dataProvider dataProvider
 	 */

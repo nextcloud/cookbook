@@ -24,7 +24,6 @@ use ReflectionProperty;
  * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
  */
 class UserFolderHelperTest extends TestCase {
-
 	/**
 	 * @var UserConfigHelper|MockObject
 	 */
@@ -50,11 +49,11 @@ class UserFolderHelperTest extends TestCase {
 
 	protected function setUp(): void {
 		parent::setup();
-		
+
 		$this->userId = 'test_user-id';
-		
+
 		$this->root = $this->createMock(IRootFolder::class);
-		
+
 		$l = $this->createMock(IL10N::class);
 		/**
 		 * @var MockObject|IL10N $l
@@ -135,7 +134,7 @@ class UserFolderHelperTest extends TestCase {
 	public function testNoWritingPermissionGetFolder() {
 		$path = '/Recipes';
 		$fullPath = "/{$this->userId}/files/Recipes";
-		
+
 		$ex = new NotFoundException();
 		$this->root->method('get')->with($fullPath)->willThrowException($ex);
 		$ex1 = new NotPermittedException();
@@ -154,7 +153,7 @@ class UserFolderHelperTest extends TestCase {
 		$nodeStub = $this->createStub(Folder::class);
 		$path = '/Recipes';
 		$fullPath = "/{$this->userId}/files/Recipes";
-		
+
 		$ex = new NotFoundException();
 		$this->root->method('get')->with($fullPath)->willReturn($nodeStub);
 
@@ -173,7 +172,7 @@ class UserFolderHelperTest extends TestCase {
 		$nodeStub = $this->createStub(Folder::class);
 		$path = '/Recipes';
 		$fullPath = "/{$this->userId}/files/Recipes";
-		
+
 		$ex = new NotFoundException();
 		$this->root->method('get')->with($fullPath)->willReturn($nodeStub);
 
