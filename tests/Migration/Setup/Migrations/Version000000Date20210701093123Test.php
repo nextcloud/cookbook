@@ -11,6 +11,8 @@ class Version000000Date20210701093123Test extends AbstractMigrationTestCase {
 	 * @dataProvider dataProvider
 	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20210701093123
+	 * @param mixed $data
+	 * @param mixed $updatedUsers
 	 */
 	public function testRedundantEntriesInDB($data, $updatedUsers) {
 		// Add recipe dummy data from data provider

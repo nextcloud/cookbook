@@ -32,7 +32,7 @@ class RecipeService {
 	private $db;
 	private $il10n;
 	/**
-	 * @var UserFolderHelper $userFolder
+	 * @var UserFolderHelper
 	 */
 	private $userFolder;
 	private $logger;
@@ -480,6 +480,7 @@ class RecipeService {
 
 	/**
 	 * @param string $html
+	 * @param mixed $url
 	 *
 	 * @return array
 	 * @deprecated
@@ -1136,6 +1137,8 @@ class RecipeService {
 
 	/**
 	 * @param string $str
+	 * @param mixed $preserve_newlines
+	 * @param mixed $remove_slashes
 	 *
 	 * @return string
 	 */

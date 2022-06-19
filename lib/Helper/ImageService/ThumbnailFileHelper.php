@@ -42,7 +42,7 @@ class ThumbnailFileHelper {
 	 * Ensure that a thumbnail for a certain size exists and returns it
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe to check for
-	 * @param integer $type The type of the thumbnail to generate
+	 * @param int $type The type of the thumbnail to generate
 	 * @return File The thumbnail file
 	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create a thumbnail from
 	 * @throws NotPermittedException if the thumbnail generation could not write the thumbnail to the correct location
@@ -73,8 +73,7 @@ class ThumbnailFileHelper {
 	 * Otherwise a new file is generated.
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
-	 * @param integer $type The thumbnail type to generate
-	 * @return void
+	 * @param int $type The thumbnail type to generate
 	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create the thumbnails from
 	 * @throws NotFoundException If no full-scale image was found.
 	 * @throws NotPermittedException if the IO to read or write the image file was not allowed
@@ -106,7 +105,6 @@ class ThumbnailFileHelper {
 	 * This will remove them and create new ones.
 	 *
 	 * @param Folder $recipeFolder The folder containing the files of a recipe.
-	 * @return void
 	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create the thumbnails from
 	 * @throws NotFoundException If no full-scale image was found.
 	 * @throws NotPermittedException if the IO to read or write the image file was not allowed
@@ -124,8 +122,7 @@ class ThumbnailFileHelper {
 	 * Drop a thumbnail in a recipe
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe
-	 * @param integer $type The thumbnail type to remove
-	 * @return void
+	 * @param int $type The thumbnail type to remove
 	 */
 	private function dropSingleThumbnail(Folder $recipeFolder, int $type): void {
 		$filename = ImageSize::NAME_MAP[$type];
@@ -138,7 +135,6 @@ class ThumbnailFileHelper {
 	 * Drop all thumbnails from a recipe folder
 	 *
 	 * @param Folder $recipeFolder The folder to drop the thumbnails from
-	 * @return void
 	 */
 	public function dropThumbnails(Folder $recipeFolder): void {
 		$this->dropSingleThumbnail($recipeFolder, ImageSize::THUMBNAIL);

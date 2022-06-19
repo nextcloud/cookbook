@@ -131,6 +131,8 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderNew
+	 * @param mixed $data
+	 * @param mixed $id
 	 */
 	public function testNew($data, $id): void {
 		$this->ensureCacheCheckTriggered();
@@ -162,6 +164,8 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderNew
+	 * @param mixed $data
+	 * @param mixed $id
 	 */
 	public function testNewFailed($data, $id): void {
 		$this->ensureCacheCheckTriggered();
@@ -182,6 +186,8 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderUpdate
+	 * @param mixed $data
+	 * @param mixed $id
 	 */
 	public function testUpdate($data, $id): void {
 		$this->ensureCacheCheckTriggered();
@@ -213,6 +219,8 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderUpdate
+	 * @param mixed $data
+	 * @param mixed $id
 	 */
 	public function testUpdateFailed($data, $id): void {
 		$this->ensureCacheCheckTriggered();
@@ -315,6 +323,8 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderCategory
+	 * @param mixed $cat
+	 * @param mixed $recipes
 	 */
 	public function testCategory($cat, $recipes): void {
 		$this->ensureCacheCheckTriggered();
@@ -398,6 +408,8 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderTags
+	 * @param mixed $keywords
+	 * @param mixed $recipes
 	 */
 	public function testTags($keywords, $recipes): void {
 		$this->ensureCacheCheckTriggered();
@@ -469,6 +481,8 @@ class MainControllerTest extends TestCase {
 	/**
 	 * @dataProvider dpSearch
 	 * @todo no implementation in controller
+	 * @param mixed $query
+	 * @param mixed $recipes
 	 */
 	public function testSearch($query, $recipes): void {
 		$this->ensureCacheCheckTriggered();
@@ -522,6 +536,7 @@ class MainControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderCategoryUpdateNoName
+	 * @param mixed $requestParams
 	 */
 	public function testCategoryUpdateNoName($requestParams): void {
 		$this->ensureCacheCheckTriggered();
@@ -545,6 +560,9 @@ class MainControllerTest extends TestCase {
 	/**
 	 * @dataProvider dpCategoryUpdate
 	 * @todo No business logic in controller
+	 * @param mixed $cat
+	 * @param mixed $oldCat
+	 * @param mixed $recipes
 	 */
 	public function testCategoryUpdate($cat, $oldCat, $recipes): void {
 		$this->ensureCacheCheckTriggered();

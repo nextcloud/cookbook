@@ -44,6 +44,9 @@ class HttpMicrodataParserTest extends TestCase {
 	/**
 	 * @dataProvider dataProvider
 	 * @covers ::parse
+	 * @param mixed $filename
+	 * @param mixed $valid
+	 * @param mixed $jsonFile
 	 */
 	public function testHTMLFile($filename, $valid, $jsonFile): void {
 		$l = $this->createStub(IL10N::class);
@@ -74,6 +77,7 @@ class HttpMicrodataParserTest extends TestCase {
 
 	/**
 	 * @dataProvider imageAttributes
+	 * @param mixed $attribute
 	 */
 	public function testImageVariantsAsAttribute($attribute): void {
 		$l = $this->createStub(IL10N::class);
@@ -86,6 +90,7 @@ class HttpMicrodataParserTest extends TestCase {
 
 	/**
 	 * @dataProvider imageAttributes
+	 * @param mixed $attribute
 	 */
 	public function testImageVariantsAsContent($attribute): void {
 		$l = $this->createStub(IL10N::class);
@@ -104,6 +109,7 @@ class HttpMicrodataParserTest extends TestCase {
 	/**
 	 * @dataProvider ingredientVariantAttributes
 	 * @param string $attrtibute
+	 * @param mixed $attribute
 	 */
 	public function testIngredientVariants($attribute): void {
 		$l = $this->createStub(IL10N::class);
@@ -123,6 +129,7 @@ class HttpMicrodataParserTest extends TestCase {
 
 	/**
 	 * @dataProvider instructionVariantAttributes
+	 * @param mixed $attribute
 	 */
 	public function testInstructionVariants($attribute): void {
 		$l = $this->createStub(IL10N::class);

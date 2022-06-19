@@ -65,6 +65,8 @@ class ThumbnailFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpFilename
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testGetThumbnailWithExistingThumbnail($type, $filename) {
 		/**
@@ -81,6 +83,8 @@ class ThumbnailFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpFilename
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testGetThumbnailWithNonExistingThumbnail($type, $filename) {
 		/**
@@ -105,6 +109,8 @@ class ThumbnailFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpFilename
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testGetThumbnailWithNonExistingMainImage($type, $filename) {
 		/**
@@ -135,6 +141,8 @@ class ThumbnailFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpDrop
+	 * @param mixed $thumbExists
+	 * @param mixed $miniExists
 	 */
 	public function testDropThumbnails($thumbExists, $miniExists) {
 		/**
@@ -170,6 +178,8 @@ class ThumbnailFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpDrop
+	 * @param mixed $thumbExists
+	 * @param mixed $miniExists
 	 */
 	public function testRecreateThumbnails($thumbExists, $miniExists) {
 		/**

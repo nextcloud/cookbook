@@ -99,7 +99,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	/**
 	 * Search for images in the microdata of a recipe
 	 * @param DOMNode $recipeNode The recipe to search within
-	 * @return boolean true, if a property was found
+	 * @return bool true, if a property was found
 	 */
 	private function parseImage(DOMNode $recipeNode): bool {
 		return $this->searchMultipleProperties(
@@ -113,7 +113,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	/**
 	 * Search for ingredients in the microdata of a recipe
 	 * @param DOMNode $recipeNode The recipe to search within
-	 * @return boolean true, if a property was found
+	 * @return bool true, if a property was found
 	 */
 	private function parseIngredients(DOMNode $recipeNode): bool {
 		return $this->searchMultipleProperties(
@@ -127,7 +127,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	/**
 	 * Search for instructions in the microdata of a recipe
 	 * @param DOMNode $recipeNode The recipe to search within
-	 * @return boolean true, if a property was found
+	 * @return bool true, if a property was found
 	 */
 	private function parseInstructions(DOMNode $recipeNode): bool {
 		return $this->searchMultipleProperties(
@@ -151,7 +151,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @param array $properties The properties to look for one-by-one
 	 * @param array $attributes The attributes that will contain the data
 	 * @param string $dst The name of the property list in the internal structure
-	 * @return boolean true, if the property was found
+	 * @return bool true, if the property was found
 	 */
 	private function searchMultipleProperties(
 		DOMNode $recipeNode,

@@ -105,6 +105,7 @@ class UserFolderHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $existing
 	 */
 	public function testUncachedPath($existing) {
 		/**

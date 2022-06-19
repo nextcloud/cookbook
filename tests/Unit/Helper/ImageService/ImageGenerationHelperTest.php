@@ -39,6 +39,7 @@ class ImageGenerationHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpThumbnails
+	 * @param mixed $type
 	 */
 	public function testThumbnailGeneration($type) {
 		/**
@@ -95,6 +96,8 @@ class ImageGenerationHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpDropExisting
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testDropThumbnailExisting($type, $filename) {
 		/**
@@ -116,6 +119,8 @@ class ImageGenerationHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpDropExisting
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testDropThumbnailNonExisting($type, $filename) {
 		/**

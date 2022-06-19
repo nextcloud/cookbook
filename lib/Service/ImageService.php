@@ -64,7 +64,7 @@ class ImageService {
 	 * Check if a recipe folder contains an image
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe to check
-	 * @return boolean true, if there is an image present
+	 * @return bool true, if there is an image present
 	 */
 	public function hasImage(Folder $recipeFolder): bool {
 		return $this->fileHelper->hasImage($recipeFolder);
@@ -76,7 +76,6 @@ class ImageService {
 	 * This will delete the primary image and all thumbnails
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
-	 * @return void
 	 */
 	public function dropImage(Folder $recipeFolder): void {
 		$this->fileHelper->dropImage($recipeFolder);
@@ -87,7 +86,7 @@ class ImageService {
 	 * Obtain a thumbnail from a recipe
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
-	 * @param integer $type The type of the thumbnail to obtain
+	 * @param int $type The type of the thumbnail to obtain
 	 * @see OCA\Cookbook\Helper\ImageService\ImageSize for a list of possible image sizes
 	 * @return string The image data
 	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create a thumbnail from
@@ -103,7 +102,7 @@ class ImageService {
 	 * Obtain a thumbnail of a recipe's primary image as a file for further processing
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
-	 * @param integer $type The type of the thumbnail to obtain
+	 * @param int $type The type of the thumbnail to obtain
 	 * @see OCA\Cookbook\Helper\ImageService\ImageSize for a list of possible image sizes
 	 * @return File The file of the thumbnail
 	 * @throws NoRecipeImageFoundException if the recipe has no primary image to create a thumbnail from
@@ -120,7 +119,6 @@ class ImageService {
 	 *
 	 * @param Folder $recipeFolder The recipe folder to store the image to
 	 * @param string $data The image data
-	 * @return void
 	 * @throws NotFoundException
 	 * @throws GenericFileException
 	 * @throws LockedException

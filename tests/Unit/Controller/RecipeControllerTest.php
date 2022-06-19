@@ -278,6 +278,8 @@ class RecipeControllerTest extends TestCase {
 	 * @dataProvider dataProviderImage
 	 * @todo Assert on image data/file name
 	 * @todo Avoid business code in controller
+	 * @param mixed $setSize
+	 * @param mixed $size
 	 */
 	public function testImage($setSize, $size): void {
 		$this->ensureCacheCheckTriggered();
@@ -327,6 +329,8 @@ class RecipeControllerTest extends TestCase {
 
 	/**
 	 * @dataProvider dpImageNotFound
+	 * @param mixed $accept
+	 * @param mixed $expectedStatus
 	 */
 	public function testImageNotFound($accept, $expectedStatus) {
 		$id = 123;
@@ -348,6 +352,9 @@ class RecipeControllerTest extends TestCase {
 	/**
 	 * @dataProvider dataProviderIndex
 	 * @todo no work on controller
+	 * @param mixed $recipes
+	 * @param mixed $setKeywords
+	 * @param mixed $keywords
 	 */
 	public function testIndex($recipes, $setKeywords, $keywords): void {
 		$this->ensureCacheCheckTriggered();

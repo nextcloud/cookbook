@@ -64,7 +64,6 @@ class UserFolderHelper {
 	 * Set the current path in the settings relative to the user's root folder
 	 *
 	 * @param string $path The name of the path to be used for the recipes
-	 * @return void
 	 */
 	public function setPath(string $path) {
 		$this->config->setFolderName($path);

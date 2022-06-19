@@ -46,6 +46,7 @@ class ImageFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $present
 	 */
 	public function testHasImage($present) {
 		$this->folder->method('nodeExists')->with('full.jpg')->willReturn($present);
@@ -61,6 +62,7 @@ class ImageFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $existing
 	 */
 	public function testDropImage($existing) {
 		/**
@@ -82,6 +84,7 @@ class ImageFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $existing
 	 */
 	public function testCreateImage($existing) {
 		$this->folder->method('nodeExists')->with('full.jpg')->willReturn($existing);

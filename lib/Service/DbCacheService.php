@@ -257,7 +257,7 @@ class DbCacheService {
 
 	/**
 	 * @param array $json
-	 * @return boolean
+	 * @return bool
 	 */
 	private function hasJSONCategory(array $json): bool {
 		return ! is_null($this->getJSONCategory($json));

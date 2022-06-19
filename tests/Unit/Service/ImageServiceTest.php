@@ -69,6 +69,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpThumbnailSizes
+	 * @param mixed $type
 	 */
 	public function testGetThumbnailAsFile($type) {
 		$recipeFolder = $this->createStub(Folder::class);
@@ -79,6 +80,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpThumbnailSizes
+	 * @param mixed $type
 	 */
 	public function testGetThumbnail($type) {
 		$recipeFolder = $this->createStub(Folder::class);
@@ -99,6 +101,7 @@ class ImageServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpHasImage
+	 * @param mixed $present
 	 */
 	public function testHasImage($present) {
 		$recipeFolder = $this->createStub(Folder::class);

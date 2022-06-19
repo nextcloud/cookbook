@@ -17,22 +17,22 @@ use OCA\Cookbook\Exception\ImportException;
 class HtmlToDomParser {
 	/**
 	 * Indicates the parsing was successfully terminated
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_SUCCESS = 0;
 	/**
 	 * Indicates the parsing terminated with warnings
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_WARNING = 1;
 	/**
 	 * Indicates the parsing terminated with an error
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_ERROR = 2;
 	/**
 	 * Indicates that the parsing terminated with a fatal error
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_FATAL_ERROR = 3;
 
@@ -171,7 +171,6 @@ class HtmlToDomParser {
 	 *
 	 * @param array $groupedErrors The grouped errors as defined in groupErrors
 	 * @param string $url The URL to import
-	 * @return void
 	 * @throws \Exception
 	 */
 	private function logAllErrors(array $groupedErrors, string $url): void {

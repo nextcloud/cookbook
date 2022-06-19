@@ -44,7 +44,6 @@ class UserConfigHelper {
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
 	 *
-	 * @return void
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	private function ensureUserIsLoggedIn(): void {
@@ -70,7 +69,6 @@ class UserConfigHelper {
 	 *
 	 * @param string $key The key of the configuration
 	 * @param string $value The value of the config entry
-	 * @return void
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	private function setRawValue(string $key, string $value): void {
@@ -81,7 +79,7 @@ class UserConfigHelper {
 	/**
 	 * Get the timestamp of the last rescan of the library
 	 *
-	 * @return integer The timestamp of the last index rebuild
+	 * @return int The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getLastIndexUpdate(): int {
@@ -96,8 +94,7 @@ class UserConfigHelper {
 	/**
 	 * Set the timestamp of the last rescan of the library
 	 *
-	 * @param integer $value The timestamp of the last index rebuild
-	 * @return void
+	 * @param int $value The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setLastIndexUpdate(int $value): void {
@@ -107,7 +104,7 @@ class UserConfigHelper {
 	/**
 	 * Get the number of seconds between rescans of the library
 	 *
-	 * @return integer The number of seconds to wait before a new rescan is triggered
+	 * @return int The number of seconds to wait before a new rescan is triggered
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getUpdateInterval(): int {
@@ -122,8 +119,7 @@ class UserConfigHelper {
 	/**
 	 * Set the interval between the rescan events of the complete library
 	 *
-	 * @param integer $value The number of seconds to wait at least between rescans
-	 * @return void
+	 * @param int $value The number of seconds to wait at least between rescans
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setUpdateInterval(int $value): void {
@@ -133,7 +129,7 @@ class UserConfigHelper {
 	/**
 	 * Check if the primary imgae should be printed or not
 	 *
-	 * @return boolean true, if the image should be printed
+	 * @return bool true, if the image should be printed
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getPrintImage(): bool {
@@ -147,8 +143,7 @@ class UserConfigHelper {
 	/**
 	 * Set if the image should be printed
 	 *
-	 * @param boolean $value true if the image should be printed
-	 * @return void
+	 * @param bool $value true if the image should be printed
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setPrintImage(bool $value): void {
@@ -191,7 +186,6 @@ class UserConfigHelper {
 	 * Instead use the methods of the UserFolderHelper class
 	 *
 	 * @param string $value The name of the folder within the user's files
-	 * @return void
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setFolderName(string $value): void {

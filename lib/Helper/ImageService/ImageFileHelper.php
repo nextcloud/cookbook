@@ -39,7 +39,7 @@ class ImageFileHelper {
 	 * Check if a recipe folder contains an image
 	 *
 	 * @param Folder $recipeFolder The folder of the recipe to check
-	 * @return boolean true, if there is an image present
+	 * @return bool true, if there is an image present
 	 */
 	public function hasImage(Folder $recipeFolder): bool {
 		return $recipeFolder->nodeExists(self::NAME_MAIN);
@@ -49,7 +49,6 @@ class ImageFileHelper {
 	 * Drop the image of a recipe
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
-	 * @return void
 	 */
 	public function dropImage(Folder $recipeFolder): void {
 		if ($recipeFolder->nodeExists(self::NAME_MAIN)) {
