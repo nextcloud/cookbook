@@ -1,8 +1,8 @@
 { "translations": {
     "Recipes" : "Рецепти",
+    "User cannot create recipe folder" : "Користувач не може створити теку рецептів",
     "in %s" : "в %s",
     "Another recipe with that name already exists" : "Вже існує рецепт з такою назвою",
-    "User cannot create recipe folder" : "Користувач не може створити теку рецептів",
     "Cookbook" : "Кулінарна книга",
     "Home" : "Домашній",
     "All recipes" : "Всі рецепти",

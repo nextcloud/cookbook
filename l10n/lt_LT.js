@@ -2,8 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Receptai",
-    "in %s" : "per %s",
     "User cannot create recipe folder" : "Naudotojas negali sukurti receptų aplanko",
+    "in %s" : "per %s",
     "Cookbook" : "Receptų knyga",
     "An integrated cookbook using schema.org JSON files as recipes" : "Integruota receptų knyga, kaip receptus naudojanti schema.org JSON failus",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Visų jūsų receptų biblioteka. Naudoja JSON failus pagal schema.org receptų formatą. Norėdami pridėti receptą į kolekciją, galite įdėti recepto URL adresą, o tuomet pateiktas internetinis puslapis bus išnagrinėtas ir atsisiųstas į bet kurį programėlės nustatymuose nurodytą aplanką.",
