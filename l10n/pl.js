@@ -18,6 +18,8 @@ OC.L10N.register(
     "Invalid URL-encoded string found. Please report a bug." : "Znaleziono nieprawidłowy ciąg zakodowany w adresie URL. Zgłoś ten błąd.",
     "The user is not logged in. No user configuration can be obtained." : "Użytkownik nie jest zalogowany. Nie można uzyskać konfiguracji użytkownika.",
     "Recipes" : "Przepisy",
+    "The user folder cannot be created due to missing permissions." : "Nie można utworzyć katalogu użytkownika z powodu braku uprawnień.",
+    "The configured user folder is a file." : "Skonfigurowany katalog użytkownika w pliku.",
     "User cannot create recipe folder" : "Użytkownik nie może utworzyć katalogu z przepisami",
     "in %s" : "w %s",
     "Could not parse URL" : "Nie udało się przeanalizować adresu URL",

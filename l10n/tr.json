@@ -16,6 +16,8 @@
     "Invalid URL-encoded string found. Please report a bug." : "Adres kodlamalı dizge bulundu. Lütfen bize hata olarak bildirin.",
     "The user is not logged in. No user configuration can be obtained." : "Kullanıcı oturum açmamış. Hehrangi bir kullanıcı yapılandırması alınamadı.",
     "Recipes" : "Yemek tarifleri",
+    "The user folder cannot be created due to missing permissions." : "İzinler eksik olduğundan kullanıcı klasörü oluşturulamadı.",
+    "The configured user folder is a file." : "Yapılandırılmış kullanıcı klasörü bir dosya.",
     "User cannot create recipe folder" : "Kullanıcı yemek tarifi klasörü ekleyemez",
     "in %s" : "%s içinde",
     "Could not parse URL" : "Adres işlenemedi",

@@ -16,6 +16,8 @@
     "Invalid URL-encoded string found. Please report a bug." : "找到了無效的 URL 編碼的字符串。請報告一個 bug。",
     "The user is not logged in. No user configuration can be obtained." : "用戶未登錄，無法獲取用戶配置。",
     "Recipes" : "食譜",
+    "The user folder cannot be created due to missing permissions." : "由於缺少權限，無法創建資料夾。",
+    "The configured user folder is a file." : "配置的資料夾是一個檔案。",
     "User cannot create recipe folder" : "用戶無法創建食譜資料夾",
     "in %s" : "在 %s",
     "Could not parse URL" : "無法解析網址",

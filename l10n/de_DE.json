@@ -16,6 +16,8 @@
     "Invalid URL-encoded string found. Please report a bug." : "Ungültige URL-kodierte Zeichenfolge gefunden. Bitte melden Sie den Fehler.",
     "The user is not logged in. No user configuration can be obtained." : "Der Benutzer ist nicht angemeldet. Es kann keine Benutzerkonfiguration abgerufen werden.",
     "Recipes" : "Rezepte",
+    "The user folder cannot be created due to missing permissions." : "Der Benutzerordner kann aufgrund fehlender Berechtigungen nicht erstellt werden.",
+    "The configured user folder is a file." : "Der konfigurierte Benutzerordner ist eine Datei.",
     "User cannot create recipe folder" : "Benutzer konnte Rezeptordner nicht erstellen",
     "in %s" : "in %s",
     "Could not parse URL" : "URL konnte nicht geparst werden",
