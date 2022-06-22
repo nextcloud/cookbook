@@ -32,6 +32,8 @@
   [#1011](https://github.com/nextcloud/cookbook/pull/1011) @christianlupus
 - Make PHP code styling more strict
   [#1011](https://github.com/nextcloud/cookbook/pull/1011) @christianlupus
+- Adding some strings to transifex
+  [#1049](https://github.com/nextcloud/cookbook/pull/1049) @christianlupus
 
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests [#1028](https://github.com/nextcloud/cookbook/issues/1028)

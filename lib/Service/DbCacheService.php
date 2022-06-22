@@ -7,6 +7,7 @@ use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Helper\UserConfigHelper;
+use OCP\IL10N;
 
 class DbCacheService {
 	private $userId;
@@ -27,6 +28,11 @@ class DbCacheService {
 	 */
 	private $userConfigHelper;
 
+	/**
+	 * @var IL10N
+	 */
+	private $l;
+
 	private $jsonFiles;
 	private $dbReceipeFiles;
 	private $dbKeywords;
@@ -36,11 +42,18 @@ class DbCacheService {
 	private $obsoleteRecipes;
 	private $updatedRecipes;
 
-	public function __construct(?string $UserId, RecipeDb $db, RecipeService $recipeService, UserConfigHelper $userConfigHelper) {
+	public function __construct(
+			?string $UserId,
+			RecipeDb $db,
+			RecipeService $recipeService,
+			UserConfigHelper $userConfigHelper,
+			IL10N $l
+		) {
 		$this->userId = $UserId;
 		$this->db = $db;
 		$this->recipeService = $recipeService;
 		$this->userConfigHelper = $userConfigHelper;
+		$this->l = $l;
 	}
 
 	public function updateCache() {
@@ -123,7 +136,7 @@ class DbCacheService {
 		if (!$json || !isset($json['name']) || $json['name'] === 'No name') {
 			$id = $jsonFile->getParent()->getId();
 
-			throw new InvalidJSONFileException("The JSON file in the folder with id $id does not have a valid name.");
+			throw new InvalidJSONFileException($this->l->t('The JSON file in the folder with id %d does not have a valid name.', [$id]));
 		}
 
 		$id = (int) $jsonFile->getParent()->getId();
