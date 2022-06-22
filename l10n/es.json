@@ -16,6 +16,8 @@
     "Invalid URL-encoded string found. Please report a bug." : "Se ha encontrado una cadena no válida de codificación URL. Por favor, informe de este error.",
     "The user is not logged in. No user configuration can be obtained." : "El usuario no está conectado. No se puede obtener la configuración del usuario.",
     "Recipes" : "Recetas",
+    "The user folder cannot be created due to missing permissions." : "La carpeta de usuario no se puede crear debido a que faltan permisos.",
+    "The configured user folder is a file." : "La carpeta de usuario configurada es un archivo.",
     "User cannot create recipe folder" : "El usuario no puede crear la carpeta de recetas",
     "in %s" : "en %s",
     "Could not parse URL" : "No se ha podido analizar la URL",

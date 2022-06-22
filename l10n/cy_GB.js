@@ -6,6 +6,7 @@ OC.L10N.register(
     "Search" : "Chwilio",
     "Category" : "Categori",
     "Tags" : "Tagiau",
+    "Categories" : "Categorïau",
     "Rename" : "Ailenwi",
     "Add" : "Ychwanegu",
     "Close" : "Cau",

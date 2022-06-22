@@ -16,6 +16,8 @@
     "Invalid URL-encoded string found. Please report a bug." : "Nalezen neplatný řetězec v URL. Prosím nahlaste chybu.",
     "The user is not logged in. No user configuration can be obtained." : "Uživatel není přihlášený. Není proto možné získat žádná nastavení pro něho.",
     "Recipes" : "Recepty",
+    "The user folder cannot be created due to missing permissions." : "Složku uživatele není možné vytvořit kvůli chybějícím oprávněním.",
+    "The configured user folder is a file." : "Nastavená složka uživatele je ve skutečnosti soubor.",
     "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
     "in %s" : "v %s",
     "Could not parse URL" : "Nepodařilo se zpracovat URL",
