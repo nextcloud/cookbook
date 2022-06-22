@@ -3,25 +3,17 @@
         <label>
             {{ fieldLabel }}
         </label>
-        <markdown-editor
-            v-if="fieldType === 'markdown'"
+        <textarea
+            v-if="fieldType === 'textarea' || fieldType === 'markdown'"
             ref="inputField"
             v-model="content"
-            class="editor"
-            toolbar=""
             @input="handleInput"
         />
         <input
-            v-else-if="fieldType !== 'textarea'"
+            v-else
             ref="inputField"
             v-model="content"
             :type="fieldType"
-            @input="handleInput"
-        />
-        <textarea
-            v-if="fieldType === 'textarea'"
-            ref="inputField"
-            v-model="content"
             @input="handleInput"
         />
     </fieldset>

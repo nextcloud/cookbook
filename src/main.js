@@ -7,8 +7,6 @@
 
 // Markdown
 import VueShowdown from "vue-showdown"
-import Editor from "v-markdown-editor"
-import "v-markdown-editor/dist/v-markdown-editor.css"
 
 import { generateUrl } from "@nextcloud/router"
 
@@ -192,7 +190,6 @@ if (__webpack_use_dev_server__ || false) {
         // set default flavor for Markdown
         flavor: "vanilla",
     })
-    Vue.use(Editor)
 
     // Pass translation engine to Vue
     Vue.prototype.t = window.t
