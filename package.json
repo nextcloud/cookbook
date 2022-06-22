@@ -14,7 +14,8 @@
 		"stylelint": "npx stylelint src",
 		"stylelint-fix": "npx stylelint --fix src",
 		"eslint": "npx eslint --cache --cache-strategy content src/**/*.{vue,js}",
-		"eslint-fix": "npx eslint --cache --cache-strategy content --fix src/**/*.{vue,js}"
+		"eslint-fix": "npx eslint --cache --cache-strategy content --fix src/**/*.{vue,js}",
+		"package-lint": "npx prettier-package-json --write ./package.json"
 	},
 	"repository": {
 		"type": "git",
