@@ -9,9 +9,7 @@
         <div class="checkmark" :class="{ done: isDone }">✔</div>
         <!-- eslint-disable-next-line vue/no-v-html -->
         <div class="ingredient">
-            <VueShowdown
-                :markdown="displayIngredient"
-            />
+            <VueShowdown :markdown="displayIngredient" />
         </div>
     </li>
 </template>
