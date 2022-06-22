@@ -5,6 +5,7 @@ namespace OCA\Cookbook\Db;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\IL10N;
 
 class RecipeDb {
 	private const DB_TABLE_RECIPES = 'cookbook_names';
@@ -18,7 +19,16 @@ class RecipeDb {
 	 */
 	private $types;
 
-	public function __construct(IDBConnection $db, DbTypesPolyfillHelper $polyfillTypes) {
+	/**
+	 * @var IL10N
+	 */
+	private $l;
+
+	public function __construct(
+			IDBConnection $db,
+			DbTypesPolyfillHelper $polyfillTypes,
+			IL10N $l
+			) {
 		$this->db = $db;
 		$this->types = $polyfillTypes;
 	}
@@ -41,7 +51,7 @@ class RecipeDb {
 		$cursor->closeCursor();
 
 		if ($row === false) {
-			throw new DoesNotExistException("Recipe with $id was not found in database.");
+			throw new DoesNotExistException($this->l->t("Recipe with ID %d was not found in database.", [$id]));
 		}
 
 		$ret = [];
