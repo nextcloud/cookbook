@@ -6,16 +6,15 @@ use OCA\Cookbook\Exception\HtmlParsingException;
 use OCP\IL10N;
 
 abstract class AbstractHtmlParser {
-	
 	/**
 	 * @var IL10N
 	 */
 	protected $l;
-	
+
 	public function __construct(IL10N $l10n) {
 		$this->l = $l10n;
 	}
-	
+
 	/**
 	 * Extract the recipe from the given document.
 	 *

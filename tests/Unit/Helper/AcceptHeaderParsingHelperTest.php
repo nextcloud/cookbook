@@ -6,7 +6,6 @@ use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use PHPUnit\Framework\TestCase;
 
 class AcceptHeaderParsingHelperTest extends TestCase {
-
 	/**
 	 * @var AcceptHeaderParsingHelper
 	 */
@@ -42,6 +41,8 @@ class AcceptHeaderParsingHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProvider
+	 * @param mixed $header
+	 * @param mixed $expected
 	 */
 	public function testParseHeader($header, $expected) {
 		$this->assertEquals($expected, $this->dut->parseHeader($header));

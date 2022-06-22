@@ -17,22 +17,22 @@ use OCA\Cookbook\Exception\ImportException;
 class HtmlToDomParser {
 	/**
 	 * Indicates the parsing was successfully terminated
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_SUCCESS = 0;
 	/**
 	 * Indicates the parsing terminated with warnings
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_WARNING = 1;
 	/**
 	 * Indicates the parsing terminated with an error
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_ERROR = 2;
 	/**
 	 * Indicates that the parsing terminated with a fatal error
-	 * @var integer
+	 * @var int
 	 */
 	public const PARSING_FATAL_ERROR = 3;
 
@@ -74,10 +74,10 @@ class HtmlToDomParser {
 	 */
 	public function loadHtmlString(DOMDocument $dom, string $url, string $html): DOMDocument {
 		$libxml_previous_state = libxml_use_internal_errors(true);
-		
+
 		try {
 			$parsedSuccessfully = $dom->loadHTML($html);
-			
+
 			// Error handling
 			$errors = libxml_get_errors();
 			try {
@@ -86,14 +86,14 @@ class HtmlToDomParser {
 				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex);
 			}
 			libxml_clear_errors();
-			
+
 			if (!$parsedSuccessfully) {
 				throw new ImportException($this->l->t('Parsing of HTML failed.'));
 			}
 		} finally {
 			libxml_use_internal_errors($libxml_previous_state);
 		}
-		
+
 		return $dom;
 	}
 
@@ -120,7 +120,7 @@ class HtmlToDomParser {
 	 */
 	private function checkXMLErrors(array $errors, string $url): void {
 		$grouped = $this->groupErrors($errors);
-		
+
 		$this->state = self::PARSING_SUCCESS;
 
 		$this->logAllErrors($grouped, $url);
@@ -163,7 +163,7 @@ class HtmlToDomParser {
 
 		return $ret;
 	}
-	
+
 	/**
 	 * Log the found error groups to the NC core error logger.
 	 *
@@ -171,7 +171,6 @@ class HtmlToDomParser {
 	 *
 	 * @param array $groupedErrors The grouped errors as defined in groupErrors
 	 * @param string $url The URL to import
-	 * @return void
 	 * @throws \Exception
 	 */
 	private function logAllErrors(array $groupedErrors, string $url): void {
@@ -200,7 +199,7 @@ class HtmlToDomParser {
 		$this->state = max($this->state, self::PARSING_WARNING);
 	}
 
-	
+
 	private function logError(int $code, array $group, string $url): void {
 		$msg = $this->l->n('Error %u occurred while parsing %s.', 'Error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
 		$this->logger->warning($this->formatError($msg, $group['first']));

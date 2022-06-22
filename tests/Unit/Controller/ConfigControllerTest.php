@@ -20,7 +20,6 @@ use ReflectionProperty;
  * @covers ::<protected>
  */
 class ConfigControllerTest extends TestCase {
-	
 	/**
 	 * @var ConfigController|MockObject
 	 */
@@ -119,6 +118,10 @@ class ConfigControllerTest extends TestCase {
 	/**
 	 * @dataProvider dataProviderConfig
 	 * @covers ::config
+	 * @param mixed $data
+	 * @param mixed $folderPath
+	 * @param mixed $interval
+	 * @param mixed $printImage
 	 */
 	public function testConfig($data, $folderPath, $interval, $printImage): void {
 		$this->restParser->method('getParameters')->willReturn($data);

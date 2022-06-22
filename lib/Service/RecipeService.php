@@ -32,16 +32,16 @@ class RecipeService {
 	private $db;
 	private $il10n;
 	/**
-	 * @var UserFolderHelper $userFolder
+	 * @var UserFolderHelper
 	 */
 	private $userFolder;
 	private $logger;
-	
+
 	/**
 	 * @var HtmlDownloadService
 	 */
 	private $htmlDownloadService;
-	
+
 	/**
 	 * @var RecipeExtractionService
 	 */
@@ -97,7 +97,7 @@ class RecipeService {
 
 		return $this->parseRecipeFile($file);
 	}
-	
+
 	/**
 	 * Get a recipe's modification time by its folder id.
 	 *
@@ -158,7 +158,7 @@ class RecipeService {
 		if (!$json) {
 			throw new Exception('Recipe array was null');
 		}
-		
+
 		if (empty($json['name'])) {
 			throw new Exception('Field "name" is required');
 		}
@@ -195,7 +195,7 @@ class RecipeService {
 						if (empty($img)) {
 							continue;
 						}
-		
+
 						$image_matches = [];
 
 						preg_match_all('!\d+!', $img, $image_matches);
@@ -244,7 +244,7 @@ class RecipeService {
 				$json['image'] .= '?' . $image_url['query'];
 			}
 		}
-		
+
 
 		// Make sure that "recipeCategory" is a string
 		if (isset($json['recipeCategory'])) {
@@ -259,10 +259,10 @@ class RecipeService {
 
 		$json['recipeCategory'] = $this->cleanUpString($json['recipeCategory'], false, true);
 
-		
+
 		// Make sure that "recipeYield" is an integer which is at least 1
 		if (isset($json['recipeYield']) && $json['recipeYield']) {
-			
+
 			// Check if "recipeYield is an array
 			if (is_array($json['recipeYield'])) {
 				if (count($json['recipeYield']) === 1) {
@@ -272,7 +272,7 @@ class RecipeService {
 					$json['recipeYield'] = join(' ', $json['recipeYield']);
 				}
 			}
-			
+
 			$regex_matches = [];
 			preg_match('/(\d*)/', $json['recipeYield'], $regex_matches);
 			if (count($regex_matches) >= 1) {
@@ -453,7 +453,7 @@ class RecipeService {
 					if (isset($duration_matches[1][0]) && !empty($duration_matches[1][0])) {
 						$duration_hours = intval($duration_matches[1][0]);
 					}
-					
+
 					if (isset($duration_matches[2][0]) && !empty($duration_matches[2][0])) {
 						$duration_minutes = intval($duration_matches[2][0]);
 					}
@@ -474,12 +474,13 @@ class RecipeService {
 		} else {
 			$json['nutrition'] = [];
 		}
-		
+
 		return $json;
 	}
 
 	/**
 	 * @param string $html
+	 * @param mixed $url
 	 *
 	 * @return array
 	 * @deprecated
@@ -507,7 +508,7 @@ class RecipeService {
 		} finally {
 			libxml_use_internal_errors($libxml_previous_state);
 		}
-		
+
 		$xpath = new \DOMXPath($document);
 
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
@@ -555,7 +556,7 @@ class RecipeService {
 
 		// Parse HTML if JSON couldn't be found
 		$json = [];
-		
+
 		$recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 
 		if (!isset($recipes[0])) {
@@ -580,7 +581,7 @@ class RecipeService {
 					case 'images':
 					case 'thumbnail':
 						$prop = 'image';
-						
+
 						if (!isset($json[$prop]) || !is_array($json[$prop])) {
 							$json[$prop] = [];
 						}
@@ -599,7 +600,7 @@ class RecipeService {
 					case 'recipeIngredient':
 					case 'ingredients':
 						$prop = 'recipeIngredient';
-						
+
 						if (!isset($json[$prop]) || !is_array($json[$prop])) {
 							$json[$prop] = [];
 						}
@@ -612,7 +613,7 @@ class RecipeService {
 						} else {
 							array_push($json[$prop], $prop_element->nodeValue);
 						}
-						
+
 						break;
 
 					case 'recipeInstructions':
@@ -620,7 +621,7 @@ class RecipeService {
 					case 'steps':
 					case 'guide':
 						$prop = 'recipeInstructions';
-						
+
 						if (!isset($json[$prop]) || !is_array($json[$prop])) {
 							$json[$prop] = [];
 						}
@@ -656,7 +657,7 @@ class RecipeService {
 		// Make one final desparate attempt at getting the instructions
 		if (!isset($json['recipeInstructions']) || !$json['recipeInstructions'] || sizeof($json['recipeInstructions']) < 1) {
 			$json['recipeInstructions'] = [];
-			
+
 			$step_elements = $recipes[0]->getElementsByTagName('p');
 
 			foreach ($step_elements as $step_element) {
@@ -667,23 +668,23 @@ class RecipeService {
 				array_push($json['recipeInstructions'], $step_element->nodeValue);
 			}
 		}
-		
+
 		return $this->checkRecipe($json);
 	}
 
 	private function display_libxml_errors($url, $errors) {
 		$error_counter = [];
 		$by_error_code = [];
-		
+
 		foreach ($errors as $error) {
 			$count = array_key_exists($error->code, $error_counter) ? $error_counter[$error->code] : 0;
 			$error_counter[$error->code] = $count + 1;
 			$by_error_code[$error->code] = $error;
 		}
-		
+
 		foreach ($error_counter as $code => $count) {
 			$error = $by_error_code[$code];
-			
+
 			switch ($error->level) {
 				case LIBXML_ERR_WARNING:
 					$error_message = "libxml: Warning $error->code ";
@@ -700,7 +701,7 @@ class RecipeService {
 
 			$error_message .= "occurred " . $count . " times while parsing " . $url . ". Last time in line $error->line" .
 				" and column $error->column: " . $error->message;
-			
+
 			$this->logger->warning($error_message);
 		}
 	}
@@ -753,7 +754,7 @@ class RecipeService {
 				if ($user_folder->nodeExists($json['name'])) {
 					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
-				
+
 				$recipe_folder->move($new_path);
 			}
 
@@ -831,15 +832,15 @@ class RecipeService {
 	 */
 	public function downloadRecipe(string $url): File {
 		$this->htmlDownloadService->downloadRecipe($url);
-		
+
 		try {
 			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom());
 		} catch (HtmlParsingException $ex) {
 			throw new ImportException($ex->getMessage(), null, $ex);
 		}
-		
+
 		$json = $this->checkRecipe($json);
-		
+
 		if (!$json) {
 			$this->logger->error('Importing parsers resulted in null recipe.' .
 				'This is most probably a bug. Please report.');
@@ -885,29 +886,29 @@ class RecipeService {
 			throw $ex;
 		}
 	}
-	
+
 	private function migrateFolderStructure() {
 		// Remove old cache folder if needed
 		$legacy_cache_path = '/cookbook/cache';
-		
+
 		if ($this->root->nodeExists($legacy_cache_path)) {
 			$this->root->get($legacy_cache_path)->delete();
 		}
-		
+
 		// Restructure files if needed
 		$user_folder = $this->userFolder->getFolder();
-		
+
 		foreach ($user_folder->getDirectoryListing() as $node) {
 			// Move JSON files from the user directory into its own folder
 			if ($this->isRecipeFile($node)) {
 				$recipe_name = str_replace('.json', '', $node->getName());
-				
+
 				$node->move($node->getPath() . '_tmp');
-				
+
 				$recipe_folder = $user_folder->newFolder($recipe_name);
-				
+
 				$node->move($recipe_folder->getPath() . '/recipe.json');
-				
+
 			// Rename folders with .json extensions (this was likely caused by a migration bug)
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
 				$node->move(str_replace('.json', '', $node->getPath()));
@@ -923,7 +924,7 @@ class RecipeService {
 	public function getAllKeywordsInSearchIndex() {
 		return $this->db->findAllKeywords($this->user_id);
 	}
-	
+
 	/**
 	 * Gets all categories from the index
 	 *
@@ -1136,6 +1137,8 @@ class RecipeService {
 
 	/**
 	 * @param string $str
+	 * @param mixed $preserve_newlines
+	 * @param mixed $remove_slashes
 	 *
 	 * @return string
 	 */
@@ -1157,7 +1160,7 @@ class RecipeService {
 		if ($remove_slashes) {
 			$str = str_replace('/', '_', $str);
 		}
-		
+
 		$str = html_entity_decode($str);
 
 		// Remove duplicated spaces

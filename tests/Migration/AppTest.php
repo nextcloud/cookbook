@@ -16,7 +16,7 @@ class AppTest extends TestCase {
 
 	public function setUp(): void {
 		resetEnvironmentToBackup();
-		
+
 		parent::setUp();
 		$app = new App('cookbook');
 		$this->container = $app->getContainer();

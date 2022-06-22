@@ -13,7 +13,7 @@ class DbTypesPolyfillHelper {
 	 * @var String
 	 */
 	private $string;
-	
+
 	public function __construct(Util $util) {
 		switch ($util->getVersion()[0]) {
 			case 18:
@@ -22,14 +22,14 @@ class DbTypesPolyfillHelper {
 				$this->int = \Doctrine\DBAL\Types\Type::INTEGER;
 				$this->string = \Doctrine\DBAL\Types\Type::STRING;
 				break;
-				
+
 			default:
 				$this->int = \OCP\DB\Types::INTEGER;
 				$this->string = \OCP\DB\Types::STRING;
 				break;
 		}
 	}
-	
+
 	/**
 	 * @return string
 	 */

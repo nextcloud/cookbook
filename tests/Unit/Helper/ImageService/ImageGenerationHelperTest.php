@@ -16,7 +16,6 @@ use PHPUnit\Framework\MockObject\Stub;
  * @covers OCA\Cookbook\Helper\ImageService\ImageGenerationHelper
  */
 class ImageGenerationHelperTest extends TestCase {
-
 	/**
 	 * @var ThumbnailService|MockObject
 	 */
@@ -40,6 +39,7 @@ class ImageGenerationHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpThumbnails
+	 * @param mixed $type
 	 */
 	public function testThumbnailGeneration($type) {
 		/**
@@ -96,6 +96,8 @@ class ImageGenerationHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpDropExisting
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testDropThumbnailExisting($type, $filename) {
 		/**
@@ -117,6 +119,8 @@ class ImageGenerationHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpDropExisting
+	 * @param mixed $type
+	 * @param mixed $filename
 	 */
 	public function testDropThumbnailNonExisting($type, $filename) {
 		/**

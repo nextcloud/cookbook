@@ -14,7 +14,6 @@ use OCP\Image;
  * You need to store the images if they should be preserved.
  */
 class ThumbnailService {
-	
 	/**
 	 * @var IL10N
 	 */
@@ -39,7 +38,7 @@ class ThumbnailService {
 	 * Create a thumbnail for a requested thumbnail size
 	 *
 	 * @param string $data The image data to be rescaled
-	 * @param integer $type The requested type, see the ImageSize class
+	 * @param int $type The requested type, see the ImageSize class
 	 * @return string The image data of the generated thumbnail
 	 * @throws InvalidThumbnailTypeException if the requested type is either unknown or useless.
 	 */
@@ -60,7 +59,7 @@ class ThumbnailService {
 	 * Create a new thumbnail of a given size
 	 *
 	 * @param string $data The image data
-	 * @param integer $size The maximal width or height of the destination image
+	 * @param int $size The maximal width or height of the destination image
 	 * @return string The resized and minimized image
 	 */
 	protected function createThumbnail(string $data, int $size): string {

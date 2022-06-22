@@ -17,7 +17,6 @@ use OCP\Files\NotFoundException;
  * @covers OCA\Cookbook\Exception\RecipeImageExistsException
  */
 class ImageFileHelperTest extends TestCase {
-	
 	/**
 	 * @var ImageFileHelper
 	 */
@@ -47,6 +46,7 @@ class ImageFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $present
 	 */
 	public function testHasImage($present) {
 		$this->folder->method('nodeExists')->with('full.jpg')->willReturn($present);
@@ -62,6 +62,7 @@ class ImageFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $existing
 	 */
 	public function testDropImage($existing) {
 		/**
@@ -69,7 +70,7 @@ class ImageFileHelperTest extends TestCase {
 		 */
 		$file = $this->createMock(File::class);
 		$this->folder->method('nodeExists')->with('full.jpg')->willReturn($existing);
-		
+
 		if ($existing) {
 			$this->folder->method('get')->with('full.jpg')->willReturn($file);
 			$file->expects($this->once())->method('delete');
@@ -83,6 +84,7 @@ class ImageFileHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider dpExisting
+	 * @param mixed $existing
 	 */
 	public function testCreateImage($existing) {
 		$this->folder->method('nodeExists')->with('full.jpg')->willReturn($existing);

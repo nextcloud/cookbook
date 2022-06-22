@@ -33,7 +33,6 @@ class MockFileGetter {
  * @covers ::<private>
  */
 class HtmlDownloadServiceTest extends TestCase {
-
 	/**
 	 * @var HtmlEntityDecodeFilter|MockObject
 	 */
@@ -61,7 +60,7 @@ class HtmlDownloadServiceTest extends TestCase {
 	public static $instance;
 
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	private $runRealFunction;
 
@@ -133,6 +132,11 @@ class HtmlDownloadServiceTest extends TestCase {
 	 * @covers ::downloadRecipe
 	 * @covers ::getDom
 	 * @covers \OCA\Cookbook\Exception\ImportException
+	 * @param mixed $url
+	 * @param mixed $urlValid
+	 * @param mixed $fetchedValue
+	 * @param mixed $parserState
+	 * @param mixed $fetchValid
 	 */
 	public function testFakeDownload($url, $urlValid, $fetchedValue, $parserState, $fetchValid): void {
 		$this->runRealFunction = false;
@@ -197,6 +201,7 @@ class HtmlDownloadServiceTest extends TestCase {
 	/**
 	 * @dataProvider dataProviderRealDownload
 	 * @covers ::downloadRecipe
+	 * @param mixed $data
 	 */
 	public function testRealDownload($data) {
 		$url = 'http://www/test.html';

@@ -9,9 +9,9 @@ use PHPUnit\Framework\TestCase;
  * @covers \OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter
  */
 class HtmlEntityDecodeFilterTest extends TestCase {
-	
 	/**
 	 * @dataProvider dataProvider
+	 * @param mixed $testString
 	 */
 	public function testDecoder($testString): void {
 		$sut = new HtmlEntityDecodeFilter();
@@ -28,6 +28,8 @@ class HtmlEntityDecodeFilterTest extends TestCase {
 
 	/**
 	 * @dataProvider dataProviderExplicit
+	 * @param mixed $encoded
+	 * @param mixed $expected
 	 */
 	public function testDecoderExplicit($encoded, $expected): void {
 		$sut = new HtmlEntityDecodeFilter();
