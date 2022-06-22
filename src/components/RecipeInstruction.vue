@@ -1,6 +1,11 @@
 <template>
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <li :class="{ done: isDone }" @click="toggleDone" v-html="instruction"></li>
+    <li :class="{ done: isDone }" @click="toggleDone">
+        <VueShowdown
+            :markdown="instruction"
+            class="markdown-instruction"
+        />
+    </li>
 </template>
 
 <script>
@@ -72,5 +77,22 @@ li input[type="checkbox"] {
     margin: 0 0.5rem 0 0;
     line-height: 1rem;
     vertical-align: middle;
+}
+
+.markdown-instruction >>> ol > li {
+    list-style-type: numbered;
+}
+
+.markdown-instruction >>> ul > li {
+    list-style-type: disc;
+}
+
+.markdown-instruction >>> ol > li,
+.markdown-instruction >>> ul > li {
+    margin-left: 20px;
+}
+
+.markdown-instruction >>> a {
+    text-decoration: underline;
 }
 </style>
