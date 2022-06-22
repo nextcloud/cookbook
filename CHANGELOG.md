@@ -36,6 +36,8 @@
   [#1049](https://github.com/nextcloud/cookbook/pull/1049) @christianlupus
 - Removed outdated dependency on v-markdown-editor due to security issues
   [#1050](https://github.com/nextcloud/cookbook/pull/1050) @christianlupus
+- Migrated node-sass to dart sass
+  [#1051](https://github.com/nextcloud/cookbook/pull/1051) @christianlupus
 
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests [#1028](https://github.com/nextcloud/cookbook/issues/1028)
