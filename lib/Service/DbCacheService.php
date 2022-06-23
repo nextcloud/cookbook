@@ -136,7 +136,7 @@ class DbCacheService {
 		if (!$json || !isset($json['name']) || $json['name'] === 'No name') {
 			$id = $jsonFile->getParent()->getId();
 
-			throw new InvalidJSONFileException($this->l->t('The JSON file in the folder with id %d does not have a valid name.', [$id]));
+			throw new InvalidJSONFileException($this->l->t('The JSON file in the folder with ID %d does not have a valid name.', [$id]));
 		}
 
 		$id = (int) $jsonFile->getParent()->getId();
