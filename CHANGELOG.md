@@ -7,6 +7,8 @@
 ### Changed
 - Extracted user folder handling into its own helper class
   [#1007](https://github.com/nextcloud/cookbook/pull/1007) @christianlupus
+- Switched to cURL for downloading of external files
+  [#1055](https://github.com/nextcloud/cookbook/pull/1055) @christianlupus
   
 ### Fixed
 - Fix visual regression in edit mode to prevent overflow of breadcrumbs

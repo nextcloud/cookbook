@@ -31,6 +31,7 @@ class RecipeDb {
 			) {
 		$this->db = $db;
 		$this->types = $polyfillTypes;
+		$this->l = $l;
 	}
 
 	/**

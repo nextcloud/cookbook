@@ -100,9 +100,10 @@ services:
             - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
         
     www:
-        image: php:apache
+        build: www
         # ports:
         #     - 8888:80
         volumes:
             - ./volumes/www/:/www:ro
             - ./config/www/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
+

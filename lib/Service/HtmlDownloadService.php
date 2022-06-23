@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Service;
 
 use DOMDocument;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
+use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
@@ -31,17 +33,26 @@ class HtmlDownloadService {
 	 */
 	private $htmlParser;
 
+	/** @var DownloadHelper */
+	private $downloadHelper;
+
 	/**
 	 * @var DOMDocument
 	 */
 	private $dom;
 
-	public function __construct(HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
-		ILogger $logger, IL10N $l10n, HtmlToDomParser $htmlParser) {
+	public function __construct(
+		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
+		ILogger $logger,
+		IL10N $l10n,
+		HtmlToDomParser $htmlParser,
+		DownloadHelper $downloadHelper
+	) {
 		$this->htmlFilters = [ $htmlEntityDecodeFilter ];
 		$this->logger = $logger;
 		$this->l = $l10n;
 		$this->htmlParser = $htmlParser;
+		$this->downloadHelper = $downloadHelper;
 	}
 
 	/**
@@ -89,20 +100,23 @@ class HtmlDownloadService {
 			throw new ImportException($this->l->t('Could not parse URL'));
 		}
 
-		$opts = [
-			"http" => [
-				"method" => "GET",
-				"header" => "User-Agent: Nextcloud Cookbook App"
-			]
+		$opt = [
+			CURLOPT_USERAGENT => 'Nextcloud Cookbook App',
 		];
 
-		$context = stream_context_create($opts);
-
-		$html = file_get_contents($url, false, $context);
-
-		if ($html === false) {
-			throw new ImportException($this->l->t('Could not parse HTML code for site {url}', $url));
+		try {
+			$this->downloadHelper->downloadFile($url, $opt);
+		} catch (NoDownloadWasCarriedOutException $ex) {
+			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), null, $ex);
 		}
+
+		$status = $this->downloadHelper->getStatus();
+
+		if ($status < 200 || $status >= 300) {
+			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
+		}
+
+		$html = $this->downloadHelper->getContent();
 
 		return $html;
 	}
