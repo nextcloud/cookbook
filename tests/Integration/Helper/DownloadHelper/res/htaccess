@@ -1,0 +1,5 @@
+# Remove the Content-Type header from the request
+# https://stackoverflow.com/questions/2428563/how-can-i-prevent-apache2-from-setting-the-content-type-header
+
+Header always set Content-Type ""
+Header always unset Content-Type

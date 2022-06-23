@@ -92,7 +92,7 @@ build_images() {
 	docker-compose build --pull --force-rm $PROGRESS \
 		--build-arg PHPVERSION=$PHP_VERSION \
 		dut occ php fpm
-	docker-compose build --pull --force-rm mysql
+	docker-compose build --pull --force-rm mysql www
 	echo 'Building images finished.'
 }
 
