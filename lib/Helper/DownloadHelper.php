@@ -52,6 +52,7 @@ class DownloadHelper {
 	 *
 	 * @param string $url The URL of the file to fetch
 	 * @param array $options Options to pass on for curl. This allows to fine-tune the transfer.
+	 * @throws NoDownloadWasCarriedOutException if the download fails for some reason
 	 */
 	public function downloadFile(string $url, array $options = []): void {
 		$this->downloaded = false;

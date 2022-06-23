@@ -1,36 +1,21 @@
 <?php
 
-namespace OCA\Cookbook\Service;
-
-use OCA\Cookbook\tests\Unit\Service\HtmlDownloadServiceTest;
-
-function file_get_contents($url, $useIncludePath, $context) {
-	return HtmlDownloadServiceTest::$instance->triggerGetContent($url, $useIncludePath, $context);
-}
-
 namespace OCA\Cookbook\tests\Unit\Service;
 
 use DOMDocument;
 use OCP\IL10N;
 use OCP\ILogger;
-use ReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
+use OCA\Cookbook\Helper\DownloadHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Service\HtmlDownloadService;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 
-class MockFileGetter {
-	public function getIt($url, $internal, $context) {
-		return '';
-	}
-}
-
 /**
- * @coversDefaultClass \OCA\Cookbook\Service\HtmlDownloadService
- * @covers ::<protected>
- * @covers ::<private>
+ * @covers \OCA\Cookbook\Service\HtmlDownloadService
  */
 class HtmlDownloadServiceTest extends TestCase {
 	/**
@@ -49,6 +34,9 @@ class HtmlDownloadServiceTest extends TestCase {
 	 * @var HtmlToDomParser|MockObject
 	 */
 	private $htmlParser;
+	/** @var DownloadHelper|MockObject */
+	private $downloadHelper;
+
 	/**
 	 * @var HtmlDownloadService
 	 */
@@ -58,16 +46,6 @@ class HtmlDownloadServiceTest extends TestCase {
 	 * @var HtmlDownloadServiceTest
 	 */
 	public static $instance;
-
-	/**
-	 * @var bool
-	 */
-	private $runRealFunction;
-
-	/**
-	 * @var MockFileGetter|MockObject
-	 */
-	private $mockFunction;
 
 	public function setUp(): void {
 		parent::setUp();
@@ -79,153 +57,66 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->ilogger = $this->createStub(ILogger::class);
 		$this->il10n = $this->createStub(IL10N::class);
 		$this->htmlParser = $this->createMock(HtmlToDomParser::class);
+		$this->downloadHelper = $this->createMock(DownloadHelper::class);
 
-		$this->mockFunction = $this->createMock(MockFileGetter::class);
-		$this->runRealFunction = true;
-
-		$this->sut = new HtmlDownloadService($this->htmlEntityDecodeFilter, $this->ilogger, $this->il10n, $this->htmlParser);
+		$this->sut = new HtmlDownloadService($this->htmlEntityDecodeFilter, $this->ilogger, $this->il10n, $this->htmlParser, $this->downloadHelper);
 	}
 
-	/**
-	 * @covers ::__construct
-	 */
-	public function testConstructor(): void {
-		$filtersProp = new ReflectionProperty(HtmlDownloadService::class, 'htmlFilters');
-		$loggerProp = new ReflectionProperty(HtmlDownloadService::class, 'logger');
-		$lProp = new ReflectionProperty(HtmlDownloadService::class, 'l');
-
-		$filtersProp->setAccessible(true);
-		$loggerProp->setAccessible(true);
-		$lProp->setAccessible(true);
-
-		$this->assertSame([$this->htmlEntityDecodeFilter], $filtersProp->getValue($this->sut));
-		$this->assertSame($this->ilogger, $loggerProp->getValue($this->sut));
-		$this->assertSame($this->il10n, $lProp->getValue($this->sut));
-	}
-
-	/**
-	 * covers ::getDom
-	 * @todo This must be checked
-	 */
-	public function oldTestGetterDom(): void {
-		$domProp = new ReflectionProperty(HtmlDownloadService::class, 'dom');
-		$domProp->setAccessible(true);
-		/**
-		 * @var DOMDocument $dom
-		 */
-		$dom = $this->createStub(DOMDocument::class);
-		$domProp->setValue($this->sut, $dom);
-
-		$this->assertSame($dom, $this->sut->getDom());
-	}
-
-	public function triggerGetContent($path, $useInternalPath, $context) {
-		if ($this->runRealFunction) {
-			return file_get_contents($path, $useInternalPath, $context);
-		} else {
-			return $this->mockFunction->getIt($path, $useInternalPath, $context);
-		}
-	}
-
-	/**
-	 * @dataProvider dataProviderFakeDownload
-	 * @covers ::downloadRecipe
-	 * @covers ::getDom
-	 * @covers \OCA\Cookbook\Exception\ImportException
-	 * @param mixed $url
-	 * @param mixed $urlValid
-	 * @param mixed $fetchedValue
-	 * @param mixed $parserState
-	 * @param mixed $fetchValid
-	 */
-	public function testFakeDownload($url, $urlValid, $fetchedValue, $parserState, $fetchValid): void {
-		$this->runRealFunction = false;
-
-		$dom = new DOMDocument();
-
-		if ($urlValid) {
-			// Mock file_get_contents
-			$this->mockFunction->expects($this->once())->method('getIt')->with(
-				$this->equalTo($url),
-				$this->anything(),
-				$this->callback(function ($context) {
-					$opts = stream_context_get_options($context);
-					if (!isset($opts['http'])) {
-						return false;
-					}
-					if (!isset($opts['http']['method']) || $opts['http']['method'] !== 'GET') {
-						return false;
-					}
-					return true;
-				})
-			)->willReturn($fetchedValue);
-		} else {
-			$this->mockFunction->expects($this->never())->method('getIt');
-		}
-
-		if ($urlValid && $fetchValid) {
-			$this->htmlEntityDecodeFilter->expects($this->once())->method('apply');
-
-			$this->htmlParser->expects($this->once())->method('loadHtmlString')->with(
-				$this->anything(),
-				$this->equalTo($url),
-				$this->equalTo($fetchedValue)
-			)->willReturn($dom);
-			$this->htmlParser->method('getState')->willReturn($parserState);
-		} else {
-			$this->htmlEntityDecodeFilter->expects($this->never())->method('apply');
-			$this->htmlParser->expects($this->never())->method('loadHtmlString');
-		}
-
-		$this->assertNull($this->sut->getDom());
-
-		try {
-			$result = $this->sut->downloadRecipe($url);
-
-			$this->assertTrue($urlValid && $fetchValid);
-			$this->assertSame($dom, $this->sut->getDom());
-			$this->assertEquals($parserState, $result);
-		} catch (ImportException $ex) {
-			$this->assertFalse($urlValid && $fetchValid);
-		}
-	}
-
-	public function dataProviderFakeDownload() {
-		return [
-			'invalidURL' => ['http:///example.com', false, null, null, false],
-			'validURL' => ['http://example.com', true, 'Here comes the text', 1, true],
-			'invalidFetch' => ['http://example.com', true, false, 1, false],
-		];
-	}
-
-	/**
-	 * @dataProvider dataProviderRealDownload
-	 * @covers ::downloadRecipe
-	 * @param mixed $data
-	 */
-	public function testRealDownload($data) {
-		$url = 'http://www/test.html';
-		$this->runRealFunction = true;
-
-		if (file_exists('/www/test.html')) {
-			unlink('/www/test.html');
-		}
-		file_put_contents('/www/test.html', $data);
-
-		$this->htmlParser->expects($this->once())->method('loadHtmlString')->with(
-			$this->anything(),
-			$this->equalTo($url),
-			$this->equalTo($data)
-		);
-
-		$this->htmlParser->method('getState')->willReturn(0);
-
+	public function testDownloadInvalidUrl() {
+		$url = 'http:///example.com';
+		$this->expectException(ImportException::class);
 		$this->sut->downloadRecipe($url);
 	}
 
-	public function dataProviderRealDownload() {
-		yield [
-			'<html><head><title>foo</title></head><body></body></html>'
+	public function testDownloadFailing() {
+		$url = 'http://example.com';
+		$this->downloadHelper->expects($this->once())
+			->method('downloadFile')
+			->willThrowException(new NoDownloadWasCarriedOutException());
+		$this->expectException(ImportException::class);
+		$this->sut->downloadRecipe($url);
+	}
+
+	public function dpBadStatus() {
+		return [
+			[180], [199], [300], [404]
 		];
+	}
+
+	/**
+	 * @dataProvider dpBadStatus
+	 * @param mixed $status
+	 */
+	public function testDownloadBadStatus($status) {
+		$url = 'http://example.com';
+		$this->downloadHelper->expects($this->once())
+			->method('downloadFile');
+		$this->downloadHelper->method('getStatus')->willReturn($status);
+		$this->expectException(ImportException::class);
+		$this->sut->downloadRecipe($url);
+	}
+
+	public function testDownload() {
+		$url = 'http://example.com';
+		$content = 'The content of the html file';
+		$dom = $this->createStub(DOMDocument::class);
+		$state = 12345;
+
+		$this->downloadHelper->expects($this->once())
+			->method('downloadFile');
+		$this->downloadHelper->method('getStatus')->willReturn(200);
+		$this->downloadHelper->method('getContent')->willReturn($content);
+		$this->htmlParser->expects($this->once())->method('loadHtmlString')
+			->with(
+				$this->anything(),
+				$this->equalTo($url),
+				$this->equalTo($content)
+			)->willReturn($dom);
+		$this->htmlParser->method('getState')->willReturn($state);
+
+		$ret = $this->sut->downloadRecipe($url);
+		$this->assertEquals($state, $ret);
+
+		$this->assertSame($dom, $this->sut->getDom());
 	}
 }
