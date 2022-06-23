@@ -18,6 +18,7 @@ OC.L10N.register(
     "Invalid URL-encoded string found. Please report a bug." : "URLan kodetutako kate baliogabea aurkitu da. Mesedez, jakinarazi akatsa.",
     "The user is not logged in. No user configuration can be obtained." : "Erabiltzaileak ez du saioa hasi. Ezin da erabiltzaile-konfiguraziorik lortu.",
     "Recipes" : "Errezetak",
+    "The user folder cannot be created due to missing permissions." : "Erabiltzaile karpeta ezin da sortu baimenak falta zaizkiolako.",
     "The configured user folder is a file." : "Konfiguratutako erabiltzaile-karpeta fitxategi bat da.",
     "User cannot create recipe folder" : "Erabiltzaileak ezin du errezeta karpetarik sortu",
     "in %s" : "%s(e)an",
