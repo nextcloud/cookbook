@@ -106,6 +106,42 @@ jobs:
                 with:
                     xml-file: ./appinfo/info.xml
                     xml-schema-file: ./info.xsd
+    
+    package-lint:
+        name: Make sure the package.json is well-formatted
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 1
+            -   name: Get the date
+                id: date
+                run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+            -   name: Cache NPM cache
+                uses: actions/cache@v2.1.7
+                with:
+                    path: |
+                        ~/.npm
+                        node_modules
+                    key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+                    restore-keys: |
+                        ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+                        ${{ runner.os }}-node-
+
+            -   name: Install NPM modules
+                run: npm install
+
+            -   name: Perform the test
+                run: |
+                    npm run package-lint
+
+                    if [ $(git diff --name-only package.json | wc -l) -gt 0 ]; then
+                    echo '::error file=package.json::The package.json file is not validly formatted.'
+                    echo '::notice::It is suggested to run `npm run package/lint`.'
+                    exit 1
+                    fi
 
     fixup-check:
         name: Block fixup and squash commits

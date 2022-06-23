@@ -40,10 +40,13 @@
   [#1051](https://github.com/nextcloud/cookbook/pull/1051) @christianlupus
 
 ### Codebase maintenance
-- Removed codecov.io upload of intermediate merge commits during pull requests [#1028](https://github.com/nextcloud/cookbook/issues/1028)
+- Removed codecov.io upload of intermediate merge commits during pull requests
+  [#1028](https://github.com/nextcloud/cookbook/issues/1028)
 - Use latest possible NC core for CI tests
 - Introduce migration tests
 - Enable automatically merging of dependabot PRs
+- Add code style checker for package.json
+  [#1053](https://github.com/nextcloud/cookbook/pull/1053) @christianlupus
 
 ### Documentation
 - Add documentation on updates of the API endpoints
