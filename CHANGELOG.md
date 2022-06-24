@@ -9,6 +9,8 @@
   [#1007](https://github.com/nextcloud/cookbook/pull/1007) @christianlupus
 - Switched to cURL for downloading of external files
   [#1055](https://github.com/nextcloud/cookbook/pull/1055) @christianlupus
+- Rewrite encoding of imported recipes
+  [#1057](https://github.com/nextcloud/cookbook/pull/1057) @christianlupus
   
 ### Fixed
 - Fix visual regression in edit mode to prevent overflow of breadcrumbs
