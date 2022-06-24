@@ -1,5 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "No se ha encontrado ninguna imagen con el tipo MIME correspondiente en el servidor.",
+    "Recipe with ID %d was not found in database." : "No se ha encontrado en la base de datos la recete con ID %d",
     "Could not find recipe in HTML code." : "No se ha podido encontrar la fórmula en el código HTML.",
     "JSON cannot be decoded." : "El JSON no puede ser decodificado.",
     "No recipe was found." : "¡No se ha encontrado la formula!",
@@ -21,7 +22,6 @@
     "User cannot create recipe folder" : "El usuario no puede crear la carpeta de recetas",
     "in %s" : "en %s",
     "Could not parse URL" : "No se ha podido analizar la URL",
-    "Could not parse HTML code for site {url}" : "No se ha podido analizar el código HTML del sitio {url}",
     "No parser found for the given import." : "No se ha encontrado ningún analizador para la importación indicada.",
     "No recipe name was given. A unique name is required to store the recipe." : "No se ha dado ningún nombre a la fórmula. Se requiere un nombre único para almacenar la fórmula.",
     "Another recipe with that name already exists" : "Ya existe otra receta con ese nombre",

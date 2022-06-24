@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "No image with the matching MIME type was found on the server." : "Ez da bat datorren MIME mota duen irudirik aurkitu zerbitzarian.",
+    "Recipe with ID %d was not found in database." : "Ez da aurkitu ID %d duen errezeta datu-basean.",
     "Could not find recipe in HTML code." : "Ezin izan da errezeta aurkitu HTML kodean.",
     "JSON cannot be decoded." : "JSON ezin da deskodetu.",
     "No recipe was found." : "Ez da errezetarik aurkitu.",
@@ -23,7 +24,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Erabiltzaileak ezin du errezeta karpetarik sortu",
     "in %s" : "%s(e)an",
     "Could not parse URL" : "Ezin izan da URLa analizatu",
-    "Could not parse HTML code for site {url}" : "Ezin izan da {url} gunerako HTML kodea analizatu",
     "No parser found for the given import." : "Ez da analizatzailerik aurkitu emandako inportaziorako.",
     "No recipe name was given. A unique name is required to store the recipe." : "Ez zen errezetaren izenik eman. Izen bakarra behar da errezeta gordetzeko.",
     "Another recipe with that name already exists" : "Badago izen hori duen beste errezeta bat",

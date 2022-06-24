@@ -18,7 +18,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Người dùng không thể tạo thư mục công thức",
     "in %s" : "trong %s",
     "Could not parse URL" : "Không thể truy xuất URL",
-    "Could not parse HTML code for site {url}" : "Không thể phân tích cú pháp mã HTML cho trang web {url}",
     "No parser found for the given import." : "Không tìm thấy trình phân tích cú pháp cho lần nhập nhất định.",
     "No recipe name was given. A unique name is required to store the recipe." : "Không có tên công thức nào được đưa ra. Yêu cầu xác định một cái tên để lưu trữ công thức.",
     "Another recipe with that name already exists" : "Một công thức khác có tên đó đã tồn tại",

@@ -19,7 +19,6 @@
     "User cannot create recipe folder" : "A felhasználó nem hozhat létre receptmappát",
     "in %s" : "itt:  %s",
     "Could not parse URL" : "Nem sikerült az URL feldolgozása",
-    "Could not parse HTML code for site {url}" : "Nem sikerült a(z) {url} webhely HTML kódjának feldolgozása",
     "No parser found for the given import." : "Nem található értelmező a megadott importáláshoz.",
     "No recipe name was given. A unique name is required to store the recipe." : "Nincs receptnév megadva. Egyedi név szükséges a recept tárolásához.",
     "Another recipe with that name already exists" : "Ezzel a névvel már létezik egy másik recept",

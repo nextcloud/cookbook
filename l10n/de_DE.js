@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "No image with the matching MIME type was found on the server." : "Auf dem Server wurde kein Bild mit dem passenden MIME-Typ gefunden.",
+    "Recipe with ID %d was not found in database." : "Rezept mit der ID %d wurde in der Datenbank nicht gefunden.",
     "Could not find recipe in HTML code." : "Rezept in HTML-Code nicht gefunden.",
     "JSON cannot be decoded." : "JSON kann nicht dekodiert werden.",
     "No recipe was found." : "Kein Rezept gefunden.",
@@ -23,7 +24,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "Benutzer konnte Rezeptordner nicht erstellen",
     "in %s" : "in %s",
     "Could not parse URL" : "URL konnte nicht geparst werden",
-    "Could not parse HTML code for site {url}" : "HTML-Code für Seite {url} konnte nicht geparst werden",
     "No parser found for the given import." : "Für den angegeben Import konnte kein Parser gefunden werden.",
     "No recipe name was given. A unique name is required to store the recipe." : "Es wurde kein Name für das Rezept angegeben. Zum Speichern wird ein eindeutiger Name benötigt.",
     "Another recipe with that name already exists" : "Ein Rezept mit diesem Namen existiert bereits",

@@ -21,7 +21,6 @@
     "User cannot create recipe folder" : "Uživatel nemůže vytvořit složku receptů",
     "in %s" : "v %s",
     "Could not parse URL" : "Nepodařilo se zpracovat URL",
-    "Could not parse HTML code for site {url}" : "Nepodařilo se zpracovat HTML zdrojový kód stránky {url}",
     "No parser found for the given import." : "Nebyl nalezen žádná data pro import",
     "No recipe name was given. A unique name is required to store the recipe." : "Nebyl zadán žádný název pro recept. Aby recept bylo možné uložit, je zapotřebí ho nazvat a to tak, aby se nejmenoval stejně, jako nějaký jiný.",
     "Another recipe with that name already exists" : "Pod tímto názvem už existuje jiný recept",

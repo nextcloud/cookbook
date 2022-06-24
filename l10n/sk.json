@@ -1,9 +1,11 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Na serveri sa nenašiel žiadny obrázok so zodpovedajúcim typom MIME.",
+    "Recipe with ID %d was not found in database." : "Recept s ID %d nebol nájdený v databázi.",
     "Could not find recipe in HTML code." : "Nemôžem nájisť recept v HTML kóde.",
     "JSON cannot be decoded." : "Nemôžem dekódovať JSON.",
     "No recipe was found." : "Nenašiel sa žiadny recept.",
     "Parsing of HTML failed." : "Spracovanie HTML zlyhalo.",
+    "Unsupported error level during parsing of XML output." : "Nepodporovaný typ chyby počas analýzy výstupu XML.",
     "The recipe has already an image file. Cannot create a new one." : "Recept už má súbor s obrázkom. Nemôžete vytvoriť nový.",
     "There is no primary image for the recipe present." : "Neexistuje žiadny primárny obrázok pre tento recept.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nemôžem parsovať non-POST multipart encoding. Toto je chyba.",
