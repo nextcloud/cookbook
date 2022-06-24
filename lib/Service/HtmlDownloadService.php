@@ -3,13 +3,17 @@
 namespace OCA\Cookbook\Service;
 
 use DOMDocument;
+use OCA\Cookbook\Exception\CouldNotGuessEncodingException;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
+use OCA\Cookbook\Helper\DownloadEncodingHelper;
 use OCA\Cookbook\Helper\DownloadHelper;
+use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCP\IL10N;
+use OCP\ILogger;
 
 class HtmlDownloadService {
 	/**
@@ -22,6 +26,9 @@ class HtmlDownloadService {
 	 */
 	private $l;
 
+	/** @var ILogger */
+	private $logger;
+
 	/**
 	 * @var HtmlToDomParser
 	 */
@@ -29,6 +36,12 @@ class HtmlDownloadService {
 
 	/** @var DownloadHelper */
 	private $downloadHelper;
+
+	/** @var EncodingGuessingHelper */
+	private $encodingGuesser;
+
+	/** @var DownloadEncodingHelper */
+	private $downloadEncodingHelper;
 
 	/**
 	 * @var DOMDocument
@@ -38,13 +51,19 @@ class HtmlDownloadService {
 	public function __construct(
 		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
 		IL10N $l10n,
+		ILogger $logger,
 		HtmlToDomParser $htmlParser,
-		DownloadHelper $downloadHelper
+		DownloadHelper $downloadHelper,
+		EncodingGuessingHelper $encodingGuesser,
+		DownloadEncodingHelper $downloadEncodingHelper
 	) {
 		$this->htmlFilters = [ $htmlEntityDecodeFilter ];
 		$this->l = $l10n;
+		$this->logger = $logger;
 		$this->htmlParser = $htmlParser;
 		$this->downloadHelper = $downloadHelper;
+		$this->encodingGuesser = $encodingGuesser;
+		$this->downloadEncodingHelper = $downloadEncodingHelper;
 	}
 
 	/**
@@ -109,6 +128,13 @@ class HtmlDownloadService {
 		}
 
 		$html = $this->downloadHelper->getContent();
+
+		try {
+			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
+			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
+		} catch (CouldNotGuessEncodingException $ex) {
+			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
+		}
 
 		return $html;
 	}

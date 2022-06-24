@@ -24,6 +24,7 @@ class EncodingGuessingHelper {
 	 * @param string $content The content of the file
 	 * @param ?string $contentType The ContentType header if present or null to look at the contents
 	 * @return string The guessed content encoding
+	 * @throws CouldNotGuessEncodingException if no encoding could be guessed
 	 */
 	public function guessEncoding(string $content, ?string $contentType): string {
 		if ($contentType !== null) {
