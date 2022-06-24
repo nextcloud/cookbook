@@ -10,18 +10,12 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCP\IL10N;
-use OCP\ILogger;
 
 class HtmlDownloadService {
 	/**
 	 * @var array
 	 */
 	private $htmlFilters;
-
-	/**
-	 * @var ILogger
-	 */
-	private $logger;
 
 	/**
 	 * @var IL10N
@@ -43,13 +37,11 @@ class HtmlDownloadService {
 
 	public function __construct(
 		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
-		ILogger $logger,
 		IL10N $l10n,
 		HtmlToDomParser $htmlParser,
 		DownloadHelper $downloadHelper
 	) {
 		$this->htmlFilters = [ $htmlEntityDecodeFilter ];
-		$this->logger = $logger;
 		$this->l = $l10n;
 		$this->htmlParser = $htmlParser;
 		$this->downloadHelper = $downloadHelper;

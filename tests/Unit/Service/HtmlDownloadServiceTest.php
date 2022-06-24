@@ -4,7 +4,6 @@ namespace OCA\Cookbook\tests\Unit\Service;
 
 use DOMDocument;
 use OCP\IL10N;
-use OCP\ILogger;
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCA\Cookbook\Exception\ImportException;
@@ -22,10 +21,6 @@ class HtmlDownloadServiceTest extends TestCase {
 	 * @var HtmlEntityDecodeFilter|MockObject
 	 */
 	private $htmlEntityDecodeFilter;
-	/**
-	 * @var ILogger
-	 */
-	private $ilogger;
 	/**
 	 * @var IL10N
 	 */
@@ -54,12 +49,11 @@ class HtmlDownloadServiceTest extends TestCase {
 
 		$this->htmlEntityDecodeFilter = $this->createMock(HtmlEntityDecodeFilter::class);
 		$this->htmlEntityDecodeFilter->method('apply')->willReturnArgument(0);
-		$this->ilogger = $this->createStub(ILogger::class);
 		$this->il10n = $this->createStub(IL10N::class);
 		$this->htmlParser = $this->createMock(HtmlToDomParser::class);
 		$this->downloadHelper = $this->createMock(DownloadHelper::class);
 
-		$this->sut = new HtmlDownloadService($this->htmlEntityDecodeFilter, $this->ilogger, $this->il10n, $this->htmlParser, $this->downloadHelper);
+		$this->sut = new HtmlDownloadService($this->htmlEntityDecodeFilter, $this->il10n, $this->htmlParser, $this->downloadHelper);
 	}
 
 	public function testDownloadInvalidUrl() {
