@@ -10,6 +10,7 @@ use OCA\Cookbook\Helper\DownloadEncodingHelper;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
+use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCP\IL10N;
@@ -50,6 +51,7 @@ class HtmlDownloadService {
 
 	public function __construct(
 		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
+		HtmlEncodingFilter $htmlEncodingFilter,
 		IL10N $l10n,
 		ILogger $logger,
 		HtmlToDomParser $htmlParser,
@@ -57,7 +59,10 @@ class HtmlDownloadService {
 		EncodingGuessingHelper $encodingGuesser,
 		DownloadEncodingHelper $downloadEncodingHelper
 	) {
-		$this->htmlFilters = [ $htmlEntityDecodeFilter ];
+		$this->htmlFilters = [
+			$htmlEntityDecodeFilter,
+			$htmlEncodingFilter,
+		];
 		$this->l = $l10n;
 		$this->logger = $logger;
 		$this->htmlParser = $htmlParser;
