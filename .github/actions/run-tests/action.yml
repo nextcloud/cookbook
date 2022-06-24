@@ -47,7 +47,7 @@ runs:
             --create-env-dump
             --create-plain-dump plain
             --install-composer-deps
-            --run-unit-tests --run-migration-tests
+            --run-unit-tests --run-integration-tests --run-migration-tests
             --extract-code-coverage
             --shutdown-helpers || { failed=$?; } ;
             if [ -n "$failed" ]; then 

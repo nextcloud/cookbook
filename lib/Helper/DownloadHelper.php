@@ -119,7 +119,7 @@ class DownloadHelper {
 
 		foreach ($this->headers as $s) {
 			$parts = explode(':', $s, 2);
-			if (trim($parts[0]) === 'Content-Type') {
+			if (strtolower(trim($parts[0])) === 'content-type') {
 				return trim($parts[1]);
 			}
 		}
