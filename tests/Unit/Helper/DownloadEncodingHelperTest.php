@@ -5,6 +5,9 @@ namespace OCA\Cookbook\tests\Unit\Helper;
 use OCA\Cookbook\Helper\DownloadEncodingHelper;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers OCA\Cookbook\Helper\DownloadEncodingHelper
+ */
 class DownloadEncodingHelperTest extends TestCase {
 	/** @var DownloadEncodingHelper */
 	private $dut;
@@ -40,6 +43,6 @@ class DownloadEncodingHelperTest extends TestCase {
 			$testString .= $fileContent;
 		}
 
-		$this->assertEquals($testString, $this->dut->encodeToUTF8($testString, 'UTF-8'));
+		$this->assertEquals($testString, $this->dut->encodeToUTF8($testString, 'utf-8'));
 	}
 }
