@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "在伺服器上找不到具有匹配 MIME 類型的圖像。",
     "Recipe with ID %d was not found in database." : "沒有找到 ID 為「%d」的食譜。",
+    "Downloading of a file failed returned the following error message: %s" : "檔案下載失敗返回以下錯誤消息：%s",
     "Could not find recipe in HTML code." : "在 HTML 代碼中找不到食譜。",
     "JSON cannot be decoded." : "JSON 無法解碼。",
     "No recipe was found." : "沒有找到食譜。",
@@ -23,7 +24,10 @@ OC.L10N.register(
     "The configured user folder is a file." : "配置的資料夾是一個檔案。",
     "User cannot create recipe folder" : "用戶無法創建食譜資料夾",
     "in %s" : "在 %s",
+    "The JSON file in the folder with ID %d does not have a valid name." : "資料夾中 ID 為 %d 的 JSON 檔案沒有有效名稱。",
     "Could not parse URL" : "無法解析網址",
+    "Exception while downloading recipe from %s." : "從 %s 下載食譜時出現異常。",
+    "Download from %s failed as HTTP status code %d is not in expected range." : "從 %s 下載失敗，因為 HTTP 狀態代碼 %d 不在預期範圍內。",
     "No parser found for the given import." : "未找到給定導入的解析器。",
     "No recipe name was given. A unique name is required to store the recipe." : "未提供食譜名稱。存儲食譜需要唯一的名稱。",
     "Another recipe with that name already exists" : "另一個同名的食譜已經存在",

@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Na serwerze nie znaleziono obrazu o zgodnym typie MIME.",
     "Recipe with ID %d was not found in database." : "Nie znaleziono przepisu o ID %d w bazie danych.",
+    "Downloading of a file failed returned the following error message: %s" : "Pobieranie pliku nie powiodło się, zwrócono następujący komunikat o błędzie: %s",
     "Could not find recipe in HTML code." : "Nie można znaleźć przepisu w kodzie HTML.",
     "JSON cannot be decoded." : "Nie można zdekodować formatu JSON.",
     "No recipe was found." : "Nie znaleziono przepisu.",
@@ -23,7 +24,10 @@ OC.L10N.register(
     "The configured user folder is a file." : "Skonfigurowany katalog użytkownika w pliku.",
     "User cannot create recipe folder" : "Użytkownik nie może utworzyć katalogu z przepisami",
     "in %s" : "w %s",
+    "The JSON file in the folder with ID %d does not have a valid name." : "Plik JSON w katalogu o ID %d ma nieprawidłową nazwę.",
     "Could not parse URL" : "Nie udało się przeanalizować adresu URL",
+    "Exception while downloading recipe from %s." : "Wyjątek podczas pobierania przepisu z %s.",
+    "Download from %s failed as HTTP status code %d is not in expected range." : "Pobieranie z %s nie powiodło się, ponieważ kod statusu HTTP %d nie mieści się w oczekiwanym zakresie.",
     "No parser found for the given import." : "Nie znaleziono analizatora składni dla danego importu.",
     "No recipe name was given. A unique name is required to store the recipe." : "Nie podano nazwy przepisu. Do przechowywania przepisu wymagana jest unikalna nazwa.",
     "Another recipe with that name already exists" : "Istnieje już inny przepis o tej nazwie",
