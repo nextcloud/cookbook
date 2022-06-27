@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "조리법들",
     "in %s" : "%s",
     "Home" : "집",
     "Loading…" : "불러오는 중…",
