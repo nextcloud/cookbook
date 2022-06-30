@@ -1,6 +1,7 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Ez da bat datorren MIME mota duen irudirik aurkitu zerbitzarian.",
     "Recipe with ID %d was not found in database." : "Ez da aurkitu ID %d duen errezeta datu-basean.",
+    "Downloading of a file failed returned the following error message: %s" : "Fitxategiaren deskargak huts egin du hurrengo errore mezuarekin: %s",
     "No content encoding was detected in the content." : "Ez da edukiaren kodifikazioa detektatu edukian.",
     "Could not find recipe in HTML code." : "Ezin izan da errezeta aurkitu HTML kodean.",
     "JSON cannot be decoded." : "JSON ezin da deskodetu.",
@@ -22,6 +23,7 @@
     "The configured user folder is a file." : "Konfiguratutako erabiltzaile-karpeta fitxategi bat da.",
     "User cannot create recipe folder" : "Erabiltzaileak ezin du errezeta karpetarik sortu",
     "in %s" : "%s(e)an",
+    "The JSON file in the folder with ID %d does not have a valid name." : "ID %d duen karpetaren JSON fitxategiak ez du baliozko izenik.",
     "Could not parse URL" : "Ezin izan da URLa analizatu",
     "Exception while downloading recipe from %s." : "%s-(e)tik errezeta deskargatzeak salbuespena sortu du.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "%s-(r)en deskargak huts egin du %d HTTP egoera-kodea ez dagoelako esperotako barrutian.",
