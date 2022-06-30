@@ -51,6 +51,8 @@
 - Enable automatically merging of dependabot PRs
 - Add code style checker for package.json
   [#1053](https://github.com/nextcloud/cookbook/pull/1053) @christianlupus
+- Remove the amount of data uploaded in CI artifacts
+  [#1059](https://github.com/nextcloud/cookbook/pull/1059) @christianlupus
 
 ### Documentation
 - Add documentation on updates of the API endpoints
