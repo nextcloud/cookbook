@@ -10,6 +10,8 @@ import { generateUrl } from "@nextcloud/router"
 import Vue from "vue"
 import store from "./store"
 
+import api from "cookbook/js/api-interface"
+
 import AppInvalidGuest from "./components/AppInvalidGuest.vue"
 
 // eslint-disable-next-line camelcase,no-undef
@@ -27,6 +29,7 @@ if (__webpack_use_dev_server__ || false) {
 
     // eslint-disable-next-line no-param-reassign
     window.baseUrl = generateUrl("apps/cookbook")
+    api.init(window.baseUrl)
 
     // Also make the injections available in Vue components
     Vue.prototype.$window = window

@@ -268,8 +268,9 @@
 </template>
 
 <script>
-import axios from "@nextcloud/axios"
 import moment from "@nextcloud/moment"
+
+import api from "cookbook/js/api-interface"
 
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
@@ -513,10 +514,8 @@ export default {
 
             const $this = this
 
-            axios
-                .get(
-                    `${this.$window.baseUrl}/api/recipes/${this.$route.params.id}`
-                )
+            api.recipes
+                .get(this.$route.params.id)
                 .then((response) => {
                     const recipe = response.data
                     // Store recipe data in vuex

@@ -18,3 +18,9 @@ rules:
     no-plusplus:
         - error
         - allowForLoopAfterthoughts: true
+
+settings:
+    "import/resolver":
+        alias:
+            map:
+                - ["cookbook", "./src"]

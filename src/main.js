@@ -14,6 +14,8 @@ import Vue from "vue"
 import router from "./router"
 import store from "./store"
 
+import api from "cookbook/js/api-interface"
+
 import AppMain from "./components/AppMain.vue"
 
 // eslint-disable-next-line camelcase,no-undef
@@ -31,6 +33,7 @@ if (__webpack_use_dev_server__ || false) {
 
     // eslint-disable-next-line no-param-reassign
     window.baseUrl = generateUrl("apps/cookbook")
+    api.init(window.baseUrl)
 
     // Check if two routes point to the same component but have different content
     // eslint-disable-next-line no-param-reassign

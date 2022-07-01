@@ -116,8 +116,10 @@
 </template>
 
 <script>
-import axios from "@nextcloud/axios"
 import Vue from "vue"
+
+import api from "cookbook/js/api-interface"
+
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"
 import EditInputGroup from "./EditInputGroup.vue"
@@ -125,6 +127,7 @@ import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
 import EditMultiselectPopup from "./EditMultiselectPopup.vue"
 import EditTimeField from "./EditTimeField.vue"
+
 
 export default {
     name: "RecipeEdit",
@@ -415,8 +418,8 @@ export default {
         this.savingRecipe = false
 
         // Load data for all recipes to be used in recipe-reference popup suggestions
-        axios
-            .get(`${this.$window.baseUrl}/api/recipes`)
+        api.recipes
+            .getAll()
             .then((response) => {
                 $this.allRecipes = response.data
             })
@@ -482,8 +485,8 @@ export default {
          */
         fetchCategories() {
             const $this = this
-            axios
-                .get(`${this.$window.baseUrl}/categories`)
+            api.categories
+                .getAll()
                 .then((response) => {
                     const json = response.data || []
                     $this.allCategories = []
@@ -507,8 +510,8 @@ export default {
          */
         fetchKeywords() {
             const $this = this
-            axios
-                .get(`${this.$window.baseUrl}/keywords`)
+            api.keywords
+                .getAll()
                 .then((response) => {
                     const json = response.data || []
                     if (json) {
@@ -545,10 +548,8 @@ export default {
                 })
             }
             const $this = this
-            axios
-                .get(
-                    `${this.$window.baseUrl}/api/recipes/${this.$route.params.id}`
-                )
+            api.recipes
+                .get(this.$route.params.id)
                 .then((response) => {
                     const recipe = response.data
                     $this.$store.dispatch("setRecipe", { recipe })

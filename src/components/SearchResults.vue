@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import axios from "@nextcloud/axios"
+import api from "cookbook/js/api-interface"
 
 import RecipeList from "./RecipeList.vue"
 
@@ -61,8 +61,8 @@ export default {
                 // Search by tags
                 const $this = this
                 const tags = this.$route.params.value
-                axios
-                    .get(`${this.$window.baseUrl}/api/tags/${tags}`)
+                api.recipes
+                    .allWithTag(tags)
                     .then((response) => {
                         $this.results = response.data
                     })
@@ -85,8 +85,8 @@ export default {
                 // Search by category
                 const $this = this
                 const cat = this.$route.params.value
-                axios
-                    .get(`${this.$window.baseUrl}/api/category/${cat}`)
+                api.recipes
+                    .allInCategory(cat)
                     .then((response) => {
                         $this.results = response.data
                     })
@@ -108,10 +108,8 @@ export default {
             } else {
                 // General search
                 const $this = this
-                axios
-                    .get(
-                        `${this.$window.baseUrl}/api/search/${this.$route.params.value}`
-                    )
+                api.recipes
+                    .search($this.$route.params.value)
                     .then((response) => {
                         $this.results = response.data
                     })
