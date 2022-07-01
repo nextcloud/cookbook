@@ -42,6 +42,8 @@
   [#1050](https://github.com/nextcloud/cookbook/pull/1050) @christianlupus
 - Migrated node-sass to dart sass
   [#1051](https://github.com/nextcloud/cookbook/pull/1051) @christianlupus
+- Add the url as a parameter to allow for specialized parsers per website in the backend
+  [#1060](https://github.com/nextcloud/cookbook/pull/1060) @christianlupus
 
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests

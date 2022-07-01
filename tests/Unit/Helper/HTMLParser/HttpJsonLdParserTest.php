@@ -74,7 +74,7 @@ class HttpJsonLdParserTest extends TestCase {
 		$document->loadHTML($content);
 
 		try {
-			$res = $parser->parse($document);
+			$res = $parser->parse($document, 'http://example.com');
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
 			$expected = json_decode($jsonDest, true);

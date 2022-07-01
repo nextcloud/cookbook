@@ -8,6 +8,7 @@ use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCP\IL10N;
 use OCA\Cookbook\Service\RecipeExtractionService;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class RecipeExtractionServiceTest extends TestCase {
 	/**
@@ -26,34 +27,37 @@ class RecipeExtractionServiceTest extends TestCase {
 	 * @param bool $exceptionExpected
 	 */
 	public function testParsingDelegation($jsonSuccess, $microdataSuccess, $exceptionExpected): void {
+		/** @var HttpJsonLdParser|MockObject $jsonParser */
 		$jsonParser = $this->createMock(HttpJsonLdParser::class);
+		/** @var HttpMicrodataParser|MockObject $microdataParser */
 		$microdataParser = $this->createMock(HttpMicrodataParser::class);
 
 		$document = $this->createStub(\DOMDocument::class);
+		$url = 'http://example.com';
 		$expectedObject = [new \stdClass()];
 
 		if ($jsonSuccess) {
 			$jsonParser->expects($this->once())
 				->method('parse')
-				->with($document)
+				->with($document, $url)
 				->willReturn($expectedObject);
 
 			$microdataParser->expects($this->never())->method('parse');
 		} else {
 			$jsonParser->expects($this->once())
 				->method('parse')
-				->with($document)
+				->with($document, $url)
 				->willThrowException(new HtmlParsingException());
 
 			if ($microdataSuccess) {
 				$microdataParser->expects($this->once())
 					->method('parse')
-					->with($document)
+					->with($document, $url)
 					->willReturn($expectedObject);
 			} else {
 				$microdataParser->expects($this->once())
 					->method('parse')
-					->with($document)
+					->with($document, $url)
 					->willThrowException(new HtmlParsingException());
 			}
 		}
@@ -61,7 +65,7 @@ class RecipeExtractionServiceTest extends TestCase {
 		$sut = new RecipeExtractionService($jsonParser, $microdataParser, $this->l);
 
 		try {
-			$ret = $sut->parse($document);
+			$ret = $sut->parse($document, $url);
 
 			$this->assertEquals($expectedObject, $ret);
 		} catch (HtmlParsingException $ex) {
