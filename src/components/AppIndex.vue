@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import axios from "@nextcloud/axios"
+import api from "cookbook/js/api-interface"
 
 import RecipeList from "./RecipeList.vue"
 
@@ -46,8 +46,8 @@ export default {
          */
         loadAll() {
             const $this = this
-            axios
-                .get(`${this.$window.baseUrl}/api/recipes`)
+            api.recipes
+                .getAll()
                 .then((response) => {
                     $this.recipes = response.data
 

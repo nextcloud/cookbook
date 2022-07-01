@@ -6,7 +6,7 @@
  */
 import Vue from "vue"
 import Vuex from "vuex"
-import axios from "@nextcloud/axios"
+import api from "cookbook/js/api-interface"
 
 Vue.use(Vuex)
 
@@ -114,11 +114,7 @@ export default new Vuex.Store({
          * Create new recipe on the server
          */
         createRecipe(c, { recipe }) {
-            const request = axios({
-                method: "POST",
-                url: `${window.baseUrl}/api/recipes`,
-                data: recipe,
-            })
+            const request = api.recipes.create(recipe)
             return request.then((v) => {
                 // Refresh navigation to display changes
                 c.dispatch("setAppNavigationRefreshRequired", {
@@ -132,7 +128,7 @@ export default new Vuex.Store({
          * Delete recipe on the server
          */
         deleteRecipe(c, { id }) {
-            const request = axios.delete(`${window.baseUrl}/api/recipes/${id}`)
+            const request = api.recipes.delete(id)
             request.then(() => {
                 // Refresh navigation to display changes
                 c.dispatch("setAppNavigationRefreshRequired", {
@@ -176,13 +172,7 @@ export default new Vuex.Store({
             const newName = categoryNames[1]
             c.dispatch("setCategoryUpdating", { category: oldName })
 
-            const request = axios({
-                method: "PUT",
-                url: `${window.baseUrl}/api/category/${encodeURIComponent(
-                    oldName
-                )}`,
-                data: { name: newName },
-            })
+            const request = api.categories.update(oldName, newName)
 
             request
                 .then(() => {
@@ -205,11 +195,7 @@ export default new Vuex.Store({
         updateRecipeDirectory(c, { dir }) {
             c.commit("setUpdatingRecipeDirectory", { b: true })
             c.dispatch("setRecipe", { recipe: null })
-            const request = axios({
-                url: `${window.baseUrl}/config`,
-                method: "POST",
-                data: { folder: dir },
-            })
+            const request = api.config.directory.update(dir)
 
             request.then(() => {
                 c.dispatch("setAppNavigationRefreshRequired", {
@@ -223,11 +209,7 @@ export default new Vuex.Store({
          * Update existing recipe on the server
          */
         updateRecipe(c, { recipe }) {
-            const request = axios({
-                method: "PUT",
-                url: `${window.baseUrl}/api/recipes/${recipe.id}`,
-                data: recipe,
-            })
+            const request = api.recipes.update(recipe.id, recipe)
             request.then(() => {
                 // Refresh navigation to display changes
                 c.dispatch("setAppNavigationRefreshRequired", {

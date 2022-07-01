@@ -11,6 +11,9 @@ import VueShowdown from "vue-showdown"
 import { generateUrl } from "@nextcloud/router"
 
 import Vue from "vue"
+
+import api from "cookbook/js/api-interface"
+
 import router from "./router"
 import store from "./store"
 
@@ -31,6 +34,7 @@ if (__webpack_use_dev_server__ || false) {
 
     // eslint-disable-next-line no-param-reassign
     window.baseUrl = generateUrl("apps/cookbook")
+    api.init(window.baseUrl)
 
     // Check if two routes point to the same component but have different content
     // eslint-disable-next-line no-param-reassign

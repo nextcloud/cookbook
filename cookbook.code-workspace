@@ -28,7 +28,7 @@
 			".github/actions/run-tests/volumes/nextcloud/custom_apps/cookbook/**/*": true,
 			".github/actions/run-tests/volumes/nextcloud/**/*": true
 		},
-		"intelephense.trace.server": "message",
+		//"intelephense.trace.server": "message",
 		"intelephense.files.exclude": [
 			"**/.git/**",
 			"**/.svn/**",
@@ -44,6 +44,9 @@
 		],
 		"cSpell.words": [
 			"Nextcloud"
-		]
+		],
+		"path-intellisense.mappings": {
+			"cookbook": "${workspaceFolder}/src",
+		}
 	}
 }
