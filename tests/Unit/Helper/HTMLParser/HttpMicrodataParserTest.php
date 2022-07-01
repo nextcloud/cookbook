@@ -59,7 +59,7 @@ class HttpMicrodataParserTest extends TestCase {
 		$document->loadHTML($content);
 
 		try {
-			$res = $parser->parse($document);
+			$res = $parser->parse($document, 'http://example.com');
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_Microdata/$jsonFile");
 			$expected = json_decode($jsonDest, true);
@@ -145,7 +145,7 @@ class HttpMicrodataParserTest extends TestCase {
 		$document->loadHTML($content);
 
 		try {
-			$res = $parser->parse($document);
+			$res = $parser->parse($document, 'http://exmapl.com');
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_Microdata/$jsonFile");
 			$expected = json_decode($jsonDest, true);

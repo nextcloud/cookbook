@@ -834,7 +834,7 @@ class RecipeService {
 		$this->htmlDownloadService->downloadRecipe($url);
 
 		try {
-			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom());
+			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom(), $url);
 		} catch (HtmlParsingException $ex) {
 			throw new ImportException($ex->getMessage(), null, $ex);
 		}

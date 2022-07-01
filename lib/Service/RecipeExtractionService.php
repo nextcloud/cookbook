@@ -29,14 +29,15 @@ class RecipeExtractionService {
 	 * Parse a DOM document using all registered parsers
 	 *
 	 * @param \DOMDocument $document The document to parse
+	 * @param ?string $url The URL of the recipe to be parsed
 	 * @throws HtmlParsingException If no parser was able to successfully parse the document
 	 * @return array The data as returned from the parser
 	 */
-	public function parse(\DOMDocument $document): array {
+	public function parse(\DOMDocument $document, ?string $url): array {
 		/** @var $parser AbstractHtmlParser */
 		foreach ($this->parsers as $parser) {
 			try {
-				return $parser->parse($document);
+				return $parser->parse($document, $url);
 			} catch (HtmlParsingException $ex) {
 				// Silently ignore failure as there might be other parsers better suited
 			}
