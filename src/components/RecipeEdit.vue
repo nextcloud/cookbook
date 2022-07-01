@@ -128,7 +128,6 @@ import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
 import EditMultiselectPopup from "./EditMultiselectPopup.vue"
 import EditTimeField from "./EditTimeField.vue"
 
-
 export default {
     name: "RecipeEdit",
     components: {
