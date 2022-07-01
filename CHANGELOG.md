@@ -44,6 +44,8 @@
   [#1051](https://github.com/nextcloud/cookbook/pull/1051) @christianlupus
 - Add the url as a parameter to allow for specialized parsers per website in the backend
   [#1060](https://github.com/nextcloud/cookbook/pull/1060) @christianlupus
+- Create wrapper in frontend for all API requests
+  [#1061](https://github.com/nextcloud/cookbook/pull/1061) @christianlupus
 
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests
