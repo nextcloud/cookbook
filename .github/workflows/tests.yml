@@ -210,12 +210,19 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
         
-      - name: Upload the code coverage report (unit tests) as artifacts
+      - name: Upload the code coverage report for codecov as artifacts
         uses: actions/upload-artifact@v2
         with:
-            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-            path: "/tmp/coverage"
+            name: Code coverage (XML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: "/tmp/coverage/coverage.*.xml"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
+
+    #   - name: Upload the code coverage report (unit tests) as artifacts
+    #     uses: actions/upload-artifact@v2
+    #     with:
+    #         name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+    #         path: "/tmp/coverage"
+    #     if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@v2
