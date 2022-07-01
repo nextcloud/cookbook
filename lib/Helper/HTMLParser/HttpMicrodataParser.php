@@ -31,7 +31,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		parent::__construct($l10n);
 	}
 
-	public function parse(DOMDocument $document): array {
+	public function parse(DOMDocument $document, ?string $url): array {
 		$this->xpath = new DOMXPath($document);
 
 		$selectorHttp = "//*[@itemtype='http://schema.org/Recipe']";

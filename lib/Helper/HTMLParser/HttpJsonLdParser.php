@@ -22,7 +22,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$this->jsonService = $jsonService;
 	}
 
-	public function parse(\DOMDocument $document): array {
+	public function parse(\DOMDocument $document, ?string $url): array {
 		$xpath = new \DOMXPath($document);
 
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
