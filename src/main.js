@@ -11,10 +11,11 @@ import VueShowdown from "vue-showdown"
 import { generateUrl } from "@nextcloud/router"
 
 import Vue from "vue"
-import router from "./router"
-import store from "./store"
 
 import api from "cookbook/js/api-interface"
+
+import router from "./router"
+import store from "./store"
 
 import AppMain from "./components/AppMain.vue"
 

@@ -8,9 +8,10 @@
 import { generateUrl } from "@nextcloud/router"
 
 import Vue from "vue"
-import store from "./store"
 
 import api from "cookbook/js/api-interface"
+
+import store from "./store"
 
 import AppInvalidGuest from "./components/AppInvalidGuest.vue"
 
