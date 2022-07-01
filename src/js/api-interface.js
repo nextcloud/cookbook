@@ -1,11 +1,8 @@
 import axios from "@nextcloud/axios"
 
-let baseUrl
-// const baseUrl = globalThis.window.baseUrl
+import { generateUrl } from "@nextcloud/router"
 
-function init($baseurl) {
-    baseUrl = $baseurl
-}
+const baseUrl = generateUrl("apps/cookbook")
 
 function createNewRecipe(recipe) {
     return axios({
@@ -107,7 +104,6 @@ function reindex() {
 }
 
 export default {
-    init,
     recipes: {
         create: createNewRecipe,
         getAll: getAllRecipes,

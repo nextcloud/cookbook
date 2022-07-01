@@ -12,7 +12,6 @@ import { generateUrl } from "@nextcloud/router"
 
 import Vue from "vue"
 
-import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 
 import router from "./router"
@@ -35,7 +34,6 @@ if (__webpack_use_dev_server__ || false) {
 
     // eslint-disable-next-line no-param-reassign
     window.baseUrl = generateUrl("apps/cookbook")
-    api.init(window.baseUrl)
 
     helpers.useRouter(router)
 

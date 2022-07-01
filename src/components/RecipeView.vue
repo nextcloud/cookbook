@@ -51,7 +51,7 @@
                     </p>
 
                     <VueShowdown
-                        :markdown="recipe.description"
+                        :markdown="parsedDescription"
                         class="markdown-description"
                     />
                     <p v-if="$store.state.recipe.url">
@@ -95,12 +95,12 @@
             <section>
                 <aside>
                     <section>
-                        <h3 v-if="recipe.ingredients.length">
+                        <h3 v-if="parsedIngredients.length">
                             {{ t("cookbook", "Ingredients") }}
                         </h3>
-                        <ul v-if="recipe.ingredients.length">
+                        <ul v-if="parsedIngredients.length">
                             <RecipeIngredient
-                                v-for="(ingredient, idx) in recipe.ingredients"
+                                v-for="(ingredient, idx) in parsedIngredients"
                                 :key="'ingr' + idx"
                                 :ingredient="ingredient"
                                 :recipe-ingredients-have-subgroups="
@@ -111,12 +111,12 @@
                     </section>
 
                     <section>
-                        <h3 v-if="recipe.tools.length">
+                        <h3 v-if="parsedTools.length">
                             {{ t("cookbook", "Tools") }}
                         </h3>
-                        <ul v-if="recipe.tools.length">
+                        <ul v-if="parsedTools.length">
                             <RecipeTool
-                                v-for="(tool, idx) in recipe.tools"
+                                v-for="(tool, idx) in parsedTools"
                                 :key="'tool' + idx"
                                 :tool="tool"
                             />
@@ -252,11 +252,11 @@
                         </ul>
                     </section>
                 </aside>
-                <main v-if="recipe.instructions.length">
+                <main v-if="parsedInstructions.length">
                     <h3>{{ t("cookbook", "Instructions") }}</h3>
                     <ol class="instructions">
                         <RecipeInstruction
-                            v-for="(instruction, idx) in recipe.instructions"
+                            v-for="(instruction, idx) in parsedInstructions"
                             :key="'instr' + idx"
                             :instruction="instruction"
                         />
@@ -272,6 +272,7 @@ import moment from "@nextcloud/moment"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
+import normalizeMarkdown from "cookbook/js/title-rename"
 
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
@@ -311,6 +312,10 @@ export default {
     data() {
         return {
             headerPrefix: "## ",
+            parsedDescription: "",
+            parsedIngredients: [],
+            parsedInstructions: [],
+            parsedTools: [],
         }
     },
     computed: {
@@ -329,22 +334,27 @@ export default {
                 nutrition: null,
             }
 
+            if (this.$store.state.recipe === null) {
+                // console.log("Recipe is null")
+                return recipe
+            }
+
             if (this.$store.state.recipe.description) {
-                recipe.description = this.convertRecipeReferences(
-                    window.escapeHTML(this.$store.state.recipe.description)
+                recipe.description = helpers.escapeHTML(
+                    this.$store.state.recipe.description
                 )
             }
 
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(
                     this.$store.state.recipe.recipeIngredient
-                ).map((i) => this.convertRecipeReferences(window.escapeHTML(i)))
+                ).map((i) => helpers.escapeHTML(i))
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(
                     this.$store.state.recipe.recipeInstructions
-                ).map((i) => this.convertRecipeReferences(window.escapeHTML(i)))
+                ).map((i) => helpers.escapeHTML(i))
             }
 
             if (this.$store.state.recipe.keywords) {
@@ -385,7 +395,7 @@ export default {
 
             if (this.$store.state.recipe.tool) {
                 recipe.tools = this.$store.state.recipe.tool.map((i) =>
-                    this.convertRecipeReferences(window.escapeHTML(i))
+                    helpers.escapeHTML(i)
                 )
             }
 
@@ -453,6 +463,77 @@ export default {
             )
         },
     },
+    watch: {
+        recipe(r) {
+            // console.log('Recipe has been updated')
+            if (r) {
+                // console.log("Recipe", r)
+
+                if (r.description) {
+                    this.parsedDescription = t("cookbook", "Loading…")
+                    normalizeMarkdown(r.description).then((x) => {
+                        this.parsedDescription = x
+                    })
+                } else {
+                    this.parsedDescription = ""
+                }
+
+                if (r.ingredients) {
+                    this.parsedIngredients = r.ingredients.map(() =>
+                        t("cookbook", "Loading…")
+                    )
+                    r.ingredients.forEach((ingredient, idx) => {
+                        normalizeMarkdown(ingredient)
+                            .then((x) => {
+                                this.parsedIngredients.splice(idx, 1, x)
+                            })
+                            .catch((ex) => {
+                                // eslint-disable-next-line no-console
+                                console.log(ex)
+                            })
+                    })
+                } else {
+                    this.parsedIngredients = []
+                }
+
+                if (r.instructions) {
+                    this.parsedInstructions = r.instructions.map(() =>
+                        t("cookbook", "Loading…")
+                    )
+                    r.instructions.forEach((instruction, idx) => {
+                        normalizeMarkdown(instruction)
+                            .then((x) => {
+                                this.parsedInstructions.splice(idx, 1, x)
+                            })
+                            .catch((ex) => {
+                                // eslint-disable-next-line no-console
+                                console.log(ex)
+                            })
+                    })
+                } else {
+                    this.parsedInstructions = []
+                }
+
+                if (r.tools) {
+                    this.parsedTools = r.tools.map(() =>
+                        t("cookbook", "Loading…")
+                    )
+                    r.tools.forEach((tool, idx) => {
+                        normalizeMarkdown(tool)
+                            .then((x) => {
+                                this.parsedTools.splice(idx, 1, x)
+                            })
+                            .catch((ex) => {
+                                // eslint-disable-next-line no-console
+                                console.log(ex)
+                            })
+                    })
+                } else {
+                    this.parsedTools = []
+                }
+            }
+        },
+    },
     mounted() {
         this.setup()
         // Register data load method hook for access from the controls components
@@ -462,14 +543,6 @@ export default {
         })
     },
     methods: {
-        convertRecipeReferences(text) {
-            const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
-            const converted = text.replace(
-                re,
-                `$1<a class="recipe-reference-inline" href="${this.$window.baseUrl}/#/recipe/$2">#$2</a>`
-            )
-            return converted
-        },
         isNullOrEmpty(str) {
             return !str || (typeof str === "string" && str.trim().length === 0)
         },
