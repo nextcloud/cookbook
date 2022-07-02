@@ -1,6 +1,78 @@
 ## [Unreleased]
 
+## 0.9.13 - 2022-07-02
 
+### Added
+- Create service class for downloading and extracting JSON
+  [#553](https://github.com/nextcloud/cookbook/pull/553) @christianlupus
+- Show recipe titles for internal references
+  [#1063](https://github.com/nextcloud/cookbook/pull/1063) @christianlupus
+
+### Changed
+- Extracted user folder handling into its own helper class
+  [#1007](https://github.com/nextcloud/cookbook/pull/1007) @christianlupus
+- Switched to cURL for downloading of external files
+  [#1055](https://github.com/nextcloud/cookbook/pull/1055) @christianlupus
+- Rewrite encoding of imported recipes
+  [#1057](https://github.com/nextcloud/cookbook/pull/1057) @christianlupus
+  
+### Fixed
+- Fix visual regression in edit mode to prevent overflow of breadcrumbs
+  [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus
+- l10n: Changed spelling of MIME
+  [#988](https://github.com/nextcloud/cookbook/pull/988) @rakekniven
+- Move "Categories" caption above list of categories
+  [#1000](https://github.com/nextcloud/cookbook/pull/1000) @seyfeb
+- Reenable the fixup action after deprecation in central repository
+  [#1012](https://github.com/nextcloud/cookbook/pull/1012) @christianlupus
+- Trim recipe name to a maximum length to fit in the database
+  [#1014](https://github.com/nextcloud/cookbook/pull/1014) @christianlupus
+- Correct transifex translations
+  [#1024](https://github.com/nextcloud/cookbook/pull/1024) @christianlupus
+- Correct singular/plural translations
+  [#1026](https://github.com/nextcloud/cookbook/pull/1026) @christianlupus
+- Update eslint-plugin-vue
+- Fix refresh-icon overlays name of recipe
+  [#1033](https://github.com/nextcloud/cookbook/pull/1033) @MarcelRobitaille
+- Reenable PR checks from foreign forks
+  [#1045](https://github.com/nextcloud/cookbook/pull/1045) @christianlupus
+- Prevent access to guzzle client without explicit dependency
+  [#1011](https://github.com/nextcloud/cookbook/pull/1011) @christianlupus
+- Make PHP code styling more strict
+  [#1011](https://github.com/nextcloud/cookbook/pull/1011) @christianlupus
+- Adding some strings to transifex
+  [#1049](https://github.com/nextcloud/cookbook/pull/1049) @christianlupus
+- Removed outdated dependency on v-markdown-editor due to security issues
+  [#1050](https://github.com/nextcloud/cookbook/pull/1050) @christianlupus
+- Migrated node-sass to dart sass
+  [#1051](https://github.com/nextcloud/cookbook/pull/1051) @christianlupus
+- Add the url as a parameter to allow for specialized parsers per website in the backend
+  [#1060](https://github.com/nextcloud/cookbook/pull/1060) @christianlupus
+- Create wrapper in frontend for all API requests
+  [#1061](https://github.com/nextcloud/cookbook/pull/1061) @christianlupus
+
+### Removed
+- Remove deprecated and no longer functional API routes from app
+  [#1065](https://github.com/nextcloud/cookbook/pull/1065) @christianlupus
+
+### Codebase maintenance
+- Removed codecov.io upload of intermediate merge commits during pull requests
+  [#1028](https://github.com/nextcloud/cookbook/issues/1028)
+- Use latest possible NC core for CI tests
+- Introduce migration tests
+- Enable automatically merging of dependabot PRs
+- Add code style checker for package.json
+  [#1053](https://github.com/nextcloud/cookbook/pull/1053) @christianlupus
+- Remove the amount of data uploaded in CI artifacts
+  [#1059](https://github.com/nextcloud/cookbook/pull/1059) @christianlupus
+- Outsource of functions from entry files to helper module
+  [#1062](https://github.com/nextcloud/cookbook/pull/1062) @christianlupus
+
+### Documentation
+- Add documentation on updates of the API endpoints
+  [#1001](https://github.com/nextcloud/cookbook/pull/1001) @christianlupus
+- Fix API specification in accordance with real implementation
+  [#1006](https://github.com/nextcloud/cookbook/pull/1006) @christianlupus
 
 ## 0.9.12 - 2022-05-12
 
@@ -29,7 +101,7 @@
   [#985](https://github.com/nextcloud/cookbook/pull/985) @christianlupus
 
 ### Documentation
-- Corrected some spelling issues
+- l10n: Corrected some spelling issues
   [#941](https://github.com/nextcloud/cookbook/pull/941) @Valdnet
 - Enhanced the user documentation by adding some starter's information
   [#936](https://github.com/nextcloud/cookbook/pull/936) @zorglubu
@@ -39,6 +111,9 @@
   [#957](https://github.com/nextcloud/cookbook/pull/957) @zorglubu
 - Add example to OpenAPI specification
   [#957](https://github.com/nextcloud/cookbook/pull/972) @christianlupus
+
+### Deprecated
+- Method RecipeService::parseRecipeHtml()
 
 
 ## 0.9.11 - 2022-03-28

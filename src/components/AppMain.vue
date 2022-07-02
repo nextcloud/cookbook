@@ -4,7 +4,9 @@
         <AppContent>
             <div>
                 <AppControls />
-                <router-view></router-view>
+                <div class="cookbook-app-content">
+                    <router-view></router-view>
+                </div>
             </div>
         </AppContent>
     </Content>
@@ -22,6 +24,7 @@ export default {
         AppContent,
         AppControls,
         AppNavi,
+        // eslint-disable-next-line vue/no-reserved-component-names
         Content,
     },
     watch: {
@@ -33,6 +36,17 @@ export default {
     },
 }
 </script>
+
+<style lang="scss" scoped>
+.app-navigation {
+    z-index: 1;
+}
+
+.cookbook-app-content {
+    position: relative;
+    z-index: 0;
+}
+</style>
 
 <style>
 @media print {

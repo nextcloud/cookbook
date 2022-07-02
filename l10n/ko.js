@@ -1,10 +1,11 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "조리법들",
     "in %s" : "%s",
     "Home" : "집",
-    "Save changes" : "변경 사항 저장",
     "Loading…" : "불러오는 중…",
+    "Save changes" : "변경 사항 저장",
     "Page not found" : "페이지를 찾을 수 없음",
     "Filter" : "필터",
     "Search" : "검색",

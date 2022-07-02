@@ -62,18 +62,13 @@
                 :title="$store.state.recipe.name"
                 :disable-drop="true"
             >
-                <ActionButton
-                    :icon="
-                        $store.state.reloadingRecipe ===
-                        parseInt($route.params.id)
-                            ? 'icon-loading-small'
-                            : 'icon-history'
-                    "
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Reload recipe')"
-                    @click="reloadRecipeEdit()"
-                    >{{ t("cookbook", "Reload recipe") }}</ActionButton
-                >
+            </Breadcrumb>
+            <Breadcrumb
+                v-if="isLoading || isLoadingRecipe"
+                class="active"
+                :title="t('cookbook', 'Loading…')"
+                :disable-drop="true"
+            >
             </Breadcrumb>
             <!-- Create new recipe -->
             <Breadcrumb
@@ -107,18 +102,6 @@
                 :title="$store.state.recipe.name"
                 :disable-drop="true"
             >
-                <ActionButton
-                    :icon="
-                        $store.state.reloadingRecipe ===
-                        parseInt($route.params.id)
-                            ? 'icon-loading-small'
-                            : 'icon-history'
-                    "
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Reload recipe')"
-                    @click="reloadRecipeView()"
-                    >{{ t("cookbook", "Reload recipe") }}</ActionButton
-                >
             </Breadcrumb>
             <Breadcrumb
                 v-if="isRecipe"
@@ -130,12 +113,46 @@
                     icon="icon-rename"
                     class="action-button"
                     :aria-label="t('cookbook', 'Edit recipe')"
-                    @click="
-                        $window.goTo(
-                            '/recipe/' + $store.state.recipe.id + '/edit'
-                        )
-                    "
+                    @click="goToRecipe($store.state.recipe.id)"
                     >{{ t("cookbook", "Edit recipe") }}</ActionButton
+                >
+            </Breadcrumb>
+            <Breadcrumb
+                v-if="isEdit"
+                class="no-arrow"
+                title=""
+                :disable-drop="true"
+            >
+                <ActionButton
+                    :icon="
+                        $store.state.reloadingRecipe ===
+                        parseInt($route.params.id)
+                            ? 'icon-loading-small'
+                            : 'icon-history'
+                    "
+                    class="action-button"
+                    :aria-label="t('cookbook', 'Reload recipe')"
+                    @click="reloadRecipeEdit()"
+                    >{{ t("cookbook", "Reload recipe") }}</ActionButton
+                >
+            </Breadcrumb>
+            <Breadcrumb
+                v-if="isRecipe"
+                class="no-arrow"
+                title=""
+                :disable-drop="true"
+            >
+                <ActionButton
+                    :icon="
+                        $store.state.reloadingRecipe ===
+                        parseInt($route.params.id)
+                            ? 'icon-loading-small'
+                            : 'icon-history'
+                    "
+                    class="action-button"
+                    :aria-label="t('cookbook', 'Reload recipe')"
+                    @click="reloadRecipeView()"
+                    >{{ t("cookbook", "Reload recipe") }}</ActionButton
                 >
             </Breadcrumb>
             <Breadcrumb
@@ -170,24 +187,24 @@
             <Breadcrumb
                 v-if="isLoading"
                 class="active no-arrow"
-                :title="t('cookbook', 'App is loading')"
+                title=""
                 :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-loading-small"
-                    :aria-label="t('cookbook', 'Loading…')"
+                    :aria-label="t('cookbook', 'Loading app')"
                 />
             </Breadcrumb>
             <!-- Is a recipe loading? -->
             <Breadcrumb
                 v-else-if="isLoadingRecipe"
                 class="active no-arrow"
-                :title="t('cookbook', 'Loading recipe')"
+                title=""
                 :disable-drop="true"
             >
                 <ActionButton
                     icon="icon-loading-small"
-                    :aria-label="t('cookbook', 'Loading…')"
+                    :aria-label="t('cookbook', 'Loading recipe')"
                 />
             </Breadcrumb>
             <!-- No recipe found -->
@@ -209,6 +226,8 @@
 </template>
 
 <script>
+import helpers from "cookbook/js/helper"
+
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
 import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
@@ -304,12 +323,10 @@ export default {
             ) {
                 return
             }
-            const $this = this
-
             this.$store
                 .dispatch("deleteRecipe", { id: this.$store.state.recipe.id })
                 .then(() => {
-                    $this.$window.goTo("/")
+                    helpers.goTo("/")
                 })
                 .catch((e) => {
                     // eslint-disable-next-line no-alert
@@ -332,11 +349,14 @@ export default {
             this.$root.$emit("saveRecipe")
         },
         search(e) {
-            this.$window.goTo(`/search/${e.target[1].value}`)
+            helpers.goTo(`/search/${e.target[1].value}`)
         },
         updateFilters(e) {
             this.filterValue = e
             this.$root.$emit("applyRecipeFilter", e)
+        },
+        goToRecipe(id) {
+            helpers.goTo(`/recipe/${id}/edit`)
         },
     },
 }

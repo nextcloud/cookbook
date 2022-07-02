@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "në %s",
     "Home" : "Kryefaqja",
-    "Save changes" : "Ruaj ndryshimet",
     "Loading…" : "Duke u ngarkuar…",
+    "Save changes" : "Ruaj ndryshimet",
     "Page not found" : "Faqja nuk u gjet ",
     "Filter" : "Filtro",
     "Search" : "Kërko",

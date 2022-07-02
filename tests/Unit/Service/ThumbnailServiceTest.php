@@ -17,7 +17,6 @@ use ReflectionClass;
  * @covers OCA\Cookbook\Exception\InvalidThumbnailTypeException
  */
 class ThumbnailServiceTest extends TestCase {
-
 	/**
 	 * @var ThumbnailService|MockObject
 	 */
@@ -61,6 +60,8 @@ class ThumbnailServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpTypes
+	 * @param mixed $type
+	 * @param mixed $size
 	 */
 	public function testgetThumbnail($type, $size) {
 		/**
@@ -99,6 +100,7 @@ class ThumbnailServiceTest extends TestCase {
 
 	/**
 	 * @dataProvider dpInvalidTypes
+	 * @param mixed $type
 	 */
 	public function testGetThumbnailInvalidType($type) {
 		$this->expectException(InvalidThumbnailTypeException::class);

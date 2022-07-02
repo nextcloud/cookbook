@@ -39,7 +39,6 @@ class ImageGenerationHelper {
 	 * @param File $fullImage The full-sized image to use as a starting point
 	 * @param int $type The requested size of the thumbnail
 	 * @param File $dstFile The name of the file to store the thumbnail to
-	 * @return void
 	 * @throws NotPermittedException if the IO to read or write the image file was not allowed
 	 * @throws LockedException if the image file was locked and thus could not be read or written
 	 * @throws GenericFileException if the writing fails for some reason
@@ -55,7 +54,7 @@ class ImageGenerationHelper {
 		$fullContent = $fullImage->getContent();
 
 		$thumbContent = $this->thumbnailService->getThumbnail($fullContent, $type);
-		
+
 		$dstFile->putContent($thumbContent);
 		$dstFile->touch();
 	}
@@ -69,8 +68,7 @@ class ImageGenerationHelper {
 	 * The main image will not be dropped.
 	 *
 	 * @param Folder $recipeFolder The folder containing the recipe
-	 * @param integer $type The type of the thumbnail to remove
-	 * @return void
+	 * @param int $type The type of the thumbnail to remove
 	 * @throws NotPermittedException if the image could not be removed
 	 * @throws InvalidPathException
 	 */
@@ -78,7 +76,7 @@ class ImageGenerationHelper {
 		if ($type === ImageSize::PRIMARY_IMAGE) {
 			return;
 		}
-		
+
 		$filename = ImageSize::NAME_MAP[$type];
 
 		try {

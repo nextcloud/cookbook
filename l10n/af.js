@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "in %s",
     "Home" : "Tuis",
-    "Save changes" : "Bewaar veranderinge",
     "Loading…" : "Laai…",
+    "Save changes" : "Bewaar veranderinge",
     "Page not found" : "Blad nie gevind nie",
     "Filter" : "Filter",
     "Search" : "Soek",

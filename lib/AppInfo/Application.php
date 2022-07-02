@@ -14,7 +14,7 @@ use OCP\Util;
 if (Util::getVersion()[0] >= 20) {
 	class Application extends App implements IBootstrap {
 		public const APP_ID = 'cookbook';
-		
+
 		public function __construct(array $urlParams = []) {
 			parent::__construct(self::APP_ID, $urlParams);
 		}
@@ -29,7 +29,7 @@ if (Util::getVersion()[0] >= 20) {
 } else {
 	class Application extends App {
 		public const APP_ID = 'cookbook';
-		
+
 		public function __construct(array $urlParams = []) {
 			parent::__construct(self::APP_ID, $urlParams);
 		}

@@ -8,6 +8,7 @@
 import { generateUrl } from "@nextcloud/router"
 
 import Vue from "vue"
+
 import store from "./store"
 
 import AppInvalidGuest from "./components/AppInvalidGuest.vue"

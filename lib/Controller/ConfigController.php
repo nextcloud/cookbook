@@ -10,29 +10,43 @@ use OCP\AppFramework\Controller;
 use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UserFolderHelper;
 
 class ConfigController extends Controller {
 	/**
 	 * @var RecipeService
 	 */
 	private $service;
-	
+
 	/**
 	 * @var DbCacheService
 	 */
 	private $dbCacheService;
-	
+
 	/**
 	 * @var RestParameterParser
 	 */
 	private $restParser;
 
-	public function __construct($AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, RestParameterParser $restParser) {
+	/**
+	 * @var UserFolderHelper
+	 */
+	private $userFolder;
+
+	public function __construct(
+		$AppName,
+		IRequest $request,
+		RecipeService $recipeService,
+		DbCacheService $dbCacheService,
+		RestParameterParser $restParser,
+		UserFolderHelper $userFolder
+	) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
+		$this->userFolder = $userFolder;
 	}
 
 	/**
@@ -41,9 +55,9 @@ class ConfigController extends Controller {
 	 */
 	public function list() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		return new DataResponse([
-			'folder' => $this->service->getUserFolderPath(),
+			'folder' => $this->userFolder->getPath(),
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
 		], Http::STATUS_OK);
@@ -55,9 +69,9 @@ class ConfigController extends Controller {
 	 */
 	public function config() {
 		$data = $this->restParser->getParameters();
-		
+
 		if (isset($data['folder'])) {
-			$this->service->setUserFolderPath($data['folder']);
+			$this->userFolder->setPath($data['folder']);
 			$this->dbCacheService->updateCache();
 		}
 
@@ -70,10 +84,10 @@ class ConfigController extends Controller {
 		}
 
 		$this->dbCacheService->triggerCheck();
-		
+
 		return new DataResponse('OK', Http::STATUS_OK);
 	}
-	
+
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired

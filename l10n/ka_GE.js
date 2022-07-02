@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "%s-ში",
     "Home" : "სახლი",
-    "Save changes" : "ცვილებების შენახვა",
     "Loading…" : "იტვირთება…",
+    "Save changes" : "ცვილებების შენახვა",
     "Page not found" : "გვერდი არაა ნაპოვნი",
     "Filter" : "ფილტრი",
     "Search" : "ძიება",

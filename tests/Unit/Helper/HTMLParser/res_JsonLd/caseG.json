@@ -1,0 +1,27 @@
+{
+    "@context": "http://schema.org",
+    "@type": "Recipe",
+            "image": "https://img.chefkoch-cdn.de/rezepte/3728791565272416/bilder/1230011/crop-960x540/lamm-tajine-mit-walnuessen-und-feigen.jpg",
+                    "recipeCategory": "Schmoren",
+            "recipeIngredient": [
+                                                                                        "800 g Lammschulter",                                                            "1 gro\u00dfe Zwiebel(n)",                                                            "2 M\u00f6hre(n)",                                                            "1 Handvoll Waln\u00fcsse",                                                            "200 g Feige(n) , getrocknete",                                                            "1 Knoblauchzehe(n)",                                                            "1 St\u00fcck(e) Ingwer , walnussgro\u00df",                                                            "1 TL Kurkuma",                                                            "1 TL Pfeffer, schwarzer",                                                            "\u00bd TL Kreuzk\u00fcmmel",                                                            "1 TL Paprikapulver",                                                            "1 TL Zimt",                                                            "1 TL Salz",                                                            " \u00d6l , 3 - 4 EL",                                                            "200 ml Gallo Family Vineyards Zinfandel"                        ],
+    "name": "Lamm-Tajine mit Waln\u00fcssen und Feigen",
+    "description": "Lamm-Tajine mit Waln\u00fcssen und Feigen - Orientalisch-w\u00fcrziger Genuss mit Fr\u00fcchten und N\u00fcssen. Gib jetzt die erste Bewertung f\u00fcr das Rezept von Gallo ab! Mit \u25ba Portionsrechner \u25ba Kochbuch \u25ba Video-Tipps!",
+    "recipeInstructions": "1. Das Fleisch in mundgerechte St\u00fccke schneiden, zusammen mit den Gew\u00fcrzen in 3 - 4 EL \u00d6l marinieren und etwa 30 Minuten im K\u00fchlschrank ruhen lassen.\n\n2. In der Zwischenzeit Zwiebel, Knoblauch, Ingwer und M\u00f6hren sch\u00e4len. \n\n3. Knoblauch und Ingwer fein hacken. Das restliche Gem\u00fcse in mundgerechte St\u00fccke schneiden.\n\n4. Die Tajine langsam erhitzen und das Fleisch darin anbraten. \n\n5. Nach etwa 10 Minuten das Gem\u00fcse, die N\u00fcsse und die Feigen hinzugeben. Das Ganze mit 200 ml Rotwein abl\u00f6schen, den Deckel auf die Tajine setzen und etwa 60 Minuten auf kleiner Flamme schmoren lassen.\n\n6. Dazu passen Couscous und etwas Petersilie.",
+            "author": {
+            "@type": "Person",
+             "name": "Gallo"
+        },
+        "publisher": {
+        "@type": "Organization",
+        "name": "Chefkoch.de"
+    },
+    "datePublished": "2019-08-08",
+            "prepTime": "P0DT0H20M",
+                "cookTime": "P0DT1H10M",
+        "totalTime": "P0DT2H0M"
+    ,
+        "recipeYield": "2 Portion(en)"
+                    ,
+        "keywords": ["Gem\u00fcse","Hauptspeise","einfach","Schmoren","Lamm oder Ziege","Frucht"]
+                }

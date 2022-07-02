@@ -91,22 +91,6 @@ jobs:
                 exit 1;
                 }
         
-        -   name: Check for open todos in lib folder
-            uses: ./.github/actions/check-todo
-            with:
-                path: lib
-                
-        -   name: Check for open todos in unit test folder
-            uses: ./.github/actions/check-todo
-            with:
-                path: tests/Unit
-                
-        -   name: Check for open todos in integration test folder
-            uses: ./.github/actions/check-todo
-            with:
-                path: tests/Integration
-                
-        
   
   unit-tests:
     name: Run the unittests
@@ -159,19 +143,20 @@ jobs:
                 
                 # Test different PHP versions additionally
                 -   database: mysql
+                    # stable24 branch needs PHP 7.4
                     coreVersion: stable23
                     phpVersion: "7.3"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
-                    coreVersion: stable23
+                    coreVersion: stable24
                     phpVersion: "8.0"
                     httpServer: "apache"
                     mayFail: false
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: stable23
+                    coreVersion: stable24
                     phpVersion: "7"
                     httpServer: "nginx"
                     mayFail: false
@@ -225,12 +210,19 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
         
-      - name: Upload the code coverage report (unit tests) as artifacts
+      - name: Upload the code coverage report for codecov as artifacts
         uses: actions/upload-artifact@v2
         with:
-            name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-            path: "/tmp/coverage"
+            name: Code coverage (XML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            path: "/tmp/coverage/coverage.*.xml"
         if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
+
+    #   - name: Upload the code coverage report (unit tests) as artifacts
+    #     uses: actions/upload-artifact@v2
+    #     with:
+    #         name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+    #         path: "/tmp/coverage"
+    #     if: ${{ steps.run-tests.outputs.silentFail == 'false' }}
       
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@v2
@@ -250,16 +242,19 @@ jobs:
         - name: Create folder structure
           run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
+          if: ${{ github.event_name == 'push' }}
           uses: actions/download-artifact@v2.0.10
           with:
             path: artifacts
         - name: Checkout of code base
+          if: ${{ github.event_name == 'push' }}
           uses: actions/checkout@v2
           with:
             path: code
             fetch-depth: 2
         
         - name: Download the uploader
+          if: ${{ github.event_name == 'push' }}
           run: |
             curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
             curl -Os https://uploader.codecov.io/latest/linux/codecov
@@ -272,6 +267,7 @@ jobs:
             chmod +x codecov
         
         - name: Copy Coverage reports to separate folders
+          if: ${{ github.event_name == 'push' }}
           run: |
             cd artifacts
 
@@ -285,11 +281,17 @@ jobs:
                 mkdir -p "../integration-coverage/$i"
                 cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
               fi
+              if [ -f "$i/coverage.migration.xml" ]; then
+                mkdir -p "../migration-coverage/$i"
+                cp "$i/coverage.migration.xml" "../migration-coverage/$i/coverage.xml"
+              fi
             done
         - name: Show file structure
-          run: ls -lR unit-coverage integration-coverage
+          if: ${{ github.event_name == 'push' }}
+          run: ls -lR *-coverage
         
         - name: Upload unit test codecov reports
+          if: ${{ github.event_name == 'push' }}
           run: >-
             ./codecov
             -F unittests
@@ -298,10 +300,20 @@ jobs:
             -X gcov
             -v
         - name: Upload integration test codecov reports
+          if: ${{ github.event_name == 'push' }}
           run: >-
             ./codecov
             -F integration
             -s integration-coverage
+            -R code
+            -X gcov
+            -v
+        - name: Upload migration test codecov reports
+          if: ${{ github.event_name == 'push' }}
+          run: >-
+            ./codecov
+            -F migration
+            -s migration-coverage
             -R code
             -X gcov
             -v

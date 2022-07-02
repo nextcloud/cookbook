@@ -172,6 +172,50 @@ components:
           description: The line where the exception is thrown
           example: 223
     
+    RecipeStub:
+      type: object
+      description: A stub of a recipe with some basic information present
+      properties:
+        name:
+          type: string
+          description: The name of the recipe
+          example: Baked bananas
+        recipe_id:
+          type: integer
+          description: The index of the recipe
+          example: 1
+        keywords:
+          type: string
+          description: A comma-separated list of recipe keywords
+          example: sweets,fruit
+        dateCreated:
+          type: string
+          description: The date the recipe was created in the app
+          example: "2022-01-02T16:12:41+0000"
+        dateModified:
+          type: string
+          description: The date the recipe was modified lastly in the app
+          example: "2022-01-10T10:02:52+0000"
+        imageUrl:
+          type: string
+          description: The URL of the recipe image
+          example: http://example.com/path/to/image.jpg
+        imagePlaceholderUrl:
+          type: string
+          description: The URL of the placeholder of the recipe image
+          example: http://example.com/path/to/image_thumb.jpg
+      required:
+        - "name"
+        - "recipe_id"
+        - "imageUrl"
+        - "imagePlaceholderUrl"
+        - "dateCreated"
+
+    StubList:
+      type: array
+      items:
+        $ref: "#/components/schemas/RecipeStub"
+    
   securitySchemes:
     app_password:
       type: http
@@ -399,7 +443,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RecipeList"
+                $ref: "#/components/schemas/StubList"
     post:
       tags: [ Recipes ]
       summary: Create a new recipe

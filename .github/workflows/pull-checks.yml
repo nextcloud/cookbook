@@ -1,5 +1,5 @@
 
-name: Additinoal tests for pull requests
+name: Additional tests for pull requests
 
 on:
     pull_request:
@@ -39,6 +39,31 @@ jobs:
                     exit 1
                 if: ${{ steps.diff.outputs.lines == 0 && steps.file-names.outputs.num > 0 }}
     
+    todo-checker:
+        name: Check for added todo messages
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Git version output
+                run: git version
+            -   name: Manual checkout of the app (base repo)
+                run: |
+                    REPO="https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+                    BRANCH="${GITHUB_REF/#refs\/heads\//}"
+
+                    git clone --filter=tree:0 "$REPO" .
+            -   name: Manual checkout of the app (PR head)
+                run: |
+                    git remote add head "${{ github.event.pull_request.head.repo.html_url }}"
+                    git fetch head --filter=tree:0
+                    
+                    git checkout -b head-branch head/${{ github.head_ref }}
+            -   name: Status of current git workspace
+                run: |
+                    git branch
+                    git status
+            -   name: Check for open TODO annotations in source code
+                uses: ./.github/actions/check-todo
+
     appinfo:
         name: Check for matching app info file
         runs-on: ubuntu-latest
@@ -73,3 +98,57 @@ jobs:
                     exit 1
                     fi
 
+            -   name: Download schema
+                run: wget https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd
+
+            -   name: Lint info.xml
+                uses: ChristophWurst/xmllint-action@v1
+                with:
+                    xml-file: ./appinfo/info.xml
+                    xml-schema-file: ./info.xsd
+    
+    package-lint:
+        name: Make sure the package.json is well-formatted
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 1
+            -   name: Get the date
+                id: date
+                run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+            -   name: Cache NPM cache
+                uses: actions/cache@v2.1.7
+                with:
+                    path: |
+                        ~/.npm
+                        node_modules
+                    key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+                    restore-keys: |
+                        ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+                        ${{ runner.os }}-node-
+
+            -   name: Install NPM modules
+                run: npm install
+
+            -   name: Perform the test
+                run: |
+                    npm run package-lint
+
+                    if [ $(git diff --name-only package.json | wc -l) -gt 0 ]; then
+                    echo '::error file=package.json::The package.json file is not validly formatted.'
+                    echo '::notice::It is suggested to run `npm run package/lint`.'
+                    exit 1
+                    fi
+
+    fixup-check:
+        name: Block fixup and squash commits
+        runs-on: ubuntu-latest
+
+        steps:
+            -   name: Run check
+                uses: xt0rted/block-autosquash-commits-action@v2
+                with:
+                    repo-token: ${{ secrets.GITHUB_TOKEN }}

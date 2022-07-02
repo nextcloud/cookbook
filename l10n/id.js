@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "dalam %s",
     "Home" : "Beranda",
-    "Save changes" : "Simpan perubahan",
     "Loading…" : "Memuat…",
+    "Save changes" : "Simpan perubahan",
     "Page not found" : "Halaman tidak ditemukan",
     "Filter" : "Filter",
     "Search" : "Cari",

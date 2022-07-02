@@ -7,9 +7,9 @@ OC.L10N.register(
     "Invalid URL-encoded string found. Please report a bug." : "Détecté une chaîne d'encodage d'URL invalide. Merci de signaler un bug.",
     "The user is not logged in. No user configuration can be obtained." : "L'utilisateur est déconnecté. Aucune configuration ne peut être obtenue.",
     "Recipes" : "Recettes",
+    "User cannot create recipe folder" : "L'utilisateur ne peut pas créer le dossier des recettes",
     "in %s" : "dans %s",
     "Another recipe with that name already exists" : "Une autre recette avec ce nom existe déjà",
-    "User cannot create recipe folder" : "L'utilisateur ne peut pas créer le dossier des recettes",
     "Recipe with ID %d not found." : "Recette avec identifiant %d non trouvée.",
     "Image size \"%s\" is not recognized." : "Taille d'image \"%s\" inconnue.",
     "The thumbnail type %d is not known." : "Le type de vignette %d est inconnu.",
@@ -19,13 +19,12 @@ OC.L10N.register(
     "Home" : "Domicile",
     "All recipes" : "Toutes les recettes",
     "Edit recipe" : "Modifier la recette",
-    "Reload recipe" : "Recharger la recette",
+    "Loading…" : "Chargement...",
     "New recipe" : "Nouvelle recette",
     "Save changes" : "Enregistrer les modifications",
+    "Reload recipe" : "Recharger la recette",
     "Print recipe" : "Imprimer la recette",
     "Delete recipe" : "Effacer la recette",
-    "App is loading" : "Chargement de l'application",
-    "Loading…" : "Chargement...",
     "Loading recipe" : "Chargement de la recette",
     "Recipe not found" : "Recette non trouvée",
     "Page not found" : "Page non trouvée",
@@ -142,4 +141,4 @@ OC.L10N.register(
     "Failed to load recipes with keywords: {tags}" : "Impossible de charger les recettes avec les mots clés: {tags}",
     "Failed to load search results" : "Impossible d'afficher les résultats de la recherche"
 },
-"nplurals=2; plural=(n > 1);");
+"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

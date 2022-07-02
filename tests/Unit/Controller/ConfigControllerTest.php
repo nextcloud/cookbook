@@ -9,6 +9,7 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Controller\ConfigController;
+use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\Response;
 use ReflectionProperty;
@@ -19,7 +20,6 @@ use ReflectionProperty;
  * @covers ::<protected>
  */
 class ConfigControllerTest extends TestCase {
-	
 	/**
 	 * @var ConfigController|MockObject
 	 */
@@ -37,6 +37,10 @@ class ConfigControllerTest extends TestCase {
 	 */
 	private $restParser;
 	/**
+	 * @var UserFolderHelper|MockObject
+	 */
+	private $userFolder;
+	/**
 	 * @var IRequest|MockObject
 	 */
 	private $request;
@@ -48,8 +52,9 @@ class ConfigControllerTest extends TestCase {
 		$this->recipeService = $this->createMock(RecipeService::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
+		$this->userFolder = $this->createMock(UserFolderHelper::class);
 
-		$this->sut = new ConfigController('cookbook', $this->request, $this->recipeService, $this->dbCacheService, $this->restParser);
+		$this->sut = new ConfigController('cookbook', $this->request, $this->recipeService, $this->dbCacheService, $this->restParser, $this->userFolder);
 	}
 
 	/**
@@ -97,7 +102,7 @@ class ConfigControllerTest extends TestCase {
 			'print_image' => $printImage,
 		];
 
-		$this->recipeService->method('getUserFolderPath')->willReturn($folder);
+		$this->userFolder->method('getPath')->willReturn($folder);
 		$this->dbCacheService->method('getSearchIndexUpdateInterval')->willReturn($interval);
 		$this->recipeService->method('getPrintImage')->willReturn($printImage);
 
@@ -113,6 +118,10 @@ class ConfigControllerTest extends TestCase {
 	/**
 	 * @dataProvider dataProviderConfig
 	 * @covers ::config
+	 * @param mixed $data
+	 * @param mixed $folderPath
+	 * @param mixed $interval
+	 * @param mixed $printImage
 	 */
 	public function testConfig($data, $folderPath, $interval, $printImage): void {
 		$this->restParser->method('getParameters')->willReturn($data);
@@ -120,10 +129,10 @@ class ConfigControllerTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 
 		if (is_null($folderPath)) {
-			$this->recipeService->expects($this->never())->method('setUserFolderPath');
+			$this->userFolder->expects($this->never())->method('setPath');
 			$this->dbCacheService->expects($this->never())->method('updateCache');
 		} else {
-			$this->recipeService->expects($this->once())->method('setUserFolderPath')->with($folderPath);
+			$this->userFolder->expects($this->once())->method('setPath')->with($folderPath);
 			$this->dbCacheService->expects($this->once())->method('updateCache');
 		}
 

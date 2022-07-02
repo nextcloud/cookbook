@@ -69,9 +69,10 @@
 </template>
 
 <script>
-import axios from "@nextcloud/axios"
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationSettings"
+
+import api from "cookbook/js/api-interface"
 
 export default {
     name: "AppSettings",
@@ -105,11 +106,8 @@ export default {
                 this.resetPrintImage = false
                 return
             }
-            axios({
-                url: `${this.$window.baseUrl}/config`,
-                method: "POST",
-                data: { print_image: newVal ? 1 : 0 },
-            })
+            api.config.printImage
+                .update(newVal)
                 .then(() => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
@@ -135,11 +133,8 @@ export default {
                 this.resetInterval = false
                 return
             }
-            axios({
-                url: `${this.$window.baseUrl}/config`,
-                method: "POST",
-                data: { update_interval: newVal },
-            })
+            api.config.updateInterval
+                .update(newVal)
                 .then(() => {
                     // Should this check the response of the query? To catch some errors that redirect the page
                 })
@@ -200,11 +195,8 @@ export default {
          * Initial setup
          */
         setup() {
-            axios({
-                url: `${this.$window.baseUrl}/config`,
-                method: "GET",
-                data: null,
-            })
+            api.config
+                .get()
                 .then((response) => {
                     const config = response.data
                     this.resetPrintImage = false

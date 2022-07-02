@@ -2,8 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "Home" : "Нүүр",
-    "Save changes" : "Өөрчлөлтийг хадгалах",
     "Loading…" : "уншиж байна",
+    "Save changes" : "Өөрчлөлтийг хадгалах",
     "Filter" : "Шүүлтүүр",
     "Search" : "Хайх",
     "Category" : "Ангилал",

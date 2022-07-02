@@ -24,6 +24,7 @@ Possible options:
   --run-code-checker                Run the cod checker
   --run-unit-tests                  Run only the unit tests
   --run-integration-tests           Run only the integration tests
+  --run-migration-tests             Run only the migration tests
   --extract-code-coverage           Output the code coverage reports into the folder volumes/coverage/.
   --keep-code-coverage				Normally, the last code coverage is removed to avoid filling up the disk. This flag keeps the old one.
   --install-composer-deps           Install composer dependencies
@@ -43,7 +44,8 @@ Possible options:
   
   --prepare <BRANCH>                Prepare the system for running the unit tests. This is a shorthand for
                                       --pull --create-images-if-needed --start-helpers --setup-environment <BRANCH> --create-env-dump --create-plain-dump plain
-  --run-tests                       Run both unit as well as integration tests and code checking
+  --run-default-tests               Run both unit as well as integration tests and code checking
+  --run-all-tests                   Run all tests present
   --run                             Run the unit tests themselves. This is a shorthand for
                                       --restore-env-dump --run-tests --extract-code-coverage
   
@@ -90,7 +92,7 @@ build_images() {
 	docker-compose build --pull --force-rm $PROGRESS \
 		--build-arg PHPVERSION=$PHP_VERSION \
 		dut occ php fpm
-	docker-compose build --pull --force-rm mysql
+	docker-compose build --pull --force-rm mysql www
 	echo 'Building images finished.'
 }
 
@@ -407,6 +409,10 @@ run_tests() {
 	if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 		PARAMS+=' --run-integration-tests'
 	fi
+
+	if [ $RUN_MIGRATION_TESTS = 'y' ]; then
+		PARAMS+=' --run-migration-tests'
+	fi
 	
 	if [ $EXTRACT_CODE_COVERAGE = 'y' ]; then
 		PARAMS+=' --create-coverage-report'
@@ -478,6 +484,7 @@ OVERWRITE_ENV_DUMP=n
 RUN_CODE_CHECKER=n
 RUN_UNIT_TESTS=n
 RUN_INTEGRATION_TESTS=n
+RUN_MIGRATION_TESTS=n
 EXTRACT_CODE_COVERAGE=n
 KEEP_CODE_COVERAGE=n
 INSTALL_COMPOSER_DEPS=n
@@ -581,15 +588,23 @@ do
 		--run-code-checker)
 			RUN_CODE_CHECKER=y
 			;;
-		--run-tests)
+		--run-tests|--run-default-tests)
 			RUN_UNIT_TESTS=y
 			RUN_INTEGRATION_TESTS=y
+			;;
+		--run-all-tests)
+			RUN_UNIT_TESTS=y
+			RUN_INTEGRATION_TESTS=y
+			RUN_MIGRATION_TESTS=y
 			;;
 		--run-unit-tests)
 			RUN_UNIT_TESTS=y
 			;;
 		--run-integration-tests)
 			RUN_INTEGRATION_TESTS=y
+			;;
+		--run-migration-tests)
+			RUN_MIGRATION_TESTS=y
 			;;
 		--extract-code-coverage)
 			EXTRACT_CODE_COVERAGE=y
@@ -891,7 +906,7 @@ toc
 rotate_code_coverage
 
 tic
-if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' ]; then
+if [ $RUN_UNIT_TESTS = 'y' -o $RUN_INTEGRATION_TESTS = 'y' -o $RUN_MIGRATION_TESTS = 'y' ]; then
 	run_tests "$@"
 fi
 toc

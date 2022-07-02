@@ -108,14 +108,18 @@
 </template>
 
 <script>
-import axios from "@nextcloud/axios"
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
 import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation"
 import AppNavigationCounter from "@nextcloud/vue/dist/Components/AppNavigationCounter"
 import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem"
 import AppNavigationNew from "@nextcloud/vue/dist/Components/AppNavigationNew"
+
 import Vue from "vue"
+
+import api from "cookbook/js/api-interface"
+import helpers from "cookbook/js/helper"
+
 import AppSettings from "./AppSettings.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
 
@@ -193,8 +197,8 @@ export default {
             const $this = this
             Vue.set(this.isCategoryUpdating, idx, true)
 
-            axios
-                .get(`${this.$window.baseUrl}/api/category/${cat.name}`)
+            api.recipes
+                .allInCategory(cat.name)
                 .then((response) => {
                     cat.recipes = response.data
                 })
@@ -264,15 +268,12 @@ export default {
         downloadRecipe(e) {
             this.downloading = true
             const $this = this
-            axios({
-                url: `${this.$window.baseUrl}/import`,
-                method: "POST",
-                data: `url=${e.target[1].value}`,
-            })
+            api.recipes
+                .import(e.target[1].value)
                 .then((response) => {
                     const recipe = response.data
                     $this.downloading = false
-                    $this.$window.goTo(`/recipe/${recipe.id}`)
+                    helpers.goTo(`/recipe/${recipe.id}`)
                     // Refresh left navigation pane to display changes
                     $this.$store.dispatch("setAppNavigationRefreshRequired", {
                         isRequired: true,
@@ -322,8 +323,8 @@ export default {
         getCategories() {
             const $this = this
             this.loading.categories = true
-            axios
-                .get(`${this.$window.baseUrl}/categories`)
+            api.categories
+                .getAll()
                 .then((response) => {
                     const json = response.data || []
                     // Reset the old values
@@ -400,20 +401,19 @@ export default {
                 return
             }
             this.scanningLibrary = true
-            axios({
-                url: `${this.$window.baseUrl}/reindex`,
-                method: "POST",
-            })
+            api.recipes
+                .reindex()
                 .then(() => {
                     $this.scanningLibrary = false
                     // eslint-disable-next-line no-console
                     console.log("Library reindexing complete")
-                    $this.getCategories()
                     if (
                         ["index", "search"].indexOf(this.$store.state.page) > -1
                     ) {
                         // This refreshes the current router view in case items in it changed during reindex
                         $this.$router.go()
+                    } else {
+                        $this.getCategories()
                     }
                 })
                 .catch(() => {

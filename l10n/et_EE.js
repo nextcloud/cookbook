@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "kaustas %s",
     "Home" : "Avaleht",
-    "Save changes" : "Salvesta muudatused",
     "Loading…" : "Laadimine…",
+    "Save changes" : "Salvesta muudatused",
     "Page not found" : "Lehekülge ei leitud",
     "Filter" : "Filter",
     "Search" : "Otsi",

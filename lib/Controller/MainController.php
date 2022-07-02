@@ -15,6 +15,7 @@ use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
+use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\AppFramework\Http\JSONResponse;
 
 class MainController extends Controller {
@@ -32,13 +33,26 @@ class MainController extends Controller {
 	 * @var IURLGenerator
 	 */
 	private $urlGenerator;
-	
+
 	/**
 	 * @var RestParameterParser
 	 */
 	private $restParser;
 
-	public function __construct(string $AppName, IRequest $request, RecipeService $recipeService, DbCacheService $dbCacheService, IURLGenerator $urlGenerator, RestParameterParser $restParser) {
+	/**
+	 * @var UserFolderHelper
+	 */
+	private $userFolder;
+
+	public function __construct(
+		string $AppName,
+		IRequest $request,
+		RecipeService $recipeService,
+		DbCacheService $dbCacheService,
+		IURLGenerator $urlGenerator,
+		RestParameterParser $restParser,
+		UserFolderHelper $userFolder
+	) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
@@ -46,6 +60,7 @@ class MainController extends Controller {
 		$this->appName = $AppName;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
+		$this->userFolder = $userFolder;
 	}
 
 	/**
@@ -58,7 +73,7 @@ class MainController extends Controller {
 	public function index(): TemplateResponse {
 		try {
 			// Check if the user folder can be accessed
-			$this->service->getFolderForUser();
+			$this->userFolder->getFolder();
 		} catch (UserFolderNotWritableException $ex) {
 			Util::addScript('cookbook', 'nextcloud-cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
@@ -68,13 +83,13 @@ class MainController extends Controller {
 		 * will prevent the controller to be called. If this does not happen for some reason, let the exception be
 		 * thrown and the user most probably has found a bug. A stack trace might help there.
 		 */
-		
+
 		$this->dbCacheService->triggerCheck();
 
 		Util::addScript('cookbook', 'nextcloud-cookbook-main');
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
-	
+
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
@@ -86,7 +101,7 @@ class MainController extends Controller {
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 0,
-				'minor' => 3
+				'minor' => 4
 			]
 		];
 		return new DataResponse($response, 200, ['Content-Type' => 'application/json']);
@@ -98,7 +113,7 @@ class MainController extends Controller {
 	 */
 	public function categories() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$categories = $this->service->getAllCategoriesInSearchIndex();
 		return new DataResponse($categories, 200, ['Content-Type' => 'application/json']);
 	}
@@ -109,7 +124,7 @@ class MainController extends Controller {
 	 */
 	public function keywords() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$keywords = $this->service->getAllKeywordsInSearchIndex();
 		return new DataResponse($keywords, 200, ['Content-Type' => 'application/json']);
 	}
@@ -117,10 +132,11 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @param mixed $query
 	 */
 	public function search($query) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$query = urldecode($query);
 		try {
 			$recipes = $this->service->findRecipesInSearchIndex($query);
@@ -152,10 +168,11 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @param mixed $category
 	 */
 	public function category($category) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$category = urldecode($category);
 		try {
 			$recipes = $this->service->getRecipesByCategory($category);
@@ -186,6 +203,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @param mixed $category
 	 */
 	public function categoryUpdate($category) {
 		$this->dbCacheService->triggerCheck();
@@ -215,6 +233,7 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @param mixed $keywords
 	 */
 	public function tags($keywords) {
 		$this->dbCacheService->triggerCheck();
@@ -253,9 +272,9 @@ class MainController extends Controller {
 	 */
 	public function import() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		$data = $this->restParser->getParameters();
-		
+
 		if (!isset($data['url'])) {
 			return new DataResponse('Field "url" is required', 400);
 		}
@@ -284,7 +303,7 @@ class MainController extends Controller {
 	 */
 	public function new() {
 		$this->dbCacheService->triggerCheck();
-		
+
 		try {
 			$recipe_data = $this->restParser->getParameters();
 			$file = $this->service->addRecipe($recipe_data);
@@ -299,10 +318,11 @@ class MainController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @param mixed $id
 	 */
 	public function update($id) {
 		$this->dbCacheService->triggerCheck();
-		
+
 		try {
 			$recipe_data = $this->restParser->getParameters();
 
@@ -310,7 +330,7 @@ class MainController extends Controller {
 
 			$file = $this->service->addRecipe($recipe_data);
 			$this->dbCacheService->addRecipe($file);
-			
+
 			return new DataResponse($id);
 		} catch (\Exception $e) {
 			return new DataResponse($e->getMessage(), 500);

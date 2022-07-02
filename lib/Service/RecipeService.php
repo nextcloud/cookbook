@@ -4,7 +4,6 @@ namespace OCA\Cookbook\Service;
 
 use Exception;
 use OCP\Files\NotFoundException;
-use OCP\Files\NotPermittedException;
 use OCP\Image;
 use OCP\IL10N;
 use OCP\Files\IRootFolder;
@@ -16,9 +15,11 @@ use OCP\PreConditionNotMetException;
 use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
-use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
+use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Exception\ImportException;
 
 /**
  * Main service class for the cookbook app.
@@ -30,7 +31,21 @@ class RecipeService {
 	private $user_id;
 	private $db;
 	private $il10n;
+	/**
+	 * @var UserFolderHelper
+	 */
+	private $userFolder;
 	private $logger;
+
+	/**
+	 * @var HtmlDownloadService
+	 */
+	private $htmlDownloadService;
+
+	/**
+	 * @var RecipeExtractionService
+	 */
+	private $recipeExtractionService;
 
 	/**
 	 * @var UserConfigHelper
@@ -47,17 +62,23 @@ class RecipeService {
 			IRootFolder $root,
 			RecipeDb $db,
 			UserConfigHelper $userConfigHelper,
+			UserFolderHelper $userFolder,
 			ImageService $imageService,
 			IL10N $il10n,
-			LoggerInterface $logger
+			LoggerInterface $logger,
+			HtmlDownloadService $downloadService,
+			RecipeExtractionService $extractionService
 		) {
 		$this->user_id = $UserId;
 		$this->root = $root;
 		$this->db = $db;
 		$this->il10n = $il10n;
+		$this->userFolder = $userFolder;
 		$this->logger = $logger;
 		$this->userConfigHelper = $userConfigHelper;
 		$this->imageService = $imageService;
+		$this->htmlDownloadService = $downloadService;
+		$this->recipeExtractionService = $extractionService;
 	}
 
 	/**
@@ -76,7 +97,7 @@ class RecipeService {
 
 		return $this->parseRecipeFile($file);
 	}
-	
+
 	/**
 	 * Get a recipe's modification time by its folder id.
 	 *
@@ -102,7 +123,7 @@ class RecipeService {
 	 * @return File|null
 	 */
 	public function getRecipeFileByFolderId(int $id) {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if (count($recipe_folder) <= 0) {
@@ -137,7 +158,7 @@ class RecipeService {
 		if (!$json) {
 			throw new Exception('Recipe array was null');
 		}
-		
+
 		if (empty($json['name'])) {
 			throw new Exception('Field "name" is required');
 		}
@@ -148,6 +169,11 @@ class RecipeService {
 
 		// Make sure that "name" doesn't have any funky characters in it
 		$json['name'] = $this->cleanUpString($json['name'], false, true);
+
+		// Restrict the length of the name to be not longer than what the DB can store
+		if (strlen($json['name']) > 256) {
+			$json['name'] = substr($json['name'], 0, 256);
+		}
 
 		// Make sure that "image" is a string of the highest resolution image available
 		if (isset($json['image']) && $json['image']) {
@@ -169,7 +195,7 @@ class RecipeService {
 						if (empty($img)) {
 							continue;
 						}
-		
+
 						$image_matches = [];
 
 						preg_match_all('!\d+!', $img, $image_matches);
@@ -218,7 +244,7 @@ class RecipeService {
 				$json['image'] .= '?' . $image_url['query'];
 			}
 		}
-		
+
 
 		// Make sure that "recipeCategory" is a string
 		if (isset($json['recipeCategory'])) {
@@ -233,10 +259,10 @@ class RecipeService {
 
 		$json['recipeCategory'] = $this->cleanUpString($json['recipeCategory'], false, true);
 
-		
+
 		// Make sure that "recipeYield" is an integer which is at least 1
 		if (isset($json['recipeYield']) && $json['recipeYield']) {
-			
+
 			// Check if "recipeYield is an array
 			if (is_array($json['recipeYield'])) {
 				if (count($json['recipeYield']) === 1) {
@@ -246,7 +272,7 @@ class RecipeService {
 					$json['recipeYield'] = join(' ', $json['recipeYield']);
 				}
 			}
-			
+
 			$regex_matches = [];
 			preg_match('/(\d*)/', $json['recipeYield'], $regex_matches);
 			if (count($regex_matches) >= 1) {
@@ -427,7 +453,7 @@ class RecipeService {
 					if (isset($duration_matches[1][0]) && !empty($duration_matches[1][0])) {
 						$duration_hours = intval($duration_matches[1][0]);
 					}
-					
+
 					if (isset($duration_matches[2][0]) && !empty($duration_matches[2][0])) {
 						$duration_minutes = intval($duration_matches[2][0]);
 					}
@@ -448,14 +474,16 @@ class RecipeService {
 		} else {
 			$json['nutrition'] = [];
 		}
-		
+
 		return $json;
 	}
 
 	/**
 	 * @param string $html
+	 * @param mixed $url
 	 *
 	 * @return array
+	 * @deprecated
 	 */
 	private function parseRecipeHtml($url, $html) {
 		if (!$html) {
@@ -480,7 +508,7 @@ class RecipeService {
 		} finally {
 			libxml_use_internal_errors($libxml_previous_state);
 		}
-		
+
 		$xpath = new \DOMXPath($document);
 
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
@@ -528,7 +556,7 @@ class RecipeService {
 
 		// Parse HTML if JSON couldn't be found
 		$json = [];
-		
+
 		$recipes = $xpath->query("//*[@itemtype='http://schema.org/Recipe']");
 
 		if (!isset($recipes[0])) {
@@ -553,7 +581,7 @@ class RecipeService {
 					case 'images':
 					case 'thumbnail':
 						$prop = 'image';
-						
+
 						if (!isset($json[$prop]) || !is_array($json[$prop])) {
 							$json[$prop] = [];
 						}
@@ -572,7 +600,7 @@ class RecipeService {
 					case 'recipeIngredient':
 					case 'ingredients':
 						$prop = 'recipeIngredient';
-						
+
 						if (!isset($json[$prop]) || !is_array($json[$prop])) {
 							$json[$prop] = [];
 						}
@@ -585,7 +613,7 @@ class RecipeService {
 						} else {
 							array_push($json[$prop], $prop_element->nodeValue);
 						}
-						
+
 						break;
 
 					case 'recipeInstructions':
@@ -593,7 +621,7 @@ class RecipeService {
 					case 'steps':
 					case 'guide':
 						$prop = 'recipeInstructions';
-						
+
 						if (!isset($json[$prop]) || !is_array($json[$prop])) {
 							$json[$prop] = [];
 						}
@@ -629,7 +657,7 @@ class RecipeService {
 		// Make one final desparate attempt at getting the instructions
 		if (!isset($json['recipeInstructions']) || !$json['recipeInstructions'] || sizeof($json['recipeInstructions']) < 1) {
 			$json['recipeInstructions'] = [];
-			
+
 			$step_elements = $recipes[0]->getElementsByTagName('p');
 
 			foreach ($step_elements as $step_element) {
@@ -640,23 +668,23 @@ class RecipeService {
 				array_push($json['recipeInstructions'], $step_element->nodeValue);
 			}
 		}
-		
+
 		return $this->checkRecipe($json);
 	}
 
 	private function display_libxml_errors($url, $errors) {
 		$error_counter = [];
 		$by_error_code = [];
-		
+
 		foreach ($errors as $error) {
 			$count = array_key_exists($error->code, $error_counter) ? $error_counter[$error->code] : 0;
 			$error_counter[$error->code] = $count + 1;
 			$by_error_code[$error->code] = $error;
 		}
-		
+
 		foreach ($error_counter as $code => $count) {
 			$error = $by_error_code[$code];
-			
+
 			switch ($error->level) {
 				case LIBXML_ERR_WARNING:
 					$error_message = "libxml: Warning $error->code ";
@@ -673,7 +701,7 @@ class RecipeService {
 
 			$error_message .= "occurred " . $count . " times while parsing " . $url . ". Last time in line $error->line" .
 				" and column $error->column: " . $error->message;
-			
+
 			$this->logger->warning($error_message);
 		}
 	}
@@ -682,7 +710,7 @@ class RecipeService {
 	 * @param int $id
 	 */
 	public function deleteRecipe(int $id) {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if ($recipe_folder && count($recipe_folder) > 0) {
@@ -711,7 +739,7 @@ class RecipeService {
 		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = null;
 
 		// Recipe already has an id, update it
@@ -726,7 +754,7 @@ class RecipeService {
 				if ($user_folder->nodeExists($json['name'])) {
 					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
-				
+
 				$recipe_folder->move($new_path);
 			}
 
@@ -796,36 +824,27 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $url
+	 * Download a recipe from a url and store it in the files
 	 *
+	 * @param string $url The recipe URL
+	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe($url) {
-		$host = parse_url($url);
+	public function downloadRecipe(string $url): File {
+		$this->htmlDownloadService->downloadRecipe($url);
 
-		if (!$host) {
-			throw new Exception('Could not parse URL');
+		try {
+			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom(), $url);
+		} catch (HtmlParsingException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex);
 		}
 
-		$opts = [
-			"http" => [
-				"method" => "GET",
-				"header" => "User-Agent: Nextcloud Cookbook App"
-			]
-		];
-
-		$context = stream_context_create($opts);
-
-		$html = file_get_contents($url, false, $context);
-
-		if (!$html) {
-			throw new Exception('Could not fetch site ' . $url);
-		}
-
-		$json = $this->parseRecipeHtml($url, $html);
+		$json = $this->checkRecipe($json);
 
 		if (!$json) {
-			throw new Exception('No recipe data found');
+			$this->logger->error('Importing parsers resulted in null recipe.' .
+				'This is most probably a bug. Please report.');
+			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'));
 		}
 
 		$json['url'] = $url;
@@ -837,7 +856,7 @@ class RecipeService {
 	 * @return array
 	 */
 	public function getRecipeFiles() {
-		$user_folder = $this->getFolderForUser();
+		$user_folder = $this->userFolder->getFolder();
 		$recipe_folders = $user_folder->getDirectoryListing();
 		$recipe_files = [];
 
@@ -867,29 +886,29 @@ class RecipeService {
 			throw $ex;
 		}
 	}
-	
+
 	private function migrateFolderStructure() {
 		// Remove old cache folder if needed
 		$legacy_cache_path = '/cookbook/cache';
-		
+
 		if ($this->root->nodeExists($legacy_cache_path)) {
 			$this->root->get($legacy_cache_path)->delete();
 		}
-		
+
 		// Restructure files if needed
-		$user_folder = $this->getFolderForUser();
-		
+		$user_folder = $this->userFolder->getFolder();
+
 		foreach ($user_folder->getDirectoryListing() as $node) {
 			// Move JSON files from the user directory into its own folder
 			if ($this->isRecipeFile($node)) {
 				$recipe_name = str_replace('.json', '', $node->getName());
-				
+
 				$node->move($node->getPath() . '_tmp');
-				
+
 				$recipe_folder = $user_folder->newFolder($recipe_name);
-				
+
 				$node->move($recipe_folder->getPath() . '/recipe.json');
-				
+
 			// Rename folders with .json extensions (this was likely caused by a migration bug)
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
 				$node->move(str_replace('.json', '', $node->getPath()));
@@ -905,7 +924,7 @@ class RecipeService {
 	public function getAllKeywordsInSearchIndex() {
 		return $this->db->findAllKeywords($this->user_id);
 	}
-	
+
 	/**
 	 * Gets all categories from the index
 	 *
@@ -990,36 +1009,11 @@ class RecipeService {
 	}
 
 	/**
-	 * @param string $path
-	 */
-	public function setUserFolderPath(string $path) {
-		$this->userConfigHelper->setFolderName($path);
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getUserFolderPath() {
-		return $this->userConfigHelper->getFolderName();
-	}
-
-	/**
 	 * @param int $interval
 	 * @throws PreConditionNotMetException
 	 */
 	public function setSearchIndexUpdateInterval(int $interval) {
 		$this->userConfigHelper->setUpdateInterval($interval);
-	}
-
-	/**
-	 * @return Folder
-	 * @throws UserNotLoggedInException if no user is logged in to get the path from
-	 */
-	public function getFolderForUser() {
-		$path = '/' . $this->user_id . '/files/' . $this->getUserFolderPath();
-		$path = str_replace('//', '/', $path);
-
-		return $this->getOrCreateFolder($path);
 	}
 
 	/**
@@ -1036,28 +1030,6 @@ class RecipeService {
 	 */
 	public function getPrintImage() {
 		return $this->userConfigHelper->getPrintImage();
-	}
-
-	/**
-	 * Finds a folder and creates it if non-existent
-	 * @param string $path path to the folder
-	 *
-	 * @return Folder
-	 *
-	 * @throws NotFoundException
-	 * @throws NotPermittedException
-	 */
-	private function getOrCreateFolder($path) {
-		if ($this->root->nodeExists($path)) {
-			$folder = $this->root->get($path);
-		} else {
-			try {
-				$folder = $this->root->newFolder($path);
-			} catch (NotPermittedException $ex) {
-				throw new UserFolderNotWritableException($this->il10n->t('User cannot create recipe folder'), null, $ex);
-			}
-		}
-		return $folder;
 	}
 
 	/**
@@ -1165,6 +1137,8 @@ class RecipeService {
 
 	/**
 	 * @param string $str
+	 * @param mixed $preserve_newlines
+	 * @param mixed $remove_slashes
 	 *
 	 * @return string
 	 */
@@ -1186,7 +1160,7 @@ class RecipeService {
 		if ($remove_slashes) {
 			$str = str_replace('/', '_', $str);
 		}
-		
+
 		$str = html_entity_decode($str);
 
 		// Remove duplicated spaces

@@ -7,8 +7,9 @@
         @click="toggleDone"
     >
         <div class="checkmark" :class="{ done: isDone }">✔</div>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="ingredient" v-html="displayIngredient"></div>
+        <div class="ingredient">
+            <VueShowdown :markdown="displayIngredient" />
+        </div>
     </li>
 </template>
 
@@ -89,5 +90,9 @@ li > .ingredient {
     padding-left: 1em;
     margin-left: 0.3em;
     text-indent: -1em;
+}
+
+.ingredient >>> a {
+    text-decoration: underline;
 }
 </style>

@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "en %s",
     "Home" : "Aniciu",
-    "Save changes" : "Guardar camudancies",
     "Loading…" : "Cargando...",
+    "Save changes" : "Guardar camudancies",
     "Page not found" : "Nun s'alcontró la páxina",
     "Filter" : "Peñerar",
     "Search" : "Search",

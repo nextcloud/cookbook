@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "an %s",
     "Home" : "Doheem",
-    "Save changes" : "Ännerunge späicheren",
     "Loading…" : "Et gëtt gelueden",
+    "Save changes" : "Ännerunge späicheren",
     "Search" : "Search",
     "Tags" : "Tags",
     "Rename" : "Ëmbenennen",

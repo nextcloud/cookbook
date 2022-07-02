@@ -3,8 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "e %s",
     "Home" : "Degemer",
-    "Save changes" : "Enrollañ ar cheñchamantoù",
     "Loading…" : "O Kargañ...",
+    "Save changes" : "Enrollañ ar cheñchamantoù",
     "Filter" : "Filtre",
     "Search" : "Klask",
     "Tags" : "Klavioù",
