@@ -1,5 +1,3 @@
-import router from "cookbook/router"
-
 // Check if two routes point to the same component but have different content
 function shouldReloadContent(url1, url2) {
     if (url1 === url2) {
@@ -79,6 +77,7 @@ function escapeHTML(text) {
 }
 
 // Fix the decimal separator for languages that use a comma instead of dot
+// deprecated
 function fixDecimalSeparator(value, io) {
     // value is the string value of the number to process
     // io is either 'i' as in input or 'o' as in output
@@ -100,11 +99,13 @@ function fixDecimalSeparator(value, io) {
 }
 
 // This will replace the PHP function nl2br in Vue components
+// deprecated
 function nl2br(text) {
     return text.replace(/\n/g, "<br />")
 }
 
 // A simple function that converts a MySQL datetime into a timestamp.
+// deprecated
 function getTimestamp(date) {
     if (date) {
         return new Date(date)
@@ -112,12 +113,18 @@ function getTimestamp(date) {
     return null
 }
 
+let router
+
+function useRouter(_router) {
+    router = _router
+}
 // Push a new URL to the router, essentially navigating to that page.
 function goTo(url) {
     router.push(url)
 }
 
 // Notify the user if notifications are allowed
+// deprecated
 function notify(title, options) {
     if (!("Notification" in window)) {
         return
@@ -148,6 +155,7 @@ export default {
     fixDecimalSeparator,
     nl2br,
     getTimestamp,
+    useRouter,
     goTo,
     notify,
 }

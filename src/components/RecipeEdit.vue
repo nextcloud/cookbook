@@ -119,6 +119,7 @@
 import Vue from "vue"
 
 import api from "cookbook/js/api-interface"
+import helpers from "cookbook/js/helper"
 
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"
@@ -146,7 +147,7 @@ export default {
     // loading the view component and loading this edit component. If that is
     // the case, the user can always manually reload by clicking the breadcrumb.
     beforeRouteEnter(to, from, next) {
-        if (window.isSameItemInstance(from.fullPath, to.fullPath)) {
+        if (helpers.isSameItemInstance(from.fullPath, to.fullPath)) {
             next((vm) => {
                 vm.setup()
             })
@@ -182,7 +183,7 @@ export default {
             next()
         }
         // Check if we should reload the component content
-        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+        if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
             this.setup()
         }
     },
@@ -190,7 +191,7 @@ export default {
         // beforeRouteUpdate is called when the static route stays the same
         next()
         // Check if we should reload the component content
-        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+        if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
             this.setup()
         }
     },
@@ -566,7 +567,7 @@ export default {
                         })
                     }
                     // Browse to new recipe creation
-                    $this.$window.goTo("/recipe/create")
+                    helpers.goTo("/recipe/create")
                 })
         },
         save() {
@@ -587,7 +588,7 @@ export default {
 
             request
                 .then((response) => {
-                    $this.$window.goTo(`/recipe/${response.data}`)
+                    helpers.goTo(`/recipe/${response.data}`)
                 })
                 .catch((e) => {
                     // error

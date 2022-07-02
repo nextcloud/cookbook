@@ -37,6 +37,8 @@ if (__webpack_use_dev_server__ || false) {
     window.baseUrl = generateUrl("apps/cookbook")
     api.init(window.baseUrl)
 
+    helpers.useRouter(router)
+
     // Check if two routes point to the same component but have different content
     // eslint-disable-next-line no-param-reassign
     window.shouldReloadContent = helpers.shouldReloadContent

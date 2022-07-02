@@ -271,6 +271,7 @@
 import moment from "@nextcloud/moment"
 
 import api from "cookbook/js/api-interface"
+import helpers from "cookbook/js/helper"
 
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
@@ -303,7 +304,7 @@ export default {
         // beforeRouteUpdate is called when the static route stays the same
         next()
         // Check if we should reload the component content
-        if (this.$window.shouldReloadContent(from.fullPath, to.fullPath)) {
+        if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
             this.setup()
         }
     },
