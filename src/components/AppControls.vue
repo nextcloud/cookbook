@@ -113,11 +113,7 @@
                     icon="icon-rename"
                     class="action-button"
                     :aria-label="t('cookbook', 'Edit recipe')"
-                    @click="
-                        helpers.goTo(
-                            '/recipe/' + $store.state.recipe.id + '/edit'
-                        )
-                    "
+                    @click="goToRecipe($store.state.recipe.id)"
                     >{{ t("cookbook", "Edit recipe") }}</ActionButton
                 >
             </Breadcrumb>
@@ -358,6 +354,9 @@ export default {
         updateFilters(e) {
             this.filterValue = e
             this.$root.$emit("applyRecipeFilter", e)
+        },
+        goToRecipe(id) {
+            helpers.goTo(`/recipe/${id}/edit`)
         },
     },
 }
