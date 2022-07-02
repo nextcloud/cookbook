@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## 0.9.13 - 2022-07-02
+
 ### Added
 - Create service class for downloading and extracting JSON
   [#553](https://github.com/nextcloud/cookbook/pull/553) @christianlupus
