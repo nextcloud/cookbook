@@ -3,6 +3,8 @@
 ### Added
 - Create service class for downloading and extracting JSON
   [#553](https://github.com/nextcloud/cookbook/pull/553) @christianlupus
+- Show recipe titles for internal references
+  [#1063](https://github.com/nextcloud/cookbook/pull/1063) @christianlupus
 
 ### Changed
 - Extracted user folder handling into its own helper class
