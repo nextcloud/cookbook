@@ -6,6 +6,7 @@
 
 <script>
 import api from "cookbook/js/api-interface"
+import helpers from "cookbook/js/helper"
 
 import RecipeList from "./RecipeList.vue"
 
@@ -47,7 +48,7 @@ export default {
                 this.query === "cat" &&
                 this.$route.params.value === val[1]
             ) {
-                this.$window.goTo(`/category/${val[0]}`)
+                helpers.goTo(`/category/${val[0]}`)
             }
         })
     },

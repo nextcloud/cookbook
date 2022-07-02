@@ -113,11 +113,7 @@
                     icon="icon-rename"
                     class="action-button"
                     :aria-label="t('cookbook', 'Edit recipe')"
-                    @click="
-                        $window.goTo(
-                            '/recipe/' + $store.state.recipe.id + '/edit'
-                        )
-                    "
+                    @click="goToRecipe($store.state.recipe.id)"
                     >{{ t("cookbook", "Edit recipe") }}</ActionButton
                 >
             </Breadcrumb>
@@ -230,6 +226,8 @@
 </template>
 
 <script>
+import helpers from "cookbook/js/helper"
+
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
 import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
@@ -325,12 +323,10 @@ export default {
             ) {
                 return
             }
-            const $this = this
-
             this.$store
                 .dispatch("deleteRecipe", { id: this.$store.state.recipe.id })
                 .then(() => {
-                    $this.$window.goTo("/")
+                    helpers.goTo("/")
                 })
                 .catch((e) => {
                     // eslint-disable-next-line no-alert
@@ -353,11 +349,14 @@ export default {
             this.$root.$emit("saveRecipe")
         },
         search(e) {
-            this.$window.goTo(`/search/${e.target[1].value}`)
+            helpers.goTo(`/search/${e.target[1].value}`)
         },
         updateFilters(e) {
             this.filterValue = e
             this.$root.$emit("applyRecipeFilter", e)
+        },
+        goToRecipe(id) {
+            helpers.goTo(`/recipe/${id}/edit`)
         },
     },
 }

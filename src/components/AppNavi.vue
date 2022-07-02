@@ -114,8 +114,12 @@ import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation"
 import AppNavigationCounter from "@nextcloud/vue/dist/Components/AppNavigationCounter"
 import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem"
 import AppNavigationNew from "@nextcloud/vue/dist/Components/AppNavigationNew"
+
 import Vue from "vue"
+
 import api from "cookbook/js/api-interface"
+import helpers from "cookbook/js/helper"
+
 import AppSettings from "./AppSettings.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
 
@@ -269,7 +273,7 @@ export default {
                 .then((response) => {
                     const recipe = response.data
                     $this.downloading = false
-                    $this.$window.goTo(`/recipe/${recipe.id}`)
+                    helpers.goTo(`/recipe/${recipe.id}`)
                     // Refresh left navigation pane to display changes
                     $this.$store.dispatch("setAppNavigationRefreshRequired", {
                         isRequired: true,
