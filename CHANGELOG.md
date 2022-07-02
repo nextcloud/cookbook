@@ -49,6 +49,10 @@
 - Create wrapper in frontend for all API requests
   [#1061](https://github.com/nextcloud/cookbook/pull/1061) @christianlupus
 
+### Removed
+- Remove deprecated and no longer functional API routes from app
+  [#1065](https://github.com/nextcloud/cookbook/pull/1065) @christianlupus
+
 ### Codebase maintenance
 - Removed codecov.io upload of intermediate merge commits during pull requests
   [#1028](https://github.com/nextcloud/cookbook/issues/1028)

@@ -11,7 +11,7 @@ return [
 	'routes' => [
 		/*
 		 * Very important: Do not change anything here without updating the api version in MainController.
-		 * If you add new features here, invrese the minor version of the API.
+		 * If you add new features here, increase the minor version of the API.
 		 * If you change the behavior or remove functionality, increase the major version there.
 		 */
 		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
@@ -28,10 +28,6 @@ return [
 		['name' => 'main#categoryUpdate', 'url' => '/api/category/{category}', 'verb' => 'PUT'],
 		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
 		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
-		/* Unknown usage */
-		/* Deprecated routes */
-		['name' => 'main#new', 'url' => '/recipes/create', 'verb' => 'POST'],
-		['name' => 'main#update', 'url' => '/recipes/{id}/edit', 'verb' => 'PUT', 'requirements' => ['id' => '\d+']],
 	],
 
 	/* API resources */
