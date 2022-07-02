@@ -39,37 +39,9 @@ if (__webpack_use_dev_server__ || false) {
 
     helpers.useRouter(router)
 
-    // Check if two routes point to the same component but have different content
-    // eslint-disable-next-line no-param-reassign
-    window.shouldReloadContent = helpers.shouldReloadContent
-
-    // Check if the two urls point to the same item instance
-    // eslint-disable-next-line no-param-reassign
-    window.isSameItemInstance = helpers.isSameItemInstance
-
     // A simple function to sanitize HTML tags
     // eslint-disable-next-line no-param-reassign
     window.escapeHTML = helpers.escapeHTML
-
-    // Fix the decimal separator for languages that use a comma instead of dot
-    // eslint-disable-next-line no-param-reassign
-    window.fixDecimalSeparator = helpers.fixDecimalSeparator
-
-    // This will replace the PHP function nl2br in Vue components
-    // eslint-disable-next-line no-param-reassign
-    window.nl2br = helpers.nl2br
-
-    // A simple function that converts a MySQL datetime into a timestamp.
-    // eslint-disable-next-line no-param-reassign
-    window.getTimestamp = helpers.getTimestamp
-
-    // Push a new URL to the router, essentially navigating to that page.
-    // eslint-disable-next-line no-param-reassign
-    window.goTo = helpers.goTo
-
-    // Notify the user if notifications are allowed
-    // eslint-disable-next-line no-param-reassign
-    window.notify = helpers.notify
 
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
