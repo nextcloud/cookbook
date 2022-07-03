@@ -44,7 +44,8 @@ class ThumbnailServiceTest extends TestCase {
 
 	public function testGetImage() {
 		$l = $this->createStub(IL10N::class);
-		$dut = new ThumbnailService($l);
+		$logger = $this->createStub(ILogger::class);
+		$dut = new ThumbnailService($l, $logger);
 
 		$cls = new ReflectionClass(ThumbnailService::class);
 		$method = $cls->getMethod('getNewImage');
