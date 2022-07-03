@@ -10,6 +10,7 @@ use OCP\Files\GenericFileException;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
+use OCP\ILogger;
 use OCP\Lock\LockedException;
 
 /**
@@ -27,10 +28,15 @@ class ImageGenerationHelper {
 	 */
 	private $thumbnailService;
 
+	/** @var ILogger */
+	private $logger;
+
 	public function __construct(
+		ILogger $logger,
 		ThumbnailService $thumbnailService
 	) {
 		$this->thumbnailService = $thumbnailService;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -47,6 +53,8 @@ class ImageGenerationHelper {
 	 * @throws InvalidThumbnailTypeException if the requested thumbnail type is not known or is useless
 	 */
 	public function generateThumbnail(File $fullImage, int $type, File $dstFile): void {
+		$this->logger->debug("Generating thumbnail with type $type in file ". $dstFile->getPath());
+
 		if ($type === ImageSize::PRIMARY_IMAGE) {
 			return;
 		}
@@ -55,8 +63,10 @@ class ImageGenerationHelper {
 
 		$thumbContent = $this->thumbnailService->getThumbnail($fullContent, $type);
 
+		$this->logger->debug('Putting content to thumb file.');
 		$dstFile->putContent($thumbContent);
 		$dstFile->touch();
+		$this->logger->debug('File is touched');
 	}
 
 	/**

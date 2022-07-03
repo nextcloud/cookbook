@@ -5,6 +5,7 @@ namespace OCA\Cookbook\Service;
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCP\IL10N;
+use OCP\ILogger;
 use OCP\Image;
 
 /**
@@ -19,8 +20,12 @@ class ThumbnailService {
 	 */
 	private $l;
 
-	public function __construct(IL10N $l) {
+	/** @var ILogger */
+	private $logger;
+
+	public function __construct(IL10N $l, ILogger $logger) {
 		$this->l = $l;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -43,6 +48,7 @@ class ThumbnailService {
 	 * @throws InvalidThumbnailTypeException if the requested type is either unknown or useless.
 	 */
 	public function getThumbnail(string $data, int $type): string {
+		$this->logger->debug("Create thumbnail of type $type");
 		switch ($type) {
 			case ImageSize::THUMBNAIL:
 				return $this->createThumbnail($data, 256);
@@ -72,13 +78,19 @@ class ThumbnailService {
 
 		// Get the file name
 		$filename = stream_get_meta_data($tmpFile)['uri'];
+		$this->logger->debug("File name of temporary file is $filename.");
+		$this->logger->debug("File stats:\n" . print_r(fstat($tmpFile), true));
 
 		$img->loadFromFile($filename);
+
+		$this->logger->debug("Failed loading local file: " . ($img === false));
 
 		$img->fixOrientation();
 		$img->resize($size);
 		$img->centerCrop();
 
+		$this->logger->debug("Image size: ". strlen($img->data()));
+		
 		return $img->data();
 	}
 }

@@ -9,6 +9,7 @@ use OCA\Cookbook\Service\ThumbnailService;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
+use OCP\ILogger;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 
@@ -28,8 +29,9 @@ class ImageGenerationHelperTest extends TestCase {
 
 	protected function setUp(): void {
 		$this->thumbnailService = $this->createMock(ThumbnailService::class);
+		$logger = $this->createStub(ILogger::class);
 
-		$this->dut = new ImageGenerationHelper($this->thumbnailService);
+		$this->dut = new ImageGenerationHelper($logger, $this->thumbnailService);
 	}
 
 	public function dpThumbnails() {

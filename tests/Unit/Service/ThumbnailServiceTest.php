@@ -6,6 +6,7 @@ use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Service\ThumbnailService;
 use OCP\IL10N;
+use OCP\ILogger;
 use OCP\Image;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
@@ -31,10 +32,12 @@ class ThumbnailServiceTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
+		$logger = $this->createStub(ILogger::class);
+
 		$this->dut = $this->getMockBuilder(ThumbnailService::class)
 			->onlyMethods(['getNewImage'])
 			->enableOriginalConstructor()
-			->setConstructorArgs([$l])
+			->setConstructorArgs([$l, $logger])
 			->getMock()
 		;
 	}
