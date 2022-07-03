@@ -90,7 +90,7 @@ class ThumbnailService {
 		$img->centerCrop();
 
 		$this->logger->debug("Image size: ". strlen($img->data()));
-		
+
 		return $img->data();
 	}
 }
