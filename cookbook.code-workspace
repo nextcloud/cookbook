@@ -47,6 +47,11 @@
 		],
 		"path-intellisense.mappings": {
 			"cookbook": "${workspaceFolder}/src",
+		},
+		"editor.quickSuggestions": {
+			"other": "on",
+			"comments": "on",
+			"strings": "on"
 		}
 	}
 }
