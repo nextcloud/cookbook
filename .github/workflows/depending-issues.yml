@@ -44,10 +44,6 @@ jobs:
           # Enable by setting the value to "on". Default "off"
           check_issues: on
 
-          # (Optional) Ignore dependabot PRs.
-          # Enable by setting the value to "on". Default "off"
-          ignore_dependabot: off
-
           # (Optional) A comma-separated list of keywords. Default
           # "depends on, blocked by"
           # keywords: depends on, blocked by
