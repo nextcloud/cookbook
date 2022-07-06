@@ -142,7 +142,7 @@ class DbCacheService {
 		$id = (int) $jsonFile->getParent()->getId();
 		$json['id'] = $id;
 
-		if(!isset($json['dateModified'])) {
+		if (!isset($json['dateModified'])) {
 			$json['dateModified'] = null;
 		}
 
@@ -226,11 +226,11 @@ class DbCacheService {
 		if ($dbEntry['name'] !== $fileEntry['name']) {
 			return false;
 		}
-		if($dbEntry['dateCreated'] !== $fileEntry['dateCreated']) {
+		if ($dbEntry['dateCreated'] !== $fileEntry['dateCreated']) {
 			return false;
 		}
 
-		if($dbEntry['dateModified'] !== $fileEntry['dateModified']) {
+		if ($dbEntry['dateModified'] !== $fileEntry['dateModified']) {
 			return false;
 		}
 

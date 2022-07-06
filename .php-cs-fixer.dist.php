@@ -21,23 +21,31 @@ class CookbookConfig extends Config {
 			'phpdoc_single_line_var_spacing' => true,
 			'phpdoc_var_without_name' => true
 		];
-		return array_merge(['@PSR12' => true], $parentRules, $additionalRules);
+		$ret = array_merge(['@PSR12' => true], $parentRules, $additionalRules);
+		// print_r($ret);
+		return $ret;
 	}
 }
 
 $config = new CookbookConfig();
-$config
+$finder = $config
 	->getFinder()
-	->ignoreVCSIgnored(true)
+	// ->ignoreVCSIgnored(true)
 	->exclude('build')
 	->exclude('l10n')
-//	->notPath('lib/Vendor')
 	->exclude('src')
 	->exclude('node_modules')
 	->exclude('vendor')
 	->exclude('.github')
-	->in(__DIR__);
+	->in(__DIR__ );
 
+$config->setFinder($finder);
+
+// foreach($finder as $f) {
+// 	print_r($f);
+// }
+
+// print_r($config);
 
 return $config;
 

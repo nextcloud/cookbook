@@ -942,7 +942,7 @@ class RecipeService {
 	 */
 	private function addDatesToRecipes(array &$recipes) {
 		foreach ($recipes as $i => $recipe) {
-			if(! array_key_exists('dateCreated', $recipe) || ! array_key_exists('dateModified', $recipe)) {
+			if (! array_key_exists('dateCreated', $recipe) || ! array_key_exists('dateModified', $recipe)) {
 				$r = $this->getRecipeById($recipe['recipe_id']);
 				$recipes[$i]['dateCreated'] = $r['dateCreated'];
 				$recipes[$i]['dateModified'] = $r['dateModified'];

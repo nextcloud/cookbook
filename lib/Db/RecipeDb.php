@@ -465,13 +465,13 @@ class RecipeDb {
 		foreach ($recipes as $recipe) {
 			$qb->setParameter('id', $recipe['id'], $this->types->INT());
 			$qb->setParameter('name', $recipe['name'], $this->types->STRING());
-			
+
 			$dateCreated = $this->parseDate($recipe['dateCreated']);
-			if($dateCreated === null) {
+			if ($dateCreated === null) {
 				$dateCreated = $this->parseDate('now');
 			}
 			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATE());
-			
+
 			$dateModified = $this->parseDate($recipe['dateModified']);
 			$qb->setParameter('dateModified', $dateModified, $this->types->DATE());
 
@@ -642,7 +642,7 @@ class RecipeDb {
 			return null;
 		}
 
-		try{
+		try {
 			return new DateTimeImmutable($date);
 		} catch (\Exception $ex) {
 			return new DateTimeImmutable();

@@ -2,8 +2,6 @@
 
 namespace OCA\Cookbook\tests\Migration\Setup\Migrations;
 
-use OCP\DB\QueryBuilder\IQueryBuilder;
-
 include_once __DIR__ . '/AbstractMigrationTestCase.php';
 
 class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
@@ -51,7 +49,7 @@ class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 		$this->assertEquals(2, count($row));
 		$this->assertNull($row['dateCreated']);
 		$this->assertNull($row['dateModified']);
-		
+
 
 		//$this->assertEquals([null, null], $data[0]);
 	}

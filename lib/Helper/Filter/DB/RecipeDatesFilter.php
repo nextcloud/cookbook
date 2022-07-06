@@ -3,22 +3,20 @@
 namespace OCA\Cookbook\Helper\Filter\DB;
 
 use DateTime;
-use DateTimeImmutable;
 use OCA\Cookbook\Helper\Filter\AbstractRecipeFilter;
 use OCP\Files\File;
 
 /**
  * Ensure the dates of a recipe are valid
- * 
+ *
  * This filter will update the recipe to have both valid dateCreated and dateModified.
  * If the dates are given in correct format, nothing is changed.
- * 
+ *
  * If only the dateModified is given, the dateCreated is set to the same value.
- * 
+ *
  * If neither is given, the file modification time of the JSON file is taken into account.
  */
 class RecipeDatesFilter implements AbstractRecipeFilter {
-
 	private const DATE_CREATED = 'dateCreated';
 	private const DATE_MODIFIED = 'dateModified';
 
@@ -28,15 +26,14 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 	/** @var string */
 	private $patternDate;
 
-	public function __construct()
-	{
+	public function __construct() {
 		$this->patternDate = join('|', [
 			'^' . self::PATTERN_DATE . '$',
 			'^' . self::PATTERN_DATE . 'T' . self::PATTERN_TIME . '$'
 		]);
 	}
 
-    public function apply(array &$json, File $recipe): bool {
+	public function apply(array &$json, File $recipe): bool {
 		$ret = false;
 
 		// First ensure the entries are present in general
@@ -47,7 +44,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 		$this->checkDateFormat($json, self::DATE_CREATED, $ret);
 		$this->checkDateFormat($json, self::DATE_MODIFIED, $ret);
 
-		if(is_null($json['dateCreated'])) {
+		if (is_null($json['dateCreated'])) {
 			if (is_null($json['dateModified'])) {
 				// No dates have been set. Fall back to time of file
 				$json['dateCreated'] = $this->getTimeFromFile($recipe);
@@ -67,45 +64,49 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 		return $ret;
 	}
 
+	/**
+	 * Undocumented function
+	 *
+	 */
 	private function getTimeFromFile(File $file): string {
 		$timestamp = $file->getCreationTime();
-		if($timestamp === 0) {
+		if ($timestamp === 0) {
 			$timestamp = $file->getUploadTime();
 		}
-		if($timestamp === 0) {
+		if ($timestamp === 0) {
 			$timestamp = $file->getMTime();
 		}
 
 		return $this->getDateFromTimestamp($timestamp);
 	}
-	
+
 	private function getDateFromTimestamp(int $timestamp): string {
 		$date = new DateTime();
 		$date->setTimestamp($timestamp);
-	
+
 		return $date->format(DateTime::ISO8601);
 	}
 
 	private function ensureEntryExists(array &$json, string $name, bool &$ret) {
-		if(!array_key_exists($name, $json)) {
+		if (!array_key_exists($name, $json)) {
 			$json[$name] = null;
 			$ret = true;
 		}
 	}
 
 	private function checkDateFormat(array &$json, string $name, bool &$ret) {
-		if($json[$name] === null) {
+		if ($json[$name] === null) {
 			return;
 		}
 
 		// Check for valid date format
-		if(preg_match('/' . $this->patternDate . '/', $json[$name]) === 1) {
+		if (preg_match('/' . $this->patternDate . '/', $json[$name]) === 1) {
 			return;
 		}
 
 		// Last desperate approach: Is it a timestamp?
-		if(preg_match('/^\d+$/', $json[$name])) {
-			if($json[$name] > 0) {
+		if (preg_match('/^\d+$/', $json[$name])) {
+			if ($json[$name] > 0) {
 				$json[$name] = $this->getDateFromTimestamp($json[$name]);
 				$ret = true;
 				return;

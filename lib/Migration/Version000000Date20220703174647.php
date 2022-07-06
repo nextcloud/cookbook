@@ -13,7 +13,6 @@ use OCP\Migration\SimpleMigrationStep;
  * Auto-generated migration step: Please modify to your needs!
  */
 class Version000000Date20220703174647 extends SimpleMigrationStep {
-
 	/**
 	 * @param IOutput $output
 	 * @param Closure $schemaClosure The `\Closure` returns a `ISchemaWrapper`
@@ -33,14 +32,14 @@ class Version000000Date20220703174647 extends SimpleMigrationStep {
 		$schema = $schemaClosure();
 
 		$table = $schema->getTable('cookbook_names');
-		
-		if(! $table->hasColumn('dateCreated')) {
+
+		if (! $table->hasColumn('dateCreated')) {
 			$table->addColumn('dateCreated', 'datetime_immutable', [
 				'notnull' => false,
 			]);
 		}
 
-		if(!$table->hasColumn('dateModified')) {
+		if (!$table->hasColumn('dateModified')) {
 			$table->addColumn('dateModified', 'datetime_immutable', [
 				'notnull' => false,
 			]);
