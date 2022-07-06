@@ -198,7 +198,7 @@ class RecipeDb {
 					)
 				)
 			->where(
-				$qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->isNull('c.name')
 				);
 
@@ -256,7 +256,7 @@ class RecipeDb {
 					)
 				)
 			->where(
-				$qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->isNull('c.name')
 				);
 		}
@@ -433,8 +433,8 @@ class RecipeDb {
 		foreach ($ids as $id) {
 			$qb->orWhere(
 				$qb->expr()->andX(
-					"recipe_id = $id",
-					$qb->expr()->eq("user_id", $qb->expr()->literal($userId))
+					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)),
+					$qb->expr()->eq("user_id", $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
 					));
 		}
 
@@ -489,16 +489,13 @@ class RecipeDb {
 			$qb->update(self::DB_TABLE_RECIPES)
 				->where('recipe_id = :id', 'user_id = :uid');
 
-			// $literal = [];
-			// $literal['name'] = $qb->expr()->literal($recipe['name'], IQueryBuilder::PARAM_STR);
-			// $qb->set('name', $literal['name']);
 			$qb->set('name', $qb->createNamedParameter($recipe['name'], IQueryBuilder::PARAM_STR));
 
 			$dateCreated = $this->parseDate($recipe['dateCreated'] ?? 'now');
 			$dateModified = $this->parseDate($recipe['dateModified']) ?? $dateCreated;
 
-			$qb->set('dateCreated', $qb->expr()->literal($dateCreated, IQueryBuilder::PARAM_DATE));
-			$qb->set('dateModified', $qb->expr()->literal($dateModified, IQueryBuilder::PARAM_DATE));
+			$qb->set('dateCreated', $qb->createNamedParameter($dateCreated, IQueryBuilder::PARAM_DATE));
+			$qb->set('dateModified', $qb->createNamedParameter($dateModified, IQueryBuilder::PARAM_DATE));
 
 			$qb->setParameter('id', $recipe['id']);
 			$qb->setParameter('uid', $userId);
@@ -558,7 +555,7 @@ class RecipeDb {
 		$qb = $this->db->getQueryBuilder();
 		$qb->update(self::DB_TABLE_CATEGORIES)
 			->where('recipe_id = :rid', 'user_id = :user');
-		$qb->set('name', $qb->expr()->literal($categoryName, IQueryBuilder::PARAM_STR));
+		$qb->set('name', $qb->createNamedParameter($categoryName, IQueryBuilder::PARAM_STR));
 		$qb->setParameter('rid', $recipeId, $this->types->INT());
 		$qb->setParameter('user', $userId, $this->types->STRING());
 		$qb->execute();
@@ -630,9 +627,9 @@ class RecipeDb {
 		foreach ($pairs as $p) {
 			$qb->orWhere(
 				$qb->expr()->andX(
-					$qb->expr()->eq('user_id', $qb->expr()->literal($userId)),
-					$qb->expr()->eq('recipe_id', $qb->expr()->literal($p['recipeId'])),
-					$qb->expr()->eq('name', $qb->expr()->literal($p['name']))
+					$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
+					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($p['recipeId'], IQueryBuilder::PARAM_INT)),
+					$qb->expr()->eq('name', $qb->createNamedParameter($p['name'], IQueryBuilder::PARAM_STR))
 					)
 				);
 		}
