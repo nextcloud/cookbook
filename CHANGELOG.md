@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+### Fixed
+- Prevent slow loading of recipes due to iteration over all files
+  [#1072](https://github.com/nextcloud/cookbook/pull/1072) @christianlupus
+
+
 ## 0.9.13 - 2022-07-02
 
 ### Added
