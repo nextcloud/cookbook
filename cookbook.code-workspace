@@ -40,13 +40,21 @@
 			"**/vendor/**/{Tests,tests}/**",
 			"**/.history/**",
 			"**/vendor/**/vendor/**",
-			"3rdparty/**"
+			// "3rdparty/**"
 		],
 		"cSpell.words": [
 			"Nextcloud"
 		],
 		"path-intellisense.mappings": {
 			"cookbook": "${workspaceFolder}/src",
-		}
+		},
+		"editor.quickSuggestions": {
+			"other": "on",
+			"comments": "on",
+			"strings": "on"
+		},
+		"intelephense.environment.includePaths": [
+			"${workspaceFolder:base}/3rdparty/doctrine/dbal/src"
+		]
 	}
 }

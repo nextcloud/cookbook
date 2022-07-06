@@ -6,6 +6,7 @@ use OCA\Cookbook\Db\RecipeDb;
 use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
+use OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
 
@@ -33,6 +34,9 @@ class DbCacheService {
 	 */
 	private $l;
 
+	/** @var NormalizeRecipeFileFilter */
+	private $normalizeFileFilter;
+
 	private $jsonFiles;
 	private $dbReceipeFiles;
 	private $dbKeywords;
@@ -43,16 +47,18 @@ class DbCacheService {
 	private $updatedRecipes;
 
 	public function __construct(
-			?string $UserId,
-			RecipeDb $db,
-			RecipeService $recipeService,
-			UserConfigHelper $userConfigHelper,
-			IL10N $l
-		) {
+		?string $UserId,
+		RecipeDb $db,
+		RecipeService $recipeService,
+		UserConfigHelper $userConfigHelper,
+		NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
+		IL10N $l
+	) {
 		$this->userId = $UserId;
 		$this->db = $db;
 		$this->recipeService = $recipeService;
 		$this->userConfigHelper = $userConfigHelper;
+		$this->normalizeFileFilter = $normalizeRecipeFileFilter;
 		$this->l = $l;
 	}
 
@@ -142,6 +148,8 @@ class DbCacheService {
 		$id = (int) $jsonFile->getParent()->getId();
 		$json['id'] = $id;
 
+		$json = $this->normalizeFileFilter->filter($json, $jsonFile, true);
+
 		return $json;
 	}
 
@@ -157,6 +165,8 @@ class DbCacheService {
 			$obj = [];
 			$obj['name'] = $row['name'];
 			$obj['id'] = $id;
+			$obj['dateCreated'] = $row['dateCreated'];
+			$obj['dateModified'] = $row['dateModified'];
 
 			$ret[$id] = $obj;
 		}
@@ -194,7 +204,7 @@ class DbCacheService {
 			if (array_key_exists($id, $this->dbReceipeFiles)) {
 				// The file was at least in the database
 
-				if (! $this->isDbEntryUpToDate($id)) {
+				if (!$this->isDbEntryUpToDate($id)) {
 					// An update is needed
 					$this->updatedRecipes[] = $id;
 				}
@@ -218,6 +228,13 @@ class DbCacheService {
 		$fileEntry = $this->jsonFiles[$id];
 
 		if ($dbEntry['name'] !== $fileEntry['name']) {
+			return false;
+		}
+		if ($dbEntry['dateCreated'] !== $fileEntry['dateCreated']) {
+			return false;
+		}
+
+		if ($dbEntry['dateModified'] !== $fileEntry['dateModified']) {
 			return false;
 		}
 
@@ -273,7 +290,7 @@ class DbCacheService {
 	 * @return bool
 	 */
 	private function hasJSONCategory(array $json): bool {
-		return ! is_null($this->getJSONCategory($json));
+		return !is_null($this->getJSONCategory($json));
 	}
 
 	/**
@@ -319,7 +336,7 @@ class DbCacheService {
 				return trim($v);
 			}, $keywords);
 			$keywords = array_filter($keywords, function ($v) {
-				return ! empty($v);
+				return !empty($v);
 			});
 
 			$dbKeywords = $this->dbKeywords[$rid];
