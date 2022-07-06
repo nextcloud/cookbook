@@ -47,13 +47,13 @@ class DbCacheService {
 	private $updatedRecipes;
 
 	public function __construct(
-			?string $UserId,
-			RecipeDb $db,
-			RecipeService $recipeService,
-			UserConfigHelper $userConfigHelper,
-			NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
-			IL10N $l
-		) {
+		?string $UserId,
+		RecipeDb $db,
+		RecipeService $recipeService,
+		UserConfigHelper $userConfigHelper,
+		NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
+		IL10N $l
+	) {
 		$this->userId = $UserId;
 		$this->db = $db;
 		$this->recipeService = $recipeService;
@@ -148,7 +148,7 @@ class DbCacheService {
 		$id = (int) $jsonFile->getParent()->getId();
 		$json['id'] = $id;
 
-		$json = $this->normalizeFileFilter->filter($json, $jsonFile);
+		$json = $this->normalizeFileFilter->filter($json, $jsonFile, true);
 
 		return $json;
 	}
@@ -204,7 +204,7 @@ class DbCacheService {
 			if (array_key_exists($id, $this->dbReceipeFiles)) {
 				// The file was at least in the database
 
-				if (! $this->isDbEntryUpToDate($id)) {
+				if (!$this->isDbEntryUpToDate($id)) {
 					// An update is needed
 					$this->updatedRecipes[] = $id;
 				}
@@ -290,7 +290,7 @@ class DbCacheService {
 	 * @return bool
 	 */
 	private function hasJSONCategory(array $json): bool {
-		return ! is_null($this->getJSONCategory($json));
+		return !is_null($this->getJSONCategory($json));
 	}
 
 	/**
@@ -336,7 +336,7 @@ class DbCacheService {
 				return trim($v);
 			}, $keywords);
 			$keywords = array_filter($keywords, function ($v) {
-				return ! empty($v);
+				return !empty($v);
 			});
 
 			$dbKeywords = $this->dbKeywords[$rid];

@@ -21,7 +21,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 	private const DATE_MODIFIED = 'dateModified';
 
 	private const PATTERN_DATE = '\d{4}-\d{2}-\d{2}';
-	private const PATTERN_TIME = '\d{1,2}:\d{2}:\d{2}(?:\.\d+)?';
+	private const PATTERN_TIME = '\d{1,2}:\d{2}:\d{2}(?:\.\d+)?(?:[+-]\d{4}|[zZ]|[+-]\d\d:\d\d|[+-]\d\d| *UTC)?';
 
 	/** @var string */
 	private $patternDate;
