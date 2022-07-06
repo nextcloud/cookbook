@@ -942,10 +942,11 @@ class RecipeService {
 	 */
 	private function addDatesToRecipes(array &$recipes) {
 		foreach ($recipes as $i => $recipe) {
-			// TODO Add data to database instead of reading from files
-			$r = $this->getRecipeById($recipe['recipe_id']);
-			$recipes[$i]['dateCreated'] = $r['dateCreated'];
-			$recipes[$i]['dateModified'] = $r['dateModified'];
+			if(! array_key_exists('dateCreated', $recipe) || ! array_key_exists('dateModified', $recipe)) {
+				$r = $this->getRecipeById($recipe['recipe_id']);
+				$recipes[$i]['dateCreated'] = $r['dateCreated'];
+				$recipes[$i]['dateModified'] = $r['dateModified'];
+			}
 		}
 	}
 

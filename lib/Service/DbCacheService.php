@@ -142,6 +142,10 @@ class DbCacheService {
 		$id = (int) $jsonFile->getParent()->getId();
 		$json['id'] = $id;
 
+		if(!isset($json['dateModified'])) {
+			$json['dateModified'] = null;
+		}
+
 		return $json;
 	}
 
@@ -157,6 +161,8 @@ class DbCacheService {
 			$obj = [];
 			$obj['name'] = $row['name'];
 			$obj['id'] = $id;
+			$obj['dateCreated'] = $row['dateCreated'];
+			$obj['dateModified'] = $row['dateModified'];
 
 			$ret[$id] = $obj;
 		}
@@ -218,6 +224,13 @@ class DbCacheService {
 		$fileEntry = $this->jsonFiles[$id];
 
 		if ($dbEntry['name'] !== $fileEntry['name']) {
+			return false;
+		}
+		if($dbEntry['dateCreated'] !== $fileEntry['dateCreated']) {
+			return false;
+		}
+
+		if($dbEntry['dateModified'] !== $fileEntry['dateModified']) {
 			return false;
 		}
 

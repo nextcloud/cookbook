@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Db;
 
+use DateTimeImmutable;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -91,7 +92,7 @@ class RecipeDb {
 	public function findAllRecipes(string $user_id) {
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->where('r.user_id = :user')
 			->orderBy('r.name');
@@ -229,7 +230,7 @@ class RecipeDb {
 			// for the recipe, but those don't seem to work:
 			// $qb->select(['r.recipe_id', 'r.name', 'GROUP_CONCAT(k.name) AS keywords']) // not working
 			// $qb->select(['r.recipe_id', 'r.name', DB::raw('GROUP_CONCAT(k.name) AS keywords')]) // not working
-			$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+			$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
 				->from(self::DB_TABLE_CATEGORIES, 'c')
 				->where('c.name = :category')
 				->andWhere('c.user_id = :user')
@@ -242,7 +243,7 @@ class RecipeDb {
 			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
 			$qb->orderBy('r.name');
 		} else {
-			$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+			$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id')
 			->leftJoin(
@@ -279,7 +280,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'kk.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'kk.name AS keywords'])
 		->from(self::DB_TABLE_KEYWORDS, 'k')
 		->where('k.name IN (:keywords)')
 		->andWhere('k.user_id = :user')
@@ -314,7 +315,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
 			->from(self::DB_TABLE_RECIPES, 'r');
 
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
@@ -454,7 +455,9 @@ class RecipeDb {
 			->values([
 				'recipe_id' => ':id',
 				'user_id' => ':userid',
-				'name' => ':name'
+				'name' => ':name',
+				'dateCreated' => ':dateCreated',
+				'dateModified' => ':dateModified',
 			]);
 
 		$qb->setParameter('userid', $userId);
@@ -462,6 +465,15 @@ class RecipeDb {
 		foreach ($recipes as $recipe) {
 			$qb->setParameter('id', $recipe['id'], $this->types->INT());
 			$qb->setParameter('name', $recipe['name'], $this->types->STRING());
+			
+			$dateCreated = $this->parseDate($recipe['dateCreated']);
+			if($dateCreated === null) {
+				$dateCreated = $this->parseDate('now');
+			}
+			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATE());
+			
+			$dateModified = $this->parseDate($recipe['dateModified']);
+			$qb->setParameter('dateModified', $dateModified, $this->types->DATE());
 
 			$qb->execute();
 		}
@@ -472,20 +484,30 @@ class RecipeDb {
 			return;
 		}
 
-		$qb = $this->db->getQueryBuilder();
-
 		foreach ($recipes as $recipe) {
+			$qb = $this->db->getQueryBuilder();
 			$qb->update(self::DB_TABLE_RECIPES)
 				->where('recipe_id = :id', 'user_id = :uid');
 
-			$literal = [];
-			$literal['name'] = $qb->expr()->literal($recipe['name'], IQueryBuilder::PARAM_STR);
-			$qb->set('name', $literal['name']);
+			// $literal = [];
+			// $literal['name'] = $qb->expr()->literal($recipe['name'], IQueryBuilder::PARAM_STR);
+			// $qb->set('name', $literal['name']);
+			$qb->set('name', $qb->createNamedParameter($recipe['name'], IQueryBuilder::PARAM_STR));
+
+			$dateCreated = $this->parseDate($recipe['dateCreated'] ?? 'now');
+			$dateModified = $this->parseDate($recipe['dateModified']) ?? $dateCreated;
+
+			$qb->set('dateCreated', $qb->expr()->literal($dateCreated, IQueryBuilder::PARAM_DATE));
+			$qb->set('dateModified', $qb->expr()->literal($dateModified, IQueryBuilder::PARAM_DATE));
 
 			$qb->setParameter('id', $recipe['id']);
 			$qb->setParameter('uid', $userId);
 
-			$qb->execute();
+			try {
+				$qb->execute();
+			} catch (\Exception $ex) {
+				throw $ex;
+			}
 		}
 	}
 
@@ -616,5 +638,17 @@ class RecipeDb {
 		}
 
 		$qb->execute();
+	}
+
+	private function parseDate(?string $date) {
+		if (is_null($date)) {
+			return null;
+		}
+
+		try{
+			return new DateTimeImmutable($date);
+		} catch (\Exception $ex) {
+			return new DateTimeImmutable();
+		}
 	}
 }
