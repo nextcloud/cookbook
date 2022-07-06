@@ -473,9 +473,6 @@ class RecipeDb {
 			$qb->setParameter('name', $recipe['name'], $this->types->STRING());
 
 			$dateCreated = $this->parseDate($recipe['dateCreated']);
-			if ($dateCreated === null) {
-				$dateCreated = $this->parseDate('now');
-			}
 			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATE());
 
 			$dateModified = $this->parseDate($recipe['dateModified']);
@@ -497,8 +494,8 @@ class RecipeDb {
 
 			$qb->set('name', $qb->createNamedParameter($recipe['name'], IQueryBuilder::PARAM_STR));
 
-			$dateCreated = $this->parseDate($recipe['dateCreated'] ?? 'now');
-			$dateModified = $this->parseDate($recipe['dateModified']) ?? $dateCreated;
+			$dateCreated = $this->parseDate($recipe['dateCreated']);
+			$dateModified = $this->parseDate($recipe['dateModified']);
 
 			$qb->set('dateCreated', $qb->createNamedParameter($dateCreated, IQueryBuilder::PARAM_DATE));
 			$qb->set('dateModified', $qb->createNamedParameter($dateModified, IQueryBuilder::PARAM_DATE));

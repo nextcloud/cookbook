@@ -6,6 +6,7 @@ use OCA\Cookbook\Db\RecipeDb;
 use OCP\Files\File;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
+use OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
 
@@ -33,6 +34,9 @@ class DbCacheService {
 	 */
 	private $l;
 
+	/** @var NormalizeRecipeFileFilter */
+	private $normalizeFileFilter;
+
 	private $jsonFiles;
 	private $dbReceipeFiles;
 	private $dbKeywords;
@@ -47,12 +51,14 @@ class DbCacheService {
 			RecipeDb $db,
 			RecipeService $recipeService,
 			UserConfigHelper $userConfigHelper,
+			NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
 			IL10N $l
 		) {
 		$this->userId = $UserId;
 		$this->db = $db;
 		$this->recipeService = $recipeService;
 		$this->userConfigHelper = $userConfigHelper;
+		$this->normalizeFileFilter = $normalizeRecipeFileFilter;
 		$this->l = $l;
 	}
 
@@ -142,9 +148,7 @@ class DbCacheService {
 		$id = (int) $jsonFile->getParent()->getId();
 		$json['id'] = $id;
 
-		if (!isset($json['dateModified'])) {
-			$json['dateModified'] = null;
-		}
+		$json = $this->normalizeFileFilter->filter($json, $jsonFile);
 
 		return $json;
 	}
