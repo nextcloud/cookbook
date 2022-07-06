@@ -92,7 +92,7 @@ class RecipeDb {
 	public function findAllRecipes(string $user_id) {
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->where('r.user_id = :user')
 			->orderBy('r.name');
@@ -101,6 +101,12 @@ class RecipeDb {
 			$qb->expr()->andX(
 				'r.recipe_id = k.recipe_id',
 				'k.user_id = :user'
+			)
+		);
+		$qb->leftJoin('r', self::DB_TABLE_CATEGORIES, 'c',
+			$qb->expr()->andX(
+				'c.recipe_id = r.recipe_id',
+				'c.user_id = r.user_id'
 			)
 		);
 
@@ -315,7 +321,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r');
 
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
