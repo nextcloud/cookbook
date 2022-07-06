@@ -58,6 +58,52 @@ class RecipeDatesFilterTest extends TestCase {
 		$this->assertEquals($copy, $recipe, 'Other entries must not change.');
 	}
 
+	public function dpDateFormats() {
+		return [
+			['2022-07-05'],
+			['2022-07-05T15:30:00'],
+			['2022-07-05T15:30:00.123'],
+			['2022-07-05T15:30:00z'],
+			['2022-07-05T15:30:00Z'],
+			['2022-07-05T15:30:00 UTC'],
+			['2022-07-05T15:30:00+0100'],
+			['2022-07-05T15:30:00-0100'],
+			['2022-07-05T15:30:00+01:00'],
+			['2022-07-05T15:30:00-01:00'],
+			['2022-07-05T15:30:00+01'],
+			['2022-07-05T15:30:00-01'],
+			['2022-07-05T15:30:00.123+01:00'],
+		];
+	}
+
+	/**
+	 * @dataProvider dpDateFormats
+	 * @param mixed $date
+	 */
+	public function testDateFormats($date) {
+		$recipe = [
+			'name' => 'my Recipe',
+			'dateCreated' => $date,
+			'dateModified' => $date
+		];
+		$copy = $recipe;
+
+		$file = $this->createStub(File::class);
+
+		$ret = $this->dut->apply($recipe, $file);
+
+		$this->assertFalse($ret, 'Reporting of modification status');
+		$this->assertEquals($date, $recipe['dateCreated'], 'Wrong creation date');
+		$this->assertEquals($date, $recipe['dateModified'], 'Wrong modification date');
+
+		unset($recipe['dateCreated']);
+		unset($recipe['dateModified']);
+		unset($copy['dateCreated']);
+		unset($copy['dateModified']);
+
+		$this->assertEquals($copy, $recipe, 'Other entries must not change.');
+	}
+
 	public function dpFromFile() {
 		yield ['2022-07-06T09:08:54+0000', false, false, 1657098534, 1657098535, 1657098536];
 		yield ['2022-07-06T09:08:55+0000', false, false, 0, 1657098535, 1657098536];
