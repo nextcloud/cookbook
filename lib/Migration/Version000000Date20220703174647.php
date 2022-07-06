@@ -33,14 +33,14 @@ class Version000000Date20220703174647 extends SimpleMigrationStep {
 
 		$table = $schema->getTable('cookbook_names');
 
-		if (! $table->hasColumn('dateCreated')) {
-			$table->addColumn('dateCreated', 'datetime_immutable', [
+		if (! $table->hasColumn('date_created')) {
+			$table->addColumn('date_created', 'datetime_immutable', [
 				'notnull' => false,
 			]);
 		}
 
-		if (!$table->hasColumn('dateModified')) {
-			$table->addColumn('dateModified', 'datetime_immutable', [
+		if (!$table->hasColumn('date_modified')) {
+			$table->addColumn('date_modified', 'datetime_immutable', [
 				'notnull' => false,
 			]);
 		}

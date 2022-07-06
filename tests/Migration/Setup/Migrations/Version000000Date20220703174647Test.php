@@ -28,27 +28,27 @@ class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 		$this->assertEquals(1, $qb->execute());
 
 		$table = $this->schema->getTable('cookbook_names');
-		$this->assertFalse($table->hasColumn('dateCreated'));
-		$this->assertFalse($table->hasColumn('dateModified'));
+		$this->assertFalse($table->hasColumn('date_created'));
+		$this->assertFalse($table->hasColumn('date_modified'));
 
 		// Run the migration under test
 		$this->migrationService->migrate('000000Date20220703174647');
 		$this->renewSchema();
 
 		$table = $this->schema->getTable('cookbook_names');
-		$this->assertTrue($table->hasColumn('dateCreated'));
-		$this->assertTrue($table->hasColumn('dateModified'));
+		$this->assertTrue($table->hasColumn('date_created'));
+		$this->assertTrue($table->hasColumn('date_modified'));
 
 		$qb = $this->db->getQueryBuilder();
-		$qb->select('dateCreated', 'dateModified')->from('cookbook_names');
+		$qb->select('date_created', 'date_modified')->from('cookbook_names');
 		$res = $qb->execute();
 		$data = $res->fetchAll();
 
 		$this->assertEquals(1, count($data));
 		$row = $data[0];
 		$this->assertEquals(2, count($row));
-		$this->assertNull($row['dateCreated']);
-		$this->assertNull($row['dateModified']);
+		$this->assertNull($row['date_created']);
+		$this->assertNull($row['date_modified']);
 
 
 		//$this->assertEquals([null, null], $data[0]);

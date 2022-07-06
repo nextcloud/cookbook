@@ -59,6 +59,8 @@ class RecipeDb {
 		$ret = [];
 		$ret['name'] = $row['name'];
 		$ret['id'] = $row['recipe_id'];
+		$ret['dateCreated'] = $row['date_created'];
+		$ret['dateModified'] = $row['date_modified'];
 
 		return $ret;
 	}
@@ -92,7 +94,7 @@ class RecipeDb {
 	public function findAllRecipes(string $user_id) {
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords', 'c.name AS category'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->where('r.user_id = :user')
 			->orderBy('r.name');
@@ -114,12 +116,25 @@ class RecipeDb {
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
+		$result = $this->mapDbNames($result);
+
 		$result = $this->sortRecipes($result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
 
 		return $this->unique($recipesGroupedTags);
+	}
+
+	private function mapDbNames($results) {
+		return array_map(function ($x) {
+			$x['dateCreated'] = $x['date_created'];
+			$x['dateModified'] = $x['date_modified'];
+			unset($x['date_created']);
+			unset($x['date_modified']);
+
+			return $x;
+		}, $results);
 	}
 
 	public function unique(array $result) {
@@ -236,7 +251,7 @@ class RecipeDb {
 			// for the recipe, but those don't seem to work:
 			// $qb->select(['r.recipe_id', 'r.name', 'GROUP_CONCAT(k.name) AS keywords']) // not working
 			// $qb->select(['r.recipe_id', 'r.name', DB::raw('GROUP_CONCAT(k.name) AS keywords')]) // not working
-			$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
+			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
 				->from(self::DB_TABLE_CATEGORIES, 'c')
 				->where('c.name = :category')
 				->andWhere('c.user_id = :user')
@@ -249,7 +264,7 @@ class RecipeDb {
 			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
 			$qb->orderBy('r.name');
 		} else {
-			$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords'])
+			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id')
 			->leftJoin(
@@ -271,6 +286,8 @@ class RecipeDb {
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
+		$result = $this->mapDbNames($result);
+
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
 
@@ -286,7 +303,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'kk.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords'])
 		->from(self::DB_TABLE_KEYWORDS, 'k')
 		->where('k.name IN (:keywords)')
 		->andWhere('k.user_id = :user')
@@ -302,6 +319,8 @@ class RecipeDb {
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = $this->mapDbNames($result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -321,7 +340,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.dateCreated', 'r.dateModified', 'k.name AS keywords', 'c.name AS category'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r');
 
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
@@ -354,6 +373,8 @@ class RecipeDb {
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = $this->mapDbNames($result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -462,8 +483,8 @@ class RecipeDb {
 				'recipe_id' => ':id',
 				'user_id' => ':userid',
 				'name' => ':name',
-				'dateCreated' => ':dateCreated',
-				'dateModified' => ':dateModified',
+				'date_created' => ':dateCreated',
+				'date_modified' => ':dateModified',
 			]);
 
 		$qb->setParameter('userid', $userId);
@@ -497,8 +518,8 @@ class RecipeDb {
 			$dateCreated = $this->parseDate($recipe['dateCreated']);
 			$dateModified = $this->parseDate($recipe['dateModified']);
 
-			$qb->set('dateCreated', $qb->createNamedParameter($dateCreated, IQueryBuilder::PARAM_DATE));
-			$qb->set('dateModified', $qb->createNamedParameter($dateModified, IQueryBuilder::PARAM_DATE));
+			$qb->set('date_created', $qb->createNamedParameter($dateCreated, IQueryBuilder::PARAM_DATE));
+			$qb->set('date_modified', $qb->createNamedParameter($dateModified, IQueryBuilder::PARAM_DATE));
 
 			$qb->setParameter('id', $recipe['id']);
 			$qb->setParameter('uid', $userId);
