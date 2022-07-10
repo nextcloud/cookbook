@@ -20,6 +20,7 @@ use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Helper\TextCleanupHelper;
 
 /**
  * Main service class for the cookbook app.
@@ -52,6 +53,8 @@ class RecipeService {
 	 */
 	private $userConfigHelper;
 
+	/** @var TextCleanupHelper */
+	private $textCleanupHelper;
 	/**
 	 * @var ImageService
 	 */
@@ -67,7 +70,8 @@ class RecipeService {
 		IL10N $il10n,
 		LoggerInterface $logger,
 		HtmlDownloadService $downloadService,
-		RecipeExtractionService $extractionService
+		RecipeExtractionService $extractionService,
+		TextCleanupHelper $textCleanupHelper
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -79,6 +83,7 @@ class RecipeService {
 		$this->imageService = $imageService;
 		$this->htmlDownloadService = $downloadService;
 		$this->recipeExtractionService = $extractionService;
+		$this->textCleanupHelper = $textCleanupHelper;
 	}
 
 	/**
@@ -1144,30 +1149,6 @@ class RecipeService {
 	 * @return string
 	 */
 	private function cleanUpString($str, $preserve_newlines = false, $remove_slashes = false) {
-		if (!$str) {
-			return '';
-		}
-
-		$str = strip_tags($str);
-
-		if (!$preserve_newlines) {
-			$str = str_replace(["\r", "\n"], ' ', $str);
-		}
-
-		$str = str_replace("\t", ' ', $str);
-		$str = str_replace("\\", '_', $str);
-
-		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
-		if ($remove_slashes) {
-			$str = str_replace('/', '_', $str);
-		}
-
-		$str = html_entity_decode($str);
-
-		// Remove duplicated spaces
-		$str = preg_replace('/  */', ' ', $str);
-		$str = trim($str);
-
-		return $str;
+		return $this->textCleanupHelper->cleanUp($str, !$preserve_newlines, $remove_slashes);
 	}
 }
