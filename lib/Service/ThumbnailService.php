@@ -81,9 +81,25 @@ class ThumbnailService {
 		$this->logger->debug("File name of temporary file is $filename.");
 		$this->logger->debug("File stats:\n" . print_r(fstat($tmpFile), true));
 
-		$img->loadFromFile($filename);
+		$loaded = $img->loadFromFile($filename);
 
-		$this->logger->debug("Failed loading local file: " . ($img === false));
+		if ($loaded === false) {
+			$this->logger->debug("Could not load temp file.");
+
+			$this->logger->debug('Image is bool ' . is_bool($imagePath)?'true':'false');
+			$this->logger->debug('Image is file: ' . @is_file($imagePath)?'true':'false');
+			$this->logger->debug('Image exists: ' . file_exists($imagePath)?'true':'false');
+			$this->logger->debug('Image file size: ' . filesize($imagePath));
+			$this->logger->debug('Image is readable: ' . is_readable($imagePath)?'true':'false');
+		} else {
+			$this->logger->debug("Loaded image successfully.");
+		}
+
+		if ($img->valid()) {
+			$this->logger->debug("The image is valid.");
+		} else {
+			$this->logger->debug("The image is invalid.");
+		}
 
 		$img->fixOrientation();
 		$img->resize($size);

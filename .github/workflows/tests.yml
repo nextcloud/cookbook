@@ -341,7 +341,6 @@ jobs:
     name: Create source code artifacts
     needs:
         - unit-tests
-        - code-lint
     runs-on: ubuntu-latest
     
     steps:
