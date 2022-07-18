@@ -62,10 +62,10 @@ class ImageGenerationHelper {
 		$this->logger->debug('Original full-sized image path: ' . $fullImage->getPath());
 		$fullContent = $fullImage->getContent();
 		$this->logger->debug('Type of content: ' . gettype($fullContent));
-		$this->logger->debug('Size of file: ' . $fullContent->getSize());
-		$this->logger->debug('Full file is readable: ' . $fullContent->isReadable()?'true':'false');
-		$this->logger->debug('Permissions: ' . $fullContent->getPermissions());
-		$this->logger->debug('Internal path: ' . $fullContent->getInternalPath());
+		$this->logger->debug('Size of file: ' . $fullImage->getSize());
+		$this->logger->debug('Full file is readable: ' . $fullImage->isReadable()?'true':'false');
+		$this->logger->debug('Permissions: ' . $fullImage->getPermissions());
+		$this->logger->debug('Internal path: ' . $fullImage->getInternalPath());
 
 		$thumbContent = $this->thumbnailService->getThumbnail($fullContent, $type);
 
