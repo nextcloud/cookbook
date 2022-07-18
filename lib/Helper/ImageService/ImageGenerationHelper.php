@@ -59,7 +59,10 @@ class ImageGenerationHelper {
 			return;
 		}
 
+		$this->logger->debug('Original full-sized image path: ' . $fullImage->getPath());
 		$fullContent = $fullImage->getContent();
+		$this->logger->debug('Type of content: ' . gettype($fullContent));
+		$this->logger->debug('Full content image: ' . $fullImage);
 
 		$thumbContent = $this->thumbnailService->getThumbnail($fullContent, $type);
 
