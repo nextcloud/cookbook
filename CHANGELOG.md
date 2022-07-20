@@ -7,6 +7,8 @@
 ### Fixed
 - Prevent slow loading of recipes due to iteration over all files
   [#1072](https://github.com/nextcloud/cookbook/pull/1072) @christianlupus
+- Fix UI glitch with narrow devices
+  [#1091](https://github.com/nextcloud/cookbook/pull/1091) @MarcelRobitaille
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
