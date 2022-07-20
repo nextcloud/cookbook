@@ -63,13 +63,6 @@
                 :disable-drop="true"
             >
             </Breadcrumb>
-            <Breadcrumb
-                v-if="isLoading || isLoadingRecipe"
-                class="active"
-                :title="t('cookbook', 'Loading…')"
-                :disable-drop="true"
-            >
-            </Breadcrumb>
             <!-- Create new recipe -->
             <Breadcrumb
                 v-else-if="isCreate"
@@ -77,24 +70,6 @@
                 :title="t('cookbook', 'New recipe')"
                 :disable-drop="true"
             />
-            <Breadcrumb
-                v-if="isEdit || isCreate"
-                class="no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    :icon="
-                        $store.state.savingRecipe
-                            ? 'icon-loading-small'
-                            : 'icon-checkmark'
-                    "
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Save changes')"
-                    @click="saveChanges()"
-                    >{{ t("cookbook", "Save changes") }}</ActionButton
-                >
-            </Breadcrumb>
             <!-- View recipe -->
             <Breadcrumb
                 v-if="isRecipe"
@@ -102,86 +77,6 @@
                 :title="$store.state.recipe.name"
                 :disable-drop="true"
             >
-            </Breadcrumb>
-            <Breadcrumb
-                v-if="isRecipe"
-                class="no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    icon="icon-rename"
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Edit recipe')"
-                    @click="goToRecipe($store.state.recipe.id)"
-                    >{{ t("cookbook", "Edit recipe") }}</ActionButton
-                >
-            </Breadcrumb>
-            <Breadcrumb
-                v-if="isEdit"
-                class="no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    :icon="
-                        $store.state.reloadingRecipe ===
-                        parseInt($route.params.id)
-                            ? 'icon-loading-small'
-                            : 'icon-history'
-                    "
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Reload recipe')"
-                    @click="reloadRecipeEdit()"
-                    >{{ t("cookbook", "Reload recipe") }}</ActionButton
-                >
-            </Breadcrumb>
-            <Breadcrumb
-                v-if="isRecipe"
-                class="no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    :icon="
-                        $store.state.reloadingRecipe ===
-                        parseInt($route.params.id)
-                            ? 'icon-loading-small'
-                            : 'icon-history'
-                    "
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Reload recipe')"
-                    @click="reloadRecipeView()"
-                    >{{ t("cookbook", "Reload recipe") }}</ActionButton
-                >
-            </Breadcrumb>
-            <Breadcrumb
-                v-if="isRecipe"
-                class="no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    icon="icon-category-office"
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Print recipe')"
-                    @click="printRecipe()"
-                    >{{ t("cookbook", "Print recipe") }}</ActionButton
-                >
-            </Breadcrumb>
-            <Breadcrumb
-                v-if="isRecipe"
-                class="no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    icon="icon-delete"
-                    class="action-button"
-                    :aria-label="t('cookbook', 'Delete recipe')"
-                    @click="deleteRecipe()"
-                    >{{ t("cookbook", "Delete recipe") }}</ActionButton
-                >
             </Breadcrumb>
             <!-- Is the app loading? -->
             <Breadcrumb
@@ -222,6 +117,70 @@
                 :disable-drop="true"
             />
         </Breadcrumbs>
+        <Actions>
+            <ActionButton
+                key="reloadRecipeView"
+                v-if="isRecipe"
+                :icon="
+                    $store.state.reloadingRecipe === parseInt($route.params.id)
+                        ? 'icon-loading-small'
+                        : 'icon-history'
+                "
+                :aria-label="t('cookbook', 'Reload recipe')"
+                @click="reloadRecipeView()"
+                >{{ t("cookbook", "Reload recipe") }}</ActionButton
+            >
+            <ActionButton
+                key="reloadRecipeEdit"
+                v-if="isEdit"
+                :icon="
+                    $store.state.reloadingRecipe === parseInt($route.params.id)
+                        ? 'icon-loading-small'
+                        : 'icon-history'
+                "
+                :aria-label="t('cookbook', 'Reload recipe')"
+                @click="reloadRecipeEdit()"
+                >{{ t("cookbook", "Reload recipe") }}</ActionButton
+            >
+            <ActionButton
+                key="editRecipe"
+                v-if="isRecipe"
+                icon="icon-rename"
+                :aria-label="t('cookbook', 'Edit recipe')"
+                @click="goToRecipe($store.state.recipe.id)"
+            >
+                {{ t("cookbook", "Edit recipe") }}
+            </ActionButton>
+            <ActionButton
+                key="printRecipe"
+                v-if="isRecipe"
+                icon="icon-category-office"
+                :aria-label="t('cookbook', 'Print recipe')"
+                @click="printRecipe()"
+                >{{ t("cookbook", "Print recipe") }}</ActionButton
+            >
+            <ActionButton
+                key="deleteRecipe"
+                v-if="isRecipe"
+                icon="icon-delete"
+                :aria-label="t('cookbook', 'Delete recipe')"
+                @click="deleteRecipe()"
+                >{{ t("cookbook", "Delete recipe") }}</ActionButton
+            >
+            <ActionButton
+                key="save"
+                v-if="isEdit || isCreate"
+                :icon="
+                    $store.state.savingRecipe
+                        ? 'icon-loading-small'
+                        : 'icon-checkmark'
+                "
+                :aria-label="t('cookbook', 'Save changes')"
+                :title="t('cookbook', 'Save changes')"
+                class="has-tooltip"
+                @click="saveChanges()"
+            />
+        </Actions>
     </div>
 </template>
 
@@ -229,8 +188,11 @@
 import helpers from "cookbook/js/helper"
 
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
+/* import Actions from "@nextcloud/vue/dist/Components/Actions" */
+import Actions from "./ResponsiveActions.vue"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
 import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
+// import Breadcrumbs from "./Breadcrumbs"
 import Breadcrumb from "@nextcloud/vue/dist/Components/Breadcrumb"
 
 export default {
@@ -240,6 +202,7 @@ export default {
         ActionInput,
         Breadcrumbs,
         Breadcrumb,
+        Actions,
     },
     data() {
         return {
@@ -373,10 +336,15 @@ export default {
 
     /* The height of the nextcloud header */
     top: var(--header-height);
-    width: 100%;
     padding-left: 4px;
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-main-background);
+
+    /*width: calc(100% - 40px);*/
+    width: 100%;
+    padding-left: 40px;
+    display: flex;
+    flex-direction: row;
 }
 
 .active {
@@ -385,8 +353,18 @@ export default {
 }
 
 .breadcrumbs {
-    flex-basis: 100%;
-    margin-left: 40px;
+    /* flex-basis: 100%; */
+    width: auto;
+    flex-grow: 0;
+    overflow-x: hidden;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    /*& /deep/ button.action-button {
+        padding-right: 0;
+    }*/
 }
 
 .no-arrow::before {
@@ -404,7 +382,9 @@ export default {
 /* Hack to increase specificity to overwrite the scoped `width: 100%` on
   `.breadcrumb` in `@nextcloud/vue` Breadcrumbs */
 .wrapper .breadcrumbs.breadcrumb {
-    width: calc(100% - 60px);
+}
+.wrapper .breadcrumbs .breadcrumb__crumbs {
+    min-width: unset;
 }
 @media print {
     .vue-tooltip {
