@@ -119,8 +119,8 @@
         </Breadcrumbs>
         <Actions>
             <ActionButton
-                key="reloadRecipeView"
                 v-if="isRecipe"
+                key="reloadRecipeView"
                 :icon="
                     $store.state.reloadingRecipe === parseInt($route.params.id)
                         ? 'icon-loading-small'
@@ -131,8 +131,8 @@
                 >{{ t("cookbook", "Reload recipe") }}</ActionButton
             >
             <ActionButton
-                key="reloadRecipeEdit"
                 v-if="isEdit"
+                key="reloadRecipeEdit"
                 :icon="
                     $store.state.reloadingRecipe === parseInt($route.params.id)
                         ? 'icon-loading-small'
@@ -143,8 +143,8 @@
                 >{{ t("cookbook", "Reload recipe") }}</ActionButton
             >
             <ActionButton
-                key="editRecipe"
                 v-if="isRecipe"
+                key="editRecipe"
                 icon="icon-rename"
                 :aria-label="t('cookbook', 'Edit recipe')"
                 @click="goToRecipe($store.state.recipe.id)"
@@ -152,24 +152,24 @@
                 {{ t("cookbook", "Edit recipe") }}
             </ActionButton>
             <ActionButton
-                key="printRecipe"
                 v-if="isRecipe"
+                key="printRecipe"
                 icon="icon-category-office"
                 :aria-label="t('cookbook', 'Print recipe')"
                 @click="printRecipe()"
                 >{{ t("cookbook", "Print recipe") }}</ActionButton
             >
             <ActionButton
-                key="deleteRecipe"
                 v-if="isRecipe"
+                key="deleteRecipe"
                 icon="icon-delete"
                 :aria-label="t('cookbook', 'Delete recipe')"
                 @click="deleteRecipe()"
                 >{{ t("cookbook", "Delete recipe") }}</ActionButton
             >
             <ActionButton
-                key="save"
                 v-if="isEdit || isCreate"
+                key="save"
                 :icon="
                     $store.state.savingRecipe
                         ? 'icon-loading-small'
@@ -189,11 +189,11 @@ import helpers from "cookbook/js/helper"
 
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 /* import Actions from "@nextcloud/vue/dist/Components/Actions" */
-import Actions from "./ResponsiveActions.vue"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
 import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
 // import Breadcrumbs from "./Breadcrumbs"
 import Breadcrumb from "@nextcloud/vue/dist/Components/Breadcrumb"
+import Actions from "./ResponsiveActions.vue"
 
 export default {
     name: "AppControls",
@@ -336,15 +336,15 @@ export default {
 
     /* The height of the nextcloud header */
     top: var(--header-height);
-    padding-left: 4px;
-    border-bottom: 1px solid var(--color-border);
-    background-color: var(--color-main-background);
+    display: flex;
 
     /*width: calc(100% - 40px);*/
     width: 100%;
-    padding-left: 40px;
-    display: flex;
     flex-direction: row;
+    padding-left: 4px;
+    padding-left: 40px;
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-main-background);
 }
 
 .active {
@@ -379,10 +379,6 @@ export default {
 </style>
 
 <style>
-/* Hack to increase specificity to overwrite the scoped `width: 100%` on
-  `.breadcrumb` in `@nextcloud/vue` Breadcrumbs */
-.wrapper .breadcrumbs.breadcrumb {
-}
 .wrapper .breadcrumbs .breadcrumb__crumbs {
     min-width: unset;
 }

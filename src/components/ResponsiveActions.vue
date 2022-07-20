@@ -1,7 +1,7 @@
 <template>
     <div ref="expandedButtonWrapper" class="actions">
         <div
-            v-if="mode==LayoutOption.WIDE"
+            v-if="mode == LayoutOption.WIDE"
             v-show="hasMultipleActions || forceMenu"
             :class="{ 'action-item--open': opened }"
             class="action-item"
@@ -14,23 +14,29 @@
             </ul>
         </div>
 
-        <div
-            v-else-if="mode==LayoutOption.MEDIUM"
-            class="action-item"
-        >
+        <div v-else-if="mode == LayoutOption.MEDIUM" class="action-item">
             <button
-                v-for='child in children'
-                v-tooltip="{boundariesElement: 'body', content: child.text, placement: 'auto'}"
+                v-for="child in children"
+                :key="child.text"
+                v-tooltip="{
+                    boundariesElement: 'body',
+                    content: child.text,
+                    placement: 'auto',
+                }"
                 class="action-item action-item--single"
                 rel="nofollow noreferrer noopener"
-                :class="{[child.icon]: child.icon}"
+                :class="{ [child.icon]: child.icon }"
                 @click="child.$listeners.click"
             />
 
             <!-- fake slot to gather main action -->
             <span :aria-hidden="true" hidden>
                 <!-- @slot All action elements passed into the default slot will be used -->
-                <ul :id="randomId" tabindex="-1" class="compressed-button-wrapper">
+                <ul
+                    :id="randomId"
+                    tabindex="-1"
+                    class="compressed-button-wrapper"
+                >
                     <template v-if="true">
                         <slot />
                     </template>
@@ -40,7 +46,7 @@
 
         <!-- more than one action -->
         <div
-            v-else-if="mode==LayoutOption.NARROW"
+            v-else-if="mode == LayoutOption.NARROW"
             :class="{ 'action-item--open': opened }"
             class="action-item"
         >
@@ -117,7 +123,7 @@
     </div>
 </template>
 <script>
-import DotsHorizontal from "vue-material-design-icons/DotsHorizontal"
+import DotsHorizontal from "vue-material-design-icons/DotsHorizontal.vue"
 
 /* import Tooltip from "../../directives/Tooltip" */
 import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip"
@@ -128,15 +134,14 @@ import Tooltip from "@nextcloud/vue/dist/Directives/Tooltip"
 import Popover from "@nextcloud/vue/dist/Components/Popover"
 
 const focusableSelector = ".focusable"
-const GenRandomId = (length) => {
-	return Math.random()
-		.toString(36)
-		.replace(/[^a-z]+/g, '')
-		.slice(0, length || 5)
-}
+const genRandomID = (length) =>
+    Math.random()
+        .toString(36)
+        .replace(/[^a-z]+/g, "")
+        .slice(0, length || 5)
 
 // Used to calculate the width we would have if all text is removed and only icons are shown
-const ICON_WIDTH = 44;
+const ICON_WIDTH = 44
 
 // Enum
 const LayoutOption = Object.freeze({
@@ -149,7 +154,6 @@ const LayoutOption = Object.freeze({
     NARROW: Symbol("narrow"),
 })
 
-
 /**
  * The Actions component can be used to display one ore more actions.
  * If only a single action is provided, it will be rendered as an inline icon.
@@ -159,32 +163,15 @@ const LayoutOption = Object.freeze({
  * @since 0.10.0
  */
 export default {
-    name: "Actions",
-
-    created()  {
-        window.addEventListener("resize", this.resizeHandler);
-
-        this.LayoutOption = LayoutOption;
-    },
-
-    destroyed()  {
-        window.removeEventListener("resize", this.resizeHandler);
-    },
-
-
-    directives: {
-        tooltip: Tooltip,
-    },
+    name: "ResponsiveActions",
 
     components: {
         DotsHorizontal,
         Popover,
+    },
 
-        // Component to render the first action icon slot content (vnodes)
-        VNodes: {
-            functional: true,
-            render: (h, context) => context.props.vnodes,
-        },
+    directives: {
+        tooltip: Tooltip,
     },
 
     props: {
@@ -284,7 +271,7 @@ export default {
             actions: [],
             opened: this.open,
             focusIndex: 0,
-            randomId: "menu-" + GenRandomId(),
+            randomId: `menu-${genRandomID()}`,
             // Making children reactive!
             // By binding this here, vuejs will track the object content
             // Needed for firstAction reactivity !!!
@@ -342,7 +329,7 @@ export default {
                 this.firstActionVNode &&
                 this.firstActionVNode.componentOptions
             ) {
-                const tag = this.firstActionVNode.componentOptions.tag
+                const { tag } = this.firstActionVNode.componentOptions
                 if (tag === "ActionLink") {
                     return {
                         is: "a",
@@ -392,7 +379,7 @@ export default {
                 this.firstActionVNode && this.firstActionVNode.data.staticClass
             const dynClass =
                 this.firstActionVNode && this.firstActionVNode.data.class
-            return (staticClass + " " + dynClass).trim()
+            return `${staticClass} ${dynClass}`.trim()
         },
 
         iconSlotIsPopulated() {
@@ -416,14 +403,13 @@ export default {
          */
         children() {
             if (!this.childWidth) {
-
-                const wrapper = this.$refs.expandedButtonWrapper;
-                const children = [...wrapper.querySelector('ul').children];
+                const wrapper = this.$refs.expandedButtonWrapper
+                const children = [...wrapper.querySelector("ul").children]
                 this.childWidth = children
-                    .map(el => el.offsetWidth)
-                    .reduce((a, b) => a + b);
-                this.numChildren = children.length;
-                this.mode = this.getMode(wrapper.offsetWidth);
+                    .map((el) => el.offsetWidth)
+                    .reduce((a, b) => a + b)
+                this.numChildren = children.length
+                this.mode = this.getMode(wrapper.offsetWidth)
             }
 
             // Fix #2529, slots maybe not available on creation lifecycle
@@ -431,13 +417,23 @@ export default {
             this.firstAction = this.children[0] ? this.children[0] : {}
         },
     },
+
+    created() {
+        window.addEventListener("resize", this.resizeHandler)
+
+        this.LayoutOption = LayoutOption
+    },
+
+    destroyed() {
+        window.removeEventListener("resize", this.resizeHandler)
+    },
+
     beforeMount() {
         // init actions
         this.initActions()
     },
     mounted() {
-        this.$nextTick(() => {
-        })
+        this.$nextTick(() => {})
     },
     beforeUpdate() {
         // ! since we're using $slots to manage our actions
@@ -454,20 +450,20 @@ export default {
         // MENU STATE MANAGEMENT
         getMode(wrapperWidth) {
             if (wrapperWidth >= this.childWidth) {
-                return LayoutOption.WIDE;
-            } else if (wrapperWidth > ICON_WIDTH * this.numChildren) {
-                return LayoutOption.MEDIUM;
-            } else {
-                return LayoutOption.NARROW;
+                return LayoutOption.WIDE
             }
+            if (wrapperWidth > ICON_WIDTH * this.numChildren) {
+                return LayoutOption.MEDIUM
+            }
+            return LayoutOption.NARROW
         },
-        resizeHandler(e) {
-            const wrapper = this.$refs.expandedButtonWrapper;
-            const width = wrapper.offsetWidth;
+        resizeHandler() {
+            const wrapper = this.$refs.expandedButtonWrapper
+            const width = wrapper.offsetWidth
 
-            this.mode = this.getMode(width);
+            this.mode = this.getMode(width)
         },
-        openMenu(e) {
+        openMenu() {
             if (this.opened) {
                 return
             }
@@ -485,7 +481,7 @@ export default {
              */
             this.$emit("open")
         },
-        closeMenu(e) {
+        closeMenu() {
             if (!this.opened) {
                 return
             }
@@ -570,7 +566,7 @@ export default {
                     this.closeMenu()
                 } else {
                     this.preventIfEvent(event)
-                    this.focusIndex = this.focusIndex - 1
+                    this.focusIndex -= 1
                 }
                 this.focusAction()
             }
@@ -585,7 +581,7 @@ export default {
                     this.closeMenu()
                 } else {
                     this.preventIfEvent(event)
-                    this.focusIndex = this.focusIndex + 1
+                    this.focusIndex += 1
                 }
                 this.focusAction()
             }
@@ -637,13 +633,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use 'sass:math';
-@import '../assets/variables.scss';
+@use "sass:math";
+@import "../assets/variables";
+
 .actions {
-    // Make actions take full width
-    flex-grow: 1;
     // Align actions right
     display: flex;
+    // Make actions take full width
+    flex-grow: 1;
     justify-content: flex-end;
 
     // Required to shrink when not enough space
