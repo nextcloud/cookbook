@@ -32,7 +32,7 @@ class ThumbnailFileHelper {
 		ImageGenerationHelper $generationHelper,
 		ImageFileHelper $fileHelper,
 		IL10N $l
-		) {
+	) {
 		$this->generationHelper = $generationHelper;
 		$this->fileHelper = $fileHelper;
 		$this->l = $l;

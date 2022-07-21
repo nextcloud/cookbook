@@ -30,7 +30,7 @@ if (Util::getVersion()[0] >= 20) {
 			IL10n $il10n,
 			IURLGenerator $urlGenerator,
 			RecipeService $recipeService
-			) {
+		) {
 			$this->l = $il10n;
 			$this->urlGenerator = $urlGenerator;
 			$this->recipeService = $recipeService;

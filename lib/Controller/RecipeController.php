@@ -50,15 +50,15 @@ class RecipeController extends Controller {
 	private $l;
 
 	public function __construct(
-			$AppName,
-			IRequest $request,
-			IURLGenerator $urlGenerator,
-			RecipeService $recipeService,
-			DbCacheService $dbCacheService,
-			RestParameterParser $restParser,
-			AcceptHeaderParsingHelper $acceptHeaderParser,
-			IL10N $l
-			) {
+		$AppName,
+		IRequest $request,
+		IURLGenerator $urlGenerator,
+		RecipeService $recipeService,
+		DbCacheService $dbCacheService,
+		RestParameterParser $restParser,
+		AcceptHeaderParsingHelper $acceptHeaderParser,
+		IL10N $l
+	) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;

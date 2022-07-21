@@ -218,7 +218,7 @@ class RecipeControllerTest extends TestCase {
 			$this->callback(function ($p) use ($id) {
 				return isset($p['size']) && $p['id'] === $id;
 			})
-			)->willReturn($imageUrl);
+		)->willReturn($imageUrl);
 		$expected = $recipe;
 		$expected['printImage'] = true;
 		$expected['imageUrl'] = $imageUrl;

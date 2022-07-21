@@ -37,6 +37,15 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
+        -   name: Cache composer files
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    vendor
+                key: ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-${{ hashFiles('composer.lock') }}
+                restore-keys: |
+                    ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-composer-
         -   name: Get PHP version
             shell: bash
             run: php -v
@@ -351,6 +360,15 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
+        -   name: Use cache for Composer
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    vendor
+                key: ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-${{ hashFiles('composer.lock') }}
+                restore-keys: |
+                    ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-composer-
         
         -   name: Update NPM
             shell: bash

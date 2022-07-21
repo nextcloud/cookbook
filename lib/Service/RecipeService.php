@@ -58,17 +58,17 @@ class RecipeService {
 	private $imageService;
 
 	public function __construct(
-			?string $UserId,
-			IRootFolder $root,
-			RecipeDb $db,
-			UserConfigHelper $userConfigHelper,
-			UserFolderHelper $userFolder,
-			ImageService $imageService,
-			IL10N $il10n,
-			LoggerInterface $logger,
-			HtmlDownloadService $downloadService,
-			RecipeExtractionService $extractionService
-		) {
+		?string $UserId,
+		IRootFolder $root,
+		RecipeDb $db,
+		UserConfigHelper $userConfigHelper,
+		UserFolderHelper $userFolder,
+		ImageService $imageService,
+		IL10N $il10n,
+		LoggerInterface $logger,
+		HtmlDownloadService $downloadService,
+		RecipeExtractionService $extractionService
+	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
 		$this->db = $db;
@@ -758,7 +758,7 @@ class RecipeService {
 				$recipe_folder->move($new_path);
 			}
 
-			// This is a new recipe, create it
+		// This is a new recipe, create it
 		} else {
 			$json['dateCreated'] = $now;
 
@@ -802,7 +802,7 @@ class RecipeService {
 				}
 			}
 
-			// The image field was empty, remove images in the recipe folder
+		// The image field was empty, remove images in the recipe folder
 		} else {
 			$this->imageService->dropImage($recipe_folder);
 		}
