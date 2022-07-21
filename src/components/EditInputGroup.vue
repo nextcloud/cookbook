@@ -28,6 +28,7 @@
                     @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
+                    @blur="handleBlur"
                 ></textarea>
                 <div class="controls">
                     <button
@@ -51,6 +52,16 @@
                         @click="deleteEntry(idx)"
                     ></button>
                 </div>
+                <SuggestionsPopup
+                    v-if="
+                        suggestionsData !== null &&
+                        suggestionsData.fieldIndex === idx
+                    "
+                    ref="suggestionsPopup"
+                    :offset="suggestionsData.popupOffset"
+                    :focus-index="suggestionsData.focusIndex"
+                    :suggestion-options="filteredSelectionOptions"
+                />
             </li>
         </ul>
         <button class="button add-list-item" @click="addNewEntry()">
@@ -60,6 +71,9 @@
 </template>
 
 <script>
+import { position as caretPosition } from "caret-pos"
+import SuggestionsPopup from "./SuggestionsPopup.vue"
+
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i])
 const findCommonPrefix = (lines) => {
@@ -80,8 +94,13 @@ const findCommonPrefix = (lines) => {
     }
 }
 
+const clamp = (val, min, max) => Math.min(max, Math.max(min, val))
+
 export default {
     name: "EditInputGroup",
+    components: {
+        SuggestionsPopup,
+    },
     props: {
         value: {
             type: Array,
@@ -112,6 +131,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        suggestionOptions: {
+            type: Array,
+            default: () => [],
+        },
     },
     data() {
         return {
@@ -120,7 +143,20 @@ export default {
             lastFocusedFieldIndex: null,
             lastCursorPosition: -1,
             ignoreNextKeyUp: false,
+            suggestionsData: null,
         }
+    },
+    computed: {
+        filteredSelectionOptions() {
+            const { searchText } = this.suggestionsData
+            return this.suggestionOptions.filter(
+                (option) =>
+                    searchText === "" ||
+                    option.title
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase())
+            )
+        },
     },
     watch: {
         value: {
@@ -129,6 +165,11 @@ export default {
             },
             deep: true,
         },
+    },
+    mounted() {
+        this.$on("suggestions-selected", (opt) => {
+            this.handleSuggestionSelected(opt.recipe_id)
+        })
     },
     methods: {
         /* if index = -1, element is added at the end
@@ -258,6 +299,57 @@ export default {
             })
         },
         /**
+         * Cancel selection if input gets blurred
+         */
+        handleBlur(e) {
+            if (this.suggestionsData === null) return
+
+            // Do not cancel suggestions if the new focused element (e.relatedTarget)
+            // is a child of the suggestions popup
+            // That is the case when clicking an option in the suggestions popup,
+            // and cancelling too early prevents the option from being properly selected
+            if (this.$refs.suggestionsPopup[0].$el.contains(e.relatedTarget)) {
+                return
+            }
+            this.handleSuggestionsCancel()
+        },
+        /**
+         * Handle keydown events for suggestions popup
+         * The event will be sent here from the normal keydown handler
+         * if suggestionsData !== null
+         */
+        suggestionsHandleKeydown(e) {
+            // Handle switching the focused option with up/down keys
+            if (["ArrowUp", "ArrowDown"].includes(e.key)) {
+                e.preventDefault()
+
+                // Increment/decrement focuse index based on which key was pressed
+                // and constrain between 0 and length - 1
+                const focusIndex = clamp(
+                    this.suggestionsData.focusIndex +
+                        {
+                            ArrowUp: -1,
+                            ArrowDown: +1,
+                        }[e.key],
+                    0,
+                    this.filteredSelectionOptions.length - 1
+                )
+                this.suggestionsData = {
+                    ...this.suggestionsData,
+                    focusIndex,
+                }
+                return
+            }
+
+            // Handle selecting the current option when enter is pressed
+            if (e.key === "Enter") {
+                e.preventDefault()
+                const { focusIndex } = this.suggestionsData
+                const selection = this.filteredSelectionOptions[focusIndex]
+                this.handleSuggestionSelected(selection.recipe_id)
+            }
+        },
+        /**
          * Catches enter and key down presses and either adds a new row or focuses the one below
          */
         keyDown(e) {
@@ -276,6 +368,12 @@ export default {
 
             // Repeat events should be ignored
             if (e.repeat) {
+                return
+            }
+
+            // Redirect to suggestions handler if in suggestion mode
+            if (this.suggestionsData !== null) {
+                this.suggestionsHandleKeydown(e)
                 return
             }
 
@@ -308,6 +406,46 @@ export default {
             }
         },
         /**
+         * Handle keyups events for suggestions popup
+         * The event will be sent here from the normal keydown handler
+         * if suggestionsData !== null
+         */
+        suggestionsHandleKeyUp(e, cursorPos) {
+            // Cancel suggestion popup on whitespace or caret movement
+            if (
+                [
+                    " ",
+                    "\t",
+                    "#",
+                    "ArrowLeft",
+                    "ArrowRight",
+                    "Home",
+                    "End",
+                    "PageUp",
+                    "PageDown",
+                    "Escape",
+                ].includes(e.key)
+            ) {
+                this.handleSuggestionsCancel()
+                return
+            }
+
+            // Cancel suggestions popup if hash deleted
+            if (cursorPos < this.suggestionsData.hashPosition) {
+                this.handleSuggestionsCancel()
+                return
+            }
+
+            // Update the search text
+            // Slice the input from the position of the "#" to the caret position
+            const { hashPosition, field } = this.suggestionsData
+            const searchText = field.value.slice(hashPosition, cursorPos)
+            this.suggestionsData = {
+                ...this.suggestionsData,
+                searchText,
+            }
+        },
+        /**
          * Shows the recipe linking popup when # is pressed
          */
         keyUp(e) {
@@ -315,11 +453,6 @@ export default {
             // ignore the following keyup event
             if (this.ignoreNextKeyUp) {
                 this.ignoreNextKeyUp = false
-                return
-            }
-
-            // Only do anything for enter or # keys
-            if (!(this.referencePopupEnabled && e.key === "#")) {
                 return
             }
 
@@ -334,20 +467,41 @@ export default {
             // Get the position of the cursor and the content of the input
             const elm = this.$refs["list-field"][$pressedLiIndex]
             const cursorPos = elm.selectionStart
-            const content = elm.value
+
+            if (this.suggestionsData !== null) {
+                this.suggestionsHandleKeyUp(e, cursorPos)
+                return
+            }
+
+            // Only do anything for enter or # keys
+            if (!(this.referencePopupEnabled && e.key === "#")) {
+                return
+            }
 
             // Show the popup only if the # was inserted at the very
             // beggining of the input or after any whitespace character
             if (
-                !(cursorPos === 1 || /\s/.test(content.charAt(cursorPos - 2)))
+                !(cursorPos === 1 || /\s/.test(elm.value.charAt(cursorPos - 2)))
             ) {
                 return
             }
 
             // Show dialog to select recipe
-            this.$parent.$emit("showRecipeReferencesPopup", {
+            // const fieldPos = elm.getBoundingClientRect()
+            const caretPos = caretPosition(elm)
+            const popupOffset = {
+                left: elm.offsetLeft + caretPos.left,
+                top: elm.offsetTop + caretPos.top + caretPos.height,
+            }
+            this.suggestionsData = {
+                field: elm,
                 context: this,
-            })
+                searchText: "",
+                popupOffset,
+                focusIndex: 0,
+                hashPosition: cursorPos,
+                fieldIndex: $pressedLiIndex,
+            }
             this.lastFocusedFieldIndex = $pressedLiIndex
             this.lastCursorPosition = cursorPos
         },
@@ -410,6 +564,13 @@ export default {
                 })
             })
         },
+        handleSuggestionSelected(recipeId) {
+            this.pasteString(`r/${recipeId} `)
+            this.suggestionsData = null
+        },
+        handleSuggestionsCancel() {
+            this.suggestionsData = null
+        },
     },
 }
 </script>
@@ -421,6 +582,7 @@ button {
 }
 
 fieldset {
+    position: relative;
     width: 100%;
     margin-bottom: 1em;
 }

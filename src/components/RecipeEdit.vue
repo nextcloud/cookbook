@@ -102,6 +102,7 @@
             :create-fields-on-newlines="true"
             :show-step-number="true"
             :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <div class="cookbook-footer">
             <button class="button" @click="save()">
@@ -115,16 +116,6 @@
                 {{ t("cookbook", "Save changes") }}
             </button>
         </div>
-        <edit-multiselect-popup
-            ref="referencesPopup"
-            class="references-popup"
-            :class="{ visible: referencesPopupFocused }"
-            :options="allRecipeOptions"
-            track-by="recipe_id"
-            label="title"
-            :loading="loadingRecipeReferences"
-            :focused="referencesPopupFocused"
-        />
     </div>
 </template>
 
@@ -143,7 +134,6 @@ import EditInputField from "./EditInputField.vue"
 import EditInputGroup from "./EditInputGroup.vue"
 import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
-import EditMultiselectPopup from "./EditMultiselectPopup.vue"
 import EditTimeField from "./EditTimeField.vue"
 
 export default {
@@ -155,7 +145,6 @@ export default {
         EditMultiselect,
         EditTimeField,
         EditMultiselectInputGroup,
-        EditMultiselectPopup,
         Actions,
         ActionButton,
         NumericIcon,
@@ -326,7 +315,6 @@ export default {
                 },
             ],
             referencesPopupFocused: false,
-            popupContext: undefined,
             loadingRecipeReferences: true,
             showRecipeYield: true,
         }
@@ -423,25 +411,6 @@ export default {
                 // eslint-disable-next-line prefer-destructuring
                 this.recipe.recipeCategory = val[0]
             }
-        })
-        // Register recipe-reference selection hook for showing popup when requested
-        // from a child element
-        this.$off("showRecipeReferencesPopup")
-        this.$on("showRecipeReferencesPopup", (val) => {
-            this.referencesPopupFocused = true
-            this.popupContext = val
-        })
-        // Register hook when recipe reference has been selected in popup
-        this.$off("ms-popup-selected")
-        this.$on("ms-popup-selected", (opt) => {
-            this.referencesPopupFocused = false
-            this.popupContext.context.pasteString(`r/${opt.recipe_id} `)
-        })
-        // Register hook when recipe reference has been selected in popup
-        this.$off("ms-popup-selection-canceled")
-        this.$on("ms-popup-selection-canceled", () => {
-            this.referencesPopupFocused = false
-            this.popupContext.context.pasteCanceled()
         })
         this.savingRecipe = false
 
