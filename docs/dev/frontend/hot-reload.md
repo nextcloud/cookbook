@@ -13,13 +13,16 @@ Do not use it in production.
 
 ## Preparation on the test instance: disable CSP
 
-The reloaded code are transmitted over an external connection from a different name.
-This is needed to side-load the JS code and allow for live-reloading.
+The reloaded code are transmitted over an external connection from a different host name and a different path.
+This needed side-load of the JS code is required to detect updated code and thus allow for live-reloading.
 
-Normally, this would trigger CSP protection by the browser.
-So, no Nextcloud app is allowed to load JS/CSS content from a foreign domain unless explicitly specified.
+Normally, this would trigger CSP protection by the browser:
+No Nextcloud app is allowed to load JS/CSS content from a foreign domain unless explicitly specified.
+We have (and do not want to have) such an exceptional allowance.
 
-In a local debugging environment the risk involved is minimal and it allows to live reload the Vue components and JS code.
+In a local debugging environment the risk involved is minimal.
+As it allows to live reload the Vue components and JS code, a developer can consider enabling the hot reload module never the less.
+He/She should be aware of the security implications if the instance is made available to others.
 
 To disable CSP protection, you have to install the [hmr_enabler app](https://github.com/nextcloud/hmr_enabler).
 Again the warning:
@@ -28,6 +31,7 @@ Do it on a local debugging instance of Nextcloud with no connection to the inter
 
 At the time of writing, you had to checkout the app to you `/apps` folder of Nextcloud and call `make composer`.
 This might change and we can only redirect any questions to the documentation of the `hmr_enabler` app.
+Finally, you might need to enable the app in your settings or via `occ app:enable hmr_enabler`.
 
 ## Build the app with hot reload enabled
 
