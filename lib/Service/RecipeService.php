@@ -20,6 +20,7 @@ use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Helper\Filter\JSONFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 
 /**
@@ -60,6 +61,9 @@ class RecipeService {
 	 */
 	private $imageService;
 
+	/** @var JSONFilter */
+	private $jsonFilter;
+
 	public function __construct(
 		?string $UserId,
 		IRootFolder $root,
@@ -71,7 +75,8 @@ class RecipeService {
 		LoggerInterface $logger,
 		HtmlDownloadService $downloadService,
 		RecipeExtractionService $extractionService,
-		TextCleanupHelper $textCleanupHelper
+		TextCleanupHelper $textCleanupHelper,
+		JSONFilter $jsonFilter
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -84,6 +89,7 @@ class RecipeService {
 		$this->htmlDownloadService = $downloadService;
 		$this->recipeExtractionService = $extractionService;
 		$this->textCleanupHelper = $textCleanupHelper;
+		$this->jsonFilter = $jsonFilter;
 	}
 
 	/**
@@ -168,319 +174,7 @@ class RecipeService {
 			throw new Exception('Field "name" is required');
 		}
 
-		// Make sure the schema.org fields are present
-		$json['@context'] = 'http://schema.org';
-		$json['@type'] = 'Recipe';
-
-		// Make sure that "name" doesn't have any funky characters in it
-		$json['name'] = $this->cleanUpString($json['name'], false, true);
-
-		// Restrict the length of the name to be not longer than what the DB can store
-		if (strlen($json['name']) > 256) {
-			$json['name'] = substr($json['name'], 0, 256);
-		}
-
-		// Make sure that "image" is a string of the highest resolution image available
-		if (isset($json['image']) && $json['image']) {
-			if (is_array($json['image'])) {
-				// Get the image from a subproperty "url"
-				if (isset($json['image']['url'])) {
-					$json['image'] = $json['image']['url'];
-
-				// Try to get the image with the highest resolution by adding together all numbers in the url
-				} else {
-					$images = $json['image'];
-					$image_size = 0;
-
-					foreach ($images as $img) {
-						if (is_array($img) && isset($img['url'])) {
-							$img = $img['url'];
-						}
-
-						if (empty($img)) {
-							continue;
-						}
-
-						$image_matches = [];
-
-						preg_match_all('!\d+!', $img, $image_matches);
-
-						$this_image_size = 0;
-
-						foreach ($image_matches as $image_match) {
-							$this_image_size += (int)$image_match;
-						}
-
-						if ($image_size === 0 || $this_image_size > $image_size) {
-							$json['image'] = $img;
-						}
-					}
-				}
-			} elseif (!is_string($json['image'])) {
-				$json['image'] = '';
-			}
-		} else {
-			$json['image'] = '';
-		}
-
-		// The image is a URL without a scheme, fix it
-		if (strpos($json['image'], '//') === 0) {
-			if (isset($json['url']) && strpos($json['url'], 'https') === 0) {
-				$json['image'] = 'https:' . $json['image'];
-			} else {
-				$json['image'] = 'http:' . $json['image'];
-			}
-		}
-
-		// Clean up the image URL string
-		$json['image'] = stripslashes($json['image']);
-
-		// Last sanity check for URL
-		if (!empty($json['image']) && (substr($json['image'], 0, 2) === '//' || $json['image'][0] !== '/')) {
-			$image_url = parse_url($json['image']);
-
-			if (!isset($image_url['scheme'])) {
-				$image_url['scheme'] = 'http';
-			}
-
-			$json['image'] = $image_url['scheme'] . '://' . $image_url['host'] . $image_url['path'];
-
-			if (isset($image_url['query'])) {
-				$json['image'] .= '?' . $image_url['query'];
-			}
-		}
-
-
-		// Make sure that "recipeCategory" is a string
-		if (isset($json['recipeCategory'])) {
-			if (is_array($json['recipeCategory'])) {
-				$json['recipeCategory'] = reset($json['recipeCategory']);
-			} elseif (!is_string($json['recipeCategory'])) {
-				$json['recipeCategory'] = '';
-			}
-		} else {
-			$json['recipeCategory'] = '';
-		}
-
-		$json['recipeCategory'] = $this->cleanUpString($json['recipeCategory'], false, true);
-
-
-		// Make sure that "recipeYield" is an integer which is at least 1
-		if (isset($json['recipeYield']) && $json['recipeYield']) {
-
-			// Check if "recipeYield is an array
-			if (is_array($json['recipeYield'])) {
-				if (count($json['recipeYield']) === 1) {
-					$json['recipeYield'] = $json['recipeYield'][0];
-				} else {
-					// XXX How to parse an array correctly?
-					$json['recipeYield'] = join(' ', $json['recipeYield']);
-				}
-			}
-
-			$regex_matches = [];
-			preg_match('/(\d*)/', $json['recipeYield'], $regex_matches);
-			if (count($regex_matches) >= 1) {
-				$yield = filter_var($regex_matches[0], FILTER_SANITIZE_NUMBER_INT);
-			}
-
-			if ($yield && $yield > 0) {
-				$json['recipeYield'] = (int) $yield;
-			} else {
-				$json['recipeYield'] = 1;
-			}
-		} else {
-			$json['recipeYield'] = 1;
-		}
-
-		// Make sure the keyword is a string and no array
-		if (isset($json['keywords']) && is_array($json['keywords'])) {
-			$json['keywords'] = implode(',', $json['keywords']);
-		}
-
-		// Make sure that "keywords" is an array of unique strings
-		if (isset($json['keywords']) && is_string($json['keywords'])) {
-			$keywords = trim($json['keywords'], " \0\t\n\x0B\r,");
-			$keywords = strip_tags($keywords);
-			$keywords = preg_replace('/\s+/', ' ', $keywords); // Collapse whitespace
-			$keywords = preg_replace('/(, | ,|,)+/', ',', $keywords); // Clean up separators
-			$keywords = explode(',', $keywords);
-			$keywords = array_unique($keywords);
-
-			foreach ($keywords as $i => $keyword) {
-				$keywords[$i] = $this->cleanUpString($keywords[$i]);
-			}
-
-			$keywords = implode(',', $keywords);
-			$json['keywords'] = $keywords;
-		} else {
-			$json['keywords'] = '';
-		}
-
-		// Make sure that "tool" is an array of strings
-		if (isset($json['tool']) && is_array($json['tool'])) {
-			$tools = [];
-
-			foreach ($json['tool'] as $i => $tool) {
-				$tool = $this->cleanUpString($tool);
-
-				if (!$tool) {
-					continue;
-				}
-
-				array_push($tools, $tool);
-			}
-			$json['tool'] = $tools;
-		} else {
-			$json['tool'] = [];
-		}
-
-		$json['tool'] = array_filter($json['tool']);
-
-		// Make sure that "recipeIngredient" is an array of strings
-		if (isset($json['recipeIngredient']) && is_array($json['recipeIngredient'])) {
-			$ingredients = [];
-
-			foreach ($json['recipeIngredient'] as $i => $ingredient) {
-				$ingredient = $this->cleanUpString($ingredient, false);
-
-				if (!$ingredient) {
-					continue;
-				}
-
-				array_push($ingredients, $ingredient);
-			}
-
-			$json['recipeIngredient'] = $ingredients;
-		} else {
-			$json['recipeIngredient'] = [];
-		}
-
-		$json['recipeIngredient'] = array_filter(array_values($json['recipeIngredient']));
-
-		// Make sure that "recipeInstructions" is an array of strings
-		if (isset($json['recipeInstructions'])) {
-			if (is_array($json['recipeInstructions'])) {
-				// Workaround for https://www.colruyt.be/fr/en-cuisine/meli-melo-de-legumes-oublies-au-chevre
-				if (isset($json['recipeInstructions']['itemListElement'])) {
-					$json['recipeInstructions'] = $json['recipeInstructions']['itemListElement'];
-				}
-
-				foreach ($json['recipeInstructions'] as $i => $step) {
-					if (is_string($step)) {
-						$json['recipeInstructions'][$i] = $this->cleanUpString($step, true);
-					} elseif (is_array($step) && isset($step['text'])) {
-						$json['recipeInstructions'][$i] = $this->cleanUpString($step['text'], true);
-					} else {
-						$json['recipeInstructions'][$i] = '';
-					}
-				}
-			} elseif (is_string($json['recipeInstructions'])) {
-				$json['recipeInstructions'] = html_entity_decode($json['recipeInstructions']);
-
-				$regex_matches = [];
-				preg_match_all('/<(p|li)>(.*?)<\/(p|li)>/', $json['recipeInstructions'], $regex_matches, PREG_SET_ORDER);
-
-				$instructions = [];
-
-				foreach ($regex_matches as $regex_match) {
-					if (!$regex_match || !isset($regex_match[2])) {
-						continue;
-					}
-
-					$step = $this->cleanUpString($regex_match[2]);
-
-					if (!$step) {
-						continue;
-					}
-
-					array_push($instructions, $step);
-				}
-
-				if (sizeof($instructions) > 0) {
-					$json['recipeInstructions'] = $instructions;
-				} else {
-					$json['recipeInstructions'] = explode(PHP_EOL, $json['recipeInstructions']);
-				}
-			} else {
-				$json['recipeInstructions'] = [];
-			}
-		} else {
-			$json['recipeInstructions'] = [];
-		}
-
-		$json['recipeInstructions'] = array_filter(array_values($json['recipeInstructions']), function ($v) {
-			return !empty($v) && $v !== "\n" && $v !== "\r";
-		});
-
-		// Make sure the 'description' is a string
-		if (isset($json['description']) && is_string($json['description'])) {
-			$json['description'] = $this->cleanUpString($json['description'], true);
-		} else {
-			$json['description'] = "";
-		}
-
-		// Make sure the 'url' is a URL, or blank
-		if (isset($json['url']) && $json['url']) {
-			$url = filter_var($json['url'], FILTER_SANITIZE_URL);
-			if (filter_var($url, FILTER_VALIDATE_URL) === false) {
-				$url = "";
-			}
-			$json['url'] = $url;
-		} else {
-			$json['url'] = "";
-		}
-
-		// Parse duration fields
-		$durations = ['prepTime', 'cookTime', 'totalTime'];
-		$duration_patterns = [
-			'/P.*T(\d+H)?(\d+M)?/',   // ISO 8601
-			'/(\d+):(\d+)/',        // Clock
-		];
-
-		foreach ($durations as $duration) {
-			if (!isset($json[$duration]) || empty($json[$duration])) {
-				continue;
-			}
-
-			$duration_hours = 0;
-			$duration_minutes = 0;
-			$duration_value = $json[$duration];
-
-			if (is_array($duration_value) && sizeof($duration_value) === 2) {
-				$duration_hours = $duration_value[0] ? $duration_value[0] : 0;
-				$duration_minutes = $duration_value[1] ? $duration_value[1] : 0;
-			} else {
-				foreach ($duration_patterns as $duration_pattern) {
-					$duration_matches = [];
-					preg_match_all($duration_pattern, $duration_value, $duration_matches);
-
-					if (isset($duration_matches[1][0]) && !empty($duration_matches[1][0])) {
-						$duration_hours = intval($duration_matches[1][0]);
-					}
-
-					if (isset($duration_matches[2][0]) && !empty($duration_matches[2][0])) {
-						$duration_minutes = intval($duration_matches[2][0]);
-					}
-				}
-			}
-
-			while ($duration_minutes >= 60) {
-				$duration_minutes -= 60;
-				$duration_hours++;
-			}
-
-			$json[$duration] = 'PT' . $duration_hours . 'H' . $duration_minutes . 'M';
-		}
-
-		// Nutrition information
-		if (isset($json['nutrition']) && is_array($json['nutrition'])) {
-			$json['nutrition'] = array_filter($json['nutrition']);
-		} else {
-			$json['nutrition'] = [];
-		}
-
-		return $json;
+		return $this->jsonFilter->apply($json);
 	}
 
 	/**
