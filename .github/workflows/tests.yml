@@ -126,12 +126,12 @@ jobs:
                 # Test different core versions additionally
                 -   database: mysql
                     coreVersion: stable19
-                    phpVersion: "8.0"
+                    phpVersion: "7.4"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable20
-                    phpVersion: "8.0"
+                    phpVersion: "7.4"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
@@ -151,12 +151,12 @@ jobs:
                     mayFail: false
                 
                 # Test different PHP versions additionally
-                -   database: mysql
-                    # stable24 branch needs PHP 7.4
-                    coreVersion: stable23
-                    phpVersion: "7.3"
-                    httpServer: "apache"
-                    mayFail: false
+                # -   database: mysql
+                #     # stable24 branch needs PHP 7.4
+                #     coreVersion: stable23
+                #     phpVersion: "7.3"
+                #     httpServer: "apache"
+                #     mayFail: false
                 -   database: mysql
                     coreVersion: stable24
                     phpVersion: "7.4"
