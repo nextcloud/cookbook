@@ -63,6 +63,9 @@ export default {
             this.resetTimeDisplay()
         },
     },
+    async created() {
+        this.notificationPermission = await Notification.requestPermission()
+    },
     mounted() {
         this.resetTimeDisplay()
         // Start loading the sound early so it's ready to go when we need to
@@ -92,12 +95,20 @@ export default {
                 // Start playing audio to alert the user that the timer is up
                 this.audio.play()
 
-                await showSimpleAlertModal(t("cookbook", "Cooking time is up!"))
+                const message = t("cookbook", "Cooking time is up!")
+
+                if (this.notificationPermission === "granted") {
+                    const notification = new Notification(message)
+                    notification.addEventListener("error", (error) => {
+                        // eslint-disable-next-line no-console
+                        console.error("Error showing notification:", error)
+                    })
+                }
+
+                await showSimpleAlertModal(message)
 
                 // Stop audio after the alert is confirmed
                 this.audio.pause()
-
-                // cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false
                 $this.resetTimeDisplay()
