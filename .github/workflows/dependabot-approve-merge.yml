@@ -12,17 +12,21 @@ on:
 
 jobs:
   auto-approve-merge:
-    if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
 
     steps:
       # Github actions bot approve
       - uses: hmarr/auto-approve-action@v2
+        if: github.actor == 'dependabot[bot]'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Nextcloud bot approve and merge request
       - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        if: github.actor == 'dependabot[bot]'
         with:
           target: minor
           github-token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
+      
+      - run: "echo 'Skipping PR auto-merge as it is no dependabot PR'"
+        if: github.actor != 'dependabot[bot]'
