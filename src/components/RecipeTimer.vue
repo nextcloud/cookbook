@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import alarmSound from "file-loader!../media/alarm.mp3"
+
 export default {
     name: "RecipeTimer",
     props: {
@@ -61,6 +63,11 @@ export default {
     },
     mounted() {
         this.resetTimeDisplay()
+        // Start loading the sound early so it's ready to go when we need to
+        // play it
+        this.audio = new Audio(
+            alarmSound.replace("nextcloud-cookbook", "cookbook")
+        )
     },
     methods: {
         onTimerEnd() {
@@ -70,6 +77,7 @@ export default {
             window.setTimeout(() => {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
+                this.audio.play()
                 // eslint-disable-next-line no-alert
                 alert(t("cookbook", "Cooking time is up!"))
                 // cookbook.notify(t('cookbook', 'Cooking time is up!'))
