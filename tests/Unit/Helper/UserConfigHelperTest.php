@@ -101,9 +101,9 @@ class UserConfigHelperTest extends TestCase {
 
 		$this->config->expects($this->exactly(2))->method('setUserValue')
 		->withConsecutive(
-				[$this->userId, 'cookbook', 'print_image', '1'],
-				[$this->userId, 'cookbook', 'print_image', '0']
-			);
+			[$this->userId, 'cookbook', 'print_image', '1'],
+			[$this->userId, 'cookbook', 'print_image', '0']
+		);
 
 		$this->assertFalse($this->dut->getPrintImage());
 		$this->dut->setPrintImage(true);

@@ -79,6 +79,9 @@ rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-delay --delete-exclu
 pushd custom_apps/cookbook
 
 if [ $INSTALL_COMPOSER_DEPS = 'y' ]; then
+	echo "Checking composer compatibility"
+	composer check-platform-reqs
+
 	echo "Installing/updating composer dependencies"
 	composer install
 fi

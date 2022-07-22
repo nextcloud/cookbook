@@ -37,6 +37,15 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
+        -   name: Cache composer files
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    vendor
+                key: ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-${{ hashFiles('composer.lock') }}
+                restore-keys: |
+                    ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-composer-
         -   name: Get PHP version
             shell: bash
             run: php -v
@@ -108,7 +117,7 @@ jobs:
             coreVersion:
                 - stable24
             phpVersion:
-                - "7"
+                - "8.1"
             httpServer:
                 - "apache"
             mayFail:
@@ -117,35 +126,40 @@ jobs:
                 # Test different core versions additionally
                 -   database: mysql
                     coreVersion: stable19
-                    phpVersion: "7"
+                    phpVersion: "7.4"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable20
-                    phpVersion: "7"
+                    phpVersion: "7.4"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable21
-                    phpVersion: "7"
+                    phpVersion: "8.0"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable22
-                    phpVersion: "7"
+                    phpVersion: "8.0"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
                     coreVersion: stable23
-                    phpVersion: "7"
+                    phpVersion: "8.0"
                     httpServer: "apache"
                     mayFail: false
                 
                 # Test different PHP versions additionally
+                # -   database: mysql
+                #     # stable24 branch needs PHP 7.4
+                #     coreVersion: stable23
+                #     phpVersion: "7.3"
+                #     httpServer: "apache"
+                #     mayFail: false
                 -   database: mysql
-                    # stable24 branch needs PHP 7.4
-                    coreVersion: stable23
-                    phpVersion: "7.3"
+                    coreVersion: stable24
+                    phpVersion: "7.4"
                     httpServer: "apache"
                     mayFail: false
                 -   database: mysql
@@ -157,14 +171,14 @@ jobs:
                 # Test different HTTP server
                 -   database: mysql
                     coreVersion: stable24
-                    phpVersion: "7"
+                    phpVersion: "8.1"
                     httpServer: "nginx"
                     mayFail: false
                 
                 # Test against master (optionally)
                 -   database: mysql
                     coreVersion: master
-                    phpVersion: "7"
+                    phpVersion: "8.1"
                     httpServer: "apache"
                     mayFail: true
                     
@@ -351,6 +365,15 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
+        -   name: Use cache for Composer
+            uses: actions/cache@v2.1.7
+            with:
+                path: |
+                    vendor
+                key: ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-${{ hashFiles('composer.lock') }}
+                restore-keys: |
+                    ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
+                    ${{ runner.os }}-composer-
         
         -   name: Update NPM
             shell: bash

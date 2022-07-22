@@ -26,10 +26,10 @@ class RecipeDb {
 	private $l;
 
 	public function __construct(
-			IDBConnection $db,
-			DbTypesPolyfillHelper $polyfillTypes,
-			IL10N $l
-			) {
+		IDBConnection $db,
+		DbTypesPolyfillHelper $polyfillTypes,
+		IL10N $l
+	) {
 		$this->db = $db;
 		$this->types = $polyfillTypes;
 		$this->l = $l;
@@ -216,12 +216,12 @@ class RecipeDb {
 				$qb->expr()->andX(
 					'r.user_id = c.user_id',
 					'r.recipe_id = c.recipe_id'
-					)
 				)
+			)
 			->where(
 				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->isNull('c.name')
-				);
+			);
 
 		$cursor = $qb->execute();
 		$row = $cursor->fetch();
@@ -274,12 +274,12 @@ class RecipeDb {
 				$qb->expr()->andX(
 					'r.user_id = c.user_id',
 					'r.recipe_id = c.recipe_id'
-					)
 				)
+			)
 			->where(
 				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->isNull('c.name')
-				);
+			);
 		}
 
 		$cursor = $qb->execute();
@@ -462,7 +462,7 @@ class RecipeDb {
 				$qb->expr()->andX(
 					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)),
 					$qb->expr()->eq("user_id", $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
-					));
+				));
 		}
 
 		$qb->execute();
@@ -654,8 +654,8 @@ class RecipeDb {
 					$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
 					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($p['recipeId'], IQueryBuilder::PARAM_INT)),
 					$qb->expr()->eq('name', $qb->createNamedParameter($p['name'], IQueryBuilder::PARAM_STR))
-					)
-				);
+				)
+			);
 		}
 
 		$qb->execute();
