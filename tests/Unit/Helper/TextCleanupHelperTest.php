@@ -23,6 +23,7 @@ class TextCleanupHelperTest extends TestCase {
 			["With\tTabs", false, false, "With Tabs"],
 			['With\\backslash\\', false, false, 'With_backslash_'],
 			['&auml;&Uuml;&szlig;&amp;', false, false, 'äÜß&'],
+			[null, false, false, ''],
 		];
 	}
 
