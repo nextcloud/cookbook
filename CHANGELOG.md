@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+- Parsing of JSON recipe objects in a cascade of filters
+  [#1097](https://github.com/nextcloud/cookbook/pull/1097) @christianlupus
+
 ### Fixed
 - Prevent slow loading of recipes due to iteration over all files
   [#1072](https://github.com/nextcloud/cookbook/pull/1072) @christianlupus

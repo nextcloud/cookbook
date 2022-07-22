@@ -15,18 +15,21 @@ class JsonService {
 	 * The type of the object can be optionally checked using the second parameter.
 	 *
 	 * @param mixed $obj The object to check
-	 * @param string $type The type to check for. If null or '' no type chek is performed
+	 * @param string $type The type to check for. If null or '' no type check is performed
+	 * @param bool $checkContext If true, check for a present context entry
 	 * @return bool true, if $obj is an object and optionally satisfies the type check
 	 */
-	public function isSchemaObject($obj, string $type = null): bool {
+	public function isSchemaObject($obj, string $type = null, bool $checkContext = true): bool {
 		if (! is_array($obj)) {
 			// Objects must bve encoded as arrays in JSON
 			return false;
 		}
 
-		if (!isset($obj['@context']) || ! preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
-			// We have no correct context property
-			return false;
+		if ($checkContext) {
+			if (!isset($obj['@context']) || ! preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
+				// We have no correct context property
+				return false;
+			}
 		}
 
 		if (!isset($obj['@type'])) {
@@ -53,7 +56,7 @@ class JsonService {
 	 * @return bool true, if $obj is a object and has the property given
 	 */
 	public function hasProperty($obj, string $property): bool {
-		if (!$this->isSchemaObject($obj)) {
+		if (!$this->isSchemaObject($obj, null, false)) {
 			return false;
 		}
 
