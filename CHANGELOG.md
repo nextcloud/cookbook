@@ -7,6 +7,8 @@
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
   [#1093](https://github.com/nextcloud/cookbook/pull/1093) @christianlupus
+- Update supported PHP versions
+  [#1095](https://github.com/nextcloud/cookbook/pull/1095) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02
