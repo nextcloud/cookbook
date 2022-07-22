@@ -20,7 +20,7 @@ class FixImageSchemeFilter extends AbstractJSONFilter {
 	}
 
 	public function apply(array &$json): bool {
-		if (str_starts_with($json['image'], '//')) {
+		if (substr($json['image'], 0, 2) === '//') {
 			if (!isset($json['url'])) {
 				throw new InvalidRecipeException($this->l->t('Could not guess image url as no recipe url was found.'));
 			}
