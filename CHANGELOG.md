@@ -13,6 +13,8 @@
   [#1093](https://github.com/nextcloud/cookbook/pull/1093) @christianlupus
 - Update supported PHP versions
   [#1095](https://github.com/nextcloud/cookbook/pull/1095) @christianlupus
+- Update README with app screenshot and fixed repository links
+  [#1102](https://github.com/nextcloud/cookbook/pull/1102) @MarcelRobitaille
 
 
 ## 0.9.13 - 2022-07-02
