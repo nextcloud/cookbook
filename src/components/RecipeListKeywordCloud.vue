@@ -39,15 +39,19 @@
                 />
             </transition-group>
         </div>
-        <div class="settings-buttons">
+        <div
+            v-if="uniqKeywords.length > 0"
+            class="settings-buttons"
+        >
             <button
-                class="ordering-button"
+                class="settings-button ordering-button"
                 :title="orderButtonTitle"
                 @click="toggleOrderCriterium"
             >
                 {{ orderButtonText }}
             </button>
             <button
+                class="settings-button"
                 :class="toggleSizeIcon"
                 :title="t('cookbook', 'Toggle keyword area size')"
                 @click="toggleCloudSize"
@@ -222,6 +226,7 @@ export default {
 <style lang="scss" scoped>
 .kw-container {
     position: relative;
+    display: flex;
 }
 
 .kw {
@@ -249,11 +254,11 @@ export default {
 }
 
 .settings-buttons {
-    position: absolute;
-    right: 10px;
-    bottom: -8px;
+    display: flex;
+    align-items: flex-start;
+    padding: 0.5rem;
 
-    button {
+    .settings-button {
         min-height: 8px;
         font-size: 8px;
         vertical-align: bottom;
