@@ -7,6 +7,8 @@
 ### Fixed
 - Prevent slow loading of recipes due to iteration over all files
   [#1072](https://github.com/nextcloud/cookbook/pull/1072) @christianlupus
+- Fix keyword ordering buttons being clipped by top bar
+  [#1103](https://github.com/nextcloud/cookbook/pull/1103) @MarcelRobitaille
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
