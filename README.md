@@ -42,7 +42,7 @@ If this still doesnt work, a full, non-incremental resync might help. This can b
 A lot of websites are unfortunately not following the schema.org/Recipe standard, which makes their recipes impossible to read by this app.
 
 #### A website using correct schema.org markup is not being read correctly
-The parser is far from perfect. If you can help out in any way, please [have a look at the parseRecipeHtml() method](https://github.com/mrzapp/nextcloud-cookbook/blob/master/lib/Service/RecipeService.php) and create a pull request with your changes.
+The parser is far from perfect. If you can help out in any way, please [have a look at the parseRecipeHtml() method](https://github.com/nextcloud/nextcloud-cookbook/blob/master/lib/Service/RecipeService.php) and create a pull request with your changes.
 
 #### All of the text is in English?
 This app uses the [Transifex](https://www.transifex.com/nextcloud/nextcloud/cookbook/) translation system.

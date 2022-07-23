@@ -4,13 +4,13 @@
   "description": "",
   "license": "AGPL-3.0-or-later",
   "author": "",
-  "homepage": "https://github.com/mrzapp/nextcloud-cookbook#readme",
+  "homepage": "https://github.com/nextcloud/nextcloud-cookbook#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrzapp/nextcloud-cookbook.git"
+    "url": "git+https://github.com/nextcloud/nextcloud-cookbook.git"
   },
   "bugs": {
-    "url": "https://github.com/mrzapp/nextcloud-cookbook/issues"
+    "url": "https://github.com/nextcloud/nextcloud-cookbook/issues"
   },
   "main": "src/main.js",
   "scripts": {
