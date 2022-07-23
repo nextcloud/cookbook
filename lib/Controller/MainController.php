@@ -75,7 +75,7 @@ class MainController extends Controller {
 			// Check if the user folder can be accessed
 			$this->userFolder->getFolder();
 		} catch (UserFolderNotWritableException $ex) {
-			Util::addScript('cookbook', 'nextcloud-cookbook-guest');
+			Util::addScript('cookbook', 'cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}
 		/*
@@ -86,7 +86,7 @@ class MainController extends Controller {
 
 		$this->dbCacheService->triggerCheck();
 
-		Util::addScript('cookbook', 'nextcloud-cookbook-main');
+		Util::addScript('cookbook', 'cookbook-main');
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
 
