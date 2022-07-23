@@ -39,10 +39,7 @@
                 />
             </transition-group>
         </div>
-        <div
-            v-if="uniqKeywords.length > 0"
-            class="settings-buttons"
-        >
+        <div v-if="uniqKeywords.length > 0" class="settings-buttons">
             <button
                 class="settings-button ordering-button"
                 :title="orderButtonTitle"
