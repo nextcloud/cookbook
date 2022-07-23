@@ -6,6 +6,8 @@
 
 # NextCloud Cookbook
 
+![A screenshot of how the app looks](./docs/assets/screenshot.png)
+
 A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.
 
 Further documentation (also internal ones) are published on the [documentation pages of the project](http://nextcloud.github.io/cookbook/).
