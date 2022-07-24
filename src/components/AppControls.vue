@@ -167,7 +167,10 @@ const ModeIndicator = {
 const Location = {
     props: ["title"],
     render(h) {
-        return h("h2", { class: "location" }, this.title)
+        // Wrapper is to enable vertical centering if only child
+        return h('div', { class: 'location-wrapper' }, [
+            h("h2", { class: "location" }, this.title),
+        ])
     },
 }
 
@@ -341,14 +344,29 @@ export default {
     flex-grow: 1;
     flex-shrink: 1;
     align-items: flex-start;
-    justify-content: center;
+    justify-content: space-around;
 }
 
 .mode-indicator {
     font-size: 0.9em;
+    line-height: 0.9em;
 }
 
-.location {
+.location-wrapper {
+    width: 100%;
+}
+
+.location-wrapper:only-child {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* The .status-header is justify-content: space-around. If there is no
+ * .mode-indicator, this will put the .location at the top. Override to place in
+ * the center */
+.status-header /deep/ .location {
     /* Don't let the location go wider than the space available */
     width: 100%;
     margin: 0;
