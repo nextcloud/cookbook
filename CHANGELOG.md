@@ -3,6 +3,8 @@
 ### Changed
 - Parsing of JSON recipe objects in a cascade of filters
   [#1097](https://github.com/nextcloud/cookbook/pull/1097) @christianlupus
+- Ordering corrected for mobile and printout versions
+  [#1107](https://github.com/nextcloud/cookbook/pull/1107) @christianlupus
 
 ### Fixed
 - Prevent slow loading of recipes due to iteration over all files
