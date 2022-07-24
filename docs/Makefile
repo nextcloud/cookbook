@@ -1,4 +1,6 @@
 
+BUNDLER=bundler
+
 .PHONY: all
 all: help
 
@@ -12,11 +14,11 @@ help:
 	@echo "  install - Install the ruby packages using bundler"
 
 build:
-	bundle exec jekyll build
+	${BUNDLER} exec jekyll build
 
 watch:
-	bundle exec jekyll serve
+	${BUNDLER} exec jekyll serve
 
 install:
-	bundle install
+	${BUNDLER} install
 
