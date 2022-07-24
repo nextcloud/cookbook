@@ -9,6 +9,8 @@
   [#1072](https://github.com/nextcloud/cookbook/pull/1072) @christianlupus
 - Fix keyword ordering buttons being clipped by top bar
   [#1103](https://github.com/nextcloud/cookbook/pull/1103) @MarcelRobitaille
+- Replace print icon with something better recognizable
+  [#1106](https://github.com/nextcloud/cookbook/pull/1106) @christianlupus
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
