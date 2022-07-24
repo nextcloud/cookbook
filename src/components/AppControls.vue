@@ -162,12 +162,13 @@
                 :disable-drop="true"
             >
                 <ActionButton
-                    icon="icon-category-office"
                     class="action-button"
                     :aria-label="t('cookbook', 'Print recipe')"
                     @click="printRecipe()"
-                    >{{ t("cookbook", "Print recipe") }}</ActionButton
                 >
+                    <template #icon=""><printer-icon :size="20" /></template>
+                    {{ t("cookbook", "Print recipe") }}
+                </ActionButton>
             </Breadcrumb>
             <Breadcrumb
                 v-if="isRecipe"
@@ -233,6 +234,8 @@ import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
 import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
 import Breadcrumb from "@nextcloud/vue/dist/Components/Breadcrumb"
 
+import PrinterIcon from "icons/Printer.vue"
+
 export default {
     name: "AppControls",
     components: {
@@ -240,6 +243,7 @@ export default {
         ActionInput,
         Breadcrumbs,
         Breadcrumb,
+        PrinterIcon,
     },
     data() {
         return {
