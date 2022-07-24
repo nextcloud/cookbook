@@ -58,7 +58,20 @@
             v-model="recipe['recipeYield']"
             :field-type="'number'"
             :field-label="t('cookbook', 'Servings')"
-        />
+            :hide="!showRecipeYield"
+        >
+            <actions>
+                <action-button
+                    class="btn-enable-recipe-yield"
+                    :aria-label="
+                        t('cookbook', 'Toggle if recipe yield field is present')
+                    "
+                    @click="toggleShowRecipeYield"
+                >
+                    <template #icon><numeric-icon :size="20" /></template>
+                </action-button>
+            </actions>
+        </EditInputField>
         <EditMultiselectInputGroup
             v-model="recipe['nutrition']"
             :field-label="t('cookbook', 'Nutrition Information')"
@@ -120,6 +133,10 @@ import Vue from "vue"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
+import NumericIcon from "icons/Numeric.vue"
+
+import Actions from "@nextcloud/vue/dist/Components/Actions"
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"
@@ -139,6 +156,9 @@ export default {
         EditTimeField,
         EditMultiselectInputGroup,
         EditMultiselectPopup,
+        Actions,
+        ActionButton,
+        NumericIcon,
     },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
@@ -308,6 +328,7 @@ export default {
             referencesPopupFocused: false,
             popupContext: undefined,
             loadingRecipeReferences: true,
+            showRecipeYield: true,
         }
     },
     computed: {
@@ -328,6 +349,13 @@ export default {
                     this.$store.state.categoryUpdating ===
                         this.recipe.recipeCategory)
             )
+        },
+        recipeWithCorrectedYield() {
+            const r = this.recipe
+            if (!this.showRecipeYield) {
+                r.recipeYield = null
+            }
+            return r
         },
     },
     watch: {
@@ -578,11 +606,11 @@ export default {
             const request = (() => {
                 if (this.recipe_id) {
                     return this.$store.dispatch("updateRecipe", {
-                        recipe: this.recipe,
+                        recipe: this.recipeWithCorrectedYield,
                     })
                 }
                 return this.$store.dispatch("createRecipe", {
-                    recipe: this.recipe,
+                    recipe: this.recipeWithCorrectedYield,
                 })
             })()
 
@@ -690,6 +718,15 @@ export default {
                     this.allCategories.push(this.recipe.recipeCategory)
                 }
 
+                if (this.recipe.recipeYield === null) {
+                    this.showRecipeYield = false
+                } else if (!this.recipe.recipeYield) {
+                    this.showRecipeYield = false
+                    this.recipe.recipeYield = null
+                } else {
+                    this.showRecipeYield = true
+                }
+
                 // Always set the active page last!
                 this.$store.dispatch("setPage", { page: "edit" })
             } else {
@@ -724,6 +761,11 @@ export default {
                 nutrition: {},
             }
             this.formDirty = false
+            this.showRecipeYield = true
+        },
+        toggleShowRecipeYield() {
+            this.showRecipeYield = !this.showRecipeYield
+            this.formDirty = true
         },
     },
 }
@@ -770,5 +812,9 @@ form fieldset ul label input[type="checkbox"] {
 .cookbook-footer {
     margin-top: 3.5em;
     text-align: end;
+}
+
+.btn-enable-recipe-yield {
+    vertical-align: bottom;
 }
 </style>

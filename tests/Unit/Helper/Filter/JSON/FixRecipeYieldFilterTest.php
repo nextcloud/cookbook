@@ -52,6 +52,7 @@ class FixRecipeYieldFilterTest extends TestCase {
 			[[4,5], 5, true],
 			['', 1, true],
 			['one two three', 1, true],
+			[null, null, false]
 		];
 	}
 

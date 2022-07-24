@@ -56,6 +56,10 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 			return true;
 		}
 
+		if ($json[self::YIELD] === null) {
+			return $changed;
+		}
+
 		if (is_array($json[self::YIELD])) {
 			assert(count($json[self::YIELD]) !== 1);
 

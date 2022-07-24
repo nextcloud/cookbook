@@ -63,7 +63,7 @@
                             >{{ $store.state.recipe.url }}</a
                         >
                     </p>
-                    <p>
+                    <p v-if="$store.state.recipe.recipeYield != null">
                         <strong>{{ t("cookbook", "Servings") }}: </strong
                         >{{ $store.state.recipe.recipeYield }}
                     </p>
