@@ -168,7 +168,7 @@ const Location = {
     props: ["title"],
     render(h) {
         // Wrapper is to enable vertical centering if only child
-        return h('div', { class: 'location-wrapper' }, [
+        return h("div", { class: "location-wrapper" }, [
             h("h2", { class: "location" }, this.title),
         ])
     },
@@ -332,7 +332,8 @@ export default {
     min-height: calc(44px + 2 * var(--vertical-padding));
     flex-direction: row;
 
-    padding: var(--vertical-padding) 1rem var(--vertical-padding) calc(44px + 2 * var(--vertical-padding));
+    padding: var(--vertical-padding) 1rem var(--vertical-padding)
+        calc(44px + 2 * var(--vertical-padding));
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-main-background);
     gap: 8px;
@@ -360,8 +361,8 @@ export default {
 }
 
 .location-wrapper:only-child {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     justify-content: center;
 }
