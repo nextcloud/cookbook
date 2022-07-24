@@ -311,6 +311,11 @@ export default {
 
 <style scoped>
 .wrapper {
+    /* 44px is the height of nextcloud/vue button (not exposed as a variable :[ ) */
+    --nc-button-size: 44px;
+
+    --vertical-padding: 8px;
+
     /* Sticky is better than fixed because fixed takes the element out of flow,
      which breaks the height, putting elements underneath */
     position: sticky;
@@ -324,12 +329,10 @@ export default {
     width: 100%;
     /* Make sure the wrapper is always at least as tall as the tallest element
      * we expect (primary button) to prevent flickering when loading, etc. */
-    /* 44px is the height of nextcloud/vue button (not exposed as a variable :[ ) */
-    /* 16px from 8px top/bottom padding */
-    min-height: 60px;
+    min-height: calc(44px + 2 * var(--vertical-padding));
     flex-direction: row;
 
-    padding: 8px 1rem;
+    padding: var(--vertical-padding) 1rem var(--vertical-padding) calc(44px + 2 * var(--vertical-padding));
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-main-background);
     gap: 8px;

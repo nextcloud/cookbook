@@ -473,6 +473,13 @@ export default {
     opacity: 1;
 }
 
+/* By default, the bar is 44px, and the toggle button margin-right is -44px */
+/* Our top bar has 8px top/bottom padding, so move the toggle button accordingly */
+>>> .app-navigation-toggle {
+    margin-top: 8px;
+    margin-right: -52px !important;
+}
+
 @media print {
     * {
         display: none !important;

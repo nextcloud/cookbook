@@ -39,7 +39,8 @@ export default {
 
 <style lang="scss" scoped>
 .app-navigation {
-    z-index: 1;
+    /* Content has z-index 1000 */
+    z-index: 2000;
 }
 
 .cookbook-app-content {
