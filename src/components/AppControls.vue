@@ -2,48 +2,46 @@
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
         <div class="status-header">
-            <span v-if="isSearch" class="mode-indicator">{{
-                searchTitle
-            }}</span>
-            <span v-else-if="isEdit" class="mode-indicator"
-                >Editing recipe</span
-            >
-            <span v-else-if="isRecipe" class="mode-indicator"
-                >Viewing recipe</span
-            >
+            <ModeIndicator v-if="isSearch" :title="searchTitle" />
+            <ModeIndicator v-else-if="isEdit" title="Editing recipe" />
+            <ModeIndicator v-else-if="isRecipe" title="Viewing recipe" />
             <!-- INDEX PAGE -->
-            <h2 v-if="isIndex" class="location" :disable-drop="true">
-                {{ t("cookbook", "All recipes") }}
-            </h2>
-            <h2 v-else-if="isSearch && $route.params.value" class="location">
-                {{
-                    $route.params.value === "_"
-                        ? "None"
+            <Location v-if="isIndex" :title="t('cookbook', 'All recipes')" />
+            <Location
+                v-else-if="isSearch && $route.params.value"
+                :title="
+                    $route.params.value === '_'
+                        ? 'None'
                         : decodeURIComponent($route.params.value)
-                }}
-            </h2>
+                "
+            />
             <!-- Recipe view / edit -->
-            <h2 v-else-if="isEdit || isRecipe" class="location">
-                {{ $store.state.recipe.name }}
-            </h2>
+            <Location
+                v-else-if="isEdit || isRecipe"
+                :title="$store.state.recipe.name"
+            />
             <!-- Is app loading? -->
-            <h2 v-else-if="isLoading" class="location">
-                {{ t("cookbook", "Loading app") }}
-            </h2>
+            <Location
+                v-else-if="isLoading"
+                :title="t('cookbook', 'Loading app')"
+            />
             <!-- Is a recipe loading? -->
-            <h2 v-else-if="isLoadingRecipe" class="location">
-                {{ t("cookbook", "Loading recipe") }}
-            </h2>
+            <Location
+                v-else-if="isLoadingRecipe"
+                :title="t('cookbook', 'Loading recipe')"
+            />
             <!-- No recipe found -->
-            <h2 v-else-if="recipeNotFound" class="location">
-                {{ t("cookbook", "Recipe not found") }}
-            </h2>
+            <Location
+                v-else-if="recipeNotFound"
+                :title="t('cookbook', 'Recipe not found')"
+            />
             <!-- No page found -->
-            <h2 v-else-if="pageNotFound" class="location">
-                {{ "t('cookbook', 'Page not found')" }}
-            </h2>
+            <Location
+                v-else-if="pageNotFound"
+                :title="t('cookbook', 'Page not found')"
+            />
             <!-- Create new recipe -->
-            <h2 v-else-if="isCreate" class="location">Creating new recipe</h2>
+            <Location v-else-if="isCreate" title="Creating new recipe" />
         </div>
         {{/* Primary buttons */}}
         <SimpleButton
@@ -159,6 +157,20 @@ import LoadingIcon from "icons/Loading.vue"
 import CheckmarkIcon from "icons/Check.vue"
 import PrinterIcon from "icons/Printer.vue"
 
+const ModeIndicator = {
+    props: ["title"],
+    render(h) {
+        return h("span", { class: "mode-indicator" }, this.title)
+    },
+}
+
+const Location = {
+    props: ["title"],
+    render(h) {
+        return h("h2", { class: "location" }, this.title)
+    },
+}
+
 export default {
     name: "AppControls",
     components: {
@@ -170,6 +182,8 @@ export default {
         PencilIcon,
         LoadingIcon,
         CheckmarkIcon,
+        ModeIndicator,
+        Location,
     },
     data() {
         return {
