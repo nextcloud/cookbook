@@ -322,7 +322,8 @@ export default {
     /* Make sure the wrapper is always at least as tall as the tallest element
      * we expect (primary button) to prevent flickering when loading, etc. */
     /* 44px is the height of nextcloud/vue button (not exposed as a variable :[ ) */
-    min-height: 44px;
+    /* 16px from 8px top/bottom padding */
+    min-height: 60px;
     flex-direction: row;
 
     padding: 8px 1rem;
