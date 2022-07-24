@@ -9,13 +9,16 @@
             v-model="content"
             @input="handleInput"
         />
-        <input
-            v-else
-            ref="inputField"
-            v-model="content"
-            :type="fieldType"
-            @input="handleInput"
-        />
+        <div v-else>
+            <slot />
+            <input
+                v-if="!hide"
+                ref="inputField"
+                v-model="content"
+                :type="fieldType"
+                @input="handleInput"
+            />
+        </div>
     </fieldset>
 </template>
 
@@ -40,6 +43,11 @@ export default {
         value: {
             default: "",
             required: true,
+        },
+        hide: {
+            type: Boolean,
+            default: false,
+            required: false,
         },
     },
     data() {
@@ -196,13 +204,17 @@ fieldset > label {
     vertical-align: top;
 }
 
-fieldset > input,
+fieldset > div,
 fieldset > textarea {
     width: revert;
     flex: 1;
 }
 
-fieldset > input[type="number"] {
+fieldset > div > input {
+    width: 100%;
+}
+
+fieldset input[type="number"] {
     width: 5em;
     flex-grow: 0;
 }
