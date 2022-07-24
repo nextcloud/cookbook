@@ -24,3 +24,4 @@ settings:
         alias:
             map:
                 - ["cookbook", "./src"]
+                - ["icons", "./node_modules/vue-material-design-icons"]

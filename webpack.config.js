@@ -29,7 +29,8 @@ function cookbookConfig (env) {
         ],
         resolve: {
             'alias': {
-                cookbook: path.resolve(__dirname, 'src')
+                cookbook: path.resolve(__dirname, 'src'),
+                icons: path.resolve(__dirname, 'node_modules/vue-material-design-icons'),
             }
         },
     })
