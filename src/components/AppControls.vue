@@ -1,128 +1,66 @@
 <template>
     <div class="wrapper">
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
-        <Breadcrumbs class="breadcrumbs" root-icon="icon-category-organization">
-            <Breadcrumb
-                :title="t('cookbook', 'Home')"
-                :to="'/'"
-                :disable-drop="true"
-            />
+        <div class="status-header">
+            <span v-if="isSearch" class="mode-indicator">{{
+                searchTitle
+            }}</span>
+            <span v-else-if="isEdit" class="mode-indicator"
+                >Editing recipe</span
+            >
+            <span v-else-if="isRecipe" class="mode-indicator"
+                >Viewing recipe</span
+            >
             <!-- INDEX PAGE -->
-            <Breadcrumb
-                v-if="isIndex"
-                class="active no-arrow"
-                :title="t('cookbook', 'All recipes')"
-                :disable-drop="true"
-            />
-            <!-- SEARCH PAGE -->
-            <Breadcrumb
-                v-if="isSearch"
-                class="not-link"
-                :title="searchTitle"
-                :disable-drop="true"
-            />
-            <Breadcrumb
-                v-if="isSearch && $route.params.value"
-                class="active"
-                :title="
-                    $route.params.value === '_'
-                        ? 'None'
+            <h2 v-if="isIndex" class="location" :disable-drop="true">
+                {{ t("cookbook", "All recipes") }}
+            </h2>
+            <h2 v-else-if="isSearch && $route.params.value" class="location">
+                {{
+                    $route.params.value === "_"
+                        ? "None"
                         : decodeURIComponent($route.params.value)
-                "
-                :disable-drop="true"
-            />
-            <!-- RECIPE PAGES -->
-            <!-- Edit recipe -->
-            <Breadcrumb
-                v-if="isEdit"
-                class="not-link"
-                :title="t('cookbook', 'Edit recipe')"
-                :disable-drop="true"
-            />
-            <Breadcrumb
-                v-if="isEdit"
-                class="active"
-                :title="$store.state.recipe.name"
-                :disable-drop="true"
-            >
-            </Breadcrumb>
-            <Breadcrumb
-                v-if="isLoading || isLoadingRecipe"
-                class="active"
-                :title="t('cookbook', 'Loading…')"
-                :disable-drop="true"
-            >
-            </Breadcrumb>
-            <!-- Create new recipe -->
-            <Breadcrumb
-                v-else-if="isCreate"
-                class="active"
-                :title="t('cookbook', 'New recipe')"
-                :disable-drop="true"
-            />
-            <!-- View recipe -->
-            <Breadcrumb
-                v-if="isRecipe"
-                class="active"
-                :title="$store.state.recipe.name"
-                :disable-drop="true"
-            >
-            </Breadcrumb>
-            <!-- Is the app loading? -->
-            <Breadcrumb
-                v-if="isLoading"
-                class="active no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    icon="icon-loading-small"
-                    :aria-label="t('cookbook', 'Loading app')"
-                />
-            </Breadcrumb>
+                }}
+            </h2>
+            <!-- Recipe view / edit -->
+            <h2 v-else-if="isEdit || isRecipe" class="location">
+                {{ $store.state.recipe.name }}
+            </h2>
+            <!-- Is app loading? -->
+            <h2 v-else-if="isLoading" class="location">
+                {{ t("cookbook", "Loading app") }}
+            </h2>
             <!-- Is a recipe loading? -->
-            <Breadcrumb
-                v-else-if="isLoadingRecipe"
-                class="active no-arrow"
-                title=""
-                :disable-drop="true"
-            >
-                <ActionButton
-                    icon="icon-loading-small"
-                    :aria-label="t('cookbook', 'Loading recipe')"
-                />
-            </Breadcrumb>
+            <h2 v-else-if="isLoadingRecipe" class="location">
+                {{ t("cookbook", "Loading recipe") }}
+            </h2>
             <!-- No recipe found -->
-            <Breadcrumb
-                v-else-if="recipeNotFound"
-                class="active no-arrow"
-                :title="t('cookbook', 'Recipe not found')"
-                :disable-drop="true"
-            />
+            <h2 v-else-if="recipeNotFound" class="location">
+                {{ t("cookbook", "Recipe not found") }}
+            </h2>
             <!-- No page found -->
-            <Breadcrumb
-                v-else-if="pageNotFound"
-                class="active no-arrow"
-                :title="t('cookbook', 'Page not found')"
-                :disable-drop="true"
-            />
-        </Breadcrumbs>
+            <h2 v-else-if="pageNotFound" class="location">
+                {{ "t('cookbook', 'Page not found')" }}
+            </h2>
+            <!-- Create new recipe -->
+            <h2 v-else-if="isCreate" class="location">Creating new recipe</h2>
+        </div>
         {{/* Primary buttons */}}
-        <Button
+        <SimpleButton
             v-if="isRecipe"
             type="primary"
-            :aria-label="t('cookbook', 'Edit recipe')"
+            :aria-label="t('cookbook', 'Edit')"
             @click="goToRecipe($store.state.recipe.id)"
         >
             <template #icon>
                 <PencilIcon :size="20" />
             </template>
-            {{ t("cookbook", "Edit recipe") }}
-        </Button>
-        <Button
+            {{ t("cookbook", "Edit") }}
+        </SimpleButton>
+        <SimpleButton
             v-if="isEdit || isCreate"
             type="primary"
-            :aria-label="t('cookbook', 'Save changes')"
+            :aria-label="t('cookbook', 'Save')"
             @click="saveChanges()"
         >
             <template #icon>
@@ -133,8 +71,8 @@
                 />
                 <CheckmarkIcon v-else :size="20" />
             </template>
-            {{ t("cookbook", "Save changes") }}
-        </Button>
+            {{ t("cookbook", "Save") }}
+        </SimpleButton>
         <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
         <Actions
             v-if="isIndex"
@@ -212,10 +150,9 @@ import helpers from "cookbook/js/helper"
 
 import Actions from "@nextcloud/vue/dist/Components/Actions"
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
-import Button from "@nextcloud/vue/dist/Components/Button"
+// Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
+import SimpleButton from "@nextcloud/vue/dist/Components/Button"
 import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
-import Breadcrumbs from "@nextcloud/vue/dist/Components/Breadcrumbs"
-import Breadcrumb from "@nextcloud/vue/dist/Components/Breadcrumb"
 
 import PencilIcon from "icons/Pencil.vue"
 import LoadingIcon from "icons/Loading.vue"
@@ -228,11 +165,8 @@ export default {
         Actions,
         ActionButton,
         ActionInput,
-        // eslint-disable-next-line vue/no-reserved-component-names
-        Button,
-        Breadcrumbs,
-        Breadcrumb,
         PrinterIcon,
+        SimpleButton,
         PencilIcon,
         LoadingIcon,
         CheckmarkIcon,
@@ -369,36 +303,49 @@ export default {
 
     /* The height of the nextcloud header */
     top: var(--header-height);
+    display: flex;
     width: 100%;
-    padding-left: 4px;
+    /* Make sure the wrapper is always at least as tall as the tallest element
+     * we expect (primary button) to prevent flickering when loading, etc. */
+    /* 44px is the height of nextcloud/vue button (not exposed as a variable :[ ) */
+    min-height: 44px;
+    flex-direction: row;
+
+    padding: 8px 1rem;
     border-bottom: 1px solid var(--color-border);
     background-color: var(--color-main-background);
+    gap: 8px;
+}
 
-    padding: 8px;
+.status-header {
     display: flex;
-    flex-direction: row;
+    /* Allow the title to shrink*/
+    min-width: 0;
+    flex-basis: 0;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 1;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-.active {
-    cursor: default !important;
-    font-weight: bold;
+.mode-indicator {
+    font-size: 0.9em;
 }
 
-.breadcrumbs {
-    width: calc(100% - 60px);
-    flex-basis: 100%;
-}
-
-.wrapper .breadcrumbs /deep/ .breadcrumb__crumbs {
-    min-width: unset;
-}
-
-.no-arrow::before {
-    content: "" !important;
-}
-
-.overflow-menu {
-    margin-left: 8px;
+.location {
+    /* Don't let the location go wider than the space available */
+    width: 100%;
+    margin: 0;
+    font-size: 1.2em;
+    line-height: 1em;
+    /* overflow-x: hidden breaks overflow-y: visible
+    https://stackoverflow.com/questions/6421966/css-overflow-x-visible-and-overflow-y-hidden-causing-scrollbar-issue */
+    overflow-x: clip;
+    overflow-y: visible;
+    /* Show ... when overflowing */
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .animation-rotate {
