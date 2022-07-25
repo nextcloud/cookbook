@@ -56,6 +56,7 @@ export default {
 .suggestions-popup {
     position: absolute;
     z-index: 2;
+    overflow: hidden;
     border: 1px solid var(--color-background-darker);
     background-color: var(--color-main-background);
     border-radius: 5px;
