@@ -3,7 +3,7 @@
         class="suggestions-popup"
         :style="{ left: `${offset.left}px`, top: `${offset.top}px` }"
     >
-        <ul>
+        <ul ref="scroller" class="scroller">
             <li
                 v-for="(option, i) in suggestionOptions"
                 :key="option.recipe_id"
@@ -40,6 +40,26 @@ export default {
             default: 0,
         },
     },
+    watch: {
+        /**
+         * Scroll to centre the focused element in the parent when it changes
+         * (with arrow keys, for example)
+         */
+        focusIndex(focusIndex) {
+            const parentHeight = this.$refs.scroller.offsetHeight
+            const childHeight = this.$refs.scroller.children[0].offsetHeight
+
+            // Get the scroll position of the top of the focused element
+            const focusedChildTop = childHeight * focusIndex
+            // Get the centre
+            const focusedChildMiddle = focusedChildTop + childHeight / 2
+            // Offset to centre in the parent scrolling element
+            const parentMiddle = focusedChildMiddle - parentHeight / 2
+
+            // Scroll to that position
+            this.$refs.scroller.scrollTo(0, parentMiddle)
+        },
+    },
     methods: {
         handleClick(e) {
             e.preventDefault()
@@ -60,6 +80,11 @@ export default {
     border: 1px solid var(--color-background-darker);
     background-color: var(--color-main-background);
     border-radius: 5px;
+}
+
+.scroller {
+    max-height: 150px;
+    overflow-y: auto;
 }
 
 .item:not(:last-child) {
