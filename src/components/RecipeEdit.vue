@@ -10,7 +10,6 @@
             v-model="recipe['description']"
             :field-type="'markdown'"
             :field-label="t('cookbook', 'Description')"
-            :reference-popup-enabled="true"
             :suggestion-options="allRecipeOptions"
         />
         <EditInputField
@@ -85,7 +84,6 @@
             :field-type="'text'"
             :field-label="t('cookbook', 'Tools')"
             :create-fields-on-newlines="true"
-            :reference-popup-enabled="true"
             :suggestion-options="allRecipeOptions"
         />
         <EditInputGroup
@@ -94,7 +92,6 @@
             :field-type="'text'"
             :field-label="t('cookbook', 'Ingredients')"
             :create-fields-on-newlines="true"
-            :reference-popup-enabled="true"
             :suggestion-options="allRecipeOptions"
         />
         <EditInputGroup
@@ -104,7 +101,6 @@
             :field-label="t('cookbook', 'Instructions')"
             :create-fields-on-newlines="true"
             :show-step-number="true"
-            :reference-popup-enabled="true"
             :suggestion-options="allRecipeOptions"
         />
         <div class="cookbook-footer">

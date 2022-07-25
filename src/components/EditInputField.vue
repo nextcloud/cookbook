@@ -53,10 +53,6 @@ export default {
             type: String,
             default: "",
         },
-        referencePopupEnabled: {
-            type: Boolean,
-            default: false,
-        },
         // Value (passed in v-model)
         // eslint-disable-next-line vue/require-prop-types
         value: {

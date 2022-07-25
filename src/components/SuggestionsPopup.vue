@@ -99,15 +99,16 @@ export const suggestionsPopupMixin = {
             const field = e.currentTarget
             const cursorPos = field.selectionStart
 
+            // No suggestion options means suggestions are disabled for this input
+            if (!this.suggestionOptions) return
+
             if (this.suggestionsData !== null) {
                 this.handleSuggestionsPopupOpenKeyUp(e, cursorPos)
                 return
             }
 
-            // Only do anything for enter or # keys
-            if (!(this.referencePopupEnabled && e.key === "#")) {
-                return
-            }
+            // Only do anything for # key
+            if (e.key !== "#") return
 
             // Show the popup only if the # was inserted at the very
             // beggining of the input or after any whitespace character
@@ -116,9 +117,7 @@ export const suggestionsPopupMixin = {
                     cursorPos === 1 ||
                     /\s/.test(field.value.charAt(cursorPos - 2))
                 )
-            ) {
-                return
-            }
+            ) return
 
             // Show dialog to select recipe
             const caretPos = caretPosition(field, { customPos: cursorPos - 1 })

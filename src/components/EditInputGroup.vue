@@ -126,10 +126,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        referencePopupEnabled: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
         return {
