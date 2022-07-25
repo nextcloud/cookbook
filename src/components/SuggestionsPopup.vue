@@ -1,7 +1,11 @@
 <template>
     <div
         class="suggestions-popup"
-        :style="{ left: `${offset.left}px`, top: `${offset.top}px` }"
+        :style="{
+            left: `${offset.left}px`,
+            top: `${offset.top}px`,
+            width: `${width}px`,
+        }"
     >
         <ul ref="scroller" class="scroller">
             <li
@@ -24,6 +28,8 @@
 </template>
 
 <script>
+export const SUGGESTIONS_POPUP_WIDTH = 300
+
 export default {
     name: "SuggestionsPopup",
     props: {
@@ -59,6 +65,9 @@ export default {
             // Scroll to that position
             this.$refs.scroller.scrollTo(0, parentMiddle)
         },
+    },
+    created() {
+        this.width = SUGGESTIONS_POPUP_WIDTH
     },
     methods: {
         handleClick(e) {

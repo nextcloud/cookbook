@@ -72,7 +72,9 @@
 
 <script>
 import { position as caretPosition } from "caret-pos"
-import SuggestionsPopup from "./SuggestionsPopup.vue"
+import SuggestionsPopup, {
+    SUGGESTIONS_POPUP_WIDTH,
+} from "./SuggestionsPopup.vue"
 
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i])
@@ -490,7 +492,10 @@ export default {
             // const fieldPos = elm.getBoundingClientRect()
             const caretPos = caretPosition(elm)
             const popupOffset = {
-                left: elm.offsetLeft + caretPos.left,
+                left: Math.min(
+                    elm.offsetLeft + caretPos.left,
+                    elm.offsetLeft + elm.offsetWidth - SUGGESTIONS_POPUP_WIDTH
+                ),
                 top: elm.offsetTop + caretPos.top + caretPos.height,
             }
             this.suggestionsData = {
