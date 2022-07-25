@@ -490,7 +490,7 @@ export default {
 
             // Show dialog to select recipe
             // const fieldPos = elm.getBoundingClientRect()
-            const caretPos = caretPosition(elm)
+            const caretPos = caretPosition(elm, { customPos: cursorPos - 1 })
             const popupOffset = {
                 left: Math.min(
                     elm.offsetLeft + caretPos.left,
