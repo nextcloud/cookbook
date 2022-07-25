@@ -59,9 +59,8 @@
                         suggestionsData.fieldIndex === idx
                     "
                     ref="suggestionsPopup"
-                    :offset="popupOffset"
-                    :focus-index="suggestionsData.focusIndex"
-                    :suggestion-options="filteredSelectionOptions"
+                    v-bind="suggestionsData"
+                    :options="filteredSuggestionOptions"
                 />
             </li>
         </ul>

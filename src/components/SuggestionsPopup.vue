@@ -9,7 +9,7 @@
     >
         <ul ref="scroller" class="scroller">
             <li
-                v-for="(option, i) in suggestionOptions"
+                v-for="(option, i) in options"
                 :key="option.recipe_id"
                 class="item"
                 :class="{ focused: i === focusIndex }"
@@ -155,7 +155,7 @@ export const suggestionsPopupMixin = {
                             ArrowDown: +1,
                         }[e.key],
                     0,
-                    this.filteredSelectionOptions.length - 1
+                    this.suggestionOptions.length - 1
                 )
                 this.suggestionsData = {
                     ...this.suggestionsData,
@@ -168,7 +168,7 @@ export const suggestionsPopupMixin = {
             if (e.key === "Enter") {
                 e.preventDefault()
                 const { focusIndex } = this.suggestionsData
-                const selection = this.filteredSelectionOptions[focusIndex]
+                const selection = this.filteredSuggestionOptions[focusIndex]
                 this.handleSuggestionSelected(selection.recipe_id)
             }
         },
@@ -199,19 +199,10 @@ export const suggestionsPopupMixin = {
             this.suggestionsData = null
         },
     },
-    data() {
-        return {
-            suggestionsData: null,
-        }
-    },
-    props: {
-        suggestionOptions: {
-            type: Array,
-        },
-    },
     computed: {
-        filteredSelectionOptions() {
-            const searchText = this.suggestionsData?.searchText ?? ""
+        filteredSuggestionOptions() {
+            const { searchText } = this.suggestionsData
+
             return this.suggestionOptions.filter(
                 (option) =>
                     searchText === "" ||
@@ -220,18 +211,15 @@ export const suggestionsPopupMixin = {
                         .includes(searchText.toLowerCase())
             )
         },
-        popupOffset() {
-            const { caretPos, field } = this.suggestionsData
-
-            return {
-                left: Math.min(
-                    field.offsetLeft + caretPos.left,
-                    field.offsetLeft +
-                        field.offsetWidth -
-                        SUGGESTIONS_POPUP_WIDTH
-                ),
-                top: field.offsetTop + caretPos.top + caretPos.height,
-            }
+    },
+    data() {
+        return {
+            suggestionsData: null,
+        }
+    },
+    props: {
+        suggestionOptions: {
+            type: Array,
         },
     },
     mounted() {
@@ -244,17 +232,40 @@ export const suggestionsPopupMixin = {
 export default {
     name: "SuggestionsPopup",
     props: {
-        suggestionOptions: {
+        options: {
             type: Array,
-            required: true,
-        },
-        offset: {
-            type: Object,
             required: true,
         },
         focusIndex: {
             type: Number,
             required: true,
+        },
+        searchText: {
+            type: String,
+            required: true,
+        },
+        field: {
+            type: HTMLElement,
+            required: true,
+        },
+        caretPos: {
+            type: Object,
+            required: true,
+        },
+    },
+    computed: {
+        offset() {
+            const { caretPos, field } = this
+
+            return {
+                left: Math.min(
+                    field.offsetLeft + caretPos.left,
+                    field.offsetLeft +
+                        field.offsetWidth -
+                        SUGGESTIONS_POPUP_WIDTH
+                ),
+                top: field.offsetTop + caretPos.top + caretPos.height,
+            }
         },
     },
     watch: {

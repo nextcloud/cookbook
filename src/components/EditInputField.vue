@@ -28,9 +28,8 @@
         <SuggestionsPopup
             v-if="suggestionsData !== null"
             ref="suggestionsPopup"
-            :offset="popupOffset"
-            :focus-index="suggestionsData.focusIndex"
-            :suggestion-options="filteredSelectionOptions"
+            v-bind="suggestionsData"
+            :options="filteredSuggestionOptions"
         />
     </fieldset>
 </template>
