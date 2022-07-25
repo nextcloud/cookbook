@@ -111,4 +111,12 @@ export default {
     background-color: var(--color-primary);
     color: var(--color-primary-text);
 }
+
+@media (max-width: 400px) {
+    .suggestions-popup {
+        left: 0 !important;
+        width: 100% !important;
+    }
+}
+
 </style>
