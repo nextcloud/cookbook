@@ -58,7 +58,7 @@
                         suggestionsData.fieldIndex === idx
                     "
                     ref="suggestionsPopup"
-                    :offset="suggestionsData.popupOffset"
+                    :offset="popupOffset"
                     :focus-index="suggestionsData.focusIndex"
                     :suggestion-options="filteredSelectionOptions"
                 />
@@ -158,6 +158,20 @@ export default {
                         .toLowerCase()
                         .includes(searchText.toLowerCase())
             )
+        },
+
+        popupOffset() {
+            const { caretPos, field } = this.suggestionsData
+
+            return {
+                left: Math.min(
+                    field.offsetLeft + caretPos.left,
+                    field.offsetLeft +
+                        field.offsetWidth -
+                        SUGGESTIONS_POPUP_WIDTH
+                ),
+                top: field.offsetTop + caretPos.top + caretPos.height,
+            }
         },
     },
     watch: {
@@ -413,6 +427,15 @@ export default {
          * if suggestionsData !== null
          */
         suggestionsHandleKeyUp(e, cursorPos) {
+            const caretPos = caretPosition(e.target, {
+                customPos: this.suggestionsData.hashPosition - 1,
+            })
+
+            // Only update the popover position if the line changes (caret pos y changes)
+            if (caretPos.top !== this.suggestionsData.caretPos.top) {
+                this.suggestionsData.caretPos = caretPos
+            }
+
             // Cancel suggestion popup on whitespace or caret movement
             if (
                 [
@@ -489,20 +512,12 @@ export default {
             }
 
             // Show dialog to select recipe
-            // const fieldPos = elm.getBoundingClientRect()
             const caretPos = caretPosition(elm, { customPos: cursorPos - 1 })
-            const popupOffset = {
-                left: Math.min(
-                    elm.offsetLeft + caretPos.left,
-                    elm.offsetLeft + elm.offsetWidth - SUGGESTIONS_POPUP_WIDTH
-                ),
-                top: elm.offsetTop + caretPos.top + caretPos.height,
-            }
             this.suggestionsData = {
                 field: elm,
                 context: this,
                 searchText: "",
-                popupOffset,
+                caretPos,
                 focusIndex: 0,
                 hashPosition: cursorPos,
                 fieldIndex: $pressedLiIndex,
