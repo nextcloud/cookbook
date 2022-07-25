@@ -291,6 +291,9 @@ export default {
     created() {
         this.width = SUGGESTIONS_POPUP_WIDTH
     },
+    mounted() {
+        this.$refs.scroller.scrollTo(0, 0)
+    },
     methods: {
         handleClick(e) {
             e.preventDefault()
