@@ -69,7 +69,7 @@ export default {
 .link {
     display: block;
     width: 100%;
-    padding: 0.2em;
+    padding: 0.2rem 0.5rem;
 }
 
 .link:hover,
