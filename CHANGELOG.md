@@ -5,6 +5,8 @@
   [#1097](https://github.com/nextcloud/cookbook/pull/1097) @christianlupus
 - Ordering corrected for mobile and printout versions
   [#1107](https://github.com/nextcloud/cookbook/pull/1107) @christianlupus
+- Less intrusive sharp popup (suggestion menu for reference autocomplete)
+  [#1098](https://github.com/nextcloud/cookbook/pull/1098) @MarcelRobitaille
 
 ### Fixed
 - Prevent slow loading of recipes due to iteration over all files
