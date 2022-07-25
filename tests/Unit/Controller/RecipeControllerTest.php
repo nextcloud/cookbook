@@ -288,7 +288,11 @@ class RecipeControllerTest extends TestCase {
 			$_GET['size'] = $size;
 		}
 
+		/** @var Stub|File */
 		$file = $this->createStub(File::class);
+		$file->method('getName')->willReturn('/the/name');
+		$file->method('getMTime')->willReturn(1234);
+
 		$id = 123;
 		$this->recipeService->method('getRecipeImageFileByFolderId')->with($id, $size)->willReturn($file);
 
