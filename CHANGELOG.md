@@ -15,6 +15,8 @@
   [#1106](https://github.com/nextcloud/cookbook/pull/1106) @christianlupus
 - Make recipeYield optional
   [#1108](https://github.com/nextcloud/cookbook/pull/1108) @christianlupus
+- Fix typos and styling issues
+  [#1112](https://github.com/nextcloud/cookbook/pull/1112) @christianlupus
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
