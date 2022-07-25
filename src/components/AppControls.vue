@@ -3,8 +3,14 @@
         <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
         <div class="status-header">
             <ModeIndicator v-if="isSearch" :title="searchTitle" />
-            <ModeIndicator v-else-if="isEdit" title="Editing recipe" />
-            <ModeIndicator v-else-if="isRecipe" title="Viewing recipe" />
+            <ModeIndicator
+                v-else-if="isEdit"
+                :title="t('cookbook', 'Editing recipe')"
+            />
+            <ModeIndicator
+                v-else-if="isRecipe"
+                :title="t('cookbook', 'Viewing recipe')"
+            />
             <!-- INDEX PAGE -->
             <Location v-if="isIndex" :title="t('cookbook', 'All recipes')" />
             <Location
@@ -41,7 +47,10 @@
                 :title="t('cookbook', 'Page not found')"
             />
             <!-- Create new recipe -->
-            <Location v-else-if="isCreate" title="Creating new recipe" />
+            <Location
+                v-else-if="isCreate"
+                :title="t('cookbook', 'Creating new recipe')"
+            />
         </div>
         {{/* Primary buttons */}}
         <SimpleButton
