@@ -11,6 +11,7 @@
             :field-type="'markdown'"
             :field-label="t('cookbook', 'Description')"
             :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <EditInputField
             v-model="recipe['url']"
@@ -85,6 +86,7 @@
             :field-label="t('cookbook', 'Tools')"
             :create-fields-on-newlines="true"
             :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <EditInputGroup
             v-model="recipe['recipeIngredient']"
@@ -93,6 +95,7 @@
             :field-label="t('cookbook', 'Ingredients')"
             :create-fields-on-newlines="true"
             :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <EditInputGroup
             v-model="recipe['recipeInstructions']"
