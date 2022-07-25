@@ -35,15 +35,15 @@ export default {
     props: {
         suggestionOptions: {
             type: Array,
-            default: () => [],
+            required: true,
         },
         offset: {
             type: Object,
-            default: () => ({ top: 0, left: 0 }),
+            required: true,
         },
         focusIndex: {
             type: Number,
-            default: 0,
+            required: true,
         },
     },
     watch: {
