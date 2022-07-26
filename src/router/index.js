@@ -7,11 +7,11 @@
 import Vue from "vue"
 import VueRouter from "vue-router"
 
-import Index from "../components/AppIndex.vue"
-import NotFound from "../components/NotFound.vue"
-import RecipeView from "../components/RecipeView.vue"
-import RecipeEdit from "../components/RecipeEdit.vue"
-import Search from "../components/SearchResults.vue"
+const Index = () => import(/* webpackPrefetch: true */ "../components/AppIndex.vue")
+const NotFound = () => import(/* webpackPrefetch: true */ "../components/NotFound.vue")
+const RecipeView = () => import(/* webpackPrefetch: true */ "../components/RecipeView.vue")
+const RecipeEdit = () => import(/* webpackPrefetch: true */ "../components/RecipeEdit.vue")
+const Search = () => import(/* webpackPrefetch: true */ "../components/SearchResults.vue")
 
 Vue.use(VueRouter)
 
