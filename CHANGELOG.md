@@ -27,6 +27,8 @@
   [#1095](https://github.com/nextcloud/cookbook/pull/1095) @christianlupus
 - Update README with app screenshot and fixed repository links
   [#1102](https://github.com/nextcloud/cookbook/pull/1102) @MarcelRobitaille
+- Cleaned up entry JS code
+  [#1118](https://github.com/nextcloud/cookbook/pull/1118) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02
