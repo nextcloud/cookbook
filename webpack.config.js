@@ -33,6 +33,7 @@ function cookbookConfig (env) {
             // Only the needed locale is dynamically loaded later
             new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
             new webpack.IgnorePlugin({ resourceRegExp: /calendar-js/ }),
+            new webpack.IgnorePlugin({ resourceRegExp: /DatetimePicker/ }),
         ],
         resolve: {
             'alias': {
