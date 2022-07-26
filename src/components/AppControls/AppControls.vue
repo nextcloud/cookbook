@@ -175,7 +175,6 @@ import NcActions from "@nextcloud/vue/dist/Components/NcActions"
 import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
 import NcButton from "@nextcloud/vue/dist/Components/NcButton"
-import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
 import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon"
 
 import PencilIcon from "icons/Pencil.vue"
@@ -192,6 +191,8 @@ import {
 
 import Location from "./Location.vue"
 import ModeIndicator from "./ModeIndicator.vue"
+
+import NcActionInput from "../SimpleActionInput.vue"
 
 export default {
     name: "AppControls",

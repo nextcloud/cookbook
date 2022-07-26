@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
 import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation"
 import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem"
 import NcAppNavigationNew from "@nextcloud/vue/dist/Components/NcAppNavigationNew"
@@ -98,6 +97,7 @@ import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import AppSettings from "./AppSettings.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
+import NcActionInput from "./SimpleActionInput.vue"
 
 export default {
     name: "AppNavi",
