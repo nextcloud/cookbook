@@ -65,9 +65,7 @@ export default {
         this.resetTimeDisplay()
         // Start loading the sound early so it's ready to go when we need to
         // play it
-        this.audio = new Audio(
-            alarmSound.replace("nextcloud-cookbook", "cookbook")
-        )
+        this.audio = new Audio(alarmSound)
     },
     methods: {
         onTimerEnd() {
