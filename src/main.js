@@ -33,8 +33,16 @@ __webpack_nonce__ = btoa(OC.requestToken)
 
 helpers.useRouter(router)
 
-const locale = document.documentElement.getAttribute('data-locale')
-import(`moment/locale/${locale}.js`).then(() => moment.locale(locale))
+const locale = document.documentElement
+    .getAttribute("data-locale")
+    .replace("_", "-")
+    .toLowerCase()
+;// `en` is the default locale and cannot be dynamically imported. Will 404
+// https://github.com/moment/moment/issues/3624
+(locale === "en"
+    ? Promise.resolve()
+    : import(`moment/locale/${locale}.js`)
+).then(() => moment.locale(locale))
 
 // A simple function to sanitize HTML tags
 // eslint-disable-next-line no-param-reassign
