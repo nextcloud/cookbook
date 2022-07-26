@@ -10,7 +10,7 @@
             </div>
 
             <div class="meta">
-                <h2>{{ $store.state.recipe.name }}</h2>
+                <h2 class="heading">{{ $store.state.recipe.name }}</h2>
                 <div class="details">
                     <div v-if="recipe.keywords.length">
                         <ul v-if="recipe.keywords.length">
@@ -643,6 +643,10 @@ export default {
 
 .meta {
     margin: 0 1rem;
+}
+
+.heading {
+    margin-top: 12px;
 }
 
 .dates {

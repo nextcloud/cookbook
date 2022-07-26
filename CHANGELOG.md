@@ -15,6 +15,8 @@
   [#1106](https://github.com/nextcloud/cookbook/pull/1106) @christianlupus
 - Make recipeYield optional
   [#1108](https://github.com/nextcloud/cookbook/pull/1108) @christianlupus
+- Fix UI glitches caused by improper use of Breadcrumbs component
+  [#1105](https://github.com/nextcloud/cookbook/pull/1105) @MarcelRobitaille
 - Fix typos and styling issues
   [#1112](https://github.com/nextcloud/cookbook/pull/1112) @christianlupus
 

@@ -113,7 +113,7 @@
                             : 'icon-checkmark'
                     "
                 ></span>
-                {{ t("cookbook", "Save changes") }}
+                {{ t("cookbook", "Save") }}
             </button>
         </div>
         <edit-multiselect-popup
