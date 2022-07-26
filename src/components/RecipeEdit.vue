@@ -64,7 +64,8 @@
                 <action-button
                     class="btn-enable-recipe-yield"
                     :aria-label="
-                        t('cookbook', 'Toggle if recipe yield field is present')
+                        // prettier-ignore
+                        t('cookbook', 'Toggle if the number of servings are present')
                     "
                     @click="toggleShowRecipeYield"
                 >

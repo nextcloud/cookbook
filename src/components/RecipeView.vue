@@ -878,7 +878,7 @@ main {
 
     main {
         grid-column: 3/4;
-        grid-row: 1/4;
+        grid-row: 1/5;
     }
 
     @media screen and (max-width: 850px), print {
