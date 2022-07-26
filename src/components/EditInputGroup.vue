@@ -405,10 +405,6 @@ export default {
                 })
             })
         },
-        handleSuggestionSelected(recipeId) {
-            this.pasteString(`r/${recipeId} `)
-            this.suggestionsData = null
-        },
     },
 }
 </script>

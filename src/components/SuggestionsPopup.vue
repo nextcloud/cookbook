@@ -37,6 +37,16 @@ export const SUGGESTIONS_POPUP_WIDTH = 300
 export const suggestionsPopupMixin = {
     methods: {
         /**
+         * Handle something selected by click or by `Enter`
+         * Insert the reference with `pasteString`,
+         * which should exist everywhere this mixin is used
+         * (`EditInputGroup` and `EditInputField`) and close the popup
+         */
+        handleSuggestionsPopupSelected(recipeId) {
+            this.pasteString(`r/${recipeId} `)
+            this.handleSuggestionsPopupCancel()
+        },
+        /**
          * Handle keyups events when the suggestions popup is open
          * The event will be sent here from the normal keydown handler
          * if suggestionsData !== null
@@ -117,7 +127,9 @@ export const suggestionsPopupMixin = {
                     cursorPos === 1 ||
                     /\s/.test(field.value.charAt(cursorPos - 2))
                 )
-            ) return
+            ) {
+                return
+            }
 
             // Show dialog to select recipe
             const caretPos = caretPosition(field, { customPos: cursorPos - 1 })
@@ -169,7 +181,7 @@ export const suggestionsPopupMixin = {
                 e.preventDefault()
                 const { focusIndex } = this.suggestionsData
                 const selection = this.filteredSuggestionOptions[focusIndex]
-                this.handleSuggestionSelected(selection.recipe_id)
+                this.handleSuggestionsPopupSelected(selection.recipe_id)
             }
         },
         /**
@@ -224,7 +236,7 @@ export const suggestionsPopupMixin = {
     },
     mounted() {
         this.$on("suggestions-selected", (opt) => {
-            this.handleSuggestionSelected(opt.recipe_id)
+            this.handleSuggestionsPopupSelected(opt.recipe_id)
         })
     },
 }
