@@ -29,6 +29,9 @@ function cookbookConfig (env) {
                 '__webpack_use_dev_server__': env.dev_server || false,
                 'verboseDebugLogging': isDev && (process.env.VERBOSE || false),
             }),
+            // Don't import all locales at once
+            // Only the needed locale is dynamically loaded later
+            new webpack.IgnorePlugin({ resourceRegExp: /^\.\/locale$/, contextRegExp: /moment$/ }),
         ],
         resolve: {
             'alias': {

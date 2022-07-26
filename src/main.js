@@ -7,6 +7,7 @@
 
 // Markdown
 import VueShowdown from "vue-showdown"
+import moment from 'moment'
 
 import Vue from "vue"
 
@@ -31,6 +32,9 @@ if (__webpack_use_dev_server__ || false) {
 __webpack_nonce__ = btoa(OC.requestToken)
 
 helpers.useRouter(router)
+
+const locale = document.documentElement.getAttribute('data-locale')
+import(`moment/locale/${locale}.js`).then(() => moment.locale(locale))
 
 // A simple function to sanitize HTML tags
 // eslint-disable-next-line no-param-reassign
