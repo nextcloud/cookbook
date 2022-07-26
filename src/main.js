@@ -6,8 +6,7 @@
  */
 
 // Markdown
-import VueShowdown from "vue-showdown"
-import moment from 'moment'
+import moment from "moment"
 
 import Vue from "vue"
 
@@ -54,12 +53,6 @@ Vue.prototype.OC = OC
 
 // eslint-disable-next-line no-undef
 Vue.prototype.verboseDebugLogging = verboseDebugLogging
-
-// Markdown for Vue
-Vue.use(VueShowdown, {
-    // set default flavor for Markdown
-    flavor: "vanilla",
-})
 
 // TODO: Equivalent library for Vue3 when we make that transition:
 // https://github.com/rlemaigre/vue3-promise-dialog
