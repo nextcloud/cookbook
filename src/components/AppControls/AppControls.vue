@@ -166,22 +166,8 @@ import LoadingIcon from "icons/Loading.vue"
 import CheckmarkIcon from "icons/Check.vue"
 import PrinterIcon from "icons/Printer.vue"
 
-const ModeIndicator = {
-    props: ["title"],
-    render(h) {
-        return h("span", { class: "mode-indicator" }, this.title)
-    },
-}
-
-const Location = {
-    props: ["title"],
-    render(h) {
-        // Wrapper is to enable vertical centering if only child
-        return h("div", { class: "location-wrapper" }, [
-            h("h2", { class: "location" }, this.title),
-        ])
-    },
-}
+import Location from "./Location.vue"
+import ModeIndicator from "./ModeIndicator.vue"
 
 export default {
     name: "AppControls",

@@ -15,7 +15,7 @@
 <script>
 import AppContent from "@nextcloud/vue/dist/Components/AppContent"
 import Content from "@nextcloud/vue/dist/Components/Content"
-import AppControls from "./AppControls.vue"
+import AppControls from "cookbook/components/AppControls/AppControls.vue"
 import AppNavi from "./AppNavi.vue"
 
 export default {
