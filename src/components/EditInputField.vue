@@ -10,6 +10,7 @@
             @input="handleInput"
             @keydown="keyDown"
             @keyup="handleSuggestionsPopupKeyUp"
+            @focus="handleSuggestionsPopupFocus"
             @blur="handleSuggestionsPopupBlur"
         />
         <div v-else>
@@ -22,11 +23,12 @@
                 @input="handleInput"
                 @keydown="keyDown"
                 @keyup="handleSuggestionsPopupKeyUp"
+                @focus="handleSuggestionsPopupFocus"
                 @blur="handleSuggestionsPopupBlur"
             />
         </div>
         <SuggestionsPopup
-            v-if="suggestionsData !== null"
+            v-if="suggestionsPopupVisible"
             ref="suggestionsPopup"
             v-bind="suggestionsData"
             :options="filteredSuggestionOptions"
@@ -81,7 +83,7 @@ export default {
         },
         keyDown(e) {
             // Redirect to suggestions handler if in suggestion mode
-            if (this.suggestionsData !== null) {
+            if (this.suggestionsPopupVisible) {
                 this.handleSuggestionsPopupKeyDown(e)
             }
         },

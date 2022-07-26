@@ -19,6 +19,7 @@
                     @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
+                    @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
                 />
                 <textarea
@@ -29,6 +30,7 @@
                     @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
+                    @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
                 ></textarea>
                 <div class="controls">
@@ -55,7 +57,7 @@
                 </div>
                 <SuggestionsPopup
                     v-if="
-                        suggestionsData !== null &&
+                        suggestionsPopupVisible &&
                         suggestionsData.fieldIndex === idx
                     "
                     ref="suggestionsPopup"
@@ -282,7 +284,7 @@ export default {
             }
 
             // Redirect to suggestions handler if in suggestion mode
-            if (this.suggestionsData !== null) {
+            if (this.suggestionsPopupVisible) {
                 this.handleSuggestionsPopupKeyDown(e)
                 return
             }

@@ -49,7 +49,7 @@ export const suggestionsPopupMixin = {
         /**
          * Handle keyups events when the suggestions popup is open
          * The event will be sent here from the normal keydown handler
-         * if suggestionsData !== null
+         * if suggestionsPopupVisible
          */
         handleSuggestionsPopupOpenKeyUp(e, cursorPos) {
             const caretPos = caretPosition(e.target, {
@@ -112,7 +112,7 @@ export const suggestionsPopupMixin = {
             // No suggestion options means suggestions are disabled for this input
             if (!this.suggestionOptions) return
 
-            if (this.suggestionsData !== null) {
+            if (this.suggestionsPopupVisible) {
                 this.handleSuggestionsPopupOpenKeyUp(e, cursorPos)
                 return
             }
@@ -139,19 +139,20 @@ export const suggestionsPopupMixin = {
                 caretPos,
                 focusIndex: 0,
                 hashPosition: cursorPos,
+                blurred: false,
                 fieldIndex: this.getClosestListItemIndex(field),
             }
             this.lastCursorPosition = cursorPos
         },
         handleSuggestionsPopupKeyDown(e) {
-            if (this.suggestionsData === null) return
+            if (!this.suggestionsPopupVisible) return
 
             this.handleSuggestionsPopupOpenKeyDown(e)
         },
         /**
          * Handle keydown events for suggestions popup
          * The event will be sent here from the normal keydown handler
-         * if suggestionsData !== null
+         * if suggestionsPopupVisible
          */
         handleSuggestionsPopupOpenKeyDown(e) {
             // Handle switching the focused option with up/down keys
@@ -185,11 +186,20 @@ export const suggestionsPopupMixin = {
             }
         },
         /**
+         * Recover suggestions popup on focus
+         */
+        handleSuggestionsPopupFocus() {
+            if (this.suggestionsData?.blurred) {
+                this.suggestionsData.blurred = false
+            }
+        },
+        /**
          * Cancel selection if input gets blurred
          */
         handleSuggestionsPopupBlur(e) {
-            if (this.suggestionsData === null || !this.$refs.suggestionsPopup)
+            if (!this.suggestionsPopupVisible || !this.$refs.suggestionsPopup) {
                 return
+            }
 
             // Get reference to the popup
             // There is only ever one at a time, but if it's defined in a v-for
@@ -205,13 +215,16 @@ export const suggestionsPopupMixin = {
             if ($suggestionsPopup.contains(e.relatedTarget)) {
                 return
             }
-            this.handleSuggestionsPopupCancel()
+            this.suggestionsData.blurred = true
         },
         handleSuggestionsPopupCancel() {
             this.suggestionsData = null
         },
     },
     computed: {
+        suggestionsPopupVisible() {
+            return this.suggestionsData !== null && !this.suggestionsData.blurred
+        },
         filteredSuggestionOptions() {
             const { searchText } = this.suggestionsData
 
