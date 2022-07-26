@@ -34,46 +34,49 @@
 
 <script>
 const ActionGlobalMixin = {
-	before() {
-		// all actions requires a valid text content
-		// if none, forbid the component mount and throw error
-		if (!this.$slots.default || this.text.trim() === '') {
-			Vue.util.warn(`${this.$options.name} cannot be empty and requires a meaningful text content`, this)
-			this.$destroy()
-			this.$el.remove()
-		}
-	},
+    before() {
+        // all actions requires a valid text content
+        // if none, forbid the component mount and throw error
+        if (!this.$slots.default || this.text.trim() === "") {
+            Vue.util.warn(
+                `${this.$options.name} cannot be empty and requires a meaningful text content`,
+                this
+            )
+            this.$destroy()
+            this.$el.remove()
+        }
+    },
 
-	beforeUpdate() {
-		this.text = this.getText()
-	},
+    beforeUpdate() {
+        this.text = this.getText()
+    },
 
-	data() {
-		return {
-			// $slots are not reactive.
-			// We need to update  the content manually
-			text: this.getText(),
-		}
-	},
+    data() {
+        return {
+            // $slots are not reactive.
+            // We need to update  the content manually
+            text: this.getText(),
+        }
+    },
 
-	computed: {
-		isLongText() {
-			return this.text && this.text.trim().length > 20
-		},
-	},
+    computed: {
+        isLongText() {
+            return this.text && this.text.trim().length > 20
+        },
+    },
 
-	methods: {
-		getText() {
-			return this.$slots.default ? this.$slots.default[0].text.trim() : ''
-		},
-	},
+    methods: {
+        getText() {
+            return this.$slots.default ? this.$slots.default[0].text.trim() : ""
+        },
+    },
 }
 
 const GenRandomId = (length) => {
-	return Math.random()
-		.toString(36)
-		.replace(/[^a-z]+/g, '')
-		.slice(0, length || 5)
+    return Math.random()
+        .toString(36)
+        .replace(/[^a-z]+/g, "")
+        .slice(0, length || 5)
 }
 
 import ArrowRight from "icons/ArrowRight"
@@ -110,11 +113,7 @@ export default {
             type: String,
             default: "text",
             validator(type) {
-                return (
-                    [
-                        "text",
-                    ].indexOf(type) > -1
-                )
+                return ["text"].indexOf(type) > -1
             },
         },
         /**
@@ -198,7 +197,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use 'sass:math';
+@use "sass:math";
 
 // https://uxplanet.org/7-rules-for-mobile-ui-button-design-e9cf2ea54556
 // recommended is 48px
@@ -214,21 +213,21 @@ $icon-size: 16px;
 $icon-margin: math.div($clickable-area - $icon-size, 2);
 
 // transparency background for icons
-$icon-focus-bg: rgba(127, 127, 127, .25);
+$icon-focus-bg: rgba(127, 127, 127, 0.25);
 
 // popovermenu arrow width from the triangle center
 $arrow-width: 9px;
 
 // opacities
-$opacity_disabled: .5;
-$opacity_normal: .7;
+$opacity_disabled: 0.5;
+$opacity_normal: 0.7;
 $opacity_full: 1;
 
 // menu round background hover feedback
 // good looking on dark AND white bg
-$action-background-hover: rgba(127, 127, 127, .25);
+$action-background-hover: rgba(127, 127, 127, 0.25);
 
-// various structure data used in the 
+// various structure data used in the
 // `AppNavigation` component
 $header-height: 50px;
 $navigation-width: 300px;
@@ -239,191 +238,191 @@ $breakpoint-mobile: 1024px;
 // top-bar spacing
 $topbar-margin: 4px;
 button:not(.button-vue),
-input:not([type='range']),
+input:not([type="range"]),
 textarea {
-	margin: 0;
-	padding: 7px 6px;
+    margin: 0;
+    padding: 7px 6px;
 
-	cursor: text;
+    cursor: text;
 
-	color: var(--color-text-lighter);
-	border: 1px solid var(--color-border-dark);
-	border-radius: var(--border-radius);
-	outline: none;
-	background-color: var(--color-main-background);
+    color: var(--color-text-lighter);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--border-radius);
+    outline: none;
+    background-color: var(--color-main-background);
 
-	font-size: 13px;
+    font-size: 13px;
 
-	&:not(:disabled):not(.primary) {
-		&:hover,
-		&:focus,
-		&.active {
-			/* active class used for multiselect */
-			border-color: var(--color-primary-element);
-			outline: none;
-		}
+    &:not(:disabled):not(.primary) {
+        &:hover,
+        &:focus,
+        &.active {
+            /* active class used for multiselect */
+            border-color: var(--color-primary-element);
+            outline: none;
+        }
 
-		&:active {
-			color: var(--color-text-light);
-			outline: none;
-			background-color: var(--color-main-background);
-		}
-	}
+        &:active {
+            color: var(--color-text-light);
+            outline: none;
+            background-color: var(--color-main-background);
+        }
+    }
 
-	&:disabled {
-		cursor: default;
-		opacity: $opacity_disabled;
-		color: var(--color-text-maxcontrast);
-		background-color: var(--color-background-dark);
-	}
+    &:disabled {
+        cursor: default;
+        opacity: $opacity_disabled;
+        color: var(--color-text-maxcontrast);
+        background-color: var(--color-background-dark);
+    }
 
-	&:required {
-		box-shadow: none;
-	}
+    &:required {
+        box-shadow: none;
+    }
 
-	&:invalid {
-		border-color: var(--color-error);
-		box-shadow: none !important;
-	}
+    &:invalid {
+        border-color: var(--color-error);
+        box-shadow: none !important;
+    }
 
-	/* Primary action button, use sparingly */
-	&.primary {
-		cursor: pointer;
-		color: var(--color-primary-text);
-		border-color: var(--color-primary-element);
-		background-color: var(--color-primary-element);
+    /* Primary action button, use sparingly */
+    &.primary {
+        cursor: pointer;
+        color: var(--color-primary-text);
+        border-color: var(--color-primary-element);
+        background-color: var(--color-primary-element);
 
-		&:not(:disabled) {
-			&:hover,
-			&:focus,
-			&:active {
-				border-color: var(--color-primary-element-light);
-				background-color: var(--color-primary-element-light);
-			}
-			&:active {
-				color: var(--color-primary-text-dark);
-			}
-		}
+        &:not(:disabled) {
+            &:hover,
+            &:focus,
+            &:active {
+                border-color: var(--color-primary-element-light);
+                background-color: var(--color-primary-element-light);
+            }
+            &:active {
+                color: var(--color-primary-text-dark);
+            }
+        }
 
-		&:disabled {
-			cursor: default;
-			color: var(--color-primary-text-dark);
-			// opacity is already defined to .5 if disabled
-			background-color: var(--color-primary-element);
-		}
-	}
+        &:disabled {
+            cursor: default;
+            color: var(--color-primary-text-dark);
+            // opacity is already defined to .5 if disabled
+            background-color: var(--color-primary-element);
+        }
+    }
 }
 @mixin action-active {
-	li {
-		&.active {
-			background-color: var(--color-background-hover);
-			border-radius: 6px;
-			padding: 0;
-		}
-	}
+    li {
+        &.active {
+            background-color: var(--color-background-hover);
+            border-radius: 6px;
+            padding: 0;
+        }
+    }
 }
 
 @mixin action--disabled {
-	.action--disabled {
-		pointer-events: none;
-		opacity: $opacity_disabled;
-		&:hover, &:focus {
-			cursor: default;
-			opacity: $opacity_disabled;
-		}
-		& * {
-			opacity: 1 !important;
-		}
-	}
+    .action--disabled {
+        pointer-events: none;
+        opacity: $opacity_disabled;
+        &:hover,
+        &:focus {
+            cursor: default;
+            opacity: $opacity_disabled;
+        }
+        & * {
+            opacity: 1 !important;
+        }
+    }
 }
 
-
 @mixin action-item($name) {
-	.action-#{$name} {
-		display: flex;
-		align-items: flex-start;
+    .action-#{$name} {
+        display: flex;
+        align-items: flex-start;
 
-		width: 100%;
-		height: auto;
-		margin: 0;
-		padding: 0;
-		padding-right: $icon-margin;
-		box-sizing: border-box; // otherwise router-link overflows in Firefox
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        padding-right: $icon-margin;
+        box-sizing: border-box; // otherwise router-link overflows in Firefox
 
-		cursor: pointer;
-		white-space: nowrap;
+        cursor: pointer;
+        white-space: nowrap;
 
-		opacity: $opacity_normal;
-		color: var(--color-main-text);
-		border: 0;
-		border-radius: 0; // otherwise Safari will cut the border-radius area
-		background-color: transparent;
-		box-shadow: none;
+        opacity: $opacity_normal;
+        color: var(--color-main-text);
+        border: 0;
+        border-radius: 0; // otherwise Safari will cut the border-radius area
+        background-color: transparent;
+        box-shadow: none;
 
-		font-weight: normal;
-		font-size: var(--default-font-size);
-		line-height: $clickable-area;
+        font-weight: normal;
+        font-size: var(--default-font-size);
+        line-height: $clickable-area;
 
-		&:hover,
-		&:focus {
-			opacity: $opacity_full;
-		}
+        &:hover,
+        &:focus {
+            opacity: $opacity_full;
+        }
 
-		& > span {
-			cursor: pointer;
-			white-space: nowrap;
-		}
+        & > span {
+            cursor: pointer;
+            white-space: nowrap;
+        }
 
-		&__icon {
-			width: $clickable-area;
-			height: $clickable-area;
-			opacity: $opacity_full;
-			background-position: $icon-margin center;
-			background-size: $icon-size;
-			background-repeat: no-repeat;
-		}
+        &__icon {
+            width: $clickable-area;
+            height: $clickable-area;
+            opacity: $opacity_full;
+            background-position: $icon-margin center;
+            background-size: $icon-size;
+            background-repeat: no-repeat;
+        }
 
-		&::v-deep .material-design-icon {
-			width: $clickable-area;
-			height: $clickable-area;
-			opacity: $opacity_full;
+        &::v-deep .material-design-icon {
+            width: $clickable-area;
+            height: $clickable-area;
+            opacity: $opacity_full;
 
-			.material-design-icon__svg {
-				vertical-align: middle;
-			}
-		}
+            .material-design-icon__svg {
+                vertical-align: middle;
+            }
+        }
 
-		// long text area
-		p {
-			max-width: 220px;
-			line-height: 1.6em;
+        // long text area
+        p {
+            max-width: 220px;
+            line-height: 1.6em;
 
-			// 14px are currently 1em line-height. Mixing units as '44px - 1.6em' does not work.
-			padding: #{math.div($clickable-area - 1.6 * 14px, 2)} 0;
+            // 14px are currently 1em line-height. Mixing units as '44px - 1.6em' does not work.
+            padding: #{math.div($clickable-area - 1.6 * 14px, 2)} 0;
 
-			cursor: pointer;
-			text-align: left;
+            cursor: pointer;
+            text-align: left;
 
-			// in case there are no spaces like long email addresses
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
+            // in case there are no spaces like long email addresses
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-		&__longtext {
-			cursor: pointer;
-			// allow the use of `\n`
-			white-space: pre-wrap;
-		}
+        &__longtext {
+            cursor: pointer;
+            // allow the use of `\n`
+            white-space: pre-wrap;
+        }
 
-		&__title {
-			font-weight: bold;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			white-space: nowrap;
-			max-width: 100%;
-			display: inline-block;
-		}
-	}
+        &__title {
+            font-weight: bold;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            max-width: 100%;
+            display: inline-block;
+        }
+    }
 }
 @include action-active;
 @include action--disabled;
