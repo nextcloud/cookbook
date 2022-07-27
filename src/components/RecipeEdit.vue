@@ -605,7 +605,7 @@ export default {
             const $this = this
 
             const request = (() => {
-                if (this.$store.state.recipe.id) {
+                if (this.$route.params.id ?? false) {
                     return this.$store.dispatch("updateRecipe", {
                         recipe: this.recipeWithCorrectedYield,
                     })
