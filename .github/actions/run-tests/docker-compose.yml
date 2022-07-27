@@ -2,14 +2,20 @@ version: "3.2"
 
 services:
     mysql:
-        build: mysql
+        build:
+            context: ./mysql
+            cache_from:
+              - cookbook_unittesting_mysql
         volumes:
             - ./volumes/mysql:/var/lib/mysql
         env_file:
             - mysql.env
             
     postgres:
-        image: postgres:alpine
+        build:
+            context: ./postgres
+            cache_from:
+              - cookbook_unittesting_postgres
         env_file:
             - postgres.env
         volumes:
@@ -63,10 +69,13 @@ services:
             - ./volumes/nextcloud:/nextcloud
             - ./volumes/data:/nextcloud/data
             - ./volumes/cookbook:/nextcloud/custom_apps/cookbook
-            - ./volumes/dumps:/dumps
+            - ./volumes/dumps:/dumps:ro
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
             - ./volumes/output:/output
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./volumes/mysql:/db/mysql
+            - ./volumes/postgres:/db/postgres
     
     occ:
         <<: *dut

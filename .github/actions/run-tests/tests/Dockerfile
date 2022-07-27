@@ -10,7 +10,7 @@ RUN apt-get -qq update && \
 	apt-get -qq -y install --no-install-recommends \
 	npm make default-mysql-client postgresql-client \
 	unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev \
-	cmake libpq-dev libsqlite3-dev sudo rsync tini wget > /dev/null && \
+	cmake libpq-dev libsqlite3-dev sudo rsync tini wget docker.io > /dev/null && \
 	apt-get clean
 
 COPY install-php-ini.sh /tmp/install-php-ini.sh
