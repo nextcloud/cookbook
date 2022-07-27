@@ -19,6 +19,8 @@
   [#1105](https://github.com/nextcloud/cookbook/pull/1105) @MarcelRobitaille
 - Fix typos and styling issues
   [#1112](https://github.com/nextcloud/cookbook/pull/1112) @christianlupus
+- Fix API endpoint used for updating recipes
+  [#1119](https://github.com/nextcloud/cookbook/pull/1119) @MarcelRobitaille
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
