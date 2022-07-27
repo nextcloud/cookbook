@@ -2,9 +2,6 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "in %s",
-    "Home" : "Initio",
-    "Loading…" : "Cargante...",
-    "Save changes" : "Salveguardar cambios",
     "Search" : "Cercar",
     "Category" : "Categoria",
     "Tags" : "Etiquettas",
@@ -13,6 +10,7 @@ OC.L10N.register(
     "Close" : "Clauder",
     "Name" : "Nomine",
     "Description" : "Description",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Loading…" : "Cargante..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,12 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "in %s",
-    "Home" : "Tuis",
-    "Loading…" : "Laai…",
-    "Save changes" : "Bewaar veranderinge",
     "Page not found" : "Blad nie gevind nie",
-    "Filter" : "Filter",
+    "Edit" : "Wysig",
+    "Save" : "Bewaar",
     "Search" : "Soek",
+    "Filter" : "Filter",
     "Category" : "Kategorie",
     "Tags" : "Etikette",
     "Categories" : "Kategorieë",
@@ -18,6 +17,7 @@ OC.L10N.register(
     "Description" : "Beskrywing",
     "URL" : "Bronadres",
     "Tools" : "Nutsmiddels",
-    "Last modified" : "Laas gewysig"
+    "Last modified" : "Laas gewysig",
+    "Loading…" : "Laai…"
 },
 "nplurals=2; plural=(n != 1);");

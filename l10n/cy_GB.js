@@ -1,8 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
-    "Home" : "Cartref",
-    "Loading…" : "Yn llwytho…",
+    "Edit" : "Golygu",
+    "Save" : "Cadw",
     "Search" : "Chwilio",
     "Category" : "Categori",
     "Tags" : "Tagiau",
@@ -13,6 +13,7 @@ OC.L10N.register(
     "Name" : "Enw",
     "Description" : "Disgrifiad",
     "URL" : "URL",
-    "Last modified" : "Newidiwyd diwethaf"
+    "Last modified" : "Newidiwyd diwethaf",
+    "Loading…" : "Yn llwytho…"
 },
 "nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;");

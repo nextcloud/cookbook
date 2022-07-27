@@ -2,9 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "ใน %s",
-    "Home" : "หน้าหลัก",
-    "Loading…" : "กำลังโหลด...",
-    "Save changes" : "บันทึกการเปลี่ยนแปลง",
+    "Edit" : "แก้ไข",
+    "Save" : "บันทึก",
     "Search" : "Search",
     "Category" : "หมวดหมู่",
     "Tags" : "แท็ก",
@@ -14,6 +13,7 @@ OC.L10N.register(
     "Close" : "ปิด",
     "Name" : "ชื่อ",
     "Description" : "รายละเอียด",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Loading…" : "กำลังโหลด..."
 },
 "nplurals=1; plural=0;");

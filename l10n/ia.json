@@ -1,8 +1,5 @@
 { "translations": {
     "in %s" : "in %s",
-    "Home" : "Initio",
-    "Loading…" : "Cargante...",
-    "Save changes" : "Salveguardar cambios",
     "Search" : "Cercar",
     "Category" : "Categoria",
     "Tags" : "Etiquettas",
@@ -11,6 +8,7 @@
     "Close" : "Clauder",
     "Name" : "Nomine",
     "Description" : "Description",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Loading…" : "Cargante..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

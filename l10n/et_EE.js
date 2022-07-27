@@ -2,12 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "kaustas %s",
-    "Home" : "Avaleht",
-    "Loading…" : "Laadimine…",
-    "Save changes" : "Salvesta muudatused",
     "Page not found" : "Lehekülge ei leitud",
-    "Filter" : "Filter",
+    "Edit" : "Redigeeri",
+    "Save" : "Salvesta",
     "Search" : "Otsi",
+    "Filter" : "Filter",
     "Category" : "Kategooria",
     "Tags" : "Sildid",
     "Categories" : "Kategooriad",
@@ -18,6 +17,7 @@ OC.L10N.register(
     "Description" : "Kirjeldus",
     "URL" : "URL",
     "Tools" : "Tööriistad",
-    "Last modified" : "Viimati muudetud"
+    "Last modified" : "Viimati muudetud",
+    "Loading…" : "Laadimine…"
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,9 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "dins %s",
-    "Home" : "Domicili",
-    "Loading…" : "Cargament…",
-    "Save changes" : "Salvar modificacions",
+    "Edit" : "Modificar",
+    "Save" : "Enregistrar",
     "Search" : "Search",
     "Category" : "Categoria",
     "Tags" : "Etiquetas",
@@ -16,6 +15,7 @@ OC.L10N.register(
     "Description" : "Descripcion",
     "URL" : "URL",
     "Tools" : "Aisinas",
-    "Calories" : "Calorias"
+    "Calories" : "Calorias",
+    "Loading…" : "Cargament…"
 },
 "nplurals=2; plural=(n > 1);");

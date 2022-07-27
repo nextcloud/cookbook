@@ -2,11 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "i %s",
-    "Home" : "Heim",
-    "Loading…" : "Laster...",
     "Page not found" : "Fann ikkje sida",
-    "Filter" : "Filter",
+    "Edit" : "Rediger",
+    "Save" : "Lagre",
     "Search" : "Search",
+    "Filter" : "Filter",
     "Category" : "Kategori",
     "Tags" : "Emneord",
     "Rename" : "Gje nytt namn",
@@ -15,6 +15,7 @@ OC.L10N.register(
     "Name" : "Namn",
     "Description" : "Skildring",
     "URL" : "URL",
-    "Last modified" : "Siste endra"
+    "Last modified" : "Siste endra",
+    "Loading…" : "Laster..."
 },
 "nplurals=2; plural=(n != 1);");
