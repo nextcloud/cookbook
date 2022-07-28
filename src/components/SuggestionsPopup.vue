@@ -43,8 +43,28 @@ export const suggestionsPopupMixin = {
          * (`EditInputGroup` and `EditInputField`) and close the popup
          */
         handleSuggestionsPopupSelected(recipeId) {
-            this.pasteString(`r/${recipeId} `)
+            const { field, hashPosition } = this.suggestionsData
+            const { value } = field
+            const before = value.slice(0, hashPosition)
+            const after = value.slice(field.selectionStart)
+            const replace = `r/${recipeId}` 
+            const newValue =  `${before}${replace}${after}`
+            if (this.buffer ?? false) {
+                this.buffer[this.suggestionsData.fieldIndex] = newValue
+                this.$emit("input", this.buffer)
+            } else {
+                this.$emit("input", newValue)
+            }
             this.handleSuggestionsPopupCancel()
+            // set cursor to position after pasted string. Waiting two ticks is necessary for
+            // the data to be updated in the field
+            this.$nextTick(() => {
+                this.$nextTick(() => {
+                    field.focus()
+                    const newCursorPos = hashPosition + replace.length
+                    field.setSelectionRange(newCursorPos, newCursorPos)
+                })
+            })
         },
         /**
          * Handle keyups events when the suggestions popup is open
