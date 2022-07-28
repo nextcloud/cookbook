@@ -2,6 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "in %s",
+    "Edit" : "Modificar",
+    "Save" : "Salveguardar",
     "Search" : "Cercar",
     "Category" : "Categoria",
     "Tags" : "Etiquettas",

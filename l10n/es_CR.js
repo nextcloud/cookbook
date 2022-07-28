@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "in %s" : "en %s",
     "Page not found" : "Página no encontrada",
+    "Edit" : "Editar",
+    "Save" : "Guardar",
     "Search" : "Buscar",
     "Filter" : "Filtrar",
     "Category" : "Categoría",

@@ -10,6 +10,7 @@ OC.L10N.register(
     "Recipe not found" : "המתכון לא נמצא",
     "Page not found" : "העמוד לא נמצא",
     "Edit" : "עריכה",
+    "Save" : "שמירה",
     "Search" : "חיפוש",
     "Reload recipe" : "רענון המתכון",
     "Print recipe" : "הדפסת מתכון",

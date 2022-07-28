@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Edit" : "засварлах",
+    "Save" : "Хадгалах",
     "Search" : "Хайх",
     "Filter" : "Шүүлтүүр",
     "Category" : "Ангилал",

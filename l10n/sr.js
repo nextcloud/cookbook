@@ -10,6 +10,8 @@ OC.L10N.register(
     "Loading recipe" : "Учитавам рецепт",
     "Recipe not found" : "Рецепт није нађен",
     "Page not found" : "Страна није нађена",
+    "Edit" : "Измени",
+    "Save" : "Сачувај",
     "Search" : "Претрага",
     "Reload recipe" : "Поново учитај рецепт",
     "Print recipe" : "Одштампај рецепт",
