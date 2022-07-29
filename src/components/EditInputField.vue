@@ -12,6 +12,7 @@
             @keyup="handleSuggestionsPopupKeyUp"
             @focus="handleSuggestionsPopupFocus"
             @blur="handleSuggestionsPopupBlur"
+            @mouseup="handleSuggestionsPopupMouseUp"
         />
         <div v-else>
             <slot />
@@ -25,6 +26,7 @@
                 @keyup="handleSuggestionsPopupKeyUp"
                 @focus="handleSuggestionsPopupFocus"
                 @blur="handleSuggestionsPopupBlur"
+                @mouseup="handleSuggestionsPopupMouseUp"
             />
         </div>
         <SuggestionsPopup

@@ -113,6 +113,7 @@ export const suggestionsPopupMixin = {
             this.suggestionsData = {
                 ...this.suggestionsData,
                 searchText,
+                caretIndex: field.selectionStart,
             }
         },
         getClosestListItemIndex(field) {
@@ -160,6 +161,7 @@ export const suggestionsPopupMixin = {
                 focusIndex: 0,
                 hashPosition: cursorPos,
                 blurred: false,
+                caretIndex: field.selectionStart,
                 fieldIndex: this.getClosestListItemIndex(field),
             }
             this.lastCursorPosition = cursorPos
@@ -239,6 +241,20 @@ export const suggestionsPopupMixin = {
             }
             this.suggestionsData.blurred = true
         },
+        /**
+         * Cancel the popup if the mouse is used to change the caret position
+         */
+        handleSuggestionsPopupMouseUp() {
+            if (!this.suggestionsPopupVisible) return
+
+            const { caretIndex, field } = this.suggestionsData
+            if (caretIndex != field.selectionStart) {
+                this.handleSuggestionsPopupCancel()
+            }
+        },
+        /**
+         * Cancel the suggestions popup by setting the data object to null
+         */
         handleSuggestionsPopupCancel() {
             this.suggestionsData = null
         },

@@ -21,6 +21,7 @@
                     @paste="handlePaste"
                     @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
+                    @mouseup="handleSuggestionsPopupMouseUp"
                 />
                 <textarea
                     v-else-if="fieldType === 'textarea'"
@@ -32,6 +33,7 @@
                     @paste="handlePaste"
                     @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
+                    @mouseup="handleSuggestionsPopupMouseUp"
                 ></textarea>
                 <div class="controls">
                     <button
