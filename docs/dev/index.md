@@ -22,3 +22,4 @@ If you want to **help contributing**, please see the [page about contributing](c
 ## Backend
 
 - [API endpoint documentation](api/index)
+- [Automated testing framework](misc/automated-testing/index)
