@@ -70,7 +70,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 		}
 
 		if (count($images) === 0) {
-			$this->logger->info($this->l->t('No valid recipe was left after heuristics of recipe  %s.', [$json['name']]));
+			$this->logger->info($this->l->t('No valid recipe was left after heuristics of recipe %s.', [$json['name']]));
 			$json['image'] = '';
 			return true;
 		}

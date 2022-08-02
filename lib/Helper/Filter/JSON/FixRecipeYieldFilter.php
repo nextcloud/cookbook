@@ -65,7 +65,7 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 
 			// Heuristics: Array with multiple entries.
 			// XXX How to parse an array correctly?
-			$this->logger->debug($this->l->t('Using heuristics to parse the `recipeYield` field representing the number of servings of recipe {name}.', ['name' => $json['name']]));
+			$this->logger->debug($this->l->t('Using heuristics to parse the "recipeYield" field representing the number of servings of recipe {name}.', ['name' => $json['name']]));
 			$json[self::YIELD] = join(' ', $json[self::YIELD]);
 		}
 
@@ -78,8 +78,8 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 			$last = end($matches);
 
 			$this->logger->debug($this->l->n(
-				'Only a single number was found in the `recipeYield` field. Using it as number of servings.',
-				'There are %n numbers found in the `recipeYield` field. Using the highest number found as number of servings.',
+				'Only a single number was found in the "recipeYield" field. Using it as number of servings.',
+				'There are %n numbers found in the "recipeYield" field. Using the highest number found as number of servings.',
 				$count
 			));
 
@@ -88,7 +88,7 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 		}
 
 		// We did not find anything useful.
-		$this->logger->info($this->l->t('Could not parse `recipeYield` field. Falling back to 1 serving.'));
+		$this->logger->info($this->l->t('Could not parse "recipeYield" field. Falling back to 1 serving.'));
 		$json[self::YIELD] = 1;
 		return true;
 	}
