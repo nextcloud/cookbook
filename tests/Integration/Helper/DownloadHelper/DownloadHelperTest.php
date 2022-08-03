@@ -1,5 +1,11 @@
 <?php
 
+namespace OCA\Cookbook\Helper;
+
+function curl_exec($ch) {
+	return \OCA\Cookbook\tests\Integration\Helper\DownloadHelper\DownloadHelperTest::mock_curl_exec($ch);
+}
+
 namespace OCA\Cookbook\tests\Integration\Helper\DownloadHelper;
 
 use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
@@ -26,6 +32,8 @@ class DownloadHelperTest extends TestCase {
 		if (file_exists('/www/.htaccess')) {
 			unlink('/www/.htaccess');
 		}
+
+		self::$useCurlMock = false;
 	}
 
 	protected function tearDown(): void {
@@ -85,16 +93,20 @@ class DownloadHelperTest extends TestCase {
 		$this->assertEquals(404, $this->dut->getStatus());
 	}
 
-	/**
-	 * @medium
-	 */
 	public function testFailedDownload() {
 		$this->expectException(NoDownloadWasCarriedOutException::class);
-		$opt = [
-			CURLOPT_TIMEOUT => 1,
-			CURLOPT_CONNECTTIMEOUT => 1,
-		];
-		$this->dut->downloadFile('http://www2/test.txt', $opt);
+		// Using mock here as the timeout causes the test to be really slow
+		self::$useCurlMock = true;
+		$this->dut->downloadFile('http://www2/test.txt');
+	}
+
+	private static $useCurlMock = false;
+	public static function mock_curl_exec($ch) {
+		if (self::$useCurlMock) {
+			throw new NoDownloadWasCarriedOutException();
+		} else {
+			return curl_exec($ch);
+		}
 	}
 
 	public function testNoContentType() {
