@@ -119,7 +119,6 @@ OC.L10N.register(
     "Keywords" : "Kulcsszavak",
     "Choose keywords" : "Válasszon kulcsszavakat",
     "Servings" : "Adagok",
-    "Toggle if the number of servings are present" : "Kapcsolja be, ha az adagok száma jelen van",
     "Nutrition Information" : "Táplálkozási információk",
     "Pick option" : "Válasszon egy lehetőséget",
     "Tools" : "Eszközök",
