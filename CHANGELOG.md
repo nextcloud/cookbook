@@ -31,6 +31,8 @@
   [#1102](https://github.com/nextcloud/cookbook/pull/1102) @MarcelRobitaille
 - Cleaned up entry JS code
   [#1118](https://github.com/nextcloud/cookbook/pull/1118) @christianlupus
+- Create Python based testing wrapper and enhance workflow script
+  [#1137](https://github.com/nextcloud/cookbook/pull/1137) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02
