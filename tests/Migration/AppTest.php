@@ -15,15 +15,15 @@ class AppTest extends TestCase {
 	private $container;
 
 	public function setUp(): void {
-		resetEnvironmentToBackup();
-
 		parent::setUp();
 		$app = new App('cookbook');
 		$this->container = $app->getContainer();
 	}
 
 	public function testAppInstalled() {
+		/** @var IAppManager $appManager */
 		$appManager = $this->container->query(IAppManager::class);
+		$appManager->enableApp('cookbook');
 		$this->assertTrue($appManager->isInstalled('cookbook'));
 	}
 }

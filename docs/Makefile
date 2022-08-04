@@ -1,5 +1,6 @@
 
 BUNDLER=bundler
+HOST=127.0.0.1
 
 .PHONY: all
 all: help
@@ -17,7 +18,7 @@ build:
 	${BUNDLER} exec jekyll build
 
 watch:
-	${BUNDLER} exec jekyll serve
+	${BUNDLER} exec jekyll serve --host ${HOST}
 
 install:
 	${BUNDLER} install

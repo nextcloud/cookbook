@@ -45,8 +45,6 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	public function setUp(): void {
 		parent::setUp();
 
-		resetEnvironmentToBackup('plain');
-
 		$this->hideMigrations();
 		$this->enableApp();
 		$this->restoreMigrations();

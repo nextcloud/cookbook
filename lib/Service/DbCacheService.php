@@ -315,7 +315,7 @@ class DbCacheService {
 			}
 		}
 
-		if (strlen(trim($category)) == 0) {
+		if (strlen(trim($category)) === 0) {
 			return null;
 		}
 		return $category;
