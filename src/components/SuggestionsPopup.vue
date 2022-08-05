@@ -47,8 +47,8 @@ export const suggestionsPopupMixin = {
             const { value } = field
             const before = value.slice(0, hashPosition)
             const after = value.slice(field.selectionStart)
-            const replace = `r/${recipeId}` 
-            const newValue =  `${before}${replace}${after}`
+            const replace = `r/${recipeId}`
+            const newValue = `${before}${replace}${after}`
             if (this.buffer ?? false) {
                 this.buffer[this.suggestionsData.fieldIndex] = newValue
                 this.$emit("input", this.buffer)
@@ -211,9 +211,9 @@ export const suggestionsPopupMixin = {
          * Recover suggestions popup on focus
          */
         handleSuggestionsPopupFocus(e) {
-            if(this.verboseDebugLogging){
+            if (this.verboseDebugLogging) {
                 // eslint-disable-next-line no-console
-                console.log('focus', e, JSON.stringify(this.suggestionsData))
+                console.log("focus", e, JSON.stringify(this.suggestionsData))
             }
             if (this.suggestionsData?.blurred) {
                 this.suggestionsData.blurred = false
@@ -223,9 +223,9 @@ export const suggestionsPopupMixin = {
          * Cancel selection if input gets blurred
          */
         handleSuggestionsPopupBlur(e) {
-            if(this.verboseDebugLogging) {
+            if (this.verboseDebugLogging) {
                 // eslint-disable-next-line no-console
-                console.log('blur', e, JSON.stringify(this.suggestionsData))
+                console.log("blur", e, JSON.stringify(this.suggestionsData))
             }
             if (!this.suggestionsPopupVisible || !this.$refs.suggestionsPopup) {
                 return
@@ -267,7 +267,9 @@ export const suggestionsPopupMixin = {
     },
     computed: {
         suggestionsPopupVisible() {
-            return this.suggestionsData !== null && !this.suggestionsData.blurred
+            return (
+                this.suggestionsData !== null && !this.suggestionsData.blurred
+            )
         },
         filteredSuggestionOptions() {
             const { searchText } = this.suggestionsData
