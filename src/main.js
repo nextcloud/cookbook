@@ -43,6 +43,8 @@ if (__webpack_use_dev_server__ || false) {
     // Also make the injections available in Vue components
     Vue.prototype.$window = window
     Vue.prototype.OC = OC
+    // eslint-disable-next-line no-undef
+    Vue.prototype.verboseDebugLogging = verboseDebugLogging
 
     // Markdown for Vue
     Vue.use(VueShowdown, {
