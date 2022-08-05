@@ -125,6 +125,7 @@ OC.L10N.register(
     "Keywords" : "關鍵詞",
     "Choose keywords" : "選擇關鍵詞",
     "Servings" : "份量",
+    "Toggle if the number of servings is present" : "顯示份數（如果存在），否則顯示另一個標籤 AFAIU。",
     "Nutrition Information" : "營養資訊",
     "Pick option" : "選取選項",
     "Tools" : "工具",

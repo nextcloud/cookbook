@@ -125,6 +125,7 @@ OC.L10N.register(
     "Keywords" : "Klíčová slova",
     "Choose keywords" : "Vyberte klíčová slova",
     "Servings" : "Porce",
+    "Toggle if the number of servings is present" : "Zapnout pokud je k dispozici počet porcí",
     "Nutrition Information" : "Výživové informace",
     "Pick option" : "Vybrat možnost",
     "Tools" : "Nástroje",

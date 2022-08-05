@@ -125,6 +125,7 @@ OC.L10N.register(
     "Keywords" : "Słowa kluczowe",
     "Choose keywords" : "Wybierz słowa kluczowe",
     "Servings" : "Porcje",
+    "Toggle if the number of servings is present" : "Przełącz jeśli liczba porcji ma być prezentowana",
     "Nutrition Information" : "Informacje o wartości odżywczej",
     "Pick option" : "Wybierz opcję",
     "Tools" : "Przybory",

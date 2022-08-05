@@ -125,6 +125,7 @@ OC.L10N.register(
     "Keywords" : "Schlüsselwörter",
     "Choose keywords" : "Schlüsselwörter auswählen",
     "Servings" : "Portionen",
+    "Toggle if the number of servings is present" : "Umschalten, wenn die Anzahl der Portionen vorhanden ist",
     "Nutrition Information" : "Nährwertangaben",
     "Pick option" : "Option wählen",
     "Tools" : "Utensilien",

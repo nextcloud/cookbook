@@ -125,6 +125,7 @@ OC.L10N.register(
     "Keywords" : "Hitz gakoak",
     "Choose keywords" : "Aukeratu gako-hitzak",
     "Servings" : "Anoak",
+    "Toggle if the number of servings is present" : "Aldatu plater kopurua badago",
     "Nutrition Information" : "Nutrizio informazioa",
     "Pick option" : "Aukeratu",
     "Tools" : "Tresnak",
