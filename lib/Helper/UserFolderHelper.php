@@ -117,7 +117,7 @@ class UserFolderHelper {
 			} catch (NotPermittedException $ex1) {
 				throw new UserFolderNotValidException(
 					$this->l->t('The user folder cannot be created due to missing permissions.'),
-					null,
+					0,
 					$ex1
 				);
 			}

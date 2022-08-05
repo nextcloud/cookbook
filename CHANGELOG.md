@@ -17,6 +17,12 @@
   [#1106](https://github.com/nextcloud/cookbook/pull/1106) @christianlupus
 - Make recipeYield optional
   [#1108](https://github.com/nextcloud/cookbook/pull/1108) @christianlupus
+- Fix UI glitches caused by improper use of Breadcrumbs component
+  [#1105](https://github.com/nextcloud/cookbook/pull/1105) @MarcelRobitaille
+- Fix typos and styling issues
+  [#1112](https://github.com/nextcloud/cookbook/pull/1112) @christianlupus
+- Fix API endpoint used for updating recipes
+  [#1119](https://github.com/nextcloud/cookbook/pull/1119) @MarcelRobitaille
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
@@ -25,6 +31,10 @@
   [#1095](https://github.com/nextcloud/cookbook/pull/1095) @christianlupus
 - Update README with app screenshot and fixed repository links
   [#1102](https://github.com/nextcloud/cookbook/pull/1102) @MarcelRobitaille
+- Cleaned up entry JS code
+  [#1118](https://github.com/nextcloud/cookbook/pull/1118) @christianlupus
+- Create Python based testing wrapper and enhance workflow script
+  [#1137](https://github.com/nextcloud/cookbook/pull/1137) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02

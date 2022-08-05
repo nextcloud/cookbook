@@ -2,24 +2,6 @@
 
 # set -x
 
-trap 'catch $? $LINENO' EXIT
-
-catch()
-{
-	echo '::set-output name=silent-fail::false';
-	
-	if [ "$1" != '0' ]; then
-# 		echo "::error line=$LINENO::Error during the test run: $1"
-		
-		if [ "$ALLOW_FAILURE" = 'true' ]; then
-			echo '::set-output name=silent-fail::true'
-			exit 0
-		else
-			exit $1
-		fi
-	fi
-}
-
 printCI() {
 	if [ "$CI" = 'true' ]; then
 		echo "$@"
@@ -70,6 +52,12 @@ do
 	esac
 	shift
 done
+
+if [ -z "$QUICK_MODE" ]; then
+	QUICK_MODE=n
+fi
+
+export QUICK_MODE
 
 printCI "::group::Test prepatation in container"
 

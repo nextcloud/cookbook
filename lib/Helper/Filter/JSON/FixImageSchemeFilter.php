@@ -22,10 +22,10 @@ class FixImageSchemeFilter extends AbstractJSONFilter {
 	public function apply(array &$json): bool {
 		if (substr($json['image'], 0, 2) === '//') {
 			if (!isset($json['url'])) {
-				throw new InvalidRecipeException($this->l->t('Could not guess image url as no recipe url was found.'));
+				throw new InvalidRecipeException($this->l->t('Could not guess image URL as no recipe URL was found.'));
 			}
 			if (preg_match('/^([a-zA-Z]+:)\/\//', $json['url'], $matches) !== 1) {
-				throw new InvalidRecipeException($this->l->t('Could not guess image url scheme from recipe url %s', [$json['url']]));
+				throw new InvalidRecipeException($this->l->t('Could not guess image URL scheme from recipe URL %s', [$json['url']]));
 			}
 
 			$json['image'] = $matches[1] . $json['image'];

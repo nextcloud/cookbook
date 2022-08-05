@@ -5,39 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Xdebug on 9000 for PHPUnit",
+            "name": "Xdebug on 9000",
             "type": "php",
             "request": "launch",
             "port": 9000,
             "pathMappings": {
-                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}"
-            }
-        },
-        {
-            "name": "Xdebug on 9000 for Live-Test",
-            "type": "php",
-            "request": "launch",
-            "port": 9000,
-            "pathMappings": {
+                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html": "${workspaceFolder:base}"
             }
         },
         {
-            "name": "Xdebug on 9003 for PHPUnit",
+            "name": "Xdebug on 9003",
             "type": "php",
             "request": "launch",
             "port": 9003,
             "pathMappings": {
-                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}"
-            }
-        },
-        {
-            "name": "Xdebug on 9003 for Live-Test",
-            "type": "php",
-            "request": "launch",
-            "port": 9003,
-            "pathMappings": {
+                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html": "${workspaceFolder:base}"
             }

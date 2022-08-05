@@ -10,7 +10,7 @@
             </div>
 
             <div class="meta">
-                <h2>{{ $store.state.recipe.name }}</h2>
+                <h2 class="heading">{{ $store.state.recipe.name }}</h2>
                 <div class="details">
                     <div v-if="recipe.keywords.length">
                         <ul v-if="recipe.keywords.length">
@@ -645,6 +645,10 @@ export default {
     margin: 0 1rem;
 }
 
+.heading {
+    margin-top: 12px;
+}
+
 .dates {
     font-size: 0.9em;
 }
@@ -874,7 +878,7 @@ main {
 
     main {
         grid-column: 3/4;
-        grid-row: 1/4;
+        grid-row: 1/5;
     }
 
     @media screen and (max-width: 850px), print {

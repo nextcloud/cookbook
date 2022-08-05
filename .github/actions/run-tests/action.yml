@@ -8,7 +8,7 @@ inputs:
     phpVersion:
         description: The PHP version to use for the tests
         required: false
-        default: '7'
+        default: '8.0'
     db:
         description: The db type to use
         required: true
@@ -18,45 +18,48 @@ inputs:
     coreVersion:
         description: The version of the NC server core to test against.
         required: true
-    allowFailure:
+    installUntested:
         description: The test may fail
         required: false
-        default: false
+        default: "false"
+    runCodeChecker:
+        description: Setting to true or false to decide if the code checker should run
+        required: false
+        default: "true"
 outputs:
     silentFail:
         description: If the test failed but was allowed to do so
-        value: ${{ steps.run.outputs.silent-fail }}
+        value: ${{ steps.test.outputs.silent-fail }}
 
 runs:
     using: 'composite'
     steps:
-        - name: Trigger the tests
+        - name: Prepare folder for installation
+          shell: bash
+          run: mkdir -p vendor
+        - name: Run all tests
+          shell: bash
+          id: tests
           run: >-
-            mkdir -p vendor &&
+            if [ "${{inputs.db}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
+            if [ "${{ inputs.installUntested }}" = 'true' ]; then PARAM="$PARAM --install-untested"; fi &&
+            if [ "${{ inputs.runCodeChecker }}" = 'true' ]; then PARAM="$PARAM --run-code-checker"; fi &&
             cd .github/actions/run-tests &&
-            export ALLOW_FAILURE=${{ inputs.allowFailure }} &&
-            export INPUT_DB=${{ inputs.db }} &&
-            export PHP_VERSION=${{ inputs.phpVersion }} &&
-            export HTTP_SERVER=${{ inputs.server }} &&
-            export COMPOSE_DOCKER_CLI_BUILD=1 &&
-            ./run-locally.sh
+            ./run-locally.py
+            $PARAM
             --pull
             --create-images
-            --start-helpers
-            --setup-environment ${{ inputs.coreVersion }}
-            --create-env-dump
-            --create-plain-dump plain
-            --install-composer-deps
-            --run-unit-tests --run-integration-tests --run-migration-tests
+            --input-db ${{ inputs.db }}
+            --http-server ${{ inputs.server }}
+            --php-version ${{ inputs.phpVersion }}
+            --create-fixture default ${{ inputs.coreVersion }}
+            --activate-fixture default
+            --run-unit-tests
+            --run-integration-tests
+            --run-migration-tests
             --extract-code-coverage
-            --shutdown-helpers || { failed=$?; } ;
-            if [ -n "$failed" ]; then 
-            echo "test_result=$failed" >> $GITHUB_ENV;
-            else 
-            echo "test_result=0" >> $GITHUB_ENV;
-            fi;
-          shell: bash
-          id: run
+            --install-composer-deps;
+            echo "test_result=$?" >> $GITHUB_ENV
         
         - name: Export the annotations of unit tests to github
           shell: bash

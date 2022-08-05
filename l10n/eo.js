@@ -2,10 +2,9 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "en %s",
-    "Home" : "Hejmo",
-    "Loading…" : "Ŝargado...",
-    "Save changes" : "Konservi ŝanĝojn",
     "Page not found" : "Paĝo ne trovita",
+    "Edit" : "Modifi",
+    "Save" : "Konservi",
     "Search" : "Serĉi",
     "Category" : "Kategorio",
     "Recipe name" : "Nomo de la recepto",
@@ -22,6 +21,7 @@ OC.L10N.register(
     "URL" : "Retadreso",
     "Tools" : "Iloj",
     "Creation date" : "Krea dato",
-    "Last modified" : "laŭ lasta modifo"
+    "Last modified" : "laŭ lasta modifo",
+    "Loading…" : "Ŝargado..."
 },
 "nplurals=2; plural=(n != 1);");

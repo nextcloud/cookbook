@@ -2,7 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "içinə %s",
-    "Home" : "Ev",
+    "Edit" : "Dəyişiklik et",
+    "Save" : "Saxla",
     "Search" : "Axtarış",
     "Tags" : "Işarələr",
     "Rename" : "Adı dəyiş",

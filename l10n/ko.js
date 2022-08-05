@@ -3,12 +3,11 @@ OC.L10N.register(
     {
     "Recipes" : "조리법들",
     "in %s" : "%s",
-    "Home" : "집",
-    "Loading…" : "불러오는 중…",
-    "Save changes" : "변경 사항 저장",
     "Page not found" : "페이지를 찾을 수 없음",
-    "Filter" : "필터",
+    "Edit" : "편집",
+    "Save" : "저장",
     "Search" : "검색",
+    "Filter" : "필터",
     "Category" : "분류",
     "Tags" : "태그",
     "Categories" : "분류",
@@ -22,6 +21,7 @@ OC.L10N.register(
     "Tools" : "도구",
     "Calories" : "칼로리",
     "Modification date" : "수정일",
-    "Last modified" : "수정한 날짜"
+    "Last modified" : "수정한 날짜",
+    "Loading…" : "불러오는 중…"
 },
 "nplurals=1; plural=0;");

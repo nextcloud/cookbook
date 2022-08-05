@@ -64,7 +64,8 @@
                 <action-button
                     class="btn-enable-recipe-yield"
                     :aria-label="
-                        t('cookbook', 'Toggle if recipe yield field is present')
+                        // prettier-ignore
+                        t('cookbook', 'Toggle if the number of servings is present')
                     "
                     @click="toggleShowRecipeYield"
                 >
@@ -112,7 +113,7 @@
                             : 'icon-checkmark'
                     "
                 ></span>
-                {{ t("cookbook", "Save changes") }}
+                {{ t("cookbook", "Save") }}
             </button>
         </div>
     </div>
@@ -572,7 +573,7 @@ export default {
             const $this = this
 
             const request = (() => {
-                if (this.recipe_id) {
+                if (this.$route.params.id ?? false) {
                     return this.$store.dispatch("updateRecipe", {
                         recipe: this.recipeWithCorrectedYield,
                     })

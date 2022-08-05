@@ -2,12 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "در %s",
-    "Home" : "خانه ",
-    "Loading…" : "بار کردن…",
-    "Save changes" : "ذخیره تغییرات",
     "Page not found" : "صفحه یافت نشد",
-    "Filter" : "فیلتر",
+    "Edit" : "ویرایش",
+    "Save" : "ذخیره",
     "Search" : "جستجو کردن",
+    "Filter" : "فیلتر",
     "Category" : "دسته‌بندی",
     "Tags" : "برچسب ها",
     "Categories" : "دسته بندی ها",
@@ -23,6 +22,7 @@ OC.L10N.register(
     "Creation date" : "تاریخ ایجاد",
     "Date created" : "تاریخ ایجاد",
     "Last modified" : "آخرین اصلاح شده",
-    "Source" : "منبع"
+    "Source" : "منبع",
+    "Loading…" : "بار کردن…"
 },
 "nplurals=2; plural=(n > 1);");

@@ -1,11 +1,10 @@
 { "translations": {
     "in %s" : "en %s",
-    "Home" : "Aniciu",
-    "Loading…" : "Cargando...",
-    "Save changes" : "Guardar camudancies",
     "Page not found" : "Nun s'alcontró la páxina",
-    "Filter" : "Peñerar",
+    "Edit" : "Editar",
+    "Save" : "Guardar",
     "Search" : "Search",
+    "Filter" : "Peñerar",
     "Category" : "Estaya",
     "Tags" : "Etiquetes",
     "Categories" : "Estayes",
@@ -15,6 +14,7 @@
     "Name" : "Nome",
     "Description" : "Descripción",
     "URL" : "Url",
-    "Tools" : "Ferramientes"
+    "Tools" : "Ferramientes",
+    "Loading…" : "Cargando..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

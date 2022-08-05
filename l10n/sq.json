@@ -1,11 +1,10 @@
 { "translations": {
     "in %s" : "në %s",
-    "Home" : "Kryefaqja",
-    "Loading…" : "Duke u ngarkuar…",
-    "Save changes" : "Ruaj ndryshimet",
     "Page not found" : "Faqja nuk u gjet ",
-    "Filter" : "Filtro",
+    "Edit" : "Përpuno",
+    "Save" : "Ruaj",
     "Search" : "Kërko",
+    "Filter" : "Filtro",
     "Category" : "Kategori",
     "Tags" : "Etiketat",
     "Categories" : "Kategoritë",
@@ -16,6 +15,7 @@
     "Description" : "Përshkrim",
     "URL" : "Url",
     "Tools" : "Mjete",
-    "Last modified" : "Ndryshuar së fundmi"
+    "Last modified" : "Ndryshuar së fundmi",
+    "Loading…" : "Duke u ngarkuar…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
