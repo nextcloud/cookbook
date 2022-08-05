@@ -39,15 +39,22 @@ jobs:
               run: make appinfo/info.xml
               if: ${{ steps.check.outputs.skip == 'false' }}
               
-            - name: Build and push the image
+            - name: Log into docker regestry as user
               shell: bash
               run: >-
-                cd .github/actions/run-tests &&
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
                 | docker login 
                 --username ${{ secrets.DOCKER_HUB_USERNAME }} 
                 --password-stdin &&
+
+            - name: Build and push the image
+              shell: bash
+              run: >-
+                cd .github/actions/run-tests &&
                 export COMPOSE_DOCKER_CLI_BUILD=1 &&
-                PHP_VERSION=${{ matrix.phpVersion }}
-                ./run-locally.sh --pull --create-images --push-images
+                ./run-locally.py
+                --pull
+                --create-images
+                --push-images
+                --php-version ${{ matrix.phpVersion }}
               if: ${{ steps.check.outputs.skip == 'false' }}
