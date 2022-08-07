@@ -55,6 +55,7 @@ jobs:
                 ./run-locally.py
                 --pull
                 --create-images
+                --pull-php-base-image
                 --push-images
                 --php-version ${{ matrix.phpVersion }}
               if: ${{ steps.check.outputs.skip == 'false' }}
