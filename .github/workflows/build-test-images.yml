@@ -45,7 +45,7 @@ jobs:
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
                 | docker login 
                 --username ${{ secrets.DOCKER_HUB_USERNAME }} 
-                --password-stdin &&
+                --password-stdin
 
             - name: Build and push the image
               shell: bash
