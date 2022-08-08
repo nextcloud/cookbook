@@ -125,7 +125,7 @@ OC.L10N.register(
     "Keywords" : "Anahtar sözcükler",
     "Choose keywords" : "Anahtar sözcükleri seçin",
     "Servings" : "Kaç kişilik",
-    "Toggle if the number of servings is present" : "Porsiyon sayısı varsa değiştirin",
+    "Toggle if the number of servings is present" : "Varsa porsiyon sayısını aç/kapat",
     "Nutrition Information" : "Beslenme bilgileri",
     "Pick option" : "Seçin",
     "Tools" : "Araçlar",
