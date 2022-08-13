@@ -9,6 +9,7 @@
     "Tags" : "Merkelapper",
     "Categories" : "Kategorier",
     "Rename" : "Endre navn",
+    "Enter new category name" : "Skriv inn et nytt kategorinavn",
     "Delete entry" : "Slett oppføring",
     "Add" : "Legg til",
     "Close" : "Lukk",
@@ -16,6 +17,7 @@
     "Description" : "Beskrivelse",
     "URL" : "URL",
     "Tools" : "Verktøy",
+    "Calories" : "Kalorier",
     "Creation date" : "Opprettelses dato",
     "Last modified" : "Sist redigert",
     "Loading…" : "Laster…"

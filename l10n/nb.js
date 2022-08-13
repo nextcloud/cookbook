@@ -11,6 +11,7 @@ OC.L10N.register(
     "Tags" : "Merkelapper",
     "Categories" : "Kategorier",
     "Rename" : "Endre navn",
+    "Enter new category name" : "Skriv inn et nytt kategorinavn",
     "Delete entry" : "Slett oppføring",
     "Add" : "Legg til",
     "Close" : "Lukk",
@@ -18,6 +19,7 @@ OC.L10N.register(
     "Description" : "Beskrivelse",
     "URL" : "URL",
     "Tools" : "Verktøy",
+    "Calories" : "Kalorier",
     "Creation date" : "Opprettelses dato",
     "Last modified" : "Sist redigert",
     "Loading…" : "Laster…"
