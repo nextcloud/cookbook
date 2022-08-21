@@ -2,7 +2,7 @@
 
 #set -x
 
-cd /nextcloud
+cd /var/www/html
 php occ "$@"
 
 exit $?

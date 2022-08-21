@@ -23,6 +23,8 @@
   [#1112](https://github.com/nextcloud/cookbook/pull/1112) @christianlupus
 - Fix API endpoint used for updating recipes
   [#1119](https://github.com/nextcloud/cookbook/pull/1119) @MarcelRobitaille
+- Reactivate step debugging  in PHP
+  [#1160](https://github.com/nextcloud/cookbook/pull/1160) @christianlupus
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
