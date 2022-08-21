@@ -28,7 +28,7 @@
     "prettier-fix": "npx prettier --write src"
   },
   "dependencies": {
-    "@nextcloud/axios": "^1.6.0",
+    "@nextcloud/axios": "^2.0.0",
     "@nextcloud/moment": "^1.1.1",
     "@nextcloud/router": "^2.0.0",
     "@nextcloud/vue": "^5.1.0",
