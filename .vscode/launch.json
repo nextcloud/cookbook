@@ -10,7 +10,6 @@
             "request": "launch",
             "port": 9000,
             "pathMappings": {
-                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html": "${workspaceFolder:base}"
             }
@@ -21,7 +20,6 @@
             "request": "launch",
             "port": 9003,
             "pathMappings": {
-                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html": "${workspaceFolder:base}"
             }

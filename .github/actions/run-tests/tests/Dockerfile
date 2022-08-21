@@ -43,8 +43,8 @@ RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.in
 
 COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
 
-RUN mkdir /nextcloud
-WORKDIR /nextcloud
+RUN mkdir -p /var/www/html
+WORKDIR /var/www/html
 
 COPY entrypoints /entrypoints
 ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "/entrypoints/test.sh"]

@@ -9,7 +9,7 @@ Also the implementation was adopted to the documentation.
 Please migrate your scripts.
 EOF
 
-sleep 2
+# sleep 2
 
 cd "$(dirname "$0")"
 

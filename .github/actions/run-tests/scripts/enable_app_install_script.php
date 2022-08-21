@@ -1,6 +1,6 @@
 <?php
 
-require('/nextcloud/config/config.php');
+require('/var/www/html/config/config.php');
 
 if (!isset($CONFIG['app_install_overwrite'])) {
 	$CONFIG['app_install_overwrite'] = array();
@@ -12,4 +12,4 @@ if (! in_array('cookbook', $CONFIG['app_install_overwrite'])) {
 
 $dump = '<?php' . "\n" . '$CONFIG = ' . var_export($CONFIG, true) . ";\n";
 
-file_put_contents('/nextcloud/config/config.php', $dump);
+file_put_contents('/var/www/html/config/config.php', $dump);

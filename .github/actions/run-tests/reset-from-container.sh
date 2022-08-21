@@ -115,7 +115,7 @@ restore_postgres_sync () {
 # exec >> /output/reset.log 2>&1
 
 echo "Cloning data files"
-rsync --archive --delete --delete-delay "$SF_DIR/data/" /nextcloud/data/
+rsync --archive --delete --delete-delay "$SF_DIR/data/" /var/www/html/data/
 
 echo "Restoring DB"
 case "$INPUT_DB" in

@@ -66,9 +66,9 @@ services:
             - postgres.env
         volumes:
             - ../../..:/cookbook:ro
-            - ./volumes/nextcloud:/nextcloud
-            - ./volumes/data:/nextcloud/data
-            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook
+            - ./volumes/nextcloud:/var/www/html
+            - ./volumes/data:/var/www/html/data
+            - ./volumes/cookbook:/var/www/html/custom_apps/cookbook
             - ./volumes/dumps:/dumps:ro
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
@@ -95,18 +95,18 @@ services:
         image: httpd:alpine
         volumes:
             - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
-            - ./volumes/nextcloud:/nextcloud:ro
-            - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
+            - ./volumes/nextcloud:/var/www/html:ro
+            - ./volumes/data:/var/www/html/data:ro
+            - ./volumes/cookbook:/var/www/html/custom_apps/cookbook:ro
     
     nginx:
         image: nginx:alpine
         #command: [nginx-debug, '-g', 'daemon off;']
         volumes:
             - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
-            - ./volumes/nextcloud:/nextcloud:ro
-            - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
+            - ./volumes/nextcloud:/var/www/html:ro
+            - ./volumes/data:/var/www/html/data:ro
+            - ./volumes/cookbook:/var/www/html/custom_apps/cookbook:ro
         
     www:
         build: www

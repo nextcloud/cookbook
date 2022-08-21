@@ -15,7 +15,7 @@ if not os.path.isfile(logfile):
 	exit(1)
 
 detailsMatcher = re.compile("name='([^']*)' message='([^']*)'.*?details='\s*([^:]*):([0-9]+).*'")
-fileNameMatcher = re.compile("/nextcloud/custom_apps/cookbook/(.*)")
+fileNameMatcher = re.compile("/var/www/html/custom_apps/cookbook/(.*)")
 def parseTestDetails(l):
 	match = detailsMatcher.search(l)
 	ret = {}
