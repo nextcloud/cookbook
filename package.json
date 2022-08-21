@@ -36,7 +36,7 @@
     "linkifyjs": "^3.0.1",
     "lozad": "^1.16.0",
     "sass": "^1.5.0",
-    "sass-loader": "^12.6.0",
+    "sass-loader": "^13.0.2",
     "vue": "^2.6.11",
     "vue-i18n": "^8.17.1",
     "vue-material-design-icons": "^5.1.2",
