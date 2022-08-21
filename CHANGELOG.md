@@ -35,6 +35,8 @@
   [#1118](https://github.com/nextcloud/cookbook/pull/1118) @christianlupus
 - Create Python based testing wrapper and enhance workflow script
   [#1137](https://github.com/nextcloud/cookbook/pull/1137) @christianlupus
+- Update workflow from nextcloud organization template
+  [#1142](https://github.com/nextcloud/cookbook/pull/1142) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02

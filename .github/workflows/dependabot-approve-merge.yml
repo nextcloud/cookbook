@@ -8,25 +8,29 @@ name: Dependabot
 on:
   pull_request_target:
     branches:
+      - main
       - master
+      - stable*
+
+permissions:
+  contents: read
 
 jobs:
   auto-approve-merge:
+    if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
+    permissions:
+      # for hmarr/auto-approve-action to approve PRs
+      pull-requests: write 
 
     steps:
       # Github actions bot approve
       - uses: hmarr/auto-approve-action@v2
-        if: github.actor == 'dependabot[bot]'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # Nextcloud bot approve and merge request
       - uses: ahmadnassri/action-dependabot-auto-merge@v2
-        if: github.actor == 'dependabot[bot]'
         with:
           target: minor
           github-token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
-      
-      - run: "echo 'Skipping PR auto-merge as it is no dependabot PR'"
-        if: github.actor != 'dependabot[bot]'
