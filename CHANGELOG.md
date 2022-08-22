@@ -25,6 +25,8 @@
   [#1119](https://github.com/nextcloud/cookbook/pull/1119) @MarcelRobitaille
 - Reactivate step debugging  in PHP
   [#1160](https://github.com/nextcloud/cookbook/pull/1160) @christianlupus
+- Fix multi-line code entry in some fields during editing
+  [#1162](https://github.com/nextcloud/cookbook/pull/1162) @christianlupus
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions

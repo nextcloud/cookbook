@@ -103,7 +103,6 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 
 		$instructions = array_map(function ($x) {
 			$x = trim($x);
-			$x = preg_replace('/\s+/', ' ', $x);
 			$x = $this->textCleaner->cleanUp($x, false);
 
 			return $x;

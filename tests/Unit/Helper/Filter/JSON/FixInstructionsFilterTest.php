@@ -137,6 +137,11 @@ class FixInstructionsFilterTest extends TestCase {
 			"a\n<p></p><ul><li></li><li></li></ul><p></p>\nb\nc\nd",
 			['a','b','c','d'], true
 		];
+
+		yield 'Instructions with Markdown' => [
+			["a\nb\nc"],
+			["a\nb\nc"], false
+		];
 	}
 
 	/** @dataProvider dpParseInstructions */

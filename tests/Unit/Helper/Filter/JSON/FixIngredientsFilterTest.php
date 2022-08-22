@@ -50,7 +50,6 @@ class FixIngredientsFilterTest extends TestCase {
 		return [
 			[['a','b','c'], ['a','b','c'], false],
 			[[' a  ',''], ['a'], true],
-			[["  a   \tb ",'   c  '],['a b','c'],true],
 		];
 	}
 
