@@ -27,6 +27,8 @@
   [#1160](https://github.com/nextcloud/cookbook/pull/1160) @christianlupus
 - Fix multi-line code entry in some fields during editing
   [#1162](https://github.com/nextcloud/cookbook/pull/1162) @christianlupus
+- Make the API return correct nutrition information objects for recipes
+  [#1163](https://github.com/nextcloud/cookbook/pull/1163) @christianlupus
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions

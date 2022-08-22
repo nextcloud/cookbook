@@ -445,7 +445,7 @@ export default {
             return (
                 this.recipe.nutrition &&
                 !(this.recipe.nutrition instanceof Array) &&
-                Object.keys(this.recipe.nutrition).length > 0
+                Object.keys(this.recipe.nutrition).length > 1
             )
         },
     },

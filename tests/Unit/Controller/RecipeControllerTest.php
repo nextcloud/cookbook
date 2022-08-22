@@ -20,6 +20,7 @@ use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
+use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\Stub;
 
@@ -40,6 +41,9 @@ class RecipeControllerTest extends TestCase {
 	 * @var DbCacheService|MockObject
 	 */
 	private $dbCacheService;
+
+	/** @var RecipeJSONOutputFilter|Stub */
+	private $recipeJSONOutputFilter;
 	/**
 	 * @var RestParameterParser|MockObject
 	 */
@@ -66,9 +70,12 @@ class RecipeControllerTest extends TestCase {
 		$this->recipeService = $this->createMock(RecipeService::class);
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
+		$this->recipeJSONOutputFilter = $this->createStub(RecipeJSONOutputFilter::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
 		$this->request = $this->createMock(IRequest::class);
 		$this->acceptHeaderParser = $this->createStub(AcceptHeaderParsingHelper::class);
+
+		$this->recipeJSONOutputFilter->method('filter')->willReturnArgument(0);
 
 		/**
 		 * @var Stub|IL10N $l
@@ -76,7 +83,7 @@ class RecipeControllerTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
-		$this->sut = new RecipeController('cookbook', $this->request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->restParser, $this->acceptHeaderParser, $l);
+		$this->sut = new RecipeController('cookbook', $this->request, $this->urlGenerator, $this->recipeService, $this->dbCacheService, $this->recipeJSONOutputFilter, $this->restParser, $this->acceptHeaderParser, $l);
 	}
 
 	public function testConstructor(): void {
