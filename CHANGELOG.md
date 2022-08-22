@@ -29,6 +29,8 @@
   [#1162](https://github.com/nextcloud/cookbook/pull/1162) @christianlupus
 - Make the API return correct nutrition information objects for recipes
   [#1163](https://github.com/nextcloud/cookbook/pull/1163) @christianlupus
+- Allow HowToSteps in recipe instructions during importing
+  [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
@@ -45,6 +47,8 @@
   [#1142](https://github.com/nextcloud/cookbook/pull/1142) @christianlupus
 - Remove dependency @nextcloud/auth from explicit dependencies
   [#1149](https://github.com/nextcloud/cookbook/pull/1149) @christianlupus
+- Fix bug in automated test programs
+  [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02

@@ -142,6 +142,23 @@ class FixInstructionsFilterTest extends TestCase {
 			["a\nb\nc"],
 			["a\nb\nc"], false
 		];
+
+		yield 'Array of HoToSteps' => [
+			[
+				[
+					'@type' => 'HowToStep',
+					'text' => 'a',
+				],
+				[
+					'@type' => 'HowToStep',
+					'text' => 'b',
+				],
+				[
+					'@type' => 'HowToStep',
+					'text' => 'c',
+				],
+			], ['a', 'b', 'c'], true
+		];
 	}
 
 	/** @dataProvider dpParseInstructions */
