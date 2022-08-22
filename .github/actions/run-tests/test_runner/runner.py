@@ -66,11 +66,11 @@ class TestRunner:
 
 		sp = p.pr.run(cmd, env=env)
 
-		l.logger.printSetOutput('silent-fail', 'false')
+		l.logger.printSetOutput('silentFail', 'false')
 		if sp.returncode != 0:
 			if args.install_untested:
 				l.logger.printWarning('Failed testing with setting --install-untested')
-				l.logger.printSetOutput('silent-fail', 'true')
+				l.logger.printSetOutput('silentFail', 'true')
 				return 0
 			else:
 				return sp.returncode
