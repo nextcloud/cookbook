@@ -93,6 +93,11 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 					continue;
 				}
 
+				if ($this->jsonService->isSchemaObject($value, 'HowToStep', false)) {
+					$instructions[$key] = [$value['text']];
+					continue;
+				}
+
 				throw new InvalidRecipeException($this->l->t('Cannot parse recipe: Unknown object found during flattening of instructions.'));
 			}
 
