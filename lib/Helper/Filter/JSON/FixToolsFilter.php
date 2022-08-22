@@ -49,8 +49,7 @@ class FixToolsFilter extends AbstractJSONFilter {
 
 		$tools = array_map(function ($t) {
 			$t = trim($t);
-			$t = preg_replace('/\s+/', ' ', $t);
-			$t = $this->textCleaner->cleanUp($t);
+			$t = $this->textCleaner->cleanUp($t, false);
 			return $t;
 		}, $tools);
 		$tools = array_filter($tools, fn ($t) => ($t));

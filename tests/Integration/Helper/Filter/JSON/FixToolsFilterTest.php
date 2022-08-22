@@ -1,8 +1,7 @@
 <?php
 
-namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
+namespace OCA\Cookbook\tests\Integration\Helper\Filter\JSON;
 
-use OCA\Cookbook\Exception\InvalidRecipeException;
 use OCP\IL10N;
 use OCP\ILogger;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +13,7 @@ class FixToolsFilterTest extends TestCase {
 	/** @var FixToolsFilter */
 	private $dut;
 
-	/** @var TextCleanupHelper|Stub */
+	/** @var TextCleanupHelper */
 	private $textCleanupHelper;
 
 	/** @var array */
@@ -28,7 +27,7 @@ class FixToolsFilterTest extends TestCase {
 		/** @var ILogger */
 		$logger = $this->createStub(ILogger::class);
 
-		$this->textCleanupHelper = $this->createStub(TextCleanupHelper::class);
+		$this->textCleanupHelper = new TextCleanupHelper();
 
 		$this->dut = new FixToolsFilter($l, $logger, $this->textCleanupHelper);
 
@@ -38,18 +37,10 @@ class FixToolsFilterTest extends TestCase {
 		];
 	}
 
-	public function testNonExisting() {
-		$recipe = $this->stub;
-		$this->assertTrue($this->dut->apply($recipe));
-
-		$this->stub['tools'] = [];
-		$this->assertEquals($this->stub, $recipe);
-	}
-
 	public function dp() {
 		return [
 			[['a','b','c'], ['a','b','c'], false],
-			[[' a  ',''], ['a'], true],
+			[["  a   \tb ",'   c  '],['a b','c'],true],
 		];
 	}
 
@@ -58,22 +49,10 @@ class FixToolsFilterTest extends TestCase {
 		$recipe = $this->stub;
 		$recipe['tools'] = $startVal;
 
-		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
-
 		$ret = $this->dut->apply($recipe);
 
 		$this->stub['tools'] = $expectedVal;
 		$this->assertEquals($changed, $ret);
 		$this->assertEquals($this->stub, $recipe);
-	}
-
-	public function testApplyString() {
-		$recipe = $this->stub;
-		$recipe['tools'] = 'some text';
-
-		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
-		$this->expectException(InvalidRecipeException::class);
-
-		$this->dut->apply($recipe);
 	}
 }
