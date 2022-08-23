@@ -15,7 +15,6 @@ master_branch=master
 major=$(cat "$deploy_path/major")
 minor=$(cat "$deploy_path/minor")
 patch=$(cat "$deploy_path/patch")
-suffix=$(cat "$deploy_path/suffix")
 
 # release
 message="$(cat "$1")"
@@ -41,53 +40,39 @@ elif echo "$message" | grep '%MINOR%' > /dev/null; then
         
 else
         
-        prerelease="$(parse_pre_release "$message")"
-
-        if [ -n "$suffix" ]; then
-                # The previous version was a pre-release
-
-                if [ -n "$prerelease" ]; then
-                        # A new pre-release should be published
-                        suffix="$prerelease"
-                else
-                        # A real release should be published
-                        suffix=''
-                fi
-        else
-                # The previous release was a real release
-                
-                let patch=$patch+1
-
-                if [ -n "$prerelease" ]; then
-                        # The next release is a pre-release
-                        suffix="$prerelease"
-                fi
-        fi
         echo 'Creating patch version'
         let patch=$patch+1
         
 fi
 
-echo "Updating bumped version files"
-echo $major > "$deploy_path/major"
-echo $minor > "$deploy_path/minor"
-echo $patch > "$deploy_path/patch"
-echo "$suffix" > "$deploy_path/suffix"
-
-git add "$deploy_path/major" "$deploy_path/minor" "$deploy_path/patch" "$deploy_path/suffix"
-
+prerelease="$(parse_pre_release "$message")"
 version="$major.$minor.$patch"
-if [ -n "$suffix" ]; then
-        version="$version-$suffix"
+
+if [ -n "$prerelease" ]; then
+        # We want to build a pre-release
+        echo "Not Updating the version files as we are creating a pre-release."
+        version="$version-$prerelease"
+else
+        echo "Updating bumped version files"
+        echo $major > "$deploy_path/major"
+        echo $minor > "$deploy_path/minor"
+        echo $patch > "$deploy_path/patch"
 fi
-echo "New version is $version."
+
+echo "The new version is $version."
+
+echo "Storing new release version in $deploy_path/last_release"
+echo "$version" > "$deploy_path/last_release"
+
+"$deploy_path/update-data.sh" "$version" "$major" "$minor" "$prerelease"
+
+exit
+
+git add "$deploy_path/major" "$deploy_path/minor" "$deploy_path/patch" "$deploy_path/last_release"
+git add package.json lib/Controller/MainController.php appinfo/info.xml
 
 git config user.name 'Github actions bot'
 git config user.email 'bot@noreply.github.com'
-
-"$deploy_path/update-data.sh"
-
-git add package.json lib/Controller/MainController.php appinfo/info.xml
 
 git commit -s -m "Bump to version $version"
 git tag "v$version"

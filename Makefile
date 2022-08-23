@@ -160,4 +160,4 @@ code_style:
 	npm run prettier-fix
 
 appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major .github/actions/deploy/appinfo/info.xml.dist
-	.github/actions/deploy/update-data.sh
+	.github/actions/deploy/update-data.sh --from-files
