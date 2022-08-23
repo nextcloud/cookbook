@@ -421,7 +421,7 @@ jobs:
         -   name: Install the NPM dependencies
             shell: bash
             run: >-
-                npm install
+                npm ci
         -   name: Install the dependencies for composer
             shell: bash
             run: >-

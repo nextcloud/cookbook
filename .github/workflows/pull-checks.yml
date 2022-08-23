@@ -131,7 +131,7 @@ jobs:
                         ${{ runner.os }}-node-
 
             -   name: Install NPM modules
-                run: npm install
+                run: npm ci
 
             -   name: Perform the test
                 run: |

@@ -51,7 +51,7 @@ jobs:
                     BOT_TOKEN: ${{ secrets.COOKBOOK_BOT_TOKEN }}
             
             -   name: Install the NPM packages
-                run: npm install
+                run: npm ci
 
             -   name: Build NPM
                 run: npm run build
