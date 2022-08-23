@@ -47,13 +47,16 @@ Here is the last chance to do some testing and verification.
 Now the critical part comes.
 As soon as you merge the PR you set the gears into action and a new release will be published both on github and the NC appstore.
 
+#### Regular releases
+
 The version number that is going to be generated **depends on the commit message of the merge commit into `stable`**.
-So before clicking on *Merge* be sure what you are doing.
+So before clicking on *Merge* be sure you know what you are doing.
 
 By default you will generate a new patch version.
 So the third part of our version would be incremented.
 If you want to generate a different version type like minor (second part incremented) or major version (first part incremented), you need to make this visible.
 You have to put a keyword on a line in the commit message to select a version type other than a patch version.
+The following table shows the effect of the keywords if the last version was `1.2.3`.
 
 | Keyword | Version type | Generated version |
 |---|---|---|
@@ -65,10 +68,29 @@ The automatic deployment action will take over once you push to the `stable` bra
 The following actions will take place after the merge:
 
 1. Some fixed parameters will be pre-filled in the codebase with the version number and a commit is generated on the `stable` branch.
-1. A new tag `v1.2.4` is generated to save the current state in history on the `stable` branch.
+1. A new tag `v1.2.4` (or similar) is generated to save the current state in history on the `stable` branch.
 1. The changes introduced in the commit are merged back into the `master` branch.
 1. A github release is published and the compiled files are uploaded as a tarball.
 1. A release in the nextcloud appstore is registered and published.
+
+#### Pre-releases
+It is also possible to publish a pre-release like `1.4.2-beta1` or `4.0.2-rc1`.
+The user/developer is responsible to provide a valid suffix for the pre-release.
+The created pre-release version is **not permanently stored**.
+
+The reasoning of not storing the last pre-release version is that the next regular release (of whatever version level) must not increase the major/minor/patch version multiple times.
+Also it might be required to change from a patch to minor or from minor to major level updates:
+... > `1.2.3` > `1.2.4-rc1` > `1.3.0-rc1` > `1.3.0` > ... .
+
+A pre-release is created by adding additionally to the keywords as described in the [regular releases section](#regular-releases) the additional keyword `%PRE-RELEASE%<suffix>%`.
+The value `<suffix>` will be used as the suffix of the pre-release.
+Assume, you are on version `1.2.3`, the following table explains the resulting release versions:
+
+| Keyword | Generated version |
+|---|---|
+| `%PRE-RELEASE%rc1%` | 1.2.4-rc1 |
+| `%MINOR% %PRE-RELEASE%alpha3%` | 1.3.0-alpha3 |
+| `%PRE-RELEASE%beta.1% %MAJOR%` | 2.0.0-beta.1 |
 
 ## Implementation details
 
