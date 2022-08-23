@@ -2,6 +2,11 @@
 
 # set -x
 
+if [ $# -lt 1 ]; then
+        echo "Please provide the name of a file to read the commit message from"
+        exit 1
+fi
+
 deploy_path='.github/actions/deploy'
 
 stable_branch=stable
@@ -13,7 +18,7 @@ patch=$(cat "$deploy_path/patch")
 suffix=$(cat "$deploy_path/suffix")
 
 # release
-message=$(git log HEAD~1...HEAD --max-count=1 --format='%s%n%b')
+message="$(cat "$1")"
 
 parse_pre_release () {
         echo "$1" | grep -E '%PRE-?RELEASE%' | head -n 1 | sed -E 's@.*%PRE-?RELEASE%([^%]+)%.*@\1@'

@@ -41,9 +41,12 @@ jobs:
                         ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                         ${{ runner.os }}-node-
 
+            -   name: Store the merge commit message in file
+                run: git log HEAD~1...HEAD --max-count=1 --format='%s%n%b' > /tmp/MERGE_COMMIT_MSG
+            
             -   name: Bump the version
                 id: bump
-                run: ./.github/actions/deploy/create-version.sh
+                run: ./.github/actions/deploy/create-version.sh /tmp/MERGE_COMMIT_MSG
                 env:
                     BOT_TOKEN: ${{ secrets.COOKBOOK_BOT_TOKEN }}
             
