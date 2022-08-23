@@ -26,22 +26,20 @@ parse_pre_release () {
 if echo "$message" | grep '%MAJOR%' > /dev/null ; then
         
         echo 'Creating major version'
-        let major=$major+1
+        let major=major+1
         minor=0
         patch=0
-        suffix=''
         
 elif echo "$message" | grep '%MINOR%' > /dev/null; then
         
         echo 'Creating minor version'
         let minor=minor+1
         patch=0
-        suffix=''
         
 else
         
         echo 'Creating patch version'
-        let patch=$patch+1
+        let patch=patch+1
         
 fi
 
@@ -64,12 +62,11 @@ echo "The new version is $version."
 echo "Storing new release version in $deploy_path/last_release"
 echo "$version" > "$deploy_path/last_release"
 
-"$deploy_path/update-data.sh" "$version" "$major" "$minor" "$prerelease"
-
-exit
+"$deploy_path/update-data.sh" "$version" "$major" "$minor" "$patch" "$prerelease"
 
 git add "$deploy_path/major" "$deploy_path/minor" "$deploy_path/patch" "$deploy_path/last_release"
-git add package.json lib/Controller/MainController.php appinfo/info.xml
+
+# exit
 
 git config user.name 'Github actions bot'
 git config user.email 'bot@noreply.github.com'
