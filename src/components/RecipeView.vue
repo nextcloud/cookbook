@@ -782,20 +782,20 @@ aside ul li input[type="checkbox"] {
     vertical-align: middle;
 }
 
-.markdown-description ::v-deep ol > li {
+.markdown-description ::v-deep(ol > li) {
     list-style-type: numbered;
 }
 
-.markdown-description ::v-deep ul > li {
+.markdown-description ::v-deep(ul > li) {
     list-style-type: disc;
 }
 
-.markdown-description ::v-deep ol > li,
-.markdown-description ::v-deep ul > li {
+.markdown-description ::v-deep(ol > li),
+.markdown-description ::v-deep(ul > li) {
     margin-left: 20px;
 }
 
-.markdown-description ::v-deep a {
+.markdown-description ::v-deep(a) {
     text-decoration: underline;
 }
 

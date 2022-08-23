@@ -21,7 +21,7 @@ li {
     margin-left: 1.25em;
 }
 
-.markdown-tool >>> a {
+.markdown-tool:deep(a) {
     text-decoration: underline;
 }
 </style>
