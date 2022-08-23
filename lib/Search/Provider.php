@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\Search;
 
 use OCA\Cookbook\AppInfo\Application;
-use OCA\Cookbook\Db\RecipeDb;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\IL10N;
 use OCP\IUser;
@@ -24,17 +23,16 @@ if (Util::getVersion()[0] >= 20) {
 		/** @var IURLGenerator */
 		private $urlGenerator;
 
-		/** @var RecipeDb */
-		private $recipeDb;
-
 		/** @var RecipeService */
 		private $recipeService;
 
-		public function __construct(IL10n $il10n, IURLGenerator $urlGenerator,
-			RecipeDb $recipeDb, RecipeService $recipeService) {
+		public function __construct(
+			IL10n $il10n,
+			IURLGenerator $urlGenerator,
+			RecipeService $recipeService
+		) {
 			$this->l = $il10n;
 			$this->urlGenerator = $urlGenerator;
-			$this->recipeDb = $recipeDb;
 			$this->recipeService = $recipeService;
 		}
 
@@ -62,7 +60,7 @@ if (Util::getVersion()[0] >= 20) {
 					$id = $recipe['recipe_id'];
 
 					$subline = '';
-					$category = $this->recipeDb->getCategoryOfRecipe($id, $user->getUID());
+					$category = $recipe['category'];
 					if ($category !== null) {
 						// TRANSLATORS Will be shown in search results, listing the recipe category, e.g., 'in Salads'
 						$subline = $this->l->t('in %s', [$category]);

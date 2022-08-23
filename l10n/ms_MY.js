@@ -2,7 +2,8 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "dalam %s",
-    "Home" : "Rumah",
+    "Edit" : "Sunting",
+    "Save" : "Simpan",
     "Search" : "Search",
     "Rename" : "Namakan",
     "Add" : "Tambah",

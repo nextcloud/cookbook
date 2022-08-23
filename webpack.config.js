@@ -10,7 +10,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const webpackConfig = require('@nextcloud/webpack-vue-config')
 const { merge } = require('webpack-merge')
-const { env } = require('process')
+
+const buildMode = process.env.NODE_ENV
+const isDev = buildMode === 'development'
 
 function cookbookConfig (env) {
     const config = merge(webpackConfig, {
@@ -25,11 +27,13 @@ function cookbookConfig (env) {
             new CleanWebpackPlugin(),
             new webpack.DefinePlugin({
                 '__webpack_use_dev_server__': env.dev_server || false,
+                'verboseDebugLogging': isDev && (process.env.VERBOSE || false),
             }),
         ],
         resolve: {
             'alias': {
-                cookbook: path.resolve(__dirname, 'src')
+                cookbook: path.resolve(__dirname, 'src'),
+                icons: path.resolve(__dirname, 'node_modules/vue-material-design-icons'),
             }
         },
     })

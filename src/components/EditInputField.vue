@@ -1,5 +1,5 @@
 <template>
-    <fieldset @keyup="keyPressed">
+    <fieldset>
         <label>
             {{ fieldLabel }}
         </label>
@@ -8,20 +8,45 @@
             ref="inputField"
             v-model="content"
             @input="handleInput"
+            @keydown="keyDown"
+            @keyup="handleSuggestionsPopupKeyUp"
+            @focus="handleSuggestionsPopupFocus"
+            @blur="handleSuggestionsPopupBlur"
+            @mouseup="handleSuggestionsPopupMouseUp"
         />
-        <input
-            v-else
-            ref="inputField"
-            v-model="content"
-            :type="fieldType"
-            @input="handleInput"
+        <div v-else>
+            <slot />
+            <input
+                v-if="!hide"
+                ref="inputField"
+                v-model="content"
+                :type="fieldType"
+                @input="handleInput"
+                @keydown="keyDown"
+                @keyup="handleSuggestionsPopupKeyUp"
+                @focus="handleSuggestionsPopupFocus"
+                @blur="handleSuggestionsPopupBlur"
+                @mouseup="handleSuggestionsPopupMouseUp"
+            />
+        </div>
+        <SuggestionsPopup
+            v-if="suggestionsPopupVisible"
+            ref="suggestionsPopup"
+            v-bind="suggestionsData"
+            :options="filteredSuggestionOptions"
         />
     </fieldset>
 </template>
 
 <script>
+import SuggestionsPopup, { suggestionsPopupMixin } from "./SuggestionsPopup.vue"
+
 export default {
     name: "EditInputField",
+    components: {
+        SuggestionsPopup,
+    },
+    mixins: [suggestionsPopupMixin],
     props: {
         fieldLabel: {
             type: String,
@@ -31,15 +56,16 @@ export default {
             type: String,
             default: "",
         },
-        referencePopupEnabled: {
-            type: Boolean,
-            default: false,
-        },
         // Value (passed in v-model)
         // eslint-disable-next-line vue/require-prop-types
         value: {
             default: "",
             required: true,
+        },
+        hide: {
+            type: Boolean,
+            default: false,
+            required: false,
         },
     },
     data() {
@@ -57,55 +83,10 @@ export default {
         handleInput() {
             this.$emit("input", this.content)
         },
-        /**
-         * Catches # key down presses and opens recipe-references dialog
-         */
-        keyPressed(e) {
-            // Using keyup for trigger will prevent repeat triggering if key is held down
-            if (this.referencePopupEnabled && e.key === "#") {
-                e.preventDefault()
-                // Check if the letter before the hash
-                if (this.fieldType === "markdown") {
-                    // for reference: https://codemirror.net/doc/manual.html#api
-                    const cursorPos = JSON.parse(
-                        JSON.stringify(
-                            this.$refs.inputField.editor.getCursor("start")
-                        )
-                    )
-                    const prevChar = this.$refs.inputField.editor.getRange(
-                        { line: cursorPos.line, ch: cursorPos.ch - 2 },
-                        { line: cursorPos.line, ch: cursorPos.ch - 1 }
-                    )
-                    if (
-                        cursorPos.ch === 1 ||
-                        prevChar === " " ||
-                        prevChar === "\n" ||
-                        prevChar === "\r"
-                    ) {
-                        // beginning of line
-                        this.$parent.$emit("showRecipeReferencesPopup", {
-                            context: this,
-                        })
-                        this.lastCursorPosition = cursorPos
-                    }
-                } else {
-                    const cursorPos = this.$refs.inputField.selectionStart
-                    const content = this.$refs.inputField.value
-                    const prevChar =
-                        cursorPos > 1 ? content.charAt(cursorPos - 2) : ""
-                    if (
-                        cursorPos === 1 ||
-                        prevChar === " " ||
-                        prevChar === "\n" ||
-                        prevChar === "\r"
-                    ) {
-                        // Show dialog to select recipe
-                        this.$parent.$emit("showRecipeReferencesPopup", {
-                            context: this,
-                        })
-                        this.lastCursorPosition = cursorPos
-                    }
-                }
+        keyDown(e) {
+            // Redirect to suggestions handler if in suggestion mode
+            if (this.suggestionsPopupVisible) {
+                this.handleSuggestionsPopupKeyDown(e)
             }
         },
         pasteCanceled() {
@@ -196,13 +177,17 @@ fieldset > label {
     vertical-align: top;
 }
 
-fieldset > input,
+fieldset > div,
 fieldset > textarea {
     width: revert;
     flex: 1;
 }
 
-fieldset > input[type="number"] {
+fieldset > div > input {
+    width: 100%;
+}
+
+fieldset input[type="number"] {
     width: 5em;
     flex-grow: 0;
 }
@@ -223,10 +208,8 @@ fieldset > .editor {
 Hack to overwrite the heavy-handed global unscoped styles of Nextcloud core
 that cause our markdown editor CodeMirror to behave strangely on mobile
 See: https://github.com/nextcloud/cookbook/issues/908
-
-Use /deep/ because >>> did not work for some reason
 */
-.editor /deep/ div[contenteditable="true"] {
+.editor:deep(div[contenteditable="true"]) {
     width: revert;
     min-height: revert;
     padding: revert;

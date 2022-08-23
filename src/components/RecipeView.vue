@@ -10,7 +10,7 @@
             </div>
 
             <div class="meta">
-                <h2>{{ $store.state.recipe.name }}</h2>
+                <h2 class="heading">{{ $store.state.recipe.name }}</h2>
                 <div class="details">
                     <div v-if="recipe.keywords.length">
                         <ul v-if="recipe.keywords.length">
@@ -63,7 +63,7 @@
                             >{{ $store.state.recipe.url }}</a
                         >
                     </p>
-                    <p>
+                    <p v-if="$store.state.recipe.recipeYield != null">
                         <strong>{{ t("cookbook", "Servings") }}: </strong
                         >{{ $store.state.recipe.recipeYield }}
                     </p>
@@ -92,166 +92,152 @@
         </div>
 
         <div v-if="$store.state.recipe" class="content">
-            <section>
-                <aside>
-                    <section>
-                        <h3 v-if="parsedIngredients.length">
-                            {{ t("cookbook", "Ingredients") }}
-                        </h3>
-                        <ul v-if="parsedIngredients.length">
-                            <RecipeIngredient
-                                v-for="(ingredient, idx) in parsedIngredients"
-                                :key="'ingr' + idx"
-                                :ingredient="ingredient"
-                                :recipe-ingredients-have-subgroups="
-                                    recipeIngredientsHaveSubgroups
-                                "
-                            />
-                        </ul>
-                    </section>
+            <section class="container">
+                <section class="ingredients">
+                    <h3 v-if="parsedIngredients.length">
+                        {{ t("cookbook", "Ingredients") }}
+                    </h3>
+                    <ul v-if="parsedIngredients.length">
+                        <RecipeIngredient
+                            v-for="(ingredient, idx) in parsedIngredients"
+                            :key="'ingr' + idx"
+                            :ingredient="ingredient"
+                            :recipe-ingredients-have-subgroups="
+                                recipeIngredientsHaveSubgroups
+                            "
+                        />
+                    </ul>
+                </section>
 
-                    <section>
-                        <h3 v-if="parsedTools.length">
-                            {{ t("cookbook", "Tools") }}
-                        </h3>
-                        <ul v-if="parsedTools.length">
-                            <RecipeTool
-                                v-for="(tool, idx) in parsedTools"
-                                :key="'tool' + idx"
-                                :tool="tool"
-                            />
-                        </ul>
-                    </section>
+                <section class="tools">
+                    <h3 v-if="parsedTools.length">
+                        {{ t("cookbook", "Tools") }}
+                    </h3>
+                    <ul v-if="parsedTools.length">
+                        <RecipeTool
+                            v-for="(tool, idx) in parsedTools"
+                            :key="'tool' + idx"
+                            :tool="tool"
+                        />
+                    </ul>
+                </section>
 
-                    <section v-if="showNutritionData">
-                        <h3>{{ t("cookbook", "Nutrition Information") }}</h3>
-                        <ul class="nutrition-items">
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'servingSize' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['servingSize']
-                                    )
-                                "
-                                :title="t('cookbook', 'Serving Size')"
-                                :data="recipe.nutrition['servingSize']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'calories' in recipe.nutrition &&
-                                    !isNullOrEmpty(recipe.nutrition['calories'])
-                                "
-                                :title="t('cookbook', 'Energy')"
-                                :data="recipe.nutrition['calories']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'sugarContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['sugarContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Sugar')"
-                                :data="recipe.nutrition['sugarContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'carbohydrateContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['carbohydrateContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Carbohydrate')"
-                                :data="recipe.nutrition['carbohydrateContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'cholesterolContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['cholesterolContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Cholesterol')"
-                                :data="recipe.nutrition['cholesterolContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'fiberContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['fiberContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Fiber')"
-                                :data="recipe.nutrition['fiberContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'proteinContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['proteinContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Protein')"
-                                :data="recipe.nutrition['proteinContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'sodiumContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['sodiumContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Sodium')"
-                                :data="recipe.nutrition['sodiumContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'fatContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['fatContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Fat total')"
-                                :data="recipe.nutrition['fatContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'saturatedFatContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['saturatedFatContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Saturated Fat')"
-                                :data="recipe.nutrition['saturatedFatContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'unsaturatedFatContent' in
-                                        recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition[
-                                            'unsaturatedFatContent'
-                                        ]
-                                    )
-                                "
-                                :title="t('cookbook', 'Unsaturated Fat')"
-                                :data="
+                <section v-if="showNutritionData" class="nutrition">
+                    <h3>{{ t("cookbook", "Nutrition Information") }}</h3>
+                    <ul class="nutrition-items">
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'servingSize' in recipe.nutrition &&
+                                !isNullOrEmpty(recipe.nutrition['servingSize'])
+                            "
+                            :title="t('cookbook', 'Serving Size')"
+                            :data="recipe.nutrition['servingSize']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'calories' in recipe.nutrition &&
+                                !isNullOrEmpty(recipe.nutrition['calories'])
+                            "
+                            :title="t('cookbook', 'Energy')"
+                            :data="recipe.nutrition['calories']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'sugarContent' in recipe.nutrition &&
+                                !isNullOrEmpty(recipe.nutrition['sugarContent'])
+                            "
+                            :title="t('cookbook', 'Sugar')"
+                            :data="recipe.nutrition['sugarContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'carbohydrateContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
+                                    recipe.nutrition['carbohydrateContent']
+                                )
+                            "
+                            :title="t('cookbook', 'Carbohydrate')"
+                            :data="recipe.nutrition['carbohydrateContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'cholesterolContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
+                                    recipe.nutrition['cholesterolContent']
+                                )
+                            "
+                            :title="t('cookbook', 'Cholesterol')"
+                            :data="recipe.nutrition['cholesterolContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'fiberContent' in recipe.nutrition &&
+                                !isNullOrEmpty(recipe.nutrition['fiberContent'])
+                            "
+                            :title="t('cookbook', 'Fiber')"
+                            :data="recipe.nutrition['fiberContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'proteinContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
+                                    recipe.nutrition['proteinContent']
+                                )
+                            "
+                            :title="t('cookbook', 'Protein')"
+                            :data="recipe.nutrition['proteinContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'sodiumContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
+                                    recipe.nutrition['sodiumContent']
+                                )
+                            "
+                            :title="t('cookbook', 'Sodium')"
+                            :data="recipe.nutrition['sodiumContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'fatContent' in recipe.nutrition &&
+                                !isNullOrEmpty(recipe.nutrition['fatContent'])
+                            "
+                            :title="t('cookbook', 'Fat total')"
+                            :data="recipe.nutrition['fatContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'saturatedFatContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
+                                    recipe.nutrition['saturatedFatContent']
+                                )
+                            "
+                            :title="t('cookbook', 'Saturated Fat')"
+                            :data="recipe.nutrition['saturatedFatContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'unsaturatedFatContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
                                     recipe.nutrition['unsaturatedFatContent']
-                                "
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'transFatContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['transFatContent']
-                                    )
-                                "
-                                :title="t('cookbook', 'Trans Fat')"
-                                :data="recipe.nutrition['transFatContent']"
-                            />
-                        </ul>
-                    </section>
-                </aside>
+                                )
+                            "
+                            :title="t('cookbook', 'Unsaturated Fat')"
+                            :data="recipe.nutrition['unsaturatedFatContent']"
+                        />
+                        <recipe-nutrition-info-item
+                            v-if="
+                                'transFatContent' in recipe.nutrition &&
+                                !isNullOrEmpty(
+                                    recipe.nutrition['transFatContent']
+                                )
+                            "
+                            :title="t('cookbook', 'Trans Fat')"
+                            :data="recipe.nutrition['transFatContent']"
+                        />
+                    </ul>
+                </section>
+
                 <main v-if="parsedInstructions.length">
                     <h3>{{ t("cookbook", "Instructions") }}</h3>
                     <ol class="instructions">
@@ -459,7 +445,7 @@ export default {
             return (
                 this.recipe.nutrition &&
                 !(this.recipe.nutrition instanceof Array) &&
-                Object.keys(this.recipe.nutrition).length > 0
+                Object.keys(this.recipe.nutrition).length > 1
             )
         },
     },
@@ -621,7 +607,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .wrapper {
     width: 100%;
 }
@@ -657,6 +643,10 @@ export default {
 
 .meta {
     margin: 0 1rem;
+}
+
+.heading {
+    margin-top: 12px;
 }
 
 .dates {
@@ -792,20 +782,20 @@ aside ul li input[type="checkbox"] {
     vertical-align: middle;
 }
 
-.markdown-description >>> ol > li {
+.markdown-description ::v-deep(ol > li) {
     list-style-type: numbered;
 }
 
-.markdown-description >>> ul > li {
+.markdown-description ::v-deep(ul > li) {
     list-style-type: disc;
 }
 
-.markdown-description >>> ol > li,
-.markdown-description >>> ul > li {
+.markdown-description ::v-deep(ol > li),
+.markdown-description ::v-deep(ul > li) {
     margin-left: 20px;
 }
 
-.markdown-description >>> a {
+.markdown-description ::v-deep(a) {
     text-decoration: underline;
 }
 
@@ -864,6 +854,57 @@ main {
 
 .instructions .instruction.done::before {
     content: "✔";
+}
+
+.content > .container {
+    display: grid;
+
+    grid-template-columns: 1fr 1em 2fr;
+
+    .ingredients {
+        grid-column: 1/2;
+        grid-row: 1/2;
+    }
+
+    .tools {
+        grid-column: 1/2;
+        grid-row: 2/3;
+    }
+
+    .nutrition {
+        grid-column: 1/2;
+        grid-row: 3/4;
+    }
+
+    main {
+        grid-column: 3/4;
+        grid-row: 1/5;
+    }
+
+    @media screen and (max-width: 850px), print {
+        grid-template-columns: 1fr;
+
+        .ingredients {
+            // grid-column: 1/2;
+            grid-row: 1/2;
+        }
+
+        .tools {
+            // grid-column: 1/2;
+            grid-row: 2/3;
+        }
+
+        .nutrition {
+            // grid-column: 1/2;
+            grid-row: 4/5;
+        }
+
+        main {
+            width: 100%;
+            grid-column: 1/2;
+            grid-row: 3/4;
+        }
+    }
 }
 </style>
 

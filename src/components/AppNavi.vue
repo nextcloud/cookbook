@@ -443,21 +443,21 @@ export default {
 </script>
 
 <style scoped>
->>> .app-navigation-new button {
+:deep(.app-navigation-new button) {
     min-height: 44px;
     background-image: var(--icon-add-000);
     background-repeat: no-repeat;
 }
 
->>> .app-navigation-entry.recipe {
+:deep(.app-navigation-entry.recipe) {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
     padding-left: 0;
 }
 
 /* stylelint-disable selector-class-pattern */
->>> .app-navigation-entry
-    .app-navigation-entry__children
-    .app-navigation-entry {
+:deep(.app-navigation-entry
+        .app-navigation-entry__children
+        .app-navigation-entry) {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
     padding-left: 0;
 }
@@ -467,10 +467,17 @@ export default {
     box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
 }
 
->>> .app-navigation-entry.recipe:hover,
->>> .app-navigation-entry.router-link-exact-active {
+:deep(.app-navigation-entry.recipe:hover),
+:deep(.app-navigation-entry.router-link-exact-active) {
     box-shadow: inset 4px 0 var(--color-primary);
     opacity: 1;
+}
+
+/* By default, the bar is 44px, and the toggle button margin-right is -44px */
+/* Our top bar has 8px top/bottom padding, so move the toggle button accordingly */
+:deep(button.app-navigation-toggle) {
+    margin-top: 8px;
+    margin-right: -52px !important;
 }
 
 @media print {

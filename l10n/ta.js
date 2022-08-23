@@ -1,7 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
-    "Home" : "அகம்",
+    "Edit" : "தொகுக்க",
+    "Save" : "சேமிக்க ",
     "Search" : "Search",
     "Tags" : "சீட்டுகள்",
     "Rename" : "பெயர்மாற்றம்",

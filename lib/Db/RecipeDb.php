@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Db;
 
+use DateTimeImmutable;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -25,10 +26,10 @@ class RecipeDb {
 	private $l;
 
 	public function __construct(
-			IDBConnection $db,
-			DbTypesPolyfillHelper $polyfillTypes,
-			IL10N $l
-			) {
+		IDBConnection $db,
+		DbTypesPolyfillHelper $polyfillTypes,
+		IL10N $l
+	) {
 		$this->db = $db;
 		$this->types = $polyfillTypes;
 		$this->l = $l;
@@ -58,6 +59,8 @@ class RecipeDb {
 		$ret = [];
 		$ret['name'] = $row['name'];
 		$ret['id'] = $row['recipe_id'];
+		$ret['dateCreated'] = $row['date_created'];
+		$ret['dateModified'] = $row['date_modified'];
 
 		return $ret;
 	}
@@ -91,7 +94,7 @@ class RecipeDb {
 	public function findAllRecipes(string $user_id) {
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->where('r.user_id = :user')
 			->orderBy('r.name');
@@ -102,10 +105,18 @@ class RecipeDb {
 				'k.user_id = :user'
 			)
 		);
+		$qb->leftJoin('r', self::DB_TABLE_CATEGORIES, 'c',
+			$qb->expr()->andX(
+				'c.recipe_id = r.recipe_id',
+				'c.user_id = r.user_id'
+			)
+		);
 
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = $this->mapDbNames($result);
 
 		$result = $this->sortRecipes($result);
 
@@ -113,6 +124,17 @@ class RecipeDb {
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
 
 		return $this->unique($recipesGroupedTags);
+	}
+
+	private function mapDbNames($results) {
+		return array_map(function ($x) {
+			$x['dateCreated'] = $x['date_created'];
+			$x['dateModified'] = $x['date_modified'];
+			unset($x['date_created']);
+			unset($x['date_modified']);
+
+			return $x;
+		}, $results);
 	}
 
 	public function unique(array $result) {
@@ -194,12 +216,12 @@ class RecipeDb {
 				$qb->expr()->andX(
 					'r.user_id = c.user_id',
 					'r.recipe_id = c.recipe_id'
-					)
 				)
+			)
 			->where(
-				$qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->isNull('c.name')
-				);
+			);
 
 		$cursor = $qb->execute();
 		$row = $cursor->fetch();
@@ -229,7 +251,7 @@ class RecipeDb {
 			// for the recipe, but those don't seem to work:
 			// $qb->select(['r.recipe_id', 'r.name', 'GROUP_CONCAT(k.name) AS keywords']) // not working
 			// $qb->select(['r.recipe_id', 'r.name', DB::raw('GROUP_CONCAT(k.name) AS keywords')]) // not working
-			$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
 				->from(self::DB_TABLE_CATEGORIES, 'c')
 				->where('c.name = :category')
 				->andWhere('c.user_id = :user')
@@ -242,7 +264,7 @@ class RecipeDb {
 			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
 			$qb->orderBy('r.name');
 		} else {
-			$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id')
 			->leftJoin(
@@ -252,17 +274,19 @@ class RecipeDb {
 				$qb->expr()->andX(
 					'r.user_id = c.user_id',
 					'r.recipe_id = c.recipe_id'
-					)
 				)
+			)
 			->where(
-				$qb->expr()->eq('r.user_id', $qb->expr()->literal($user_id)),
+				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
 				$qb->expr()->isNull('c.name')
-				);
+			);
 		}
 
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = $this->mapDbNames($result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -279,7 +303,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'kk.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords'])
 		->from(self::DB_TABLE_KEYWORDS, 'k')
 		->where('k.name IN (:keywords)')
 		->andWhere('k.user_id = :user')
@@ -295,6 +319,8 @@ class RecipeDb {
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = $this->mapDbNames($result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -314,7 +340,7 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'k.name AS keywords'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r');
 
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
@@ -347,6 +373,8 @@ class RecipeDb {
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = $this->mapDbNames($result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -432,9 +460,9 @@ class RecipeDb {
 		foreach ($ids as $id) {
 			$qb->orWhere(
 				$qb->expr()->andX(
-					"recipe_id = $id",
-					$qb->expr()->eq("user_id", $qb->expr()->literal($userId))
-					));
+					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)),
+					$qb->expr()->eq("user_id", $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
+				));
 		}
 
 		$qb->execute();
@@ -454,7 +482,9 @@ class RecipeDb {
 			->values([
 				'recipe_id' => ':id',
 				'user_id' => ':userid',
-				'name' => ':name'
+				'name' => ':name',
+				'date_created' => ':dateCreated',
+				'date_modified' => ':dateModified',
 			]);
 
 		$qb->setParameter('userid', $userId);
@@ -462,6 +492,12 @@ class RecipeDb {
 		foreach ($recipes as $recipe) {
 			$qb->setParameter('id', $recipe['id'], $this->types->INT());
 			$qb->setParameter('name', $recipe['name'], $this->types->STRING());
+
+			$dateCreated = $this->parseDate($recipe['dateCreated']);
+			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATE());
+
+			$dateModified = $this->parseDate($recipe['dateModified']);
+			$qb->setParameter('dateModified', $dateModified, $this->types->DATE());
 
 			$qb->execute();
 		}
@@ -472,20 +508,27 @@ class RecipeDb {
 			return;
 		}
 
-		$qb = $this->db->getQueryBuilder();
-
 		foreach ($recipes as $recipe) {
+			$qb = $this->db->getQueryBuilder();
 			$qb->update(self::DB_TABLE_RECIPES)
 				->where('recipe_id = :id', 'user_id = :uid');
 
-			$literal = [];
-			$literal['name'] = $qb->expr()->literal($recipe['name'], IQueryBuilder::PARAM_STR);
-			$qb->set('name', $literal['name']);
+			$qb->set('name', $qb->createNamedParameter($recipe['name'], IQueryBuilder::PARAM_STR));
+
+			$dateCreated = $this->parseDate($recipe['dateCreated']);
+			$dateModified = $this->parseDate($recipe['dateModified']);
+
+			$qb->set('date_created', $qb->createNamedParameter($dateCreated, IQueryBuilder::PARAM_DATE));
+			$qb->set('date_modified', $qb->createNamedParameter($dateModified, IQueryBuilder::PARAM_DATE));
 
 			$qb->setParameter('id', $recipe['id']);
 			$qb->setParameter('uid', $userId);
 
-			$qb->execute();
+			try {
+				$qb->execute();
+			} catch (\Exception $ex) {
+				throw $ex;
+			}
 		}
 	}
 
@@ -536,7 +579,7 @@ class RecipeDb {
 		$qb = $this->db->getQueryBuilder();
 		$qb->update(self::DB_TABLE_CATEGORIES)
 			->where('recipe_id = :rid', 'user_id = :user');
-		$qb->set('name', $qb->expr()->literal($categoryName, IQueryBuilder::PARAM_STR));
+		$qb->set('name', $qb->createNamedParameter($categoryName, IQueryBuilder::PARAM_STR));
 		$qb->setParameter('rid', $recipeId, $this->types->INT());
 		$qb->setParameter('user', $userId, $this->types->STRING());
 		$qb->execute();
@@ -608,13 +651,25 @@ class RecipeDb {
 		foreach ($pairs as $p) {
 			$qb->orWhere(
 				$qb->expr()->andX(
-					$qb->expr()->eq('user_id', $qb->expr()->literal($userId)),
-					$qb->expr()->eq('recipe_id', $qb->expr()->literal($p['recipeId'])),
-					$qb->expr()->eq('name', $qb->expr()->literal($p['name']))
-					)
-				);
+					$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR)),
+					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($p['recipeId'], IQueryBuilder::PARAM_INT)),
+					$qb->expr()->eq('name', $qb->createNamedParameter($p['name'], IQueryBuilder::PARAM_STR))
+				)
+			);
 		}
 
 		$qb->execute();
+	}
+
+	private function parseDate(?string $date) {
+		if (is_null($date)) {
+			return null;
+		}
+
+		try {
+			return new DateTimeImmutable($date);
+		} catch (\Exception $ex) {
+			return new DateTimeImmutable();
+		}
 	}
 }

@@ -2,16 +2,16 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "om %s",
-    "Home" : "Hjem",
-    "Loading…" : "Laster…",
-    "Save changes" : "Lagre endringer",
     "Page not found" : "Siden ble ikke funnet",
-    "Filter" : "Filter",
+    "Edit" : "Rediger",
+    "Save" : "Lagre",
     "Search" : "Søk",
+    "Filter" : "Filter",
     "Category" : "Kategori",
     "Tags" : "Merkelapper",
     "Categories" : "Kategorier",
     "Rename" : "Endre navn",
+    "Enter new category name" : "Skriv inn et nytt kategorinavn",
     "Delete entry" : "Slett oppføring",
     "Add" : "Legg til",
     "Close" : "Lukk",
@@ -19,7 +19,9 @@ OC.L10N.register(
     "Description" : "Beskrivelse",
     "URL" : "URL",
     "Tools" : "Verktøy",
+    "Calories" : "Kalorier",
     "Creation date" : "Opprettelses dato",
-    "Last modified" : "Sist redigert"
+    "Last modified" : "Sist redigert",
+    "Loading…" : "Laster…"
 },
 "nplurals=2; plural=(n != 1);");

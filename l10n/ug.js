@@ -1,7 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
-    "Home" : "ئۆي",
+    "Edit" : "تەھرىر",
+    "Save" : "ساقلا",
     "Search" : "Search",
     "Tags" : "بەلگەلەر",
     "Rename" : "ئات ئۆزگەرت",

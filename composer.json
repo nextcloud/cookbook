@@ -18,5 +18,10 @@
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
         "cs:fix": "./vendor/bin/php-cs-fixer fix",
         "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -not -path './node_modules/*' -not -path './tests/phpunit/*' -print0 | xargs -0 -n1 php -l"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
     }
 }

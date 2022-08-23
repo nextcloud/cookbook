@@ -123,7 +123,7 @@ class HtmlDownloadService {
 		try {
 			$this->downloadHelper->downloadFile($url, $opt);
 		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), null, $ex);
+			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), 0, $ex);
 		}
 
 		$status = $this->downloadHelper->getStatus();

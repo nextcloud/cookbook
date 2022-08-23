@@ -17,8 +17,9 @@ If you want to **help contributing**, please see the [page about contributing](c
 ## Frontend
 
 - [Webpack `BundleAnalyzer` Plugin](frontend/webpack-bundle-analyzer)
-
+- [Hot reload capability for faster frontend development](frontend/hot-reload)
 
 ## Backend
 
 - [API endpoint documentation](api/index)
+- [Automated testing framework](misc/automated-testing/index)

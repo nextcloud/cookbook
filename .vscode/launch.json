@@ -5,16 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Xdebug on 9000 for PHPUnit",
-            "type": "php",
-            "request": "launch",
-            "port": 9000,
-            "pathMappings": {
-                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}"
-            }
-        },
-        {
-            "name": "Xdebug on 9000 for Live-Test",
+            "name": "Xdebug on 9000",
             "type": "php",
             "request": "launch",
             "port": 9000,
@@ -24,16 +15,7 @@
             }
         },
         {
-            "name": "Xdebug on 9003 for PHPUnit",
-            "type": "php",
-            "request": "launch",
-            "port": 9003,
-            "pathMappings": {
-                "/nextcloud/custom_apps/cookbook": "${workspaceFolder:cookbook}"
-            }
-        },
-        {
-            "name": "Xdebug on 9003 for Live-Test",
+            "name": "Xdebug on 9003",
             "type": "php",
             "request": "launch",
             "port": 9003,

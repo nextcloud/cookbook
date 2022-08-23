@@ -36,7 +36,7 @@ class ThumbnailServiceTest extends TestCase {
 			->enableOriginalConstructor()
 			->setConstructorArgs([$l])
 			->getMock()
-			;
+		;
 	}
 
 	public function testGetImage() {

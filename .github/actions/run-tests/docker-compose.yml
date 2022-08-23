@@ -2,14 +2,20 @@ version: "3.2"
 
 services:
     mysql:
-        build: mysql
+        build:
+            context: ./mysql
+            cache_from:
+              - cookbook_unittesting_mysql
         volumes:
             - ./volumes/mysql:/var/lib/mysql
         env_file:
             - mysql.env
             
     postgres:
-        image: postgres:alpine
+        build:
+            context: ./postgres
+            cache_from:
+              - cookbook_unittesting_postgres
         env_file:
             - postgres.env
         volumes:
@@ -60,13 +66,16 @@ services:
             - postgres.env
         volumes:
             - ../../..:/cookbook:ro
-            - ./volumes/nextcloud:/nextcloud
-            - ./volumes/data:/nextcloud/data
-            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook
-            - ./volumes/dumps:/dumps
+            - ./volumes/nextcloud:/var/www/html
+            - ./volumes/data:/var/www/html/data
+            - ./volumes/cookbook:/var/www/html/custom_apps/cookbook
+            - ./volumes/dumps:/dumps:ro
             - ./volumes/coverage:/coverage
             - ./volumes/www/:/www
             - ./volumes/output:/output
+            - /var/run/docker.sock:/var/run/docker.sock
+            - ./volumes/mysql:/db/mysql
+            - ./volumes/postgres:/db/postgres
     
     occ:
         <<: *dut
@@ -86,18 +95,18 @@ services:
         image: httpd:alpine
         volumes:
             - ./config/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro
-            - ./volumes/nextcloud:/nextcloud:ro
-            - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
+            - ./volumes/nextcloud:/var/www/html:ro
+            - ./volumes/data:/var/www/html/data:ro
+            - ./volumes/cookbook:/var/www/html/custom_apps/cookbook:ro
     
     nginx:
         image: nginx:alpine
         #command: [nginx-debug, '-g', 'daemon off;']
         volumes:
             - ./config/nginx/conf.d:/etc/nginx/conf.d:ro
-            - ./volumes/nextcloud:/nextcloud:ro
-            - ./volumes/data:/nextcloud/data:ro
-            - ./volumes/cookbook:/nextcloud/custom_apps/cookbook:ro
+            - ./volumes/nextcloud:/var/www/html:ro
+            - ./volumes/data:/var/www/html/data:ro
+            - ./volumes/cookbook:/var/www/html/custom_apps/cookbook:ro
         
     www:
         build: www

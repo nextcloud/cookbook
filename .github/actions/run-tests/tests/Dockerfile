@@ -10,7 +10,7 @@ RUN apt-get -qq update && \
 	apt-get -qq -y install --no-install-recommends \
 	npm make default-mysql-client postgresql-client \
 	unzip git libfreetype6-dev libpng-dev libjpeg-dev libzip-dev \
-	cmake libpq-dev libsqlite3-dev sudo rsync tini wget > /dev/null && \
+	cmake libpq-dev libsqlite3-dev sudo rsync tini wget docker.io > /dev/null && \
 	apt-get clean
 
 COPY install-php-ini.sh /tmp/install-php-ini.sh
@@ -43,8 +43,8 @@ RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.in
 
 COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
 
-RUN mkdir /nextcloud
-WORKDIR /nextcloud
+RUN mkdir -p /var/www/html
+WORKDIR /var/www/html
 
 COPY entrypoints /entrypoints
 ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoints/default-entrypoint.sh", "/entrypoints/test.sh"]

@@ -33,6 +33,8 @@ class JsonServiceTest extends TestCase {
 		$result = $this->service->isSchemaObject($testData);
 		self::assertFalse($result, 'The object must have a context');
 
+		$this->assertTrue($this->service->isSchemaObject($testData, null, false));
+
 		// Context must be in schema.org domain
 		$testData = [
 			"@context" => "https://schema.com/",
@@ -45,6 +47,7 @@ class JsonServiceTest extends TestCase {
 		];
 		$result = $this->service->isSchemaObject($testData);
 		self::assertFalse($result, 'The object must be in the correct context');
+		$this->assertTrue($this->service->isSchemaObject($testData, null, false), 'Ignore even a bad context');
 
 		// Objects must have a property @type
 		$testData = [
@@ -57,6 +60,7 @@ class JsonServiceTest extends TestCase {
 		];
 		$result = $this->service->isSchemaObject($testData);
 		self::assertFalse($result, 'The object must have the property @type');
+		$this->assertFalse($this->service->isSchemaObject($testData, null, false));
 
 		// No typecheck will be requested
 		$testData = [
@@ -87,6 +91,8 @@ class JsonServiceTest extends TestCase {
 		self::assertTrue($result, 'The type match but it returned false');
 		$result = $this->service->isSchemaObject($testData, 'Foo');
 		self::assertFalse($result, 'The type does not match bat it returned true');
+		$this->assertTrue($this->service->isSchemaObject($testData, 'Thing', false));
+		$this->assertFalse($this->service->isSchemaObject($testData, 'Foo', false));
 	}
 
 	public function testHasProperty() {

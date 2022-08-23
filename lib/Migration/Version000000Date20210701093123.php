@@ -49,7 +49,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 					->where(
 						'user_id = :user',
 						'recipe_id = :recipe'
-						);
+					);
 
 				$qb2 = $this->db->getQueryBuilder();
 				$qb2->update('preferences')
@@ -58,7 +58,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 						'userid = :user',
 						'appid = :app',
 						'configkey = :property'
-						);
+					);
 				$qb2->setParameter('app', 'cookbook');
 				$qb2->setParameter('property', 'last_index_update');
 

@@ -8,7 +8,7 @@ if [ `whoami` = root ]; then
 		echo "Quick mode activated. No permission update is carried out"
 	else
 		echo "Changing ownership of files to runner"
-		chown -R runner: /nextcloud
+		chown -R runner: /var/www/html
 	fi
 	
 	if [ -n "$DEBUG_MODE" ]; then

@@ -75,20 +75,20 @@ li input[type="checkbox"] {
     vertical-align: middle;
 }
 
-.markdown-instruction >>> ol > li {
+.markdown-instruction:deep(ol > li) {
     list-style-type: numbered;
 }
 
-.markdown-instruction >>> ul > li {
+.markdown-instruction:deep(ul > li) {
     list-style-type: disc;
 }
 
-.markdown-instruction >>> ol > li,
-.markdown-instruction >>> ul > li {
+.markdown-instruction:deep(ol > li),
+.markdown-instruction:deep(ul > li) {
     margin-left: 20px;
 }
 
-.markdown-instruction >>> a {
+.markdown-instruction:deep(a) {
     text-decoration: underline;
 }
 </style>

@@ -1,4 +1,7 @@
 
+BUNDLER=bundler
+HOST=127.0.0.1
+
 .PHONY: all
 all: help
 
@@ -12,11 +15,11 @@ help:
 	@echo "  install - Install the ruby packages using bundler"
 
 build:
-	bundle exec jekyll build
+	${BUNDLER} exec jekyll build
 
 watch:
-	bundle exec jekyll serve
+	${BUNDLER} exec jekyll serve --host ${HOST}
 
 install:
-	bundle install
+	${BUNDLER} install
 

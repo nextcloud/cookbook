@@ -92,7 +92,7 @@ li > .ingredient {
     text-indent: -1em;
 }
 
-.ingredient >>> a {
+.ingredient:deep(a) {
     text-decoration: underline;
 }
 </style>

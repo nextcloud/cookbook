@@ -10,7 +10,7 @@
             v-model="recipe['description']"
             :field-type="'markdown'"
             :field-label="t('cookbook', 'Description')"
-            :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <EditInputField
             v-model="recipe['url']"
@@ -58,7 +58,21 @@
             v-model="recipe['recipeYield']"
             :field-type="'number'"
             :field-label="t('cookbook', 'Servings')"
-        />
+            :hide="!showRecipeYield"
+        >
+            <actions>
+                <action-button
+                    class="btn-enable-recipe-yield"
+                    :aria-label="
+                        // prettier-ignore
+                        t('cookbook', 'Toggle if the number of servings is present')
+                    "
+                    @click="toggleShowRecipeYield"
+                >
+                    <template #icon><numeric-icon :size="20" /></template>
+                </action-button>
+            </actions>
+        </EditInputField>
         <EditMultiselectInputGroup
             v-model="recipe['nutrition']"
             :field-label="t('cookbook', 'Nutrition Information')"
@@ -71,7 +85,7 @@
             :field-type="'text'"
             :field-label="t('cookbook', 'Tools')"
             :create-fields-on-newlines="true"
-            :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <EditInputGroup
             v-model="recipe['recipeIngredient']"
@@ -79,7 +93,7 @@
             :field-type="'text'"
             :field-label="t('cookbook', 'Ingredients')"
             :create-fields-on-newlines="true"
-            :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <EditInputGroup
             v-model="recipe['recipeInstructions']"
@@ -88,7 +102,7 @@
             :field-label="t('cookbook', 'Instructions')"
             :create-fields-on-newlines="true"
             :show-step-number="true"
-            :reference-popup-enabled="true"
+            :suggestion-options="allRecipeOptions"
         />
         <div class="cookbook-footer">
             <button class="button" @click="save()">
@@ -99,19 +113,9 @@
                             : 'icon-checkmark'
                     "
                 ></span>
-                {{ t("cookbook", "Save changes") }}
+                {{ t("cookbook", "Save") }}
             </button>
         </div>
-        <edit-multiselect-popup
-            ref="referencesPopup"
-            class="references-popup"
-            :class="{ visible: referencesPopupFocused }"
-            :options="allRecipeOptions"
-            track-by="recipe_id"
-            label="title"
-            :loading="loadingRecipeReferences"
-            :focused="referencesPopupFocused"
-        />
     </div>
 </template>
 
@@ -120,13 +124,16 @@ import Vue from "vue"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
+import NumericIcon from "icons/Numeric.vue"
+
+import Actions from "@nextcloud/vue/dist/Components/Actions"
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"
 import EditInputGroup from "./EditInputGroup.vue"
 import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
-import EditMultiselectPopup from "./EditMultiselectPopup.vue"
 import EditTimeField from "./EditTimeField.vue"
 
 export default {
@@ -138,7 +145,9 @@ export default {
         EditMultiselect,
         EditTimeField,
         EditMultiselectInputGroup,
-        EditMultiselectPopup,
+        Actions,
+        ActionButton,
+        NumericIcon,
     },
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a
@@ -306,8 +315,8 @@ export default {
                 },
             ],
             referencesPopupFocused: false,
-            popupContext: undefined,
             loadingRecipeReferences: true,
+            showRecipeYield: true,
         }
     },
     computed: {
@@ -328,6 +337,13 @@ export default {
                     this.$store.state.categoryUpdating ===
                         this.recipe.recipeCategory)
             )
+        },
+        recipeWithCorrectedYield() {
+            const r = this.recipe
+            if (!this.showRecipeYield) {
+                r.recipeYield = null
+            }
+            return r
         },
     },
     watch: {
@@ -395,25 +411,6 @@ export default {
                 // eslint-disable-next-line prefer-destructuring
                 this.recipe.recipeCategory = val[0]
             }
-        })
-        // Register recipe-reference selection hook for showing popup when requested
-        // from a child element
-        this.$off("showRecipeReferencesPopup")
-        this.$on("showRecipeReferencesPopup", (val) => {
-            this.referencesPopupFocused = true
-            this.popupContext = val
-        })
-        // Register hook when recipe reference has been selected in popup
-        this.$off("ms-popup-selected")
-        this.$on("ms-popup-selected", (opt) => {
-            this.referencesPopupFocused = false
-            this.popupContext.context.pasteString(`r/${opt.recipe_id} `)
-        })
-        // Register hook when recipe reference has been selected in popup
-        this.$off("ms-popup-selection-canceled")
-        this.$on("ms-popup-selection-canceled", () => {
-            this.referencesPopupFocused = false
-            this.popupContext.context.pasteCanceled()
         })
         this.savingRecipe = false
 
@@ -576,13 +573,13 @@ export default {
             const $this = this
 
             const request = (() => {
-                if (this.recipe_id) {
+                if (this.$route.params.id ?? false) {
                     return this.$store.dispatch("updateRecipe", {
-                        recipe: this.recipe,
+                        recipe: this.recipeWithCorrectedYield,
                     })
                 }
                 return this.$store.dispatch("createRecipe", {
-                    recipe: this.recipe,
+                    recipe: this.recipeWithCorrectedYield,
                 })
             })()
 
@@ -690,6 +687,15 @@ export default {
                     this.allCategories.push(this.recipe.recipeCategory)
                 }
 
+                if (this.recipe.recipeYield === null) {
+                    this.showRecipeYield = false
+                } else if (!this.recipe.recipeYield) {
+                    this.showRecipeYield = false
+                    this.recipe.recipeYield = null
+                } else {
+                    this.showRecipeYield = true
+                }
+
                 // Always set the active page last!
                 this.$store.dispatch("setPage", { page: "edit" })
             } else {
@@ -724,6 +730,11 @@ export default {
                 nutrition: {},
             }
             this.formDirty = false
+            this.showRecipeYield = true
+        },
+        toggleShowRecipeYield() {
+            this.showRecipeYield = !this.showRecipeYield
+            this.formDirty = true
         },
     },
 }
@@ -770,5 +781,9 @@ form fieldset ul label input[type="checkbox"] {
 .cookbook-footer {
     margin-top: 3.5em;
     text-align: end;
+}
+
+.btn-enable-recipe-yield {
+    vertical-align: bottom;
 }
 </style>

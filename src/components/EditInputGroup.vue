@@ -19,6 +19,9 @@
                     @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
+                    @focus="handleSuggestionsPopupFocus"
+                    @blur="handleSuggestionsPopupBlur"
+                    @mouseup="handleSuggestionsPopupMouseUp"
                 />
                 <textarea
                     v-else-if="fieldType === 'textarea'"
@@ -28,6 +31,9 @@
                     @keyup="keyUp"
                     @input="handleInput"
                     @paste="handlePaste"
+                    @focus="handleSuggestionsPopupFocus"
+                    @blur="handleSuggestionsPopupBlur"
+                    @mouseup="handleSuggestionsPopupMouseUp"
                 ></textarea>
                 <div class="controls">
                     <button
@@ -51,6 +57,15 @@
                         @click="deleteEntry(idx)"
                     ></button>
                 </div>
+                <SuggestionsPopup
+                    v-if="
+                        suggestionsPopupVisible &&
+                        suggestionsData.fieldIndex === idx
+                    "
+                    ref="suggestionsPopup"
+                    v-bind="suggestionsData"
+                    :options="filteredSuggestionOptions"
+                />
             </li>
         </ul>
         <button class="button add-list-item" @click="addNewEntry()">
@@ -60,6 +75,8 @@
 </template>
 
 <script>
+import SuggestionsPopup, { suggestionsPopupMixin } from "./SuggestionsPopup.vue"
+
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i])
 const findCommonPrefix = (lines) => {
@@ -82,6 +99,10 @@ const findCommonPrefix = (lines) => {
 
 export default {
     name: "EditInputGroup",
+    components: {
+        SuggestionsPopup,
+    },
+    mixins: [suggestionsPopupMixin],
     props: {
         value: {
             type: Array,
@@ -105,10 +126,6 @@ export default {
         },
         // If true, add new fields, for newlines in pasted data
         createFieldsOnNewlines: {
-            type: Boolean,
-            default: false,
-        },
-        referencePopupEnabled: {
             type: Boolean,
             default: false,
         },
@@ -268,6 +285,12 @@ export default {
                 return
             }
 
+            // Redirect to suggestions handler if in suggestion mode
+            if (this.suggestionsPopupVisible) {
+                this.handleSuggestionsPopupKeyDown(e)
+                return
+            }
+
             // Allow new lines with shift key
             if (e.shiftKey) {
                 // Do nothing here, user wants a line break
@@ -318,38 +341,14 @@ export default {
                 return
             }
 
-            // Only do anything for enter or # keys
-            if (!(this.referencePopupEnabled && e.key === "#")) {
-                return
-            }
-
-            // Get the index of the pressed list item
             const $li = e.currentTarget.closest("li")
             const $ul = $li.closest("ul")
             const $pressedLiIndex = Array.prototype.indexOf.call(
                 $ul.childNodes,
                 $li
             )
-
-            // Get the position of the cursor and the content of the input
-            const elm = this.$refs["list-field"][$pressedLiIndex]
-            const cursorPos = elm.selectionStart
-            const content = elm.value
-
-            // Show the popup only if the # was inserted at the very
-            // beggining of the input or after any whitespace character
-            if (
-                !(cursorPos === 1 || /\s/.test(content.charAt(cursorPos - 2)))
-            ) {
-                return
-            }
-
-            // Show dialog to select recipe
-            this.$parent.$emit("showRecipeReferencesPopup", {
-                context: this,
-            })
             this.lastFocusedFieldIndex = $pressedLiIndex
-            this.lastCursorPosition = cursorPos
+            this.handleSuggestionsPopupKeyUp(e)
         },
         moveEntryDown(index) {
             if (index >= this.buffer.length - 1) {
@@ -421,6 +420,7 @@ button {
 }
 
 fieldset {
+    position: relative;
     width: 100%;
     margin-bottom: 1em;
 }

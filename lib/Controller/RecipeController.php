@@ -15,6 +15,7 @@ use OCP\IURLGenerator;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
+use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IL10N;
@@ -34,6 +35,9 @@ class RecipeController extends Controller {
 	 */
 	private $dbCacheService;
 
+	/** @var RecipeJSONOutputFilter */
+	private $outputFilter;
+
 	/**
 	 * @var RestParameterParser
 	 */
@@ -50,20 +54,22 @@ class RecipeController extends Controller {
 	private $l;
 
 	public function __construct(
-			$AppName,
-			IRequest $request,
-			IURLGenerator $urlGenerator,
-			RecipeService $recipeService,
-			DbCacheService $dbCacheService,
-			RestParameterParser $restParser,
-			AcceptHeaderParsingHelper $acceptHeaderParser,
-			IL10N $l
-			) {
+		$AppName,
+		IRequest $request,
+		IURLGenerator $urlGenerator,
+		RecipeService $recipeService,
+		DbCacheService $dbCacheService,
+		RecipeJSONOutputFilter $outputFilter,
+		RestParameterParser $restParser,
+		AcceptHeaderParsingHelper $acceptHeaderParser,
+		IL10N $l
+	) {
 		parent::__construct($AppName, $request);
 
 		$this->service = $recipeService;
 		$this->urlGenerator = $urlGenerator;
 		$this->dbCacheService = $dbCacheService;
+		$this->outputFilter = $outputFilter;
 		$this->restParser = $restParser;
 		$this->acceptHeaderParser = $acceptHeaderParser;
 		$this->l = $l;
@@ -105,6 +111,8 @@ class RecipeController extends Controller {
 
 		$json['printImage'] = $this->service->getPrintImage();
 		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
+
+		$json = $this->outputFilter->filter($json);
 
 		return new DataResponse($json, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 	}

@@ -1,11 +1,10 @@
 { "translations": {
     "in %s" : "dalam %s",
-    "Home" : "Beranda",
-    "Loading…" : "Memuat…",
-    "Save changes" : "Simpan perubahan",
     "Page not found" : "Halaman tidak ditemukan",
-    "Filter" : "Filter",
+    "Edit" : "Sunting",
+    "Save" : "Simpan",
     "Search" : "Cari",
+    "Filter" : "Filter",
     "Category" : "Kategori",
     "Tags" : "Tag",
     "Categories" : "Kategori",
@@ -16,6 +15,7 @@
     "Description" : "Deskrisi",
     "URL" : "URL",
     "Creation date" : "Tanggal pembuatan",
-    "Last modified" : "Terakhir diubah"
+    "Last modified" : "Terakhir diubah",
+    "Loading…" : "Memuat…"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

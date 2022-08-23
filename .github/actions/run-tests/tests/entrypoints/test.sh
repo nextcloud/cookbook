@@ -2,24 +2,6 @@
 
 # set -x
 
-trap 'catch $? $LINENO' EXIT
-
-catch()
-{
-	echo '::set-output name=silent-fail::false';
-	
-	if [ "$1" != '0' ]; then
-# 		echo "::error line=$LINENO::Error during the test run: $1"
-		
-		if [ "$ALLOW_FAILURE" = 'true' ]; then
-			echo '::set-output name=silent-fail::true'
-			exit 0
-		else
-			exit $1
-		fi
-	fi
-}
-
 printCI() {
 	if [ "$CI" = 'true' ]; then
 		echo "$@"
@@ -71,6 +53,12 @@ do
 	shift
 done
 
+if [ -z "$QUICK_MODE" ]; then
+	QUICK_MODE=n
+fi
+
+export QUICK_MODE
+
 printCI "::group::Test prepatation in container"
 
 echo "Synchronizing cookbook codebase"
@@ -79,13 +67,16 @@ rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-delay --delete-exclu
 pushd custom_apps/cookbook
 
 if [ $INSTALL_COMPOSER_DEPS = 'y' ]; then
+	echo "Checking composer compatibility"
+	composer check-platform-reqs
+
 	echo "Installing/updating composer dependencies"
 	composer install
 fi
 
 if [ $BUILD_NPM = 'y' ]; then
 	echo 'Installing NPM packages'
-	npm install
+	npm ci
 	
 	echo 'Building JS folder'
 	npm run build

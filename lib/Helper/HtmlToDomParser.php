@@ -188,7 +188,7 @@ class HtmlToDomParser {
 				case LIBXML_ERR_NONE:
 					break;
 				default:
-				throw new \Exception($this->l->t('Unsupported error level during parsing of XML output.'));
+					throw new \Exception($this->l->t('Unsupported error level during parsing of XML output.'));
 			}
 		}
 	}

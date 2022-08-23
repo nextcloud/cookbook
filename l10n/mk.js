@@ -2,12 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "во %s",
-    "Home" : "Дома",
-    "Loading…" : "Се вчитува…",
-    "Save changes" : "Зачувај ги промените",
     "Page not found" : "Страницата не е пронајдена",
-    "Filter" : "Филтер",
+    "Edit" : "Уреди",
+    "Save" : "Зачувај",
     "Search" : "Барај",
+    "Filter" : "Филтер",
     "Category" : "Категорија",
     "Tags" : "Ознаки",
     "Categories" : "Категории",
@@ -22,6 +21,7 @@ OC.L10N.register(
     "Instructions" : "Инструкции",
     "Date created" : "Датум на креирање",
     "Last modified" : "Скоро изменети",
-    "Source" : "Извор"
+    "Source" : "Извор",
+    "Loading…" : "Се вчитува…"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

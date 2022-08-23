@@ -31,7 +31,7 @@ class ImageService {
 	public function __construct(
 		ImageFileHelper $fileHelper,
 		ThumbnailFileHelper $thumbnailHelper
-		) {
+	) {
 		$this->fileHelper = $fileHelper;
 		$this->thumbnailHelper = $thumbnailHelper;
 	}

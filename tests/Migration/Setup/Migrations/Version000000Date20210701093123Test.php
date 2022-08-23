@@ -65,7 +65,7 @@ class Version000000Date20210701093123Test extends AbstractMigrationTestCase {
 			->where(
 				'appid = :appid',
 				'configkey = :property'
-				);
+			);
 		$qb->setParameter('appid', 'cookbook');
 		$qb->setParameter('property', 'last_index_update');
 
