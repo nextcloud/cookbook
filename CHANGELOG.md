@@ -53,6 +53,8 @@
   [#1159](https://github.com/nextcloud/cookbook/pull/1159) @christianlupus
 - Prepare the generation of pre-releases
   [#1169](https://github.com/nextcloud/cookbook/pull/1169) @christianlupus
+- Corrected usage of npm ci
+  [#1170](https://github.com/nextcloud/cookbook/pull/1170) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02
