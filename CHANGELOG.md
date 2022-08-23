@@ -51,6 +51,8 @@
   [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
 - Update some NPM dependencies and deprecations
   [#1159](https://github.com/nextcloud/cookbook/pull/1159) @christianlupus
+- Prepare the generation of pre-releases
+  [#1169](https://github.com/nextcloud/cookbook/pull/1169) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02
