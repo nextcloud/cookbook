@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@nextcloud/stylelint-config": "^2.1.2",
-    "@nextcloud/webpack-vue-config": "^5.0.0",
+    "@nextcloud/webpack-vue-config": "^5.3.0",
     "check-peer-dependencies": "^4.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.2.0",
