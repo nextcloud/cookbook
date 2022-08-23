@@ -49,6 +49,8 @@
   [#1149](https://github.com/nextcloud/cookbook/pull/1149) @christianlupus
 - Fix bug in automated test programs
   [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
+- Update some NPM dependencies and deprecations
+  [#1159](https://github.com/nextcloud/cookbook/pull/1159) @christianlupus
 
 
 ## 0.9.13 - 2022-07-02
