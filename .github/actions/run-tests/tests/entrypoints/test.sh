@@ -76,7 +76,7 @@ fi
 
 if [ $BUILD_NPM = 'y' ]; then
 	echo 'Installing NPM packages'
-	npm install
+	npm ci
 	
 	echo 'Building JS folder'
 	npm run build
