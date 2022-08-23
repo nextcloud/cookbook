@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.14-beta1 - 2022-08-23
+
 ### Changed
 - Parsing of JSON recipe objects in a cascade of filters
   [#1097](https://github.com/nextcloud/cookbook/pull/1097) @christianlupus
