@@ -34,7 +34,7 @@ git add package.json
 echo "Updating version in main controller"
 version_arr="$major, $minor, $patch"
 if [ -n "$suffix" ]; then
-	version_arr="$version_arr, -$suffix"
+	version_arr="$version_arr, '-$suffix'"
 fi
 sed "/VERSION_TAG/s@[[].*[]]@[$version_arr]@" -i lib/Controller/MainController.php
 git add lib/Controller/MainController.php
