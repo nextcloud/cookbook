@@ -7,7 +7,7 @@
     "No valid recipe was left after heuristics of recipe %s." : "Auch mit heuristischer Suche wurde kein Rezept gefunden %s.",
     "Heuristics failed for image extraction of recipe %s." : "Fehler bei der heuristischen Suche nach einem Bild für das Rezept  %s.",
     "Could not guess image URL as no recipe URL was found." : "Eine Bild-URL konnte nicht ermittelt werden, da keine Rezept-URL gefunden wurde.",
-    "Could not guess image URL scheme from recipe URL %s" : "Ein Bild-URL-Schema konnte nicht aus der Rezept-Url %sermittelt werden.",
+    "Could not guess image URL scheme from recipe URL %s" : "Ein Bild-URL-Schema konnte nicht aus der Rezept-URL %sermittelt werden.",
     "Could not parse recipe ingredients. It is no array." : "Rezept-Zutaten konnten nicht analysiert werden. Kein Array.",
     "Could not parse recipe instructions as they are no array." : "Rezept-Anleitung konnten nicht gelesen werden, da kein Array.",
     "Cannot parse recipe: Unknown object found during flattening of instructions." : "Rezept konnte nicht eingelesen werden: Unbekanntes Objekt beim Reduzieren von Anweisungen gefunden.",
