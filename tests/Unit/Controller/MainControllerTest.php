@@ -96,11 +96,16 @@ class MainControllerTest extends TestCase {
 
 	public function testGetAPIVersion(): void {
 		$ret = $this->sut->getApiVersion();
+
 		$this->assertEquals(200, $ret->getStatus());
 
 		$retData = $ret->getData();
 		$this->assertTrue(isset($retData['cookbook_version']));
-		$this->assertEquals(3, count($retData['cookbook_version']));
+		$this->assertTrue(count($retData['cookbook_version']) === 3 || count($retData['cookbook_version']) === 4);
+		$this->assertTrue(is_int($retData['cookbook_version'][0]));
+		$this->assertTrue(is_int($retData['cookbook_version'][1]));
+		$this->assertTrue(is_int($retData['cookbook_version'][2]));
+
 		$this->assertTrue(isset($retData['api_version']));
 		$this->assertTrue(isset($retData['api_version']['epoch']));
 		$this->assertTrue(isset($retData['api_version']['major']));
