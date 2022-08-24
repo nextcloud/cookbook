@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.9.14-beta2 - 2022-08-24
+
 ### Fixed
 - Correct output of getApiVersion
   [#1175](https://github.com/nextcloud/cookbook/pull/1175) @christianlupus
