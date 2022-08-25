@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Maintenance
+- Reactivate Codecov coverage reporting
+  [#1177](https://github.com/nextcloud/cookbook/pull/1177) @christianlupus
+
 
 ## 0.9.14-beta2 - 2022-08-24
 

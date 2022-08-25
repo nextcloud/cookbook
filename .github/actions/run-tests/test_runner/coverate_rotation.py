@@ -17,6 +17,10 @@ class CoverageRotation:
 		if self.location is None:
 			l.logger.printWarning('No location was stored for rotation')
 			return
+
+		if not os.path.exists(os.readlink('volumes/coverage/latest')):
+			l.logger.printWarning('No new code coverage was generated. Aborting rotation of coverages.')
+			return
 		
 		location = 'volumes/coverage/{name}'.format(name=self.location)
 
