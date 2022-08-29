@@ -1,6 +1,70 @@
 ## [Unreleased]
 
 
+
+## 0.9.14 - 2022-08-29
+
+### Changed
+- Parsing of JSON recipe objects in a cascade of filters
+  [#1097](https://github.com/nextcloud/cookbook/pull/1097) @christianlupus
+- Ordering corrected for mobile and printout versions
+  [#1107](https://github.com/nextcloud/cookbook/pull/1107) @christianlupus
+- Less intrusive sharp popup (suggestion menu for reference autocomplete)
+  [#1098](https://github.com/nextcloud/cookbook/pull/1098) @MarcelRobitaille
+
+### Fixed
+- Prevent slow loading of recipes due to iteration over all files
+  [#1072](https://github.com/nextcloud/cookbook/pull/1072) @christianlupus
+- Fix keyword ordering buttons being clipped by top bar
+  [#1103](https://github.com/nextcloud/cookbook/pull/1103) @MarcelRobitaille
+- Replace print icon with something better recognizable
+  [#1106](https://github.com/nextcloud/cookbook/pull/1106) @christianlupus
+- Make recipeYield optional
+  [#1108](https://github.com/nextcloud/cookbook/pull/1108) @christianlupus
+- Fix UI glitches caused by improper use of Breadcrumbs component
+  [#1105](https://github.com/nextcloud/cookbook/pull/1105) @MarcelRobitaille
+- Fix typos and styling issues
+  [#1112](https://github.com/nextcloud/cookbook/pull/1112) @christianlupus
+- Fix API endpoint used for updating recipes
+  [#1119](https://github.com/nextcloud/cookbook/pull/1119) @MarcelRobitaille
+- Reactivate step debugging  in PHP
+  [#1160](https://github.com/nextcloud/cookbook/pull/1160) @christianlupus
+- Fix multi-line code entry in some fields during editing
+  [#1162](https://github.com/nextcloud/cookbook/pull/1162) @christianlupus
+- Make the API return correct nutrition information objects for recipes
+  [#1163](https://github.com/nextcloud/cookbook/pull/1163) @christianlupus
+- Allow HowToSteps in recipe instructions during importing
+  [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
+- Correct output of getApiVersion
+  [#1175](https://github.com/nextcloud/cookbook/pull/1175) @christianlupus
+
+### Maintenance
+- Add composer.json to version control to have unique installed dependency versions
+  [#1093](https://github.com/nextcloud/cookbook/pull/1093) @christianlupus
+- Update supported PHP versions
+  [#1095](https://github.com/nextcloud/cookbook/pull/1095) @christianlupus
+- Update README with app screenshot and fixed repository links
+  [#1102](https://github.com/nextcloud/cookbook/pull/1102) @MarcelRobitaille
+- Cleaned up entry JS code
+  [#1118](https://github.com/nextcloud/cookbook/pull/1118) @christianlupus
+- Create Python based testing wrapper and enhance workflow script
+  [#1137](https://github.com/nextcloud/cookbook/pull/1137) @christianlupus
+- Update workflow from nextcloud organization template
+  [#1142](https://github.com/nextcloud/cookbook/pull/1142) @christianlupus
+- Remove dependency @nextcloud/auth from explicit dependencies
+  [#1149](https://github.com/nextcloud/cookbook/pull/1149) @christianlupus
+- Fix bug in automated test programs
+  [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
+- Update some NPM dependencies and deprecations
+  [#1159](https://github.com/nextcloud/cookbook/pull/1159) @christianlupus
+- Prepare the generation of pre-releases
+  [#1169](https://github.com/nextcloud/cookbook/pull/1169) @christianlupus
+- Corrected usage of npm ci
+  [#1170](https://github.com/nextcloud/cookbook/pull/1170) @christianlupus
+- Reactivate Codecov coverage reporting
+  [#1177](https://github.com/nextcloud/cookbook/pull/1177) @christianlupus
+
+
 ## 0.9.14-beta2 - 2022-08-24
 
 ### Fixed

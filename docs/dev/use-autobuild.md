@@ -72,8 +72,13 @@ Make yourself comfortable how to restore the backup.
 You need to find the installation folder of the cookbook app in your nextcloud installation.
 This is typically `/apps/cookbook` or `/custom_apps/cookbook` but could be something else if you have a custom path in your `config/config.php`.
 
-I assume you have your cookbook app installed in `apps/cookbook`.
+I assume you have your cookbook app installed in `/apps/cookbook`.
 If your installation is different, you need to change the paths accordingly.
+
+## Optional: Disable previous installation
+
+It might be a good idea to disable the app if you had it pre-installed.
+You can do so by means of `occ app:disable cookbook` or via the web frontend.
 
 ## Remove regular installation
 
@@ -86,7 +91,17 @@ Now you should have an empty folder `/apps/cookbook`.
 Depending on your server you can untar the `cookbook-appstore.tar.gz` file on your server or not.
 Anyways, you need to put the content of the folder `cookbook` in the file into the `/apps/cookbook` folder.
 
+Just to make sure, the paths were not messed up or you did forget a step:
 There should be a folder `/apps/cookbook/appinfo` with a `.xml` file inside.
+
+## (Re-) Activate the app
+
+The app should now be detected by the installer.
+If you [disabled the previous installation](#optional-disable-previous-installation) or if you install from scratch, this is mandatory.
+Again, you can use `occ app:enable cookbook` or the web frontend.
+
+You should be prepared to be presented with a screen that requests an upgrade of the cookbook app upon reloading the app.
+This happens if for example the database structures need an update.
 
 ## Test the code
 

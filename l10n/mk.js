@@ -16,6 +16,7 @@ OC.L10N.register(
     "Name" : "Име",
     "Description" : "Опис",
     "URL" : "Адреса",
+    "Image" : "Слика",
     "Keywords" : "Клучни зборови",
     "Tools" : "Алатки",
     "Instructions" : "Инструкции",

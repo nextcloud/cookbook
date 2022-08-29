@@ -26,10 +26,6 @@ inputs:
         description: Setting to true or false to decide if the code checker should run
         required: false
         default: "true"
-outputs:
-    silentFail:
-        description: If the test failed but was allowed to do so
-        value: ${{ steps.test.outputs.silent-fail }}
 
 runs:
     using: 'composite'
