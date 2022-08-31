@@ -36,5 +36,5 @@ version_arr="$major, $minor, $patch"
 if [ -n "$suffix" ]; then
 	version_arr="$version_arr, '-$suffix'"
 fi
-sed "/VERSION_TAG/s@[[].*[]]@[$version_arr]@" -i lib/Controller/MainController.php
+sed "/VERSION_TAG/s@[[].*[]]@[$version_arr]@" -i lib/Controller/UtilApiController.php
 git add lib/Controller/MainController.php

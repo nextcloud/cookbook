@@ -14,7 +14,6 @@ return [
 		 * If you add new features here, increase the minor version of the API.
 		 * If you change the behavior or remove functionality, increase the major version there.
 		 */
-		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
 		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'main#keywords', 'url' => '/keywords', 'verb' => 'GET'],
 		['name' => 'main#categories', 'url' => '/categories', 'verb' => 'GET'],
@@ -28,10 +27,29 @@ return [
 		['name' => 'main#categoryUpdate', 'url' => '/api/category/{category}', 'verb' => 'PUT'],
 		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
 		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
+
+		/* API routes */
+
+		['name' => 'util_api#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
+
+		['name' => 'recipe_api#image', 'url' => '/api/v1/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'recipe_api#import', 'url' => '/api/v1/import', 'verb' => 'POST'],
+		['name' => 'keyword_api#keywords', 'url' => '/api/v1/keywords', 'verb' => 'GET'],
+		['name' => 'category_api#categories', 'url' => '/api/v1/categories', 'verb' => 'GET'],
+		['name' => 'category_api#rename', 'url' => '/api/v1/category/{category}', 'verb' => 'PUT'],
+		['name' => 'config_api#list', 'url' => '/api/v1/config', 'verb' => 'GET'],
+		['name' => 'config_api#config', 'url' => '/api/v1/config', 'verb' => 'POST'],
+		['name' => 'config_api#reindex', 'url' => '/api/v1/reindex', 'verb' => 'POST'],
+		['name' => 'recipe_api#category', 'url' => '/api/v1/category/{category}', 'verb' => 'GET'],
+		['name' => 'recipe_api#tags', 'url' => '/api/v1/tags/{keywords}', 'verb' => 'GET'],
+		['name' => 'recipe_api#search', 'url' => '/api/v1/search/{query}', 'verb' => 'GET'],
+
+		['name' => 'util_api#preflighted_cors', 'url' => '/api/{path}', 'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 	],
 
 	/* API resources */
 	'resources' => [
-		'recipe' => ['url' => '/api/recipes']
+		'recipe' => ['url' => '/api/recipes'],
+		'recipe_api' => ['url' => '/api/v1/recipes'],
 	]
 ];
