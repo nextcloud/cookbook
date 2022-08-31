@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Documentation
+- Defining new API interface to fix security issue
+  [#1186](https://github.com/nextcloud/cookbook/pull/1186) @christianlupus
 
 
 ## 0.9.14 - 2022-08-29
