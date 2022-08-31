@@ -24,7 +24,7 @@ So you might want to create a branch `release/1.2.4` from master.
 git checkout -b release/1.2.4 master
 ```
 
-### Update the changelog
+### Update the changelogs
 
 In the release branch you will have to prepare the changelog file.
 This means, you have to add a new second level heading to the unreleased changes so far.
@@ -33,6 +33,9 @@ You might need to add
 ## 1.2.4 - YYYY-mm-dd
 ```
 as one of the first few lines with `YYYY-mm-dd` the current date.
+
+Also check if any pending API change is present.
+Update the API changelog (in `/docs/dev/api/changelog/*.md`) accordingly.
 
 Commit the changes and push them to github.
 

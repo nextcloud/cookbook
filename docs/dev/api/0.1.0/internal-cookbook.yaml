@@ -1,0 +1,514 @@
+openapi: 3.0.1
+info:
+  title: Nextcloud cookbook app
+  description: >-
+    This is the internal API definition of the [cookbook app](https://github.com/nextcloud/cookbook) webapp for the [nextcloud server](http://nextcloud.com).
+    
+    
+    The total API is separated into two parts:
+
+    - There is the public API part that can be used from 3rd party apps and scripts.
+
+    - There is the internal API that is used only by the web app of the cookbook app. This is described here.
+    
+
+    The internal part is intended only to be used by the internal web app.
+    It uses session based authentication and thus requires a `requesttoken` to protect against CSRF attacks.
+    The generation and updating of these tokens is not part of the app but the regular browser capabilities and the nextcloud web frontend is used here instead.
+
+
+    In contrast, the External APIs are intended for use by external services.
+    These endpoints require the user credentials to be present in every request.
+    Thus, no session is created and no cookies or similar needs to be handled.
+    Technically, there is a CORS preflight possible but it is not required for the function of the endpoints.
+
+    
+    Further contact can be found on the matrix.org server in the room [#nextcloud-cookbook:matrix.org](https://matrix.to/#/#nextcloud-cookbook:matrix.org) for general questions.
+    Additionally, there is [#nextcloud-cookbook-integration:matrix.org](https://matrix.to/#/#nextcloud-cookbook-integration:matrix.org) for questions related to the API and third party integration.
+    Further information on the different versions can be found in [the API overview page](https://nextcloud.github.io/cookbook/dev/api/index).
+  #contact:
+    #email: apiteam@swagger.io
+  license:
+    name: AGPL-3
+    url: 'http://www.gnu.org/licenses/agpl-3.0.de.html'
+  version: 0.1.0
+
+#externalDocs:
+#  description: Find out more about Swagger
+#  url: 'http://swagger.io'
+
+servers:
+  - url: 'http://localhost:8000/apps/cookbook'
+  - url: '{protocol}://{server}'
+    variables:
+      protocol:
+        enum:
+          - http
+          - https
+        default: https
+      server:
+        default: 'example.com'
+
+tags:
+  # - name: External API v1 - Recipes
+  #   description: Querying and manipulating recipes using external APIs
+  # - name: External API v1 - Categories
+  #   description: Access to the categories of recipes using external APIs
+  # - name: External API v1 - Tags
+  #   description: Access to tags/keywords of recipes using external APIs
+  # - name: External API v1 - Misc
+  #   description: Other API endpoints for use by external APIs
+
+  - name: Recipes
+    description: Everything related to recipes and their usage
+  - name: Categories
+    description: Access to the categories of the recipes
+  - name: Tags
+    description: Access to tags/keywords of recipes
+  - name: Misc
+    description: Other API endpoints
+
+
+
+components:
+  
+  schemas:
+    Config:
+      $ref: objects.yaml#/Config
+    Error:
+      $ref: objects.yaml#/Error
+    RecipeStub:
+      $ref: objects.yaml#/RecipeStub
+    StubList:
+      $ref: objects.yaml#/StubList
+    Recipe:
+      $ref: objects.yaml#/Recipe
+  
+  securitySchemes:
+    # app_password:
+    #   type: http
+    #   scheme: basic
+    #   description: Use username and app password
+    requesttoken:
+      type: apiKey
+      name: requestkey
+      in: header
+    session:
+      type: apiKey
+      in: cookie
+      name: nc_session_id
+
+security:
+  - requesttoken: []
+    session: []
+
+paths:
+  
+  /webapp/reindex:
+    post:
+      tags: [ Misc ]
+      summary: Trigger a rescan of all recipes into the caching database
+      responses:
+        200:
+          description: The reindex process was done.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Search index rebuilt successfully
+  /webapp/config:
+    get:
+      tags: [ Misc ]
+      summary: Get the current configuration of the app
+      responses:
+        200:
+          description: The config was read successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Config"
+    post:
+      tags: [ Misc ]
+      summary: Set the configuration for the current user
+      responses:
+        200:
+          description: The configuration was successfully saved.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: OK
+  
+  /webapp/import:
+    post:
+      tags: [ Recipes ]
+      summary: Import a recipe using schema.org metadata from a website
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: 'http://www.chefkoch.de/2345'
+              required:
+                - url
+      responses:
+        200:
+          description: Successfully imported recipe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        400:
+          description: The URL to be imported was not inserted in the request or any other issue was rosen.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Field "url" is required
+        409:
+          description: There exists a recipe with that name already. Import was aborted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /webapp/recipes/{id}/image:
+    get:
+      tags: [ Recipes ]
+      summary: Get the main image of a recipe. If no image is stored a fallback image is delivered.
+      parameters:
+        - in: path
+          name: id
+          description: The id of the recipe to obtain the image for.
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Image was obtained and will be in response either as image/jpeg or image/svg+xml
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/svg+xml:
+              schema:
+                type: string
+                format: binary
+        406:
+          description: The recipe has no image whose MIME type matches the Accept header
+  /webapp/search/{query}:
+    parameters:
+      - in: path
+        name: query
+        required: true
+        description: The search string, urlencoded, separated with spaces and/or commas
+        schema:
+          type: string
+    get:
+      tags: [ Recipes ]
+      summary: Search for recipes for keywords, tags and categories with the named search string
+      responses:
+        200:
+          description: The recipes were obtained successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StubList"
+        500:
+          description: An error has been thrown
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error message
+  /webapp/recipes:
+    get:
+      tags: [ Recipes ]
+      summary: Get all recipes in the database
+      responses:
+        200:
+          description: Successfully obtained all recipes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StubList"
+    post:
+      tags: [ Recipes ]
+      summary: Create a new recipe
+      requestBody:
+        description: |
+          A JSON representation of the recipe to be saved.
+          
+          See also the structure at https://schema.org/Recipe
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+              required: [ "name" ]
+              additionalProperties: true
+              example:
+                name: "Chips"
+                description: "A very delicious way of getting kids quiet"
+                ingredients:
+                  - "1 pack of pre-fried chips"
+                tools: ["common oven"]
+                instructions:
+                  - "Put the chips in the oven"
+                  - "Wait until the are due"
+      responses:
+        200:
+          description: Successfully created new recipe
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 2462
+                description: The id of the newly created recipe
+        409:
+          description: A recipe with the name was already found on the server. No recipe is created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        422:
+          description: There was no name in the request given for the recipe. Cannot save the recipe.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /webapp/recipes/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        description: The id of the recipe
+        schema:
+          type: integer
+    get:
+      tags: [ Recipes ]
+      summary: Get a single recipe from the server
+      responses:
+        200:
+          description: Recipe was sucessfully obtained
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        404:
+          description: The given recipe id was not found
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 2345
+                description: The id of the recipe that was not found
+    put:
+      tags: [ Recipes ]
+      summary: Update a recipe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Recipe"
+      responses:
+        200:
+          description: The recipe was sucessfully updated
+          content:
+            application/json:
+              schema:
+                type: integer
+                description: The id of the updated recipe
+                example: 2345
+        422:
+          description: There was no name in the request given for the recipe. Cannot save the recipe.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        
+    delete:
+      tags: [ Recipes ]
+      summary: Delete an existing recipe
+      responses:
+        200:
+          description: The recipe was deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Recipe 2345 was deletes successfully
+        502:
+          description: An Exception was thrown
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Recipe with id 2345 was not found.
+                description: Error message
+  
+  /webapp/keywords:
+    get:
+      tags: [ Tags ]
+      summary: Get all known keywords
+      responses:
+        '200':
+          description: Successfully obtained all keywords
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    recipe_count:
+                      type: integer
+                  required:
+                    - name
+                    - recipe_count
+              example:
+                - name: vegetarian
+                  recipe_count: 5
+                - name: sugar-free
+                  recipe_count: 2
+  /webapp/tags/{keywords}:
+    get:
+      tags: [ Tags ]
+      summary: Get all recipes associated with certain keywords
+      parameters:
+        - in: path
+          name: keywords
+          required: true
+          description: Comma separated list of keywords, urlencoded
+          schema:
+            type: string
+            example: vegetarian,sweet
+      responses:
+        200:
+          description: Recipes were successfully obtained
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StubList"
+        500:
+          description: An error occured
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "SQLException: Something went wrong."
+  
+  /webapp/categories:
+    get:
+      tags: [ Categories ]
+      summary: Get all known categories
+      responses:
+        200:
+          description: >-
+            Sucessfully obtained all categories
+            
+            
+            Please note: A category name of `*` indicates the number of
+            recipes with no category associated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    recipe_count:
+                      type: integer
+                  required:
+                    - name
+                    - recipe_count
+              example:
+                - name: Dinner
+                  recipe_count: 21
+                - name: Lunch
+                  recipe_count: 10
+                - name: '*'
+                  recipe_count: 3
+  /webapp/category/{category}:
+    get:
+      tags: [ Categories ]
+      summary: Get all recipes of a certain category
+      parameters:
+        - in: path
+          name: category
+          required: true
+          description: >-
+            The name of the category to be queried as urlencoded string
+            
+            
+            Put the string `_` to obtain all recipes with no category
+          schema:
+            type: string
+      responses:
+        200:
+          description: The filtered recipes belonging to the category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StubList"
+        500:
+          description: An exception was issued.
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error message
+                example: Could not find category foo.
+    put:
+      tags: [ Categories ]
+      summary: Rename a category
+      parameters:
+        - in: path
+          name: category
+          required: true
+          description: >-
+            The name of the category to be queried as urlencoded string
+            
+            
+            Put the string `_` to obtain all recipes with no category
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Lunch
+                  description: The new name to rename the category to
+              required:
+                - name
+      responses:
+        200:
+          description: The category was renamed successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Lunch
+        400:
+          description: The new category name was not included during the request.
+        500:
+          description: The renaming did not succeed.
+          content:
+            application/json:
+              schema:
+                type: string
+                description: The error message
+                example: There exists already a category of that name.
