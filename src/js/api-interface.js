@@ -2,46 +2,46 @@ import axios from "@nextcloud/axios"
 
 import { generateUrl } from "@nextcloud/router"
 
-const baseUrl = generateUrl("apps/cookbook")
+const baseUrl = `${generateUrl("apps/cookbook")}/webapp`
 
 function createNewRecipe(recipe) {
     return axios({
         method: "POST",
-        url: `${baseUrl}/api/recipes`,
+        url: `${baseUrl}/recipes`,
         data: recipe,
     })
 }
 
 function getRecipe(id) {
-    return axios.get(`${baseUrl}/api/recipes/${id}`)
+    return axios.get(`${baseUrl}/recipes/${id}`)
 }
 
 function getAllRecipes() {
-    return axios.get(`${baseUrl}/api/recipes`)
+    return axios.get(`${baseUrl}/recipes`)
 }
 
 function getAllRecipesOfCategory(categoryName) {
-    return axios.get(`${baseUrl}/api/category/${categoryName}`)
+    return axios.get(`${baseUrl}/category/${categoryName}`)
 }
 
 function getAllRecipesWithTag(tags) {
-    return axios.get(`${baseUrl}/api/tags/${tags}`)
+    return axios.get(`${baseUrl}/tags/${tags}`)
 }
 
 function searchRecipes(search) {
-    return axios.get(`${baseUrl}/api/search/${search}`)
+    return axios.get(`${baseUrl}/search/${search}`)
 }
 
 function updateRecipe(id, recipe) {
     return axios({
         method: "PUT",
-        url: `${baseUrl}/api/recipes/${id}`,
+        url: `${baseUrl}/recipes/${id}`,
         data: recipe,
     })
 }
 
 function deleteRecipe(id) {
-    return axios.delete(`${baseUrl}/api/recipes/${id}`)
+    return axios.delete(`${baseUrl}/recipes/${id}`)
 }
 
 function importRecipe(url) {
@@ -59,7 +59,7 @@ function getAllCategories() {
 function updateCategoryName(oldName, newName) {
     return axios({
         method: "PUT",
-        url: `${baseUrl}/api/category/${encodeURIComponent(oldName)}`,
+        url: `${baseUrl}/category/${encodeURIComponent(oldName)}`,
         data: { name: newName },
     })
 }

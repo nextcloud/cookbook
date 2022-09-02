@@ -4,14 +4,17 @@ namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCP\IRequest;
-use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\FileDisplayResponse;
 
-class RecipeController extends Controller {
+class RecipeApiController extends ApiController {
 	/** @var RecipeImplementation */
 	private $impl;
 
 	public function __construct(
-		$AppName,
+		string $AppName,
 		IRequest $request,
 		RecipeImplementation $recipeImplementation
 	) {
@@ -22,6 +25,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 */
 	public function index() {
 		return $this->impl->index();
@@ -29,6 +34,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 * @param int $id
 	 * @return JSONResponse
 	 */
@@ -40,6 +47,8 @@ class RecipeController extends Controller {
 	 * Update an existing recipe.
 	 *
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 * @param $id
 	 * @return JSONResponse
 	 * @todo Parameter id is never used. Fix that
@@ -52,6 +61,8 @@ class RecipeController extends Controller {
 	 * Create a new recipe.
 	 *
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * @return JSONResponse
 	 */
@@ -61,6 +72,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 * @param int $id
 	 * @return JSONResponse
 	 */
@@ -71,6 +84,7 @@ class RecipeController extends Controller {
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
+	 * @CORS
 	 * @param $id
 	 * @return JSONResponse|FileDisplayResponse|DataDisplayResponse
 	 */
@@ -80,6 +94,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 */
 	public function import() {
 		return $this->impl->import();
@@ -87,6 +103,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 * @param string $query
 	 * @return JSONResponse
 	 */
@@ -96,6 +114,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 * @param string $category
 	 * @return JSONResponse
 	 */
@@ -107,6 +127,8 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 * @param string $keywords
 	 * @return JSONResponse
 	 */

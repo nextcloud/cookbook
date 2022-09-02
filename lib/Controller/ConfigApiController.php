@@ -2,12 +2,12 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCP\IRequest;
-use OCP\AppFramework\Controller;
-
 use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
+use OCP\IRequest;
+use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\JSONResponse;
 
-class ConfigController extends Controller {
+class ConfigApiController extends ApiController {
 	/** @var ConfigImplementation */
 	private $implementation;
 
@@ -23,6 +23,8 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * @return JSONResponse
 	 */
@@ -32,6 +34,8 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * @return JSONResponse
 	 */
@@ -41,6 +45,8 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
+	 * @CORS
 	 *
 	 * @return JSONResponse
 	 */
