@@ -3,13 +3,10 @@
 namespace OCA\Cookbook\Controller;
 
 use OCP\IRequest;
-use OCP\IURLGenerator;
 use OCP\Util;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\AppFramework\Controller;
-use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserFolderHelper;

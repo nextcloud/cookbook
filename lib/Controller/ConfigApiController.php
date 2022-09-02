@@ -8,7 +8,6 @@ use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\JSONResponse;
 
 class ConfigApiController extends ApiController {
-
 	/** @var ConfigImplementation */
 	private $implementation;
 
@@ -26,7 +25,7 @@ class ConfigApiController extends ApiController {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @CORS
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function list() {
@@ -37,7 +36,7 @@ class ConfigApiController extends ApiController {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @CORS
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function config() {
@@ -48,7 +47,7 @@ class ConfigApiController extends ApiController {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @CORS
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function reindex() {

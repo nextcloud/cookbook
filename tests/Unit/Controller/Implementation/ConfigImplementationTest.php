@@ -2,7 +2,6 @@
 
 namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
-use OCP\IRequest;
 use ReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use OCP\AppFramework\Http\Response;

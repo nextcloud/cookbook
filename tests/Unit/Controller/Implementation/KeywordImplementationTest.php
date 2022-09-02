@@ -55,5 +55,4 @@ class KeywordImplementationTest extends TestCase {
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals($kw, $ret->getData());
 	}
-
 }

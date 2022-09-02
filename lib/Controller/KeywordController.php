@@ -4,10 +4,7 @@ namespace OCA\Cookbook\Controller;
 
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\ApiController;
-use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
 
 class KeywordController extends Controller {
@@ -25,7 +22,7 @@ class KeywordController extends Controller {
 	}
 	/**
 	 * @NoAdminRequired
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function keywords() {

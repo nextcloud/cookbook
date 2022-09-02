@@ -21,7 +21,7 @@ class KeywordImplementation {
 	}
 	/**
 	 * List all available keywords.
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function index() {

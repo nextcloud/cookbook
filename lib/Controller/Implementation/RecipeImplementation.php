@@ -75,7 +75,7 @@ class RecipeImplementation {
 
 	/**
 	 * Fetch a single recipe
-	 * 
+	 *
 	 * @param int $id
 	 * @return JSONResponse
 	 */
@@ -155,7 +155,7 @@ class RecipeImplementation {
 
 	/**
 	 * Remove a recipe
-	 * 
+	 *
 	 * @param int $id The ifd of the recipe in question
 	 * @return JSONResponse
 	 */
@@ -172,7 +172,7 @@ class RecipeImplementation {
 
 	/**
 	 * Get the image associated with a recipe
-	 * 
+	 *
 	 * @param $id The id of the recipe
 	 * @return JSONResponse|FileDisplayResponse|DataDisplayResponse
 	 */
@@ -206,7 +206,7 @@ class RecipeImplementation {
 
 	/**
 	 * Trigger the import of a recipe.
-	 * 
+	 *
 	 * The URL is extracted from the request directly.
 	 */
 	public function import() {
@@ -238,7 +238,7 @@ class RecipeImplementation {
 
 	/**
 	 * Search for a recipe
-	 * 
+	 *
 	 * @param string $query The query to search for
 	 * @return JSONResponse
 	 */
@@ -275,7 +275,7 @@ class RecipeImplementation {
 
 	/**
 	 * Get all recipes in a category
-	 * 
+	 *
 	 * @param string $category The category to filter the recipes by
 	 * @return JSONResponse
 	 */
@@ -313,9 +313,9 @@ class RecipeImplementation {
 
 	/**
 	 * Get all recipes with a tag associated
-	 * 
+	 *
 	 * The filtering is done such that a recipe is in the result if any keyword is attached.
-	 * 
+	 *
 	 * @param string $keywords The keywords to look for
 	 * @return JSONResponse
 	 */

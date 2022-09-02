@@ -6,14 +6,6 @@ use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
 
-use OCA\Cookbook\Service\RecipeService;
-use OCP\IURLGenerator;
-use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
-use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
-use OCA\Cookbook\Helper\RestParameterParser;
-use OCP\IL10N;
-
 class RecipeController extends Controller {
 	/** @var RecipeImplementation */
 	private $impl;

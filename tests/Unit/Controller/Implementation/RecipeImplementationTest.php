@@ -7,29 +7,26 @@ use OCP\IL10N;
 use OCP\IRequest;
 use OCP\Files\File;
 use OCP\IURLGenerator;
-use ReflectionProperty;
 use OCP\AppFramework\Http;
 use PHPUnit\Framework\TestCase;
 use OCP\AppFramework\Http\IOutput;
 use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Helper\UserFolderHelper;
-use OCA\Cookbook\Controller\MainController;
 use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 
 /**
  * @covers \OCA\Cookbook\Controller\Implementation\RecipeImplementation
  * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
+ * @covers \OCA\Cookbook\Exception\RecipeExistsException
+ * @covers \OCA\Cookbook\Exception\NoRecipeNameGivenException
  */
 class RecipeImplementationTest extends TestCase {
 	/** @var IRequest|MockObject */
@@ -78,19 +75,6 @@ class RecipeImplementationTest extends TestCase {
 			$l
 		);
 	}
-
-	// public function testConstructor(): void {
-	// 	$this->ensurePropertyIsCorrect('urlGenerator', $this->urlGenerator);
-	// 	$this->ensurePropertyIsCorrect('service', $this->recipeService);
-	// 	$this->ensurePropertyIsCorrect('dbCacheService', $this->dbCacheService);
-	// 	$this->ensurePropertyIsCorrect('restParser', $this->restParser);
-	// }
-
-	// private function ensurePropertyIsCorrect(string $name, &$val) {
-	// 	$property = new ReflectionProperty(MainController::class, $name);
-	// 	$property->setAccessible(true);
-	// 	$this->assertSame($val, $property->getValue($this->sut));
-	// }
 
 	private function ensureCacheCheckTriggered(): void {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');

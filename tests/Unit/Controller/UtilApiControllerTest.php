@@ -2,30 +2,15 @@
 
 namespace OCA\Cookbook\tests\Unit\Controller;
 
-use Exception;
 use OCP\IRequest;
-use OCP\Files\File;
-use OCP\IURLGenerator;
-use ReflectionProperty;
 use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Controller\MainController;
 use OCA\Cookbook\Controller\UtilApiController;
-use OCA\Cookbook\Helper\RestParameterParser;
-use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Exception\RecipeExistsException;
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
-use OCA\Cookbook\Helper\UserFolderHelper;
 
 /**
  * @covers \OCA\Cookbook\Controller\UtilApiController
  * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
  */
 class UtilApiControllerTest extends TestCase {
-
 	/**
 	 * @var UtilApiController
 	 */
@@ -54,7 +39,7 @@ class UtilApiControllerTest extends TestCase {
 		$this->assertIsInt($retData['cookbook_version'][0]);
 		$this->assertIsInt($retData['cookbook_version'][1]);
 		$this->assertIsInt($retData['cookbook_version'][2]);
-		if(count($retData['cookbook_version']) === 4) {
+		if (count($retData['cookbook_version']) === 4) {
 			$this->assertIsString($retData['cookbook_version'][3]);
 		}
 
@@ -63,7 +48,4 @@ class UtilApiControllerTest extends TestCase {
 		$this->assertArrayHasKey('major', $retData['api_version']);
 		$this->assertArrayHasKey('minor', $retData['api_version']);
 	}
-
-
-
 }

@@ -2,20 +2,11 @@
 
 namespace OCA\Cookbook\tests\Unit\Controller;
 
-use Exception;
 use OCP\IRequest;
-use OCP\Files\File;
-use OCP\IURLGenerator;
-use ReflectionProperty;
 use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\Http\DataResponse;
-use OCP\AppFramework\Http\JSONResponse;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Controller\MainController;
-use OCA\Cookbook\Helper\RestParameterParser;
 use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\Files\Folder;
@@ -75,7 +66,4 @@ class MainControllerTest extends TestCase {
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals('invalid_guest', $ret->getTemplateName());
 	}
-
-
-
 }

@@ -8,9 +8,6 @@ namespace OCA\Cookbook\tests\Unit\Controller;
 
 use OCA\Cookbook\Controller\CategoryController;
 use OCA\Cookbook\Controller\Implementation\CategoryImplementation;
-use OCP\IRequest;
-use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Controller\CategoryController

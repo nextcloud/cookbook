@@ -23,7 +23,7 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function list() {
@@ -32,7 +32,7 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function config() {
@@ -41,7 +41,7 @@ class ConfigController extends Controller {
 
 	/**
 	 * @NoAdminRequired
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function reindex() {

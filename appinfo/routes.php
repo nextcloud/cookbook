@@ -14,7 +14,7 @@ return [
 		 * If you add new features here, increase the minor version of the API.
 		 * If you change the behavior or remove functionality, increase the major version there.
 		 */
-		
+
 		// The static HTML template
 		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
 
@@ -24,12 +24,12 @@ return [
 		['name' => 'recipe#category', 'url' => '/webapp/category/{category}', 'verb' => 'GET'],
 		['name' => 'recipe#tags', 'url' => '/webapp/tags/{keywords}', 'verb' => 'GET'],
 		['name' => 'recipe#search', 'url' => '/webapp/search/{query}', 'verb' => 'GET'],
-		
+
 		['name' => 'keyword#keywords', 'url' => '/webapp/keywords', 'verb' => 'GET'],
-		
+
 		['name' => 'category#categories', 'url' => '/webapp/categories', 'verb' => 'GET'],
 		['name' => 'category#rename', 'url' => '/webapp/category/{category}', 'verb' => 'PUT'],
-		
+
 		['name' => 'config#list', 'url' => '/webapp/config', 'verb' => 'GET'],
 		['name' => 'config#config', 'url' => '/webapp/config', 'verb' => 'POST'],
 		['name' => 'config#reindex', 'url' => '/webapp/reindex', 'verb' => 'POST'],
@@ -45,12 +45,12 @@ return [
 		['name' => 'recipe_api#category', 'url' => '/api/v1/category/{category}', 'verb' => 'GET'],
 		['name' => 'recipe_api#tags', 'url' => '/api/v1/tags/{keywords}', 'verb' => 'GET'],
 		['name' => 'recipe_api#search', 'url' => '/api/v1/search/{query}', 'verb' => 'GET'],
-		
+
 		['name' => 'keyword_api#keywords', 'url' => '/api/v1/keywords', 'verb' => 'GET'],
-		
+
 		['name' => 'category_api#categories', 'url' => '/api/v1/categories', 'verb' => 'GET'],
 		['name' => 'category_api#rename', 'url' => '/api/v1/category/{category}', 'verb' => 'PUT'],
-		
+
 		['name' => 'config_api#list', 'url' => '/api/v1/config', 'verb' => 'GET'],
 		['name' => 'config_api#config', 'url' => '/api/v1/config', 'verb' => 'POST'],
 		['name' => 'config_api#reindex', 'url' => '/api/v1/reindex', 'verb' => 'POST'],

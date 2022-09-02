@@ -28,7 +28,7 @@ class CategoryImplementation {
 
 	/**
 	 * List all available categories.
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
 	public function index() {
@@ -40,7 +40,7 @@ class CategoryImplementation {
 
 	/**
 	 * Rename a category.
-	 * 
+	 *
 	 * @param string $category
 	 * @return JSONResponse
 	 */

@@ -9,31 +9,28 @@ use ReflectionClass;
 use ReflectionMethod;
 
 abstract class AbstractControllerTestCase extends TestCase {
-	protected abstract function getClassName(): string;
-	protected abstract function getImplementationClassName(): string;
-	protected abstract function getMethodsAndParameters(): array;
+	abstract protected function getClassName(): string;
+	abstract protected function getImplementationClassName(): string;
+	abstract protected function getMethodsAndParameters(): array;
 
 	protected $dut;
 	protected $impl;
 
-	protected function setUp(): void
-	{
+	protected function setUp(): void {
 		parent::setUp();
-
-		
 	}
 
 	public function dpMethodNames() {
 		$data = $this->getMethodsAndParameters();
-		foreach($data as $row) {
+		foreach ($data as $row) {
 			$methodName = $row['name'];
-			
+
 			$implName = isset($row['implName']) ? $row['implName'] : $methodName;
 
 			$once = isset($row['once']) ? $row['once'] : false;
-			
-			if (isset($row['args'])){
-				foreach($row['args'] as $args) {
+
+			if (isset($row['args'])) {
+				foreach ($row['args'] as $args) {
 					yield [$methodName, $args, $implName, $once];
 				}
 			} else {
@@ -53,7 +50,7 @@ abstract class AbstractControllerTestCase extends TestCase {
 
 		$expected = $this->createStub(JSONResponse::class);
 
-		if($once) {
+		if ($once) {
 			$impl->expects($this->once())->method($implName)->with(...$args)->willReturn($expected);
 		} else {
 			$impl->method($implName)->with(...$args)->willReturn($expected);

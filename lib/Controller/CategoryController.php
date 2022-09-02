@@ -4,12 +4,10 @@ namespace OCA\Cookbook\Controller;
 
 use OCP\IRequest;
 use OCP\AppFramework\Controller;
-use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\JSONResponse;
 use OCA\Cookbook\Controller\Implementation\CategoryImplementation;
 
-class CategoryController extends Controller
-{
+class CategoryController extends Controller {
 	/** @var CategoryImplementation */
 	private $impl;
 
@@ -25,11 +23,10 @@ class CategoryController extends Controller
 
 	/**
 	 * @NoAdminRequired
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
-	public function categories()
-	{
+	public function categories() {
 		return $this->impl->index();
 	}
 
@@ -38,8 +35,7 @@ class CategoryController extends Controller
 	 * @param string $category
 	 * @return JSONResponse
 	 */
-	public function rename($category)
-	{
+	public function rename($category) {
 		return $this->impl->rename($category);
 	}
 }

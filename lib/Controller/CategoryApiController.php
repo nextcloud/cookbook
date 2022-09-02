@@ -7,8 +7,7 @@ use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
-class CategoryApiController extends ApiController
-{
+class CategoryApiController extends ApiController {
 	/** @var CategoryImplementation */
 	private $impl;
 
@@ -26,11 +25,10 @@ class CategoryApiController extends ApiController
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @CORS
-	 * 
+	 *
 	 * @return JSONResponse
 	 */
-	public function categories()
-	{
+	public function categories() {
 		return $this->impl->index();
 	}
 
@@ -41,8 +39,7 @@ class CategoryApiController extends ApiController
 	 * @param string $category
 	 * @return JSONResponse
 	 */
-	public function rename($category)
-	{
+	public function rename($category) {
 		return $this->impl->rename($category);
 	}
 }
