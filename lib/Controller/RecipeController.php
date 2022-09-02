@@ -70,6 +70,7 @@ class RecipeController extends Controller {
 
 	/**
 	 * @NoAdminRequired
+	 * @NoCSRFRequired
 	 * @param $id
 	 * @return JSONResponse|FileDisplayResponse|DataDisplayResponse
 	 */
