@@ -4,8 +4,14 @@ namespace OCA\Cookbook\Controller;
 
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\IRequest;
 
 class UtilApiController extends ApiController {
+	public function __construct($AppName, IRequest $request)
+	{
+		parent::__construct($AppName, $request);
+	}
+	
 	/**
 	 * @NoAdminRequired
 	 * @NoCSRFRequired

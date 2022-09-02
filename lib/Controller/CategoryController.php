@@ -2,12 +2,13 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCA\Cookbook\Controller\Implementation\CategoryImplementation;
+use OCP\IRequest;
+use OCP\AppFramework\Controller;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\JSONResponse;
-use OCP\IRequest;
+use OCA\Cookbook\Controller\Implementation\CategoryImplementation;
 
-class CategoryApiController extends ApiController
+class CategoryController extends Controller
 {
 	/** @var CategoryImplementation */
 	private $impl;
@@ -24,8 +25,6 @@ class CategoryApiController extends ApiController
 
 	/**
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
 	 * 
 	 * @return JSONResponse
 	 */
@@ -36,8 +35,6 @@ class CategoryApiController extends ApiController
 
 	/**
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
 	 * @param string $category
 	 * @return JSONResponse
 	 */

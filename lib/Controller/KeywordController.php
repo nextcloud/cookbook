@@ -2,14 +2,15 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
-use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\ApiController;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\ApiController;
+use OCA\Cookbook\Service\RecipeService;
+use OCP\AppFramework\Http\JSONResponse;
+use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
 
-class KeywordApiController extends ApiController {
+class KeywordController extends Controller {
 	/** @var KeywordImplementation */
 	private $impl;
 
@@ -24,8 +25,6 @@ class KeywordApiController extends ApiController {
 	}
 	/**
 	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
 	 * 
 	 * @return JSONResponse
 	 */
