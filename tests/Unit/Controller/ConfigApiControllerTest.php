@@ -6,15 +6,15 @@ require_once(__DIR__ . '/AbstractControllerTestCase.php');
 
 namespace OCA\Cookbook\tests\Unit\Controller;
 
-use OCA\Cookbook\Controller\ConfigController;
+use OCA\Cookbook\Controller\ConfigApiController;
 use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
 
 /**
- * @covers OCA\Cookbook\Controller\ConfigController
+ * @covers OCA\Cookbook\Controller\ConfigApiController
  */
-class ConfigControllerTest extends AbstractControllerTestCase {
+class ConfigApiControllerTest extends AbstractControllerTestCase {
 	protected function getClassName(): string {
-		return ConfigController::class;
+		return ConfigApiController::class;
 	}
 
 	protected function getImplementationClassName(): string {

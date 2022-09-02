@@ -14,24 +14,72 @@ return [
 		 * If you add new features here, increase the minor version of the API.
 		 * If you change the behavior or remove functionality, increase the major version there.
 		 */
-		['name' => 'main#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
+
+		// The static HTML template
 		['name' => 'main#index', 'url' => '/', 'verb' => 'GET'],
-		['name' => 'main#keywords', 'url' => '/keywords', 'verb' => 'GET'],
-		['name' => 'main#categories', 'url' => '/categories', 'verb' => 'GET'],
-		['name' => 'main#import', 'url' => '/import', 'verb' => 'POST'],
-		['name' => 'recipe#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
-		['name' => 'config#reindex', 'url' => '/reindex', 'verb' => 'POST'],
-		['name' => 'config#list', 'url' => '/config', 'verb' => 'GET'],
-		['name' => 'config#config', 'url' => '/config', 'verb' => 'POST'],
+
+		// The /webapp routes
+		['name' => 'recipe#image', 'url' => '/webapp/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'recipe#import', 'url' => '/webapp/import', 'verb' => 'POST'],
+		['name' => 'recipe#category', 'url' => '/webapp/category/{category}', 'verb' => 'GET'],
+		['name' => 'recipe#tags', 'url' => '/webapp/tags/{keywords}', 'verb' => 'GET'],
+		['name' => 'recipe#search', 'url' => '/webapp/search/{query}', 'verb' => 'GET'],
+
+		['name' => 'keyword#keywords', 'url' => '/webapp/keywords', 'verb' => 'GET'],
+
+		['name' => 'category#categories', 'url' => '/webapp/categories', 'verb' => 'GET'],
+		['name' => 'category#rename', 'url' => '/webapp/category/{category}', 'verb' => 'PUT'],
+
+		['name' => 'config#list', 'url' => '/webapp/config', 'verb' => 'GET'],
+		['name' => 'config#config', 'url' => '/webapp/config', 'verb' => 'POST'],
+		['name' => 'config#reindex', 'url' => '/webapp/reindex', 'verb' => 'POST'],
+
 		/* API routes */
-		['name' => 'main#category', 'url' => '/api/category/{category}', 'verb' => 'GET'],
-		['name' => 'main#categoryUpdate', 'url' => '/api/category/{category}', 'verb' => 'PUT'],
-		['name' => 'main#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET'],
-		['name' => 'main#search', 'url' => '/api/search/{query}', 'verb' => 'GET'],
+
+		// Generic routes on /api
+		['name' => 'util_api#getApiVersion', 'url' => '/api/version', 'verb' => 'GET'],
+
+		// APIv1 routes under /api/v1
+		['name' => 'recipe_api#image', 'url' => '/api/v1/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+']],
+		['name' => 'recipe_api#import', 'url' => '/api/v1/import', 'verb' => 'POST'],
+		['name' => 'recipe_api#category', 'url' => '/api/v1/category/{category}', 'verb' => 'GET'],
+		['name' => 'recipe_api#tags', 'url' => '/api/v1/tags/{keywords}', 'verb' => 'GET'],
+		['name' => 'recipe_api#search', 'url' => '/api/v1/search/{query}', 'verb' => 'GET'],
+
+		['name' => 'keyword_api#keywords', 'url' => '/api/v1/keywords', 'verb' => 'GET'],
+
+		['name' => 'category_api#categories', 'url' => '/api/v1/categories', 'verb' => 'GET'],
+		['name' => 'category_api#rename', 'url' => '/api/v1/category/{category}', 'verb' => 'PUT'],
+
+		['name' => 'config_api#list', 'url' => '/api/v1/config', 'verb' => 'GET'],
+		['name' => 'config_api#config', 'url' => '/api/v1/config', 'verb' => 'POST'],
+		['name' => 'config_api#reindex', 'url' => '/api/v1/reindex', 'verb' => 'POST'],
+
+		// DEPRECATED ROUTES
+		// These routes are here only to avoid breaking the current 3rd party apps. They will be removed with the next release.
+
+		['name' => 'recipe_api#import', 'url' => '/import', 'verb' => 'POST', 'postfix' => '_legacy'],
+		['name' => 'recipe_api#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+'], 'postfix' => '_legacy'],
+		['name' => 'recipe_api#category', 'url' => '/api/category/{category}', 'verb' => 'GET', 'postfix' => '_legacy'],
+		['name' => 'recipe_api#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET', 'postfix' => '_legacy'],
+		['name' => 'recipe_api#search', 'url' => '/api/search/{query}', 'verb' => 'GET', 'postfix' => '_legacy'],
+
+		['name' => 'keyword_api#keywords', 'url' => '/keywords', 'verb' => 'GET', 'postfix' => '_legacy'],
+
+		['name' => 'category_api#categories', 'url' => '/categories', 'verb' => 'GET', 'postfix' => '_legacy'],
+		['name' => 'category_api#rename', 'url' => '/api/category/{category}', 'verb' => 'PUT', 'postfix' => '_legacy'],
+
+		['name' => 'config_api#list', 'url' => '/config', 'verb' => 'GET', 'postfix' => '_legacy'],
+		['name' => 'config_api#config', 'url' => '/config', 'verb' => 'POST', 'postfix' => '_legacy'],
+		['name' => 'config_api#reindex', 'url' => '/reindex', 'verb' => 'POST', 'postfix' => '_legacy'],
+
+		// Preflight option for CORS API
+		['name' => 'util_api#preflighted_cors', 'url' => '/api/{path}', 'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 	],
 
 	/* API resources */
 	'resources' => [
-		'recipe' => ['url' => '/api/recipes']
+		'recipe' => ['url' => '/webapp/recipes'],
+		'recipe_api' => ['url' => '/api/v1/recipes'],
 	]
 ];

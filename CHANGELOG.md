@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+### Fixed
+- Close security issue by enabling CSRF protection on most endpoints
+  [#1190](https://github.com/nextcloud/cookbook/pull/1190) @christianlupus
+
+### Documentation
+- Defining new API interface to fix security issue
+  [#1186](https://github.com/nextcloud/cookbook/pull/1186) @christianlupus
 
 
 ## 0.9.14 - 2022-08-29

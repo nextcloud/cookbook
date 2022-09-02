@@ -20,6 +20,8 @@ use OCP\ILogger;
 
 /**
  * @covers \OCA\Cookbook\Service\HtmlDownloadService
+ * @covers \OCA\Cookbook\Exception\NoDownloadWasCarriedOutException
+ * @covers \OCA\Cookbook\Exception\ImportException
  */
 class HtmlDownloadServiceTest extends TestCase {
 	/**
