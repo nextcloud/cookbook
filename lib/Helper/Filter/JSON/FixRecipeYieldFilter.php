@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 
 /**
@@ -25,10 +25,10 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
-	public function __construct(IL10N $l, ILogger $logger) {
+	public function __construct(IL10N $l, LoggerInterface $logger) {
 		$this->l = $l;
 		$this->logger = $logger;
 	}

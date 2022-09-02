@@ -4,7 +4,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidDurationException;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\ISO8601DurationHelper;
 
@@ -22,7 +22,7 @@ class FixDurationsFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
 	/** @var ISO8601DurationHelper */
@@ -30,7 +30,7 @@ class FixDurationsFilter extends AbstractJSONFilter {
 
 	public function __construct(
 		IL10N $l,
-		ILogger $logger,
+		LoggerInterface $logger,
 		ISO8601DurationHelper $isoHelper
 	) {
 		$this->l = $l;
