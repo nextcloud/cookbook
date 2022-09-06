@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\tests\Integration\Helper\Filter\JSON;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Helper\TextCleanupHelper;
@@ -25,8 +25,8 @@ class FixIngredientsFilterTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
-		/** @var ILogger */
-		$logger = $this->createStub(ILogger::class);
+		/** @var LoggerInterface */
+		$logger = $this->createStub(LoggerInterface::class);
 
 		$this->textCleanupHelper = new TextCleanupHelper();
 

@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 
@@ -21,7 +21,7 @@ class FixDescriptionFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
 	/** @var TextCleanupHelper */
@@ -29,7 +29,7 @@ class FixDescriptionFilter extends AbstractJSONFilter {
 
 	public function __construct(
 		IL10N $l,
-		ILogger $logger,
+		LoggerInterface $logger,
 		TextCleanupHelper $textCleanupHelper
 	) {
 		$this->l = $l;

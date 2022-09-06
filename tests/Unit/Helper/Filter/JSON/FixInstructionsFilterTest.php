@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Service\JsonService;
 use PHPUnit\Framework\MockObject\Stub;
@@ -30,8 +30,8 @@ class FixInstructionsFilterTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
-		/** @var ILogger */
-		$logger = $this->createStub(ILogger::class);
+		/** @var LoggerInterface */
+		$logger = $this->createStub(LoggerInterface::class);
 
 		$this->textCleanupHelper = $this->createStub(TextCleanupHelper::class);
 		$jsonService = new JsonService();

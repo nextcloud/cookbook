@@ -4,7 +4,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Select the best image URL.
@@ -18,10 +18,10 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
-	public function __construct(IL10N $l, ILogger $logger) {
+	public function __construct(IL10N $l, LoggerInterface $logger) {
 		$this->l = $l;
 		$this->logger = $logger;
 	}

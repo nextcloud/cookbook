@@ -5,7 +5,7 @@ namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 use OCA\Cookbook\Helper\Filter\JSON\FixDescriptionFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class FixDescriptionFilterTest extends TestCase {
 		/** @var Stub|IL10N */
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
-		$logger = $this->createStub(ILogger::class);
+		$logger = $this->createStub(LoggerInterface::class);
 
 		$this->textCleanupHelper = $this->createMock(TextCleanupHelper::class);
 

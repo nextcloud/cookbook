@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+- Migrate ILogger to LoggerInterface
+  [#1192](https://github.com/nextcloud/cookbook/pull/1192) @miles170
+
 ### Fixed
 - Close security issue by enabling CSRF protection on most endpoints
   [#1190](https://github.com/nextcloud/cookbook/pull/1190) @christianlupus
