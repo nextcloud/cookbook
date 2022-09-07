@@ -12,7 +12,8 @@
       "ext-libxml": "*"
     },
     "require-dev": {
-        "nextcloud/coding-standard": "^1.0.0"
+        "nextcloud/coding-standard": "^1.0.0",
+        "christophwurst/nextcloud_testing": "^0.12.4"
     },
     "scripts": {
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
