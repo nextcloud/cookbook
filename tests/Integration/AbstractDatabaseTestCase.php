@@ -15,6 +15,7 @@ abstract class AbstractDatabaseTestCase extends TestCase {
 
 	protected function setUp(): void {
 		parent::setUp();
+		$this->startTransaction();
 
 		$app = new Application();
 		$this->ncContainer = $app->getContainer();
@@ -25,6 +26,7 @@ abstract class AbstractDatabaseTestCase extends TestCase {
 	}
 
 	protected function tearDown(): void {
+		$this->rollbackTransation();
 		parent::tearDown();
 
 		$this->resetDataFolder();
