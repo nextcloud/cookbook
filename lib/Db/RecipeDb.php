@@ -97,7 +97,8 @@ class RecipeDb {
 		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->where('r.user_id = :user')
-			->orderBy('r.name');
+			->orderBy('r.name')
+			->orderBy('k.name');
 		$qb->setParameter('user', $user_id, $this->types->STRING());
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k',
 			$qb->expr()->andX(
@@ -287,6 +288,14 @@ class RecipeDb {
 		$cursor->closeCursor();
 
 		$result = $this->mapDbNames($result);
+		$result = array_map(function ($x) use ($category) {
+			if ($category === '_') {
+				$x['category'] = null;
+			} else {
+				$x['category'] = $category;
+			}
+			return $x;
+		}, $result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -303,15 +312,16 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords'])
-		->from(self::DB_TABLE_KEYWORDS, 'k')
-		->where('k.name IN (:keywords)')
-		->andWhere('k.user_id = :user')
-		->having('COUNT(DISTINCT k.name) = :keywordsCount')
-		->setParameter('user', $user_id, $this->types->INT())
-		->setParameter('keywords', $keywords_arr, IQueryBuilder::PARAM_STR_ARRAY)
-		->setParameter('keywordsCount', sizeof($keywords_arr), $this->types->INT());
-		$qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords', 'c.name AS category'])
+			->from(self::DB_TABLE_KEYWORDS, 'k')
+			->where('k.name IN (:keywords)')
+			->andWhere('k.user_id = :user')
+			->having('COUNT(DISTINCT k.name) = :keywordsCount')
+			->setParameter('user', $user_id, $this->types->INT())
+			->setParameter('keywords', $keywords_arr, IQueryBuilder::PARAM_STR_ARRAY)
+			->setParameter('keywordsCount', sizeof($keywords_arr), $this->types->INT());
+		$qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id')
+			->join('r', self::DB_TABLE_CATEGORIES, 'c', 'c.recipe_id = r.recipe_id');
 		$qb->join('r', self::DB_TABLE_KEYWORDS, 'kk', 'kk.recipe_id = r.recipe_id');
 		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name']);
 		$qb->orderBy('r.name');
@@ -340,11 +350,12 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r');
 
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
 		$qb->leftJoin('r', self::DB_TABLE_CATEGORIES, 'c', 'r.recipe_id = c.recipe_id');
+		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'kk', 'kk.recipe_id = r.recipe_id');
 
 		$paramIdx = 1;
 		$params = [];
@@ -367,7 +378,7 @@ class RecipeDb {
 		$qb->setParameters($params, $types);
 		$qb->setParameter('user', $user_id, $this->types->STRING());
 
-		$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
+		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();
@@ -406,28 +417,28 @@ class RecipeDb {
 	 */
 	public function emptySearchIndex(string $user_id) {
 		$qb = $this->db->getQueryBuilder();
-
 		$qb->delete(self::DB_TABLE_RECIPES)
 			->where('user_id = :user')
 			->orWhere('user_id = :empty');
 		$qb->setParameter('user', $user_id, $this->types->STRING());
 		$qb->setParameter('empty', 'empty', $this->types->STRING());
+		$qb->executeStatement();
 
-		$qb->execute();
-
+		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_KEYWORDS)
 			->where('user_id = :user')
 			->orWhere('user_id = :empty');
 		$qb->setParameter('user', $user_id, $this->types->STRING());
 		$qb->setParameter('empty', 'empty', $this->types->STRING());
+		$qb->executeStatement();
 
+		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_CATEGORIES)
 			->where('user_id = :user')
 			->orWhere('user_id = :empty');
 		$qb->setParameter('user', $user_id, $this->types->STRING());
 		$qb->setParameter('empty', 'empty', $this->types->STRING());
-
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	private function isRecipeEmpty($json) {
@@ -494,10 +505,10 @@ class RecipeDb {
 			$qb->setParameter('name', $recipe['name'], $this->types->STRING());
 
 			$dateCreated = $this->parseDate($recipe['dateCreated']);
-			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATE());
+			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATETIME());
 
 			$dateModified = $this->parseDate($recipe['dateModified']);
-			$qb->setParameter('dateModified', $dateModified, $this->types->DATE());
+			$qb->setParameter('dateModified', $dateModified, $this->types->DATETIME());
 
 			$qb->execute();
 		}
