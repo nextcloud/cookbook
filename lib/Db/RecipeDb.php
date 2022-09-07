@@ -262,7 +262,7 @@ class RecipeDb {
 			$qb->join('c', self::DB_TABLE_RECIPES, 'r', 'c.recipe_id = r.recipe_id');
 			$qb->leftJoin('c', self::DB_TABLE_KEYWORDS, 'k', 'c.recipe_id = k.recipe_id');
 
-			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
+			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name', 'r.date_created','r.date_modified']);
 			$qb->orderBy('r.name');
 		} else {
 			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
@@ -323,7 +323,7 @@ class RecipeDb {
 		$qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id')
 			->join('r', self::DB_TABLE_CATEGORIES, 'c', 'c.recipe_id = r.recipe_id');
 		$qb->join('r', self::DB_TABLE_KEYWORDS, 'kk', 'kk.recipe_id = r.recipe_id');
-		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name']);
+		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name', 'r.date_created', 'r.date_modified', 'c.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();
@@ -378,7 +378,7 @@ class RecipeDb {
 		$qb->setParameters($params, $types);
 		$qb->setParameter('user', $user_id, $this->types->STRING());
 
-		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name']);
+		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name', 'r.date_created', 'r.date_modified', 'c.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();
