@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\DB\Types;
 use OCP\IL10N;
 
 class RecipeDb {
@@ -13,12 +14,8 @@ class RecipeDb {
 	private const DB_TABLE_KEYWORDS = 'cookbook_keywords';
 	private const DB_TABLE_CATEGORIES = 'cookbook_categories';
 
+	/** @var IDBConnection */
 	private $db;
-
-	/**
-	 * @var DbTypesPolyfillHelper
-	 */
-	private $types;
 
 	/**
 	 * @var IL10N
@@ -27,11 +24,9 @@ class RecipeDb {
 
 	public function __construct(
 		IDBConnection $db,
-		DbTypesPolyfillHelper $polyfillTypes,
 		IL10N $l
 	) {
 		$this->db = $db;
-		$this->types = $polyfillTypes;
 		$this->l = $l;
 	}
 
@@ -97,8 +92,9 @@ class RecipeDb {
 		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r')
 			->where('r.user_id = :user')
-			->orderBy('r.name');
-		$qb->setParameter('user', $user_id, $this->types->STRING());
+			->orderBy('r.name')
+			->orderBy('k.name');
+		$qb->setParameter('user', $user_id, Types::STRING);
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k',
 			$qb->expr()->andX(
 				'r.recipe_id = k.recipe_id',
@@ -174,7 +170,7 @@ class RecipeDb {
 			->where('user_id = :user AND k.name != \'\'')
 			->groupBy('k.name')
 			->orderBy('k.name');
-		$qb->setParameter('user', $user_id, $this->types->STRING());
+		$qb->setParameter('user', $user_id, Types::STRING);
 
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
@@ -198,7 +194,7 @@ class RecipeDb {
 			->where('user_id = :user')
 			->groupBy('c.name')
 			->orderBy('c.name');
-		$qb->setParameter('user', $user_id, $this->types->STRING());
+		$qb->setParameter('user', $user_id, Types::STRING);
 
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
@@ -255,13 +251,13 @@ class RecipeDb {
 				->from(self::DB_TABLE_CATEGORIES, 'c')
 				->where('c.name = :category')
 				->andWhere('c.user_id = :user')
-				->setParameter('category', $category, $this->types->STRING())
-				->setParameter('user', $user_id, $this->types->STRING());
+				->setParameter('category', $category, Types::STRING)
+				->setParameter('user', $user_id, Types::STRING);
 
 			$qb->join('c', self::DB_TABLE_RECIPES, 'r', 'c.recipe_id = r.recipe_id');
 			$qb->leftJoin('c', self::DB_TABLE_KEYWORDS, 'k', 'c.recipe_id = k.recipe_id');
 
-			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
+			$qb->groupBy(['r.name', 'r.recipe_id', 'k.name', 'r.date_created','r.date_modified']);
 			$qb->orderBy('r.name');
 		} else {
 			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
@@ -287,6 +283,14 @@ class RecipeDb {
 		$cursor->closeCursor();
 
 		$result = $this->mapDbNames($result);
+		$result = array_map(function ($x) use ($category) {
+			if ($category === '_') {
+				$x['category'] = null;
+			} else {
+				$x['category'] = $category;
+			}
+			return $x;
+		}, $result);
 
 		// group recipes, convert keywords to comma-separated list
 		$recipesGroupedTags = $this->groupKeywordInResult($result);
@@ -303,17 +307,18 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords'])
-		->from(self::DB_TABLE_KEYWORDS, 'k')
-		->where('k.name IN (:keywords)')
-		->andWhere('k.user_id = :user')
-		->having('COUNT(DISTINCT k.name) = :keywordsCount')
-		->setParameter('user', $user_id, $this->types->INT())
-		->setParameter('keywords', $keywords_arr, IQueryBuilder::PARAM_STR_ARRAY)
-		->setParameter('keywordsCount', sizeof($keywords_arr), $this->types->INT());
-		$qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id');
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords', 'c.name AS category'])
+			->from(self::DB_TABLE_KEYWORDS, 'k')
+			->where('k.name IN (:keywords)')
+			->andWhere('k.user_id = :user')
+			->having('COUNT(DISTINCT k.name) = :keywordsCount')
+			->setParameter('user', $user_id, Types::INTEGER)
+			->setParameter('keywords', $keywords_arr, IQueryBuilder::PARAM_STR_ARRAY)
+			->setParameter('keywordsCount', sizeof($keywords_arr), Types::INTEGER);
+		$qb->join('k', self::DB_TABLE_RECIPES, 'r', 'k.recipe_id = r.recipe_id')
+			->join('r', self::DB_TABLE_CATEGORIES, 'c', 'c.recipe_id = r.recipe_id');
 		$qb->join('r', self::DB_TABLE_KEYWORDS, 'kk', 'kk.recipe_id = r.recipe_id');
-		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name']);
+		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name', 'r.date_created', 'r.date_modified', 'c.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();
@@ -340,11 +345,12 @@ class RecipeDb {
 
 		$qb = $this->db->getQueryBuilder();
 
-		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords', 'c.name AS category'])
+		$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'kk.name AS keywords', 'c.name AS category'])
 			->from(self::DB_TABLE_RECIPES, 'r');
 
 		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'k.recipe_id = r.recipe_id');
 		$qb->leftJoin('r', self::DB_TABLE_CATEGORIES, 'c', 'r.recipe_id = c.recipe_id');
+		$qb->leftJoin('r', self::DB_TABLE_KEYWORDS, 'kk', 'kk.recipe_id = r.recipe_id');
 
 		$paramIdx = 1;
 		$params = [];
@@ -358,16 +364,16 @@ class RecipeDb {
 			$qb->orWhere("LOWER(c.name) LIKE :keyword$paramIdx");
 
 			$params["keyword$paramIdx"] = "%$lowerKeyword%";
-			$types["keyword$paramIdx"] = $this->types->STRING();
+			$types["keyword$paramIdx"] = Types::STRING;
 			$paramIdx++;
 		}
 
 		$qb->andWhere('r.user_id = :user');
 
 		$qb->setParameters($params, $types);
-		$qb->setParameter('user', $user_id, $this->types->STRING());
+		$qb->setParameter('user', $user_id, Types::STRING);
 
-		$qb->groupBy(['r.name', 'r.recipe_id', 'k.name']);
+		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name', 'r.date_created', 'r.date_modified', 'c.name']);
 		$qb->orderBy('r.name');
 
 		$cursor = $qb->execute();
@@ -406,27 +412,27 @@ class RecipeDb {
 	 */
 	public function emptySearchIndex(string $user_id) {
 		$qb = $this->db->getQueryBuilder();
-
 		$qb->delete(self::DB_TABLE_RECIPES)
 			->where('user_id = :user')
 			->orWhere('user_id = :empty');
-		$qb->setParameter('user', $user_id, $this->types->STRING());
-		$qb->setParameter('empty', 'empty', $this->types->STRING());
-
+		$qb->setParameter('user', $user_id, Types::STRING);
+		$qb->setParameter('empty', 'empty', Types::STRING);
 		$qb->execute();
 
+		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_KEYWORDS)
 			->where('user_id = :user')
 			->orWhere('user_id = :empty');
-		$qb->setParameter('user', $user_id, $this->types->STRING());
-		$qb->setParameter('empty', 'empty', $this->types->STRING());
+		$qb->setParameter('user', $user_id, Types::STRING);
+		$qb->setParameter('empty', 'empty', Types::STRING);
+		$qb->execute();
 
+		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_CATEGORIES)
 			->where('user_id = :user')
 			->orWhere('user_id = :empty');
-		$qb->setParameter('user', $user_id, $this->types->STRING());
-		$qb->setParameter('empty', 'empty', $this->types->STRING());
-
+		$qb->setParameter('user', $user_id, Types::STRING);
+		$qb->setParameter('empty', 'empty', Types::STRING);
 		$qb->execute();
 	}
 
@@ -490,14 +496,14 @@ class RecipeDb {
 		$qb->setParameter('userid', $userId);
 
 		foreach ($recipes as $recipe) {
-			$qb->setParameter('id', $recipe['id'], $this->types->INT());
-			$qb->setParameter('name', $recipe['name'], $this->types->STRING());
+			$qb->setParameter('id', $recipe['id'], Types::INTEGER);
+			$qb->setParameter('name', $recipe['name'], Types::STRING);
 
 			$dateCreated = $this->parseDate($recipe['dateCreated']);
-			$qb->setParameter('dateCreated', $dateCreated, $this->types->DATE());
+			$qb->setParameter('dateCreated', $dateCreated, Types::DATETIME);
 
 			$dateModified = $this->parseDate($recipe['dateModified']);
-			$qb->setParameter('dateModified', $dateModified, $this->types->DATE());
+			$qb->setParameter('dateModified', $dateModified, Types::DATETIME);
 
 			$qb->execute();
 		}
@@ -580,8 +586,8 @@ class RecipeDb {
 		$qb->update(self::DB_TABLE_CATEGORIES)
 			->where('recipe_id = :rid', 'user_id = :user');
 		$qb->set('name', $qb->createNamedParameter($categoryName, IQueryBuilder::PARAM_STR));
-		$qb->setParameter('rid', $recipeId, $this->types->INT());
-		$qb->setParameter('user', $userId, $this->types->STRING());
+		$qb->setParameter('rid', $recipeId, Types::INTEGER);
+		$qb->setParameter('user', $userId, Types::STRING);
 		$qb->execute();
 	}
 
@@ -598,9 +604,9 @@ class RecipeDb {
 		$qb = $this->db->getQueryBuilder();
 		$qb->insert(self::DB_TABLE_CATEGORIES)
 			->values(['recipe_id' => ':rid', 'name' => ':name', 'user_id' => ':user']);
-		$qb->setParameter('rid', $recipeId, $this->types->INT());
-		$qb->setParameter('name', $categoryName, $this->types->STRING());
-		$qb->setParameter('user', $userId, $this->types->STRING());
+		$qb->setParameter('rid', $recipeId, Types::INTEGER);
+		$qb->setParameter('name', $categoryName, Types::STRING);
+		$qb->setParameter('user', $userId, Types::STRING);
 
 		try {
 			$qb->execute();
@@ -613,8 +619,8 @@ class RecipeDb {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_CATEGORIES)
 			->where('recipe_id = :rid', 'user_id = :user');
-		$qb->setParameter('rid', $recipeId, $this->types->INT());
-		$qb->setParameter('user', $userId, $this->types->STRING());
+		$qb->setParameter('rid', $recipeId, Types::INTEGER);
+		$qb->setParameter('user', $userId, Types::STRING);
 		$qb->execute();
 	}
 
@@ -626,11 +632,11 @@ class RecipeDb {
 		$qb = $this->db->getQueryBuilder();
 		$qb->insert(self::DB_TABLE_KEYWORDS)
 			->values(['recipe_id' => ':rid', 'name' => ':name', 'user_id' => ':user']);
-		$qb->setParameter('user', $userId, $this->types->STRING());
+		$qb->setParameter('user', $userId, Types::STRING);
 
 		foreach ($pairs as $p) {
-			$qb->setParameter('rid', $p['recipeId'], $this->types->INT());
-			$qb->setParameter('name', $p['name'], $this->types->STRING());
+			$qb->setParameter('rid', $p['recipeId'], Types::INTEGER);
+			$qb->setParameter('name', $p['name'], Types::STRING);
 
 			try {
 				$qb->execute();

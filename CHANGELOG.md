@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Create structure to run integration tests against a real database
+  [#1195](https://github.com/nextcloud/cookbook/pull/1195) @christianlupus
+
 ### Changed
 - Migrate ILogger to LoggerInterface
   [#1192](https://github.com/nextcloud/cookbook/pull/1192) @miles170
@@ -7,10 +11,22 @@
 ### Fixed
 - Close security issue by enabling CSRF protection on most endpoints
   [#1190](https://github.com/nextcloud/cookbook/pull/1190) @christianlupus
+- Fix bug in DB access class to prevent PostgreSQL from viewing all recipes of a category
+  [#1195](https://github.com/nextcloud/cookbook/pull/1195) @christianlupus
+- Fix minor bug to make API access consistent with API definitions and internal structure more well-defined
+  [#1195](https://github.com/nextcloud/cookbook/pull/1195) @christianlupus
 
 ### Documentation
 - Defining new API interface to fix security issue
   [#1186](https://github.com/nextcloud/cookbook/pull/1186) @christianlupus
+
+### Deprecated
+- Deprecate NC core version V21
+  [#1195](https://github.com/nextcloud/cookbook/pull/1195) @christianlupus
+
+### Removed
+- Removed support for NC core <= V20
+  [#1195](https://github.com/nextcloud/cookbook/pull/1195) @christianlupus
 
 
 ## 0.9.14 - 2022-08-29

@@ -41,6 +41,7 @@
 			"**/.history/**",
 			"**/vendor/**/vendor/**",
 			// "3rdparty/**"
+			".github/actions/**",
 		],
 		"cSpell.words": [
 			"Nextcloud"

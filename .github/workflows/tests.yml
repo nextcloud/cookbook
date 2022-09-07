@@ -130,27 +130,7 @@ jobs:
                     phpVersion: "8.1"
                     httpServer: "apache"
                 
-                # Test different core versions additionally with lower PHP versions
-                -   database: mysql
-                    coreVersion: stable19
-                    phpVersion: "7.4"
-                    httpServer: "apache"
-                -   database: mysql
-                    coreVersion: stable20
-                    phpVersion: "7.4"
-                    httpServer: "apache"
-                
                 # Test different PHP versions additionally
-                # -   database: mysql
-                #     # stable24 branch needs PHP 7.4
-                #     coreVersion: stable23
-                #     phpVersion: "7.3"
-                #     httpServer: "apache"
-                # -   database: mysql
-                #     coreVersion: stable24
-                #     # We have already PHP 7.4 with stable 19/20
-                #     phpVersion: "7.4"
-                #     httpServer: "apache"
                 -   database: mysql
                     coreVersion: stable24
                     phpVersion: "8.1"
@@ -161,12 +141,6 @@ jobs:
                     coreVersion: stable24
                     phpVersion: "8.1"
                     httpServer: "nginx"
-                
-                # Test against master (optionally)
-                # -   database: mysql
-                #     coreVersion: master
-                #     phpVersion: "8.1"
-                #     httpServer: "apache"
                     
     steps:
       - name: Checkout the app
