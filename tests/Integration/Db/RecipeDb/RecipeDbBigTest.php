@@ -115,6 +115,10 @@ class RecipeDbBigTest extends AbstractDatabaseTestCase {
 	}
 
 	public function testGetRecipesByKeyword() {
+		if ($_ENV['INPUT_DB'] === 'sqlite') {
+			$this->markTestSkipped();
+		}
+
 		$recipes = $this->dut->getRecipesByKeywords('Favorites', $this->user);
 		$expected = [
 			[
