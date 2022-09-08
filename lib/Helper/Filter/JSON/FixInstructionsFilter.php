@@ -4,7 +4,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidRecipeException;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCA\Cookbook\Service\JsonService;
@@ -32,7 +32,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
 	/** @var TextCleanupHelper */
@@ -43,7 +43,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 
 	public function __construct(
 		IL10N $l,
-		ILogger $logger,
+		LoggerInterface $logger,
 		TextCleanupHelper $textCleanupHelper,
 		JsonService $jsonService
 	) {

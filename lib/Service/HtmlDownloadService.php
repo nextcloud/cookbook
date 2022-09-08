@@ -14,7 +14,7 @@ use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 
 class HtmlDownloadService {
 	/**
@@ -27,7 +27,7 @@ class HtmlDownloadService {
 	 */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
 	/**
@@ -53,7 +53,7 @@ class HtmlDownloadService {
 		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
 		HtmlEncodingFilter $htmlEncodingFilter,
 		IL10N $l10n,
-		ILogger $logger,
+		LoggerInterface $logger,
 		HtmlToDomParser $htmlParser,
 		DownloadHelper $downloadHelper,
 		EncodingGuessingHelper $encodingGuesser,

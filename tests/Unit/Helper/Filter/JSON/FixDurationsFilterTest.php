@@ -4,7 +4,7 @@ namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidDurationException;
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -25,7 +25,7 @@ class FixDurationsFilterTest extends TestCase {
 		/** @var Stub|IL10N */
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
-		$logger = $this->createStub(ILogger::class);
+		$logger = $this->createStub(LoggerInterface::class);
 
 		$this->iso8601DurationHelper = $this->createMock(ISO8601DurationHelper::class);
 

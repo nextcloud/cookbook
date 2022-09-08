@@ -6,7 +6,7 @@ use Exception;
 use OCP\IL10N;
 use DOMDocument;
 use LibXMLError;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\ImportException;
 
 /**
@@ -48,7 +48,7 @@ class HtmlToDomParser {
 	private $state;
 
 	/**
-	 * @var ILogger
+	 * @var LoggerInterface
 	 */
 	private $logger;
 
@@ -57,7 +57,7 @@ class HtmlToDomParser {
 	 */
 	private $l;
 
-	public function __construct(ILogger $logger, IL10N $il10n) {
+	public function __construct(LoggerInterface $logger, IL10N $il10n) {
 		$this->logger = $logger;
 		$this->l = $il10n;
 		$this->state = self::PARSING_NOT_DONE;

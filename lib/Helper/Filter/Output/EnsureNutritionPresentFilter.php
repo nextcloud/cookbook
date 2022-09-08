@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\Helper\Filter\Output;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 
 /**
@@ -15,12 +15,12 @@ class EnsureNutritionPresentFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	/** @var ILogger */
+	/** @var LoggerInterface */
 	private $logger;
 
 	public function __construct(
 		IL10N $l,
-		ILogger $logger
+		LoggerInterface $logger
 	) {
 		$this->l = $l;
 		$this->logger = $logger;

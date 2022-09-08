@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\Output;
 
 use OCP\IL10N;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Helper\Filter\Output\EnsureNutritionPresentFilter;
@@ -19,7 +19,7 @@ class EnsureNutritionPresentFilterTest extends TestCase {
 		/** @var Stub|IL10N */
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
-		$logger = $this->createStub(ILogger::class);
+		$logger = $this->createStub(LoggerInterface::class);
 
 		$this->dut = new EnsureNutritionPresentFilter($l, $logger);
 

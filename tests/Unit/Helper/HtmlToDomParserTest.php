@@ -23,7 +23,7 @@ use DOMDocument;
 use Exception;
 use LibXMLError;
 use OCA\Cookbook\Exception\ImportException;
-use OCP\ILogger;
+use Psr\Log\LoggerInterface;
 use ReflectionProperty;
 use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Helper\HtmlToDomParser;
@@ -47,7 +47,7 @@ class XMLMocking {
  */
 class HtmlToDomParserTest extends TestCase {
 	/**
-	 * @var ILogger|MockObject
+	 * @var LoggerInterface|MockObject
 	 */
 	private $logger;
 	/**
@@ -76,7 +76,7 @@ class HtmlToDomParserTest extends TestCase {
 		self::$instance = $this;
 		$this->xmlMock = $this->createMock(XMLMocking::class);
 
-		$this->logger = $this->createStub(ILogger::class);
+		$this->logger = $this->createStub(LoggerInterface::class);
 
 		$this->l = $this->createStub(IL10N::class);
 		$this->l->method('t')->will($this->returnArgument(0));
