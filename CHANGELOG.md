@@ -19,6 +19,8 @@
 ### Documentation
 - Defining new API interface to fix security issue
   [#1186](https://github.com/nextcloud/cookbook/pull/1186) @christianlupus
+- Fixed API description w.r.t. return types and examples 
+  (see [#1153](https://github.com/nextcloud/cookbook/issues/1153)) @christianlupus
 
 ### Deprecated
 - Deprecate NC core version V21

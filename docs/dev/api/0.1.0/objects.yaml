@@ -79,9 +79,9 @@ RecipeStub:
     - type: object
       properties:
         recipe_id:
-          type: integer
-          description: The index of the recipe
-          example: 1
+          type: string
+          description: The index of the recipe. Note this is a string and might change its appearance in the future.
+          example: "1"
       required:
         - "recipe_id"
 
@@ -175,9 +175,9 @@ Recipe:
           example: "Recipe"
           description: Schema.org object type identifier
         id:
-          type: integer
-          description: The index of the recipe
-          example: 123
+          type: string
+          description: The index of the recipe. Note the representation as a string as the representation might change in the future.
+          example: "123"
         prepTime:
           type: string
           nullable: true
@@ -243,7 +243,8 @@ Recipe:
       additionalProperties: true
   example:
     name: Baked bananas
-    id: 123
+    "@type": "Recipe"
+    id: "123"
     description: A very delightful recipe of the best baked bananas ever
     image: http://example.com/path/to/image.jpg
     recipeYield: 5
@@ -271,6 +272,8 @@ RecipeList:
     $ref: "#/Recipe"
   example:
     - name: Baked bananas
+      "@type": Recipe
+      id: "123"
       description: A very delightful recipe of the best baked bananas ever
       image: http://example.com/path/to/image.jpg
       recipeYield: 5
@@ -287,6 +290,8 @@ RecipeList:
       recipeCategory: Dessert
       keywords: banana,cinnamon,sweet,untested recipe
     - name: "Homemade Apple Butter"
+      "@type": Recipe
+      id: "267"
       author:
         "@type": Person
         name: "Julie Clark"
