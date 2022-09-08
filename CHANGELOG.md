@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+
+
+## 0.9.15 - 2022-09-08
+
 ### Added
 - Create structure to run integration tests against a real database
   [#1195](https://github.com/nextcloud/cookbook/pull/1195) @christianlupus
