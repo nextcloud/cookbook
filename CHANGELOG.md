@@ -10,6 +10,10 @@
 - Fix API endpoint helpers to enforce JSON answers and minor styling enhancements
   [#1202](https://github.com/nextcloud/cookbook/pull/1202) @christianlupus
 
+### Maintenance
+- Use the pre-built database images for MySQL and PostgreSQL tests
+  [#1204](https://github.com/nextcloud/cookbook/pull/1204) @christianlupus
+
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
   [#1200](https://github.com/nextcloud/cookbook/pull/1200) @christianlupus

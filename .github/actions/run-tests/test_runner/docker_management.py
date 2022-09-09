@@ -11,12 +11,19 @@ def pullImages(args, quiet=True):
 	p.pr.run(cmd).check_returncode()
 
 	imageName = 'nextcloudcookbook/testci:php{version}'.format(version=args.php_version[0])
-	cmd = ['docker', 'pull', '--quiet', imageName]
-	if not quiet:
-		cmd = [x for x in cmd if x != '--quiet']
-	sp = p.pr.run(cmd)
-	if sp.returncode == 0:
-		p.pr.run(['docker', 'tag', imageName, 'cookbook_unittesting_dut'])
+
+	def runPull(localName, remoteName):
+		quietPart = ['--quiet'] if quiet else []
+		cmdPull = ['docker', 'pull'] + quietPart + [remoteName]
+		pull = p.pr.run(cmdPull)
+		if pull.returncode == 0:
+			p.pr.run(['docker', 'tag', remoteName, localName])
+		else:
+			l.logger.printWarning('Failure loading upstream docker image.')
+
+	runPull('cookbook_unittesting_dut', imageName)
+	runPull('cookbook_unittesting_mysql', 'nextcloudcookbook/mariadb-test:latest')
+	runPull('cookbook_unittesting_postgres', 'nextcloudcookbook/postgres-test:latest')
 
 	l.logger.printTask('Pulling images finished')
 
@@ -46,9 +53,25 @@ def pushImages(args):
 		'docker', 'tag', 'cookbook_unittesting_dut', pushedName
 	]).check_returncode()
 
+	p.pr.run([
+		'docker', 'tag', 'cookbook_unittesting_mysql', 'nextcloudcookbook/mariadb-test:latest'
+	]).check_returncode()
+
+	p.pr.run([
+		'docker', 'tag', 'cookbook_unittesting_postgres', 'nextcloudcookbook/postgres-test:latest'
+	]).check_returncode()
+
 	l.logger.printTask('Pushing docker images to repository')
 	p.pr.run([
 		'docker', 'push', pushedName
+	]).check_returncode()
+
+	p.pr.run([
+		'docker', 'push', 'nextcloudcookbook/mariadb-test:latest'
+	]).check_returncode()
+
+	p.pr.run([
+		'docker', 'push', 'nextcloudcookbook/postgres-test:latest'
 	]).check_returncode()
 
 def handleDockerImages(args):
