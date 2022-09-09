@@ -7,11 +7,7 @@ const baseUrl = `${generateUrl("apps/cookbook")}/webapp`
 axios.defaults.headers.common.Accept = "application/json"
 
 function createNewRecipe(recipe) {
-    return axios({
-        method: "POST",
-        url: `${baseUrl}/recipes`,
-        data: recipe,
-    })
+    return axios.post(`${baseUrl}/recipes`, recipe)
 }
 
 function getRecipe(id) {
@@ -35,11 +31,7 @@ function searchRecipes(search) {
 }
 
 function updateRecipe(id, recipe) {
-    return axios({
-        method: "PUT",
-        url: `${baseUrl}/recipes/${id}`,
-        data: recipe,
-    })
+    return axios.put(`${baseUrl}/recipes/${id}`, recipe)
 }
 
 function deleteRecipe(id) {
@@ -47,11 +39,7 @@ function deleteRecipe(id) {
 }
 
 function importRecipe(url) {
-    return axios({
-        method: "POST",
-        url: `${baseUrl}/import`,
-        data: `url=${url}`,
-    })
+    return axios.post(`${baseUrl}/import`, `url=${url}`)
 }
 
 function getAllCategories() {
@@ -59,10 +47,8 @@ function getAllCategories() {
 }
 
 function updateCategoryName(oldName, newName) {
-    return axios({
-        method: "PUT",
-        url: `${baseUrl}/category/${encodeURIComponent(oldName)}`,
-        data: { name: newName },
+    return axios.put(`${baseUrl}/category/${encodeURIComponent(oldName)}`, {
+        name: newName,
     })
 }
 
@@ -75,34 +61,19 @@ function getConfig() {
 }
 
 function updatePrintImageSetting(enabled) {
-    return axios({
-        method: "POST",
-        url: `${baseUrl}/config`,
-        data: { print_image: enabled ? 1 : 0 },
-    })
+    return axios.post(`${baseUrl}/config`, { print_image: enabled ? 1 : 0 })
 }
 
 function updateUpdateInterval(newInterval) {
-    return axios({
-        method: "POST",
-        url: `${baseUrl}/config`,
-        data: { update_interval: newInterval },
-    })
+    return axios.post(`${baseUrl}/config`, { update_interval: newInterval })
 }
 
 function updateRecipeDirectory(newDir) {
-    return axios({
-        method: "POST",
-        url: `${baseUrl}/config`,
-        data: { folder: newDir },
-    })
+    return axios.post(`${baseUrl}/config`, { folder: newDir })
 }
 
 function reindex() {
-    return axios({
-        method: "POST",
-        url: `${baseUrl}/reindex`,
-    })
+    return axios.post(`${baseUrl}/reindex`)
 }
 
 export default {
