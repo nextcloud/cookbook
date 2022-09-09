@@ -3,6 +3,8 @@
 ### Fixed
 - Added new public page styling in preparation for NC25
   [#1201](https://github.com/nextcloud/cookbook/pull/1201) @christianlupus
+- Fix API endpoint helpers to enforce JSON answers and minor styling enhancements
+  [#1202](https://github.com/nextcloud/cookbook/pull/1202) @christianlupus
 
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
