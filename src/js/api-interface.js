@@ -4,6 +4,8 @@ import { generateUrl } from "@nextcloud/router"
 
 const baseUrl = `${generateUrl("apps/cookbook")}/webapp`
 
+axios.defaults.headers.common.Accept = "application/json"
+
 function createNewRecipe(recipe) {
     return axios({
         method: "POST",
