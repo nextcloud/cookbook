@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Fixed
+- Added new public page styling in preparation for NC25
+  [#1201](https://github.com/nextcloud/cookbook/pull/1201) @christianlupus
+
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
   [#1200](https://github.com/nextcloud/cookbook/pull/1200) @christianlupus
