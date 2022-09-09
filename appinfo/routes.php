@@ -55,24 +55,6 @@ return [
 		['name' => 'config_api#config', 'url' => '/api/v1/config', 'verb' => 'POST'],
 		['name' => 'config_api#reindex', 'url' => '/api/v1/reindex', 'verb' => 'POST'],
 
-		// DEPRECATED ROUTES
-		// These routes are here only to avoid breaking the current 3rd party apps. They will be removed with the next release.
-
-		['name' => 'recipe_api#import', 'url' => '/import', 'verb' => 'POST', 'postfix' => '_legacy'],
-		['name' => 'recipe_api#image', 'url' => '/recipes/{id}/image', 'verb' => 'GET', 'requirements' => ['id' => '\d+'], 'postfix' => '_legacy'],
-		['name' => 'recipe_api#category', 'url' => '/api/category/{category}', 'verb' => 'GET', 'postfix' => '_legacy'],
-		['name' => 'recipe_api#tags', 'url' => '/api/tags/{keywords}', 'verb' => 'GET', 'postfix' => '_legacy'],
-		['name' => 'recipe_api#search', 'url' => '/api/search/{query}', 'verb' => 'GET', 'postfix' => '_legacy'],
-
-		['name' => 'keyword_api#keywords', 'url' => '/keywords', 'verb' => 'GET', 'postfix' => '_legacy'],
-
-		['name' => 'category_api#categories', 'url' => '/categories', 'verb' => 'GET', 'postfix' => '_legacy'],
-		['name' => 'category_api#rename', 'url' => '/api/category/{category}', 'verb' => 'PUT', 'postfix' => '_legacy'],
-
-		['name' => 'config_api#list', 'url' => '/config', 'verb' => 'GET', 'postfix' => '_legacy'],
-		['name' => 'config_api#config', 'url' => '/config', 'verb' => 'POST', 'postfix' => '_legacy'],
-		['name' => 'config_api#reindex', 'url' => '/reindex', 'verb' => 'POST', 'postfix' => '_legacy'],
-
 		// Preflight option for CORS API
 		['name' => 'util_api#preflighted_cors', 'url' => '/api/{path}', 'verb' => 'OPTIONS', 'requirements' => ['path' => '.+']],
 	],
