@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+- Create build script for GitHub pages with GitHub actions to allow for custom building
+  [#1203](https://github.com/nextcloud/cookbook/pull/1203) @christianlupus
+
 ### Fixed
 - Added new public page styling in preparation for NC25
   [#1201](https://github.com/nextcloud/cookbook/pull/1201) @christianlupus
