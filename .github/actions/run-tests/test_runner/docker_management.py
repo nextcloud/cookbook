@@ -46,9 +46,25 @@ def pushImages(args):
 		'docker', 'tag', 'cookbook_unittesting_dut', pushedName
 	]).check_returncode()
 
+	p.pr.run([
+		'docker', 'tag', 'cookbook_unittesting_mysql', 'nextcloudcookbook/mariadb-test:latest'
+	]).check_returncode()
+
+	p.pr.run([
+		'docker', 'tag', 'cookbook_unittesting_postgres', 'nextcloudcookbook/postgres-test:latest'
+	]).check_returncode()
+
 	l.logger.printTask('Pushing docker images to repository')
 	p.pr.run([
 		'docker', 'push', pushedName
+	]).check_returncode()
+
+	p.pr.run([
+		'docker', 'push', 'nextcloudcookbook/mariadb-test:latest'
+	]).check_returncode()
+
+	p.pr.run([
+		'docker', 'push', 'nextcloudcookbook/postgres-test:latest'
 	]).check_returncode()
 
 def handleDockerImages(args):
