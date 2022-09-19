@@ -38,6 +38,8 @@ class HttpMicrodataParserTest extends TestCase {
 			'caseC' => ['caseC.html',false,null],
 			'caseD' => ['caseD.html',true,'caseD.json'],
 			'caseE' => ['caseE.html',true,'caseE.json'],
+
+			'caseIssue1209' => ['caseFix1209.html',true,'caseFix1209.json'],
 		];
 	}
 
@@ -63,6 +65,8 @@ class HttpMicrodataParserTest extends TestCase {
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_Microdata/$jsonFile");
 			$expected = json_decode($jsonDest, true);
+
+			// print_r(json_encode($res));
 
 			$this->assertTrue($valid);
 			$this->assertEquals($expected, $res);
