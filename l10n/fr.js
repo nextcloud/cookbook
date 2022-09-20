@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipe with ID %d was not found in database." : "Recette avec l'ID %dnon trouvée dans la base de données.",
+    "No recipe was found." : "Pas de recette trouvée.",
     "The recipe has already an image file. Cannot create a new one." : "La recette a déjà un fichier image. Impossible d'en créer un nouveau.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Ne peut pas traiter les documents non POST en encodage multipart. Il s'agit d'un bug.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Ne peut pas détecter le type de données transmises. C'est une erreur, merci de le signaler.",
@@ -23,6 +25,7 @@ OC.L10N.register(
     "Loading recipe" : "Chargement de la recette",
     "Recipe not found" : "Recette non trouvée",
     "Page not found" : "Page non trouvée",
+    "Creating new recipe" : "Créer une nouvelle recette",
     "Edit" : "Modifier",
     "Save" : "Enregistrer",
     "Search" : "Rechercher",
