@@ -9,6 +9,8 @@
   [#1201](https://github.com/nextcloud/cookbook/pull/1201) @christianlupus
 - Fix API endpoint helpers to enforce JSON answers and minor styling enhancements
   [#1202](https://github.com/nextcloud/cookbook/pull/1202) @christianlupus
+- Fix XPath to allow for microdata parsing with multiple adjacent schema objects in HTML code
+  [#1220](https://github.com/nextcloud/cookbook/pull/1220) @christianlupus
 
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests

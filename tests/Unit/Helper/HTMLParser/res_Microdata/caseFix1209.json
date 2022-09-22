@@ -1,0 +1,28 @@
+{
+	"@type": "Recipe",
+	"@context": "http://schema.org",
+	"name": "Kürbis-Erdäpfel-Gulasch mit Debreziner",
+	"recipeYield": "4 Portionen",
+	"image": [
+	  "https://files.billa.at/fg/thema7/20181001_07_g.jpg"
+	],
+	"recipeIngredient": [
+	  "500\n                                        g\n                                    \n                                    festkochende Ja! Natürlich Bio-Erdäpfel",
+	  "600\n                                        g\n                                    \n                                    Ja! Natürlich Bio-Hokkaidokürbis",
+	  "1\n                                        \n                                    \n                                    gelbe Ja! Natürlich Bio-Zwiebel",
+	  "2\n                                        \n                                    \n                                    Ja! Natürlich Bio-Knoblauchzehen",
+	  "2\n                                        EL\n                                    \n                                    Ja! Natürlich Bio-Olivenöl",
+	  "1\n                                        EL\n                                    \n                                    Tomatenmark",
+	  "800\n                                        ml\n                                    \n                                    Gemüsesuppe",
+	  "3\n                                        EL\n                                    \n                                    Ja! Natürlich Bio-Estragonsenf",
+	  "1\n                                        \n                                    \n                                    Loorbeerblatt",
+	  "200\n                                        g\n                                    \n                                    Ja! Natürlich Bio Debreziner",
+	  "2\n                                        \n                                    \n                                    rote Ja! Natürlich Bio-Spitzpaprika",
+	  "2\n                                        EL\n                                    \n                                    Ja! Natürlich Bio-Petersilienblätter",
+	  "Salz",
+	  "schwarzer Pfeffer aus der Mühle"
+	],
+	"recipeInstructions": [
+	  "Zubereitung\n                        \n                        \n                            \n                        \n                    \n                \n\n\nErdäpfel schälen, in ca. 2 cm große Würfel schneiden und in kaltes Wasser legen. Kürbis putzen, entkernen und in ebenso große Würfel schneiden. Zwiebel schälen und fein würfeln. Knoblauch schälen und pressen.\nErdäpfel in einem Sieb gut abtropfen lassen. Öl in einem breiten Topf erhitzen, Zwiebel und Knoblauch hineingeben und ca. 1 Minute anbraten. Erdäpfel und Kürbis dazugeben und unter gelegentlichem Rühren ca. 3 Minuten braten. Tomatenmark unterrühren und kurz anrösten. Suppe, Senf und Lorbeer dazugeben und zugedeckt ca 15 Minuten köcheln lassen.\nWährenddessen die Debreziner in dicke Scheiben schneiden. Die Stielansätze der Paprika zusammen mit den Kernen aus den Schoten schneiden und die Schoten in dünne Ringe schneiden. Petersilie grob hacken.\nEtwa ein Drittel des Gulaschs fein pürieren. Paprika und Debreziner unter das Gulasch mischen und offen ca. 5 Minuten köcheln lassen. Mit Salz und Pfeffer abschmecken.\nGulasch anrichten, mit Petersilie bestreuen und servieren."
+	]
+  }
