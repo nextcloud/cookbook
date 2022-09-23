@@ -159,6 +159,10 @@ class FixInstructionsFilterTest extends TestCase {
 				],
 			], ['a', 'b', 'c'], true
 		];
+
+		yield 'Issue1210' => [
+			['a', '', 'b'], ['a', 'b'], true
+		];
 	}
 
 	/** @dataProvider dpParseInstructions */

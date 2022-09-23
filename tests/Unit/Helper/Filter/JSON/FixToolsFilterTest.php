@@ -50,6 +50,7 @@ class FixToolsFilterTest extends TestCase {
 		return [
 			[['a','b','c'], ['a','b','c'], false],
 			[[' a  ',''], ['a'], true],
+			[[' a  ','', 'b'], ['a', 'b'], true],
 		];
 	}
 
