@@ -11,6 +11,8 @@
   [#1202](https://github.com/nextcloud/cookbook/pull/1202) @christianlupus
 - Fix XPath to allow for microdata parsing with multiple adjacent schema objects in HTML code
   [#1220](https://github.com/nextcloud/cookbook/pull/1220) @christianlupus
+- Fix filters for array-valued entries in recipes
+  [#1222](https://github.com/nextcloud/cookbook/pull/1222) @christianlupus
 
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests
