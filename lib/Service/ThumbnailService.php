@@ -72,7 +72,8 @@ class ThumbnailService {
 		$img = $this->getNewImage();
 
 		// Store to temp location
-		$tmpFile = tmpfile();
+		// $tmpFile = tmpfile();
+		$tmpFile = fopen('/tmp/tmp-cookbook-img.jpg', 'w');
 		fwrite($tmpFile, $data);
 		fflush($tmpFile);
 
@@ -82,15 +83,17 @@ class ThumbnailService {
 		$this->logger->debug("File stats:\n" . print_r(fstat($tmpFile), true));
 
 		$loaded = $img->loadFromFile($filename);
+		$this->logger->debug('Type of result of loadFromFile: ' . gettype($loaded));
 
 		if ($loaded === false) {
 			$this->logger->debug("Could not load temp file.");
 
-			$this->logger->debug('Image is bool ' . is_bool($imagePath)?'true':'false');
-			$this->logger->debug('Image is file: ' . @is_file($imagePath)?'true':'false');
-			$this->logger->debug('Image exists: ' . file_exists($imagePath)?'true':'false');
+			$imagePath = $filename;
+			$this->logger->debug('Image is bool ' . is_bool($imagePath) ? 'true' : 'false');
+			$this->logger->debug('Image is file: ' . @is_file($imagePath) ? 'true' : 'false');
+			$this->logger->debug('Image exists: ' . file_exists($imagePath) ? 'true' : 'false');
 			$this->logger->debug('Image file size: ' . filesize($imagePath));
-			$this->logger->debug('Image is readable: ' . is_readable($imagePath)?'true':'false');
+			$this->logger->debug('Image is readable: ' . is_readable($imagePath) ? 'true' : 'false');
 		} else {
 			$this->logger->debug("Loaded image successfully.");
 		}
