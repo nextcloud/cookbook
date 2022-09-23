@@ -18,7 +18,7 @@ use OCA\Cookbook\Helper\TextCleanupHelper;
  * If there is already an array present, the entries are cleaned up to prevent malicious chars to be present.
  */
 class FixToolsFilter extends AbstractJSONFilter {
-	private const TOOLS = 'tools';
+	private const TOOLS = 'tool';
 
 	/** @var IL10N */
 	private $l;

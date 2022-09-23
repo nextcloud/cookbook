@@ -42,7 +42,7 @@ class FixToolsFilterTest extends TestCase {
 		$recipe = $this->stub;
 		$this->assertTrue($this->dut->apply($recipe));
 
-		$this->stub['tools'] = [];
+		$this->stub['tool'] = [];
 		$this->assertEquals($this->stub, $recipe);
 	}
 
@@ -57,20 +57,20 @@ class FixToolsFilterTest extends TestCase {
 	/** @dataProvider dp */
 	public function testApply($startVal, $expectedVal, $changed) {
 		$recipe = $this->stub;
-		$recipe['tools'] = $startVal;
+		$recipe['tool'] = $startVal;
 
 		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
 
 		$ret = $this->dut->apply($recipe);
 
-		$this->stub['tools'] = $expectedVal;
+		$this->stub['tool'] = $expectedVal;
 		$this->assertEquals($changed, $ret);
 		$this->assertEquals($this->stub, $recipe);
 	}
 
 	public function testApplyString() {
 		$recipe = $this->stub;
-		$recipe['tools'] = 'some text';
+		$recipe['tool'] = 'some text';
 
 		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
 		$this->expectException(InvalidRecipeException::class);
