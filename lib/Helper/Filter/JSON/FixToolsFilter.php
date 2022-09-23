@@ -18,7 +18,7 @@ use OCA\Cookbook\Helper\TextCleanupHelper;
  * If there is already an array present, the entries are cleaned up to prevent malicious chars to be present.
  */
 class FixToolsFilter extends AbstractJSONFilter {
-	private const TOOLS = 'tools';
+	private const TOOLS = 'tool';
 
 	/** @var IL10N */
 	private $l;
@@ -53,6 +53,8 @@ class FixToolsFilter extends AbstractJSONFilter {
 			return $t;
 		}, $tools);
 		$tools = array_filter($tools, fn ($t) => ($t));
+		ksort($tools);
+		$tools = array_values($tools);
 
 		$changed = $tools !== $json[self::TOOLS];
 		$json[self::TOOLS] = $tools;
