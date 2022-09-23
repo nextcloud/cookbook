@@ -33,6 +33,7 @@ OC.L10N.register(
     "Name" : "Ім'я",
     "Description" : "Опис",
     "URL" : "URL-адреса",
+    "Image" : "Зображення",
     "Tools" : "Інструменти",
     "Date created" : "Створено",
     "Last modified" : "Змінено",
