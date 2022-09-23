@@ -53,6 +53,8 @@ class FixToolsFilter extends AbstractJSONFilter {
 			return $t;
 		}, $tools);
 		$tools = array_filter($tools, fn ($t) => ($t));
+		ksort($tools);
+		$tools = array_values($tools);
 
 		$changed = $tools !== $json[self::TOOLS];
 		$json[self::TOOLS] = $tools;

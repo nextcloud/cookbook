@@ -113,6 +113,8 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 			return $x;
 		}, $instructions);
 		$instructions = array_filter($instructions);
+		ksort($instructions);
+		$instructions = array_values($instructions);
 
 		$changed = $instructions !== $json[self::INSTRUCTIONS];
 		$json[self::INSTRUCTIONS] = $instructions;
