@@ -47,11 +47,11 @@ class FixToolsFilterTest extends TestCase {
 	/** @dataProvider dp */
 	public function testApply($startVal, $expectedVal, $changed) {
 		$recipe = $this->stub;
-		$recipe['tools'] = $startVal;
+		$recipe['tool'] = $startVal;
 
 		$ret = $this->dut->apply($recipe);
 
-		$this->stub['tools'] = $expectedVal;
+		$this->stub['tool'] = $expectedVal;
 		$this->assertEquals($changed, $ret);
 		$this->assertEquals($this->stub, $recipe);
 	}
