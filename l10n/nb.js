@@ -18,6 +18,7 @@ OC.L10N.register(
     "Name" : "Navn",
     "Description" : "Beskrivelse",
     "URL" : "URL",
+    "Image" : "Bilde",
     "Tools" : "Verktøy",
     "Calories" : "Kalorier",
     "Creation date" : "Opprettelses dato",
