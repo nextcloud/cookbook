@@ -19,6 +19,8 @@
   [#1204](https://github.com/nextcloud/cookbook/pull/1204) @christianlupus
 - Update stylelint-config-idiomatic and fix code styling
   [#1224](https://github.com/nextcloud/cookbook/pull/1224) @christianlupus
+- Remove obsolete code from Recipe service class
+  [#1226](https://github.com/nextcloud/cookbook/pull/1226) @christianlupus
 
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
