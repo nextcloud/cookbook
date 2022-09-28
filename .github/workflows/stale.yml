@@ -3,6 +3,7 @@ name: Stale bot
 on:
     schedule:
       - cron: '0 3 * * *'
+    workflow_dispatch:
 
 jobs:
     stale:
@@ -11,7 +12,7 @@ jobs:
         
         steps:
         
-          - uses: actions/stale@v3.0.18
+          - uses: actions/stale@v6
             name: Close stale issues
             with:
                 days-before-stale: 45
@@ -31,3 +32,4 @@ jobs:
                     It will be closed now.
                 stale-issue-label: 'stale'
                 only-labels: 'stalebot-enabled'
+                debug-only: true
