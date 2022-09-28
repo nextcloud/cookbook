@@ -32,4 +32,4 @@ jobs:
                     It will be closed now.
                 stale-issue-label: 'stale'
                 only-labels: 'stalebot-enabled'
-                debug-only: true
+                # debug-only: true
