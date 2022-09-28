@@ -133,8 +133,8 @@ export default {
     position: relative;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
-    margin: 1rem 2rem;
     border-radius: 3px;
+    margin: 1rem 2rem;
     font-size: 1.2rem;
     text-align: center;
 }

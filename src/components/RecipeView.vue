@@ -703,8 +703,8 @@ export default {
     position: relative;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
-    margin: 1rem 2rem;
     border-radius: 3px;
+    margin: 1rem 2rem;
     font-size: 1.2rem;
     text-align: center;
 }
@@ -836,11 +836,11 @@ main {
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
     margin: -6px 1rem 1rem 0;
     background-color: var(--color-background-dark);
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 50%;
     content: counter(instruction-counter);
     float: left;
     line-height: 36px;

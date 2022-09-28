@@ -214,9 +214,9 @@ See: https://github.com/nextcloud/cookbook/issues/908
     min-height: revert;
     padding: revert;
     border: revert;
+    border-radius: revert;
     margin: revert;
     background-color: revert;
-    border-radius: revert;
     color: revert;
     font-size: revert;
     outline: revert;
