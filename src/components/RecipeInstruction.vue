@@ -46,10 +46,10 @@ li::before {
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
     background-color: var(--color-background-dark);
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 50%;
     content: counter(instruction-counter);
     line-height: 36px;
     outline: none;
