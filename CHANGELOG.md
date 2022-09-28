@@ -17,6 +17,8 @@
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests
   [#1204](https://github.com/nextcloud/cookbook/pull/1204) @christianlupus
+- Update stylelint-config-idiomatic and fix code styling
+  [#1224](https://github.com/nextcloud/cookbook/pull/1224) @christianlupus
 
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
