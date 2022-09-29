@@ -40,13 +40,13 @@ jobs:
         id: count-plantuml
         run: |
           count=$(find docs/ -name \*.puml | wc -l)
-          echo "There are $count number of plantuml files"
+          echo "There are $count plantuml files"
           echo "::set-output name=num::$count"
       - name: Install PlantUML on demand
         if: steps.count-plantuml.outputs.num > 0
         run: |
-          apt-get update
-          apt-get install --no-install-recommends plantuml
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y plantuml
       - name: Build PlantUML images
         if: steps.count-plantuml.outputs.num > 0
         run: make -C docs build-uml-svg
