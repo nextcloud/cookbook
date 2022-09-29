@@ -1,0 +1,29 @@
+name: Slack-like comments
+on:
+  issue_comment:
+    types:
+      - "created"
+      - "edited"
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  approve-pr:
+    name: Approve PR
+    runs-on: ubuntu-latest
+    if: ${ github.event.issue.pull_request }
+    steps:
+      - run: |-
+          echo "User association: ${{ github.event.comment.user_association }}"
+          echo "Comment body matches /approve: ${{github.event.comment.body == '/approve'}}"
+      - uses: hmarr/auto-approve-action@v2
+        if: >-
+          github.event.comment.body == '/approve' &&
+          github.event.comment.user_association == 'OWNER'
+        with:
+          github-token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
+          pull-request-number: ${{ github.event.issue.number }}
+          review-message: "Automatically approved by GitHub action on behalf of `/approve`"
+
