@@ -2,10 +2,13 @@
 BUNDLER=bundler
 HOST=127.0.0.1
 
+PLANTUML_SRC=$(shell find -name \*.puml ! -path ./_site/\*)
+PLANTUML_DST_SVG=${PLANTUML_SRC:%.puml=%.svg}
+
 .PHONY: all
 all: help
 
-.PHONY: help watch build install
+.PHONY: help watch build install build-uml-svg
 
 help:
 	@echo "Make tragets supported:"
@@ -23,3 +26,15 @@ watch:
 install:
 	${BUNDLER} install
 
+build-uml-svg:
+ifeq ($(strip ${PLANTUML_SRC}),)
+	@echo 'No plantuml files were found. Skipping.'
+else
+	${MAKE} ${PLANTUML_DST_SVG}
+endif
+
+%.svg: %.puml
+	plantuml -tsvg $<
+
+%.png: %.puml
+	plantuml -tpng $<
