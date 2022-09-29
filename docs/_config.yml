@@ -5,3 +5,8 @@ exclude:
     - "vendor/"
     - Gemfile
     - Gemfile.lock
+# plugins:
+#     - jekyll-spaceship
+markdown: kramdown
+kramdown:
+    input: GFM
