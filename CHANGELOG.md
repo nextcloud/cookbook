@@ -21,6 +21,8 @@
   [#1224](https://github.com/nextcloud/cookbook/pull/1224) @christianlupus
 - Remove obsolete code from Recipe service class
   [#1226](https://github.com/nextcloud/cookbook/pull/1226) @christianlupus
+- Allow for PlantUML diagrams in documentation
+  [#1229](https://github.com/nextcloud/cookbook/pull/1229) @christianlupus
 
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
