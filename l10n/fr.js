@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipe with ID %d was not found in database." : "Recette avec l'ID %d non trouvée dans la base de données.",
+    "JSON cannot be decoded." : "Le JSON ne peut être décodé.",
     "No recipe was found." : "Pas de recette trouvée.",
     "The recipe has already an image file. Cannot create a new one." : "La recette a déjà un fichier image. Impossible d'en créer un nouveau.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Ne peut pas traiter les documents non POST en encodage multipart. Il s'agit d'un bug.",
