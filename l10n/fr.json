@@ -62,7 +62,7 @@
     "Show keyword cloud in recipe lists" : "Montrer le nuage de mots-clés dans les listes de recettes",
     "Could not set preference for image printing" : "Impossible de définir le paramètre d'impression des images",
     "Could not set recipe update interval to {interval}" : "Impossible de définir l'intervalle de mise à jour à {interval}",
-    "Could not set recipe folder to {path}" : "Impossible de définir le répertoire de recette sur {path}",
+    "Could not set recipe folder to {path}" : "Impossible de définir {path} comme dossier de recette ",
     "Loading config failed" : "Erreur lors du chargement de la configuration",
     "Enter URL or select from your Nextcloud instance on the right" : "Saisir l'URL ou sélectionner sur la droite depuis votre instance Nextcloud",
     "Pick a local image" : "Choisir une image locale",
