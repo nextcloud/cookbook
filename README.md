@@ -1,13 +1,20 @@
-| ⚠️ **IMPORTANT** ⚠️ |
-| --- |
-| Users of this app are practically testers. We're limited on resources, and still working out how to make this app function the best it can. There will be regressions and bugs. And we of course appreciate constructive feedback whenever users run into them. |
+> ⚠️ **IMPORTANT** ⚠️  
+>  Users of this app are practically testers. We're limited on resources, and still working out how to make this app function the best it can. There will be regressions and bugs. And we of course appreciate constructive feedback whenever users run into them.
 
-![CI-tests](https://github.com/nextcloud/cookbook/workflows/CI-tests/badge.svg)
+<a href="https://matrix.to/#/#nextcloud-cookbook:matrix.org" >
+    <img src="https://img.shields.io/matrix/nextcloud-cookbook:matrix.org?logo=matrix&label=Join%20the%20discussion&style=flat" alt="Join us on Matrix" >
+</a>
+
+![CI-tests](https://github.com/nextcloud/cookbook/workflows/CI-tests/badge.svg) 
+![GitHub](https://img.shields.io/github/license/nextcloud/cookbook)
+![GitHub language count](https://img.shields.io/github/languages/count/nextcloud/cookbook)
+![GitHub Repo stars](https://img.shields.io/github/stars/nextcloud/cookbook?logo=github)
+![GitHub all releases](https://img.shields.io/github/downloads/nextcloud/cookbook/total?logo=github)
 
 # NextCloud Cookbook
-
-![A screenshot of how the app looks](./docs/assets/screenshot.png)
-
+<p align=center>
+<img alt="A screenshot of how the app looks" src="./docs/assets/screenshot.png">
+</p>
 A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.
 
 Further documentation (also internal ones) are published on the [documentation pages of the project](http://nextcloud.github.io/cookbook/).
@@ -16,20 +23,21 @@ Further documentation (also internal ones) are published on the [documentation p
 
 The app works generally in any modern browser. Additionally, there are some more specialized clients listed here.
 
-### Android
-The currently available clients are
+### Mobile
+The currently available clients are:
 
-- Nextcloud Cookbook (by MicMun) ([Google Play](https://play.google.com/store/apps/details?id=de.micmun.android.nextcloudcookbook&hl=en_US&gl=US), [FDroid](https://f-droid.org/en/packages/de.micmun.android.nextcloudcookbook/), [homepage](https://micmun.de/nextcloud-cookbook-english/))
-- [Nextcloud Cookbook](https://github.com/Teifun2/nextcloud-cookbook-flutter) (by Teifun2) ([Google Play](https://play.google.com/store/apps/details?id=com.nextcloud_cookbook_flutter&hl=en_US&gl=US), [FDroid](https://f-droid.org/en/packages/com.nextcloud_cookbook_flutter/))
-- Nook ([Google Play](https://play.google.com/store/apps/details?id=org.capacitor.cookbook.app))
+[Nextcloud Cookbook](https://micmun.de/nextcloud-cookbook-english/) (by MicMun)  
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/de.micmun.android.nextcloudcookbook/) [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=de.micmun.android.nextcloudcookbook&hl=en_US&gl=US&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1/)
+
+[Nextcloud Cookbook](https://github.com/Teifun2/nextcloud-cookbook-flutter) (by Teifun2)  
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/en/packages/com.nextcloud_cookbook_flutter/) [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=com.nextcloud_cookbook_flutter&hl=en_US&gl=US) [<img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store" height="80" width="160">](https://apps.apple.com/us/app/nextcloud-cookbook/id1619926634?itsct=apps_box_badge&amp;itscg=30200)
+
+Nook  
+[<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=org.capacitor.cookbook.app)
 
 ### Browser plugins/scripts
 
 - [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
-
-## Join the discussion
-
-* [#nextcloud-cookbook:matrix.org](https://matrix.to/#/#nextcloud-cookbook:matrix.org)
 
 ## F.A.Q.
 
