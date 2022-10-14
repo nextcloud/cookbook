@@ -33,6 +33,9 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import ArrowRight from "icons/ArrowRight.vue"
+
 const ActionGlobalMixin = {
     before() {
         // all actions requires a valid text content
@@ -72,14 +75,11 @@ const ActionGlobalMixin = {
     },
 }
 
-const GenRandomId = (length) => {
-    return Math.random()
+const GenRandomId = (length) =>
+    Math.random()
         .toString(36)
         .replace(/[^a-z]+/g, "")
         .slice(0, length || 5)
-}
-
-import ArrowRight from "icons/ArrowRight"
 
 export default {
     name: "ActionInput",
@@ -96,7 +96,7 @@ export default {
          */
         id: {
             type: String,
-            default: () => "action-" + GenRandomId(),
+            default: () => `action-${GenRandomId()}`,
             validator: (id) => id.trim() !== "",
         },
         /**
@@ -172,6 +172,7 @@ export default {
         onSubmit(event) {
             event.preventDefault()
             event.stopPropagation()
+
             if (!this.disabled) {
                 /**
                  * Emitted on submit of the input field
@@ -179,10 +180,11 @@ export default {
                  * @type {Event}
                  */
                 this.$emit("submit", event)
-            } else {
-                // ignore submit
-                return false
+                return true
             }
+
+            // ignore submit
+            return false
         },
         onChange(event) {
             /**
