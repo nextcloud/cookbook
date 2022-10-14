@@ -6,7 +6,7 @@
  */
 
 // Markdown
-import moment from "moment"
+import moment from "@nextcloud/moment"
 
 import Vue from "vue"
 
