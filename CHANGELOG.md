@@ -14,6 +14,8 @@
   [#1220](https://github.com/nextcloud/cookbook/pull/1220) @christianlupus
 - Fix filters for array-valued entries in recipes
   [#1222](https://github.com/nextcloud/cookbook/pull/1222) @christianlupus
+- Add overlay when app navigation is open
+  [1122](https://github.com/nextcloud/cookbook/pull/1122) @MarcelRobitaille
 
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests
@@ -98,8 +100,6 @@
   [#1165](https://github.com/nextcloud/cookbook/pull/1165) @christianlupus
 - Correct output of getApiVersion
   [#1175](https://github.com/nextcloud/cookbook/pull/1175) @christianlupus
-- Add overlay when app navigation is open
-  [1122](https://github.com/nextcloud/cookbook/pull/1122) @MarcelRobitaille
 
 ### Maintenance
 - Add composer.json to version control to have unique installed dependency versions
