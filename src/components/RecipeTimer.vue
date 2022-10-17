@@ -80,7 +80,13 @@ export default {
             window.setTimeout(() => {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
+
+                // Ensure audio starts at the beggining
+                // If it's paused midway, by default it will resume from that point
+                this.audio.currentTime = 0
+                // Start playing audio to alert the user that the timer is up
                 this.audio.play()
+
                 // eslint-disable-next-line no-alert
                 alert(t("cookbook", "Cooking time is up!"))
 
