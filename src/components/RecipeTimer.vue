@@ -83,6 +83,10 @@ export default {
                 this.audio.play()
                 // eslint-disable-next-line no-alert
                 alert(t("cookbook", "Cooking time is up!"))
+
+                // Stop audio after the alert is confirmed
+                this.audio.pause()
+
                 // cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false
