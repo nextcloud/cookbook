@@ -27,6 +27,10 @@
 - Allow for PlantUML diagrams in documentation
   [#1229](https://github.com/nextcloud/cookbook/pull/1229) @christianlupus
 
+### Documentation
+- Fix bad writing
+  [#1256](https://github.com/nextcloud/cookbook/pull/1256) @MarcelRobitaille
+
 ### Removed
 - Remove the deprecated endpoints from version 0.9.15
   [#1200](https://github.com/nextcloud/cookbook/pull/1200) @christianlupus
