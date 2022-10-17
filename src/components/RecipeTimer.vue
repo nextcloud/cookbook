@@ -68,6 +68,9 @@ export default {
         // Start loading the sound early so it's ready to go when we need to
         // play it
         this.audio = new Audio(alarmSound)
+        // For now, the alarm should play continuously until it is dismissed
+        // See https://github.com/nextcloud/cookbook/issues/671#issuecomment-1279030452
+        this.audio.loop = true
     },
     methods: {
         onTimerEnd() {
