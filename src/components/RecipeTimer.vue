@@ -14,7 +14,7 @@
 <script>
 // Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
 // Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
-import alarmSound from "file-loader!../media/alarm-clock-short-6402.mp3"
+import alarmSound from "../media/alarm-clock-short-6402.mp3"
 
 export default {
     name: "RecipeTimer",
