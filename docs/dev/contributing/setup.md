@@ -29,7 +29,7 @@ cd /var/www/nextcloud/apps
 git clone https://github.com/nextcloud/cookbook.git # you may want to clone your own fork if you are contributing pull requests
 ```
 
-### Usage of the docker-compose file by juliushaertl
+### Usage of [nextcloud-docker-dev](https://github.com/juliushaertl/nextcloud-docker-dev) by juliushaertl
 
 If you installed via Docker, [the volumes section of the `docker-compose.yml`](https://github.com/juliushaertl/nextcloud-docker-dev/blob/2bbf26cc257081d9ed72abc947441849fca59dcd/docker-compose.yml#L68) shows that there are many options for specifying apps.
 
@@ -41,9 +41,9 @@ You might need to adopt the path specification according to your local setup. Al
 
 Be sure to recreate the containers after modifying `docker-compose.yml` using `docker-compose up -d`.
 
-### Usage of the docker-compose scripts by christianlupus
+### Usage of [nextcloud-docker-debug](https://github.com/christianlupus/nextcloud-docker-debug) by christianlupus
 
-The installation process is described in the README of the project. Feel free to contact the author in cases of problems.
+The installation process is described in the README of that project. Feel free to contact the author in cases of problems.
 
 ## Install PHP dependencies
 
