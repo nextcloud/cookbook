@@ -26,6 +26,7 @@
   [#1226](https://github.com/nextcloud/cookbook/pull/1226) @christianlupus
 - Allow for PlantUML diagrams in documentation
   [#1229](https://github.com/nextcloud/cookbook/pull/1229) @christianlupus
+- Remove deprecated `::v-deep` CSS syntax @christianlupus
 
 ### Documentation
 - Fix bad writing
