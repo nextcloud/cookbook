@@ -35,7 +35,9 @@ helpers.useRouter(router)
 const locale = document.documentElement
     .getAttribute("data-locale")
     .replace("_", "-")
-    .toLowerCase() // `en` is the default locale and cannot be dynamically imported. Will 404
+    .toLowerCase()
+
+// `en` is the default locale and cannot be dynamically imported. Will 404
 // https://github.com/moment/moment/issues/3624
 ;(locale === "en"
     ? Promise.resolve()
