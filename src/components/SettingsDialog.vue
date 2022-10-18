@@ -12,7 +12,7 @@
             <fieldset>
                 <ul>
                     <li>
-                        <NcButton @click="$emit('reindex')">
+                        <NcButton @click="reindex">
                             <template #icon>
                                 <LoadingIcon v-if="scanningLibrary" />
                                 <ReloadIcon v-else />
