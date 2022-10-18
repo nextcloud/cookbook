@@ -73,15 +73,18 @@
         </template>
 
         <template slot="footer">
-            <AppSettings
-                :scanning-library="scanningLibrary"
-                @reindex="reindex"
+            <NcAppNavigationNew
+                :text="t('cookbook', 'Cookbook settings')"
+                :button-class="['create', 'icon-settings']"
+                @click="handleOpenSettings"
             />
         </template>
     </NcAppNavigation>
 </template>
 
 <script>
+import { emit } from "@nextcloud/event-bus"
+
 import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
 import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation"
 import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem"
@@ -96,7 +99,7 @@ import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
-import AppSettings from "./AppSettings.vue"
+import { SHOW_SETTINGS_EVENT } from "./SettingsDialog.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
 
 export default {
@@ -107,7 +110,6 @@ export default {
         NcAppNavigationItem,
         NcAppNavigationNew,
         NcCounterBubble,
-        AppSettings,
         AppNavigationCaption,
         PlusIcon,
     },
@@ -118,7 +120,6 @@ export default {
             downloading: false,
             isCategoryUpdating: [],
             loading: { categories: true },
-            scanningLibrary: false,
             uncatRecipes: 0,
         }
     },
@@ -345,40 +346,6 @@ export default {
         },
 
         /**
-         * Reindex all recipes
-         */
-        reindex() {
-            this.$log.debug("Calling reindex")
-            const $this = this
-            if (this.scanningLibrary) {
-                // No repeat clicks until we're done
-                return
-            }
-            this.scanningLibrary = true
-            api.recipes
-                .reindex()
-                .then(() => {
-                    $this.scanningLibrary = false
-                    // eslint-disable-next-line no-console
-                    console.log("Library reindexing complete")
-                    if (
-                        ["index", "search"].indexOf(this.$store.state.page) > -1
-                    ) {
-                        // This refreshes the current router view in case items in it changed during reindex
-                        $this.$router.go()
-                    } else {
-                        this.$log.debug("Calling getCategories from reindex")
-                        $this.getCategories()
-                    }
-                })
-                .catch(() => {
-                    $this.scanningLibrary = false
-                    // eslint-disable-next-line no-console
-                    console.log("Library reindexing failed!")
-                })
-        },
-
-        /**
          * Set loading recipe index to show the loading icon
          */
         setLoadingRecipe(id) {
@@ -392,6 +359,10 @@ export default {
             this.$store.dispatch("setAppNavigationVisible", {
                 isVisible: !this.$store.state.appNavigation.visible,
             })
+        },
+
+        handleOpenSettings() {
+            emit(SHOW_SETTINGS_EVENT)
         },
     },
 }

@@ -16,6 +16,7 @@
             />
         </NcAppContent>
         <dialogs-wrapper></dialogs-wrapper>
+        <SettingsDialog />
     </NcContent>
 </template>
 
@@ -26,6 +27,7 @@ import NcContent from "@nextcloud/vue/dist/Components/NcContent"
 import AppControls from "cookbook/components/AppControls/AppControls.vue"
 import { emit, subscribe, unsubscribe } from "@nextcloud/event-bus"
 import AppNavi from "./AppNavi.vue"
+import SettingsDialog from "./SettingsDialog.vue"
 
 export default {
     name: "AppMain",
@@ -33,6 +35,7 @@ export default {
         NcAppContent,
         AppControls,
         AppNavi,
+        SettingsDialog,
         // eslint-disable-next-line vue/no-reserved-component-names
         NcContent,
     },

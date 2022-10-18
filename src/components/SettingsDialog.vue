@@ -1,19 +1,24 @@
 <template>
-    <NcAppNavigationSettings :open="true">
-        <div id="app-settings">
+    <NcAppSettingsDialog
+        :open.sync="isOpen"
+        :title="t('cookbook', 'Cookbook settings')"
+        :show-navigation="true"
+        first-selected-section="keyboard shortcuts"
+    >
+        <NcAppSettingsSection
+            :title="t('cookbook', 'Recipe folder')"
+            class="app-settings-section"
+        >
             <fieldset>
                 <ul>
                     <li>
-                        <NcActionButton
-                            class="button"
-                            :icon="
-                                scanningLibrary
-                                    ? 'icon-loading-small'
-                                    : 'icon-history'
-                            "
-                            :title="t('cookbook', 'Rescan library')"
-                            @click="$emit('reindex')"
-                        />
+                        <NcButton @click="$emit('reindex')">
+                            <template #icon>
+                                <LoadingIcon v-if="scanningLibrary" />
+                                <ReloadIcon v-else />
+                            </template>
+                            {{ t("cookbook", "Rescan library") }}
+                        </NcButton>
                     </li>
                     <li>
                         <label class="settings-input">{{
@@ -37,6 +42,15 @@
                             placeholder="0"
                         />
                     </li>
+                </ul>
+            </fieldset>
+        </NcAppSettingsSection>
+        <NcAppSettingsSection
+            :title="t('cookbook', 'Recipe display settings')"
+            class="app-settings-section"
+        >
+            <fieldset>
+                <ul>
                     <li>
                         <input
                             id="recipe-print-image"
@@ -64,36 +78,42 @@
                     </li>
                 </ul>
             </fieldset>
-        </div>
-    </NcAppNavigationSettings>
+        </NcAppSettingsSection>
+    </NcAppSettingsDialog>
 </template>
 
 <script>
-import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
-import NcAppNavigationSettings from "@nextcloud/vue/dist/Components/NcAppNavigationSettings"
+import { subscribe, unsubscribe } from "@nextcloud/event-bus"
+
+import NcAppSettingsDialog from "@nextcloud/vue/dist/Components/NcAppSettingsDialog"
+import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSection"
+import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+import LoadingIcon from "icons/Loading.vue"
+import ReloadIcon from "icons/Cached.vue"
 
 import api from "cookbook/js/api-interface"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
+export const SHOW_SETTINGS_EVENT = "show-settings"
+
 export default {
-    name: "AppSettings",
+    name: "SettingsDialog",
     components: {
-        NcActionButton,
-        NcAppNavigationSettings,
-    },
-    props: {
-        scanningLibrary: {
-            type: Boolean,
-            default: false,
-        },
+        NcButton,
+        NcAppSettingsDialog,
+        NcAppSettingsSection,
+        LoadingIcon,
+        ReloadIcon,
     },
     data() {
         return {
+            isOpen: false,
             printImage: false,
             recipeFolder: "",
             resetPrintImage: true,
             showTagCloudInRecipeList: true,
             resetTagCloud: true,
+            scanningLibrary: false,
             // By setting the reset value initially to true, it will skip one watch event
             // (the one when config is loaded at page load)
             resetInterval: true,
@@ -150,8 +170,14 @@ export default {
     },
     mounted() {
         this.setup()
+
+        subscribe(SHOW_SETTINGS_EVENT, this.handleShowSettings)
     },
     methods: {
+        handleShowSettings() {
+            this.isOpen = true
+        },
+
         /**
          * Select a recipe folder using the Nextcloud file picker
          */
@@ -209,27 +235,70 @@ export default {
                 )
             }
         },
+
+        /**
+         * Reindex all recipes
+         */
+        reindex() {
+            const $this = this
+            if (this.scanningLibrary) {
+                // No repeat clicks until we're done
+                return
+            }
+            this.scanningLibrary = true
+            api.recipes
+                .reindex()
+                .then(() => {
+                    $this.scanningLibrary = false
+                    // eslint-disable-next-line no-console
+                    console.log("Library reindexing complete")
+                    if (
+                        ["index", "search"].indexOf(this.$store.state.page) > -1
+                    ) {
+                        // This refreshes the current router view in case items in it changed during reindex
+                        $this.$router.go()
+                    } else {
+                        $this.getCategories()
+                    }
+                })
+                .catch(() => {
+                    $this.scanningLibrary = false
+                    // eslint-disable-next-line no-console
+                    console.log("Library reindexing failed!")
+                })
+        },
+
+        beforeDestroy() {
+            unsubscribe(SHOW_SETTINGS_EVENT, this.handleShowSettings)
+        },
     },
 }
 </script>
 
+<style scoped>
+.material-design-icon.loading-icon ::v-deep svg {
+    animation: rotate var(--animation-duration, 0.8s) linear infinite;
+    color: var(--color-loading-dark);
+}
+</style>
+
 <style>
 #app-settings input[type="text"],
 #app-settings input[type="number"],
-#app-settings .button {
+#app-settings .button.disable {
     display: block;
     width: 100%;
 }
 
-#app-settings .button {
-    z-index: 2;
-    height: 44px;
-    padding: 0;
-    border-radius: var(--border-radius);
-}
+/* #app-settings .button { */
+/*     z-index: 2; */
+/*     height: 44px; */
+/*     padding: 0; */
+/*     border-radius: var(--border-radius); */
+/* } */
 
-#app-settings .button p {
-    margin: auto;
-    font-size: 13px;
-}
+/* #app-settings .button p { */
+/*     margin: auto; */
+/*     font-size: 13px; */
+/* } */
 </style>
