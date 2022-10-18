@@ -42,5 +42,6 @@ export default {
 .modal__button-bar {
     display: flex;
     justify-content: flex-end;
+    gap: 15px;
 }
 </style>
