@@ -190,7 +190,7 @@ export default {
         // confirm leave. This prevents accidentally losing changes
         if (
             this.isNavigationDangerous &&
-            (await showSimpleConfirmModal(CONFIRM_MSG))
+            !(await showSimpleConfirmModal(CONFIRM_MSG))
         ) {
             next(false)
         } else {
