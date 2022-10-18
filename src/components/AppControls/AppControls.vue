@@ -153,8 +153,6 @@
 </template>
 
 <script>
-import helpers from "cookbook/js/helper"
-
 import Actions from "@nextcloud/vue/dist/Components/Actions"
 import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
@@ -165,6 +163,9 @@ import PencilIcon from "icons/Pencil.vue"
 import LoadingIcon from "icons/Loading.vue"
 import CheckmarkIcon from "icons/Check.vue"
 import PrinterIcon from "icons/Printer.vue"
+
+import helpers from "cookbook/js/helper"
+import { showSimpleAlertModal, showSimpleConfirmModal } from "../../js/modals"
 
 import Location from "./Location.vue"
 import ModeIndicator from "./ModeIndicator.vue"
@@ -254,29 +255,30 @@ export default {
         },
     },
     methods: {
-        deleteRecipe() {
+        async deleteRecipe() {
             // Confirm delete
             if (
-                // eslint-disable-next-line no-alert
-                !window.confirm(
-                    // prettier-ignore
-                    t("cookbook","Are you sure you want to delete this recipe?")
-                )
+                !(await showSimpleConfirmModal(
+                    t(
+                        "cookbook",
+                        "Are you sure you want to delete this recipe?"
+                    )
+                ))
             ) {
                 return
             }
-            this.$store
-                .dispatch("deleteRecipe", { id: this.$store.state.recipe.id })
-                .then(() => {
-                    helpers.goTo("/")
+
+            try {
+                await this.$store.dispatch("deleteRecipe", {
+                    id: this.$store.state.recipe.id,
                 })
-                .catch((e) => {
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Delete failed"))
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
+                helpers.goTo("/")
+            } catch (e) {
+                await showSimpleAlertModal(t("cookbook", "Delete failed"))
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            }
         },
         printRecipe() {
             window.print()

@@ -259,6 +259,7 @@ import moment from "@nextcloud/moment"
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import normalizeMarkdown from "cookbook/js/title-rename"
+import { showSimpleAlertModal } from "../js/modals"
 
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
@@ -551,7 +552,7 @@ export default {
             }
             return date
         },
-        setup() {
+        async setup() {
             // Make the control row show that a recipe is loading
             if (!this.$store.state.recipe) {
                 this.$store.dispatch("setLoadingRecipe", { recipe: -1 })
@@ -574,34 +575,33 @@ export default {
 
             const $this = this
 
-            api.recipes
-                .get(this.$route.params.id)
-                .then((response) => {
-                    const recipe = response.data
-                    // Store recipe data in vuex
-                    $this.$store.dispatch("setRecipe", { recipe })
+            try {
+                const response = await api.recipes.get(this.$route.params.id)
+                const recipe = response.data
+                // Store recipe data in vuex
+                $this.$store.dispatch("setRecipe", { recipe })
 
-                    // Always set the active page last!
-                    $this.$store.dispatch("setPage", { page: "recipe" })
-                })
-                .catch(() => {
-                    if ($this.$store.state.loadingRecipe) {
-                        // Reset loading recipe
-                        $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
-                    }
+                // Always set the active page last!
+                $this.$store.dispatch("setPage", { page: "recipe" })
+            } catch {
+                if ($this.$store.state.loadingRecipe) {
+                    // Reset loading recipe
+                    $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
+                }
 
-                    if ($this.$store.state.reloadingRecipe) {
-                        // Reset reloading recipe
-                        $this.$store.dispatch("setReloadingRecipe", {
-                            recipe: 0,
-                        })
-                    }
+                if ($this.$store.state.reloadingRecipe) {
+                    // Reset reloading recipe
+                    $this.$store.dispatch("setReloadingRecipe", {
+                        recipe: 0,
+                    })
+                }
 
-                    $this.$store.dispatch("setPage", { page: "recipe" })
+                $this.$store.dispatch("setPage", { page: "recipe" })
 
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Loading recipe failed"))
-                })
+                await showSimpleAlertModal(
+                    t("cookbook", "Loading recipe failed")
+                )
+            }
         },
     },
 }

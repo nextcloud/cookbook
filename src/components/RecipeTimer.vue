@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { showSimpleAlertModal } from "../js/modals"
+
 export default {
     name: "RecipeTimer",
     props: {
@@ -65,13 +67,11 @@ export default {
     methods: {
         onTimerEnd() {
             window.clearInterval(this.countdown)
-            // I'll just use an alert until this functionality is finished
             const $this = this
-            window.setTimeout(() => {
+            window.setTimeout(async () => {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
-                // eslint-disable-next-line no-alert
-                alert(t("cookbook", "Cooking time is up!"))
+                await showSimpleAlertModal(t("cookbook", "Cooking time is up!"))
                 // cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false

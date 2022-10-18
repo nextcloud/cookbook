@@ -122,12 +122,13 @@
 <script>
 import Vue from "vue"
 
+import Actions from "@nextcloud/vue/dist/Components/Actions"
+import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
+
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import NumericIcon from "icons/Numeric.vue"
-
-import Actions from "@nextcloud/vue/dist/Components/Actions"
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
+import { showSimpleAlertModal, showSimpleConfirmModal } from "../js/modals"
 
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"
@@ -135,6 +136,11 @@ import EditInputGroup from "./EditInputGroup.vue"
 import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
 import EditTimeField from "./EditTimeField.vue"
+
+const CONFIRM_MSG = t(
+    "cookbook",
+    "You have unsaved changes! Do you still want to leave?"
+)
 
 export default {
     name: "RecipeEdit",
@@ -178,11 +184,14 @@ export default {
      * This can also be used to confirm that the user wants to leave the page
      * if there are unsaved changes.
      */
-    beforeRouteLeave(to, from, next) {
+    async beforeRouteLeave(to, from, next) {
         // beforeRouteLeave is called when the static route changes.
         // Cancel the navigation, if the form has unsaved edits and the user did not
         // confirm leave. This prevents accidentally losing changes
-        if (this.confirmStayInEditedForm()) {
+        if (
+            this.isNavigationDangerous &&
+            (await showSimpleConfirmModal(CONFIRM_MSG))
+        ) {
             next(false)
         } else {
             // We have to check if the target component stays the same and reload.
@@ -345,6 +354,11 @@ export default {
             }
             return r
         },
+
+        // Whether navigation would lose data, etc.
+        isNavigationDangerous() {
+            return !this.savingRecipe && this.formDirty
+        },
     },
     watch: {
         prepTime: {
@@ -454,25 +468,13 @@ export default {
             this.recipe[field].splice(index, 0, content)
         },
         beforeWindowUnload(e) {
-            if (this.confirmStayInEditedForm()) {
+            // We cannot use our fancy modal here because `beforeunload` does not wait for promises to resolve
+            // However, we can avoid `window.confirm` by using `e.returnValue`
+            if (this.isNavigationDangerous) {
                 // Cancel the window unload event
                 e.preventDefault()
-                e.returnValue = ""
+                e.returnValue = CONFIRM_MSG
             }
-        },
-        confirmLeavingPage() {
-            // eslint-disable-next-line no-alert
-            return window.confirm(
-                // prettier-ignore
-                t("cookbook", "You have unsaved changes! Do you still want to leave?")
-            )
-        },
-        confirmStayInEditedForm() {
-            return (
-                !this.savingRecipe &&
-                this.formDirty &&
-                !this.confirmLeavingPage()
-            )
         },
         deleteEntry(field, index) {
             this.recipe[field].splice(index, 1)
@@ -480,56 +482,54 @@ export default {
         /**
          * Fetch and display recipe categories
          */
-        fetchCategories() {
+        async fetchCategories() {
             const $this = this
-            api.categories
-                .getAll()
-                .then((response) => {
-                    const json = response.data || []
-                    $this.allCategories = []
-                    for (let i = 0; i < json.length; i++) {
-                        if (json[i].name !== "*") {
-                            $this.allCategories.push(json[i].name)
-                        }
+            try {
+                const response = await api.categories.getAll()
+                const json = response.data || []
+                $this.allCategories = []
+                for (let i = 0; i < json.length; i++) {
+                    if (json[i].name !== "*") {
+                        $this.allCategories.push(json[i].name)
                     }
-                    $this.isFetchingCategories = false
-                })
-                .catch((e) => {
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Failed to fetch categories"))
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
+                }
+                $this.isFetchingCategories = false
+            } catch (e) {
+                await showSimpleAlertModal(
+                    t("cookbook", "Failed to fetch categories")
+                )
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            }
         },
         /**
          * Fetch and display recipe keywords
          */
-        fetchKeywords() {
+        async fetchKeywords() {
             const $this = this
-            api.keywords
-                .getAll()
-                .then((response) => {
-                    const json = response.data || []
-                    if (json) {
-                        $this.allKeywords = []
-                        for (let i = 0; i < json.length; i++) {
-                            if (json[i].name !== "*") {
-                                $this.allKeywords.push(json[i].name)
-                            }
+            try {
+                const response = await api.keywords.getAll()
+                const json = response.data || []
+                if (json) {
+                    $this.allKeywords = []
+                    for (let i = 0; i < json.length; i++) {
+                        if (json[i].name !== "*") {
+                            $this.allKeywords.push(json[i].name)
                         }
                     }
-                    $this.isFetchingKeywords = false
-                })
-                .catch((e) => {
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Failed to fetch keywords"))
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
+                }
+                $this.isFetchingKeywords = false
+            } catch (e) {
+                await showSimpleAlertModal(
+                    t("cookbook", "Failed to fetch keywords")
+                )
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            }
         },
-        loadRecipeData() {
+        async loadRecipeData() {
             if (!this.$store.state.recipe) {
                 // Make the control row show that a recipe is loading
                 this.$store.dispatch("setLoadingRecipe", {
@@ -545,29 +545,28 @@ export default {
                 })
             }
             const $this = this
-            api.recipes
-                .get(this.$route.params.id)
-                .then((response) => {
-                    const recipe = response.data
-                    $this.$store.dispatch("setRecipe", { recipe })
-                    $this.setup()
-                })
-                .catch(() => {
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Loading recipe failed"))
-                    // Disable loading indicator
-                    if ($this.$store.state.loadingRecipe) {
-                        $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
-                    } else if ($this.$store.state.reloadingRecipe) {
-                        $this.$store.dispatch("setReloadingRecipe", {
-                            recipe: 0,
-                        })
-                    }
-                    // Browse to new recipe creation
-                    helpers.goTo("/recipe/create")
-                })
+            try {
+                const response = await api.recipes.get(this.$route.params.id)
+                const recipe = response.data
+                $this.$store.dispatch("setRecipe", { recipe })
+                $this.setup()
+            } catch {
+                await showSimpleAlertModal(
+                    t("cookbook", "Loading recipe failed")
+                )
+                // Disable loading indicator
+                if ($this.$store.state.loadingRecipe) {
+                    $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
+                } else if ($this.$store.state.reloadingRecipe) {
+                    $this.$store.dispatch("setReloadingRecipe", {
+                        recipe: 0,
+                    })
+                }
+                // Browse to new recipe creation
+                helpers.goTo("/recipe/create")
+            }
         },
-        save() {
+        async save() {
             this.savingRecipe = true
             this.$store.dispatch("setSavingRecipe", { saving: true })
             const $this = this
@@ -583,56 +582,47 @@ export default {
                 })
             })()
 
-            request
-                .then((response) => {
-                    helpers.goTo(`/recipe/${response.data}`)
-                })
-                .catch((e) => {
-                    // error
+            try {
+                const response = await request
+                helpers.goTo(`/recipe/${response.data}`)
+            } catch (e) {
+                if (e.response) {
+                    // Non 2xx state returned
 
-                    if (e.response) {
-                        // Non 2xx state returned
+                    switch (e.response.status) {
+                        case 409:
+                        case 422:
+                            await showSimpleAlertModal(e.response.data.msg)
+                            break
 
-                        switch (e.response.status) {
-                            case 409:
-                            case 422:
-                                // eslint-disable-next-line no-alert
-                                alert(e.response.data.msg)
-                                break
-
-                            default:
-                                // eslint-disable-next-line no-alert
-                                alert(
-                                    // prettier-ignore
-                                    t("cookbook","Unknown answer returned from server. See logs.")
-                                )
-                                // eslint-disable-next-line no-console
-                                console.log(e.response)
-                        }
-                    } else if (e.request) {
-                        // eslint-disable-next-line no-alert
-                        alert(
-                            t("cookbook", "No answer for request was received.")
-                        )
-                        // eslint-disable-next-line no-console
-                        console.log(e)
-                    } else {
-                        // eslint-disable-next-line no-alert
-                        alert(
-                            // prettier-ignore
-                            t("cookbook","Could not start request to save recipe.")
-                        )
-                        // eslint-disable-next-line no-console
-                        console.log(e)
+                        default:
+                            await showSimpleAlertModal(
+                                // prettier-ignore
+                                t("cookbook","Unknown answer returned from server. See logs.")
+                            )
+                            // eslint-disable-next-line no-console
+                            console.log(e.response)
                     }
+                } else if (e.request) {
+                    await showSimpleAlertModal(
+                        t("cookbook", "No answer for request was received.")
+                    )
+                    // eslint-disable-next-line no-console
+                    console.log(e)
+                } else {
+                    await showSimpleAlertModal(
+                        // prettier-ignore
+                        t("cookbook","Could not start request to save recipe.")
+                    )
+                    // eslint-disable-next-line no-console
+                    console.log(e)
+                }
+            } finally {
+                $this.$store.dispatch("setSavingRecipe", {
+                    saving: false,
                 })
-                .then(() => {
-                    // finally
-                    $this.$store.dispatch("setSavingRecipe", {
-                        saving: false,
-                    })
-                    $this.savingRecipe = false
-                })
+                $this.savingRecipe = false
+            }
         },
         setup() {
             this.fetchCategories()

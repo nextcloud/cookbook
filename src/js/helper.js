@@ -1,3 +1,5 @@
+import { showSimpleAlertModal } from "./modals"
+
 // Check if two routes point to the same component but have different content
 function shouldReloadContent(url1, url2) {
     if (url1 === url2) {
@@ -141,8 +143,7 @@ function notify(title, options) {
                 // eslint-disable-next-line no-unused-vars
                 const notification = new Notification(title, options)
             } else {
-                // eslint-disable-next-line no-alert
-                alert(title)
+                showSimpleAlertModal(title)
             }
         })
     }

@@ -10,6 +10,8 @@ import VueShowdown from "vue-showdown"
 
 import Vue from "vue"
 
+import * as ModalDialogs from "vue-modal-dialogs"
+
 import helpers from "cookbook/js/helper"
 
 import router from "./router"
@@ -45,6 +47,10 @@ Vue.use(VueShowdown, {
     // set default flavor for Markdown
     flavor: "vanilla",
 })
+
+// TODO: Equivalent library for Vue3 when we make that transition:
+// https://github.com/rlemaigre/vue3-promise-dialog
+Vue.use(ModalDialogs)
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
