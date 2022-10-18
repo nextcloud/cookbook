@@ -268,21 +268,22 @@ $breakpoint-mobile: 1024px;
 
 // top-bar spacing
 $topbar-margin: 4px;
+
 button:not(.button-vue),
 input:not([type="range"]),
 textarea {
-    margin: 0;
     padding: 7px 6px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--border-radius);
+    margin: 0;
+    background-color: var(--color-main-background);
+
+    color: var(--color-text-lighter);
 
     cursor: text;
 
-    color: var(--color-text-lighter);
-    border: 1px solid var(--color-border-dark);
-    border-radius: var(--border-radius);
-    outline: none;
-    background-color: var(--color-main-background);
-
     font-size: 13px;
+    outline: none;
 
     &:not(:disabled):not(.primary) {
         &:hover,
@@ -294,17 +295,17 @@ textarea {
         }
 
         &:active {
+            background-color: var(--color-main-background);
             color: var(--color-text-light);
             outline: none;
-            background-color: var(--color-main-background);
         }
     }
 
     &:disabled {
+        background-color: var(--color-background-dark);
+        color: var(--color-text-maxcontrast);
         cursor: default;
         opacity: $opacity_disabled;
-        color: var(--color-text-maxcontrast);
-        background-color: var(--color-background-dark);
     }
 
     &:required {
@@ -318,10 +319,10 @@ textarea {
 
     /* Primary action button, use sparingly */
     &.primary {
-        cursor: pointer;
-        color: var(--color-primary-text);
         border-color: var(--color-primary-element);
         background-color: var(--color-primary-element);
+        color: var(--color-primary-text);
+        cursor: pointer;
 
         &:not(:disabled) {
             &:hover,
@@ -336,27 +337,27 @@ textarea {
         }
 
         &:disabled {
-            cursor: default;
-            color: var(--color-primary-text-dark);
             // opacity is already defined to .5 if disabled
             background-color: var(--color-primary-element);
+            color: var(--color-primary-text-dark);
+            cursor: default;
         }
     }
 }
 @mixin action-active {
     li {
         &.active {
-            background-color: var(--color-background-hover);
-            border-radius: 6px;
             padding: 0;
+            border-radius: 6px;
+            background-color: var(--color-background-hover);
         }
     }
 }
 
 @mixin action--disabled {
     .action--disabled {
-        pointer-events: none;
         opacity: $opacity_disabled;
+        pointer-events: none;
         &:hover,
         &:focus {
             cursor: default;
@@ -371,28 +372,28 @@ textarea {
 @mixin action-item($name) {
     .action-#{$name} {
         display: flex;
-        align-items: flex-start;
 
         width: 100%;
         height: auto;
-        margin: 0;
+        box-sizing: border-box; // otherwise router-link overflows in Firefox
+        align-items: flex-start;
         padding: 0;
         padding-right: $icon-margin;
-        box-sizing: border-box; // otherwise router-link overflows in Firefox
-
-        cursor: pointer;
-        white-space: nowrap;
-
-        opacity: $opacity_normal;
-        color: var(--color-main-text);
         border: 0;
         border-radius: 0; // otherwise Safari will cut the border-radius area
+        margin: 0;
         background-color: transparent;
         box-shadow: none;
+        color: var(--color-main-text);
+
+        cursor: pointer;
+        font-size: var(--default-font-size);
 
         font-weight: normal;
-        font-size: var(--default-font-size);
         line-height: $clickable-area;
+
+        opacity: $opacity_normal;
+        white-space: nowrap;
 
         &:hover,
         &:focus {
@@ -407,10 +408,10 @@ textarea {
         &__icon {
             width: $clickable-area;
             height: $clickable-area;
-            opacity: $opacity_full;
             background-position: $icon-margin center;
-            background-size: $icon-size;
             background-repeat: no-repeat;
+            background-size: $icon-size;
+            opacity: $opacity_full;
         }
 
         &::v-deep .material-design-icon {
@@ -425,17 +426,17 @@ textarea {
 
         // long text area
         p {
+
+            // in case there are no spaces like long email addresses
+            overflow: hidden;
             max-width: 220px;
-            line-height: 1.6em;
 
             // 14px are currently 1em line-height. Mixing units as '44px - 1.6em' does not work.
             padding: #{math.div($clickable-area - 1.6 * 14px, 2)} 0;
 
             cursor: pointer;
+            line-height: 1.6em;
             text-align: left;
-
-            // in case there are no spaces like long email addresses
-            overflow: hidden;
             text-overflow: ellipsis;
         }
 
@@ -446,12 +447,12 @@ textarea {
         }
 
         &__title {
+            display: inline-block;
+            overflow: hidden;
+            max-width: 100%;
             font-weight: bold;
             text-overflow: ellipsis;
-            overflow: hidden;
             white-space: nowrap;
-            max-width: 100%;
-            display: inline-block;
         }
     }
 }
@@ -462,23 +463,23 @@ $input-margin: 4px;
 
 .action-input {
     display: flex;
-    align-items: flex-start;
 
     width: 100%;
     height: auto;
-    margin: 0;
+    align-items: flex-start;
     padding: 0;
-
-    cursor: pointer;
-    white-space: nowrap;
-
-    color: var(--color-main-text);
     border: 0;
     border-radius: 0; // otherwise Safari will cut the border-radius area
+    margin: 0;
     background-color: transparent;
     box-shadow: none;
 
+    color: var(--color-main-text);
+
+    cursor: pointer;
+
     font-weight: normal;
+    white-space: nowrap;
 
     &::v-deep .material-design-icon {
         width: $clickable-area;
@@ -532,41 +533,41 @@ $input-margin: 4px;
     // Forms & text inputs
     &__form {
         display: flex;
-        align-items: center;
         flex: 1 1 auto;
+        align-items: center;
+        padding-right: $icon-margin;
 
         margin: $input-margin 0;
-        padding-right: $icon-margin;
     }
 
     &__submit {
         position: absolute;
-        left: -10000px;
         top: auto;
+        left: -10000px;
+        overflow: hidden;
         width: 1px;
         height: 1px;
-        overflow: hidden;
     }
 
     &__label {
         display: flex;
-        align-items: center;
-        justify-content: center;
 
         width: #{$clickable-area - $input-margin * 2};
         height: #{$clickable-area - $input-margin * 2};
         box-sizing: border-box;
-        margin: 0 0 0 -8px;
+        align-items: center;
+        justify-content: center;
         padding: 7px 6px;
-
-        opacity: $opacity_full;
-        color: var(--color-text-lighter);
         border: 1px solid var(--color-border-dark);
-        border-left-color: transparent;
         border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        border-left-color: transparent;
+        margin: 0 0 0 -8px;
+        background-clip: padding-box;
         /* Avoid background under border */
         background-color: var(--color-main-background);
-        background-clip: padding-box;
+        color: var(--color-text-lighter);
+
+        opacity: $opacity_full;
 
         &,
         * {
@@ -576,11 +577,10 @@ $input-margin: 4px;
 
     /* Inputs inside popover supports text, submit & reset */
     &__input {
-        flex: 1 1 auto;
-
         min-width: $clickable-area * 3;
         min-height: #{$clickable-area - $input-margin * 2}; /* twice the element margin-y */
         max-height: #{$clickable-area - $input-margin * 2}; /* twice the element margin-y */
+        flex: 1 1 auto;
         margin: 0;
 
         // if disabled, change cursor
