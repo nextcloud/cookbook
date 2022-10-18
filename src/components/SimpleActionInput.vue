@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue"
 import ArrowRight from "icons/ArrowRight.vue"
 
 const ActionGlobalMixin = {
