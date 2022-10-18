@@ -518,8 +518,8 @@ $input-margin: 4px;
     &__icon {
         min-width: 0; /* Overwrite icons*/
         min-height: 0;
-        /* Keep padding to define the width to
-			assure correct position of a possible text */
+        /* Keep padding to define the width to */
+        /* assure correct position of a possible text */
         padding: #{math.div($clickable-area, 2)} 0 #{math.div(
                 $clickable-area,
                 2
