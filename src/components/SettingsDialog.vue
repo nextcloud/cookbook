@@ -276,6 +276,8 @@ export default {
 </script>
 
 <style scoped>
+/* TODO: Use @nextcloud/vue LoadingIcon once we update to 7.0.0 and we won't
+ * have to do this */
 .material-design-icon.loading-icon ::v-deep svg {
     animation: rotate var(--animation-duration, 0.8s) linear infinite;
     color: var(--color-loading-dark);
