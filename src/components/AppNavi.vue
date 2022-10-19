@@ -204,9 +204,8 @@ export default {
             } catch (e) {
                 cat.recipes = []
                 await showSimpleAlertModal(
-                    t(
-                        "cookbook",
-                        "Failed to load category {category} recipes",
+                    // prettier-ignore
+                    t("cookbook", "Failed to load category {category} recipes",
                         {
                             category: cat.name,
                         }

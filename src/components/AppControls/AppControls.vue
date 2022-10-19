@@ -259,10 +259,8 @@ export default {
             // Confirm delete
             if (
                 !(await showSimpleConfirmModal(
-                    t(
-                        "cookbook",
-                        "Are you sure you want to delete this recipe?"
-                    )
+                    // prettier-ignore
+                    t("cookbook", "Are you sure you want to delete this recipe?")
                 ))
             ) {
                 return

@@ -69,9 +69,8 @@ export default {
                 } catch (e) {
                     $this.results = []
                     await showSimpleAlertModal(
-                        t(
-                            "cookbook",
-                            "Failed to load recipes with keywords: {tags}",
+                        // prettier-ignore
+                        t("cookbook", "Failed to load recipes with keywords: {tags}",
                             {
                                 tags,
                             }
@@ -91,9 +90,8 @@ export default {
                 } catch (e) {
                     $this.results = []
                     await showSimpleAlertModal(
-                        t(
-                            "cookbook",
-                            "Failed to load category {category} recipes",
+                        // prettier-ignore
+                        t("cookbook", "Failed to load category {category} recipes",
                             {
                                 category: cat,
                             }

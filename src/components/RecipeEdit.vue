@@ -137,10 +137,8 @@ import EditMultiselect from "./EditMultiselect.vue"
 import EditMultiselectInputGroup from "./EditMultiselectInputGroup.vue"
 import EditTimeField from "./EditTimeField.vue"
 
-const CONFIRM_MSG = t(
-    "cookbook",
-    "You have unsaved changes! Do you still want to leave?"
-)
+// prettier-ignore
+const CONFIRM_MSG = t("cookbook", "You have unsaved changes! Do you still want to leave?")
 
 export default {
     name: "RecipeEdit",
