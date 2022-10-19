@@ -27,6 +27,8 @@
 - Allow for PlantUML diagrams in documentation
   [#1229](https://github.com/nextcloud/cookbook/pull/1229) @christianlupus
 - Remove deprecated `::v-deep` CSS syntax @christianlupus
+- Disable webpack bundle analyzer plugin by default to speed up development cycle
+  [#1263](https://github.com/nextcloud/cookbook/pull/1263) @MarcelRobitaille
 
 ### Documentation
 - Fix bad writing
