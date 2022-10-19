@@ -12,9 +12,13 @@
 </template>
 
 <script>
+
 // Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
 // Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
 import alarmSound from "../media/alarm-clock-short-6402.mp3"
+
+import { showSimpleAlertModal } from "cookbook/js/modals"
+
 
 export default {
     name: "RecipeTimer",
@@ -75,9 +79,8 @@ export default {
     methods: {
         onTimerEnd() {
             window.clearInterval(this.countdown)
-            // I'll just use an alert until this functionality is finished
             const $this = this
-            window.setTimeout(() => {
+            window.setTimeout(async () => {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
 
@@ -87,8 +90,7 @@ export default {
                 // Start playing audio to alert the user that the timer is up
                 this.audio.play()
 
-                // eslint-disable-next-line no-alert
-                alert(t("cookbook", "Cooking time is up!"))
+                await showSimpleAlertModal(t("cookbook", "Cooking time is up!"))
 
                 // Stop audio after the alert is confirmed
                 this.audio.pause()
