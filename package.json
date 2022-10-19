@@ -16,6 +16,7 @@
   "scripts": {
     "build": "npx webpack --node-env production --progress --config webpack.config.js",
     "build-dev": "npx webpack --node-env development --progress --config webpack.devel.js",
+    "build-bundle-analyzer": "npx webpack --node-env development --progress --config webpack.devel.js --env BUNDLE_ANALYZER=true",
     "dev": "npx webpack --node-env development --progress --watch --config webpack.devel.js",
     "eslint": "npx eslint --cache --cache-strategy content 'src/**/*.{vue,js}'",
     "eslint-fix": "npx eslint --cache --cache-strategy content --fix 'src/**/*.{vue,js}'",
