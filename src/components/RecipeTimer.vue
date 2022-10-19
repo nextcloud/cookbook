@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { showSimpleAlertModal } from "../js/modals"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 export default {
     name: "RecipeTimer",

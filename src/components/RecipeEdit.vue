@@ -128,7 +128,10 @@ import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import NumericIcon from "icons/Numeric.vue"
-import { showSimpleAlertModal, showSimpleConfirmModal } from "../js/modals"
+import {
+    showSimpleAlertModal,
+    showSimpleConfirmModal,
+} from "cookbook/js/modals"
 
 import EditImageField from "./EditImageField.vue"
 import EditInputField from "./EditInputField.vue"

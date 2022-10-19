@@ -73,7 +73,7 @@ import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationSettings"
 
 import api from "cookbook/js/api-interface"
-import { showSimpleAlertModal } from "../js/modals"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 export default {
     name: "AppSettings",

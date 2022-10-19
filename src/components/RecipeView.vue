@@ -259,7 +259,7 @@ import moment from "@nextcloud/moment"
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import normalizeMarkdown from "cookbook/js/title-rename"
-import { showSimpleAlertModal } from "../js/modals"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"

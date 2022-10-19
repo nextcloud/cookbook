@@ -165,7 +165,10 @@ import CheckmarkIcon from "icons/Check.vue"
 import PrinterIcon from "icons/Printer.vue"
 
 import helpers from "cookbook/js/helper"
-import { showSimpleAlertModal, showSimpleConfirmModal } from "../../js/modals"
+import {
+    showSimpleAlertModal,
+    showSimpleConfirmModal,
+} from "cookbook/js/modals"
 
 import Location from "./Location.vue"
 import ModeIndicator from "./ModeIndicator.vue"

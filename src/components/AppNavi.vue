@@ -119,7 +119,7 @@ import Vue from "vue"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
-import { showSimpleAlertModal } from "../js/modals"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import AppSettings from "./AppSettings.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
