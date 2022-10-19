@@ -15,6 +15,7 @@
                 @click="closeNavigation"
             />
         </AppContent>
+        <dialogs-wrapper></dialogs-wrapper>
     </Content>
 </template>
 

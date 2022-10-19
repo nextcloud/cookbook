@@ -4,6 +4,8 @@
 - Create build script for GitHub pages with GitHub actions to allow for custom building
   [#1203](https://github.com/nextcloud/cookbook/pull/1203) @christianlupus
 - Added a new client and badges to the readme @TheMBeat
+- Replace native alert and confirm dialogs with custom ones from nextcloud vue
+  [#1261](https://github.com/nextcloud/cookbook/pull/1261) @MarcelRobitaille
 
 ### Fixed
 - Added new public page styling in preparation for NC25

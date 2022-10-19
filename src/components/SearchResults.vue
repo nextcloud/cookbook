@@ -7,6 +7,7 @@
 <script>
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import RecipeList from "./RecipeList.vue"
 
@@ -53,7 +54,7 @@ export default {
         })
     },
     methods: {
-        setup() {
+        async setup() {
             // TODO: This is a mess of different implementation styles, needs cleanup
             if (this.query === "name") {
                 // Search by name
@@ -62,66 +63,61 @@ export default {
                 // Search by tags
                 const $this = this
                 const tags = this.$route.params.value
-                api.recipes
-                    .allWithTag(tags)
-                    .then((response) => {
-                        $this.results = response.data
-                    })
-                    .catch((e) => {
-                        $this.results = []
-                        // eslint-disable-next-line no-alert
-                        alert(
-                            // prettier-ignore
-                            t("cookbook","Failed to load recipes with keywords: {tags}",
-                                {
-                                    tags
-                                }
-                            )
+                try {
+                    const response = await api.recipes.allWithTag(tags)
+                    $this.results = response.data
+                } catch (e) {
+                    $this.results = []
+                    await showSimpleAlertModal(
+                        // prettier-ignore
+                        t("cookbook", "Failed to load recipes with keywords: {tags}",
+                            {
+                                tags,
+                            }
                         )
-                        if (e && e instanceof Error) {
-                            throw e
-                        }
-                    })
+                    )
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                }
             } else if (this.query === "cat") {
                 // Search by category
                 const $this = this
                 const cat = this.$route.params.value
-                api.recipes
-                    .allInCategory(cat)
-                    .then((response) => {
-                        $this.results = response.data
-                    })
-                    .catch((e) => {
-                        $this.results = []
-                        // eslint-disable-next-line no-alert
-                        alert(
-                            // prettier-ignore
-                            t("cookbook","Failed to load category {category} recipes",
-                                {
-                                    category: cat,
-                                }
-                            )
+                try {
+                    const response = await api.recipes.allInCategory(cat)
+                    $this.results = response.data
+                } catch (e) {
+                    $this.results = []
+                    await showSimpleAlertModal(
+                        // prettier-ignore
+                        t("cookbook", "Failed to load category {category} recipes",
+                            {
+                                category: cat,
+                            }
                         )
-                        if (e && e instanceof Error) {
-                            throw e
-                        }
-                    })
+                    )
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                }
             } else {
                 // General search
                 const $this = this
-                api.recipes
-                    .search($this.$route.params.value)
-                    .then((response) => {
-                        $this.results = response.data
-                    })
-                    .catch((e) => {
-                        $this.results = []
-                        // eslint-disable-next-line no-alert
-                        alert(t("cookbook", "Failed to load search results"))
-                        if (e && e instanceof Error) {
-                            throw e
-                        }
-                    })
+                try {
+                    const response = api.recipes.search(
+                        $this.$route.params.value
+                    )
+                    $this.results = response.data
+                } catch (e) {
+                    $this.results = []
+                    await showSimpleAlertModal(
+                        t("cookbook", "Failed to load search results")
+                    )
+                    if (e && e instanceof Error) {
+                        throw e
+                    }
+                }
                 this.$store.dispatch("setPage", { page: "search" })
             }
             this.$store.dispatch("setPage", { page: "search" })

@@ -119,6 +119,7 @@ import Vue from "vue"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import AppSettings from "./AppSettings.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
@@ -185,7 +186,7 @@ export default {
         /**
          * Opens a category
          */
-        categoryOpen(idx) {
+        async categoryOpen(idx) {
             if (
                 !this.categories[idx].recipes.length ||
                 this.categories[idx].recipes[0].id
@@ -197,36 +198,31 @@ export default {
             const $this = this
             Vue.set(this.isCategoryUpdating, idx, true)
 
-            api.recipes
-                .allInCategory(cat.name)
-                .then((response) => {
-                    cat.recipes = response.data
-                })
-                .catch((e) => {
-                    cat.recipes = []
-                    // eslint-disable-next-line no-alert
-                    alert(
-                        // prettier-ignore
-                        t("cookbook","Failed to load category {category} recipes",
-                            {
-                                category: cat.name,
-                            }
-                        )
+            try {
+                const response = await api.recipes.allInCategory(cat.name)
+                cat.recipes = response.data
+            } catch (e) {
+                cat.recipes = []
+                await showSimpleAlertModal(
+                    // prettier-ignore
+                    t("cookbook", "Failed to load category {category} recipes",
+                        {
+                            category: cat.name,
+                        }
                     )
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
-                .then(() => {
-                    // finally
-                    Vue.set($this.isCategoryUpdating, idx, false)
-                })
+                )
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            } finally {
+                Vue.set($this.isCategoryUpdating, idx, false)
+            }
         },
 
         /**
          * Updates the name of a category
          */
-        categoryUpdateName(idx, newName) {
+        async categoryUpdateName(idx, newName) {
             if (!this.categories[idx]) {
                 return
             }
@@ -234,161 +230,139 @@ export default {
             const oldName = this.categories[idx].name
             const $this = this
 
-            this.$store
-                .dispatch("updateCategoryName", {
+            try {
+                await this.$store.dispatch("updateCategoryName", {
                     categoryNames: [oldName, newName],
                 })
-                .then(() => {
-                    $this.categories[idx].name = newName
-                    $this.$root.$emit("categoryRenamed", [newName, oldName])
-                })
-                .catch((e) => {
-                    // eslint-disable-next-line no-alert
-                    alert(
-                        // prettier-ignore
-                        t("cookbook",'Failed to update name of category "{category}"',
-                            {
-                                category: oldName,
-                            }
-                        )
+                $this.categories[idx].name = newName
+                $this.$root.$emit("categoryRenamed", [newName, oldName])
+            } catch (e) {
+                await showSimpleAlertModal(
+                    // prettier-ignore
+                    t("cookbook",'Failed to update name of category "{category}"',
+                        {
+                            category: oldName,
+                        }
                     )
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
-                .then(() => {
-                    // finally
-                    Vue.set($this.isCategoryUpdating, idx, false)
-                })
+                )
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            } finally {
+                Vue.set($this.isCategoryUpdating, idx, false)
+            }
         },
 
         /**
          * Download and import the recipe at given URL
          */
-        downloadRecipe(e) {
+        async downloadRecipe(e) {
             this.downloading = true
             const $this = this
-            api.recipes
-                .import(e.target[1].value)
-                .then((response) => {
-                    const recipe = response.data
-                    $this.downloading = false
-                    helpers.goTo(`/recipe/${recipe.id}`)
-                    // Refresh left navigation pane to display changes
-                    $this.$store.dispatch("setAppNavigationRefreshRequired", {
-                        isRequired: true,
-                    })
+            try {
+                const response = await api.recipes.import(e.target[1].value)
+                const recipe = response.data
+                $this.downloading = false
+                helpers.goTo(`/recipe/${recipe.id}`)
+                // Refresh left navigation pane to display changes
+                $this.$store.dispatch("setAppNavigationRefreshRequired", {
+                    isRequired: true,
                 })
-                .catch((e2) => {
-                    $this.downloading = false
+            } catch (e2) {
+                $this.downloading = false
 
-                    if (e2.response) {
-                        if (
-                            e2.response.status >= 400 &&
-                            e2.response.status < 500
-                        ) {
-                            if (e2.response.status === 409) {
-                                // There was a recipe found with the same name
+                if (e2.response) {
+                    if (e2.response.status >= 400 && e2.response.status < 500) {
+                        if (e2.response.status === 409) {
+                            // There was a recipe found with the same name
 
-                                // eslint-disable-next-line no-alert
-                                alert(e2.response.data.msg)
-                            } else {
-                                // eslint-disable-next-line no-alert
-                                alert(e2.response.data)
-                            }
+                            await showSimpleAlertModal(e2.response.data.msg)
                         } else {
-                            // eslint-disable-next-line no-console
-                            console.error(e2)
-                            // eslint-disable-next-line no-alert
-                            alert(
-                                // prettier-ignore
-                                t("cookbook","The server reported an error. Please check.")
-                            )
+                            await showSimpleAlertModal(e2.response.data)
                         }
                     } else {
                         // eslint-disable-next-line no-console
                         console.error(e2)
-                        // eslint-disable-next-line no-alert
-                        alert(
+                        await showSimpleAlertModal(
                             // prettier-ignore
-                            t("cookbook", "Could not query the server. This might be a network problem.")
+                            t("cookbook","The server reported an error. Please check.")
                         )
                     }
-                })
+                } else {
+                    // eslint-disable-next-line no-console
+                    console.error(e2)
+                    await showSimpleAlertModal(
+                        // prettier-ignore
+                        t("cookbook", "Could not query the server. This might be a network problem.")
+                    )
+                }
+            }
         },
 
         /**
          * Fetch and display recipe categories
          */
-        getCategories() {
+        async getCategories() {
             const $this = this
             this.loading.categories = true
-            api.categories
-                .getAll()
-                .then((response) => {
-                    const json = response.data || []
-                    // Reset the old values
-                    $this.uncatRecipes = 0
-                    $this.categories = []
-                    $this.isCategoryUpdating = []
+            try {
+                const response = await api.categories.getAll()
+                const json = response.data || []
+                // Reset the old values
+                $this.uncatRecipes = 0
+                $this.categories = []
+                $this.isCategoryUpdating = []
 
-                    for (let i = 0; i < json.length; i++) {
-                        if (json[i].name === "*") {
-                            $this.uncatRecipes = parseInt(
-                                json[i].recipe_count,
-                                10
+                for (let i = 0; i < json.length; i++) {
+                    if (json[i].name === "*") {
+                        $this.uncatRecipes = parseInt(json[i].recipe_count, 10)
+                    } else {
+                        $this.categories.push({
+                            name: json[i].name,
+                            recipeCount: parseInt(json[i].recipe_count, 10),
+                            recipes: [
+                                {
+                                    id: 0,
+                                    // prettier-ignore
+                                    name: t("cookbook","Loading category recipes …"),
+                                },
+                            ],
+                        })
+                        $this.isCategoryUpdating.push(false)
+                    }
+                }
+                $this.$nextTick(() => {
+                    for (let i = 0; i < $this.categories.length; i++) {
+                        // Reload recipes in open categories
+                        if (!$this.$refs[`app-navi-cat-${i}`]) {
+                            // eslint-disable-next-line no-continue
+                            continue
+                        }
+                        if ($this.$refs[`app-navi-cat-${i}`][0].opened) {
+                            // eslint-disable-next-line no-console
+                            console.log(
+                                `Reloading recipes in ${
+                                    $this.$refs[`app-navi-cat-${i}`][0].title
+                                }`
                             )
-                        } else {
-                            $this.categories.push({
-                                name: json[i].name,
-                                recipeCount: parseInt(json[i].recipe_count, 10),
-                                recipes: [
-                                    {
-                                        id: 0,
-                                        // prettier-ignore
-                                        name: t("cookbook","Loading category recipes …"),
-                                    },
-                                ],
-                            })
-                            $this.isCategoryUpdating.push(false)
+                            $this.categoryOpen(i)
                         }
                     }
-                    $this.$nextTick(() => {
-                        for (let i = 0; i < $this.categories.length; i++) {
-                            // Reload recipes in open categories
-                            if (!$this.$refs[`app-navi-cat-${i}`]) {
-                                // eslint-disable-next-line no-continue
-                                continue
-                            }
-                            if ($this.$refs[`app-navi-cat-${i}`][0].opened) {
-                                // eslint-disable-next-line no-console
-                                console.log(
-                                    `Reloading recipes in ${
-                                        $this.$refs[`app-navi-cat-${i}`][0]
-                                            .title
-                                    }`
-                                )
-                                $this.categoryOpen(i)
-                            }
-                        }
-                        // Refreshing component data has been finished
-                        $this.$store.dispatch(
-                            "setAppNavigationRefreshRequired",
-                            { isRequired: false }
-                        )
+                    // Refreshing component data has been finished
+                    $this.$store.dispatch("setAppNavigationRefreshRequired", {
+                        isRequired: false,
                     })
                 })
-                .catch((e) => {
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Failed to fetch categories"))
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                })
-                .then(() => {
-                    // finally
-                    $this.loading.categories = false
-                })
+            } catch (e) {
+                await showSimpleAlertModal(
+                    t("cookbook", "Failed to fetch categories")
+                )
+                if (e && e instanceof Error) {
+                    throw e
+                }
+            } finally {
+                $this.loading.categories = false
+            }
         },
 
         /**
