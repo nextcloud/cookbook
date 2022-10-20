@@ -24,6 +24,8 @@
   [#1222](https://github.com/nextcloud/cookbook/pull/1222) @christianlupus
 - Add overlay when app navigation is open
   [1122](https://github.com/nextcloud/cookbook/pull/1122) @MarcelRobitaille
+- Add filter to prevent special chars in folder names
+  [#1268](https://github.com/nextcloud/cookbook/pull/1268) @christianlupus
 
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests
