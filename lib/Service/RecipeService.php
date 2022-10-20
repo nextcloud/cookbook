@@ -20,6 +20,7 @@ use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSONFilter;
 
 /**
@@ -57,6 +58,8 @@ class RecipeService {
 	 * @var ImageService
 	 */
 	private $imageService;
+	/** @var RecipeNameHelper */
+	private $recipeNameHelper;
 
 	/** @var JSONFilter */
 	private $jsonFilter;
@@ -68,6 +71,7 @@ class RecipeService {
 		UserConfigHelper $userConfigHelper,
 		UserFolderHelper $userFolder,
 		ImageService $imageService,
+		RecipeNameHelper $recipeNameHelper,
 		IL10N $il10n,
 		LoggerInterface $logger,
 		HtmlDownloadService $downloadService,
@@ -82,6 +86,7 @@ class RecipeService {
 		$this->logger = $logger;
 		$this->userConfigHelper = $userConfigHelper;
 		$this->imageService = $imageService;
+		$this->recipeNameHelper = $recipeNameHelper;
 		$this->htmlDownloadService = $downloadService;
 		$this->recipeExtractionService = $extractionService;
 		$this->jsonFilter = $jsonFilter;
@@ -209,16 +214,18 @@ class RecipeService {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = null;
 
+		$recipeFolderName = $this->recipeNameHelper->getFolderName($json['name']);
+
 		// Recipe already has an id, update it
 		if (isset($json['id']) && $json['id']) {
 			$recipe_folder = $user_folder->getById($json['id'])[0];
 
 			$old_path = $recipe_folder->getPath();
-			$new_path = dirname($old_path) . '/' . $json['name'];
+			$new_path = dirname($old_path) . '/' . $recipeFolderName;
 
 			// The recipe is being renamed, move the folder
 			if ($old_path !== $new_path) {
-				if ($user_folder->nodeExists($json['name'])) {
+				if ($user_folder->nodeExists($recipeFolderName)) {
 					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
 
@@ -229,11 +236,11 @@ class RecipeService {
 		} else {
 			$json['dateCreated'] = $now;
 
-			if ($user_folder->nodeExists($json['name'])) {
+			if ($user_folder->nodeExists($recipeFolderName)) {
 				throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 			}
 
-			$recipe_folder = $user_folder->newFolder($json['name']);
+			$recipe_folder = $user_folder->newFolder($recipeFolderName);
 		}
 
 		// Write JSON file to disk
