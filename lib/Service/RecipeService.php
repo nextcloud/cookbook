@@ -188,10 +188,11 @@ class RecipeService {
 
 	/**
 	 * @param array $json
+	 * @param ?string $importedHtml The HTML file as downloaded if the recipe was imported
 	 *
 	 * @return File
 	 */
-	public function addRecipe($json) {
+	public function addRecipe($json, $importedHtml = null) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
 			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}
@@ -249,6 +250,13 @@ class RecipeService {
 
 		$recipe_file->putContent(json_encode($json));
 
+		if (! is_null($importedHtml)) {
+			// We imported a recipe. Save the import html file as a backup
+			$importFile = $recipe_folder->newFile('import.html');
+			$importFile->putContent($importedHtml);
+			$importFile->touch();
+		}
+
 		// Download image and generate thumbnail
 		$full_image_data = null;
 
@@ -301,6 +309,7 @@ class RecipeService {
 
 		try {
 			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom(), $url);
+			$importedHtml = $this->htmlDownloadService->getDom()->saveHTML();
 		} catch (HtmlParsingException $ex) {
 			throw new ImportException($ex->getMessage(), null, $ex);
 		}
@@ -315,7 +324,7 @@ class RecipeService {
 
 		$json['url'] = $url;
 
-		return $this->addRecipe($json);
+		return $this->addRecipe($json, $importedHtml);
 	}
 
 	/**

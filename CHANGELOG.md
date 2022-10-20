@@ -10,6 +10,8 @@
 - Added a new client and badges to the readme @TheMBeat
 - Replace native alert and confirm dialogs with custom ones from nextcloud vue
   [#1261](https://github.com/nextcloud/cookbook/pull/1261) @MarcelRobitaille
+- Store imported HTML file for future enhanced parsing
+  [#1267](https://github.com/nextcloud/cookbook/pull/1267) @christianlupus
 
 ### Fixed
 - Added new public page styling in preparation for NC25
