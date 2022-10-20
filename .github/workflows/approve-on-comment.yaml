@@ -21,7 +21,7 @@ jobs:
           echo "Admins: $admins"
           echo "User is permitted: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}"
           echo "Comment body matches /approve: ${{github.event.comment.body == '/approve'}}"
-      - uses: hmarr/auto-approve-action@v2
+      - uses: hmarr/auto-approve-action@v3
         if: >-
           github.event.comment.body == '/approve' &&
           contains(fromJSON(env.admins), github.event.comment.user.login)
