@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Add alarm sound to timers
+  [#1120](https://github.com/nextcloud/cookbook/pull/1120) @MarcelRobitaille
+
 ### Changed
 - Create build script for GitHub pages with GitHub actions to allow for custom building
   [#1203](https://github.com/nextcloud/cookbook/pull/1203) @christianlupus
