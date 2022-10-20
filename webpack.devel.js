@@ -6,7 +6,7 @@ module.exports = (env) => merge(base(env), {
     plugins: env.BUNDLE_ANALYZER ? [
         new BundleAnalyzerPlugin(
             {
-                openAnalyzer: false,
+                openAnalyzer: true,
             }
         )
     ] : [],
