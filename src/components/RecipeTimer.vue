@@ -12,13 +12,9 @@
 </template>
 
 <script>
-
-// Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
-// Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
-import alarmSound from "../media/alarm-clock-short-6402.mp3"
+import { linkTo } from "@nextcloud/router"
 
 import { showSimpleAlertModal } from "cookbook/js/modals"
-
 
 export default {
     name: "RecipeTimer",
@@ -71,7 +67,13 @@ export default {
         this.resetTimeDisplay()
         // Start loading the sound early so it's ready to go when we need to
         // play it
-        this.audio = new Audio(alarmSound)
+
+        // Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
+        // Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
+        this.audio = new Audio(
+            linkTo("cookbook", "assets/alarm-continuous.mp3")
+        )
+
         // For now, the alarm should play continuously until it is dismissed
         // See https://github.com/nextcloud/cookbook/issues/671#issuecomment-1279030452
         this.audio.loop = true
