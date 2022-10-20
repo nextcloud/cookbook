@@ -10,6 +10,8 @@ OC.L10N.register(
     "Close" : "Tutup",
     "Name" : "Nama",
     "Description" : "Keterangan",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "Batal",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

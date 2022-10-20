@@ -80,6 +80,7 @@ OC.L10N.register(
     "Tools" : "Инструменты",
     "Ingredients" : "Ингредиенты",
     "Instructions" : "Инструкции",
+    "You have unsaved changes! Do you still want to leave?" : "У вас есть несохранённые изменения! Вы всё ещё хотите уйти?",
     "Calories" : "Калорийность",
     "E.g.: 450 kcal (amount & unit)" : "Пример: 450 ккал (кол-во и ед. изм.)",
     "Carbohydrate content" : "Содержание углеводов",
@@ -95,7 +96,6 @@ OC.L10N.register(
     "Sugar content" : "Содержание сахаров",
     "Trans-fat content" : "Содержание трансжиров",
     "Unsaturated-fat content" : "Содержание ненасыщенных жиров",
-    "You have unsaved changes! Do you still want to leave?" : "У вас есть несохранённые изменения! Вы всё ещё хотите уйти?",
     "Failed to fetch keywords" : "Не удалось получить ключевые слова",
     "Loading recipe failed" : "Не удалась загрузить рецепт",
     "Unknown answer returned from server. See logs." : "Неизвестный ответ, полученный от сервера. См. журналы.",
@@ -132,6 +132,9 @@ OC.L10N.register(
     "Source" : "Источник",
     "Loading…" : "Загрузка…",
     "Failed to load recipes with keywords: {tags}" : "Не удалось загрузить рецепты с ключевыми словами: {tags}",
-    "Failed to load search results" : "Не удалось загрузить результаты поиска"
+    "Failed to load search results" : "Не удалось загрузить результаты поиска",
+    "Dismiss" : "Отклонить",
+    "Cancel" : "Отменить",
+    "OK" : "ОК"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");

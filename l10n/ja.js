@@ -61,6 +61,7 @@ OC.L10N.register(
     "Tools" : "ツール",
     "Ingredients" : "食材",
     "Instructions" : "手順",
+    "You have unsaved changes! Do you still want to leave?" : "保存されていない変更があります！離れるつもりですか？",
     "Calories" : "カロリー",
     "E.g.: 450 kcal (amount & unit)" : "例： 450 kcal （数量と単位）",
     "Carbohydrate content" : "炭水化物含有量",
@@ -75,7 +76,6 @@ OC.L10N.register(
     "Sugar content" : "糖質含有量",
     "Trans-fat content" : "トランス脂肪酸含有量",
     "Unsaturated-fat content" : "不飽和脂肪酸含有量",
-    "You have unsaved changes! Do you still want to leave?" : "保存されていない変更があります！離れるつもりですか？",
     "Failed to fetch keywords" : "キーワードの取得に失敗しました",
     "Loading recipe failed" : "レシピの読み込みに失敗しました",
     "Recipe image" : "レシピ画像",
@@ -99,6 +99,9 @@ OC.L10N.register(
     "Source" : "出典",
     "Loading…" : "読み込み中…",
     "Failed to load recipes with keywords: {tags}" : "キーワードでレシピの読み込みに失敗しました: {tags}",
-    "Failed to load search results" : "検索結果の読み込みに失敗しました"
+    "Failed to load search results" : "検索結果の読み込みに失敗しました",
+    "Dismiss" : "閉じる",
+    "Cancel" : "キャンセル",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

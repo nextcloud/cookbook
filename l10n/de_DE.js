@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Utensilien",
     "Ingredients" : "Zutaten",
     "Instructions" : "Zubereitung",
+    "You have unsaved changes! Do you still want to leave?" : "Sie haben nicht gespeicherte Änderungen! Wollen Sie immer noch gehen?",
     "Calories" : "Kalorien",
     "E.g.: 450 kcal (amount & unit)" : "Z. B.: 450 kcal (Menge & Einheit)",
     "Carbohydrate content" : "Kohlenhydratgehalt",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Zuckergehalt",
     "Trans-fat content" : "Gehalt an Transfetten",
     "Unsaturated-fat content" : "Gehalt an ungesättigten Fettsäuren",
-    "You have unsaved changes! Do you still want to leave?" : "Sie haben nicht gespeicherte Änderungen! Wollen Sie immer noch gehen?",
     "Failed to fetch keywords" : "Schlüsselwörter konnten nicht abgerufen werden",
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Unknown answer returned from server. See logs." : "Unbekannte Antwort vom Server zurückgegeben. Siehe Protokolle.",
@@ -183,6 +183,7 @@ OC.L10N.register(
     "Source" : "Quelle",
     "Loading…" : "Lade …",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlagworten: {tags}",
-    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse"
+    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
+    "Dismiss" : "Ablehnen"
 },
 "nplurals=2; plural=(n != 1);");

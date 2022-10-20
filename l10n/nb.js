@@ -23,6 +23,9 @@ OC.L10N.register(
     "Calories" : "Kalorier",
     "Creation date" : "Opprettelses dato",
     "Last modified" : "Sist redigert",
-    "Loading…" : "Laster…"
+    "Loading…" : "Laster…",
+    "Dismiss" : "Avvis",
+    "Cancel" : "Avbryt",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

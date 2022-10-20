@@ -40,6 +40,9 @@ OC.L10N.register(
     "Cooking time is up!" : "Gatavošanas laiks beidzies.",
     "Last modified" : "Pēdējoreiz modificēts",
     "Source" : "Avots",
-    "Loading…" : "Notiek ielāde..."
+    "Loading…" : "Notiek ielāde...",
+    "Dismiss" : "Atmest",
+    "Cancel" : "Atcelt",
+    "OK" : "Labi"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

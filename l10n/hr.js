@@ -76,6 +76,7 @@ OC.L10N.register(
     "Tools" : "Alati",
     "Ingredients" : "Sastojci",
     "Instructions" : "Upute",
+    "You have unsaved changes! Do you still want to leave?" : "Postoje nespremljene promjene! Želite li još uvijek izaći?",
     "Calories" : "Kalorije",
     "E.g.: 450 kcal (amount & unit)" : "Npr.: 450 kcal (količina i jedinica)",
     "Carbohydrate content" : "Udio ugljikohidrata",
@@ -91,7 +92,6 @@ OC.L10N.register(
     "Sugar content" : "Udio šećera",
     "Trans-fat content" : "Udio transmasnih kiselina",
     "Unsaturated-fat content" : "Udio nezasićenih masnih kiselina",
-    "You have unsaved changes! Do you still want to leave?" : "Postoje nespremljene promjene! Želite li još uvijek izaći?",
     "Failed to fetch keywords" : "Dohvaćanje ključnih riječi nije uspjelo",
     "Loading recipe failed" : "Učitavanje recepta nije uspjelo",
     "Unknown answer returned from server. See logs." : "Poslužitelj je vratio nepoznat odgovor. Pogledajte zapisnike.",
@@ -125,6 +125,9 @@ OC.L10N.register(
     "Source" : "Izvor",
     "Loading…" : "Učitavanje…",
     "Failed to load recipes with keywords: {tags}" : "Učitavanje recepata sa sljedećim ključnim riječima nije uspjelo: {tags}",
-    "Failed to load search results" : "Učitavanje rezultata pretraživanja nije uspjelo"
+    "Failed to load search results" : "Učitavanje rezultata pretraživanja nije uspjelo",
+    "Dismiss" : "Zanemari",
+    "Cancel" : "Odustani",
+    "OK" : "U redu"
 },
 "nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;");

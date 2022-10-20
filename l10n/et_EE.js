@@ -18,6 +18,9 @@ OC.L10N.register(
     "URL" : "URL",
     "Tools" : "Tööriistad",
     "Last modified" : "Viimati muudetud",
-    "Loading…" : "Laadimine…"
+    "Loading…" : "Laadimine…",
+    "Dismiss" : "Jäta vahele",
+    "Cancel" : "Loobu",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

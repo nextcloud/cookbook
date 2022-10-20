@@ -23,6 +23,9 @@ OC.L10N.register(
     "Date created" : "تاریخ ایجاد",
     "Last modified" : "آخرین اصلاح شده",
     "Source" : "منبع",
-    "Loading…" : "بار کردن…"
+    "Loading…" : "بار کردن…",
+    "Dismiss" : "پنهان کن",
+    "Cancel" : "لغو",
+    "OK" : "تایید"
 },
 "nplurals=2; plural=(n > 1);");

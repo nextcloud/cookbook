@@ -10,6 +10,9 @@ OC.L10N.register(
     "Close" : "ປິດ",
     "Name" : "ຊື່",
     "URL" : "URL",
-    "Loading…" : "ກຳລັງໂຫຼດ"
+    "Loading…" : "ກຳລັງໂຫຼດ",
+    "Dismiss" : "ຍົກເລີກ",
+    "Cancel" : "ຍົກເລີກ",
+    "OK" : "ຕົກລົງ"
 },
 "nplurals=1; plural=0;");

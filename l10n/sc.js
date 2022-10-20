@@ -76,6 +76,7 @@ OC.L10N.register(
     "Tools" : "Ainas",
     "Ingredients" : "Ingredientes",
     "Instructions" : "Inditos",
+    "You have unsaved changes! Do you still want to leave?" : "No as sarvadu is modìficas! A beru boles essire?",
     "Calories" : "Calorias",
     "E.g.: 450 kcal (amount & unit)" : "Es: 450 kcal (cantidade & unidade)",
     "Carbohydrate content" : "Cuntenutu de carboidratos",
@@ -91,7 +92,6 @@ OC.L10N.register(
     "Sugar content" : "Cuntenutu de tzùcuru",
     "Trans-fat content" : "Cuntenutu de grassos trans",
     "Unsaturated-fat content" : "Cuntenutu de grassos non sàturos",
-    "You have unsaved changes! Do you still want to leave?" : "No as sarvadu is modìficas! A beru boles essire?",
     "Failed to fetch keywords" : "Non faghet a recuperare is faeddos crae",
     "Loading recipe failed" : "Non faghet a carrigare sa retzeta",
     "Unknown answer returned from server. See logs." : "Su serbidore at torradu risposta disconnota. Controlla is registros.",
@@ -125,6 +125,9 @@ OC.L10N.register(
     "Source" : "Fonte",
     "Loading…" : "Carrighende...",
     "Failed to load recipes with keywords: {tags}" : "Impossìbile a carrigare retzetas cun faeddos is crae: {tags}",
-    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca"
+    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca",
+    "Dismiss" : "Iscarta",
+    "Cancel" : "Annulla",
+    "OK" : "AB"
 },
 "nplurals=2; plural=(n != 1);");

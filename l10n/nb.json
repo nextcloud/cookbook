@@ -21,6 +21,9 @@
     "Calories" : "Kalorier",
     "Creation date" : "Opprettelses dato",
     "Last modified" : "Sist redigert",
-    "Loading…" : "Laster…"
+    "Loading…" : "Laster…",
+    "Dismiss" : "Avvis",
+    "Cancel" : "Avbryt",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

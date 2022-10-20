@@ -74,6 +74,7 @@ OC.L10N.register(
     "Tools" : "Utensílios",
     "Ingredients" : "Ingredientes",
     "Instructions" : "Instruções",
+    "You have unsaved changes! Do you still want to leave?" : "Existem alterações que não estão guardadas. Tem a certeza que quer sair?",
     "Calories" : "Calorias",
     "E.g.: 450 kcal (amount & unit)" : "Ex.: 450 kcal (quantidade e unidades)",
     "Carbohydrate content" : "Hidratos de carbono",
@@ -89,7 +90,6 @@ OC.L10N.register(
     "Sugar content" : "Açúcares",
     "Trans-fat content" : "Lípidos trans",
     "Unsaturated-fat content" : "Lípidos insaturados",
-    "You have unsaved changes! Do you still want to leave?" : "Existem alterações que não estão guardadas. Tem a certeza que quer sair?",
     "Failed to fetch keywords" : "Falhou ao obter palavras-chave",
     "Loading recipe failed" : "Falhou ao carregar a receita",
     "Recipe image" : "Imagem da receita",
@@ -112,6 +112,9 @@ OC.L10N.register(
     "Sodium" : "Sal",
     "Fat total" : "Total de gordura",
     "Source" : "Fonte",
-    "Loading…" : "A carregar..."
+    "Loading…" : "A carregar...",
+    "Dismiss" : "Dispensar",
+    "Cancel" : "Cancelar",
+    "OK" : "Ok"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

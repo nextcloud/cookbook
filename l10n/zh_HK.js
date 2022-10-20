@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "工具",
     "Ingredients" : "材料",
     "Instructions" : "烹飪方法",
+    "You have unsaved changes! Do you still want to leave?" : "您有未保存的更改！你還要離開嗎？",
     "Calories" : "熱量",
     "E.g.: 450 kcal (amount & unit)" : "例如：450 千卡 （數量 & 單位）",
     "Carbohydrate content" : "碳水化合物含量",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "糖含量",
     "Trans-fat content" : "反式脂肪含量",
     "Unsaturated-fat content" : "不飽和脂肪含量",
-    "You have unsaved changes! Do you still want to leave?" : "您有未保存的更改！你還要離開嗎？",
     "Failed to fetch keywords" : "獲取關鍵詞失敗",
     "Loading recipe failed" : "食譜加載失敗",
     "Unknown answer returned from server. See logs." : "從伺服器返回的未知答案。請參閱系統記錄。",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "來源",
     "Loading…" : "載入中…",
     "Failed to load recipes with keywords: {tags}" : "無法加載帶有關鍵字的食譜：{tags}",
-    "Failed to load search results" : "無法加載搜尋結果"
+    "Failed to load search results" : "無法加載搜尋結果",
+    "Dismiss" : "撤銷",
+    "Cancel" : "取消",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

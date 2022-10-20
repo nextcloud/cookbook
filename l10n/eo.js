@@ -22,6 +22,8 @@ OC.L10N.register(
     "Tools" : "Iloj",
     "Creation date" : "Krea dato",
     "Last modified" : "laŭ lasta modifo",
-    "Loading…" : "Ŝargado..."
+    "Loading…" : "Ŝargado...",
+    "Dismiss" : "Preterpasi",
+    "OK" : "Bone"
 },
 "nplurals=2; plural=(n != 1);");

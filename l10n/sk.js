@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Nástroje",
     "Ingredients" : "Prísady",
     "Instructions" : "Postup",
+    "You have unsaved changes! Do you still want to leave?" : "Máte neuložené zmeny! Stále chcete odísť?",
     "Calories" : "Kalórie",
     "E.g.: 450 kcal (amount & unit)" : "Napr: 450 kcal (možstvo a jednotka)",
     "Carbohydrate content" : "Obsah karbohydrátov",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Obsah cukru",
     "Trans-fat content" : "Obsah trans tukov",
     "Unsaturated-fat content" : "Obsah nenasýtených tukov",
-    "You have unsaved changes! Do you still want to leave?" : "Máte neuložené zmeny! Stále chcete odísť?",
     "Failed to fetch keywords" : "Nepodarilo sa načítať kľúčové slová",
     "Loading recipe failed" : "Načítanie receptu zlyhalo",
     "Unknown answer returned from server. See logs." : "Neznáma odpoveď zo servera. Pozrite logy.",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Zdroj",
     "Loading…" : "Načítava sa...",
     "Failed to load recipes with keywords: {tags}" : "Zlyhalo načítavanie receptov s kľúčovými slovami : {tags}",
-    "Failed to load search results" : "Zlyhalo načítavanie výsledkov vyhľadávania"
+    "Failed to load search results" : "Zlyhalo načítavanie výsledkov vyhľadávania",
+    "Dismiss" : "Odmietnuť",
+    "Cancel" : "Zrušiť",
+    "OK" : "OK"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

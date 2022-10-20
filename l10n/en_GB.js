@@ -60,6 +60,8 @@ OC.L10N.register(
     "Last modified" : "Last modified",
     "Source" : "Source",
     "Loading…" : "Loading…",
-    "Failed to load search results" : "Failed to load search results"
+    "Failed to load search results" : "Failed to load search results",
+    "Dismiss" : "Dismiss",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

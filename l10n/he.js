@@ -56,6 +56,9 @@ OC.L10N.register(
     "Last modified" : "מועד שינוי אחרון",
     "Energy" : "אנרגיה",
     "Source" : "מקור",
-    "Loading…" : "בטעינה…"
+    "Loading…" : "בטעינה…",
+    "Dismiss" : "התעלמות",
+    "Cancel" : "ביטול",
+    "OK" : "אישור"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

@@ -11,6 +11,8 @@ OC.L10N.register(
     "Close" : "වසන්න",
     "Name" : "නම",
     "Description" : "විස්තරය",
-    "Loading…" : "පූරණය වෙමින්…"
+    "Loading…" : "පූරණය වෙමින්…",
+    "Cancel" : "අවලංගු කරන්න",
+    "OK" : "හරි"
 },
 "nplurals=2; plural=(n != 1);");

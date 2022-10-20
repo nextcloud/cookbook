@@ -80,6 +80,7 @@ OC.L10N.register(
     "Tools" : "Strumenti",
     "Ingredients" : "Ingredienti",
     "Instructions" : "Istruzioni",
+    "You have unsaved changes! Do you still want to leave?" : "Hai delle modifiche non salvate! Vuoi uscire comunque?",
     "Calories" : "Calorie",
     "E.g.: 450 kcal (amount & unit)" : "Ad es.: 450 kcal (quantità e unità)",
     "Carbohydrate content" : "Contenuto di carboidrati",
@@ -95,7 +96,6 @@ OC.L10N.register(
     "Sugar content" : "Contenuto di zuccheri",
     "Trans-fat content" : "Contenuto di acidi grassi trans",
     "Unsaturated-fat content" : "Contenuto di grassi insaturi",
-    "You have unsaved changes! Do you still want to leave?" : "Hai delle modifiche non salvate! Vuoi uscire comunque?",
     "Failed to fetch keywords" : "Recupero delle parole chiave non riuscito",
     "Loading recipe failed" : "Caricamento della ricetta non riuscito",
     "Unknown answer returned from server. See logs." : "Il server ha restituito una risposta sconosciuta. Controlla i log.",
@@ -132,6 +132,9 @@ OC.L10N.register(
     "Source" : "Fonte",
     "Loading…" : "Caricamento…",
     "Failed to load recipes with keywords: {tags}" : "Caricamento delle ricette con parole chiave non riuscito: {tags}",
-    "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito"
+    "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito",
+    "Dismiss" : "Annulla",
+    "Cancel" : "Annulla",
+    "OK" : "OK"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

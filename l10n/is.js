@@ -59,6 +59,9 @@ OC.L10N.register(
     "Fat total" : "Fat total",
     "Saturated Fat" : "Saturated Fat",
     "Source" : "Heimild",
-    "Loading…" : "Hleð inn…"
+    "Loading…" : "Hleð inn…",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Hætta við",
+    "OK" : "Í lagi"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

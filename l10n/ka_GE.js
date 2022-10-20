@@ -18,6 +18,9 @@ OC.L10N.register(
     "URL" : "მისამართი",
     "Tools" : "ხელსაწყოები",
     "Last modified" : "ბოლო ცვლილება",
-    "Loading…" : "იტვირთება…"
+    "Loading…" : "იტვირთება…",
+    "Dismiss" : "დათხოვნა",
+    "Cancel" : "უარყოფა",
+    "OK" : "კარგი"
 },
 "nplurals=2; plural=(n!=1);");

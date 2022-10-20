@@ -80,6 +80,7 @@ OC.L10N.register(
     "Tools" : "Værktøjer",
     "Ingredients" : "Ingredienser",
     "Instructions" : "Instruktioner",
+    "You have unsaved changes! Do you still want to leave?" : "Du har ikke-gemte ændringer! Vil du stadig lukke?",
     "Calories" : "Kalorier",
     "E.g.: 450 kcal (amount & unit)" : "F.eks.: 450 kcal (mængde og enhed)",
     "Carbohydrate content" : "Kulhydrat",
@@ -95,7 +96,6 @@ OC.L10N.register(
     "Sugar content" : "Sukker",
     "Trans-fat content" : "Trans-fedt syrer",
     "Unsaturated-fat content" : "Ikke-mættede fedtsyrer",
-    "You have unsaved changes! Do you still want to leave?" : "Du har ikke-gemte ændringer! Vil du stadig lukke?",
     "Failed to fetch keywords" : "Kunne ikke indhente nøgleord",
     "Loading recipe failed" : "Indlæsning af opskrift fejlede.",
     "Unknown answer returned from server. See logs." : "Ukendt svar returneret fra server. Se logfiler.",
@@ -132,6 +132,7 @@ OC.L10N.register(
     "Source" : "Kilde",
     "Loading…" : "Indlæser…",
     "Failed to load recipes with keywords: {tags}" : "Kunne ikke indlæse opskrifter med nøgleord: {tags}",
-    "Failed to load search results" : "Kunne ikke indlæse søgeresultater"
+    "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
+    "Dismiss" : "Afvis"
 },
 "nplurals=2; plural=(n != 1);");

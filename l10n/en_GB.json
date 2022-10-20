@@ -58,6 +58,8 @@
     "Last modified" : "Last modified",
     "Source" : "Source",
     "Loading…" : "Loading…",
-    "Failed to load search results" : "Failed to load search results"
+    "Failed to load search results" : "Failed to load search results",
+    "Dismiss" : "Dismiss",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

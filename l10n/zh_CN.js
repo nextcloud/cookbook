@@ -76,6 +76,7 @@ OC.L10N.register(
     "Tools" : "工具",
     "Ingredients" : "原料",
     "Instructions" : "说明",
+    "You have unsaved changes! Do you still want to leave?" : "你有未保存的更改！你还是想离开吗？",
     "Calories" : "热量",
     "E.g.: 450 kcal (amount & unit)" : "例如：450 千卡 （数量 & 单位）",
     "Carbohydrate content" : "碳水化合物含量",
@@ -91,7 +92,6 @@ OC.L10N.register(
     "Sugar content" : "糖含量",
     "Trans-fat content" : "反式脂肪含量",
     "Unsaturated-fat content" : "不饱和脂肪含量",
-    "You have unsaved changes! Do you still want to leave?" : "你有未保存的更改！你还是想离开吗？",
     "Failed to fetch keywords" : "获取关键词失败",
     "Loading recipe failed" : "菜谱加载失败",
     "Unknown answer returned from server. See logs." : "服务器返回了未知应答。见日志。",
@@ -125,6 +125,9 @@ OC.L10N.register(
     "Source" : "来源",
     "Loading…" : "正在加载…",
     "Failed to load recipes with keywords: {tags}" : "未能加载带这些关键词的菜谱：{tags}",
-    "Failed to load search results" : "未能加载搜索结果"
+    "Failed to load search results" : "未能加载搜索结果",
+    "Dismiss" : "不予理会",
+    "Cancel" : "取消",
+    "OK" : "好"
 },
 "nplurals=1; plural=0;");

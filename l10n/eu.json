@@ -129,6 +129,7 @@
     "Tools" : "Tresnak",
     "Ingredients" : "Osagaiak",
     "Instructions" : "Jarraibideak",
+    "You have unsaved changes! Do you still want to leave?" : "Gorde gabeko aldaketak dauzkazu! Atera nahi duzu hala ere?",
     "Calories" : "Kaloriak",
     "E.g.: 450 kcal (amount & unit)" : "Adib.: 450 kcal (kopurua eta unitatea)",
     "Carbohydrate content" : "Karbohidrato kopurua",
@@ -144,7 +145,6 @@
     "Sugar content" : "Azukre kopurua",
     "Trans-fat content" : "Trans gantz kopurua",
     "Unsaturated-fat content" : "Gantz asegabe kopurua",
-    "You have unsaved changes! Do you still want to leave?" : "Gorde gabeko aldaketak dauzkazu! Atera nahi duzu hala ere?",
     "Failed to fetch keywords" : "Gako-hitzak eskuratzeak huts egin du",
     "Loading recipe failed" : "Errezeta kargatzeak huts egin du",
     "Unknown answer returned from server. See logs." : "Erantzun ezezaguna itzuli da zerbitzaritik. Ikusi egunkariak.",
@@ -181,6 +181,9 @@
     "Source" : "Iturburua",
     "Loading…" : "Kargatzen…",
     "Failed to load recipes with keywords: {tags}" : "Huts egin du gako-hitz hau duten errezetak kargatzeak: {tags}",
-    "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu"
+    "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu",
+    "Dismiss" : "Baztertu",
+    "Cancel" : "Utzi",
+    "OK" : "Ados"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
