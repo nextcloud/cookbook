@@ -36,14 +36,6 @@ function cookbookConfig (env) {
                 icons: path.resolve(__dirname, 'node_modules/vue-material-design-icons'),
             }
         },
-        module: {
-            rules: [
-                {
-                    test: /\.mp3$/,
-                    type: 'asset/resource',
-                },
-            ],
-        }
     })
     // console.log(config)
     return config
