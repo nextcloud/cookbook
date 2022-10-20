@@ -3,11 +3,11 @@ const base = require('./webpack.config.js')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = (env) => merge(base(env), {
-    plugins: [
+    plugins: env.BUNDLE_ANALYZER ? [
         new BundleAnalyzerPlugin(
             {
-                openAnalyzer: false,
+                openAnalyzer: true,
             }
         )
-    ],
+    ] : [],
 })

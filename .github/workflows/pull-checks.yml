@@ -139,7 +139,7 @@ jobs:
 
                     if [ $(git diff --name-only package.json | wc -l) -gt 0 ]; then
                     echo '::error file=package.json::The package.json file is not validly formatted.'
-                    echo '::notice::It is suggested to run `npm run package/lint`.'
+                    echo '::notice::It is suggested to run `npm run package-lint` and commit locally.'
                     exit 1
                     fi
 
