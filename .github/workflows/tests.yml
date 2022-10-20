@@ -28,7 +28,7 @@ jobs:
             id: date
             run: echo "::set-output name=date::$(date +%Y-%m-%d)"
         -   name: Cache NPM cache
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     ~/.npm
@@ -38,7 +38,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     vendor
@@ -359,7 +359,7 @@ jobs:
             id: date
             run: echo "::set-output name=date::$(date +%Y-%m-%d)"
         -   name: Use cache for NPM
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     ~/.npm
@@ -369,7 +369,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     vendor
