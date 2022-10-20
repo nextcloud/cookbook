@@ -17,7 +17,7 @@ jobs:
         -   name: Checkout the project
             uses: actions/checkout@v2
         -   name: Setup node and NPM
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
                 node-version: '14'
         -   name: Install npm
@@ -348,7 +348,7 @@ jobs:
         -   name: Checkout the app
             uses: actions/checkout@v2
         -   name: Setup node and NPM
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
                 node-version: '14'
         -   name: Install npm
