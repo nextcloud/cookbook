@@ -39,6 +39,8 @@
 - Remove deprecated `::v-deep` CSS syntax @christianlupus
 - Disable webpack bundle analyzer plugin by default to speed up development cycle
   [#1263](https://github.com/nextcloud/cookbook/pull/1263) @MarcelRobitaille
+- Update github actions
+  [1269](https://github.com/nextcloud/cookbook/pull/1269)
 
 ### Documentation
 - Fix bad writing
