@@ -17,12 +17,12 @@ jobs:
         -   name: Checkout the project
             uses: actions/checkout@v2
         -   name: Setup node and NPM
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
-                node-version: '14'
+                node-version: '16'
         -   name: Install npm
             shell: bash
-            run: npm install -g npm@^7
+            run: npm install -g npm@^8
             
         -   name: Get the date
             id: date
@@ -348,12 +348,12 @@ jobs:
         -   name: Checkout the app
             uses: actions/checkout@v2
         -   name: Setup node and NPM
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
-                node-version: '14'
+                node-version: '16'
         -   name: Install npm
             shell: bash
-            run: npm install -g npm@^7
+            run: npm install -g npm@^8
             
         -   name: Get the date
             id: date
@@ -377,10 +377,6 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-composer-
-        
-        -   name: Update NPM
-            shell: bash
-            run: sudo npm install -g npm
         
         -   name: Install the NPM dependencies
             shell: bash

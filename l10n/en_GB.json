@@ -60,6 +60,7 @@
     "Loading…" : "Loading…",
     "Failed to load search results" : "Failed to load search results",
     "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
     "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

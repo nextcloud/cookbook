@@ -16,6 +16,9 @@
     "URL" : "Bronadres",
     "Tools" : "Nutsmiddels",
     "Last modified" : "Laas gewysig",
-    "Loading…" : "Laai…"
+    "Loading…" : "Laai…",
+    "Dismiss" : "Ontslaan",
+    "Cancel" : "Kanselleer",
+    "OK" : "Goed"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

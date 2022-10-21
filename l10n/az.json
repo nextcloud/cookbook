@@ -9,6 +9,8 @@
     "Close" : "Bağla",
     "Name" : "Ad",
     "Description" : "Açıqlanma",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "Dayandır",
+    "OK" : "Oldu"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
