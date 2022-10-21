@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
         -   name: Setup node and NPM
             uses: actions/setup-node@v3
             with:
@@ -144,7 +144,7 @@ jobs:
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             fetch-depth: 2
       
@@ -201,7 +201,7 @@ jobs:
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             fetch-depth: 2
       
@@ -265,7 +265,7 @@ jobs:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
           with:
             path: code
             fetch-depth: 2
@@ -346,7 +346,7 @@ jobs:
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
         -   name: Setup node and NPM
             uses: actions/setup-node@v3
             with:

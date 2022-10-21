@@ -12,7 +12,7 @@ jobs:
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 2
             
@@ -70,7 +70,7 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
                 
@@ -113,7 +113,7 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
             -   name: Get the date
