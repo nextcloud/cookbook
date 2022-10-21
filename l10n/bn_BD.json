@@ -9,6 +9,8 @@
     "Close" : "বন্ধ",
     "Name" : "নাম",
     "Description" : "বিবরণ",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "বাতির",
+    "OK" : "তথাস্তু"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

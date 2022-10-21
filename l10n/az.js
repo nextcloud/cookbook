@@ -11,6 +11,8 @@ OC.L10N.register(
     "Close" : "Bağla",
     "Name" : "Ad",
     "Description" : "Açıqlanma",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "Dayandır",
+    "OK" : "Oldu"
 },
 "nplurals=2; plural=(n != 1);");

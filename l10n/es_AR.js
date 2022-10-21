@@ -20,6 +20,7 @@ OC.L10N.register(
     "Last modified" : "Última modificación",
     "Loading…" : "Cargando…",
     "Dismiss" : "Despedir",
+    "Cancel" : "Cancelar",
     "OK" : "OK"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

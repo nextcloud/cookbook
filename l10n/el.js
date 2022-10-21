@@ -104,6 +104,8 @@ OC.L10N.register(
     "Loading…" : "Φορτώνει…",
     "Failed to load recipes with keywords: {tags}" : "Αποτυχία φόρτωσης συνταγών με λέξεις κλειδιά: {tags}",
     "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης",
-    "Dismiss" : "Τους ζυγούς λύσατε!"
+    "Dismiss" : "Τους ζυγούς λύσατε!",
+    "Cancel" : "Ακύρωση",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");
