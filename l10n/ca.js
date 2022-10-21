@@ -132,6 +132,9 @@ OC.L10N.register(
     "Source" : "Origen",
     "Loading…" : "S'està carregant…",
     "Failed to load recipes with keywords: {tags}" : "No s'han pogut carregar les receptes amb paraules clau: {tags}",
-    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca"
+    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca",
+    "Dismiss" : "Descarta",
+    "Cancel" : "Cancel·la",
+    "OK" : "D'acord"
 },
 "nplurals=2; plural=(n != 1);");

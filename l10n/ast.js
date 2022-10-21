@@ -17,6 +17,9 @@ OC.L10N.register(
     "Description" : "Descripción",
     "URL" : "Url",
     "Tools" : "Ferramientes",
-    "Loading…" : "Cargando..."
+    "Loading…" : "Cargando...",
+    "Dismiss" : "Escartar",
+    "Cancel" : "Encaboxar",
+    "OK" : "Aceutar"
 },
 "nplurals=2; plural=(n != 1);");

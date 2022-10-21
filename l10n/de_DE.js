@@ -184,6 +184,8 @@ OC.L10N.register(
     "Loading…" : "Lade …",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlagworten: {tags}",
     "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
-    "Dismiss" : "Ablehnen"
+    "Dismiss" : "Ablehnen",
+    "Cancel" : "Abbrechen",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

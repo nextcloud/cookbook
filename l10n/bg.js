@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Източник",
     "Loading…" : "Зареждане…",
     "Failed to load recipes with keywords: {tags}" : "Неуспешно зареждане на рецепти с ключови думи: {tags}",
-    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно "
+    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
+    "Dismiss" : "Отхвърляне",
+    "Cancel" : "Отказ",
+    "OK" : "Добре"
 },
 "nplurals=2; plural=(n != 1);");

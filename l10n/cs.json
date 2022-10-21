@@ -181,6 +181,9 @@
     "Source" : "Zdroj",
     "Loading…" : "Načítání…",
     "Failed to load recipes with keywords: {tags}" : "Nepodařilo se načíst recepty, obsahující klíčová slova: {tags}",
-    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
+    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání",
+    "Dismiss" : "Zahodit",
+    "Cancel" : "Storno",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
