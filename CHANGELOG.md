@@ -43,6 +43,7 @@
   [1269](https://github.com/nextcloud/cookbook/pull/1269)
   [1270](https://github.com/nextcloud/cookbook/pull/1270)
   [1271](https://github.com/nextcloud/cookbook/pull/1271)
+  [1273](https://github.com/nextcloud/cookbook/pull/1273)
 
 ### Documentation
 - Fix bad writing
