@@ -18,6 +18,9 @@ OC.L10N.register(
     "URL" : "Bronadres",
     "Tools" : "Nutsmiddels",
     "Last modified" : "Laas gewysig",
-    "Loading…" : "Laai…"
+    "Loading…" : "Laai…",
+    "Dismiss" : "Ontslaan",
+    "Cancel" : "Kanselleer",
+    "OK" : "Goed"
 },
 "nplurals=2; plural=(n != 1);");
