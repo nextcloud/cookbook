@@ -1,0 +1,14 @@
+{ "translations": {
+    "Edit" : "Redaktirläň",
+    "Save" : "Saklamak",
+    "Search" : "Gözlemek",
+    "Tags" : "Bellikler",
+    "Rename" : "Adyny üýtgetmek",
+    "Close" : "Ýap",
+    "Name" : "Ady",
+    "Loading…" : "Ýüklenýär…",
+    "Dismiss" : "Ýapmak.",
+    "Cancel" : "ýatyrmak",
+    "OK" : "Bolýar"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

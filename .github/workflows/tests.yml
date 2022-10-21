@@ -15,20 +15,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
         -   name: Setup node and NPM
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
-                node-version: '14'
+                node-version: '16'
         -   name: Install npm
             shell: bash
-            run: npm install -g npm@^7
+            run: npm install -g npm@^8
             
         -   name: Get the date
             id: date
             run: echo "::set-output name=date::$(date +%Y-%m-%d)"
         -   name: Cache NPM cache
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     ~/.npm
@@ -38,7 +38,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     vendor
@@ -144,7 +144,7 @@ jobs:
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             fetch-depth: 2
       
@@ -164,7 +164,7 @@ jobs:
             coreVersion: ${{ matrix.coreVersion }}
     
       - name: Upload the log file as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
             name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
@@ -177,19 +177,19 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: Code coverage (XML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage/coverage.*.xml"
 
     #   - name: Upload the code coverage report (unit tests) as artifacts
-    #     uses: actions/upload-artifact@v2
+    #     uses: actions/upload-artifact@v3
     #     with:
     #         name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
     #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: Junit test log files (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -201,7 +201,7 @@ jobs:
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
             fetch-depth: 2
       
@@ -223,7 +223,7 @@ jobs:
             runCodeChecker: false
     
       - name: Upload the log file as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: always()
         with:
             name: Nextcloud-logs (mysql, master, apache)
@@ -236,13 +236,13 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: Code coverage (XML) (mysql, master, apache)
             path: "/tmp/coverage/coverage.*.xml"
 
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
             name: Junit test log files (mysql, master, apache)
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -265,7 +265,7 @@ jobs:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@v2
+          uses: actions/checkout@v3
           with:
             path: code
             fetch-depth: 2
@@ -346,20 +346,20 @@ jobs:
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@v2
+            uses: actions/checkout@v3
         -   name: Setup node and NPM
-            uses: actions/setup-node@v2
+            uses: actions/setup-node@v3
             with:
-                node-version: '14'
+                node-version: '16'
         -   name: Install npm
             shell: bash
-            run: npm install -g npm@^7
+            run: npm install -g npm@^8
             
         -   name: Get the date
             id: date
             run: echo "::set-output name=date::$(date +%Y-%m-%d)"
         -   name: Use cache for NPM
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     ~/.npm
@@ -369,7 +369,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v2.1.7
+            uses: actions/cache@v3.0.11
             with:
                 path: |
                     vendor
@@ -377,10 +377,6 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-composer-
-        
-        -   name: Update NPM
-            shell: bash
-            run: sudo npm install -g npm
         
         -   name: Install the NPM dependencies
             shell: bash
@@ -400,7 +396,7 @@ jobs:
             run: >-
                 make appstore_package_name=/tmp/appstore appstore
         -   name: Publish the app store package as artifact
-            uses: actions/upload-artifact@v2
+            uses: actions/upload-artifact@v3
             with:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
@@ -410,7 +406,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Upload
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: Event File
         path: ${{ github.event_path }}

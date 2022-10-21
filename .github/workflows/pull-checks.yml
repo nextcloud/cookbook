@@ -12,7 +12,7 @@ jobs:
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 2
             
@@ -70,7 +70,7 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
                 
@@ -113,14 +113,14 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
             -   name: Get the date
                 id: date
                 run: echo "::set-output name=date::$(date +%Y-%m-%d)"
             -   name: Cache NPM cache
-                uses: actions/cache@v2.1.7
+                uses: actions/cache@v3.0.11
                 with:
                     path: |
                         ~/.npm

@@ -184,6 +184,8 @@ OC.L10N.register(
     "Loading…" : "Lade …",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlüsselwörter: {tags}",
     "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
-    "Dismiss" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE)."
+    "Dismiss" : "Verwerfen",
+    "Cancel" : "Abbrechen",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

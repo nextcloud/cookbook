@@ -21,7 +21,7 @@ jobs:
 
         steps:
             -   name: Checkout the project
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     path: cookbook
                     ref: ${{ github.ref }}
@@ -31,7 +31,7 @@ jobs:
                 id: date
                 run: echo "::set-output name=date::$(date +%Y-%m-%d)"
             -   name: Use cache for NPM
-                uses: actions/cache@v2.1.7
+                uses: actions/cache@v3.0.11
                 with:
                     path: |
                         ~/.npm
