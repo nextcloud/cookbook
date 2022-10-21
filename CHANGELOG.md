@@ -41,6 +41,7 @@
   [#1263](https://github.com/nextcloud/cookbook/pull/1263) @MarcelRobitaille
 - Update github actions
   [1269](https://github.com/nextcloud/cookbook/pull/1269)
+  [1270](https://github.com/nextcloud/cookbook/pull/1270)
 
 ### Documentation
 - Fix bad writing
