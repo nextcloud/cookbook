@@ -184,7 +184,7 @@ OC.L10N.register(
     "Loading…" : "Betöltés…",
     "Failed to load recipes with keywords: {tags}" : "Nem sikerült betölteni a kulcsszavakkal ellátott recepteket: {tags}",
     "Failed to load search results" : "Nem sikerült betölteni a találatokat",
-    "Dismiss" : "Elutasítás",
+    "Dismiss" : "Eltüntetés",
     "Cancel" : "Mégse",
     "OK" : "Rendben"
 },

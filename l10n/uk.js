@@ -50,7 +50,7 @@ OC.L10N.register(
     "Trans Fat" : "Транс-жири",
     "Source" : "Джерело",
     "Loading…" : "Завантаження…",
-    "Failed to load search results" : "Помилка при завантажені пошукового результату",
+    "Failed to load search results" : "Помилка при завантаженні результатів пошуку",
     "Dismiss" : "Припинити",
     "Cancel" : "Скасувати",
     "OK" : "Гаразд"
