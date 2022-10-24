@@ -395,6 +395,7 @@ export default {
         },
     },
     mounted() {
+        this.$log.info('RecipeEdit mounted')
         const $this = this
 
         // Store the initial recipe configuration for possible later use

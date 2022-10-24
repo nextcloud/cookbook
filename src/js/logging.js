@@ -63,4 +63,6 @@ export default function setupLogging(Vue) {
         separator: "|",
         showConsoleColors: true,
     })
+
+    Vue.$log.info(`Setting up logging with log level ${logLevel}`)
 }

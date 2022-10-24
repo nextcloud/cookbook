@@ -149,6 +149,7 @@ export default {
     },
     computed: {
         totalRecipeCount() {
+            this.$log.debug('Calling totalRecipeCount')
             let total = this.uncatRecipes
             for (let i = 0; i < this.categories.length; i++) {
                 total += this.categories[i].recipeCount
@@ -168,11 +169,13 @@ export default {
         // Register a method hook for navigation refreshing
         refreshRequired(newVal, oldVal) {
             if (newVal !== oldVal && newVal === true) {
+                this.$log.debug('Calling getCategories from refreshRequired')
                 this.getCategories()
             }
         },
     },
     mounted() {
+        this.$log.info('AppNavi mounted')
         this.getCategories()
     },
     methods: {
@@ -303,6 +306,7 @@ export default {
          * Fetch and display recipe categories
          */
         async getCategories() {
+            this.$log.debug('Calling getCategories')
             const $this = this
             this.loading.categories = true
             try {
@@ -369,6 +373,7 @@ export default {
          * Reindex all recipes
          */
         reindex() {
+            this.$log.debug('Calling reindex')
             const $this = this
             if (this.scanningLibrary) {
                 // No repeat clicks until we're done
@@ -387,6 +392,7 @@ export default {
                         // This refreshes the current router view in case items in it changed during reindex
                         $this.$router.go()
                     } else {
+                        this.$log.debug('Calling getCategories from reindex')
                         $this.getCategories()
                     }
                 })
