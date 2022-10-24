@@ -13,6 +13,7 @@ import Vue from "vue"
 import * as ModalDialogs from "vue-modal-dialogs"
 
 import helpers from "cookbook/js/helper"
+import setupLogging from "cookbook/js/logging"
 
 import router from "./router"
 import store from "./store"
@@ -51,6 +52,8 @@ Vue.use(VueShowdown, {
 // TODO: Equivalent library for Vue3 when we make that transition:
 // https://github.com/rlemaigre/vue3-promise-dialog
 Vue.use(ModalDialogs)
+
+setupLogging(Vue)
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
