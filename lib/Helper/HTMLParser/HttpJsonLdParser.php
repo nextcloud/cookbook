@@ -177,10 +177,6 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 * @param array $json The JSON object to parse
 	 */
 	private function checkForArrayType(array &$json) {
-		if (! $this->jsonService->isSchemaObject($json)) {
-			return;
-		}
-
 		if (is_array($json['@type'])) {
 			$json['@type'] = 'Recipe';
 		}
