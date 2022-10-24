@@ -114,4 +114,27 @@ class JsonServiceTest extends TestCase {
 		$result = $this->service->hasProperty(['foo' => 'bar'], 'foo');
 		self::assertFalse($result, 'Property of a non-object must not be returned.');
 	}
+
+	public function dpRecipeCheckArray() {
+		return [
+			['Recipe', true, true],
+			['Recipe', false, true],
+			[['Recipe'], true, true],
+			[['Recipe'], false, true],
+			[['Recipe', 'Foo'], true, false],
+			[['Recipe', 'Foo'], false, true],
+			[['Recipe1', 'Foo'], true, false],
+			[['Recipe1', 'Foo'], false, false],
+		];
+	}
+
+	/** @dataProvider dpRecipeCheckArray */
+	public function testRecipeCheckArray($type, $unique, $expected) {
+		$json = [
+			'@context' => 'https://schema.org',
+			'name' => 'The name',
+			'@type' => $type,
+		];
+		$this->assertEquals($expected, $this->service->isSchemaObject($json, 'Recipe', true, $unique));
+	}
 }
