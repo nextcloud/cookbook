@@ -62,7 +62,7 @@ jobs:
         
         -   name: Install Node packages
             shell: bash
-            run: npm -q install || { cat ~/.npm/eresolve-report.txt ; exit 1; }
+            run: npm -q ci || { cat ~/.npm/eresolve-report.txt ; exit 1; }
         
         -   name: Run PHP linter
             shell: bash
@@ -111,10 +111,11 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - stable21
-                - stable22
-                - stable23
-                - stable24
+                - 21
+                - 22
+                - 23
+                - 24
+                - 25
             phpVersion:
                 - "8.0"
             httpServer:
@@ -122,23 +123,23 @@ jobs:
             include:
                 # Test different databses
                 -   database: sqlite
-                    coreVersion: stable24
+                    coreVersion: 25
                     phpVersion: "8.1"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: stable24
+                    coreVersion: 25
                     phpVersion: "8.1"
                     httpServer: "apache"
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: stable24
+                    coreVersion: 25
                     phpVersion: "8.1"
                     httpServer: "apache"
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: stable24
+                    coreVersion: 25
                     phpVersion: "8.1"
                     httpServer: "nginx"
                     
@@ -154,46 +155,73 @@ jobs:
       
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
-        
+
+      - name: Install helper program
+        shell: bash
+        run: |-
+          pip install yq
+          
+      - name: Get the min and max compatible server versions from manifest XML file
+        shell: bash
+        id: ncVersionRequirements
+        run: |-
+          minVersion="$(cat appinfo/info.xml | xq '.info.dependencies.nextcloud."@min-version"' -r)"
+          maxVersion="$(cat appinfo/info.xml | xq '.info.dependencies.nextcloud."@max-version"' -r)"
+          echo "minVersion=$minVersion" >> $GITHUB_OUTPUT
+          echo "maxVersion=$maxVersion" >> $GITHUB_OUTPUT
+          echo "Compatible NC server versions: [$minVersion, $maxVersion]"
+          if [ "${{ matrix.coreVersion }}" -ge "$minVersion" -a "${{ matrix.coreVersion }}" -le "$maxVersion" ]; then
+          mv="true"
+          else
+          mv="false"
+          echo "Skipping the main tests as this version is marked incompatible with the installed NC version." >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "matchingVersion=$mv" >> $GITHUB_OUTPUT
+          echo "The app is compatible with the current NV core v${{ matrix.coreVersion }}: $mv"
+
+
       - name: Run the tests in docker container
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
         uses: ./.github/actions/run-tests
         with:
             db: ${{ matrix.database }}
             phpVersion: ${{ matrix.phpVersion }}
             server: ${{ matrix.httpServer }}
-            coreVersion: ${{ matrix.coreVersion }}
+            coreVersion: stable${{ matrix.coreVersion }}
     
       - name: Upload the log file as artifact
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
         uses: actions/upload-artifact@v3
-        if: always()
         with:
-            name: Nextcloud-logs (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            name: Nextcloud-logs (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
       
       - name: Copy coverage-reports into non-link folder
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
         shell: bash
         run: >-
             mkdir /tmp/coverage &&
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
         uses: actions/upload-artifact@v3
         with:
-            name: Code coverage (XML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            name: Code coverage (XML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage/coverage.*.xml"
 
     #   - name: Upload the code coverage report (unit tests) as artifacts
     #     uses: actions/upload-artifact@v3
     #     with:
-    #         name: Code coverage (HTML) (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+    #         name: Code coverage (HTML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
     #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@v3
         with:
-            name: Junit test log files (${{matrix.database}}, ${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+            name: Junit test log files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
-        if: always()
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
   
   unit-tests-master:
     name: Run the tests against the master branch of the NC server
