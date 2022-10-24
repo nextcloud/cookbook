@@ -17,9 +17,10 @@ class JsonService {
 	 * @param mixed $obj The object to check
 	 * @param string $type The type to check for. If null or '' no type check is performed
 	 * @param bool $checkContext If true, check for a present context entry
+	 * @param bool $uniqueType If false, also accept JSON objects that contain multiple types as @type.
 	 * @return bool true, if $obj is an object and optionally satisfies the type check
 	 */
-	public function isSchemaObject($obj, string $type = null, bool $checkContext = true): bool {
+	public function isSchemaObject($obj, string $type = null, bool $checkContext = true, bool $uniqueType = true): bool {
 		if (! is_array($obj)) {
 			// Objects must bve encoded as arrays in JSON
 			return false;
@@ -42,6 +43,21 @@ class JsonService {
 		if ($type === null || $type === '') {
 			// No typecheck was requested. So return true
 			return true;
+		}
+
+		if (is_array($obj['@type'])) {
+			if ($uniqueType) {
+				if (count($obj['@type']) === 1 && $obj['@type'][0] === $type) {
+					return true;
+				}
+				return false;
+			}
+
+			$foundTypes = array_filter($obj['@type'], function ($x) use ($type) {
+				return trim($x) === $type;
+			});
+
+			return count($foundTypes) > 0;
 		}
 
 		// Check if type matches

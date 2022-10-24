@@ -26,6 +26,8 @@
   [1122](https://github.com/nextcloud/cookbook/pull/1122) @MarcelRobitaille
 - Add filter to prevent special chars in folder names
   [#1268](https://github.com/nextcloud/cookbook/pull/1268) @christianlupus
+- Fix bug with websites that provide array of schema entries
+  [#1282](https://github.com/nextcloud/cookbook/pull/1282) @christianlupus
 
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests
