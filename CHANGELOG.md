@@ -46,6 +46,8 @@
   [1273](https://github.com/nextcloud/cookbook/pull/1273)
   [1274](https://github.com/nextcloud/cookbook/pull/1274)
   [1277](https://github.com/nextcloud/cookbook/pull/1277)
+- Add logging to diagnose bugs in production
+  [#1283](https://github.com/nextcloud/cookbook/pull/1283) @MarcelRobitaille
 
 ### Documentation
 - Fix bad writing
