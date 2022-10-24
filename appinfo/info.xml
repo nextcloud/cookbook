@@ -9,6 +9,8 @@
     <version>0.9.15</version>
     <licence>agpl</licence>
     <author mail="github@christian-wolf.click">Christian Wolf</author>
+    <author mail="info@sebastianfey.de">Sebastian Fey</author>
+    <author mail="mail@marcelrobitaille.me">Marcel Robitaille</author>
     <author mail="mrzapp@users.noreply.github.com">Jeppe Zapp</author>
     <namespace>Cookbook</namespace>
     <category>organization</category>
