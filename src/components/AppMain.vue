@@ -50,7 +50,7 @@ export default {
         */
     },
     mounted() {
-        this.$log.info('AppMain mounted')
+        this.$log.info("AppMain mounted")
         subscribe("navigation-toggled", this.updateAppNavigationOpen)
     },
     unmounted() {

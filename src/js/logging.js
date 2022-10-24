@@ -1,5 +1,5 @@
 // TODO: Switch to vuejs3-logger when we switch to Vue 3
-import VueLogger from 'vuejs-logger'
+import VueLogger from "vuejs-logger"
 import moment from "@nextcloud/moment"
 
 const DEFAULT_LOG_LEVEL = "info"

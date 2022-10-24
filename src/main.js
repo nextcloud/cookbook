@@ -59,7 +59,7 @@ setupLogging(Vue)
 Vue.prototype.t = window.t
 
 // Start the app once document is done loading
-Vue.$log.info('Main is done. Creating App.')
+Vue.$log.info("Main is done. Creating App.")
 const App = Vue.extend(AppMain)
 new App({
     store,

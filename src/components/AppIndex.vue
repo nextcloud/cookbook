@@ -38,7 +38,7 @@ export default {
         },
     },
     mounted() {
-        this.$log.info('AppIndex mounted')
+        this.$log.info("AppIndex mounted")
         this.loadAll()
     },
     methods: {
