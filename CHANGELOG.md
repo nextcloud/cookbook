@@ -26,6 +26,8 @@
   [1122](https://github.com/nextcloud/cookbook/pull/1122) @MarcelRobitaille
 - Add filter to prevent special chars in folder names
   [#1268](https://github.com/nextcloud/cookbook/pull/1268) @christianlupus
+- Fix bug with websites that provide array of schema entries
+  [#1282](https://github.com/nextcloud/cookbook/pull/1282) @christianlupus
 
 ### Maintenance
 - Use the pre-built database images for MySQL and PostgreSQL tests
@@ -46,6 +48,8 @@
   [1273](https://github.com/nextcloud/cookbook/pull/1273)
   [1274](https://github.com/nextcloud/cookbook/pull/1274)
   [1277](https://github.com/nextcloud/cookbook/pull/1277)
+- Prepare the GitHub action scripts to be compatible with the upcoming version split in version 0.10.0
+  [#1285](https://github.com/nextcloud/cookbook/pull/1285) @christianlupus
 - Add logging to diagnose bugs in production
   [#1283](https://github.com/nextcloud/cookbook/pull/1283) @MarcelRobitaille
 

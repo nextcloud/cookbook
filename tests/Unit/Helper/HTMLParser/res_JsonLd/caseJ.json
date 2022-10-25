@@ -1,0 +1,1382 @@
+{
+  "@context": "http://schema.org",
+  "@type": "Recipe",
+  "headline": "Chicken Parmesan",
+  "datePublished": "2012-06-06T16:20:12.000-04:00",
+  "dateModified": "2022-09-30T15:21:12.000-04:00",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Chef John",
+      "url": "https://www.allrecipes.com/cook/foodwisheswithchefjohn"
+    }
+  ],
+  "description": "For the best chicken Parmesan, try Chef John&#39;s version that&#39;s pan-fried and then baked, delivering impressive results with a crispier crust than most recipes.",
+  "image": [
+    {
+      "@type": "ImageObject",
+      "url": "https://www.allrecipes.com/thmb/n-Hx6ERCbREcQP3ZWO2edHxpKaM=/1333x1333/smart/filters:no_upscale()/223042-Chicken-Parmesan-mfs_001-b5a42a1bd4564f0a880b9030a33e24d3.jpg",
+      "height": 1333,
+      "width": 1333
+    },
+    {
+      "@type": "ImageObject",
+      "url": "https://www.allrecipes.com/thmb/5bjGqeDURwhMU7Zuq6YaNQD7gzA=/1777x1333/smart/filters:no_upscale()/223042-Chicken-Parmesan-mfs_001-b5a42a1bd4564f0a880b9030a33e24d3.jpg",
+      "height": 1333,
+      "width": 1777
+    },
+    {
+      "@type": "ImageObject",
+      "url": "https://www.allrecipes.com/thmb/4EpzeVMWhDc6xh46KHN5eHpTOhs=/2000x1125/smart/filters:no_upscale()/223042-Chicken-Parmesan-mfs_001-b5a42a1bd4564f0a880b9030a33e24d3.jpg",
+      "height": 1125,
+      "width": 2000
+    }
+  ],
+  "video": {
+    "@type": "VideoObject",
+    "embedUrl": "https://players.brightcove.net/1033249144001/default_default/index.html?videoId=1185395705001",
+    "description": "Discover the secret to Chef John’s perfect chicken parmesan.",
+    "duration": "PT7M55S",
+    "name": "How to Make Chicken Parmesan",
+    "thumbnailUrl": "https://static.onecms.io/wp-content/uploads/sites/43/2022/03/19/223042-Chicken-Parmesan-mfs_001.jpg",
+    "uploadDate": "2021-03-01T04:07:23.286Z"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Allrecipes",
+    "url": "https://www.allrecipes.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.allrecipes.com/thmb/D7RKdhNOAqTKqelKSPdfS7Zzyfw=/112x112/filters:no_upscale():max_bytes(150000):strip_icc()/ar_publisherSchema-d55be7e68f554b629d9f16e5b8a21895.jpg",
+      "width": 112,
+      "height": 112
+    },
+    "brand": "Allrecipes",
+    "publishingPrinciples": "https://www.allrecipes.com/about-us-6648102#toc-editorial-guidelines",
+    "sameAs": [
+      "https://www.facebook.com/allrecipes",
+      "https://www.pinterest.com/allrecipes/",
+      "https://www.youtube.com/user/allrecipes/videos",
+      "https://en.wikipedia.org/wiki/Allrecipes.com",
+      "https://twitter.com/Allrecipes",
+      "https://flipboard.com/@Allrecipes",
+      "https://www.tiktok.com/@allrecipes",
+      "https://apps.apple.com/us/app/allrecipes-dinner-spinner/id299515267",
+      "https://play.google.com/store/apps/details?id=com.allrecipes.spinner.free&hl=en_US&gl=US",
+      "https://www.youtube.com/c/foodwishes",
+      "https://www.linkedin.com/company/19312/admin/",
+      "https://www.instagram.com/allrecipes/"
+    ]
+  },
+  "name": "Chicken Parmesan",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "4429"
+  },
+  "cookTime": "PT20M",
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "471 kcal",
+    "carbohydrateContent": "25 g",
+    "cholesterolContent": "187 mg",
+    "fiberContent": "1 g",
+    "proteinContent": "42 g",
+    "saturatedFatContent": "9 g",
+    "sodiumContent": "840 mg",
+    "sugarContent": "2 g",
+    "fatContent": "25 g",
+    "unsaturatedFatContent": "0 g"
+  },
+  "prepTime": "PT15M",
+  "recipeIngredient": [
+    "4 skinless, boneless chicken breast halves",
+    "salt and freshly ground black pepper to taste",
+    "2 large eggs",
+    "1 cup panko bread crumbs, or more as needed",
+    "0.75 cup grated Parmesan cheese, divided",
+    "2 tablespoons all-purpose flour, or more if needed",
+    "0.5 cup olive oil for frying, or as needed",
+    "0.5 cup prepared tomato sauce",
+    "0.25 cup fresh mozzarella, cut into small cubes",
+    "0.25 cup chopped fresh basil",
+    "0.5 cup grated provolone cheese",
+    "2 teaspoons olive oil"
+  ],
+  "recipeInstructions": [
+    {
+      "@type": "HowToStep",
+      "text": "Preheat an oven to 450 degrees F (230 degrees C)."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Place chicken breasts between two sheets of heavy plastic (resealable freezer bags work well) on a solid, level surface. Firmly pound chicken with the smooth side of a meat mallet to a thickness of 1/2-inch. Season chicken thoroughly with salt and pepper."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Beat eggs in a shallow bowl and set aside."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Mix bread crumbs and 1/2 cup Parmesan cheese in a separate bowl, set aside."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Place flour in a sifter or strainer; sprinkle over chicken breasts, evenly coating both sides."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Dip a flour-coated chicken breast in beaten eggs. Transfer breast to the bread crumb mixture, pressing crumbs into both sides. Repeat for each breast. Let chicken rest for 10 to 15 minutes."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Heat 1/2 inch olive oil in a large skillet on medium-high heat until it begins to shimmer. Cook chicken in the hot oil until golden, about 2 minutes per side. The chicken will finish cooking in the oven."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Transfer chicken to a baking dish. Top each breast with 2 tablespoons tomato sauce. Layer each chicken breast with equal amounts of mozzarella cheese, fresh basil, and provolone cheese. Sprinkle remaining Parmesan over top and drizzle each with 1/2 teaspoon olive oil."
+    },
+    {
+      "@type": "HowToStep",
+      "image": [
+        {
+          "@type": "ImageObject",
+          "url": "https://www.allrecipes.com/thmb/0oiIsgZio15dN6OHiJaSXARNods=/2000x2000/filters:no_upscale()/223042-Chicken-Parmesan-mfs_003-915dc0e0523e4a0cacaef7821dcd1e63.jpg",
+          "height": 2000,
+          "width": 2000
+        }
+      ],
+      "text": "Bake in the preheated oven until cheese is browned and bubbly and chicken breasts are no longer pink in the center, 15 to 20 minutes. An instant-read thermometer inserted into the center should read at least 165 degrees F (74 degrees C)."
+    }
+  ],
+  "recipeYield": [
+    "4"
+  ],
+  "totalTime": "PT45M",
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "lisa Tarbell"
+      },
+      "reviewBody": "Best chicken parm Eva!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "LOOSENUP"
+      },
+      "reviewBody": "Letting the breaded chicken rest is brilliant. This was easy and delish!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Best chicken parmesan I have ever made. Thank you!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Making it for the third time tonight. I don’t change anything and as usual Chef J nails it. Excellent recipe"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Engelica"
+      },
+      "reviewBody": "Great recipe followed it exactly and my husband said it was the best chicken I’ve cooked to date! Very juicy and letting it sit with the better before frying really made the coat stick nicely."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Ultimately it turned out great and the whole family loved it. Make sure to double check the measurements in the instructions, not all will update when the servings are adjusted but is an easy catch."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Amazing. I loved how it was so easy to follow!!!!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "parrottvas21"
+      },
+      "reviewBody": "Easy, great recipe!!!! I opted to “cheat” on the sauce and used a jar variety of Bertolli brand. I did run short on enough Panko, so I added Italian Herb breadcrumbs and it turn out great. I sautéed some onions, bell and sweet peppers as a topper to a side of pasta. Soooo good!!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "KarenL"
+      },
+      "reviewBody": "Excellent! Loved the supportive reviews , made this recipe extra special, thank you!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Very good will make again the exact way"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Al Caliguire"
+      },
+      "reviewBody": "Great! Love It."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Lucille Orlando"
+      },
+      "reviewBody": "This is my go to recipe! Perfectly moist and tasty every time! Love it."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "This was easier than I thought and tasted wonderful! I warmed some extra sauce and served it, along with extra grated parmigiana and provolone cheeses, table side. Personally, I didn’t think it needed anything extra! In fact, I planned to serve it with some spaghetti noodles but ran out of time and left it off. we all thought it was great with a side of fresh baked bread—a baguette with butter and garlic. A salad would have complimented nicely. Thanks for a wonderful recipe!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "chrisgabe737"
+      },
+      "reviewBody": "no changes..perfect the way it is!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Robbie Himes"
+      },
+      "reviewBody": "Made it exactly as the directions said too. This was the juiciest parmigiana chicken I have ever had. It was flavorful and absolutely delicious. The entire family loved I will be making this again."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "3"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Mark Hammond"
+      },
+      "reviewBody": "Followed to the letter and it was very good. however the cheese slid off the chicken Next time ill put the cheese on, bake then add the sauce."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Easy recipe with excellent results. i used my resources so i didn’t use Panko, instead a regular Italian breadcrumbs but it still came out super crispy."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Karen"
+      },
+      "reviewBody": "The whole family loved the chicken. It was breaded nicely and the 2 tablespoons of sauce was plenty. I will be keeping this recipe handy."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Joan Bell-Taylor"
+      },
+      "reviewBody": "This is the second time I’ve made this and it is a great recipe. I don’t like cooking at all but I got through this recipe-thanks!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Alicia J"
+      },
+      "reviewBody": "It was so good. There are a couple of steps I didn’t do or substituted items. I had five breasts so I had to squeeze one in the middle."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I give this five stars not just because the recipe was so delicious (and it was), but because the video and explanations made it so straightforward and easy to follow. Huge success!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "LOVED IT THANK YOU"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "2"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Baking the cutlet at 450 degrees for 20 minutes will result in the cheese totally burnt to a dark brown. Better at 350-375 degrees."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Shane Burns"
+      },
+      "reviewBody": "This was absolutely delicious. It tasted better than restaurant quality. I added garlic powder, and basil seasoning to the Italian bread crumbs, herbs, and parmesan mixture. The chicken was well seasoned and moist, and tender. I also used discs of fresh mozzarella rather than cutting them up, and slices of Provolone (rather than shredded). It was absolutely delicious (I can't say that enough!) Will definitely make this again."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I have tried other chicken parm recipes and this one is, by far, going into our family dinner rotation. What differentiated this recipe from some others is: a.) adding parmesan to the breadcrumbs and b.) the addition of provolone to the mozzarella topping. The slight modifications I made were: a.) seasoning the chicken with garlic powder and b.) adding Italian seasoned breadcrumbs to the panko/parm mixture. I used our favorite jarred Marinara."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "It led me in the right direction for such a classic. One difference I used a cast iron skillet and once chicken was seared on the stove transferred directly in the oven after the sauce and cheeses were put on. I also like a side of noodles and sauce with my chicken parm."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Kaela Alexander"
+      },
+      "reviewBody": "Didn’t have provolone so used Asiago instead, hubby looooved it! Making it again soon ✨✨✨"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "tlangston808"
+      },
+      "reviewBody": "It was delicious! I appreciated the tips given, particularly less sauce so that the chicken stays crispy. It turned out perfect! Thank you"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Michelle Comes"
+      },
+      "reviewBody": "Great!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "This picture was before baking !! The recipe was so easy !! Can’t wait to taste !!!! Denise Robinson"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Derek K. McCool"
+      },
+      "reviewBody": "I used Italian seasoning instead of basil. Tasted great!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Luis lopez"
+      },
+      "reviewBody": "First timer. Wife loved it. A lot of recipes only use mozarella, I loved the sharpness the Provole brought. I appreciated the frugality of the ingredients as they were being prepared. I served it over colliflower rice with a side of marinara. So good! Labor day we'll be at a gathering and sure to serve this... maybe over spaghetti squash. Thank you, LL"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "jgd56"
+      },
+      "reviewBody": "My third time making this. Delicious!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Instead of tomato sauce I used marinara sauce..."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Susan M Ehlenbach"
+      },
+      "reviewBody": "My son's absolutely love this recipe. I make it at least three times a month. So easy!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "This chicken parm was so good I created an allrecipes account just to rate it. I didn’t have mozzarella, so I just added a ton of Parm and kept an eye on it in the oven. Crispy, chicken-y, and juicy. My first time making chicken Parm, but thanks to this recipe it won’t be the last."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Diane Hugunin"
+      },
+      "reviewBody": "I made this today and my family said it was the best chicken parm they ever had. Thanks for the recipe, I’ll watch for more from you."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "sunfloweradp"
+      },
+      "reviewBody": "Omg this was delicious and so easy to make!!! My family absolutely loved it!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "This was crispy and delicious! We used a low carb sauce and more Parmesan vs bread crumbs with a side of vegetables for a yummy low carb dinner! I think the key is fresh ingredients, I bought blocks of the cheese and grated them fresh. It was all pretty simple and popping it in the oven allowed plenty of time to fix the sides."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "mary ellen gies"
+      },
+      "reviewBody": "Followed the recipe, very tasty."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "First time making this and it came out great. Thank you for this recipe! :)"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "4princesses"
+      },
+      "reviewBody": "Very good, oil can be heated at 4:00 position, ensure entire cutlet is covered in sauce so it isn’t quite as crispy, nice way to vary the taste is with different cheeses,"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Jonathan Blackmore"
+      },
+      "reviewBody": "Made 100% as per Chef John’s Recipe and it is a True Keeper ! Absolutely a Perfect Safe Recipe despite who you invited as Guest !"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I broiled some garlic bread in the air fryer and added baby spinach to make chicken parm sandwiches and they were a huge hit. Great recipe, will use again"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Juanita Barton Conkle"
+      },
+      "reviewBody": "Follow the recipe but I added a teaspoon of garlic to the basil and mixed it. Delicious will make this again even though it takes a little bit more time than it says if you're not a fast person"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Everyone loved it, which is rare in our home! Made with a side of fettuccine noodles in tomato sauce with fresh parsley"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "HoneyDay"
+      },
+      "reviewBody": "Never having made chicken parm before, I followed this recipe and the tips to the letter. I needn’t have worried about my lack of experience, it turned out perfect!! I was thrilled since it was a family dinner for my brother’s birthday! Thanks for sharing this!❤️"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Absolutely delicious! Followed the recipe exactly, chicken was crisp on the outside and moist in the middle. Served with spaghetti and tomato sauce on the side. With the chicken breast pounded to half an inch we could have made one breast work for 2 of us, but it was so delicious we ate both !"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sarah Stewart"
+      },
+      "reviewBody": "I highly recommend watching the video before starting. Chef John is always so amazing at giving simple instructions that make all of his recipes successful. We followed the instructions to a T. Our Chicken Parmesan turned out PERFECT ! Thank you for the recipe : )"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Didn’t have mozzarella but it was still amazing!!!! It was super easy to follow the recipe. Seems like a couple other reviews got confused by the recipe and that’s why they didn’t like it but I’m obsessed!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "manita"
+      },
+      "reviewBody": "Very easy to make and delicious! I don't recommend adding more salt or pepper. The breadcrumbs and different cheese add plenty of salt to the final result."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "The recipe worked perfectly. I couldn’t find shredded provolone so I used a 6 cheese Italian blend. I will definitely be making this again."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I made it for dinner tonite and myfamily absolutely loved it. I made extra but there was nothing left over. I didn't have any provolone so I did without . A big success!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Very good"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "It was excellent just the way it says . Only thing I did differently was I didn’t add basil . Great recipe"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "it is great. 450 is a little too high in a toaster oven tho. I didn't have provolone so I used extra mozzarili."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Julia Ellingboe"
+      },
+      "reviewBody": "freaking easy and amazing"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Luvbugs"
+      },
+      "reviewBody": "Very good recipe!! Thank you:)"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "misti"
+      },
+      "reviewBody": "Family favorite and very easy to make"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "hash brown casserole"
+      },
+      "reviewBody": "Amazing!! I have tried other recipes over the years but never ran across one I really liked so I would push it back and not make again for a few years as this is a favorite dish of mine when done well I ran across this one and decided to give it one more try. WOW my entire family loved it even my picky teen. I used Raos marinara and it was delicious!! Thanks so much for sharing"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sarah Jameson"
+      },
+      "reviewBody": "Awesome"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "BJ"
+      },
+      "reviewBody": "My family like this a lot. I am adding it to my menu."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I ended up using like 6 eggs and a LOT of bread crumbs but it was delicious. My tip, splurge on your cheeses!!! It’s worth every penny to get the freshest cheese!!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Esther Cooper"
+      },
+      "reviewBody": "Everyone enjoyed this. Chicken was tender and juicy. Will make again."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "moody krazy"
+      },
+      "reviewBody": "Wow!! Moisture is there, alongside The flavor. Added noodles with same sauce. Overall Delicious!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Laura"
+      },
+      "reviewBody": "DELISH. Of course took longer to make than I'd anticipated. But that is ALWAYS the case with me and a new recipe.... Really delish, and my 16 year and friend LOVED it - served on butter toasted buns, with extra sauce on the side. I had mine with salad..."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "dds"
+      },
+      "reviewBody": "Absolutely divine! Followed each step carefully. Worth the time and was a grand success. Take your time."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "lrpratt"
+      },
+      "reviewBody": "I actually made two versions at the same meal. I followed the recipe to the letter for 1 version and everyone LOVED it. It was very juicy and had great flavor. For the 2nd version, I substituted extra olive oil and minced garlic for the red sauce. I used the same substitution for over the pasta. I also thought it was very tasty! My granddaughter said that I definitely need to make this meal again! THANK YOU for sharing the recipe!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "bevycrocker"
+      },
+      "reviewBody": "Oh. My. Goodness. (Emphasis on goodness.) This was wonderful! I took my time with the prep &amp; watched the very helpful video several times. I could not have imagined how great it would turn out nor how delicious it would be. (My husband had seconds!!) This will DEFINITELY be one of our go-to dishes from now on. Thank you, Chef John!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Melissa Figueroa"
+      },
+      "reviewBody": "This recipe is a 100% keeper! The chicken stayed crispy on the outside, tender and juicy on the inside. Just enough sauce to add falvor but not drown the chicken. Literally all the ingredients shine in this recipe. The whole family (2 adults, 4 grown kids) went nuts for this! I was a hero last night but I did remember to give Chef John credit ;)"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Delicious!!!!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "James"
+      },
+      "reviewBody": "Chicken was crispy and was good ingredient to make into a grinder (sub)."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Fran Maxwell"
+      },
+      "reviewBody": "Pleasantly surprised how flavorful this dish is. My new favorite 💕"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Loved this recipe! I followed the recipe exactly to the T and he was right it literally tasted like I purchased it at the restaurant."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "This recipe is AMAZING! It's so juicy and crispy and the best part is is that it's easy to follow!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Yulia Komina"
+      },
+      "reviewBody": "This recipe turned out incredible! I followed it exactly and loved the outcome. The chicken parm was crispy and delicious."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "It came out beautiful 🤩❤️ for my chef skills .. Chef IRA McCoy thanks"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Shelley Martinez"
+      },
+      "reviewBody": "Delicious not complicated and doesn't have to be. I can eye a recipe and make adjustments. Just wanted it for cooking and baking times. I recommend it :)"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "This was great, I added a side of veggies and bow tie pasta with Spinach Loved it"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Gale Goldman"
+      },
+      "reviewBody": "Didn't have any provolone on hand, so just used parmesan and mozzarella, it was outstanding. Used my favorite Raos marinara, worth the price."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "roachnest"
+      },
+      "reviewBody": "turned out great"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I followed the recipe but adjusted it for six servings. Everyone loved it. I also floured the chicken with your technique. I will always do it that way. This is our new family favorite! Thanks"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "techstu63"
+      },
+      "reviewBody": "This was very good, adding parmesan cheese to the breadcrumbs really made a difference, it pan fried crispy. I wish I had watched the video as I don't think I put enough cheese on top but it turned out great. Fresh basil was not available so I used dry and it was great. Follow the recipe and you won't be disappointed!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Susan Rickert"
+      },
+      "reviewBody": "This is by far the best Chicken Parm recipe I have ever made! I make homemade tomato sauce, grow basil and grate fresh Parmesan cheese."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "MelZ"
+      },
+      "reviewBody": "I love this recipe. easy to make and fun to eat. We have this at least twice a month."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I love this I’ve made it twice now and it’s still amazing thank you"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Georgia Freas"
+      },
+      "reviewBody": "Absolutely delicious. I did a bit less oil and added butter instead. I followed advice of all a reviewer and used Barilla garlic sauce....wonderful. my favorite sauce now,,,great flavor and no sogginess.new fav."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Druin Redwolf Harvey Heal"
+      },
+      "reviewBody": "Super yummy! We forgot the provolone, but it was still great. We’ll have to try it again with the prov."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Peter Binns"
+      },
+      "reviewBody": "No changes, follow as instructed. So delicious"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Now hear me out..... I'm no cook. In fact, I downright hate it. If it weren't for a house full of people depending on me to eat....I'd be happy with cereal for dinner. I tried this recipe and let me tell you....my entire house smells delicious. It was easy and quick and oh so juicy and scrumptious 😋 I'll definitely be making it again (I didn't have fresh Basil so I sprinkled some dry Basil instead)"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Made it for my boyfriend and me we loved it!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Turned out delicious! And that’s saying something seeing that I usually only cook basic dinners because even following a recipe my dinners are not ,let’s say ,on par. Great recipe easy steps and turned out yummy"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "It was very easy to prepare. I used garlic parsley mix for seasoning. Will make it again."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "4"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "I make this every other week but wish the sodium count could be reduced"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Sherry"
+      },
+      "reviewBody": "Excellent and easy ~ loved this version of Chicken Parm and how crispy it is. It's in my permanent collection!"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Made it for family and all raved about the taste. Definitely a keep recipe."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "3"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "mamacooks4six"
+      },
+      "reviewBody": "I have made other things from Chef John that we absolutely loved (his stuffed Peppers are seriously AMAZING!), so I was very excited to try this recipe. As much as I wanted to love it; it just lacked flavor. He nailed it in texture and in moistness, but I'd highly recommend adding various Italian seasonings &amp; swapping out spaghetti or pizza sauce for plain old tomato sauce. (Note: our family loves ethnic food that explodes with flavor. So if you like things on the blander side &amp; love cheese - this is your recipe!)"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "Came Out So Good, My Kids Love It❤️"
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Allrecipes Member"
+      },
+      "reviewBody": "No changes Amazing recipe 😋"
+    }
+  ],
+  "mainEntityOfPage": {
+    "@type": [
+      "WebPage"
+    ],
+    "@id": "https://www.allrecipes.com/recipe/223042/chicken-parmesan/",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://www.allrecipes.com/recipes/16954/main-dish/chicken/",
+            "name": "Chicken"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "https://www.allrecipes.com/recipes/16383/main-dish/chicken/chicken-parmesan/",
+            "name": "Parmesan"
+          }
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "item": {
+            "@id": "https://www.allrecipes.com/recipe/223042/chicken-parmesan/",
+            "name": "Chicken Parmesan Recipe (with Video)"
+          }
+        }
+      ]
+    }
+  },
+  "about": []
+}

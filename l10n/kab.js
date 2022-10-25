@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Page not found" : "Ulac asebter",
     "Edit" : "Ẓreg",
     "Save" : "Sekles",
     "Search" : "Nadi",

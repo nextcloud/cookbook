@@ -37,4 +37,4 @@ if [ -n "$suffix" ]; then
 	version_arr="$version_arr, '-$suffix'"
 fi
 sed "/VERSION_TAG/s@[[].*[]]@[$version_arr]@" -i lib/Controller/UtilApiController.php
-git add lib/Controller/MainController.php
+git add lib/Controller/UtilApiController.php
