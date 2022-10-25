@@ -41,7 +41,7 @@ jobs:
         run: |
           count=$(find docs/ -name \*.puml | wc -l)
           echo "There are $count plantuml files"
-          echo "::set-output name=num::$count"
+          echo "num=$count" >> $GITHUB_OUTPUT
       - name: Install PlantUML on demand
         if: steps.count-plantuml.outputs.num > 0
         run: |
