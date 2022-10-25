@@ -522,6 +522,7 @@ export default {
         },
     },
     mounted() {
+        this.$log.info("RecipeView mounted")
         this.setup()
         // Register data load method hook for access from the controls components
         this.$root.$off("reloadRecipeView")

@@ -50,6 +50,8 @@
   [1277](https://github.com/nextcloud/cookbook/pull/1277)
 - Prepare the GitHub action scripts to be compatible with the upcoming version split in version 0.10.0
   [#1285](https://github.com/nextcloud/cookbook/pull/1285) @christianlupus
+- Add logging to diagnose bugs in production
+  [#1283](https://github.com/nextcloud/cookbook/pull/1283) @MarcelRobitaille
 
 ### Documentation
 - Fix bad writing
