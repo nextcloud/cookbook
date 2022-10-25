@@ -10,6 +10,9 @@
     "Name" : "Numm",
     "Description" : "Beschreiwung",
     "URL" : "URL",
-    "Loading…" : "Et gëtt gelueden"
+    "Loading…" : "Et gëtt gelueden",
+    "Dismiss" : "Ofbriechen",
+    "Cancel" : "Ofbriechen",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

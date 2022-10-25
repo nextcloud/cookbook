@@ -95,8 +95,8 @@ export default {
     overflow: hidden;
     width: 105px;
     height: 105px;
-    background-color: #bebdbd;
     border-radius: 3px 0 0 3px;
+    background-color: #bebdbd;
     float: left;
 }
 

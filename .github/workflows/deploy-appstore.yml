@@ -4,7 +4,7 @@ name: Deploy to Appstore
 on:
     push:
         branches:
-            - stable
+            - stable*
 
 jobs:
     
@@ -21,7 +21,7 @@ jobs:
 
         steps:
             -   name: Checkout the project
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     path: cookbook
                     ref: ${{ github.ref }}
@@ -29,9 +29,9 @@ jobs:
 
             -   name: Get the date
                 id: date
-                run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+                run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Use cache for NPM
-                uses: actions/cache@v2.1.7
+                uses: actions/cache@v3.0.11
                 with:
                     path: |
                         ~/.npm
@@ -120,7 +120,7 @@ jobs:
                     ret=$? &&
                     code=$(echo "$curl_out" | tail -n 1) &&
                     msg=$(echo "$curl_out" | head -n -1) &&
-                    echo "::set-output name=code::$code" &&
-                    echo "::set-output name=msg::$msg" &&
+                    echo "code=$code" >> $GITHUB_OUTPUT &&
+                    echo "msg=$msg" >> $GITHUB_OUTPUT &&
                     echo "Result ($code): $msg" &&
                     echo "$code" | grep '^\([^45][0-9][0-9]\)$'

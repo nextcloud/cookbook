@@ -1,5 +1,65 @@
 ## [Unreleased]
 
+### Added
+- Add alarm sound to timers
+  [#1120](https://github.com/nextcloud/cookbook/pull/1120) @MarcelRobitaille
+
+### Changed
+- Create build script for GitHub pages with GitHub actions to allow for custom building
+  [#1203](https://github.com/nextcloud/cookbook/pull/1203) @christianlupus
+- Added a new client and badges to the readme @TheMBeat
+- Replace native alert and confirm dialogs with custom ones from nextcloud vue
+  [#1261](https://github.com/nextcloud/cookbook/pull/1261) @MarcelRobitaille
+- Store imported HTML file for future enhanced parsing
+  [#1267](https://github.com/nextcloud/cookbook/pull/1267) @christianlupus
+
+### Fixed
+- Added new public page styling in preparation for NC25
+  [#1201](https://github.com/nextcloud/cookbook/pull/1201) @christianlupus
+- Fix API endpoint helpers to enforce JSON answers and minor styling enhancements
+  [#1202](https://github.com/nextcloud/cookbook/pull/1202) @christianlupus
+- Fix XPath to allow for microdata parsing with multiple adjacent schema objects in HTML code
+  [#1220](https://github.com/nextcloud/cookbook/pull/1220) @christianlupus
+- Fix filters for array-valued entries in recipes
+  [#1222](https://github.com/nextcloud/cookbook/pull/1222) @christianlupus
+- Add overlay when app navigation is open
+  [1122](https://github.com/nextcloud/cookbook/pull/1122) @MarcelRobitaille
+- Add filter to prevent special chars in folder names
+  [#1268](https://github.com/nextcloud/cookbook/pull/1268) @christianlupus
+- Fix bug with websites that provide array of schema entries
+  [#1282](https://github.com/nextcloud/cookbook/pull/1282) @christianlupus
+
+### Maintenance
+- Use the pre-built database images for MySQL and PostgreSQL tests
+  [#1204](https://github.com/nextcloud/cookbook/pull/1204) @christianlupus
+- Update stylelint-config-idiomatic and fix code styling
+  [#1224](https://github.com/nextcloud/cookbook/pull/1224) @christianlupus
+- Remove obsolete code from Recipe service class
+  [#1226](https://github.com/nextcloud/cookbook/pull/1226) @christianlupus
+- Allow for PlantUML diagrams in documentation
+  [#1229](https://github.com/nextcloud/cookbook/pull/1229) @christianlupus
+- Remove deprecated `::v-deep` CSS syntax @christianlupus
+- Disable webpack bundle analyzer plugin by default to speed up development cycle
+  [#1263](https://github.com/nextcloud/cookbook/pull/1263) @MarcelRobitaille
+- Update github actions
+  [1269](https://github.com/nextcloud/cookbook/pull/1269)
+  [1270](https://github.com/nextcloud/cookbook/pull/1270)
+  [1271](https://github.com/nextcloud/cookbook/pull/1271)
+  [1273](https://github.com/nextcloud/cookbook/pull/1273)
+  [1274](https://github.com/nextcloud/cookbook/pull/1274)
+  [1277](https://github.com/nextcloud/cookbook/pull/1277)
+- Prepare the GitHub action scripts to be compatible with the upcoming version split in version 0.10.0
+  [#1285](https://github.com/nextcloud/cookbook/pull/1285) @christianlupus
+- Add logging to diagnose bugs in production
+  [#1283](https://github.com/nextcloud/cookbook/pull/1283) @MarcelRobitaille
+
+### Documentation
+- Fix bad writing
+  [#1256](https://github.com/nextcloud/cookbook/pull/1256) @MarcelRobitaille
+
+### Removed
+- Remove the deprecated endpoints from version 0.9.15
+  [#1200](https://github.com/nextcloud/cookbook/pull/1200) @christianlupus
 
 
 ## 0.9.15 - 2022-09-08
@@ -23,7 +83,7 @@
 ### Documentation
 - Defining new API interface to fix security issue
   [#1186](https://github.com/nextcloud/cookbook/pull/1186) @christianlupus
-- Fixed API description w.r.t. return types and examples 
+- Fixed API description w.r.t. return types and examples
   (see [#1153](https://github.com/nextcloud/cookbook/issues/1153)) @christianlupus
 
 ### Deprecated
@@ -179,7 +239,7 @@
   [#1055](https://github.com/nextcloud/cookbook/pull/1055) @christianlupus
 - Rewrite encoding of imported recipes
   [#1057](https://github.com/nextcloud/cookbook/pull/1057) @christianlupus
-  
+
 ### Fixed
 - Fix visual regression in edit mode to prevent overflow of breadcrumbs
   [#989](https://github.com/nextcloud/cookbook/pull/989) @christianlupus

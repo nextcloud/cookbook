@@ -12,6 +12,10 @@
 </template>
 
 <script>
+import { linkTo } from "@nextcloud/router"
+
+import { showSimpleAlertModal } from "cookbook/js/modals"
+
 export default {
     name: "RecipeTimer",
     props: {
@@ -61,17 +65,38 @@ export default {
     },
     mounted() {
         this.resetTimeDisplay()
+        // Start loading the sound early so it's ready to go when we need to
+        // play it
+
+        // Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
+        // Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
+        this.audio = new Audio(
+            linkTo("cookbook", "assets/alarm-continuous.mp3")
+        )
+
+        // For now, the alarm should play continuously until it is dismissed
+        // See https://github.com/nextcloud/cookbook/issues/671#issuecomment-1279030452
+        this.audio.loop = true
     },
     methods: {
         onTimerEnd() {
             window.clearInterval(this.countdown)
-            // I'll just use an alert until this functionality is finished
             const $this = this
-            window.setTimeout(() => {
+            window.setTimeout(async () => {
                 // The short timeout is needed or Vue doesn't have time to update the countdown
                 //  display to display 00:00:00
-                // eslint-disable-next-line no-alert
-                alert(t("cookbook", "Cooking time is up!"))
+
+                // Ensure audio starts at the beggining
+                // If it's paused midway, by default it will resume from that point
+                this.audio.currentTime = 0
+                // Start playing audio to alert the user that the timer is up
+                this.audio.play()
+
+                await showSimpleAlertModal(t("cookbook", "Cooking time is up!"))
+
+                // Stop audio after the alert is confirmed
+                this.audio.pause()
+
                 // cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false
@@ -133,8 +158,8 @@ export default {
     position: relative;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
-    margin: 1rem 2rem;
     border-radius: 3px;
+    margin: 1rem 2rem;
     font-size: 1.2rem;
     text-align: center;
 }

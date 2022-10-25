@@ -16,6 +16,9 @@ OC.L10N.register(
     "URL" : "URL",
     "Tools" : "Aisinas",
     "Calories" : "Calorias",
-    "Loading…" : "Cargament…"
+    "Loading…" : "Cargament…",
+    "Dismiss" : "Regetar",
+    "Cancel" : "Anullar",
+    "OK" : "D’acòrdi"
 },
 "nplurals=2; plural=(n > 1);");

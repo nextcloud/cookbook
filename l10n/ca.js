@@ -80,6 +80,7 @@ OC.L10N.register(
     "Tools" : "Estris",
     "Ingredients" : "Ingredients",
     "Instructions" : "Instruccions",
+    "You have unsaved changes! Do you still want to leave?" : "Teniu canvis no desats! Encara vols marxar?",
     "Calories" : "Calories",
     "E.g.: 450 kcal (amount & unit)" : "Per exemple: 450 kcal (quantitat i unitat)",
     "Carbohydrate content" : "Contingut d'hidrats de carboni",
@@ -95,7 +96,6 @@ OC.L10N.register(
     "Sugar content" : "Contingut en sucre",
     "Trans-fat content" : "Contingut trans-greix",
     "Unsaturated-fat content" : "Contingut en greixos insaturats",
-    "You have unsaved changes! Do you still want to leave?" : "Teniu canvis no desats! Encara vols marxar?",
     "Failed to fetch keywords" : "No s'han pogut obtenir les paraules clau",
     "Loading recipe failed" : "Ha fallat la càrrega de la recepta",
     "Unknown answer returned from server. See logs." : "Resposta desconeguda retornada del servidor. Veure registres.",
@@ -132,6 +132,9 @@ OC.L10N.register(
     "Source" : "Origen",
     "Loading…" : "S'està carregant…",
     "Failed to load recipes with keywords: {tags}" : "No s'han pogut carregar les receptes amb paraules clau: {tags}",
-    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca"
+    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca",
+    "Dismiss" : "Descarta",
+    "Cancel" : "Cancel·la",
+    "OK" : "D'acord"
 },
 "nplurals=2; plural=(n != 1);");

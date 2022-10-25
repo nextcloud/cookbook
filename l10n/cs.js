@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Nástroje",
     "Ingredients" : "Přísady",
     "Instructions" : "Pokyny",
+    "You have unsaved changes! Do you still want to leave?" : "Jsou zde neuložené změny! Opravdu chcete odejít?",
     "Calories" : "Kalorie",
     "E.g.: 450 kcal (amount & unit)" : "Např.: 450 kcal (množství a jednotka)",
     "Carbohydrate content" : "Obsah sacharidů",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Obsah cukru",
     "Trans-fat content" : "Obsah trans mastných kyselin",
     "Unsaturated-fat content" : "Obsah nenasycených tuků",
-    "You have unsaved changes! Do you still want to leave?" : "Jsou zde neuložené změny! Opravdu chcete odejít?",
     "Failed to fetch keywords" : "Načtení klíčových slov se nezdařilo",
     "Loading recipe failed" : "Načítání receptu se nezdařilo",
     "Unknown answer returned from server. See logs." : "Ze serveru byla přijata neznámá odpověď. Prohlédněte si záznamy událostí.",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Zdroj",
     "Loading…" : "Načítání…",
     "Failed to load recipes with keywords: {tags}" : "Nepodařilo se načíst recepty, obsahující klíčová slova: {tags}",
-    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
+    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání",
+    "Dismiss" : "Zahodit",
+    "Cancel" : "Storno",
+    "OK" : "OK"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -1,6 +1,5 @@
 /vendor
 /_site/
-/Gemfile.lock
 /.jekyll-metadata
 /.sass-cache
 /.jekyll-cache

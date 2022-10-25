@@ -12,6 +12,9 @@ OC.L10N.register(
     "Name" : "Numm",
     "Description" : "Beschreiwung",
     "URL" : "URL",
-    "Loading…" : "Et gëtt gelueden"
+    "Loading…" : "Et gëtt gelueden",
+    "Dismiss" : "Ofbriechen",
+    "Cancel" : "Ofbriechen",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

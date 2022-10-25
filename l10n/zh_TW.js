@@ -42,6 +42,9 @@ OC.L10N.register(
     "Date created" : "建立日期",
     "Last modified" : "上次修改",
     "Source" : "來源",
-    "Loading…" : "載入中…"
+    "Loading…" : "載入中…",
+    "Dismiss" : "取消",
+    "Cancel" : "取消",
+    "OK" : "確定"
 },
 "nplurals=1; plural=0;");

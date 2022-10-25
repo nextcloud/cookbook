@@ -52,8 +52,8 @@ class FixIngredientsFilter extends AbstractJSONFilter {
 			$t = $this->textCleaner->cleanUp($t, false);
 			return $t;
 		}, $ingredients);
-		$ingredients = array_values($ingredients);
 		$ingredients = array_filter($ingredients, fn ($t) => ($t));
+		$ingredients = array_values($ingredients);
 
 		$changed = $ingredients !== $json[self::INGREDIENTS];
 		$json[self::INGREDIENTS] = $ingredients;

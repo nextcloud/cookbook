@@ -24,7 +24,7 @@ jobs:
 
     steps:
       # Github actions bot approve
-      - uses: hmarr/auto-approve-action@v2
+      - uses: hmarr/auto-approve-action@v3
         if: github.actor == 'dependabot[bot]'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}

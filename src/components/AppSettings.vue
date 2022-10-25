@@ -73,6 +73,7 @@ import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
 import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationSettings"
 
 import api from "cookbook/js/api-interface"
+import { showSimpleAlertModal } from "cookbook/js/modals"
 
 export default {
     name: "AppSettings",
@@ -100,26 +101,23 @@ export default {
         }
     },
     watch: {
-        printImage(newVal, oldVal) {
+        async printImage(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetPrintImage) {
                 this.resetPrintImage = false
                 return
             }
-            api.config.printImage
-                .update(newVal)
-                .then(() => {
-                    // Should this check the response of the query? To catch some errors that redirect the page
-                })
-                .catch(() => {
-                    // eslint-disable-next-line no-alert
-                    alert(
-                        // prettier-ignore
-                        t("cookbook","Could not set preference for image printing")
-                    )
-                    this.resetPrintImage = true
-                    this.printImage = oldVal
-                })
+            try {
+                api.config.printImage.update(newVal)
+                // Should this check the response of the query? To catch some errors that redirect the page
+            } catch {
+                await showSimpleAlertModal(
+                    // prettier-ignore
+                    t("cookbook","Could not set preference for image printing")
+                )
+                this.resetPrintImage = true
+                this.printImage = oldVal
+            }
         },
         // eslint-disable-next-line no-unused-vars
         showTagCloudInRecipeList(newVal, oldVal) {
@@ -127,30 +125,27 @@ export default {
                 showTagCloud: newVal,
             })
         },
-        updateInterval(newVal, oldVal) {
+        async updateInterval(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetInterval) {
                 this.resetInterval = false
                 return
             }
-            api.config.updateInterval
-                .update(newVal)
-                .then(() => {
-                    // Should this check the response of the query? To catch some errors that redirect the page
-                })
-                .catch(() => {
-                    // eslint-disable-next-line no-alert
-                    alert(
-                        // prettier-ignore
-                        t("cookbook","Could not set recipe update interval to {interval}",
-                            {
-                                interval: newVal,
-                            }
-                        )
+            try {
+                await api.config.updateInterval.update(newVal)
+                // Should this check the response of the query? To catch some errors that redirect the page
+            } catch {
+                await showSimpleAlertModal(
+                    // prettier-ignore
+                    t("cookbook","Could not set recipe update interval to {interval}",
+                        {
+                            interval: newVal,
+                        }
                     )
-                    this.resetInterval = true
-                    this.updateInterval = oldVal
-                })
+                )
+                this.resetInterval = true
+                this.updateInterval = oldVal
+            }
         },
     },
     mounted() {
@@ -173,17 +168,16 @@ export default {
                                 $this.$router.push("/")
                             }
                         })
-                        .catch(() => {
-                            // eslint-disable-next-line no-alert
-                            alert(
+                        .catch(() =>
+                            showSimpleAlertModal(
                                 // prettier-ignore
                                 t("cookbook","Could not set recipe folder to {path}",
-                                    {
-                                        path
-                                    }
-                                )
+                                {
+                                    path
+                                }
                             )
-                        })
+                            )
+                        )
                 },
                 false,
                 ["httpd/unix-directory"],
@@ -194,27 +188,26 @@ export default {
         /**
          * Initial setup
          */
-        setup() {
-            api.config
-                .get()
-                .then((response) => {
-                    const config = response.data
-                    this.resetPrintImage = false
-                    if (config) {
-                        this.printImage = config.print_image
-                        this.showTagCloudInRecipeList =
-                            this.$store.state.localSettings.showTagCloudInRecipeList
-                        this.updateInterval = config.update_interval
-                        this.recipeFolder = config.folder
-                    } else {
-                        // eslint-disable-next-line no-alert
-                        alert(t("cookbook", "Loading config failed"))
-                    }
-                })
-                .catch(() => {
-                    // eslint-disable-next-line no-alert
-                    alert(t("cookbook", "Loading config failed"))
-                })
+        async setup() {
+            try {
+                const response = await api.config.get()
+                const config = response.data
+                this.resetPrintImage = false
+
+                if (!config) {
+                    throw new Error()
+                }
+
+                this.printImage = config.print_image
+                this.showTagCloudInRecipeList =
+                    this.$store.state.localSettings.showTagCloudInRecipeList
+                this.updateInterval = config.update_interval
+                this.recipeFolder = config.folder
+            } catch {
+                await showSimpleAlertModal(
+                    t("cookbook", "Loading config failed")
+                )
+            }
         },
     },
 }

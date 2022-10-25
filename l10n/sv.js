@@ -62,6 +62,9 @@ OC.L10N.register(
     "Last modified" : "Senast ändrad",
     "Sugar" : "Socker",
     "Source" : "Källa",
-    "Loading…" : "Läser in …"
+    "Loading…" : "Läser in …",
+    "Dismiss" : "Avfärda",
+    "Cancel" : "Avbryt",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

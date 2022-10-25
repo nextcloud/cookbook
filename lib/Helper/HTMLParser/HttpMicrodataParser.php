@@ -207,7 +207,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @return DOMNodeList A list of all found child nodes with the given property
 	 */
 	private function searchChildEntries(DOMNode $recipeNode, string $prop): DOMNodeList {
-		return $this->xpath->query("//*[@itemprop='$prop']", $recipeNode);
+		return $this->xpath->query(".//*[@itemprop='$prop']", $recipeNode);
 	}
 
 	/**

@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Przybory",
     "Ingredients" : "Składniki",
     "Instructions" : "Instrukcje",
+    "You have unsaved changes! Do you still want to leave?" : "Masz niezapisane zmiany! Czy nadal chcesz wyjść?",
     "Calories" : "Kalorie",
     "E.g.: 450 kcal (amount & unit)" : "Np.: 450 kcal (ilość i jednostka)",
     "Carbohydrate content" : "Zawartość węglowodanów",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Zawartość cukru",
     "Trans-fat content" : "Zawartość tłuszczu trans",
     "Unsaturated-fat content" : "Zawartość tłuszczu nienasyconego",
-    "You have unsaved changes! Do you still want to leave?" : "Masz niezapisane zmiany! Czy nadal chcesz wyjść?",
     "Failed to fetch keywords" : "Nie udało się pobrać słów kluczowych",
     "Loading recipe failed" : "Wczytywanie przepisu nie powiodło się",
     "Unknown answer returned from server. See logs." : "Zwrócono nieznaną odpowiedź z serwera. Zobacz dzienniki.",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Źródło",
     "Loading…" : "Wczytywanie…",
     "Failed to load recipes with keywords: {tags}" : "Nie udało się załadować przepisów ze słowami kluczowymi: {tags}",
-    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania"
+    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania",
+    "Dismiss" : "Odrzuć",
+    "Cancel" : "Anuluj",
+    "OK" : "OK"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

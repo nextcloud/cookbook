@@ -18,6 +18,9 @@ OC.L10N.register(
     "URL" : "URL",
     "Creation date" : "Tanggal pembuatan",
     "Last modified" : "Terakhir diubah",
-    "Loading…" : "Memuat…"
+    "Loading…" : "Memuat…",
+    "Dismiss" : "Batal",
+    "Cancel" : "Membatalkan",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

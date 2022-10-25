@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Инструменти",
     "Ingredients" : "Съставки",
     "Instructions" : "Инструкции",
+    "You have unsaved changes! Do you still want to leave?" : "Имате незапазени промени! Все още ли искате да напуснете?",
     "Calories" : "Калории",
     "E.g.: 450 kcal (amount & unit)" : "Например: 450 kcal (количество и единици)",
     "Carbohydrate content" : "Съдържание на въглехидрати",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Съдържание на захар",
     "Trans-fat content" : "Съдържание на трансмазнини",
     "Unsaturated-fat content" : "Съдържание на ненаситени мазнини",
-    "You have unsaved changes! Do you still want to leave?" : "Имате незапазени промени! Все още ли искате да напуснете?",
     "Failed to fetch keywords" : "Неуспешно извличане на ключови думи ",
     "Loading recipe failed" : "Зареждането на рецептата е неуспешно",
     "Unknown answer returned from server. See logs." : "От сървъра е върнат неизвестен отговор. Вижте журналите. ",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Източник",
     "Loading…" : "Зареждане…",
     "Failed to load recipes with keywords: {tags}" : "Неуспешно зареждане на рецепти с ключови думи: {tags}",
-    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно "
+    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
+    "Dismiss" : "Отхвърляне",
+    "Cancel" : "Отказ",
+    "OK" : "Добре"
 },
 "nplurals=2; plural=(n != 1);");

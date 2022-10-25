@@ -18,6 +18,9 @@ OC.L10N.register(
     "URL" : "Url",
     "Tools" : "Mjete",
     "Last modified" : "Ndryshuar së fundmi",
-    "Loading…" : "Duke u ngarkuar…"
+    "Loading…" : "Duke u ngarkuar…",
+    "Dismiss" : "Hiq",
+    "Cancel" : "Anullo",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

@@ -22,6 +22,9 @@ OC.L10N.register(
     "Calories" : "칼로리",
     "Modification date" : "수정일",
     "Last modified" : "수정한 날짜",
-    "Loading…" : "불러오는 중…"
+    "Loading…" : "불러오는 중…",
+    "Dismiss" : "무시",
+    "Cancel" : "취소",
+    "OK" : "확인"
 },
 "nplurals=1; plural=0;");

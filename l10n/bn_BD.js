@@ -11,6 +11,8 @@ OC.L10N.register(
     "Close" : "বন্ধ",
     "Name" : "নাম",
     "Description" : "বিবরণ",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "বাতির",
+    "OK" : "তথাস্তু"
 },
 "nplurals=2; plural=(n != 1);");

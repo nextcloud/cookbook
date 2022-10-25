@@ -18,6 +18,7 @@ If you want to **help contributing**, please see the [page about contributing](c
 
 - [Webpack `BundleAnalyzer` Plugin](frontend/webpack-bundle-analyzer)
 - [Hot reload capability for faster frontend development](frontend/hot-reload)
+- [Debugging in production through logging](frontend/logging)
 
 ## Backend
 

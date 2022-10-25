@@ -4,7 +4,7 @@ The Webpack Bundle Analyzer Plugin is installed as a development dependency (see
 
 ## Usage
 
-The interactive view of the treemap is available at `http://localhost:8888` while running `npm run dev` in the terminal.
+The interactive view of the treemap is available at `http://localhost:8888` while running `npm run build-bundle-analyzer` in the terminal.
 
 ![Bundle Analyzer example](assets/webpack-bundle-analyzer_example.png)
 

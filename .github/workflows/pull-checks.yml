@@ -12,7 +12,7 @@ jobs:
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 2
             
@@ -21,7 +21,7 @@ jobs:
                 run: |
                     git diff HEAD~1 -- CHANGELOG.md
                     lines=$(git diff HEAD~1 -- CHANGELOG.md | wc -l)
-                    echo "::set-output name=lines::$lines"
+                    echo "lines=$lines" >> $GITHUB_OUTPUT
             
             -   name: Get all changed file names
                 id: file-names
@@ -31,7 +31,7 @@ jobs:
                     echo "$lines"
                     cnt="$(echo "$lines" | grep -v '^package-lock.json$' | wc -l)"
                     echo "That are $cnt changed files."
-                    echo "::set-output name=num::$cnt"
+                    echo "num=$cnt" >> $GITHUB_OUTPUT
 
             -   name: Error if the number of diff lines is zero
                 run: |
@@ -70,7 +70,7 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
                 
@@ -113,14 +113,14 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v2
+                uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
             -   name: Get the date
                 id: date
-                run: echo "::set-output name=date::$(date +%Y-%m-%d)"
+                run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Cache NPM cache
-                uses: actions/cache@v2.1.7
+                uses: actions/cache@v3.0.11
                 with:
                     path: |
                         ~/.npm
@@ -139,7 +139,7 @@ jobs:
 
                     if [ $(git diff --name-only package.json | wc -l) -gt 0 ]; then
                     echo '::error file=package.json::The package.json file is not validly formatted.'
-                    echo '::notice::It is suggested to run `npm run package/lint`.'
+                    echo '::notice::It is suggested to run `npm run package-lint` and commit locally.'
                     exit 1
                     fi
 

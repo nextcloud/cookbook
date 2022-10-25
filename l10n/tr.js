@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Araçlar",
     "Ingredients" : "Malzemeler",
     "Instructions" : "Nasıl yapılır",
+    "You have unsaved changes! Do you still want to leave?" : "Kaydedilmemiş değişiklikleriniz var. Gene de ayrılmak istiyor musunuz?",
     "Calories" : "Kalori",
     "E.g.: 450 kcal (amount & unit)" : "Mrnek 450 kcal (miktar ve birim)",
     "Carbohydrate content" : "Karbonhidrat miktarı",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Şeker miktarı",
     "Trans-fat content" : "Trans yağ miktarı",
     "Unsaturated-fat content" : "Doymamış yağ miktarı",
-    "You have unsaved changes! Do you still want to leave?" : "Kaydedilmemiş değişiklikleriniz var. Gene de ayrılmak istiyor musunuz?",
     "Failed to fetch keywords" : "Anahtar sözcükler alınamadı",
     "Loading recipe failed" : "Tarif yüklenemedi",
     "Unknown answer returned from server. See logs." : "Sunucudan bilinmeyen bir yanıt alındı. Günlüklere bakabilirsiniz.",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Kaynak",
     "Loading…" : "Yükleniyor…",
     "Failed to load recipes with keywords: {tags}" : "Şu anahtar sözcüklerin bulunduğu tarifler yüklenemedi: {tags}",
-    "Failed to load search results" : "Arama sonuçları yüklenemedi"
+    "Failed to load search results" : "Arama sonuçları yüklenemedi",
+    "Dismiss" : "Yok say",
+    "Cancel" : "İptal",
+    "OK" : "Tamam"
 },
 "nplurals=2; plural=(n > 1);");

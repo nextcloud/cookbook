@@ -14,6 +14,9 @@ OC.L10N.register(
     "Name" : "ชื่อ",
     "Description" : "รายละเอียด",
     "URL" : "URL",
-    "Loading…" : "กำลังโหลด..."
+    "Loading…" : "กำลังโหลด...",
+    "Dismiss" : "ปิดทิ้ง",
+    "Cancel" : "ยกเลิก",
+    "OK" : "ตกลง"
 },
 "nplurals=1; plural=0;");

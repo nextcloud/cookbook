@@ -86,6 +86,7 @@ OC.L10N.register(
     "Tools" : "Työvälineet",
     "Ingredients" : "Ainesosat",
     "Instructions" : "Ohjeet",
+    "You have unsaved changes! Do you still want to leave?" : "Sinulla on tallentamattomia muutoksia! Haluatko silti poistua?",
     "Calories" : "Kalorit",
     "E.g.: 450 kcal (amount & unit)" : "Esim. 450 kcal (määrä & yksikkö)",
     "Carbohydrate content" : "Hiilihydraatit",
@@ -101,7 +102,6 @@ OC.L10N.register(
     "Sugar content" : "Sokeri",
     "Trans-fat content" : "Trans-rasva",
     "Unsaturated-fat content" : "Tyydyttymätön rasva",
-    "You have unsaved changes! Do you still want to leave?" : "Sinulla on tallentamattomia muutoksia! Haluatko silti poistua?",
     "Failed to fetch keywords" : "Avainsanojen haku epäonnistui",
     "Loading recipe failed" : "Reseptin lataus epäonnistui",
     "Unknown answer returned from server. See logs." : "Tuntematon vastaus palvelimelta. Katso lokit.",
@@ -138,6 +138,9 @@ OC.L10N.register(
     "Source" : "Lähde",
     "Loading…" : "Ladataan…",
     "Failed to load recipes with keywords: {tags}" : "Reseptien lataaminen epäonnistui seuraavilla avainsanoilla: {tags} ",
-    "Failed to load search results" : "Hakutulosten lataus epäonnistui"
+    "Failed to load search results" : "Hakutulosten lataus epäonnistui",
+    "Dismiss" : "Hylkää",
+    "Cancel" : "Peruuta",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

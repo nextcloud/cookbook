@@ -131,6 +131,7 @@ OC.L10N.register(
     "Tools" : "Eszközök",
     "Ingredients" : "Hozzávalók",
     "Instructions" : "Leírások",
+    "You have unsaved changes! Do you still want to leave?" : "Nem mentett módosításai vannak! Elhagyja az oldalt?",
     "Calories" : "Kalória",
     "E.g.: 450 kcal (amount & unit)" : "Például 450 kcal (mennyiség és egység)",
     "Carbohydrate content" : "Szénhidráttartalom",
@@ -146,7 +147,6 @@ OC.L10N.register(
     "Sugar content" : "Cukortartalom",
     "Trans-fat content" : "Transzzsírtartalom",
     "Unsaturated-fat content" : "Telítetlen zsírtartalom",
-    "You have unsaved changes! Do you still want to leave?" : "Nem mentett módosításai vannak! Elhagyja az oldalt?",
     "Failed to fetch keywords" : "Nem sikerült beolvasni a kulcsszavakat",
     "Loading recipe failed" : "A recept betöltése sikertelen",
     "Unknown answer returned from server. See logs." : "Ismeretlen válasz érkezett a kiszolgálótól. Nézze meg a naplókat.",
@@ -183,6 +183,9 @@ OC.L10N.register(
     "Source" : "Forrás",
     "Loading…" : "Betöltés…",
     "Failed to load recipes with keywords: {tags}" : "Nem sikerült betölteni a kulcsszavakkal ellátott recepteket: {tags}",
-    "Failed to load search results" : "Nem sikerült betölteni a találatokat"
+    "Failed to load search results" : "Nem sikerült betölteni a találatokat",
+    "Dismiss" : "Eltüntetés",
+    "Cancel" : "Mégse",
+    "OK" : "Rendben"
 },
 "nplurals=2; plural=(n != 1);");

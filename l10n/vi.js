@@ -98,6 +98,7 @@ OC.L10N.register(
     "Tools" : "Công cụ",
     "Ingredients" : "Thành phần",
     "Instructions" : "Hướng dẫn",
+    "You have unsaved changes! Do you still want to leave?" : "Bạn có các thay đổi chưa lưu! Bạn vẫn muốn rời đi?",
     "Calories" : "Lượng calo",
     "E.g.: 450 kcal (amount & unit)" : "Ví dụ: 450 kcal (lượng và đơn vị)",
     "Carbohydrate content" : "Hàm lượng các bon",
@@ -113,7 +114,6 @@ OC.L10N.register(
     "Sugar content" : "Hàm lượng đường",
     "Trans-fat content" : "Hàm lượng chất béo chuyển hóa",
     "Unsaturated-fat content" : "Hàm lượng chất béo không bão hòa",
-    "You have unsaved changes! Do you still want to leave?" : "Bạn có các thay đổi chưa lưu! Bạn vẫn muốn rời đi?",
     "Failed to fetch keywords" : "Không tìm nạp được từ khóa",
     "Loading recipe failed" : "Tải công thức không thành công",
     "Unknown answer returned from server. See logs." : "Câu trả lời không xác định được trả về từ máy chủ. Xem nhật ký.",
@@ -150,6 +150,9 @@ OC.L10N.register(
     "Source" : "Nguồn",
     "Loading…" : "Đang tải…",
     "Failed to load recipes with keywords: {tags}" : "Không tải được các công thức nấu ăn có từ khóa: {tags}",
-    "Failed to load search results" : "Không tải được kết quả tìm kiếm"
+    "Failed to load search results" : "Không tải được kết quả tìm kiếm",
+    "Dismiss" : "Bỏ qua",
+    "Cancel" : "Hủy",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

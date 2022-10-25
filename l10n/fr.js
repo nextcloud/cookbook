@@ -1,6 +1,9 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipe with ID %d was not found in database." : "Recette avec l'ID %d non trouvée dans la base de données.",
+    "JSON cannot be decoded." : "Le JSON ne peut être décodé.",
+    "No recipe was found." : "Pas de recette trouvée.",
     "The recipe has already an image file. Cannot create a new one." : "La recette a déjà un fichier image. Impossible d'en créer un nouveau.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Ne peut pas traiter les documents non POST en encodage multipart. Il s'agit d'un bug.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Ne peut pas détecter le type de données transmises. C'est une erreur, merci de le signaler.",
@@ -23,6 +26,7 @@ OC.L10N.register(
     "Loading recipe" : "Chargement de la recette",
     "Recipe not found" : "Recette non trouvée",
     "Page not found" : "Page non trouvée",
+    "Creating new recipe" : "Créer une nouvelle recette",
     "Edit" : "Modifier",
     "Save" : "Enregistrer",
     "Search" : "Rechercher",
@@ -60,7 +64,7 @@ OC.L10N.register(
     "Show keyword cloud in recipe lists" : "Montrer le nuage de mots-clés dans les listes de recettes",
     "Could not set preference for image printing" : "Impossible de définir le paramètre d'impression des images",
     "Could not set recipe update interval to {interval}" : "Impossible de définir l'intervalle de mise à jour à {interval}",
-    "Could not set recipe folder to {path}" : "Impossible de définir le répertoire de recette sur {path}",
+    "Could not set recipe folder to {path}" : "Impossible de définir {path} comme dossier de recette ",
     "Loading config failed" : "Erreur lors du chargement de la configuration",
     "Enter URL or select from your Nextcloud instance on the right" : "Saisir l'URL ou sélectionner sur la droite depuis votre instance Nextcloud",
     "Pick a local image" : "Choisir une image locale",
@@ -88,6 +92,7 @@ OC.L10N.register(
     "Tools" : "Ustensiles",
     "Ingredients" : "Ingrédients",
     "Instructions" : "Instructions",
+    "You have unsaved changes! Do you still want to leave?" : "Vous avez des modifications non enregistrées. Voulez-vous malgré tout quitter ?",
     "Calories" : "Calories",
     "E.g.: 450 kcal (amount & unit)" : "Par ex. : 450 kcal (quantité et unité)",
     "Carbohydrate content" : "Teneur en glucides",
@@ -103,7 +108,6 @@ OC.L10N.register(
     "Sugar content" : "Contenu en sucre",
     "Trans-fat content" : "Contenu trans-gras",
     "Unsaturated-fat content" : "Contenu gras non saturé",
-    "You have unsaved changes! Do you still want to leave?" : "Vous avez des modifications non enregistrées. Voulez-vous malgré tout quitter ?",
     "Failed to fetch keywords" : "Impossible de récupérer les mots-clef",
     "Loading recipe failed" : "Erreur lors du chargement de la recette",
     "Unknown answer returned from server. See logs." : "Réponse du serveur inconnu. Voir les logs.",
@@ -140,6 +144,9 @@ OC.L10N.register(
     "Source" : "Source",
     "Loading…" : "Chargement...",
     "Failed to load recipes with keywords: {tags}" : "Impossible de charger les recettes avec les mots clés: {tags}",
-    "Failed to load search results" : "Impossible d'afficher les résultats de la recherche"
+    "Failed to load search results" : "Impossible d'afficher les résultats de la recherche",
+    "Dismiss" : "Abandonner",
+    "Cancel" : "Annuler",
+    "OK" : "OK"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

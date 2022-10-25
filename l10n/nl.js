@@ -87,6 +87,7 @@ OC.L10N.register(
     "Tools" : "Hulpmiddelen",
     "Ingredients" : "Ingrediënten",
     "Instructions" : "Instructies",
+    "You have unsaved changes! Do you still want to leave?" : "Je hebt niet-opgeslagen wijzigingen! Wil je toch weg?",
     "Calories" : "Calorieën",
     "E.g.: 450 kcal (amount & unit)" : "Bijv.: 450 kcal (hoeveelheid & eenheid)",
     "Carbohydrate content" : "Koolhydraatgehalte",
@@ -102,7 +103,6 @@ OC.L10N.register(
     "Sugar content" : "Suikergehalte",
     "Trans-fat content" : "Transvetgehalte",
     "Unsaturated-fat content" : "Onverzadigd vetgehalte",
-    "You have unsaved changes! Do you still want to leave?" : "Je hebt niet-opgeslagen wijzigingen! Wil je toch weg?",
     "Failed to fetch keywords" : "Kan trefwoorden niet ophalen",
     "Loading recipe failed" : "Laden recept mislukt",
     "Unknown answer returned from server. See logs." : "Onbekende reactie ontvangen van de server. Bekijk de logs.",
@@ -139,6 +139,9 @@ OC.L10N.register(
     "Source" : "Bron",
     "Loading…" : "Laden…",
     "Failed to load recipes with keywords: {tags}" : "Kon recepten met sleutelwoorden niet laden: (labels)",
-    "Failed to load search results" : "Kon zoekresultaten niet laden"
+    "Failed to load search results" : "Kon zoekresultaten niet laden",
+    "Dismiss" : "Wissen",
+    "Cancel" : "Annuleren",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

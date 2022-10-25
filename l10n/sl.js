@@ -80,6 +80,7 @@ OC.L10N.register(
     "Tools" : "Pripomočki",
     "Ingredients" : "Sestavine",
     "Instructions" : "Navodila",
+    "You have unsaved changes! Do you still want to leave?" : "Zaznane so neshranjene spremembe! Ali vseeno želite zapustiti stran?",
     "Calories" : "Kalorije",
     "E.g.: 450 kcal (amount & unit)" : "npr.: 450 kcal (količina in enota)",
     "Carbohydrate content" : "Vsebnost ogljikovih hidratov",
@@ -95,7 +96,6 @@ OC.L10N.register(
     "Sugar content" : "Vsebnost sladkorja",
     "Trans-fat content" : "Vsebnost trans-maščob",
     "Unsaturated-fat content" : "Vsebnost nenasičenih maščob",
-    "You have unsaved changes! Do you still want to leave?" : "Zaznane so neshranjene spremembe! Ali vseeno želite zapustiti stran?",
     "Failed to fetch keywords" : "Pridobivanje ključnih besed je spodletelo",
     "Loading recipe failed" : "Nalaganje receptov je spodletelo",
     "Unknown answer returned from server. See logs." : "S strežnika je prejeto nerazumljivo sporočilo. Preverite dnevniški zapis.",
@@ -129,6 +129,9 @@ OC.L10N.register(
     "Source" : "Vir",
     "Loading…" : "Poteka nalaganje …",
     "Failed to load recipes with keywords: {tags}" : "Spodletelo je nalaganje receptov za ključne besede: {tags}",
-    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo"
+    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo",
+    "Dismiss" : "Opusti",
+    "Cancel" : "Prekliči",
+    "OK" : "V redu"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

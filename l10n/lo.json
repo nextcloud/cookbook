@@ -8,6 +8,9 @@
     "Close" : "ປິດ",
     "Name" : "ຊື່",
     "URL" : "URL",
-    "Loading…" : "ກຳລັງໂຫຼດ"
+    "Loading…" : "ກຳລັງໂຫຼດ",
+    "Dismiss" : "ຍົກເລີກ",
+    "Cancel" : "ຍົກເລີກ",
+    "OK" : "ຕົກລົງ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

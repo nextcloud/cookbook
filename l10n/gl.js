@@ -74,6 +74,7 @@ OC.L10N.register(
     "Tools" : "Trebellos",
     "Ingredients" : "Ingredientes",
     "Instructions" : "Elaboración",
+    "You have unsaved changes! Do you still want to leave?" : "Ten cambios sen gardar. Está seguro de querer marchar?",
     "Calories" : "Calorias",
     "E.g.: 450 kcal (amount & unit)" : "P. ex.: 450 kcal (cantidade e unidade)",
     "Carbohydrate content" : "Contido de hidratos de carbono",
@@ -89,7 +90,6 @@ OC.L10N.register(
     "Sugar content" : "Contido de azucre",
     "Trans-fat content" : "Contido de graxas trans",
     "Unsaturated-fat content" : "Contido de graxa insaturada",
-    "You have unsaved changes! Do you still want to leave?" : "Ten cambios sen gardar. Está seguro de querer marchar?",
     "Failed to fetch keywords" : "Produciuse un fallo ao obter as palabras clave",
     "Loading recipe failed" : "Produciuse un fallo ao cargar a receita",
     "Recipe image" : "Imaxe da receita",
@@ -117,6 +117,9 @@ OC.L10N.register(
     "Source" : "Orixe",
     "Loading…" : "Cargando…",
     "Failed to load recipes with keywords: {tags}" : "Produciuse un fallo ao cargar as receitas coas palabras clave: {tags}",
-    "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca"
+    "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca",
+    "Dismiss" : "Rexeitar",
+    "Cancel" : "Cancelar",
+    "OK" : "Aceptar"
 },
 "nplurals=2; plural=(n != 1);");

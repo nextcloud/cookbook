@@ -466,10 +466,10 @@ li .controls > button {
     width: 34px;
     height: 34px;
     padding: 0;
+    border-radius: 0;
     border-right-color: transparent;
     border-left-color: transparent;
     margin: 0;
-    border-radius: 0;
 }
 
 li .controls > button:last-child {
@@ -510,10 +510,10 @@ li .controls > button:last-child:not(:hover):not(:focus) {
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
     background-color: var(--color-background-dark);
     background-position: center;
     background-repeat: no-repeat;
-    border-radius: 50%;
     line-height: 36px;
     outline: none;
     text-align: center;

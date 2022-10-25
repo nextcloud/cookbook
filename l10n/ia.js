@@ -13,6 +13,9 @@ OC.L10N.register(
     "Name" : "Nomine",
     "Description" : "Description",
     "URL" : "URL",
-    "Loading…" : "Cargante..."
+    "Loading…" : "Cargante...",
+    "Dismiss" : "Dimitter",
+    "Cancel" : "Cancellar",
+    "OK" : "Ok"
 },
 "nplurals=2; plural=(n != 1);");

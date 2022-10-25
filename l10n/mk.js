@@ -23,6 +23,9 @@ OC.L10N.register(
     "Date created" : "Датум на креирање",
     "Last modified" : "Скоро изменети",
     "Source" : "Извор",
-    "Loading…" : "Се вчитува…"
+    "Loading…" : "Се вчитува…",
+    "Dismiss" : "Отфрли",
+    "Cancel" : "Откажи",
+    "OK" : "Добро"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

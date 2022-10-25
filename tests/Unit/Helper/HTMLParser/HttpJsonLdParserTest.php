@@ -27,6 +27,7 @@ class HttpJsonLdParserTest extends TestCase {
 			'caseG' => ['caseG.html', true, 'caseG.json'],
 			'caseH' => ['caseH.html', true, 'caseH.json'],
 			'caseI' => ['caseI.html', true, 'caseI.json'],
+			'caseJ' => ['caseJ.html', true, 'caseJ.json'],
 		];
 	}
 

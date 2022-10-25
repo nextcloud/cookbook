@@ -70,15 +70,18 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		// Look for an array of recipes
 		$this->mapArray($json);
 
-		// Ensure the type of the object is never an array
-		$this->checkForArrayType($json);
+		if ($this->jsonService->isSchemaObject($json, 'Recipe', true, false)) {
+			// Ensure the type of the object is never an array
+			$this->checkForArrayType($json);
 
-		if ($this->jsonService->isSchemaObject($json, 'Recipe')) {
 			// We found our recipe
 			return $json;
 		} else {
-			throw new HtmlParsingException($this->l->t('No recipe was found.'));
+			// Continue with other approaches
 		}
+
+		//
+		throw new HtmlParsingException($this->l->t('No recipe was found.'));
 	}
 
 	/**
@@ -156,7 +159,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		// Iterate through all objects in the array ...
 		foreach ($arr as $item) {
 			// ... looking for a recipe
-			if ($this->jsonService->isSchemaObject($item, 'Recipe')) {
+			if ($this->jsonService->isSchemaObject($item, 'Recipe', true, false)) {
 				// We found a recipe in the array, use it
 				return $item;
 			}
@@ -174,12 +177,8 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 * @param array $json The JSON object to parse
 	 */
 	private function checkForArrayType(array &$json) {
-		if (! $this->jsonService->isSchemaObject($json)) {
-			return;
-		}
-
 		if (is_array($json['@type'])) {
-			$json['@type'] = $json['@type'][0];
+			$json['@type'] = 'Recipe';
 		}
 	}
 }

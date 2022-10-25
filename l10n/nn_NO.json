@@ -14,6 +14,9 @@
     "Description" : "Skildring",
     "URL" : "URL",
     "Last modified" : "Siste endra",
-    "Loading…" : "Laster..."
+    "Loading…" : "Laster...",
+    "Dismiss" : "Forkast",
+    "Cancel" : "Avbryt",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

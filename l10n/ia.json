@@ -11,6 +11,9 @@
     "Name" : "Nomine",
     "Description" : "Description",
     "URL" : "URL",
-    "Loading…" : "Cargante..."
+    "Loading…" : "Cargante...",
+    "Dismiss" : "Dimitter",
+    "Cancel" : "Cancellar",
+    "OK" : "Ok"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

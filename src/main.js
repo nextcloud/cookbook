@@ -10,7 +10,10 @@ import VueShowdown from "vue-showdown"
 
 import Vue from "vue"
 
+import * as ModalDialogs from "vue-modal-dialogs"
+
 import helpers from "cookbook/js/helper"
+import setupLogging from "cookbook/js/logging"
 
 import router from "./router"
 import store from "./store"
@@ -46,10 +49,17 @@ Vue.use(VueShowdown, {
     flavor: "vanilla",
 })
 
+// TODO: Equivalent library for Vue3 when we make that transition:
+// https://github.com/rlemaigre/vue3-promise-dialog
+Vue.use(ModalDialogs)
+
+setupLogging(Vue)
+
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
 
 // Start the app once document is done loading
+Vue.$log.info("Main is done. Creating App.")
 const App = Vue.extend(AppMain)
 new App({
     store,

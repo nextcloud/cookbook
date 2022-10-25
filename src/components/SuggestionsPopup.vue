@@ -383,8 +383,8 @@ export default {
     z-index: 2;
     overflow: hidden;
     border: 1px solid var(--color-background-darker);
-    background-color: var(--color-main-background);
     border-radius: 5px;
+    background-color: var(--color-main-background);
 }
 
 .scroller {

@@ -10,6 +10,8 @@ OC.L10N.register(
     "Close" : "மூடுக",
     "Name" : "பெயர்",
     "Description" : "விவரிப்பு",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "இரத்து செய்க",
+    "OK" : "சரி "
 },
 "nplurals=2; plural=(n != 1);");

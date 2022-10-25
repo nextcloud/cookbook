@@ -16,6 +16,9 @@
     "URL" : "URL",
     "Creation date" : "Tanggal pembuatan",
     "Last modified" : "Terakhir diubah",
-    "Loading…" : "Memuat…"
+    "Loading…" : "Memuat…",
+    "Dismiss" : "Batal",
+    "Cancel" : "Membatalkan",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

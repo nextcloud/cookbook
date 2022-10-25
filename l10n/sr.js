@@ -59,6 +59,9 @@ OC.L10N.register(
     "Last modified" : "По времену последње измене",
     "Source" : "Извор",
     "Loading…" : "Учитавам…",
-    "Failed to load search results" : "Грешка приликом учитавања резултата претраге"
+    "Failed to load search results" : "Грешка приликом учитавања резултата претраге",
+    "Dismiss" : "Уклони",
+    "Cancel" : "Поништи",
+    "OK" : "У реду"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

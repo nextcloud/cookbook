@@ -10,6 +10,8 @@ OC.L10N.register(
     "Close" : "ياپ",
     "Name" : "ئاتى",
     "Description" : "چۈشەندۈرۈش",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Cancel" : "ۋاز كەچ",
+    "OK" : "جەزملە"
 },
 "nplurals=2; plural=(n != 1);");
