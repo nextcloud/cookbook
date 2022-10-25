@@ -23,12 +23,12 @@ jobs:
               shell: bash
               id: check
               run: |
-                echo "::set-output name=skip::false"
+                echo "skip=false" >> $GITHUB_OUTPUT
                 if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
-                    echo "::set-output name=skip::true"
+                    echo "skip=true" >> $GITHUB_OUTPUT
                 fi
                 if [ -z "${{ secrets.DOCKER_HUB_USERNAME }}" ]; then
-                    echo "::set-output name=skip::true"
+                    echo "skip=true" >> $GITHUB_OUTPUT
                 fi
             
             - name: Checkout the app

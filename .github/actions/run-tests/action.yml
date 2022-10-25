@@ -41,6 +41,7 @@ runs:
             if [ "${{ inputs.installUntested }}" = 'true' ]; then PARAM="$PARAM --install-untested"; fi &&
             if [ "${{ inputs.runCodeChecker }}" = 'true' ]; then PARAM="$PARAM --run-code-checker"; fi &&
             cd .github/actions/run-tests &&
+            sudo pip install -r requirements.txt &&
             ./run-locally.py
             $PARAM
             --pull

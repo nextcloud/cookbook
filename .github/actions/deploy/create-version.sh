@@ -9,7 +9,7 @@ fi
 
 deploy_path='.github/actions/deploy'
 
-stable_branch=stable
+stable_branch=$(cat "$deploy_path/stable_name")
 master_branch=master
 
 major=$(cat "$deploy_path/major")
@@ -79,8 +79,7 @@ git merge --no-ff $stable_branch
 
 git remote add tokenized "https://nextcloud-cookbook-bot:$BOT_TOKEN@github.com/nextcloud/cookbook.git"
 
-git -c "http.https://github.com/.extraheader=" push tokenized $stable_branch
-git -c "http.https://github.com/.extraheader=" push tokenized $master_branch
+git -c "http.https://github.com/.extraheader=" push tokenized $stable_branch $master_branch
 git push origin "v$version"
 
 echo "::set-output name=version::$version"

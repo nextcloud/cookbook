@@ -48,6 +48,8 @@
   [1273](https://github.com/nextcloud/cookbook/pull/1273)
   [1274](https://github.com/nextcloud/cookbook/pull/1274)
   [1277](https://github.com/nextcloud/cookbook/pull/1277)
+- Prepare the GitHub action scripts to be compatible with the upcoming version split in version 0.10.0
+  [#1285](https://github.com/nextcloud/cookbook/pull/1285) @christianlupus
 
 ### Documentation
 - Fix bad writing
