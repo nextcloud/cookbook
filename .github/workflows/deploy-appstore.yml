@@ -36,7 +36,7 @@ jobs:
                     path: |
                         ~/.npm
                         cookbook/node_modules
-                    key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+                    key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('cookbook/package-lock.json') }}
                     restore-keys: |
                         ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                         ${{ runner.os }}-node-
