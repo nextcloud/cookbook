@@ -76,7 +76,7 @@ OC.L10N.register(
     "Recipe name" : "Име на рецепта",
     "Tags" : "Етикети",
     "Search for recipes" : "Търсене на рецепти",
-    "Are you sure you want to delete this recipe?" : "Сигурен ли сте, че искате да изтриете тази рецепта?",
+    "Are you sure you want to delete this recipe?" : "Сигурни ли сте, че искате да изтриете тази рецепта?",
     "Delete failed" : "Неуспешно изтриване",
     "Cannot access recipe folder." : "Няма достъп до папка с рецепти.",
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Влезли сте с профил на гост. Следователно не ви е позволено да генерирате произволни файлове и папки в този екземпляр на Nextcloud. За да можете да използвате приложението Cookbook като гост, трябва да посочите папка, където се съхраняват всички рецепти. Ще ви трябва право за запис в тази папка.",
