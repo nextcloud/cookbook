@@ -5,7 +5,6 @@
  * @license AGPL3 or later
  */
 
-// Markdown
 import moment from "@nextcloud/moment"
 
 import Vue from "vue"
