@@ -21,7 +21,7 @@
   - along with this program. If not, see <http://www.gnu.org/licenses/>.
   -
   - This file is modified from:
-  - https://github.com/nextcloud/nextcloud-vue/blob/master/src/components/NcActionInput/NcActionInput.vue
+  - https://github.com/nextcloud/nextcloud-vue/blob/8caab6d0a9346231d77a236045723b75176b08cf/src/components/NcActionInput/NcActionInput.vue
   - Some features are stripped to avoid importing large dependencies to reduce
   - bundle size.
   - Please see: https://github.com/nextcloud/cookbook/pull/1116
