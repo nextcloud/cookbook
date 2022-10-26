@@ -28,10 +28,16 @@
   -->
 
 <template>
-    <li class="action">
+    <li class="action" :class="{ 'action--disabled': disabled }">
         <span class="action-input">
             <slot name="icon">
-                <span :class="icon" class="action-input__icon" />
+                <span
+                    :class="[isIconUrl ? 'action-input__icon--url' : icon]"
+                    :style="{
+                        backgroundImage: isIconUrl ? `url(${icon})` : null,
+                    }"
+                    class="action-input__icon"
+                />
             </slot>
             <form
                 ref="form"
@@ -92,6 +98,13 @@ const ActionGlobalMixin = {
     },
 
     computed: {
+        isIconUrl() {
+            try {
+                return new URL(this.icon)
+            } catch (error) {
+                return false
+            }
+        },
         isLongText() {
             return this.text && this.text.trim().length > 20
         },
@@ -426,7 +439,6 @@ textarea {
 
         // long text area
         p {
-
             // in case there are no spaces like long email addresses
             overflow: hidden;
             max-width: 220px;
