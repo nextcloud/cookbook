@@ -13,7 +13,7 @@ instance.interceptors.request.use((config) => {
         `Making "${config.method}" request to "${config.url}"`,
         config
     )
-    const contentType = config.headers[config.method]['Content-Type']
+    const contentType = config.headers[config.method]["Content-Type"]
     if (!["application/json", "text/json"].includes(contentType)) {
         Vue.$log.warn(
             `Request to "${config.url}" is using Content-Type "${contentType}", not JSON`
