@@ -52,6 +52,8 @@
   [#1285](https://github.com/nextcloud/cookbook/pull/1285) @christianlupus
 - Add logging to diagnose bugs in production
   [#1283](https://github.com/nextcloud/cookbook/pull/1283) @MarcelRobitaille
+- Log every network request
+  [#1291](https://github.com/nextcloud/cookbook/pull/1291) @MarcelRobitaille
 
 ### Documentation
 - Fix bad writing
