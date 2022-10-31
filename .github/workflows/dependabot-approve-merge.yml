@@ -10,7 +10,7 @@ on:
     branches:
       - main
       - master
-      - stable*
+      - main-*
 
 permissions:
   contents: read
