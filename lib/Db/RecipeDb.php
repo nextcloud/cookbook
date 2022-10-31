@@ -176,6 +176,11 @@ class RecipeDb {
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
+		$result = array_map(function ($x) {
+			$x['recipe_count'] = (int) $x['recipe_count'];
+			return $x;
+		}, $result);
+
 		$result = $this->sortRecipes($result);
 
 		$result = array_unique($result, SORT_REGULAR);
@@ -199,6 +204,11 @@ class RecipeDb {
 		$cursor = $qb->execute();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
+
+		$result = array_map(function ($x) {
+			$x['recipe_count'] = (int) $x['recipe_count'];
+			return $x;
+		}, $result);
 
 		$qb = $this->db->getQueryBuilder();
 
@@ -225,7 +235,7 @@ class RecipeDb {
 
 		$result[] = [
 			'name' => '*',
-			'recipe_count' => $row['cnt']
+			'recipe_count' => (int) $row['cnt']
 		];
 
 		$result = array_unique($result, SORT_REGULAR);

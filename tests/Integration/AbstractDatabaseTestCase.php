@@ -4,6 +4,7 @@ namespace OCA\Cookbook\tests\Integration;
 
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use ChristophWurst\Nextcloud\Testing\DatabaseTransaction;
+use Exception;
 use OCA\Cookbook\AppInfo\Application;
 use Psr\Container\ContainerInterface;
 
@@ -43,6 +44,8 @@ abstract class AbstractDatabaseTestCase extends TestCase {
 			echo "\nThe recovery of the data failed. Standard output:\n";
 			print_r($output);
 			echo "The return code was $ret.\n";
+
+			throw new Exception('Failed to reset the environment');
 		}
 	}
 }
