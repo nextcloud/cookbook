@@ -94,7 +94,13 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 				}
 
 				if ($this->jsonService->isSchemaObject($value, 'HowToStep', false)) {
-					$instructions[$key] = [$value['text']];
+					$instructions[$key] = [$this->extractHowToStep($value)];
+					continue;
+				}
+
+				if ($this->jsonService->isSchemaObject($value, 'HowToSection', false)) {
+					$newInstructions = $this->flattenHowToSection($value);
+					$instructions[$key] = $newInstructions;
 					continue;
 				}
 
@@ -143,6 +149,11 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 			if ($this->jsonService->isSchemaObject($element, 'ListItem', false)) {
 				$newKey = $element['position'] ?? $key;
 				$newElements[$newKey] = $this->parseListItem($element['item']);
+				continue;
+			}
+
+			if ($this->jsonService->isSchemaObject($element, 'HowToStep', false)) {
+				$newElements[$key] = [$this->extractHowToStep($element)];
 				continue;
 			}
 
@@ -196,5 +207,25 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 		$pieces = array_map(fn ($x) => (strip_tags($x)), $pieces);
 		$pieces = array_filter($pieces);
 		return $pieces;
+	}
+
+	private function flattenHowToSection($item): array {
+		if ($item['name'] && is_string($item['name'])) {
+			$ret = ['## ' . $item['name']];
+		} else {
+			$ret = ['## HowToSection'];
+		}
+
+		$items = $this->flattenItemList($item);
+
+		return array_merge($ret, $items);
+	}
+
+	private function extractHowToStep($item) {
+		if (! $this->jsonService->isSchemaObject($item, 'HowToStep', false)) {
+			throw new InvalidRecipeException($this->l->t('Cannot parse recipe: Unknown object found during flattening of instructions.'));
+		}
+
+		return $item['text'];
 	}
 }

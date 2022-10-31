@@ -239,6 +239,8 @@ class FixInstructionsFilterTest extends TestCase {
 		$original = json_decode($originalRaw, true);
 		$expected = json_decode($expectedRaw, true);
 
+		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
+
 		$ret = $this->dut->apply($original);
 
 		$this->assertEquals($expected, $original);
