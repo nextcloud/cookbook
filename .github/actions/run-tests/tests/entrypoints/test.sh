@@ -31,9 +31,6 @@ do
 		--create-coverage-report)
 			CREATE_COVERAGE_REPORT=y
 			;;
-		--run-code-checker)
-			RUN_CODE_CHECKER=y
-			;;
 		--install-composer-deps)
 			INSTALL_COMPOSER_DEPS=y
 			;;
@@ -96,17 +93,6 @@ if [ $CREATE_COVERAGE_REPORT = 'y' ]; then
 	PARAM_COVERAGE_UNIT+=' --coverage-clover /coverage/tmp/coverage.unit.xml --coverage-html /coverage/tmp/coverage-unit'
 	PARAM_COVERAGE_INTEGRATION+=' --coverage-clover /coverage/tmp/coverage.integration.xml --coverage-html /coverage/tmp/coverage-integration'
 	PARAM_COVERAGE_MIGRATION+=' --coverage-clover /coverage/tmp/coverage.migration.xml --coverage-html /coverage/tmp/coverage-migration'
-fi
-
-if [ $RUN_CODE_CHECKER = 'y' ]; then
-	printCI "::group::Code checker"
-	echo 'Running the code checker'
-	if ! ./occ app:check-code cookbook; then
-		echo '::error ::The code checker rejected the code base. See the logs of the action for further details.'
-		exit 1
-	fi
-	echo 'Code checker finished'
-	printCI "::endgroup::"
 fi
 
 pushd custom_apps/cookbook > /dev/null

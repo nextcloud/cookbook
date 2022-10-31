@@ -111,13 +111,10 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 21
-                - 22
-                - 23
-                - 24
                 - 25
+                # - 26
             phpVersion:
-                - "8.0"
+                - "8.1"
             httpServer:
                 - "apache"
             include:
@@ -134,7 +131,11 @@ jobs:
                 # Test different PHP versions additionally
                 -   database: mysql
                     coreVersion: 25
-                    phpVersion: "8.1"
+                    phpVersion: "8.0"
+                    httpServer: "apache"
+                -   database: mysql
+                    coreVersion: 25
+                    phpVersion: "7.4"
                     httpServer: "apache"
                 
                 # Test different HTTP server
@@ -248,7 +249,6 @@ jobs:
             phpVersion: "8.1"
             server: apache
             installUntested: true
-            runCodeChecker: false
     
       - name: Upload the log file as artifact
         uses: actions/upload-artifact@v3
