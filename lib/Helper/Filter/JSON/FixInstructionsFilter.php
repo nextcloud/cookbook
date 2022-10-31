@@ -210,7 +210,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 	}
 
 	private function flattenHowToSection($item): array {
-		if ($item['name'] && is_string($item['name'])) {
+		if (array_key_exists('name', $item) && $item['name'] && is_string($item['name'])) {
 			$ret = ['## ' . $item['name']];
 		} else {
 			$ret = ['## HowToSection'];
@@ -222,10 +222,6 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 	}
 
 	private function extractHowToStep($item) {
-		if (! $this->jsonService->isSchemaObject($item, 'HowToStep', false)) {
-			throw new InvalidRecipeException($this->l->t('Cannot parse recipe: Unknown object found during flattening of instructions.'));
-		}
-
 		return $item['text'];
 	}
 }

@@ -160,6 +160,42 @@ class FixInstructionsFilterTest extends TestCase {
 			], ['a', 'b', 'c'], true
 		];
 
+		yield 'HowToSections' => [
+			[
+				[
+					'@type' => 'HowToSection',
+					'name' => 'Foo',
+					'itemListElement' => [
+						[
+							'@type' => 'HowToStep',
+							'text' => 'a',
+						],
+						[
+							'@type' => 'HowToStep',
+							'text' => 'b',
+						],
+					],
+				],
+				[
+					'@type' => 'HowToSection',
+					'itemListElement' => [
+						[
+							'@type' => 'HowToStep',
+							'text' => 'c',
+						],
+						[
+							'@type' => 'HowToStep',
+							'text' => 'd',
+						],
+					],
+				],
+				[
+					'@type' => 'HowToStep',
+					'text' => 'e',
+				],
+			], ['## Foo', 'a', 'b', '## HowToSection', 'c', 'd', 'e'], true
+		];
+
 		yield 'Issue1210' => [
 			['a', '', 'b'], ['a', 'b'], true
 		];
