@@ -224,4 +224,24 @@ class FixInstructionsFilterTest extends TestCase {
 
 		$this->dut->apply($recipe);
 	}
+
+	public function dpRealWorldIssues() {
+		return [
+			'case01' => ['case01.json', 'case01.expected.json', true],
+		];
+	}
+
+	/** @dataProvider dpRealWorldIssues */
+	public function testRealWorldIssue($fileName, $expectedFileName, $shouldChange) {
+		$originalRaw = file_get_contents(__DIR__ . "/res_FixInstructionsFilter/$fileName");
+		$expectedRaw = file_get_contents(__DIR__ . "/res_FixInstructionsFilter/$expectedFileName");
+
+		$original = json_decode($originalRaw, true);
+		$expected = json_decode($expectedRaw, true);
+
+		$ret = $this->dut->apply($original);
+
+		$this->assertEquals($expected, $original);
+		$this->assertEquals($shouldChange, $ret);
+	}
 }

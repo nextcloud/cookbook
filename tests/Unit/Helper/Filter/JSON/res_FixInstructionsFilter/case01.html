@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head ><meta charset="UTF-8" /><script>if(navigator.userAgent.match(/MSIE|Internet Explorer/i)||navigator.userAgent.match(/Trident\/7\..*?rv:11/i)){var href=document.location.href;if(!href.match(/[?&]nowprocket/)){if(href.indexOf("?")==-1){if(href.indexOf("#")==-1){document.location.href=href+"?nowprocket=1"}else{document.location.href=href.replace("#","?nowprocket=1#")}}else{if(href.indexOf("#")==-1){document.location.href=href+"&nowprocket=1"}else{document.location.href=href.replace("#","&nowprocket=1#")}}}}</script><script>class RocketLazyLoadScripts{constructor(e){this.triggerEvents=e,this.eventOptions={passive:!0},this.userEventListener=this.triggerListener.bind(this),this.delayedScripts={normal:[],async:[],defer:[]},this.allJQueries=[]}_addUserInteractionListener(e){this.triggerEvents.forEach((t=>window.addEventListener(t,e.userEventListener,e.eventOptions)))}_removeUserInteractionListener(e){this.triggerEvents.forEach((t=>window.removeEventListener(t,e.userEventListener,e.eventOptions)))}triggerListener(){this._removeUserInteractionListener(this),"loading"===document.readyState?document.addEventListener("DOMContentLoaded",this._loadEverythingNow.bind(this)):this._loadEverythingNow()}async _loadEverythingNow(){this._delayEventListeners(),this._delayJQueryReady(this),this._handleDocumentWrite(),this._registerAllDelayedScripts(),this._preloadAllScripts(),await this._loadScriptsFromList(this.delayedScripts.normal),await this._loadScriptsFromList(this.delayedScripts.defer),await this._loadScriptsFromList(this.delayedScripts.async),await this._triggerDOMContentLoaded(),await this._triggerWindowLoad(),window.dispatchEvent(new Event("rocket-allScriptsLoaded"))}_registerAllDelayedScripts(){document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e=>{e.hasAttribute("src")?e.hasAttribute("async")&&!1!==e.async?this.delayedScripts.async.push(e):e.hasAttribute("defer")&&!1!==e.defer||"module"===e.getAttribute("data-rocket-type")?this.delayedScripts.defer.push(e):this.delayedScripts.normal.push(e):this.delayedScripts.normal.push(e)}))}async _transformScript(e){return await this._requestAnimFrame(),new Promise((t=>{const n=document.createElement("script");let r;[...e.attributes].forEach((e=>{let t=e.nodeName;"type"!==t&&("data-rocket-type"===t&&(t="type",r=e.nodeValue),n.setAttribute(t,e.nodeValue))})),e.hasAttribute("src")?(n.addEventListener("load",t),n.addEventListener("error",t)):(n.text=e.text,t()),e.parentNode.replaceChild(n,e)}))}async _loadScriptsFromList(e){const t=e.shift();return t?(await this._transformScript(t),this._loadScriptsFromList(e)):Promise.resolve()}_preloadAllScripts(){var e=document.createDocumentFragment();[...this.delayedScripts.normal,...this.delayedScripts.defer,...this.delayedScripts.async].forEach((t=>{const n=t.getAttribute("src");if(n){const t=document.createElement("link");t.href=n,t.rel="preload",t.as="script",e.appendChild(t)}})),document.head.appendChild(e)}_delayEventListeners(){let e={};function t(t,n){!function(t){function n(n){return e[t].eventsToRewrite.indexOf(n)>=0?"rocket-"+n:n}e[t]||(e[t]={originalFunctions:{add:t.addEventListener,remove:t.removeEventListener},eventsToRewrite:[]},t.addEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.add.apply(t,arguments)},t.removeEventListener=function(){arguments[0]=n(arguments[0]),e[t].originalFunctions.remove.apply(t,arguments)})}(t),e[t].eventsToRewrite.push(n)}function n(e,t){let n=e[t];Object.defineProperty(e,t,{get:()=>n||function(){},set(r){e["rocket"+t]=n=r}})}t(document,"DOMContentLoaded"),t(window,"DOMContentLoaded"),t(window,"load"),t(window,"pageshow"),t(document,"readystatechange"),n(document,"onreadystatechange"),n(window,"onload"),n(window,"onpageshow")}_delayJQueryReady(e){let t=window.jQuery;Object.defineProperty(window,"jQuery",{get:()=>t,set(n){if(n&&n.fn&&!e.allJQueries.includes(n)){n.fn.ready=n.fn.init.prototype.ready=function(t){e.domReadyFired?t.bind(document)(n):document.addEventListener("rocket-DOMContentLoaded",(()=>t.bind(document)(n)))};const t=n.fn.on;n.fn.on=n.fn.init.prototype.on=function(){if(this[0]===window){function e(e){return e.split(" ").map((e=>"load"===e||0===e.indexOf("load.")?"rocket-jquery-load":e)).join(" ")}"string"==typeof arguments[0]||arguments[0]instanceof String?arguments[0]=e(arguments[0]):"object"==typeof arguments[0]&&Object.keys(arguments[0]).forEach((t=>{delete Object.assign(arguments[0],{[e(t)]:arguments[0][t]})[t]}))}return t.apply(this,arguments),this},e.allJQueries.push(n)}t=n}})}async _triggerDOMContentLoaded(){this.domReadyFired=!0,await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-DOMContentLoaded")),await this._requestAnimFrame(),document.dispatchEvent(new Event("rocket-readystatechange")),await this._requestAnimFrame(),document.rocketonreadystatechange&&document.rocketonreadystatechange()}async _triggerWindowLoad(){await this._requestAnimFrame(),window.dispatchEvent(new Event("rocket-load")),await this._requestAnimFrame(),window.rocketonload&&window.rocketonload(),await this._requestAnimFrame(),this.allJQueries.forEach((e=>e(window).trigger("rocket-jquery-load"))),window.dispatchEvent(new Event("rocket-pageshow")),await this._requestAnimFrame(),window.rocketonpageshow&&window.rocketonpageshow()}_handleDocumentWrite(){const e=new Map;document.write=document.writeln=function(t){const n=document.currentScript,r=document.createRange(),i=n.parentElement;let o=e.get(n);void 0===o&&(o=n.nextSibling,e.set(n,o));const a=document.createDocumentFragment();r.setStart(a,0),a.appendChild(r.createContextualFragment(t)),i.insertBefore(a,o)}}async _requestAnimFrame(){return new Promise((e=>requestAnimationFrame(e)))}static run(){const e=new RocketLazyLoadScripts(["keydown","mousemove","touchmove","touchstart","touchend","wheel"]);e._addUserInteractionListener(e)}}RocketLazyLoadScripts.run();</script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO Premium plugin v18.0 (Yoast SEO v18.1) - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Marinated Tofu, Avocado, and Spinach Salad &raquo; I LOVE VEGAN</title><style id="rocket-critical-css">html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}article,aside,figure,header,main,nav,section{display:block}a{background-color:transparent}img{border:0}svg:not(:root){overflow:hidden}figure{margin:20px 0}input,textarea{color:inherit;font:inherit;margin:0}input[type="submit"]{-webkit-appearance:button}input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type="search"]{-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}textarea{overflow:auto}*,input[type="search"]{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}.entry:after,.entry-content:after,.nav-primary:after,.site-container:after,.site-header:after,.site-inner:after,.widget:after,.widget-area:after,.wrap:after{clear:both;content:" ";display:table}body{background:#fff;color:#010101;font-family:"Muli",Arial,Helvetica,sans-serif;font-size:100%;font-weight:300;letter-spacing:0.5px;line-height:1.8}a{color:#fb6a4a;text-decoration:none}.single .content a,aside a{text-decoration:underline}a img{margin-bottom:17px}p{margin:5px 0 15px;padding:0}ul{margin:0;padding:0}h1,h2{font-family:"Karla",Arial,Helvetica,sans-serif;font-weight:700;letter-spacing:3px;line-height:1.3;margin:37px 0 21px;padding:0;text-transform:uppercase}h1{font-size:2em}h2{font-size:1.625em}iframe,img{max-width:100%}img{height:auto}input,textarea{border:1px solid #eee;-webkit-box-shadow:0 0 0 #fff;-webkit-box-shadow:0 0 0 #fff;box-shadow:0 0 0 #fff;color:#999;font-weight:300;letter-spacing:0.5px;padding:10px;width:100%}::-moz-placeholder{color:#000}::-webkit-input-placeholder{color:#000}.button,input[type="submit"]{background:#010101;border:1px solid #010101;-webkit-box-shadow:none;box-shadow:none;color:#fff;font-family:"Karla",Arial,Helvetica,sans-serif;font-style:normal;font-weight:700;letter-spacing:2px;padding:7px 17px;text-transform:uppercase;width:auto}input[type="submit"]{letter-spacing:2px}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-results-button{display:none}.site-container{margin:0 auto}.content-sidebar-wrap,.site-inner,.wrap{margin:0 auto;max-width:1170px}.site-inner{background:#fff;margin:0 auto;padding:15px 37px}.content{float:right;width:720px}.content-sidebar .content{float:left}.sidebar-primary{float:right;width:300px}.search-form{background:#fff;border:1px solid #eee;padding:10px}.search-form input{background:#fff url(https://www.ilovevegan.com/wp-content/themes/foodiepro-v440/images/search.svg) center right no-repeat;-webkit-background-size:contain;background-size:contain;border:0;padding:0}.search-form input[type="submit"]{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;padding:0;position:absolute;width:1px}.alignleft{float:left;margin-right:37px;text-align:left}.entry-title{margin:0 0 17px;word-wrap:break-word}h1.entry-title{color:#010101;text-decoration:none}.screen-reader-text,.screen-reader-shortcut{background:#fff;border:0;clip:rect(0,0,0,0);color:#333;height:1px;overflow:hidden;position:absolute!important;width:1px}.genesis-skip-link li{height:0;list-style:none;width:0}.enews-widget{background:#f7f9fc;color:#010101;padding:17px;text-align:center}.enews-widget input{margin-bottom:7px;padding:11px 17px}.simple-social-icons ul li:before{content:none!important;padding-right:0!important}img[data-lazy-src]{opacity:0}img.lazyloaded{opacity:1}.title-area{display:inline-block;margin:0;padding:17px 0;width:320px}.site-title{line-height:0.8;margin:0;text-transform:uppercase}.site-title a{color:#010101;font-style:normal}.header-full-width .title-area,.header-full-width .site-title{text-align:center;width:100%}.genesis-nav-menu{background:#fff;border-bottom:1px solid #eee;border-top:1px solid #eee;clear:both;font-family:"Karla",Arial,Helvetica,sans-serif;font-weight:400;letter-spacing:2px;padding:7px 0;text-align:center;width:100%}.genesis-nav-menu .menu-item{display:inline-block;margin:0;padding:0;text-align:left}.genesis-nav-menu a{color:#010101;display:block;padding:17px 21px;position:relative;text-decoration:none;text-transform:uppercase;min-height:52px}.genesis-nav-menu .search-form{display:inline-block;margin-left:27px;vertical-align:middle;width:auto}.nav-primary{margin:0}.entry{margin-bottom:37px}.entry-content p{margin-bottom:37px}.entry-header{color:#777;margin:0 0 37px}.sidebar p:last-child{margin:0}.sidebar .widget{border-bottom:1px solid #eee;margin-bottom:37px;padding-bottom:37px}.sidebar a{font-weight:600}.sidebar a img{margin-bottom:0}@media only screen and (min-width:1200px){aside,#breadcrumbs{font-size:0.8em}}@media only screen and (max-width:1200px){.site-inner,.wrap{max-width:1040px;overflow:hidden}.content{width:620px}.genesis-nav-menu a{padding:17px}.sidebar-primary{width:300px}}@media only screen and (max-width:1023px){.content,.sidebar-primary,.site-inner,.title-area,.wrap{width:100%}.site-inner{padding-left:5%;padding-right:5%}.entry,.sidebar .widget,.site-header{padding:10px 0}.genesis-nav-menu li{float:none}.genesis-nav-menu,.site-header .title-area,.site-title{text-align:center}.sidebar .widget.enews-widget{padding:20px}}@media only screen and (max-width:940px){nav{display:none;position:relative}#genesis-nav-primary{border-bottom:2px solid #CCC}.genesis-nav-menu{border:none}.genesis-nav-menu .menu-item{border-bottom:1px solid #eee;display:block;position:relative;text-align:left}.genesis-nav-menu .search-form{border:0;float:right;width:100%;padding:20px 10px}}@media only screen and (max-width:767px){.alignleft{float:none;margin:0 auto 20px}}.wp-block-image{margin-bottom:1em}.wp-block-image img{max-width:100%}.wp-block-image:not(.is-style-rounded) img{border-radius:inherit}.has-text-align-center{text-align:center}.simple-social-icons svg[class^="social-"]{display:inline-block;width:1em;height:1em;stroke-width:0;stroke:currentColor;fill:currentColor}.simple-social-icons{overflow:hidden}.simple-social-icons ul{margin:0;padding:0}.simple-social-icons ul li{background:none!important;border:none!important;float:left;list-style-type:none!important;margin:0 6px 12px!important;padding:0!important}.simple-social-icons ul li a{border:none!important;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box;display:inline-block;font-style:normal!important;font-variant:normal!important;font-weight:normal!important;height:1em;line-height:1em;text-align:center;text-decoration:none!important;text-transform:none!important;width:1em}:root{--swiper-theme-color:#007aff}:root{--swiper-navigation-size:44px}#jp-relatedposts .jp-relatedposts-items p{font-size:14px;line-height:20px;margin:0}#jp-relatedposts .jp-relatedposts-items p{margin-bottom:0}#jp-relatedposts .jp-relatedposts-items-visual div.jp-relatedposts-post-thumbs p.jp-relatedposts-post-excerpt{display:none}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important}.screen-reader-text{border:0;clip:rect(1px,1px,1px,1px);-webkit-clip-path:inset(50%);clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute!important;width:1px;word-wrap:normal!important}</style>
+	<meta name="description" content="A hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." />
+	<link rel="canonical" href="https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing" />
+	<meta property="og:description" content="A hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." />
+	<meta property="og:url" content="https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/" />
+	<meta property="og:site_name" content="I LOVE VEGAN" />
+	<meta property="article:publisher" content="http://www.facebook.com/ilovegan/" />
+	<meta property="article:author" content="https://www.facebook.com/" />
+	<meta property="article:published_time" content="2019-08-31T21:36:12+00:00" />
+	<meta property="article:modified_time" content="2021-11-19T19:57:09+00:00" />
+	<meta property="og:image" content="https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0079.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="1800" />
+	<meta property="og:image:type" content="image/jpeg" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:creator" content="@http://www.twitter.com/ilovegan/" />
+	<meta name="twitter:site" content="@ilovegan" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="Brittany" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="3 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://ilovevegan.com/#organization","name":"I Love Vegan","url":"https://ilovevegan.com/","sameAs":["http://www.facebook.com/ilovegan/","http://instagram.com/ilovegan","http://www.pinterest.com/ilovevegan/","https://twitter.com/ilovegan"],"logo":{"@type":"ImageObject","@id":"https://ilovevegan.com/#logo","inLanguage":"en-US","url":"https://www.ilovevegan.com/wp-content/uploads/2021/03/i-love-vegan-logo-1x1-2021.png","contentUrl":"https://www.ilovevegan.com/wp-content/uploads/2021/03/i-love-vegan-logo-1x1-2021.png","width":1000,"height":1000,"caption":"I Love Vegan"},"image":{"@id":"https://ilovevegan.com/#logo"}},{"@type":"WebSite","@id":"https://ilovevegan.com/#website","url":"https://ilovevegan.com/","name":"I LOVE VEGAN","description":"Your Guide to Living a Healthy, Balanced, &amp; Compassionate Life! I Love Vegan features 180+ delicious vegan recipes designed to suit a variety of needs.","publisher":{"@id":"https://ilovevegan.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://ilovevegan.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"ImageObject","@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#primaryimage","inLanguage":"en-US","url":"https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0079.jpg","contentUrl":"https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0079.jpg","width":1200,"height":1800,"caption":"Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing."},{"@type":"WebPage","@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#webpage","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/","name":"Marinated Tofu, Avocado, and Spinach Salad &raquo; I LOVE VEGAN","isPartOf":{"@id":"https://ilovevegan.com/#website"},"primaryImageOfPage":{"@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#primaryimage"},"datePublished":"2019-08-31T21:36:12+00:00","dateModified":"2021-11-19T19:57:09+00:00","description":"A hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing.","breadcrumb":{"@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/"]}]},{"@type":"BreadcrumbList","@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://ilovevegan.com/"},{"@type":"ListItem","position":2,"name":"All Recipes","item":"https://ilovevegan.com/category/recipe/"},{"@type":"ListItem","position":3,"name":"Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing"}]},{"@type":"Article","@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#article","isPartOf":{"@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#webpage"},"author":{"@id":"https://ilovevegan.com/#/schema/person/bc95930d3df9d63e4820236f92a0094b"},"headline":"Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing","datePublished":"2019-08-31T21:36:12+00:00","dateModified":"2021-11-19T19:57:09+00:00","wordCount":673,"commentCount":19,"publisher":{"@id":"https://ilovevegan.com/#organization"},"image":{"@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#primaryimage"},"thumbnailUrl":"https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0079.jpg","keywords":["avocado","spinach","Tofu"],"articleSection":["All Recipes","Salads","Sauces &amp; Dips"],"inLanguage":"en-US","potentialAction":[{"@type":"CommentAction","name":"Comment","target":["https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#respond"]}]},{"@type":"Person","@id":"https://ilovevegan.com/#/schema/person/bc95930d3df9d63e4820236f92a0094b","name":"Brittany","description":"I'm Brittany! Canadian-based vegan food blogger, recipe developer, and photographer at http://ilovevegan.com","sameAs":["https://www.ilovevegan.com","https://www.facebook.com/","http://www.instagram.com/ilovegan","http://www.pinterest.com/ilovevegan/","https://twitter.com/http://www.twitter.com/ilovegan/","http://garden-of-vegan.tumblr.com/"]},{"@context":"https://schema.org/","@type":"Recipe","name":"Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame & Soy Dressing","description":"A hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing.","author":{"@type":"Person","name":"brittany mueller"},"keywords":"marinated tofu, tofu salad, vegan sesame dressing","image":["https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-225x225.jpg","https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-260x195.jpg","https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-320x180.jpg","https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081.jpg"],"url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/","recipeIngredient":["1 block (350g) firm or extra-firm tofu, pressed and cut into small squares","2 tbsp (30ml) low-sodium soy sauce","2 tbsp (30ml) water","3 cloves garlic, minced","2 tsp (10ml) sriracha (more or less to your preference)","1 tsp (5ml) sesame oil","(Optional, for sautéing) 1 tbsp (15ml) canola oil (or other neutral-tasting vegetable oil)","3-4 tbsp (45-60ml) low-sodium soy sauce","¼ cup (60ml) raw cashews","¼ cup (60ml) water","3 tbsp (45ml) toasted sesame seeds, divided","2 tbsp (30ml) canola oil","2 tsp (10ml) sugar","2 tsp (10ml) rice wine vinegar","8 large handfuls of baby spinach","1 carrot, grated","½ cucumber, halved and sliced","½ red bell pepper, sliced","1 ripe avocado, sliced","2 stalks green onion, sliced thinly","2 tbsp (30ml) toasted sesame seeds"],"recipeInstructions":[{"@type":"HowToSection","name":"Toasting sesame seeds:","itemListElement":[{"@type":"HowToStep","text":"Heat skillet over medium heat. Add sesame seeds and cook, stirring often until golden-brown and fragrant. Do not leave unattended.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-1"}]},{"@type":"HowToSection","name":"Marinated Tofu:","itemListElement":[{"@type":"HowToStep","text":"For optimal flavour, press tofu to draw out excess moisture. Check out our tutorial on draining and pressing tofu for a quick and easy method.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-2"},{"@type":"HowToStep","text":"Combine marinade ingredients. Add cubed tofu. Stir to coat. Marinate for 1 hour (stirring halfway through). If you're in a hurry, you can skip this step.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-3"},{"@type":"HowToStep","text":"Baking Instructions: (Uses less oil, slower method) Preheat oven to 425°F (220°C). Line a baking sheet with parchment paper. Spread tofu out in a single layer with no pieces touching. Top with remaining marinade. Bake for 20 minutes (or until tofu is crisp on the outside and tender inside.)","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-4"},{"@type":"HowToStep","text":"Skillet Instructions: (Uses more oil, faster method) Heat 1 tbsp canola oil over medium-high heat. Add marinated tofu cubes (reserving excess marinade) and cook, turning tofu as needed, until all sides are golden-brown and crisp on all sides. Stir in remaining marinade and cook until marinade cooks down and coats the tofu.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-5"},{"@type":"HowToStep","text":"Chill tofu.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-6"}]},{"@type":"HowToSection","name":"Creamy Toasted Sesame &amp; Soy Dressing:","itemListElement":[{"@type":"HowToStep","text":"Set aside half of the sesame seeds. Combine remaining ingredients in a blender. Blend on high until smooth and creamy. Taste and adjust seasoning. Add remaining sesame seeds and stir. Chill in refrigerator.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-7"}]},{"@type":"HowToSection","name":"Assembling salad:","itemListElement":[{"@type":"HowToStep","text":"In a large bowl, add 2 handfuls of spinach. Top with grated carrot, sliced cucumber, red bell pepper, avocado, and green onion. Add ¼ of the chilled marinated tofu. Drizzle with dressing and sprinkle with extra toasted sesame seeds.","url":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-8"}]}],"prepTime":"PT15M","cookTime":"PT20M","totalTime":"PT2H5M","recipeYield":["4","4 servings"],"recipeCategory":"Lunch & Dinner","cookingMethod":"Baking","recipeCuisine":"Vegan","aggregateRating":{"@type":"AggregateRating","reviewCount":"10","ratingValue":"4.9"},"nutrition":{"servingSize":"","calories":"379 calories","sugarContent":"7.5 g","sodiumContent":"832.4 mg","fatContent":"27 g","saturatedFatContent":"3.6 g","transFatContent":"0 g","carbohydrateContent":"21.8 g","fiberContent":"6.5 g","proteinContent":"14.9 g","cholesterolContent":"0 mg","@type":"nutritionInformation"},"review":[{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5"},"author":{"@type":"Person","name":"Stephanie"},"datePublished":"2019-11-04","reviewBody":"Delicious! I didn't have cashews so I swapped in natural peanut butter for the cashews and the oil. I baked the tofu and added half a cup of cooked quinoa since I'm nursing a baby. Highly recommend!"},{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5"},"author":{"@type":"Person","name":"Belinda"},"datePublished":"2020-03-22","reviewBody":"I wanted to make an avocado, orange, spinach salad with tofu, but I have not been very successful with making tasty sauteed tofu. Your recipe was my inspiration. Your suggestions for pressing the tofu, skipping the marinating time and baking the tofu made the salad fabulous!! I ended up adding thinly sliced cabbage, cooked golden beets and green onion. The salad was delicious—thanks to your dressing recipe, your excellent tofu preparation suggestions and your tasty marinade recipe! Thank you. We will definitely make this again."},{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5"},"author":{"@type":"Person","name":"Tanya W"},"datePublished":"2020-06-21","reviewBody":"Easy and delicious! It's super tasty and will be in our summer rotation! Great way to use large bags of spinach before they go bad!\r\n\r\nBecause another similar recipe I love calls for cornstarch before baking, I added about 1 T cornstarch.  Next time I'll have to try side by side with and without to see if how that changes it!  My husband and family loved it (except our 10 &amp; 12 yo boys who hate tofu).\r\n\r\nThis is versatile. I didn't have avocado, peppers, or carrot, but it was still a great and quick meal (you do have to plan ahead a little for tofu pressing time and baking time). I have fallen in love with tofu because it can be prepared so healthfully and deliciously.  I like not worrying about it getting tough like a lot of chicken, and not having unhealthy hormone and antibiotic additives (and not causing animals to live out horrible lives to feed us!)."},{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5"},"author":{"@type":"Person","name":"cm"},"datePublished":"2020-07-20","reviewBody":"A lovely  salad for a summers day, and full of exceptional  nutrition too."},{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5"},"author":{"@type":"Person","name":"Kortneii MacKenzie"},"datePublished":"2021-01-04","reviewBody":"Yum this was a nice change of pace.really enjoying the different flavors! Excellent recipe! Thanks for sharing."},{"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5"},"author":{"@type":"Person","name":"Natasha"},"datePublished":"2021-07-10","reviewBody":"Very tasty"}],"datePublished":"2019-08-31","@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#recipe","isPartOf":{"@id":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#article"},"mainEntityOfPage":"https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#webpage"}]}</script>
+	<!-- / Yoast SEO Premium plugin. -->
+
+
+<link rel='dns-prefetch' href='//scripts.mediavine.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//fonts.gstatic.com' />
+<link rel='dns-prefetch' href='//googletagmanager.com' />
+<link rel='dns-prefetch' href='//pixel.wp.com' />
+<link rel='dns-prefetch' href='//stats.wp.com' />
+
+<link rel="alternate" type="application/rss+xml" title="I LOVE VEGAN &raquo; Feed" href="https://ilovevegan.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="I LOVE VEGAN &raquo; Comments Feed" href="https://ilovevegan.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="I LOVE VEGAN &raquo; Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing Comments Feed" href="https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/feed/" />
+<link rel='preload'   href='https://ilovevegan.com/wp-content/themes/foodiepro-v440/style.css?ver=4.4.0' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type='text/css' media='all' />
+<style id='foodie-pro-theme-inline-css' type='text/css'>
+.before-header, .enews-widget, .footer-widgets, .form-allowed-tags{background:#dd9933;}.site-title a, .site-title a:hover{color:#292929;}.genesis-nav-menu, .genesis-nav-menu .sub-menu, .entry-footer .entry-meta, .post-meta, li.comment{border-color:#dd9933;}body, .site-description, .sidebar a{color:#3d3d3d;}h1.entry-title, .entry-title a, .widgettitle, .recipe-index-search .widgettitle, .footer-widgets .widgettitle{color:#303030;}.entry-meta, .post-info, .post-meta, .site-footer{color:#333333;}.before-header, .enews-widget, .before-header .widgettitle, .enews-widget .widgettitle, .footer-widgets, .form-allowed-tags{color:#3d3d3d;}a, .entry-meta a, .post-info a, .post-meta a, .site-footer a, .entry-content a{color:#333333;}a:hover, .entry-meta a:hover, .post-info a:hover, .post-meta a:hover, .site-footer a:hover{color:#646464;}.genesis-nav-menu > li > a{color:#3d3d3d;}.genesis-nav-menu > li > a:hover, .genesis-nav-menu > .current-menu-item > a{color:#26a96c;}.button, button, .enews-widget input[type="submit"], a.more-link, .more-from-category a, .sidebar .button, .sidebar .more-from-category a{background:#3d5f3a;}.button, button, .enews-widget input[type="submit"], a.more-link, .more-from-category a{border-color:#3d5f3a;}.button:hover, button:hover, .enews-widget input[type="submit"]:hover, a.more-link:hover, .more-from-category a:hover{color:#3d5f3a;}
+</style>
+<link rel='preload'   href='https://ilovevegan.com/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type='text/css' media='all' />
+<link rel='preload'   href='https://ilovevegan.com/wp-content/plugins/simple-social-icons/css/style.css?ver=3.0.2' data-rocket-async="style" as="style" onload="this.onload=null;this.rel='stylesheet'" type='text/css' media='all' />
+<script type='text/javascript' async="async" data-noptimize="1" data-cfasync="false" src='https://scripts.mediavine.com/tags/i-love-vegan.js?ver=5.8.2' id='mv-script-wrapper-js'></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://ilovevegan.com/wp-content/plugins/simple-social-icons/svgxuse.js?ver=1.1.21' id='svg-x-use-js' defer></script>
+<link rel="https://api.w.org/" href="https://ilovevegan.com/wp-json/" /><link rel="alternate" type="application/json" href="https://ilovevegan.com/wp-json/wp/v2/posts/17268" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://ilovevegan.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://ilovevegan.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='shortlink' href='https://ilovevegan.com/?p=17268' />
+<link rel="alternate" type="application/json+oembed" href="https://ilovevegan.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Filovevegan.com%2Fspinach-avocado-and-marinated-tofu-salad%2F" />
+<link rel="alternate" type="text/xml+oembed" href="https://ilovevegan.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Filovevegan.com%2Fspinach-avocado-and-marinated-tofu-salad%2F&#038;format=xml" />
+	<style type="text/css">
+	@media only screen and (max-width: 940px) {
+		.menu-toggle,
+		.menu-toggle:hover {
+		  position: fixed;
+		  top: 0;
+		  background: #FFF;
+		  z-index:9;
+		}
+		.nav-primary {
+		  position: fixed;
+		  top: 52px;
+		  width: 100%;
+		  background: #FFF;
+		  z-index: 9;
+		}
+		.site-container {
+			margin-top: 50px;
+		}
+	}
+	</style><style id='feast-blockandfront-styles'>.feast-about-author { background-color: #f2f2f2; color: #32373c; padding: 17px; margin-top: 57px; display: grid; grid-template-columns: 1fr 3fr !important; } .feast-about-author h2 { margin-top: 7px !important;} .feast-about-author img{ border-radius: 50% !important; }aside .feast-about-author { grid-template-columns: 1fr !important; }.wp-block-search .wp-block-search__input { max-width: 100%; }.screen-reader-text { width: 1px; height: 1px; }footer ul li, .site-footer ul li { list-style-type: none; }footer ul li, .site-footer ul li { list-style-type: none; }aside .wp-block-search { display: grid; grid-template-columns: 1fr; margin: 37px 0;  } aside .wp-block-search__inside-wrapper { display: grid !important; grid-template-columns: 1fr; } aside input { min-height: 50px; }  ​aside .wp-block-search__label, aside .wp-block-search__button { display: none; } aside li:before { content: '' !important; } aside p, aside div, aside ul { margin: 17px 0; }@media only screen and (max-width: 600px) { aside .wp-block-search { grid-template-columns: 1fr; } aside input { min-height: 50px; margin-bottom: 17px;} }.feast-button a { border: 2px solid var(--feast-branding-primary-background); padding: 7px 14px; border-radius: 20px; background: var(--feast-branding-primary); color: var(--feast-branding-primary-background); text-decoration: none !important; font-weight: bold; } .feast-button { padding: 27px 7px; }.feast-box-primary { color: var( --feast-branding-primary ) !important; background: var(--feast-branding-primary-background) !important; padding: 17px !important; margin: 17px 0 !important;  }.feast-box-secondary { color: var( --feast-branding-secondary ) !important; background: var(--feast-branding-secondary-background) !important; padding: 17px !important; margin: 17px 0 !important;  }.feast-box-primary li, .feast-box-secondary li {margin-left: 17px !important; }.feast-checklist li::marker { color: transparent; } .feast-checklist li:before { content: '✓'; margin-right: 17px; }.schema-faq-question { font-size: 1.2em; display: block; margin-bottom: 7px;} .schema-faq-section { margin: 37px 0; }</style>
+<style id='feast-modern-branding'>:root {  --feast-branding-primary: #000000; --feast-branding-primary-background: ; --feast-branding-secondary: #000000; --feast-branding-secondary-background: ; }</style>
+<style type="text/css">
+	.feast-category-index-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr) );
+		grid-gap: 57px 17px;
+		list-style: none;
+		list-style-type: none;
+		margin: 17px 0 !important;
+	}
+	.feast-category-index-list li {
+		min-height: 150px;
+		text-align: center;
+		position: relative;
+		list-style: none !important;
+		margin-left: 0 !important;
+		list-style-type: none !important;
+		overflow: hidden;
+	}
+	.feast-category-index-list li a.title { 
+		text-decoration: none; 
+	}
+	.feast-category-index-list-overlay .fsci-title {
+		position: absolute;
+		top: 88%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: #FFF;
+		padding: 5px;
+		color: #333;
+		font-weight: bold;
+		border: 2px solid #888;
+		text-transform: uppercase;
+		width: 80%;
+	}
+	.listing-item:focus-within, .wp-block-search__input:focus {outline: 2px solid #555; }
+	.listing-item a:focus, .listing-item a:focus .fsri-title, .listing-item a:focus img { opacity: 0.8; outline: none; }
+	li.listing-item:before { content: "" !important; }
+	.feast-image-frame, .feast-image-border { border: 3px solid #DDD; }
+	.feast-image-round, .feast-image-round img { border-radius: 50%; } 
+	.feast-image-shadow { box-shadow: 3px 3px 5px #AAA; }
+	.feast-line-through { text-decoration: line-through; }
+	.feast-grid-full, .feast-grid-half, .feast-grid-third, .feast-grid-fourth, .feast-grid-fifth { display: grid; grid-gap: 57px 17px; }
+	.feast-grid-full { grid-template-columns: 1fr !important; }
+	.feast-grid-half { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+	.feast-grid-third { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+	.feast-grid-fourth { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+	.feast-grid-fifth { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+	@media only screen and (min-width: 600px)  { 
+		.feast-category-index-list { grid-template-columns: repeat(4, minmax(0, 1fr) ); }
+		.feast-desktop-grid-full { grid-template-columns: 1fr !important; }
+		.feast-desktop-grid-half { grid-template-columns: repeat(2, 1fr) !important; }
+		.feast-desktop-grid-third { grid-template-columns: repeat(3, 1fr) !important; }
+		.feast-desktop-grid-fourth { grid-template-columns: repeat(4, 1fr) !important; }
+		.feast-desktop-grid-fifth { grid-template-columns: repeat(5, 1fr) !important; }
+		.feast-desktop-grid-sixth { grid-template-columns: repeat(6, 1fr) !important; }
+	}
+	@media only screen and (min-width: 1100px) { .full-width-content main.content { width: 1080px; max-width: 1080px; } }
+	@media only screen and (max-width: 600px) { .entry-content .wp-block-image { width: 100% !important; }}
+	@media only screen and (min-width: 1024px) {
+		.feast-full-width-wrapper { width: 100vw; position: relative; left: 50%; right: 50%; margin: 37px -50vw; background: #F5F5F5; padding: 17px 0; }
+		.feast-full-width-wrapper .feast-recipe-index { width: 1140px; margin: 0 auto; }
+		.feast-full-width-wrapper .listing-item { background: #FFF; padding: 17px; }
+	}
+	.home main .wp-block-search { margin: 57px 0; padding: 13px; background: #FFF; }
+	.home main .wp-block-search button { display: none; visibility: hidden; }
+	.home main .wp-block-search__label { position:absolute; left:-10000px; top:auto; }
+	.feast-prev-next { display: grid; grid-template-columns: 1fr;  border-bottom: 1px solid #CCC; margin: 57px 0;  }
+	.feast-prev-post, .feast-next-post { padding: 37px 17px; border-top: 1px solid #CCC; }
+	.feast-next-post { text-align: right; }
+	@media only screen and (min-width: 600px) {
+		.feast-prev-next { grid-template-columns: 1fr 1fr; border-bottom: none; }
+		.feast-next-post { border-left: 1px solid #CCC;}
+		.feast-prev-post, .feast-next-post { padding: 37px; }
+	}
+	.has-background { padding: 1.25em 2.375em; margin: 1em 0; }
+	@media only screen and (max-width: 1023px) {
+		.content-sidebar .content, .sidebar-primary { float: none; clear: both; }
+		.has-background { padding: 1em; margin: 1em 0; }
+	}
+	hr.has-background { padding: inherit; margin: inherit; }
+	body { -webkit-animation: none !important; animation: none !important; }
+	summary { display: list-item; }
+	.bypostauthor .comment-author-name { color: unset; }
+	.comment-list article header { overflow: auto; }
+</style><style type="text/css">
+.tasty-recipes-rating-solid.tasty-recipes-clip-10{-webkit-clip-path:polygon(0 0,10% 0,10% 100%,0 100%);clip-path:polygon(0 0,10% 0,10% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-20{-webkit-clip-path:polygon(0 0,20% 0,20% 100%,0 100%);clip-path:polygon(0 0,20% 0,20% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-30{-webkit-clip-path:polygon(0 0,30% 0,30% 100%,0 100%);clip-path:polygon(0 0,30% 0,30% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-40{-webkit-clip-path:polygon(0 0,40% 0,40% 100%,0 100%);clip-path:polygon(0 0,40% 0,40% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-50{-webkit-clip-path:polygon(0 0,50% 0,50% 100%,0 100%);clip-path:polygon(0 0,50% 0,50% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-60{-webkit-clip-path:polygon(0 0,60% 0,60% 100%,0 100%);clip-path:polygon(0 0,60% 0,60% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-70{-webkit-clip-path:polygon(0 0,70% 0,70% 100%,0 100%);clip-path:polygon(0 0,70% 0,70% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-80{-webkit-clip-path:polygon(0 0,80% 0,80% 100%,0 100%);clip-path:polygon(0 0,80% 0,80% 100%,0 100%)}.tasty-recipes-rating-solid.tasty-recipes-clip-90{-webkit-clip-path:polygon(0 0,90% 0,90% 100%,0 100%);clip-path:polygon(0 0,90% 0,90% 100%,0 100%)}.tasty-recipes-rating-outline{display:inline-block;height:1em;width:1em}.tasty-recipes-rating-outline.tasty-recipes-clip-0 svg{fill:url(#tasty-recipes-clip-0)}.tasty-recipes-rating-outline.tasty-recipes-clip-10 svg{fill:url(#tasty-recipes-clip-10)}.tasty-recipes-rating-outline.tasty-recipes-clip-20 svg{fill:url(#tasty-recipes-clip-20)}.tasty-recipes-rating-outline.tasty-recipes-clip-30 svg{fill:url(#tasty-recipes-clip-30)}.tasty-recipes-rating-outline.tasty-recipes-clip-40 svg{fill:url(#tasty-recipes-clip-40)}.tasty-recipes-rating-outline.tasty-recipes-clip-50 svg{fill:url(#tasty-recipes-clip-50)}.tasty-recipes-rating-outline.tasty-recipes-clip-60 svg{fill:url(#tasty-recipes-clip-60)}.tasty-recipes-rating-outline.tasty-recipes-clip-70 svg{fill:url(#tasty-recipes-clip-70)}.tasty-recipes-rating-outline.tasty-recipes-clip-80 svg{fill:url(#tasty-recipes-clip-80)}.tasty-recipes-rating-outline.tasty-recipes-clip-90 svg{fill:url(#tasty-recipes-clip-90)}.tasty-recipes-rating-outline.tasty-recipes-clip-100 svg{fill:url(#tasty-recipes-clip-100)}.comment-content .tasty-recipes-rating-outline.tasty-recipes-clip-100 svg{fill:currentColor}.tasty-recipes-comment-form{border:none;margin:0;padding:0}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons{direction:rtl;display:block;text-align:left;unicode-bidi:bidi-override}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>span{display:inline-block;position:relative;width:1.1em}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>span i{font-style:normal}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>span .unchecked{display:inline-block}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>input:checked~span .unchecked,.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>span .checked{display:none}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>input:checked~span .checked{display:inline-block}@media only screen and (min-width:1024px){.tasty-recipes-comment-form .tasty-recipes-ratings-buttons:not(:hover)>input:checked~span .unchecked,.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>:hover .unchecked,.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>:hover~span .unchecked{display:none}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons:not(:hover)>input:checked~span .checked,.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>:hover .checked,.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>:hover~span .checked{display:inline-block}}.tasty-recipes-comment-form .tasty-recipes-ratings-buttons>input{cursor:pointer;height:1.3em;margin-left:-1.4em;margin-right:0;opacity:0;position:relative;width:1.2em;z-index:2}
+
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-35913415-1"></script>
+<script type="rocketlazyloadscript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-35913415-1');
+</script>
+<script type="rocketlazyloadscript">
+  var _comscore = _comscore || [];
+  _comscore.push({ c1: \\\"2\\\", c2: \\\"6035233\\\" });
+  (function() {
+    var s = document.createElement(\\\"script\\\"), el = document.getElementsByTagName(\\\"script\\\")[0]; s.async = true;
+    s.src = (document.location.protocol == \\\"https:\\\" ? \\\"https://sb\\\" : \\\"http://b\\\") + \\\".scorecardresearch.com/beacon.js\\\";
+    el.parentNode.insertBefore(s, el);
+  })();
+</script>
+<noscript>
+  <img src=\\\"http://b.scorecardresearch.com/p?c1=2&c2=6035233&cv=2.0&cj=1\\\" />
+</noscript>
+
+<meta name=\\\"norton-safeweb-site-verification\\\" content=\\\"gi18h-k01e7bk9mkchi6u80thmx89zkp5z9b9g2ro-3nevk440ksb6j4kf38zrw493rjj1qrm5z81we6kawk71hbo02eaamnjttskg7xkltqcq7p0rsr1e8u84ies5h4\\\" />	<style>
+		/* Add animation (Chrome, Safari, Opera) */
+		@-webkit-keyframes openmenu {
+		  from {left:-100px;opacity: 0;}
+		  to {left:0px;opacity:1;}
+		}
+		@-webkit-keyframes closebutton {
+		    0% {opacity: 0;}
+		    100% {opacity: 1;}
+		}
+         
+		/* Add animation (Standard syntax) */
+		@keyframes openmenu {
+		  from {left:-100px;opacity: 0;}
+		  to {left:0px;opacity:1;}
+		}
+		@keyframes closebutton {
+		    0% {opacity: 0;}
+		    100% {opacity: 1;}
+		}
+
+		/* The mmm's background */
+		.feastmobilemenu-background {
+			display: none;
+			position: fixed;
+			z-index: 9999;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+			background-color: rgb(0, 0, 0);
+			background-color: rgba(0, 0, 0, 0.4);
+		}
+
+		/* Display the mmm when targeted */
+		.feastmobilemenu-background:target {
+			display: table;
+			position: fixed;
+		}
+
+		/* The mmm box */
+		.mmm-dialog {
+			display: table-cell;
+			vertical-align: top;
+			font-size: 20px;
+		}
+
+		/* The mmm's content */
+		.mmm-dialog .mmm-content {
+			margin: 0;
+			padding: 10px 10px 10px 20px;
+			position: fixed;
+			left: 0;
+			background-color: #FEFEFE;
+			contain: strict;
+			overflow-x: hidden;
+			overflow-y: auto;
+			outline: 0;
+			border-right: 1px #777 solid;
+			border-bottom: 1px #777 solid;
+			text-align: justify;
+			width: 320px;
+			height: 90%;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+			/* Add animation */
+			-webkit-animation-name: openmenu; /* Chrome, Safari, Opera */
+			-webkit-animation-duration: 0.6s; /* Chrome, Safari, Opera */
+			animation-name: openmenu;
+			animation-duration: 0.6s;
+		}
+		.mmm-content li {
+		    list-style: none;
+		}
+		#menu-feast-modern-mobile-menu li {
+			min-height: 50px; 
+			margin-left: 5px;
+		    	list-style: none;
+		}
+		#menu-feast-modern-mobile-menu li a {
+			color: inherit;
+			text-decoration: inherit;
+		}
+	
+		/* The button used to close the mmm */
+		.closebtn {
+			text-decoration: none;
+			float: right;
+			margin-right: 10px;
+			font-size: 50px;
+			font-weight: bold;
+			color: #333;
+			z-index:1001;
+  			top: 0;
+			position: fixed;
+			left: 270px;
+			-webkit-animation-name: closebutton; /* Chrome, Safari, Opera */
+			-webkit-animation-duration: 1.5s; /* Chrome, Safari, Opera */
+			animation-name: closebutton;
+			animation-duration: 1.5s;
+		}
+
+		.closebtn:hover,
+		.closebtn:focus {
+			color: #555;
+			cursor: pointer;
+		}
+
+		.mmmheader {
+			font-size: 25px;
+			color: #FFF;
+			height: 80px;
+			display: flex;
+			justify-content: space-between;
+		}
+		#mmmlogo {	
+			max-width: 200px;	
+			max-height: 70px;	
+		}
+		#feast-mobile-search {
+			margin-bottom: 17px;
+			min-height: 50px;
+			overflow: auto;
+		}
+		#feast-mobile-search input[type=submit] {
+			display: none;
+		}
+		#feast-mobile-search input[type=search] {
+			width: 100%;
+		}	
+
+		#feast-mobile-menu-social-icons {
+			margin-top: 17px;
+		}
+
+		#feast-social .simple-social-icons {
+			list-style: none;
+			margin: 0 !important; 
+		}
+
+		.feastmobilenavbar { 
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 998;
+			width: 100%;
+			height: 80px;
+			padding: 0;
+			margin: 0 auto;
+			box-sizing: border-box;
+			border-top: 1px solid #CCC;
+			border-bottom: 1px solid #CCC;
+			background: #FFF;
+			display: grid;
+			grid-template-columns: repeat(7, minmax(50px, 1fr));
+			text-align: center;
+			contain: strict;
+			overflow: hidden;
+		}
+		.feastmobilenavbar > div { height: 80px; }
+		.admin-bar .feastmobilenavbar {
+			top: 32px;
+		}
+		@media screen and (max-width:782px) {
+			.admin-bar .feastmobilenavbar {
+				top: 0;
+				position: sticky; 
+			}
+			.admin-bar .site-container, .admin-bar .body-template-content { 
+				margin-top: 0;
+			}
+		}
+		.feastmobilenavbar a img { 
+			margin-bottom: inherit !important; 
+		}
+		.feastmenutoggle, .feastsearchtoggle, .feastsubscribebutton {
+			display: flex;
+			align-items: center;
+			justify-items: center;
+			justify-content: center;
+		}
+		
+				
+		.feastsearchtoggle svg, .feastmenutoggle svg {
+			width: 30px;
+			height: 30px;
+			padding: 10px;
+			box-sizing: content-box;
+			color: black;
+		}
+		.feastsubscribebutton { 
+   		 	overflow: hidden;
+		}
+		.feastsubscribebutton img {
+			max-width: 90px;
+			padding: 15px;
+			margin: 1px;
+		}
+		.feastsubscribebutton svg {
+			color: #000;
+		}
+						.feastmenulogo {
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			grid-column-end: span 4;
+		}
+		
+		
+					.desktop-inline-modern-menu .sub-menu { display: none; }
+			.desktop-inline-modern-menu, .modern-menu-desktop-social { display: none; }
+			@media only screen and (min-width: 1200px) {
+				.desktop-inline-modern-menu, .modern-menu-desktop-social { display: block; }
+				.feastmobilenavbar .feastmenutoggle { display: none; } /* hide menu toggle */
+				.feastmobilenavbar { grid-template-columns: 1fr 3fr 1fr 50px !important; } /* rearrange grid for desktop */
+				.feastmenulogo { grid-column-end: span 1 !important; }
+				.desktop-inline-modern-menu ul { 
+					display: grid; 
+					grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 
+					height: 70px; 
+					overflow: hidden; 
+					margin: 0 17px;
+				}
+				.desktop-inline-modern-menu ul li { 
+					display: flex; 
+					justify-content: center; 
+					align-items: center; 
+					min-height: 70px; 
+				}
+				.desktop-inline-modern-menu ul li:nth-child(n+6) { display: none; }
+				.modern-menu-desktop-social .simple-social-icons li:nth-child(n+4), .modern-menu-desktop-social .widgettitle { display: none; }
+				.modern-menu-desktop-social { display: flex !important; justify-content: center; align-items: center; }
+				.feastmobilenavbar a { color: #000; text-decoration: none; }
+
+			} /* end desktop query */
+			 /* end testing */
+				
+		
+		@media only screen and ( max-width: 1199px ) {
+			.feastmenulogo {grid-column-end: span 3; } 
+			.feastsubscribebutton { grid-column-end: span 2; }
+		}
+		@media only screen and (max-width: 359px) { /* 320px fix */ 
+			.feastmobilenavbar { 
+				grid-template-columns: repeat(6, minmax(50px, 1fr)); 
+			} 
+			.feastmenulogo {grid-column-end: span 2; }		}
+		header.site-header, .nav-primary  { 
+			display: none !important; 
+			visibility: hidden; 
+		}
+		.site-container, .body-template-content { 
+			margin-top: 80px; /* prevents menu overlapping content */ 
+		}
+		@media only screen and ( min-width: 1200px ) { 
+			.feastmobilenavbar { 
+				width: 100%;
+				left: 0;
+				padding-left: calc(50% - 550px);
+				padding-right: calc(50% - 550px);
+			} 
+							.feastsubscribebutton { display: none; }
+					}
+		@media print {
+			.feastmobilenavbar { position: static; }
+		}
+		</style>
+		
+		<style id='feast-increase-content-width'>@media only screen and (min-width: 1200px) { #genesis-content { min-width: 728px; } #content-container { min-width: 728px; }  }</style>
+		<style id='feast-system-fonts'>body {font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;}
+h1,h2,h3,h4,h5,h6 {font-family:-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;}
+</style>
+	<style id='feast-edit-body-font-size'>body { font-size: 16px; }</style><link rel="icon" href="https://ilovevegan.com/wp-content/uploads/2012/08/cropped-ILoveVegan1-32x32.jpg" sizes="32x32" />
+<link rel="icon" href="https://ilovevegan.com/wp-content/uploads/2012/08/cropped-ILoveVegan1-192x192.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://ilovevegan.com/wp-content/uploads/2012/08/cropped-ILoveVegan1-180x180.jpg" />
+<meta name="msapplication-TileImage" content="https://ilovevegan.com/wp-content/uploads/2012/08/cropped-ILoveVegan1-270x270.jpg" />
+		<style type="text/css" id="wp-custom-css">
+			@media only screen and (min-width: 1024px) {
+.custom-full-width { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; background: #EEE; padding: 17px 0; }
+.custom-full-width .feast-category-index { width: 1140px; margin: 0 auto; }
+.custom-full-width .listing-item { background: #FFF; padding: 17px; }
+}
+.menu-item { font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; font-weight: 800; font-size: 1.1rem; color: #333333; margin-bottom: 0.8rem; padding: 0 0 0 0.3rem; }
+.menu-item a:link { color: #333333; opacity: 100; line-height: 0.5rem; display: inline-block; background-color: #FFC857; margin-top: 0.7rem; padding: 0 0 0 0.3rem; } 
+.menu-item a:visited { color: #333333; opacity: 100; line-height: 0.5rem; display: inline-block; background-color: #FFC857; margin-top: 0.7rem; padding: 0 0 0 0.3rem; }
+.menu-item a:hover { color: #333333; opacity: 100;  text-decoration: underline; text-decoration-thickness: 0.125rem;  line-height: 0.5rem; display: inline-block; background-color: transparent; margin-top: 0.7rem; padding: 0 0 0 0.3rem; }
+font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+.body { 
+letter-spacing:normal !important;
+}		</style>
+		<noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript><script type="rocketlazyloadscript">
+/*! loadCSS rel=preload polyfill. [c]2017 Filament Group, Inc. MIT License */
+(function(w){"use strict";if(!w.loadCSS){w.loadCSS=function(){}}
+var rp=loadCSS.relpreload={};rp.support=(function(){var ret;try{ret=w.document.createElement("link").relList.supports("preload")}catch(e){ret=!1}
+return function(){return ret}})();rp.bindMediaToggle=function(link){var finalMedia=link.media||"all";function enableStylesheet(){link.media=finalMedia}
+if(link.addEventListener){link.addEventListener("load",enableStylesheet)}else if(link.attachEvent){link.attachEvent("onload",enableStylesheet)}
+setTimeout(function(){link.rel="stylesheet";link.media="only x"});setTimeout(enableStylesheet,3000)};rp.poly=function(){if(rp.support()){return}
+var links=w.document.getElementsByTagName("link");for(var i=0;i<links.length;i++){var link=links[i];if(link.rel==="preload"&&link.getAttribute("as")==="style"&&!link.getAttribute("data-loadcss")){link.setAttribute("data-loadcss",!0);rp.bindMediaToggle(link)}}};if(!rp.support()){rp.poly();var run=w.setInterval(rp.poly,500);if(w.addEventListener){w.addEventListener("load",function(){rp.poly();w.clearInterval(run)})}else if(w.attachEvent){w.attachEvent("onload",function(){rp.poly();w.clearInterval(run)})}}
+if(typeof exports!=="undefined"){exports.loadCSS=loadCSS}
+else{w.loadCSS=loadCSS}}(typeof global!=="undefined"?global:this))
+</script></head>
+<body class="post-template-default single single-post postid-17268 single-format-standard feast-plugin header-full-width content-sidebar genesis-breadcrumbs-visible genesis-footer-widgets-hidden foodie-pro"><div class="site-container"><ul class="genesis-skip-link"><li><a href="#genesis-nav-primary" class="screen-reader-shortcut"> Skip to primary navigation</a></li><li><a href="#genesis-content" class="screen-reader-shortcut"> Skip to main content</a></li><li><a href="#genesis-sidebar-primary" class="screen-reader-shortcut"> Skip to primary sidebar</a></li></ul><header class="site-header"><div class="wrap"><div class="title-area"><div class="site-title"><a href="https://ilovevegan.com/">I LOVE VEGAN</a></div></div></div></header><nav class="nav-primary" aria-label="Main" id="genesis-nav-primary"><div class="wrap"><ul id="menu-feast-modern-mobile-menu" class="menu genesis-nav-menu menu-primary"><li id="menu-item-20963" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20963"><a href="https://ilovevegan.com/complete-recipe-index/"><span >recipes →</span></a></li>
+<li id="menu-item-20947" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20947"><a href="https://ilovevegan.com/resources/"><span >go vegan!</span></a></li>
+<li id="menu-item-21122" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21122"><a href="https://ilovevegan.com/subscribe/"><span >subscribe</span></a></li>
+<li id="foodie-search" class="foodie-search menu-item"><form class="search-form" method="get" action="https://ilovevegan.com/" role="search"><label class="search-form-label screen-reader-text" for="searchform-1">Search</label><input class="search-form-input" type="search" name="s" id="searchform-1" placeholder="Search"><input class="search-form-submit" type="submit" value="Search"><meta content="https://ilovevegan.com/?s={s}"></form></li></ul></div></nav><div class="feastmobilenavbar"><div class="feastmenutoggle"><a href="#feastmobilemenu"><?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "//www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Capa_1" xmlns="//www.w3.org/2000/svg" xmlns:xlink="//www.w3.org/1999/xlink" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 459 459" style="enable-background:new 0 0 459 459;" xml:space="preserve" aria-labelledby="menuicon" role="img">
+	<title id="menuicon">menu icon</title>
+	<g id="menu">
+		<path fill="currentColor" d="M0,382.5h459v-51H0V382.5z M0,255h459v-51H0V255z M0,76.5v51h459v-51H0z"/>
+	</g>
+</svg>
+</a></div><div class="feastmenulogo"><a href="https://ilovevegan.com"><img width="200" height="70" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%2070'%3E%3C/svg%3E" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-400.png 2x" alt="go to homepage" data-pin-nopin="true" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-200.png" /><noscript><img width="200" height="70" src="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-200.png" srcset="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-400.png 2x" alt="go to homepage" data-pin-nopin="true" /></noscript></a></div><nav class='desktop-inline-modern-menu'><ul id="menu-feast-modern-mobile-menu-1" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20963"><a href="https://ilovevegan.com/complete-recipe-index/">recipes →</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20947"><a href="https://ilovevegan.com/resources/">go vegan!</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21122"><a href="https://ilovevegan.com/subscribe/">subscribe</a></li>
+</ul></nav><div class='modern-menu-desktop-social'><div id="feast-social"><li id="simple-social-icons-3" class="widget simple-social-icons"><ul class="alignleft"><li class="ssi-facebook"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/ilovegan" ><svg role="img" class="social-facebook" aria-labelledby="social-facebook-3"><title id="social-facebook-3">Facebook</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-facebook"></use></svg></a></li><li class="ssi-instagram"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/ilovegan/" ><svg role="img" class="social-instagram" aria-labelledby="social-instagram-3"><title id="social-instagram-3">Instagram</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-instagram"></use></svg></a></li><li class="ssi-pinterest"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://www.pinterest.com/ilovevegan/" ><svg role="img" class="social-pinterest" aria-labelledby="social-pinterest-3"><title id="social-pinterest-3">Pinterest</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-pinterest"></use></svg></a></li><li class="ssi-tumblr"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://garden-of-vegan.tumblr.com/" ><svg role="img" class="social-tumblr" aria-labelledby="social-tumblr-3"><title id="social-tumblr-3">Tumblr</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-tumblr"></use></svg></a></li><li class="ssi-twitter"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://twitter.com/ilovegan" ><svg role="img" class="social-twitter" aria-labelledby="social-twitter-3"><title id="social-twitter-3">Twitter</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-twitter"></use></svg></a></li></ul></li>
+</div></div><div class="feastsubscribebutton"><a href="/subscribe/"><svg id="svg" version="1.1" xmlns="//www.w3.org/2000/svg" xmlns:xlink="//www.w3.org/1999/xlink" height="30px" width="90px" viewBox="0, 0, 400,62.365591397849464">
+  <title>subscribe</title>
+  <g id="svgg">
+    <path fill="currentColor" id="path0" d="M26.050 5.330 C 19.725 7.308,15.771 12.123,15.771 17.846 C 15.771 25.406,19.962 29.225,32.891 33.446 C 48.466 38.530,48.556 50.896,33.017 50.896 C 25.829 50.896,22.500 48.560,20.505 42.115 C 19.726 39.597,14.337 40.411,14.337 43.046 C 14.337 56.105,41.674 61.606,48.769 49.975 C 54.448 40.665,48.765 31.572,34.767 27.571 C 23.980 24.488,20.269 20.193,23.310 14.313 C 27.257 6.680,43.728 9.562,43.728 17.886 C 43.728 19.171,44.177 19.355,47.312 19.355 C 49.283 19.355,50.896 19.252,50.896 19.127 C 50.896 9.148,37.546 1.734,26.050 5.330 M160.932 4.926 C 143.613 9.505,145.768 26.536,164.445 32.693 C 175.194 36.236,177.778 38.236,177.778 43.011 C 177.778 53.848,156.854 53.818,154.473 42.977 C 153.842 40.106,147.658 39.647,147.686 42.473 C 147.827 56.888,176.357 61.890,183.180 48.696 C 187.688 39.978,182.226 32.186,168.371 27.569 C 156.805 23.715,152.605 17.927,157.885 13.118 C 164.593 7.008,177.778 10.406,177.778 18.244 C 177.778 19.087,178.577 19.355,181.097 19.355 L 184.417 19.355 183.994 16.747 C 182.636 8.383,170.802 2.317,160.932 4.926 M205.522 5.288 C 193.113 9.929,187.498 27.839,193.471 43.728 C 200.113 61.398,225.168 60.783,229.987 42.832 L 230.709 40.143 227.272 40.143 C 224.006 40.143,223.813 40.253,223.393 42.354 C 221.152 53.560,205.804 54.266,200.382 43.412 C 197.373 37.389,197.248 24.155,200.140 17.838 C 205.236 6.706,220.504 7.247,223.462 18.664 C 224.326 21.998,230.667 22.645,230.225 19.355 C 228.759 8.450,216.195 1.295,205.522 5.288 M58.781 24.396 C 58.781 45.482,59.019 47.008,62.941 51.141 C 70.903 59.530,87.303 57.865,93.053 48.085 L 94.982 44.803 95.203 24.910 L 95.424 5.018 92.199 5.018 L 88.974 5.018 88.752 24.194 C 88.469 48.664,87.490 50.887,76.988 50.893 C 66.447 50.900,65.236 48.111,65.234 23.835 L 65.233 5.018 62.007 5.018 L 58.781 5.018 58.781 24.396 M106.093 30.538 L 106.093 56.059 118.100 55.784 C 131.707 55.472,134.341 54.673,138.131 49.704 C 142.597 43.849,140.283 32.689,134.070 30.116 L 131.852 29.197 134.377 27.481 C 140.228 23.505,140.846 14.573,135.646 9.123 C 132.673 6.006,128.030 5.018,116.357 5.018 L 106.093 5.018 106.093 30.538 M240.143 30.466 L 240.143 55.914 243.369 55.914 L 246.595 55.914 246.595 45.520 L 246.595 35.125 252.509 35.126 L 258.423 35.127 264.025 45.521 L 269.628 55.914 273.190 55.914 C 276.653 55.914,276.730 55.869,275.923 54.301 C 275.467 53.414,272.875 48.634,270.163 43.679 C 264.354 33.065,264.551 34.140,268.014 31.954 C 278.032 25.630,275.856 9.891,264.455 6.209 C 261.718 5.325,258.109 5.018,250.455 5.018 L 240.143 5.018 240.143 30.466 M284.588 30.466 L 284.588 55.914 287.814 55.914 L 291.039 55.914 291.039 30.466 L 291.039 5.018 287.814 5.018 L 284.588 5.018 284.588 30.466 M303.226 30.466 L 303.226 55.914 313.953 55.914 C 325.859 55.914,330.021 55.026,333.601 51.722 C 339.739 46.056,339.150 35.284,332.463 30.920 L 329.863 29.224 332.594 26.619 C 336.044 23.329,337.133 19.713,336.111 14.946 C 334.474 7.313,329.244 5.018,313.490 5.018 L 303.226 5.018 303.226 30.466 M348.387 30.466 L 348.387 55.914 364.559 55.914 L 380.732 55.914 380.509 53.226 L 380.287 50.538 367.563 50.342 L 354.839 50.146 354.839 41.202 L 354.839 32.258 365.950 32.258 L 377.061 32.258 377.061 29.749 L 377.061 27.240 365.950 27.240 L 354.839 27.240 354.839 18.996 L 354.839 10.753 367.384 10.753 L 379.928 10.753 379.928 7.885 L 379.928 5.018 364.158 5.018 L 348.387 5.018 348.387 30.466 M129.099 11.862 C 132.543 13.644,133.822 19.465,131.498 22.784 C 129.472 25.675,126.727 26.523,119.390 26.523 L 112.545 26.523 112.545 18.638 L 112.545 10.753 119.749 10.753 C 124.849 10.753,127.579 11.077,129.099 11.862 M263.574 12.151 C 266.573 13.979,267.549 15.950,267.549 20.179 C 267.549 27.041,264.112 29.448,253.584 29.960 L 246.595 30.299 246.595 20.526 L 246.595 10.753 253.943 10.755 C 259.953 10.758,261.706 11.011,263.574 12.151 M328.021 13.122 C 333.818 19.868,328.285 26.523,316.881 26.523 L 310.394 26.523 310.394 18.575 L 310.394 10.626 318.343 10.868 C 326.030 11.103,326.349 11.177,328.021 13.122 M129.773 33.345 C 133.706 35.379,135.094 40.558,133.031 45.495 C 131.463 49.248,128.894 50.179,120.107 50.179 L 112.545 50.179 112.545 41.219 L 112.545 32.258 120.107 32.258 C 125.465 32.258,128.283 32.575,129.773 33.345 M329.093 34.958 C 332.751 39.055,331.571 46.679,326.905 49.092 C 325.435 49.852,322.636 50.179,317.598 50.179 L 310.394 50.179 310.394 41.157 L 310.394 32.135 318.698 32.376 L 327.003 32.616 329.093 34.958 " stroke="none" fill-rule="evenodd"></path>
+  </g>
+</svg>
+</a></div><div class="feastsearchtoggle"><a href="#feastmobilemenu"><svg xmlns="//www.w3.org/2000/svg" xmlns:xlink="//www.w3.org/1999/xlink" xml:space="preserve" xmlns:svg="//www.w3.org/2000/svg" version="1.1" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 100 100" aria-labelledby="searchicon" role="img">
+  <title id="searchicon">search icon</title>
+  <g transform="translate(0,-952.36218)">
+    <path fill="currentColor" d="M 40 11 C 24.007431 11 11 24.00743 11 40 C 11 55.9926 24.007431 69 40 69 C 47.281794 69 53.935267 66.28907 59.03125 61.84375 L 85.59375 88.40625 C 86.332786 89.16705 87.691654 89.1915 88.4375 88.4375 C 89.183345 87.6834 89.175154 86.2931 88.40625 85.5625 L 61.875 59.03125 C 66.312418 53.937244 69 47.274551 69 40 C 69 24.00743 55.992569 11 40 11 z M 40 15 C 53.830808 15 65 26.16919 65 40 C 65 53.8308 53.830808 65 40 65 C 26.169192 65 15 53.8308 15 40 C 15 26.16919 26.169192 15 40 15 z " transform="translate(0,952.36218)">
+    </path>
+  </g>
+</svg>
+</a></div></div><div id="feastmobilemenu" class="feastmobilemenu-background" aria-label="main"><div class="mmm-dialog"><div class="mmm-content"><a href="https://ilovevegan.com"><img width="200" height="70" id="mmmlogo" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20200%2070'%3E%3C/svg%3E" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-400.png 2x" alt="Homepage link" data-pin-nopin="true" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-200.png" /><noscript><img width="200" height="70" id="mmmlogo" src="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-200.png" srcset="https://ilovevegan.com/wp-content/uploads/2021/09/i-love-vegan-2021-400.png 2x" alt="Homepage link" data-pin-nopin="true" /></noscript></a><div id="feast-mobile-search"><form class="search-form" method="get" action="https://ilovevegan.com/" role="search"><label class="search-form-label screen-reader-text" for="searchform-2">Search</label><input class="search-form-input" type="search" name="s" id="searchform-2" placeholder="Search"><input class="search-form-submit" type="submit" value="Search"><meta content="https://ilovevegan.com/?s={s}"></form></div><ul id="menu-feast-modern-mobile-menu-2" class="menu"><li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20963"><a href="https://ilovevegan.com/complete-recipe-index/">recipes →</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-20947"><a href="https://ilovevegan.com/resources/">go vegan!</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-21122"><a href="https://ilovevegan.com/subscribe/">subscribe</a></li>
+</ul><div id="feast-mobile-menu-social-icons"><div id="feast-social"><li id="simple-social-icons-3" class="widget simple-social-icons"><ul class="alignleft"><li class="ssi-facebook"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/ilovegan" ><svg role="img" class="social-facebook" aria-labelledby="social-facebook-3"><title id="social-facebook-3">Facebook</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-facebook"></use></svg></a></li><li class="ssi-instagram"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/ilovegan/" ><svg role="img" class="social-instagram" aria-labelledby="social-instagram-3"><title id="social-instagram-3">Instagram</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-instagram"></use></svg></a></li><li class="ssi-pinterest"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://www.pinterest.com/ilovevegan/" ><svg role="img" class="social-pinterest" aria-labelledby="social-pinterest-3"><title id="social-pinterest-3">Pinterest</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-pinterest"></use></svg></a></li><li class="ssi-tumblr"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://garden-of-vegan.tumblr.com/" ><svg role="img" class="social-tumblr" aria-labelledby="social-tumblr-3"><title id="social-tumblr-3">Tumblr</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-tumblr"></use></svg></a></li><li class="ssi-twitter"><a data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://twitter.com/ilovegan" ><svg role="img" class="social-twitter" aria-labelledby="social-twitter-3"><title id="social-twitter-3">Twitter</title><use xlink:data-wpel-link="ignore" target="_blank" rel="noopener noreferrer" href="https://ilovevegan.com/wp-content/plugins/simple-social-icons/symbol-defs.svg#social-twitter"></use></svg></a></li></ul></li>
+</div></div><a href="#" class="closebtn">×</a></div></div></div><div class="site-inner"><div class="content-sidebar-wrap"><main class="content" id="genesis-content"><p id="breadcrumbs"><span><span><a href="https://ilovevegan.com/">Home</a> » <span><a href="https://ilovevegan.com/category/recipe/">All Recipes</a></span></p><article class="post-17268 post type-post status-publish format-standard has-post-thumbnail category-recipe category-salads category-sauces-dips tag-avocado tag-spinach tag-tofu mv-content-wrapper entry" aria-label="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing"><header class="entry-header"><h1 class="entry-title">Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing</h1>
+</header><div class="entry-content"><p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0087.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0087.jpg" alt="Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p style="text-align: center;">This Spinach, Avocado and Marinated Tofu Salad recipe was originally published on March 13th, 2013. After noticing more people visiting this recipe we decided to update it and repost it on August 30, 2019.</p>
+<p>This new and improved version of our Spinach, Avocado and Marinated Tofu Salad features fresh new images, and updated recipe, nutrition info, and a new dressing. The original recipe called for a simple "dressing" of soy sauce and sesame oil. We've stuck to that theme but upgraded it to a creamy toasted soy &amp; sesame dressing. We’ve doubled the marinated tofu portion of the recipe but otherwise kept it the same.</p>
+<p>We included the original image at the end of the post to jog your memory if you think you've made this recipe before.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Close up shot of Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081.jpg" alt="Close up shot of Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p>We topped this hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing.</p>
+<p>This is a great meal to pack for work or school lunches (just pack the dressing on the side). Add some cooked brown rice to turn this salad into a filling vegan lunch bowl. A single serving, made as is, contains 15 grams of plant-based protein (scroll to the end for complete nutrition information.)</p>
+<p>Feel free to swap ingredients in and out. I love adding to or swapping the spinach with romaine lettuce for a crunchier salad.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Vegan Creamy Toasted Sesame &amp; Soy Dressing in a measuring cup." width="1298" height="1947" data-pin-description="Vegan Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-9994.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-9994.jpg" alt="Vegan Creamy Toasted Sesame &amp; Soy Dressing in a measuring cup." width="1298" height="1947" data-pin-description="Vegan Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p>Inspired by the flavours of gomae, a Japanese spinach salad, this toasted sesame and soy dressing is blended and contains cashews for a creamy finish. This versatile dressing is perfect for rice noodle salads, vegan lunch bowls, summer rolls, and stir-fries.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Extra-firm tofu cubes in a soy sauce, sriracha, sesame oil, and garlic marinade." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-9959.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-9959.jpg" alt="Extra-firm tofu cubes in a soy sauce, sriracha, sesame oil, and garlic marinade." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p>The marinated tofu in this recipe remains the same as before: a simple marinade of soy sauce, sriracha, sesame oil, and garlic. You can choose to bake or sauté the tofu. Baking takes a little longer but it's more hands-off and uses less oil. Sautéing is quicker, but its uses more oil and requires more hands-on supervision.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Marinated tofu on a baking sheet lined with parchment paper." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-9983.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-9983.jpg" alt="Marinated tofu on a baking sheet lined with parchment paper." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p>As with any marinated tofu recipe, you’ll enjoy the best flavour if you press your tofu first. I’m not a fan of typical pressing methods, they tend to take a while or they don’t work that well.<a href="https://www.ilovevegan.com/tofu-part-2-draining-and-preparing-tofu/"> I usually use my “quick pressing method” from my very old “4 Part Tofu Tutorial”</a>. Slice a block of extra-firm tofu into 8 slices and lay them on a clean folded kitchen towel. Top with a second folded kitchen towel and add pressure to draw out excess moisture. Place a cutting board on top and weight it with some heavy things, (cookbooks, cast-iron bakeware, nesting bowls, etc.) for 30 minutes or so. If you're in a hurry you can quickly press some moisture out of the tofu with your hands.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Baked marinated tofu cubes on parchment paper." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0020.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0020.jpg" alt="Baked marinated tofu cubes on parchment paper." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p><strong>Tofu Pressing Tip (for my fellow cooks with cats and dogs in house):</strong></p>
+<p>Pet hair is a fact of life and sometimes kitchen towels aren't 100% fur-free. You can use paper towel to press tofu but you'll need to use a lot of it. Instead, use the kitchen towel method but add a single piece of paper towel wrapped around the tofu. With this method, paper towel is a barrier between the tofu while the kitchen towel absorbs moisture. This ensures that you don’t add any undesired “ingredients” to your tofu with minimal waste.</p>
+<p>Alternatively, you can buy a tofu press! It's like a little vice that evenly adds pressure to press excess moisture from a block of tofu.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201298%201947'%3E%3C/svg%3E" alt="Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0079.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0079.jpg" alt="Salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing." width="1298" height="1947" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript></p>
+<p>This marinade is rich enough that you CAN skip the marinating if you’re looking to save time. In this case I’ll whip up the tofu first and let it marinate briefly while I preheat my oven or skillet and prepare the dressing and vegetables. After that, use up remaining marinade in the cooking process. If baking, top the tofu with any leftover marinade before baking. If sautéing, add remaining marinade near the end of the cooking process and cook until it’s absorbed.</p>
+<p><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201280%20960'%3E%3C/svg%3E" alt="2013 images of salad of baby spinach, marinated tofu, avocado, carrot, cucumber, tomato, green onion." width="1280" height="960" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-pin-nopin="true" data-lazy-src="http://www.ilovevegan.com/wp-content/uploads/2013/05/marinated-tofu-salad.jpg" /><noscript><img data-pin-title="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing" class="alignnone" src="http://www.ilovevegan.com/wp-content/uploads/2013/05/marinated-tofu-salad.jpg" alt="2013 images of salad of baby spinach, marinated tofu, avocado, carrot, cucumber, tomato, green onion." width="1280" height="960" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-pin-nopin="true" /></noscript></p>
+<p><a name="recipe"></a></p>
+<a class="button tasty-recipes-print-button tasty-recipes-no-print tasty-recipes-print-above-card" href="https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/print/20572/">Print</a><span class="tasty-recipes-jump-target" id="tasty-recipes-20572-jump-target" style="display:block;padding-top:2px;margin-top:-2px;"></span><div id="tasty-recipes-20572" class="tasty-recipes tasty-recipes-20572 tasty-recipes-display tasty-recipes-has-image" data-tasty-recipes-customization="primary-color.background-color">
+<style type="text/css" style="display: none !important;">
+.tasty-recipes-print-button{background-color:#667;border:none;display:inline-block;padding:.5em 1em;text-decoration:none}body:not(.tasty-recipes-print-view) .tasty-recipes-print-button.tasty-recipes-print-above-card{color:#fff;display:none}body:not(.tasty-recipes-print-view) .tasty-recipes-print-button.tasty-recipes-print-above-card:hover{background-color:#b2b2bb;color:#fff;display:inline-block;padding:.5em 1em;text-decoration:none}.tasty-recipes-image-button-container{display:flex;flex-direction:column;flex-wrap:wrap;float:right;margin-left:10px}body.tasty-recipes-print-view .tasty-recipes-buttons{display:none}.tasty-recipes-image-button-container .tasty-recipes-buttons{margin-bottom:10px;margin-top:10px}.tasty-recipes-image-button-container .tasty-recipes-button-wrap{box-sizing:border-box;margin-bottom:10px}.tasty-recipes-image-button-container .tasty-recipes-buttons a{background-color:#f9f9f9;border:1px solid #aaa;border-radius:0;color:#aaa;display:block;font-size:16px;font-weight:700;line-height:16px;margin-top:0;padding:8px;text-align:center;text-decoration:none;text-transform:uppercase}.tasty-recipes-image-button-container .tasty-recipes-buttons .button:hover{background-color:#aaa;border:1px solid #aaa;color:#fff;opacity:1}.tasty-recipes-image-button-container .tasty-recipes-buttons a:hover{background-color:#979599;text-decoration:none}.tasty-recipes-image-button-container .tasty-recipes-buttons svg{display:none}.tasty-recipes-yield-scale{border:1px solid #979599;border-radius:2px;color:#979599;font-size:.7rem;margin-left:3px;padding:0 4px}.tasty-recipes-units-scale-container{display:flex;flex-wrap:wrap}.tasty-recipes-convert-container{padding:0 1em 1em 0}.tasty-recipes-convert-container .tasty-recipes-convert-label{align-self:center;color:#979599;font-size:.6rem;text-transform:uppercase}.tasty-recipes-convert-container button{background:transparent;border:1px solid #979599;border-radius:2px;color:#979599;letter-spacing:0;margin-left:5px;min-width:34px;padding:2px 4px;text-align:center}.tasty-recipes-convert-container button.tasty-recipes-convert-button-active{border-color:#353547;color:#353547}.tasty-recipes-convert-container button:focus{outline:none}.tasty-recipes-scale-container{display:flex;padding:0 0 1em}.tasty-recipes-scale-container .tasty-recipes-scale-label{align-self:center;color:#979599;font-size:.6rem;text-transform:uppercase}.tasty-recipes-scale-container button{background:transparent;border:1px solid #979599;border-radius:2px;color:#979599;letter-spacing:0;margin-left:5px;min-width:34px;padding:2px 4px}.tasty-recipes-scale-container button.tasty-recipes-scale-button-active{border-color:#353547;color:#353547}.tasty-recipes-scale-container button:focus{outline:none}.tasty-recipes-ingredients-header{margin:1em 0}@media only screen and (min-width:520px){.tasty-recipes-ingredients-header{align-items:center;display:flex;flex-wrap:wrap;justify-content:space-between}}.tasty-recipes-ingredients-header .tasty-recipes-ingredients-clipboard-container{align-items:baseline;display:inline-flex}.tasty-recipes-ingredients-header h3{margin:0 10px 10px 0}.tasty-recipes-ingredients-clipboard-container .tasty-recipes-copy-button{background:transparent;border:none;color:#353547;height:24px;padding:0;position:relative;width:24px}.tasty-recipes-ingredients-clipboard-container .tasty-recipes-copy-button:hover{opacity:.5}.tasty-recipes-instructions-header{align-items:baseline;display:flex;flex-wrap:wrap;justify-content:space-between;margin:1em 0}.tasty-recipes-entry-content .tasty-recipes-instructions h3{margin:0 0 1rem}@media only screen and (min-width:520px){.tasty-recipes-entry-content .tasty-recipes-instructions h3{margin:0}}button[name=tasty-recipes-video-toggle]{background:#979599;border:#979599;border-radius:2px;display:inline-block;font-size:14px;height:30px;line-height:20px;margin:0;padding:0;text-align:center;vertical-align:middle;width:86px}button[name=tasty-recipes-video-toggle] span{padding:0 4px;pointer-events:none}button[name=tasty-recipes-video-toggle][aria-checked=false] :last-child,button[name=tasty-recipes-video-toggle][aria-checked=true] :first-child{background:#fff;border-radius:2px;color:#979599;padding:2px 4px}button[name=tasty-recipes-video-toggle][aria-checked=false] :first-child,button[name=tasty-recipes-video-toggle][aria-checked=true] :last-child{color:#fff}label[for=tasty-recipes-video-toggle]{color:#979599;font-size:.6rem;line-height:30px;padding-right:8px;text-transform:uppercase;user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;-o-user-select:none;vertical-align:middle}.tasty-recipe-responsive-iframe-container{margin:10px 0}.tasty-recipes-equipment{display:flex;flex-wrap:wrap;justify-content:space-evenly}.tasty-recipes-equipment>h3{flex:0 0 100%}.tasty-recipes-equipment .tasty-link-card{flex:0 0 50%;padding:1.5rem 1rem;text-align:center}@media screen and (min-width:500px){.tasty-recipes-equipment .tasty-link-card{flex:0 0 33%}}.tasty-recipes-equipment .tasty-link-card p{font-size:1em;font-weight:700;margin-bottom:0}.tasty-recipes-equipment .tasty-link-card p a{color:initial}.tasty-recipes-equipment .tasty-link-card span{font-size:.9em}.tasty-recipes .tasty-recipes-nutrition ul{list-style-type:none;margin:0;padding:0}.tasty-recipes .tasty-recipes-nutrition ul:after{clear:both;content:" ";display:block}.tasty-recipes .tasty-recipes-nutrition li{float:left;list-style-type:none;margin-bottom:0;margin-left:0;margin-right:16px}.tasty-recipes-plug{align-items:center;display:flex;flex-wrap:wrap;justify-content:center;margin-bottom:1em;text-align:center}.tasty-recipes-plug a{box-shadow:none;text-decoration:none}.tasty-recipes-plug a img{display:inline-block;height:auto;margin:5px 0 0 8px;width:150px}.tasty-recipes-footer-content{padding:1.5em;text-align:center}.tasty-recipes-footer-content .tasty-recipes-footer-copy{margin-left:0}.tasty-recipes-footer-content img,.tasty-recipes-footer-content svg{width:60px}.tasty-recipes-entry-content .tasty-recipes-entry-footer h3{font-size:1.25em;margin:0 0 .25em;padding:0}.tasty-recipes-entry-footer p{font-size:.75em;margin:0}.tasty-recipes-entry-footer p a{border-bottom:none;box-shadow:none;text-decoration:underline}.tasty-recipes-flash-message{background-color:#fff;border-radius:4px;box-shadow:0 .3px .4px 0 rgba(0,0,0,.024),0 .9px 1.5px 0 rgba(0,0,0,.05),0 3.5px 6px 0 rgba(0,0,0,.1);color:#313135;display:inline-block;font-size:13px;letter-spacing:0;line-height:1.2em;margin-left:10px;padding:4px 10px}@media screen and (min-width:500px){.tasty-recipes-flash-message{padding:4px 10px}}.tasty-recipes-flash-message p{margin:0;padding:0;text-transform:none}@media screen and (min-width:500px){.tasty-recipes-footer-content{align-items:center;display:flex;justify-content:center;padding:1.5em 0;text-align:left}.tasty-recipes-footer-content .tasty-recipes-footer-copy{margin-left:.8em}}@media print{.tasty-recipes-no-print,.tasty-recipes-no-print *{display:none!important}}[data-tr-ingredient-checkbox]{cursor:pointer;list-style-position:outside;list-style-type:none!important;margin-left:0!important}[data-tr-ingredient-checkbox] .tr-ingredient-checkbox-container{position:relative}[data-tr-ingredient-checkbox] .tr-ingredient-checkbox-container input[type=checkbox]+label{display:inline-block;position:relative;vertical-align:middle}[data-tr-ingredient-checkbox] .tr-ingredient-checkbox-container input[type=checkbox]{clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px);height:1px;overflow:hidden;position:absolute!important;width:1px}[data-tr-ingredient-checkbox] .tr-ingredient-checkbox-container input[type=checkbox]+label:before{border:1px solid;border-radius:2px;content:"";display:inline-block;height:20px;margin-right:10px;position:relative;width:20px}[data-tr-ingredient-checkbox] .tr-ingredient-checkbox-container input[type=checkbox]:checked+label:after{border-bottom:2px solid;border-left:2px solid;content:"";display:inline-block;height:6px;left:4px;position:absolute;top:4px;transform:rotate(-45deg);width:12px}[data-tr-ingredient-checkbox] .tr-ingredient-checkbox-container input[type=checkbox]:focus+label:before{box-shadow:0 0 8px #5e9ed6;outline:1px solid #5d9dd5}[data-tr-ingredient-checkbox=checked]{opacity:.8;text-decoration:line-through}/* Fresh recipe card styles. */ .tasty-recipes{margin-bottom:4em;max-width:700px;background-color:#f9f9f9}.tasty-recipes.tasty-recipes-has-plug{margin-bottom:1em}.tasty-recipes-plug{margin-bottom:4em}.tasty-recipes-print-button{display:none}.tasty-recipes-image-shim{height:69.5px;clear:both}.tasty-recipes-entry-header{padding-top:2em;padding-left:2em;padding-right:2em}.tasty-recipes-entry-header.tasty-recipes-has-image{padding-top:0px}.tasty-recipes-entry-header .tasty-recipes-image{float:none;margin-bottom:1em}@media only screen and (min-width:730px){.tasty-recipes-entry-header .tasty-recipes-image{float:left;margin-right:16px}}.tasty-recipes-entry-header .tasty-recipes-image img{float:none;height:150px;width:150px;object-fit:cover}.tasty-recipes-entry-header .tasty-recipes-header-content{min-height:215px}.tasty-recipes-entry-header h2{margin-bottom:0;margin-top:0;padding-top:0;padding-bottom:0;clear:none}.tasty-recipes-entry-header hr{border:1px solid #eee;background-color:#eee;margin-bottom:0;margin-top:1em;margin-right:-2em;margin-left:-2em}.tasty-recipes-entry-header .tasty-recipes-rating-outer{width:100%}.tasty-recipes-entry-header .tasty-recipes-rating-outer a{text-decoration:none;border:none;display:inherit;box-shadow:none}.tasty-recipes-entry-header .tasty-recipes-rating-outer a:hover{text-decoration:none}.tasty-recipes-entry-header .tasty-recipes-rating-stars{font-size:18px}.tasty-recipes-entry-header .tasty-recipes-rating-stars span{margin-right:2px;margin-left:2px;color:#aaa}.tasty-recipes-entry-header .tasty-recipes-rating-stars span:first-child{margin-left:0}.tasty-recipes-entry-header .tasty-recipes-rating-label{color:#B7BBC6;font-size:.6875em;margin-top:1em;position:absolute}.tasty-recipes-entry-header .tasty-recipes-rating-stars .post-ratings{font-size:10px}.tasty-recipes-entry-header .tasty-recipes-rating-stars .post-ratings .tasty-recipes-cf-ratings-label{margin-top:0;line-height:1}.tasty-recipes-entry-header .tasty-recipes-details{margin-top:1.5em;color:#606060}.tasty-recipes-entry-header .tasty-recipes-details ul{list-style-type:none;margin:0;padding-left:0}.tasty-recipes-entry-header .tasty-recipes-details ul li{display:inline-block;margin-left:0;padding-left:0;margin-right:.5em;margin-bottom:0;font-size:1em;line-height:1.8em}.tasty-recipes-entry-header .tasty-recipes-details .detail-icon{height:1em;margin-top:.4em}.tasty-recipes-entry-header .tasty-recipes-details ul li{font-size:1em}.tasty-recipes-entry-header .tasty-recipes-details .tasty-recipes-label{margin-right:.125em}.tasty-recipes-entry-header .tasty-recipes-details .detail-icon{vertical-align:top;margin-right:.2em}@media only screen and (min-width:730px){.tasty-recipes-entry-header .tasty-recipes-details{padding-left:166px}}.tasty-recipes-entry-content{padding-top:0.1em;color:#606060;clear:both}.tasty-recipes-entry-header .tasty-recipes-buttons{margin-top:1.25em;margin-bottom:1.25em;width:100%}.tasty-recipes-entry-header .tasty-recipes-buttons:after{content:" ";display:block;clear:both}.tasty-recipes-entry-header .tasty-recipes-button-wrap{box-sizing:border-box}.tasty-recipes-entry-header .tasty-recipes-buttons a{text-transform:uppercase;text-align:center;display:block;background-color:#f9f9f9;font-size:1em;line-height:1.375em;font-weight:bold;padding-top:7px;padding-bottom:7px;margin-top:0;border:1px solid #aaa;border-radius:0;text-decoration:none;color:#aaa}.tasty-recipes-entry-header .tasty-recipes-buttons .button:hover{background-color:#aaa;border:1px solid #aaa;color:#fff;opacity:1}.tasty-recipes-entry-content a img{box-shadow:none;-webkit-box-shadow:none}.tasty-recipes-entry-header .tasty-recipes-buttons a:hover{background-color:#979599;text-decoration:none}.tasty-recipes-entry-header .tasty-recipes-buttons img{vertical-align:top}.tasty-recipes-entry-header .tasty-recipes-buttons .svg-print,.tasty-recipes-entry-header .tasty-recipes-buttons .svg-pinterest,.tasty-recipes-entry-header .tasty-recipes-buttons .svg-heart-regular,.tasty-recipes-entry-header .tasty-recipes-buttons .svg-heart-solid{height:1.25em;margin-right:.375em;margin-bottom:0;background:none;display:inline-block;box-shadow:none;vertical-align:middle}@media only screen and (max-width:730px){.tasty-recipes-entry-header .tasty-recipes-button-wrap{width:100%}.tasty-recipes-entry-header .tasty-recipes-button-wrap:nth-child(2){padding-top:1em}}@media only screen and (min-width:450px){.tasty-recipes-entry-header .tasty-recipes-buttons{width:100%;float:none}.tasty-recipes-entry-header .tasty-recipes-button-wrap:first-child{width:50%;padding-right:5px;float:left}.tasty-recipes-entry-header .tasty-recipes-button-wrap:nth-child(2){width:50%;padding-left:5px;float:right;padding-top:0}}@media only screen and (min-width:730px){.tasty-recipes-entry-header .tasty-recipes-buttons{padding-left:166px;box-sizing:border-box}.tasty-recipes-header-content{position:relative}.tasty-recipes-header-content .tasty-recipes-rating-outer{position:absolute;top:155px;width:150px;text-align:center}.tasty-recipes-header-content .tasty-recipes-rating-label{display:block;position:static;margin-top:0}}.tasty-recipes-entry-content h3{color:initial}.tasty-recipes-entry-content h4{font-size:1em;padding-top:0;margin-bottom:1.5em;margin-top:1.5em}.tasty-recipes-entry-content hr{background-color:#eee;border:1px solid #eee;margin-top:1em;margin-bottom:1em}.tasty-recipes-entry-content .tasty-recipes-description,.tasty-recipes-entry-content .tasty-recipes-ingredients,.tasty-recipes-entry-content .tasty-recipes-instructions,.tasty-recipes-entry-content .tasty-recipes-keywords{padding-left:2em;padding-right:2em}.tasty-recipes-entry-content .tasty-recipes-description p{margin-bottom:1em}.tasty-recipes-entry-content .tasty-recipes-ingredients ul,.tasty-recipes-entry-content .tasty-recipes-instructions ul{list-style-type:none;margin-left:0;margin-bottom:1.5em;padding:0}.tasty-recipes-entry-content .tasty-recipes-ingredients ul li,.tasty-recipes-entry-content .tasty-recipes-instructions ul li{margin-bottom:.625em;list-style-type:none;position:relative;margin-left:1.5em;line-height:1.46}.tasty-recipes-entry-content .tasty-recipes-ingredients ul li:before,.tasty-recipes-entry-content .tasty-recipes-instructions ul li:before{background-color:#aaa;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;height:.5em;width:.5em;display:block;content:" ";left:-1.25em;top:.375em;position:absolute}.tasty-recipes-entry-content .tasty-recipes-ingredients ol,.tasty-recipes-entry-content .tasty-recipes-instructions ol{counter-reset:li;margin-left:0;padding:0}.tasty-recipes-entry-content .tasty-recipes-ingredients ol>li,.tasty-recipes-entry-content .tasty-recipes-instructions ol>li{list-style-type:none;position:relative;margin-bottom:1em;margin-left:1.5em;line-height:1.46}.tasty-recipes-entry-content .tasty-recipes-ingredients ol>li:before,.tasty-recipes-entry-content .tasty-recipes-instructions ol>li:before{content:counter(li);counter-increment:li;position:absolute;background-color:#aaa;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;height:1.45em;width:1.45em;color:#FFF;left:-1.25em;transform:translateX(-50%);line-height:1.5em;font-size:.6875em;text-align:center;top:.1875em}.tasty-recipes-entry-content .tasty-recipes-ingredients li li,.tasty-recipes-entry-content .tasty-recipes-instructions li li{margin-top:0.625em}.tasty-recipes-entry-content .tasty-recipes-ingredients li ul,.tasty-recipes-entry-content .tasty-recipes-ingredients li ol,.tasty-recipes-entry-content .tasty-recipes-instructions li ul,.tasty-recipes-entry-content .tasty-recipes-instructions li ol{margin-bottom:0}@media only screen and (max-width:520px){.tasty-recipes-entry-content .tasty-recipes-ingredients ol,.tasty-recipes-entry-content .tasty-recipes-instructions ol{margin-left:0}}.tasty-recipes-entry-content .tasty-recipes-equipment{padding-left:2em;padding-right:2em}.tasty-recipes-entry-content .tasty-recipe-video-embed~.tasty-recipes-equipment{padding-top:1em}.tasty-recipes-entry-content .tasty-recipes-notes,.tasty-recipes-entry-content .tasty-recipes-nutrition{padding-bottom:1.25em;padding-left:2em;padding-right:2em}.tasty-recipes-entry-content .tasty-recipes-notes ol{counter-reset:li;margin-left:0;padding:0;margin-bottom:0}.tasty-recipes-entry-content .tasty-recipes-notes ul{margin-left:0;padding:0;margin-bottom:0}.tasty-recipes-entry-content .tasty-recipes-notes p,.tasty-recipes-entry-content .tasty-recipes-notes ul li,.tasty-recipes-entry-content .tasty-recipes-notes ol li{padding-left:1.5em;padding-top:1.25em;padding-bottom:1.25em;position:relative;margin-bottom:0;margin-left:0;list-style-type:none}.tasty-recipes-entry-content .tasty-recipes-notes p:before,.tasty-recipes-entry-content .tasty-recipes-notes ul li:before{content:"i";display:block;background-color:#aaa;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;height:1.3em;width:1.3em;font-size:.75em;line-height:1.3em;text-align:center;color:#FFF;position:absolute;left:0;top:2.1em}.tasty-recipes-entry-content .tasty-recipes-notes ol>li:before{content:counter(li);counter-increment:li;position:absolute;background-color:#aaa;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;height:1.45em;width:1.45em;color:#FFF;left:2em;transform:translateX(-50%);line-height:1.5em;font-size:.6875em;text-align:center;top:2.3em}.tasty-recipes-entry-content .tasty-recipes-notes p:last-child{margin-bottom:0}.tasty-recipes-entry-content .tasty-recipes-keywords{margin-top:1em;margin-bottom:1em;color:#aaa}.tasty-recipes-entry-content .tasty-recipes-keywords p{margin-bottom:0;font-size:0.7em}.tasty-recipes-nutrifox{text-align:center;margin:0}.tasty-recipes-nutrifox iframe{width:100%;display:block;margin:0}.tasty-recipes-entry-content .tasty-recipes-nutrition ul li{list-style-type:none;margin-left:0}.tasty-recipes-entry-footer{background-color:#fff}.tasty-recipes-entry-footer:after{content:" ";display:block;clear:both}.clearfix:after{clear:both;content:" ";display:table}/* Print view styles */ .tasty-recipes-print-view{font-size:11px;line-height:1.5em}.tasty-recipes-print{padding:0}.tasty-recipes-print-view .tasty-recipes,.tasty-recipes-print-view .tasty-recipes-entry-content{background:#fff}.tasty-recipes-print-view .tasty-recipes{margin-top:1em}.tasty-recipes-print .tasty-recipes-entry-header{background-color:inherit;color:inherit;padding-bottom:0;padding-left:2em;padding-right:2em}.tasty-recipes-print .tasty-recipes-entry-header .tasty-recipes-image{transform:none;float:left;margin-right:16px}.tasty-recipes-print-view .tasty-recipes-entry-header .tasty-recipes-header-content{min-height:20px}.tasty-recipes-print.tasty-recipes-has-image .tasty-recipes-entry-header h2{margin-top:0}.tasty-recipes-print .tasty-recipes-entry-header h2{color:inherit;margin-bottom:.5em}.tasty-recipes-print .tasty-recipes-entry-header hr{display:none}.tasty-recipes-print .tasty-recipes-header-content .tasty-recipes-rating-outer{position:initial;text-align:left;width:unset;top:unset}.tasty-recipes-print .tasty-recipes-entry-header .tasty-recipes-rating-stars span{color:#000}.tasty-recipes-print .tasty-recipes-entry-header .tasty-recipes-details{padding:0}.tasty-recipes-print .tasty-recipes-entry-header .tasty-recipes-details ul{padding:0;clear:none}.tasty-recipes-print .tasty-recipes-entry-header .tasty-recipes-details ul li{line-height:1.8em;margin-bottom:0}.tasty-recipes-print .tasty-recipes-entry-header .tasty-recipes-details .detail-icon{display:none}.tasty-recipes-print-view .tasty-recipes-source-link{text-align:center}.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-ingredients ul li,.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-instructions ul li,.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-ingredients ol li,.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-instructions ol li{margin-bottom:0}.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-notes p,.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-notes ul li,.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-notes ol li{margin-top:1rem;padding-top:0;padding-bottom:0}.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-notes p:before,.tasty-recipes-print-view .tasty-recipes-entry-content .tasty-recipes-notes ul li:before{top:0.1em}.tasty-recipes-entry-content .tasty-recipes-ingredients ul li[data-tr-ingredient-checkbox]:before{display:none}
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs><symbol id="tasty-recipes-icon-clock" width="24" height="24" viewBox="0 0 24 24"><title>clock</title> <desc>clock icon</desc><path d="M22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM12.5 8H11v6l4.75 2.85.75-1.23-4-2.37V8zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z" fill="currentColor" /></symbol><symbol id="tasty-recipes-icon-cutlery" width="24" height="24" viewBox="0 0 24 24"><title>cutlery</title> <desc>cutlery icon</desc><path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z" fill="currentColor" /></symbol><symbol id="tasty-recipes-icon-flag" width="24" height="24" viewBox="0 0 24 24"><title>flag</title> <desc>flag icon</desc><path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z" fill="currentColor"/></symbol><symbol id="tasty-recipes-icon-folder" width="24" height="24" viewBox="0 0 24 24"><title>folder</title> <desc>folder icon</desc><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" fill="currentColor" /></symbol><symbol id="tasty-recipes-icon-instagram" viewBox="0 0 448 512"><title>instagram</title> <desc>instagram icon</desc><path fill="currentColor" d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"></path></symbol><symbol id="tasty-recipes-icon-pinterest" viewBox="0 0 496 512"><title>pinterest</title> <desc>pinterest icon</desc><path fill="currentColor" d="M496 256c0 137-111 248-248 248-25.6 0-50.2-3.9-73.4-11.1 10.1-16.5 25.2-43.5 30.8-65 3-11.6 15.4-59 15.4-59 8.1 15.4 31.7 28.5 56.8 28.5 74.8 0 128.7-68.8 128.7-154.3 0-81.9-66.9-143.2-152.9-143.2-107 0-163.9 71.8-163.9 150.1 0 36.4 19.4 81.7 50.3 96.1 4.7 2.2 7.2 1.2 8.3-3.3.8-3.4 5-20.3 6.9-28.1.6-2.5.3-4.7-1.7-7.1-10.1-12.5-18.3-35.3-18.3-56.6 0-54.7 41.4-107.6 112-107.6 60.9 0 103.6 41.5 103.6 100.9 0 67.1-33.9 113.6-78 113.6-24.3 0-42.6-20.1-36.7-44.8 7-29.5 20.5-61.3 20.5-82.6 0-19-10.2-34.9-31.4-34.9-24.9 0-44.9 25.7-44.9 60.2 0 22 7.4 36.8 7.4 36.8s-24.5 103.8-29 123.2c-5 21.4-3 51.6-.9 71.2C65.4 450.9 0 361.1 0 256 0 119 111 8 248 8s248 111 248 248z"></path></symbol><symbol id="tasty-recipes-icon-facebook" viewBox="0 0 448 512"><title>facebook</title> <desc>facebook icon</desc><path fill="currentColor" d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z" /></symbol><symbol id="tasty-recipes-icon-print" width="24" height="24" viewBox="0 0 24 24"><title>print</title> <desc>print icon</desc><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" fill="currentColor" /></symbol><symbol id="tasty-recipes-icon-squares" width="24" height="24" viewBox="0 0 24 24"><title>squares</title> <desc>squares icon</desc><path d="M22 9V7h-2V5c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-2h2v-2h-2v-2h2v-2h-2V9h2zm-4 10H4V5h14v14zM6 13h5v4H6zm6-6h4v3h-4zM6 7h5v5H6zm6 4h4v6h-4z" fill="currentColor" /></symbol><symbol id="tasty-recipes-icon-heart-regular" viewBox="0 0 512 512"><title>heart</title> <desc>heart icon</desc><path fill="currentColor" d="M458.4 64.3C400.6 15.7 311.3 23 256 79.3 200.7 23 111.4 15.6 53.6 64.3-21.6 127.6-10.6 230.8 43 285.5l175.4 178.7c10 10.2 23.4 15.9 37.6 15.9 14.3 0 27.6-5.6 37.6-15.8L469 285.6c53.5-54.7 64.7-157.9-10.6-221.3zm-23.6 187.5L259.4 430.5c-2.4 2.4-4.4 2.4-6.8 0L77.2 251.8c-36.5-37.2-43.9-107.6 7.3-150.7 38.9-32.7 98.9-27.8 136.5 10.5l35 35.7 35-35.7c37.8-38.5 97.8-43.2 136.5-10.6 51.1 43.1 43.5 113.9 7.3 150.8z"></path></symbol><symbol id="tasty-recipes-icon-heart-solid" viewBox="0 0 512 512"><title>heart solid</title> <desc>heart solid icon</desc><path fill="currentColor" d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path></symbol></defs></svg>
+<header class="tasty-recipes-entry-header">
+			<div class="tasty-recipes-image">
+			<img width="180" height="180" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20180%20180'%3E%3C/svg%3E" class="attachment-thumbnail size-thumbnail" alt="" data-pin-nopin="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-320x321.jpg 320w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-225x225.jpg 225w" data-lazy-sizes="(max-width: 180px) 100vw, 180px" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-640x640.jpg" /><noscript><img width="180" height="180" src="https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-640x640.jpg" class="attachment-thumbnail size-thumbnail" alt="" data-pin-nopin="true" srcset="https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-320x321.jpg 320w, https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-225x225.jpg 225w" sizes="(max-width: 180px) 100vw, 180px" data-pin-description="Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &amp; Soy Dressing - ilovevegan.com #vegan" /></noscript>		</div>
+		<div class="tasty-recipes-header-content clearfix">
+		<h2 class="tasty-recipes-title" data-tasty-recipes-customization="h2-color.color h2-transform.text-transform">Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame &#038; Soy Dressing</h2>
+					<div class="tasty-recipes-rating">
+				<div class="tasty-recipes-rating-outer">
+					<div class="tasty-recipes-rating-inner">
+													<a href="#respond">
+																					<span class="tasty-recipes-rating-stars"><span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-rating tasty-recipes-clip-90 tasty-recipes-rating-solid">&#9733;</span></span>
+																						<span class="tasty-recipes-rating-label"><span data-tasty-recipes-customization="detail-label-color.color" class="rating-label"><span class="average">4.9</span> from <span class="count">10</span> reviews</span></span>
+																				</a>
+											</div>
+				</div>
+			</div>
+							<div class="tasty-recipes-details">
+				<ul>
+											<li class="author"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+													Author:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-author-name">brittany mueller</span></li>
+											<li class="prep-time"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-clock"></use></svg>						Prep Time:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-prep-time">15 minutes</span></li>
+											<li class="cook-time"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-clock"></use></svg>						Cook Time:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-cook-time">20 minutes</span></li>
+											<li class="total-time"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-clock"></use></svg>						Total Time:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-total-time">2 hours 5 minutes</span></li>
+											<li class="yield"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-cutlery"></use></svg>						Yield:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-yield"><span data-amount="4">4</span> servings <span class="tasty-recipes-yield-scale"><span data-amount="1">1</span>x</span></span></li>
+											<li class="category"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-folder"></use></svg>						Category:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-category">Lunch & Dinner, Main Course, Salad</span></li>
+											<li class="method"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-squares"></use></svg>						Method:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-method">Baking</span></li>
+											<li class="cuisine"><span class="tasty-recipes-label" data-tasty-recipes-customization="detail-label-color.color">
+							<svg viewBox="0 0 24 24" class="detail-icon" aria-hidden="true" data-tasty-recipes-customization="icon-color.color"><use xlink:href="#tasty-recipes-icon-flag"></use></svg>						Cuisine:</span> <span data-tasty-recipes-customization="detail-value-color.color" class="tasty-recipes-cuisine">Vegan</span></li>
+									</ul>
+			</div>
+		
+				<div class="tasty-recipes-buttons">
+						<div class="tasty-recipes-button-wrap">
+				
+<a class="button tasty-recipes-print-button tasty-recipes-no-print" href="https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/print/20572/" target="_blank" data-tasty-recipes-customization="button-color.background button-text-color.color">
+			<svg viewBox="0 0 24 24" class="svg-print" aria-hidden="true"><use xlink:href="#tasty-recipes-icon-print"></use></svg>
+		Print Recipe</a>
+			</div>
+									<div class="tasty-recipes-button-wrap">
+				
+<a class="share-pin button" data-pin-custom="true" data-href="https://www.pinterest.com/pin/create/bookmarklet/?url=https%3A%2F%2Filovevegan.com%2Fspinach-avocado-and-marinated-tofu-salad%2F" href="https://www.pinterest.com/pin/create/bookmarklet/?url=https%3A%2F%2Filovevegan.com%2Fspinach-avocado-and-marinated-tofu-salad%2F" data-tasty-recipes-customization="button-color.background button-text-color.color" onclick="window.open(this.dataset.href,'targetWindow','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=500,height=500'); event.stopPropagation(); return false;">
+			<svg viewBox="0 0 24 24" class="svg-print" aria-hidden="true"><use xlink:href="#tasty-recipes-icon-pinterest"></use></svg>
+		Pin Recipe</a>
+			</div>
+					</div>
+	</div>
+
+	
+</header>
+
+<div class="tasty-recipes-entry-content">
+	<hr data-tasty-recipes-customization="secondary-color.border-color secondary-color.background-color">
+
+			<div class="tasty-recipes-description">
+			<h3 data-tasty-recipes-customization="h3-color.color h3-transform.text-transform">Description</h3>
+			<div class="tasty-recipes-description-body" data-tasty-recipes-customization="body-color.color">
+				<p>A hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing.</p>
+			</div>
+		</div>
+	
+			<hr data-tasty-recipes-customization="secondary-color.border-color secondary-color.background-color">
+	
+			<div class="tasty-recipes-ingredients">
+			<div class="tasty-recipes-ingredients-header">
+				<div class="tasty-recipes-ingredients-clipboard-container">
+					<h3 data-tasty-recipes-customization="h3-color.color h3-transform.text-transform">Ingredients</h3>
+											<button aria-label="Copy ingredients to clipboard" class="tasty-recipes-copy-button" data-text="Copy ingredients" data-success="Copied!"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-labelledby="copyIconTitle copyIconDesc">
+	<title id="copyIconTitle">Copy to clipboard</title>
+	<desc id="copyIconDesc">Copy to clipboard</desc>
+  	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
+</svg>
+</button>									</div>
+				<div class="tasty-recipes-units-scale-container">
+																<span class="tasty-recipes-scale-container">
+							<span class="tasty-recipes-scale-label">Scale</span>
+							<button class="tasty-recipes-scale-button tasty-recipes-scale-button-active" data-amount="1" type="button">1x</button><button class="tasty-recipes-scale-button" data-amount="2" type="button">2x</button><button class="tasty-recipes-scale-button" data-amount="3" type="button">3x</button>						</span>
+									</div>
+			</div>
+			<div class="tasty-recipes-ingredients-body" data-tasty-recipes-customization="body-color.color">
+				<h4>Marinated Tofu:</h4>
+<ul>
+<li><span data-amount="1">1</span> block (350g) firm or extra-firm tofu, pressed and cut into small squares</li>
+<li><span data-amount="2" data-unit="tbsp">2 tbsp</span> (30ml) low-sodium soy sauce</li>
+<li><span data-amount="2" data-unit="tbsp">2 tbsp</span> (30ml) water</li>
+<li><span data-amount="3">3</span> cloves garlic, minced</li>
+<li><span data-amount="2" data-unit="tsp">2 tsp</span> (10ml) sriracha (more or less to your preference)</li>
+<li><span data-amount="1" data-unit="tsp">1 tsp</span> (5ml) sesame oil</li>
+<li>(Optional, for sautéing) 1 tablespoon (15ml) canola oil (or other neutral-tasting vegetable oil)</li>
+</ul>
+<h4>Creamy Toasted Sesame &amp; Soy Dressing:</h4>
+<ul>
+<li><span data-amount="3">3</span>-<span data-amount="4">4</span> tablespoon (45-60ml) low-sodium soy sauce</li>
+<li><span data-amount="0.25" data-unit="cup">¼ cup</span> (60ml) raw cashews</li>
+<li><span data-amount="0.25" data-unit="cup">¼ cup</span> (60ml) water</li>
+<li><span data-amount="3" data-unit="tbsp">3 tbsp</span> (45ml) toasted sesame seeds, divided</li>
+<li><span data-amount="2" data-unit="tbsp">2 tbsp</span> (30ml) canola oil</li>
+<li><span data-amount="2" data-unit="tsp">2 tsp</span> (10ml) sugar</li>
+<li><span data-amount="2" data-unit="tsp">2 tsp</span> (10ml) rice wine vinegar</li>
+</ul>
+<h4>Spinach, Avocado, and Marinated Tofu Salad:</h4>
+<ul>
+<li><span data-amount="8">8</span> large handfuls of baby spinach</li>
+<li><span data-amount="1">1</span> carrot, grated</li>
+<li><span data-amount="0.5">½</span> cucumber, halved and sliced</li>
+<li><span data-amount="0.5">½</span> red bell pepper, sliced</li>
+<li><span data-amount="1">1</span> ripe avocado, sliced</li>
+<li><span data-amount="2">2</span> stalks green onion, sliced thinly</li>
+<li><span data-amount="2" data-unit="tbsp">2 tbsp</span> (30ml) toasted sesame seeds</li>
+</ul>
+			</div>
+		</div>
+	
+			<hr data-tasty-recipes-customization="secondary-color.border-color secondary-color.background-color">
+	
+			<div class="tasty-recipes-instructions">
+			<div class="tasty-recipes-instructions-header">
+				<h3 data-tasty-recipes-customization="h3-color.color h3-transform.text-transform">Instructions</h3>
+							</div>
+			<div class="tasty-recipes-instructions-body" data-tasty-recipes-customization="body-color.color">
+				<h4>Toasting sesame seeds:</h4>
+<ol>
+<li id="instruction-step-1">Heat skillet over medium heat. Add sesame seeds and cook, stirring often until golden-brown and fragrant. Do not leave unattended.</li>
+</ol>
+<h4>Marinated Tofu:</h4>
+<ol>
+<li id="instruction-step-2">For optimal flavour, press tofu to draw out excess moisture. Check out our <a href="https://www.ilovevegan.com/tofu-part-2-draining-and-preparing-tofu/">tutorial on draining and pressing tofu</a> for a quick and easy method.</li>
+<li id="instruction-step-3">Combine marinade ingredients. Add cubed tofu. Stir to coat. Marinate for 1 hour (stirring halfway through). If you're in a hurry, you can skip this step.</li>
+<li id="instruction-step-4">Baking Instructions: (Uses less oil, slower method) Preheat oven to 425°F (220°C). Line a baking sheet with parchment paper. Spread tofu out in a single layer with no pieces touching. Top with remaining marinade. Bake for 20 minutes (or until tofu is crisp on the outside and tender inside.)</li>
+<li id="instruction-step-5">Skillet Instructions: (Uses more oil, faster method) Heat 1 tablespoon canola oil over medium-high heat. Add marinated tofu cubes (reserving excess marinade) and cook, turning tofu as needed, until all sides are golden-brown and crisp on all sides. Stir in remaining marinade and cook until marinade cooks down and coats the tofu.</li>
+<li id="instruction-step-6">Chill tofu.</li>
+</ol>
+<h4>Creamy Toasted Sesame &amp; Soy Dressing:</h4>
+<ol>
+<li id="instruction-step-7">Set aside half of the sesame seeds. Combine remaining ingredients in a blender. Blend on high until smooth and creamy. Taste and adjust seasoning. Add remaining sesame seeds and stir. Chill in refrigerator.</li>
+</ol>
+<h4>Assembling salad:</h4>
+<ol>
+<li id="instruction-step-8">In a large bowl, add 2 handfuls of spinach. Top with grated carrot, sliced cucumber, red bell pepper, avocado, and green onion. Add ¼ of the chilled marinated tofu. Drizzle with dressing and sprinkle with extra toasted sesame seeds.</li>
+</ol>
+			</div>
+		</div>
+	
+	
+			<hr data-tasty-recipes-customization="secondary-color.border-color secondary-color.background-color">
+	
+	
+	
+	
+	
+			<div class="tasty-recipes-nutrifox">
+			<script type="rocketlazyloadscript" data-rocket-type="text/javascript" data-cfasync="false">
+(function(){
+	window.addEventListener( 'message', function( event ){
+		if ( ( 'https://nutrifox.com' !== event.origin && 'https://nutrifox.test' !== event.origin ) ||
+			typeof event.data !== 'string' ) {
+			return;
+		}
+		var payload = JSON.parse( event.data );
+		switch ( payload.event ) {
+			case 'setHeight':
+				var iframe = document.getElementById( 'nutrifox-label-' + payload.recipeId );
+				iframe.style.height = payload.height + 'px';
+				break;
+		}
+	} );
+}())
+
+</script>
+<iframe title="nutritional information" id="nutrifox-label-81231" src="https://nutrifox.com/embed/label/81231" style="width:100%;border-width:0;"></iframe>		</div>
+	
+	
+			<div class="tasty-recipes-keywords" data-tasty-recipes-customization="detail-value-color.color">
+			<p><em><strong data-tasty-recipes-customization="detail-label-color.color">Keywords:</strong> marinated tofu, tofu salad, vegan sesame dressing</em></p>
+		</div>
+	
+	<footer class="tasty-recipes-entry-footer">
+		<div class="tasty-recipes-footer-content">
+												<svg viewBox="0 0 24 24" class="svg-instagram" aria-hidden="true" data-tasty-recipes-customization="footer-icon-color.color"><use xlink:href="#tasty-recipes-icon-instagram"></use></svg>
+										<div class="tasty-recipes-footer-copy">
+				<h3 data-tasty-recipes-customization="footer-heading-color.color h3-transform.text-transform footer-heading.innerText">Did you make this recipe?</h3>
+				<div data-tasty-recipes-customization="footer-description-color.color footer-description.innerHTML"><p>Tag <a href="https://www.instagram.com/ilovegan" target="_blank" rel="noreferrer noopener">@ilovegan</a> on Instagram and hashtag it <a href="https://www.instagram.com/explore/tags/ilovegan" target="_blank" rel="noreferrer noopener">#ilovegan</a></p></div>
+			</div>
+		</div>
+	</footer>
+</div>
+
+
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" style="display: none !important;">
+(function(){
+	/* frac.js (C) 2012-present SheetJS -- http://sheetjs.com */
+	/* bothEquals() avoids use of &&, which gets prettified by WordPress. */
+	var bothEquals = function( d1, d2, D ) {
+		var ret = 0;
+		if (d1<=D) {
+			ret++;
+		}
+		if (d2<=D) {
+			ret++;
+		}
+		return ret === 2;
+	};
+	var frac =function frac(x,D,mixed){var n1=Math.floor(x),d1=1;var n2=n1+1,d2=1;if(x!==n1)while(bothEquals(d1,d2,D)){var m=(n1+n2)/(d1+d2);if(x===m){if(d1+d2<=D){d1+=d2;n1+=n2;d2=D+1}else if(d1>d2)d2=D+1;else d1=D+1;break}else if(x<m){n2=n1+n2;d2=d1+d2}else{n1=n1+n2;d1=d1+d2}}if(d1>D){d1=d2;n1=n2}if(!mixed)return[0,n1,d1];var q=Math.floor(n1/d1);return[q,n1-q*d1,d1]};frac.cont=function cont(x,D,mixed){var sgn=x<0?-1:1;var B=x*sgn;var P_2=0,P_1=1,P=0;var Q_2=1,Q_1=0,Q=0;var A=Math.floor(B);while(Q_1<D){A=Math.floor(B);P=A*P_1+P_2;Q=A*Q_1+Q_2;if(B-A<5e-8)break;B=1/(B-A);P_2=P_1;P_1=P;Q_2=Q_1;Q_1=Q}if(Q>D){if(Q_1>D){Q=Q_2;P=P_2}else{Q=Q_1;P=P_1}}if(!mixed)return[0,sgn*P,Q];var q=Math.floor(sgn*P/Q);return[q,sgn*P-q*Q,Q]};
+
+	/* {'¼': '¼','½': '½','¾': '¾','⅓': '⅓','⅔':'⅔','⅕':'⅕','⅖':'⅖','⅗':'⅗','⅘':'⅘','⅙':'⅙','⅚':'⅚','⅛':'⅛','⅜':'⅜','⅝':'⅝','⅞':'⅞'} */
+	window.tastyRecipesVulgarFractions = JSON.parse(decodeURIComponent("%7B%22%C2%BC%22%3A%221%2F4%22%2C%22%C2%BD%22%3A%221%2F2%22%2C%22%C2%BE%22%3A%223%2F4%22%2C%22%E2%85%93%22%3A%221%2F3%22%2C%22%E2%85%94%22%3A%222%2F3%22%2C%22%E2%85%95%22%3A%221%2F5%22%2C%22%E2%85%96%22%3A%222%2F5%22%2C%22%E2%85%97%22%3A%223%2F5%22%2C%22%E2%85%98%22%3A%224%2F5%22%2C%22%E2%85%99%22%3A%221%2F6%22%2C%22%E2%85%9A%22%3A%225%2F6%22%2C%22%E2%85%9B%22%3A%221%2F8%22%2C%22%E2%85%9C%22%3A%223%2F8%22%2C%22%E2%85%9D%22%3A%225%2F8%22%2C%22%E2%85%9E%22%3A%227%2F8%22%7D"));
+
+	window.tastyRecipesFormatAmount = function(amount, el) {
+		if ( parseFloat( amount ) === parseInt( amount ) ) {
+			return amount;
+		}
+		var roundType = 'frac';
+		if (typeof el.dataset.amountShouldRound !== 'undefined') {
+			if ('false' != el.dataset.amountShouldRound) {
+				if ( 'number' === el.dataset.amountShouldRound ) {
+					roundType = 'number';
+				} else if ('frac' === el.dataset.amountShouldRound) {
+					roundType = 'frac'
+				} else if ('vulgar' === el.dataset.amountShouldRound) {
+					roundType = 'vulgar'
+				} else {
+					roundType = 'integer';
+				}
+			}
+		}
+		if ('number' === roundType) {
+			amount = Number.parseFloat(amount).toPrecision(2);
+		} else if ('integer' === roundType) {
+			amount = Math.round(amount);
+		} else if ('frac' === roundType || 'vulgar' === roundType) {
+			var denom = 8;
+			if (typeof el.dataset.unit !== 'undefined') {
+				var unit = el.dataset.unit;
+				if (['cups','cup','c'].includes(unit)) {
+					denom = 4;
+					if (0.125 === amount) {
+						denom = 8;
+					}
+				}
+				if (['tablespoons','tablespoon','tbsp'].includes(unit)) {
+					denom = 2;
+				}
+				if (['teaspoons','teaspoon','tsp'].includes(unit)) {
+					denom = 8;
+				}
+			}
+			var amountArray = frac.cont( amount, denom, true );
+			var newAmount = '';
+			if ( amountArray[1] !== 0 ) {
+				newAmount = amountArray[1] + '/' + amountArray[2];
+				if ('vulgar' === roundType) {
+					Object.keys(window.tastyRecipesVulgarFractions).forEach(function(vulgar) {
+						if (newAmount === window.tastyRecipesVulgarFractions[vulgar]) {
+							newAmount = vulgar;
+						}
+					});
+				}
+			}
+			if ( newAmount ) {
+				newAmount = ' ' + newAmount;
+			}
+			if ( amountArray[0] ) {
+				newAmount = amountArray[0] + newAmount;
+			}
+			amount = newAmount;
+		}
+		return amount;
+	}
+}())
+
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" style="display: none !important;">
+(function(){
+	var buttonClass = 'tasty-recipes-scale-button',
+		buttonActiveClass = 'tasty-recipes-scale-button-active',
+		buttons = document.querySelectorAll('.tasty-recipes-scale-button');
+	if ( ! buttons ) {
+		return;
+	}
+
+	buttons.forEach(function(button){
+		button.addEventListener('click', function(event){
+			event.preventDefault();
+			var recipe = event.target.closest('.tasty-recipes');
+			if ( ! recipe ) {
+				return;
+			}
+			var otherButtons = recipe.querySelectorAll('.' + buttonClass);
+			otherButtons.forEach(function(bt){
+				bt.classList.remove(buttonActiveClass);
+			});
+			button.classList.add(buttonActiveClass);
+
+			/* Scales all scalable amounts. */
+			var scalables = recipe.querySelectorAll('span[data-amount]');
+			var buttonAmount = parseFloat( button.dataset.amount );
+			scalables.forEach(function(scalable){
+				if (typeof scalable.dataset.amountOriginalType === 'undefined'
+					&& typeof scalable.dataset.nfOriginal === 'undefined') {
+					if (-1 !== scalable.innerText.indexOf('/')) {
+						scalable.dataset.amountOriginalType = 'frac';
+					}
+					if (-1 !== scalable.innerText.indexOf('.')) {
+						scalable.dataset.amountOriginalType = 'number';
+					}
+					Object.keys(window.tastyRecipesVulgarFractions).forEach(function(vulgar) {
+						if (-1 !== scalable.innerText.indexOf(vulgar)) {
+							scalable.dataset.amountOriginalType = 'vulgar';
+						}
+					})
+					if (typeof scalable.dataset.amountOriginalType !== 'undefined') {
+						scalable.dataset.amountShouldRound = scalable.dataset.amountOriginalType;
+					}
+				}
+				var amount = parseFloat( scalable.dataset.amount ) * buttonAmount;
+				amount = window.tastyRecipesFormatAmount(amount, scalable);
+				if ( typeof scalable.dataset.unit !== 'undefined' ) {
+					if ( ! scalable.classList.contains('nutrifox-quantity') ) {
+						if ( ! scalable.classList.contains('nutrifox-second-quantity') ) {
+							amount += ' ' + scalable.dataset.unit;
+						}
+					}
+				}
+				scalable.innerText = amount;
+			});
+			/* Appends " (x2)" indicator. */
+			var nonNumerics = recipe.querySelectorAll('[data-has-non-numeric-amount]');
+			nonNumerics.forEach(function(nonNumeric){
+				var indicator = nonNumeric.querySelector('span[data-non-numeric-label]');
+				if ( indicator ) {
+					nonNumeric.removeChild(indicator);
+				}
+				if ( 1 !== buttonAmount ) {
+					var indicator = document.createElement('span');
+					indicator.setAttribute('data-non-numeric-label', true);
+					var text = document.createTextNode(' (x' + buttonAmount + ')');
+					indicator.appendChild(text);
+					nonNumeric.appendChild(indicator);
+				}
+			});
+		});
+	});
+}());
+
+</script>
+<script type="rocketlazyloadscript" data-rocket-type="text/javascript" style="display: none !important;">
+(function() {
+
+	document.querySelectorAll('.tasty-recipes-copy-button').forEach(function(copyButton) {
+		if (copyButton.getAttribute('data-tasty-recipes-click-event')) {
+			return;
+		}
+		copyButton.setAttribute('data-tasty-recipes-click-event', true);
+
+		copyButton.addEventListener('click', function(event) {
+			event.preventDefault();
+			var copyContainer = copyButton.closest('.tasty-recipes-ingredients-clipboard-container');
+
+			var messageText = copyButton.attributes.getNamedItem('data-success').nodeValue;
+			var copySuccessMessage = document.createElement('div');
+			var copySuccessParagraph = document.createElement('p');
+			copySuccessParagraph.innerText = messageText;
+			copySuccessMessage.appendChild(copySuccessParagraph);
+			copySuccessMessage.classList.add('tasty-recipes-flash-message');
+			var messageDuration = 3000;
+
+			var ingredients = [];
+			var ingredientsContainer = copyButton.closest('.tasty-recipes-ingredients') || copyButton.closest('.tasty-recipe-ingredients');
+			var foundIngredients = false;
+			var findIngredients = function(div) {
+				if ( div.querySelectorAll('li').length ) {
+					div.querySelectorAll('li').forEach(function(li) {
+						ingredients.push(li.innerText);
+					});
+					foundIngredients = true;
+				} else if ( div.querySelectorAll('p').length ) {
+					div.querySelectorAll('p').forEach(function(p) {
+						ingredients.push(p.innerText);
+					});
+					foundIngredients = true;
+				}
+			};
+			if (ingredientsContainer.querySelector('.tasty-recipes-ingredients-body')) {
+				findIngredients(ingredientsContainer.querySelector('.tasty-recipes-ingredients-body'));
+			} else {
+				ingredientsContainer.querySelectorAll('div').forEach(function(div) {
+					if ( foundIngredients ) {
+						return;
+					}
+					if ( div.classList.contains('tasty-recipes-ingredients-header')
+						|| div.parentElement.classList.contains('tasty-recipes-ingredients-header')
+						|| div.classList.contains('tasty-recipes-ingredients-header') ) {
+						return;
+					}
+					findIngredients(div);
+				});
+			}
+
+			var readableIngredients = '';
+			ingredients.forEach(function(ingredient) {
+				readableIngredients += ingredient + '\n';
+			});
+			readableIngredients = readableIngredients.trim();
+
+			var fakeElem = document.createElement("textarea");
+			fakeElem.style.fontSize = "12pt";
+			fakeElem.style.border = "0";
+			fakeElem.style.padding = "0";
+			fakeElem.style.margin = "0";
+			fakeElem.style.position = "absolute";
+			fakeElem.style.left = "-9999px";
+
+			var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+			fakeElem.style.top = yPosition + 'px';
+
+			fakeElem.setAttribute("readonly", "");
+			fakeElem.value = readableIngredients;
+
+			document.body.appendChild(fakeElem);
+
+			if (navigator.userAgent.match(/ipad|iphone/i)) {
+				var range = document.createRange();
+				var selection = window.getSelection();
+				range.selectNodeContents(fakeElem);
+				selection.removeAllRanges();
+				selection.addRange(range);
+				fakeElem.setSelectionRange(0, 999999);
+			} else {
+				fakeElem.select();
+			}
+
+			document.execCommand("copy");
+
+			document.body.removeChild(fakeElem);
+			fakeElem = null;
+
+			copyContainer.appendChild(copySuccessMessage);
+
+			setTimeout(function() {
+				copyContainer.removeChild(copySuccessMessage);
+			}, messageDuration);
+		});
+	});
+
+}());
+
+</script></div>
+</div><div class="feast-prev-next"><div class="feast-prev-post">&laquo; <a aria-label="Previous post: " href="https://ilovevegan.com/rosemary-herb-potato-focaccia/" rel="prev">Rosemary Herb &#038; Potato Focaccia</a></div><div class="feast-next-post"><a aria-label="Next post: " href="https://ilovevegan.com/easy-1-pot-vegan-mac-cheese/" rel="next">Easy 1 Pot Vegan Mac and Cheese</a> &raquo;</div></div><footer class="entry-footer"></footer></article><h2 class="screen-reader-text">Reader Interactions</h2><div class="entry-comments" id="comments"><h3>Comments</h3><ol class="comment-list">
+	<li class="comment even thread-even depth-1" id="comment-80003">
+	<article id="article-comment-80003">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Natasha</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">July 10, 2021 at 4:16 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Very tasty</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-80003' data-commentid="80003" data-postid="17268" data-belowelement="article-comment-80003" data-respondelement="respond" data-replyto="Reply to Natasha" aria-label='Reply to Natasha'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-75239">
+	<article id="article-comment-75239">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Kortneii MacKenzie</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">January 04, 2021 at 8:16 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Yum this was a nice change of pace.really enjoying the different flavors! Excellent recipe! Thanks for sharing.</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-75239' data-commentid="75239" data-postid="17268" data-belowelement="article-comment-75239" data-respondelement="respond" data-replyto="Reply to Kortneii MacKenzie" aria-label='Reply to Kortneii MacKenzie'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment even thread-even depth-1" id="comment-71823">
+	<article id="article-comment-71823">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Evelyn</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">August 29, 2020 at 1:39 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>I could not find rice wine vinegar, I found rice vinegar is that the same?</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-71823' data-commentid="71823" data-postid="17268" data-belowelement="article-comment-71823" data-respondelement="respond" data-replyto="Reply to Evelyn" aria-label='Reply to Evelyn'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-70859">
+	<article id="article-comment-70859">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">cm</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">July 20, 2020 at 11:15 am</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>A lovely  salad for a summers day, and full of exceptional  nutrition too.</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-70859' data-commentid="70859" data-postid="17268" data-belowelement="article-comment-70859" data-respondelement="respond" data-replyto="Reply to cm" aria-label='Reply to cm'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment even thread-even depth-1" id="comment-70166">
+	<article id="article-comment-70166">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Tanya W</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">June 21, 2020 at 7:41 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Easy and delicious! It's super tasty and will be in our summer rotation! Great way to use large bags of spinach before they go bad!</p>
+<p>Because another similar recipe I love calls for cornstarch before baking, I added about 1 T cornstarch.  Next time I'll have to try side by side with and without to see if how that changes it!  My husband and family loved it (except our 10 &amp; 12 yo boys who hate tofu).</p>
+<p>This is versatile. I didn't have avocado, peppers, or carrot, but it was still a great and quick meal (you do have to plan ahead a little for tofu pressing time and baking time). I have fallen in love with tofu because it can be prepared so healthfully and deliciously.  I like not worrying about it getting tough like a lot of chicken, and not having unhealthy hormone and antibiotic additives (and not causing animals to live out horrible lives to feed us!).</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-70166' data-commentid="70166" data-postid="17268" data-belowelement="article-comment-70166" data-respondelement="respond" data-replyto="Reply to Tanya W" aria-label='Reply to Tanya W'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-67673">
+	<article id="article-comment-67673">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Belinda</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">March 22, 2020 at 7:32 am</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>I wanted to make an avocado, orange, spinach salad with tofu, but I have not been very successful with making tasty sauteed tofu. Your recipe was my inspiration. Your suggestions for pressing the tofu, skipping the marinating time and baking the tofu made the salad fabulous!! I ended up adding thinly sliced cabbage, cooked golden beets and green onion. The salad was delicious—thanks to your dressing recipe, your excellent tofu preparation suggestions and your tasty marinade recipe! Thank you. We will definitely make this again.</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-67673' data-commentid="67673" data-postid="17268" data-belowelement="article-comment-67673" data-respondelement="respond" data-replyto="Reply to Belinda" aria-label='Reply to Belinda'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment even thread-even depth-1" id="comment-65157">
+	<article id="article-comment-65157">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Barbara</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">December 01, 2019 at 10:05 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>This recipe looks amazing - thanks!</p>
+<p>I'm a little confused about the tofu - the recipe says to add just a quarter of the marinated tofu. What about the rest?</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-65157' data-commentid="65157" data-postid="17268" data-belowelement="article-comment-65157" data-respondelement="respond" data-replyto="Reply to Barbara" aria-label='Reply to Barbara'>Reply</a></div>
+		
+	</article>
+	<ul class="children">
+
+	<li class="comment byuser comment-author-ilovevegan bypostauthor odd alt depth-2" id="comment-65161">
+	<article id="article-comment-65161">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Brittany</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">December 02, 2019 at 1:19 am</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Ah! I'm sorry you were confused, I should have been more clear in my directions. My intention was that you would use 1/4 of the tofu for each serving!</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-65161' data-commentid="65161" data-postid="17268" data-belowelement="article-comment-65161" data-respondelement="respond" data-replyto="Reply to Brittany" aria-label='Reply to Brittany'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+	<li class="comment even thread-odd thread-alt depth-1" id="comment-64372">
+	<article id="article-comment-64372">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Stephanie</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">November 04, 2019 at 9:15 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Delicious! I didn't have cashews so I swapped in natural peanut butter for the cashews and the oil. I baked the tofu and added half a cup of cooked quinoa since I'm nursing a baby. Highly recommend!</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-64372' data-commentid="64372" data-postid="17268" data-belowelement="article-comment-64372" data-respondelement="respond" data-replyto="Reply to Stephanie" aria-label='Reply to Stephanie'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt thread-even depth-1" id="comment-61911">
+	<article id="article-comment-61911">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Cheryl</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">September 01, 2019 at 12:42 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Delicious  recipe with some great new ideas. Fantastic photography show casing the lively colours and textures too. And it's vegan--hurray!🌱</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-61911' data-commentid="61911" data-postid="17268" data-belowelement="article-comment-61911" data-respondelement="respond" data-replyto="Reply to Cheryl" aria-label='Reply to Cheryl'>Reply</a></div>
+		
+	</article>
+	<ul class="children">
+
+	<li class="comment byuser comment-author-ilovevegan bypostauthor even depth-2" id="comment-62016">
+	<article id="article-comment-62016">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Brittany</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">September 09, 2019 at 6:52 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Thank you so much! The photography has certainly come a long way, haha 😛</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-62016' data-commentid="62016" data-postid="17268" data-belowelement="article-comment-62016" data-respondelement="respond" data-replyto="Reply to Brittany" aria-label='Reply to Brittany'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt depth-2" id="comment-86870">
+	<article id="article-comment-86870">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Lisa</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">January 31, 2022 at 2:03 am</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>This is delicious. How long will the leftover dressing last in the fridge?</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-86870' data-commentid="86870" data-postid="17268" data-belowelement="article-comment-86870" data-respondelement="respond" data-replyto="Reply to Lisa" aria-label='Reply to Lisa'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+	<li class="comment even thread-odd thread-alt depth-1" id="comment-60289">
+	<article id="article-comment-60289">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Tim Bu Dong</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">July 16, 2019 at 10:35 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Ummm, I might be dense, but the ingredients list leaves out almost all of the ingredients?</p>
+<p>Can you actually complete the ingredients list?</p>
+<p>- Avocado<br />
+- Spinach<br />
+- Tofu<br />
+- ??? </p>
+<p>Looks like cucumber and red capsicum, but I can't tell. Or is that tomato?</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-60289' data-commentid="60289" data-postid="17268" data-belowelement="article-comment-60289" data-respondelement="respond" data-replyto="Reply to Tim Bu Dong" aria-label='Reply to Tim Bu Dong'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt thread-even depth-1" id="comment-59313">
+	<article id="article-comment-59313">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Kanika</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">July 06, 2019 at 3:57 am</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Amazing recipe !!simple ,quick and addictive ..thanks</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-59313' data-commentid="59313" data-postid="17268" data-belowelement="article-comment-59313" data-respondelement="respond" data-replyto="Reply to Kanika" aria-label='Reply to Kanika'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment even thread-odd thread-alt depth-1" id="comment-43256">
+	<article id="article-comment-43256">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Anna</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">April 23, 2018 at 3:48 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Discovered this addicting recipe a couple months ago and use it all the time. Yum!  I marinate a whole block at once. Is there a way to put it the oven to cook, or should you always fry|?</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-43256' data-commentid="43256" data-postid="17268" data-belowelement="article-comment-43256" data-respondelement="respond" data-replyto="Reply to Anna" aria-label='Reply to Anna'>Reply</a></div>
+		
+	</article>
+	<ul class="children">
+
+	<li class="comment byuser comment-author-ilovevegan bypostauthor odd alt depth-2" id="comment-43309">
+	<article id="article-comment-43309">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Brittany</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">April 24, 2018 at 11:00 am</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Thanks for commenting Anna! You can definitely cook this tofu in the oven, I'd preheat your oven to about 425F and cook for about  10-15 minutes per side. I hope that works for you!</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-43309' data-commentid="43309" data-postid="17268" data-belowelement="article-comment-43309" data-respondelement="respond" data-replyto="Reply to Brittany" aria-label='Reply to Brittany'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+
+	<li class="comment even thread-even depth-1" id="comment-41366">
+	<article id="article-comment-41366">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Mary Feraz</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">March 16, 2018 at 3:23 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Made this with some leftover tofu and wheatberries. Nice flavors. Thanks!</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-41366' data-commentid="41366" data-postid="17268" data-belowelement="article-comment-41366" data-respondelement="respond" data-replyto="Reply to Mary Feraz" aria-label='Reply to Mary Feraz'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+
+	<li class="comment odd alt thread-odd thread-alt depth-1" id="comment-28802">
+	<article id="article-comment-28802">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Andrea</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">July 26, 2016 at 1:15 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Was on a tofu hiatus for a few months after getting burned out, but after an amazing tofu scramble experience my fermented soybean craze was kick-started once again. I am a salad fanatic and wanted to incorporate chilled tofu into my meal prep for this week's lunches. Stumbled upon this recipe and WOW! So simple with inexpensive ingredients and the flavors are just perfect for a yummy summertime lunch. I added brown rice for texture and opted for a balsamic vinaigrette dressing (not a fan of Asian store bought dressings). I can tolerate some heat so I wish I had added more sriracha sauce and marinated for a tad longer because I can barely taste it. I'd recommend marinating for at least two hours.</p>
+<p>Great recipe- definitely adding to my rotation!</p>
+<p class="tasty-recipes-ratings"><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span><span class="tasty-recipes-rating tasty-recipes-clip-100 tasty-recipes-rating-solid">&#9733;</span></p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-28802' data-commentid="28802" data-postid="17268" data-belowelement="article-comment-28802" data-respondelement="respond" data-replyto="Reply to Andrea" aria-label='Reply to Andrea'>Reply</a></div>
+		
+	</article>
+	<ul class="children">
+
+	<li class="comment byuser comment-author-ilovevegan bypostauthor even depth-2" id="comment-28808">
+	<article id="article-comment-28808">
+
+		
+		<header class="comment-header">
+			<p class="comment-author">
+				<span class="comment-author-name">Brittany</span>			</p>
+
+			<p class="comment-meta"><time class="comment-time">July 26, 2016 at 3:24 pm</time></p>		</header>
+
+		<div class="comment-content">
+			
+			<p>Thanks so much Andrea!</p>
+		</div>
+
+		<div class="comment-reply"><a rel='nofollow' class='comment-reply-link' href='#comment-28808' data-commentid="28808" data-postid="17268" data-belowelement="article-comment-28808" data-respondelement="respond" data-replyto="Reply to Brittany" aria-label='Reply to Brittany'>Reply</a></div>
+		
+	</article>
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ol></div>	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="/spinach-avocado-and-marinated-tofu-salad/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://ilovevegan.com/wp-comments-post.php?wpe-comment-post=ilovevegan" method="post" id="commentform" class="comment-form" novalidate><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p>		<fieldset class="tasty-recipes-ratings tasty-recipes-comment-form">
+			<legend>Recipe rating</legend>
+			<!-- <label for="tasty-recipes-rating">Rate this recipe -->
+			<span class="tasty-recipes-ratings-buttons">
+							<input aria-label="Rate this recipe 5 stars" type="radio" name="tasty-recipes-rating" class="tasty-recipes-rating" value="5" /><span><i class="checked">&#9733;</i><i class="unchecked">&#9734;</i></span>
+							<input aria-label="Rate this recipe 4 stars" type="radio" name="tasty-recipes-rating" class="tasty-recipes-rating" value="4" /><span><i class="checked">&#9733;</i><i class="unchecked">&#9734;</i></span>
+							<input aria-label="Rate this recipe 3 stars" type="radio" name="tasty-recipes-rating" class="tasty-recipes-rating" value="3" /><span><i class="checked">&#9733;</i><i class="unchecked">&#9734;</i></span>
+							<input aria-label="Rate this recipe 2 stars" type="radio" name="tasty-recipes-rating" class="tasty-recipes-rating" value="2" /><span><i class="checked">&#9733;</i><i class="unchecked">&#9734;</i></span>
+							<input aria-label="Rate this recipe 1 stars" type="radio" name="tasty-recipes-rating" class="tasty-recipes-rating" value="1" /><span><i class="checked">&#9733;</i><i class="unchecked">&#9734;</i></span>
+						</span>
+		</fieldset>
+		<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" required='required' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" maxlength="100" aria-describedby="email-notes" required='required' /></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes" /> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment" /> <input type='hidden' name='comment_post_ID' value='17268' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="cff9c8b39f" /></p><p style="display: none !important;"><label>&#916;<textarea name="ak_hp_textarea" cols="45" rows="8" maxlength="100"></textarea></label><input type="hidden" id="ak_js_1" name="ak_js" value="181"/><script type="rocketlazyloadscript">document.getElementById( "ak_js_1" ).setAttribute( "value", ( new Date() ).getTime() );</script></p></form>	</div><!-- #respond -->
+	<p class="akismet_comment_form_privacy_notice">This site uses Akismet to reduce spam. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">Learn how your comment data is processed</a>.</p></main><aside class="sidebar sidebar-primary widget-area" role="complementary" aria-label="Primary Sidebar" id="genesis-sidebar-primary"><h2 class="genesis-sidebar-title screen-reader-text">Primary Sidebar</h2><div class='feast-modern-sidebar'>
+<div class="wp-block-group feast-about-author has-text-color has-background" style="background-color:#ffebd6;color:#1e152a"><div class="wp-block-group__inner-container">
+<figure class="wp-block-image size-full is-style-default"><img width="600" height="600" data-pin-nopin="1" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20600%20600'%3E%3C/svg%3E" alt="Brittany and William of I Love Vegan" class="wp-image-19932" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2018/07/Brittany-and-William-Co-Founder-of-I-Love-Vegan-6879-2.jpg"/><noscript><img width="600" height="600" data-pin-nopin="1" src="https://ilovevegan.com/wp-content/uploads/2018/07/Brittany-and-William-Co-Founder-of-I-Love-Vegan-6879-2.jpg" alt="Brittany and William of I Love Vegan" class="wp-image-19932"/></noscript></figure>
+
+
+
+<h2 id="h-hello"><strong>Hello!</strong></h2>
+
+
+
+<p><strong>We're Brittany and William!</strong> <br>We live in Alberta, Canada. We love eating really great (vegan) food + promoting veganism in a friendly and relaxed way.</p>
+
+
+
+<p class="has-text-align-right"><a style="font-weight: bold;" href="https://ilovevegan..com/about">More about us →</a></p>
+</div></div>
+
+
+
+<style>
+.feast-about-author h2:after { background: transparent; }
+.feast-about-author p { font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; font-size: 0.9rem; color: #1E152A; }
+.feast-about-author a:link { color: #1E152A; opacity: 100; text-decoration: underline; text-decoration-thickness: 0.125rem; line-height: 0.5rem; display: inline-block; background-color: #FFD95C; margin-top: 0.7rem; padding: 0 0 0 0.3rem; } 
+.feast-about-author a:visited { color: #1E152A; opacity: 100; text-decoration: underline; text-decoration-thickness: 0.125rem; line-height: 0.5rem; display: inline-block; background-color: #FFD95C; margin-top: 0.7rem; padding: 0 0 0 0.3rem; } 
+.feast-about-author a:hover { color: #1E152A !important; opacity: 100; text-decoration: none; line-height: 0.5rem; display: inline-block; background-color: transparent !important; margin-top: 0.7rem; padding: 0 0 0 0.3rem; } </style>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container">
+<h3 id="h-popular-recipes">Popular Recipes</h3>
+
+
+<div class='feast-category-index  feast-recipe-index'><ul class="feast-category-index-list fsri-list feast-grid-half feast-desktop-grid-half"><li class="listing-item"><a href="https://ilovevegan.com/creamy-vegan-broccoli-soup/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/creamy-vegan-broccoli-soup/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-320x320.jpg 320w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-225x225.jpg 225w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Creamy Vegan Broccoli Soup - ilovevegan.com #vegan" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/creamy-vegan-broccoli-soup/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-320x320.jpg 320w, https://ilovevegan.com/wp-content/uploads/2016/01/creamy-vegan-broccoli-soup12-225x225.jpg 225w" sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Creamy Vegan Broccoli Soup - ilovevegan.com #vegan" /></noscript><div class='fsri-title'>Creamy Vegan Broccoli Soup</div></a></li><li class="listing-item"><a href="https://ilovevegan.com/garlicky-cashew-broccoli-tofu-stir-fry/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/garlicky-cashew-broccoli-tofu-stir-fry/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-320x320.jpg 320w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-225x225.jpg 225w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/garlicky-cashew-broccoli-tofu-stir-fry/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-320x320.jpg 320w, https://ilovevegan.com/wp-content/uploads/2017/03/Garlicky-Cashew-Broccoli-Tofu-Stir-Fry-3991-6491-225x225.jpg 225w" sizes="(max-width: 360px) 100vw, 360px" /></noscript><div class='fsri-title'>Garlicky Cashew Broccoli &#038; Tofu Stir-Fry</div></a></li><li class="listing-item"><a href="https://ilovevegan.com/vegetable-pakoras/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/vegetable-pakoras/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-320x320.jpg 320w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/vegetable-pakoras/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2017/10/Vegan-Vegetable-Pakoras-Recipe-ilovevegan-9368-320x320.jpg 320w" sizes="(max-width: 360px) 100vw, 360px" /></noscript><div class='fsri-title'>Vegetable Pakoras</div></a></li><li class="listing-item"><a href="https://ilovevegan.com/fresh-vegetable-crunchy-rolls-with-sriracha-soy-sauce-tofu/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/fresh-vegetable-crunchy-rolls-with-sriracha-soy-sauce-tofu/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-320x320.jpg 320w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Vegan Rice Paper Rolls with Sriracha and Soy Sauce Tofu (served with Sweet &amp; Spicy Peanut Sauce!) - ilovevegan.com #vegan #glutenfree" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/fresh-vegetable-crunchy-rolls-with-sriracha-soy-sauce-tofu/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2014/10/fresh-vegetable-crunchy-rolls1-320x320.jpg 320w" sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Vegan Rice Paper Rolls with Sriracha and Soy Sauce Tofu (served with Sweet &amp; Spicy Peanut Sauce!) - ilovevegan.com #vegan #glutenfree" /></noscript><div class='fsri-title'>Vegan Rice Paper Rolls with Sriracha &#038; Soy Sauce Tofu and Peanut Sauce</div></a></li></ul></div></div></div>
+
+
+
+<div class="wp-block-group"><div class="wp-block-group__inner-container">
+<h3 id="h-fall-recipes">Fall Recipes</h3>
+
+
+<div class='feast-category-index  feast-recipe-index'><ul class="feast-category-index-list fsri-list feast-grid-half feast-desktop-grid-half"><li class="listing-item"><a href="https://ilovevegan.com/instant-pot-vegan-tofu-little-potato-stew/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/instant-pot-vegan-tofu-little-potato-stew/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-320x321.jpg 320w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-225x225.jpg 225w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Instant Pot Vegan Tofu &amp; Potato Stew - ilovevegan.com" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/instant-pot-vegan-tofu-little-potato-stew/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-320x321.jpg 320w, https://ilovevegan.com/wp-content/uploads/2018/08/Instant-Pot-Vegan-Tofu-Potato-Stew-7919-225x225.jpg 225w" sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Instant Pot Vegan Tofu &amp; Potato Stew - ilovevegan.com" /></noscript><div class='fsri-title'>Instant Pot Vegan Tofu &#038; Little Potato Stew</div></a></li><li class="listing-item"><a href="https://ilovevegan.com/vegan-apple-crisp-apple-crumble/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/vegan-apple-crisp-apple-crumble/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-320x321.jpg 320w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-225x225.jpg 225w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Vegan Apple Crisp (Apple Crumble) - ilovevegan.com #vegan #veganrecipe" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/vegan-apple-crisp-apple-crumble/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-720x720.jpg 720w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-320x321.jpg 320w, https://ilovevegan.com/wp-content/uploads/2018/10/Vegan-Apple-Crisp-ilovevegan-1392-225x225.jpg 225w" sizes="(max-width: 360px) 100vw, 360px" data-pin-description="Vegan Apple Crisp (Apple Crumble) - ilovevegan.com #vegan #veganrecipe" /></noscript><div class='fsri-title'>Vegan Apple Crisp (Apple Crumble)</div></a></li><li class="listing-item"><a href="https://ilovevegan.com/roasted-vegan-thanksgiving-bowl/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/roasted-vegan-thanksgiving-bowl/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-320x320.jpg 320w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-225x225.jpg 225w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/roasted-vegan-thanksgiving-bowl/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-320x320.jpg 320w, https://ilovevegan.com/wp-content/uploads/2015/10/Roasted-Vegan-Thanksgiving-Bowl2-225x225.jpg 225w" sizes="(max-width: 360px) 100vw, 360px" /></noscript><div class='fsri-title'>Roasted Vegan Thanksgiving Bowl</div></a></li><li class="listing-item"><a href="https://ilovevegan.com/vegan-molasses-cookies/" style="text-decoration: none;"><img data-pin-url="https://ilovevegan.com/vegan-molasses-cookies/" width="360" height="360" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20360%20360'%3E%3C/svg%3E" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" data-lazy-srcset="https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--320x321.jpg 320w" data-lazy-sizes="(max-width: 360px) 100vw, 360px" data-lazy-src="https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--360x360.jpg" /><noscript><img data-pin-url="https://ilovevegan.com/vegan-molasses-cookies/" width="360" height="360" src="https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--360x360.jpg" class=" wp-post-image" alt="" data-pin-nopin="true" aria-hidden="true" srcset="https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--360x360.jpg 360w, https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--640x640.jpg 640w, https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--180x180.jpg 180w, https://ilovevegan.com/wp-content/uploads/2016/11/Vegan-Molasses-Cookies-ilovevegan--320x321.jpg 320w" sizes="(max-width: 360px) 100vw, 360px" /></noscript><div class='fsri-title'>Vegan Molasses Cookies</div></a></li></ul></div></div></div>
+</div></aside></div></div><footer class="site-footer"><div class="wrap"><h2 class='screen-reader-text'>Footer</h2>
+<div class='feast-modern-footer'>
+<p class="has-text-align-center"><a rel="nofollow" href="#">↑ back to top ↑</a></p>
+
+
+
+<div class="wp-block-columns">
+<div class="wp-block-column">
+<h3 id="h-about">About</h3>
+
+
+
+<ul><li><a href="/about-us/">About Us</a></li><li><a href="/privacy-policy">Privacy Policy</a></li></ul>
+</div>
+
+
+
+<div class="wp-block-column">
+<h3 id="h-subscribe">✉ Subscribe</h3>
+
+
+
+<ul><li><a href="https://ilovevegan.us9.list-manage.com/subscribe/post?u=a8399c1b7437dee41dc05becc&amp;id=8903451200">Sign Up</a> for recipes by email</li></ul>
+</div>
+
+
+
+<div class="wp-block-column">
+<h3 id="h-contact">Contact</h3>
+
+
+
+<ul><li><a href="/about-us/#contact">Contact</a></li><li><a data-type="URL" data-id="/collaboration/" href="/collaboration/">Collaborate</a></li><li><a href="/resources/frequently-asked-vegan-questions/">FAQ</a></li></ul>
+</div>
+</div>
+
+
+
+<p class="has-text-align-center">Copyright © 2021 <strong>I Love Vegan Inc.</strong></p>
+
+
+
+<style>.site-container > footer {
+background: #C4FDEB; 
+padding: 27px 0;
+color: #2F1B25 !important; 
+text-transform: inherit !important; 
+letter-spacing: inherit !important;
+font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace; font-weight: 800; font-size: 1.1rem; color: #333333; margin-bottom: 0.8rem; padding: 0 0 0 0.3rem; 
+}
+.site-container > footer a:link {
+text-decoration: underline ; color: #3d3d3d ; opacity: 100; text-decoration: underline; text-decoration-thickness: 0.125rem !important; line-height: 0.5rem; display: inline-block; background-color: #FFD449; margin-top: 0.7rem; padding: 0 0 0 0.3rem; } 
+.site-container > footer a:visited {
+text-decoration: underline ; color: #3d3d3d ; opacity: 100; text-decoration: underline; text-decoration-thickness: 0.125rem !important; line-height: 0.5rem; display: inline-block; background-color: #FFD449; margin-top: 0.7rem; padding: 0 0 0 0.3rem; }
+.site-container > footer a:hover { color: #333333; opacity: 100; text-decoration: none; line-height: 0.5rem; display: inline-block; background-color: transparent; margin-top: 0.7rem; padding: 0 0 0 0.3rem; } 
+}</style>
+
+
+
+<p></p>
+</div></div></footer></div><script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='//assets.pinterest.com/js/pinit.js' data-pin-hover='true' defer></script>
+<style type="text/css" media="screen"> #simple-social-icons-3 ul li a, #simple-social-icons-3 ul li a:hover, #simple-social-icons-3 ul li a:focus { background-color: #c4fdeb !important; border-radius: 17px; color: #1e152a !important; border: 0px #ffffff solid !important; font-size: 17px; padding: 9px; }  #simple-social-icons-3 ul li a:hover, #simple-social-icons-3 ul li a:focus { background-color: #ffd449 !important; border-color: #ffffff !important; color: #1e152a !important; }  #simple-social-icons-3 ul li a:focus { outline: 1px dotted #ffd449 !important; } #simple-social-icons-3 ul li a, #simple-social-icons-3 ul li a:hover, #simple-social-icons-3 ul li a:focus { background-color: #c4fdeb !important; border-radius: 17px; color: #1e152a !important; border: 0px #ffffff solid !important; font-size: 17px; padding: 9px; }  #simple-social-icons-3 ul li a:hover, #simple-social-icons-3 ul li a:focus { background-color: #ffd449 !important; border-color: #ffffff !important; color: #1e152a !important; }  #simple-social-icons-3 ul li a:focus { outline: 1px dotted #ffd449 !important; }</style><script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://ilovevegan.com/wp-includes/js/comment-reply.min.js?ver=5.8.2' id='comment-reply-js' defer></script>
+<script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://ilovevegan.com/wp-content/themes/genesis/lib/js/skip-links.min.js?ver=3.3.5' id='skip-links-js' defer></script>
+<script type='text/javascript' src='https://ilovevegan.com/wp-includes/js/wp-embed.min.js?ver=5.8.2' id='wp-embed-js' defer></script>
+<script>window.lazyLoadOptions={elements_selector:"img[data-lazy-src],.rocket-lazyload",data_src:"lazy-src",data_srcset:"lazy-srcset",data_sizes:"lazy-sizes",class_loading:"lazyloading",class_loaded:"lazyloaded",threshold:300,callback_loaded:function(element){if(element.tagName==="IFRAME"&&element.dataset.rocketLazyload=="fitvidscompatible"){if(element.classList.contains("lazyloaded")){if(typeof window.jQuery!="undefined"){if(jQuery.fn.fitVids){jQuery(element).parent().fitVids()}}}}}};window.addEventListener('LazyLoad::Initialized',function(e){var lazyLoadInstance=e.detail.instance;if(window.MutationObserver){var observer=new MutationObserver(function(mutations){var image_count=0;var iframe_count=0;var rocketlazy_count=0;mutations.forEach(function(mutation){for(var i=0;i<mutation.addedNodes.length;i++){if(typeof mutation.addedNodes[i].getElementsByTagName!=='function'){continue}
+if(typeof mutation.addedNodes[i].getElementsByClassName!=='function'){continue}
+images=mutation.addedNodes[i].getElementsByTagName('img');is_image=mutation.addedNodes[i].tagName=="IMG";iframes=mutation.addedNodes[i].getElementsByTagName('iframe');is_iframe=mutation.addedNodes[i].tagName=="IFRAME";rocket_lazy=mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');image_count+=images.length;iframe_count+=iframes.length;rocketlazy_count+=rocket_lazy.length;if(is_image){image_count+=1}
+if(is_iframe){iframe_count+=1}}});if(image_count>0||iframe_count>0||rocketlazy_count>0){lazyLoadInstance.update()}});var b=document.getElementsByTagName("body")[0];var config={childList:!0,subtree:!0};observer.observe(b,config)}},!1)</script><script data-no-minify="1" async src="https://ilovevegan.com/wp-content/plugins/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script><script type="rocketlazyloadscript">"use strict";var wprRemoveCPCSS=function wprRemoveCPCSS(){var elem;document.querySelector('link[data-rocket-async="style"][rel="preload"]')?setTimeout(wprRemoveCPCSS,200):(elem=document.getElementById("rocket-critical-css"))&&"remove"in elem&&elem.remove()};window.addEventListener?window.addEventListener("load",wprRemoveCPCSS):window.attachEvent&&window.attachEvent("onload",wprRemoveCPCSS);</script><noscript><link rel='stylesheet' id='foodie-pro-theme-css'  href='https://ilovevegan.com/wp-content/themes/foodiepro-v440/style.css?ver=4.4.0' type='text/css' media='all' /><link rel='stylesheet' id='wp-block-library-css'  href='https://ilovevegan.com/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2' type='text/css' media='all' /><link rel='stylesheet' id='simple-social-icons-font-css'  href='https://ilovevegan.com/wp-content/plugins/simple-social-icons/css/style.css?ver=3.0.2' type='text/css' media='all' /></noscript></body></html>
+
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
