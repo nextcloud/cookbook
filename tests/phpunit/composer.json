@@ -1,0 +1,7 @@
+{
+    "name": "nextcloud/cookbook-phpunit",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    }
+}

@@ -1,79 +1,97 @@
+import Vue from "vue"
 import axios from "@nextcloud/axios"
 
 import { generateUrl } from "@nextcloud/router"
 
+const instance = axios.create()
+
 const baseUrl = `${generateUrl("apps/cookbook")}/webapp`
+
+// Add a debug log for every request
+instance.interceptors.request.use((config) => {
+    Vue.$log.debug(
+        `Making "${config.method}" request to "${config.url}"`,
+        config
+    )
+    const contentType = config.headers[config.method]["Content-Type"]
+    if (!["application/json", "text/json"].includes(contentType)) {
+        Vue.$log.warn(
+            `Request to "${config.url}" is using Content-Type "${contentType}", not JSON`
+        )
+    }
+    return config
+})
 
 axios.defaults.headers.common.Accept = "application/json"
 
 function createNewRecipe(recipe) {
-    return axios.post(`${baseUrl}/recipes`, recipe)
+    return instance.post(`${baseUrl}/recipes`, recipe)
 }
 
 function getRecipe(id) {
-    return axios.get(`${baseUrl}/recipes/${id}`)
+    return instance.get(`${baseUrl}/recipes/${id}`)
 }
 
 function getAllRecipes() {
-    return axios.get(`${baseUrl}/recipes`)
+    return instance.get(`${baseUrl}/recipes`)
 }
 
 function getAllRecipesOfCategory(categoryName) {
-    return axios.get(`${baseUrl}/category/${categoryName}`)
+    return instance.get(`${baseUrl}/category/${categoryName}`)
 }
 
 function getAllRecipesWithTag(tags) {
-    return axios.get(`${baseUrl}/tags/${tags}`)
+    return instance.get(`${baseUrl}/tags/${tags}`)
 }
 
 function searchRecipes(search) {
-    return axios.get(`${baseUrl}/search/${search}`)
+    return instance.get(`${baseUrl}/search/${search}`)
 }
 
 function updateRecipe(id, recipe) {
-    return axios.put(`${baseUrl}/recipes/${id}`, recipe)
+    return instance.put(`${baseUrl}/recipes/${id}`, recipe)
 }
 
 function deleteRecipe(id) {
-    return axios.delete(`${baseUrl}/recipes/${id}`)
+    return instance.delete(`${baseUrl}/recipes/${id}`)
 }
 
 function importRecipe(url) {
-    return axios.post(`${baseUrl}/import`, `url=${url}`)
+    return instance.post(`${baseUrl}/import`, `url=${url}`)
 }
 
 function getAllCategories() {
-    return axios.get(`${baseUrl}/categories`)
+    return instance.get(`${baseUrl}/categories`)
 }
 
 function updateCategoryName(oldName, newName) {
-    return axios.put(`${baseUrl}/category/${encodeURIComponent(oldName)}`, {
+    return instance.put(`${baseUrl}/category/${encodeURIComponent(oldName)}`, {
         name: newName,
     })
 }
 
 function getAllKeywords() {
-    return axios.get(`${baseUrl}/keywords`)
+    return instance.get(`${baseUrl}/keywords`)
 }
 
 function getConfig() {
-    return axios.get(`${baseUrl}/config`)
+    return instance.get(`${baseUrl}/config`)
 }
 
 function updatePrintImageSetting(enabled) {
-    return axios.post(`${baseUrl}/config`, { print_image: enabled ? 1 : 0 })
+    return instance.post(`${baseUrl}/config`, { print_image: enabled ? 1 : 0 })
 }
 
 function updateUpdateInterval(newInterval) {
-    return axios.post(`${baseUrl}/config`, { update_interval: newInterval })
+    return instance.post(`${baseUrl}/config`, { update_interval: newInterval })
 }
 
 function updateRecipeDirectory(newDir) {
-    return axios.post(`${baseUrl}/config`, { folder: newDir })
+    return instance.post(`${baseUrl}/config`, { folder: newDir })
 }
 
 function reindex() {
-    return axios.post(`${baseUrl}/reindex`)
+    return instance.post(`${baseUrl}/reindex`)
 }
 
 export default {

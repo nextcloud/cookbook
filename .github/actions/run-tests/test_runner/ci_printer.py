@@ -1,4 +1,6 @@
 
+import os
+
 class CILogger:
 	def __init__(self, isCi):
 		self.ci = isCi
@@ -62,7 +64,12 @@ class CILogger:
 	
 	def printSetOutput(self, name, value):
 		if self.ci:
-			print('::set-output name={name}::{value}'.format(name=name, value=value))
+			if 'GITHUB_OUTPUT' in os.environ:
+				with open(os.environ['GITHUB_OUTPUT'], 'a') as fp:
+					fp.write(f"{name}={value}")
+			else:
+				print('Error: GITHUB_OUTPUT not found in environment. Falling back to old syntax.')
+				print('::set-output name={name}::{value}'.format(name=name, value=value))
 		else:
 			print('[O:{name}] {value}'.format(name=name, value=value))
 

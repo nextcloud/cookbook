@@ -1,0 +1,222 @@
+{
+  "@context": "https://schema.org/",
+  "@id": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#recipe",
+  "@type": "Recipe",
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "reviewCount": "10"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "brittany mueller"
+  },
+  "cookTime": "PT20M",
+  "cookingMethod": "Baking",
+  "datePublished": "2019-08-31",
+  "description": "A hearty salad of baby spinach, marinated tofu, avocado, carrot, cucumber, red bell pepper, green onion with a creamy toasted sesame and soy dressing.",
+  "image": [
+    "https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-225x225.jpg",
+    "https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-260x195.jpg",
+    "https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081-320x180.jpg",
+    "https://ilovevegan.com/wp-content/uploads/2013/03/Marinated-Tofu-Avocado-Spinach-Salad-with-Sesame-Dressing-0081.jpg"
+  ],
+  "isPartOf": {
+    "@id": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#article"
+  },
+  "keywords": "marinated tofu, tofu salad, vegan sesame dressing",
+  "mainEntityOfPage": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#webpage",
+  "name": "Marinated Tofu, Avocado, and Spinach Salad with Creamy Toasted Sesame & Soy Dressing",
+  "nutrition": {
+    "@type": "nutritionInformation",
+    "calories": "379 calories",
+    "carbohydrateContent": "21.8 g",
+    "cholesterolContent": "0 mg",
+    "fatContent": "27 g",
+    "fiberContent": "6.5 g",
+    "proteinContent": "14.9 g",
+    "saturatedFatContent": "3.6 g",
+    "servingSize": "",
+    "sodiumContent": "832.4 mg",
+    "sugarContent": "7.5 g",
+    "transFatContent": "0 g"
+  },
+  "prepTime": "PT15M",
+  "recipeCategory": "Lunch & Dinner",
+  "recipeCuisine": "Vegan",
+  "recipeIngredient": [
+    "1 block (350g) firm or extra-firm tofu, pressed and cut into small squares",
+    "2 tbsp (30ml) low-sodium soy sauce",
+    "2 tbsp (30ml) water",
+    "3 cloves garlic, minced",
+    "2 tsp (10ml) sriracha (more or less to your preference)",
+    "1 tsp (5ml) sesame oil",
+    "(Optional, for sautéing) 1 tbsp (15ml) canola oil (or other neutral-tasting vegetable oil)",
+    "3-4 tbsp (45-60ml) low-sodium soy sauce",
+    "¼ cup (60ml) raw cashews",
+    "¼ cup (60ml) water",
+    "3 tbsp (45ml) toasted sesame seeds, divided",
+    "2 tbsp (30ml) canola oil",
+    "2 tsp (10ml) sugar",
+    "2 tsp (10ml) rice wine vinegar",
+    "8 large handfuls of baby spinach",
+    "1 carrot, grated",
+    "½ cucumber, halved and sliced",
+    "½ red bell pepper, sliced",
+    "1 ripe avocado, sliced",
+    "2 stalks green onion, sliced thinly",
+    "2 tbsp (30ml) toasted sesame seeds"
+  ],
+  "recipeInstructions": [
+    {
+      "@type": "HowToSection",
+      "itemListElement": [
+        {
+          "@type": "HowToStep",
+          "text": "Heat skillet over medium heat. Add sesame seeds and cook, stirring often until golden-brown and fragrant. Do not leave unattended.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-1"
+        }
+      ],
+      "name": "Toasting sesame seeds:"
+    },
+    {
+      "@type": "HowToSection",
+      "itemListElement": [
+        {
+          "@type": "HowToStep",
+          "text": "For optimal flavour, press tofu to draw out excess moisture. Check out our tutorial on draining and pressing tofu for a quick and easy method.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-2"
+        },
+        {
+          "@type": "HowToStep",
+          "text": "Combine marinade ingredients. Add cubed tofu. Stir to coat. Marinate for 1 hour (stirring halfway through). If you're in a hurry, you can skip this step.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-3"
+        },
+        {
+          "@type": "HowToStep",
+          "text": "Baking Instructions: (Uses less oil, slower method) Preheat oven to 425°F (220°C). Line a baking sheet with parchment paper. Spread tofu out in a single layer with no pieces touching. Top with remaining marinade. Bake for 20 minutes (or until tofu is crisp on the outside and tender inside.)",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-4"
+        },
+        {
+          "@type": "HowToStep",
+          "text": "Skillet Instructions: (Uses more oil, faster method) Heat 1 tbsp canola oil over medium-high heat. Add marinated tofu cubes (reserving excess marinade) and cook, turning tofu as needed, until all sides are golden-brown and crisp on all sides. Stir in remaining marinade and cook until marinade cooks down and coats the tofu.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-5"
+        },
+        {
+          "@type": "HowToStep",
+          "text": "Chill tofu.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-6"
+        }
+      ],
+      "name": "Marinated Tofu:"
+    },
+    {
+      "@type": "HowToSection",
+      "itemListElement": [
+        {
+          "@type": "HowToStep",
+          "text": "Set aside half of the sesame seeds. Combine remaining ingredients in a blender. Blend on high until smooth and creamy. Taste and adjust seasoning. Add remaining sesame seeds and stir. Chill in refrigerator.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-7"
+        }
+      ],
+      "name": "Creamy Toasted Sesame &amp; Soy Dressing:"
+    },
+    {
+      "@type": "HowToSection",
+      "itemListElement": [
+        {
+          "@type": "HowToStep",
+          "text": "In a large bowl, add 2 handfuls of spinach. Top with grated carrot, sliced cucumber, red bell pepper, avocado, and green onion. Add ¼ of the chilled marinated tofu. Drizzle with dressing and sprinkle with extra toasted sesame seeds.",
+          "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/#instruction-step-8"
+        }
+      ],
+      "name": "Assembling salad:"
+    }
+  ],
+  "recipeYield": [
+    "4",
+    "4 servings"
+  ],
+  "review": [
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Stephanie"
+      },
+      "datePublished": "2019-11-04",
+      "reviewBody": "Delicious! I didn't have cashews so I swapped in natural peanut butter for the cashews and the oil. I baked the tofu and added half a cup of cooked quinoa since I'm nursing a baby. Highly recommend!",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Belinda"
+      },
+      "datePublished": "2020-03-22",
+      "reviewBody": "I wanted to make an avocado, orange, spinach salad with tofu, but I have not been very successful with making tasty sauteed tofu. Your recipe was my inspiration. Your suggestions for pressing the tofu, skipping the marinating time and baking the tofu made the salad fabulous!! I ended up adding thinly sliced cabbage, cooked golden beets and green onion. The salad was delicious—thanks to your dressing recipe, your excellent tofu preparation suggestions and your tasty marinade recipe! Thank you. We will definitely make this again.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Tanya W"
+      },
+      "datePublished": "2020-06-21",
+      "reviewBody": "Easy and delicious! It's super tasty and will be in our summer rotation! Great way to use large bags of spinach before they go bad!\r\n\r\nBecause another similar recipe I love calls for cornstarch before baking, I added about 1 T cornstarch.  Next time I'll have to try side by side with and without to see if how that changes it!  My husband and family loved it (except our 10 &amp; 12 yo boys who hate tofu).\r\n\r\nThis is versatile. I didn't have avocado, peppers, or carrot, but it was still a great and quick meal (you do have to plan ahead a little for tofu pressing time and baking time). I have fallen in love with tofu because it can be prepared so healthfully and deliciously.  I like not worrying about it getting tough like a lot of chicken, and not having unhealthy hormone and antibiotic additives (and not causing animals to live out horrible lives to feed us!).",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "cm"
+      },
+      "datePublished": "2020-07-20",
+      "reviewBody": "A lovely  salad for a summers day, and full of exceptional  nutrition too.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Kortneii MacKenzie"
+      },
+      "datePublished": "2021-01-04",
+      "reviewBody": "Yum this was a nice change of pace.really enjoying the different flavors! Excellent recipe! Thanks for sharing.",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    },
+    {
+      "@type": "Review",
+      "author": {
+        "@type": "Person",
+        "name": "Natasha"
+      },
+      "datePublished": "2021-07-10",
+      "reviewBody": "Very tasty",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "5"
+      }
+    }
+  ],
+  "totalTime": "PT2H5M",
+  "url": "https://ilovevegan.com/spinach-avocado-and-marinated-tofu-salad/"
+}

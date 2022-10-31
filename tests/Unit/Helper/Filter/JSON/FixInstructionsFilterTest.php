@@ -160,6 +160,42 @@ class FixInstructionsFilterTest extends TestCase {
 			], ['a', 'b', 'c'], true
 		];
 
+		yield 'HowToSections' => [
+			[
+				[
+					'@type' => 'HowToSection',
+					'name' => 'Foo',
+					'itemListElement' => [
+						[
+							'@type' => 'HowToStep',
+							'text' => 'a',
+						],
+						[
+							'@type' => 'HowToStep',
+							'text' => 'b',
+						],
+					],
+				],
+				[
+					'@type' => 'HowToSection',
+					'itemListElement' => [
+						[
+							'@type' => 'HowToStep',
+							'text' => 'c',
+						],
+						[
+							'@type' => 'HowToStep',
+							'text' => 'd',
+						],
+					],
+				],
+				[
+					'@type' => 'HowToStep',
+					'text' => 'e',
+				],
+			], ['## Foo', 'a', 'b', '## HowToSection', 'c', 'd', 'e'], true
+		];
+
 		yield 'Issue1210' => [
 			['a', '', 'b'], ['a', 'b'], true
 		];
@@ -223,5 +259,27 @@ class FixInstructionsFilterTest extends TestCase {
 		$this->expectException(InvalidRecipeException::class);
 
 		$this->dut->apply($recipe);
+	}
+
+	public function dpRealWorldIssues() {
+		return [
+			'case01' => ['case01.json', 'case01.expected.json', true],
+		];
+	}
+
+	/** @dataProvider dpRealWorldIssues */
+	public function testRealWorldIssue($fileName, $expectedFileName, $shouldChange) {
+		$originalRaw = file_get_contents(__DIR__ . "/res_FixInstructionsFilter/$fileName");
+		$expectedRaw = file_get_contents(__DIR__ . "/res_FixInstructionsFilter/$expectedFileName");
+
+		$original = json_decode($originalRaw, true);
+		$expected = json_decode($expectedRaw, true);
+
+		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
+
+		$ret = $this->dut->apply($original);
+
+		$this->assertEquals($expected, $original);
+		$this->assertEquals($shouldChange, $ret);
 	}
 }

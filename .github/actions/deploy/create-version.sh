@@ -82,4 +82,4 @@ git remote add tokenized "https://nextcloud-cookbook-bot:$BOT_TOKEN@github.com/n
 git -c "http.https://github.com/.extraheader=" push tokenized $stable_branch $master_branch
 git push origin "v$version"
 
-echo "::set-output name=version::$version"
+echo "version=$version" >> $GITHUB_OUTPUT
