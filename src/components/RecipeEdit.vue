@@ -60,8 +60,8 @@
             :field-label="t('cookbook', 'Servings')"
             :hide="!showRecipeYield"
         >
-            <actions>
-                <action-button
+            <nc-actions>
+                <nc-action-button
                     class="btn-enable-recipe-yield"
                     :aria-label="
                         // prettier-ignore
@@ -70,8 +70,8 @@
                     @click="toggleShowRecipeYield"
                 >
                     <template #icon><numeric-icon :size="20" /></template>
-                </action-button>
-            </actions>
+                </nc-action-button>
+            </nc-actions>
         </EditInputField>
         <EditMultiselectInputGroup
             v-model="recipe['nutrition']"
@@ -122,8 +122,8 @@
 <script>
 import Vue from "vue"
 
-import Actions from "@nextcloud/vue/dist/Components/Actions"
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
+import NcActions from "@nextcloud/vue/dist/Components/NcActions"
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
@@ -152,8 +152,8 @@ export default {
         EditMultiselect,
         EditTimeField,
         EditMultiselectInputGroup,
-        Actions,
-        ActionButton,
+        NcActions,
+        NcActionButton,
         NumericIcon,
     },
     // We can check if the user has browsed from the same recipe's view to this

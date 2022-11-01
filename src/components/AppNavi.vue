@@ -1,8 +1,8 @@
 <template>
     <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
-    <AppNavigation>
+    <NcAppNavigation>
         <router-link :to="'/recipe/create'">
-            <AppNavigationNew
+            <NcAppNavigationNew
                 class="create"
                 :text="t('cookbook', 'Create recipe')"
                 button-id="cookbook_new_cookbook"
@@ -11,34 +11,34 @@
         </router-link>
 
         <template slot="list">
-            <ActionInput
+            <NcActionInput
                 class="download"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'"
                 @submit="downloadRecipe"
             >
                 {{ t("cookbook", "Download recipe from URL") }}
-            </ActionInput>
+            </NcActionInput>
 
-            <AppNavigationItem
+            <NcAppNavigationItem
                 :title="t('cookbook', 'All recipes')"
                 icon="icon-category-organization"
                 :to="'/'"
             >
-                <AppNavigationCounter slot="counter">{{
+                <NcAppNavigationCounter slot="counter">{{
                     totalRecipeCount
-                }}</AppNavigationCounter>
-            </AppNavigationItem>
+                }}</NcAppNavigationCounter>
+            </NcAppNavigationItem>
 
-            <AppNavigationItem
+            <NcAppNavigationItem
                 :title="t('cookbook', 'Uncategorized recipes')"
                 icon="icon-category-organization"
                 :to="'/category/_/'"
             >
-                <AppNavigationCounter slot="counter">{{
+                <NcAppNavigationCounter slot="counter">{{
                     uncatRecipes
-                }}</AppNavigationCounter>
-            </AppNavigationItem>
+                }}</NcAppNavigationCounter>
+            </NcAppNavigationItem>
 
             <AppNavigationCaption
                 v-if="loading.categories || categories.length > 0"
@@ -46,16 +46,16 @@
                 :loading="loading.categories"
             >
                 <template slot="actions">
-                    <ActionButton
+                    <NcActionButton
                         icon="icon-rename"
                         @click="toggleCategoryRenaming"
                     >
                         {{ t("cookbook", "Toggle editing") }}
-                    </ActionButton>
+                    </NcActionButton>
                 </template>
             </AppNavigationCaption>
 
-            <AppNavigationItem
+            <NcAppNavigationItem
                 v-for="(cat, idx) in categories"
                 :key="cat + idx"
                 :ref="'app-navi-cat-' + idx"
@@ -74,14 +74,14 @@
                     }
                 "
             >
-                <AppNavigationCounter
+                <NcAppNavigationCounter
                     v-if="!catRenamingEnabled"
                     slot="counter"
-                    >{{ cat.recipeCount }}</AppNavigationCounter
+                    >{{ cat.recipeCount }}</NcAppNavigationCounter
                 >
                 <!-- eslint-disable-next-line vue/no-lone-template -->
                 <template>
-                    <AppNavigationItem
+                    <NcAppNavigationItem
                         v-for="(rec, idy) in cat.recipes"
                         :key="idx + '-' + idy"
                         class="recipe"
@@ -95,7 +95,7 @@
                         "
                     />
                 </template>
-            </AppNavigationItem>
+            </NcAppNavigationItem>
         </template>
 
         <template slot="footer">
@@ -104,16 +104,16 @@
                 @reindex="reindex"
             />
         </template>
-    </AppNavigation>
+    </NcAppNavigation>
 </template>
 
 <script>
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
-import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
-import AppNavigation from "@nextcloud/vue/dist/Components/AppNavigation"
-import AppNavigationCounter from "@nextcloud/vue/dist/Components/AppNavigationCounter"
-import AppNavigationItem from "@nextcloud/vue/dist/Components/AppNavigationItem"
-import AppNavigationNew from "@nextcloud/vue/dist/Components/AppNavigationNew"
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
+import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
+import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation"
+import NcAppNavigationCounter from "@nextcloud/vue/dist/Components/NcAppNavigationCounter"
+import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem"
+import NcAppNavigationNew from "@nextcloud/vue/dist/Components/NcAppNavigationNew"
 
 import Vue from "vue"
 
@@ -127,12 +127,12 @@ import AppNavigationCaption from "./AppNavigationCaption.vue"
 export default {
     name: "AppNavi",
     components: {
-        ActionButton,
-        ActionInput,
-        AppNavigation,
-        AppNavigationCounter,
-        AppNavigationItem,
-        AppNavigationNew,
+        NcActionButton,
+        NcActionInput,
+        NcAppNavigation,
+        NcAppNavigationCounter,
+        NcAppNavigationItem,
+        NcAppNavigationNew,
         AppSettings,
         AppNavigationCaption,
     },

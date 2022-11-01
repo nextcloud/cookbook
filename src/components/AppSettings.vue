@@ -1,10 +1,10 @@
 <template>
-    <AppNavigationSettings :open="true">
+    <NcAppNavigationSettings :open="true">
         <div id="app-settings">
             <fieldset>
                 <ul>
                     <li>
-                        <ActionButton
+                        <NcActionButton
                             class="button"
                             :icon="
                                 scanningLibrary
@@ -65,12 +65,12 @@
                 </ul>
             </fieldset>
         </div>
-    </AppNavigationSettings>
+    </NcAppNavigationSettings>
 </template>
 
 <script>
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
-import AppNavigationSettings from "@nextcloud/vue/dist/Components/AppNavigationSettings"
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
+import NcAppNavigationSettings from "@nextcloud/vue/dist/Components/NcAppNavigationSettings"
 
 import api from "cookbook/js/api-interface"
 import { showSimpleAlertModal } from "cookbook/js/modals"
@@ -78,8 +78,8 @@ import { showSimpleAlertModal } from "cookbook/js/modals"
 export default {
     name: "AppSettings",
     components: {
-        ActionButton,
-        AppNavigationSettings,
+        NcActionButton,
+        NcAppNavigationSettings,
     },
     props: {
         scanningLibrary: {

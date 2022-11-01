@@ -1,7 +1,7 @@
 <template>
-    <Content app-name="cookbook">
+    <NcContent app-name="cookbook">
         <AppNavi class="app-navigation" />
-        <AppContent>
+        <NcAppContent>
             <div>
                 <AppControls />
                 <div class="cookbook-app-content">
@@ -14,15 +14,15 @@
                 :class="{ 'stay-open': isNavigationOpen }"
                 @click="closeNavigation"
             />
-        </AppContent>
+        </NcAppContent>
         <dialogs-wrapper></dialogs-wrapper>
-    </Content>
+    </NcContent>
 </template>
 
 <script>
 import isMobile from "@nextcloud/vue/dist/Mixins/isMobile"
-import AppContent from "@nextcloud/vue/dist/Components/AppContent"
-import Content from "@nextcloud/vue/dist/Components/Content"
+import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
+import NcContent from "@nextcloud/vue/dist/Components/NcContent"
 import AppControls from "cookbook/components/AppControls/AppControls.vue"
 import { emit, subscribe, unsubscribe } from "@nextcloud/event-bus"
 import AppNavi from "./AppNavi.vue"
@@ -30,11 +30,11 @@ import AppNavi from "./AppNavi.vue"
 export default {
     name: "AppMain",
     components: {
-        AppContent,
+        NcAppContent,
         AppControls,
         AppNavi,
         // eslint-disable-next-line vue/no-reserved-component-names
-        Content,
+        NcContent,
     },
     mixins: [isMobile],
     data() {

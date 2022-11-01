@@ -64,7 +64,7 @@ button will be automatically created.
         </div>
         <!-- Actions -->
         <div v-if="hasUtils" class="app-navigation-entry__utils">
-            <Actions
+            <NcActions
                 menu-align="right"
                 :placement="menuPlacement"
                 :open="menuOpen"
@@ -73,20 +73,20 @@ button will be automatically created.
                 @update:open="onMenuToggle"
             >
                 <slot name="actions" />
-            </Actions>
+            </NcActions>
         </div>
     </li>
 </template>
 
 <script>
-import Actions from "@nextcloud/vue/dist/Components/Actions"
+import NcActions from "@nextcloud/vue/dist/Components/NcActions"
 import isMobile from "@nextcloud/vue/dist/Mixins/isMobile"
 
 export default {
     name: "AppNavigationCaption",
 
     components: {
-        Actions,
+        NcActions,
     },
     mixins: [isMobile],
     props: {

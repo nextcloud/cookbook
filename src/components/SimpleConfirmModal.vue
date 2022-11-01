@@ -1,5 +1,5 @@
 <template>
-    <Modal :title="title" @close="$close(false)">
+    <NcModal :title="title" @close="$close(false)">
         <div class="modal__wrapper">
             <div class="modal__content">{{ content }}</div>
             <div class="modal__button-bar">
@@ -11,17 +11,17 @@
                 }}</NcButton>
             </div>
         </div>
-    </Modal>
+    </NcModal>
 </template>
 
 <script>
-import Modal from "@nextcloud/vue/dist/Components/Modal"
-import NcButton from "@nextcloud/vue/dist/Components/Button"
+import NcModal from "@nextcloud/vue/dist/Components/NcModal"
+import NcButton from "@nextcloud/vue/dist/Components/NcButton"
 
 export default {
     name: "SimpleConfirmModal",
     components: {
-        Modal,
+        NcModal,
         NcButton,
     },
 }
