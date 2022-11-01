@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Allow import of recipes with HowToSections
+  [#1255](https://github.com/nextcloud/cookbook/pull/1255) @christianlupus
 
 
 ## 0.9.17 - 2022-10-31
@@ -8,7 +11,7 @@
 - Add alarm sound to timers
   [#1120](https://github.com/nextcloud/cookbook/pull/1120) @MarcelRobitaille
 - Allow import of recipes with HowToSections
-  [#1300](https://github.com/nextcloud/cookbook/pull/1282) @christianlupus
+  [#1300](https://github.com/nextcloud/cookbook/pull/1300) @christianlupus
 
 ### Changed
 - Create build script for GitHub pages with GitHub actions to allow for custom building
