@@ -3,7 +3,7 @@
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
             <li v-for="(entry, idx) in selectedOpts" :key="fieldLabel + idx">
-                <multiselect
+                <nc-multiselect
                     class="key"
                     :options="selectableOptions(idx)"
                     track-by="key"
@@ -25,7 +25,7 @@
                 v-if="selectedOptions.length < options.length"
                 :key="fieldLabel + selectedOptions.length"
             >
-                <multiselect
+                <nc-multiselect
                     class="key"
                     :options="selectableOptions(selectedOptions.length)"
                     track-by="key"
@@ -46,12 +46,12 @@
 </template>
 
 <script>
-import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+import NcMultiselect from "@nextcloud/vue/dist/Components/NcMultiselect"
 
 export default {
     name: "EditMultiselectInputGroup",
     components: {
-        Multiselect,
+        NcMultiselect,
     },
     // Define which prop and which event is used here, for binding to the
     // v-model used in the parent (the one using this component)

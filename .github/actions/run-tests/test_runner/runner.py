@@ -28,9 +28,6 @@ class TestRunner:
 		
 		if args.build_npm:
 			cmd.append('--build-npm')
-		
-		if args.run_code_checker:
-			cmd.append('--run-code-checker')
 
 		cmd.append('--')
 

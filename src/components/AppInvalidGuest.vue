@@ -1,6 +1,6 @@
 <template>
-    <Content app-name="cookbook">
-        <AppContent>
+    <NcContent app-name="cookbook">
+        <NcAppContent>
             <div class="main">
                 <div class="dialog">
                     <div class="message">
@@ -19,20 +19,20 @@
                     </div>
                 </div>
             </div>
-        </AppContent>
-    </Content>
+        </NcAppContent>
+    </NcContent>
 </template>
 
 <script>
-import Content from "@nextcloud/vue/dist/Components/Content"
-import AppContent from "@nextcloud/vue/dist/Components/AppContent"
+import NcContent from "@nextcloud/vue/dist/Components/NcContent"
+import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
 
 export default {
     name: "InvalidGuest",
     components: {
         // eslint-disable-next-line vue/no-reserved-component-names
-        Content,
-        AppContent,
+        NcContent,
+        NcAppContent,
     },
     methods: {
         selectFolder() {

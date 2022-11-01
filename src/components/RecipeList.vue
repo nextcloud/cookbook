@@ -7,7 +7,7 @@
             :filtered-recipes="filteredRecipes"
         />
         <div id="recipes-submenu" class="recipes-submenu-container">
-            <Multiselect
+            <NcMultiselect
                 v-if="recipes.length > 0"
                 v-model="orderBy"
                 class="recipes-sorting-dropdown"
@@ -35,7 +35,7 @@
                     />
                     <span class="option__title">{{ props.option.label }}</span>
                 </template>
-            </Multiselect>
+            </NcMultiselect>
         </div>
         <ul class="recipes">
             <li
@@ -50,14 +50,14 @@
 </template>
 
 <script>
-import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+import NcMultiselect from "@nextcloud/vue/dist/Components/NcMultiselect"
 import RecipeCard from "./RecipeCard.vue"
 import RecipeListKeywordCloud from "./RecipeListKeywordCloud.vue"
 
 export default {
     name: "RecipeList",
     components: {
-        Multiselect,
+        NcMultiselect,
         RecipeCard,
         RecipeListKeywordCloud,
     },

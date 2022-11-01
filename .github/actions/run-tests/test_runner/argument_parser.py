@@ -36,8 +36,6 @@ def parseArguments():
 	You can specify groups of tests (unit, integration, migration) as well as additional tests.
 	Additional reports can be generated in order to allow for code coverage analysis.''')
 
-	group.add_argument('--run-code-checker', action='store_true', help='Run the code checker')
-
 	group.add_argument('--run-unit-tests', '-u', action='store_true', help='Run only the unit tests')
 	group.add_argument('--run-integration-tests', '-i', action='store_true', help='Run only the integration tests')
 	group.add_argument('--run-migration-tests', '-m', action='store_true', help='Run only the migration tests')

@@ -22,10 +22,6 @@ inputs:
         description: The test may fail
         required: false
         default: "false"
-    runCodeChecker:
-        description: Setting to true or false to decide if the code checker should run
-        required: false
-        default: "true"
 
 runs:
     using: 'composite'
@@ -39,7 +35,6 @@ runs:
           run: >-
             if [ "${{inputs.db}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
             if [ "${{ inputs.installUntested }}" = 'true' ]; then PARAM="$PARAM --install-untested"; fi &&
-            if [ "${{ inputs.runCodeChecker }}" = 'true' ]; then PARAM="$PARAM --run-code-checker"; fi &&
             cd .github/actions/run-tests &&
             sudo pip install -r requirements.txt &&
             ./run-locally.py
