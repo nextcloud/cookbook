@@ -6,6 +6,7 @@
         first-selected-section="keyboard shortcuts"
     >
         <NcAppSettingsSection
+            id="settings-recipe-folder"
             :title="t('cookbook', 'Recipe folder')"
             class="app-settings-section"
         >
@@ -46,6 +47,7 @@
             </fieldset>
         </NcAppSettingsSection>
         <NcAppSettingsSection
+            id="settings-recipe-display"
             :title="t('cookbook', 'Recipe display settings')"
             class="app-settings-section"
         >
