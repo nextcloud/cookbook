@@ -53,18 +53,18 @@
             />
         </div>
         {{/* Primary buttons */}}
-        <SimpleButton
+        <NcButton
             v-if="isRecipe"
             type="primary"
             :aria-label="t('cookbook', 'Edit')"
-            @click="goToRecipe($store.state.recipe.id)"
+            @click="goToRecipeEdit($store.state.recipe.id)"
         >
             <template #icon>
                 <PencilIcon :size="20" />
             </template>
             {{ t("cookbook", "Edit") }}
-        </SimpleButton>
-        <SimpleButton
+        </NcButton>
+        <NcButton
             v-if="isEdit || isCreate"
             type="primary"
             :aria-label="t('cookbook', 'Save')"
@@ -79,32 +79,32 @@
                 <CheckmarkIcon v-else :size="20" />
             </template>
             {{ t("cookbook", "Save") }}
-        </SimpleButton>
+        </NcButton>
         <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
-        <Actions
+        <NcActions
             v-if="isIndex"
             default-icon="icon-search-white"
             :menu-title="t('cookbook', 'Search')"
             :primary="true"
         >
-            <ActionInput
+            <NcActionInput
                 icon="icon-quota"
                 :value="filterValue"
                 @update:value="updateFilters"
             >
                 {{ t("cookbook", "Filter") }}
-            </ActionInput>
-            <ActionInput icon="icon-search" @submit="search">
+            </NcActionInput>
+            <NcActionInput icon="icon-search" @submit="search">
                 {{ t("cookbook", "Search") }}
-            </ActionInput>
-        </Actions>
+            </NcActionInput>
+        </NcActions>
         {{/* Overflow buttons (3-dot menu) */}}
-        <Actions
+        <NcActions
             v-if="isRecipe || isEdit"
             :force-menu="true"
             class="overflow-menu"
         >
-            <ActionButton
+            <NcActionButton
                 v-if="isEdit"
                 :icon="
                     $store.state.reloadingRecipe === parseInt($route.params.id)
@@ -116,8 +116,26 @@
                 @click="reloadRecipeEdit()"
             >
                 {{ t("cookbook", "Reload recipe") }}
-            </ActionButton>
-            <ActionButton
+            </NcActionButton>
+            <NcActionButton
+                v-if="isEdit"
+                class="action-button"
+                :aria-label="t('cookbook', 'Abort editing')"
+                @click="goToRecipe($store.state.recipe.id)"
+            >
+                {{ t("cookbook", "Abort editing") }}
+                <template #icon>
+                    <NcLoadingIcon
+                        v-if="
+                            $store.state.reloadingRecipe ===
+                            parseInt($route.params.id)
+                        "
+                        :size="20"
+                    />
+                    <eye-icon v-else :size="20" />
+                </template>
+            </NcActionButton>
+            <NcActionButton
                 v-if="isRecipe"
                 :icon="
                     $store.state.reloadingRecipe === parseInt($route.params.id)
@@ -129,8 +147,8 @@
                 @click="reloadRecipeView()"
             >
                 {{ t("cookbook", "Reload recipe") }}
-            </ActionButton>
-            <ActionButton
+            </NcActionButton>
+            <NcActionButton
                 v-if="isRecipe"
                 class="action-button"
                 :aria-label="t('cookbook', 'Print recipe')"
@@ -138,8 +156,8 @@
             >
                 <template #icon=""><printer-icon :size="20" /></template>
                 {{ t("cookbook", "Print recipe") }}
-            </ActionButton>
-            <ActionButton
+            </NcActionButton>
+            <NcActionButton
                 v-if="isRecipe"
                 icon="icon-delete"
                 class="action-button"
@@ -147,22 +165,24 @@
                 @click="deleteRecipe()"
             >
                 {{ t("cookbook", "Delete recipe") }}
-            </ActionButton>
-        </Actions>
+            </NcActionButton>
+        </NcActions>
     </div>
 </template>
 
 <script>
-import Actions from "@nextcloud/vue/dist/Components/Actions"
-import ActionButton from "@nextcloud/vue/dist/Components/ActionButton"
+import NcActions from "@nextcloud/vue/dist/Components/NcActions"
+import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
-import SimpleButton from "@nextcloud/vue/dist/Components/Button"
-import ActionInput from "@nextcloud/vue/dist/Components/ActionInput"
+import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
+import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon"
 
 import PencilIcon from "icons/Pencil.vue"
 import LoadingIcon from "icons/Loading.vue"
 import CheckmarkIcon from "icons/Check.vue"
 import PrinterIcon from "icons/Printer.vue"
+import EyeIcon from "icons/Eye.vue"
 
 import helpers from "cookbook/js/helper"
 import {
@@ -176,14 +196,16 @@ import ModeIndicator from "./ModeIndicator.vue"
 export default {
     name: "AppControls",
     components: {
-        Actions,
-        ActionButton,
-        ActionInput,
+        NcActions,
+        NcActionButton,
+        NcActionInput,
+        NcLoadingIcon,
         PrinterIcon,
-        SimpleButton,
+        NcButton,
         PencilIcon,
         LoadingIcon,
         CheckmarkIcon,
+        EyeIcon,
         ModeIndicator,
         Location,
     },
@@ -301,6 +323,9 @@ export default {
             this.$root.$emit("applyRecipeFilter", e)
         },
         goToRecipe(id) {
+            helpers.goTo(`/recipe/${id}`)
+        },
+        goToRecipeEdit(id) {
             helpers.goTo(`/recipe/${id}/edit`)
         },
     },
@@ -312,7 +337,7 @@ export default {
     /* 44px is the height of nextcloud/vue button (not exposed as a variable :[ ) */
     --nc-button-size: 44px;
 
-    --vertical-padding: 8px;
+    --vertical-padding: 4px;
 
     /* Sticky is better than fixed because fixed takes the element out of flow,
      which breaks the height, putting elements underneath */
@@ -322,7 +347,7 @@ export default {
     z-index: 2;
 
     /* The height of the nextcloud header */
-    top: var(--header-height);
+    top: 0px;
     display: flex;
     width: 100%;
     /* Make sure the wrapper is always at least as tall as the tallest element

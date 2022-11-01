@@ -1,6 +1,6 @@
 <template>
     <div class="multiselect-popup-container">
-        <Multiselect
+        <NcMultiselect
             ref="ms"
             class="multiselect-popup-container__multiselect"
             v-bind="$attrs"
@@ -24,12 +24,12 @@
 </template>
 
 <script>
-import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+import NcMultiselect from "@nextcloud/vue/dist/Components/NcMultiselect"
 
 export default {
     name: "EditMultiselectPopup",
     components: {
-        Multiselect,
+        NcMultiselect,
     },
     props: {
         focused: {

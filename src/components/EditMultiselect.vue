@@ -1,7 +1,7 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <Multiselect
+        <NcMultiselect
             class="edit-multiselect"
             v-bind="$attrs"
             v-on="$listeners"
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import Multiselect from "@nextcloud/vue/dist/Components/Multiselect"
+import NcMultiselect from "@nextcloud/vue/dist/Components/NcMultiselect"
 
 export default {
     name: "EditMultiselect",
     components: {
-        Multiselect,
+        NcMultiselect,
     },
     props: {
         fieldLabel: {
