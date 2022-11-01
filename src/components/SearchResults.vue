@@ -105,7 +105,7 @@ export default {
                 // General search
                 const $this = this
                 try {
-                    const response = api.recipes.search(
+                    const response = await api.recipes.search(
                         $this.$route.params.value
                     )
                     $this.results = response.data

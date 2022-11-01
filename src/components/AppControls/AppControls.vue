@@ -57,7 +57,7 @@
             v-if="isRecipe"
             type="primary"
             :aria-label="t('cookbook', 'Edit')"
-            @click="goToRecipe($store.state.recipe.id)"
+            @click="goToRecipeEdit($store.state.recipe.id)"
         >
             <template #icon>
                 <PencilIcon :size="20" />
@@ -118,6 +118,24 @@
                 {{ t("cookbook", "Reload recipe") }}
             </NcActionButton>
             <NcActionButton
+                v-if="isEdit"
+                class="action-button"
+                :aria-label="t('cookbook', 'Abort editing')"
+                @click="goToRecipe($store.state.recipe.id)"
+            >
+                {{ t("cookbook", "Abort editing") }}
+                <template #icon>
+                    <NcLoadingIcon
+                        v-if="
+                            $store.state.reloadingRecipe ===
+                            parseInt($route.params.id)
+                        "
+                        :size="20"
+                    />
+                    <eye-icon v-else :size="20" />
+                </template>
+            </NcActionButton>
+            <NcActionButton
                 v-if="isRecipe"
                 :icon="
                     $store.state.reloadingRecipe === parseInt($route.params.id)
@@ -158,11 +176,13 @@ import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
 import NcButton from "@nextcloud/vue/dist/Components/NcButton"
 import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
+import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon"
 
 import PencilIcon from "icons/Pencil.vue"
 import LoadingIcon from "icons/Loading.vue"
 import CheckmarkIcon from "icons/Check.vue"
 import PrinterIcon from "icons/Printer.vue"
+import EyeIcon from "icons/Eye.vue"
 
 import helpers from "cookbook/js/helper"
 import {
@@ -179,11 +199,13 @@ export default {
         NcActions,
         NcActionButton,
         NcActionInput,
+        NcLoadingIcon,
         PrinterIcon,
         NcButton,
         PencilIcon,
         LoadingIcon,
         CheckmarkIcon,
+        EyeIcon,
         ModeIndicator,
         Location,
     },
@@ -301,6 +323,9 @@ export default {
             this.$root.$emit("applyRecipeFilter", e)
         },
         goToRecipe(id) {
+            helpers.goTo(`/recipe/${id}`)
+        },
+        goToRecipeEdit(id) {
             helpers.goTo(`/recipe/${id}/edit`)
         },
     },
@@ -312,7 +337,7 @@ export default {
     /* 44px is the height of nextcloud/vue button (not exposed as a variable :[ ) */
     --nc-button-size: 44px;
 
-    --vertical-padding: 8px;
+    --vertical-padding: 4px;
 
     /* Sticky is better than fixed because fixed takes the element out of flow,
      which breaks the height, putting elements underneath */
@@ -322,7 +347,7 @@ export default {
     z-index: 2;
 
     /* The height of the nextcloud header */
-    top: var(--header-height);
+    top: 0px;
     display: flex;
     width: 100%;
     /* Make sure the wrapper is always at least as tall as the tallest element

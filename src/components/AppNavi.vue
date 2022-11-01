@@ -5,9 +5,9 @@
             <NcAppNavigationNew
                 class="create"
                 :text="t('cookbook', 'Create recipe')"
-                button-id="cookbook_new_cookbook"
-                :button-class="['create', 'icon-add']"
-            />
+            >
+                <template #icon><plus-icon :size="20" /> </template>
+            </NcAppNavigationNew>
         </router-link>
 
         <template slot="list">
@@ -25,9 +25,11 @@
                 icon="icon-category-organization"
                 :to="'/'"
             >
-                <NcAppNavigationCounter slot="counter">{{
-                    totalRecipeCount
-                }}</NcAppNavigationCounter>
+                <template #counter>
+                    <nc-counter-bubble>{{
+                        totalRecipeCount
+                    }}</nc-counter-bubble>
+                </template>
             </NcAppNavigationItem>
 
             <NcAppNavigationItem
@@ -35,9 +37,9 @@
                 icon="icon-category-organization"
                 :to="'/category/_/'"
             >
-                <NcAppNavigationCounter slot="counter">{{
-                    uncatRecipes
-                }}</NcAppNavigationCounter>
+                <template #counter>
+                    <nc-counter-bubble>{{ uncatRecipes }}</nc-counter-bubble>
+                </template>
             </NcAppNavigationItem>
 
             <AppNavigationCaption
@@ -45,14 +47,6 @@
                 :title="t('cookbook', 'Categories')"
                 :loading="loading.categories"
             >
-                <template slot="actions">
-                    <NcActionButton
-                        icon="icon-rename"
-                        @click="toggleCategoryRenaming"
-                    >
-                        {{ t("cookbook", "Toggle editing") }}
-                    </NcActionButton>
-                </template>
             </AppNavigationCaption>
 
             <NcAppNavigationItem
@@ -60,11 +54,9 @@
                 :key="cat + idx"
                 :ref="'app-navi-cat-' + idx"
                 :title="cat.name"
-                :icon="categoryUpdating[idx] ? '' : 'icon-category-files'"
-                :loading="categoryUpdating[idx]"
-                :allow-collapse="true"
+                :icon="'icon-category-files'"
                 :to="'/category/' + cat.name"
-                :editable="catRenamingEnabled"
+                :editable="true"
                 :edit-label="t('cookbook', 'Rename')"
                 :edit-placeholder="t('cookbook', 'Enter new category name')"
                 @update:open="categoryOpen(idx)"
@@ -74,26 +66,8 @@
                     }
                 "
             >
-                <NcAppNavigationCounter
-                    v-if="!catRenamingEnabled"
-                    slot="counter"
-                    >{{ cat.recipeCount }}</NcAppNavigationCounter
-                >
-                <!-- eslint-disable-next-line vue/no-lone-template -->
-                <template>
-                    <NcAppNavigationItem
-                        v-for="(rec, idy) in cat.recipes"
-                        :key="idx + '-' + idy"
-                        class="recipe"
-                        :title="rec.name"
-                        :to="'/recipe/' + rec.recipe_id"
-                        :icon="
-                            $store.state.loadingRecipe ===
-                                parseInt(rec.recipe_id) || !rec.recipe_id
-                                ? 'icon-loading-small'
-                                : 'icon-file'
-                        "
-                    />
+                <template #counter>
+                    <nc-counter-bubble>{{ cat.recipeCount }}</nc-counter-bubble>
                 </template>
             </NcAppNavigationItem>
         </template>
@@ -108,14 +82,15 @@
 </template>
 
 <script>
-import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
 import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
 import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation"
-import NcAppNavigationCounter from "@nextcloud/vue/dist/Components/NcAppNavigationCounter"
 import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem"
 import NcAppNavigationNew from "@nextcloud/vue/dist/Components/NcAppNavigationNew"
+import NcCounterBubble from "@nextcloud/vue/dist/Components/NcCounterBubble"
 
 import Vue from "vue"
+
+import PlusIcon from "icons/Plus.vue"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
@@ -127,14 +102,14 @@ import AppNavigationCaption from "./AppNavigationCaption.vue"
 export default {
     name: "AppNavi",
     components: {
-        NcActionButton,
         NcActionInput,
         NcAppNavigation,
-        NcAppNavigationCounter,
         NcAppNavigationItem,
         NcAppNavigationNew,
+        NcCounterBubble,
         AppSettings,
         AppNavigationCaption,
+        PlusIcon,
     },
     data() {
         return {
@@ -423,43 +398,6 @@ export default {
 </script>
 
 <style scoped>
-:deep(.app-navigation-new button) {
-    min-height: 44px;
-    background-image: var(--icon-add-000);
-    background-repeat: no-repeat;
-}
-
-:deep(.app-navigation-entry.recipe) {
-    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
-    padding-left: 0;
-}
-
-/* stylelint-disable selector-class-pattern */
-:deep(.app-navigation-entry
-        .app-navigation-entry__children
-        .app-navigation-entry) {
-    /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
-    padding-left: 0;
-}
-/* stylelint-enable selector-class-pattern */
-
-.app-navigation-entry:hover .recipe {
-    box-shadow: inset 4px 0 rgba(255, 255, 255, 1);
-}
-
-:deep(.app-navigation-entry.recipe:hover),
-:deep(.app-navigation-entry.router-link-exact-active) {
-    box-shadow: inset 4px 0 var(--color-primary);
-    opacity: 1;
-}
-
-/* By default, the bar is 44px, and the toggle button margin-right is -44px */
-/* Our top bar has 8px top/bottom padding, so move the toggle button accordingly */
-:deep(button.app-navigation-toggle) {
-    margin-top: 8px;
-    margin-right: -52px !important;
-}
-
 @media print {
     * {
         display: none !important;
