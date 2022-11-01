@@ -33,7 +33,7 @@
     "@nextcloud/event-bus": "3.0.2",
     "@nextcloud/moment": "^1.1.1",
     "@nextcloud/router": "^2.0.0",
-    "@nextcloud/vue": "^5.1.0",
+    "@nextcloud/vue": "^6.0.0",
     "caret-pos": "2.0.0",
     "linkifyjs": "^4.0.0",
     "lozad": "^1.16.0",
