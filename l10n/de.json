@@ -184,6 +184,7 @@
     "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
     "Dismiss" : "Verwerfen",
     "Cancel" : "Abbrechen",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Abort editing" : "Bearbeitung abbrechen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
