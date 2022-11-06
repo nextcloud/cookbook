@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "Nem sikerült betölteni a találatokat",
     "Dismiss" : "Eltüntetés",
     "Cancel" : "Mégse",
-    "OK" : "Rendben"
+    "OK" : "Rendben",
+    "Abort editing" : "Szerkesztés megszakítása"
 },
 "nplurals=2; plural=(n != 1);");

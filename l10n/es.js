@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "Fallo al cargar los resultados de la búsqueda",
     "Dismiss" : "Descartar",
     "Cancel" : "Cancelar",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Abort editing" : "Abortar edición"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
