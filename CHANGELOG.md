@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+
+
+## 0.10.0 - 2022-11-06
+
+### Changed
+- Update app to be compatible with Nextcloud server version 25 @christianlupus
+
 ### Fixed
 - Allow import of recipes with HowToSections
   [#1255](https://github.com/nextcloud/cookbook/pull/1255) @christianlupus
