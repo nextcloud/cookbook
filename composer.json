@@ -24,10 +24,5 @@
         "platform": {
             "php": "7.4"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "OCA\\Cookbook\\tests\\": "tests/"
-        }
     }
 }
