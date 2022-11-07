@@ -1,6 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\tests\Integration;
+namespace OCA\Cookbook\Tests\Integration;
 
 use ChristophWurst\Nextcloud\Testing\TestCase;
 use ChristophWurst\Nextcloud\Testing\DatabaseTransaction;

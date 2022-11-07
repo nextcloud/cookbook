@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\tests\Integration\Db\RecipeDb;
 
 use OCA\Cookbook\Db\RecipeDb;
-use OCA\Cookbook\tests\Integration\AbstractDatabaseTestCase;
+use OCA\Cookbook\Tests\Integration\AbstractDatabaseTestCase;
 use OCP\AppFramework\Db\DoesNotExistException;
 
 /**
