@@ -7,6 +7,13 @@ assignees:
 
 ---
 
+<!--
+Please note: This is the issue tracker of the cookbook app on nextcloud.
+This is NOT the right place to report issues related to (native) mobile apps.
+
+Make sure you have an issue with the cookbook in your browser (either desktop or mobile) or the backend. For issues concerning specific third-party mobile applications contact their respective developer.
+-->
+
 **Description**
 A clear and concise description of what the bug is.
 

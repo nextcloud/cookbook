@@ -1,0 +1,10 @@
+contact_links:
+  - name: Documentation of the project
+    url: https://nextcloud.github.io/cookbook/
+    about: Documentation of the usage, the administration and development of the cookbook app
+  - name: Matrix Chat
+    url: https://matrix.to/#/#nextcloud-cookbook:matrix.org
+    about: A generic matrix channel to chat about the app and ask for help and support
+  - name: Contact page
+    url: https://nextcloud.github.io/cookbook/contact
+    about: Contact page in the app to see all options

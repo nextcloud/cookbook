@@ -2,6 +2,8 @@ theme: jekyll-theme-slate
 repository: nextcloud/cookbook
 exclude:
     - "Makefile"
+    - Makefile.local
+    - .gitignore
     - "vendor/"
     - Gemfile
     - Gemfile.lock
