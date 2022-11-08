@@ -154,5 +154,17 @@ export default {
     a:visited::after {
         content: " [" attr(href) "] ";
     }
+
+    body {
+        position: static;
+    }
+
+    #content-vue {
+        position: static;
+        width: 100%;
+        height: initial;
+        border-radius: 0;
+        margin: 0;
+    }
 }
 </style>
