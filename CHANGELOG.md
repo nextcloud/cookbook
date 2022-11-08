@@ -4,6 +4,8 @@
 ### Maintenance
 - Cleaned up some minor code issues and updated some dependencies
   [#1321](https://github.com/nextcloud/cookbook/pull/1321) @christianlupus
+- Make issue-template selection description clearer
+  [1323](https://github.com/nextcloud/cookbook/pull/1323) @seyfeb
 
 ## 0.10.0 - 2022-11-06
 
