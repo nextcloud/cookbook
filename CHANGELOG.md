@@ -1,6 +1,11 @@
 ## [Unreleased]
 
 
+## 0.9.18 - 2022-11-09
+
+### Fixed
+- Critical security issue fixed related to vue-loader
+
 
 ## 0.9.17 - 2022-10-31
 
