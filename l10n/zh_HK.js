@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "無法加載搜尋結果",
     "Dismiss" : "撤銷",
     "Cancel" : "取消",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Abort editing" : "中止編輯"
 },
 "nplurals=1; plural=0;");

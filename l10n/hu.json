@@ -184,6 +184,7 @@
     "Failed to load search results" : "Nem sikerült betölteni a találatokat",
     "Dismiss" : "Eltüntetés",
     "Cancel" : "Mégse",
-    "OK" : "Rendben"
+    "OK" : "Rendben",
+    "Abort editing" : "Szerkesztés megszakítása"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

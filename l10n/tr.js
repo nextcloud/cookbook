@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "Arama sonuçları yüklenemedi",
     "Dismiss" : "Yok say",
     "Cancel" : "İptal",
-    "OK" : "Tamam"
+    "OK" : "Tamam",
+    "Abort editing" : "Düzenlemekten vazgeç"
 },
 "nplurals=2; plural=(n > 1);");
