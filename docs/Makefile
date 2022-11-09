@@ -38,3 +38,5 @@ endif
 
 %.png: %.puml
 	plantuml -tpng $<
+
+-include Makefile.local
