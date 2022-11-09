@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "Zlyhalo načítavanie výsledkov vyhľadávania",
     "Dismiss" : "Odmietnuť",
     "Cancel" : "Zrušiť",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Abort editing" : "Zrušiť úpravu"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");
