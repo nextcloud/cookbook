@@ -1,8 +1,12 @@
 ## [Unreleased]
 
+
+## 0.10.1 - 2022-11-09
+
 ### Fixed
 - Fix printing in app to show all pages with NC25
   [#1327](https://github.com/nextcloud/cookbook/pull/1327) @christianlupus
+- Critical security issue fixed related to vue-loader
 
 ### Maintenance
 - Cleaned up some minor code issues and updated some dependencies
