@@ -10,7 +10,7 @@ fi
 deploy_path='.github/actions/deploy'
 
 stable_branch=$(cat "$deploy_path/stable_name")
-master_branch=master
+master_branch=main-0.9.x
 
 major=$(cat "$deploy_path/major")
 minor=$(cat "$deploy_path/minor")
