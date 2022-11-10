@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
     "Dismiss" : "Отхвърляне",
     "Cancel" : "Отказ",
-    "OK" : "Добре"
+    "OK" : "Добре",
+    "Abort editing" : "Прекратяване на редактирането"
 },
 "nplurals=2; plural=(n != 1);");
