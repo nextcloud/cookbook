@@ -17,7 +17,8 @@
                 v-else-if="isSearch && $route.params.value"
                 :title="
                     $route.params.value === '_'
-                        ? 'None'
+                        // TRANSLATORS Shown, e.g., as the recipe category in the navigation/title bar for uncategorized recipes.
+                        ? t('cookbook', 'None')
                         : decodeURIComponent($route.params.value)
                 "
             />
