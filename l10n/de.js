@@ -184,7 +184,7 @@ OC.L10N.register(
     "Loading…" : "Lade …",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlüsselwörter: {tags}",
     "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
-    "Dismiss" : "Verwerfen",
+    "Dismiss" : "Abbrechen",
     "Cancel" : "Abbrechen",
     "OK" : "OK",
     "Abort editing" : "Bearbeitung abbrechen"
