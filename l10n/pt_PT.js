@@ -115,6 +115,7 @@ OC.L10N.register(
     "Loading…" : "A carregar...",
     "Dismiss" : "Dispensar",
     "Cancel" : "Cancelar",
-    "OK" : "Ok"
+    "OK" : "Ok",
+    "None" : "Nenhum"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

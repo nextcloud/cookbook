@@ -118,6 +118,7 @@
     "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca",
     "Dismiss" : "Rexeitar",
     "Cancel" : "Cancelar",
-    "OK" : "Aceptar"
+    "OK" : "Aceptar",
+    "None" : "Ningún"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -186,6 +186,7 @@ OC.L10N.register(
     "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu",
     "Dismiss" : "Baztertu",
     "Cancel" : "Utzi",
-    "OK" : "Ados"
+    "OK" : "Ados",
+    "None" : "Bat ere ez"
 },
 "nplurals=2; plural=(n != 1);");

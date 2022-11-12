@@ -17,6 +17,7 @@ OC.L10N.register(
     "Loading…" : "กำลังโหลด...",
     "Dismiss" : "ปิดทิ้ง",
     "Cancel" : "ยกเลิก",
-    "OK" : "ตกลง"
+    "OK" : "ตกลง",
+    "None" : "ไม่มี"
 },
 "nplurals=1; plural=0;");

@@ -65,6 +65,7 @@ OC.L10N.register(
     "Loading…" : "Läser in …",
     "Dismiss" : "Avfärda",
     "Cancel" : "Avbryt",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Ingen"
 },
 "nplurals=2; plural=(n != 1);");

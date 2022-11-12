@@ -19,6 +19,7 @@ OC.L10N.register(
     "Loading…" : "Cargament…",
     "Dismiss" : "Regetar",
     "Cancel" : "Anullar",
-    "OK" : "D’acòrdi"
+    "OK" : "D’acòrdi",
+    "None" : "Cap"
 },
 "nplurals=2; plural=(n > 1);");

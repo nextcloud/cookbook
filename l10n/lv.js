@@ -43,6 +43,7 @@ OC.L10N.register(
     "Loading…" : "Notiek ielāde...",
     "Dismiss" : "Atmest",
     "Cancel" : "Atcelt",
-    "OK" : "Labi"
+    "OK" : "Labi",
+    "None" : "Nav"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

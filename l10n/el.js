@@ -106,6 +106,7 @@ OC.L10N.register(
     "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης",
     "Dismiss" : "Τους ζυγούς λύσατε!",
     "Cancel" : "Ακύρωση",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Καμμία"
 },
 "nplurals=2; plural=(n != 1);");

@@ -19,6 +19,7 @@
     "Loading…" : "Laadimine…",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Pole"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -185,6 +185,7 @@
     "Dismiss" : "Отхвърляне",
     "Cancel" : "Отказ",
     "OK" : "Добре",
+    "None" : "Няма",
     "Abort editing" : "Прекратяване на редактирането"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

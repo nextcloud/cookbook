@@ -18,6 +18,7 @@ OC.L10N.register(
     "Loading…" : "уншиж байна",
     "Dismiss" : "Арилгах",
     "Cancel" : "болиулах",
-    "OK" : "ок"
+    "OK" : "ок",
+    "None" : "юу ч үгүй"
 },
 "nplurals=2; plural=(n != 1);");

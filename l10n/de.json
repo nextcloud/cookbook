@@ -185,6 +185,7 @@
     "Dismiss" : "Abbrechen",
     "Cancel" : "Abbrechen",
     "OK" : "OK",
+    "None" : "Nicht kategorisierte Rezepte",
     "Abort editing" : "Bearbeitung abbrechen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

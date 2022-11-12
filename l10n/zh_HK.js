@@ -187,6 +187,7 @@ OC.L10N.register(
     "Dismiss" : "撤銷",
     "Cancel" : "取消",
     "OK" : "OK",
+    "None" : "無",
     "Abort editing" : "中止編輯"
 },
 "nplurals=1; plural=0;");

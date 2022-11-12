@@ -17,6 +17,7 @@
     "Loading…" : "Laster...",
     "Dismiss" : "Forkast",
     "Cancel" : "Avbryt",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Ingen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

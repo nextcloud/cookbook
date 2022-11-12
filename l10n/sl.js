@@ -132,6 +132,7 @@ OC.L10N.register(
     "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo",
     "Dismiss" : "Opusti",
     "Cancel" : "Prekliči",
-    "OK" : "V redu"
+    "OK" : "V redu",
+    "None" : "Brez"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");
