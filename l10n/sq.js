@@ -21,6 +21,7 @@ OC.L10N.register(
     "Loading…" : "Duke u ngarkuar…",
     "Dismiss" : "Hiq",
     "Cancel" : "Anullo",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Asnjë"
 },
 "nplurals=2; plural=(n != 1);");

@@ -24,6 +24,7 @@
     "Loading…" : "Се вчитува…",
     "Dismiss" : "Отфрли",
     "Cancel" : "Откажи",
-    "OK" : "Добро"
+    "OK" : "Добро",
+    "None" : "Ништо"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

@@ -187,6 +187,7 @@ OC.L10N.register(
     "Dismiss" : "Eltüntetés",
     "Cancel" : "Mégse",
     "OK" : "Rendben",
+    "None" : "Egyik sem",
     "Abort editing" : "Szerkesztés megszakítása"
 },
 "nplurals=2; plural=(n != 1);");

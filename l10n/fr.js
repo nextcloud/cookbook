@@ -147,6 +147,7 @@ OC.L10N.register(
     "Failed to load search results" : "Impossible d'afficher les résultats de la recherche",
     "Dismiss" : "Abandonner",
     "Cancel" : "Annuler",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Aucune"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

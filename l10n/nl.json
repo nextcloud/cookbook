@@ -140,6 +140,7 @@
     "Failed to load search results" : "Kon zoekresultaten niet laden",
     "Dismiss" : "Wissen",
     "Cancel" : "Annuleren",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Geen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

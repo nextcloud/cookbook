@@ -12,6 +12,7 @@ OC.L10N.register(
     "Description" : "விவரிப்பு",
     "URL" : "URL",
     "Cancel" : "இரத்து செய்க",
-    "OK" : "சரி "
+    "OK" : "சரி ",
+    "None" : "ஒன்றுமில்லை"
 },
 "nplurals=2; plural=(n != 1);");

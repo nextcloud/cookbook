@@ -12,6 +12,7 @@ OC.L10N.register(
     "Description" : "ការ​អធិប្បាយ",
     "URL" : "URL",
     "Cancel" : "បោះបង់",
-    "OK" : "ព្រម"
+    "OK" : "ព្រម",
+    "None" : "គ្មាន"
 },
 "nplurals=1; plural=0;");

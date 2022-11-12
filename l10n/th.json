@@ -15,6 +15,7 @@
     "Loading…" : "กำลังโหลด...",
     "Dismiss" : "ปิดทิ้ง",
     "Cancel" : "ยกเลิก",
-    "OK" : "ตกลง"
+    "OK" : "ตกลง",
+    "None" : "ไม่มี"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Loading…" : "Laadimine…",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Pole"
 },
 "nplurals=2; plural=(n != 1);");

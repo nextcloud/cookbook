@@ -23,6 +23,7 @@
     "Loading…" : "불러오는 중…",
     "Dismiss" : "무시",
     "Cancel" : "취소",
-    "OK" : "확인"
+    "OK" : "확인",
+    "None" : "없음"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

@@ -21,6 +21,7 @@ OC.L10N.register(
     "Loading…" : "Cargando...",
     "Dismiss" : "Descartar",
     "Cancel" : "Cancelar",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Ninguno"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

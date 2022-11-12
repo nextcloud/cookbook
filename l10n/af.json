@@ -19,6 +19,7 @@
     "Loading…" : "Laai…",
     "Dismiss" : "Ontslaan",
     "Cancel" : "Kanselleer",
-    "OK" : "Goed"
+    "OK" : "Goed",
+    "None" : "Geen"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

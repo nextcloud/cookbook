@@ -187,6 +187,7 @@ OC.L10N.register(
     "Dismiss" : "Yok say",
     "Cancel" : "İptal",
     "OK" : "Tamam",
+    "None" : "Yok",
     "Abort editing" : "Düzenlemekten vazgeç"
 },
 "nplurals=2; plural=(n > 1);");

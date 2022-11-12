@@ -187,6 +187,7 @@ OC.L10N.register(
     "Dismiss" : "Abbrechen",
     "Cancel" : "Abbrechen",
     "OK" : "OK",
+    "None" : "Nicht kategorisierte Rezepte",
     "Abort editing" : "Bearbeitung abbrechen"
 },
 "nplurals=2; plural=(n != 1);");

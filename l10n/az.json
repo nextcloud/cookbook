@@ -11,6 +11,7 @@
     "Description" : "Açıqlanma",
     "URL" : "URL",
     "Cancel" : "Dayandır",
-    "OK" : "Oldu"
+    "OK" : "Oldu",
+    "None" : "Heç bir"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

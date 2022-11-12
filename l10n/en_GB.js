@@ -63,6 +63,7 @@ OC.L10N.register(
     "Failed to load search results" : "Failed to load search results",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "None"
 },
 "nplurals=2; plural=(n != 1);");

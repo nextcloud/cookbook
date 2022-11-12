@@ -26,6 +26,7 @@ OC.L10N.register(
     "Loading…" : "بار کردن…",
     "Dismiss" : "پنهان کن",
     "Cancel" : "لغو",
-    "OK" : "تایید"
+    "OK" : "تایید",
+    "None" : "هیچ‌کدام"
 },
 "nplurals=2; plural=(n > 1);");

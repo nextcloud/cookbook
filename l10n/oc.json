@@ -17,6 +17,7 @@
     "Loading…" : "Cargament…",
     "Dismiss" : "Regetar",
     "Cancel" : "Anullar",
-    "OK" : "D’acòrdi"
+    "OK" : "D’acòrdi",
+    "None" : "Cap"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

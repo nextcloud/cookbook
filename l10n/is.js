@@ -62,6 +62,7 @@ OC.L10N.register(
     "Loading…" : "Hleð inn…",
     "Dismiss" : "Dismiss",
     "Cancel" : "Hætta við",
-    "OK" : "Í lagi"
+    "OK" : "Í lagi",
+    "None" : "Ekkert"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

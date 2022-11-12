@@ -45,6 +45,7 @@ OC.L10N.register(
     "Loading…" : "載入中…",
     "Dismiss" : "取消",
     "Cancel" : "取消",
-    "OK" : "確定"
+    "OK" : "確定",
+    "None" : "無"
 },
 "nplurals=1; plural=0;");

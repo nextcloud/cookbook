@@ -10,6 +10,7 @@
     "Description" : "چۈشەندۈرۈش",
     "URL" : "URL",
     "Cancel" : "ۋاز كەچ",
-    "OK" : "جەزملە"
+    "OK" : "جەزملە",
+    "None" : "يوق"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

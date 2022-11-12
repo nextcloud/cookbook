@@ -187,6 +187,7 @@ OC.L10N.register(
     "Dismiss" : "Descartar",
     "Cancel" : "Cancelar",
     "OK" : "OK",
+    "None" : "Ninguno",
     "Abort editing" : "Abortar edición"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

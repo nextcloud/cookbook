@@ -135,6 +135,7 @@ OC.L10N.register(
     "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca",
     "Dismiss" : "Descarta",
     "Cancel" : "Cancel·la",
-    "OK" : "D'acord"
+    "OK" : "D'acord",
+    "None" : "Només una vegada"
 },
 "nplurals=2; plural=(n != 1);");

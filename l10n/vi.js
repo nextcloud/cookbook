@@ -153,6 +153,7 @@ OC.L10N.register(
     "Failed to load search results" : "Không tải được kết quả tìm kiếm",
     "Dismiss" : "Bỏ qua",
     "Cancel" : "Hủy",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Không có"
 },
 "nplurals=1; plural=0;");

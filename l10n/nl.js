@@ -142,6 +142,7 @@ OC.L10N.register(
     "Failed to load search results" : "Kon zoekresultaten niet laden",
     "Dismiss" : "Wissen",
     "Cancel" : "Annuleren",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Geen"
 },
 "nplurals=2; plural=(n != 1);");

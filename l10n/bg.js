@@ -187,6 +187,7 @@ OC.L10N.register(
     "Dismiss" : "Отхвърляне",
     "Cancel" : "Отказ",
     "OK" : "Добре",
+    "None" : "Няма",
     "Abort editing" : "Прекратяване на редактирането"
 },
 "nplurals=2; plural=(n != 1);");
