@@ -18,6 +18,7 @@ OC.L10N.register(
     "URL" : "الرابط",
     "Tools" : "الأدوات",
     "Modification date" : "تاريخ التعديل",
+    "Date created" : "تم تكوين التاريخ",
     "Last modified" : "آخر تعديل",
     "Loading…" : "التحميل جارٍ…",
     "Dismiss" : "تجاهل",
