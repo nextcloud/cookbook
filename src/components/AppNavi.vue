@@ -435,9 +435,11 @@ export default {
 }
 
 /* stylelint-disable selector-class-pattern */
-:deep(.app-navigation-entry
-        .app-navigation-entry__children
-        .app-navigation-entry) {
+:deep(
+        .app-navigation-entry
+            .app-navigation-entry__children
+            .app-navigation-entry
+    ) {
     /* Let's not waste space in front of the recipe if we're only using the icon to show loading */
     padding-left: 0;
 }
