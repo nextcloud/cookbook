@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Maintenance
+- Fix some prettier style
+  [#1356](https://github.com/nextcloud/cookbook/pull/1356) @christianlupus
+
 
 ## 0.9.18 - 2022-11-09
 
