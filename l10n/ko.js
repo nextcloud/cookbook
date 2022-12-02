@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Recipes" : "조리법들",
     "in %s" : "%s",
+    "The full-sized image is not a thumbnail." : "완전한 크기의 이미지는 썸네일이 아닙니다.",
+    "The thumbnail type %d is not known." : "썸네일 타입 %d은(는) 알려지지 않았습니다.",
     "Page not found" : "페이지를 찾을 수 없음",
     "Edit" : "편집",
     "Save" : "저장",
