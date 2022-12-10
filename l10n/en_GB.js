@@ -51,7 +51,7 @@ OC.L10N.register(
     "Another recipe with that name already exists" : "Another recipe with that name already exists",
     "No recipe data found. This is a bug" : "No recipe data found. This is a bug",
     "Recipe with ID %d not found." : "Recipe with ID %d not found.",
-    "Image size \"%s\" is not recognized." : "Image size \"%s\" is not recognized.",
+    "Image size \"%s\" is not recognized." : "Image size \"%s\" is not recognised.",
     "The full-sized image is not a thumbnail." : "The full-sized image is not a thumbnail.",
     "The thumbnail type %d is not known." : "The thumbnail type %d is not known.",
     "Cookbook" : "Cookbook",
