@@ -254,7 +254,9 @@
 </template>
 
 <script>
+import Vue from "vue"
 import moment from "@nextcloud/moment"
+import VueShowdown from "vue-showdown"
 
 import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
@@ -268,6 +270,13 @@ import RecipeKeyword from "./RecipeKeyword.vue"
 import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem.vue"
 import RecipeTimer from "./RecipeTimer.vue"
 import RecipeTool from "./RecipeTool.vue"
+
+// Markdown for Vue
+// Used by RecipeTool, RecipeInstruction, and RecipeIngredient
+Vue.use(VueShowdown, {
+    // set default flavor for Markdown
+    flavor: "vanilla",
+})
 
 export default {
     name: "RecipeView",
