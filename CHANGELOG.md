@@ -31,6 +31,10 @@
 - Allow import of recipes with HowToSections
   [#1255](https://github.com/nextcloud/cookbook/pull/1255) @christianlupus
 
+### Changed
+- Add an app configuration (settings modal) to replace the one in the sidebar
+  [#1258](https://github.com/nextcloud/cookbook/pull/1258) @MarcelRobitaille
+
 
 ## 0.9.17 - 2022-10-31
 
