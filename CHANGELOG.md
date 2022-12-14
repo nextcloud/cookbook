@@ -4,6 +4,10 @@
 - Make "None" category string translatable
   [1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
 
+### Maintenance
+- Update dependency for GitHub pages builder
+
+
 ## 0.10.1 - 2022-11-09
 
 ### Fixed
