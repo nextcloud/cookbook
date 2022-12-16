@@ -188,6 +188,8 @@ OC.L10N.register(
     "Cancel" : "取消",
     "OK" : "OK",
     "None" : "無",
-    "Abort editing" : "中止編輯"
+    "Abort editing" : "中止編輯",
+    "Cookbook settings" : "食譜設置",
+    "Recipe display settings" : "食譜顯示設置"
 },
 "nplurals=1; plural=0;");
