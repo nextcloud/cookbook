@@ -186,6 +186,8 @@
     "Cancel" : "取消",
     "OK" : "OK",
     "None" : "無",
-    "Abort editing" : "中止編輯"
+    "Abort editing" : "中止編輯",
+    "Cookbook settings" : "食譜設置",
+    "Recipe display settings" : "食譜顯示設置"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

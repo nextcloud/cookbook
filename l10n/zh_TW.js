@@ -1,6 +1,8 @@
 OC.L10N.register(
     "cookbook",
     {
+    "No image with the matching MIME type was found on the server." : "在伺服器上找不到符合 MIME 類型的影像。",
+    "Recipe with ID %d was not found in database." : "在資料庫中沒有找到 ID 為 %d 的食譜。",
     "Recipes" : "食譜",
     "in %s" : "在 %s",
     "Cookbook" : "食譜",

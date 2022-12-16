@@ -188,6 +188,8 @@ OC.L10N.register(
     "Cancel" : "Cancelar",
     "OK" : "OK",
     "None" : "Ninguno",
-    "Abort editing" : "Abortar edición"
+    "Abort editing" : "Abortar edición",
+    "Cookbook settings" : "Configuración del recetario",
+    "Recipe display settings" : "Configuraciones de vista de recetas"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

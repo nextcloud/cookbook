@@ -186,6 +186,8 @@
     "Cancel" : "Cancel",
     "OK" : "OK",
     "None" : "None",
-    "Abort editing" : "Abort editing"
+    "Abort editing" : "Abort editing",
+    "Cookbook settings" : "Cookbook settings",
+    "Recipe display settings" : "Recipe display settings"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
