@@ -188,6 +188,8 @@ OC.L10N.register(
     "Cancel" : "İptal",
     "OK" : "Tamam",
     "None" : "Yok",
-    "Abort editing" : "Düzenlemekten vazgeç"
+    "Abort editing" : "Düzenlemekten vazgeç",
+    "Cookbook settings" : "Yemek kitabı ayarları",
+    "Recipe display settings" : "Tarif görüntüleme ayarları"
 },
 "nplurals=2; plural=(n > 1);");

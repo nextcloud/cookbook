@@ -188,6 +188,8 @@ OC.L10N.register(
     "Cancel" : "Отказ",
     "OK" : "Добре",
     "None" : "Няма",
-    "Abort editing" : "Прекратяване на редактирането"
+    "Abort editing" : "Прекратяване на редактирането",
+    "Cookbook settings" : "Настройки на приложението Cookbook /готварска книга/",
+    "Recipe display settings" : "Настройки за показване на рецепта"
 },
 "nplurals=2; plural=(n != 1);");
