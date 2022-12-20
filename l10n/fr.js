@@ -148,7 +148,7 @@ OC.L10N.register(
     "Trans Fat" : "Gras trans",
     "Source" : "Source",
     "Loading…" : "Chargement...",
-    "Failed to load recipes with keywords: {tags}" : "Impossible de charger les recettes avec les mots clés: {tags}",
+    "Failed to load recipes with keywords: {tags}" : "Impossible de charger les recettes avec les mots-clés : {tags}",
     "Failed to load search results" : "Impossible d'afficher les résultats de la recherche",
     "Dismiss" : "Abandonner",
     "Cancel" : "Annuler",
