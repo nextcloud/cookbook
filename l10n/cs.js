@@ -188,6 +188,8 @@ OC.L10N.register(
     "Cancel" : "Storno",
     "OK" : "OK",
     "None" : "Žádná",
-    "Abort editing" : "Přerušit úpravy"
+    "Abort editing" : "Přerušit úpravy",
+    "Cookbook settings" : "Nastavení pro Kuchařku",
+    "Recipe display settings" : "Nastavení zobrazení receptu"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
