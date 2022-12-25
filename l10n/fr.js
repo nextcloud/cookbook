@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "No image with the matching MIME type was found on the server." : "Pas d'image au format MIME à été trouvée sur le serveur",
     "Recipe with ID %d was not found in database." : "Recette avec l'ID %d non trouvée dans la base de données.",
     "Heuristics failed for image extraction of recipe %s." : "Les heuristiques lors de l'extraction de l'image pour la recette %s.",
     "JSON cannot be decoded." : "Le JSON ne peut être décodé.",
@@ -14,6 +15,7 @@ OC.L10N.register(
     "Recipes" : "Recettes",
     "User cannot create recipe folder" : "L'utilisateur ne peut pas créer le dossier des recettes",
     "in %s" : "dans %s",
+    "Could not parse URL" : "Impossible d'analyser l'URL",
     "Exception while downloading recipe from %s." : "Erreur rencontrée lors du téléchargement de la recette depuis %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Le téléchargement depuis %s a échoué car le code HTTP %d n'est pas dans la plage attendue.",
     "No recipe name was given. A unique name is required to store the recipe." : "Aucun nom de recette n'a été donné. Un nom unique est nécessaire pour enregistrer la recette. ",
