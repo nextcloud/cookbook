@@ -21,12 +21,12 @@
     "eslint": "npx eslint --cache --cache-strategy content 'src/**/*.{vue,js}'",
     "eslint-fix": "npx eslint --cache --cache-strategy content --fix 'src/**/*.{vue,js}'",
     "package-lint": "npx prettier-package-json --write ./package.json",
+    "prettier": "npx prettier --check src",
+    "prettier-fix": "npx prettier --write src",
     "serve": "npx webpack serve --node-env development --progress --config webpack.config.js --env dev_server",
     "stylelint": "npx stylelint src",
     "stylelint-fix": "npx stylelint --fix src",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prettier": "npx prettier --check src",
-    "prettier-fix": "npx prettier --write src"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.0.0",
