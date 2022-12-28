@@ -6,6 +6,7 @@
 
 ### Maintenance
 - Update dependency for GitHub pages builder
+- Fix package.json sort order
 
 
 ## 0.10.1 - 2022-11-09
