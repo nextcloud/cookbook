@@ -29,15 +29,23 @@ jobs:
                     lines="$(git diff HEAD~1 --name-only)"
                     echo "Changed files:"
                     echo "$lines"
-                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | wc -l)"
-                    echo "That are $cnt changed files."
+                    totalcnt="$(echo "$lines" | wc -l)"
+                    echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
+                    #
+                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | grep -v '^\.github/workflows/' | wc -l)"
                     echo "num=$cnt" >> $GITHUB_OUTPUT
+                    #
+                    echo "That are $totalcnt changed files. After reducing the number there are $cnt files left."
 
-            -   name: Error if the number of diff lines is zero
+            -   name: Error/warn if the number of diff lines is zero
                 run: |
+                    if [ ${{ steps.file-names.outputs.num }} -gt 0 ]; then
                     echo "::error file=CHANGELOG.md::There was no change in the changelog detected. Please fill in a valid entry into that file."
                     exit 1
-                if: ${{ steps.diff.outputs.lines == 0 && steps.file-names.outputs.num > 0 }}
+                    else
+                    echo "::warning file=CHANGELOG.md::There was no change in the changelog detected. There are in total ${{ steps.file-names.outputs.totalcount }} changed files."
+                    fi
+                if: ${{ steps.diff.outputs.lines == 0 }}
     
     todo-checker:
         name: Check for added todo messages
