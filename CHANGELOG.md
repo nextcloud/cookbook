@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Changed
+- Make info block visibility configurable
+  [1404](https://github.com/nextcloud/cookbook/pull/1404) @MarcelRobitaille
+
 ### Fixed
 - Make "None" category string translatable
   [#1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
