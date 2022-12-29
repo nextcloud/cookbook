@@ -39,6 +39,7 @@ class UserConfigHelper {
 	protected const KEY_LAST_INDEX_UPDATE = 'last_index_update';
 	protected const KEY_UPDATE_INTERVAL = 'update_interval';
 	protected const KEY_PRINT_IMAGE = 'print_image';
+	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
 
 	/**
@@ -152,6 +153,38 @@ class UserConfigHelper {
 		} else {
 			$this->setRawValue(self::KEY_PRINT_IMAGE, '0');
 		}
+	}
+
+	/**
+	 * Determines which info blocks are displayed next to the recipe
+	 *
+	 * @return array<string, bool> keys: info block ids, values: display state
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getVisibleInfoBlocks(): array {
+		$rawValue = $this->getRawValue(self::KEY_VISIBLE_INFO_BLOCKS);
+		
+		if ($rawValue === '') {
+			return [
+				'preparation-time' => true,
+				'cooking-time' => true,
+				'total-time' => true,
+				'nutrition-information' => true,
+				'tools' => true,
+			];
+		}
+
+		return json_decode($rawValue, true);
+	}
+
+	/**
+	 * Sets which info blocks are displayed next to the recipe
+	 *
+	 * @param array<string, bool> keys: info block ids, values: display state
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setVisibleInfoBlocks(array $visibleInfoBlocks): void {
+		$this->setRawValue(self::KEY_VISIBLE_INFO_BLOCKS, json_encode($visibleInfoBlocks));
 	}
 
 	/**
