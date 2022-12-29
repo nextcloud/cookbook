@@ -88,6 +88,7 @@ class ConfigImplementationTest extends TestCase {
 			'folder' => $folder,
 			'update_interval' => $interval,
 			'print_image' => $printImage,
+			'visibleInfoBlocks' => Array (),
 		];
 
 		$this->userFolder->method('getPath')->willReturn($folder);
