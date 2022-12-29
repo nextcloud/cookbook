@@ -459,7 +459,7 @@ export default {
             )
         },
         visibleInfoBlocks() {
-            return this.$store.state.localSettings.visibleInfoBlocks ?? {}
+            return this.$store.state.config?.visibleInfoBlocks ?? {}
         },
     },
     watch: {

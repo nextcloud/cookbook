@@ -224,7 +224,7 @@ export default {
                 return
             }
             try {
-                api.config.printImage.update(newVal)
+                await api.config.printImage.update(newVal)
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
@@ -272,7 +272,7 @@ export default {
             try {
                 const data = visibleInfoBlocksEncode(newVal)
                 await api.config.visibleInfoBlocks.update(data)
-                this.$store.dispatch('setVisibleInfoBlocks', { visibleInfoBlocks: data })
+                await this.$store.dispatch("refreshConfig")
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch (err) {
                 // eslint-disable-next-line no-console
@@ -333,9 +333,10 @@ export default {
          */
         async setup() {
             try {
-                const response = await api.config.get()
-                const config = response.data
+                await this.$store.dispatch("refreshConfig")
+                const { config } = this.$store.state
                 this.resetPrintImage = false
+                this.resetVisibleInfoBlocks = false
 
                 if (!config) {
                     throw new Error()
@@ -345,12 +346,13 @@ export default {
                 this.visibleInfoBlocks = visibleInfoBlocksDecode(
                     config.visibleInfoBlocks
                 )
-                this.$store.dispatch('setVisibleInfoBlocks', { visibleInfoBlocks: config.visibleInfoBlocks })
                 this.showTagCloudInRecipeList =
                     this.$store.state.localSettings.showTagCloudInRecipeList
                 this.updateInterval = config.update_interval
                 this.recipeFolder = config.folder
-            } catch {
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error("Error setting up SettingsDialog", err)
                 await showSimpleAlertModal(
                     t("cookbook", "Loading config failed")
                 )
