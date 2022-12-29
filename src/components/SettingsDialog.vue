@@ -272,6 +272,7 @@ export default {
             try {
                 const data = visibleInfoBlocksEncode(newVal)
                 await api.config.visibleInfoBlocks.update(data)
+                this.$store.dispatch('setVisibleInfoBlocks', { visibleInfoBlocks: data })
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch (err) {
                 // eslint-disable-next-line no-console
@@ -344,6 +345,7 @@ export default {
                 this.visibleInfoBlocks = visibleInfoBlocksDecode(
                     config.visibleInfoBlocks
                 )
+                this.$store.dispatch('setVisibleInfoBlocks', { visibleInfoBlocks: config.visibleInfoBlocks })
                 this.showTagCloudInRecipeList =
                     this.$store.state.localSettings.showTagCloudInRecipeList
                 this.updateInterval = config.update_interval

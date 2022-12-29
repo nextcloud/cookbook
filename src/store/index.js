@@ -45,6 +45,7 @@ export default new Vuex.Store({
         categoryUpdating: null,
         localSettings: {
             showTagCloudInRecipeList: true,
+            visibleInfoBlocks: null,
         },
     },
 
@@ -100,6 +101,9 @@ export default new Vuex.Store({
         setShowTagCloudInRecipeList(state, { b }) {
             localStorage.setItem("showTagCloudInRecipeList", JSON.stringify(b))
             state.localSettings.showTagCloudInRecipeList = b
+        },
+        setVisibleInfoBlocks(state, { visibleInfoBlocks }) {
+            state.localSettings.visibleInfoBlocks = visibleInfoBlocks
         },
         setUser(state, { u }) {
             state.user = u
@@ -166,6 +170,9 @@ export default new Vuex.Store({
         },
         setShowTagCloudInRecipeList(c, { showTagCloud }) {
             c.commit("setShowTagCloudInRecipeList", { b: showTagCloud })
+        },
+        setVisibleInfoBlocks(c, { visibleInfoBlocks }) {
+            c.commit("setVisibleInfoBlocks", { visibleInfoBlocks })
         },
         updateCategoryName(c, { categoryNames }) {
             const oldName = categoryNames[0]
