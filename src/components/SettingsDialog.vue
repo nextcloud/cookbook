@@ -81,6 +81,69 @@
                 </ul>
             </fieldset>
         </NcAppSettingsSection>
+        <NcAppSettingsSection
+            id="settings-info-blocks"
+            :title="t('cookbook', 'Info blocks')"
+            class="app-settings-section"
+        >
+            <fieldset>
+                <legend class="settings-info-blocks__legend">
+                    Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.
+                </legend>
+                <ul>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-preparation-time"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                        <label for="info-blocks-checkbox-preparation-time">
+                            {{ t("cookbook", "Preparation time") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-cooking-time"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                        <label for="info-blocks-checkbox-cooking-time">
+                            {{ t("cookbook", "Cooking time") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-total-time"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                        <label for="info-blocks-checkbox-total-time">
+                            {{ t("cookbook", "Total time") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-nutrition-information"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                        <label for="info-blocks-checkbox-nutrition-information">
+                            {{ t("cookbook", "Nutrition information") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-tools"
+                            type="checkbox"
+                            class="checkbox"
+                        />
+                        <label for="info-blocks-checkbox-tools">
+                            {{ t("cookbook", "Tools") }}
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+        </NcAppSettingsSection>
     </NcAppSettingsDialog>
 </template>
 
@@ -283,6 +346,10 @@ export default {
 .material-design-icon.loading-icon:deep(svg) {
     animation: rotate var(--animation-duration, 0.8s) linear infinite;
     color: var(--color-loading-dark);
+}
+
+.settings-info-blocks__legend {
+    margin-bottom: 10px;
 }
 </style>
 
