@@ -163,7 +163,7 @@ class UserConfigHelper {
 	 */
 	public function getVisibleInfoBlocks(): array {
 		$rawValue = $this->getRawValue(self::KEY_VISIBLE_INFO_BLOCKS);
-		
+
 		if ($rawValue === '') {
 			return [
 				'preparation-time' => true,
