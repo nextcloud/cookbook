@@ -46,7 +46,7 @@ OC.L10N.register(
     "Exception while downloading recipe from %s." : "從 %s 下載食譜時出現異常。",
     "Download from %s failed as HTTP status code %d is not in expected range." : "從 %s 下載失敗，因為 HTTP 狀態代碼 %d 不在預期範圍內。",
     "Could not find a valid encoding when parsing %s." : "剖析%s 時找不到有效的編碼。",
-    "No parser found for the given import." : "未找到給定導入的解析器。",
+    "No parser found for the given import." : "找不到要導入的配方的解析器。",
     "No recipe name was given. A unique name is required to store the recipe." : "未提供食譜名稱。存儲食譜需要唯一的名稱。",
     "Another recipe with that name already exists" : "另一個同名的食譜已經存在",
     "No recipe data found. This is a bug" : "未找到食譜數據。這是一個錯誤",
