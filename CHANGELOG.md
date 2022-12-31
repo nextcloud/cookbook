@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Add browser notification support for timers
+  [1409](https://github.com/nextcloud/cookbook/pull/1409) @MarcelRobitaille
+
 ### Fixed
 - Make "None" category string translatable
   [1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
