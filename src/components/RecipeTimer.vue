@@ -16,6 +16,8 @@ import { linkTo } from "@nextcloud/router"
 
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
+import * as browserNotifications from "cookbook/js/browser_notifications"
+
 export default {
     name: "RecipeTimer",
     props: {
@@ -63,9 +65,6 @@ export default {
             this.resetTimeDisplay()
         },
     },
-    async created() {
-        this.notificationPermission = await Notification.requestPermission()
-    },
     mounted() {
         this.resetTimeDisplay()
         // Start loading the sound early so it's ready to go when we need to
@@ -82,6 +81,14 @@ export default {
         this.audio.loop = true
     },
     methods: {
+        onTimerStart() {
+            browserNotifications.requestPermission({
+                justification: [
+                    t("cookbook", "Please enable browser notifications to receive an alert when the timer is over."),
+                    t("cookbook", "You can disable these notifications at any time in the \"Cookbook settings\" dialog."),
+                ],
+            })
+        },
         onTimerEnd() {
             window.clearInterval(this.countdown)
             const $this = this
@@ -96,15 +103,7 @@ export default {
                 this.audio.play()
 
                 const message = t("cookbook", "Cooking time is up!")
-
-                if (this.notificationPermission === "granted") {
-                    const notification = new Notification(message)
-                    notification.addEventListener("error", (error) => {
-                        // eslint-disable-next-line no-console
-                        console.error("Error showing notification:", error)
-                    })
-                }
-
+                await browserNotifications.notify(message)
                 await showSimpleAlertModal(message)
 
                 // Stop audio after the alert is confirmed
@@ -137,6 +136,7 @@ export default {
             if (this.countdown === null) {
                 // Pass this to callback function
                 const $this = this
+                $this.onTimerStart()
                 this.countdown = window.setInterval(() => {
                     $this.seconds -= 1
                     if ($this.seconds < 0) {
