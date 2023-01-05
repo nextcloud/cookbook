@@ -51,10 +51,12 @@ RecipeStubInformation:
     dateCreated:
       type: string
       description: The date the recipe was created in the app
+      format: date-time
       example: "2022-01-02T16:12:41+0000"
     dateModified:
       type: string
       description: The date the recipe was modified lastly in the app
+      format: date-time
       example: "2022-01-10T10:02:52+0000"
     imageUrl:
       type: string
