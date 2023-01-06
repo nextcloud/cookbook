@@ -348,7 +348,9 @@ ReleaseVersion:
 PreReleaseVersion:
   type: array
   items:
-    type: integer|string
+    oneOf:
+      - type: integer
+      - type: string
   minItems: 4
   maxItems: 4
   description: The installed pre-release of the cookbook app
