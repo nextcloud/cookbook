@@ -187,6 +187,9 @@ OC.L10N.register(
     "Dismiss" : "Baztertu",
     "Cancel" : "Utzi",
     "OK" : "Ados",
-    "None" : "Bat ere ez"
+    "None" : "Bat ere ez",
+    "Abort editing" : "Utzi edizioa",
+    "Cookbook settings" : "Errezeta-liburuaren ezarpenak",
+    "Recipe display settings" : "Errezeta bistaratzeko ezarpenak"
 },
 "nplurals=2; plural=(n != 1);");
