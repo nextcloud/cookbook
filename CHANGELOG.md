@@ -3,12 +3,16 @@
 ### Fixed
 - Make "None" category string translatable
   [#1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
+- Import was no longer possible as the handling of native events caused a glitch
+  [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
 
 ### Maintenance
 - Update dependency for GitHub pages builder
 - Fix package.json sort order
 - Migrate the dev environment to [docker-dev by Julius Haertl](https://github.com/juliushaertl/nextcloud-docker-dev)
   [#1440](https://github.com/nextcloud/cookbook/pull/1440) @christianlupus
+- Fix the build environment after regression
+  [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
 
 ## Documentation
 - Fixed some issues in the API description
