@@ -6,6 +6,8 @@
 - Fix styling of package.json file
 - Migrate the dev environment to [docker-dev by Julius Haertl](https://github.com/juliushaertl/nextcloud-docker-dev)
   [#1441](https://github.com/nextcloud/cookbook/pull/1441) @christianlupus
+- Fix the build environment after regression
+  [#1443](https://github.com/nextcloud/cookbook/pull/1443) @christianlupus
 
 
 ## 0.9.18 - 2022-11-09
