@@ -16,6 +16,7 @@ const isDev = buildMode === 'development'
 
 function cookbookConfig (env) {
     const config = merge(webpackConfig, {
+        context: path.resolve(__dirname),
         entry: {
             guest: path.resolve(path.join('src', 'guest.js')),
         },
