@@ -10,6 +10,9 @@
 - Migrate the dev environment to [docker-dev by Julius Haertl](https://github.com/juliushaertl/nextcloud-docker-dev)
   [#1440](https://github.com/nextcloud/cookbook/pull/1440) @christianlupus
 
+## Documentation
+- Fixed some issues in the API description
+
 
 ## 0.10.1 - 2022-11-09
 
