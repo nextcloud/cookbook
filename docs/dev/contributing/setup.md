@@ -41,10 +41,6 @@ You might need to adopt the path specification according to your local setup. Al
 
 Be sure to recreate the containers after modifying `docker-compose.yml` using `docker-compose up -d`.
 
-### Usage of [nextcloud-docker-debug](https://github.com/christianlupus/nextcloud-docker-debug) by christianlupus
-
-The installation process is described in the README of that project. Feel free to contact the author in cases of problems.
-
 ## Install PHP dependencies
 
 The app needs some depdencies in the PHP backend. These are managed via [composer](http://composer.org). Make sure, you have composer ready on your development machine.
