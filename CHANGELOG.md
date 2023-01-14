@@ -2,11 +2,13 @@
 
 ### Fixed
 - Make "None" category string translatable
-  [1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
+  [#1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
 
 ### Maintenance
 - Update dependency for GitHub pages builder
 - Fix package.json sort order
+- Migrate the dev environment to [docker-dev by Julius Haertl](https://github.com/juliushaertl/nextcloud-docker-dev)
+  [#1440](https://github.com/nextcloud/cookbook/pull/1440) @christianlupus
 
 
 ## 0.10.1 - 2022-11-09

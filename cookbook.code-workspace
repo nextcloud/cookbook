@@ -4,7 +4,8 @@
 			"path": "."
 		},
 		{
-			"path": "../../base"
+			"path": "../..",
+			"name": "base"
 		},
 		{
 			"path": "tests/phpunit/vendor",

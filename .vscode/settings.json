@@ -3,7 +3,7 @@
     "less.validate": false,
     "scss.validate": false,
     "intelephense.environment.includePaths": [
-        "../../base/lib",
+        "../../lib",
     ],
     "intelephense.files.exclude": [
         "**/.git/**",
