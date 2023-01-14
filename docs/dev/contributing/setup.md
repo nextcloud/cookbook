@@ -59,10 +59,8 @@ The frontend is based on Vue. Some Javascript/NPM dependencies are needed in ord
 
 Open a terminal to the directory where you cloned the cookbook app. Then download the dependencies with:
 ```
-npm install
+npm ci
 ```
-
-To reset you can remove the folder `node_modules` and the file `package-lock.json`. Then you can install all packages from scratch.
 
 ## Create the bundled assets for the frontend
 
