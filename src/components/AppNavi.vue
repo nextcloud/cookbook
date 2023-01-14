@@ -16,6 +16,7 @@
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'"
                 @submit="downloadRecipe"
+                @update:value="updateUrl"
             >
                 {{ t("cookbook", "Download recipe from URL") }}
             </NcActionInput>
@@ -121,6 +122,7 @@ export default {
             isCategoryUpdating: [],
             loading: { categories: true },
             uncatRecipes: 0,
+            importUrl: "",
         }
     },
     computed: {
@@ -232,14 +234,17 @@ export default {
             }
         },
 
+        updateUrl(e) {
+            this.importUrl = e
+        },
         /**
          * Download and import the recipe at given URL
          */
-        async downloadRecipe(e) {
+        async downloadRecipe() {
             this.downloading = true
             const $this = this
             try {
-                const response = await api.recipes.import(e.target[1].value)
+                const response = await api.recipes.import(this.importUrl)
                 const recipe = response.data
                 $this.downloading = false
                 helpers.goTo(`/recipe/${recipe.id}`)
