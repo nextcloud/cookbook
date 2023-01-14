@@ -19,6 +19,8 @@ rules:
         - error
         - allowForLoopAfterthoughts: true
 
+root: true
+
 settings:
     "import/resolver":
         alias:
