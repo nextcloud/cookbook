@@ -91,6 +91,7 @@ paths:
     get:
       tags: [ Misc ]
       summary: Get the version of the API endpoint
+      operationId: version
       responses:
         '200':
           description: API version
@@ -102,6 +103,7 @@ paths:
     post:
       tags: [ Misc ]
       summary: Trigger a rescan of all recipes into the caching database
+      operationId: reindex
       responses:
         200:
           description: The reindex process was done.
@@ -114,6 +116,7 @@ paths:
     get:
       tags: [ Misc ]
       summary: Get the current configuration of the app
+      operationId: get_config
       responses:
         200:
           description: The config was read successfully
@@ -124,6 +127,7 @@ paths:
     post:
       tags: [ Misc ]
       summary: Set the configuration for the current user
+      operationId: set_config
       responses:
         200:
           description: The configuration was successfully saved.
@@ -137,6 +141,7 @@ paths:
     post:
       tags: [ Recipes ]
       summary: Import a recipe using schema.org metadata from a website
+      operationId: import
       requestBody:
         content:
           application/json:
@@ -172,6 +177,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get the main image of a recipe. If no image is stored a fallback image is delivered.
+      operationId: image
       parameters:
         - in: path
           name: id
@@ -204,6 +210,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Search for recipes for keywords, tags and categories with the named search string
+      operationId: search
       responses:
         200:
           description: The recipes were obtained successfully
@@ -222,6 +229,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get all recipes in the database
+      operationId: list_recipes
       responses:
         200:
           description: Successfully obtained all recipes
@@ -232,6 +240,7 @@ paths:
     post:
       tags: [ Recipes ]
       summary: Create a new recipe
+      operationId: new_recipe
       requestBody:
         description: |
           A JSON representation of the recipe to be saved.
@@ -287,6 +296,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get a single recipe from the server
+      operationId: recipe_details
       responses:
         200:
           description: Recipe was sucessfully obtained
@@ -305,6 +315,7 @@ paths:
     put:
       tags: [ Recipes ]
       summary: Update a recipe
+      operationId: update_recipe
       requestBody:
         content:
           application/json:
@@ -329,6 +340,7 @@ paths:
     delete:
       tags: [ Recipes ]
       summary: Delete an existing recipe
+      operationId: delete_recipe
       responses:
         200:
           description: The recipe was deleted successfully
@@ -350,6 +362,7 @@ paths:
     get:
       tags: [ Tags ]
       summary: Get all known keywords
+      operationId: list_keywords
       responses:
         '200':
           description: Successfully obtained all keywords
@@ -376,6 +389,7 @@ paths:
     get:
       tags: [ Tags ]
       summary: Get all recipes associated with certain keywords
+      operationId: recipes_with_keyword
       parameters:
         - in: path
           name: keywords
@@ -403,6 +417,7 @@ paths:
     get:
       tags: [ Categories ]
       summary: Get all known categories
+      operationId: list_categories
       responses:
         200:
           description: >-
@@ -436,6 +451,7 @@ paths:
     get:
       tags: [ Categories ]
       summary: Get all recipes of a certain category
+      operationId: recipes_in_category
       parameters:
         - in: path
           name: category
@@ -465,6 +481,7 @@ paths:
     put:
       tags: [ Categories ]
       summary: Rename a category
+      operationId: rename_category
       parameters:
         - in: path
           name: category
