@@ -84,7 +84,6 @@ import TriangleDownIcon from "icons/TriangleSmallDown.vue"
 
 import SuggestionsPopup, { suggestionsPopupMixin } from "./SuggestionsPopup.vue"
 
-
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i])
 const findCommonPrefix = (lines) => {
