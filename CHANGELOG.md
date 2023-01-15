@@ -5,6 +5,8 @@
   [#1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
 - Import was no longer possible as the handling of native events caused a glitch
   [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
+- Reorder arrows are no longer hidden
+  [#1446](https://github.com/nextcloud/cookbook/pull/1446) @christianlupus
 
 ### Maintenance
 - Update dependency for GitHub pages builder
