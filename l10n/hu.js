@@ -188,6 +188,8 @@ OC.L10N.register(
     "Cancel" : "Mégse",
     "OK" : "Rendben",
     "None" : "Egyik sem",
-    "Abort editing" : "Szerkesztés megszakítása"
+    "Abort editing" : "Szerkesztés megszakítása",
+    "Cookbook settings" : "Receptkönyv beállításai",
+    "Recipe display settings" : "Receptek megjelenítési beállításai"
 },
 "nplurals=2; plural=(n != 1);");
