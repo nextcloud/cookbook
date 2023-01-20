@@ -1,2 +1,3 @@
 ---
 BUNDLE_BUNDLE_PATH: "vendor/bundle"
+BUNDLE_PATH: "vendor/bundle"

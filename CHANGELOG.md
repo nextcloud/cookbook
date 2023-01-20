@@ -18,6 +18,8 @@
 
 ## Documentation
 - Fixed some issues in the API description
+- Fix security issue in GitHub pages with path insertion
+  [#1457](https://github.com/nextcloud/cookbook/pull/1457) @christianlupus
 
 
 ## 0.10.1 - 2022-11-09
