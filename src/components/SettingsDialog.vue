@@ -356,8 +356,7 @@ export default {
                 this.updateInterval = config.update_interval
                 this.recipeFolder = config.folder
             } catch (err) {
-                // eslint-disable-next-line no-console
-                console.error("Error setting up SettingsDialog", err)
+                this.$log.error("Error setting up SettingsDialog", err)
                 await showSimpleAlertModal(
                     t("cookbook", "Loading config failed")
                 )
