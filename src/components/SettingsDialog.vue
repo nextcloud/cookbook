@@ -91,9 +91,7 @@
                     {{
                         t(
                             "cookbook",
-                            `Control which blocks of information are shown in
-                            the recipe view. If you do not use some features
-                            and find them distracting, you may hide them.`
+                            "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them."
                         )
                     }}
                 </legend>
