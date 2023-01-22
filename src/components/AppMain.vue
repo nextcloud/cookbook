@@ -48,7 +48,7 @@ export default {
     watch: {
         /* This is left here as an example in case the routes need to be debugged again
         '$route' (to, from) {
-            console.log(this.$window.isSameBaseRoute(from.fullPath, to.fullPath))
+            this.$log.debug(this.$window.isSameBaseRoute(from.fullPath, to.fullPath))
         },
         */
     },

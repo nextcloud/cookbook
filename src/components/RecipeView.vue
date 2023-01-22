@@ -322,7 +322,7 @@ export default {
             }
 
             if (this.$store.state.recipe === null) {
-                // console.log("Recipe is null")
+                this.$log.debug("Recipe is null")
                 return recipe
             }
 
@@ -452,9 +452,9 @@ export default {
     },
     watch: {
         recipe(r) {
-            // console.log('Recipe has been updated')
+            this.$log.debug('Recipe has been updated')
             if (r) {
-                // console.log("Recipe", r)
+                this.$log.debug("Recipe", r)
 
                 if (r.description) {
                     this.parsedDescription = t("cookbook", "Loading…")
@@ -475,8 +475,7 @@ export default {
                                 this.parsedIngredients.splice(idx, 1, x)
                             })
                             .catch((ex) => {
-                                // eslint-disable-next-line no-console
-                                console.log(ex)
+                                this.$log.error(ex)
                             })
                     })
                 } else {
@@ -493,8 +492,7 @@ export default {
                                 this.parsedInstructions.splice(idx, 1, x)
                             })
                             .catch((ex) => {
-                                // eslint-disable-next-line no-console
-                                console.log(ex)
+                                this.$log.error(ex)
                             })
                     })
                 } else {
@@ -511,8 +509,7 @@ export default {
                                 this.parsedTools.splice(idx, 1, x)
                             })
                             .catch((ex) => {
-                                // eslint-disable-next-line no-console
-                                console.log(ex)
+                                this.$log.error(ex)
                             })
                     })
                 } else {

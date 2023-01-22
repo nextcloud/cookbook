@@ -252,8 +252,7 @@ export default {
                 .reindex()
                 .then(() => {
                     $this.scanningLibrary = false
-                    // eslint-disable-next-line no-console
-                    console.log("Library reindexing complete")
+                    this.$log.info("Library reindexing complete")
                     if (
                         ["index", "search"].indexOf(this.$store.state.page) > -1
                     ) {
@@ -265,8 +264,7 @@ export default {
                 })
                 .catch(() => {
                     $this.scanningLibrary = false
-                    // eslint-disable-next-line no-console
-                    console.log("Library reindexing failed!")
+                    this.$log.error("Library reindexing failed!")
                 })
         },
 
