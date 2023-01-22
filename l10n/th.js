@@ -5,6 +5,7 @@ OC.L10N.register(
     "Edit" : "แก้ไข",
     "Save" : "บันทึก",
     "Search" : "Search",
+    "Filter" : "ตัวกรอง",
     "Category" : "หมวดหมู่",
     "Tags" : "แท็ก",
     "Categories" : "หมวดหมู่",
