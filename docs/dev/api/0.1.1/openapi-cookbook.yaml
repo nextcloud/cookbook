@@ -63,16 +63,22 @@ tags:
 
 components:
   schemas:
+    Category:
+      $ref: objects.yaml#/Category
     Config:
       $ref: objects.yaml#/Config
     Error:
       $ref: objects.yaml#/Error
+    Keyword:
+      $ref: objects.yaml#/Keyword
     RecipeStub:
       $ref: objects.yaml#/RecipeStub
     StubList:
       $ref: objects.yaml#/StubList
     Recipe:
       $ref: objects.yaml#/Recipe
+    Url:
+      $ref: objects.yaml#/Url
     Version:
       $ref: objects.yaml#/Version
   
@@ -146,13 +152,8 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                url:
-                  type: string
-                  example: 'http://www.chefkoch.de/2345'
-              required:
-                - url
+              $ref: "#/components/schemas/Url"
+
       responses:
         200:
           description: Successfully imported recipe
@@ -249,12 +250,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required: [ "name" ]
-              additionalProperties: true
+              $ref: "#/components/schemas/Recipe"
               example:
                 name: "Chips"
                 description: "A very delicious way of getting kids quiet"
@@ -371,20 +367,8 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    recipe_count:
-                      type: integer
-                  required:
-                    - name
-                    - recipe_count
-              example:
-                - name: vegetarian
-                  recipe_count: 5
-                - name: sugar-free
-                  recipe_count: 2
+                  $ref: "#/components/schemas/Keyword"
+
   /api/v1/tags/{keywords}:
     get:
       tags: [ Tags ]
@@ -431,15 +415,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    recipe_count:
-                      type: integer
-                  required:
-                    - name
-                    - recipe_count
+                  $ref: "#/components/schemas/Category"
               example:
                 - name: Dinner
                   recipe_count: 21

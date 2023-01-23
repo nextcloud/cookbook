@@ -1,3 +1,29 @@
+Category:
+  type: object
+  description: A category
+  allOf:
+    - $ref: "#/CategoryInformation"
+
+CategoryInformation:
+  type: object
+  description: >-
+    The very basic information of a category
+
+    Please note: A category name of `*` indicates the number of
+    recipes with no category associated.
+  properties:
+    name:
+      type: string
+      description: The name of the category
+      example: Dinner
+    recipe_count:
+      type: integer
+      description: The number of recipes in the category
+      example: 21
+  required:
+    - name
+    - recipe_count
+
 Config:
   type: object
   description: An object describing the configuration of the web app
@@ -35,6 +61,12 @@ Error:
       type: integer
       description: The line where the exception is thrown
       example: 223
+
+Keyword:
+  type: object
+  description: An Keyword
+  allOf:
+    - $ref: "#/CategoryInformation"
 
 RecipeStubInformation:
   type: object
@@ -381,6 +413,15 @@ APIVersion:
     epoch: 0
     major: 1
     minor: 3
+
+Url:
+  type: object
+  properties:
+    url:
+      type: string
+      example: "http://www.chefkoch.de/2345"
+  required:
+    - url
 
 Version:
   type: object
