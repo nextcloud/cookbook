@@ -32,14 +32,17 @@ Config:
       type: string
       example: /Recipes
       description: The folder in the user's files that contains the recipes
+      nullable: true
     update_interval:
       type: integer
       example: 10
       description: The interval between automatic rescans to rebuild the database cache in minutes
+      nullable: true
     print_image:
       type: boolean
       example: true
       description: True, if the user wished to print the recipe images with the rest of the recipes
+      nullable: true
   required:
     - folder
     - update_interval
@@ -80,6 +83,7 @@ RecipeStubInformation:
       type: string
       description: A comma-separated list of recipe keywords, can be empty string
       example: sweets,fruit
+      default: ""
     dateCreated:
       type: string
       description: The date the recipe was created in the app
@@ -94,10 +98,12 @@ RecipeStubInformation:
       type: string
       description: The URL of the recipe image
       example: http://example.com/path/to/image.jpg
+      default: ""
     imagePlaceholderUrl:
       type: string
       description: The URL of the placeholder of the recipe image
       example: http://example.com/path/to/image_thumb.jpg
+      default: ""
   required:
     - "name"
     - "keywords"
@@ -146,6 +152,7 @@ Nutrition:
       type: string
       example: NutritionInformation
       description: Schema.org object description
+      default: NutritionInformation
     calories:
       type: string
       description: The number of calories for the given amount
@@ -207,11 +214,13 @@ Recipe:
         "@type":
           type: string
           example: "Recipe"
+          default: Recipe
           description: Schema.org object type identifier
         id:
           type: string
           description: The index of the recipe. Note the representation as a string as the representation might change in the future.
           example: "123"
+          nullable: true
         prepTime:
           type: string
           nullable: true
@@ -231,22 +240,27 @@ Recipe:
           type: string
           example: A very easy way to make children happy
           description: A description of the recipe or the empty string
+          default: ""
         url:
           type: string
           example: http://exmaple.com/my-recipe.html
           description: The URL the recipe was found at or the empty string
+          default: ""
         image:
           type: string
           example: http://example.com/my-recipe-image.jpeg
           description: The URL of the original recipe
+          default: ""
         recipeYield:
           type: integer
           example: 4
           description: Number of servings in recipe
+          default: 1
         recipeCategory:
           type: string
           example: Dessert
           description: The category of the recipe
+          default: ""
         tool:
           type: array
           items:
@@ -285,7 +299,7 @@ Recipe:
     prepTime: PT0H15M
     cookTime: null
     totalTime: PT1H20M
-    url: ''
+    url: ""
     tool: []
     recipeIngredient:
       - 3 ripe bananas

@@ -134,6 +134,12 @@ paths:
       tags: [ Misc ]
       summary: Set the configuration for the current user
       operationId: setConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Config"
       responses:
         200:
           description: The configuration was successfully saved.
@@ -149,6 +155,7 @@ paths:
       summary: Import a recipe using schema.org metadata from a website
       operationId: import
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -261,6 +268,7 @@ paths:
           A JSON representation of the recipe to be saved.
           
           See also the structure at https://schema.org/Recipe
+        required: true
         content:
           application/json:
             schema:
@@ -327,6 +335,7 @@ paths:
       summary: Update a recipe
       operationId: updateRecipe
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -484,6 +493,7 @@ paths:
           schema:
             type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:
