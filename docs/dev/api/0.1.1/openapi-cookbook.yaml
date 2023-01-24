@@ -186,6 +186,20 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: size
+          description: >
+            The size of the requested image
+
+            * `full`    - Full resolution image (size full res)
+            * `thumb`   - thumbnail of the image (size 250px)
+            * `thumb16` - icon of the image (size 16px)
+
+            by default the full size image will be returned
+          required: false
+          schema:
+            type: string
+            enum: [full, thumb, thumb16]
       responses:
         200:
           description: Image was obtained and will be in response either as image/jpeg or image/svg+xml
