@@ -2,7 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "No image with the matching MIME type was found on the server." : "Sunucu üzerinde eşleşen MIME türünde bir görsel bulunamadı. ",
-    "Recipe with ID %d was not found in database." : "%d kodlu yemek tarifi veritabanında bulunamadı.",
+    "Recipe with ID %d was not found in database." : "%d kodlu yemek tarifi veri tabanında bulunamadı.",
     "Downloading of a file failed returned the following error message: %s" : "Bir dosya şu hata iletisi ile indirilemedi: %s",
     "No content encoding was detected in the content." : "İçerikte bir içerik kodlayıcı bulunamadı.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "%s tarifi için belirtilen görsel işlenemedi. Vazgeçilip atlanıyor.",
