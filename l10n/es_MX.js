@@ -18,6 +18,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Tools" : "Herramientas",
     "Last modified" : "Última modificación",
+    "Energy" : "Energía",
     "Loading…" : "Cargando...",
     "Dismiss" : "Descartar",
     "Cancel" : "Cancelar",
