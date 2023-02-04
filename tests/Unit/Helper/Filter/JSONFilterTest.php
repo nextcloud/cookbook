@@ -14,6 +14,7 @@ use OCA\Cookbook\Helper\Filter\JSON\FixNutritionFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixRecipeYieldFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixUrlFilter;
+use OCA\Cookbook\Helper\Filter\JSON\RecipeIdTypeFilter;
 use OCA\Cookbook\Helper\Filter\JSON\RecipeNameFilter;
 use OCA\Cookbook\Helper\Filter\JSON\SchemaConformityFilter;
 use OCA\Cookbook\Helper\Filter\JSONFilter;
@@ -25,6 +26,7 @@ class JSONFilterTest extends TestCase {
 
 	private $schemaConformityFilter;
 	private $recipeNameFilter;
+	private $recipeIdTypeFilter;
 	private $extractImageUrlFilter;
 	private $fixImageSchemeFilter;
 	private $cleanCategoryFilter;
@@ -41,6 +43,7 @@ class JSONFilterTest extends TestCase {
 	protected function setUp(): void {
 		$this->schemaConformityFilter = $this->createStub(SchemaConformityFilter::class);
 		$this->recipeNameFilter = $this->createStub(RecipeNameFilter::class);
+		$this->recipeIdTypeFilter = $this->createStub(RecipeIdTypeFilter::class);
 		$this->extractImageUrlFilter = $this->createStub(ExtractImageUrlFilter::class);
 		$this->fixImageSchemeFilter = $this->createStub(FixImageSchemeFilter::class);
 		$this->cleanCategoryFilter = $this->createStub(CleanCategoryFilter::class);
@@ -58,6 +61,7 @@ class JSONFilterTest extends TestCase {
 		$this->dut = new JSONFilter(
 			$this->schemaConformityFilter,
 			$this->recipeNameFilter,
+			$this->recipeIdTypeFilter,
 			$this->extractImageUrlFilter,
 			$this->fixImageSchemeFilter,
 			$this->cleanCategoryFilter,
@@ -88,6 +92,7 @@ class JSONFilterTest extends TestCase {
 
 		$this->schemaConformityFilter->method('apply')->willReturnCallback($closure());
 		$this->recipeNameFilter->method('apply')->willReturnCallback($closure());
+		$this->recipeIdTypeFilter->method('apply')->willReturnCallback($closure());
 		$this->extractImageUrlFilter->method('apply')->willReturnCallback($closure());
 		$this->fixImageSchemeFilter->method('apply')->willReturnCallback($closure());
 		$this->cleanCategoryFilter->method('apply')->willReturnCallback($closure());

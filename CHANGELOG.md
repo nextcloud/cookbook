@@ -13,6 +13,8 @@
   [#1446](https://github.com/nextcloud/cookbook/pull/1446) @christianlupus
 - Add network logging for responses, not only requests
   [1405](https://github.com/nextcloud/cookbook/pull/1405) @MarcelRobitaille
+- Make the server api compliant
+  [#1464](https://github.com/nextcloud/cookbook/pull/1464) @leptopoda
 
 ### Maintenance
 - Update dependency for GitHub pages builder

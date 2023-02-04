@@ -14,6 +14,7 @@ use OCA\Cookbook\Helper\Filter\JSON\FixNutritionFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixRecipeYieldFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixUrlFilter;
+use OCA\Cookbook\Helper\Filter\JSON\RecipeIdTypeFilter;
 use OCA\Cookbook\Helper\Filter\JSON\RecipeNameFilter;
 use OCA\Cookbook\Helper\Filter\JSON\SchemaConformityFilter;
 
@@ -24,6 +25,7 @@ class JSONFilter {
 	public function __construct(
 		SchemaConformityFilter $schemaConformityFilter,
 		RecipeNameFilter $recipeNameFilter,
+		RecipeIdTypeFilter $recipeIdTypeFilter,
 		ExtractImageUrlFilter $extractImageUrlFilter,
 		FixImageSchemeFilter $fixImageSchemeFilter,
 		CleanCategoryFilter $cleanCategoryFilter,
@@ -40,6 +42,7 @@ class JSONFilter {
 		$this->filters = [
 			$schemaConformityFilter,
 			$recipeNameFilter,
+			$recipeIdTypeFilter,
 			$extractImageUrlFilter,
 			$fixImageSchemeFilter,
 			$cleanCategoryFilter,
