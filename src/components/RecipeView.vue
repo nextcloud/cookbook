@@ -67,10 +67,9 @@
                         <strong>{{ t("cookbook", "Servings") }}: </strong
                         >{{ $store.state.recipe.recipeYield }}
                     </p>
-                    <p v-if="$store.state.recipe.aggregateRating.ratingValue != null">
+                    <p v-if="$store.state.recipe.aggregateRating != null">
                         <strong>{{ t("cookbook", "Rating") }}: </strong
                         >
-
                         <span v-for="i in parseInt($store.state.recipe.aggregateRating.ratingValue)" class="icon-favorite rating-icon" />
                         <span v-for="i in 5-parseInt($store.state.recipe.aggregateRating.ratingValue)" class="icon-favorite-white rating-icon" />
                     </p>
