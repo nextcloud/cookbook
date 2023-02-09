@@ -67,6 +67,13 @@
                         <strong>{{ t("cookbook", "Servings") }}: </strong
                         >{{ $store.state.recipe.recipeYield }}
                     </p>
+                    <p v-if="$store.state.recipe.aggregateRating.ratingValue != null">
+                        <strong>{{ t("cookbook", "Rating") }}: </strong
+                        >
+
+                        <span v-for="i in parseInt($store.state.recipe.aggregateRating.ratingValue)" class="icon-favorite rating-icon" />
+                        <span v-for="i in 5-parseInt($store.state.recipe.aggregateRating.ratingValue)" class="icon-favorite-white rating-icon" />
+                    </p>
                 </div>
                 <div class="times">
                     <RecipeTimer
@@ -662,6 +669,14 @@ export default {
     display: inline-block;
     margin-right: 0.2em;
     margin-bottom: 0.2em;
+    background-size: 1em;
+    vertical-align: middle;
+}
+
+.rating-icon {
+    display: inline-block;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
     background-size: 1em;
     vertical-align: middle;
 }
