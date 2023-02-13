@@ -115,7 +115,6 @@ jobs:
                 - 22
                 - 23
                 - 24
-                - 25
             phpVersion:
                 - "8.0"
             httpServer:
@@ -123,24 +122,20 @@ jobs:
             include:
                 # Test different databses
                 -   database: sqlite
-                    coreVersion: 25
-                    phpVersion: "8.1"
+                    coreVersion: 24
+                    phpVersion: "8.0"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 25
-                    phpVersion: "8.1"
+                    coreVersion: 24
+                    phpVersion: "8.0"
                     httpServer: "apache"
                 
-                # Test different PHP versions additionally
-                -   database: mysql
-                    coreVersion: 25
-                    phpVersion: "8.1"
-                    httpServer: "apache"
+                # Test different PHP versions additionally => No other PHP version is valid
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: 25
-                    phpVersion: "8.1"
+                    coreVersion: 24
+                    phpVersion: "8.0"
                     httpServer: "nginx"
                     
     steps:
