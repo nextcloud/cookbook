@@ -106,7 +106,7 @@ Instruction:
   type: string
   example: Peel the bananas
   description: An instruction step for processing the recipe
-  
+
 Nutrition:
   type: object
   properties:
@@ -211,15 +211,15 @@ Recipe:
           type: integer
           example: 4
           description: Number of servings in recipe
-        recipeCatregory:
+        recipeCategory:
           type: string
           example: Dessert
           description: The category of the recipe
-        tools:
+        tool:
           type: array
           items:
             $ref: "#/Tool"
-        recipeIngredients:
+        recipeIngredient:
           type: array
           items:
             $ref: "#/Ingredient"
@@ -238,8 +238,8 @@ Recipe:
         - url
         - recipeYield
         - recipeCategory
-        - tools
-        - recipeIngredients
+        - tool
+        - recipeIngredient
         - recipeInstructions
         - nutrition
       additionalProperties: true
@@ -254,7 +254,7 @@ Recipe:
     cookTime: null
     totalTime: PT1H20M
     url: ''
-    tools: []
+    tool: []
     recipeIngredient:
       - 3 ripe bananas
       - 100g sugar
