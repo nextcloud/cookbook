@@ -71,6 +71,7 @@
     "Could not set recipe update interval to {interval}" : "Kon de update-interval voor recepten niet instellen op {interval}",
     "Could not set recipe folder to {path}" : "Kan de receptenmap niet instellen op {path}",
     "Loading config failed" : "Laden configuratie mislukt",
+    "Enter URL or select from your Nextcloud instance on the right" : "Voer URL in of selecteer vanuit je Nextcloud-server aan de rechterkant",
     "Pick a local image" : "Kies een lokale afbeelding",
     "Path to your recipe image" : "Pad naar recept afbeelding",
     "Move entry up" : "verplaats omhoog",
