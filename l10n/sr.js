@@ -40,6 +40,7 @@ OC.L10N.register(
     "Loading config failed" : "Учитавање конфигурације није успело",
     "Pick a local image" : "Одаберите локалну слику",
     "Path to your recipe image" : "Путања до слике рецепта",
+    "Delete entry" : "Обриши ставку",
     "Add" : "Додај",
     "Close" : "Затвори",
     "The page was not found" : "Страна није нађена",
