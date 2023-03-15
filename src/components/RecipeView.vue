@@ -873,6 +873,7 @@ main {
     display: grid;
 
     grid-template-columns: 1fr 1em 2fr;
+    grid-template-rows: 100% 100% 100% 1fr;
 
     .ingredients {
         grid-column: 1/2;
