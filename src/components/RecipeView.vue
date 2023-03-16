@@ -70,19 +70,27 @@
                 </div>
                 <div class="times">
                     <RecipeTimer
-                        v-if="recipe.timerPrep"
+                        v-if="
+                            recipe.timerPrep &&
+                            visibleInfoBlocks['preparation-time']
+                        "
                         :value="recipe.timerPrep"
                         :timer="false"
                         :label="t('cookbook', 'Preparation time (H:MM)')"
                     />
                     <RecipeTimer
-                        v-if="recipe.timerCook"
+                        v-if="
+                            recipe.timerCook &&
+                            visibleInfoBlocks['cooking-time']
+                        "
                         :value="recipe.timerCook"
                         :timer="true"
                         :label="t('cookbook', 'Cooking time (H:MM)')"
                     />
                     <RecipeTimer
-                        v-if="recipe.timerTotal"
+                        v-if="
+                            recipe.timerTotal && visibleInfoBlocks['total-time']
+                        "
                         :value="recipe.timerTotal"
                         :timer="false"
                         :label="t('cookbook', 'Total time (H:MM)')"
@@ -109,7 +117,7 @@
                     </ul>
                 </section>
 
-                <section class="tools">
+                <section v-if="visibleInfoBlocks.tools" class="tools">
                     <h3 v-if="parsedTools.length">
                         {{ t("cookbook", "Tools") }}
                     </h3>
@@ -446,8 +454,12 @@ export default {
             return (
                 this.recipe.nutrition &&
                 !(this.recipe.nutrition instanceof Array) &&
-                Object.keys(this.recipe.nutrition).length > 1
+                Object.keys(this.recipe.nutrition).length > 1 &&
+                this.visibleInfoBlocks["nutrition-information"]
             )
+        },
+        visibleInfoBlocks() {
+            return this.$store.state.config?.visibleInfoBlocks ?? {}
         },
     },
     watch: {
@@ -861,6 +873,7 @@ main {
     display: grid;
 
     grid-template-columns: 1fr 1em 2fr;
+    grid-template-rows: 100% 100% 100% 1fr;
 
     .ingredients {
         grid-column: 1/2;

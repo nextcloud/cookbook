@@ -81,6 +81,84 @@
                 </ul>
             </fieldset>
         </NcAppSettingsSection>
+        <NcAppSettingsSection
+            id="settings-info-blocks"
+            :title="t('cookbook', 'Info blocks')"
+            class="app-settings-section"
+        >
+            <fieldset>
+                <legend class="settings-info-blocks__legend">
+                    {{
+                        t(
+                            "cookbook",
+                            "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them."
+                        )
+                    }}
+                </legend>
+                <ul>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-preparation-time"
+                            v-model="visibleInfoBlocks"
+                            type="checkbox"
+                            class="checkbox"
+                            value="preparation-time"
+                        />
+                        <label for="info-blocks-checkbox-preparation-time">
+                            {{ t("cookbook", "Preparation time") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-cooking-time"
+                            v-model="visibleInfoBlocks"
+                            type="checkbox"
+                            class="checkbox"
+                            value="cooking-time"
+                        />
+                        <label for="info-blocks-checkbox-cooking-time">
+                            {{ t("cookbook", "Cooking time") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-total-time"
+                            v-model="visibleInfoBlocks"
+                            type="checkbox"
+                            class="checkbox"
+                            value="total-time"
+                        />
+                        <label for="info-blocks-checkbox-total-time">
+                            {{ t("cookbook", "Total time") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-nutrition-information"
+                            v-model="visibleInfoBlocks"
+                            type="checkbox"
+                            class="checkbox"
+                            value="nutrition-information"
+                        />
+                        <label for="info-blocks-checkbox-nutrition-information">
+                            {{ t("cookbook", "Nutrition information") }}
+                        </label>
+                    </li>
+                    <li>
+                        <input
+                            id="info-blocks-checkbox-tools"
+                            v-model="visibleInfoBlocks"
+                            type="checkbox"
+                            class="checkbox"
+                            value="tools"
+                        />
+                        <label for="info-blocks-checkbox-tools">
+                            {{ t("cookbook", "Tools") }}
+                        </label>
+                    </li>
+                </ul>
+            </fieldset>
+        </NcAppSettingsSection>
     </NcAppSettingsDialog>
 </template>
 
@@ -97,6 +175,23 @@ import api from "cookbook/js/api-interface"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
 export const SHOW_SETTINGS_EVENT = "show-settings"
+
+const INFO_BLOCK_KEYS = [
+    "preparation-time",
+    "cooking-time",
+    "total-time",
+    "nutrition-information",
+    "tools",
+]
+
+// The Vue representation of multiple checkboxes is an array of all checked values
+// However, the backend representation is an object (map of block ids to booleans)
+const visibleInfoBlocksEncode = (arr) =>
+    Object.fromEntries(INFO_BLOCK_KEYS.map((key) => [key, arr.includes(key)]))
+const visibleInfoBlocksDecode = (obj) =>
+    Object.entries(obj)
+        .filter(([, v]) => v)
+        .map(([k]) => k)
 
 export default {
     name: "SettingsDialog",
@@ -120,6 +215,8 @@ export default {
             // (the one when config is loaded at page load)
             resetInterval: true,
             updateInterval: 0,
+            visibleInfoBlocks: [...INFO_BLOCK_KEYS],
+            resetVisibleInfoBlocks: true,
         }
     },
     watch: {
@@ -130,7 +227,7 @@ export default {
                 return
             }
             try {
-                api.config.printImage.update(newVal)
+                await api.config.printImage.update(newVal)
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
@@ -167,6 +264,27 @@ export default {
                 )
                 this.resetInterval = true
                 this.updateInterval = oldVal
+            }
+        },
+        async visibleInfoBlocks(newVal, oldVal) {
+            // Avoid infinite loop on page load and when reseting value after failed submit
+            if (this.resetVisibleInfoBlocks) {
+                this.resetVisibleInfoBlocks = false
+                return
+            }
+            try {
+                const data = visibleInfoBlocksEncode(newVal)
+                await api.config.visibleInfoBlocks.update(data)
+                await this.$store.dispatch("refreshConfig")
+                // Should this check the response of the query? To catch some errors that redirect the page
+            } catch (err) {
+                // eslint-disable-next-line no-console
+                console.error("Error while trying to save info blocks", err)
+                await showSimpleAlertModal(
+                    t("cookbook", "Could save visible info blocks")
+                )
+                this.resetVisibleInfoBlocks = true
+                this.visibleInfoBlocks = oldVal
             }
         },
     },
@@ -218,20 +336,25 @@ export default {
          */
         async setup() {
             try {
-                const response = await api.config.get()
-                const config = response.data
+                await this.$store.dispatch("refreshConfig")
+                const { config } = this.$store.state
                 this.resetPrintImage = false
+                this.resetVisibleInfoBlocks = false
 
                 if (!config) {
                     throw new Error()
                 }
 
                 this.printImage = config.print_image
+                this.visibleInfoBlocks = visibleInfoBlocksDecode(
+                    config.visibleInfoBlocks
+                )
                 this.showTagCloudInRecipeList =
                     this.$store.state.localSettings.showTagCloudInRecipeList
                 this.updateInterval = config.update_interval
                 this.recipeFolder = config.folder
-            } catch {
+            } catch (err) {
+                this.$log.error("Error setting up SettingsDialog", err)
                 await showSimpleAlertModal(
                     t("cookbook", "Loading config failed")
                 )
@@ -283,6 +406,10 @@ export default {
 .material-design-icon.loading-icon:deep(svg) {
     animation: rotate var(--animation-duration, 0.8s) linear infinite;
     color: var(--color-loading-dark);
+}
+
+.settings-info-blocks__legend {
+    margin-bottom: 10px;
 }
 </style>
 

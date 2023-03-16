@@ -516,6 +516,22 @@ class RecipeService {
 	}
 
 	/**
+	 * Sets which info blocks are displayed next to the recipe
+	 * @param array<string, bool> keys: info block ids, values: display state
+	 */
+	public function setVisibleInfoBlocks(array $visibleInfoBlocks) {
+		$this->userConfigHelper->setVisibleInfoBlocks($visibleInfoBlocks);
+	}
+
+	/**
+	 * Determines which info blocks are displayed next to the recipe
+	 * @return array<string, bool> keys: info block ids, values: display state
+	 */
+	public function getVisibleInfoBlocks(): array {
+		return $this->userConfigHelper->getVisibleInfoBlocks();
+	}
+
+	/**
 	 * Get recipe file contents as an array
 	 *
 	 * @param File $file

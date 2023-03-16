@@ -90,6 +90,10 @@ function updateRecipeDirectory(newDir) {
     return instance.post(`${baseUrl}/config`, { folder: newDir })
 }
 
+function updateVisibleInfoBlocks(visibleInfoBlocks) {
+    return instance.post(`${baseUrl}/config`, { visibleInfoBlocks })
+}
+
 function reindex() {
     return instance.post(`${baseUrl}/reindex`)
 }
@@ -124,6 +128,9 @@ export default {
         },
         updateInterval: {
             update: updateUpdateInterval,
+        },
+        visibleInfoBlocks: {
+            update: updateVisibleInfoBlocks,
         },
     },
 }

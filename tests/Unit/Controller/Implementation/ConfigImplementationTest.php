@@ -88,6 +88,7 @@ class ConfigImplementationTest extends TestCase {
 			'folder' => $folder,
 			'update_interval' => $interval,
 			'print_image' => $printImage,
+			'visibleInfoBlocks' => array(),
 		];
 
 		$this->userFolder->method('getPath')->willReturn($folder);
@@ -109,8 +110,9 @@ class ConfigImplementationTest extends TestCase {
 	 * @param mixed $folderPath
 	 * @param mixed $interval
 	 * @param mixed $printImage
+	 * @param mixed $visibleInfoBlocks
 	 */
-	public function testConfig($data, $folderPath, $interval, $printImage): void {
+	public function testConfig($data, $folderPath, $interval, $printImage, $visibleInfoBlocks): void {
 		$this->restParser->method('getParameters')->willReturn($data);
 
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
@@ -135,6 +137,12 @@ class ConfigImplementationTest extends TestCase {
 			$this->recipeService->expects($this->once())->method('setPrintImage')->with($printImage);
 		}
 
+		if (is_null($visibleInfoBlocks)) {
+			$this->recipeService->expects($this->never())->method('setVisibleInfoBlocks');
+		} else {
+			$this->recipeService->expects($this->once())->method('setVisibleInfoBlocks')->with($visibleInfoBlocks);
+		}
+
 		/**
 		 * @var JSONResponse $response
 		 */
@@ -146,23 +154,28 @@ class ConfigImplementationTest extends TestCase {
 	public function dataProviderConfig() {
 		return [
 			'noChange' => [
-				[], null, null, null
+				[], null, null, null, null
 			],
 			'changeFolder' => [
-				['folder' => '/path/to/whatever'], '/path/to/whatever', null, null
+				['folder' => '/path/to/whatever'], '/path/to/whatever', null, null, null
 			],
 			'changeinterval' => [
-				['update_interval' => 15], null, 15, null
+				['update_interval' => 15], null, 15, null, null
 			],
 			'changePrint' => [
-				['print_image' => true], null, null, true
+				['print_image' => true], null, null, true, null
+			],
+			'changeVisibleBlocks' => [
+				['visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true]],
+				null, null, null, ['cooking-time' => true, 'preparation-time' => true]
 			],
 			'changeAll' => [
 				[
 					'folder' => '/my/custom/path',
 					'update_interval' => 12,
-					'print_image' => false
-				], '/my/custom/path', 12, false
+					'print_image' => false,
+					'visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true],
+				], '/my/custom/path', 12, false, ['cooking-time' => true, 'preparation-time' => true]
 			],
 		];
 	}

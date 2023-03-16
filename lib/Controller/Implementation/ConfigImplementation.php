@@ -31,6 +31,8 @@ class ConfigImplementation {
 		$this->userFolder = $userFolder;
 	}
 
+	protected const KEY_VISIBLE_INFO_BLOCKS = 'visibleInfoBlocks';
+
 	/**
 	 * Get the current configuration of the app
 	 *
@@ -43,6 +45,7 @@ class ConfigImplementation {
 			'folder' => $this->userFolder->getPath(),
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
+			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
 		], Http::STATUS_OK);
 	}
 
@@ -70,6 +73,10 @@ class ConfigImplementation {
 
 		if (isset($data['print_image'])) {
 			$this->service->setPrintImage((bool)$data['print_image']);
+		}
+
+		if (isset($data[self::KEY_VISIBLE_INFO_BLOCKS])) {
+			$this->service->setVisibleInfoBlocks($data[self::KEY_VISIBLE_INFO_BLOCKS]);
 		}
 
 		$this->dbCacheService->triggerCheck();

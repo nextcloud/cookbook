@@ -46,9 +46,13 @@ export default new Vuex.Store({
         localSettings: {
             showTagCloudInRecipeList: true,
         },
+        config: null,
     },
 
     mutations: {
+        setConfig(state, { config }) {
+            state.config = config
+        },
         initializeStore(state) {
             if (localStorage.getItem("showTagCloudInRecipeList")) {
                 state.localSettings.showTagCloudInRecipeList = JSON.parse(
@@ -110,6 +114,14 @@ export default new Vuex.Store({
     },
 
     actions: {
+        /**
+         * Read/Update the user settings from the backend
+         */
+        async refreshConfig(c) {
+            const config = (await api.config.get()).data
+            c.commit("setConfig", { config })
+        },
+
         /**
          * Create new recipe on the server
          */
