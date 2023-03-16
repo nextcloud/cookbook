@@ -110,6 +110,7 @@ class ConfigImplementationTest extends TestCase {
 	 * @param mixed $folderPath
 	 * @param mixed $interval
 	 * @param mixed $printImage
+	 * @param mixed $visibleInfoBlocks
 	 */
 	public function testConfig($data, $folderPath, $interval, $printImage, $visibleInfoBlocks): void {
 		$this->restParser->method('getParameters')->willReturn($data);
@@ -165,7 +166,7 @@ class ConfigImplementationTest extends TestCase {
 				['print_image' => true], null, null, true, null
 			],
 			'changeVisibleBlocks' => [
-				['visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true]], 
+				['visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true]],
 				null, null, null, ['cooking-time' => true, 'preparation-time' => true]
 			],
 			'changeAll' => [
