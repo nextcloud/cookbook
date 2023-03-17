@@ -129,6 +129,9 @@ OC.L10N.register(
     "Dismiss" : "Iscarta",
     "Cancel" : "Annulla",
     "OK" : "AB",
-    "None" : "Perunu"
+    "None" : "Perunu",
+    "Preparation time" : "Tempus de preparatzione",
+    "Cooking time" : "Tempus de cotura",
+    "Total time" : "Tempus totale"
 },
 "nplurals=2; plural=(n != 1);");

@@ -142,6 +142,9 @@ OC.L10N.register(
     "Dismiss" : "Hylkää",
     "Cancel" : "Peruuta",
     "OK" : "OK",
-    "None" : "Ei mitään"
+    "None" : "Ei mitään",
+    "Preparation time" : "Valmisteluaika",
+    "Cooking time" : "Kokkausaika",
+    "Total time" : "Kokonaiskesto"
 },
 "nplurals=2; plural=(n != 1);");

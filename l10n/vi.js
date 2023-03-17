@@ -154,6 +154,9 @@ OC.L10N.register(
     "Dismiss" : "Bỏ qua",
     "Cancel" : "Hủy",
     "OK" : "OK",
-    "None" : "Không có"
+    "None" : "Không có",
+    "Preparation time" : "Thời gian chuẩn sự bị",
+    "Cooking time" : "Thời gian nấu",
+    "Total time" : "Tổng thời gian"
 },
 "nplurals=1; plural=0;");

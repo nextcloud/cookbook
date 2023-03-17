@@ -103,6 +103,7 @@ OC.L10N.register(
     "Dismiss" : "閉じる",
     "Cancel" : "キャンセル",
     "OK" : "OK",
-    "None" : "なし"
+    "None" : "なし",
+    "Cooking time" : "調理時間"
 },
 "nplurals=1; plural=0;");

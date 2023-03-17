@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Žádná",
     "Abort editing" : "Přerušit úpravy",
     "Cookbook settings" : "Nastavení pro Kuchařku",
-    "Recipe display settings" : "Nastavení zobrazení receptu"
+    "Recipe display settings" : "Nastavení zobrazení receptu",
+    "Preparation time" : "Doba přípravy",
+    "Cooking time" : "Doba vaření",
+    "Total time" : "Celková doba"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

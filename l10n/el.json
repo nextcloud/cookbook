@@ -109,6 +109,9 @@
     "Dismiss" : "Τους ζυγούς λύσατε!",
     "Cancel" : "Ακύρωση",
     "OK" : "OK",
-    "None" : "Καμμία"
+    "None" : "Καμμία",
+    "Preparation time" : "Χρόνος προετοιμασίας",
+    "Cooking time" : "Χρόνος μαγειρέματος",
+    "Total time" : "Συνολικός χρόνος"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

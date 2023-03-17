@@ -136,6 +136,9 @@ OC.L10N.register(
     "Dismiss" : "Annulla",
     "Cancel" : "Annulla",
     "OK" : "OK",
-    "None" : "Nessuno"
+    "None" : "Nessuno",
+    "Preparation time" : "Tempo di preparazione",
+    "Cooking time" : "Tempo di cottura",
+    "Total time" : "Tempo totale"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

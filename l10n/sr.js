@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Ништа",
     "Abort editing" : "Прекини уређивање",
     "Cookbook settings" : "Подешавања кувара",
-    "Recipe display settings" : "Подешавања приказа рецепта"
+    "Recipe display settings" : "Подешавања приказа рецепта",
+    "Preparation time" : "Време припреме",
+    "Cooking time" : "Време кувања",
+    "Total time" : "Укупно време"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

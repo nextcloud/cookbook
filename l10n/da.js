@@ -136,6 +136,9 @@ OC.L10N.register(
     "Dismiss" : "Afvis",
     "Cancel" : "Annuller",
     "OK" : "OK",
-    "None" : "Ingen"
+    "None" : "Ingen",
+    "Preparation time" : "Forberedelsestid",
+    "Cooking time" : "Opvarmningstid",
+    "Total time" : "Total tid"
 },
 "nplurals=2; plural=(n != 1);");

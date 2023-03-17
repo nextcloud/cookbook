@@ -136,6 +136,9 @@ OC.L10N.register(
     "Dismiss" : "Descarta",
     "Cancel" : "Cancel·la",
     "OK" : "D'acord",
-    "None" : "Només una vegada"
+    "None" : "Només una vegada",
+    "Preparation time" : "Temps de preparació",
+    "Cooking time" : "Temps de cocció",
+    "Total time" : "Temps total"
 },
 "nplurals=2; plural=(n != 1);");

@@ -63,6 +63,9 @@ OC.L10N.register(
     "Dismiss" : "Dismiss",
     "Cancel" : "Hætta við",
     "OK" : "Í lagi",
-    "None" : "Ekkert"
+    "None" : "Ekkert",
+    "Preparation time" : "Undirbúningstími",
+    "Cooking time" : "Eldunartími",
+    "Total time" : "Heildartími"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");
