@@ -116,7 +116,7 @@ paths:
     get:
       tags: [ Misc ]
       summary: Get the current configuration of the app
-      operationId: get_config
+      operationId: getConfig
       responses:
         200:
           description: The config was read successfully
@@ -127,7 +127,7 @@ paths:
     post:
       tags: [ Misc ]
       summary: Set the configuration for the current user
-      operationId: set_config
+      operationId: setConfig
       responses:
         200:
           description: The configuration was successfully saved.
@@ -177,7 +177,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get the main image of a recipe. If no image is stored a fallback image is delivered.
-      operationId: image
+      operationId: getImage
       parameters:
         - in: path
           name: id
@@ -229,7 +229,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get all recipes in the database
-      operationId: list_recipes
+      operationId: listRecipes
       responses:
         200:
           description: Successfully obtained all recipes
@@ -240,7 +240,7 @@ paths:
     post:
       tags: [ Recipes ]
       summary: Create a new recipe
-      operationId: new_recipe
+      operationId: newRecipe
       requestBody:
         description: |
           A JSON representation of the recipe to be saved.
@@ -296,7 +296,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get a single recipe from the server
-      operationId: recipe_details
+      operationId: recipeDetails
       responses:
         200:
           description: Recipe was sucessfully obtained
@@ -315,7 +315,7 @@ paths:
     put:
       tags: [ Recipes ]
       summary: Update a recipe
-      operationId: update_recipe
+      operationId: updateRecipe
       requestBody:
         content:
           application/json:
@@ -340,7 +340,7 @@ paths:
     delete:
       tags: [ Recipes ]
       summary: Delete an existing recipe
-      operationId: delete_recipe
+      operationId: deleteRecipe
       responses:
         200:
           description: The recipe was deleted successfully
@@ -362,7 +362,7 @@ paths:
     get:
       tags: [ Tags ]
       summary: Get all known keywords
-      operationId: list_keywords
+      operationId: listKeywords
       responses:
         '200':
           description: Successfully obtained all keywords
@@ -389,7 +389,7 @@ paths:
     get:
       tags: [ Tags ]
       summary: Get all recipes associated with certain keywords
-      operationId: recipes_with_keyword
+      operationId: recipesWithKeyword
       parameters:
         - in: path
           name: keywords
@@ -417,7 +417,7 @@ paths:
     get:
       tags: [ Categories ]
       summary: Get all known categories
-      operationId: list_categories
+      operationId: listCategories
       responses:
         200:
           description: >-
@@ -451,7 +451,7 @@ paths:
     get:
       tags: [ Categories ]
       summary: Get all recipes of a certain category
-      operationId: recipes_in_category
+      operationId: recipesInCategory
       parameters:
         - in: path
           name: category
@@ -481,7 +481,7 @@ paths:
     put:
       tags: [ Categories ]
       summary: Rename a category
-      operationId: rename_category
+      operationId: renameCategory
       parameters:
         - in: path
           name: category
