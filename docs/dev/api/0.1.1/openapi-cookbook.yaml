@@ -63,16 +63,22 @@ tags:
 
 components:
   schemas:
+    Category:
+      $ref: objects.yaml#/Category
     Config:
       $ref: objects.yaml#/Config
     Error:
       $ref: objects.yaml#/Error
+    Keyword:
+      $ref: objects.yaml#/Keyword
     RecipeStub:
       $ref: objects.yaml#/RecipeStub
     StubList:
       $ref: objects.yaml#/StubList
     Recipe:
       $ref: objects.yaml#/Recipe
+    Url:
+      $ref: objects.yaml#/Url
     Version:
       $ref: objects.yaml#/Version
   
@@ -128,6 +134,12 @@ paths:
       tags: [ Misc ]
       summary: Set the configuration for the current user
       operationId: setConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Config"
       responses:
         200:
           description: The configuration was successfully saved.
@@ -143,16 +155,12 @@ paths:
       summary: Import a recipe using schema.org metadata from a website
       operationId: import
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                url:
-                  type: string
-                  example: 'http://www.chefkoch.de/2345'
-              required:
-                - url
+              $ref: "#/components/schemas/Url"
+
       responses:
         200:
           description: Successfully imported recipe
@@ -185,6 +193,20 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: size
+          description: >
+            The size of the requested image
+
+            * `full`    - Full resolution image (size full res)
+            * `thumb`   - thumbnail of the image (size 250px)
+            * `thumb16` - icon of the image (size 16px)
+
+            by default the full size image will be returned
+          required: false
+          schema:
+            type: string
+            enum: [full, thumb, thumb16]
       responses:
         200:
           description: Image was obtained and will be in response either as image/jpeg or image/svg+xml
@@ -246,15 +268,11 @@ paths:
           A JSON representation of the recipe to be saved.
           
           See also the structure at https://schema.org/Recipe
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required: [ "name" ]
-              additionalProperties: true
+              $ref: "#/components/schemas/Recipe"
               example:
                 name: "Chips"
                 description: "A very delicious way of getting kids quiet"
@@ -317,6 +335,7 @@ paths:
       summary: Update a recipe
       operationId: updateRecipe
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -371,20 +390,8 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    recipe_count:
-                      type: integer
-                  required:
-                    - name
-                    - recipe_count
-              example:
-                - name: vegetarian
-                  recipe_count: 5
-                - name: sugar-free
-                  recipe_count: 2
+                  $ref: "#/components/schemas/Keyword"
+
   /api/v1/tags/{keywords}:
     get:
       tags: [ Tags ]
@@ -431,15 +438,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    recipe_count:
-                      type: integer
-                  required:
-                    - name
-                    - recipe_count
+                  $ref: "#/components/schemas/Category"
               example:
                 - name: Dinner
                   recipe_count: 21
@@ -494,6 +493,7 @@ paths:
           schema:
             type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:

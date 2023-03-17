@@ -110,10 +110,6 @@ Instruction:
 Nutrition:
   type: object
   properties:
-    "@type":
-      type: string
-      example: NutritionInformation
-      description: Schema.org object description
     calories:
       type: string
       description: The number of calories for the given amount
@@ -162,8 +158,6 @@ Nutrition:
       type: string
       description: The number of grams of unsaturated fat
       example: 40 g
-  required:
-    - "@type"
 
 Recipe:
   #type: object
@@ -172,10 +166,6 @@ Recipe:
     - $ref: "#/RecipeStubInformation"
     - type: object
       properties:
-        "@type":
-          type: string
-          example: "Recipe"
-          description: Schema.org object type identifier
         id:
           type: string
           description: The index of the recipe. Note the representation as a string as the representation might change in the future.

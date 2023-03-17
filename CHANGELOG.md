@@ -23,13 +23,15 @@
   [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
 
 ## Documentation
-- Fixed some issues in the API description
+- Fixed some issues in the API description #1419 and #1461 @leptopoda
+- Improve API description for better code-generation #1461 @leptopoda
 - Fix security issue in GitHub pages with path insertion
   [#1457](https://github.com/nextcloud/cookbook/pull/1457) @christianlupus
 - Add quick start guide for backend testing
   [#1466](https://github.com/nextcloud/cookbook/pull/1466) @MarcelRobitaille
 - Fixed some typos in the OpenAPI specification @leptopoda
 - Add operation ids to all external API endpoints
+- Improve API description for better code-generation #1461 @leptopoda
 
 
 ## 0.10.1 - 2022-11-09
