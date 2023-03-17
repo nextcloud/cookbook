@@ -32,6 +32,7 @@
 - Fixed some typos in the OpenAPI specification @leptopoda
 - Add operation ids to all external API endpoints
 - Improve API description for better code-generation #1461 @leptopoda
+- Removed some inconsitencies in the documentation of the API
 
 
 ## 0.10.1 - 2022-11-09

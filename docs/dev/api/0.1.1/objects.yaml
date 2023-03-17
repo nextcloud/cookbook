@@ -24,6 +24,30 @@ CategoryInformation:
     - name
     - recipe_count
 
+VisibleInfoBlocks:
+  type: object
+  properties:
+    preparation-time:
+      type: boolean
+      example: true
+      description: Show the preparation time in UI
+    cooking-time:
+      type: boolean
+      example: true
+      description: Show the time required for cooking in the UI
+    total-time:
+      type: boolean
+      example: false
+      description: Show the total time required to carry out the complee recipe
+    nutrition-information:
+      type: boolean
+      example: true
+      description: Show the nutrition information in the UI
+    tools:
+      type: boolean
+      example: false
+      description: Show the list of tools in the UI
+
 Config:
   type: object
   description: An object describing the configuration of the web app
@@ -32,21 +56,16 @@ Config:
       type: string
       example: /Recipes
       description: The folder in the user's files that contains the recipes
-      nullable: true
     update_interval:
       type: integer
       example: 10
       description: The interval between automatic rescans to rebuild the database cache in minutes
-      nullable: true
     print_image:
       type: boolean
       example: true
       description: True, if the user wished to print the recipe images with the rest of the recipes
-      nullable: true
-  required:
-    - folder
-    - update_interval
-    - print_image
+    visibleInfoBlocks:
+      $ref: "#/VisibleInfoBlocks"
 
 Error:
   type: object
