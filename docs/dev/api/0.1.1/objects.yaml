@@ -32,21 +32,14 @@ Config:
       type: string
       example: /Recipes
       description: The folder in the user's files that contains the recipes
-      nullable: true
     update_interval:
       type: integer
       example: 10
       description: The interval between automatic rescans to rebuild the database cache in minutes
-      nullable: true
     print_image:
       type: boolean
       example: true
       description: True, if the user wished to print the recipe images with the rest of the recipes
-      nullable: true
-  required:
-    - folder
-    - update_interval
-    - print_image
 
 Error:
   type: object
