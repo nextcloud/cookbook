@@ -24,6 +24,30 @@ CategoryInformation:
     - name
     - recipe_count
 
+VisibleInfoBlocks:
+  type: object
+  properties:
+    preparation-time:
+      type: boolean
+      example: true
+      description: Show the preparation time in UI
+    cooking-time:
+      type: boolean
+      example: true
+      description: Show the time required for cooking in the UI
+    total-time:
+      type: boolean
+      example: false
+      description: Show the total time required to carry out the complee recipe
+    nutrition-information:
+      type: boolean
+      example: true
+      description: Show the nutrition information in the UI
+    tools:
+      type: boolean
+      example: false
+      description: Show the list of tools in the UI
+
 Config:
   type: object
   description: An object describing the configuration of the web app
@@ -40,6 +64,8 @@ Config:
       type: boolean
       example: true
       description: True, if the user wished to print the recipe images with the rest of the recipes
+    visibleInfoBlocks:
+      $ref: "#/VisibleInfoBlocks"
 
 Error:
   type: object
