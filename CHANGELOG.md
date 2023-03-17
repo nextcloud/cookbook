@@ -11,6 +11,8 @@
   [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
 - Reorder arrows are no longer hidden
   [#1446](https://github.com/nextcloud/cookbook/pull/1446) @christianlupus
+- Add network logging for responses, not only requests
+  [1405](https://github.com/nextcloud/cookbook/pull/1405) @MarcelRobitaille
 
 ### Maintenance
 - Update dependency for GitHub pages builder
