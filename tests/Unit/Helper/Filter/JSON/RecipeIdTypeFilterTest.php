@@ -6,12 +6,10 @@ use OCA\Cookbook\Helper\Filter\JSON\RecipeIdTypeFilter;
 use Test\TestCase;
 
 class RecipeIdTypeFilterTest extends TestCase {
-
 	/** @var RecipeIdTypeFilter */
 	private $dut;
 
-	protected function setUp(): void
-	{
+	protected function setUp(): void {
 		$this->dut = new RecipeIdTypeFilter();
 	}
 
