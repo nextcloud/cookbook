@@ -29,6 +29,7 @@
 - Add quick start guide for backend testing
   [#1466](https://github.com/nextcloud/cookbook/pull/1466) @MarcelRobitaille
 - Fixed some typos in the OpenAPI specification @leptopoda
+- Add operation ids to all external API endpoints
 
 
 ## 0.10.1 - 2022-11-09

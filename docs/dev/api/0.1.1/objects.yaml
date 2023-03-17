@@ -1,0 +1,391 @@
+Config:
+  type: object
+  description: An object describing the configuration of the web app
+  properties:
+    folder:
+      type: string
+      example: /Recipes
+      description: The folder in the user's files that contains the recipes
+    update_interval:
+      type: integer
+      example: 10
+      description: The interval between automatic rescans to rebuild the database cache in minutes
+    print_image:
+      type: boolean
+      example: true
+      description: True, if the user wished to print the recipe images with the rest of the recipes
+  required:
+    - folder
+    - update_interval
+    - print_image
+
+Error:
+  type: object
+  description: An error description
+  properties:
+    msg:
+      type: string
+      description: The error message
+      example: Recipe could not be found
+    file:
+      type: string
+      description: The file in which the exception was thrown
+      example: /var/www/custom_apps/cookbook/Service/RecipeService.php
+    line:
+      type: integer
+      description: The line where the exception is thrown
+      example: 223
+
+RecipeStubInformation:
+  type: object
+  description: The very basic information of a recipe
+  properties:
+    name:
+      type: string
+      description: The name of the recipe
+      example: Baked bananas
+    keywords:
+      type: string
+      description: A comma-separated list of recipe keywords, can be empty string
+      example: sweets,fruit
+    dateCreated:
+      type: string
+      description: The date the recipe was created in the app
+      format: date-time
+      example: "2022-01-02T16:12:41+0000"
+    dateModified:
+      type: string
+      description: The date the recipe was modified lastly in the app
+      format: date-time
+      example: "2022-01-10T10:02:52+0000"
+    imageUrl:
+      type: string
+      description: The URL of the recipe image
+      example: http://example.com/path/to/image.jpg
+    imagePlaceholderUrl:
+      type: string
+      description: The URL of the placeholder of the recipe image
+      example: http://example.com/path/to/image_thumb.jpg
+  required:
+    - "name"
+    - "keywords"
+    - "imageUrl"
+    - "imagePlaceholderUrl"
+    - "dateCreated"
+
+RecipeStub:
+  type: object
+  description: A stub of a recipe with some basic information present
+  allOf:
+    - $ref: "#/RecipeStubInformation"
+    - type: object
+      properties:
+        recipe_id:
+          type: string
+          description: The index of the recipe. Note this is a string and might change its appearance in the future.
+          example: "1"
+      required:
+        - "recipe_id"
+
+StubList:
+  type: array
+  items:
+    $ref: "#/RecipeStub"
+
+Tool:
+  type: string
+  example: Flat and fire-resistent bowl
+  description: A single tool for a recipe. A tool is not consumed but only used.
+
+Ingredient:
+  type: string
+  example: 100g ripe Bananas
+  description: A single ingredient for a recipe
+
+Instruction:
+  type: string
+  example: Peel the bananas
+  description: An instruction step for processing the recipe
+
+Nutrition:
+  type: object
+  properties:
+    "@type":
+      type: string
+      example: NutritionInformation
+      description: Schema.org object description
+    calories:
+      type: string
+      description: The number of calories for the given amount
+      example: 650 kcal
+    carbohydrateContent:
+      type: string
+      description: The number of grams of carbohydrates
+      example: 300 g
+    cholesterolContent:
+      type: string
+      description: The number of milligrams of cholesterol
+      example: 10 g
+    fatContent:
+      type: string
+      description: The number of grams of fat
+      example: 45 g
+    fiberContent:
+      type: string
+      description: The number of grams of fiber
+      example: 50 g
+    proteinContent:
+      type: string
+      description: The number of grams of protein
+      example: 80 g
+    saturatedFatContent:
+      type: string
+      description: The number of grams of saturated fat
+      example: 5 g
+    servingSize:
+      type: string
+      description: The serving size, in terms of the number of volume or mass
+      example: One plate, sufficient for one person as dessert
+    sodiumContent:
+      type: string
+      description: The number of milligrams of sodium
+      example: 10 mg
+    sugarContent:
+      type: string
+      description: The number of grams of sugar
+      example: 5 g
+    transFatContent:
+      type: string
+      description: The number of grams of trans fat
+      example: 10 g
+    unsaturatedFatContent:
+      type: string
+      description: The number of grams of unsaturated fat
+      example: 40 g
+  required:
+    - "@type"
+
+Recipe:
+  #type: object
+  description: A recipe according to [schema.org](http://schema.org/Recipe)
+  allOf:
+    - $ref: "#/RecipeStubInformation"
+    - type: object
+      properties:
+        "@type":
+          type: string
+          example: "Recipe"
+          description: Schema.org object type identifier
+        id:
+          type: string
+          description: The index of the recipe. Note the representation as a string as the representation might change in the future.
+          example: "123"
+        prepTime:
+          type: string
+          nullable: true
+          description: The time required for preparation in ISO8601 format
+          example: "PT0H10M"
+        cookTime:
+          type: string
+          nullable: true
+          description: The time required for cooking in ISO8601 format
+          example: "PT1H20M"
+        totalTime:
+          type: string
+          nullable: true
+          description: The time required for the complete processing in ISO8601 format
+          example: "PT1H30M"
+        description:
+          type: string
+          example: A very easy way to make children happy
+          description: A description of the recipe or the empty string
+        url:
+          type: string
+          example: http://exmaple.com/my-recipe.html
+          description: The URL the recipe was found at or the empty string
+        image:
+          type: string
+          example: http://example.com/my-recipe-image.jpeg
+          description: The URL of the original recipe
+        recipeYield:
+          type: integer
+          example: 4
+          description: Number of servings in recipe
+        recipeCategory:
+          type: string
+          example: Dessert
+          description: The category of the recipe
+        tool:
+          type: array
+          items:
+            $ref: "#/Tool"
+        recipeIngredient:
+          type: array
+          items:
+            $ref: "#/Ingredient"
+        recipeInstructions:
+          type: array
+          items:
+            $ref: "#/Instruction"
+        nutrition:
+          $ref: "#/Nutrition"
+      required:
+        - id
+        - prepTime
+        - cookTime
+        - totalTime
+        - description
+        - url
+        - recipeYield
+        - recipeCategory
+        - tool
+        - recipeIngredient
+        - recipeInstructions
+        - nutrition
+      additionalProperties: true
+  example:
+    name: Baked bananas
+    "@type": "Recipe"
+    id: "123"
+    description: A very delightful recipe of the best baked bananas ever
+    image: http://example.com/path/to/image.jpg
+    recipeYield: 5
+    prepTime: PT0H15M
+    cookTime: null
+    totalTime: PT1H20M
+    url: ''
+    tool: []
+    recipeIngredient:
+      - 3 ripe bananas
+      - 100g sugar
+      - 20 teaspoons of cinamon
+    resipeInstructions:
+      - Peel the bananas
+      - Dip the bananas in the pot of sugar
+      - Put the banans in the oven and let the cinamon soak in for 10 minutes
+      - After 5 hours of baking, they are ready
+    recipeCategory: Dessert
+    keywords: banana,cinnamon,sweet,untested recipe
+    nutrition: []
+
+RecipeList:
+  type: array
+  items:
+    $ref: "#/Recipe"
+  example:
+    - name: Baked bananas
+      "@type": Recipe
+      id: "123"
+      description: A very delightful recipe of the best baked bananas ever
+      image: http://example.com/path/to/image.jpg
+      recipeYield: 5
+      prepTime: PT0H15M
+      recipeIngredient:
+        - 3 ripe bananas
+        - 100g sugar
+        - 20 teaspoons of cinamon
+      resipeInstructions:
+        - Peel the bananas
+        - Dip the bananas in the pot of sugar
+        - Put the banans in the oven and let the cinamon soak in for 10 minutes
+        - After 5 hours of baking, they are ready
+      recipeCategory: Dessert
+      keywords: banana,cinnamon,sweet,untested recipe
+    - name: "Homemade Apple Butter"
+      "@type": Recipe
+      id: "267"
+      author:
+        "@type": Person
+        name: "Julie Clark"
+      description: "A simple recipe for Homemade Apple Butter that you can make in the slow cooker. Use as a spread, a syrup or in your fall recipes!"
+      datePublished: "2016-09-01T01:58:54+00:00"
+      image: "https://www.tastesoflizzyt.com/wp-content/uploads/2016/08/homemade-apple-butter-2-480x270.jpg"
+      recipeYield: 20
+      prepTime: "PT0H25M"
+      cookTime: "PT10H0M"
+      totalTime: "PT10H25M"
+      recipeIngredient:
+        - 6 1/2 pounds apples (peeled, cored and sliced)
+        - 1/2 cup granulated sugar
+        - 1/2 cup packed brown sugar
+        - 1 1/2 tablespoons ground cinnamon
+        - 1/4 teaspoon salt
+        - 1 tablespoon vanilla extract
+      recipeInstructions:
+        - Place the apples in a slow cooker.
+        - Add the sugars, cinnamon, salt and vanilla to the crockpot. Mix well.
+        - Cook in slow cooker on low for about 10 hours, stirring every couple hours. The apple butter should be thick and dark brown.
+        - If desired, use a blender to puree the apple butter until smooth.
+        - Cover and refrigerate for up to two weeks or freeze in small containers.
+      aggregateRating:
+        "@type": "AggregateRating"
+        ratingValue: "4.87"
+        ratingCount: "38"
+      recipeCategory: "Breakfast"
+      keywords: "apple butter recipes,apple recipes,fall recipes"
+      nutrition:
+        "@type": "NutritionInformation"
+        calories: "120 kcal"
+        carbohydrateContent: "31 g"
+        sodiumContent: "32 mg"
+        fiberContent: "3 g"
+        sugarContent: "25 g"
+        servingSize: "1 serving"
+      tool: []
+      url: "https://www.tastesoflizzyt.com/homemade-apple-butter/"
+      dateModified: "2021-05-23T17:10:25+0000"
+      dateCreated: "2021-05-23T17:10:25+0000"
+
+ReleaseVersion:
+  type: array
+  items:
+    type: integer
+  minItems: 3
+  maxItems: 3
+  description: The installed release of the cookbook app
+  example: [0, 9, 14]
+
+PreReleaseVersion:
+  type: array
+  items:
+    oneOf:
+      - type: integer
+      - type: string
+  minItems: 4
+  maxItems: 4
+  description: The installed pre-release of the cookbook app
+  example: [0, 9, 14, "-rc1"]
+
+AppVersion:
+  oneOf:
+    - $ref: "#/ReleaseVersion"
+    - $ref: "#/PreReleaseVersion"
+
+APIVersion:
+  type: object
+  properties:
+    epoch:
+      type: integer
+      description: An epoch to cope with bad API versions
+    major:
+      type: integer
+      description: The major number of the API
+    minor:
+      type: integer
+      description: The minor number of the API
+  required:
+    - "epoch"
+    - "major"
+    - "minor"
+  example:
+    epoch: 0
+    major: 1
+    minor: 3
+
+Version:
+  type: object
+  properties:
+    cookbook_version:
+      $ref: "#/AppVersion"
+    api_version:
+      $ref: "#/APIVersion"
