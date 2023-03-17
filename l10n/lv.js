@@ -44,6 +44,9 @@ OC.L10N.register(
     "Dismiss" : "Atmest",
     "Cancel" : "Atcelt",
     "OK" : "Labi",
-    "None" : "Nav"
+    "None" : "Nav",
+    "Preparation time" : "Pagatavošanas laiks",
+    "Cooking time" : "Gatavošanas laiks",
+    "Total time" : "Kopējais laiks"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

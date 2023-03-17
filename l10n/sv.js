@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Ingen",
     "Abort editing" : "Avbryt redigering",
     "Cookbook settings" : "Kokboksinställningar",
-    "Recipe display settings" : "Visningsinställningar för recept"
+    "Recipe display settings" : "Visningsinställningar för recept",
+    "Preparation time" : "Förberedningstid",
+    "Cooking time" : "Tillagningstid",
+    "Total time" : "Total tid"
 },
 "nplurals=2; plural=(n != 1);");

@@ -60,6 +60,9 @@ OC.L10N.register(
     "Dismiss" : "התעלמות",
     "Cancel" : "ביטול",
     "OK" : "אישור",
-    "None" : "ללא"
+    "None" : "ללא",
+    "Preparation time" : "זמן הכנה",
+    "Cooking time" : "זמן בישול",
+    "Total time" : "זמן כולל"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;");

@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Bat ere ez",
     "Abort editing" : "Utzi edizioa",
     "Cookbook settings" : "Errezeta-liburuaren ezarpenak",
-    "Recipe display settings" : "Errezeta bistaratzeko ezarpenak"
+    "Recipe display settings" : "Errezeta bistaratzeko ezarpenak",
+    "Preparation time" : "Prestatzeko denbora",
+    "Cooking time" : "Janaria prestatzeko denbora",
+    "Total time" : "Denbora guztira"
 },
 "nplurals=2; plural=(n != 1);");

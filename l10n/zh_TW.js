@@ -48,6 +48,9 @@ OC.L10N.register(
     "Dismiss" : "取消",
     "Cancel" : "取消",
     "OK" : "確定",
-    "None" : "無"
+    "None" : "無",
+    "Preparation time" : "準備時間",
+    "Cooking time" : "烹調時間",
+    "Total time" : "總時間"
 },
 "nplurals=1; plural=0;");

@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Yok",
     "Abort editing" : "Düzenlemekten vazgeç",
     "Cookbook settings" : "Yemek kitabı ayarları",
-    "Recipe display settings" : "Tarif görüntüleme ayarları"
+    "Recipe display settings" : "Tarif görüntüleme ayarları",
+    "Preparation time" : "Hazırlama süresi",
+    "Cooking time" : "Pişirme süresi",
+    "Total time" : "Toplam süre"
 },
 "nplurals=2; plural=(n > 1);");

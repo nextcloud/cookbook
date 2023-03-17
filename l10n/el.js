@@ -111,6 +111,9 @@ OC.L10N.register(
     "Dismiss" : "Τους ζυγούς λύσατε!",
     "Cancel" : "Ακύρωση",
     "OK" : "OK",
-    "None" : "Καμμία"
+    "None" : "Καμμία",
+    "Preparation time" : "Χρόνος προετοιμασίας",
+    "Cooking time" : "Χρόνος μαγειρέματος",
+    "Total time" : "Συνολικός χρόνος"
 },
 "nplurals=2; plural=(n != 1);");

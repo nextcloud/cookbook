@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Egyik sem",
     "Abort editing" : "Szerkesztés megszakítása",
     "Cookbook settings" : "Receptkönyv beállításai",
-    "Recipe display settings" : "Receptek megjelenítési beállításai"
+    "Recipe display settings" : "Receptek megjelenítési beállításai",
+    "Preparation time" : "Előkészítési idő",
+    "Cooking time" : "Főzési idő",
+    "Total time" : "Teljes idő"
 },
 "nplurals=2; plural=(n != 1);");

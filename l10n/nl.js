@@ -156,6 +156,9 @@ OC.L10N.register(
     "Cancel" : "Annuleren",
     "OK" : "OK",
     "None" : "Geen",
-    "Abort editing" : "Bewerken annuleren"
+    "Abort editing" : "Bewerken annuleren",
+    "Preparation time" : "Voorbereidingstijd",
+    "Cooking time" : "Kooktijd",
+    "Total time" : "Totale tijd"
 },
 "nplurals=2; plural=(n != 1);");

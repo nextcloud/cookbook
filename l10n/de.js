@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Nicht kategorisierte Rezepte",
     "Abort editing" : "Bearbeitung abbrechen",
     "Cookbook settings" : "Kochbuch-Einstellungen",
-    "Recipe display settings" : "Einstellungen für Rezeptdarstellung"
+    "Recipe display settings" : "Einstellungen für Rezeptdarstellung",
+    "Preparation time" : "Vorbereitungsdauer",
+    "Cooking time" : "Kochdauer",
+    "Total time" : "Gesamtzeit"
 },
 "nplurals=2; plural=(n != 1);");

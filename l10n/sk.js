@@ -188,6 +188,9 @@ OC.L10N.register(
     "Cancel" : "Zrušiť",
     "OK" : "OK",
     "None" : "Žiadne",
-    "Abort editing" : "Zrušiť úpravu"
+    "Abort editing" : "Zrušiť úpravu",
+    "Preparation time" : "Doba prípravy",
+    "Cooking time" : "Čas varenia",
+    "Total time" : "Celkový čas"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

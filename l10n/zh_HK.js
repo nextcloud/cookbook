@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "無",
     "Abort editing" : "中止編輯",
     "Cookbook settings" : "食譜設置",
-    "Recipe display settings" : "食譜顯示設置"
+    "Recipe display settings" : "食譜顯示設置",
+    "Preparation time" : "準備時間",
+    "Cooking time" : "烹調時間",
+    "Total time" : "總時間"
 },
 "nplurals=1; plural=0;");
