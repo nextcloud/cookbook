@@ -298,7 +298,6 @@ Recipe:
       additionalProperties: true
   example:
     name: Baked bananas
-    "@type": "Recipe"
     id: "123"
     description: A very delightful recipe of the best baked bananas ever
     image: http://example.com/path/to/image.jpg
@@ -327,7 +326,6 @@ RecipeList:
     $ref: "#/Recipe"
   example:
     - name: Baked bananas
-      "@type": Recipe
       id: "123"
       description: A very delightful recipe of the best baked bananas ever
       image: http://example.com/path/to/image.jpg
@@ -345,10 +343,8 @@ RecipeList:
       recipeCategory: Dessert
       keywords: banana,cinnamon,sweet,untested recipe
     - name: "Homemade Apple Butter"
-      "@type": Recipe
       id: "267"
       author:
-        "@type": Person
         name: "Julie Clark"
       description: "A simple recipe for Homemade Apple Butter that you can make in the slow cooker. Use as a spread, a syrup or in your fall recipes!"
       datePublished: "2016-09-01T01:58:54+00:00"
@@ -371,13 +367,11 @@ RecipeList:
         - If desired, use a blender to puree the apple butter until smooth.
         - Cover and refrigerate for up to two weeks or freeze in small containers.
       aggregateRating:
-        "@type": "AggregateRating"
         ratingValue: "4.87"
         ratingCount: "38"
       recipeCategory: "Breakfast"
       keywords: "apple butter recipes,apple recipes,fall recipes"
       nutrition:
-        "@type": "NutritionInformation"
         calories: "120 kcal"
         carbohydrateContent: "31 g"
         sodiumContent: "32 mg"
