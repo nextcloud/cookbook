@@ -190,6 +190,9 @@ OC.L10N.register(
     "None" : "Няма",
     "Abort editing" : "Прекратяване на редактирането",
     "Cookbook settings" : "Настройки на приложението Cookbook /готварска книга/",
-    "Recipe display settings" : "Настройки за показване на рецепта"
+    "Recipe display settings" : "Настройки за показване на рецепта",
+    "Preparation time" : "Време за подготовка",
+    "Cooking time" : "Време за готвене",
+    "Total time" : "Общо време"
 },
 "nplurals=2; plural=(n != 1);");

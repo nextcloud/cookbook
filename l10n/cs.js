@@ -191,8 +191,12 @@ OC.L10N.register(
     "Abort editing" : "Přerušit úpravy",
     "Cookbook settings" : "Nastavení pro Kuchařku",
     "Recipe display settings" : "Nastavení zobrazení receptu",
+    "Info blocks" : "Bloky informací",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Řídí které bloky informací jsou ukazovány v zobrazení receptu. Pokud některé funkce nevyužíváte a ruší vás, je možné je skrýt.",
     "Preparation time" : "Doba přípravy",
     "Cooking time" : "Doba vaření",
-    "Total time" : "Celková doba"
+    "Total time" : "Celková doba",
+    "Nutrition information" : "Výživové informace",
+    "Could save visible info blocks" : "Nedaří se uložit viditelné bloky informací"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");

@@ -191,8 +191,12 @@ OC.L10N.register(
     "Abort editing" : "Düzenlemekten vazgeç",
     "Cookbook settings" : "Yemek kitabı ayarları",
     "Recipe display settings" : "Tarif görüntüleme ayarları",
+    "Info blocks" : "Bilgi blokları",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Tarif görünümünde hangi bilgi bloklarının görüntüleneceğini belirleyin. Kullanmadığınız ve dikkatinizi dağıtan özellikleri gizleyebilirsiniz.",
     "Preparation time" : "Hazırlama süresi",
     "Cooking time" : "Pişirme süresi",
-    "Total time" : "Toplam süre"
+    "Total time" : "Toplam süre",
+    "Nutrition information" : "Beslenme bilgileri",
+    "Could save visible info blocks" : "Görünür bilgi blokları kaydedilebilir"
 },
 "nplurals=2; plural=(n > 1);");
