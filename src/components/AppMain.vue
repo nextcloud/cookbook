@@ -46,11 +46,11 @@ export default {
         }
     },
     watch: {
-        /* This is left here as an example in case the routes need to be debugged again
-        '$route' (to, from) {
-            this.$log.debug(this.$window.isSameBaseRoute(from.fullPath, to.fullPath))
+        $route(to, from) {
+            this.$log.debug(
+                this.$window.isSameBaseRoute(from.fullPath, to.fullPath)
+            )
         },
-        */
     },
     mounted() {
         this.$log.info("AppMain mounted")
