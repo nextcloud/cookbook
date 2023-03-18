@@ -191,8 +191,12 @@ OC.L10N.register(
     "Abort editing" : "Abort editing",
     "Cookbook settings" : "Cookbook settings",
     "Recipe display settings" : "Recipe display settings",
+    "Info blocks" : "Info blocks",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.",
     "Preparation time" : "Preparation time",
     "Cooking time" : "Cooking time",
-    "Total time" : "Total time"
+    "Total time" : "Total time",
+    "Nutrition information" : "Nutrition information",
+    "Could save visible info blocks" : "Could save visible info blocks"
 },
 "nplurals=2; plural=(n != 1);");
