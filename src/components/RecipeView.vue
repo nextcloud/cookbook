@@ -452,7 +452,7 @@ export default {
     },
     watch: {
         recipe(r) {
-            this.$log.debug('Recipe has been updated')
+            this.$log.debug("Recipe has been updated")
             if (r) {
                 this.$log.debug("Recipe", r)
 
