@@ -15,7 +15,6 @@ use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Service\HtmlDownloadService;
-use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -24,10 +23,6 @@ use Psr\Log\LoggerInterface;
  * @covers \OCA\Cookbook\Exception\ImportException
  */
 class HtmlDownloadServiceTest extends TestCase {
-	/**
-	 * @var HtmlEntityDecodeFilter|MockObject
-	 */
-	private $htmlEntityDecodeFilter;
 	/** @var HtmlEncodingFilter */
 	private $htmlEncodingFilter;
 	/**
@@ -62,8 +57,6 @@ class HtmlDownloadServiceTest extends TestCase {
 
 		self::$instance = $this;
 
-		$this->htmlEntityDecodeFilter = $this->createMock(HtmlEntityDecodeFilter::class);
-		$this->htmlEntityDecodeFilter->method('apply')->willReturnArgument(0);
 		$this->htmlEncodingFilter = $this->createStub(HtmlEncodingFilter::class);
 		$this->htmlEncodingFilter->method('apply')->willReturnArgument(0);
 
@@ -75,7 +68,7 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->downloadEncodingHelper = $this->createMock(DownloadEncodingHelper::class);
 
 		$this->sut = new HtmlDownloadService(
-			$this->htmlEntityDecodeFilter, $this->htmlEncodingFilter, $this->il10n, $logger, $this->htmlParser,
+			$this->htmlEncodingFilter, $this->il10n, $logger, $this->htmlParser,
 			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper);
 	}
 

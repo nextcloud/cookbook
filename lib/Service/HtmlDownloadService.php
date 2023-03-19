@@ -50,7 +50,6 @@ class HtmlDownloadService {
 	private $dom;
 
 	public function __construct(
-		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
 		HtmlEncodingFilter $htmlEncodingFilter,
 		IL10N $l10n,
 		LoggerInterface $logger,
@@ -60,7 +59,6 @@ class HtmlDownloadService {
 		DownloadEncodingHelper $downloadEncodingHelper
 	) {
 		$this->htmlFilters = [
-			$htmlEntityDecodeFilter,
 			$htmlEncodingFilter,
 		];
 		$this->l = $l10n;
