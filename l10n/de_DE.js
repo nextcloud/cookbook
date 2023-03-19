@@ -191,8 +191,12 @@ OC.L10N.register(
     "Abort editing" : "Bearbeitung abbrechen",
     "Cookbook settings" : "Kochbuch-Einstellungen",
     "Recipe display settings" : "Einstellungen der Rezeptdarstellung",
+    "Info blocks" : "Infoblöcke",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Steuern Sie, welche Informationsblöcke in der Rezeptansicht angezeigt werden. Wenn Sie einige Funktionen nicht verwenden und sie als störend empfinden, können Sie sie ausblenden.",
     "Preparation time" : "Vorbereitungsdauer",
     "Cooking time" : "Kochdauer",
-    "Total time" : "Gesamtzeit"
+    "Total time" : "Gesamtzeit",
+    "Nutrition information" : "Nährwertangaben",
+    "Could save visible info blocks" : "Sichtbare Infoblöcke können gespeichert werden"
 },
 "nplurals=2; plural=(n != 1);");
