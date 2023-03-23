@@ -15,6 +15,8 @@
   [1405](https://github.com/nextcloud/cookbook/pull/1405) @MarcelRobitaille
 - Make the server api compliant
   [#1464](https://github.com/nextcloud/cookbook/pull/1464) @leptopoda
+- Fix string in translations
+  [#1549](https://github.com/nextcloud/cookbook/pull/1549) @silopolis
 
 ### Maintenance
 - Update dependency for GitHub pages builder
