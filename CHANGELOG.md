@@ -15,6 +15,8 @@
   [#1440](https://github.com/nextcloud/cookbook/pull/1440) @christianlupus
 - Fix the build environment after regression
   [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
+- Use logging framework throughout the complete app
+  [1459](https://github.com/nextcloud/cookbook/pull/1459) @MarcelRobitaille
 
 ## Documentation
 - Fixed some issues in the API description
