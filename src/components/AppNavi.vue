@@ -324,8 +324,7 @@ export default {
                             continue
                         }
                         if ($this.$refs[`app-navi-cat-${i}`][0].opened) {
-                            // eslint-disable-next-line no-console
-                            console.log(
+                            this.$log.info(
                                 `Reloading recipes in ${
                                     $this.$refs[`app-navi-cat-${i}`][0].title
                                 }`

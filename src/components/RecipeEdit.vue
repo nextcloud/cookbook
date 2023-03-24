@@ -437,8 +437,7 @@ export default {
                 $this.allRecipes = response.data
             })
             .catch((e) => {
-                // eslint-disable-next-line no-console
-                console.log(e)
+                this.$log.error(e)
             })
             .then(() => {
                 // finally
@@ -602,22 +601,19 @@ export default {
                                 // prettier-ignore
                                 t("cookbook","Unknown answer returned from server. See logs.")
                             )
-                            // eslint-disable-next-line no-console
-                            console.log(e.response)
+                            this.$log.error(e.response)
                     }
                 } else if (e.request) {
                     await showSimpleAlertModal(
                         t("cookbook", "No answer for request was received.")
                     )
-                    // eslint-disable-next-line no-console
-                    console.log(e)
+                    this.$log.error(e)
                 } else {
                     await showSimpleAlertModal(
                         // prettier-ignore
                         t("cookbook","Could not start request to save recipe.")
                     )
-                    // eslint-disable-next-line no-console
-                    console.log(e)
+                    this.$log.error(e)
                 }
             } finally {
                 $this.$store.dispatch("setSavingRecipe", {

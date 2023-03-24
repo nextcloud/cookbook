@@ -28,7 +28,6 @@ function cookbookConfig (env) {
             new CleanWebpackPlugin(),
             new webpack.DefinePlugin({
                 '__webpack_use_dev_server__': env.dev_server || false,
-                'verboseDebugLogging': isDev && (process.env.VERBOSE || false),
             }),
         ],
         resolve: {
