@@ -196,7 +196,6 @@ OC.L10N.register(
     "Preparation time" : "Време припреме",
     "Cooking time" : "Време кувања",
     "Total time" : "Укупно време",
-    "Nutrition information" : "Нутритивне информације",
-    "Could save visible info blocks" : "Успело је чување видљивих инфо блокова"
+    "Nutrition information" : "Нутритивне информације"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

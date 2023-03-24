@@ -196,7 +196,6 @@ OC.L10N.register(
     "Preparation time" : "準備時間",
     "Cooking time" : "烹調時間",
     "Total time" : "總時間",
-    "Nutrition information" : "營養資訊",
-    "Could save visible info blocks" : "可以保存可見的資料塊"
+    "Nutrition information" : "營養資訊"
 },
 "nplurals=1; plural=0;");
