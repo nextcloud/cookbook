@@ -11,6 +11,7 @@
     "Loading…" : "ກຳລັງໂຫຼດ",
     "Dismiss" : "ຍົກເລີກ",
     "Cancel" : "ຍົກເລີກ",
-    "OK" : "ຕົກລົງ"
+    "OK" : "ຕົກລົງ",
+    "None" : "ບໍ່ມີ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

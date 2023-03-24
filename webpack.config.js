@@ -16,6 +16,7 @@ const isDev = buildMode === 'development'
 
 function cookbookConfig (env) {
     const config = merge(webpackConfig, {
+        context: path.resolve(__dirname),
         entry: {
             guest: path.resolve(path.join('src', 'guest.js')),
         },
@@ -27,7 +28,6 @@ function cookbookConfig (env) {
             new CleanWebpackPlugin(),
             new webpack.DefinePlugin({
                 '__webpack_use_dev_server__': env.dev_server || false,
-                'verboseDebugLogging': isDev && (process.env.VERBOSE || false),
             }),
         ],
         resolve: {

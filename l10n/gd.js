@@ -12,6 +12,7 @@ OC.L10N.register(
     "Loading…" : "’Ga luchdadh…",
     "Dismiss" : "Leig seachad",
     "Cancel" : "Sguir dheth",
-    "OK" : "Ceart ma-thà"
+    "OK" : "Ceart ma-thà",
+    "None" : "Chan eil gin"
 },
 "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");

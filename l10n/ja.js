@@ -102,6 +102,8 @@ OC.L10N.register(
     "Failed to load search results" : "検索結果の読み込みに失敗しました",
     "Dismiss" : "閉じる",
     "Cancel" : "キャンセル",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "なし",
+    "Cooking time" : "調理時間"
 },
 "nplurals=1; plural=0;");

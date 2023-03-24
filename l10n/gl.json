@@ -118,6 +118,10 @@
     "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca",
     "Dismiss" : "Rexeitar",
     "Cancel" : "Cancelar",
-    "OK" : "Aceptar"
+    "OK" : "Aceptar",
+    "None" : "Ningún",
+    "Preparation time" : "Tempo de preparación",
+    "Cooking time" : "Tempo de cociñado",
+    "Total time" : "Tempo total"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -128,6 +128,10 @@ OC.L10N.register(
     "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca",
     "Dismiss" : "Iscarta",
     "Cancel" : "Annulla",
-    "OK" : "AB"
+    "OK" : "AB",
+    "None" : "Perunu",
+    "Preparation time" : "Tempus de preparatzione",
+    "Cooking time" : "Tempus de cotura",
+    "Total time" : "Tempus totale"
 },
 "nplurals=2; plural=(n != 1);");

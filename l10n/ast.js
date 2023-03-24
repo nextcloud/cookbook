@@ -20,6 +20,7 @@ OC.L10N.register(
     "Loading…" : "Cargando...",
     "Dismiss" : "Escartar",
     "Cancel" : "Encaboxar",
-    "OK" : "Aceutar"
+    "OK" : "Aceutar",
+    "None" : "Dengún"
 },
 "nplurals=2; plural=(n != 1);");

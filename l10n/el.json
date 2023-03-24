@@ -2,6 +2,7 @@
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Δεν είναι δυνατή η ανίχνευση τύπου μεταδιδόμενων δεδομένων. Αυτό είναι ένα σφάλμα, αναφέρετέ το.",
     "Invalid URL-encoded string found. Please report a bug." : "Βρέθηκε μη-έγκυρη ακολουθία χαρακτήρων κωδικοποιημένου-υπερσυνδέσμου. Παρακαλώ αναφέρετε το σφάλμα.",
     "Recipes" : "Συνταγές",
+    "The configured user folder is a file." : "Ο διαμορφωμένος φάκελος χρήστη είναι ένα αρχείο.",
     "in %s" : "σε %s",
     "Another recipe with that name already exists" : "Υπάρχει άλλη συνταγή με το ίδιο όνομα",
     "Cookbook" : "Βιβλίο συνταγών",
@@ -58,6 +59,9 @@
     "Description" : "Περιγραφή",
     "URL" : "URL",
     "Image" : "Εικόνα",
+    "Preparation time (hours:minutes)" : "Χρόνος προετοιμασίας (ώρες:λεπτά)",
+    "Cooking time (hours:minutes)" : "Χρόνος μαγειρέματος (ώρες:λεπτά)",
+    "Total time (hours:minutes)" : "Συνολικός χρόνος (ώρες:λεπτά)",
     "Choose category" : "Επιλέξτε κατηγορία",
     "Keywords" : "Λέξεις-κλειδιά",
     "Choose keywords" : "Επιλέξτε λέξεις-κλειδιά",
@@ -104,6 +108,10 @@
     "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης",
     "Dismiss" : "Τους ζυγούς λύσατε!",
     "Cancel" : "Ακύρωση",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Καμμία",
+    "Preparation time" : "Χρόνος προετοιμασίας",
+    "Cooking time" : "Χρόνος μαγειρέματος",
+    "Total time" : "Συνολικός χρόνος"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

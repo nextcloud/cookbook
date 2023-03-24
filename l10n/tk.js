@@ -11,6 +11,7 @@ OC.L10N.register(
     "Loading…" : "Ýüklenýär…",
     "Dismiss" : "Ýapmak.",
     "Cancel" : "ýatyrmak",
-    "OK" : "Bolýar"
+    "OK" : "Bolýar",
+    "None" : "Hiç"
 },
 "nplurals=2; plural=(n != 1);");

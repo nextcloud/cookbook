@@ -51,10 +51,12 @@ RecipeStubInformation:
     dateCreated:
       type: string
       description: The date the recipe was created in the app
+      format: date-time
       example: "2022-01-02T16:12:41+0000"
     dateModified:
       type: string
       description: The date the recipe was modified lastly in the app
+      format: date-time
       example: "2022-01-10T10:02:52+0000"
     imageUrl:
       type: string
@@ -104,14 +106,10 @@ Instruction:
   type: string
   example: Peel the bananas
   description: An instruction step for processing the recipe
-  
+
 Nutrition:
   type: object
   properties:
-    "@type":
-      type: string
-      example: NutritionInformation
-      description: Schema.org object description
     calories:
       type: string
       description: The number of calories for the given amount
@@ -160,8 +158,6 @@ Nutrition:
       type: string
       description: The number of grams of unsaturated fat
       example: 40 g
-  required:
-    - "@type"
 
 Recipe:
   #type: object
@@ -170,10 +166,6 @@ Recipe:
     - $ref: "#/RecipeStubInformation"
     - type: object
       properties:
-        "@type":
-          type: string
-          example: "Recipe"
-          description: Schema.org object type identifier
         id:
           type: string
           description: The index of the recipe. Note the representation as a string as the representation might change in the future.
@@ -209,15 +201,15 @@ Recipe:
           type: integer
           example: 4
           description: Number of servings in recipe
-        recipeCatregory:
+        recipeCategory:
           type: string
           example: Dessert
           description: The category of the recipe
-        tools:
+        tool:
           type: array
           items:
             $ref: "#/Tool"
-        recipeIngredients:
+        recipeIngredient:
           type: array
           items:
             $ref: "#/Ingredient"
@@ -236,8 +228,8 @@ Recipe:
         - url
         - recipeYield
         - recipeCategory
-        - tools
-        - recipeIngredients
+        - tool
+        - recipeIngredient
         - recipeInstructions
         - nutrition
       additionalProperties: true
@@ -252,7 +244,7 @@ Recipe:
     cookTime: null
     totalTime: PT1H20M
     url: ''
-    tools: []
+    tool: []
     recipeIngredient:
       - 3 ripe bananas
       - 100g sugar
@@ -346,7 +338,9 @@ ReleaseVersion:
 PreReleaseVersion:
   type: array
   items:
-    type: integer|string
+    oneOf:
+      - type: integer
+      - type: string
   minItems: 4
   maxItems: 4
   description: The installed pre-release of the cookbook app

@@ -37,22 +37,26 @@
                 ></textarea>
                 <div class="controls">
                     <button
-                        class="icon-arrow-up"
+                        class=""
                         :title="t('cookbook', 'Move entry up')"
                         @click="moveEntryUp(idx)"
-                    ></button>
+                    >
+                        <TriangleUpIcon :size="25" />
+                    </button>
                     <button
-                        class="icon-arrow-down"
+                        class=""
                         :title="t('cookbook', 'Move entry down')"
                         @click="moveEntryDown(idx)"
-                    ></button>
+                    >
+                        <TriangleDownIcon :size="25" />
+                    </button>
                     <button
-                        class="icon-add"
+                        class="icon-add pad-icon"
                         :title="t('cookbook', 'Insert entry above')"
                         @click="addNewEntry(idx)"
                     ></button>
                     <button
-                        class="icon-delete"
+                        class="icon-delete pad-icon"
                         :title="t('cookbook', 'Delete entry')"
                         @click="deleteEntry(idx)"
                     ></button>
@@ -68,13 +72,16 @@
                 />
             </li>
         </ul>
-        <button class="button add-list-item" @click="addNewEntry()">
+        <button class="button add-list-item pad-icon" @click="addNewEntry()">
             <span class="icon-add"></span> {{ t("cookbook", "Add") }}
         </button>
     </fieldset>
 </template>
 
 <script>
+import TriangleUpIcon from "icons/TriangleSmallUp.vue"
+import TriangleDownIcon from "icons/TriangleSmallDown.vue"
+
 import SuggestionsPopup, { suggestionsPopupMixin } from "./SuggestionsPopup.vue"
 
 const linesMatchAtPosition = (lines, i) =>
@@ -101,6 +108,8 @@ export default {
     name: "EditInputGroup",
     components: {
         SuggestionsPopup,
+        TriangleUpIcon,
+        TriangleDownIcon,
     },
     mixins: [suggestionsPopupMixin],
     props: {
@@ -414,7 +423,7 @@ export default {
 </script>
 
 <style scoped>
-button {
+.pad-icon {
     width: auto !important;
     padding: 0 1rem 0 0.75rem !important;
 }

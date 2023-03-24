@@ -13,6 +13,7 @@ OC.L10N.register(
     "Description" : "বিবরণ",
     "URL" : "URL",
     "Cancel" : "বাতির",
-    "OK" : "তথাস্তু"
+    "OK" : "তথাস্তু",
+    "None" : "কোনটিই নয়"
 },
 "nplurals=2; plural=(n != 1);");

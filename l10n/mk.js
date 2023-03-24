@@ -26,6 +26,7 @@ OC.L10N.register(
     "Loading…" : "Се вчитува…",
     "Dismiss" : "Отфрли",
     "Cancel" : "Откажи",
-    "OK" : "Добро"
+    "OK" : "Добро",
+    "None" : "Ништо"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

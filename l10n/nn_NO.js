@@ -19,6 +19,7 @@ OC.L10N.register(
     "Loading…" : "Laster...",
     "Dismiss" : "Forkast",
     "Cancel" : "Avbryt",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Ingen"
 },
 "nplurals=2; plural=(n != 1);");

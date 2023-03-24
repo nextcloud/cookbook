@@ -13,6 +13,7 @@ OC.L10N.register(
     "Loading…" : "Asali...",
     "Dismiss" : "Agi",
     "Cancel" : "Sefsex",
-    "OK" : "IH"
+    "OK" : "IH",
+    "None" : "Ula d yiwen"
 },
 "nplurals=2; plural=(n != 1);");

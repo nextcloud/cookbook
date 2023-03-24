@@ -21,6 +21,7 @@ OC.L10N.register(
     "Loading…" : "Laai…",
     "Dismiss" : "Ontslaan",
     "Cancel" : "Kanselleer",
-    "OK" : "Goed"
+    "OK" : "Goed",
+    "None" : "Geen"
 },
 "nplurals=2; plural=(n != 1);");

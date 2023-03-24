@@ -211,10 +211,7 @@ export const suggestionsPopupMixin = {
          * Recover suggestions popup on focus
          */
         handleSuggestionsPopupFocus(e) {
-            if (this.verboseDebugLogging) {
-                // eslint-disable-next-line no-console
-                console.log("focus", e, JSON.stringify(this.suggestionsData))
-            }
+            this.$log.debug("focus", e, JSON.stringify(this.suggestionsData))
             if (this.suggestionsData?.blurred) {
                 this.suggestionsData.blurred = false
             }
@@ -223,10 +220,7 @@ export const suggestionsPopupMixin = {
          * Cancel selection if input gets blurred
          */
         handleSuggestionsPopupBlur(e) {
-            if (this.verboseDebugLogging) {
-                // eslint-disable-next-line no-console
-                console.log("blur", e, JSON.stringify(this.suggestionsData))
-            }
+            this.$log.debug("blur", e, JSON.stringify(this.suggestionsData))
             if (!this.suggestionsPopupVisible || !this.$refs.suggestionsPopup) {
                 return
             }

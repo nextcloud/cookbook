@@ -141,6 +141,10 @@ OC.L10N.register(
     "Failed to load search results" : "Hakutulosten lataus epäonnistui",
     "Dismiss" : "Hylkää",
     "Cancel" : "Peruuta",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Ei mitään",
+    "Preparation time" : "Valmisteluaika",
+    "Cooking time" : "Kokkausaika",
+    "Total time" : "Kokonaiskesto"
 },
 "nplurals=2; plural=(n != 1);");

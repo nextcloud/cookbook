@@ -12,6 +12,7 @@ OC.L10N.register(
     "Description" : "چۈشەندۈرۈش",
     "URL" : "URL",
     "Cancel" : "ۋاز كەچ",
-    "OK" : "جەزملە"
+    "OK" : "جەزملە",
+    "None" : "يوق"
 },
 "nplurals=2; plural=(n != 1);");

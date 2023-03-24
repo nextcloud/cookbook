@@ -187,6 +187,12 @@ OC.L10N.register(
     "Dismiss" : "Odrzuć",
     "Cancel" : "Anuluj",
     "OK" : "OK",
-    "Abort editing" : "Przerwij edycję"
+    "None" : "Brak",
+    "Abort editing" : "Przerwij edycję",
+    "Cookbook settings" : "Ustawienia książki kucharskiej",
+    "Recipe display settings" : "Ustawienia wyświetlania przepisów",
+    "Preparation time" : "Czas przygotowania",
+    "Cooking time" : "Czas gotowania",
+    "Total time" : "Czas całkowity"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

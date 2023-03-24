@@ -336,7 +336,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Recipe 2345 was deletes successfully
+                example: Recipe 2345 deleted successfully
         502:
           description: An Exception was thrown
           content:

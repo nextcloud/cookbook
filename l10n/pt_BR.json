@@ -184,6 +184,13 @@
     "Failed to load search results" : "Falha ao carregar os resultados da pesquisa",
     "Dismiss" : "Dispensar",
     "Cancel" : "Cancelar",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Nenhum",
+    "Abort editing" : "Abortar edição",
+    "Cookbook settings" : "Configurações do livro de receitas",
+    "Recipe display settings" : "Configurações de exibição da receita",
+    "Preparation time" : "Tempo de preparação",
+    "Cooking time" : "Tempo de Cozimento",
+    "Total time" : "Tempo total"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

@@ -40,9 +40,6 @@ window.escapeHTML = helpers.escapeHTML
 Vue.prototype.$window = window
 Vue.prototype.OC = OC
 
-// eslint-disable-next-line no-undef
-Vue.prototype.verboseDebugLogging = verboseDebugLogging
-
 // Markdown for Vue
 Vue.use(VueShowdown, {
     // set default flavor for Markdown

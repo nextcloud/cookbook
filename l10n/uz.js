@@ -11,6 +11,7 @@ OC.L10N.register(
     "Loading…" : "Loading…",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "None"
 },
 "nplurals=1; plural=0;");

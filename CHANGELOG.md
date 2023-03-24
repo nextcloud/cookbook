@@ -1,6 +1,50 @@
 ## [Unreleased]
 
 
+## 0.10.2 - 2023-03-24
+
+### Changed
+- Make info block visibility configurable
+  [1404](https://github.com/nextcloud/cookbook/pull/1404) @MarcelRobitaille
+
+### Fixed
+- Make "None" category string translatable
+  [#1323](https://github.com/nextcloud/cookbook/pull/1344) @seyfeb
+- Import was no longer possible as the handling of native events caused a glitch
+  [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
+- Reorder arrows are no longer hidden
+  [#1446](https://github.com/nextcloud/cookbook/pull/1446) @christianlupus
+- Add network logging for responses, not only requests
+  [1405](https://github.com/nextcloud/cookbook/pull/1405) @MarcelRobitaille
+- Make the server api compliant
+  [#1464](https://github.com/nextcloud/cookbook/pull/1464) @leptopoda
+- Fix string in translations
+  [#1549](https://github.com/nextcloud/cookbook/pull/1549) @silopolis
+- Mark app compatible with NC26
+
+### Maintenance
+- Update dependency for GitHub pages builder
+- Fix package.json sort order
+- Migrate the dev environment to [docker-dev by Julius Haertl](https://github.com/juliushaertl/nextcloud-docker-dev)
+  [#1440](https://github.com/nextcloud/cookbook/pull/1440) @christianlupus
+- Fix the build environment after regression
+  [#1442](https://github.com/nextcloud/cookbook/pull/1442) @christianlupus
+- Use logging framework throughout the complete app
+  [1459](https://github.com/nextcloud/cookbook/pull/1459) @MarcelRobitaille
+
+## Documentation
+- Fixed some issues in the API description #1419 and #1461 @leptopoda
+- Improve API description for better code-generation #1461 @leptopoda
+- Fix security issue in GitHub pages with path insertion
+  [#1457](https://github.com/nextcloud/cookbook/pull/1457) @christianlupus
+- Add quick start guide for backend testing
+  [#1466](https://github.com/nextcloud/cookbook/pull/1466) @MarcelRobitaille
+- Fixed some typos in the OpenAPI specification @leptopoda
+- Add operation ids to all external API endpoints
+- Improve API description for better code-generation #1461 @leptopoda
+- Removed some inconsitencies in the documentation of the API
+
+
 ## 0.10.1 - 2022-11-09
 
 ### Fixed
@@ -23,6 +67,10 @@
 ### Fixed
 - Allow import of recipes with HowToSections
   [#1255](https://github.com/nextcloud/cookbook/pull/1255) @christianlupus
+
+### Changed
+- Add an app configuration (settings modal) to replace the one in the sidebar
+  [#1258](https://github.com/nextcloud/cookbook/pull/1258) @MarcelRobitaille
 
 
 ## 0.9.17 - 2022-10-31

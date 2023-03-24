@@ -13,6 +13,7 @@ OC.L10N.register(
     "Loading…" : "ກຳລັງໂຫຼດ",
     "Dismiss" : "ຍົກເລີກ",
     "Cancel" : "ຍົກເລີກ",
-    "OK" : "ຕົກລົງ"
+    "OK" : "ຕົກລົງ",
+    "None" : "ບໍ່ມີ"
 },
 "nplurals=1; plural=0;");

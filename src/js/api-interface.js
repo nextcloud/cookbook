@@ -10,17 +10,28 @@ const baseUrl = `${generateUrl("apps/cookbook")}/webapp`
 // Add a debug log for every request
 instance.interceptors.request.use((config) => {
     Vue.$log.debug(
-        `Making "${config.method}" request to "${config.url}"`,
+        `[axios] Making "${config.method}" request to "${config.url}"`,
         config
     )
     const contentType = config.headers[config.method]["Content-Type"]
     if (!["application/json", "text/json"].includes(contentType)) {
         Vue.$log.warn(
-            `Request to "${config.url}" is using Content-Type "${contentType}", not JSON`
+            `[axios] Request to "${config.url}" is using Content-Type "${contentType}", not JSON`
         )
     }
     return config
 })
+
+instance.interceptors.response.use(
+    (response) => {
+        Vue.$log.debug("[axios] Received response", response)
+        return response
+    },
+    (error) => {
+        Vue.$log.warn("[axios] Received error", error)
+        return Promise.reject(error)
+    }
+)
 
 axios.defaults.headers.common.Accept = "application/json"
 
@@ -90,6 +101,10 @@ function updateRecipeDirectory(newDir) {
     return instance.post(`${baseUrl}/config`, { folder: newDir })
 }
 
+function updateVisibleInfoBlocks(visibleInfoBlocks) {
+    return instance.post(`${baseUrl}/config`, { visibleInfoBlocks })
+}
+
 function reindex() {
     return instance.post(`${baseUrl}/reindex`)
 }
@@ -124,6 +139,9 @@ export default {
         },
         updateInterval: {
             update: updateUpdateInterval,
+        },
+        visibleInfoBlocks: {
+            update: updateVisibleInfoBlocks,
         },
     },
 }

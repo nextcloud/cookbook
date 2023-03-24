@@ -2,9 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "ใน %s",
+    "Page not found" : "ไม่พบหน้า",
     "Edit" : "แก้ไข",
     "Save" : "บันทึก",
-    "Search" : "Search",
+    "Search" : "ค้นหา",
+    "Filter" : "ตัวกรอง",
     "Category" : "หมวดหมู่",
     "Tags" : "แท็ก",
     "Categories" : "หมวดหมู่",
@@ -12,11 +14,12 @@ OC.L10N.register(
     "Add" : "เพิ่ม",
     "Close" : "ปิด",
     "Name" : "ชื่อ",
-    "Description" : "รายละเอียด",
+    "Description" : "คำอธิบาย",
     "URL" : "URL",
     "Loading…" : "กำลังโหลด...",
     "Dismiss" : "ปิดทิ้ง",
     "Cancel" : "ยกเลิก",
-    "OK" : "ตกลง"
+    "OK" : "ตกลง",
+    "None" : "ไม่มี"
 },
 "nplurals=1; plural=0;");

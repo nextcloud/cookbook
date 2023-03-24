@@ -14,6 +14,7 @@
     "Loading…" : "Cargante...",
     "Dismiss" : "Dimitter",
     "Cancel" : "Cancellar",
-    "OK" : "Ok"
+    "OK" : "Ok",
+    "None" : "Nulle"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

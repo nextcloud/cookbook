@@ -184,6 +184,13 @@
     "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
     "Dismiss" : "Отхвърляне",
     "Cancel" : "Отказ",
-    "OK" : "Добре"
+    "OK" : "Добре",
+    "None" : "Няма",
+    "Abort editing" : "Прекратяване на редактирането",
+    "Cookbook settings" : "Настройки на приложението Cookbook /готварска книга/",
+    "Recipe display settings" : "Настройки за показване на рецепта",
+    "Preparation time" : "Време за подготовка",
+    "Cooking time" : "Време за готвене",
+    "Total time" : "Общо време"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

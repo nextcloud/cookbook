@@ -187,6 +187,12 @@ OC.L10N.register(
     "Dismiss" : "Descartar",
     "Cancel" : "Cancelar",
     "OK" : "OK",
-    "Abort editing" : "Abortar edición"
+    "None" : "Ninguno",
+    "Abort editing" : "Abortar edición",
+    "Cookbook settings" : "Configuración del recetario",
+    "Recipe display settings" : "Configuraciones de vista de recetas",
+    "Preparation time" : "Tiempo de preparación",
+    "Cooking time" : "Tiempo de cocción",
+    "Total time" : "Tiempo total"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

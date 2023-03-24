@@ -184,9 +184,18 @@ OC.L10N.register(
     "Loading…" : "Lade …",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlüsselwörter: {tags}",
     "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
-    "Dismiss" : "Verwerfen",
+    "Dismiss" : "Abbrechen",
     "Cancel" : "Abbrechen",
     "OK" : "OK",
-    "Abort editing" : "Bearbeitung abbrechen"
+    "None" : "Nicht kategorisierte Rezepte",
+    "Abort editing" : "Bearbeitung abbrechen",
+    "Cookbook settings" : "Kochbuch-Einstellungen",
+    "Recipe display settings" : "Einstellungen für Rezeptdarstellung",
+    "Info blocks" : "Infoblöcke",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Steuere, welche Informationsblöcke in der Rezeptansicht angezeigt werden. Wenn du einige Funktionen nicht verwendest und sie als störend empfindest, kannst du sie ausblenden.",
+    "Preparation time" : "Vorbereitungsdauer",
+    "Cooking time" : "Kochdauer",
+    "Total time" : "Gesamtzeit",
+    "Nutrition information" : "Nährwertangaben"
 },
 "nplurals=2; plural=(n != 1);");
