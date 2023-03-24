@@ -196,7 +196,6 @@ OC.L10N.register(
     "Preparation time" : "Preparation time",
     "Cooking time" : "Cooking time",
     "Total time" : "Total time",
-    "Nutrition information" : "Nutrition information",
-    "Could save visible info blocks" : "Could save visible info blocks"
+    "Nutrition information" : "Nutrition information"
 },
 "nplurals=2; plural=(n != 1);");
