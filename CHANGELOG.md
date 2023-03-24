@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.10.2 - 2023-03-24
+
 ### Changed
 - Make info block visibility configurable
   [1404](https://github.com/nextcloud/cookbook/pull/1404) @MarcelRobitaille
@@ -17,6 +20,7 @@
   [#1464](https://github.com/nextcloud/cookbook/pull/1464) @leptopoda
 - Fix string in translations
   [#1549](https://github.com/nextcloud/cookbook/pull/1549) @silopolis
+- Mark app compatible with NC26
 
 ### Maintenance
 - Update dependency for GitHub pages builder
