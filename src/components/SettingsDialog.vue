@@ -281,7 +281,7 @@ export default {
                 // eslint-disable-next-line no-console
                 console.error("Error while trying to save info blocks", err)
                 await showSimpleAlertModal(
-                    t("cookbook", "Couldn't save visible info blocks")
+                    t("cookbook", "Could not save visible info blocks")
                 )
                 this.resetVisibleInfoBlocks = true
                 this.visibleInfoBlocks = oldVal
