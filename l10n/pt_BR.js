@@ -191,8 +191,12 @@ OC.L10N.register(
     "Abort editing" : "Abortar edição",
     "Cookbook settings" : "Configurações do livro de receitas",
     "Recipe display settings" : "Configurações de exibição da receita",
+    "Info blocks" : "Info blocks",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.",
     "Preparation time" : "Tempo de preparação",
     "Cooking time" : "Tempo de Cozimento",
-    "Total time" : "Tempo total"
+    "Total time" : "Tempo total",
+    "Nutrition information" : "Nutrition information",
+    "Couldn" : "Poderia"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
