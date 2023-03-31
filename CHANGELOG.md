@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Fix translation string to not contain quotes
+  [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio
 
 ## 0.10.2 - 2023-03-24
 
