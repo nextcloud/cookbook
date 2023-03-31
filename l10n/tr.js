@@ -196,6 +196,7 @@ OC.L10N.register(
     "Preparation time" : "Hazırlama süresi",
     "Cooking time" : "Pişirme süresi",
     "Total time" : "Toplam süre",
-    "Nutrition information" : "Beslenme bilgileri"
+    "Nutrition information" : "Beslenme bilgileri",
+    "Couldn" : "Yapılamadı"
 },
 "nplurals=2; plural=(n > 1);");
