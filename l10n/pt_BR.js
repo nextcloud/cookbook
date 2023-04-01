@@ -196,7 +196,6 @@ OC.L10N.register(
     "Preparation time" : "Tempo de preparação",
     "Cooking time" : "Tempo de Cozimento",
     "Total time" : "Tempo total",
-    "Nutrition information" : "Nutrition information",
-    "Couldn" : "Poderia"
+    "Nutrition information" : "Nutrition information"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

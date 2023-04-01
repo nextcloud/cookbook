@@ -196,7 +196,6 @@ OC.L10N.register(
     "Preparation time" : "Време за подготовка",
     "Cooking time" : "Време за готвене",
     "Total time" : "Общо време",
-    "Nutrition information" : "Информация за храната",
-    "Couldn" : "Не можа да"
+    "Nutrition information" : "Информация за храната"
 },
 "nplurals=2; plural=(n != 1);");
