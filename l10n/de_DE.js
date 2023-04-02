@@ -196,6 +196,7 @@ OC.L10N.register(
     "Preparation time" : "Vorbereitungsdauer",
     "Cooking time" : "Kochdauer",
     "Total time" : "Gesamtzeit",
-    "Nutrition information" : "Nährwertangaben"
+    "Nutrition information" : "Nährwertangaben",
+    "Could not save visible info blocks" : "Sichtbare Infoblöcke konnten nicht gespeichert werden"
 },
 "nplurals=2; plural=(n != 1);");
