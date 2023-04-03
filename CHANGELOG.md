@@ -1,6 +1,12 @@
 ## [Unreleased]
 
+### Added
 - Add yield calculator
+  [#1573](https://github.com/nextcloud/cookbook/pull/1573) @j0hannesr0th
+
+### Fixed
+- Fix translation string to not contain quotes
+  [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio
 
 ## 0.10.2 - 2023-03-24
 

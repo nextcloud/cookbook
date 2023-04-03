@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "dins %s",
+    "Page not found" : "Pagina pas trobada",
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
     "Search" : "Search",

@@ -189,8 +189,11 @@
     "Abort editing" : "Прекратяване на редактирането",
     "Cookbook settings" : "Настройки на приложението Cookbook /готварска книга/",
     "Recipe display settings" : "Настройки за показване на рецепта",
+    "Info blocks" : "Информационни блокове",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Управлявайте кои информационни блокове се показват в изгледа на рецептата. Ако не използвате някои функции и ги намирате за разсейващи, можете да ги скриете.",
     "Preparation time" : "Време за подготовка",
     "Cooking time" : "Време за готвене",
-    "Total time" : "Общо време"
+    "Total time" : "Общо време",
+    "Nutrition information" : "Информация за храната"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

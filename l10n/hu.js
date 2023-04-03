@@ -191,8 +191,11 @@ OC.L10N.register(
     "Abort editing" : "Szerkesztés megszakítása",
     "Cookbook settings" : "Receptkönyv beállításai",
     "Recipe display settings" : "Receptek megjelenítési beállításai",
+    "Info blocks" : "Információs blokkok",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Vezérelje, hogy mely információs blokkok jelenjenek meg a receptnézetben. Ha nem használ egy funkciót, és zavarónak találja, akkor elrejtheti",
     "Preparation time" : "Előkészítési idő",
     "Cooking time" : "Főzési idő",
-    "Total time" : "Teljes idő"
+    "Total time" : "Teljes idő",
+    "Nutrition information" : "Táplálkozási információk"
 },
 "nplurals=2; plural=(n != 1);");

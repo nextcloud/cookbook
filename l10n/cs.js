@@ -196,6 +196,7 @@ OC.L10N.register(
     "Preparation time" : "Doba příprav",
     "Cooking time" : "Doba tepelné úpravy",
     "Total time" : "Celková doba",
-    "Nutrition information" : "Výživové informace"
+    "Nutrition information" : "Výživové informace",
+    "Could not save visible info blocks" : "Nedaří se uložit viditelnost bloků informací"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
