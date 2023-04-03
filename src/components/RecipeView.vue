@@ -134,9 +134,15 @@
                     <div v-if="!ingredientsSyntaxCorrect">
                         <hr />
                         <span class="icon-error date-icon" />
-                        {{ t("cookbook", "ingredient can't be recalculated due to incorrect syntax.") }}
-                        {{ t("cookbook", "Please change it to this syntax: amount unit ingredient.") }}
-                        {{ t("cookbook", "Example: 12 pinch of salt") }}
+                        {{
+                            // prettier-ignore
+                            t("cookbook", "ingredient can't be recalculated due to incorrect syntax.")
+                        }}
+                        {{
+                            // prettier-ignore
+                            t("cookbook", "Please change it to this syntax: amount unit ingredient.")
+                        }}
+                        {{ t("cookbook", "Example: 1 pinch of salt") }}
                     </div>
                 </section>
 
