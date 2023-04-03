@@ -1,5 +1,6 @@
 ## [Unreleased]
 
+- Add yield calculator
 
 ## 0.10.2 - 2023-03-24
 
