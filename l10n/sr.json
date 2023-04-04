@@ -194,6 +194,7 @@
     "Preparation time" : "Време припреме",
     "Cooking time" : "Време кувања",
     "Total time" : "Укупно време",
-    "Nutrition information" : "Нутритивне информације"
+    "Nutrition information" : "Нутритивне информације",
+    "Could not save visible info blocks" : "Није успело чување видљивих инфо блокова"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);"
 }
