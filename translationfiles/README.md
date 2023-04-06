@@ -1,7 +1,7 @@
 # Translations for the cookbook app
 
 **Warning:
-This is an old and outdated information! This project has moved to [Transifex](https://www.transifex.com/nextcloud/nextcloud/cookbook/).**
+This is an old and outdated information! This project has moved to [Transifex](https://app.transifex.com/nextcloud/nextcloud/cookbook/).**
 You can use this as a guide for developers to test translations but **do not** open pull requests regarding translation files.
 
 Thank you!
