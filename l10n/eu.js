@@ -191,8 +191,12 @@ OC.L10N.register(
     "Abort editing" : "Utzi edizioa",
     "Cookbook settings" : "Errezeta-liburuaren ezarpenak",
     "Recipe display settings" : "Errezeta bistaratzeko ezarpenak",
+    "Info blocks" : "Informazio blokeak",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Kontrolatu errezetaren ikuspegian zein informazio-bloke agertzen diren. Funtzio batzuk erabiltzen ez badituzu eta distraitzen dutela ikusten baduzu, ezkutatzen ahal dituzu.",
     "Preparation time" : "Prestatzeko denbora",
     "Cooking time" : "Janaria prestatzeko denbora",
-    "Total time" : "Denbora guztira"
+    "Total time" : "Denbora guztira",
+    "Nutrition information" : "Nutrizio-informazioa",
+    "Could not save visible info blocks" : "Ezin izan dira gorde ikusgai dauden informazio-blokeak"
 },
 "nplurals=2; plural=(n != 1);");
