@@ -115,9 +115,12 @@
         <div v-if="$store.state.recipe" class="content">
             <section class="container">
                 <section class="ingredients">
-                    <h3 v-if="parsedIngredients.length">
+                    <h3 v-if="parsedIngredients.length" class="date-icon">
                         {{ t("cookbook", "Ingredients") }}
                     </h3>
+                    <button @click="copyIngredientsToClipboard">
+                        {{ t("cookbook", "Copy ingredients") }}
+                    </button>
                     <ul v-if="parsedIngredients.length">
                         <RecipeIngredient
                             v-for="(ingredient, idx) in parsedIngredients"
@@ -685,6 +688,40 @@ export default {
 			 */
             const ingredientRegExp = /^(?:\d+(?:\.\d+)?|\.\d+)(?:\s.+$|\s\S+$)/
             return ingredientRegExp.test(ingredient)
+        },
+        copyIngredientsToClipboard() {
+            const ingredientsToCopy = this.parsedIngredients.join("\n")
+
+            if (navigator.clipboard) {
+                navigator.clipboard
+                    .writeText(ingredientsToCopy)
+                    .then(() =>
+                        this.$log.info("JSON array copied to clipboard")
+                    )
+                    .catch((err) =>
+                        this.$log.error("Failed to copy JSON array: ", err)
+                    )
+            } else {
+                // fallback solution
+                const input = document.createElement("textarea")
+                input.style.position = "absolute"
+                input.style.left = "-1000px"
+                input.style.top = "-1000px"
+                input.value = ingredientsToCopy
+                document.body.appendChild(input)
+                input.select()
+                try {
+                    const successful = document.execCommand("copy")
+                    if (successful) {
+                        this.$log.info("JSON array copied to clipboard")
+                    } else {
+                        this.$log.error("Failed to copy JSON array")
+                    }
+                } catch (err) {
+                    this.$log.error("Failed to copy JSON array: ", err)
+                }
+                document.body.removeChild(input)
+            }
         },
     },
 }
