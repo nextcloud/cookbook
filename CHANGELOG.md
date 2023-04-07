@@ -3,6 +3,8 @@
 ### Added
 - Add yield calculator
   [#1573](https://github.com/nextcloud/cookbook/pull/1573) @j0hannesr0th
+- Add copy to clipboard action for ingredients
+  [#1602](https://github.com/nextcloud/cookbook/pull/1602) @j0hannesr0th
 
 ### Fixed
 - Fix translation string to not contain quotes
