@@ -103,5 +103,4 @@ li > .ingredient {
 li > span.icon-error {
     margin-left: 0.3em;
 }
-
 </style>
