@@ -4,6 +4,11 @@
 - Fix translation string to not contain quotes
   [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio
 
+### Maintenance
+- Fix URL of Transifex after upstream subdomain change
+  [#1598](https://github.com/nextcloud/cookbook/pull/1598) @rakekniven
+
+
 ## 0.10.2 - 2023-03-24
 
 ### Changed
