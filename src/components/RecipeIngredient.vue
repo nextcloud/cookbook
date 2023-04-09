@@ -10,6 +10,7 @@
         <div class="ingredient">
             <VueShowdown :markdown="displayIngredient" />
         </div>
+        <span v-if="!ingredientHasCorrectSyntax" class="icon-error" />
     </li>
 </template>
 
@@ -22,6 +23,9 @@ export default {
         ingredient: {
             type: String,
             default: "",
+        },
+        ingredientHasCorrectSyntax: {
+            type: Boolean,
         },
         recipeIngredientsHaveSubgroups: {
             type: Boolean,
@@ -94,5 +98,9 @@ li > .ingredient {
 
 .ingredient:deep(a) {
     text-decoration: underline;
+}
+
+li > span.icon-error {
+    margin-left: 0.3em;
 }
 </style>

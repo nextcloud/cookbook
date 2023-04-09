@@ -63,10 +63,23 @@
                             >{{ $store.state.recipe.url }}</a
                         >
                     </p>
-                    <p v-if="$store.state.recipe.recipeYield != null">
-                        <strong>{{ t("cookbook", "Servings") }}: </strong
-                        >{{ $store.state.recipe.recipeYield }}
-                    </p>
+                    <div>
+                        <p v-if="$store.state.recipe.recipeYield != null">
+                            <strong>{{ t("cookbook", "Servings") }}: </strong>
+                            <span>
+                                <button
+                                    :disabled="recipeYield === 1"
+                                    @click="recalculateIngredients(false)"
+                                >
+                                    <span class="icon-view-previous" />
+                                </button>
+                                {{ recipeYield }}
+                                <button @click="recalculateIngredients">
+                                    <span class="icon-view-next" />
+                                </button>
+                            </span>
+                        </p>
+                    </div>
                 </div>
                 <div class="times">
                     <RecipeTimer
@@ -110,11 +123,25 @@
                             v-for="(ingredient, idx) in parsedIngredients"
                             :key="'ingr' + idx"
                             :ingredient="ingredient"
+                            :ingredient-has-correct-syntax="
+                                validateIngredientSyntax(ingredient)
+                            "
                             :recipe-ingredients-have-subgroups="
                                 recipeIngredientsHaveSubgroups
                             "
                         />
                     </ul>
+                    <div
+                        v-if="!ingredientsSyntaxCorrect"
+                        class="ingredient-parsing-error"
+                    >
+                        <hr />
+                        <span class="icon-error" />
+                        {{
+                            // prettier-ignore
+                            t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt")
+                        }}
+                    </div>
                 </section>
 
                 <section v-if="visibleInfoBlocks.tools" class="tools">
@@ -311,6 +338,7 @@ export default {
             parsedIngredients: [],
             parsedInstructions: [],
             parsedTools: [],
+            recipeYield: 0,
         }
     },
     computed: {
@@ -460,6 +488,9 @@ export default {
         },
         visibleInfoBlocks() {
             return this.$store.state.config?.visibleInfoBlocks ?? {}
+        },
+        ingredientsSyntaxCorrect() {
+            return this.parsedIngredients.every(this.validateIngredientSyntax)
         },
     },
     watch: {
@@ -612,6 +643,48 @@ export default {
                     t("cookbook", "Loading recipe failed")
                 )
             }
+
+            this.recipeYield = this.$store.state.recipe.recipeYield
+        },
+        recalculateIngredients(increaseYield = true) {
+            this.recipeYield = increaseYield
+                ? this.recipeYield + 1
+                : this.recipeYield - 1
+
+            this.parsedIngredients = this.parsedIngredients.map(
+                (ingredient) => {
+                    if (this.validateIngredientSyntax(ingredient)) {
+                        const amount = parseFloat(ingredient.split(" ")[0])
+                        const unitAndIngredient = ingredient
+                            .split(" ")
+                            .slice(1)
+                            .join(" ")
+                        const newAmount =
+                            amount *
+                            (increaseYield
+                                ? this.recipeYield / (this.recipeYield - 1)
+                                : this.recipeYield / (this.recipeYield + 1))
+
+                        // Remove decimal places if they are .00
+                        return `${newAmount
+                            .toFixed(2)
+                            .replace(/[.]00$/, "")} ${unitAndIngredient}`
+                    }
+
+                    return ingredient
+                }
+            )
+        },
+        validateIngredientSyntax(ingredient) {
+            /*
+				Explanation:
+    				^: Start of string
+    				(?:\d+(?:\.\d+)?|\.\d+): Non-capturing group that matches either a positive float value or a positive integer value. The first alternative matches one or more digits, followed by an optional decimal part consisting of a dot and one or more digits. The second alternative matches a decimal point followed by one or more digits.
+    				(?:\s.+$|\s\S+$): Non-capturing group that matches a whitespace character followed by any character with unlimited length or any special character with unlimited length. The first alternative matches a whitespace character followed by any character(s) until the end of the string. The second alternative matches a whitespace character followed by any non-whitespace character(s) until the end of the string.
+    				$: End of string
+			 */
+            const ingredientRegExp = /^(?:\d+(?:\.\d+)?|\.\d+)(?:\s.+$|\s\S+$)/
+            return ingredientRegExp.test(ingredient)
         },
     },
 }
@@ -916,6 +989,10 @@ main {
             grid-row: 3/4;
         }
     }
+}
+
+.ingredient-parsing-error span.icon-error {
+    display: inline-block;
 }
 </style>
 
