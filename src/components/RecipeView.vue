@@ -131,18 +131,12 @@
                             "
                         />
                     </ul>
-                    <div v-if="!ingredientsSyntaxCorrect">
+                    <div v-if="!ingredientsSyntaxCorrect" class="ingredient-parsing-error">
                         <hr />
-                        <span class="icon-error date-icon" />
+                        <span class="icon-error" />
                         {{
                             // prettier-ignore
-                            t("cookbook", "ingredient can't be recalculated due to incorrect syntax.")
-                        }}
-                        {{
-                            // prettier-ignore
-                            t("cookbook", "Please change it to this syntax: amount unit ingredient.")
-                        }}
-                        {{ t("cookbook", "Example: 1 pinch of salt") }}
+                            t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt") }}
                     </div>
                 </section>
 
@@ -991,6 +985,10 @@ main {
             grid-row: 3/4;
         }
     }
+}
+
+.ingredient-parsing-error span.icon-error {
+    display: inline-block;
 }
 </style>
 
