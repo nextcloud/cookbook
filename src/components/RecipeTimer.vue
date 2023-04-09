@@ -16,6 +16,8 @@ import { linkTo } from "@nextcloud/router"
 
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
+import * as browserNotifications from "cookbook/js/browser_notifications"
+
 export default {
     name: "RecipeTimer",
     props: {
@@ -79,6 +81,14 @@ export default {
         this.audio.loop = true
     },
     methods: {
+        onTimerStart() {
+            browserNotifications.requestPermission({
+                justification: [
+                    t("cookbook", "Please enable browser notifications to receive an alert when the timer is over."),
+                    t("cookbook", "You can disable these notifications at any time in the \"Cookbook settings\" dialog."),
+                ],
+            })
+        },
         onTimerEnd() {
             window.clearInterval(this.countdown)
             const $this = this
@@ -92,12 +102,12 @@ export default {
                 // Start playing audio to alert the user that the timer is up
                 this.audio.play()
 
-                await showSimpleAlertModal(t("cookbook", "Cooking time is up!"))
+                const message = t("cookbook", "Cooking time is up!")
+                await browserNotifications.notify(message)
+                await showSimpleAlertModal(message)
 
                 // Stop audio after the alert is confirmed
                 this.audio.pause()
-
-                // cookbook.notify(t('cookbook', 'Cooking time is up!'))
                 $this.countdown = null
                 $this.showFullTime = false
                 $this.resetTimeDisplay()
@@ -126,6 +136,7 @@ export default {
             if (this.countdown === null) {
                 // Pass this to callback function
                 const $this = this
+                $this.onTimerStart()
                 this.countdown = window.setInterval(() => {
                     $this.seconds -= 1
                     if ($this.seconds < 0) {

@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+- Add browser notification support for timers
+  [1409](https://github.com/nextcloud/cookbook/pull/1409) @MarcelRobitaille
+
 ### Fixed
 - Fix translation string to not contain quotes
   [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio

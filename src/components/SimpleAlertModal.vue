@@ -1,7 +1,8 @@
 <template>
     <NcModal :title="title" @close="$close">
         <div class="modal__wrapper">
-            <div class="modal__content">{{ content }}</div>
+            <div v-if="!multiline" class="modal__content">{{ content }}</div>
+            <p v-else v-for="line in content" class="modal__content">{{ line }}</p>
             <div class="modal__button-bar">
                 <NcButton type="primary" @click="$close">{{
                     t("cookbook", "Dismiss")
@@ -20,6 +21,11 @@ export default {
     components: {
         NcModal,
         NcButton,
+    },
+    computed: {
+        multiline() {
+            return Array.isArray(this.content)
+        },
     },
 }
 </script>
