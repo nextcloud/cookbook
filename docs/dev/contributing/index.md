@@ -12,7 +12,7 @@ We prepared a [page on the setup](setup) to help you get started with the techni
 See also the page on [code coverage](code_coverage).
 
 ## Translating
-Feel free to have a look at the [transifex page on the cookbook app](https://www.transifex.com/nextcloud/nextcloud/cookbook/).
+Feel free to have a look at the [transifex page on the cookbook app](https://app.transifex.com/nextcloud/nextcloud/cookbook/).
 Any translations done there will be synchronized on a nightly base.
 
 ## Documentation
