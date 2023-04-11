@@ -23,7 +23,7 @@
     "package-lint": "npx prettier-package-json --write ./package.json",
     "prettier": "npx prettier --check src",
     "prettier-fix": "npx prettier --write src",
-    "serve": "npx webpack serve --node-env development --progress --config webpack.config.js --env dev_server",
+    "serve": "npx webpack serve --node-env development --progress --config webpack.config.js --env dev_server --allowed-hosts all",
     "stylelint": "npx stylelint src",
     "stylelint-fix": "npx stylelint --fix src",
     "test": "echo \"Error: no test specified\" && exit 1"
