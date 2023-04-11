@@ -188,6 +188,7 @@
     "None" : "Žádná",
     "Abort editing" : "Přerušit úpravy",
     "Cookbook settings" : "Nastavení pro Kuchařku",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Přísady není možné přepočítat kvůli nesprávné syntaxi. Změňte ji na tuto: počet jednotek přísady. Příklady: 200g mrkve nebo 1 špetka soli",
     "Recipe display settings" : "Nastavení zobrazení receptu",
     "Info blocks" : "Bloky informací",
     "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Řídí které bloky informací jsou ukazovány v zobrazení receptu. Pokud některé funkce nevyužíváte a ruší vás, je možné je skrýt.",
