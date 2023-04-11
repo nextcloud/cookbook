@@ -11,6 +11,8 @@
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
   [#1598](https://github.com/nextcloud/cookbook/pull/1598) @rakekniven
+- Fix webpack dev server settings to allow for docker dev environment
+  [#1607](https://github.com/nextcloud/cookbook/pull/1607) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
