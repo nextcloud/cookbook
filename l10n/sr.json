@@ -188,6 +188,7 @@
     "None" : "Ништа",
     "Abort editing" : "Прекини уређивање",
     "Cookbook settings" : "Подешавања кувара",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Услед неисправне синтаксе састојак не може понова да се прорачуна. Молимо вас да га промените на следећу синтаксу: количина јединица састојак. Примери: 200 g шаргарепа или 1 прстохват соли",
     "Recipe display settings" : "Подешавања приказа рецепта",
     "Info blocks" : "Инфо блокови",
     "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Контролише који се блокови информација приказују у погледу рецепта. Ако не користите неке могућности и само вам сметају, можете да их сакријете.",
