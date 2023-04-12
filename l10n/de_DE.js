@@ -190,6 +190,7 @@ OC.L10N.register(
     "None" : "Keine",
     "Abort editing" : "Bearbeitung abbrechen",
     "Cookbook settings" : "Kochbuch-Einstellungen",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Die Menge der Zutat kann aufgrund einer falschen Syntax nicht neu berechnet werden. Bitte in diese Syntax ändern: Menge Einheit Zutat. Beispiele: 200 g Karotten oder 1 Prise Salz",
     "Recipe display settings" : "Einstellungen der Rezeptdarstellung",
     "Info blocks" : "Infoblöcke",
     "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Steuern Sie, welche Informationsblöcke in der Rezeptansicht angezeigt werden. Wenn Sie einige Funktionen nicht verwenden und sie als störend empfinden, können Sie sie ausblenden.",

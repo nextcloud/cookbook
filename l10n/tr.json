@@ -188,6 +188,7 @@
     "None" : "Yok",
     "Abort editing" : "Düzenlemekten vazgeç",
     "Cookbook settings" : "Yemek kitabı ayarları",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Yanlış söz dizimi nedeniyle içerik yeniden hesaplanamadı. Lütfen bu söz dizimini şu şekilde değiştirin: miktar birim bileşen. Örnekler: 200 gr havuç ya da 1 tutam tuz",
     "Recipe display settings" : "Tarif görüntüleme ayarları",
     "Info blocks" : "Bilgi blokları",
     "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Tarif görünümünde hangi bilgi bloklarının görüntüleneceğini belirleyin. Kullanmadığınız ve dikkatinizi dağıtan özellikleri gizleyebilirsiniz.",
