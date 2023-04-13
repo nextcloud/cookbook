@@ -190,6 +190,7 @@ OC.L10N.register(
     "None" : "無",
     "Abort editing" : "中止編輯",
     "Cookbook settings" : "食譜設置",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "由於語法錯誤，無法重新計算成分。請將其更改為以下語法：[數量] [單位] [成分]。示例：200 克胡蘿蔔，1 撮鹽",
     "Recipe display settings" : "食譜顯示設置",
     "Info blocks" : "資料塊",
     "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "控制在食譜檢視中顯示哪些資訊塊。如果您不使用某些功能並發現它們分散注意力，您可以隱藏它們。",
