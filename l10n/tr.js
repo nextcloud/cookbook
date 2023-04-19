@@ -75,7 +75,7 @@ OC.L10N.register(
     "Category" : "Kategori",
     "Recipe name" : "Yemek tarifi adı",
     "Tags" : "Etiketler",
-    "Search for recipes" : "Yemek tarifi arama",
+    "Search for recipes" : "Yemek tarifi ara",
     "Are you sure you want to delete this recipe?" : "Bu yemek tarifini silmek istediğinize emin misiniz?",
     "Delete failed" : "Silinemedi",
     "Cannot access recipe folder." : "Yemek tarifi klasörüne erişilemedi.",
