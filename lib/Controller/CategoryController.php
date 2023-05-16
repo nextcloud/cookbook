@@ -2,10 +2,10 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCP\IRequest;
+use OCA\Cookbook\Controller\Implementation\CategoryImplementation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Controller\Implementation\CategoryImplementation;
+use OCP\IRequest;
 
 class CategoryController extends Controller {
 	/** @var CategoryImplementation */

@@ -3,13 +3,13 @@
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidDurationException;
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
-use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Helper\Filter\JSON\FixDurationsFilter;
 use OCA\Cookbook\Helper\ISO8601DurationHelper;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class FixDurationsFilterTest extends TestCase {
 	/** @var FixDurationsFilter */

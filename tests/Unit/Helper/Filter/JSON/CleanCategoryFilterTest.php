@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Helper\Filter\JSON\CleanCategoryFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
 
 class CleanCategoryFilterTest extends TestCase {
 	/** @var CleanCategoryFilter */

@@ -2,10 +2,10 @@
 
 namespace OCA\Cookbook\Service;
 
+use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\AbstractHtmlParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
-use OCA\Cookbook\Exception\HtmlParsingException;
 use OCP\IL10N;
 
 class RecipeExtractionService {

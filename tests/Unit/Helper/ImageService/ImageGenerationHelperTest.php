@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\tests\Unit\Helper\ImageService;
 
 use OCA\Cookbook\Helper\ImageService\ImageGenerationHelper;
-use PHPUnit\Framework\TestCase;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Service\ThumbnailService;
 use OCP\Files\File;
@@ -11,6 +10,7 @@ use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers OCA\Cookbook\Helper\ImageService\ImageGenerationHelper
