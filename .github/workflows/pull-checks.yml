@@ -60,11 +60,14 @@ jobs:
 
                     git clone --filter=tree:0 "$REPO" .
             -   name: Manual checkout of the app (PR head)
+                env:
+                    URL: ${{ github.event.pull_request.head.repo.html_url }}
+                    HEAD_REF: ${{ github.head_ref }}
                 run: |
-                    git remote add head "${{ github.event.pull_request.head.repo.html_url }}"
+                    git remote add head "$URL"
                     git fetch head --filter=tree:0
                     
-                    git checkout -b head-branch head/${{ github.head_ref }}
+                    git checkout -b head-branch head/$HEAD_REF
             -   name: Status of current git workspace
                 run: |
                     git branch
