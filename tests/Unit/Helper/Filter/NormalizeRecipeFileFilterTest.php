@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\Filter;
 
-use OCP\Files\File;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Helper\Filter\DB\RecipeDatesFilter;
 use OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter;
+use OCP\Files\File;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter

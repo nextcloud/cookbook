@@ -4,18 +4,18 @@ namespace OCA\Cookbook\tests\Unit\Service;
 
 use DOMDocument;
 use OCA\Cookbook\Exception\CouldNotGuessEncodingException;
-use OCP\IL10N;
-use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Helper\HtmlToDomParser;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
 use OCA\Cookbook\Helper\DownloadEncodingHelper;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
-use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Service\HtmlDownloadService;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
+use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Service\HtmlDownloadService;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
 /**

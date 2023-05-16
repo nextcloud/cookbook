@@ -2,10 +2,10 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCP\IRequest;
+use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
+use OCP\IRequest;
 
 class KeywordController extends Controller {
 	/** @var KeywordImplementation */

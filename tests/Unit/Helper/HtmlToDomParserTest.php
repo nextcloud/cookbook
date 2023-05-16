@@ -18,16 +18,16 @@ function libxml_clear_errors() {
 
 namespace OCA\Cookbook\tests\Unit\Helper;
 
-use OCP\IL10N;
 use DOMDocument;
 use Exception;
 use LibXMLError;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use ReflectionProperty;
-use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Helper\HtmlToDomParser;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class XMLMocking {
 	public function useInternalErrors(bool $prev): bool {

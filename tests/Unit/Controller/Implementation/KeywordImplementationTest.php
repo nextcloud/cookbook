@@ -3,10 +3,10 @@
 namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
-use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Service\RecipeService;
 use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Service\RecipeService;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Controller\Implementation\KeywordImplementation
