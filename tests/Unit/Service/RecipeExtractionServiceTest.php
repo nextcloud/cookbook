@@ -2,13 +2,13 @@
 
 namespace OCA\Cookbook\tests\Unit\Service;
 
-use PHPUnit\Framework\TestCase;
+use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
-use OCA\Cookbook\Exception\HtmlParsingException;
-use OCP\IL10N;
 use OCA\Cookbook\Service\RecipeExtractionService;
+use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
 class RecipeExtractionServiceTest extends TestCase {
 	/**

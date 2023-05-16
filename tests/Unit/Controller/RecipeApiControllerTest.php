@@ -6,8 +6,8 @@ require_once(__DIR__ . '/AbstractControllerTestCase.php');
 
 namespace OCA\Cookbook\tests\Unit\Controller;
 
-use OCA\Cookbook\Controller\RecipeApiController;
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
+use OCA\Cookbook\Controller\RecipeApiController;
 
 /**
  * @covers \OCA\Cookbook\Controller\RecipeApiController

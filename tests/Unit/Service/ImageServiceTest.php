@@ -5,12 +5,12 @@ namespace OCA\Cookbook\tests\Unit\Service;
 use OCA\Cookbook\Helper\ImageService\ImageFileHelper;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\ImageService\ThumbnailFileHelper;
+use OCA\Cookbook\Service\ImageService;
 use OCP\Files\File;
 use OCP\Files\Folder;
-use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Service\ImageService;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Service\ImageService
