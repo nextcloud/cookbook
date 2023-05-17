@@ -4,8 +4,8 @@ namespace OCA\Cookbook\Migration;
 
 use Closure;
 use OCP\DB\ISchemaWrapper;
-use OCP\Migration\SimpleMigrationStep;
 use OCP\Migration\IOutput;
+use OCP\Migration\SimpleMigrationStep;
 
 class Version000000Date20190910100911 extends SimpleMigrationStep {
 	/**

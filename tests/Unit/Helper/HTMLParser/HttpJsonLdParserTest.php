@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\HTMLParser;
 
-use PHPUnit\Framework\TestCase;
+use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
-use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
-use OCA\Cookbook\Exception\HtmlParsingException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser

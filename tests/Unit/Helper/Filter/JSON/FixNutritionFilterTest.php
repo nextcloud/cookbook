@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Helper\Filter\JSON\FixNutritionFilter;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class FixNutritionFilterTest extends TestCase {
 	/** @var FixNutritionFilter */

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace OCA\Cookbook\Migration;
 
-use OCP\IDBConnection;
+use Closure;
 use OCP\DB\ISchemaWrapper;
+use OCP\DB\QueryBuilder\IQueryBuilder;
+use OCP\IDBConnection;
 use OCP\Migration\IOutput;
 use OCP\Migration\SimpleMigrationStep;
-use Closure;
-use OCP\DB\QueryBuilder\IQueryBuilder;
 
 /**
  * Auto-generated migration step: Please modify to your needs!

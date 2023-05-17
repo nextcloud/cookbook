@@ -3,14 +3,14 @@
 namespace OCA\Cookbook\tests\Migration\Setup\Migrations;
 
 use Doctrine\DBAL\Schema\Table;
+use OC\DB\Connection;
+use OC\DB\MigrationService;
+use OC\DB\SchemaWrapper;
+use OCP\AppFramework\App;
+use OCP\AppFramework\IAppContainer;
 use OCP\IDBConnection;
 use OCP\Util;
-use OC\DB\Connection;
-use OC\DB\SchemaWrapper;
 use PHPUnit\Framework\TestCase;
-use OCP\AppFramework\App;
-use OC\DB\MigrationService;
-use OCP\AppFramework\IAppContainer;
 
 /**
  * @runTestsInSeparateProcesses

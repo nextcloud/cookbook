@@ -2,13 +2,13 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
-use OCA\Cookbook\Helper\TextCleanupHelper;
-use PHPUnit\Framework\MockObject\MockObject;
 use OCA\Cookbook\Helper\Filter\JSON\FixKeywordsFilter;
+use OCA\Cookbook\Helper\TextCleanupHelper;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class FixKeywordsFilterTest extends TestCase {
 	/** @var FixKeywordsFilter */

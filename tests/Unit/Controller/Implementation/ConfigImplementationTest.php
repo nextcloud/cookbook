@@ -2,16 +2,16 @@
 
 namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
-use ReflectionProperty;
-use PHPUnit\Framework\TestCase;
-use OCP\AppFramework\Http\Response;
+use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
+use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\DataResponse;
-use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Helper\UserFolderHelper;
-use OCA\Cookbook\Helper\RestParameterParser;
+use OCP\AppFramework\Http\Response;
 use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
+use PHPUnit\Framework\TestCase;
+use ReflectionProperty;
 
 /**
  * @covers OCA\Cookbook\Controller\Implementation\ConfigImplementation
