@@ -2,12 +2,12 @@
 
 namespace OCA\Cookbook\Helper\ImageService;
 
-use OCP\IL10N;
+use OCA\Cookbook\Exception\RecipeImageExistsException;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
-use OCA\Cookbook\Exception\RecipeImageExistsException;
 use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 
 class ImageFileHelper {
 	private const NAME_MAIN = ImageSize::NAME_MAP[ImageSize::PRIMARY_IMAGE];

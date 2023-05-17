@@ -1,13 +1,19 @@
 OC.L10N.register(
     "cookbook",
     {
+    "The recipe has already an image file. Cannot create a new one." : "La ricetta ha già un file immagine. Impossibile crearne uno nuovo.",
+    "There is no primary image for the recipe present." : "Non esiste un'immagine primaria per la ricetta presente.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Impossibile analizzare la codifica multiparte non POST. Questo è un bug.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Impossibile rilevare il tipo di dati trasmessi. Questo è un bug, segnalalo.",
     "Invalid URL-encoded string found. Please report a bug." : "Trovata una stringa codificata dell'URL non valida. Segnala un bug.",
+    "The user is not logged in. No user configuration can be obtained." : "L'utente non ha effettuato l'accesso. Non è possibile ottenere alcuna configurazione utente.",
     "Recipes" : "Ricette",
     "User cannot create recipe folder" : "L'utente non può creare la cartella delle ricette",
     "in %s" : "in %s",
     "Another recipe with that name already exists" : "Esiste già un'altra ricetta con lo stesso nome",
+    "Recipe with ID %d not found." : "Ricetta con ID %d non trovata.",
+    "Image size \"%s\" is not recognized." : "La dimensione dell'immagine \"%s\" non è riconosciuta.",
+    "The thumbnail type %d is not known." : "Il tipo di miniatura %dnon è noto.",
     "Cookbook" : "Ricettario",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un ricettario integrato che utilizza file JSON schema.org come ricette",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Una raccolta per tutte le tue ricette. Utilizza file JSON che seguono il formato di ricette schema.org. Per aggiungere una ricetta alla raccolta, puoi incollare l'URL della ricetta, e la pagina web fornita sarà elaborata e scaricata nella cartella che hai specificato nelle impostazioni dell'applicazione.",
@@ -135,6 +141,10 @@ OC.L10N.register(
     "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito",
     "Dismiss" : "Annulla",
     "Cancel" : "Annulla",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Nessuno",
+    "Preparation time" : "Tempo di preparazione",
+    "Cooking time" : "Tempo di cottura",
+    "Total time" : "Tempo totale"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

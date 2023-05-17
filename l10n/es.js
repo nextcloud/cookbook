@@ -187,6 +187,17 @@ OC.L10N.register(
     "Dismiss" : "Descartar",
     "Cancel" : "Cancelar",
     "OK" : "OK",
-    "Abort editing" : "Abortar edición"
+    "None" : "Ninguno",
+    "Abort editing" : "Abortar edición",
+    "Cookbook settings" : "Configuración del recetario",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "El ingrediente no puede ser re-calculado por un error de sintaxis. Por favor, cámbielo a la siguiente sintaxis: cantidad unidad ingrediente. Ejemplos: 200g de zanahoria o 1 pizca de sal",
+    "Recipe display settings" : "Configuraciones de vista de recetas",
+    "Info blocks" : "Bloques de información",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Controla que bloques de información se mostrarán en la vista de recetas. Si no utiliza alguna de las características y le distraen, podrá ocultarlas.",
+    "Preparation time" : "Tiempo de preparación",
+    "Cooking time" : "Tiempo de cocción",
+    "Total time" : "Tiempo total",
+    "Nutrition information" : "Información nutricional",
+    "Could not save visible info blocks" : "No fue posible guardar los bloques de información visibles"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

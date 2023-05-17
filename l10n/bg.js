@@ -186,6 +186,18 @@ OC.L10N.register(
     "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
     "Dismiss" : "Отхвърляне",
     "Cancel" : "Отказ",
-    "OK" : "Добре"
+    "OK" : "Добре",
+    "None" : "Няма",
+    "Abort editing" : "Прекратяване на редактирането",
+    "Cookbook settings" : "Настройки на приложението Cookbook /готварска книга/",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Съставката не може да бъде преизчислена поради неправилен синтаксис. Моля, променете го със следният синтаксис: количество за всяка една от съставките. Примери: 200 г моркови или 1 щипка сол",
+    "Recipe display settings" : "Настройки за показване на рецепта",
+    "Info blocks" : "Информационни блокове",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Управлявайте кои информационни блокове се показват в изгледа на рецептата. Ако не използвате някои функции и ги намирате за разсейващи, можете да ги скриете.",
+    "Preparation time" : "Време за подготовка",
+    "Cooking time" : "Време за готвене",
+    "Total time" : "Общо време",
+    "Nutrition information" : "Информация за храната",
+    "Could not save visible info blocks" : "Не можаха да се запишат видимите информационни блокове"
 },
 "nplurals=2; plural=(n != 1);");

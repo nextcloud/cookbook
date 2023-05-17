@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Recipes" : "조리법들",
     "in %s" : "%s",
+    "The full-sized image is not a thumbnail." : "완전한 크기의 이미지는 썸네일이 아닙니다.",
+    "The thumbnail type %d is not known." : "썸네일 타입 %d은(는) 알려지지 않았습니다.",
     "Page not found" : "페이지를 찾을 수 없음",
     "Edit" : "편집",
     "Save" : "저장",
@@ -10,6 +12,7 @@ OC.L10N.register(
     "Filter" : "필터",
     "Category" : "분류",
     "Tags" : "태그",
+    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "현재 손님 계정으로 로그인한 상태입니다. 따라서, 이 Nextcloud 인스턴스에 임의의 파일이나 폴더를 생성할 수 없습니다. 손님 계정으로 Cookbook 앱을 사용하기 위해 레시피가 저장될 폴더를 지정해야 하며, 해당 폴더의 쓰기 권한을 보유하고 있어야 합니다.",
     "Categories" : "분류",
     "Rename" : "이름 바꾸기",
     "Add" : "추가",
@@ -25,6 +28,7 @@ OC.L10N.register(
     "Loading…" : "불러오는 중…",
     "Dismiss" : "무시",
     "Cancel" : "취소",
-    "OK" : "확인"
+    "OK" : "확인",
+    "None" : "없음"
 },
 "nplurals=1; plural=0;");

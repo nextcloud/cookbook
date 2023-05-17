@@ -2,8 +2,8 @@
 
 namespace OCA\Cookbook\tests\Integration;
 
-use ChristophWurst\Nextcloud\Testing\TestCase;
 use ChristophWurst\Nextcloud\Testing\DatabaseTransaction;
+use ChristophWurst\Nextcloud\Testing\TestCase;
 use OCA\Cookbook\AppInfo\Application;
 use Psr\Container\ContainerInterface;
 

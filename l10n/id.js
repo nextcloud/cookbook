@@ -21,6 +21,7 @@ OC.L10N.register(
     "Loading…" : "Memuat…",
     "Dismiss" : "Batal",
     "Cancel" : "Membatalkan",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Tidak ada"
 },
 "nplurals=1; plural=0;");

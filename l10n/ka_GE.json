@@ -19,6 +19,7 @@
     "Loading…" : "იტვირთება…",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "უარყოფა",
-    "OK" : "კარგი"
+    "OK" : "კარგი",
+    "None" : "არც ერთი"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

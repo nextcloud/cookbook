@@ -3,10 +3,10 @@
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidRecipeException;
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
+use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 /**
  * Fix the ingredients list.

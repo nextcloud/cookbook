@@ -3,9 +3,9 @@
 namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
-use OCP\IRequest;
 use OCP\AppFramework\ApiController;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\IRequest;
 
 class ConfigApiController extends ApiController {
 	/** @var ConfigImplementation */

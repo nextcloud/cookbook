@@ -135,6 +135,10 @@ OC.L10N.register(
     "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
     "Dismiss" : "Afvis",
     "Cancel" : "Annuller",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Ingen",
+    "Preparation time" : "Forberedelsestid",
+    "Cooking time" : "Opvarmningstid",
+    "Total time" : "Total tid"
 },
 "nplurals=2; plural=(n != 1);");

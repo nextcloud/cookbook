@@ -15,6 +15,7 @@ OC.L10N.register(
     "Loading…" : "Et gëtt gelueden",
     "Dismiss" : "Ofbriechen",
     "Cancel" : "Ofbriechen",
-    "OK" : "OK"
+    "OK" : "OK",
+    "None" : "Keng"
 },
 "nplurals=2; plural=(n != 1);");

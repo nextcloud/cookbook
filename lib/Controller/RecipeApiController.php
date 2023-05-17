@@ -3,11 +3,11 @@
 namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
-use OCP\IRequest;
 use OCP\AppFramework\ApiController;
-use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\DataDisplayResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IRequest;
 
 class RecipeApiController extends ApiController {
 	/** @var RecipeImplementation */

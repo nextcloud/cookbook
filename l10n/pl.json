@@ -185,6 +185,17 @@
     "Dismiss" : "Odrzuć",
     "Cancel" : "Anuluj",
     "OK" : "OK",
-    "Abort editing" : "Przerwij edycję"
+    "None" : "Brak",
+    "Abort editing" : "Przerwij edycję",
+    "Cookbook settings" : "Ustawienia książki kucharskiej",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Nie można ponownie obliczyć ilości składnika z powodu nieprawidłowej składni. Zmień ją na następującą składnię: jednostkowa ilość składnika. Przykłady: 200 g marchwi lub 1 szczypta soli",
+    "Recipe display settings" : "Ustawienia wyświetlania przepisów",
+    "Info blocks" : "Bloki informacyjne",
+    "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Kontroluj, które bloki informacyjne są wyświetlane w widoku przepisu. Jeśli nie korzystasz z niektórych funkcji i uważasz, że rozpraszają one uwagę, możesz je ukryć.",
+    "Preparation time" : "Czas przygotowania",
+    "Cooking time" : "Czas gotowania",
+    "Total time" : "Czas całkowity",
+    "Nutrition information" : "Informacje żywnieniowe",
+    "Could not save visible info blocks" : "Nie można zapisać widocznych bloków informacyjnych"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

@@ -25,6 +25,7 @@ OC.L10N.register(
     "Loading…" : "Ŝargado...",
     "Dismiss" : "Preterpasi",
     "Cancel" : "Nuligi",
-    "OK" : "Bone"
+    "OK" : "Bone",
+    "None" : "Nenio"
 },
 "nplurals=2; plural=(n != 1);");

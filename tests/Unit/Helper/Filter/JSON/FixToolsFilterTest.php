@@ -3,12 +3,12 @@
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidRecipeException;
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
-use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
+use OCA\Cookbook\Helper\TextCleanupHelper;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class FixToolsFilterTest extends TestCase {
 	/** @var FixToolsFilter */

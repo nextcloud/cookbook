@@ -131,6 +131,10 @@ OC.L10N.register(
     "Failed to load search results" : "未能加载搜索结果",
     "Dismiss" : "不予理会",
     "Cancel" : "取消",
-    "OK" : "好"
+    "OK" : "好",
+    "None" : "无",
+    "Preparation time" : "准备时间",
+    "Cooking time" : "烹饪时间",
+    "Total time" : "总时间"
 },
 "nplurals=1; plural=0;");

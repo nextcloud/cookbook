@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "dins %s",
+    "Page not found" : "Pagina pas trobada",
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
     "Search" : "Search",
@@ -19,6 +20,7 @@ OC.L10N.register(
     "Loading…" : "Cargament…",
     "Dismiss" : "Regetar",
     "Cancel" : "Anullar",
-    "OK" : "D’acòrdi"
+    "OK" : "D’acòrdi",
+    "None" : "Cap"
 },
 "nplurals=2; plural=(n > 1);");

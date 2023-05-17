@@ -12,7 +12,7 @@ jobs:
         
         steps:
         
-          - uses: actions/stale@v6
+          - uses: actions/stale@v8
             name: Close stale issues
             with:
                 days-before-stale: 45

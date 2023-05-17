@@ -120,6 +120,10 @@ OC.L10N.register(
     "Failed to load search results" : "Produciuse un fallo ao cargar os resultados da busca",
     "Dismiss" : "Rexeitar",
     "Cancel" : "Cancelar",
-    "OK" : "Aceptar"
+    "OK" : "Aceptar",
+    "None" : "Ningún",
+    "Preparation time" : "Tempo de preparación",
+    "Cooking time" : "Tempo de cociñado",
+    "Total time" : "Tempo total"
 },
 "nplurals=2; plural=(n != 1);");

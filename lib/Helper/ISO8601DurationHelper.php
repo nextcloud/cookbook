@@ -2,8 +2,8 @@
 
 namespace OCA\Cookbook\Helper;
 
-use OCP\IL10N;
 use OCA\Cookbook\Exception\InvalidDurationException;
+use OCP\IL10N;
 
 /**
  * Parser for ISO8601 and similar time spans.

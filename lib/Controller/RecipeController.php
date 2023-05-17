@@ -3,8 +3,8 @@
 namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
-use OCP\IRequest;
 use OCP\AppFramework\Controller;
+use OCP\IRequest;
 
 class RecipeController extends Controller {
 	/** @var RecipeImplementation */

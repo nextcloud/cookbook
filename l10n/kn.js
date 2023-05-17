@@ -10,6 +10,7 @@ OC.L10N.register(
     "Name" : "﻿ಹೆಸರು",
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Cancel" : "﻿ರದ್ದು",
-    "OK" : "ಸರಿ"
+    "OK" : "ಸರಿ",
+    "None" : "﻿ಯಾವುದೂ ಇಲ್ಲ"
 },
 "nplurals=2; plural=(n > 1);");

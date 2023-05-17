@@ -21,6 +21,7 @@ OC.L10N.register(
     "Loading…" : "იტვირთება…",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "უარყოფა",
-    "OK" : "კარგი"
+    "OK" : "კარგი",
+    "None" : "არც ერთი"
 },
 "nplurals=2; plural=(n!=1);");
