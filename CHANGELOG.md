@@ -1,4 +1,7 @@
-## [Unreleased]
+## 0.9.19 - 2023-05-17
+
+This is the last version in the 0.9.x branch and should provide the latest updates of the dependencies.
+As the supported Nextcloud server versions are all at end of life, this will not be maintained anymore and new features will only go to the master branch.
 
 ### Maintenance
 - Fix some prettier style
