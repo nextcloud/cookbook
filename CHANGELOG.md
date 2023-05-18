@@ -17,6 +17,8 @@
   [#1614](https://github.com/nextcloud/cookbook/pull/1614) @dependabot @christianlupus
 - Remove support for old 0.9.x branch to simplify development (NC v24 is no longer supported)
   [#1683](https://github.com/nextcloud/cookbook/pull/1683) @christianlupus
+- Update dependencies for Jekyll building
+  [#1684](https://github.com/nextcloud/cookbook/pull/1684) @dependabot @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
