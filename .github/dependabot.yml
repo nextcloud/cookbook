@@ -29,35 +29,3 @@ updates:
     time: "02:50"
   open-pull-requests-limit: 10
 
-- package-ecosystem: npm
-  directory: "/"
-  target-branch: "main-0.9.x"
-  schedule:
-    interval: daily
-    time: "03:00"
-    timezone: Europe/Paris
-  open-pull-requests-limit: 10
-- package-ecosystem: composer
-  directory: "/"
-  target-branch: "main-0.9.x"
-  schedule:
-    interval: daily
-    time: "03:00"
-    timezone: Europe/Paris
-  open-pull-requests-limit: 10
-- package-ecosystem: bundler
-  directory: "/docs"
-  target-branch: "main-0.9.x"
-  schedule:
-    timezone: Europe/Berlin
-    interval: daily
-    time: "02:50"
-  open-pull-requests-limit: 10
-- package-ecosystem: github-actions
-  directory: "/"
-  target-branch: "main-0.9.x"
-  schedule:
-    timezone: Europe/Berlin
-    interval: daily
-    time: "02:50"
-  open-pull-requests-limit: 10

@@ -15,6 +15,8 @@
   [#1607](https://github.com/nextcloud/cookbook/pull/1607) @christianlupus
 - Fix alphabetical ordering of PHP imports
   [#1614](https://github.com/nextcloud/cookbook/pull/1614) @dependabot @christianlupus
+- Remove support for old 0.9.x branch to simplify development (NC v24 is no longer supported)
+  [#1683](https://github.com/nextcloud/cookbook/pull/1683) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
