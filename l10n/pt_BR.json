@@ -188,6 +188,7 @@
     "None" : "Nenhum",
     "Abort editing" : "Abortar edição",
     "Cookbook settings" : "Configurações do livro de receitas",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "O ingrediente não pode ser recalculado devido à sintaxe incorreta. Por favor, altere para esta sintaxe: quantidade unidade ingrediente. Exemplos: 200 g de cenoura ou 1 pitada de sal",
     "Recipe display settings" : "Configurações de exibição da receita",
     "Info blocks" : "Info blocks",
     "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them." : "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.",
