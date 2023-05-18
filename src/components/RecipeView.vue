@@ -115,6 +115,16 @@
         <div v-if="$store.state.recipe" class="content">
             <section class="container">
                 <section class="ingredients">
+                    <NcButton
+                        class="copy-ingredients"
+                        :type="'tertiary'"
+                        @click="copyIngredientsToClipboard"
+                    >
+                        <template #icon>
+                            <ContentCopyIcon :size="20" />
+                        </template>
+                        {{ t("cookbook", "Copy ingredients") }}
+                    </NcButton>
                     <h3 v-if="parsedIngredients.length">
                         {{ t("cookbook", "Ingredients") }}
                     </h3>
@@ -296,6 +306,10 @@ import helpers from "cookbook/js/helper"
 import normalizeMarkdown from "cookbook/js/title-rename"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
+import ContentCopyIcon from "icons/ContentCopy.vue"
+
+import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
 import RecipeInstruction from "./RecipeInstruction.vue"
@@ -314,6 +328,8 @@ export default {
         RecipeNutritionInfoItem,
         RecipeTimer,
         RecipeTool,
+        ContentCopyIcon,
+        NcButton,
     },
     /**
      * This is one tricky feature of Vue router. If different paths lead to
@@ -686,6 +702,40 @@ export default {
             const ingredientRegExp = /^(?:\d+(?:\.\d+)?|\.\d+)(?:\s.+$|\s\S+$)/
             return ingredientRegExp.test(ingredient)
         },
+        copyIngredientsToClipboard() {
+            const ingredientsToCopy = this.parsedIngredients.join("\n")
+
+            if (navigator.clipboard) {
+                navigator.clipboard
+                    .writeText(ingredientsToCopy)
+                    .then(() =>
+                        this.$log.info("JSON array copied to clipboard")
+                    )
+                    .catch((err) =>
+                        this.$log.error("Failed to copy JSON array: ", err)
+                    )
+            } else {
+                // fallback solution
+                const input = document.createElement("textarea")
+                input.style.position = "absolute"
+                input.style.left = "-1000px"
+                input.style.top = "-1000px"
+                input.value = ingredientsToCopy
+                document.body.appendChild(input)
+                input.select()
+                try {
+                    const successful = document.execCommand("copy")
+                    if (successful) {
+                        this.$log.info("JSON array copied to clipboard")
+                    } else {
+                        this.$log.error("Failed to copy JSON array")
+                    }
+                } catch (err) {
+                    this.$log.error("Failed to copy JSON array: ", err)
+                }
+                document.body.removeChild(input)
+            }
+        },
     },
 }
 </script>
@@ -750,6 +800,10 @@ export default {
 
 .date-text {
     vertical-align: middle;
+}
+
+.copy-ingredients {
+    float: right;
 }
 
 .description {
