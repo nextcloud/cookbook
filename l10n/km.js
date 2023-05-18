@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "គ្មាន",
     "Edit" : "កែប្រែ",
     "Save" : "រក្សាទុក",
     "Search" : "Search",
@@ -12,7 +13,6 @@ OC.L10N.register(
     "Description" : "ការ​អធិប្បាយ",
     "URL" : "URL",
     "Cancel" : "បោះបង់",
-    "OK" : "ព្រម",
-    "None" : "គ្មាន"
+    "OK" : "ព្រម"
 },
 "nplurals=1; plural=0;");

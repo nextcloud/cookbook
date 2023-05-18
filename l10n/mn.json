@@ -1,4 +1,5 @@
 { "translations": {
+    "None" : "юу ч үгүй",
     "Edit" : "засварлах",
     "Save" : "Хадгалах",
     "Search" : "Хайх",
@@ -16,7 +17,6 @@
     "Loading…" : "уншиж байна",
     "Dismiss" : "Арилгах",
     "Cancel" : "болиулах",
-    "OK" : "ок",
-    "None" : "юу ч үгүй"
+    "OK" : "ок"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

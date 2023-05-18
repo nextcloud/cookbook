@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "në %s",
+    "None" : "Asnjë",
     "Page not found" : "Faqja nuk u gjet ",
     "Edit" : "Përpuno",
     "Save" : "Ruaj",
@@ -19,7 +20,6 @@
     "Loading…" : "Duke u ngarkuar…",
     "Dismiss" : "Hiq",
     "Cancel" : "Anullo",
-    "OK" : "OK",
-    "None" : "Asnjë"
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

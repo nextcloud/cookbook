@@ -1,4 +1,5 @@
 { "translations": {
+    "None" : "Hiç",
     "Edit" : "Redaktirläň",
     "Save" : "Saklamak",
     "Search" : "Gözlemek",
@@ -9,7 +10,6 @@
     "Loading…" : "Ýüklenýär…",
     "Dismiss" : "Ýapmak.",
     "Cancel" : "ýatyrmak",
-    "OK" : "Bolýar",
-    "None" : "Hiç"
+    "OK" : "Bolýar"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

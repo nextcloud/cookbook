@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "në %s",
+    "None" : "Asnjë",
     "Page not found" : "Faqja nuk u gjet ",
     "Edit" : "Përpuno",
     "Save" : "Ruaj",
@@ -21,7 +22,6 @@ OC.L10N.register(
     "Loading…" : "Duke u ngarkuar…",
     "Dismiss" : "Hiq",
     "Cancel" : "Anullo",
-    "OK" : "OK",
-    "None" : "Asnjë"
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

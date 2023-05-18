@@ -5,6 +5,7 @@ OC.L10N.register(
     "in %s" : "%s",
     "The full-sized image is not a thumbnail." : "완전한 크기의 이미지는 썸네일이 아닙니다.",
     "The thumbnail type %d is not known." : "썸네일 타입 %d은(는) 알려지지 않았습니다.",
+    "None" : "없음",
     "Page not found" : "페이지를 찾을 수 없음",
     "Edit" : "편집",
     "Save" : "저장",
@@ -28,7 +29,6 @@ OC.L10N.register(
     "Loading…" : "불러오는 중…",
     "Dismiss" : "무시",
     "Cancel" : "취소",
-    "OK" : "확인",
-    "None" : "없음"
+    "OK" : "확인"
 },
 "nplurals=1; plural=0;");

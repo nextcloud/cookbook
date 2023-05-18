@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "in %s",
+    "None" : "Geen",
     "Page not found" : "Blad nie gevind nie",
     "Edit" : "Wysig",
     "Save" : "Bewaar",
@@ -19,7 +20,6 @@
     "Loading…" : "Laai…",
     "Dismiss" : "Ontslaan",
     "Cancel" : "Kanselleer",
-    "OK" : "Goed",
-    "None" : "Geen"
+    "OK" : "Goed"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

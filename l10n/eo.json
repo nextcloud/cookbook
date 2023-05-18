@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "en %s",
+    "None" : "Nenio",
     "Page not found" : "Paĝo ne trovita",
     "Edit" : "Modifi",
     "Save" : "Konservi",
@@ -23,7 +24,6 @@
     "Loading…" : "Ŝargado...",
     "Dismiss" : "Preterpasi",
     "Cancel" : "Nuligi",
-    "OK" : "Bone",
-    "None" : "Nenio"
+    "OK" : "Bone"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

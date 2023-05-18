@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "%s-ში",
+    "None" : "არც ერთი",
     "Page not found" : "გვერდი არაა ნაპოვნი",
     "Edit" : "შეცვლა",
     "Save" : "შენახვა",
@@ -19,7 +20,6 @@
     "Loading…" : "იტვირთება…",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "უარყოფა",
-    "OK" : "კარგი",
-    "None" : "არც ერთი"
+    "OK" : "კარგი"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

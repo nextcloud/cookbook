@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "Ula d yiwen",
     "Page not found" : "Ulac asebter",
     "Edit" : "Ẓreg",
     "Save" : "Sekles",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Loading…" : "Asali...",
     "Dismiss" : "Agi",
     "Cancel" : "Sefsex",
-    "OK" : "IH",
-    "None" : "Ula d yiwen"
+    "OK" : "IH"
 },
 "nplurals=2; plural=(n != 1);");

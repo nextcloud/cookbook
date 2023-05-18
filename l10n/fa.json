@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "در %s",
+    "None" : "هیچ‌کدام",
     "Page not found" : "صفحه یافت نشد",
     "Edit" : "ویرایش",
     "Save" : "ذخیره",
@@ -24,7 +25,6 @@
     "Loading…" : "بار کردن…",
     "Dismiss" : "پنهان کن",
     "Cancel" : "لغو",
-    "OK" : "تایید",
-    "None" : "هیچ‌کدام"
+    "OK" : "تایید"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

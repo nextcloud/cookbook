@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "ஒன்றுமில்லை",
     "Edit" : "தொகுக்க",
     "Save" : "சேமிக்க ",
     "Search" : "Search",
@@ -12,7 +13,6 @@ OC.L10N.register(
     "Description" : "விவரிப்பு",
     "URL" : "URL",
     "Cancel" : "இரத்து செய்க",
-    "OK" : "சரி ",
-    "None" : "ஒன்றுமில்லை"
+    "OK" : "சரி "
 },
 "nplurals=2; plural=(n != 1);");

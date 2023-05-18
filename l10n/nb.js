@@ -18,6 +18,7 @@ OC.L10N.register(
     "Editing recipe" : "Redigerer oppskrift",
     "Viewing recipe" : "Viser oppskrift",
     "All recipes" : "Alle oppskrifter",
+    "None" : "Ingen",
     "Loading app" : "Laster inn app",
     "Loading recipe" : "Laster inn oppskrift",
     "Recipe not found" : "Oppskrift ikke funnet",
@@ -43,7 +44,7 @@ OC.L10N.register(
     "Categories" : "Kategorier",
     "Rename" : "Endre navn",
     "Enter new category name" : "Skriv inn et nytt kategorinavn",
-    "Toggle editing" : "Redigeringsmodus av/på",
+    "Cookbook settings" : "Kokebok innstillinger",
     "Delete entry" : "Slett oppføring",
     "Add" : "Legg til",
     "Close" : "Lukk",
@@ -78,11 +79,9 @@ OC.L10N.register(
     "Serving Size" : "Porsjonsstørrelse",
     "Source" : "Kilde",
     "Loading…" : "Laster…",
+    "Recipe display settings" : "Visningsvalg for oppskrifter",
     "Dismiss" : "Avvis",
     "Cancel" : "Avbryt",
-    "OK" : "OK",
-    "None" : "Ingen",
-    "Cookbook settings" : "Kokebok innstillinger",
-    "Recipe display settings" : "Visningsvalg for oppskrifter"
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "kaustas %s",
+    "None" : "Pole",
     "Page not found" : "Lehekülge ei leitud",
     "Edit" : "Redigeeri",
     "Save" : "Salvesta",
@@ -19,7 +20,6 @@
     "Loading…" : "Laadimine…",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",
-    "OK" : "OK",
-    "None" : "Pole"
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

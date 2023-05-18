@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "in %s",
+    "None" : "Nulle",
     "Edit" : "Modificar",
     "Save" : "Salveguardar",
     "Search" : "Cercar",
@@ -14,7 +15,6 @@
     "Loading…" : "Cargante...",
     "Dismiss" : "Dimitter",
     "Cancel" : "Cancellar",
-    "OK" : "Ok",
-    "None" : "Nulle"
+    "OK" : "Ok"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

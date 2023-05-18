@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "ບໍ່ມີ",
     "Edit" : "ແກ້ໄຂ",
     "Save" : "ບັນທຶກ",
     "Search" : "ຄົ້ນຫາ",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Loading…" : "ກຳລັງໂຫຼດ",
     "Dismiss" : "ຍົກເລີກ",
     "Cancel" : "ຍົກເລີກ",
-    "OK" : "ຕົກລົງ",
-    "None" : "ບໍ່ມີ"
+    "OK" : "ຕົກລົງ"
 },
 "nplurals=1; plural=0;");

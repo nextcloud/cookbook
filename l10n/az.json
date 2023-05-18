@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "içinə %s",
+    "None" : "Heç bir",
     "Edit" : "Dəyişiklik et",
     "Save" : "Saxla",
     "Search" : "Axtarış",
@@ -11,7 +12,6 @@
     "Description" : "Açıqlanma",
     "URL" : "URL",
     "Cancel" : "Dayandır",
-    "OK" : "Oldu",
-    "None" : "Heç bir"
+    "OK" : "Oldu"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

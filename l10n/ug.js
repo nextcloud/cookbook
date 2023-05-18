@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "يوق",
     "Edit" : "تەھرىر",
     "Save" : "ساقلا",
     "Search" : "Search",
@@ -12,7 +13,6 @@ OC.L10N.register(
     "Description" : "چۈشەندۈرۈش",
     "URL" : "URL",
     "Cancel" : "ۋاز كەچ",
-    "OK" : "جەزملە",
-    "None" : "يوق"
+    "OK" : "جەزملە"
 },
 "nplurals=2; plural=(n != 1);");

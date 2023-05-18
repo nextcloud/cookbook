@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "i %s",
+    "None" : "Ingen",
     "Page not found" : "Fann ikkje sida",
     "Edit" : "Rediger",
     "Save" : "Lagre",
@@ -17,7 +18,6 @@
     "Loading…" : "Laster...",
     "Dismiss" : "Forkast",
     "Cancel" : "Avbryt",
-    "OK" : "OK",
-    "None" : "Ingen"
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

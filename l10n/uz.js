@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "None",
     "Save" : "Save",
     "Search" : "Search",
     "Tags" : "Tags",
@@ -11,7 +12,6 @@ OC.L10N.register(
     "Loading…" : "Loading…",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
-    "OK" : "OK",
-    "None" : "None"
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

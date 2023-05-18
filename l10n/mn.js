@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "юу ч үгүй",
     "Edit" : "засварлах",
     "Save" : "Хадгалах",
     "Search" : "Хайх",
@@ -18,7 +19,6 @@ OC.L10N.register(
     "Loading…" : "уншиж байна",
     "Dismiss" : "Арилгах",
     "Cancel" : "болиулах",
-    "OK" : "ок",
-    "None" : "юу ч үгүй"
+    "OK" : "ок"
 },
 "nplurals=2; plural=(n != 1);");

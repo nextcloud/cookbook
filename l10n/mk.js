@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "во %s",
+    "None" : "Ништо",
     "Page not found" : "Страницата не е пронајдена",
     "Edit" : "Уреди",
     "Save" : "Зачувај",
@@ -26,7 +27,6 @@ OC.L10N.register(
     "Loading…" : "Се вчитува…",
     "Dismiss" : "Отфрли",
     "Cancel" : "Откажи",
-    "OK" : "Добро",
-    "None" : "Ништо"
+    "OK" : "Добро"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

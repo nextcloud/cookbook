@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "dins %s",
+    "None" : "Cap",
     "Page not found" : "Pagina pas trobada",
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
@@ -18,7 +19,6 @@
     "Loading…" : "Cargament…",
     "Dismiss" : "Regetar",
     "Cancel" : "Anullar",
-    "OK" : "D’acòrdi",
-    "None" : "Cap"
+    "OK" : "D’acòrdi"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -7,6 +7,7 @@ OC.L10N.register(
     "Another recipe with that name already exists" : "Вже існує рецепт з такою назвою",
     "Cookbook" : "Кулінарна книга",
     "All recipes" : "Всі рецепти",
+    "None" : "Нічого",
     "Loading recipe" : "Завантаження рецептів",
     "Recipe not found" : "Рецепт не знайдено",
     "Page not found" : "Сторінку не знайдено",
@@ -53,7 +54,6 @@ OC.L10N.register(
     "Failed to load search results" : "Помилка при завантаженні результатів пошуку",
     "Dismiss" : "Припинити",
     "Cancel" : "Скасувати",
-    "OK" : "Гаразд",
-    "None" : "Нічого"
+    "OK" : "Гаразд"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

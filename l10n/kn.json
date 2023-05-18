@@ -1,4 +1,5 @@
 { "translations": {
+    "None" : "﻿ಯಾವುದೂ ಇಲ್ಲ",
     "Edit" : "ಸಂಪಾದಿಸು",
     "Save" : "﻿ಉಳಿಸಿ",
     "Search" : "Search",
@@ -8,7 +9,6 @@
     "Name" : "﻿ಹೆಸರು",
     "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Cancel" : "﻿ರದ್ದು",
-    "OK" : "ಸರಿ",
-    "None" : "﻿ಯಾವುದೂ ಇಲ್ಲ"
+    "OK" : "ಸರಿ"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

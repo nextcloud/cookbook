@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "içinə %s",
+    "None" : "Heç bir",
     "Edit" : "Dəyişiklik et",
     "Save" : "Saxla",
     "Search" : "Axtarış",
@@ -13,7 +14,6 @@ OC.L10N.register(
     "Description" : "Açıqlanma",
     "URL" : "URL",
     "Cancel" : "Dayandır",
-    "OK" : "Oldu",
-    "None" : "Heç bir"
+    "OK" : "Oldu"
 },
 "nplurals=2; plural=(n != 1);");

@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "في %s",
+    "None" : "غير محدد",
     "Edit" : "تعديل",
     "Save" : "Save",
     "Search" : "البحث",
@@ -23,7 +24,6 @@ OC.L10N.register(
     "Loading…" : "التحميل جارٍ…",
     "Dismiss" : "تجاهل",
     "Cancel" : "إلغاء",
-    "OK" : "موافق",
-    "None" : "غير محدد"
+    "OK" : "موافق"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

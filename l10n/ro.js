@@ -11,6 +11,7 @@ OC.L10N.register(
     "An integrated cookbook using schema.org JSON files as recipes" : "O carte de bucate încorporată care folosește fișiere JSON schema.org ca rețete",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "O colecție pentru toate rețetele tale. Folosește fișiere JSON care urmează formatul de rețetă schema.org. Pentru a adăuga o rețetă la colecție, puteți lipi adresa URL a rețetei, iar pagina web furnizată va fi procesată și descărcată în folderul specificat în setările aplicației.",
     "All recipes" : "Toate rețetele",
+    "None" : "Niciuna",
     "Loading recipe" : "Se încarcă rețeta",
     "Recipe not found" : "Rețeta nu a fost găsită",
     "Page not found" : "Pagina nu a fost găsită",
@@ -37,7 +38,6 @@ OC.L10N.register(
     "Loading…" : "Se încarcă…",
     "Dismiss" : "Elimină",
     "Cancel" : "Anulare",
-    "OK" : "OK",
-    "None" : "Niciuna"
+    "OK" : "OK"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

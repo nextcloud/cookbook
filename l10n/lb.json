@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "an %s",
+    "None" : "Keng",
     "Edit" : "Änneren",
     "Save" : "Späicheren",
     "Search" : "Search",
@@ -13,7 +14,6 @@
     "Loading…" : "Et gëtt gelueden",
     "Dismiss" : "Ofbriechen",
     "Cancel" : "Ofbriechen",
-    "OK" : "OK",
-    "None" : "Keng"
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

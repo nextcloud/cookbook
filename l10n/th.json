@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "ใน %s",
+    "None" : "ไม่มี",
     "Page not found" : "ไม่พบหน้า",
     "Edit" : "แก้ไข",
     "Save" : "บันทึก",
@@ -17,7 +18,6 @@
     "Loading…" : "กำลังโหลด...",
     "Dismiss" : "ปิดทิ้ง",
     "Cancel" : "ยกเลิก",
-    "OK" : "ตกลง",
-    "None" : "ไม่มี"
+    "OK" : "ตกลง"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

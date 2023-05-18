@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "dalam %s",
+    "None" : "Tidak ada",
     "Page not found" : "Halaman tidak ditemukan",
     "Edit" : "Sunting",
     "Save" : "Simpan",
@@ -21,7 +22,6 @@ OC.L10N.register(
     "Loading…" : "Memuat…",
     "Dismiss" : "Batal",
     "Cancel" : "Membatalkan",
-    "OK" : "OK",
-    "None" : "Tidak ada"
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");
