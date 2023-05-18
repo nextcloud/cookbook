@@ -115,12 +115,19 @@
         <div v-if="$store.state.recipe" class="content">
             <section class="container">
                 <section class="ingredients">
-                    <h3 v-if="parsedIngredients.length" class="date-icon">
+                    <NcButton
+                        class="copy-ingredients"
+                        :type="'tertiary'"
+                        @click="copyIngredientsToClipboard"
+                    >
+                        <template #icon>
+                            <ContentCopyIcon :size="20" />
+                        </template>
+                        {{ t("cookbook", "Copy ingredients") }}
+                    </NcButton>
+                    <h3 v-if="parsedIngredients.length">
                         {{ t("cookbook", "Ingredients") }}
                     </h3>
-                    <button @click="copyIngredientsToClipboard">
-                        {{ t("cookbook", "Copy ingredients") }}
-                    </button>
                     <ul v-if="parsedIngredients.length">
                         <RecipeIngredient
                             v-for="(ingredient, idx) in parsedIngredients"
@@ -299,6 +306,10 @@ import helpers from "cookbook/js/helper"
 import normalizeMarkdown from "cookbook/js/title-rename"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
+import ContentCopyIcon from "icons/ContentCopy.vue"
+
+import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+
 import RecipeImages from "./RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
 import RecipeInstruction from "./RecipeInstruction.vue"
@@ -317,6 +328,8 @@ export default {
         RecipeNutritionInfoItem,
         RecipeTimer,
         RecipeTool,
+        ContentCopyIcon,
+        NcButton,
     },
     /**
      * This is one tricky feature of Vue router. If different paths lead to
@@ -787,6 +800,10 @@ export default {
 
 .date-text {
     vertical-align: middle;
+}
+
+.copy-ingredients {
+    float: right;
 }
 
 .description {
