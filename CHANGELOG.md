@@ -19,6 +19,8 @@
   [#1683](https://github.com/nextcloud/cookbook/pull/1683) @christianlupus
 - Update dependencies for Jekyll building
   [#1684](https://github.com/nextcloud/cookbook/pull/1684) @dependabot @christianlupus
+- Update dependency @nextcloud/event-bus and allow automatic updates of dependencies
+  [#1680](https://github.com/nextcloud/cookbook/pull/1680) @dependabot
 
 
 ## 0.10.2 - 2023-03-24
