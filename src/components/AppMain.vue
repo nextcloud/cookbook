@@ -46,11 +46,12 @@ export default {
         }
     },
     watch: {
-        $route(to, from) {
-            this.$log.debug(
-                this.$window.isSameBaseRoute(from.fullPath, to.fullPath)
-            )
-        },
+        // This might be handy when routing of Vue components needs fixing.
+        // $route(to, from) {
+        //     this.$log.debug(
+        //         this.$window.isSameBaseRoute(from.fullPath, to.fullPath)
+        //     )
+        // },
     },
     mounted() {
         this.$log.info("AppMain mounted")

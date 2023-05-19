@@ -23,6 +23,8 @@
   [#1684](https://github.com/nextcloud/cookbook/pull/1684) @dependabot @christianlupus
 - Update dependency @nextcloud/event-bus and allow automatic updates of dependencies
   [#1680](https://github.com/nextcloud/cookbook/pull/1680) @dependabot
+- Fix bug in browser console
+  [#1686](https://github.com/nextcloud/cookbook/pull/1686) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
