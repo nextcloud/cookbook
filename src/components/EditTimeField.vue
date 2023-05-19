@@ -96,7 +96,7 @@ fieldset > span {
 }
 
 fieldset > input {
-    width: 50px !important;
+    width: 4.5em;
     text-align: center;
 }
 </style>
