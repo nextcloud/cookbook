@@ -119,7 +119,7 @@ jobs:
             httpServer:
                 - "apache"
             include:
-                # Test different databses
+                # Test different databases
                 -   database: sqlite
                     coreVersion: 27
                     phpVersion: "8.1"
