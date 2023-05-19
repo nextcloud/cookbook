@@ -9,6 +9,8 @@
 ### Fixed
 - Fix translation string to not contain quotes
   [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio
+- Make time input fields wider to view multiple digits in chrome
+  [#1687](https://github.com/nextcloud/cookbook/pull/1687) @christianlupus
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
