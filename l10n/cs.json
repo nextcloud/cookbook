@@ -171,6 +171,7 @@
     "Unsaturated Fat" : "Nenasycené mastné kyseliny",
     "Trans Fat" : "Trans mastné kyseliny",
     "Source" : "Zdroj",
+    "Copy ingredients" : "Zkopírovat přísady",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Přísady není možné přepočítat kvůli nesprávné syntaxi. Změňte ji na tuto: počet jednotek přísady. Příklady: 200g mrkve nebo 1 špetka soli",
     "Loading…" : "Načítání…",
     "Failed to load recipes with keywords: {tags}" : "Nepodařilo se načíst recepty, obsahující klíčová slova: {tags}",

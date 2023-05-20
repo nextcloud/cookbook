@@ -19,6 +19,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Tools" : "Tööriistad",
     "Last modified" : "Viimati muudetud",
+    "Copy ingredients" : "Kopeeri koostisosad",
     "Loading…" : "Laadimine…",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",

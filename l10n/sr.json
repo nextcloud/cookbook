@@ -171,6 +171,7 @@
     "Unsaturated Fat" : "Незасићене масти",
     "Trans Fat" : "Транс масти",
     "Source" : "Извор",
+    "Copy ingredients" : "Копирај састојке",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Услед неисправне синтаксе састојак не може понова да се прорачуна. Молимо вас да га промените на следећу синтаксу: количина јединица састојак. Примери: 200 g шаргарепа или 1 прстохват соли",
     "Loading…" : "Учитавам…",
     "Failed to load recipes with keywords: {tags}" : "Није успело учитавање рецепата са кључним речима: {tags}",

@@ -173,6 +173,7 @@ OC.L10N.register(
     "Unsaturated Fat" : "不飽和脂肪",
     "Trans Fat" : "反式脂肪",
     "Source" : "來源",
+    "Copy ingredients" : "複製材料",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "由於語法錯誤，無法重新計算成分。請將其更改為以下語法：[數量] [單位] [成分]。示例：200 克胡蘿蔔，1 撮鹽",
     "Loading…" : "載入中…",
     "Failed to load recipes with keywords: {tags}" : "無法加載帶有關鍵字的食譜：{tags}",
