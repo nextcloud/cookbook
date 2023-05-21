@@ -7,7 +7,7 @@ OC.L10N.register(
     "Save" : "Save",
     "Search" : "البحث",
     "Filter" : "فلتر",
-    "Category" : "الفئة",
+    "Category" : "التصنيف",
     "Tags" : "الوسوم",
     "Uncategorized recipes" : "وصفات غير مصنفة",
     "Categories" : "التصنيفات",

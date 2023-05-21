@@ -173,6 +173,7 @@ OC.L10N.register(
     "Unsaturated Fat" : "Doymamış yağ",
     "Trans Fat" : "Trans yağ",
     "Source" : "Kaynak",
+    "Copy ingredients" : "Malzemeleri kopyala",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Yanlış söz dizimi nedeniyle içerik yeniden hesaplanamadı. Lütfen bu söz dizimini şu şekilde değiştirin: miktar birim bileşen. Örnekler: 200 gr havuç ya da 1 tutam tuz",
     "Loading…" : "Yükleniyor…",
     "Failed to load recipes with keywords: {tags}" : "Şu anahtar sözcüklerin bulunduğu tarifler yüklenemedi: {tags}",
