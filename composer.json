@@ -14,7 +14,8 @@
     "require-dev": {
         "nextcloud/coding-standard": "^1.0.0",
         "christophwurst/nextcloud_testing": "^0.12.4",
-        "psalm/phar": "^4.10"
+        "psalm/phar": "^4.10",
+        "nextcloud/ocp": "^25.0"
     },
     "scripts": {
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",

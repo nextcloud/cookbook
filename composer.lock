@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d86d0f809bc147a0b624e84d3c28bd6",
+    "content-hash": "a9c310cb64ad580fa39354e7ede6801a",
     "packages": [],
     "packages-dev": [
         {
@@ -732,6 +732,49 @@
                 "source": "https://github.com/nextcloud/coding-standard/tree/v1.1.0"
             },
             "time": "2023-04-13T10:52:46+00:00"
+        },
+        {
+            "name": "nextcloud/ocp",
+            "version": "v25.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nextcloud-deps/ocp.git",
+                "reference": "4f1eec84860621a1ce9a812e15bbf9a4f055cd3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/4f1eec84860621a1ce9a812e15bbf9a4f055cd3b",
+                "reference": "4f1eec84860621a1ce9a812e15bbf9a4f055cd3b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 || ~8.0 || ~8.1",
+                "psr/container": "^1.1.1",
+                "psr/event-dispatcher": "^1.0",
+                "psr/log": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "26.0.0-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Wurst",
+                    "email": "christoph@winzerhof-wurst.at"
+                }
+            ],
+            "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
+            "support": {
+                "issues": "https://github.com/nextcloud-deps/ocp/issues",
+                "source": "https://github.com/nextcloud-deps/ocp/tree/v25.0.4"
+            },
+            "time": "2023-03-03T14:24:08+00:00"
         },
         {
             "name": "nikic/php-parser",
