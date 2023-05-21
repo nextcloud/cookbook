@@ -1,0 +1,750 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="lib/AppInfo/Application.php">
+    <UndefinedClass occurrences="2">
+      <code>App</code>
+      <code>IBootstrap</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/CategoryApiController.php">
+    <UndefinedClass occurrences="1">
+      <code>ApiController</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/CategoryController.php">
+    <UndefinedClass occurrences="1">
+      <code>Controller</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/ConfigApiController.php">
+    <UndefinedClass occurrences="1">
+      <code>ApiController</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/ConfigController.php">
+    <UndefinedClass occurrences="1">
+      <code>Controller</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/Implementation/CategoryImplementation.php">
+    <UndefinedClass occurrences="5">
+      <code>Http</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Controller/Implementation/ConfigImplementation.php">
+    <UndefinedClass occurrences="6">
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="3">
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Controller/Implementation/KeywordImplementation.php">
+    <UndefinedClass occurrences="1">
+      <code>JSONResponse</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>JSONResponse</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Controller/Implementation/RecipeImplementation.php">
+    <UndefinedClass occurrences="44">
+      <code>$file</code>
+      <code>$file</code>
+      <code>DataDisplayResponse</code>
+      <code>FileDisplayResponse</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>Http</code>
+      <code>IL10N</code>
+      <code>IRequest</code>
+      <code>IURLGenerator</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="22">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>$this-&gt;urlGenerator</code>
+      <code>IL10N</code>
+      <code>IRequest</code>
+      <code>IURLGenerator</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse|FileDisplayResponse|DataDisplayResponse</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Controller/KeywordApiController.php">
+    <UndefinedClass occurrences="1">
+      <code>ApiController</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/KeywordController.php">
+    <UndefinedClass occurrences="1">
+      <code>Controller</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/MainController.php">
+    <UndefinedClass occurrences="1">
+      <code>Controller</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/RecipeApiController.php">
+    <UndefinedClass occurrences="1">
+      <code>ApiController</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/RecipeController.php">
+    <UndefinedClass occurrences="1">
+      <code>Controller</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Controller/UtilApiController.php">
+    <UndefinedClass occurrences="1">
+      <code>ApiController</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Db/RecipeDb.php">
+    <RedundantCondition occurrences="2">
+      <code>$keywords &amp;&amp; is_array($keywords)</code>
+      <code>is_array($keywords)</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="5">
+      <code>!is_array($ids)</code>
+      <code>!is_array($pairs)</code>
+      <code>!is_array($pairs)</code>
+      <code>!is_array($recipes)</code>
+      <code>!is_array($recipes)</code>
+    </TypeDoesNotContainType>
+    <UndefinedClass occurrences="48">
+      <code>DoesNotExistException</code>
+      <code>IDBConnection</code>
+      <code>IL10N</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>IQueryBuilder</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+      <code>Types</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="31">
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;db</code>
+      <code>$this-&gt;l</code>
+      <code>IDBConnection</code>
+      <code>IL10N</code>
+      <code>\OCP\AppFramework\Db\DoesNotExistException</code>
+      <code>\OCP\AppFramework\Db\DoesNotExistException</code>
+      <code>\OCP\AppFramework\Db\DoesNotExistException</code>
+      <code>\OCP\AppFramework\Db\DoesNotExistException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/DownloadHelper.php">
+    <InvalidNullableReturnType occurrences="2">
+      <code>int</code>
+      <code>string</code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement occurrences="2">
+      <code>$this-&gt;content</code>
+      <code>$this-&gt;status</code>
+    </NullableReturnStatement>
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/EncodingGuessingHelper.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/FileSystem/RecipeNameHelper.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/AbstractRecipeFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>File</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Helper/Filter/DB/RecipeDatesFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>File</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/ExtractImageUrlFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="4">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixDescriptionFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixDurationsFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixImageSchemeFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="3">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixIngredientsFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixInstructionsFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="6">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixKeywordsFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixNutritionFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixRecipeYieldFilter.php">
+    <ParadoxicalCondition occurrences="1">
+      <code>is_float($json[self::YIELD]) || is_double($json[self::YIELD])</code>
+    </ParadoxicalCondition>
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="4">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixToolsFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixUrlFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/Filter/JSON/SchemaConformityFilter.php">
+    <FalseOperand occurrences="1">
+      <code>$changed</code>
+    </FalseOperand>
+    <InvalidOperand occurrences="1">
+      <code>$this-&gt;setJSONValue($json, '@type', 'Recipe')</code>
+    </InvalidOperand>
+    <InvalidReturnStatement occurrences="1">
+      <code>$changed</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>bool</code>
+    </InvalidReturnType>
+  </file>
+  <file src="lib/Helper/Filter/NormalizeRecipeFileFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>File</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Helper/Filter/Output/EnsureNutritionPresentFilter.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/HTMLParser/AbstractHtmlParser.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/HTMLParser/HttpJsonLdParser.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="4">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/HTMLParser/HttpMicrodataParser.php">
+    <InvalidDocblock occurrences="1"/>
+    <MissingDocblockType occurrences="1">
+      <code>$node</code>
+    </MissingDocblockType>
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>$this-&gt;l</code>
+    </UndefinedDocblockClass>
+    <UndefinedMethod occurrences="4">
+      <code>getAttribute</code>
+      <code>getAttribute</code>
+      <code>getElementsByTagName</code>
+      <code>hasAttribute</code>
+    </UndefinedMethod>
+  </file>
+  <file src="lib/Helper/HtmlToDomParser.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="8">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/ISO8601DurationHelper.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/ImageService/ImageFileHelper.php">
+    <UndefinedClass occurrences="7">
+      <code>File</code>
+      <code>File</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/ImageService/ImageGenerationHelper.php">
+    <UndefinedClass occurrences="3">
+      <code>File</code>
+      <code>File</code>
+      <code>Folder</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Helper/ImageService/ThumbnailFileHelper.php">
+    <UndefinedClass occurrences="7">
+      <code>File</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/RestParameterParser.php">
+    <InvalidReturnType occurrences="1">
+      <code>array</code>
+    </InvalidReturnType>
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="4">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/UserConfigHelper.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$value</code>
+    </InvalidScalarArgument>
+    <MissingDependency occurrences="2">
+      <code>Application</code>
+      <code>Application</code>
+    </MissingDependency>
+    <UndefinedClass occurrences="2">
+      <code>IConfig</code>
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="6">
+      <code>$this-&gt;config</code>
+      <code>$this-&gt;config</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IConfig</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/UserFolderHelper.php">
+    <UndefinedClass occurrences="7">
+      <code>FileInfo</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>IL10N</code>
+      <code>IRootFolder</code>
+      <code>NotFoundException</code>
+      <code>NotPermittedException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="8">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>?Node</code>
+      <code>IL10N</code>
+      <code>IRootFolder</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20190312140601.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20190910100911.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20190910223344.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20200315121603.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20210427082010.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20210701093123.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Migration/Version000000Date20220703174647.php">
+    <UndefinedClass occurrences="1">
+      <code>SimpleMigrationStep</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Search/Provider.php">
+    <DuplicateClass occurrences="1">
+      <code>Provider</code>
+    </DuplicateClass>
+  </file>
+  <file src="lib/Service/DbCacheService.php">
+    <UndefinedClass occurrences="3">
+      <code>File</code>
+      <code>File</code>
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>DoesNotExistException</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Service/HtmlDownloadService.php">
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="5">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Service/ImageService.php">
+    <UndefinedClass occurrences="9">
+      <code>File</code>
+      <code>File</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>Folder</code>
+    </UndefinedClass>
+  </file>
+  <file src="lib/Service/RecipeExtractionService.php">
+    <InvalidDocblock occurrences="1"/>
+    <MissingDocblockType occurrences="1">
+      <code>$parser</code>
+    </MissingDocblockType>
+    <UndefinedClass occurrences="1">
+      <code>IL10N</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Service/RecipeService.php">
+    <NullableReturnStatement occurrences="1">
+      <code>null</code>
+    </NullableReturnStatement>
+    <UndefinedClass occurrences="28">
+      <code>$node</code>
+      <code>$node</code>
+      <code>$node</code>
+      <code>$recipe_folder</code>
+      <code>$recipe_folder</code>
+      <code>$recipe_folder</code>
+      <code>$this-&gt;il10n</code>
+      <code>$this-&gt;il10n</code>
+      <code>$this-&gt;il10n</code>
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>$user_folder</code>
+      <code>File</code>
+      <code>File</code>
+      <code>Folder</code>
+      <code>Folder</code>
+      <code>IL10N</code>
+      <code>IRootFolder</code>
+      <code>NotFoundException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="14">
+      <code>$file</code>
+      <code>$recipe_file</code>
+      <code>$recipe_file</code>
+      <code>$recipe_file</code>
+      <code>$recipe_file</code>
+      <code>$recipe_file</code>
+      <code>File</code>
+      <code>File</code>
+      <code>File</code>
+      <code>File|null</code>
+      <code>PreConditionNotMetException</code>
+      <code>PreConditionNotMetException</code>
+      <code>\OCP\AppFramework\Db\DoesNotExistException</code>
+      <code>\OCP\AppFramework\Db\DoesNotExistException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Service/ThumbnailService.php">
+    <UndefinedClass occurrences="7">
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>IL10N</code>
+      <code>Image</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="3">
+      <code>$this-&gt;l</code>
+      <code>$this-&gt;l</code>
+      <code>IL10N</code>
+    </UndefinedDocblockClass>
+  </file>
+</files>
