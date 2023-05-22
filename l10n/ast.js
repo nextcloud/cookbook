@@ -10,6 +10,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Tools" : "Ferramientes",
     "Calories" : "Caloríes",
-    "Loading…" : "Cargando…"
+    "Loading…" : "Cargando…",
+    "Nutrition information" : "Información nutricional"
 },
 "nplurals=2; plural=(n != 1);");
