@@ -4,6 +4,7 @@ OC.L10N.register(
     "Recipes" : "Recetes",
     "Cookbook" : "Recetariu",
     "All recipes" : "Toles recetes",
+    "Category" : "Categoría",
     "Tags" : "Etiquetes",
     "Name" : "Nome",
     "Description" : "Descripción",
