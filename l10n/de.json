@@ -171,6 +171,7 @@
     "Unsaturated Fat" : "Ungesättigte Fettsäuren",
     "Trans Fat" : "Transfette",
     "Source" : "Quelle",
+    "Copy ingredients" : "Zutaten kopieren",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Die Menge der Zutat kann aufgrund einer falschen Syntax nicht neu berechnet werden. Bitte ändere sie in diese Syntax: Menge Einheit Zutat. Beispiele: 200 g Karotten oder 1 Prise Salz",
     "Loading…" : "Lade …",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlüsselwörter: {tags}",
