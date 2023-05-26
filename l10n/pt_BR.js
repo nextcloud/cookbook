@@ -173,6 +173,7 @@ OC.L10N.register(
     "Unsaturated Fat" : "Gordura Insaturada",
     "Trans Fat" : "Gordura Trans",
     "Source" : "Fonte",
+    "Copy ingredients" : "Copiar ingredientes",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "O ingrediente não pode ser recalculado devido à sintaxe incorreta. Por favor, altere para esta sintaxe: quantidade unidade ingrediente. Exemplos: 200 g de cenoura ou 1 pitada de sal",
     "Loading…" : "Carregando...",
     "Failed to load recipes with keywords: {tags}" : "Falhou em carregar receitas com palavras-chave: {tags}",
