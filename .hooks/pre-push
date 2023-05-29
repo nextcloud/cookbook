@@ -17,9 +17,11 @@ trap cleanup EXIT
 retVal=0
 
 if [ -e 'vendor/bin/php-cs-fixer' ]; then
-
 	composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
-	
+fi
+
+if [ -e 'vendor/bin/psalm.phar' ]; then
+	composer psalm || { echo "The PHP code has type issues. Check psalm."; (( retVal |= 16 )); }
 fi
 
 if [ -e 'node_modules/.bin/eslint' ]; then

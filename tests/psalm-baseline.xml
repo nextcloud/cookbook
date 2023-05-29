@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="lib/Controller/Implementation/CategoryImplementation.php">
+    <InvalidArgument occurrences="2">
+      <code>$e-&gt;getMessage()</code>
+      <code>'New category name not found in data'</code>
+    </InvalidArgument>
+  </file>
+  <file src="lib/Controller/Implementation/ConfigImplementation.php">
+    <InvalidArgument occurrences="2">
+      <code>'OK'</code>
+      <code>'Search index rebuilt successfully'</code>
+    </InvalidArgument>
+  </file>
+  <file src="lib/Controller/Implementation/RecipeImplementation.php">
+    <InvalidArgument occurrences="10">
+      <code>$e-&gt;getMessage()</code>
+      <code>$e-&gt;getMessage()</code>
+      <code>$e-&gt;getMessage()</code>
+      <code>$e-&gt;getMessage()</code>
+      <code>$e-&gt;getMessage()</code>
+      <code>$file-&gt;getParent()-&gt;getId()</code>
+      <code>$file-&gt;getParent()-&gt;getId()</code>
+      <code>$id</code>
+      <code>'Field "url" is required'</code>
+      <code>'Recipe ' . $id . ' deleted successfully'</code>
+    </InvalidArgument>
+    <TooManyArguments occurrences="3">
+      <code>new JSONResponse($recipes, 200, ['Content-Type' =&gt; 'application/json'])</code>
+      <code>new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' =&gt; 'application/json'])</code>
+      <code>new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' =&gt; 'application/json'])</code>
+    </TooManyArguments>
+  </file>
+  <file src="lib/Controller/RecipeController.php">
+    <InvalidReturnStatement occurrences="8">
+      <code>$this-&gt;impl-&gt;create()</code>
+      <code>$this-&gt;impl-&gt;destroy($id)</code>
+      <code>$this-&gt;impl-&gt;getAllInCategory($category)</code>
+      <code>$this-&gt;impl-&gt;getAllWithTags($keywords)</code>
+      <code>$this-&gt;impl-&gt;image($id)</code>
+      <code>$this-&gt;impl-&gt;search($query)</code>
+      <code>$this-&gt;impl-&gt;show($id)</code>
+      <code>$this-&gt;impl-&gt;update($id)</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="8">
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse|FileDisplayResponse|DataDisplayResponse</code>
+    </InvalidReturnType>
+    <UndefinedDocblockClass occurrences="8">
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse</code>
+      <code>JSONResponse|FileDisplayResponse|DataDisplayResponse</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Db/RecipeDb.php">
+    <RedundantCondition occurrences="2">
+      <code>$keywords &amp;&amp; is_array($keywords)</code>
+      <code>is_array($keywords)</code>
+    </RedundantCondition>
+    <TypeDoesNotContainType occurrences="5">
+      <code>!is_array($ids)</code>
+      <code>!is_array($pairs)</code>
+      <code>!is_array($pairs)</code>
+      <code>!is_array($recipes)</code>
+      <code>!is_array($recipes)</code>
+    </TypeDoesNotContainType>
+  </file>
+  <file src="lib/Helper/DownloadHelper.php">
+    <InvalidNullableReturnType occurrences="2">
+      <code>int</code>
+      <code>string</code>
+    </InvalidNullableReturnType>
+    <NullableReturnStatement occurrences="2">
+      <code>$this-&gt;content</code>
+      <code>$this-&gt;status</code>
+    </NullableReturnStatement>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixRecipeYieldFilter.php">
+    <ParadoxicalCondition occurrences="1">
+      <code>is_float($json[self::YIELD]) || is_double($json[self::YIELD])</code>
+    </ParadoxicalCondition>
+  </file>
+  <file src="lib/Helper/Filter/JSON/SchemaConformityFilter.php">
+    <FalseOperand occurrences="1">
+      <code>$changed</code>
+    </FalseOperand>
+    <InvalidOperand occurrences="1">
+      <code>$this-&gt;setJSONValue($json, '@type', 'Recipe')</code>
+    </InvalidOperand>
+    <InvalidReturnStatement occurrences="1">
+      <code>$changed</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="1">
+      <code>bool</code>
+    </InvalidReturnType>
+  </file>
+  <file src="lib/Helper/Filter/NormalizeRecipeFileFilter.php">
+    <InvalidOperand occurrences="1">
+      <code>$filter-&gt;apply($json, $recipeFile)</code>
+    </InvalidOperand>
+  </file>
+  <file src="lib/Helper/HTMLParser/HttpMicrodataParser.php">
+    <InvalidDocblock occurrences="1"/>
+    <MissingDocblockType occurrences="1">
+      <code>$node</code>
+    </MissingDocblockType>
+    <UndefinedMethod occurrences="4">
+      <code>getAttribute</code>
+      <code>getAttribute</code>
+      <code>getElementsByTagName</code>
+      <code>hasAttribute</code>
+    </UndefinedMethod>
+  </file>
+  <file src="lib/Helper/ImageService/ThumbnailFileHelper.php">
+    <UndefinedDocblockClass occurrences="8">
+      <code>GenericFileException</code>
+      <code>GenericFileException</code>
+      <code>InvalidPathException</code>
+      <code>InvalidPathException</code>
+      <code>InvalidThumbnailTypeException</code>
+      <code>InvalidThumbnailTypeException</code>
+      <code>LockedException</code>
+      <code>LockedException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/RestParameterParser.php">
+    <InvalidReturnType occurrences="1">
+      <code>array</code>
+    </InvalidReturnType>
+  </file>
+  <file src="lib/Helper/UserConfigHelper.php">
+    <InvalidScalarArgument occurrences="1">
+      <code>$value</code>
+    </InvalidScalarArgument>
+  </file>
+  <file src="lib/Helper/UserFolderHelper.php">
+    <MissingDependency occurrences="4">
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>IRootFolder</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+  </file>
+  <file src="lib/Search/Provider.php">
+    <DuplicateClass occurrences="1">
+      <code>Provider</code>
+    </DuplicateClass>
+  </file>
+  <file src="lib/Service/ImageService.php">
+    <UndefinedDocblockClass occurrences="7">
+      <code>GenericFileException</code>
+      <code>InvalidPathException</code>
+      <code>InvalidThumbnailTypeException</code>
+      <code>NoRecipeImageFoundException</code>
+      <code>NoRecipeImageFoundException</code>
+      <code>NoRecipeImageFoundException</code>
+      <code>RecipeImageExistsException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Service/RecipeExtractionService.php">
+    <InvalidDocblock occurrences="1"/>
+    <MissingDocblockType occurrences="1">
+      <code>$parser</code>
+    </MissingDocblockType>
+  </file>
+  <file src="lib/Service/RecipeService.php">
+    <InvalidNullableReturnType occurrences="2">
+      <code>array</code>
+      <code>int</code>
+    </InvalidNullableReturnType>
+    <MissingDependency occurrences="5">
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>$this-&gt;root</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+    <NullableReturnStatement occurrences="3">
+      <code>null</code>
+      <code>null</code>
+      <code>null</code>
+    </NullableReturnStatement>
+    <RedundantCondition occurrences="1">
+      <code>!array_key_exists('dateCreated', $json) &amp;&amp; method_exists($file, 'getCreationTime')</code>
+    </RedundantCondition>
+    <UndefinedInterfaceMethod occurrences="4">
+      <code>newFile</code>
+      <code>newFile</code>
+      <code>newFile</code>
+      <code>nodeExists</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="lib/Service/ThumbnailService.php">
+    <MissingDependency occurrences="6">
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>Image</code>
+    </MissingDependency>
+  </file>
+</files>
