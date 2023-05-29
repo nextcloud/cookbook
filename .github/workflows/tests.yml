@@ -69,10 +69,11 @@ jobs:
             run: composer lint:lint
         -   name: Run PHP code style checker
             shell: bash
-            env:
-                PHP_CS_FIXER_IGNORE_ENV: 1
             run: composer cs:check
-            
+        -   name: Run PHP type checker Psalm
+            shell: bash
+            run: composer psalm
+
         -   name: Check for formatting issues with vue files (prettier)
             shell: bash
             run: >-
