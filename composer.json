@@ -24,7 +24,7 @@
         "psalm": "psalm.phar --threads=1",
         "psalm:update-baseline": "psalm.phar --threads=1 --update-baseline",
         "psalm:update-baseline:force": "psalm.phar --threads=1 --update-baseline --set-baseline=tests/psalm-baseline.xml",
-        "psalm:clear": "psalm.phar --clear-cache && psalm --clear-global-cache",
+        "psalm:clear": "psalm.phar --clear-cache && psalm.phar --clear-global-cache",
         "psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
     },
     "config": {
