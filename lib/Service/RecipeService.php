@@ -216,8 +216,8 @@ class RecipeService {
 
 		$recipeFolderName = $this->recipeNameHelper->getFolderName($json['name']);
 
-		// Recipe already has an id, update it
 		if (isset($json['id']) && $json['id']) {
+			// Recipe already has an id, update it
 			$recipe_folder = $user_folder->getById($json['id'])[0];
 
 			$old_path = $recipe_folder->getPath();
@@ -232,8 +232,8 @@ class RecipeService {
 				$recipe_folder->move($new_path);
 			}
 
-		// This is a new recipe, create it
 		} else {
+			// This is a new recipe, create it
 			$json['dateCreated'] = $now;
 
 			if ($user_folder->nodeExists($recipeFolderName)) {
@@ -268,13 +268,13 @@ class RecipeService {
 		$full_image_data = null;
 
 		if (isset($json['image']) && $json['image']) {
-			// The image is a URL
 			if (strpos($json['image'], 'http') === 0) {
+				// The image is a URL
 				$json['image'] = str_replace(' ', '%20', $json['image']);
 				$full_image_data = file_get_contents($json['image']);
 
-			// The image is a local path
 			} else {
+				// The image is a local path
 				try {
 					$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
 					$full_image_data = $full_image_file->getContent();
@@ -283,8 +283,8 @@ class RecipeService {
 				}
 			}
 
-		// The image field was empty, remove images in the recipe folder
 		} else {
+			// The image field was empty, remove images in the recipe folder
 			$this->imageService->dropImage($recipe_folder);
 		}
 
@@ -391,8 +391,8 @@ class RecipeService {
 
 				$node->move($recipe_folder->getPath() . '/recipe.json');
 
-			// Rename folders with .json extensions (this was likely caused by a migration bug)
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
+				// Rename folders with .json extensions (this was likely caused by a migration bug)
 				$node->move(str_replace('.json', '', $node->getPath()));
 			}
 		}
