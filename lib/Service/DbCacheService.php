@@ -37,6 +37,9 @@ class DbCacheService {
 	/** @var NormalizeRecipeFileFilter */
 	private $normalizeFileFilter;
 
+	/**
+	 * @var array<int, mixed>
+	 */
 	private $jsonFiles;
 	private $dbReceipeFiles;
 	private $dbKeywords;
@@ -223,7 +226,7 @@ class DbCacheService {
 
 	//     private function
 
-	private function isDbEntryUpToDate($id) {
+	private function isDbEntryUpToDate(int $id) {
 		$dbEntry = $this->dbReceipeFiles[$id];
 		$fileEntry = $this->jsonFiles[$id];
 

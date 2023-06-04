@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
 
 class RecipeController extends Controller {
@@ -72,7 +74,7 @@ class RecipeController extends Controller {
 	 * @NoAdminRequired
 	 * @NoCSRFRequired
 	 * @param $id
-	 * @return JSONResponse|FileDisplayResponse|DataDisplayResponse
+	 * @return Response
 	 */
 	public function image($id) {
 		return $this->impl->image($id);

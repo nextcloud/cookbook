@@ -108,7 +108,7 @@ class UserFolderHelper {
 		return $this->cache;
 	}
 
-	private function getOrCreateFolder($path): Folder {
+	private function getOrCreateFolder(string $path): Folder {
 		try {
 			$node = $this->root->get($path);
 		} catch (NotFoundException $ex) {

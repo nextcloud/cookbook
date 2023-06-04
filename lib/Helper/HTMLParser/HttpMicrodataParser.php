@@ -233,7 +233,6 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	private function extractAttribute(DOMNodeList $nodes, array $attributes): array {
 		$foundEntries = [];
 
-		/** @var $node \DOMElement */
 		foreach ($nodes as $node) {
 			try {
 				$foundEntries[] = $this->extractSingeAttribute($node, $attributes);

@@ -14,6 +14,7 @@ use OCA\Cookbook\Helper\Filter\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
+use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
@@ -97,7 +98,7 @@ class RecipeService {
 	 *
 	 * @param int $id
 	 *
-	 * @return array|null
+	 * @return ?array
 	 */
 	public function getRecipeById(int $id) {
 		$file = $this->getRecipeFileByFolderId($id);
@@ -113,10 +114,8 @@ class RecipeService {
 	 * Get a recipe's modification time by its folder id.
 	 *
 	 * @param int $id
-	 *
-	 * @return int
 	 */
-	public function getRecipeMTime(int $id) {
+	public function getRecipeMTime(int $id): ?int {
 		$file = $this->getRecipeFileByFolderId($id);
 
 		if (!$file) {
@@ -184,7 +183,7 @@ class RecipeService {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
-		if ($recipe_folder && count($recipe_folder) > 0) {
+		if ($recipe_folder) {
 			$recipe_folder[0]->delete();
 		}
 
@@ -462,7 +461,7 @@ class RecipeService {
 	 * @param string $keywords Keywords/tags as a comma-separated string.
 	 *
 	 * @return array
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws DoesNotExistException
 	 */
 	public function getRecipesByKeywords($keywords): array {
 		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
@@ -473,11 +472,14 @@ class RecipeService {
 	/**
 	 * Search for recipes by keywords
 	 *
-	 * @param $keywords_string
+	 * @param string $keywords_string
+	 *
 	 * @return array
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 *
+	 * @throws DoesNotExistException
+	 *
 	 */
-	public function findRecipesInSearchIndex($keywords_string): array {
+	public function findRecipesInSearchIndex(string $keywords_string): array {
 		$keywords_string = strtolower($keywords_string);
 		$keywords_array = [];
 		preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -535,10 +537,8 @@ class RecipeService {
 	 * Get recipe file contents as an array
 	 *
 	 * @param File $file
-	 *
-	 * @return array
 	 */
-	public function parseRecipeFile($file) {
+	public function parseRecipeFile($file): ?array {
 		if (!$file) {
 			return null;
 		}
