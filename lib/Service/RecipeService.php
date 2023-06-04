@@ -184,7 +184,7 @@ class RecipeService {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
-		if ($recipe_folder && count($recipe_folder) > 0) {
+		if ($recipe_folder) {
 			$recipe_folder[0]->delete();
 		}
 

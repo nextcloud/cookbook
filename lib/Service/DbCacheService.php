@@ -37,6 +37,9 @@ class DbCacheService {
 	/** @var NormalizeRecipeFileFilter */
 	private $normalizeFileFilter;
 
+	/**
+	 * @var array<int, mixed>
+	 */
 	private $jsonFiles;
 	private $dbReceipeFiles;
 	private $dbKeywords;

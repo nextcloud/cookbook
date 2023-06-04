@@ -21,11 +21,13 @@
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
         "cs:fix": "./vendor/bin/php-cs-fixer fix",
         "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -not -path './node_modules/*' -not -path './tests/phpunit/*' -print0 | xargs -0 -n1 php -l",
-        "psalm": "psalm.phar --threads=1",
-        "psalm:update-baseline": "psalm.phar --threads=1 --update-baseline",
-        "psalm:update-baseline:force": "psalm.phar --threads=1 --update-baseline --set-baseline=tests/psalm-baseline.xml",
+        "psalm": "psalm.phar --threads=1 --no-diff",
+        "psalm:nobaseline": "psalm.phar --threads=1 --no-diff --ignore-baseline",
+        "psalm:nocache": "psalm.phar --no-cache --threads=1",
+        "psalm:update-baseline": "psalm.phar --threads=1 --no-diff --update-baseline",
+        "psalm:update-baseline:force": "psalm.phar --threads=1 --no-diff --update-baseline --set-baseline=tests/psalm-baseline.xml",
         "psalm:clear": "psalm.phar --clear-cache && psalm.phar --clear-global-cache",
-        "psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
+        "psalm:fix": "psalm.phar --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType --no-diff"
     },
     "config": {
         "platform": {
