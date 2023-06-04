@@ -1,9 +1,16 @@
 #!/usr/bin/env python
 
+import debugpy
+
 import test_runner
 import test_runner.ci_printer as l
 
 (args, subArgs) = test_runner.argument_parser.parseArguments()
+
+if args.debug_python:
+	print("Debugging Python")
+	debugpy.listen(5678)
+	debugpy.wait_for_client()
 
 # print(args)
 
