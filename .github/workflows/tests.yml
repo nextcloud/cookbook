@@ -163,6 +163,7 @@ jobs:
         shell: bash
         run: |-
           pip install yq
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           
       - name: Get the min and max compatible server versions from manifest XML file
         shell: bash
