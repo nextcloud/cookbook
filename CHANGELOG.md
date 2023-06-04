@@ -33,6 +33,8 @@
   [#1691](https://github.com/nextcloud/cookbook/pull/1691) @christianlupus
 - Fix some comments and updated PHP coding style
   [#1710](https://github.com/nextcloud/cookbook/pull/1710) @dependabot @christianlupus
+- Update Psalm and fix some introduced issues
+  [#1707](https://github.com/nextcloud/cookbook/pull/1707) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
