@@ -32,6 +32,16 @@
         //    }
         //},
         {
+            "name": "Xdebug PHPUnit",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "pathMappings": {
+                "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
+                "/var/www/html": "${workspaceFolder:base}"
+            }
+        },
+        {
             "name": "Xdebug on 9003",
             "type": "php",
             "request": "launch",

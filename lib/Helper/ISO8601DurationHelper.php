@@ -48,8 +48,8 @@ class ISO8601DurationHelper {
 
 		if ($ret === 1) {
 			$hours = (int)$matches[1];
-			$minutes = (int)$matches[2];
-			$seconds = (int)$matches[3];
+			$minutes = (int) ($matches[2] ?? 0);
+			$seconds = (int) ($matches[3] ?? 0);
 
 			while ($seconds >= 60) {
 				$seconds -= 60;
