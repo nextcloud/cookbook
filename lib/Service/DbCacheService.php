@@ -226,7 +226,7 @@ class DbCacheService {
 
 	//     private function
 
-	private function isDbEntryUpToDate($id) {
+	private function isDbEntryUpToDate(int $id) {
 		$dbEntry = $this->dbReceipeFiles[$id];
 		$fileEntry = $this->jsonFiles[$id];
 

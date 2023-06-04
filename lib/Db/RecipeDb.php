@@ -122,7 +122,7 @@ class RecipeDb {
 		return $this->unique($recipesGroupedTags);
 	}
 
-	private function mapDbNames($results) {
+	private function mapDbNames(array $results) {
 		return array_map(function ($x) {
 			$x['dateCreated'] = $x['date_created'];
 			$x['dateModified'] = $x['date_modified'];

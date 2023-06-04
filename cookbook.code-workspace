@@ -57,6 +57,8 @@
 		},
 		"intelephense.environment.includePaths": [
 			"${workspaceFolder:base}/3rdparty/doctrine/dbal/src"
-		]
+		],
+		"psalm.phpExecutablePath": "",
+		"psalm.psalmScriptPath": "vendor/bin/psalm.phar"
 	}
 }

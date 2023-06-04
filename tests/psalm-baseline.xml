@@ -37,16 +37,6 @@
       <code>is_array($keywords)</code>
     </RedundantCondition>
   </file>
-  <file src="lib/Helper/DownloadHelper.php">
-    <InvalidNullableReturnType>
-      <code>int</code>
-      <code>string</code>
-    </InvalidNullableReturnType>
-    <NullableReturnStatement>
-      <code><![CDATA[$this->content]]></code>
-      <code><![CDATA[$this->status]]></code>
-    </NullableReturnStatement>
-  </file>
   <file src="lib/Helper/Filter/JSON/FixInstructionsFilter.php">
     <NamedArgumentNotAllowed>
       <code>$instructions</code>
@@ -60,12 +50,6 @@
     <InvalidOperand>
       <code><![CDATA[$this->setJSONValue($json, '@type', 'Recipe')]]></code>
     </InvalidOperand>
-    <InvalidReturnStatement>
-      <code>$changed</code>
-    </InvalidReturnStatement>
-    <InvalidReturnType>
-      <code>bool</code>
-    </InvalidReturnType>
   </file>
   <file src="lib/Helper/Filter/NormalizeRecipeFileFilter.php">
     <InvalidOperand>
@@ -127,10 +111,6 @@
     </UndefinedDocblockClass>
   </file>
   <file src="lib/Service/RecipeService.php">
-    <InvalidNullableReturnType>
-      <code>array</code>
-      <code>int</code>
-    </InvalidNullableReturnType>
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
       <code><![CDATA[$this->root]]></code>
@@ -138,11 +118,6 @@
       <code><![CDATA[$this->root]]></code>
       <code>IRootFolder</code>
     </MissingDependency>
-    <NullableReturnStatement>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-    </NullableReturnStatement>
     <RedundantCondition>
       <code><![CDATA[!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')]]></code>
     </RedundantCondition>

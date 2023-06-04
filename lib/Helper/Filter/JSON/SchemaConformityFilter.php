@@ -14,6 +14,6 @@ class SchemaConformityFilter extends AbstractJSONFilter {
 		$changed |= $this->setJSONValue($json, '@context', 'http://schema.org');
 		$changed |= $this->setJSONValue($json, '@type', 'Recipe');
 
-		return $changed;
+		return (bool) $changed;
 	}
 }
