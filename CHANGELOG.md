@@ -31,6 +31,8 @@
   [#1700](https://github.com/nextcloud/cookbook/pull/1700) @christianlupus
 - Add psalm run to CI/CD
   [#1691](https://github.com/nextcloud/cookbook/pull/1691) @christianlupus
+- Fix some comments and updated PHP coding style
+  [#1710](https://github.com/nextcloud/cookbook/pull/1710) @dependabot @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
