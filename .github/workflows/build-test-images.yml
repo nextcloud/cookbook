@@ -38,7 +38,7 @@ jobs:
               run: make appinfo/info.xml
               if: ${{ steps.check.outputs.skip == 'false' }}
               
-            - name: Log into docker regestry as user
+            - name: Log into docker registry as user
               shell: bash
               run: >-
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
@@ -46,11 +46,19 @@ jobs:
                 --username ${{ secrets.DOCKER_HUB_USERNAME }} 
                 --password-stdin
 
+            - name: Install dependencies for runner
+              shell: bash
+              run: >-
+                cd .github/actions/run-tests &&
+                source venv/bin/activate &&
+                pip install -r requirements.txt
+
             - name: Build and push the image
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
                 export COMPOSE_DOCKER_CLI_BUILD=1 &&
+                source venv/bin/activate &&
                 ./run-locally.py
                 --pull
                 --create-images
