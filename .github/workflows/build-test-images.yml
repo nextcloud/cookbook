@@ -50,6 +50,7 @@ jobs:
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
+                virtualenv venv &&
                 source venv/bin/activate &&
                 pip install -r requirements.txt
 
