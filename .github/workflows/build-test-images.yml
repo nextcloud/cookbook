@@ -50,8 +50,6 @@ jobs:
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
-                virtualenv venv &&
-                source venv/bin/activate &&
                 pip install -r requirements.txt
 
             - name: Build and push the image
@@ -59,7 +57,6 @@ jobs:
               run: >-
                 cd .github/actions/run-tests &&
                 export COMPOSE_DOCKER_CLI_BUILD=1 &&
-                source venv/bin/activate &&
                 ./run-locally.py
                 --pull
                 --create-images
