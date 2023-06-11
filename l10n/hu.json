@@ -171,6 +171,7 @@
     "Unsaturated Fat" : "Telítetlen zsír",
     "Trans Fat" : "Transzzsír",
     "Source" : "Forrás",
+    "Copy ingredients" : "Hozzávalók másolása",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "A hozzávaló az érvénytelen szintaxis miatt nem számolható újra. Módosítsa erre a szintaxisra: mennyiség mértékegység hozzávaló. Példák: 200 g sárgarépa vagy 1 csipet só",
     "Loading…" : "Betöltés…",
     "Failed to load recipes with keywords: {tags}" : "Nem sikerült betölteni a kulcsszavakkal ellátott recepteket: {tags}",
