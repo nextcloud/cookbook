@@ -81,7 +81,13 @@
                                 <button @click="changeRecipeYield">
                                     <span class="icon-view-next" />
                                 </button>
-                                <button v-if="recipeYield !== $store.state.recipe.recipeYield" @click="restoreOriginalRecipeYield">
+                                <button
+                                    v-if="
+                                        recipeYield !==
+                                        $store.state.recipe.recipeYield
+                                    "
+                                    @click="restoreOriginalRecipeYield"
+                                >
                                     <span class="icon-history" />
                                 </button>
                             </span>
@@ -585,11 +591,11 @@ export default {
         },
         recipeYield() {
             if (this.recipeYield < 0) {
-                this.restoreOriginalRecipeYield();
+                this.restoreOriginalRecipeYield()
             }
 
-            this.recalculateIngredients();
-        }
+            this.recalculateIngredients()
+        },
     },
     mounted() {
         this.$log.info("RecipeView mounted")
@@ -680,21 +686,29 @@ export default {
             return helpers.validateIngredientSyntax(ingredient)
         },
         changeRecipeYield(increase = true) {
-            this.recipeYield = +this.recipeYield + (increase ? 1 : -1);
+            this.recipeYield = +this.recipeYield + (increase ? 1 : -1)
         },
         recalculateIngredients() {
             this.parsedIngredients = this.parsedIngredients.map(
                 (ingredient, index) => {
                     if (this.validateIngredientSyntax(ingredient)) {
                         // For some cases, where the unit is not seperated from the amount: 100g cheese
-                        const possibleUnit = ingredient.split(" ")[0].replace(/[^a-zA-Z]/g, '');
-                        const amount = parseFloat(this.$store.state.recipe.recipeIngredient[index].split(" ")[0])
+                        const possibleUnit = ingredient
+                            .split(" ")[0]
+                            .replace(/[^a-zA-Z]/g, "")
+                        const amount = parseFloat(
+                            this.$store.state.recipe.recipeIngredient[
+                                index
+                            ].split(" ")[0]
+                        )
                         const unitAndIngredient = ingredient
                             .split(" ")
                             .slice(1)
                             .join(" ")
-                        let newAmount = amount / this.$store.state.recipe.recipeYield * this.recipeYield;
-                        newAmount = newAmount.toFixed(2).replace(/[.]00$/, "");
+                        let newAmount =
+                            (amount / this.$store.state.recipe.recipeYield) *
+                            this.recipeYield
+                        newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
 
                         return `${newAmount}${possibleUnit} ${unitAndIngredient}`
                     }
@@ -739,7 +753,7 @@ export default {
         },
         restoreOriginalRecipeYield() {
             this.recipeYield = this.$store.state.recipe.recipeYield
-        }
+        },
     },
 }
 </script>

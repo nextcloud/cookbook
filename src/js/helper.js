@@ -157,9 +157,9 @@ function validateIngredientSyntax(ingredient) {
 	    (?:\s.+$|\s\S+$): Non-capturing group that matches a whitespace character followed by any character with unlimited length or any special character with unlimited length. The first alternative matches a whitespace character followed by any character(s) until the end of the string. The second alternative matches a whitespace character followed by any non-whitespace character(s) until the end of the string.
 	    $: End of string
     */
-    const ingredientSyntaxRegExp = /^(?:\d+(?:\.\d+)?(?:\/\d+)?)\s?.*$/;
+    const ingredientSyntaxRegExp = /^(?:\d+(?:\.\d+)?(?:\/\d+)?)\s?.*$/
     // Regular expression to match all possible fractions within a string
-    const ingredientFractionRegExp = /\b\d+\/\d+\b/g;
+    const ingredientFractionRegExp = /\b\d+\/\d+\b/g
     /*
         Explanation of ingredientMultipleSeperatorsRegExp:
         /^                - Start of the string
@@ -169,9 +169,13 @@ function validateIngredientSyntax(ingredient) {
                             The {2,} quantifier ensures that there are at least two occurrences of this pattern.
         .*                - Matches any characters (except newline) zero or more times.
     */
-    const ingredientMultipleSeperatorsRegExp = /^-?\d+(?:[.,]\d+){2,}.*/;
+    const ingredientMultipleSeperatorsRegExp = /^-?\d+(?:[.,]\d+){2,}.*/
 
-    return ingredientSyntaxRegExp.test(ingredient) && !ingredientFractionRegExp.test(ingredient) && !ingredientMultipleSeperatorsRegExp.test(ingredient);
+    return (
+        ingredientSyntaxRegExp.test(ingredient) &&
+        !ingredientFractionRegExp.test(ingredient) &&
+        !ingredientMultipleSeperatorsRegExp.test(ingredient)
+    )
 }
 
 export default {
