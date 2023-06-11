@@ -8,7 +8,7 @@ jobs:
     
     changelog:
         name: Check if the changelog was updated
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         
         steps:
             -   name: Checkout the app
@@ -49,7 +49,7 @@ jobs:
     
     todo-checker:
         name: Check for added todo messages
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         steps:
             -   name: Git version output
                 run: git version
@@ -77,7 +77,7 @@ jobs:
 
     appinfo:
         name: Check for matching app info file
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
 
         steps:
             -   name: Checkout of the app
@@ -121,7 +121,7 @@ jobs:
     
     package-lint:
         name: Make sure the package.json is well-formatted
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
 
         steps:
             -   name: Checkout of the app
