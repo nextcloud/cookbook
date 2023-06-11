@@ -10,7 +10,7 @@ jobs:
     
     deploy:
         name: Deploy codebase
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         
         defaults:
             run:
