@@ -69,13 +69,20 @@
                             <span>
                                 <button
                                     :disabled="recipeYield === 1"
-                                    @click="recalculateIngredients(false)"
+                                    @click="changeRecipeYield(false)"
                                 >
                                     <span class="icon-view-previous" />
                                 </button>
-                                {{ recipeYield }}
-                                <button @click="recalculateIngredients">
+                                <input
+                                    v-model="recipeYield"
+                                    type="number"
+                                    min="0"
+                                />
+                                <button @click="changeRecipeYield">
                                     <span class="icon-view-next" />
+                                </button>
+                                <button v-if="recipeYield !== $store.state.recipe.recipeYield" @click="restoreOriginalRecipeYield">
+                                    <span class="icon-history" />
                                 </button>
                             </span>
                         </p>
@@ -576,6 +583,13 @@ export default {
                 }
             }
         },
+        recipeYield() {
+            if (this.recipeYield < 0) {
+                this.restoreOriginalRecipeYield();
+            }
+
+            this.recalculateIngredients();
+        }
     },
     mounted() {
         this.$log.info("RecipeView mounted")
@@ -662,45 +676,32 @@ export default {
 
             this.recipeYield = this.$store.state.recipe.recipeYield
         },
-        recalculateIngredients(increaseYield = true) {
-            this.recipeYield = increaseYield
-                ? this.recipeYield + 1
-                : this.recipeYield - 1
-
+        validateIngredientSyntax(ingredient) {
+            return helpers.validateIngredientSyntax(ingredient)
+        },
+        changeRecipeYield(increase = true) {
+            this.recipeYield = +this.recipeYield + (increase ? 1 : -1);
+        },
+        recalculateIngredients() {
             this.parsedIngredients = this.parsedIngredients.map(
-                (ingredient) => {
+                (ingredient, index) => {
                     if (this.validateIngredientSyntax(ingredient)) {
-                        const amount = parseFloat(ingredient.split(" ")[0])
+                        // For some cases, where the unit is not seperated from the amount: 100g cheese
+                        const possibleUnit = ingredient.split(" ")[0].replace(/[^a-zA-Z]/g, '');
+                        const amount = parseFloat(this.$store.state.recipe.recipeIngredient[index].split(" ")[0])
                         const unitAndIngredient = ingredient
                             .split(" ")
                             .slice(1)
                             .join(" ")
-                        const newAmount =
-                            amount *
-                            (increaseYield
-                                ? this.recipeYield / (this.recipeYield - 1)
-                                : this.recipeYield / (this.recipeYield + 1))
+                        let newAmount = amount / this.$store.state.recipe.recipeYield * this.recipeYield;
+                        newAmount = newAmount.toFixed(2).replace(/[.]00$/, "");
 
-                        // Remove decimal places if they are .00
-                        return `${newAmount
-                            .toFixed(2)
-                            .replace(/[.]00$/, "")} ${unitAndIngredient}`
+                        return `${newAmount}${possibleUnit} ${unitAndIngredient}`
                     }
 
                     return ingredient
                 }
             )
-        },
-        validateIngredientSyntax(ingredient) {
-            /*
-				Explanation:
-    				^: Start of string
-    				(?:\d+(?:\.\d+)?|\.\d+): Non-capturing group that matches either a positive float value or a positive integer value. The first alternative matches one or more digits, followed by an optional decimal part consisting of a dot and one or more digits. The second alternative matches a decimal point followed by one or more digits.
-    				(?:\s.+$|\s\S+$): Non-capturing group that matches a whitespace character followed by any character with unlimited length or any special character with unlimited length. The first alternative matches a whitespace character followed by any character(s) until the end of the string. The second alternative matches a whitespace character followed by any non-whitespace character(s) until the end of the string.
-    				$: End of string
-			 */
-            const ingredientRegExp = /^(?:\d+(?:\.\d+)?|\.\d+)(?:\s.+$|\s\S+$)/
-            return ingredientRegExp.test(ingredient)
         },
         copyIngredientsToClipboard() {
             const ingredientsToCopy = this.parsedIngredients.join("\n")
@@ -736,6 +737,9 @@ export default {
                 document.body.removeChild(input)
             }
         },
+        restoreOriginalRecipeYield() {
+            this.recipeYield = this.$store.state.recipe.recipeYield
+        }
     },
 }
 </script>
