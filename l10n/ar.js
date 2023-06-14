@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "in %s" : "في %s",
     "None" : "غير محدد",
+    "Page not found" : "الصفحة غير موجودة",
     "Edit" : "تعديل",
     "Save" : "Save",
     "Search" : "البحث",
