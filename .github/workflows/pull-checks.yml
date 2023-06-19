@@ -32,7 +32,7 @@ jobs:
                     totalcnt="$(echo "$lines" | wc -l)"
                     echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
                     #
-                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | grep -v '^\.github/workflows/' | wc -l)"
+                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | wc -l)"
                     echo "num=$cnt" >> $GITHUB_OUTPUT
                     #
                     echo "That are $totalcnt changed files. After reducing the number there are $cnt files left."
