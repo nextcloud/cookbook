@@ -37,6 +37,8 @@
   [#1707](https://github.com/nextcloud/cookbook/pull/1707) @christianlupus
 - Allow remote debugging of the test python scripts
   [#1713](https://github.com/nextcloud/cookbook/pull/1713) @christianlupus
+- Update PHP dependencies
+  [#1729](https://github.com/nextcloud/cookbook/pull/1729) @dependabot @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
