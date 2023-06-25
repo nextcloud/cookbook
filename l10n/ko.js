@@ -21,6 +21,7 @@ OC.L10N.register(
     "Name" : "이름",
     "Description" : "설명",
     "URL" : "URL",
+    "Image" : "이미지",
     "Keywords" : "키워드",
     "Tools" : "도구",
     "Calories" : "칼로리",
