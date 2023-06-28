@@ -19,6 +19,7 @@ OC.L10N.register(
     "Description" : "الوصف",
     "URL" : "الرابط",
     "Tools" : "الأدوات",
+    "Instructions" : "التعليمات",
     "Modification date" : "تاريخ التعديل",
     "Date created" : "تم تكوين التاريخ",
     "Last modified" : "آخر تعديل",
