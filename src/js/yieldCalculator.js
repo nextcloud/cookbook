@@ -1,6 +1,7 @@
 function isValidIngredientSyntax(ingredient) {
     /*
-        Explanation of ingredientSyntaxRegExp:
+        *** Outdated!!! ***
+		Explanation of ingredientSyntaxRegExp:
 	    ^: Start of string
 	    (?:\d+(?:\.\d+)?|\.\d+): Non-capturing group that matches either a positive float value or a positive integer value. The first alternative matches one or more digits, followed by an optional decimal part consisting of a dot and one or more digits. The second alternative matches a decimal point followed by one or more digits.
 	    (?:\s.+$|\s\S+$): Non-capturing group that matches a whitespace character followed by any character with unlimited length or any special character with unlimited length. The first alternative matches a whitespace character followed by any character(s) until the end of the string. The second alternative matches a whitespace character followed by any non-whitespace character(s) until the end of the string.
