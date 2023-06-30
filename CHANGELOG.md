@@ -39,6 +39,8 @@
   [#1713](https://github.com/nextcloud/cookbook/pull/1713) @christianlupus
 - Update PHP dependencies
   [#1729](https://github.com/nextcloud/cookbook/pull/1729) @dependabot @christianlupus
+- Update Node to new LTS version
+  [#1735](https://github.com/nextcloud/cookbook/pull/1735) @nextcloud-command
 
 
 ## 0.10.2 - 2023-03-24
