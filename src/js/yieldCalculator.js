@@ -39,7 +39,9 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             const possibleUnit = ingredient
                 .split(" ")[0]
                 .replace(/[^a-zA-Z]/g, "")
-            const amount = parseFloat(ingredients[index].split(" ")[0])
+            const amount = parseFloat(
+                ingredients[index].split(" ")[0].replace(",", ".")
+            )
             const unitAndIngredient = ingredient.split(" ").slice(1).join(" ")
             let newAmount = (amount / originalYield) * currentYield
             newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
