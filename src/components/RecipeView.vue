@@ -77,7 +77,7 @@
                                     v-model="recipeYield"
                                     type="number"
                                     min="0"
-                                    style="width: 65px;"
+                                    style="width: 65px"
                                 />
                                 <button @click="changeRecipeYield">
                                     <span class="icon-view-next" />
