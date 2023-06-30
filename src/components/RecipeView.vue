@@ -69,13 +69,26 @@
                             <span>
                                 <button
                                     :disabled="recipeYield === 1"
-                                    @click="recalculateIngredients(false)"
+                                    @click="changeRecipeYield(false)"
                                 >
                                     <span class="icon-view-previous" />
                                 </button>
-                                {{ recipeYield }}
-                                <button @click="recalculateIngredients">
+                                <input
+                                    v-model="recipeYield"
+                                    type="number"
+                                    min="0"
+                                />
+                                <button @click="changeRecipeYield">
                                     <span class="icon-view-next" />
+                                </button>
+                                <button
+                                    v-if="
+                                        recipeYield !==
+                                        $store.state.recipe.recipeYield
+                                    "
+                                    @click="restoreOriginalRecipeYield"
+                                >
+                                    <span class="icon-history" />
                                 </button>
                             </span>
                         </p>
@@ -125,16 +138,17 @@
                         </template>
                         {{ t("cookbook", "Copy ingredients") }}
                     </NcButton>
-                    <h3 v-if="parsedIngredients.length">
+                    <h3 v-if="scaledIngredients.length">
                         {{ t("cookbook", "Ingredients") }}
                     </h3>
-                    <ul v-if="parsedIngredients.length">
+                    <ul v-if="scaledIngredients.length">
                         <RecipeIngredient
-                            v-for="(ingredient, idx) in parsedIngredients"
+                            v-for="(ingredient, idx) in scaledIngredients"
                             :key="'ingr' + idx"
                             :ingredient="ingredient"
                             :ingredient-has-correct-syntax="
-                                validateIngredientSyntax(ingredient)
+                                /* yieldCalculator.isValidIngredientSyntax(ingredient) */
+                                ingredientsWithValidSyntax[idx]
                             "
                             :recipe-ingredients-have-subgroups="
                                 recipeIngredientsHaveSubgroups
@@ -305,6 +319,7 @@ import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import normalizeMarkdown from "cookbook/js/title-rename"
 import { showSimpleAlertModal } from "cookbook/js/modals"
+import yieldCalculator from "cookbook/js/yieldCalculator"
 
 import ContentCopyIcon from "icons/ContentCopy.vue"
 
@@ -505,8 +520,20 @@ export default {
         visibleInfoBlocks() {
             return this.$store.state.config?.visibleInfoBlocks ?? {}
         },
+        scaledIngredients() {
+            return yieldCalculator.recalculateIngredients(
+                this.parsedIngredients,
+                this.recipeYield,
+                this.$store.state.recipe.recipeYield
+            )
+        },
+        ingredientsWithValidSyntax() {
+            return this.parsedIngredients.map(
+                yieldCalculator.isValidIngredientSyntax
+            )
+        },
         ingredientsSyntaxCorrect() {
-            return this.parsedIngredients.every(this.validateIngredientSyntax)
+            return this.ingredientsWithValidSyntax.every((x) => x)
         },
     },
     watch: {
@@ -574,6 +601,11 @@ export default {
                 } else {
                     this.parsedTools = []
                 }
+            }
+        },
+        recipeYield() {
+            if (this.recipeYield < 0) {
+                this.restoreOriginalRecipeYield()
             }
         },
     },
@@ -662,48 +694,11 @@ export default {
 
             this.recipeYield = this.$store.state.recipe.recipeYield
         },
-        recalculateIngredients(increaseYield = true) {
-            this.recipeYield = increaseYield
-                ? this.recipeYield + 1
-                : this.recipeYield - 1
-
-            this.parsedIngredients = this.parsedIngredients.map(
-                (ingredient) => {
-                    if (this.validateIngredientSyntax(ingredient)) {
-                        const amount = parseFloat(ingredient.split(" ")[0])
-                        const unitAndIngredient = ingredient
-                            .split(" ")
-                            .slice(1)
-                            .join(" ")
-                        const newAmount =
-                            amount *
-                            (increaseYield
-                                ? this.recipeYield / (this.recipeYield - 1)
-                                : this.recipeYield / (this.recipeYield + 1))
-
-                        // Remove decimal places if they are .00
-                        return `${newAmount
-                            .toFixed(2)
-                            .replace(/[.]00$/, "")} ${unitAndIngredient}`
-                    }
-
-                    return ingredient
-                }
-            )
-        },
-        validateIngredientSyntax(ingredient) {
-            /*
-				Explanation:
-    				^: Start of string
-    				(?:\d+(?:\.\d+)?|\.\d+): Non-capturing group that matches either a positive float value or a positive integer value. The first alternative matches one or more digits, followed by an optional decimal part consisting of a dot and one or more digits. The second alternative matches a decimal point followed by one or more digits.
-    				(?:\s.+$|\s\S+$): Non-capturing group that matches a whitespace character followed by any character with unlimited length or any special character with unlimited length. The first alternative matches a whitespace character followed by any character(s) until the end of the string. The second alternative matches a whitespace character followed by any non-whitespace character(s) until the end of the string.
-    				$: End of string
-			 */
-            const ingredientRegExp = /^(?:\d+(?:\.\d+)?|\.\d+)(?:\s.+$|\s\S+$)/
-            return ingredientRegExp.test(ingredient)
+        changeRecipeYield(increase = true) {
+            this.recipeYield = +this.recipeYield + (increase ? 1 : -1)
         },
         copyIngredientsToClipboard() {
-            const ingredientsToCopy = this.parsedIngredients.join("\n")
+            const ingredientsToCopy = this.scaledIngredients.join("\n")
 
             if (navigator.clipboard) {
                 navigator.clipboard
@@ -735,6 +730,9 @@ export default {
                 }
                 document.body.removeChild(input)
             }
+        },
+        restoreOriginalRecipeYield() {
+            this.recipeYield = this.$store.state.recipe.recipeYield
         },
     },
 }
