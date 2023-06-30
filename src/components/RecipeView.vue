@@ -524,15 +524,16 @@ export default {
             return yieldCalculator.recalculateIngredients(
                 this.parsedIngredients,
                 this.recipeYield,
-                this.$store.state.recipe.recipeYield,
+                this.$store.state.recipe.recipeYield
             )
         },
         ingredientsWithValidSyntax() {
-            return this.parsedIngredients.map(yieldCalculator.isValidIngredientSyntax)
+            return this.parsedIngredients.map(
+                yieldCalculator.isValidIngredientSyntax
+            )
         },
         ingredientsSyntaxCorrect() {
-            return this.ingredientsWithValidSyntax.every(x => x)
-            // return yieldCalculator.isIngredientsArrayValid(this.parsedIngredients)
+            return this.ingredientsWithValidSyntax.every((x) => x)
         },
     },
     watch: {

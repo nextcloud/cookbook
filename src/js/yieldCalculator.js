@@ -28,44 +28,37 @@ function isValidIngredientSyntax(ingredient) {
 }
 
 function isIngredientsArrayValid(ingredients) {
-	return ingredients.every(isValidIngredientSyntax)
+    return ingredients.every(isValidIngredientSyntax)
 }
 
 function recalculateIngredients(ingredients, currentYield, originalYield) {
-	return ingredients.map(
-		(ingredient, index) => {
-			if (isValidIngredientSyntax(ingredient)) {
-				// For some cases, where the unit is not separated from the amount: 100g cheese
-				const possibleUnit = ingredient
-					.split(" ")[0]
-					.replace(/[^a-zA-Z]/g, "")
-				const amount = parseFloat(
-					ingredients[index].split(" ")[0]
-				)
-				const unitAndIngredient = ingredient
-					.split(" ")
-					.slice(1)
-					.join(" ")
-				let newAmount = (amount / originalYield) * currentYield
-				newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
+    return ingredients.map((ingredient, index) => {
+        if (isValidIngredientSyntax(ingredient)) {
+            // For some cases, where the unit is not separated from the amount: 100g cheese
+            const possibleUnit = ingredient
+                .split(" ")[0]
+                .replace(/[^a-zA-Z]/g, "")
+            const amount = parseFloat(ingredients[index].split(" ")[0])
+            const unitAndIngredient = ingredient.split(" ").slice(1).join(" ")
+            let newAmount = (amount / originalYield) * currentYield
+            newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
 
-				return `${newAmount}${possibleUnit} ${unitAndIngredient}`
-			}
+            return `${newAmount}${possibleUnit} ${unitAndIngredient}`
+        }
 
-			const factor = (currentYield/originalYield)
-			const prefix= ((f) => {
-				if(f === 1){
-					return ''
-				} 
-				return `${f.toFixed(2)}x `
-			})(factor)
-			return `${prefix}${ingredient}`
-		}
-	)
+        const factor = currentYield / originalYield
+        const prefix = ((f) => {
+            if (f === 1) {
+                return ""
+            }
+            return `${f.toFixed(2)}x `
+        })(factor)
+        return `${prefix}${ingredient}`
+    })
 }
 
 export default {
-	isValidIngredientSyntax,
-	isIngredientsArrayValid,
-	recalculateIngredients
+    isValidIngredientSyntax,
+    isIngredientsArrayValid,
+    recalculateIngredients,
 }
