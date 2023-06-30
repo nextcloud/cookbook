@@ -138,16 +138,17 @@
                         </template>
                         {{ t("cookbook", "Copy ingredients") }}
                     </NcButton>
-                    <h3 v-if="parsedIngredients.length">
+                    <h3 v-if="scaledIngredients.length">
                         {{ t("cookbook", "Ingredients") }}
                     </h3>
-                    <ul v-if="parsedIngredients.length">
+                    <ul v-if="scaledIngredients.length">
                         <RecipeIngredient
-                            v-for="(ingredient, idx) in parsedIngredients"
+                            v-for="(ingredient, idx) in scaledIngredients"
                             :key="'ingr' + idx"
                             :ingredient="ingredient"
                             :ingredient-has-correct-syntax="
-                                validateIngredientSyntax(ingredient)
+                                /* yieldCalculator.isValidIngredientSyntax(ingredient) */
+                                ingredientsWithValidSyntax[idx]
                             "
                             :recipe-ingredients-have-subgroups="
                                 recipeIngredientsHaveSubgroups
@@ -318,6 +319,7 @@ import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import normalizeMarkdown from "cookbook/js/title-rename"
 import { showSimpleAlertModal } from "cookbook/js/modals"
+import yieldCalculator from "cookbook/js/yieldCalculator"
 
 import ContentCopyIcon from "icons/ContentCopy.vue"
 
@@ -518,8 +520,19 @@ export default {
         visibleInfoBlocks() {
             return this.$store.state.config?.visibleInfoBlocks ?? {}
         },
+        scaledIngredients() {
+            return yieldCalculator.recalculateIngredients(
+                this.parsedIngredients,
+                this.recipeYield,
+                this.$store.state.recipe.recipeYield,
+            )
+        },
+        ingredientsWithValidSyntax() {
+            return this.parsedIngredients.map(yieldCalculator.isValidIngredientSyntax)
+        },
         ingredientsSyntaxCorrect() {
-            return this.parsedIngredients.every(this.validateIngredientSyntax)
+            return this.ingredientsWithValidSyntax.every(x => x)
+            // return yieldCalculator.isIngredientsArrayValid(this.parsedIngredients)
         },
     },
     watch: {
@@ -593,8 +606,6 @@ export default {
             if (this.recipeYield < 0) {
                 this.restoreOriginalRecipeYield()
             }
-
-            this.recalculateIngredients()
         },
     },
     mounted() {
@@ -682,43 +693,11 @@ export default {
 
             this.recipeYield = this.$store.state.recipe.recipeYield
         },
-        validateIngredientSyntax(ingredient) {
-            return helpers.validateIngredientSyntax(ingredient)
-        },
         changeRecipeYield(increase = true) {
             this.recipeYield = +this.recipeYield + (increase ? 1 : -1)
         },
-        recalculateIngredients() {
-            this.parsedIngredients = this.parsedIngredients.map(
-                (ingredient, index) => {
-                    if (this.validateIngredientSyntax(ingredient)) {
-                        // For some cases, where the unit is not seperated from the amount: 100g cheese
-                        const possibleUnit = ingredient
-                            .split(" ")[0]
-                            .replace(/[^a-zA-Z]/g, "")
-                        const amount = parseFloat(
-                            this.$store.state.recipe.recipeIngredient[
-                                index
-                            ].split(" ")[0]
-                        )
-                        const unitAndIngredient = ingredient
-                            .split(" ")
-                            .slice(1)
-                            .join(" ")
-                        let newAmount =
-                            (amount / this.$store.state.recipe.recipeYield) *
-                            this.recipeYield
-                        newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
-
-                        return `${newAmount}${possibleUnit} ${unitAndIngredient}`
-                    }
-
-                    return ingredient
-                }
-            )
-        },
         copyIngredientsToClipboard() {
-            const ingredientsToCopy = this.parsedIngredients.join("\n")
+            const ingredientsToCopy = this.scaledIngredients.join("\n")
 
             if (navigator.clipboard) {
                 navigator.clipboard
