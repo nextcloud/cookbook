@@ -32,8 +32,31 @@ function isIngredientsArrayValid(ingredients) {
 
 function recalculateIngredients(ingredients, currentYield, originalYield) {
     return ingredients.map((ingredient, index) => {
+        const fractionRegExp = /(\d+\s)?(\d+)\/(\d+)/
+        const matches = ingredient.match(fractionRegExp)
+
+        if (matches) {
+            const [
+                fullMatch,
+                wholeNumberPartRaw,
+                numeratorRaw,
+                denominatorRaw,
+            ] = matches
+            const wholeNumberPart = wholeNumberPartRaw
+                ? parseInt(wholeNumberPartRaw, 10)
+                : 0
+            const numerator = parseInt(numeratorRaw, 10)
+            const denominator = parseInt(denominatorRaw, 10)
+
+            const decimalAmount = wholeNumberPart + numerator / denominator
+            let newAmount = (decimalAmount / originalYield) * currentYield
+            newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
+
+            const newIngredient = ingredient.replace(fullMatch, newAmount)
+            return newIngredient
+        }
+
         if (isValidIngredientSyntax(ingredient)) {
-            // For some cases, where the unit is not separated from the amount: 100g cheese
             const possibleUnit = ingredient
                 .split(" ")[0]
                 .replace(/[^a-zA-Z]/g, "")
@@ -41,20 +64,14 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
                 ingredients[index].split(" ")[0].replace(",", ".")
             )
             const unitAndIngredient = ingredient.split(" ").slice(1).join(" ")
+
             let newAmount = (amount / originalYield) * currentYield
             newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
 
             return `${newAmount}${possibleUnit} ${unitAndIngredient}`
         }
 
-        const factor = currentYield / originalYield
-        const prefix = ((f) => {
-            if (f === 1) {
-                return ""
-            }
-            return `${f.toFixed(2)}x `
-        })(factor)
-        return `${prefix}${ingredient}`
+        return ingredient
     })
 }
 
