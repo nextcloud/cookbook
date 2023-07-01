@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "وصفات طبخ",
     "in %s" : "في %s",
     "None" : "غير محدد",
     "Page not found" : "الصفحة غير موجودة",
@@ -18,11 +19,13 @@ OC.L10N.register(
     "Name" : "الاسم",
     "Description" : "الوصف",
     "URL" : "الرابط",
+    "Keywords" : "الكلمات المفتاحية",
     "Tools" : "الأدوات",
     "Instructions" : "التعليمات",
     "Modification date" : "تاريخ التعديل",
     "Date created" : "تم تكوين التاريخ",
     "Last modified" : "آخر تعديل",
+    "Source" : "المصدر",
     "Loading…" : "التحميل جارٍ…",
     "Dismiss" : "تجاهل",
     "Cancel" : "إلغاء",
