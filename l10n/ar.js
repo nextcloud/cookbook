@@ -26,6 +26,7 @@ OC.L10N.register(
     "Date created" : "تم تكوين التاريخ",
     "Last modified" : "آخر تعديل",
     "Source" : "المصدر",
+    "Copy ingredients" : "نسخ العناصر",
     "Loading…" : "التحميل جارٍ…",
     "Dismiss" : "تجاهل",
     "Cancel" : "إلغاء",
