@@ -20,7 +20,7 @@ OC.L10N.register(
     "Filter" : "Фільтр",
     "Category" : "Категорія",
     "Recipe name" : "Назва рецепта",
-    "Tags" : "Позначки",
+    "Tags" : "Мітки",
     "Search for recipes" : "Пошук рецептів",
     "Are you sure you want to delete this recipe?" : "Ви впевненні, що хочете вилучити рецепт?",
     "Delete failed" : "Не вдалося вилучити",
