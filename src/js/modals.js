@@ -7,5 +7,5 @@ export const showSimpleAlertModal = create(SimpleAlertModal, "content", "title")
 export const showSimpleConfirmModal = create(
     SimpleConfirmModal,
     "content",
-    "title"
+    "title",
 )

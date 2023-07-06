@@ -167,7 +167,7 @@ export default {
 
             if (this.filters) {
                 ret = ret.filter((r) =>
-                    r.name.toLowerCase().includes($this.filters.toLowerCase())
+                    r.name.toLowerCase().includes($this.filters.toLowerCase()),
                 )
             }
 
@@ -268,7 +268,7 @@ export default {
                     }
                     if (recipeProperty === "name") {
                         return r1[recipeProperty].localeCompare(
-                            r2[recipeProperty]
+                            r2[recipeProperty],
                         )
                     }
                     if (
