@@ -190,7 +190,7 @@ export default {
                         {
                             category: cat.name,
                         }
-                    )
+                    ),
                 )
                 if (e && e instanceof Error) {
                     throw e
@@ -224,7 +224,7 @@ export default {
                         {
                             category: oldName,
                         }
-                    )
+                    ),
                 )
                 if (e && e instanceof Error) {
                     throw e
@@ -269,7 +269,7 @@ export default {
                         console.error(e2)
                         await showSimpleAlertModal(
                             // prettier-ignore
-                            t("cookbook","The server reported an error. Please check.")
+                            t("cookbook","The server reported an error. Please check."),
                         )
                     }
                 } else {
@@ -277,7 +277,7 @@ export default {
                     console.error(e2)
                     await showSimpleAlertModal(
                         // prettier-ignore
-                        t("cookbook", "Could not query the server. This might be a network problem.")
+                        t("cookbook", "Could not query the server. This might be a network problem."),
                     )
                 }
             }
@@ -327,7 +327,7 @@ export default {
                             this.$log.info(
                                 `Reloading recipes in ${
                                     $this.$refs[`app-navi-cat-${i}`][0].title
-                                }`
+                                }`,
                             )
                             $this.categoryOpen(i)
                         }
@@ -339,7 +339,7 @@ export default {
                 })
             } catch (e) {
                 await showSimpleAlertModal(
-                    t("cookbook", "Failed to fetch categories")
+                    t("cookbook", "Failed to fetch categories"),
                 )
                 if (e && e instanceof Error) {
                     throw e
