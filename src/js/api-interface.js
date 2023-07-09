@@ -11,12 +11,12 @@ const baseUrl = `${generateUrl("apps/cookbook")}/webapp`
 instance.interceptors.request.use((config) => {
     Vue.$log.debug(
         `[axios] Making "${config.method}" request to "${config.url}"`,
-        config
+        config,
     )
     const contentType = config.headers[config.method]["Content-Type"]
     if (!["application/json", "text/json"].includes(contentType)) {
         Vue.$log.warn(
-            `[axios] Request to "${config.url}" is using Content-Type "${contentType}", not JSON`
+            `[axios] Request to "${config.url}" is using Content-Type "${contentType}", not JSON`,
         )
     }
     return config
@@ -30,7 +30,7 @@ instance.interceptors.response.use(
     (error) => {
         Vue.$log.warn("[axios] Received error", error)
         return Promise.reject(error)
-    }
+    },
 )
 
 axios.defaults.headers.common.Accept = "application/json"
