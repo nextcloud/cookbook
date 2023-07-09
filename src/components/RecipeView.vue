@@ -212,7 +212,7 @@
                             v-if="
                                 'carbohydrateContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['carbohydrateContent'],
+                                    recipe.nutrition['carbohydrateContent']
                                 )
                             "
                             :title="t('cookbook', 'Carbohydrate')"
@@ -222,7 +222,7 @@
                             v-if="
                                 'cholesterolContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['cholesterolContent'],
+                                    recipe.nutrition['cholesterolContent']
                                 )
                             "
                             :title="t('cookbook', 'Cholesterol')"
@@ -240,7 +240,7 @@
                             v-if="
                                 'proteinContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['proteinContent'],
+                                    recipe.nutrition['proteinContent']
                                 )
                             "
                             :title="t('cookbook', 'Protein')"
@@ -250,7 +250,7 @@
                             v-if="
                                 'sodiumContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['sodiumContent'],
+                                    recipe.nutrition['sodiumContent']
                                 )
                             "
                             :title="t('cookbook', 'Sodium')"
@@ -268,7 +268,7 @@
                             v-if="
                                 'saturatedFatContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['saturatedFatContent'],
+                                    recipe.nutrition['saturatedFatContent']
                                 )
                             "
                             :title="t('cookbook', 'Saturated Fat')"
@@ -278,7 +278,7 @@
                             v-if="
                                 'unsaturatedFatContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['unsaturatedFatContent'],
+                                    recipe.nutrition['unsaturatedFatContent']
                                 )
                             "
                             :title="t('cookbook', 'Unsaturated Fat')"
@@ -288,7 +288,7 @@
                             v-if="
                                 'transFatContent' in recipe.nutrition &&
                                 !isNullOrEmpty(
-                                    recipe.nutrition['transFatContent'],
+                                    recipe.nutrition['transFatContent']
                                 )
                             "
                             :title="t('cookbook', 'Trans Fat')"
@@ -395,25 +395,25 @@ export default {
 
             if (this.$store.state.recipe.description) {
                 recipe.description = helpers.escapeHTML(
-                    this.$store.state.recipe.description,
+                    this.$store.state.recipe.description
                 )
             }
 
             if (this.$store.state.recipe.recipeIngredient) {
                 recipe.ingredients = Object.values(
-                    this.$store.state.recipe.recipeIngredient,
+                    this.$store.state.recipe.recipeIngredient
                 ).map((i) => helpers.escapeHTML(i))
             }
 
             if (this.$store.state.recipe.recipeInstructions) {
                 recipe.instructions = Object.values(
-                    this.$store.state.recipe.recipeInstructions,
+                    this.$store.state.recipe.recipeInstructions
                 ).map((i) => helpers.escapeHTML(i))
             }
 
             if (this.$store.state.recipe.keywords) {
                 recipe.keywords = String(
-                    this.$store.state.recipe.keywords,
+                    this.$store.state.recipe.keywords
                 ).split(",")
             }
 
@@ -449,13 +449,13 @@ export default {
 
             if (this.$store.state.recipe.tool) {
                 recipe.tools = this.$store.state.recipe.tool.map((i) =>
-                    helpers.escapeHTML(i),
+                    helpers.escapeHTML(i)
                 )
             }
 
             if (this.$store.state.recipe.dateCreated) {
                 const date = this.parseDateTime(
-                    this.$store.state.recipe.dateCreated,
+                    this.$store.state.recipe.dateCreated
                 )
                 recipe.dateCreated =
                     date != null ? date.format("L, LT").toString() : null
@@ -463,7 +463,7 @@ export default {
 
             if (this.$store.state.recipe.dateModified) {
                 const date = this.parseDateTime(
-                    this.$store.state.recipe.dateModified,
+                    this.$store.state.recipe.dateModified
                 )
                 recipe.dateModified =
                     date != null ? date.format("L, LT").toString() : null
@@ -486,7 +486,7 @@ export default {
                 for (let idx = 0; idx < this.recipe.ingredients.length; ++idx) {
                     if (
                         this.recipe.ingredients[idx].startsWith(
-                            this.headerPrefix,
+                            this.headerPrefix
                         )
                     ) {
                         return true
@@ -524,12 +524,12 @@ export default {
             return yieldCalculator.recalculateIngredients(
                 this.parsedIngredients,
                 this.recipeYield,
-                this.$store.state.recipe.recipeYield,
+                this.$store.state.recipe.recipeYield
             )
         },
         ingredientsWithValidSyntax() {
             return this.parsedIngredients.map(
-                yieldCalculator.isValidIngredientSyntax,
+                yieldCalculator.isValidIngredientSyntax
             )
         },
         ingredientsSyntaxCorrect() {
@@ -553,7 +553,7 @@ export default {
 
                 if (r.ingredients) {
                     this.parsedIngredients = r.ingredients.map(() =>
-                        t("cookbook", "Loading…"),
+                        t("cookbook", "Loading…")
                     )
                     r.ingredients.forEach((ingredient, idx) => {
                         normalizeMarkdown(ingredient)
@@ -570,7 +570,7 @@ export default {
 
                 if (r.instructions) {
                     this.parsedInstructions = r.instructions.map(() =>
-                        t("cookbook", "Loading…"),
+                        t("cookbook", "Loading…")
                     )
                     r.instructions.forEach((instruction, idx) => {
                         normalizeMarkdown(instruction)
@@ -587,7 +587,7 @@ export default {
 
                 if (r.tools) {
                     this.parsedTools = r.tools.map(() =>
-                        t("cookbook", "Loading…"),
+                        t("cookbook", "Loading…")
                     )
                     r.tools.forEach((tool, idx) => {
                         normalizeMarkdown(tool)
@@ -688,7 +688,7 @@ export default {
                 $this.$store.dispatch("setPage", { page: "recipe" })
 
                 await showSimpleAlertModal(
-                    t("cookbook", "Loading recipe failed"),
+                    t("cookbook", "Loading recipe failed")
                 )
             }
 
@@ -704,10 +704,10 @@ export default {
                 navigator.clipboard
                     .writeText(ingredientsToCopy)
                     .then(() =>
-                        this.$log.info("JSON array copied to clipboard"),
+                        this.$log.info("JSON array copied to clipboard")
                     )
                     .catch((err) =>
-                        this.$log.error("Failed to copy JSON array: ", err),
+                        this.$log.error("Failed to copy JSON array: ", err)
                     )
             } else {
                 // fallback solution

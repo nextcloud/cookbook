@@ -190,7 +190,7 @@ export const suggestionsPopupMixin = {
                             ArrowDown: +1,
                         }[e.key],
                     0,
-                    this.suggestionOptions.length - 1,
+                    this.suggestionOptions.length - 1
                 )
                 this.suggestionsData = {
                     ...this.suggestionsData,
@@ -273,7 +273,7 @@ export const suggestionsPopupMixin = {
                     searchText === "" ||
                     option.title
                         .toLowerCase()
-                        .includes(searchText.toLowerCase()),
+                        .includes(searchText.toLowerCase())
             )
         },
     },
@@ -327,7 +327,7 @@ export default {
                     field.offsetLeft + caretPos.left,
                     field.offsetLeft +
                         field.offsetWidth -
-                        SUGGESTIONS_POPUP_WIDTH,
+                        SUGGESTIONS_POPUP_WIDTH
                 ),
                 top: field.offsetTop + caretPos.top + caretPos.height,
             }

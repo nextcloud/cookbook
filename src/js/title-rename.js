@@ -35,7 +35,7 @@ async function getRecipesFromLinks(linkIds) {
                 recipe = null
             }
             return recipe
-        }),
+        })
     )
 }
 
@@ -58,12 +58,12 @@ function insertMarkdownLinks(content, recipes) {
         // Replace plain references with recipe name
         const rePlain = RegExp(
             `(^|\\s|[,._+&?!-])#r/${id}($|\\s|[,._+&?!-])`,
-            "g",
+            "g"
         )
         // const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
         ret = ret.replace(
             rePlain,
-            `$1[${r.name} (\\#r/${id})](${getRecipeUrl(id)})$2`,
+            `$1[${r.name} (\\#r/${id})](${getRecipeUrl(id)})$2`
         )
     })
     return ret

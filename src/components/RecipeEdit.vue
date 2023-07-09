@@ -497,7 +497,7 @@ export default {
                 $this.isFetchingCategories = false
             } catch (e) {
                 await showSimpleAlertModal(
-                    t("cookbook", "Failed to fetch categories"),
+                    t("cookbook", "Failed to fetch categories")
                 )
                 if (e && e instanceof Error) {
                     throw e
@@ -523,7 +523,7 @@ export default {
                 $this.isFetchingKeywords = false
             } catch (e) {
                 await showSimpleAlertModal(
-                    t("cookbook", "Failed to fetch keywords"),
+                    t("cookbook", "Failed to fetch keywords")
                 )
                 if (e && e instanceof Error) {
                     throw e
@@ -553,7 +553,7 @@ export default {
                 $this.setup()
             } catch {
                 await showSimpleAlertModal(
-                    t("cookbook", "Loading recipe failed"),
+                    t("cookbook", "Loading recipe failed")
                 )
                 // Disable loading indicator
                 if ($this.$store.state.loadingRecipe) {
@@ -599,19 +599,19 @@ export default {
                         default:
                             await showSimpleAlertModal(
                                 // prettier-ignore
-                                t("cookbook","Unknown answer returned from server. See logs."),
+                                t("cookbook","Unknown answer returned from server. See logs.")
                             )
                             this.$log.error(e.response)
                     }
                 } else if (e.request) {
                     await showSimpleAlertModal(
-                        t("cookbook", "No answer for request was received."),
+                        t("cookbook", "No answer for request was received.")
                     )
                     this.$log.error(e)
                 } else {
                     await showSimpleAlertModal(
                         // prettier-ignore
-                        t("cookbook","Could not start request to save recipe."),
+                        t("cookbook","Could not start request to save recipe.")
                     )
                     this.$log.error(e)
                 }

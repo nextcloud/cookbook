@@ -232,7 +232,7 @@ export default {
             const $ul = $li.closest("ul")
             const $insertedIndex = Array.prototype.indexOf.call(
                 $ul.childNodes,
-                $li,
+                $li
             )
 
             // Remove the common prefix from each line of the pasted text
@@ -268,7 +268,7 @@ export default {
                 this.addNewEntry(
                     $insertedIndex + i + 1,
                     false,
-                    inputLinesArray[i],
+                    inputLinesArray[i]
                 )
             }
             this.$emit("input", this.buffer)
@@ -325,7 +325,7 @@ export default {
             const $ul = $li.closest("ul")
             const $pressedLiIndex = Array.prototype.indexOf.call(
                 $ul.childNodes,
-                $li,
+                $li
             )
 
             if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
@@ -354,7 +354,7 @@ export default {
             const $ul = $li.closest("ul")
             const $pressedLiIndex = Array.prototype.indexOf.call(
                 $ul.childNodes,
-                $li,
+                $li
             )
             this.lastFocusedFieldIndex = $pressedLiIndex
             this.handleSuggestionsPopupKeyUp(e)
@@ -388,7 +388,7 @@ export default {
                 field.focus()
                 field.setSelectionRange(
                     this.lastCursorPosition,
-                    this.lastCursorPosition,
+                    this.lastCursorPosition
                 )
             })
         },

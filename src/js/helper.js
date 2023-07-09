@@ -74,7 +74,7 @@ function escapeHTML(text) {
                 "'": "&apos;",
                 "<": "&lt;",
                 ">": "&gt;",
-            })[a],
+            }[a])
     )
 }
 

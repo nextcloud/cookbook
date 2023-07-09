@@ -47,7 +47,7 @@ export default {
                 },
                 false, // Single result
                 ["httpd/unix-directory"], // Desired MIME type
-                true, // Make modal dialog
+                true // Make modal dialog
             )
         },
     },

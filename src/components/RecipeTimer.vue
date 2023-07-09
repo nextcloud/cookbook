@@ -71,7 +71,7 @@ export default {
         // Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
         // Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
         this.audio = new Audio(
-            linkTo("cookbook", "assets/alarm-continuous.mp3"),
+            linkTo("cookbook", "assets/alarm-continuous.mp3")
         )
 
         // For now, the alarm should play continuously until it is dismissed

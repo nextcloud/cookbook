@@ -100,7 +100,7 @@ export default {
                     field.focus()
                     field.setSelectionRange(
                         this.lastCursorPosition,
-                        this.lastCursorPosition,
+                        this.lastCursorPosition
                     )
                 }
             })

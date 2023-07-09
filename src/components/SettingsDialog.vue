@@ -91,7 +91,7 @@
                     {{
                         t(
                             "cookbook",
-                            "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.",
+                            "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them."
                         )
                     }}
                 </legend>
@@ -232,7 +232,7 @@ export default {
             } catch {
                 await showSimpleAlertModal(
                     // prettier-ignore
-                    t("cookbook","Could not set preference for image printing"),
+                    t("cookbook","Could not set preference for image printing")
                 )
                 this.resetPrintImage = true
                 this.printImage = oldVal
@@ -260,7 +260,7 @@ export default {
                         {
                             interval: newVal,
                         }
-                    ),
+                    )
                 )
                 this.resetInterval = true
                 this.updateInterval = oldVal
@@ -281,7 +281,7 @@ export default {
                 // eslint-disable-next-line no-console
                 console.error("Error while trying to save info blocks", err)
                 await showSimpleAlertModal(
-                    t("cookbook", "Could not save visible info blocks"),
+                    t("cookbook", "Could not save visible info blocks")
                 )
                 this.resetVisibleInfoBlocks = true
                 this.visibleInfoBlocks = oldVal
@@ -321,13 +321,13 @@ export default {
                                 {
                                     path
                                 }
-                            ),
-                            ),
+                            )
+                            )
                         )
                 },
                 false,
                 ["httpd/unix-directory"],
-                true,
+                true
             )
         },
 
@@ -347,7 +347,7 @@ export default {
 
                 this.printImage = config.print_image
                 this.visibleInfoBlocks = visibleInfoBlocksDecode(
-                    config.visibleInfoBlocks,
+                    config.visibleInfoBlocks
                 )
                 this.showTagCloudInRecipeList =
                     this.$store.state.localSettings.showTagCloudInRecipeList
@@ -356,7 +356,7 @@ export default {
             } catch (err) {
                 this.$log.error("Error setting up SettingsDialog", err)
                 await showSimpleAlertModal(
-                    t("cookbook", "Loading config failed"),
+                    t("cookbook", "Loading config failed")
                 )
             }
         },

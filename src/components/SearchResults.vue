@@ -74,7 +74,7 @@ export default {
                             {
                                 tags,
                             }
-                        ),
+                        )
                     )
                     if (e && e instanceof Error) {
                         throw e
@@ -95,7 +95,7 @@ export default {
                             {
                                 category: cat,
                             }
-                        ),
+                        )
                     )
                     if (e && e instanceof Error) {
                         throw e
@@ -106,13 +106,13 @@ export default {
                 const $this = this
                 try {
                     const response = await api.recipes.search(
-                        $this.$route.params.value,
+                        $this.$route.params.value
                     )
                     $this.results = response.data
                 } catch (e) {
                     $this.results = []
                     await showSimpleAlertModal(
-                        t("cookbook", "Failed to load search results"),
+                        t("cookbook", "Failed to load search results")
                     )
                     if (e && e instanceof Error) {
                         throw e

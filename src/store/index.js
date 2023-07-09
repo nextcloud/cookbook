@@ -56,7 +56,7 @@ export default new Vuex.Store({
         initializeStore(state) {
             if (localStorage.getItem("showTagCloudInRecipeList")) {
                 state.localSettings.showTagCloudInRecipeList = JSON.parse(
-                    localStorage.getItem("showTagCloudInRecipeList"),
+                    localStorage.getItem("showTagCloudInRecipeList")
                 )
             } else {
                 state.localSettings.showTagCloudInRecipeList = true

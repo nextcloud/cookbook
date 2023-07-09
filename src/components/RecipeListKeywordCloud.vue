@@ -156,9 +156,9 @@ export default {
                     .map(
                         (r) =>
                             r.keywords &&
-                            r.keywords.split(",").includes(kw.name),
+                            r.keywords.split(",").includes(kw.name)
                     )
-                    .reduce((l, r) => l || r, false),
+                    .reduce((l, r) => l || r, false)
             )
         },
         /**
@@ -166,7 +166,7 @@ export default {
          */
         selectedKeywordsWithCount() {
             return this.keywordsWithCount.filter((kw) =>
-                this.selectedKeywordsBuffer.includes(kw.name),
+                this.selectedKeywordsBuffer.includes(kw.name)
             )
         },
         /**
@@ -174,7 +174,7 @@ export default {
          */
         unavailableKeywords() {
             return this.unselectedKeywords.filter(
-                (kw) => !this.selectableKeywords.includes(kw),
+                (kw) => !this.selectableKeywords.includes(kw)
             )
         },
         /**
@@ -182,7 +182,7 @@ export default {
          */
         unselectedKeywords() {
             return this.keywordsWithCount.filter(
-                (kw) => !this.selectedKeywordsWithCount.includes(kw),
+                (kw) => !this.selectedKeywordsWithCount.includes(kw)
             )
         },
     },

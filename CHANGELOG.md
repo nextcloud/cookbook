@@ -43,8 +43,6 @@
   [#1729](https://github.com/nextcloud/cookbook/pull/1729) @dependabot @christianlupus
 - Update Node to new LTS version
   [#1735](https://github.com/nextcloud/cookbook/pull/1735) @nextcloud-command
-- Update major prettier version
-  [#1746](https://github.com/nextcloud/cookbook/pull/1746) @dependabot @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
