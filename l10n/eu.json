@@ -171,6 +171,7 @@
     "Unsaturated Fat" : "Gantz asegabeak",
     "Trans Fat" : "Trans gantzak",
     "Source" : "Iturburua",
+    "Copy ingredients" : "Kopiatu osagaiak",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Osagaia ezin da berriro kalkulatu sintaxi okerragatik. Mesedez, aldatu sintaxi honetara: zenbatekoa unitate osagaia. Adibideak: 200 g azenario edo gatz pittin bat",
     "Loading…" : "Kargatzen…",
     "Failed to load recipes with keywords: {tags}" : "Huts egin du gako-hitz hau duten errezetak kargatzeak: {tags}",
