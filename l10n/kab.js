@@ -6,6 +6,7 @@ OC.L10N.register(
     "Edit" : "Ẓreg",
     "Save" : "Sekles",
     "Search" : "Nadi",
+    "Filter" : "Sizdeg",
     "Tags" : "Tibzimin",
     "Rename" : "Beddel isem",
     "Add" : "Rnu",
