@@ -10,6 +10,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const webpack = require('webpack')
 const webpackConfig = require('@nextcloud/webpack-vue-config')
 const { merge } = require('webpack-merge')
+const rules = require('@nextcloud/webpack-vue-config/rules')
 
 const buildMode = process.env.NODE_ENV
 const isDev = buildMode === 'development'
@@ -35,6 +36,9 @@ function cookbookConfig (env) {
                 cookbook: path.resolve(__dirname, 'src'),
                 icons: path.resolve(__dirname, 'node_modules/vue-material-design-icons'),
             }
+        },
+        module: {
+            rules: Object.values(rules),
         },
     })
     // console.log(config)
