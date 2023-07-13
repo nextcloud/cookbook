@@ -45,6 +45,8 @@
   [#1735](https://github.com/nextcloud/cookbook/pull/1735) @nextcloud-command
 - Update major prettier version
   [#1746](https://github.com/nextcloud/cookbook/pull/1746) @dependabot @christianlupus
+- Update major stylelint version
+  [#1750](https://github.com/nextcloud/cookbook/pull/1750) @dependabot @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
