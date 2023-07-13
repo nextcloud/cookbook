@@ -35,7 +35,7 @@ const isEnabled = () => {
     if (userValue !== null && expiry === null) {
         localStorage.setItem(
             KEY_EXPIRY,
-            moment().add(EXPIRY_MINUTES, "m").valueOf()
+            moment().add(EXPIRY_MINUTES, "m").valueOf(),
         )
     }
 

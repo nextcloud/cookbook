@@ -98,7 +98,7 @@ export default {
                 const onThumbnailPreviewLoaded = () => {
                     imgPlaceholder.removeEventListener(
                         "load",
-                        onThumbnailPreviewLoaded
+                        onThumbnailPreviewLoaded,
                     )
                     img.addEventListener("load", onThumbnailFullyLoaded)
                     $this.$once("hook:destroyed", () => {
@@ -110,12 +110,12 @@ export default {
 
                 imgPlaceholder.addEventListener(
                     "load",
-                    onThumbnailPreviewLoaded
+                    onThumbnailPreviewLoaded,
                 )
                 $this.$once("hook:destroyed", () => {
                     imgPlaceholder.removeEventListener(
                         "load",
-                        onThumbnailPreviewLoaded
+                        onThumbnailPreviewLoaded,
                     )
                 })
 

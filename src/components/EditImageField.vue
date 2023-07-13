@@ -49,7 +49,7 @@ export default {
                 false,
                 ["image/jpeg", "image/png"],
                 true,
-                OC.dialogs.FILEPICKER_TYPE_CHOOSE
+                OC.dialogs.FILEPICKER_TYPE_CHOOSE,
             )
         },
     },
