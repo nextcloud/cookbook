@@ -74,5 +74,8 @@
   "engines": {
     "node": "^20.0.0",
     "npm": "^9.0.0"
+  },
+  "overrides": {
+    "stylelint-order": "^6.0.0"
   }
 }
