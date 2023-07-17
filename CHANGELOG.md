@@ -47,6 +47,8 @@
   [#1746](https://github.com/nextcloud/cookbook/pull/1746) @dependabot @christianlupus
 - Update major stylelint version
   [#1750](https://github.com/nextcloud/cookbook/pull/1750) @dependabot @christianlupus
+- Fix dev mode with bug introduced by prettier
+  [#1758](https://github.com/nextcloud/cookbook/pull/1758) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
