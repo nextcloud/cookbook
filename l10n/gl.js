@@ -52,7 +52,7 @@ OC.L10N.register(
     "No recipe data found. This is a bug" : "Non se atoparon datos de receitas. Isto é un fallo",
     "Recipe with ID %d not found." : "Non se atopou a receita co ID %d.",
     "Image size \"%s\" is not recognized." : "O tamaño «%s» da imaxe é descoñecido.",
-    "The full-sized image is not a thumbnail." : "A imaxe a tamaño completo non é unha miniatura.",
+    "The full-sized image is not a thumbnail." : "A imaxe a tamaño real non é unha miniatura.",
     "The thumbnail type %d is not known." : "Non se coñece o tipo de miniatura %d.",
     "Cookbook" : "Receitas de cociña",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un libro de receitas integrado que usa os ficheiros JSON de schema.org como receitas",
