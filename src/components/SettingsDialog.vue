@@ -89,10 +89,8 @@
             <fieldset>
                 <legend class="settings-info-blocks__legend">
                     {{
-                        t(
-                            "cookbook",
-                            "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.",
-                        )
+                        // prettier-ignore
+                        t("cookbook", "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.")
                     }}
                 </legend>
                 <ul>
@@ -159,6 +157,17 @@
                 </ul>
             </fieldset>
         </NcAppSettingsSection>
+        <NcAppSettingsSection
+            id='debug'
+            :title="t('cookbook', 'Debug settings')"
+            class="app-settings-section"
+            >
+            <NcButton
+                @click="enableLogger"
+            >
+                Enable debugging
+            </NcButton>
+        </NcAppSettingsSection>
     </NcAppSettingsDialog>
 </template>
 
@@ -173,6 +182,8 @@ import ReloadIcon from "icons/Cached.vue"
 
 import api from "cookbook/js/api-interface"
 import { showSimpleAlertModal } from "cookbook/js/modals"
+
+import { enableLogging } from 'cookbook/js/logging'
 
 export const SHOW_SETTINGS_EVENT = "show-settings"
 
@@ -389,6 +400,9 @@ export default {
                     $this.scanningLibrary = false
                     this.$log.error("Library reindexing failed!")
                 })
+        },
+        enableLogger() {
+            enableLogging()
         },
 
         beforeDestroy() {
