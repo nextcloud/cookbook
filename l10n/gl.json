@@ -45,7 +45,7 @@
     "Download from %s failed as HTTP status code %d is not in expected range." : "Produciuse un fallo na descarga dende %s xa que o código de estado HTTP %d non está no intervalo agardado.",
     "Could not find a valid encoding when parsing %s." : "Non foi posíbel atopar unha codificación válida ao analizar %s.",
     "No parser found for the given import." : "Non se atopou ningún analizador para a importación indicada.",
-    "No recipe name was given. A unique name is required to store the recipe." : "Non se indicou ningún nome de receita. É necesario un nome único para almacenar a receita.",
+    "No recipe name was given. A unique name is required to store the recipe." : "Non se indicou ningún nome de receita. Precisase un nome único para almacenar a receita.",
     "Another recipe with that name already exists" : "Xa existe outra receita con ese nome",
     "No recipe data found. This is a bug" : "Non se atoparon datos de receitas. Isto é un fallo",
     "Recipe with ID %d not found." : "Non se atopou a receita co ID %d.",
