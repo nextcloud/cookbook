@@ -77,6 +77,7 @@
                                     v-model="recipeYield"
                                     type="number"
                                     min="0"
+                                    style="width: 65px"
                                 />
                                 <button @click="changeRecipeYield">
                                     <span class="icon-view-next" />
@@ -147,14 +148,19 @@
                             :key="'ingr' + idx"
                             :ingredient="ingredient"
                             :ingredient-has-correct-syntax="
-                                /* yieldCalculator.isValidIngredientSyntax(ingredient) */
                                 ingredientsWithValidSyntax[idx]
                             "
                             :recipe-ingredients-have-subgroups="
                                 recipeIngredientsHaveSubgroups
                             "
+                            :style="{
+                                'font-style': ingredientsWithValidSyntax[idx]
+                                    ? 'normal'
+                                    : 'italic',
+                            }"
                         />
                     </ul>
+
                     <div
                         v-if="!ingredientsSyntaxCorrect"
                         class="ingredient-parsing-error"
