@@ -13,6 +13,8 @@
   [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio
 - Make time input fields wider to view multiple digits in chrome
   [#1687](https://github.com/nextcloud/cookbook/pull/1687) @christianlupus
+- Prevent popup from falsely showing during loading of the app
+  [#1764](https://github.com/nextcloud/cookbook/pull/1764) @christianlupus
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change

@@ -66,3 +66,7 @@ export default function setupLogging(Vue) {
 
     Vue.$log.info(`Setting up logging with log level ${logLevel}`)
 }
+
+export function enableLogging() {
+    localStorage.setItem(KEY_ENABLED, true)
+}
