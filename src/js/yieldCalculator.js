@@ -61,7 +61,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
                 .split(" ")[0]
                 .replace(/[^a-zA-Z]/g, "")
             const amount = parseFloat(
-                ingredients[index].split(" ")[0].replace(",", ".")
+                ingredients[index].split(" ")[0].replace(",", "."),
             )
             const unitAndIngredient = ingredient.split(" ").slice(1).join(" ")
 
