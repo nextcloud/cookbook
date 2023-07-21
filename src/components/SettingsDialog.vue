@@ -158,15 +158,17 @@
             </fieldset>
         </NcAppSettingsSection>
         <NcAppSettingsSection
-            id='debug'
-            :title="t('cookbook', 'Debug settings')"
+            id="debug"
+            :title="t('cookbook', 'Frontend debug settings')"
             class="app-settings-section"
-            >
-            <NcButton
-                @click="enableLogger"
-            >
-                Enable debugging
-            </NcButton>
+        >
+            <legend class="settings-info-blocks__legend">
+                {{
+                    // prettier-ignore
+                    t("cookbook", "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.")
+                }}
+            </legend>
+            <NcButton @click="enableLogger">Enable debugging</NcButton>
         </NcAppSettingsSection>
     </NcAppSettingsDialog>
 </template>
@@ -183,7 +185,7 @@ import ReloadIcon from "icons/Cached.vue"
 import api from "cookbook/js/api-interface"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
-import { enableLogging } from 'cookbook/js/logging'
+import { enableLogging } from "cookbook/js/logging"
 
 export const SHOW_SETTINGS_EVENT = "show-settings"
 
