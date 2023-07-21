@@ -31,7 +31,7 @@ function isIngredientsArrayValid(ingredients) {
 }
 
 function recalculateIngredients(ingredients, currentYield, originalYield) {
-    return ingredients.map((ingredient, index) => {
+    return ingredients.map((ingredient) => {
         const fractionRegExp = /(\d+\s)?(\d+)\/(\d+)/
         const matches = ingredient.match(fractionRegExp)
 
@@ -61,7 +61,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
                 .split(" ")[0]
                 .replace(/[^a-zA-Z]/g, "")
             const amount = parseFloat(
-                ingredients[index].split(" ")[0].replace(",", "."),
+                ingredient.split(" ")[0].replace(",", "."),
             )
             const unitAndIngredient = ingredient.split(" ").slice(1).join(" ")
 
