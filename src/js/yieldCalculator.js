@@ -1,3 +1,9 @@
+/*
+    The ingredientFractionRegExp is used to identify fractions in the string.
+    This is used to exclude strings that contain fractions from being valid.
+*/
+const fractionRegExp = /^((\d+\s+)?(\d+)\s*\/\s*(\d+)).*/
+
 function isValidIngredientSyntax(ingredient) {
     /*
         The ingredientSyntaxRegExp checks whether the ingredient string starts with a number, 
@@ -7,12 +13,6 @@ function isValidIngredientSyntax(ingredient) {
     const ingredientSyntaxRegExp = /^(?:\d+(?:\.\d+)?(?:\/\d+)?)\s?.*$/
 
     /*
-        The ingredientFractionRegExp is used to identify fractions in the string.
-        This is used to exclude strings that contain fractions from being valid.
-    */
-    const ingredientFractionRegExp = /\b\d+\/\d+\b/g
-
-    /*
         The ingredientMultipleSeperatorsRegExp is used to check whether the string contains
         more than one separators (.,) after a number. This is used to exclude strings that 
         contain more than one separator from being valid.
@@ -20,9 +20,9 @@ function isValidIngredientSyntax(ingredient) {
     const ingredientMultipleSeperatorsRegExp = /^-?\d+(?:[.,]\d+){2,}.*/
 
     return (
-        ingredientSyntaxRegExp.test(ingredient) &&
-        !ingredientFractionRegExp.test(ingredient) &&
-        !ingredientMultipleSeperatorsRegExp.test(ingredient)
+        fractionRegExp.test(ingredient) ||
+        (ingredientSyntaxRegExp.test(ingredient) &&
+            !ingredientMultipleSeperatorsRegExp.test(ingredient))
     )
 }
 
@@ -32,12 +32,12 @@ function isIngredientsArrayValid(ingredients) {
 
 function recalculateIngredients(ingredients, currentYield, originalYield) {
     return ingredients.map((ingredient) => {
-        const fractionRegExp = /(\d+\s)?(\d+)\/(\d+)/
         const matches = ingredient.match(fractionRegExp)
 
         if (matches) {
             const [
-                fullMatch,
+                ,
+                fractionMatch,
                 wholeNumberPartRaw,
                 numeratorRaw,
                 denominatorRaw,
@@ -52,7 +52,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             let newAmount = (decimalAmount / originalYield) * currentYield
             newAmount = newAmount.toFixed(2).replace(/[.]00$/, "")
 
-            const newIngredient = ingredient.replace(fullMatch, newAmount)
+            const newIngredient = ingredient.replace(fractionMatch, newAmount)
             return newIngredient
         }
 
