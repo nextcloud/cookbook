@@ -36,6 +36,9 @@ The currently available clients are:
 Nook  
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=org.capacitor.cookbook.app)
 
+[Nextcloud Cookbook](https://lneugebauer.github.io/nextcloud-cookbook/) (by lneugebauer)  
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/de.lukasneugebauer.nextcloudcookbook/) [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Play Store" height="80">](https://play.google.com/store/apps/details?id=de.lukasneugebauer.nextcloudcookbook)
+
 ### Browser plugins/scripts
 
 - [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
