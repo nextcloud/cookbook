@@ -5,26 +5,26 @@ class PostgresConnector:
 		self.user = user
 		self.password = password
 		self.db = db
-	
+
 	def getUser(self):
 		return self.user
 
 	def getDb(self):
 		return self.db
-	
+
 	def getPassword(self):
 		return self.password
-	
+
 	def callSQL(self, input, params = [], text=True, capture_output=True, stdin=None):
 		cmd = [
-			'docker-compose', 'exec', '-T', 'postgres', 'psql', '-U', self.user, self.db,
+			'docker', 'compose', 'exec', '-T', 'postgres', 'psql', '-U', self.user, self.db,
 			'-v', 'ON_ERROR_STOP=1'
 		]
 		return p.pr.run(cmd + params, text=text, input=input, capture_output=capture_output, stdin=stdin)
-	
+
 	def dumpDb(self, name):
 		cmd = [
-			'docker-compose', 'exec', '-T', 'postgres', 'pg_dump', '-U', self.user, self.db, '--clean', '--if-exists'
+			'docker', 'compose', 'exec', '-T', 'postgres', 'pg_dump', '-U', self.user, self.db, '--clean', '--if-exists'
 		]
 		with open(name, 'w') as fp:
 			p.pr.run(cmd, stdout=fp).check_returncode()
@@ -34,27 +34,27 @@ class MysqlConnector:
 		self.user = user
 		self.password = password
 		self.db = db
-	
+
 	def getUser(self):
 		return self.user
-	
+
 	def getDb(self):
 		return self.db
-	
+
 	def getPassword(self):
 		return self.password
 
 	def callSQL(self, input, params = [], text=True, capture_output=True, stdin=None):
 		cmd = [
-			'docker-compose', 'exec', '-T', 'mysql', 'mysql', '-u', self.user, 
+			'docker', 'compose', 'exec', '-T', 'mysql', 'mysql', '-u', self.user,
 			'-p{pwd}'.format(pwd=self.password), self.db
 		]
 		# print('input', input)
 		return p.pr.run(cmd + params, text=text, input=input, capture_output=capture_output, stdin=stdin)
-	
+
 	def dumpDb(self, name):
 		cmd = [
-			'docker-compose', 'exec', '-T', 'mysql', 'mysqldump', '-u', self.user,
+			'docker', 'compose', 'exec', '-T', 'mysql', 'mysqldump', '-u', self.user,
 			'-p{pwd}'.format(pwd=self.password), '--add-drop-database', '--database', self.db
 		]
 		with open(name, 'w') as fp:

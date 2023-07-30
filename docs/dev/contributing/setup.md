@@ -14,7 +14,7 @@ There are multiple methods to set up the Nextcloud development environment.
     Follow the instructions in this repository, noting that the default username/password are admin/admin.<br>
     Please pay attention to the warning from that repository:
     > :warning: DO NOT USE THIS IN PRODUCTION Various settings in this setup are considered insecure and default passwords and secrets are used all over the place
-1. There is also [this repository](https://github.com/christianlupus/nextcloud-docker-debug) that contains a configuration using docker-compose as well. This setup is tailored down to allow easy debugging and profiling of apps. The repository has an extensive documentation attached in form of a README file on how to setup.<br>
+1. There is also [this repository](https://github.com/christianlupus/nextcloud-docker-debug) that contains a configuration using Docker Compose as well. This setup is tailored down to allow easy debugging and profiling of apps. The repository has an extensive documentation attached in form of a README file on how to setup.<br>
     **This repository is only for development purposes. Do not use for productive usage!**
 
 ## Add Cookbook to your Nextcloud environment's apps directory
@@ -39,7 +39,7 @@ The easiest way might be to add a new line in this section after cloning [`nextc
 ```
 You might need to adopt the path specification according to your local setup. Also note that docker-compose needs the correct indentation (spaces and no tabs!) to work well.
 
-Be sure to recreate the containers after modifying `docker-compose.yml` using `docker-compose up -d`.
+Be sure to recreate the containers after modifying `docker-compose.yml` using `docker compose up -d`.
 
 ## Install PHP dependencies
 

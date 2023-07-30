@@ -5,7 +5,7 @@ import test_runner.proc as p
 
 def pullImages(args, quiet=True):
 	l.logger.printTask('Pulling pre-built images')
-	cmd = ['docker-compose', 'pull']
+	cmd = ['docker', 'compose', 'pull']
 	if quiet:
 		cmd.append('--quiet')
 	p.pr.run(cmd).check_returncode()
@@ -29,8 +29,8 @@ def pullImages(args, quiet=True):
 
 def buildImages(args, pull=True):
 	l.logger.printTask('Building images')
-	
-	cmd = ['docker-compose', 'build', '--force-rm']
+
+	cmd = ['docker', 'compose', 'build', '--force-rm']
 	if pull:
 		cmd.append('--pull')
 	if args.ci:
@@ -41,7 +41,7 @@ def buildImages(args, pull=True):
 
 	p.pr.run(cmd).check_returncode()
 
-	p.pr.run(['docker-compose', 'build', '--pull', '--force-rm', 'mysql', 'postgres', 'www']).check_returncode()
+	p.pr.run(['docker', 'compose', 'build', '--pull', '--force-rm', 'mysql', 'postgres', 'www']).check_returncode()
 
 	l.logger.printTask('Building images finished.')
 
@@ -83,14 +83,14 @@ def handleDockerImages(args):
 	if args.pull or args.create_images:
 		pullImages(args, not args.verbose)
 		t.toc('Pulling done')
-	
+
 	if args.create_images:
 		pull = not args.pull_php_base_image
 		buildImages(args, pull)
 		t.toc('Building done')
-	
+
 	if args.push_images:
 		pushImages(args)
-	
+
 	l.logger.endGroup()
 	t.toc()
