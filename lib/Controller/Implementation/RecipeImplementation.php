@@ -109,6 +109,13 @@ class RecipeImplementation {
 		$recipeData = $this->restParser->getParameters();
 		try {
 			$file = $this->service->addRecipe($recipeData);
+		} catch (RecipeExistsException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
 			$json = [
 				'msg' => $ex->getMessage(),

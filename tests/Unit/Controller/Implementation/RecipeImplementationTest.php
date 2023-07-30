@@ -416,6 +416,24 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 
+	public function testUpdateConflictingName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['a', 'recipe', 'as', 'array'];
+
+		$errorMsg = "Another recipe with that name already exists";
+		$ex = new RecipeExistsException($errorMsg);
+
+		$this->restParser->method('getParameters')->willReturn($recipe);
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($recipe)->willThrowException($ex);
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->update(1);
+
+		$this->assertEquals(409, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
 	public function testCreate(): void {
 		$this->ensureCacheCheckTriggered();
 
