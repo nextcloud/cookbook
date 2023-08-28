@@ -57,6 +57,8 @@
   [#1758](https://github.com/nextcloud/cookbook/pull/1758) @christianlupus
 - Update browserlist bz nextcloud
   [#1792](https://github.com/nextcloud/cookbook/pull/1792) @dependabot
+- Fix workaround introduced in #1758
+  [#1802](https://github.com/nextcloud/cookbook/pull/1802) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
