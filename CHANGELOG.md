@@ -55,10 +55,12 @@
   [#1750](https://github.com/nextcloud/cookbook/pull/1750) @dependabot @christianlupus
 - Fix dev mode with bug introduced by prettier
   [#1758](https://github.com/nextcloud/cookbook/pull/1758) @christianlupus
-- Update browserlist bz nextcloud
+- Update browserlist by nextcloud
   [#1792](https://github.com/nextcloud/cookbook/pull/1792) @dependabot
 - Fix workaround introduced in #1758
   [#1802](https://github.com/nextcloud/cookbook/pull/1802) @christianlupus
+- Update lint config
+  [#1783](https://github.com/nextcloud/cookbook/pull/1783) @dependabot
 
 
 ## 0.10.2 - 2023-03-24
