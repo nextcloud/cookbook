@@ -49,9 +49,9 @@
     "vuex": "^3.1.3"
   },
   "devDependencies": {
-    "@nextcloud/browserslist-config": "^2.3.0",
+    "@nextcloud/browserslist-config": "^3.0.0",
     "@nextcloud/stylelint-config": "^2.1.2",
-    "@nextcloud/webpack-vue-config": "github:nextcloud/webpack-vue-config#fix/prettier-15-support",
+    "@nextcloud/webpack-vue-config": "^6.0.0",
     "check-peer-dependencies": "^4.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "eslint": "^8.2.0",
