@@ -2,38 +2,136 @@
 
 # set -x
 
-lines_before=`git stash list | wc -l`
-git stash push --keep-index -q
-lines_after=`git stash list | wc -l`
+REF_INFO="$(cat)"
 
-cleanup() {
-	if [ $lines_before -lt $lines_after ]; then
-		git stash pop -q
+lines=$(wc -l <<< "$REF_INFO")
+
+if [ "$lines" -gt 1 ]
+then
+	echo "WARNING: There are multiple refs pushed at the same time. This is not checked in the hook"
+	check_php=1
+	check_js=1
+	check_xml=1
+	check_package=1
+	run_check=1
+
+	localRef=HEAD
+else
+	read localRef localSHA remoteRef remoteSHA <<< "$REF_INFO"
+	emptySHA='0000000000000000000000000000000000000000'
+
+	if [ "$localSHA" = "$emptySHA" ]
+	then
+		echo "Removing remote branch $remoteRef. No checks are carried out"
+		exit 0
 	fi
-}
 
-trap cleanup EXIT
+	if [ "$remoteSHA" = "$emptySHA" ]
+	then
+		# Creating new branch remotely
+		BASE_REF="remotes/$1/master"
+	else
+		BASE_REF="remotes/$1/$remoteRef"
+	fi
 
-retVal=0
+	files="$(git diff --name-only "$BASE_REF" "$localRef")"
+	
+	grep '^lib/' <<< "$files" > /dev/null && check_php=1 && run_check=1
+	grep '^src/' <<< "$files" > /dev/null && check_js=1 && run_check=1
+	grep '^package.json$' <<< "$files" > /dev/null && check_package=1 && run_check=1
+	grep '^appinfo/info.xml$' <<< "$files" > /dev/null && check_xml=1 && run_check=1
 
-if [ -e 'vendor/bin/php-cs-fixer' ]; then
-	composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
 fi
 
-if [ -e 'vendor/bin/psalm.phar' ]; then
-	composer psalm || { echo "The PHP code has type issues. Check psalm."; (( retVal |= 16 )); }
-fi
+echo "RunChecks: $run_check"
 
-if [ -e 'node_modules/.bin/eslint' ]; then
-	npm run eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
-fi
+if [ -n "$run_check" ]
+then
 
-if [ -e 'node_modules/.bin/prettier' ]; then
-	npm run prettier || { echo 'The javascript code seems to be not satifying the prettier code styler.'; (( retVal |= 4 )); }
-fi
+	# Clean current folder
+	rm -rf .hook-checkout/checkout
+	mkdir .hook-checkout/checkout
 
-if [ -e 'node_modules/.bin/stylelint' ]; then
-	npm run stylelint || { echo 'The CSS code seems to be not satifying the stylelint linter.'; (( retVal |= 8 )); }
+	# Clone the latest code base to the folder and apply the staged changes
+	git archive --format tar $localRef | tar x -C .hook-checkout/checkout
+
+	# Link the imported dependencies to the checkout folder (for fast working)
+	ln -sr node_modules .hook-checkout/checkout
+	ln -sr vendor .hook-checkout/checkout
+
+
+	run_php_checks() {
+		cd .hook-checkout/checkout
+
+		# Run the PHP linter
+		if [ -e 'vendor/bin/php-cs-fixer' ]
+		then
+			composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
+		else
+			echo "WARNING: The PHP check could not be carried out!"
+		fi
+
+		if [ -e 'vendor/bin/psalm.phar' ]; then
+			composer psalm || { echo "The PHP code has type issues. Check psalm."; (( retVal |= 16 )); }
+		else
+			echo "WARNING: The PSALM code checker could not be carried out!"
+		fi
+
+		cd ../..
+	}
+
+	run_js_checks() {
+		cd .hook-checkout/checkout
+
+		# Run the JS linter
+		if [ -e 'node_modules/.bin/eslint' ]
+		then
+			npm run --silent eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
+		else
+			echo "WARNING: The JS/Vue check could not be carried out!"
+		fi
+
+		if [ -e 'node_modules/.bin/prettier' ]; then
+			npm run prettier || { echo 'The javascript code seems to be not satifying the prettier code styler.'; (( retVal |= 4 )); }
+		else
+			echo "WARNING: The Prettier check could not be carried out!"
+		fi
+
+		if [ -e 'node_modules/.bin/stylelint' ]; then
+			npm run stylelint || { echo 'The CSS code seems to be not satifying the stylelint linter.'; (( retVal |= 8 )); }
+		else
+			echo "WARNING: The Stylelint check could not be carried out!"
+		fi
+	}
+
+	run_package_checks() {
+		cd .hook-checkout/checkout
+		cp package.json package.json.backup
+		npm run package-lint
+		diff -qs package.json package.json.backup || { echo "The package.json file is not correctly formatted."; (( retVal |= 32 )); }
+		mv package.json.backup package.json
+		cd ../..
+	}
+
+	run_xml_checks() {
+		cd .hook-checkout/checkout
+		if [ -x "$(which xmllint)" ]
+		then
+			xmllint --noout --quiet --schema <(curl -sL 'https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd') appinfo/info.xml || { \
+				echo 'The app info file does not conform the XSD file.'; (( retVal |= 64 )); }
+		else
+			echo 'WARNING: Could not check the XML file as xmllint was not found in the path.'
+		fi
+		cd ../..
+	}
+
+	test -n "$check_php" && run_php_checks
+	test -n "$check_js" && run_js_checks
+	test -n "$check_package" && run_package_checks
+	test -n "$check_xml" && run_xml_checks
+
+	rm -r .hook-checkout/checkout
+
 fi
 
 exit $retVal
