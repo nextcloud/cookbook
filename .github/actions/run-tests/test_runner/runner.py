@@ -1,6 +1,7 @@
 
 import test_runner.ci_printer as l
 import test_runner.proc as p
+import test_runner.docker_helper
 
 import os
 
@@ -9,7 +10,7 @@ class TestRunner:
 		pass
 
 	def __buildRunCmd(self, args, subArgs):
-		cmd = ['docker', 'compose', 'run', '--rm', 'dut']
+		cmd = test_runner.docker_helper.instance.getDockerCompose() + ['run', '--rm', 'dut']
 
 		if args.run_unit_tests:
 			cmd.append('--run-unit-tests')

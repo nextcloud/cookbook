@@ -2,10 +2,14 @@ import test_runner.ci_printer
 import test_runner.timer
 import test_runner.ci_printer as l
 import test_runner.proc as p
+import test_runner.docker_helper
 
 def pullImages(args, quiet=True):
 	l.logger.printTask('Pulling pre-built images')
-	cmd = ['docker', 'compose', 'pull']
+
+	dockerComposeCmd = test_runner.docker_helper.instance.getDockerCompose()
+
+	cmd = dockerComposeCmd + ['pull']
 	if quiet:
 		cmd.append('--quiet')
 	p.pr.run(cmd).check_returncode()
@@ -30,7 +34,9 @@ def pullImages(args, quiet=True):
 def buildImages(args, pull=True):
 	l.logger.printTask('Building images')
 
-	cmd = ['docker', 'compose', 'build', '--force-rm']
+	dockerComposeCmd = test_runner.docker_helper.instance.getDockerCompose()
+
+	cmd = dockerComposeCmd + ['build', '--force-rm']
 	if pull:
 		cmd.append('--pull')
 	if args.ci:
@@ -41,7 +47,7 @@ def buildImages(args, pull=True):
 
 	p.pr.run(cmd).check_returncode()
 
-	p.pr.run(['docker', 'compose', 'build', '--pull', '--force-rm', 'mysql', 'postgres', 'www']).check_returncode()
+	p.pr.run(dockerComposeCmd + ['build', '--pull', '--force-rm', 'mysql', 'postgres', 'www']).check_returncode()
 
 	l.logger.printTask('Building images finished.')
 

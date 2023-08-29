@@ -13,6 +13,7 @@ if args.debug_python:
 	debugpy.wait_for_client()
 
 # print(args)
+test_runner.docker_helper.initialize(args)
 
 test_runner.ci_printer.logger = test_runner.ci_printer.CILogger(args.ci)
 

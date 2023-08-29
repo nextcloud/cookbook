@@ -2,13 +2,14 @@ import test_runner.ci_printer as l
 import test_runner.db
 import test_runner.timer
 import test_runner.proc as p
+import test_runner.docker_helper
 
 import time
 import os
 
 class Environment:
 	def __init__(self):
-		pass
+		self.dockerComposeCmd = test_runner.docker_helper.instance.getDockerCompose()
 
 	def ensureFolderStructureExists(self):
 		if not os.path.isdir('volumes'):
@@ -40,7 +41,7 @@ class Environment:
 				raise Exception('Starting of MySQL container failed.')
 
 			l.logger.printDebug('Starting MySQL database container')
-			p.pr.run(['docker', 'compose', 'up', '-d', 'mysql']).check_returncode()
+			p.pr.run(self.dockerComposeCmd + ['up', '-d', 'mysql']).check_returncode()
 			checkRunning()
 
 		def startPostgresql():
@@ -53,7 +54,7 @@ class Environment:
 				raise Exception('Starting of PostgreSQL failed.')
 
 			l.logger.printDebug('Starting PostgreSQL container')
-			p.pr.run(['docker', 'compose', 'up', '-d', 'postgres']).check_returncode()
+			p.pr.run(self.dockerComposeCmd + ['up', '-d', 'postgres']).check_returncode()
 
 			pgCaller = test_runner.db.PostgresConnector()
 			checkRunning(pgCaller)
@@ -74,7 +75,7 @@ class Environment:
 	def stopDatabase(self, db):
 		def stopContainer(name):
 			l.logger.printTask('Stopping container {name}'.format(name=name))
-			p.pr.run(['docker', 'compose', 'stop', name]).check_returncode()
+			p.pr.run(self.dockerComposeCmd + ['stop', name]).check_returncode()
 
 		def handleMySql():
 			stopContainer('mysql')
@@ -94,7 +95,7 @@ class Environment:
 
 	def stopContainers(self):
 		l.logger.printTask('Stopping remaining containers')
-		p.pr.run(['docker', 'compose', 'stop']).check_returncode()
+		p.pr.run(self.dockerComposeCmd + ['stop']).check_returncode()
 
 	def __dropEnvironment(self, db):
 		def cleanMysql():
@@ -143,7 +144,7 @@ class Environment:
 			data = fp.read()
 
 		return p.pr.run(
-			['docker', 'compose', 'run', '--rm', '-T', 'php'], input=data,
+			self.dockerComposeCmd + ['run', '--rm', '-T', 'php'], input=data,
 			capture_output=True, text=True
 		)
 
@@ -169,8 +170,8 @@ class Environment:
 		p.pr.run(['mkdir', '-p', 'custom_apps/cookbook', 'data'], cwd='volumes/nextcloud').check_returncode()
 
 		def installGeneric(options):
-			cmd = [
-				'docker', 'compose', 'run', '--rm', '-T', 'occ', 'maintenance:install',
+			cmd = self.dockerComposeCmd + [
+				'run', '--rm', '-T', 'occ', 'maintenance:install',
 				'--admin-user', 'admin', '--admin-pass', 'admin'
 			] + options
 
@@ -232,7 +233,7 @@ class Environment:
 
 		l.logger.printTask('Activate the cookbook app in the server')
 		p.pr.run(
-			['docker', 'compose', 'run', '--rm', '-T', 'occ', 'app:enable', 'cookbook']
+			self.dockerComposeCmd + ['run', '--rm', '-T', 'occ', 'app:enable', 'cookbook']
 		).check_returncode()
 
 		l.logger.printTask('Installation of cookbook finished')
@@ -267,7 +268,7 @@ class Environment:
 		timer.tic()
 
 		l.logger.printTask('Start fpm and www containers')
-		p.pr.run(['docker', 'compose', 'up', '-d', 'www', 'fpm']).check_returncode()
+		p.pr.run(self.dockerComposeCmd + ['up', '-d', 'www', 'fpm']).check_returncode()
 
 		httpMapper = {
 			'apache': 'apache',
@@ -275,7 +276,7 @@ class Environment:
 		}
 		l.logger.printTask('Start HTTP server')
 		p.pr.run(
-			['docker', 'compose', 'up', '-d', httpMapper[http_server]]
+			self.dockerComposeCmd + ['up', '-d', httpMapper[http_server]]
 		).check_returncode()
 
 		l.logger.printTask('Started all containers')
