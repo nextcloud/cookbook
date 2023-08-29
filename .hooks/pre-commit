@@ -56,7 +56,7 @@ then
 	fi
 
 	cd ../..
-	rm -r .hook-ckeckout/checkout
+	rm -r .hook-checkout/checkout
 fi
 
 exit $retVal
