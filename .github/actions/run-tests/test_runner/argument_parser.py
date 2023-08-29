@@ -7,6 +7,7 @@ def parseArguments():
 
 	parser.add_argument('-v', '--verbose', action='store_true', help='Do not hide the output of intermediate commands')
 	parser.add_argument('--debug-python', action='store_true', help='Activate the python debugger to develop the test environments.')
+	parser.add_argument('--use-docker-compose-legacy', action='store_true', help='Use the legacy docker-compose v1 instead of the new docker compose.')
 
 	group = parser.add_argument_group('Docker image management', 'Manage the docker images involved in the test routines.')
 

@@ -1,6 +1,7 @@
 
 import test_runner.ci_printer as l
 import test_runner.proc as p
+import test_runner.docker_helper
 
 import os
 
@@ -9,23 +10,23 @@ class TestRunner:
 		pass
 
 	def __buildRunCmd(self, args, subArgs):
-		cmd = ['docker-compose', 'run', '--rm', 'dut']
+		cmd = test_runner.docker_helper.instance.getDockerCompose() + ['run', '--rm', 'dut']
 
 		if args.run_unit_tests:
 			cmd.append('--run-unit-tests')
-		
+
 		if args.run_integration_tests:
 			cmd.append('--run-integration-tests')
-		
+
 		if args.run_migration_tests:
 			cmd.append('--run-migration-tests')
-		
+
 		if args.extract_code_coverage:
 			cmd.append('--create-coverage-report')
-		
+
 		if args.install_composer_deps:
 			cmd.append('--install-composer-deps')
-		
+
 		if args.build_npm:
 			cmd.append('--build-npm')
 
@@ -42,7 +43,7 @@ class TestRunner:
 			modes.append('trace')
 		if args.enable_profiling:
 			modes.append('profile')
-		
+
 		return ",".join(modes)
 
 	def runTests(self, args, subArgs, db):
@@ -64,4 +65,3 @@ class TestRunner:
 		sp = p.pr.run(cmd, env=env)
 
 		return sp.returncode
-
