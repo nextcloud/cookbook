@@ -9,17 +9,22 @@ First a nextcloud server is needed to run the app within.
 
 There are multiple methods to set up the Nextcloud development environment.
 
-1. The [official guide](https://docs.nextcloud.com/server/latest/developer_manual/getting_started/devenv.html) walks you through installing Nextcloud and its dependencies on bare metal.
-1. Alternatively, you can use [this Docker Compose configuration](https://github.com/juliushaertl/nextcloud-docker-dev). This method is easier in that you don't have to manually install Nextcloud, a SQL database, etc.<br>
+:warning: DO NOT USE THIS IN PRODUCTION Various settings in this setup are considered insecure and default passwords and secrets are used all over the place.
+
+1. By default, you can use [this Docker Compose configuration](https://github.com/juliushaertl/nextcloud-docker-dev). This method is easier in that you don't have to manually install Nextcloud, a SQL database, etc.<br>
     Follow the instructions in this repository, noting that the default username/password are admin/admin.<br>
-    Please pay attention to the warning from that repository:
-    > :warning: DO NOT USE THIS IN PRODUCTION Various settings in this setup are considered insecure and default passwords and secrets are used all over the place
-1. There is also [this repository](https://github.com/christianlupus/nextcloud-docker-debug) that contains a configuration using Docker Compose as well. This setup is tailored down to allow easy debugging and profiling of apps. The repository has an extensive documentation attached in form of a README file on how to setup.<br>
-    **This repository is only for development purposes. Do not use for productive usage!**
+1. Alternatively, the [official guide](https://docs.nextcloud.com/server/latest/developer_manual/getting_started/devenv.html) walks you through installing Nextcloud and its dependencies on bare metal.
 
 ## Add Cookbook to your Nextcloud environment's apps directory
 
 You must install the checked out version of the app into the corresponding folder of the nextcloud server.
+
+### Usage of [nextcloud-docker-dev](https://github.com/juliushaertl/nextcloud-docker-dev) by juliushaertl (Default)
+
+If you installed via Docker, [the volumes section of the `docker-compose.yml`](https://github.com/juliushaertl/nextcloud-docker-dev/blob/2bbf26cc257081d9ed72abc947441849fca59dcd/docker-compose.yml#L68) shows that there are many options for specifying apps.
+
+Just go with the documentation attached in the repository and follow the steps.
+This should bring you to a running environment.
 
 ### Bare metal installation
 
@@ -29,21 +34,9 @@ cd /var/www/nextcloud/apps
 git clone https://github.com/nextcloud/cookbook.git # you may want to clone your own fork if you are contributing pull requests
 ```
 
-### Usage of [nextcloud-docker-dev](https://github.com/juliushaertl/nextcloud-docker-dev) by juliushaertl
-
-If you installed via Docker, [the volumes section of the `docker-compose.yml`](https://github.com/juliushaertl/nextcloud-docker-dev/blob/2bbf26cc257081d9ed72abc947441849fca59dcd/docker-compose.yml#L68) shows that there are many options for specifying apps.
-
-The easiest way might be to add a new line in this section after cloning [`nextcloud/cookbook`](https://github.com/nextcloud/cookbook) in the same folder as [`juliushaertl/nextcloud-docker-dev`](https://github.com/juliushaertl/nextcloud-docker-dev):
-```
-- ../cookbook:/var/www/html/apps/cookbook:ro
-```
-You might need to adopt the path specification according to your local setup. Also note that docker-compose needs the correct indentation (spaces and no tabs!) to work well.
-
-Be sure to recreate the containers after modifying `docker-compose.yml` using `docker compose up -d`.
-
 ## Install PHP dependencies
 
-The app needs some depdencies in the PHP backend. These are managed via [composer](http://composer.org). Make sure, you have composer ready on your development machine.
+The app needs some dependencies in the PHP backend. These are managed via [composer](http://composer.org). Make sure, you have composer ready on your development machine.
 
 To install the required packages just run in the root of the checked-out source folder of the cookbook app
 ```
