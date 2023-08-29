@@ -61,6 +61,8 @@
   [#1802](https://github.com/nextcloud/cookbook/pull/1802) @christianlupus
 - Update lint config
   [#1783](https://github.com/nextcloud/cookbook/pull/1783) @dependabot
+- Add editorconfig file for better cooperation
+  [#1771](https://github.com/nextcloud/cookbook/pull/1771) @SethFalco
 
 
 ## 0.10.2 - 2023-03-24
