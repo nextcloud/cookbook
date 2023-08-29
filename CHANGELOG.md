@@ -63,6 +63,8 @@
   [#1783](https://github.com/nextcloud/cookbook/pull/1783) @dependabot
 - Add editorconfig file for better cooperation
   [#1771](https://github.com/nextcloud/cookbook/pull/1771) @SethFalco
+- Use docker compose for tests by default
+  [#1772](https://github.com/nextcloud/cookbook/pull/1772) @SethFalco
 
 
 ## 0.10.2 - 2023-03-24
