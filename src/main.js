@@ -18,6 +18,10 @@ import setupLogging from "cookbook/js/logging"
 import router from "./router"
 import store from "./store"
 
+import {loadState} from '@nextcloud/initial-state'
+// Initialize the configuration
+store.commit('setConfig', { config: loadState('cookbook', 'config', {})})
+
 import AppMain from "./components/AppMain.vue"
 
 // eslint-disable-next-line camelcase,no-undef
@@ -54,6 +58,7 @@ setupLogging(Vue)
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
+
 
 // Start the app once document is done loading
 Vue.$log.info("Main is done. Creating App.")

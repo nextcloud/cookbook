@@ -4,10 +4,12 @@ namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
+use OCA\Cookbook\Helper\ConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\TemplateResponse;
+use OCP\AppFramework\Services\IInitialState;
 use OCP\IRequest;
 use OCP\Util;
 
@@ -18,18 +20,26 @@ class MainController extends Controller {
 	private $dbCacheService;
 	/** @var UserFolderHelper */
 	private $userFolder;
+	/** @var ConfigHelper */
+	private $configHelper;
+	/** @var IInitialState */
+	private $initialState;
 
 	public function __construct(
 		string $AppName,
 		IRequest $request,
 		DbCacheService $dbCacheService,
-		UserFolderHelper $userFolder
+		UserFolderHelper $userFolder,
+		ConfigHelper $configHelper,
+		IInitialState $initialState
 	) {
 		parent::__construct($AppName, $request);
 
 		$this->appName = $AppName;
 		$this->dbCacheService = $dbCacheService;
 		$this->userFolder = $userFolder;
+		$this->configHelper = $configHelper;
+		$this->initialState = $initialState;
 	}
 
 	/**
@@ -56,6 +66,7 @@ class MainController extends Controller {
 		$this->dbCacheService->triggerCheck();
 
 		Util::addScript('cookbook', 'cookbook-main');
+		$this->initialState->provideInitialState('config', $this->configHelper->getConfig());
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
 }

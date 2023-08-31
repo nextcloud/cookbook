@@ -232,6 +232,9 @@ export default {
             resetVisibleInfoBlocks: true,
         }
     },
+    computed: {
+        config() { return this.$store.state.config },
+    },
     watch: {
         async printImage(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
@@ -240,7 +243,9 @@ export default {
                 return
             }
             try {
-                await api.config.printImage.update(newVal)
+                if(newVal !== this.config.print_image) {
+                    await api.config.printImage.update(newVal)
+                }
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
@@ -264,7 +269,9 @@ export default {
                 return
             }
             try {
-                await api.config.updateInterval.update(newVal)
+                if (newVal !== this.config.update_interval){
+                    await api.config.updateInterval.update(newVal)
+                }
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
@@ -287,8 +294,10 @@ export default {
             }
             try {
                 const data = visibleInfoBlocksEncode(newVal)
-                await api.config.visibleInfoBlocks.update(data)
-                await this.$store.dispatch("refreshConfig")
+                if (JSON.stringify(data) !== JSON.stringify(this.config.visibleInfoBlocks)){
+                    await api.config.visibleInfoBlocks.update(data)
+                    await this.$store.dispatch("refreshConfig")
+                }
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch (err) {
                 // eslint-disable-next-line no-console
@@ -349,7 +358,7 @@ export default {
          */
         async setup() {
             try {
-                await this.$store.dispatch("refreshConfig")
+                // await this.$store.dispatch("refreshConfig")
                 const { config } = this.$store.state
                 this.resetPrintImage = false
                 this.resetVisibleInfoBlocks = false
