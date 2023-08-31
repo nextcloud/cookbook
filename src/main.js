@@ -15,10 +15,15 @@ import * as ModalDialogs from "vue-modal-dialogs"
 import helpers from "cookbook/js/helper"
 import setupLogging from "cookbook/js/logging"
 
+// eslint-disable-next-line no-unused-vars
+import {loadState} from '@nextcloud/initial-state'
 import router from "./router"
 import store from "./store"
 
 import AppMain from "./components/AppMain.vue"
+
+// Initialize the configuration
+// store.commit('setConfig', { config: loadState('cookbook', 'config', {})})
 
 // eslint-disable-next-line camelcase,no-undef
 if (__webpack_use_dev_server__ || false) {
