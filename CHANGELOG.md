@@ -19,6 +19,8 @@
   [#1687](https://github.com/nextcloud/cookbook/pull/1687) @christianlupus
 - Prevent popup from falsely showing during loading of the app
   [#1764](https://github.com/nextcloud/cookbook/pull/1764) @christianlupus
+- Fix unclear error message if recipe is already existing
+  [#1770](https://github.com/nextcloud/cookbook/pull/1770) @SethFalco
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
