@@ -77,6 +77,7 @@ OC.L10N.register(
     "Cooking time (H:MM)" : "Tilbredelsestid (T:MM)",
     "Total time (H:MM)" : "Total tid (T:MM)",
     "Serving Size" : "Porsjonsstørrelse",
+    "Energy" : "Energi",
     "Source" : "Kilde",
     "Loading…" : "Laster…",
     "Recipe display settings" : "Visningsvalg for oppskrifter",
