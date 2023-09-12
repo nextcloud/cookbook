@@ -69,6 +69,8 @@
   [#1772](https://github.com/nextcloud/cookbook/pull/1772) @SethFalco
 - Update hooks to avoid cluttering the git repository and speed up a bit
   [#1803](https://github.com/nextcloud/cookbook/pull/1803) @christianlupus
+- Fix building docker images for CI/automated tests
+  [#1810](https://github.com/nextcloud/cookbook/pull/1810) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
