@@ -31,7 +31,7 @@ jobs:
                 fi
             
             - name: Checkout the app
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: ${{ steps.check.outputs.skip == 'false' }}
             - name: Make sure the appinfo is built
               shell: bash
