@@ -15,7 +15,6 @@
                 @click="closeNavigation"
             />
         </NcAppContent>
-        <dialogs-wrapper></dialogs-wrapper>
         <SettingsDialog />
     </NcContent>
 </template>

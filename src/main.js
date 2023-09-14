@@ -23,6 +23,7 @@ import store from "./store"
 import AppMain from "./components/AppMain.vue"
 
 // Initialize the configuration
+store.dispatch('refreshConfig')
 // store.commit('setConfig', { config: loadState('cookbook', 'config', {})})
 
 // eslint-disable-next-line camelcase,no-undef

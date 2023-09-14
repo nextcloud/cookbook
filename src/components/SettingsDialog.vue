@@ -1,9 +1,10 @@
 <template>
     <NcAppSettingsDialog
-        :open.sync="isOpen"
+        :open="isOpen"
         :title="t('cookbook', 'Cookbook settings')"
         :show-navigation="true"
         first-selected-section="keyboard shortcuts"
+        @update:open="log"
     >
         <NcAppSettingsSection
             id="settings-recipe-folder"
@@ -232,6 +233,9 @@ export default {
             resetVisibleInfoBlocks: true,
         }
     },
+    computed: {
+        config() { return this.$store.state.config },
+    },
     watch: {
         async printImage(newVal, oldVal) {
             // Avoid infinite loop on page load and when reseting value after failed submit
@@ -240,7 +244,9 @@ export default {
                 return
             }
             try {
-                await api.config.printImage.update(newVal)
+                if(newVal !== this.config.print_image) {
+                    await api.config.printImage.update(newVal)
+                }
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
@@ -264,7 +270,9 @@ export default {
                 return
             }
             try {
-                await api.config.updateInterval.update(newVal)
+                if (newVal !== this.config.update_interval){
+                    await api.config.updateInterval.update(newVal)
+                }
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
@@ -287,8 +295,10 @@ export default {
             }
             try {
                 const data = visibleInfoBlocksEncode(newVal)
-                await api.config.visibleInfoBlocks.update(data)
-                await this.$store.dispatch("refreshConfig")
+                if (JSON.stringify(data) !== JSON.stringify(this.config.visibleInfoBlocks)){
+                    await api.config.visibleInfoBlocks.update(data)
+                    await this.$store.dispatch("refreshConfig")
+                }
                 // Should this check the response of the query? To catch some errors that redirect the page
             } catch (err) {
                 // eslint-disable-next-line no-console
@@ -302,7 +312,7 @@ export default {
         },
     },
     mounted() {
-        this.setup()
+        // this.setup()
 
         subscribe(SHOW_SETTINGS_EVENT, this.handleShowSettings)
     },
@@ -347,32 +357,32 @@ export default {
         /**
          * Initial setup
          */
-        async setup() {
-            try {
-                await this.$store.dispatch("refreshConfig")
-                const { config } = this.$store.state
-                this.resetPrintImage = false
-                this.resetVisibleInfoBlocks = false
+        // async setup() {
+        //     try {
+        //         // await this.$store.dispatch("refreshConfig")
+        //         const { config } = this.$store.state
+        //         this.resetPrintImage = false
+        //         this.resetVisibleInfoBlocks = false
 
-                if (!config) {
-                    throw new Error()
-                }
+        //         if (!config) {
+        //             throw new Error()
+        //         }
 
-                this.printImage = config.print_image
-                this.visibleInfoBlocks = visibleInfoBlocksDecode(
-                    config.visibleInfoBlocks,
-                )
-                this.showTagCloudInRecipeList =
-                    this.$store.state.localSettings.showTagCloudInRecipeList
-                this.updateInterval = config.update_interval
-                this.recipeFolder = config.folder
-            } catch (err) {
-                this.$log.error("Error setting up SettingsDialog", err)
-                await showSimpleAlertModal(
-                    t("cookbook", "Loading config failed"),
-                )
-            }
-        },
+        //         this.printImage = config.print_image
+        //         this.visibleInfoBlocks = visibleInfoBlocksDecode(
+        //             config.visibleInfoBlocks,
+        //         )
+        //         this.showTagCloudInRecipeList =
+        //             this.$store.state.localSettings.showTagCloudInRecipeList
+        //         this.updateInterval = config.update_interval
+        //         this.recipeFolder = config.folder
+        //     } catch (err) {
+        //         this.$log.error("Error setting up SettingsDialog", err)
+        //         await showSimpleAlertModal(
+        //             t("cookbook", "Loading config failed"),
+        //         )
+        //     }
+        // },
 
         /**
          * Reindex all recipes
@@ -409,6 +419,9 @@ export default {
 
         beforeDestroy() {
             unsubscribe(SHOW_SETTINGS_EVENT, this.handleShowSettings)
+        },
+        log(e) {
+            console.log(e)
         },
     },
 }
