@@ -9,6 +9,7 @@ use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 class DbCacheService {
 	private $userId;
@@ -34,6 +35,9 @@ class DbCacheService {
 	 */
 	private $l;
 
+	/** @var LoggerInterface */
+	private $logger;
+
 	/** @var NormalizeRecipeFileFilter */
 	private $normalizeFileFilter;
 
@@ -52,7 +56,8 @@ class DbCacheService {
 		RecipeService $recipeService,
 		UserConfigHelper $userConfigHelper,
 		NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
-		IL10N $l
+		IL10N $l,
+		LoggerInterface $logger
 	) {
 		$this->userId = $UserId;
 		$this->db = $db;
@@ -60,6 +65,7 @@ class DbCacheService {
 		$this->userConfigHelper = $userConfigHelper;
 		$this->normalizeFileFilter = $normalizeRecipeFileFilter;
 		$this->l = $l;
+		$this->logger = $logger;
 	}
 
 	public function updateCache() {
@@ -115,6 +121,8 @@ class DbCacheService {
 	private function parseJSONFiles() {
 		$ret = [];
 
+		$this->logger->info('Starting reindex.');
+
 		$jsonFiles = $this->recipeService->getRecipeFiles();
 		foreach ($jsonFiles as $jsonFile) {
 			try {
@@ -136,6 +144,8 @@ class DbCacheService {
 	 * @return array
 	 */
 	private function parseJSONFile(File $jsonFile): array {
+		$this->logger->debug('Parsing file {path} for recipe data.', ['path' => $jsonFile->getPath()]);
+
 		// XXX Export of file reading into library/service?
 		$json = json_decode($jsonFile->getContent(), true);
 
