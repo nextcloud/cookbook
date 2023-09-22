@@ -1,5 +1,5 @@
 
-name: Deploy to Appstore
+name: Prepare deployment to app store
 
 on:
     push:
