@@ -27,6 +27,8 @@
 import NcContent from "@nextcloud/vue/dist/Components/NcContent"
 import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
 
+import { FilePicker } from "@nextcloud/dialogs"
+
 export default {
     name: "InvalidGuest",
     components: {
@@ -36,7 +38,7 @@ export default {
     },
     methods: {
         selectFolder() {
-            OC.dialogs.filepicker(
+            FilePicker(
                 t("cookbook", "Path to your recipe collection"),
                 (path) => {
                     this.$store

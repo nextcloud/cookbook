@@ -175,6 +175,7 @@
 
 <script>
 import { subscribe, unsubscribe } from "@nextcloud/event-bus"
+import { FilePicker } from "@nextcloud/dialogs"
 
 import NcAppSettingsDialog from "@nextcloud/vue/dist/Components/NcAppSettingsDialog"
 import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSection"
@@ -315,7 +316,7 @@ export default {
          * Select a recipe folder using the Nextcloud file picker
          */
         pickRecipeFolder() {
-            OC.dialogs.filepicker(
+            FilePicker(
                 t("cookbook", "Path to your recipe collection"),
                 (path) => {
                     const $this = this

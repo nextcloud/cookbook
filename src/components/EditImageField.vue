@@ -25,6 +25,9 @@
 </template>
 
 <script>
+
+import { FilePicker, FilePickerType, FILEPICKER_TYPE_CHOOSE } from "@nextcloud/dialogs"
+
 export default {
     name: "EditImageField",
     props: {
@@ -41,7 +44,7 @@ export default {
         pickImage(e) {
             e.preventDefault()
             const $this = this
-            OC.dialogs.filepicker(
+            FilePicker(
                 t("cookbook", "Path to your recipe image"),
                 (path) => {
                     $this.$emit("input", path)
@@ -49,7 +52,7 @@ export default {
                 false,
                 ["image/jpeg", "image/png"],
                 true,
-                OC.dialogs.FILEPICKER_TYPE_CHOOSE,
+                FilePickerType.Choose,
             )
         },
     },
