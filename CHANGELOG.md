@@ -71,6 +71,8 @@
   [#1803](https://github.com/nextcloud/cookbook/pull/1803) @christianlupus
 - Fix building docker images for CI/automated tests
   [#1810](https://github.com/nextcloud/cookbook/pull/1810) @christianlupus
+- Reimplement appstore build scripts
+  [#1822](https://github.com/nextcloud/cookbook/pull/1822) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24

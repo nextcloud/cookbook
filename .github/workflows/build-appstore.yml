@@ -1,0 +1,38 @@
+
+name: Prepare deployment to app store
+
+on:
+    push:
+        branches:
+            - stable*
+
+jobs:
+    
+    build:
+        name: Create tagged release in stable branch
+        runs-on: ubuntu-22.04
+        
+        defaults:
+            run:
+                shell: bash
+                working-directory: cookbook
+        
+        if: github.actor != 'nextcloud-cookbook-bot'
+
+        steps:
+            -   name: Checkout the project
+                uses: actions/checkout@v4
+                with:
+                    path: cookbook
+                    ref: ${{ github.ref }}
+                    fetch-depth: 0
+
+            -   name: Store the merge commit message in file
+                run: git log HEAD~1...HEAD --max-count=1 --format='%s%n%b' > /tmp/MERGE_COMMIT_MSG
+            
+            -   name: Bump the version
+                id: bump
+                run: ./.github/actions/deploy/create-version.sh /tmp/MERGE_COMMIT_MSG
+                env:
+                    BOT_TOKEN: ${{ secrets.COOKBOOK_BOT_TOKEN }}
+            

@@ -45,10 +45,14 @@ Now, you should create a pull request to merge the changes in the new `release/1
 Do not yet merge the PR.
 Here is the last chance to do some testing and verification.
 
-### Let the actions do its magic
+### Let Github actions create a tag for you
 
-Now the critical part comes.
-As soon as you merge the PR you set the gears into action and a new release will be published both on github and the NC appstore.
+By merging the PR into `stable`, you trigger the generation of a tag in Github as well as some additional tasks.
+This will **not yet** publish a release, just define the version to be used.
+
+The important part is the commit message here.
+It defines the type and the state of the release created.
+For further information, read on.
 
 #### Regular releases
 
@@ -94,6 +98,21 @@ Assume, you are on version `1.2.3`, the following table explains the resulting r
 | `%PRE-RELEASE%rc1%` | 1.2.4-rc1 |
 | `%MINOR% %PRE-RELEASE%alpha3%` | 1.3.0-alpha3 |
 | `%PRE-RELEASE%beta.1% %MAJOR%` | 2.0.0-beta.1 |
+
+### Fetch the created tag
+
+After the action has run completely, you need locally to fetch the tags from the remote repository.
+The new version should be downloaded as a tag `v1.2.4` automatically.
+
+### Push the version to the appstore
+
+Finally, the release can be published to the app store by pushing the pure tag to the release repository.
+The Github actions there will build the app, create a release and finally trigger a new release in the Nextcloud app store.
+
+**Attention:**
+This is the final point where you have control over the process.
+Once you pushed the tag to the releases repository, it will be published (unless a failure happens).
+Undoing the publication needs manual intervention.
 
 ## Implementation details
 
