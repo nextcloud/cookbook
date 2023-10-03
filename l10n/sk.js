@@ -188,7 +188,7 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Interval aktualizácie receptu sa nepodarilo nastaviť na {interval}",
     "Could not set recipe folder to {path}" : "Priečinok receptov sa nepodarilo nastaviť na {path}",
     "Loading config failed" : "Načítanie nastavenia zlyhalo",
-    "Dismiss" : "Odmietnuť",
+    "Dismiss" : "Zatvoriť",
     "Cancel" : "Zrušiť",
     "OK" : "OK"
 },
