@@ -7,12 +7,10 @@ use OCA\Cookbook\Helper\Filter\RecipeStubFilter;
 use PHPUnit\Framework\TestCase;
 
 class RecipeFixIdsTest extends TestCase {
-
 	/** @var RecipeStubFilter */
 	private $dut;
 
-	protected function setUp(): void
-	{
+	protected function setUp(): void {
 		parent::setUp();
 
 		$app = new Application();
@@ -20,7 +18,7 @@ class RecipeFixIdsTest extends TestCase {
 		$this->dut = $container->get(RecipeStubFilter::class);
 	}
 
-	public function dp(){
+	public function dp() {
 		$stub = [
 			'name' => 'The name of te recipe',
 			'date' => '1970-01-12',
@@ -28,7 +26,7 @@ class RecipeFixIdsTest extends TestCase {
 
 		$src = $stub;
 		$src['recipe_id'] = 123;
-		
+
 		$expected = $stub;
 		$expected['recipe_id'] = 123;
 		$expected['id'] = '123';
@@ -41,8 +39,10 @@ class RecipeFixIdsTest extends TestCase {
 
 	/**
 	 * @dataProvider dp
+	 * @param mixed $original
+	 * @param mixed $expected
 	 */
-	public function testRecipeStubs($original, $expected){
+	public function testRecipeStubs($original, $expected) {
 		$ret = $this->dut->apply($original);
 		$this->assertSame($expected, $ret);
 	}
