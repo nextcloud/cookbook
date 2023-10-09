@@ -6,7 +6,8 @@ This page provides an overview over the possible API endpoints provided by the a
 - [Version 0.0.3](0.0.3/index.html)
 - [Version 0.0.4](0.0.4/index.html)
 - [Version 0.1.0](0.1.0/index.html) ([internal interface](0.1.0/internal.html))
-- (Preliminary) [Version 0.1.1](0.1.1/index.html) ([internal interface](0.1.1/internal.html))
+- [Version 0.1.1](0.1.1/index.html) ([internal interface](0.1.1/internal.html))
+- [Version 0.1.2](0.1.2/index.html) ([internal interface](0.1.2/internal.html))
 
 The following list provides a in depth changelog for the individual epochs:
 
