@@ -15,6 +15,8 @@ import * as ModalDialogs from "vue-modal-dialogs"
 import helpers from "cookbook/js/helper"
 import setupLogging from "cookbook/js/logging"
 
+import { linkTo } from "@nextcloud/router"
+
 import router from "./router"
 import store from "./store"
 
@@ -25,6 +27,9 @@ if (__webpack_use_dev_server__ || false) {
     // eslint-disable-next-line camelcase,no-undef
     __webpack_public_path__ = "http://127.0.0.1:3000/apps/cookbook/js/"
 }
+
+// eslint-disable-next-line camelcase,no-undef
+__webpack_public_path__ = `${linkTo("cookbook", "js")}/`
 
 // Fetch Nextcloud nonce identifier for dynamic script loading
 // eslint-disable-next-line camelcase,no-undef

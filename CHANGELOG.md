@@ -21,6 +21,8 @@
   [#1764](https://github.com/nextcloud/cookbook/pull/1764) @christianlupus
 - Fix unclear error message if recipe is already existing
   [#1770](https://github.com/nextcloud/cookbook/pull/1770) @SethFalco
+- Restore dialog to select files
+  [#1832](https://github.com/nextcloud/cookbook/pull/1832) @christianlupus
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change

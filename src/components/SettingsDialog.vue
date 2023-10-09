@@ -175,6 +175,7 @@
 
 <script>
 import { subscribe, unsubscribe } from "@nextcloud/event-bus"
+import { getFilePickerBuilder } from "@nextcloud/dialogs"
 
 import NcAppSettingsDialog from "@nextcloud/vue/dist/Components/NcAppSettingsDialog"
 import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSection"
@@ -315,33 +316,36 @@ export default {
          * Select a recipe folder using the Nextcloud file picker
          */
         pickRecipeFolder() {
-            OC.dialogs.filepicker(
+            const filepicker = getFilePickerBuilder(
                 t("cookbook", "Path to your recipe collection"),
-                (path) => {
-                    const $this = this
-                    this.$store
-                        .dispatch("updateRecipeDirectory", { dir: path })
-                        .then(() => {
-                            $this.recipeFolder = path
-                            if ($this.$route.path !== "/") {
-                                $this.$router.push("/")
-                            }
-                        })
-                        .catch(() =>
-                            showSimpleAlertModal(
-                                // prettier-ignore
-                                t("cookbook","Could not set recipe folder to {path}",
-                                {
-                                    path
-                                }
-                            ),
-                            ),
-                        )
-                },
-                false,
-                ["httpd/unix-directory"],
-                true,
             )
+                .addMimeTypeFilter("httpd/unix-directory")
+                .addButton({
+                    label: "Pick",
+                    type: "primary",
+                })
+                .build()
+            filepicker.pick().then((path) => {
+                const $this = this
+                this.$store
+                    .dispatch("updateRecipeDirectory", { dir: path })
+                    .then(() => {
+                        $this.recipeFolder = path
+                        if ($this.$route.path !== "/") {
+                            $this.$router.push("/")
+                        }
+                    })
+                    .catch(() =>
+                        showSimpleAlertModal(
+                            // prettier-ignore
+                            t("cookbook","Could not set recipe folder to {path}",
+                            {
+                                path
+                            }
+                        ),
+                        ),
+                    )
+            })
         },
 
         /**
