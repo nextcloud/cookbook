@@ -175,7 +175,7 @@
 
 <script>
 import { subscribe, unsubscribe } from "@nextcloud/event-bus"
-import { FilePicker, getFilePickerBuilder } from "@nextcloud/dialogs"
+import { getFilePickerBuilder } from "@nextcloud/dialogs"
 
 import NcAppSettingsDialog from "@nextcloud/vue/dist/Components/NcAppSettingsDialog"
 import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSection"
@@ -326,7 +326,6 @@ export default {
                 })
                 .build()
             filepicker.pick().then((path) => {
-                console.log(path)
                 const $this = this
                 this.$store
                     .dispatch("updateRecipeDirectory", { dir: path })
