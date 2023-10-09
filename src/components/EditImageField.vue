@@ -25,7 +25,6 @@
 </template>
 
 <script>
-
 import { FilePickerType, getFilePickerBuilder } from "@nextcloud/dialogs"
 
 export default {
@@ -43,16 +42,16 @@ export default {
     methods: {
         pickImage(e) {
             e.preventDefault()
-            const filePicker = getFilePickerBuilder(t("cookbook", "Path to your recipe image"))
+            const filePicker = getFilePickerBuilder(
+                t("cookbook", "Path to your recipe image"),
+            )
                 .addMimeTypeFilter("image/jpeg")
                 .addMimeTypeFilter("image/png")
                 .setType(FilePickerType.Choose)
                 .build()
-            filePicker.pick().then(
-                (path) => {
-                    this.$emit("input", path)
-                },
-            )
+            filePicker.pick().then((path) => {
+                this.$emit("input", path)
+            })
         },
     },
 }

@@ -38,19 +38,19 @@ export default {
     },
     methods: {
         selectFolder() {
-            const filePicker = getFilePickerBuilder(t('cookbook', 'Path to your recipe collection'))
+            const filePicker = getFilePickerBuilder(
+                t("cookbook", "Path to your recipe collection"),
+            )
                 .addMimeTypeFilter("httpd/unix-directory")
                 .setType(FilePickerType.Choose)
                 .build()
-            filePicker.pick().then(
-                (path) => {
-                    this.$store
-                        .dispatch("updateRecipeDirectory", { dir: path })
-                        .then(() => {
-                            window.location.reload()
-                        })
-                },
-            )
+            filePicker.pick().then((path) => {
+                this.$store
+                    .dispatch("updateRecipeDirectory", { dir: path })
+                    .then(() => {
+                        window.location.reload()
+                    })
+            })
         },
     },
 }

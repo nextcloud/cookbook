@@ -18,7 +18,7 @@ import setupLogging from "cookbook/js/logging"
 import router from "./router"
 import store from "./store"
 
-import {linkTo} from "@nextcloud/router"
+import { linkTo } from "@nextcloud/router"
 
 import AppMain from "./components/AppMain.vue"
 
@@ -28,7 +28,7 @@ if (__webpack_use_dev_server__ || false) {
     __webpack_public_path__ = "http://127.0.0.1:3000/apps/cookbook/js/"
 }
 
-__webpack_public_path__ = linkTo('cookbook', 'js') + '/'
+__webpack_public_path__ = linkTo("cookbook", "js") + "/"
 
 // Fetch Nextcloud nonce identifier for dynamic script loading
 // eslint-disable-next-line camelcase,no-undef

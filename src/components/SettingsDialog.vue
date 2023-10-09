@@ -316,12 +316,15 @@ export default {
          * Select a recipe folder using the Nextcloud file picker
          */
         pickRecipeFolder() {
-            const filepicker = getFilePickerBuilder(t('cookbook', 'Path to your recipe collection'))
-                .addMimeTypeFilter('httpd/unix-directory')
+            const filepicker = getFilePickerBuilder(
+                t("cookbook", "Path to your recipe collection"),
+            )
+                .addMimeTypeFilter("httpd/unix-directory")
                 .addButton({
-                    label: 'Pick',
-                    type: 'primary'
-                }).build()
+                    label: "Pick",
+                    type: "primary",
+                })
+                .build()
             filepicker.pick().then((path) => {
                 console.log(path)
                 const $this = this
