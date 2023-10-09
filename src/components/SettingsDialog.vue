@@ -175,7 +175,7 @@
 
 <script>
 import { subscribe, unsubscribe } from "@nextcloud/event-bus"
-import { FilePicker } from "@nextcloud/dialogs"
+import { FilePicker, getFilePickerBuilder } from "@nextcloud/dialogs"
 
 import NcAppSettingsDialog from "@nextcloud/vue/dist/Components/NcAppSettingsDialog"
 import NcAppSettingsSection from "@nextcloud/vue/dist/Components/NcAppSettingsSection"
@@ -316,33 +316,34 @@ export default {
          * Select a recipe folder using the Nextcloud file picker
          */
         pickRecipeFolder() {
-            FilePicker(
-                t("cookbook", "Path to your recipe collection"),
-                (path) => {
-                    const $this = this
-                    this.$store
-                        .dispatch("updateRecipeDirectory", { dir: path })
-                        .then(() => {
-                            $this.recipeFolder = path
-                            if ($this.$route.path !== "/") {
-                                $this.$router.push("/")
+            const filepicker = getFilePickerBuilder(t('cookbook', 'Path to your recipe collection'))
+                .addMimeTypeFilter('httpd/unix-directory')
+                .addButton({
+                    label: 'Pick',
+                    type: 'primary'
+                }).build()
+            filepicker.pick().then((path) => {
+                console.log(path)
+                const $this = this
+                this.$store
+                    .dispatch("updateRecipeDirectory", { dir: path })
+                    .then(() => {
+                        $this.recipeFolder = path
+                        if ($this.$route.path !== "/") {
+                            $this.$router.push("/")
+                        }
+                    })
+                    .catch(() =>
+                        showSimpleAlertModal(
+                            // prettier-ignore
+                            t("cookbook","Could not set recipe folder to {path}",
+                            {
+                                path
                             }
-                        })
-                        .catch(() =>
-                            showSimpleAlertModal(
-                                // prettier-ignore
-                                t("cookbook","Could not set recipe folder to {path}",
-                                {
-                                    path
-                                }
-                            ),
-                            ),
-                        )
-                },
-                false,
-                ["httpd/unix-directory"],
-                true,
-            )
+                        ),
+                        ),
+                    )
+            })
         },
 
         /**
