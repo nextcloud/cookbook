@@ -138,11 +138,20 @@ RecipeStub:
     - type: object
       properties:
         recipe_id:
+          type: int
+          description: |
+            The index of the recipe. Note this is a string and might change its appearance in the future.
+
+            This is deprecated. Do not use it anymore. See id
+          example: 123
+          deprecated: true
+        id:
           type: string
-          description: The index of the recipe. Note this is a string and might change its appearance in the future.
+          description: The identifier of the recipe
           example: "1"
       required:
         - "recipe_id"
+        - id
 
 StubList:
   type: array
