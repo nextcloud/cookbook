@@ -26,7 +26,7 @@
 
 <script>
 
-import { FilePicker, FilePickerType, FILEPICKER_TYPE_CHOOSE } from "@nextcloud/dialogs"
+import { FilePickerType, getFilePickerBuilder } from "@nextcloud/dialogs"
 
 export default {
     name: "EditImageField",
@@ -43,16 +43,15 @@ export default {
     methods: {
         pickImage(e) {
             e.preventDefault()
-            const $this = this
-            FilePicker(
-                t("cookbook", "Path to your recipe image"),
+            const filePicker = getFilePickerBuilder(t("cookbook", "Path to your recipe image"))
+                .addMimeTypeFilter("image/jpeg")
+                .addMimeTypeFilter("image/png")
+                .setType(FilePickerType.Choose)
+                .build()
+            filePicker.pick().then(
                 (path) => {
-                    $this.$emit("input", path)
+                    this.$emit("input", path)
                 },
-                false,
-                ["image/jpeg", "image/png"],
-                true,
-                FilePickerType.Choose,
             )
         },
     },

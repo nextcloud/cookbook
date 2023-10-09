@@ -27,7 +27,7 @@
 import NcContent from "@nextcloud/vue/dist/Components/NcContent"
 import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
 
-import { FilePicker } from "@nextcloud/dialogs"
+import { getFilePickerBuilder, FilePickerType } from "@nextcloud/dialogs"
 
 export default {
     name: "InvalidGuest",
@@ -38,8 +38,11 @@ export default {
     },
     methods: {
         selectFolder() {
-            FilePicker(
-                t("cookbook", "Path to your recipe collection"),
+            const filePicker = getFilePickerBuilder(t('cookbook', 'Path to your recipe collection'))
+                .addMimeTypeFilter("httpd/unix-directory")
+                .setType(FilePickerType.Choose)
+                .build()
+            filePicker.pick().then(
                 (path) => {
                     this.$store
                         .dispatch("updateRecipeDirectory", { dir: path })
@@ -47,9 +50,6 @@ export default {
                             window.location.reload()
                         })
                 },
-                false, // Single result
-                ["httpd/unix-directory"], // Desired MIME type
-                true, // Make modal dialog
             )
         },
     },
