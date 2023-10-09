@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: Nextcloud cookbook app
   description: >-
-    This is the internal API definition of the [cookbook app](https://github.com/nextcloud/cookbook) webapp for the [nextcloud server](http://nextcloud.com).
+    This is the public API definition of the [cookbook app](https://github.com/nextcloud/cookbook) for the [nextcloud server](http://nextcloud.com).
     
     
     The total API is separated into two parts:
@@ -31,7 +31,7 @@ info:
   license:
     name: AGPL-3
     url: 'http://www.gnu.org/licenses/agpl-3.0.de.html'
-  version: 0.1.1
+  version: 0.1.2
 
 #externalDocs:
 #  description: Find out more about Swagger
@@ -50,15 +50,6 @@ servers:
         default: 'example.com'
 
 tags:
-  # - name: External API v1 - Recipes
-  #   description: Querying and manipulating recipes using external APIs
-  # - name: External API v1 - Categories
-  #   description: Access to the categories of recipes using external APIs
-  # - name: External API v1 - Tags
-  #   description: Access to tags/keywords of recipes using external APIs
-  # - name: External API v1 - Misc
-  #   description: Other API endpoints for use by external APIs
-
   - name: Recipes
     description: Everything related to recipes and their usage
   - name: Categories
@@ -71,43 +62,54 @@ tags:
 
 
 components:
-  
   schemas:
+    Category:
+      $ref: objects.yaml#/Category
     Config:
       $ref: objects.yaml#/Config
     Error:
       $ref: objects.yaml#/Error
+    Keyword:
+      $ref: objects.yaml#/Keyword
     RecipeStub:
       $ref: objects.yaml#/RecipeStub
     StubList:
       $ref: objects.yaml#/StubList
     Recipe:
       $ref: objects.yaml#/Recipe
+    Url:
+      $ref: objects.yaml#/Url
+    Version:
+      $ref: objects.yaml#/Version
   
   securitySchemes:
-    # app_password:
-    #   type: http
-    #   scheme: basic
-    #   description: Use username and app password
-    requesttoken:
-      type: apiKey
-      name: requestkey
-      in: header
-    session:
-      type: apiKey
-      in: cookie
-      name: nc_session_id
+    app_password:
+      type: http
+      scheme: basic
+      description: Use username and app password
 
 security:
-  - requesttoken: []
-    session: []
+  - app_password: []
 
 paths:
   
-  /webapp/reindex:
+  /api/version:
+    get:
+      tags: [ Misc ]
+      summary: Get the version of the API endpoint
+      operationId: version
+      responses:
+        '200':
+          description: API version
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Version"
+  /api/v1/reindex:
     post:
       tags: [ Misc ]
       summary: Trigger a rescan of all recipes into the caching database
+      operationId: reindex
       responses:
         200:
           description: The reindex process was done.
@@ -116,10 +118,11 @@ paths:
               schema:
                 type: string
                 example: Search index rebuilt successfully
-  /webapp/config:
+  /api/v1/config:
     get:
       tags: [ Misc ]
       summary: Get the current configuration of the app
+      operationId: getConfig
       responses:
         200:
           description: The config was read successfully
@@ -130,6 +133,13 @@ paths:
     post:
       tags: [ Misc ]
       summary: Set the configuration for the current user
+      operationId: setConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Config"
       responses:
         200:
           description: The configuration was successfully saved.
@@ -139,21 +149,18 @@ paths:
                 type: string
                 example: OK
   
-  /webapp/import:
+  /api/v1/import:
     post:
       tags: [ Recipes ]
       summary: Import a recipe using schema.org metadata from a website
+      operationId: import
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                url:
-                  type: string
-                  example: 'http://www.chefkoch.de/2345'
-              required:
-                - url
+              $ref: "#/components/schemas/Url"
+
       responses:
         200:
           description: Successfully imported recipe
@@ -174,10 +181,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /webapp/recipes/{id}/image:
+  /api/v1/recipes/{id}/image:
     get:
       tags: [ Recipes ]
       summary: Get the main image of a recipe. If no image is stored a fallback image is delivered.
+      operationId: getImage
       parameters:
         - in: path
           name: id
@@ -185,6 +193,20 @@ paths:
           required: true
           schema:
             type: integer
+        - in: query
+          name: size
+          description: >
+            The size of the requested image
+
+            * `full`    - Full resolution image (size full res)
+            * `thumb`   - thumbnail of the image (size 250px)
+            * `thumb16` - icon of the image (size 16px)
+
+            by default the full size image will be returned
+          required: false
+          schema:
+            type: string
+            enum: [full, thumb, thumb16]
       responses:
         200:
           description: Image was obtained and will be in response either as image/jpeg or image/svg+xml
@@ -199,7 +221,7 @@ paths:
                 format: binary
         406:
           description: The recipe has no image whose MIME type matches the Accept header
-  /webapp/search/{query}:
+  /api/v1/search/{query}:
     parameters:
       - in: path
         name: query
@@ -210,6 +232,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Search for recipes for keywords, tags and categories with the named search string
+      operationId: search
       responses:
         200:
           description: The recipes were obtained successfully
@@ -224,10 +247,11 @@ paths:
               schema:
                 type: string
                 description: The error message
-  /webapp/recipes:
+  /api/v1/recipes:
     get:
       tags: [ Recipes ]
       summary: Get all recipes in the database
+      operationId: listRecipes
       responses:
         200:
           description: Successfully obtained all recipes
@@ -238,20 +262,17 @@ paths:
     post:
       tags: [ Recipes ]
       summary: Create a new recipe
+      operationId: newRecipe
       requestBody:
         description: |
           A JSON representation of the recipe to be saved.
           
           See also the structure at https://schema.org/Recipe
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-              required: [ "name" ]
-              additionalProperties: true
+              $ref: "#/components/schemas/Recipe"
               example:
                 name: "Chips"
                 description: "A very delicious way of getting kids quiet"
@@ -282,7 +303,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /webapp/recipes/{id}:
+  /api/v1/recipes/{id}:
     parameters:
       - in: path
         name: id
@@ -293,6 +314,7 @@ paths:
     get:
       tags: [ Recipes ]
       summary: Get a single recipe from the server
+      operationId: recipeDetails
       responses:
         200:
           description: Recipe was sucessfully obtained
@@ -311,7 +333,9 @@ paths:
     put:
       tags: [ Recipes ]
       summary: Update a recipe
+      operationId: updateRecipe
       requestBody:
+        required: true
         content:
           application/json:
             schema:
@@ -335,6 +359,7 @@ paths:
     delete:
       tags: [ Recipes ]
       summary: Delete an existing recipe
+      operationId: deleteRecipe
       responses:
         200:
           description: The recipe was deleted successfully
@@ -342,7 +367,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Recipe 2345 was deletes successfully
+                example: Recipe 2345 deleted successfully
         502:
           description: An Exception was thrown
           content:
@@ -352,10 +377,11 @@ paths:
                 example: Recipe with id 2345 was not found.
                 description: Error message
   
-  /webapp/keywords:
+  /api/v1/keywords:
     get:
       tags: [ Tags ]
       summary: Get all known keywords
+      operationId: listKeywords
       responses:
         '200':
           description: Successfully obtained all keywords
@@ -364,24 +390,13 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    recipe_count:
-                      type: integer
-                  required:
-                    - name
-                    - recipe_count
-              example:
-                - name: vegetarian
-                  recipe_count: 5
-                - name: sugar-free
-                  recipe_count: 2
-  /webapp/tags/{keywords}:
+                  $ref: "#/components/schemas/Keyword"
+
+  /api/v1/tags/{keywords}:
     get:
       tags: [ Tags ]
       summary: Get all recipes associated with certain keywords
+      operationId: recipesWithKeyword
       parameters:
         - in: path
           name: keywords
@@ -405,10 +420,11 @@ paths:
                 type: string
                 example: "SQLException: Something went wrong."
   
-  /webapp/categories:
+  /api/v1/categories:
     get:
       tags: [ Categories ]
       summary: Get all known categories
+      operationId: listCategories
       responses:
         200:
           description: >-
@@ -422,15 +438,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    recipe_count:
-                      type: integer
-                  required:
-                    - name
-                    - recipe_count
+                  $ref: "#/components/schemas/Category"
               example:
                 - name: Dinner
                   recipe_count: 21
@@ -438,10 +446,11 @@ paths:
                   recipe_count: 10
                 - name: '*'
                   recipe_count: 3
-  /webapp/category/{category}:
+  /api/v1/category/{category}:
     get:
       tags: [ Categories ]
       summary: Get all recipes of a certain category
+      operationId: recipesInCategory
       parameters:
         - in: path
           name: category
@@ -471,6 +480,7 @@ paths:
     put:
       tags: [ Categories ]
       summary: Rename a category
+      operationId: renameCategory
       parameters:
         - in: path
           name: category
@@ -483,6 +493,7 @@ paths:
           schema:
             type: string
       requestBody:
+        required: true
         content:
           application/json:
             schema:
