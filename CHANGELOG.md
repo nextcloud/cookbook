@@ -23,6 +23,8 @@
   [#1770](https://github.com/nextcloud/cookbook/pull/1770) @SethFalco
 - Restore dialog to select files
   [#1832](https://github.com/nextcloud/cookbook/pull/1832) @christianlupus
+- Provide id of recipe stub in API endpoints as well to make API consistend with recipe API
+  [#1834](https://github.com/nextcloud/cookbook/pull/1834) @christianlupus
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
