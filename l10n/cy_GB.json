@@ -1,5 +1,6 @@
 { "translations": {
     "None" : "Dim",
+    "Page not found" : "Heb ganfod y dudalen",
     "Edit" : "Golygu",
     "Save" : "Cadw",
     "Search" : "Chwilio",
@@ -12,6 +13,7 @@
     "Name" : "Enw",
     "Description" : "Disgrifiad",
     "URL" : "URL",
+    "Tools" : "Offer",
     "Last modified" : "Newidiwyd diwethaf",
     "Loading…" : "Yn llwytho…",
     "Cancel" : "Diddymu",

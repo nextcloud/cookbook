@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "None" : "Dim",
+    "Page not found" : "Heb ganfod y dudalen",
     "Edit" : "Golygu",
     "Save" : "Cadw",
     "Search" : "Chwilio",
@@ -14,6 +15,7 @@ OC.L10N.register(
     "Name" : "Enw",
     "Description" : "Disgrifiad",
     "URL" : "URL",
+    "Tools" : "Offer",
     "Last modified" : "Newidiwyd diwethaf",
     "Loading…" : "Yn llwytho…",
     "Cancel" : "Diddymu",
