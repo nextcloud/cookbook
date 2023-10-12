@@ -25,6 +25,8 @@
   [#1832](https://github.com/nextcloud/cookbook/pull/1832) @christianlupus
 - Provide id of recipe stub in API endpoints as well to make API consistend with recipe API
   [#1834](https://github.com/nextcloud/cookbook/pull/1834) @christianlupus
+- Hode the button to copy ingredients unless there are some ingredients to copy
+  [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
