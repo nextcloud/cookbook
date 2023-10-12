@@ -46,6 +46,16 @@ Nook
 
 - [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
 
+## Sponsoring
+
+We thank the sponsrs of this project for their support as open source software.
+
+### Blackfire
+[<img alt="Blackfire Logo" src=".img/blackfire-io.png" style="height: 60px;">](https://www.blackfire.io)
+
+### Browser Stack
+[<img alt="Browserstack Logo" src=".img/BrowserStack.png" style="height: 60px;">](https://www.browserstack.com/)
+
 ## F.A.Q.
 
 #### I can't see my recipes
