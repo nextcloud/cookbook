@@ -39,6 +39,9 @@ Nook
 [Nextcloud Cookbook](https://lneugebauer.github.io/nextcloud-cookbook/) (by lneugebauer)  
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/de.lukasneugebauer.nextcloudcookbook/) [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Play Store" height="80">](https://play.google.com/store/apps/details?id=de.lukasneugebauer.nextcloudcookbook)
 
+[Cookbook Client](https://github.com/VincentMeilinger/Nextcloud-Cookbook-iOS/)  
+[<img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store" height="80" width="160">](https://apps.apple.com/de/app/cookbook-client/id6467141985)
+
 ### Browser plugins/scripts
 
 - [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
