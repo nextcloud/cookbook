@@ -132,6 +132,7 @@
                     <NcButton
                         class="copy-ingredients"
                         :type="'tertiary'"
+                        v-if="scaledIngredients.length"
                         @click="copyIngredientsToClipboard"
                     >
                         <template #icon>
