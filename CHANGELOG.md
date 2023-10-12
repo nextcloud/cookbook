@@ -77,6 +77,8 @@
   [#1810](https://github.com/nextcloud/cookbook/pull/1810) @christianlupus
 - Reimplement appstore build scripts
   [#1822](https://github.com/nextcloud/cookbook/pull/1822) @christianlupus
+- Added new description in README to external app
+  [#1837](https://github.com/nextcloud/cookbook/pull/1837) @VincentMeilinger
 
 
 ## 0.10.2 - 2023-03-24
