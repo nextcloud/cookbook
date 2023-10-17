@@ -188,6 +188,8 @@ import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import { enableLogging } from "cookbook/js/logging"
 
+import Vue from "vue"
+
 export const SHOW_SETTINGS_EVENT = "show-settings"
 
 const INFO_BLOCK_KEYS = [
@@ -221,20 +223,25 @@ export default {
             isOpen: false,
             printImage: false,
             recipeFolder: "",
-            resetPrintImage: true,
+            resetPrintImage: false,
             showTagCloudInRecipeList: true,
-            resetTagCloud: true,
+            resetTagCloud: false,
             scanningLibrary: false,
             // By setting the reset value initially to true, it will skip one watch event
             // (the one when config is loaded at page load)
-            resetInterval: true,
+            resetInterval: false,
             updateInterval: 0,
             visibleInfoBlocks: [...INFO_BLOCK_KEYS],
             resetVisibleInfoBlocks: true,
+            writeChanges: true,
         }
     },
     watch: {
         async printImage(newVal, oldVal) {
+            if (! this.writeChanges) {
+                return
+            }
+
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetPrintImage) {
                 this.resetPrintImage = false
@@ -254,11 +261,19 @@ export default {
         },
         // eslint-disable-next-line no-unused-vars
         showTagCloudInRecipeList(newVal, oldVal) {
+            if (! this.writeChanges) {
+                return
+            }
+
             this.$store.dispatch("setShowTagCloudInRecipeList", {
                 showTagCloud: newVal,
             })
         },
         async updateInterval(newVal, oldVal) {
+            if (! this.writeChanges) {
+                return
+            }
+
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetInterval) {
                 this.resetInterval = false
@@ -281,6 +296,10 @@ export default {
             }
         },
         async visibleInfoBlocks(newVal, oldVal) {
+            if (!this.writeChanges) {
+                return
+            }
+
             // Avoid infinite loop on page load and when reseting value after failed submit
             if (this.resetVisibleInfoBlocks) {
                 this.resetVisibleInfoBlocks = false
@@ -303,13 +322,33 @@ export default {
         },
     },
     mounted() {
-        this.setup()
-
         subscribe(SHOW_SETTINGS_EVENT, this.handleShowSettings)
     },
     methods: {
         handleShowSettings() {
             this.isOpen = true
+            
+            // Temporarily disable the storage of data
+            this.writeChanges = false
+
+            const { config } = this.$store.state
+            this.resetPrintImage = false
+            this.resetVisibleInfoBlocks = false
+
+            if (!config) {
+                throw new Error()
+            }
+
+            this.printImage = config.print_image
+            this.visibleInfoBlocks = visibleInfoBlocksDecode(
+                config.visibleInfoBlocks,
+            )
+            this.showTagCloudInRecipeList =
+                this.$store.state.localSettings.showTagCloudInRecipeList
+            this.updateInterval = config.update_interval
+            this.recipeFolder = config.folder
+
+            Vue.nextTick(() => { this.writeChanges = true })
         },
 
         /**
@@ -346,36 +385,6 @@ export default {
                         ),
                     )
             })
-        },
-
-        /**
-         * Initial setup
-         */
-        async setup() {
-            try {
-                await this.$store.dispatch("refreshConfig")
-                const { config } = this.$store.state
-                this.resetPrintImage = false
-                this.resetVisibleInfoBlocks = false
-
-                if (!config) {
-                    throw new Error()
-                }
-
-                this.printImage = config.print_image
-                this.visibleInfoBlocks = visibleInfoBlocksDecode(
-                    config.visibleInfoBlocks,
-                )
-                this.showTagCloudInRecipeList =
-                    this.$store.state.localSettings.showTagCloudInRecipeList
-                this.updateInterval = config.update_interval
-                this.recipeFolder = config.folder
-            } catch (err) {
-                this.$log.error("Error setting up SettingsDialog", err)
-                await showSimpleAlertModal(
-                    t("cookbook", "Loading config failed"),
-                )
-            }
         },
 
         /**
@@ -439,15 +448,4 @@ export default {
     width: 100%;
 }
 
-/* #app-settings .button { */
-/*     z-index: 2; */
-/*     height: 44px; */
-/*     padding: 0; */
-/*     border-radius: var(--border-radius); */
-/* } */
-
-/* #app-settings .button p { */
-/*     margin: auto; */
-/*     font-size: 13px; */
-/* } */
 </style>
