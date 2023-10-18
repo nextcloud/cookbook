@@ -6,6 +6,7 @@ OC.L10N.register(
     "All recipes" : "Toles recetes",
     "Category" : "Categoría",
     "Tags" : "Etiquetes",
+    "Add" : "Amestar",
     "Name" : "Nome",
     "Description" : "Descripción",
     "URL" : "URL",
