@@ -51,6 +51,9 @@ class FixToolsFilterTest extends TestCase {
 			[['a','b','c'], ['a','b','c'], false],
 			[[' a  ',''], ['a'], true],
 			[[' a  ','', 'b'], ['a', 'b'], true],
+			['a', ['a'], true],
+			['', [], true],
+			["  a   \tb ", ['a b'], true],
 		];
 	}
 
