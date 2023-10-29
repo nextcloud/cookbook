@@ -50,14 +50,13 @@ class FixToolsFilter extends AbstractJSONFilter {
 		if (!is_array($json[self::TOOLS])) {
 			$t = trim($json[self::TOOLS]);
 			$tools[] = $this->textCleaner->cleanUp($t, false);
-		}
-		else{
+		} else {
 			$tools = array_map(function ($t) {
 				$t = trim($t);
 				$t = $this->textCleaner->cleanUp($t, false);
 				return $t;
 			}, $json[self::TOOLS]);
-			$tools = array_filter($tools, fn($t) => ($t));
+			$tools = array_filter($tools, fn ($t) => ($t));
 			ksort($tools);
 			$tools = array_values($tools);
 		}
