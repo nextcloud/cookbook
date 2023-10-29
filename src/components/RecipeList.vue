@@ -1,5 +1,70 @@
 <template>
     <div>
+        <div v-if="recipeObjects.length == 0">
+            <NcEmptyContent v-if="!isCategorySelected">
+                <template #description>
+                    <div class="center p-4">
+                        <div>
+                            {{
+                                t("cookbook", "No recipes created or imported.")
+                            }}
+                        </div>
+                        <div>
+                            {{
+                                t(
+                                    "cookbook",
+                                    "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.",
+                                )
+                            }}
+                        </div>
+                    </div>
+                </template>
+                <template #icon>
+                    <RecipeIcon />
+                </template>
+                <template #name>
+                    <h1 class="empty-content__name">
+                        {{ t("cookbook", "No recipes") }}
+                    </h1>
+                </template>
+                <template #action>
+                    <router-link :to="'/recipe/create'">
+                        <NcButton type="primary"> Create new recipe! </NcButton>
+                    </router-link>
+                </template>
+            </NcEmptyContent>
+
+            <NcEmptyContent v-if="isCategorySelected">
+                <template #description>
+                    <div class="center p-4">
+                        <div>
+                            {{
+                                t(
+                                    "cookbook",
+                                    "No recipes matching the selected category found.",
+                                )
+                            }}
+                        </div>
+                        <div>
+                            {{
+                                t(
+                                    "cookbook",
+                                    "Try selecting a category from the left navigation bar.",
+                                )
+                            }}
+                        </div>
+                    </div>
+                </template>
+                <template #icon>
+                    <RecipeIcon />
+                </template>
+                <template #name>
+                    <h1 class="empty-content__name">
+                        {{ t("cookbook", "No recipes") }}
+                    </h1>
+                </template>
+            </NcEmptyContent>
+        </div>
         <RecipeListKeywordCloud
             v-if="showTagCloudInRecipeList"
             v-model="keywordFilter"
@@ -50,6 +115,9 @@
 </template>
 
 <script>
+import RecipeIcon from "vue-material-design-icons/ChefHat.vue"
+import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+import NcEmptyContent from "@nextcloud/vue/dist/Components/NcEmptyContent"
 import NcMultiselect from "@nextcloud/vue/dist/Components/NcMultiselect"
 import RecipeCard from "./RecipeCard.vue"
 import RecipeListKeywordCloud from "./RecipeListKeywordCloud.vue"
@@ -57,8 +125,11 @@ import RecipeListKeywordCloud from "./RecipeListKeywordCloud.vue"
 export default {
     name: "RecipeList",
     components: {
+        NcButton,
+        NcEmptyContent,
         NcMultiselect,
         RecipeCard,
+        RecipeIcon,
         RecipeListKeywordCloud,
     },
     props: {
@@ -115,6 +186,12 @@ export default {
         }
     },
     computed: {
+        /**
+         * True, if the recipe list is shown for a selected category or the 'undefined' category and not "All recipes".
+         */
+        isCategorySelected() {
+            return this.$route.path.substring(1, 9) === "category"
+        },
         /**
          * An array of all keywords in all recipes. These are neither sorted nor unique
          */
@@ -324,5 +401,9 @@ export default {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.p-4 {
+    padding: 1.5rem !important;
 }
 </style>
