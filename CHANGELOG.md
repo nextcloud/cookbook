@@ -11,6 +11,8 @@
   [#1723](https://github.com/nextcloud/cookbook/pull/1743) @j0hannesr0th
 - Add Android client to README
   [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
+- Show info for empty cookbook or categories in recipe overview
+  [#1866](https://github.com/nextcloud/cookbook/pull/1767) @seyfeb
 
 ### Fixed
 - Fix translation string to not contain quotes
