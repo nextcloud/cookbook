@@ -2,7 +2,6 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
-use OCA\Cookbook\Exception\InvalidRecipeException;
 use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCP\IL10N;
@@ -69,15 +68,5 @@ class FixToolsFilterTest extends TestCase {
 		$this->stub['tool'] = $expectedVal;
 		$this->assertEquals($changed, $ret);
 		$this->assertEquals($this->stub, $recipe);
-	}
-
-	public function testApplyString() {
-		$recipe = $this->stub;
-		$recipe['tool'] = 'some text';
-
-		$this->textCleanupHelper->method('cleanUp')->willReturnArgument(0);
-		$this->expectException(InvalidRecipeException::class);
-
-		$this->dut->apply($recipe);
 	}
 }

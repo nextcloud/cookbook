@@ -28,7 +28,7 @@
 - Hode the button to copy ingredients unless there are some ingredients to copy
   [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
 - Allow single tool in JSON+LD import, fixes #1641
-  [#XXXX](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
+  [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change

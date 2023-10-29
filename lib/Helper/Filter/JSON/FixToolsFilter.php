@@ -50,6 +50,8 @@ class FixToolsFilter extends AbstractJSONFilter {
 		if (!is_array($json[self::TOOLS])) {
 			$t = trim($json[self::TOOLS]);
 			$t = $this->textCleaner->cleanUp($t, false);
+
+			// Empty string would mean no tools (i.e., empty array)
 			if($t != "") {
 				$tools[] = $t;
 			}
