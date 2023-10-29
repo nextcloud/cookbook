@@ -49,7 +49,10 @@ class FixToolsFilter extends AbstractJSONFilter {
 
 		if (!is_array($json[self::TOOLS])) {
 			$t = trim($json[self::TOOLS]);
-			$tools[] = $this->textCleaner->cleanUp($t, false);
+			$t = $this->textCleaner->cleanUp($t, false);
+			if($t != "") {
+				$tools[] = $t;
+			}
 		} else {
 			$tools = array_map(function ($t) {
 				$t = trim($t);
