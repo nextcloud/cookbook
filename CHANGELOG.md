@@ -12,7 +12,7 @@
 - Add Android client to README
   [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
 - Show info for empty cookbook or categories in recipe overview
-  [#1866](https://github.com/nextcloud/cookbook/pull/1767) @seyfeb
+  [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
 
 ### Fixed
 - Fix translation string to not contain quotes
@@ -29,6 +29,8 @@
   [#1834](https://github.com/nextcloud/cookbook/pull/1834) @christianlupus
 - Hode the button to copy ingredients unless there are some ingredients to copy
   [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
+- Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
+  [#XX](https://github.com/nextcloud/cookbook/pull/XX) @seyfeb
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
