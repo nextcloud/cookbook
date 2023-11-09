@@ -18,7 +18,7 @@ import setupLogging from "cookbook/js/logging"
 import { linkTo } from "@nextcloud/router"
 
 import router from "./router"
-import store from "./store"
+import { useStore } from "./store"
 
 import AppMain from "./components/AppMain.vue"
 
@@ -59,6 +59,8 @@ setupLogging(Vue)
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
+
+const store = useStore();
 
 // Start the app once document is done loading
 Vue.$log.info("Main is done. Creating App.")

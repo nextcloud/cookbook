@@ -7,7 +7,7 @@
 
 import Vue from "vue"
 
-import store from "./store"
+import { useStore } from "./store"
 
 import AppInvalidGuest from "./components/AppInvalidGuest.vue"
 
@@ -26,6 +26,8 @@ Vue.prototype.OC = OC
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
+
+const store = useStore();
 
 // Start the app once document is done loading
 const App = Vue.extend(AppInvalidGuest)
