@@ -3,63 +3,62 @@
 </template>
 
 <script>
-import api from "cookbook/js/api-interface"
-
-import RecipeList from "./RecipeList.vue"
-
 export default {
-    name: "AppIndex",
-    components: {
-        RecipeList,
-    },
-    data() {
-        return {
-            // The known recipes in the cookbook
-            recipes: [],
-        }
-    },
-    computed: {
-        /**
-         * Is the Cookbook recipe directory currently being changed?
-         */
-        updatingRecipeDirectory() {
-            return this.$store.state.updatingRecipeDirectory
-        },
-    },
-    watch: {
-        /**
-         * If the Cookbook recipe directory currently was changed, reload
-         * the recipes in the index component.
-         */
-        updatingRecipeDirectory(newVal, oldVal) {
-            if (newVal === false && newVal !== oldVal) {
-                this.loadAll()
-            }
-        },
-    },
-    mounted() {
-        this.$log.info("AppIndex mounted")
-        this.loadAll()
-    },
-    methods: {
-        /**
-         * Load all recipes from the database
-         */
-        loadAll() {
-            const $this = this
-            api.recipes
-                .getAll()
-                .then((response) => {
-                    $this.recipes = response.data
-
-                    // Always set page name last
-                    $this.$store.dispatch("setPage", { page: "index" })
-                })
-                .catch(() => {
-                    // Always set page name last
-                    $this.$store.dispatch("setPage", { page: "index" })
-                })
-        },
-    },
+    name: 'Location',
 }
+</script>
+<script setup>
+
+import api from "cookbook/js/api-interface";
+import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
+
+import RecipeList from "./RecipeList.vue";
+import { useStore } from '../store';
+// import { useStore } from '@vueblocks/vue-use-vuex';
+// import { useStore } from 'vuex-composition-helpers';
+
+let store = useStore();
+
+// The known recipes in the cookbook
+const recipes = ref([]);
+
+/**
+ * Is the Cookbook recipe directory currently being changed?
+ */
+const updatingRecipeDirectory = computed(() => {
+    return store.state.updatingRecipeDirectory
+});
+
+/**
+ * If the Cookbook recipe directory currently was changed, reload
+ * the recipes in the index component.
+ */
+watch(updatingRecipeDirectory, async (newVal, oldVal) => {
+    if (newVal === false && newVal !== oldVal) {
+        this.loadAll();
+    }
+});
+
+onMounted(() => {
+    getCurrentInstance().proxy.$log.info("AppIndex mounted");
+    loadAll();
+})
+
+/**
+ * Load all recipes from the database
+ */
+const loadAll = () =>  {
+    api.recipes
+        .getAll()
+        .then((response) => {
+            recipes.value = response.data
+
+            // Always set page name last
+            store.dispatch("setPage", { page: "index" })
+        })
+        .catch(() => {
+            // Always set page name last
+            store.dispatch("setPage", { page: "index" })
+        });
+};
 </script>
