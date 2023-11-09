@@ -23,37 +23,57 @@
     </NcContent>
 </template>
 
+<script setup>
+import NcContent from "@nextcloud/vue/dist/Components/NcContent";
+import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent";
+import { getFilePickerBuilder, FilePickerType } from "@nextcloud/dialogs";
+
+const selectFolder = () => {
+    const filePicker = getFilePickerBuilder(
+        t("cookbook", "Path to your recipe collection"),
+    )
+        .addMimeTypeFilter("httpd/unix-directory")
+        .setType(FilePickerType.Choose)
+        .build();
+    filePicker.pick().then((path) => {
+        this.$store
+            .dispatch("updateRecipeDirectory", { dir: path })
+            .then(() => {
+                window.location.reload()
+            });
+    });
+};
+// export default {
+//     name: "InvalidGuest",
+//     components: {
+//         // eslint-disable-next-line vue/no-reserved-component-names
+//         NcContent,
+//         NcAppContent,
+//     },
+//     methods: {
+//         selectFolder() {
+//             const filePicker = getFilePickerBuilder(
+//                 t("cookbook", "Path to your recipe collection"),
+//             )
+//                 .addMimeTypeFilter("httpd/unix-directory")
+//                 .setType(FilePickerType.Choose)
+//                 .build()
+//             filePicker.pick().then((path) => {
+//                 this.$store
+//                     .dispatch("updateRecipeDirectory", { dir: path })
+//                     .then(() => {
+//                         window.location.reload()
+//                     })
+//             })
+//         },
+//     },
+// }
+</script>
+
 <script>
-import NcContent from "@nextcloud/vue/dist/Components/NcContent"
-import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
-
-import { getFilePickerBuilder, FilePickerType } from "@nextcloud/dialogs"
-
 export default {
-    name: "InvalidGuest",
-    components: {
-        // eslint-disable-next-line vue/no-reserved-component-names
-        NcContent,
-        NcAppContent,
-    },
-    methods: {
-        selectFolder() {
-            const filePicker = getFilePickerBuilder(
-                t("cookbook", "Path to your recipe collection"),
-            )
-                .addMimeTypeFilter("httpd/unix-directory")
-                .setType(FilePickerType.Choose)
-                .build()
-            filePicker.pick().then((path) => {
-                this.$store
-                    .dispatch("updateRecipeDirectory", { dir: path })
-                    .then(() => {
-                        window.location.reload()
-                    })
-            })
-        },
-    },
-}
+    name: 'InvalidGuest'
+};
 </script>
 
 <style lang="scss" scoped>
