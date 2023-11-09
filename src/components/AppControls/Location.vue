@@ -6,13 +6,14 @@
 
 <script>
 export default {
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: "Location",
-    props: {
-        title: {
-            type: String,
-            default: "",
-        },
-    },
-}
+    name: 'Location',
+};
+</script>
+
+<script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+    title: { type: String, default: "",}
+});
 </script>

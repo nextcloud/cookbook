@@ -2,15 +2,17 @@
     <span class="mode-indicator">{{ title }}</span>
 </template>
 
+
 <script>
 export default {
-    // eslint-disable-next-line vue/multi-word-component-names
-    name: "ModeIndicator",
-    props: {
-        title: {
-            type: String,
-            default: "",
-        },
-    },
-}
+    name: 'ModeIndicator',
+};
+</script>
+
+<script setup>
+import {defineProps} from 'vue';
+
+defineProps({
+    title: { type: String, default: '' }
+});
 </script>
