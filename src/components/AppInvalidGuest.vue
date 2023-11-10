@@ -43,31 +43,6 @@ const selectFolder = () => {
             });
     });
 };
-// export default {
-//     name: "InvalidGuest",
-//     components: {
-//         // eslint-disable-next-line vue/no-reserved-component-names
-//         NcContent,
-//         NcAppContent,
-//     },
-//     methods: {
-//         selectFolder() {
-//             const filePicker = getFilePickerBuilder(
-//                 t("cookbook", "Path to your recipe collection"),
-//             )
-//                 .addMimeTypeFilter("httpd/unix-directory")
-//                 .setType(FilePickerType.Choose)
-//                 .build()
-//             filePicker.pick().then((path) => {
-//                 this.$store
-//                     .dispatch("updateRecipeDirectory", { dir: path })
-//                     .then(() => {
-//                         window.location.reload()
-//                     })
-//             })
-//         },
-//     },
-// }
 </script>
 
 <script>

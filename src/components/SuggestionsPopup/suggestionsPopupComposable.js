@@ -238,8 +238,6 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
         if (!suggestionsPopupVisible.value || !suggestionsPopupElement.value) {
             return;
         }
-console.log(suggestionsPopupElement)
-console.log(suggestionsPopupElement.value)
         // Get reference to the popup
         // There is only ever one at a time, but if it's defined in a v-for
         // the reference will be an array of one

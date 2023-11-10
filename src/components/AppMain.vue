@@ -29,6 +29,7 @@ import { emit, subscribe, unsubscribe } from "@nextcloud/event-bus"
 import AppNavi from "./AppNavi.vue"
 import SettingsDialog from "./SettingsDialog.vue"
 
+// todo
 export default {
     name: "AppMain",
     components: {
@@ -73,6 +74,12 @@ export default {
     },
 }
 </script>
+
+<!--<script>-->
+<!--export default {-->
+<!--    name: 'AppMain'-->
+<!--};-->
+<!--</script>-->
 
 <style lang="scss" scoped>
 .app-navigation {
