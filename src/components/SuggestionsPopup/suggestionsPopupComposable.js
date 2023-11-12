@@ -1,7 +1,7 @@
 import {position as caretPosition} from "caret-pos";
 import { computed, nextTick, ref } from "vue";
 
-export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursorPosition, suggestionsData, emit, log, props) {
+export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursorPosition, suggestionsData, buffer, emit, log, props) {
     const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
 
     /**
@@ -56,13 +56,13 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
         const after = value.slice(field.selectionStart);
         const replace = `r/${recipeId}`;
         const newValue = `${before}${replace}${after}`;
-        // Find out what the buffer code was meant to do. Can't figure out what this.buffer in the mixin is..
-        // if (this.buffer ?? false) {
-        //     this.buffer[suggestionsData.value.fieldIndex] = newValue;
-        //     emit("input", this.buffer);
-        // } else {
+
+        if (buffer.value ?? false) {
+            buffer.value[suggestionsData.value.fieldIndex] = newValue;
+            emit("input", buffer.value);
+        } else {
             emit("input", newValue);
-        // }
+        }
         handleSuggestionsPopupCancel();
         // set cursor to position after pasted string. Waiting two ticks is necessary for
         // the data to be updated in the field

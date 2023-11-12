@@ -43,14 +43,13 @@
 import { getCurrentInstance, nextTick, ref, watch } from "vue";
 import SuggestionsPopup from '../SuggestionsPopup/SuggestionsPopup';
 import useSuggestionPopup from '../SuggestionsPopup/suggestionsPopupComposable';
+const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
 
 // Template refs
 const inputField = ref(null);
-// const suggestionsPopupElement = ref(null);
 
-const log = getCurrentInstance().proxy.$log;
 
 const suggestionsData = ref(null);
 
@@ -100,7 +99,7 @@ let {
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
-} = useSuggestionPopup(suggestionsPopupElement, lastCursorPosition, suggestionsData, emit, log, props);
+} = useSuggestionPopup(suggestionsPopupElement, lastCursorPosition, suggestionsData, null, emit, log, props);
 
 watch(() => props.value, (newValue) => {
     content.value = newValue;
