@@ -14,46 +14,51 @@
     </li>
 </template>
 
+<script setup>
+import { computed, ref } from 'vue';
+
+const headerPrefix = "## ";
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isDone = ref(false);
+
+const props = defineProps({
+    /* Ingredient HTML string to display. Content should be sanitized.
+     */
+    ingredient: {
+        type: String,
+        default: "",
+    },
+    ingredientHasCorrectSyntax: {
+        type: Boolean,
+    },
+    recipeIngredientsHaveSubgroups: {
+        type: Boolean,
+    },
+});
+
+const displayIngredient = computed(() => {
+    if (isHeader()) {
+        return props.ingredient.substring(headerPrefix.length);
+    }
+    return props.ingredient;
+});
+
+const isHeader = () => {
+    return props.ingredient.startsWith(headerPrefix);
+};
+
+const toggleDone = () => {
+    isDone.value = !isDone.value;
+};
+</script>
+
 <script>
 export default {
-    name: "RecipeIngredient",
-    props: {
-        /* Ingredient HTML string to display. Content should be sanitized.
-         */
-        ingredient: {
-            type: String,
-            default: "",
-        },
-        ingredientHasCorrectSyntax: {
-            type: Boolean,
-        },
-        recipeIngredientsHaveSubgroups: {
-            type: Boolean,
-        },
-    },
-    data() {
-        return {
-            headerPrefix: "## ",
-            isDone: false,
-        }
-    },
-    computed: {
-        displayIngredient() {
-            if (this.isHeader()) {
-                return this.ingredient.substring(this.headerPrefix.length)
-            }
-            return this.ingredient
-        },
-    },
-    methods: {
-        isHeader() {
-            return this.ingredient.startsWith(this.headerPrefix)
-        },
-        toggleDone() {
-            this.isDone = !this.isDone
-        },
-    },
-}
+    name: 'RecipeIngredient'
+};
 </script>
 
 <style scoped>
