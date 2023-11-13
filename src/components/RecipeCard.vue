@@ -43,7 +43,7 @@
 
 <script>
 import moment from "@nextcloud/moment"
-import LazyPicture from "./LazyPicture.vue"
+import LazyPicture from "./Utilities/LazyPicture.vue"
 
 export default {
     name: "RecipeCard",
