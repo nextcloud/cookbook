@@ -41,35 +41,31 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import moment from "@nextcloud/moment"
-import LazyPicture from "./Utilities/LazyPicture.vue"
+import LazyPicture from "../Utilities/LazyPicture.vue"
 
+defineProps({
+    recipe: {
+        type: Object,
+        default: () => null,
+    }
+});
+
+const formatDateTime = (dt) => {
+    if (!dt) return null
+    const date = moment(dt, moment.ISO_8601)
+    if (!date.isValid()) {
+        return null
+    }
+    return date.format("L, LT").toString()
+};
+</script>
+
+<script>
 export default {
-    name: "RecipeCard",
-    components: {
-        LazyPicture,
-    },
-    props: {
-        recipe: {
-            type: Object,
-            default: () => null,
-        },
-    },
-    methods: {
-        /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
-         * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
-         */
-        formatDateTime(dt) {
-            if (!dt) return null
-            const date = moment(dt, moment.ISO_8601)
-            if (!date.isValid()) {
-                return null
-            }
-            return date.format("L, LT").toString()
-        },
-    },
-}
+    name: 'RecipeCard'
+};
 </script>
 
 <style scoped>
