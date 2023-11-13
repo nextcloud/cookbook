@@ -334,7 +334,7 @@ import NcButton from "@nextcloud/vue/dist/Components/NcButton"
 
 import RecipeImages from "./RecipeView/RecipeImages.vue"
 import RecipeIngredient from "./RecipeView/RecipeIngredient.vue"
-import RecipeInstruction from "./RecipeInstruction.vue"
+import RecipeInstruction from "./RecipeView/RecipeInstruction.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
 import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem.vue"
 import RecipeTimer from "./RecipeTimer.vue"

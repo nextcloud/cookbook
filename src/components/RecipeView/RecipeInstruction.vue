@@ -4,28 +4,32 @@
     </li>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+
+defineProps({
+    /* Instruction HTML string to display. Content should be sanitized.
+     */
+    instruction: {
+        type: String,
+        default: "",
+    },
+});
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isDone = ref(false);
+
+const toggleDone = () => {
+    isDone.value = !isDone.value;
+};
+</script>
+
 <script>
 export default {
-    name: "RecipeInstruction",
-    props: {
-        /* Instruction HTML string to display. Content should be sanitized.
-         */
-        instruction: {
-            type: String,
-            default: "",
-        },
-    },
-    data() {
-        return {
-            isDone: false,
-        }
-    },
-    methods: {
-        toggleDone() {
-            this.isDone = !this.isDone
-        },
-    },
-}
+    name: 'RecipeInstruction'
+};
 </script>
 
 <style scoped>
