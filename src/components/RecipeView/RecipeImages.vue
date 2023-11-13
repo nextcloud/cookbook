@@ -14,20 +14,23 @@
     </div>
 </template>
 
+<script setup>
+import { ref } from "vue";
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const collapsed = ref(true);
+
+const toggleCollapsed = () => {
+    this.collapsed = !this.collapsed
+};
+</script>
+
 <script>
 export default {
-    name: "RecipeImages",
-    data() {
-        return {
-            collapsed: true,
-        }
-    },
-    methods: {
-        toggleCollapsed() {
-            this.collapsed = !this.collapsed
-        },
-    },
-}
+    name: 'RecipeImages'
+};
 </script>
 
 <style scoped>

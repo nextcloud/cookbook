@@ -332,7 +332,7 @@ import ContentCopyIcon from "icons/ContentCopy.vue"
 
 import NcButton from "@nextcloud/vue/dist/Components/NcButton"
 
-import RecipeImages from "./RecipeImages.vue"
+import RecipeImages from "./RecipeView/RecipeImages.vue"
 import RecipeIngredient from "./RecipeIngredient.vue"
 import RecipeInstruction from "./RecipeInstruction.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
