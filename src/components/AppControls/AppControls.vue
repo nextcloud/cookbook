@@ -321,7 +321,7 @@ const search = (e) => {
 
 const updateFilters = (e) => {
     filterValue.value = e;
-    rootEl.$emit("applyRecipeFilter", e);
+    store.dispatch('setRecipeFilters', e);
 };
 
 const goToRecipe = (id) => {
