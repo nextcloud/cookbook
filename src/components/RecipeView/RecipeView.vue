@@ -129,19 +129,20 @@
         <div v-if="$store.state.recipe" class="content">
             <section class="container">
                 <section class="ingredients">
-                    <NcButton
-                        class="copy-ingredients"
-                        :type="'tertiary'"
-                        v-if="scaledIngredients.length"
-                        @click="copyIngredientsToClipboard"
-                    >
-                        <template #icon>
-                            <ContentCopyIcon :size="20" />
-                        </template>
-                        {{ t("cookbook", "Copy ingredients") }}
-                    </NcButton>
-                    <h3 v-if="scaledIngredients.length">
-                        {{ t("cookbook", "Ingredients") }}
+                    <h3 v-if="scaledIngredients.length" class="section-title">
+                        <span>{{ t("cookbook", "Ingredients") }}</span>
+                        <NcButton
+                            class="copy-ingredients"
+                            :type="'tertiary'"
+                            v-if="scaledIngredients.length"
+                            @click="copyIngredientsToClipboard"
+                            ariaLabel="Copy all ingredients to the clipboard"
+                            :title="t('cookbook', 'Copy ingredients')"
+                        >
+                            <template #icon>
+                                <ContentCopyIcon :size="20" />
+                            </template>
+                        </NcButton>
                     </h3>
                     <ul v-if="scaledIngredients.length">
                         <RecipeIngredient
@@ -319,430 +320,461 @@
     </div>
 </template>
 
-<script>
-import moment from "@nextcloud/moment"
+<script setup>
+import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router/composables';
+import moment from '@nextcloud/moment';
 
-import api from "cookbook/js/api-interface"
-import helpers from "cookbook/js/helper"
-import normalizeMarkdown from "cookbook/js/title-rename"
-import { showSimpleAlertModal } from "cookbook/js/modals"
-import yieldCalculator from "cookbook/js/yieldCalculator"
+import api from 'cookbook/js/api-interface';
+import helpers from 'cookbook/js/helper';
+import normalizeMarkdown from 'cookbook/js/title-rename';
+import { showSimpleAlertModal } from 'cookbook/js/modals';
+import { useStore } from '../../store';
+import emitter from '../../bus';
+import yieldCalculator from 'cookbook/js/yieldCalculator';
 
-import ContentCopyIcon from "icons/ContentCopy.vue"
+import ContentCopyIcon from 'icons/ContentCopy.vue';
 
-import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+import NcButton from '@nextcloud/vue/dist/Components/NcButton';
 
-import RecipeImages from "./RecipeView/RecipeImages.vue"
-import RecipeIngredient from "./RecipeView/RecipeIngredient.vue"
-import RecipeInstruction from "./RecipeView/RecipeInstruction.vue"
-import RecipeKeyword from "./RecipeKeyword.vue"
-import RecipeNutritionInfoItem from "./RecipeView/RecipeNutritionInfoItem.vue"
-import RecipeTimer from "./RecipeView/RecipeTimer.vue"
-import RecipeTool from "./RecipeView/RecipeTool.vue"
+import RecipeImages from './RecipeImages.vue';
+import RecipeIngredient from './RecipeIngredient.vue';
+import RecipeInstruction from './RecipeInstruction.vue';
+import RecipeKeyword from '../RecipeKeyword.vue';
+import RecipeNutritionInfoItem from './RecipeNutritionInfoItem.vue';
+import RecipeTimer from './RecipeTimer.vue';
+import RecipeTool from './RecipeTool.vue';
 
-export default {
-    name: "RecipeView",
-    components: {
-        RecipeImages,
-        RecipeIngredient,
-        RecipeInstruction,
-        RecipeKeyword,
-        RecipeNutritionInfoItem,
-        RecipeTimer,
-        RecipeTool,
-        ContentCopyIcon,
-        NcButton,
-    },
-    /**
-     * This is one tricky feature of Vue router. If different paths lead to
-     * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
-     * the component will not automatically reload. So we have to manually
-     * reload the page contents.
-     * This can also be used to confirm that the user wants to leave the page
-     * if there are unsaved changes.
-     */
-    beforeRouteUpdate(to, from, next) {
-        // beforeRouteUpdate is called when the static route stays the same
-        next()
-        // Check if we should reload the component content
-        if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-            this.setup()
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
+const log = getCurrentInstance().proxy.$log;
+
+/**
+ * This is one tricky feature of Vue router. If different paths lead to
+ * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
+ * the component will not automatically reload. So we have to manually
+ * reload the page contents.
+ * This can also be used to confirm that the user wants to leave the page
+ * if there are unsaved changes.
+ */
+onBeforeRouteUpdate((to, from, next) => {
+    // beforeRouteUpdate is called when the static route stays the same
+    next();
+    // Check if we should reload the component content
+    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
+        setup();
+    }
+});
+
+onMounted(() => {
+    log.info('RecipeView mounted');
+    setup();
+    // Register data load method hook for access from the controls components
+    emitter.off('reloadRecipeView');
+    emitter.on('reloadRecipeView', () => {
+        setup();
+    });
+});
+
+/**
+ * @type {string}
+ */
+const headerPrefix = '## ';
+/**
+ * @type {import('vue').Ref<string>}
+ */
+const parsedDescription = ref('');
+/**
+ * @type {import('vue').Ref<Array.<string>>}
+ */
+const parsedIngredients = ref([]);
+/**
+ * @type {import('vue').Ref<Array.<string>>}
+ */
+const parsedInstructions = ref([]);
+/**
+ * @type {import('vue').Ref<Array.<string>>}
+ */
+const parsedTools = ref([]);
+/**
+ * @type {import('vue').Ref<number>}
+ */
+const recipeYield = ref(0);
+
+// Computed properties
+
+const recipe = computed(() => {
+    const recipe = {
+        description: '',
+        ingredients: [],
+        instructions: [],
+        keywords: [],
+        timerCook: null,
+        timerPrep: null,
+        timerTotal: null,
+        tools: [],
+        dateCreated: null,
+        dateModified: null,
+        nutrition: null,
+    };
+
+    if (store.state.recipe === null) {
+        log.debug('Recipe is null');
+        return recipe;
+    }
+
+    if (store.state.recipe.description) {
+        recipe.description = helpers.escapeHTML(
+            store.state.recipe.description,
+        );
+    }
+
+    if (store.state.recipe.recipeIngredient) {
+        recipe.ingredients = Object.values(
+            store.state.recipe.recipeIngredient,
+        ).map((i) => helpers.escapeHTML(i));
+    }
+
+    if (store.state.recipe.recipeInstructions) {
+        recipe.instructions = Object.values(
+            store.state.recipe.recipeInstructions,
+        ).map((i) => helpers.escapeHTML(i));
+    }
+
+    if (store.state.recipe.keywords) {
+        recipe.keywords = String(
+            store.state.recipe.keywords,
+        ).split(',');
+    }
+
+    if (store.state.recipe.cookTime) {
+        const cookT =
+            store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/);
+        const hh = parseInt(cookT[1], 10);
+        const mm = parseInt(cookT[2], 10);
+        if (hh > 0 || mm > 0) {
+            recipe.timerCook = { hours: hh, minutes: mm };
         }
-    },
-    data() {
-        return {
-            headerPrefix: "## ",
-            parsedDescription: "",
-            parsedIngredients: [],
-            parsedInstructions: [],
-            parsedTools: [],
-            recipeYield: 0,
+    }
+
+    if (store.state.recipe.prepTime) {
+        const prepT =
+            store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/);
+        const hh = parseInt(prepT[1], 10);
+        const mm = parseInt(prepT[2], 10);
+        if (hh > 0 || mm > 0) {
+            recipe.timerPrep = { hours: hh, minutes: mm };
         }
-    },
-    computed: {
-        recipe() {
-            const recipe = {
-                description: "",
-                ingredients: [],
-                instructions: [],
-                keywords: [],
-                timerCook: null,
-                timerPrep: null,
-                timerTotal: null,
-                tools: [],
-                dateCreated: null,
-                dateModified: null,
-                nutrition: null,
-            }
+    }
 
-            if (this.$store.state.recipe === null) {
-                this.$log.debug("Recipe is null")
-                return recipe
-            }
+    if (store.state.recipe.totalTime) {
+        const totalT =
+            store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/);
+        const hh = parseInt(totalT[1], 10);
+        const mm = parseInt(totalT[2], 10);
+        if (hh > 0 || mm > 0) {
+            recipe.timerTotal = { hours: hh, minutes: mm };
+        }
+    }
 
-            if (this.$store.state.recipe.description) {
-                recipe.description = helpers.escapeHTML(
-                    this.$store.state.recipe.description,
+    if (store.state.recipe.tool) {
+        recipe.tools = store.state.recipe.tool.map((i) =>
+            helpers.escapeHTML(i),
+        );
+    }
+
+    if (store.state.recipe.dateCreated) {
+        const date = parseDateTime(
+            store.state.recipe.dateCreated,
+        );
+        recipe.dateCreated =
+            date != null ? date.format('L, LT').toString() : null;
+    }
+
+    if (store.state.recipe.dateModified) {
+        const date = parseDateTime(
+            store.state.recipe.dateModified,
+        );
+        recipe.dateModified =
+            date != null ? date.format('L, LT').toString() : null;
+    }
+
+    if (store.state.recipe.nutrition) {
+        if (store.state.recipe.nutrition instanceof Array) {
+            recipe.nutrition = {};
+        } else {
+            recipe.nutrition = store.state.recipe.nutrition;
+        }
+    } else {
+        recipe.nutrition = {};
+    }
+
+    return recipe;
+});
+
+const recipeIngredientsHaveSubgroups = computed(() => {
+    if (recipe.value.ingredients && recipe.value.ingredients.length > 0) {
+        for (let idx = 0; idx < recipe.value.ingredients.length; ++idx) {
+            if (
+                recipe.value.ingredients[idx].startsWith(
+                    headerPrefix,
                 )
-            }
-
-            if (this.$store.state.recipe.recipeIngredient) {
-                recipe.ingredients = Object.values(
-                    this.$store.state.recipe.recipeIngredient,
-                ).map((i) => helpers.escapeHTML(i))
-            }
-
-            if (this.$store.state.recipe.recipeInstructions) {
-                recipe.instructions = Object.values(
-                    this.$store.state.recipe.recipeInstructions,
-                ).map((i) => helpers.escapeHTML(i))
-            }
-
-            if (this.$store.state.recipe.keywords) {
-                recipe.keywords = String(
-                    this.$store.state.recipe.keywords,
-                ).split(",")
-            }
-
-            if (this.$store.state.recipe.cookTime) {
-                const cookT =
-                    this.$store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/)
-                const hh = parseInt(cookT[1], 10)
-                const mm = parseInt(cookT[2], 10)
-                if (hh > 0 || mm > 0) {
-                    recipe.timerCook = { hours: hh, minutes: mm }
-                }
-            }
-
-            if (this.$store.state.recipe.prepTime) {
-                const prepT =
-                    this.$store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/)
-                const hh = parseInt(prepT[1], 10)
-                const mm = parseInt(prepT[2], 10)
-                if (hh > 0 || mm > 0) {
-                    recipe.timerPrep = { hours: hh, minutes: mm }
-                }
-            }
-
-            if (this.$store.state.recipe.totalTime) {
-                const totalT =
-                    this.$store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/)
-                const hh = parseInt(totalT[1], 10)
-                const mm = parseInt(totalT[2], 10)
-                if (hh > 0 || mm > 0) {
-                    recipe.timerTotal = { hours: hh, minutes: mm }
-                }
-            }
-
-            if (this.$store.state.recipe.tool) {
-                recipe.tools = this.$store.state.recipe.tool.map((i) =>
-                    helpers.escapeHTML(i),
-                )
-            }
-
-            if (this.$store.state.recipe.dateCreated) {
-                const date = this.parseDateTime(
-                    this.$store.state.recipe.dateCreated,
-                )
-                recipe.dateCreated =
-                    date != null ? date.format("L, LT").toString() : null
-            }
-
-            if (this.$store.state.recipe.dateModified) {
-                const date = this.parseDateTime(
-                    this.$store.state.recipe.dateModified,
-                )
-                recipe.dateModified =
-                    date != null ? date.format("L, LT").toString() : null
-            }
-
-            if (this.$store.state.recipe.nutrition) {
-                if (this.$store.state.recipe.nutrition instanceof Array) {
-                    recipe.nutrition = {}
-                } else {
-                    recipe.nutrition = this.$store.state.recipe.nutrition
-                }
-            } else {
-                recipe.nutrition = {}
-            }
-
-            return recipe
-        },
-        recipeIngredientsHaveSubgroups() {
-            if (this.recipe.ingredients && this.recipe.ingredients.length > 0) {
-                for (let idx = 0; idx < this.recipe.ingredients.length; ++idx) {
-                    if (
-                        this.recipe.ingredients[idx].startsWith(
-                            this.headerPrefix,
-                        )
-                    ) {
-                        return true
-                    }
-                }
-            }
-            return false
-        },
-        showCreatedDate() {
-            return this.recipe.dateCreated
-        },
-        showModifiedDate() {
-            if (!this.recipe.dateModified) {
-                return false
-            }
-            return !(
-                this.$store.state.recipe.dateCreated &&
-                this.$store.state.recipe.dateModified &&
-                this.$store.state.recipe.dateCreated ===
-                    this.$store.state.recipe.dateModified
-            )
-        },
-        showNutritionData() {
-            return (
-                this.recipe.nutrition &&
-                !(this.recipe.nutrition instanceof Array) &&
-                Object.keys(this.recipe.nutrition).length > 1 &&
-                this.visibleInfoBlocks["nutrition-information"]
-            )
-        },
-        visibleInfoBlocks() {
-            return this.$store.state.config?.visibleInfoBlocks ?? {}
-        },
-        scaledIngredients() {
-            return yieldCalculator.recalculateIngredients(
-                this.parsedIngredients,
-                this.recipeYield,
-                this.$store.state.recipe.recipeYield,
-            )
-        },
-        ingredientsWithValidSyntax() {
-            return this.parsedIngredients.map(
-                yieldCalculator.isValidIngredientSyntax,
-            )
-        },
-        ingredientsSyntaxCorrect() {
-            return this.ingredientsWithValidSyntax.every((x) => x)
-        },
-    },
-    watch: {
-        recipe(r) {
-            this.$log.debug("Recipe has been updated")
-            if (r) {
-                this.$log.debug("Recipe", r)
-
-                if (r.description) {
-                    this.parsedDescription = t("cookbook", "Loading…")
-                    normalizeMarkdown(r.description).then((x) => {
-                        this.parsedDescription = x
-                    })
-                } else {
-                    this.parsedDescription = ""
-                }
-
-                if (r.ingredients) {
-                    this.parsedIngredients = r.ingredients.map(() =>
-                        t("cookbook", "Loading…"),
-                    )
-                    r.ingredients.forEach((ingredient, idx) => {
-                        normalizeMarkdown(ingredient)
-                            .then((x) => {
-                                this.parsedIngredients.splice(idx, 1, x)
-                            })
-                            .catch((ex) => {
-                                this.$log.error(ex)
-                            })
-                    })
-                } else {
-                    this.parsedIngredients = []
-                }
-
-                if (r.instructions) {
-                    this.parsedInstructions = r.instructions.map(() =>
-                        t("cookbook", "Loading…"),
-                    )
-                    r.instructions.forEach((instruction, idx) => {
-                        normalizeMarkdown(instruction)
-                            .then((x) => {
-                                this.parsedInstructions.splice(idx, 1, x)
-                            })
-                            .catch((ex) => {
-                                this.$log.error(ex)
-                            })
-                    })
-                } else {
-                    this.parsedInstructions = []
-                }
-
-                if (r.tools) {
-                    this.parsedTools = r.tools.map(() =>
-                        t("cookbook", "Loading…"),
-                    )
-                    r.tools.forEach((tool, idx) => {
-                        normalizeMarkdown(tool)
-                            .then((x) => {
-                                this.parsedTools.splice(idx, 1, x)
-                            })
-                            .catch((ex) => {
-                                this.$log.error(ex)
-                            })
-                    })
-                } else {
-                    this.parsedTools = []
-                }
-            }
-        },
-        recipeYield() {
-            if (this.recipeYield < 0) {
-                this.restoreOriginalRecipeYield()
-            }
-        },
-    },
-    mounted() {
-        this.$log.info("RecipeView mounted")
-        this.setup()
-        // Register data load method hook for access from the controls components
-        this.$root.$off("reloadRecipeView")
-        this.$root.$on("reloadRecipeView", () => {
-            this.setup()
-        })
-    },
-    methods: {
-        isNullOrEmpty(str) {
-            return !str || (typeof str === "string" && str.trim().length === 0)
-        },
-        /**
-         * Callback for click on keyword
-         */
-        keywordClicked(keyword) {
-            if (keyword) {
-                this.$router.push(`/tags/${keyword}`)
-            }
-        },
-        /* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
-         * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
-         */
-        parseDateTime(dt) {
-            if (!dt) return null
-            const date = moment(dt, moment.ISO_8601)
-            if (!date.isValid()) {
-                return null
-            }
-            return date
-        },
-        async setup() {
-            // Make the control row show that a recipe is loading
-            if (!this.$store.state.recipe) {
-                this.$store.dispatch("setLoadingRecipe", { recipe: -1 })
-
-                // Make the control row show that the recipe is reloading
-            } else if (
-                this.$store.state.recipe.id ===
-                parseInt(this.$route.params.id, 10)
             ) {
-                this.$store.dispatch("setReloadingRecipe", {
-                    recipe: this.$route.params.id,
-                })
-
-                // Make the control row show that a new recipe is loading
-            } else {
-                this.$store.dispatch("setLoadingRecipe", {
-                    recipe: this.$route.params.id,
-                })
+                return true;
             }
+        }
+    }
+    return false;
+});
 
-            const $this = this
+const showCreatedDate = computed(() => {
+    return recipe.value.dateCreated;
+});
 
-            try {
-                const response = await api.recipes.get(this.$route.params.id)
-                const recipe = response.data
-                // Store recipe data in vuex
-                $this.$store.dispatch("setRecipe", { recipe })
+const showModifiedDate = computed(() => {
+    if (!recipe.value.dateModified) {
+        return false;
+    }
+    return !(
+        store.state.recipe.dateCreated &&
+        store.state.recipe.dateModified &&
+        store.state.recipe.dateCreated ===
+        store.state.recipe.dateModified
+    );
+});
 
-                // Always set the active page last!
-                $this.$store.dispatch("setPage", { page: "recipe" })
-            } catch {
-                if ($this.$store.state.loadingRecipe) {
-                    // Reset loading recipe
-                    $this.$store.dispatch("setLoadingRecipe", { recipe: 0 })
-                }
+const showNutritionData = computed(() => {
+    return (
+        recipe.value.nutrition &&
+        !(recipe.value.nutrition instanceof Array) &&
+        Object.keys(recipe.value.nutrition).length > 1 &&
+        visibleInfoBlocks.value['nutrition-information']
+    );
+});
 
-                if ($this.$store.state.reloadingRecipe) {
-                    // Reset reloading recipe
-                    $this.$store.dispatch("setReloadingRecipe", {
-                        recipe: 0,
+const visibleInfoBlocks = computed(() => {
+    return store.state.config?.visibleInfoBlocks ?? {};
+});
+
+const scaledIngredients = computed(() => {
+    return yieldCalculator.recalculateIngredients(
+        parsedIngredients.value,
+        recipeYield.value,
+        store.state.recipe.recipeYield,
+    );
+});
+
+const ingredientsWithValidSyntax = computed(() => {
+    return parsedIngredients.value.map(
+        yieldCalculator.isValidIngredientSyntax,
+    );
+});
+
+const ingredientsSyntaxCorrect = computed(() => {
+    return ingredientsWithValidSyntax.value.every((x) => x);
+});
+
+// Watchers
+watch(() => recipe.value, (r) => {
+    log.debug('Recipe has been updated');
+    if (r) {
+        log.debug('Recipe', r);
+
+        if (r.description) {
+            parsedDescription.value = t('cookbook', 'Loading…');
+            normalizeMarkdown(r.description).then((x) => {
+                parsedDescription.value = x;
+            });
+        } else {
+            parsedDescription.value = '';
+        }
+
+        if (r.ingredients) {
+            parsedIngredients.value = r.ingredients.map(() =>
+                t('cookbook', 'Loading…'),
+            );
+            r.ingredients.forEach((ingredient, idx) => {
+                normalizeMarkdown(ingredient)
+                    .then((x) => {
+                        parsedIngredients.value.splice(idx, 1, x);
                     })
-                }
+                    .catch((ex) => {
+                        log.error(ex);
+                    });
+            });
+        } else {
+            parsedIngredients.value = [];
+        }
 
-                $this.$store.dispatch("setPage", { page: "recipe" })
+        if (r.instructions) {
+            parsedInstructions.value = r.instructions.map(() =>
+                t('cookbook', 'Loading…'),
+            );
+            r.instructions.forEach((instruction, idx) => {
+                normalizeMarkdown(instruction)
+                    .then((x) => {
+                        parsedInstructions.value.splice(idx, 1, x);
+                    })
+                    .catch((ex) => {
+                        log.error(ex);
+                    })
+            });
+        } else {
+            parsedInstructions.value = [];
+        }
 
-                await showSimpleAlertModal(
-                    t("cookbook", "Loading recipe failed"),
-                )
-            }
+        if (r.tools) {
+            parsedTools.value = r.tools.map(() =>
+                t('cookbook', 'Loading…'),
+            );
+            r.tools.forEach((tool, idx) => {
+                normalizeMarkdown(tool)
+                    .then((x) => {
+                        parsedTools.value.splice(idx, 1, x);
+                    })
+                    .catch((ex) => {
+                        log.error(ex);
+                    })
+            });
+        } else {
+            parsedTools.value = [];
+        }
+    }
+});
 
-            this.recipeYield = this.$store.state.recipe.recipeYield
-        },
-        changeRecipeYield(increase = true) {
-            this.recipeYield = +this.recipeYield + (increase ? 1 : -1)
-        },
-        copyIngredientsToClipboard() {
-            const ingredientsToCopy = this.scaledIngredients.join("\n")
+watch(() => recipeYield.value, () => {
+    if (recipeYield.value < 0) {
+        restoreOriginalRecipeYield();
+    }
+});
 
-            if (navigator.clipboard) {
-                navigator.clipboard
-                    .writeText(ingredientsToCopy)
-                    .then(() =>
-                        this.$log.info("JSON array copied to clipboard"),
-                    )
-                    .catch((err) =>
-                        this.$log.error("Failed to copy JSON array: ", err),
-                    )
+// Methods
+const isNullOrEmpty = (str) => {
+    return !str || (typeof str === 'string' && str.trim().length === 0)
+};
+
+/**
+ * Callback for click on keyword
+ */
+const keywordClicked = (keyword) => {
+    if (keyword) {
+        router.push(`/tags/${keyword}`);
+    }
+};
+
+/* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
+ * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
+ */
+const parseDateTime = (dt) => {
+    if (!dt) return null;
+    const date = moment(dt, moment.ISO_8601);
+    if (!date.isValid()) {
+        return null;
+    }
+    return date;
+};
+
+const setup = async () => {
+    // Make the control row show that a recipe is loading
+    if (!store.state.recipe) {
+        store.dispatch('setLoadingRecipe', { recipe: -1 });
+
+        // Make the control row show that the recipe is reloading
+    } else if (
+        store.state.recipe.id ===
+        parseInt(route.params.id, 10)
+    ) {
+        store.dispatch('setReloadingRecipe', {
+            recipe: route.params.id,
+        });
+
+        // Make the control row show that a new recipe is loading
+    } else {
+        store.dispatch('setLoadingRecipe', {
+            recipe: route.params.id,
+        });
+    }
+
+    try {
+        const response = await api.recipes.get(route.params.id);
+        const recipe = response.data;
+        // Store recipe data in vuex
+        store.dispatch('setRecipe', { recipe });
+
+        // Always set the active page last!
+        store.dispatch('setPage', { page: 'recipe' });
+    } catch {
+        if (store.state.loadingRecipe) {
+            // Reset loading recipe
+            store.dispatch('setLoadingRecipe', { recipe: 0 });
+        }
+
+        if (store.state.reloadingRecipe) {
+            // Reset reloading recipe
+            store.dispatch('setReloadingRecipe', {
+                recipe: 0,
+            });
+        }
+
+        store.dispatch('setPage', { page: 'recipe' });
+
+        await showSimpleAlertModal(
+            t('cookbook', 'Loading recipe failed'),
+        );
+    }
+
+    recipeYield.value = store.state.recipe.recipeYield;
+};
+
+const changeRecipeYield = (increase = true) => {
+    recipeYield.value = recipeYield.value + (increase ? 1 : -1)
+};
+
+const copyIngredientsToClipboard = () => {
+    const ingredientsToCopy = scaledIngredients.value.join('\n');
+
+    if (navigator.clipboard) {
+        navigator.clipboard
+            .writeText(ingredientsToCopy)
+            .then(() =>
+                log.info('JSON array copied to clipboard'),
+            )
+            .catch((err) =>
+                log.error('Failed to copy JSON array: ', err),
+            );
+    } else {
+        // fallback solution
+        const input = document.createElement('textarea');
+        input.style.position = 'absolute';
+        input.style.left = '-1000px';
+        input.style.top = '-1000px';
+        input.value = ingredientsToCopy;
+        document.body.appendChild(input);
+        input.select();
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                log.info('JSON array copied to clipboard');
             } else {
-                // fallback solution
-                const input = document.createElement("textarea")
-                input.style.position = "absolute"
-                input.style.left = "-1000px"
-                input.style.top = "-1000px"
-                input.value = ingredientsToCopy
-                document.body.appendChild(input)
-                input.select()
-                try {
-                    const successful = document.execCommand("copy")
-                    if (successful) {
-                        this.$log.info("JSON array copied to clipboard")
-                    } else {
-                        this.$log.error("Failed to copy JSON array")
-                    }
-                } catch (err) {
-                    this.$log.error("Failed to copy JSON array: ", err)
-                }
-                document.body.removeChild(input)
+                log.error('Failed to copy JSON array');
             }
-        },
-        restoreOriginalRecipeYield() {
-            this.recipeYield = this.$store.state.recipe.recipeYield
-        },
-    },
-}
+        } catch (err) {
+            log.error('Failed to copy JSON array: ', err);
+        }
+        document.body.removeChild(input);
+    }
+};
+
+const restoreOriginalRecipeYield = () => {
+    recipeYield.value = store.state.recipe.recipeYield;
+};
+</script>
+
+<script>
+export default {
+    name: 'RecipeView'
+};
 </script>
 
 <style lang="scss" scoped>
@@ -957,6 +989,11 @@ main {
         width: 100%;
         flex-basis: 100%;
     }
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
 }
 
 .instructions {
