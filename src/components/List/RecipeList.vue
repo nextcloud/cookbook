@@ -123,7 +123,7 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton';
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent';
 import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
 import RecipeCard from './RecipeCard.vue';
-import RecipeListKeywordCloud from '../RecipeListKeywordCloud.vue';
+import RecipeListKeywordCloud from './RecipeListKeywordCloud.vue';
 
 const route = useRoute();
 const store = useStore();
