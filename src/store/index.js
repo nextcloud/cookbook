@@ -30,6 +30,8 @@ var store = new Vuex.Store({
         // We'll save the recipe here, since the data is used by
         //  several independent components
         recipe: null,
+        // Filter applied to a list of recipes
+        recipeFilters: "",
         // Loading and saving states to determine which loader icons to show.
         // State of -1 is reserved for recipe and edit views to be set when the
         // User loads the app at one of these locations and has to wait for an
@@ -95,6 +97,9 @@ var store = new Vuex.Store({
         setRecipeCategory(state, { c }) {
             state.recipe.category = c
         },
+        setRecipeFilters(state, { f }) {
+            state.recipeFilters = f;
+        },
         setReloadingRecipe(state, { r }) {
             state.reloadingRecipe = r
         },
@@ -120,6 +125,13 @@ var store = new Vuex.Store({
         async refreshConfig(c) {
             const config = (await api.config.get()).data
             c.commit("setConfig", { config })
+        },
+
+        /*
+         * Clears all filters currently applied for listing recipes.
+         */
+        clearRecipeFilters(c) {
+            c.commit('setRecipeFilters', { f: '' });
         },
 
         /**
@@ -163,6 +175,9 @@ var store = new Vuex.Store({
         },
         setRecipe(c, { recipe }) {
             c.commit("setRecipe", { r: recipe })
+        },
+        setRecipeFilters(c, filters) {
+            c.commit("setRecipeFilters", { f: filters })
         },
         setReloadingRecipe(c, { recipe }) {
             c.commit("setReloadingRecipe", { r: parseInt(recipe, 10) })
