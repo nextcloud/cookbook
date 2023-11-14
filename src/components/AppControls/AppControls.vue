@@ -201,6 +201,7 @@ import {
 import Location from "./Location.vue";
 import ModeIndicator from "./ModeIndicator.vue";
 import { useStore } from '../../store';
+import emitter from '../../bus';
 
 const rootEl = getCurrentInstance().proxy.$root;
 const route = useRoute();
@@ -304,15 +305,15 @@ const printRecipe = () => {
 };
 
 const reloadRecipeEdit = () => {
-    rootEl.$emit("reloadRecipeEdit");
+    emitter.emit("reloadRecipeEdit");
 };
 
 const reloadRecipeView = () => {
-    rootEl.$emit("reloadRecipeView");
+    emitter.emit("reloadRecipeView");
 };
 
 const saveChanges = () => {
-    rootEl.$emit("saveRecipe");
+    emitter.emit("saveRecipe");
 };
 
 const search = (e) => {
