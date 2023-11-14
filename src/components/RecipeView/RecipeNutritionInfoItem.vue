@@ -9,20 +9,23 @@
     </li>
 </template>
 
+<script setup>
+defineProps({
+    title: {
+        type: String,
+        required: true,
+    },
+    data: {
+        type: String,
+        required: true,
+    },
+});
+</script>
+
 <script>
 export default {
-    name: "RecipeNutritionInfoItem",
-    props: {
-        title: {
-            type: String,
-            required: true,
-        },
-        data: {
-            type: String,
-            required: true,
-        },
-    },
-}
+    name: 'RecipeNutritionInfoItem'
+};
 </script>
 
 <style scoped>

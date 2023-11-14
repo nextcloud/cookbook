@@ -336,7 +336,7 @@ import RecipeImages from "./RecipeView/RecipeImages.vue"
 import RecipeIngredient from "./RecipeView/RecipeIngredient.vue"
 import RecipeInstruction from "./RecipeView/RecipeInstruction.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
-import RecipeNutritionInfoItem from "./RecipeNutritionInfoItem.vue"
+import RecipeNutritionInfoItem from "./RecipeView/RecipeNutritionInfoItem.vue"
 import RecipeTimer from "./RecipeTimer.vue"
 import RecipeTool from "./RecipeTool.vue"
 
