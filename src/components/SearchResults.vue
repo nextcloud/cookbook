@@ -4,124 +4,127 @@
     </div>
 </template>
 
-<script>
-import api from "cookbook/js/api-interface"
-import helpers from "cookbook/js/helper"
-import { showSimpleAlertModal } from "cookbook/js/modals"
+<script setup>
+import { onMounted, ref } from 'vue';
+import { onBeforeRouteUpdate, useRoute } from "vue-router/composables";
+import api from 'cookbook/js/api-interface';
+import helpers from 'cookbook/js/helper';
+import { showSimpleAlertModal } from 'cookbook/js/modals';
 
-import RecipeList from "./List/RecipeList.vue"
+import RecipeList from './List/RecipeList.vue';
+import {useStore} from '../store';
+import emitter from '../bus';
 
-export default {
-    name: "SearchResult",
-    components: {
-        RecipeList,
+let route = useRoute();
+let store = useStore();
+
+defineProps({
+    query: {
+        type: String,
+        default: '',
     },
-    beforeRouteUpdate(to, from, next) {
-        // Move to next route as expected
-        next()
-        // Reload view
-        this.setup()
-    },
-    props: {
-        query: {
-            type: String,
-            default: "",
-        },
-    },
-    data() {
-        return {
-            results: [],
+});
+
+/**
+ * @type {import('vue').Ref<Array>}
+ */
+const results = ref([]);
+
+// watch(route, (to, from) => {
+//     keywordFilter.value = [];
+// });
+
+onBeforeRouteUpdate((to, from, next) => {
+    // Move to next route as expected
+    next();
+    // Reload view
+    setup();
+});
+
+onMounted(() => {
+    setup();
+    emitter.off('categoryRenamed');
+    emitter.on('categoryRenamed', (val) => {
+        if (
+            // eslint-disable-next-line no-underscore-dangle
+            !_inactive &&
+            props.query === 'cat' &&
+            route.params.value === val[1]
+        ) {
+            helpers.goTo(`/category/${val[0]}`);
         }
-    },
-    watch: {
-        // eslint-disable-next-line no-unused-vars
-        $route(to, from) {
-            this.keywordFilter = []
-        },
-    },
-    mounted() {
-        this.setup()
-        this.$root.$off("categoryRenamed")
-        this.$root.$on("categoryRenamed", (val) => {
-            if (
-                // eslint-disable-next-line no-underscore-dangle
-                !this._inactive &&
-                this.query === "cat" &&
-                this.$route.params.value === val[1]
-            ) {
-                helpers.goTo(`/category/${val[0]}`)
+    });
+});
+
+const setup = async () => {
+    // TODO: This is a mess of different implementation styles, needs cleanup
+    if (props.query === 'name') {
+        // Search by name
+        // TODO
+    } else if (this.query === 'tags') {
+        // Search by tags
+        const tags = route.params.value;
+        try {
+            const response = await api.recipes.allWithTag(tags);
+            results.value = response.data;
+        } catch (e) {
+            results.value = [];
+            await showSimpleAlertModal(
+                // prettier-ignore
+                t('cookbook', 'Failed to load recipes with keywords: {tags}',
+                    {
+                        tags,
+                    }
+                ),
+            );
+            if (e && e instanceof Error) {
+                throw e;
             }
-        })
-    },
-    methods: {
-        async setup() {
-            // TODO: This is a mess of different implementation styles, needs cleanup
-            if (this.query === "name") {
-                // Search by name
-                // TODO
-            } else if (this.query === "tags") {
-                // Search by tags
-                const $this = this
-                const tags = this.$route.params.value
-                try {
-                    const response = await api.recipes.allWithTag(tags)
-                    $this.results = response.data
-                } catch (e) {
-                    $this.results = []
-                    await showSimpleAlertModal(
-                        // prettier-ignore
-                        t("cookbook", "Failed to load recipes with keywords: {tags}",
-                            {
-                                tags,
-                            }
-                        ),
-                    )
-                    if (e && e instanceof Error) {
-                        throw e
+        }
+    } else if (props.query === 'cat') {
+        // Search by category
+        const cat = route.params.value;
+        try {
+            const response = await api.recipes.allInCategory(cat);
+            results.value = response.data;
+        } catch (e) {
+            results.value = [];
+            await showSimpleAlertModal(
+                // prettier-ignore
+                t('cookbook', 'Failed to load category {category} recipes',
+                    {
+                        category: cat,
                     }
-                }
-            } else if (this.query === "cat") {
-                // Search by category
-                const $this = this
-                const cat = this.$route.params.value
-                try {
-                    const response = await api.recipes.allInCategory(cat)
-                    $this.results = response.data
-                } catch (e) {
-                    $this.results = []
-                    await showSimpleAlertModal(
-                        // prettier-ignore
-                        t("cookbook", "Failed to load category {category} recipes",
-                            {
-                                category: cat,
-                            }
-                        ),
-                    )
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                }
-            } else {
-                // General search
-                const $this = this
-                try {
-                    const response = await api.recipes.search(
-                        $this.$route.params.value,
-                    )
-                    $this.results = response.data
-                } catch (e) {
-                    $this.results = []
-                    await showSimpleAlertModal(
-                        t("cookbook", "Failed to load search results"),
-                    )
-                    if (e && e instanceof Error) {
-                        throw e
-                    }
-                }
-                this.$store.dispatch("setPage", { page: "search" })
+                ),
+            );
+            if (e && e instanceof Error) {
+                throw e;
             }
-            this.$store.dispatch("setPage", { page: "search" })
-        },
-    },
-}
+        }
+    } else {
+        // General search
+        try {
+            const response = await api.recipes.search(
+                route.params.value,
+            );
+            results.value = response.data;
+        } catch (e) {
+            results.value = [];
+            await showSimpleAlertModal(
+                t('cookbook', 'Failed to load search results'),
+            );
+            if (e && e instanceof Error) {
+                throw e;
+            }
+        }
+        store.dispatch('setPage', { page: 'search' });
+    }
+    store.dispatch('setPage', { page: 'search' });
+};
+</script>
+
+<script>
+export default {
+    name: 'SearchResults',
+};
 </script>
