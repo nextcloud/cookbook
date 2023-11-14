@@ -9,7 +9,7 @@ import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
-import RecipeList from "./RecipeList.vue"
+import RecipeList from "./List/RecipeList.vue"
 
 export default {
     name: "SearchResult",

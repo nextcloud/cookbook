@@ -12,10 +12,8 @@ export default {
 import api from "cookbook/js/api-interface";
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
-import RecipeList from "./RecipeList.vue";
+import RecipeList from "./List/RecipeList.vue";
 import { useStore } from '../store';
-// import { useStore } from '@vueblocks/vue-use-vuex';
-// import { useStore } from 'vuex-composition-helpers';
 
 let store = useStore();
 
