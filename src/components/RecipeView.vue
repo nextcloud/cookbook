@@ -338,7 +338,7 @@ import RecipeInstruction from "./RecipeView/RecipeInstruction.vue"
 import RecipeKeyword from "./RecipeKeyword.vue"
 import RecipeNutritionInfoItem from "./RecipeView/RecipeNutritionInfoItem.vue"
 import RecipeTimer from "./RecipeView/RecipeTimer.vue"
-import RecipeTool from "./RecipeTool.vue"
+import RecipeTool from "./RecipeView/RecipeTool.vue"
 
 export default {
     name: "RecipeView",

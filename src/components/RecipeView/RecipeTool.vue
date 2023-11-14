@@ -4,16 +4,19 @@
     </li>
 </template>
 
+<script setup>
+defineProps({
+    tool: {
+        type: String,
+        default: '',
+    },
+});
+</script>
+
 <script>
 export default {
-    name: "RecipeTool",
-    props: {
-        tool: {
-            type: String,
-            default: "",
-        },
-    },
-}
+    name: 'RecipeTool'
+};
 </script>
 
 <style scoped>
