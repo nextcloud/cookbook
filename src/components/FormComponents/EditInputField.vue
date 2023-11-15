@@ -42,7 +42,7 @@
 <script setup>
 import { getCurrentInstance, nextTick, ref, watch } from "vue";
 import SuggestionsPopup from '../Modals/SuggestionsPopup';
-import useSuggestionPopup from '../Modals/suggestionsPopupComposable';
+import useSuggestionPopup from '../../composables/useSuggestionsPopup';
 const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);

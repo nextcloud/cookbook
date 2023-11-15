@@ -57,7 +57,7 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
         const replace = `r/${recipeId}`;
         const newValue = `${before}${replace}${after}`;
 
-        if (buffer.value ?? false) {
+        if (buffer?.value) {
             buffer.value[suggestionsData.value.fieldIndex] = newValue;
             emit("input", buffer.value);
         } else {

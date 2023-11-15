@@ -85,7 +85,7 @@ import TriangleUpIcon from "icons/TriangleSmallUp.vue";
 import TriangleDownIcon from "icons/TriangleSmallDown.vue";
 
 import SuggestionsPopup from '../Modals/SuggestionsPopup';
-import useSuggestionPopup from '../Modals/suggestionsPopupComposable';
+import useSuggestionPopup from '../../composables/useSuggestionsPopup';
 const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
