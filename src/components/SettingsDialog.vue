@@ -18,12 +18,12 @@
                                 <LoadingIcon v-if="scanningLibrary" />
                                 <ReloadIcon v-else />
                             </template>
-                            {{ t("cookbook", "Rescan library") }}
+                            {{ t('cookbook', 'Rescan library') }}
                         </NcButton>
                     </li>
                     <li>
                         <label class="settings-input">{{
-                            t("cookbook", "Recipe folder")
+                            t('cookbook', 'Recipe folder')
                         }}</label>
                         <input
                             type="text"
@@ -34,7 +34,7 @@
                     </li>
                     <li>
                         <label class="settings-input">
-                            {{ t("cookbook", "Update interval in minutes") }}
+                            {{ t('cookbook', 'Update interval in minutes') }}
                         </label>
                         <input
                             v-model="updateInterval"
@@ -61,7 +61,7 @@
                             class="checkbox"
                         />
                         <label for="recipe-print-image">
-                            {{ t("cookbook", "Print image with recipe") }}
+                            {{ t('cookbook', 'Print image with recipe') }}
                         </label>
                     </li>
                     <li>
@@ -74,7 +74,7 @@
                         <label for="tag-cloud">
                             {{
                                 // prettier-ignore
-                                t("cookbook", "Show keyword cloud in recipe lists")
+                                t('cookbook', 'Show keyword cloud in recipe lists')
                             }}
                         </label>
                     </li>
@@ -90,7 +90,7 @@
                 <legend class="settings-info-blocks__legend">
                     {{
                         // prettier-ignore
-                        t("cookbook", "Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.")
+                        t('cookbook', 'Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.')
                     }}
                 </legend>
                 <ul>
@@ -103,7 +103,7 @@
                             value="preparation-time"
                         />
                         <label for="info-blocks-checkbox-preparation-time">
-                            {{ t("cookbook", "Preparation time") }}
+                            {{ t('cookbook', 'Preparation time') }}
                         </label>
                     </li>
                     <li>
@@ -115,7 +115,7 @@
                             value="cooking-time"
                         />
                         <label for="info-blocks-checkbox-cooking-time">
-                            {{ t("cookbook", "Cooking time") }}
+                            {{ t('cookbook', 'Cooking time') }}
                         </label>
                     </li>
                     <li>
@@ -127,7 +127,7 @@
                             value="total-time"
                         />
                         <label for="info-blocks-checkbox-total-time">
-                            {{ t("cookbook", "Total time") }}
+                            {{ t('cookbook', 'Total time') }}
                         </label>
                     </li>
                     <li>
@@ -139,7 +139,7 @@
                             value="nutrition-information"
                         />
                         <label for="info-blocks-checkbox-nutrition-information">
-                            {{ t("cookbook", "Nutrition information") }}
+                            {{ t('cookbook', 'Nutrition information') }}
                         </label>
                     </li>
                     <li>
@@ -151,7 +151,7 @@
                             value="tools"
                         />
                         <label for="info-blocks-checkbox-tools">
-                            {{ t("cookbook", "Tools") }}
+                            {{ t('cookbook', 'Tools') }}
                         </label>
                     </li>
                 </ul>
@@ -165,7 +165,7 @@
             <legend class="settings-info-blocks__legend">
                 {{
                     // prettier-ignore
-                    t("cookbook", "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.")
+                    t('cookbook', 'This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.")
                 }}
             </legend>
             <NcButton @click="enableLogger">Enable debugging</NcButton>
@@ -183,7 +183,7 @@ import { getFilePickerBuilder } from '@nextcloud/dialogs';
 import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog';
 import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton';
-import LoadingIcon from 'icons/Loading.vue';
+import { NcLoadingIcon as LoadingIcon } from '@nextcloud/vue';
 import ReloadIcon from 'icons/Cached.vue';
 
 import api from 'cookbook/js/api-interface';
@@ -423,13 +423,6 @@ export default {
 </script>
 
 <style scoped>
-/* TODO: Use @nextcloud/vue LoadingIcon once we update to 7.0.0 and we won't
- * have to do this */
-.material-design-icon.loading-icon:deep(svg) {
-    animation: rotate var(--animation-duration, 0.8s) linear infinite;
-    color: var(--color-loading-dark);
-}
-
 .settings-info-blocks__legend {
     margin-bottom: 10px;
 }
@@ -442,16 +435,4 @@ export default {
     display: block;
     width: 100%;
 }
-
-/* #app-settings .button { */
-/*     z-index: 2; */
-/*     height: 44px; */
-/*     padding: 0; */
-/*     border-radius: var(--border-radius); */
-/* } */
-
-/* #app-settings .button p { */
-/*     margin: auto; */
-/*     font-size: 13px; */
-/* } */
 </style>
