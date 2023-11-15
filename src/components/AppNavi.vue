@@ -22,7 +22,7 @@
             </NcActionInput>
 
             <NcAppNavigationItem
-                :title="t('cookbook', 'All recipes')"
+                :name="t('cookbook', 'All recipes')"
                 icon="icon-category-organization"
                 :to="'/'"
             >
@@ -34,7 +34,7 @@
             </NcAppNavigationItem>
 
             <NcAppNavigationItem
-                :title="t('cookbook', 'Uncategorized recipes')"
+                :name="t('cookbook', 'Uncategorized recipes')"
                 icon="icon-category-organization"
                 :to="'/category/_/'"
             >
@@ -54,7 +54,7 @@
                 v-for="(cat, idx) in categories"
                 :key="cat + idx"
                 :ref="'app-navi-cat-' + idx"
-                :title="cat.name"
+                :name="cat.name"
                 :icon="'icon-category-files'"
                 :to="'/category/' + cat.name"
                 :editable="true"
