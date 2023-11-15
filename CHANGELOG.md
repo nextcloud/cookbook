@@ -32,7 +32,7 @@
 - Allow single tool in JSON+LD import, fixes #1641
   [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
 - Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
-  [#XX](https://github.com/nextcloud/cookbook/pull/XX) @seyfeb
+  [#1864](https://github.com/nextcloud/cookbook/pull/1864) @seyfeb
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
