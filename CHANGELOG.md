@@ -29,8 +29,10 @@
   [#1834](https://github.com/nextcloud/cookbook/pull/1834) @christianlupus
 - Hode the button to copy ingredients unless there are some ingredients to copy
   [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
+- Allow single tool in JSON+LD import, fixes #1641
+  [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
 - Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
-  [#XX](https://github.com/nextcloud/cookbook/pull/XX) @seyfeb
+  [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change

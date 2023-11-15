@@ -40,7 +40,9 @@ class FixToolsFilterTest extends TestCase {
 	public function dp() {
 		return [
 			[['a','b','c'], ['a','b','c'], false],
-			[["  a   \tb ",'   c  '],['a b','c'],true],
+			[["  a   \tb ",'   c  '], ['a b','c'], true],
+			['a', ['a'], true],
+			["  a   \tb ", ['a b'], true],
 		];
 	}
 

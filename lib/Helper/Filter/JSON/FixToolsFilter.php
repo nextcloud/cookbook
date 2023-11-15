@@ -41,20 +41,30 @@ class FixToolsFilter extends AbstractJSONFilter {
 			return true;
 		}
 
-		if (!is_array($json[self::TOOLS])) {
-			throw new InvalidRecipeException($this->l->t('Could not parse recipe tools. It is no array.'));
+		if (!is_array($json[self::TOOLS]) && !is_string($json[self::TOOLS])) {
+			throw new InvalidRecipeException($this->l->t('Could not parse recipe tools. Expected array or string.'));
 		}
 
-		$tools = $json[self::TOOLS];
+		$tools = array();
 
-		$tools = array_map(function ($t) {
-			$t = trim($t);
+		if (!is_array($json[self::TOOLS])) {
+			$t = trim($json[self::TOOLS]);
 			$t = $this->textCleaner->cleanUp($t, false);
-			return $t;
-		}, $tools);
-		$tools = array_filter($tools, fn ($t) => ($t));
-		ksort($tools);
-		$tools = array_values($tools);
+
+			// Empty string would mean no tools (i.e., empty array)
+			if($t != "") {
+				$tools[] = $t;
+			}
+		} else {
+			$tools = array_map(function ($t) {
+				$t = trim($t);
+				$t = $this->textCleaner->cleanUp($t, false);
+				return $t;
+			}, $json[self::TOOLS]);
+			$tools = array_filter($tools, fn ($t) => ($t));
+			ksort($tools);
+			$tools = array_values($tools);
+		}
 
 		$changed = $tools !== $json[self::TOOLS];
 		$json[self::TOOLS] = $tools;
