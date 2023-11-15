@@ -165,7 +165,7 @@
             <legend class="settings-info-blocks__legend">
                 {{
                     // prettier-ignore
-                    t('cookbook', 'This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.")
+                    t('cookbook', 'This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.')
                 }}
             </legend>
             <NcButton @click="enableLogger">Enable debugging</NcButton>
@@ -191,8 +191,8 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import { enableLogging } from 'cookbook/js/logging';
 import { useRoute, useRouter } from 'vue-router/composables';
-import { useStore } from '../store';
-import useSettingsDialog from '../composables/settingsDialogComposable';
+import { useStore } from '../../store';
+import useSettingsDialog from '../../composables/settingsDialogComposable';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();

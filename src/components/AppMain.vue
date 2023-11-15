@@ -27,7 +27,7 @@ import NcContent from "@nextcloud/vue/dist/Components/NcContent"
 import AppControls from "cookbook/components/AppControls/AppControls.vue"
 import { emit, subscribe, unsubscribe } from "@nextcloud/event-bus"
 import AppNavi from "./AppNavi.vue"
-import SettingsDialog from "./SettingsDialog.vue"
+import SettingsDialog from "./Modals/SettingsDialog.vue"
 
 // todo
 export default {

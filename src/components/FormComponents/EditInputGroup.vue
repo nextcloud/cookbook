@@ -84,8 +84,8 @@ import { getCurrentInstance, nextTick, ref, watch } from "vue";
 import TriangleUpIcon from "icons/TriangleSmallUp.vue";
 import TriangleDownIcon from "icons/TriangleSmallDown.vue";
 
-import SuggestionsPopup from '../SuggestionsPopup/SuggestionsPopup';
-import useSuggestionPopup from '../SuggestionsPopup/suggestionsPopupComposable';
+import SuggestionsPopup from '../Modals/SuggestionsPopup';
+import useSuggestionPopup from '../Modals/suggestionsPopupComposable';
 const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
