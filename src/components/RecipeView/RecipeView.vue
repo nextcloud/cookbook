@@ -331,6 +331,7 @@ import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { useStore } from '../../store';
 import emitter from '../../bus';
+import { parseDateTime } from "../../composables/dateTimeHandling";
 import yieldCalculator from 'cookbook/js/yieldCalculator';
 
 import ContentCopyIcon from 'icons/ContentCopy.vue';
@@ -349,6 +350,7 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
+
 
 /**
  * This is one tricky feature of Vue router. If different paths lead to
@@ -661,18 +663,6 @@ const keywordClicked = (keyword) => {
     if (keyword) {
         router.push(`/tags/${keyword}`);
     }
-};
-
-/* The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
- * or DateTime (https://schema.org/DateTime). This follows the ISO 8601 standard.
- */
-const parseDateTime = (dt) => {
-    if (!dt) return null;
-    const date = moment(dt, moment.ISO_8601);
-    if (!date.isValid()) {
-        return null;
-    }
-    return date;
 };
 
 const setup = async () => {
