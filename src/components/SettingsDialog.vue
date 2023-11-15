@@ -281,7 +281,6 @@ export default {
             }
             try {
                 await api.config.updateInterval.update(newVal)
-                // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
                     // prettier-ignore
@@ -308,8 +307,6 @@ export default {
             try {
                 const data = visibleInfoBlocksEncode(newVal)
                 await api.config.visibleInfoBlocks.update(data)
-                await this.$store.dispatch("refreshConfig")
-                // Should this check the response of the query? To catch some errors that redirect the page
             } catch (err) {
                 // eslint-disable-next-line no-console
                 console.error("Error while trying to save info blocks", err)
