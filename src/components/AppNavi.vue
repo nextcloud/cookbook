@@ -43,17 +43,17 @@
                 </template>
             </NcAppNavigationItem>
 
-            <AppNavigationCaption
+            <NcAppNavigationCaption
                 v-if="loading.categories || categories.length > 0"
                 :title="t('cookbook', 'Categories')"
                 :loading="loading.categories"
             >
-            </AppNavigationCaption>
+            </NcAppNavigationCaption>
 
             <NcAppNavigationItem
                 v-for="(cat, idx) in categories"
                 :key="cat + idx"
-                :ref="'app-navi-cat-' + idx"
+                :ref="el => { categoryItemElements[idx] = el }"
                 :name="cat.name"
                 :icon="'icon-category-files'"
                 :to="'/category/' + cat.name"
@@ -83,297 +83,314 @@
     </NcAppNavigation>
 </template>
 
-<script>
-import { emit } from "@nextcloud/event-bus"
+<script setup>
+import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue';
 
-import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
-import NcAppNavigation from "@nextcloud/vue/dist/Components/NcAppNavigation"
-import NcAppNavigationItem from "@nextcloud/vue/dist/Components/NcAppNavigationItem"
-import NcAppNavigationNew from "@nextcloud/vue/dist/Components/NcAppNavigationNew"
-import NcCounterBubble from "@nextcloud/vue/dist/Components/NcCounterBubble"
+import { emit } from '@nextcloud/event-bus';
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput';
+import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation';
+import NcAppNavigationCaption from '@nextcloud/vue/dist/Components/NcAppNavigationCaption';
+import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem';
+import NcAppNavigationNew from '@nextcloud/vue/dist/Components/NcAppNavigationNew';
+import NcCounterBubble from '@nextcloud/vue/dist/Components/NcCounterBubble';
 
-import Vue from "vue"
+import PlusIcon from 'icons/Plus.vue';
 
-import PlusIcon from "icons/Plus.vue"
+import api from 'cookbook/js/api-interface';
+import helpers from 'cookbook/js/helper';
+import { showSimpleAlertModal } from 'cookbook/js/modals';
 
-import api from "cookbook/js/api-interface"
-import helpers from "cookbook/js/helper"
-import { showSimpleAlertModal } from "cookbook/js/modals"
+import emitter from '../bus';
+import useSettingsDialog from '../composables/settingsDialogComposable';
+import { useStore } from "../store";
 
-import AppNavigationCaption from "./AppNavigationCaption.vue"
+const log = getCurrentInstance().proxy.$log;
+const store = useStore();
 
-import useSettingsDialog from "../composables/settingsDialogComposable";
+/**
+ * References to the DOM elements of the categories in the App navigation.
+ * @type {import('vue').Ref<Array.<HTMLElement | null>>}
+ */
+const categoryItemElements = ref([]);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const catRenamingEnabled = ref(false);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
+const categories = ref([]);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const downloading = ref(false);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
+const isCategoryUpdating = ref([]);
+const loading = ref({ categories: true });
+/**
+ * @type {import('vue').Ref<number>}
+ */
+const uncatRecipes = ref(0);
+/**
+ * @type {import('vue').Ref<string>}
+ */
+const importUrl = ref('');
 
-export default {
-    name: "AppNavi",
-    components: {
-        NcActionInput,
-        NcAppNavigation,
-        NcAppNavigationItem,
-        NcAppNavigationNew,
-        NcCounterBubble,
-        AppNavigationCaption,
-        PlusIcon,
-    },
-    data() {
-        return {
-            catRenamingEnabled: false,
-            categories: [],
-            downloading: false,
-            isCategoryUpdating: [],
-            loading: { categories: true },
-            uncatRecipes: 0,
-            importUrl: "",
-        }
-    },
-    computed: {
-        totalRecipeCount() {
-            this.$log.debug("Calling totalRecipeCount")
-            let total = this.uncatRecipes
-            for (let i = 0; i < this.categories.length; i++) {
-                total += this.categories[i].recipeCount
-            }
-            return total
-        },
-        // Computed property to watch the Vuex state. If there are more in the
-        // future, consider using the Vue mapState helper
-        refreshRequired() {
-            return this.$store.state.appNavigation.refreshRequired
-        },
-        categoryUpdating() {
-            return this.isCategoryUpdating
-        },
-        settingsDialogComposable() {
-            return useSettingsDialog();
-        }
-    },
-    watch: {
-        // Register a method hook for navigation refreshing
-        refreshRequired(newVal, oldVal) {
-            if (newVal !== oldVal && newVal === true) {
-                this.$log.debug("Calling getCategories from refreshRequired")
-                this.getCategories()
-            }
-        },
-    },
-    mounted() {
-        this.$log.info("AppNavi mounted")
-        this.getCategories()
-    },
-    methods: {
-        /**
-         * Enable renaming of categories.
-         */
-        toggleCategoryRenaming() {
-            this.catRenamingEnabled = !this.catRenamingEnabled
-        },
+onMounted(() => {
+    log.info('AppNavi mounted');
+    getCategories();
+});
 
-        /**
-         * Opens a category
-         */
-        async categoryOpen(idx) {
-            if (
-                !this.categories[idx].recipes.length ||
-                this.categories[idx].recipes[0].id
-            ) {
-                // Recipes have already been loaded
-                return
-            }
-            const cat = this.categories[idx]
-            const $this = this
-            Vue.set(this.isCategoryUpdating, idx, true)
+// Computed properties
+const totalRecipeCount = computed(() => {
+    log.debug('Calling totalRecipeCount');
+    let total = uncatRecipes.value;
+    for (let i = 0; i < categories.value.length; i++) {
+        total += categories.value[i].recipeCount;
+    }
+    return total;
+});
 
-            try {
-                const response = await api.recipes.allInCategory(cat.name)
-                cat.recipes = response.data
-            } catch (e) {
-                cat.recipes = []
-                await showSimpleAlertModal(
-                    // prettier-ignore
-                    t("cookbook", "Failed to load category {category} recipes",
-                        {
-                            category: cat.name,
-                        }
-                    ),
-                )
-                if (e && e instanceof Error) {
-                    throw e
+// Computed property to watch the Vuex state. If there are more in the
+// future, consider using the Vue mapState helper
+const refreshRequired = computed(() => {
+    return store.state.appNavigation.refreshRequired;
+});
+
+const categoryUpdating = computed(() => {
+    return isCategoryUpdating.value;
+});
+
+const settingsDialogComposable = computed(() => {
+    return useSettingsDialog();
+});
+
+// Watchers
+// Register a method hook for navigation refreshing
+watch(() => refreshRequired.value, (newVal, oldVal) => {
+    if (newVal !== oldVal && newVal === true) {
+        log.debug('Calling getCategories from refreshRequired');
+        getCategories();
+    }
+});
+
+// Methods
+/**
+ * Enable renaming of categories.
+ */
+const toggleCategoryRenaming = () => {
+    catRenamingEnabled.value = !catRenamingEnabled.value;
+};
+
+/**
+ * Opens a category
+ */
+const openCategory = async (idx) => {
+    if (
+        !categories.value[idx].recipes.length ||
+        categories.value[idx].recipes[0].id
+    ) {
+        // Recipes have already been loaded
+        return;
+    }
+    const cat = categories.value[idx];
+    isCategoryUpdating.value[idx] = true;
+
+    try {
+        const response = await api.recipes.allInCategory(cat.name);
+        cat.recipes = response.data;
+    } catch (e) {
+        cat.recipes = []
+        await showSimpleAlertModal(
+            // prettier-ignore
+            t('cookbook', 'Failed to load category {category} recipes',
+                {
+                    category: cat.name,
                 }
-            } finally {
-                Vue.set($this.isCategoryUpdating, idx, false)
-            }
-        },
+            ),
+        );
+        if (e && e instanceof Error) {
+            throw e;
+        }
+    } finally {
+        isCategoryUpdating.value[idx] = false;
+    }
+};
 
-        /**
-         * Updates the name of a category
-         */
-        async categoryUpdateName(idx, newName) {
-            if (!this.categories[idx]) {
-                return
-            }
-            Vue.set(this.isCategoryUpdating, idx, true)
-            const oldName = this.categories[idx].name
-            const $this = this
+/**
+ * Updates the name of a category
+ */
+const categoryUpdateName = async (idx, newName) => {
+    if (!categories.value[idx]) {
+        return;
+    }
+    isCategoryUpdating.value[idx] = true;
+    const oldName = categories.value[idx].name;
 
-            try {
-                await this.$store.dispatch("updateCategoryName", {
-                    categoryNames: [oldName, newName],
-                })
-                $this.categories[idx].name = newName
-                $this.$root.$emit("categoryRenamed", [newName, oldName])
-            } catch (e) {
-                await showSimpleAlertModal(
-                    // prettier-ignore
-                    t("cookbook",'Failed to update name of category "{category}"',
-                        {
-                            category: oldName,
-                        }
-                    ),
-                )
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            } finally {
-                Vue.set($this.isCategoryUpdating, idx, false)
-            }
-        },
+    try {
+        await store.dispatch('updateCategoryName', {
+            categoryNames: [oldName, newName],
+        });
+        categories.value[idx].name = newName;
+        emitter.emit('categoryRenamed', [newName, oldName]);
+    } catch (e) {
+        await showSimpleAlertModal(
+            // prettier-ignore
+            t('cookbook','Failed to update name of category "{category}"',
+            {
+                category: oldName,
+            }),
+        );
+        if (e && e instanceof Error) {
+            throw e;
+        }
+    } finally {
+        isCategoryUpdating.value[idx] = false;
+    }
+};
 
-        updateUrl(e) {
-            this.importUrl = e
-        },
-        /**
-         * Download and import the recipe at given URL
-         */
-        async downloadRecipe() {
-            this.downloading = true
-            const $this = this
-            try {
-                const response = await api.recipes.import(this.importUrl)
-                const recipe = response.data
-                $this.downloading = false
-                helpers.goTo(`/recipe/${recipe.id}`)
-                // Refresh left navigation pane to display changes
-                $this.$store.dispatch("setAppNavigationRefreshRequired", {
-                    isRequired: true,
-                })
-            } catch (e2) {
-                $this.downloading = false
+const updateUrl = (e) => {
+    importUrl.value = e;
+};
 
-                if (e2.response) {
-                    if (e2.response.status >= 400 && e2.response.status < 500) {
-                        if (e2.response.status === 409) {
-                            // There was a recipe found with the same name
+/**
+ * Download and import the recipe at given URL
+ */
+const downloadRecipe = async () => {
+    downloading.value = true;
+    try {
+        const response = await api.recipes.import(importUrl.value);
+        const recipe = response.data;
+        downloading.value = false;
+        helpers.goTo(`/recipe/${recipe.id}`);
+        // Refresh left navigation pane to display changes
+        store.dispatch('setAppNavigationRefreshRequired', {
+            isRequired: true,
+        });
+    } catch (e2) {
+        downloading.value = false;
 
-                            await showSimpleAlertModal(e2.response.data.msg)
-                        } else {
-                            await showSimpleAlertModal(e2.response.data)
-                        }
-                    } else {
-                        // eslint-disable-next-line no-console
-                        console.error(e2)
-                        await showSimpleAlertModal(
-                            // prettier-ignore
-                            t("cookbook","The server reported an error. Please check."),
-                        )
-                    }
+        if (e2.response) {
+            if (e2.response.status >= 400 && e2.response.status < 500) {
+                if (e2.response.status === 409) {
+                    // There was a recipe found with the same name
+
+                    await showSimpleAlertModal(e2.response.data.msg);
                 } else {
-                    // eslint-disable-next-line no-console
-                    console.error(e2)
-                    await showSimpleAlertModal(
-                        // prettier-ignore
-                        t("cookbook", "Could not query the server. This might be a network problem."),
-                    )
+                    await showSimpleAlertModal(e2.response.data);
                 }
-            }
-        },
-
-        /**
-         * Fetch and display recipe categories
-         */
-        async getCategories() {
-            this.$log.debug("Calling getCategories")
-            const $this = this
-            this.loading.categories = true
-            try {
-                const response = await api.categories.getAll()
-                const json = response.data || []
-                // Reset the old values
-                $this.uncatRecipes = 0
-                $this.categories = []
-                $this.isCategoryUpdating = []
-
-                for (let i = 0; i < json.length; i++) {
-                    if (json[i].name === "*") {
-                        $this.uncatRecipes = parseInt(json[i].recipe_count, 10)
-                    } else {
-                        $this.categories.push({
-                            name: json[i].name,
-                            recipeCount: parseInt(json[i].recipe_count, 10),
-                            recipes: [
-                                {
-                                    id: 0,
-                                    // prettier-ignore
-                                    name: t("cookbook","Loading category recipes …"),
-                                },
-                            ],
-                        })
-                        $this.isCategoryUpdating.push(false)
-                    }
-                }
-                $this.$nextTick(() => {
-                    for (let i = 0; i < $this.categories.length; i++) {
-                        // Reload recipes in open categories
-                        if (!$this.$refs[`app-navi-cat-${i}`]) {
-                            // eslint-disable-next-line no-continue
-                            continue
-                        }
-                        if ($this.$refs[`app-navi-cat-${i}`][0].opened) {
-                            this.$log.info(
-                                `Reloading recipes in ${
-                                    $this.$refs[`app-navi-cat-${i}`][0].title
-                                }`,
-                            )
-                            $this.categoryOpen(i)
-                        }
-                    }
-                    // Refreshing component data has been finished
-                    $this.$store.dispatch("setAppNavigationRefreshRequired", {
-                        isRequired: false,
-                    })
-                })
-            } catch (e) {
+            } else {
+                // eslint-disable-next-line no-console
+                console.error(e2);
                 await showSimpleAlertModal(
-                    t("cookbook", "Failed to fetch categories"),
-                )
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            } finally {
-                $this.loading.categories = false
+                    // prettier-ignore
+                    t('cookbook','The server reported an error. Please check.'),
+                );
             }
-        },
+        } else {
+            // eslint-disable-next-line no-console
+            console.error(e2);
+            await showSimpleAlertModal(
+                // prettier-ignore
+                t('cookbook', 'Could not query the server. This might be a network problem.'),
+            );
+        }
+    }
+};
 
-        /**
-         * Set loading recipe index to show the loading icon
-         */
-        setLoadingRecipe(id) {
-            this.$store.dispatch("setLoadingRecipe", { recipe: id })
-        },
+/**
+ * Fetch and display recipe categories
+ */
+const getCategories = async () => {
+    log.debug('Calling getCategories');
+    loading.value.categories = true;
+    try {
+        const response = await api.categories.getAll();
+        const json = response.data || [];
+        // Reset the old values
+        uncatRecipes.value = 0;
+        categories.value = [];
+        isCategoryUpdating.value = [];
 
-        /**
-         * Toggle the left navigation pane
-         */
-        toggleNavigation() {
-            this.$store.dispatch("setAppNavigationVisible", {
-                isVisible: !this.$store.state.appNavigation.visible,
-            })
-        },
+        for (let i = 0; i < json.length; i++) {
+            if (json[i].name === '*') {
+                uncatRecipes.value = parseInt(json[i].recipe_count, 10);
+            } else {
+                categories.value.push({
+                    name: json[i].name,
+                    recipeCount: parseInt(json[i].recipe_count, 10),
+                    recipes: [
+                        {
+                            id: 0,
+                            // prettier-ignore
+                            name: t('cookbook','Loading category recipes …'),
+                        },
+                    ],
+                });
+                isCategoryUpdating.value.push(false);
+            }
+        }
+        await nextTick();
 
-        handleOpenSettings() {
-            emit(this.settingsDialogComposable.SHOW_SETTINGS_EVENT, null)
-        },
-    },
-}
+        for (let i = 0; i < categories.value.length; i++) {
+            // Reload recipes in open categories
+            if (!categoryItemElements[i]) {
+                // eslint-disable-next-line no-continue
+                continue;
+            }
+            if (categoryItemElements[i][0].opened) {
+                log.info(
+                    `Reloading recipes in ${
+                        categoryItemElements[i][0].title
+                    }`,
+                );
+                await openCategory(i);
+            }
+        }
+        // Refreshing component data has been finished
+        store.dispatch('setAppNavigationRefreshRequired', {
+            isRequired: false,
+        });
+
+    } catch (e) {
+        await showSimpleAlertModal(
+            t('cookbook', 'Failed to fetch categories'),
+        );
+        if (e && e instanceof Error) {
+            throw e;
+        }
+    } finally {
+        loading.value.categories = false;
+    }
+};
+
+/**
+ * Set loading recipe index to show the loading icon
+ */
+const setLoadingRecipe = (id) => {
+    store.dispatch('setLoadingRecipe', { recipe: id });
+};
+
+/**
+ * Toggle the left navigation pane
+ */
+const toggleNavigation = () => {
+    store.dispatch('setAppNavigationVisible', {
+        isVisible: !store.state.appNavigation.visible,
+    });
+};
+
+const handleOpenSettings = () => {
+    emit(settingsDialogComposable.SHOW_SETTINGS_EVENT, null);
+};
+</script>
+
+<script>
+export default {
+    name: 'AppNavi',
+};
 </script>
 
 <style scoped>
