@@ -9,10 +9,10 @@ export default {
 </script>
 <script setup>
 
-import api from "cookbook/js/api-interface";
+import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
-import RecipeList from "./List/RecipeList.vue";
+import RecipeList from './List/RecipeList.vue';
 import { useStore } from '../store';
 
 let store = useStore();
@@ -33,12 +33,12 @@ const updatingRecipeDirectory = computed(() => {
  */
 watch(updatingRecipeDirectory, async (newVal, oldVal) => {
     if (newVal === false && newVal !== oldVal) {
-        this.loadAll();
+        loadAll();
     }
 });
 
 onMounted(() => {
-    getCurrentInstance().proxy.$log.info("AppIndex mounted");
+    getCurrentInstance().proxy.$log.info('AppIndex mounted');
     loadAll();
 })
 
@@ -52,11 +52,11 @@ const loadAll = () =>  {
             recipes.value = response.data
 
             // Always set page name last
-            store.dispatch("setPage", { page: "index" })
+            store.dispatch('setPage', { page: 'index' })
         })
         .catch(() => {
             // Always set page name last
-            store.dispatch("setPage", { page: "index" })
+            store.dispatch('setPage', { page: 'index' })
         });
 };
 </script>

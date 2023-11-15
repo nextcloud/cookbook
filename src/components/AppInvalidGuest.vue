@@ -24,20 +24,20 @@
 </template>
 
 <script setup>
-import NcContent from "@nextcloud/vue/dist/Components/NcContent";
-import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent";
-import { getFilePickerBuilder, FilePickerType } from "@nextcloud/dialogs";
+import NcContent from '@nextcloud/vue/dist/Components/NcContent';
+import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent';
+import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
 const selectFolder = () => {
     const filePicker = getFilePickerBuilder(
-        t("cookbook", "Path to your recipe collection"),
+        t('cookbook', 'Path to your recipe collection'),
     )
-        .addMimeTypeFilter("httpd/unix-directory")
+        .addMimeTypeFilter('httpd/unix-directory')
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
         this.$store
-            .dispatch("updateRecipeDirectory", { dir: path })
+            .dispatch('updateRecipeDirectory', { dir: path })
             .then(() => {
                 window.location.reload()
             });
