@@ -5,26 +5,31 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onActivated, onDeactivated, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from "vue-router/composables";
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import RecipeList from './List/RecipeList.vue';
-import {useStore} from '../store';
+import { useStore } from '../store';
 import emitter from '../bus';
 
 let route = useRoute();
 let store = useStore();
 
-defineProps({
+const props = defineProps({
     query: {
         type: String,
         default: '',
     },
 });
 
+// Reactive properties
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isComponentActive = ref(true);
 /**
  * @type {import('vue').Ref<Array>}
  */
@@ -34,6 +39,7 @@ const results = ref([]);
 //     keywordFilter.value = [];
 // });
 
+// Lifecycle hooks
 onBeforeRouteUpdate((to, from, next) => {
     // Move to next route as expected
     next();
@@ -47,7 +53,7 @@ onMounted(() => {
     emitter.on('categoryRenamed', (val) => {
         if (
             // eslint-disable-next-line no-underscore-dangle
-            !_inactive &&
+            isComponentActive &&
             props.query === 'cat' &&
             route.params.value === val[1]
         ) {
@@ -56,12 +62,21 @@ onMounted(() => {
     });
 });
 
+onActivated(() => {
+    isComponentActive.value = true;
+});
+
+onDeactivated(() => {
+    isComponentActive.value = false;
+});
+
+// Methods
 const setup = async () => {
     // TODO: This is a mess of different implementation styles, needs cleanup
     if (props.query === 'name') {
         // Search by name
         // TODO
-    } else if (this.query === 'tags') {
+    } else if (props.query === 'tags') {
         // Search by tags
         const tags = route.params.value;
         try {
