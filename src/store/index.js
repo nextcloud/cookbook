@@ -203,7 +203,7 @@ var store = new Vuex.Store({
 
             request
                 .then(() => {
-                    if (c.state.recipe.recipeCategory === oldName) {
+                    if (c.state.recipe && c.state.recipe.recipeCategory === oldName) {
                         c.commit("setRecipeCategory", { c: newName })
                     }
                 })
