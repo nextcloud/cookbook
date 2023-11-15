@@ -232,7 +232,7 @@ export default {
     },
     watch: {
         async printImage(newVal, oldVal) {
-            if (! this.writeChanges) {
+            if (!this.writeChanges) {
                 return
             }
 
@@ -249,7 +249,7 @@ export default {
         },
         // eslint-disable-next-line no-unused-vars
         showTagCloudInRecipeList(newVal, oldVal) {
-            if (! this.writeChanges) {
+            if (!this.writeChanges) {
                 return
             }
 
@@ -258,7 +258,7 @@ export default {
             })
         },
         async updateInterval(newVal, oldVal) {
-            if (! this.writeChanges) {
+            if (!this.writeChanges) {
                 return
             }
 
@@ -300,7 +300,7 @@ export default {
     methods: {
         handleShowSettings() {
             this.isOpen = true
-            
+
             // Temporarily disable the storage of data
             this.writeChanges = false
 
@@ -319,7 +319,9 @@ export default {
             this.updateInterval = config.update_interval
             this.recipeFolder = config.folder
 
-            Vue.nextTick(() => { this.writeChanges = true })
+            Vue.nextTick(() => {
+                this.writeChanges = true
+            })
         },
 
         /**
@@ -418,5 +420,4 @@ export default {
     display: block;
     width: 100%;
 }
-
 </style>

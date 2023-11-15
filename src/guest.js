@@ -27,7 +27,7 @@ Vue.prototype.OC = OC
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
 
-store.dispatch('refreshConfig')
+store.dispatch("refreshConfig")
 
 // Start the app once document is done loading
 const App = Vue.extend(AppInvalidGuest)

@@ -130,9 +130,9 @@
             <section class="container">
                 <section class="ingredients">
                     <NcButton
+                        v-if="scaledIngredients.length"
                         class="copy-ingredients"
                         :type="'tertiary'"
-                        v-if="scaledIngredients.length"
                         @click="copyIngredientsToClipboard"
                     >
                         <template #icon>
