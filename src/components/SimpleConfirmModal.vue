@@ -4,27 +4,25 @@
             <div class="modal__content">{{ content }}</div>
             <div class="modal__button-bar">
                 <NcButton @click="$close(false)">{{
-                    t("cookbook", "Cancel")
+                    t('cookbook', 'Cancel')
                 }}</NcButton>
                 <NcButton type="primary" @click="$close(true)">{{
-                    t("cookbook", "OK")
+                    t('cookbook', 'OK')
                 }}</NcButton>
             </div>
         </div>
     </NcModal>
 </template>
 
-<script>
-import NcModal from "@nextcloud/vue/dist/Components/NcModal"
-import NcButton from "@nextcloud/vue/dist/Components/NcButton"
+<script setup>
+import NcModal from '@nextcloud/vue/dist/Components/NcModal';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+</script>
 
+<script>
 export default {
-    name: "SimpleConfirmModal",
-    components: {
-        NcModal,
-        NcButton,
-    },
-}
+    name: 'SimpleConfirmModal',
+};
 </script>
 
 <style scoped>
