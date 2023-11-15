@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # set -x
 
@@ -31,7 +31,7 @@ else
 		# Creating new branch remotely
 		BASE_REF="remotes/$1/master"
 	else
-		BASE_REF="remotes/$1/$remoteRef"
+		BASE_REF="remotes/$1/${remoteRef#refs/heads/}"
 	fi
 
 	files="$(git diff --name-only "$BASE_REF" "$localRef")"
@@ -102,6 +102,8 @@ then
 		else
 			echo "WARNING: The Stylelint check could not be carried out!"
 		fi
+
+		cd ../..
 	}
 
 	run_package_checks() {
