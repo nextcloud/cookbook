@@ -13,7 +13,7 @@
     },
     "require-dev": {
         "nextcloud/coding-standard": "^1.0.0",
-        "christophwurst/nextcloud_testing": "^0.12.4",
+        "christophwurst/nextcloud_testing": "^1.0.0",
         "psalm/phar": "^5.12",
         "nextcloud/ocp": "^27.0"
     },
