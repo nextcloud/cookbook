@@ -100,8 +100,9 @@ import api from "cookbook/js/api-interface"
 import helpers from "cookbook/js/helper"
 import { showSimpleAlertModal } from "cookbook/js/modals"
 
-import { SHOW_SETTINGS_EVENT } from "./SettingsDialog.vue"
 import AppNavigationCaption from "./AppNavigationCaption.vue"
+
+import useSettingsDialog from "../composables/settingsDialogComposable";
 
 export default {
     name: "AppNavi",
@@ -142,6 +143,9 @@ export default {
         categoryUpdating() {
             return this.isCategoryUpdating
         },
+        settingsDialogComposable() {
+            return useSettingsDialog();
+        }
     },
     watch: {
         // Register a method hook for navigation refreshing
@@ -366,7 +370,7 @@ export default {
         },
 
         handleOpenSettings() {
-            emit(SHOW_SETTINGS_EVENT)
+            emit(this.settingsDialogComposable.SHOW_SETTINGS_EVENT, null)
         },
     },
 }
