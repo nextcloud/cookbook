@@ -223,16 +223,10 @@ export default {
             isOpen: false,
             printImage: false,
             recipeFolder: "",
-            resetPrintImage: false,
             showTagCloudInRecipeList: true,
-            resetTagCloud: false,
             scanningLibrary: false,
-            // By setting the reset value initially to true, it will skip one watch event
-            // (the one when config is loaded at page load)
-            resetInterval: false,
             updateInterval: 0,
             visibleInfoBlocks: [...INFO_BLOCK_KEYS],
-            resetVisibleInfoBlocks: true,
             writeChanges: true,
         }
     },
@@ -242,11 +236,6 @@ export default {
                 return
             }
 
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetPrintImage) {
-                this.resetPrintImage = false
-                return
-            }
             try {
                 await api.config.printImage.update(newVal)
                 // Should this check the response of the query? To catch some errors that redirect the page
@@ -255,7 +244,6 @@ export default {
                     // prettier-ignore
                     t("cookbook","Could not set preference for image printing"),
                 )
-                this.resetPrintImage = true
                 this.printImage = oldVal
             }
         },
@@ -274,11 +262,6 @@ export default {
                 return
             }
 
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetInterval) {
-                this.resetInterval = false
-                return
-            }
             try {
                 await api.config.updateInterval.update(newVal)
             } catch {
@@ -290,7 +273,6 @@ export default {
                         }
                     ),
                 )
-                this.resetInterval = true
                 this.updateInterval = oldVal
             }
         },
@@ -299,11 +281,6 @@ export default {
                 return
             }
 
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetVisibleInfoBlocks) {
-                this.resetVisibleInfoBlocks = false
-                return
-            }
             try {
                 const data = visibleInfoBlocksEncode(newVal)
                 await api.config.visibleInfoBlocks.update(data)
@@ -313,7 +290,6 @@ export default {
                 await showSimpleAlertModal(
                     t("cookbook", "Could not save visible info blocks"),
                 )
-                this.resetVisibleInfoBlocks = true
                 this.visibleInfoBlocks = oldVal
             }
         },
@@ -329,8 +305,6 @@ export default {
             this.writeChanges = false
 
             const { config } = this.$store.state
-            this.resetPrintImage = false
-            this.resetVisibleInfoBlocks = false
 
             if (!config) {
                 throw new Error()
