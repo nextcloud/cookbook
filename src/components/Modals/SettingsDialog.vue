@@ -192,13 +192,12 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { enableLogging } from 'cookbook/js/logging';
 import { useRoute, useRouter } from 'vue-router/composables';
 import { useStore } from '../../store';
-import useSettingsDialog from '../../composables/settingsDialogComposable';
+import { SHOW_SETTINGS_EVENT } from '../../composables/useSettingsDialog';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
-const settingsDialogComposable = useSettingsDialog();
 
 const INFO_BLOCK_KEYS = [
     'preparation-time',
@@ -305,12 +304,12 @@ watch(() => visibleInfoBlocks.value, async (newVal, oldVal) => {
 
 onMounted(() => {
     setup();
-    subscribe(settingsDialogComposable.SHOW_SETTINGS_EVENT, handleShowSettings);
+    subscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
 });
 
 
 onBeforeUnmount(() => {
-    unsubscribe(settingsDialogComposable.SHOW_SETTINGS_EVENT, handleShowSettings);
+    unsubscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
 });
 
 const handleShowSettings = () => {

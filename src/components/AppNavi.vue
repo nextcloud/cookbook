@@ -101,7 +101,7 @@ import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import emitter from '../bus';
-import useSettingsDialog from '../composables/settingsDialogComposable';
+import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
 import { useStore } from "../store";
 
 const log = getCurrentInstance().proxy.$log;
@@ -161,10 +161,6 @@ const refreshRequired = computed(() => {
 
 const categoryUpdating = computed(() => {
     return isCategoryUpdating.value;
-});
-
-const settingsDialogComposable = computed(() => {
-    return useSettingsDialog();
 });
 
 // Watchers
@@ -383,7 +379,7 @@ const toggleNavigation = () => {
 };
 
 const handleOpenSettings = () => {
-    emit(settingsDialogComposable.SHOW_SETTINGS_EVENT, null);
+    emit(SHOW_SETTINGS_EVENT, null);
 };
 </script>
 
