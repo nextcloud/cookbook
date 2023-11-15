@@ -45,6 +45,11 @@ class ISO8601DurationHelperTest extends TestCase {
 			['PT3H', 'PT3H0M0S'],
 			['PT13H0M', 'PT13H0M0S'],
 			['PT0H60M61S', 'PT1H1M1S'],
+			['PT10M', 'PT0H10M0S'],
+			['PT1M', 'PT0H1M0S'],
+			['PT10S', 'PT0H0M10S'],
+			['PT1S', 'PT0H0M1S'],
+			['PT20M1S', 'PT0H20M1S'],
 		];
 	}
 

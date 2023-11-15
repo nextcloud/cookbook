@@ -11,6 +11,8 @@
   [#1723](https://github.com/nextcloud/cookbook/pull/1743) @j0hannesr0th
 - Add Android client to README
   [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
+- Show info for empty cookbook or categories in recipe overview
+  [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
 
 ### Fixed
 - Fix translation string to not contain quotes
@@ -29,6 +31,8 @@
   [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
 - Allow single tool in JSON+LD import, fixes #1641
   [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
+- Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
+  [#XX](https://github.com/nextcloud/cookbook/pull/XX) @seyfeb
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
@@ -85,6 +89,8 @@
   [#1837](https://github.com/nextcloud/cookbook/pull/1837) @VincentMeilinger
 - Drop old polyfill code related to global search
   [#1843](https://github.com/nextcloud/cookbook/pull/1843) @christianlupus
+- Update helper dependency for DB testing
+  [#1873](https://github.com/nextcloud/cookbook/pull/1873) @dependabot
 
 
 ## 0.10.2 - 2023-03-24
