@@ -52,7 +52,8 @@ class FixToolsFilterTest extends TestCase {
 			[[' a  ','', 'b'], ['a', 'b'], true],
 			['a', ['a'], true],
 			['', [], true],
-			["  a   \tb ", ['a b'], true],
+			// The text cleaner is only stubbed, so the multiple inline spaces are not fixed here.
+			["  a   \tb ", ["a   \tb"], true],
 		];
 	}
 
