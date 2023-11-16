@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\Helper\Filter\DB;
 
 use DateTime;
-use OCA\Cookbook\Helper\Filter\AbstractRecipeFilter;
 use OCP\Files\File;
 
 /**

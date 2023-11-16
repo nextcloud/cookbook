@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\tests\Integration\Helper\Filter\JSON;
 
 use OCA\Cookbook\AppInfo\Application;
-use OCA\Cookbook\Helper\Filter\RecipeStubFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use PHPUnit\Framework\TestCase;
 
 class RecipeFixIdsTest extends TestCase {
@@ -30,11 +30,17 @@ class RecipeFixIdsTest extends TestCase {
 		$expected = $stub;
 		$expected['recipe_id'] = 123;
 		$expected['id'] = '123';
-		yield [$src, $expected];
+		yield 'only numeric recipe_id' => [$src, $expected];
+
+		$src['recipe_id'] = $expected['recipe_id'] = '123';
+		yield 'only string recipe_id' => [$src, $expected];
 
 		$src['id'] = '234';
 		$expected['id'] = '234';
-		yield [$src, $expected];
+		yield 'with string id' => [$src, $expected];
+
+		$src['recipe_id'] = $expected['recipe_id'] = 123;
+		yield 'mixed string and int id recipe_id' => [$src, $expected];
 	}
 
 	/**

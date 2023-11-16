@@ -7,7 +7,7 @@ use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
-use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;

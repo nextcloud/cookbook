@@ -2,8 +2,6 @@
 
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
-
 /**
  * Copy the id from the recipe_id to the id field if there is no id present so far.
  */

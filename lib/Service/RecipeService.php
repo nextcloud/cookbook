@@ -10,7 +10,7 @@ use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
-use OCA\Cookbook\Helper\Filter\JSONFilter;
+use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;

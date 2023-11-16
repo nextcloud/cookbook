@@ -3,7 +3,7 @@
 namespace OCA\Cookbook\tests\Unit\Helper\Filter;
 
 use OCA\Cookbook\Helper\Filter\Output\EnsureNutritionPresentFilter;
-use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use PHPUnit\Framework\TestCase;
 
 class RecipeJSONOutputFilterTest extends TestCase {

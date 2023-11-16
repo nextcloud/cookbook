@@ -1,8 +1,7 @@
 <?php
 
-namespace OCA\Cookbook\Helper\Filter;
+namespace OCA\Cookbook\Helper\Filter\DB;
 
-use OCA\Cookbook\Helper\Filter\DB\RecipeDatesFilter;
 use OCP\Files\File;
 
 class NormalizeRecipeFileFilter {

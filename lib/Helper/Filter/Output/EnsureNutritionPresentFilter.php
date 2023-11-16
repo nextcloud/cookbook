@@ -2,7 +2,7 @@
 
 namespace OCA\Cookbook\Helper\Filter\Output;
 
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
+use OCA\Cookbook\Helper\Filter\JSON\AbstractJSONFilter;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 

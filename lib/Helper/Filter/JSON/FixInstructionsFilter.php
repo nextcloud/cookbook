@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidRecipeException;
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;

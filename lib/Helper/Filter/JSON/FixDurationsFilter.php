@@ -3,7 +3,6 @@
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidDurationException;
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\ISO8601DurationHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
