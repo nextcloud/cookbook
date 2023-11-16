@@ -17,7 +17,6 @@
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Heuristikak erabiltzen \"recipeYield\" eremua analizatzeko {name} errezetaren plater kopurua adierazteko.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["Kopuru %n aurkitu da \"recipeYield\" eremuan. Plater kopururako erabiliko da."," %n kopuru aurkitu dira \"recipeYield\" eremuan. Aurkitutako zenbaki handiena erabiliko da plater kopururako."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Ezin izan da \"recipeYield\" eremua analizatu. Plater batera ezarri da.",
-    "Could not parse recipe tools. It is no array." : "Ezin izan dira errezetaren tresnak analizatu. Ez dago matrizerik.",
     "Could not find recipe in HTML code." : "Ezin izan da errezeta aurkitu HTML kodean.",
     "JSON cannot be decoded." : "JSON ezin da deskodetu.",
     "No recipe was found." : "Ez da errezetarik aurkitu.",

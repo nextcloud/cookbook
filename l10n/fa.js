@@ -19,7 +19,6 @@ OC.L10N.register(
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["Only a single number was found in the \"recipeYield\" field. Using it as number of servings.","There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Could not parse \"recipeYield\" field. Falling back to 1 serving.",
-    "Could not parse recipe tools. It is no array." : "Could not parse recipe tools. It is no array.",
     "Could not find recipe in HTML code." : "Could not find recipe in HTML code.",
     "JSON cannot be decoded." : "JSON cannot be decoded.",
     "No recipe was found." : "No recipe was found.",

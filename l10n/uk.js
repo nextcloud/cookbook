@@ -36,6 +36,7 @@ OC.L10N.register(
     "URL" : "URL-адреса",
     "Image" : "Зображення",
     "Tools" : "Інструменти",
+    "You have unsaved changes! Do you still want to leave?" : "Наявні незбережені зміни! Ви справді хочете залишити сторінку?",
     "Date created" : "Створено",
     "Last modified" : "Змінено",
     "Energy" : "Енергія",

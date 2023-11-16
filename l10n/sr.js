@@ -19,7 +19,6 @@ OC.L10N.register(
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Користи се хеуристика за парсирање поља „recipeYield” које представља број порција рецепта {name}.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["Пронађен је само један број у „recipeYield” пољу. Користи се као број порција.","Пронађена су %n броја у „recipeYield” пољу. Као број порција се користи највећи пронађен.","Пронађено је %n бројева у „recipeYield” пољу. Као број порција се користи највећи пронађен."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Поље „recipeYield” није могло да се парсира. Користи се 1 порција.",
-    "Could not parse recipe tools. It is no array." : "Опрема за рецепт не може да се парсира. Није низ.",
     "Could not find recipe in HTML code." : "У HTML коду није пронађен рецепт.",
     "JSON cannot be decoded." : "JSON не може да се декодује.",
     "No recipe was found." : "Није пронађен рецепт.",

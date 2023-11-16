@@ -19,7 +19,6 @@ OC.L10N.register(
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "使用啟發式分析食譜 {name} 份數的 \"recipeYield\" 字段。",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["在 “recipeYield” 字段中有 %n 個數字。使用找到的最高數量作為份數。"],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "無法分析 \"recipeYield\" 字段。回落到 1 份。",
-    "Could not parse recipe tools. It is no array." : "無法分析食譜工具。它不是一個數組。",
     "Could not find recipe in HTML code." : "在 HTML 代碼中找不到食譜。",
     "JSON cannot be decoded." : "JSON 無法解碼。",
     "No recipe was found." : "沒有找到食譜。",

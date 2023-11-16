@@ -17,7 +17,6 @@
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Verwenden von Heuristiken zum Analysieren des Felds \"recipeYield\" das die Anzahl Portionen des Rezepts {name} enthält.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["Es wurde genau %n Zahl im Feld \"recipeYield\" gefunden, verwende diese als Anzahl Portionen.","Es wurden %n Zahlen im Feld \"recipeYield\" gefunden, verwende die größte Zahl als Anzahl Portionen."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Das Feld \"recipeYield\" konnte nicht eingelesen werden. Setze Anzahl Portionen auf 1.",
-    "Could not parse recipe tools. It is no array." : "Utensilien für das Rezept konnten nicht gelesen werden. Es ist kein Array.",
     "Could not find recipe in HTML code." : "Im HTML-Code konnte kein Rezept gefunden werden",
     "JSON cannot be decoded." : "JSON kann nicht dekodiert werden",
     "No recipe was found." : "Kein Rezept gefunden",

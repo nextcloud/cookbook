@@ -17,7 +17,6 @@
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Heurisztika használata a(z) {name} recept „recipeYield” mezőjének feldolgozásához.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["%n szám található a „recipeYield” mezőben. A legnagyobb szám lesz adagszámként használva.","%n szám található a „recipeYield” mezőben. A legnagyobb szám lesz adagszámként használva."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "A „recipeYield” mező nem dolgozható fel. Visszaállás 1 adagra.",
-    "Could not parse recipe tools. It is no array." : "A recept eszközei nem dolgozhatók fel. Nem tömb.",
     "Could not find recipe in HTML code." : "Nem található recept a HTML kódban.",
     "JSON cannot be decoded." : "A JSON nem dekódolható.",
     "No recipe was found." : "Nem található recept.",

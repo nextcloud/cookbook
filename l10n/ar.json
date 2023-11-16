@@ -17,7 +17,6 @@
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "استخدام الاستدلال لتحليل حقل \"recipeYield\" الذي يمثل عدد حصص servings الوصفة {name}.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["تم العثور على %n أرقام في حقل \"recipeYield\". استخدام أكبر رقم تم العثور عليه كعدد حصص التقديم.","تم العثور عل رقم فردي \"recipeYield\". تم استخدامه كرقم لعدد حصص التقديم.","تم العثور على %n أرقام في حقل \"recipeYield\". استخدام أكبر رقم تم العثور عليه كعدد حصص التقديم.","تم العثور على م%n أرقام في حقل \"recipeYield\". استخدام أكبر رقم تم العثور عليه كعدد حصص التقديم.","تم العثور على %n أرقام في حقل \"recipeYield\". استخدام أكبر رقم تم العثور عليه كعدد حصص التقديم.","تم العثور على%nأرقام في حقل \"recipeYield\". استخدام أكبر رقم تم العثور عليه كعدد حصص التقديم."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "تعذّر تحليل حقل \"recipeYield\". العودة لاعتبارها حصة واحدة 1.",
-    "Could not parse recipe tools. It is no array." : "تعذّر تحليل أدوات tools الوصفة. حيث أنها لا تمثل مصفوفة.",
     "Could not find recipe in HTML code." : "تعذّر العثور على الوصفة في كود HTML.",
     "JSON cannot be decoded." : "لا يمكن فك ترميز JSON",
     "No recipe was found." : "لم يتم العثور على أيّ وصفة.",

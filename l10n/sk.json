@@ -17,7 +17,6 @@
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Použitie heuristiky na analýzu poľa \"recipeYield\" predstavujúce počet porcií receptu {name}.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["V poli \"recipeYield\" sa nachádza %n číslo. Použije sa najvyššie číslo nájdené ako počet porcií.","V poli \"recipeYield\" sa nachádzajú %n čísla. Použije sa najvyššie číslo nájdené ako počet porcií.","V poli \"recipeYield\" sa nachádza %n čísiel. Použije sa najvyššie číslo nájdené ako počet porcií.","V poli \"recipeYield\" sa nachádzajú %n čísla. Použije sa najvyššie číslo nájdené ako počet porcií."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Pole „recipeYield“ sa nepodarilo spracovať. Použije sa 1 porcia.",
-    "Could not parse recipe tools. It is no array." : "Nepodarilo sa spracovať nástroje k receptu. Nie je to pole.",
     "Could not find recipe in HTML code." : "Nemôžem nájisť recept v HTML kóde.",
     "JSON cannot be decoded." : "Nemôžem dekódovať JSON.",
     "No recipe was found." : "Nenašiel sa žiadny recept.",

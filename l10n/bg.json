@@ -17,7 +17,6 @@
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Използване на евристика за анализиране на полето „рецептаПорции“, представляващо броя на порциите от рецептата {name}.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["Има намерени %n числа в полето „рецептаПорции“. Използване на най-голямото намерено число като брой порции.","Има намерени %n числа в полето „рецептаПорции“. Използване на най-голямото намерено число като брой порции."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Не можа да се анализира полето „рецептаПорции“. Връщане към 1 порция.",
-    "Could not parse recipe tools. It is no array." : "Инструментите за рецептата не можаха да бъдат анализирани. Не е масив.",
     "Could not find recipe in HTML code." : "Не можа да се намери рецепта в HTML кода.",
     "JSON cannot be decoded." : "JSON файлът не може да се декодира.",
     "No recipe was found." : "Не беше намерена рецепта.",
