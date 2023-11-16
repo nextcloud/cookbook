@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\Helper\Filter\Output;
 
 use OCP\Files\File;
+use OCA\Cookbook\Helper\Filter\JSON\AbstractJSONFilter;
 
 class RecipeJSONOutputFilter {
 	/** @var array */

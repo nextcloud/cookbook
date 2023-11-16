@@ -31,7 +31,8 @@ class NormalizeRecipeFileFilter {
 
 		foreach ($this->filters as $filter) {
 			/** @var AbstractRecipeFilter $filter */
-			$changed |= $filter->apply($json, $recipeFile);
+			$ret = $filter->apply($json, $recipeFile);
+			$changed = $changed || $ret;
 		}
 
 		if ($changed && $updateFiles) {
