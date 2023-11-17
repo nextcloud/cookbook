@@ -19,6 +19,7 @@ OC.L10N.register(
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "{name} tarifinin porsiyon sayısını gösteren \"recipeYield\" alanının işlemek için buluşsal tarama kullanılıyor.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["\"recipeYield\" alanında tek bir sayı bulundu. Porsiyon sayısı olarak bulunan en yüksek sayı kullanılıyor.","\"recipeYield\" alanında %n birkaç sayı bulundu. Porsiyon sayısı olarak bulunan en yüksek sayı kullanılıyor."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "\"recipeYield\" alanı işlenemedi. 1 porsiyon olduğu varsayılıyor.",
+    "Could not parse recipe tools. Expected array or string." : "Tarif araçları işlenemedi. Dizi ya da dizge bekleniyor.",
     "Could not find recipe in HTML code." : "HTML kodunda yemek tarifi bulunamadı.",
     "JSON cannot be decoded." : "JSON kodu çözülemedi.",
     "No recipe was found." : "Herhangi bir yemek tarifi bulunamadı!",
