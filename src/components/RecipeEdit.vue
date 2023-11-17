@@ -139,8 +139,7 @@ import EditImageField from './FormComponents/EditImageField.vue';
 import EditInputField from './FormComponents/EditInputField';
 import EditInputGroup from './FormComponents/EditInputGroup.vue';
 import EditMultiselect from './FormComponents/EditMultiselect.vue';
-import EditMultiselectInputGroup from './EditMultiselectInputGroup.vue';
-// import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGroup.vue';
+import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGroup.vue';
 import EditTimeField from './FormComponents/EditTimeField.vue';
 import { useStore } from '../store';
 import emitter from '../bus';
@@ -561,15 +560,14 @@ const loadRecipeData = async () => {
 const save = async () => {
     savingRecipe.value = true;
     store.dispatch('setSavingRecipe', { saving: true });
-
     const request = (() => {
         if (route.params.id ?? false) {
             return store.dispatch('updateRecipe', {
-                recipe: recipe.valueWithCorrectedYield,
+                recipe: recipeWithCorrectedYield.value,
             });
         }
         return store.dispatch('createRecipe', {
-            recipe: recipe.valueWithCorrectedYield,
+            recipe: recipeWithCorrectedYield.value,
         });
     })();
 
