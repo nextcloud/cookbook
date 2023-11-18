@@ -35,6 +35,8 @@
   [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
 
 ### Maintenance
+- Preparation for migration to vue.js 3
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Fix URL of Transifex after upstream subdomain change
   [#1598](https://github.com/nextcloud/cookbook/pull/1598) @rakekniven
 - Fix webpack dev server settings to allow for docker dev environment
