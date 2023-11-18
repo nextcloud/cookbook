@@ -4,7 +4,7 @@
             <div class="main">
                 <div class="dialog">
                     <div class="message">
-                        {{ t("cookbook", "Cannot access recipe folder.") }}
+                        {{ t('cookbook', 'Cannot access recipe folder.') }}
                     </div>
                     <div>
                         {{
@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <button @click.prevent="selectFolder">
-                            {{ t("cookbook", "Select recipe folder") }}
+                            {{ t('cookbook', 'Select recipe folder') }}
                         </button>
                     </div>
                 </div>
@@ -39,7 +39,7 @@ const selectFolder = () => {
         this.$store
             .dispatch('updateRecipeDirectory', { dir: path })
             .then(() => {
-                window.location.reload()
+                window.location.reload();
             });
     });
 };
@@ -47,7 +47,7 @@ const selectFolder = () => {
 
 <script>
 export default {
-    name: 'InvalidGuest'
+    name: 'InvalidGuest',
 };
 </script>
 

@@ -6,69 +6,69 @@
  */
 
 // Markdown
-import VueShowdown from "vue-showdown"
+import VueShowdown from 'vue-showdown';
 
-import Vue from "vue"
+import Vue from 'vue';
 
-import * as ModalDialogs from "vue-modal-dialogs"
+import * as ModalDialogs from 'vue-modal-dialogs';
 
-import helpers from "cookbook/js/helper"
-import setupLogging from "cookbook/js/logging"
+import helpers from 'cookbook/js/helper';
+import setupLogging from 'cookbook/js/logging';
 
-import { linkTo } from "@nextcloud/router"
+import { linkTo } from '@nextcloud/router';
 
-import router from "./router"
-import { useStore } from "./store"
+import router from './router';
+import { useStore } from './store';
 
-import AppMain from "./components/AppMain.vue"
+import AppMain from './components/AppMain.vue';
 
 // eslint-disable-next-line camelcase,no-undef
 if (__webpack_use_dev_server__ || false) {
     // eslint-disable-next-line camelcase,no-undef
-    __webpack_public_path__ = "http://127.0.0.1:3000/apps/cookbook/js/"
+    __webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
 }
 
 // eslint-disable-next-line camelcase,no-undef
-__webpack_public_path__ = `${linkTo("cookbook", "js")}/`
+__webpack_public_path__ = `${linkTo('cookbook', 'js')}/`;
 
 // Fetch Nextcloud nonce identifier for dynamic script loading
 // eslint-disable-next-line camelcase,no-undef
-__webpack_nonce__ = btoa(OC.requestToken)
+__webpack_nonce__ = btoa(OC.requestToken);
 
-helpers.useRouter(router)
+helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
 // eslint-disable-next-line no-param-reassign
-window.escapeHTML = helpers.escapeHTML
+window.escapeHTML = helpers.escapeHTML;
 
 // Also make the injections available in Vue components
-Vue.prototype.$window = window
-Vue.prototype.OC = OC
+Vue.prototype.$window = window;
+Vue.prototype.OC = OC;
 
 // Markdown for Vue
 Vue.use(VueShowdown, {
     // set default flavor for Markdown
-    flavor: "vanilla",
-})
+    flavor: 'vanilla',
+});
 
 // TODO: Equivalent library for Vue3 when we make that transition:
 // https://github.com/rlemaigre/vue3-promise-dialog
-Vue.use(ModalDialogs)
+Vue.use(ModalDialogs);
 
-setupLogging(Vue)
+setupLogging(Vue);
 
 // Pass translation engine to Vue
-Vue.prototype.t = window.t
+Vue.prototype.t = window.t;
 
 const store = useStore();
 
 // Start the app once document is done loading
-Vue.$log.info("Main is done. Creating App.")
-const App = Vue.extend(AppMain)
+Vue.$log.info('Main is done. Creating App.');
+const App = Vue.extend(AppMain);
 new App({
     store,
     router,
     beforeCreate() {
-        this.$store.commit("initializeStore")
+        this.$store.commit('initializeStore');
     },
-}).$mount("#content")
+}).$mount('#content');

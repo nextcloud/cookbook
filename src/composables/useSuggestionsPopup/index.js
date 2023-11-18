@@ -1,14 +1,22 @@
-import {position as caretPosition} from "caret-pos";
-import { computed, nextTick, ref } from "vue";
+import { position as caretPosition } from 'caret-pos';
+import { computed, nextTick, ref } from 'vue';
 
-export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursorPosition, suggestionsData, buffer, emit, log, props) {
+export default function useSuggestionsPopup(
+    suggestionsPopupElementA,
+    lastCursorPosition,
+    suggestionsData,
+    buffer,
+    emit,
+    log,
+    props,
+) {
     const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
 
     /**
      * Reference to the SuggestionsPopup DOM element.
      * @type {Ref<HTMLElement | null>}
      */
-    const suggestionsPopupElement = ref(null)
+    const suggestionsPopupElement = ref(null);
 
     /**
      * Cancel the suggestions popup by setting the data object to null
@@ -18,9 +26,7 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
     };
 
     const suggestionsPopupVisible = computed(() => {
-        return (
-            suggestionsData.value !== null && !suggestionsData.value.blurred
-        );
+        return suggestionsData.value !== null && !suggestionsData.value.blurred;
     });
 
     const filteredSuggestionOptions = computed(() => {
@@ -28,10 +34,8 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
 
         return props.suggestionOptions.filter(
             (option) =>
-                searchText === "" ||
-                option.title
-                    .toLowerCase()
-                    .includes(searchText.toLowerCase()),
+                searchText === '' ||
+                option.title.toLowerCase().includes(searchText.toLowerCase()),
         );
     });
 
@@ -41,7 +45,7 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
      */
     const handleSuggestionsPopupSelectedEvent = (opt) => {
         handleSuggestionsPopupSelected(opt.recipe_id);
-    }
+    };
 
     /**
      * Handle something selected by click or by `Enter`
@@ -59,9 +63,9 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
 
         if (buffer?.value) {
             buffer.value[suggestionsData.value.fieldIndex] = newValue;
-            emit("input", buffer.value);
+            emit('input', buffer.value);
         } else {
-            emit("input", newValue);
+            emit('input', newValue);
         }
         handleSuggestionsPopupCancel();
         // set cursor to position after pasted string. Waiting two ticks is necessary for
@@ -82,26 +86,26 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
     const handleSuggestionsPopupOpenKeyUp = (e, cursorPos) => {
         const caretPos = caretPosition(e.target, {
             customPos: suggestionsData.value.hashPosition - 1,
-        })
+        });
 
         // Only update the popover position if the line changes (caret pos y changes)
         if (caretPos.top !== suggestionsData.value.caretPos.top) {
-            suggestionsData.value.caretPos = caretPos
+            suggestionsData.value.caretPos = caretPos;
         }
 
         // Cancel suggestion popup on whitespace or caret movement
         if (
             [
-                " ",
-                "\t",
-                "#",
-                "ArrowLeft",
-                "ArrowRight",
-                "Home",
-                "End",
-                "PageUp",
-                "PageDown",
-                "Escape",
+                ' ',
+                '\t',
+                '#',
+                'ArrowLeft',
+                'ArrowRight',
+                'Home',
+                'End',
+                'PageUp',
+                'PageDown',
+                'Escape',
             ].includes(e.key)
         ) {
             handleSuggestionsPopupCancel();
@@ -126,8 +130,8 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
     };
 
     const getClosestListItemIndex = (field) => {
-        const $li = field.closest("li");
-        const $ul = $li?.closest("ul");
+        const $li = field.closest('li');
+        const $ul = $li?.closest('ul');
         if (!$ul) return null;
 
         return Array.prototype.indexOf.call($ul.childNodes, $li);
@@ -149,24 +153,21 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
         }
 
         // Only do anything for # key
-        if (e.key !== "#") return;
+        if (e.key !== '#') return;
 
         // Show the popup only if the # was inserted at the very
         // beginning of the input or after any whitespace character
         if (
-            !(
-                cursorPos === 1 ||
-                /\s/.test(field.value.charAt(cursorPos - 2))
-            )
+            !(cursorPos === 1 || /\s/.test(field.value.charAt(cursorPos - 2)))
         ) {
             return;
         }
 
         // Show dialog to select recipe
-        const caretPos = caretPosition(field, { customPos: cursorPos - 1 })
+        const caretPos = caretPosition(field, { customPos: cursorPos - 1 });
         suggestionsData.value = {
             field,
-            searchText: "",
+            searchText: '',
             caretPos,
             focusIndex: 0,
             hashPosition: cursorPos,
@@ -190,17 +191,17 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
      */
     const handleSuggestionsPopupOpenKeyDown = (e) => {
         // Handle switching the focused option with up/down keys
-        if (["ArrowUp", "ArrowDown"].includes(e.key)) {
+        if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
             e.preventDefault();
 
             // Increment/decrement focuse index based on which key was pressed
             // and constrain between 0 and length - 1
             const focusIndex = clamp(
                 suggestionsData.value.focusIndex +
-                {
-                    ArrowUp: -1,
-                    ArrowDown: +1,
-                }[e.key],
+                    {
+                        ArrowUp: -1,
+                        ArrowDown: +1,
+                    }[e.key],
                 0,
                 props.suggestionOptions.length - 1,
             );
@@ -212,7 +213,7 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
         }
 
         // Handle selecting the current option when enter is pressed
-        if (e.key === "Enter") {
+        if (e.key === 'Enter') {
             e.preventDefault();
             const { focusIndex } = suggestionsData.value;
             const selection = filteredSuggestionOptions.value[focusIndex];
@@ -224,9 +225,9 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
      * Recover suggestions popup on focus
      */
     const handleSuggestionsPopupFocus = (e) => {
-        log.debug("focus", e, JSON.stringify(suggestionsData.value))
+        log.debug('focus', e, JSON.stringify(suggestionsData.value));
         if (suggestionsData.value?.blurred) {
-            suggestionsData.value.blurred = false
+            suggestionsData.value.blurred = false;
         }
     };
 
@@ -234,7 +235,7 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
      * Cancel selection if input gets blurred
      */
     const handleSuggestionsPopupBlur = (e) => {
-        log.debug("blur", e, JSON.stringify(suggestionsData.value))
+        log.debug('blur', e, JSON.stringify(suggestionsData.value));
         if (!suggestionsPopupVisible.value || !suggestionsPopupElement.value) {
             return;
         }
@@ -281,6 +282,6 @@ export default function useSuggestionsPopup(suggestionsPopupElementA, lastCursor
         handleSuggestionsPopupFocus,
         handleSuggestionsPopupBlur,
         handleSuggestionsPopupMouseUp,
-        handleSuggestionsPopupSelectedEvent
+        handleSuggestionsPopupSelectedEvent,
     };
 }

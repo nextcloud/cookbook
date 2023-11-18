@@ -1,5 +1,5 @@
 <template>
-    <h2>{{ t("cookbook", "The page was not found") }}</h2>
+    <h2>{{ t('cookbook', 'The page was not found') }}</h2>
 </template>
 
 <script setup>
@@ -9,13 +9,13 @@ import { useStore } from '../store';
 const store = useStore();
 
 onMounted(() => {
-        store.dispatch("setPage", { page: "notfound" });
+    store.dispatch('setPage', { page: 'notfound' });
 });
 </script>
 
 <script>
 export default {
-    name: 'NotFound'
+    name: 'NotFound',
 };
 </script>
 

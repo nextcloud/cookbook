@@ -173,10 +173,14 @@
     </NcAppSettingsDialog>
 </template>
 
-
-
 <script setup>
-import { getCurrentInstance, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import {
+    getCurrentInstance,
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    watch,
+} from 'vue';
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
 import { getFilePickerBuilder } from '@nextcloud/dialogs';
 
@@ -264,82 +268,93 @@ const visibleInfoBlocks = ref([...INFO_BLOCK_KEYS]);
 const resetVisibleInfoBlocks = ref(true);
 
 // Watchers
-watch(() => printImage.value, async (newVal, oldVal) => {
-    // Avoid infinite loop on page load and when resetting value after failed submit
-    if (resetPrintImage.value) {
-        resetPrintImage.value = false;
-        return;
-    }
-    try {
-        await api.config.printImage.update(newVal);
-        // Should this check the response of the query? To catch some errors that redirect the page
-    } catch {
-        await showSimpleAlertModal(
-            // prettier-ignore
-            t('cookbook','Could not set preference for image printing'),
-        );
-        resetPrintImage.value = true;
-        printImage.value = oldVal;
-    }
-});
+watch(
+    () => printImage.value,
+    async (newVal, oldVal) => {
+        // Avoid infinite loop on page load and when resetting value after failed submit
+        if (resetPrintImage.value) {
+            resetPrintImage.value = false;
+            return;
+        }
+        try {
+            await api.config.printImage.update(newVal);
+            // Should this check the response of the query? To catch some errors that redirect the page
+        } catch {
+            await showSimpleAlertModal(
+                // prettier-ignore
+                t('cookbook','Could not set preference for image printing'),
+            );
+            resetPrintImage.value = true;
+            printImage.value = oldVal;
+        }
+    },
+);
 
 // eslint-disable-next-line no-unused-vars
-watch(() => showTagCloudInRecipeList.value, (newVal) => {
-    store.dispatch('setShowTagCloudInRecipeList', {
-        showTagCloud: newVal,
-    });
-});
+watch(
+    () => showTagCloudInRecipeList.value,
+    (newVal) => {
+        store.dispatch('setShowTagCloudInRecipeList', {
+            showTagCloud: newVal,
+        });
+    },
+);
 
-watch(() => updateInterval.value, async (newVal, oldVal) => {
-    // Avoid infinite loop on page load and when resetting value after failed submit
-    if (resetInterval.value) {
-        resetInterval.value = false;
-        return;
-    }
-    try {
-        await api.config.updateInterval.update(newVal);
-        // Should this check the response of the query? To catch some errors that redirect the page
-    } catch {
-        await showSimpleAlertModal(
-            // prettier-ignore
-            t('cookbook','Could not set recipe update interval to {interval}',
+watch(
+    () => updateInterval.value,
+    async (newVal, oldVal) => {
+        // Avoid infinite loop on page load and when resetting value after failed submit
+        if (resetInterval.value) {
+            resetInterval.value = false;
+            return;
+        }
+        try {
+            await api.config.updateInterval.update(newVal);
+            // Should this check the response of the query? To catch some errors that redirect the page
+        } catch {
+            await showSimpleAlertModal(
+                // prettier-ignore
+                t('cookbook','Could not set recipe update interval to {interval}',
                 {
                     interval: newVal,
                 }
             ),
-        );
-        resetInterval.value = true;
-        updateInterval.value = oldVal;
-    }
-});
+            );
+            resetInterval.value = true;
+            updateInterval.value = oldVal;
+        }
+    },
+);
 
-watch(() => visibleInfoBlocks.value, async (newVal, oldVal) => {
-    // Avoid infinite loop on page load and when resetting value after failed submit
-    if (resetVisibleInfoBlocks.value) {
-        resetVisibleInfoBlocks.value = false;
-        return;
-    }
-    try {
-        const data = visibleInfoBlocksEncode(newVal);
-        await api.config.visibleInfoBlocks.update(data);
-        await store.dispatch('refreshConfig');
-        // Should this check the response of the query? To catch some errors that redirect the page
-    } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Error while trying to save info blocks', err);
-        await showSimpleAlertModal(
-            t('cookbook', 'Could not save visible info blocks'),
-        );
-        resetVisibleInfoBlocks.value = true;
-        visibleInfoBlocks.value = oldVal;
-    }
-});
+watch(
+    () => visibleInfoBlocks.value,
+    async (newVal, oldVal) => {
+        // Avoid infinite loop on page load and when resetting value after failed submit
+        if (resetVisibleInfoBlocks.value) {
+            resetVisibleInfoBlocks.value = false;
+            return;
+        }
+        try {
+            const data = visibleInfoBlocksEncode(newVal);
+            await api.config.visibleInfoBlocks.update(data);
+            await store.dispatch('refreshConfig');
+            // Should this check the response of the query? To catch some errors that redirect the page
+        } catch (err) {
+            // eslint-disable-next-line no-console
+            console.error('Error while trying to save info blocks', err);
+            await showSimpleAlertModal(
+                t('cookbook', 'Could not save visible info blocks'),
+            );
+            resetVisibleInfoBlocks.value = true;
+            visibleInfoBlocks.value = oldVal;
+        }
+    },
+);
 
 onMounted(() => {
     setup();
     subscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
 });
-
 
 onBeforeUnmount(() => {
     unsubscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
@@ -381,7 +396,7 @@ const pickRecipeFolder = () => {
                     ),
                 ),
             );
-    })
+    });
 };
 
 /**
@@ -408,9 +423,7 @@ const setup = async () => {
         recipeFolder.value = config.folder;
     } catch (err) {
         log.error('Error setting up SettingsDialog', err);
-        await showSimpleAlertModal(
-            t('cookbook', 'Loading config failed'),
-        );
+        await showSimpleAlertModal(t('cookbook', 'Loading config failed'));
     }
 };
 
@@ -428,9 +441,7 @@ const reindex = () => {
         .then(() => {
             scanningLibrary.value = false;
             log.info('Library reindexing complete');
-            if (
-                ['index', 'search'].indexOf(store.state.page) > -1
-            ) {
+            if (['index', 'search'].indexOf(store.state.page) > -1) {
                 // This refreshes the current router view in case items in it changed during reindex
                 router.go();
             } else {
@@ -444,7 +455,7 @@ const reindex = () => {
 };
 
 const enableLogger = () => {
-    enableLogging()
+    enableLogging();
 };
 </script>
 
@@ -461,8 +472,8 @@ export default {
 </style>
 
 <style>
-#app-settings input[type="text"],
-#app-settings input[type="number"],
+#app-settings input[type='text'],
+#app-settings input[type='number'],
 #app-settings .button.disable {
     display: block;
     width: 100%;

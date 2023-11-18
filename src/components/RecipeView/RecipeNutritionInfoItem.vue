@@ -24,7 +24,7 @@ defineProps({
 
 <script>
 export default {
-    name: 'RecipeNutritionInfoItem'
+    name: 'RecipeNutritionInfoItem',
 };
 </script>
 

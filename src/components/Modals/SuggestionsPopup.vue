@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref, watch } from "vue";
+import { computed, defineProps, onMounted, ref, watch } from 'vue';
 const SUGGESTIONS_POPUP_WIDTH = 300;
 
 const emit = defineEmits(['suggestions-selected']);
@@ -72,9 +72,7 @@ const offset = computed(() => {
     return {
         left: Math.min(
             props.field.offsetLeft + caretPos.left,
-            field.offsetLeft +
-            field.offsetWidth -
-            SUGGESTIONS_POPUP_WIDTH
+            field.offsetLeft + field.offsetWidth - SUGGESTIONS_POPUP_WIDTH,
         ),
         top: field.offsetTop + caretPos.top + caretPos.height,
     };
@@ -84,22 +82,25 @@ const offset = computed(() => {
  * Scroll to centre the focused element in the parent when it changes
  * (with arrow keys, for example)
  */
-watch(() => props.focusIndex, (focusIndex) => {
-    if(scroller.value === null) return;
+watch(
+    () => props.focusIndex,
+    (focusIndex) => {
+        if (scroller.value === null) return;
 
-    const parentHeight = scroller.value.offsetHeight;
-    const childHeight = scroller.value.children[0].offsetHeight;
+        const parentHeight = scroller.value.offsetHeight;
+        const childHeight = scroller.value.children[0].offsetHeight;
 
-    // Get the scroll position of the top of the focused element
-    const focusedChildTop = childHeight * focusIndex;
-    // Get the centre
-    const focusedChildMiddle = focusedChildTop + childHeight / 2;
-    // Offset to centre in the parent scrolling element
-    const parentMiddle = focusedChildMiddle - parentHeight / 2;
+        // Get the scroll position of the top of the focused element
+        const focusedChildTop = childHeight * focusIndex;
+        // Get the centre
+        const focusedChildMiddle = focusedChildTop + childHeight / 2;
+        // Offset to centre in the parent scrolling element
+        const parentMiddle = focusedChildMiddle - parentHeight / 2;
 
-    // Scroll to that position
-    scroller.value.scrollTo(0, parentMiddle);
-});
+        // Scroll to that position
+        scroller.value.scrollTo(0, parentMiddle);
+    },
+);
 
 onMounted(() => {
     scroller.value.scrollTo(0, 0);
@@ -118,7 +119,7 @@ const handleClick = (e) => {
 
 <script>
 export default {
-    name: 'SuggestionsPopup'
+    name: 'SuggestionsPopup',
 };
 </script>
 

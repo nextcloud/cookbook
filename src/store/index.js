@@ -4,11 +4,11 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from "vue"
-import Vuex from "vuex"
-import api from "cookbook/js/api-interface"
+import Vue from 'vue';
+import Vuex from 'vuex';
+import api from 'cookbook/js/api-interface';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // We are using the vuex store linking changes within the components to updates in the navigation panel.
 var store = new Vuex.Store({
@@ -31,7 +31,7 @@ var store = new Vuex.Store({
         //  several independent components
         recipe: null,
         // Filter applied to a list of recipes
-        recipeFilters: "",
+        recipeFilters: '',
         // Loading and saving states to determine which loader icons to show.
         // State of -1 is reserved for recipe and edit views to be set when the
         // User loads the app at one of these locations and has to wait for an
@@ -53,68 +53,68 @@ var store = new Vuex.Store({
 
     mutations: {
         setConfig(state, { config }) {
-            state.config = config
+            state.config = config;
         },
         initializeStore(state) {
-            if (localStorage.getItem("showTagCloudInRecipeList")) {
+            if (localStorage.getItem('showTagCloudInRecipeList')) {
                 state.localSettings.showTagCloudInRecipeList = JSON.parse(
-                    localStorage.getItem("showTagCloudInRecipeList"),
-                )
+                    localStorage.getItem('showTagCloudInRecipeList'),
+                );
             } else {
-                state.localSettings.showTagCloudInRecipeList = true
+                state.localSettings.showTagCloudInRecipeList = true;
             }
         },
         setAppNavigationRefreshRequired(state, { b }) {
-            state.appNavigation.refreshRequired = b
+            state.appNavigation.refreshRequired = b;
         },
         setAppNavigationVisible(state, { b }) {
-            state.appNavigation.visible = b
+            state.appNavigation.visible = b;
         },
         setCategoryUpdating(state, { c }) {
-            state.categoryUpdating = c
+            state.categoryUpdating = c;
         },
         setLoadingRecipe(state, { r }) {
-            state.loadingRecipe = r
+            state.loadingRecipe = r;
         },
         setPage(state, { p }) {
-            state.page = p
+            state.page = p;
         },
         setRecipe(state, { r }) {
-            const rec = JSON.parse(JSON.stringify(r))
+            const rec = JSON.parse(JSON.stringify(r));
             if (rec === null) {
-                state.recipe = null
-                return
+                state.recipe = null;
+                return;
             }
-            if ("nutrition" in rec && rec.nutrition instanceof Array) {
-                rec.nutrition = {}
+            if ('nutrition' in rec && rec.nutrition instanceof Array) {
+                rec.nutrition = {};
             }
-            state.recipe = rec
+            state.recipe = rec;
 
             // Setting recipe also means that loading/reloading the recipe has finished
-            state.loadingRecipe = 0
-            state.reloadingRecipe = 0
+            state.loadingRecipe = 0;
+            state.reloadingRecipe = 0;
         },
         setRecipeCategory(state, { c }) {
-            state.recipe.category = c
+            state.recipe.category = c;
         },
         setRecipeFilters(state, { f }) {
             state.recipeFilters = f;
         },
         setReloadingRecipe(state, { r }) {
-            state.reloadingRecipe = r
+            state.reloadingRecipe = r;
         },
         setSavingRecipe(state, { b }) {
-            state.savingRecipe = b
+            state.savingRecipe = b;
         },
         setShowTagCloudInRecipeList(state, { b }) {
-            localStorage.setItem("showTagCloudInRecipeList", JSON.stringify(b))
-            state.localSettings.showTagCloudInRecipeList = b
+            localStorage.setItem('showTagCloudInRecipeList', JSON.stringify(b));
+            state.localSettings.showTagCloudInRecipeList = b;
         },
         setUser(state, { u }) {
-            state.user = u
+            state.user = u;
         },
         setUpdatingRecipeDirectory(state, { b }) {
-            state.updatingRecipeDirectory = b
+            state.updatingRecipeDirectory = b;
         },
     },
 
@@ -123,8 +123,8 @@ var store = new Vuex.Store({
          * Read/Update the user settings from the backend
          */
         async refreshConfig(c) {
-            const config = (await api.config.get()).data
-            c.commit("setConfig", { config })
+            const config = (await api.config.get()).data;
+            c.commit('setConfig', { config });
         },
 
         /*
@@ -138,114 +138,117 @@ var store = new Vuex.Store({
          * Create new recipe on the server
          */
         createRecipe(c, { recipe }) {
-            const request = api.recipes.create(recipe)
+            const request = api.recipes.create(recipe);
             return request.then((v) => {
                 // Refresh navigation to display changes
-                c.dispatch("setAppNavigationRefreshRequired", {
+                c.dispatch('setAppNavigationRefreshRequired', {
                     isRequired: true,
-                })
+                });
 
-                return v
-            })
+                return v;
+            });
         },
         /**
          * Delete recipe on the server
          */
         deleteRecipe(c, { id }) {
-            const request = api.recipes.delete(id)
+            const request = api.recipes.delete(id);
             request.then(() => {
                 // Refresh navigation to display changes
-                c.dispatch("setAppNavigationRefreshRequired", {
+                c.dispatch('setAppNavigationRefreshRequired', {
                     isRequired: true,
-                })
-            })
-            return request
+                });
+            });
+            return request;
         },
         setAppNavigationVisible(c, { isVisible }) {
-            c.commit("setAppNavigationVisible", { b: isVisible })
+            c.commit('setAppNavigationVisible', { b: isVisible });
         },
         setAppNavigationRefreshRequired(c, { isRequired }) {
-            c.commit("setAppNavigationRefreshRequired", { b: isRequired })
+            c.commit('setAppNavigationRefreshRequired', { b: isRequired });
         },
         setLoadingRecipe(c, { recipe }) {
-            c.commit("setLoadingRecipe", { r: parseInt(recipe, 10) })
+            c.commit('setLoadingRecipe', { r: parseInt(recipe, 10) });
         },
         setPage(c, { page }) {
-            c.commit("setPage", { p: page })
+            c.commit('setPage', { p: page });
         },
         setRecipe(c, { recipe }) {
-            c.commit("setRecipe", { r: recipe })
+            c.commit('setRecipe', { r: recipe });
         },
         setRecipeFilters(c, filters) {
-            c.commit("setRecipeFilters", { f: filters })
+            c.commit('setRecipeFilters', { f: filters });
         },
         setReloadingRecipe(c, { recipe }) {
-            c.commit("setReloadingRecipe", { r: parseInt(recipe, 10) })
+            c.commit('setReloadingRecipe', { r: parseInt(recipe, 10) });
         },
         setSavingRecipe(c, { saving }) {
-            c.commit("setSavingRecipe", { b: saving })
+            c.commit('setSavingRecipe', { b: saving });
         },
         setUser(c, { user }) {
-            c.commit("setUser", { u: user })
+            c.commit('setUser', { u: user });
         },
         setCategoryUpdating(c, { category }) {
-            c.commit("setCategoryUpdating", { c: category })
+            c.commit('setCategoryUpdating', { c: category });
         },
         setShowTagCloudInRecipeList(c, { showTagCloud }) {
-            c.commit("setShowTagCloudInRecipeList", { b: showTagCloud })
+            c.commit('setShowTagCloudInRecipeList', { b: showTagCloud });
         },
         updateCategoryName(c, { categoryNames }) {
-            const oldName = categoryNames[0]
-            const newName = categoryNames[1]
-            c.dispatch("setCategoryUpdating", { category: oldName })
+            const oldName = categoryNames[0];
+            const newName = categoryNames[1];
+            c.dispatch('setCategoryUpdating', { category: oldName });
 
-            const request = api.categories.update(oldName, newName)
+            const request = api.categories.update(oldName, newName);
 
             request
                 .then(() => {
-                    if (c.state.recipe && c.state.recipe.recipeCategory === oldName) {
-                        c.commit("setRecipeCategory", { c: newName })
+                    if (
+                        c.state.recipe &&
+                        c.state.recipe.recipeCategory === oldName
+                    ) {
+                        c.commit('setRecipeCategory', { c: newName });
                     }
                 })
                 .catch((e) => {
                     if (e && e instanceof Error) {
-                        throw e
+                        throw e;
                     }
                 })
                 .then(() => {
                     // finally
-                    c.dispatch("setCategoryUpdating", { category: null })
-                })
+                    c.dispatch('setCategoryUpdating', { category: null });
+                });
 
-            return request
+            return request;
         },
         updateRecipeDirectory(c, { dir }) {
-            c.commit("setUpdatingRecipeDirectory", { b: true })
-            c.dispatch("setRecipe", { recipe: null })
-            const request = api.config.directory.update(dir)
+            c.commit('setUpdatingRecipeDirectory', { b: true });
+            c.dispatch('setRecipe', { recipe: null });
+            const request = api.config.directory.update(dir);
 
             request.then(() => {
-                c.dispatch("setAppNavigationRefreshRequired", {
+                c.dispatch('setAppNavigationRefreshRequired', {
                     isRequired: true,
-                })
-                c.commit("setUpdatingRecipeDirectory", { b: false })
-            })
-            return request
+                });
+                c.commit('setUpdatingRecipeDirectory', { b: false });
+            });
+            return request;
         },
         /**
          * Update existing recipe on the server
          */
         updateRecipe(c, { recipe }) {
-            const request = api.recipes.update(recipe.id, recipe)
+            const request = api.recipes.update(recipe.id, recipe);
             request.then(() => {
                 // Refresh navigation to display changes
-                c.dispatch("setAppNavigationRefreshRequired", {
+                c.dispatch('setAppNavigationRefreshRequired', {
                     isRequired: true,
-                })
-            })
-            return request
+                });
+            });
+            return request;
         },
     },
-})
+});
 
 export const useStore = () => store;

@@ -12,7 +12,7 @@ defineProps({
      */
     instruction: {
         type: String,
-        default: "",
+        default: '',
     },
 });
 
@@ -28,7 +28,7 @@ const toggleDone = () => {
 
 <script>
 export default {
-    name: 'RecipeInstruction'
+    name: 'RecipeInstruction',
 };
 </script>
 
@@ -65,11 +65,11 @@ li:hover::before {
 }
 
 .done::before {
-    content: "✔";
+    content: '✔';
 }
 
 li span,
-li input[type="checkbox"] {
+li input[type='checkbox'] {
     display: inline-block;
     width: 1rem;
     height: auto;

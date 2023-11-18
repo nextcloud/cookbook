@@ -18,7 +18,7 @@
                 @submit="downloadRecipe"
                 @update:value="updateUrl"
             >
-                {{ t("cookbook", "Download recipe from URL") }}
+                {{ t('cookbook', 'Download recipe from URL') }}
             </NcActionInput>
 
             <NcAppNavigationItem
@@ -53,7 +53,11 @@
             <NcAppNavigationItem
                 v-for="(cat, idx) in categories"
                 :key="cat + idx"
-                :ref="el => { categoryItemElements[idx] = el }"
+                :ref="
+                    (el) => {
+                        categoryItemElements[idx] = el;
+                    }
+                "
                 :name="cat.name"
                 :icon="'icon-category-files'"
                 :to="'/category/' + cat.name"
@@ -63,7 +67,7 @@
                 @update:open="categoryOpen(idx)"
                 @update:title="
                     (val) => {
-                        categoryUpdateName(idx, val)
+                        categoryUpdateName(idx, val);
                     }
                 "
             >
@@ -84,7 +88,14 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, nextTick, onMounted, ref, watch } from 'vue';
+import {
+    computed,
+    getCurrentInstance,
+    nextTick,
+    onMounted,
+    ref,
+    watch,
+} from 'vue';
 
 import { emit } from '@nextcloud/event-bus';
 import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput';
@@ -102,7 +113,7 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import emitter from '../bus';
 import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
-import { useStore } from "../store";
+import { useStore } from '../store';
 
 const log = getCurrentInstance().proxy.$log;
 const store = useStore();
@@ -165,12 +176,15 @@ const categoryUpdating = computed(() => {
 
 // Watchers
 // Register a method hook for navigation refreshing
-watch(() => refreshRequired.value, (newVal, oldVal) => {
-    if (newVal !== oldVal && newVal === true) {
-        log.debug('Calling getCategories from refreshRequired');
-        getCategories();
-    }
-});
+watch(
+    () => refreshRequired.value,
+    (newVal, oldVal) => {
+        if (newVal !== oldVal && newVal === true) {
+            log.debug('Calling getCategories from refreshRequired');
+            getCategories();
+        }
+    },
+);
 
 // Methods
 /**
@@ -198,7 +212,7 @@ const openCategory = async (idx) => {
         const response = await api.recipes.allInCategory(cat.name);
         cat.recipes = response.data;
     } catch (e) {
-        cat.recipes = []
+        cat.recipes = [];
         await showSimpleAlertModal(
             // prettier-ignore
             t('cookbook', 'Failed to load category {category} recipes',
@@ -338,9 +352,7 @@ const getCategories = async () => {
             }
             if (categoryItemElements[i][0].opened) {
                 log.info(
-                    `Reloading recipes in ${
-                        categoryItemElements[i][0].title
-                    }`,
+                    `Reloading recipes in ${categoryItemElements[i][0].title}`,
                 );
                 await openCategory(i);
             }
@@ -349,11 +361,8 @@ const getCategories = async () => {
         store.dispatch('setAppNavigationRefreshRequired', {
             isRequired: false,
         });
-
     } catch (e) {
-        await showSimpleAlertModal(
-            t('cookbook', 'Failed to fetch categories'),
-        );
+        await showSimpleAlertModal(t('cookbook', 'Failed to fetch categories'));
         if (e && e instanceof Error) {
             throw e;
         }

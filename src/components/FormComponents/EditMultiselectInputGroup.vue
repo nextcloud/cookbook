@@ -12,7 +12,11 @@
                     :placeholder="labelSelectPlaceholder"
                     class="key"
                 />
-                <input v-model="row.customText" :placeholder="row.options.placeholder" class="val" />
+                <input
+                    v-model="row.customText"
+                    :placeholder="row.options.placeholder"
+                    class="val"
+                />
             </li>
         </ul>
     </fieldset>
@@ -27,7 +31,7 @@ const emits = defineEmits(['input']);
 const props = defineProps({
     fieldLabel: {
         type: String,
-        default: "",
+        default: '',
     },
     labelSelectPlaceholder: {
         type: String,
@@ -57,10 +61,13 @@ const props = defineProps({
  */
 const rows = ref([]);
 
-watch(() => props.value, async (newModelValue) => {
-    // React to external changes in modelValue
-    await createRowsBasedOnModelValue(newModelValue);
-});
+watch(
+    () => props.value,
+    async (newModelValue) => {
+        // React to external changes in modelValue
+        await createRowsBasedOnModelValue(newModelValue);
+    },
+);
 
 const createRowsBasedOnModelValue = async () => {
     const initialModelValue = props.value || {};
@@ -70,8 +77,8 @@ const createRowsBasedOnModelValue = async () => {
         const option = props.options.find((opt) => opt.key === key);
         const row = rows.value.find((row) => row.selectedOption.key === key);
         // Update row with key if it already exists
-        if(row){
-            row.customText = initialModelValue[key] || ''
+        if (row) {
+            row.customText = initialModelValue[key] || '';
         }
         // otherwise create new row
         else {
@@ -87,12 +94,12 @@ const createRowsBasedOnModelValue = async () => {
 
     await recalculateAvailableOptions();
     await createRow(); // Create an additional row for future selections
-}
+};
 
 const createRow = async () => {
     // Remove empty rows at the end before creating a new one
-    for (let i = rows.value.length - 1; i >= 0; i--){
-        if(!(rows.value[i].selectedOption)){
+    for (let i = rows.value.length - 1; i >= 0; i--) {
+        if (!rows.value[i].selectedOption) {
             rows.value.pop();
         }
     }
@@ -106,7 +113,7 @@ const createRow = async () => {
             customText: '',
         });
     }
-}
+};
 
 const handleMultiselectChange = async (changedIndex) => {
     // Wait for the DOM to update after the multiselect change
@@ -122,20 +129,20 @@ const handleMultiselectChange = async (changedIndex) => {
     emits('input', getSelectedValues());
 
     await createRow();
-}
+};
 
 const recalculateAvailableOptions = async () => {
     // Update options in all rows based on the current selections
     for (let i = 0; i < rows.value.length; i++) {
         rows.value[i].options = await getAvailableOptions();
     }
-}
+};
 
 const getAvailableOptions = async () => {
     // Calculate available options by excluding those already selected
     const selectedOptions = rows.value.map((row) => row.selectedOption);
     return props.options.filter((option) => !selectedOptions.includes(option));
-}
+};
 
 const getSelectedValues = () => {
     const selectedValues = {};
@@ -146,13 +153,12 @@ const getSelectedValues = () => {
         }
     });
     return selectedValues;
-}
-
+};
 </script>
 
 <script>
 export default {
-    name: 'EditMultiselectInputGroup'
+    name: 'EditMultiselectInputGroup',
 };
 </script>
 

@@ -62,7 +62,7 @@
             <template #icon>
                 <PencilIcon :size="20" />
             </template>
-            {{ t("cookbook", "Edit") }}
+            {{ t('cookbook', 'Edit') }}
         </NcButton>
         <NcButton
             v-if="isEdit || isCreate"
@@ -78,7 +78,7 @@
                 />
                 <CheckmarkIcon v-else :size="20" />
             </template>
-            {{ t("cookbook", "Save") }}
+            {{ t('cookbook', 'Save') }}
         </NcButton>
         <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
         <NcActions
@@ -92,10 +92,10 @@
                 :value="filterValue"
                 @update:value="updateFilters"
             >
-                {{ t("cookbook", "Filter") }}
+                {{ t('cookbook', 'Filter') }}
             </NcActionInput>
             <NcActionInput icon="icon-search" @submit="search">
-                {{ t("cookbook", "Search") }}
+                {{ t('cookbook', 'Search') }}
             </NcActionInput>
         </NcActions>
         {{/* Overflow buttons (3-dot menu) */}}
@@ -115,7 +115,7 @@
                 :aria-label="t('cookbook', 'Reload recipe')"
                 @click="reloadRecipeEdit()"
             >
-                {{ t("cookbook", "Reload recipe") }}
+                {{ t('cookbook', 'Reload recipe') }}
             </NcActionButton>
             <NcActionButton
                 v-if="isEdit"
@@ -123,7 +123,7 @@
                 :aria-label="t('cookbook', 'Abort editing')"
                 @click="goToRecipe(store.state.recipe.id)"
             >
-                {{ t("cookbook", "Abort editing") }}
+                {{ t('cookbook', 'Abort editing') }}
                 <template #icon>
                     <NcLoadingIcon
                         v-if="
@@ -146,7 +146,7 @@
                 :aria-label="t('cookbook', 'Reload recipe')"
                 @click="reloadRecipeView()"
             >
-                {{ t("cookbook", "Reload recipe") }}
+                {{ t('cookbook', 'Reload recipe') }}
             </NcActionButton>
             <NcActionButton
                 v-if="isRecipe"
@@ -155,7 +155,7 @@
                 @click="printRecipe()"
             >
                 <template #icon=""><printer-icon :size="20" /></template>
-                {{ t("cookbook", "Print recipe") }}
+                {{ t('cookbook', 'Print recipe') }}
             </NcActionButton>
             <NcActionButton
                 v-if="isRecipe"
@@ -164,7 +164,7 @@
                 :aria-label="t('cookbook', 'Delete recipe')"
                 @click="deleteRecipe()"
             >
-                {{ t("cookbook", "Delete recipe") }}
+                {{ t('cookbook', 'Delete recipe') }}
             </NcActionButton>
         </NcActions>
     </div>
@@ -179,38 +179,38 @@ export default {
 <script setup>
 import { computed, getCurrentInstance, ref } from 'vue';
 import { useRoute } from 'vue-router/composables';
-import NcActions from "@nextcloud/vue/dist/Components/NcActions";
-import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton";
+import NcActions from '@nextcloud/vue/dist/Components/NcActions';
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
-import NcButton from "@nextcloud/vue/dist/Components/NcButton";
-import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput";
-import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon";
+import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput';
+import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon';
 
-import PencilIcon from "icons/Pencil.vue";
-import LoadingIcon from "icons/Loading.vue";
-import CheckmarkIcon from "icons/Check.vue";
-import PrinterIcon from "icons/Printer.vue";
-import EyeIcon from "icons/Eye.vue";
+import PencilIcon from 'icons/Pencil.vue';
+import LoadingIcon from 'icons/Loading.vue';
+import CheckmarkIcon from 'icons/Check.vue';
+import PrinterIcon from 'icons/Printer.vue';
+import EyeIcon from 'icons/Eye.vue';
 
-import helpers from "cookbook/js/helper";
+import helpers from 'cookbook/js/helper';
 import {
     showSimpleAlertModal,
     showSimpleConfirmModal,
-} from "cookbook/js/modals";
+} from 'cookbook/js/modals';
 
-import Location from "./Location.vue";
-import ModeIndicator from "./ModeIndicator.vue";
+import Location from './Location.vue';
+import ModeIndicator from './ModeIndicator.vue';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 
 const route = useRoute();
 const store = useStore();
-const filterValue = ref("");
+const filterValue = ref('');
 
 /** Computed values **/
 
 const isCreate = computed(() => {
-    return store.state.page === "create";
+    return store.state.page === 'create';
 });
 const isEdit = computed(() => {
     //  A recipe is being loaded
@@ -218,16 +218,14 @@ const isEdit = computed(() => {
         return false; // Do not show both at the same time
     }
     // Editing requires that a recipe was found
-    return !!(
-        store.state.page === "edit" && store.state.recipe
-    );
+    return !!(store.state.page === 'edit' && store.state.recipe);
 });
 const isIndex = computed(() => {
     //  A recipe is being loaded
     if (!!store.state.loadingRecipe) {
         return false; // Do not show both at the same time
     }
-    return store.state.page === "index";
+    return store.state.page === 'index';
 });
 const isLoading = computed(() => {
     //  The page is being loaded
@@ -239,38 +237,36 @@ const isRecipe = computed(() => {
         return false; // Do not show both at the same time
     }
     // Viewing recipe requires that one was found
-    return !!(
-        store.state.page === "recipe" && store.state.recipe
-    );
+    return !!(store.state.page === 'recipe' && store.state.recipe);
 });
 const isSearch = computed(() => {
     //  A recipe is being loaded
     if (!!store.state.loadingRecipe) {
-        return false // Do not show both at the same time
+        return false; // Do not show both at the same time
     }
-    return store.state.page === "search";
+    return store.state.page === 'search';
 });
 const pageNotFound = computed(() => {
-    return store.state.page === "notfound";
+    return store.state.page === 'notfound';
 });
 const recipeNotFound = computed(() => {
     // Editing or viewing recipe was attempted, but no recipe was found
     return (
-        ["edit", "recipe"].indexOf(store.state.page) !== -1 &&
+        ['edit', 'recipe'].indexOf(store.state.page) !== -1 &&
         !store.state.recipe
     );
 });
 const searchTitle = computed(() => {
-    if (route.name === "search-category") {
-        return t("cookbook", "Category")
+    if (route.name === 'search-category') {
+        return t('cookbook', 'Category');
     }
-    if (route.name === "search-name") {
-        return t("cookbook", "Recipe name")
+    if (route.name === 'search-name') {
+        return t('cookbook', 'Recipe name');
     }
-    if (route.name === "search-tags") {
-        return t("cookbook", "Tags")
+    if (route.name === 'search-tags') {
+        return t('cookbook', 'Tags');
     }
-    return t("cookbook", "Search for recipes");
+    return t('cookbook', 'Search for recipes');
 });
 
 // Methods
@@ -283,18 +279,18 @@ const deleteRecipe = async () => {
             t("cookbook", "Are you sure you want to delete this recipe?"),
         ))
     ) {
-        return
+        return;
     }
 
     try {
-        await store.dispatch("deleteRecipe", {
+        await store.dispatch('deleteRecipe', {
             id: store.state.recipe.id,
-        })
-        helpers.goTo("/")
+        });
+        helpers.goTo('/');
     } catch (e) {
-        await showSimpleAlertModal(t("cookbook", "Delete failed"))
+        await showSimpleAlertModal(t('cookbook', 'Delete failed'));
         if (e && e instanceof Error) {
-            throw e
+            throw e;
         }
     }
 };
@@ -304,15 +300,15 @@ const printRecipe = () => {
 };
 
 const reloadRecipeEdit = () => {
-    emitter.emit("reloadRecipeEdit");
+    emitter.emit('reloadRecipeEdit');
 };
 
 const reloadRecipeView = () => {
-    emitter.emit("reloadRecipeView");
+    emitter.emit('reloadRecipeView');
 };
 
 const saveChanges = () => {
-    emitter.emit("saveRecipe");
+    emitter.emit('saveRecipe');
 };
 
 const search = (e) => {

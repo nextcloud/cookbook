@@ -38,7 +38,6 @@ const isMobile = useIsMobile();
  */
 const isNavigationOpen = ref(false);
 
-
 // previously there was this commented section in this component. I leave it here for reference:
 // watch: {
 //     // This might be handy when routing of Vue components needs fixing.
@@ -68,7 +67,6 @@ const updateAppNavigationOpen = ({ open }) => {
 const closeNavigation = () => {
     emit('toggle-navigation', { open: false });
 };
-
 </script>
 
 <script>
@@ -159,7 +157,7 @@ export default {
 
     a:link::after,
     a:visited::after {
-        content: " [" attr(href) "] ";
+        content: ' [' attr(href) '] ';
     }
 
     body {

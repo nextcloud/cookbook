@@ -130,9 +130,7 @@ const keywordsWithCount = computed(() => {
         }))
         .sort((k1, k2) => {
             if (isOrderedAlphabetically.value) {
-                return k1.name.toLowerCase() > k2.name.toLowerCase()
-                    ? 1
-                    : -1;
+                return k1.name.toLowerCase() > k2.name.toLowerCase() ? 1 : -1;
             }
             // else: order by number of recipe with this keyword (decreasing)
             if (k1.count !== k2.count) {
@@ -140,9 +138,7 @@ const keywordsWithCount = computed(() => {
                 return k2.count - k1.count;
             }
             // Distinguish by keyword name
-            return k1.name.toLowerCase() > k2.name.toLowerCase()
-                ? 1
-                : -1;
+            return k1.name.toLowerCase() > k2.name.toLowerCase() ? 1 : -1;
         });
 });
 /**
@@ -155,11 +151,7 @@ const selectableKeywords = computed(() => {
 
     return unselectedKeywords.value.filter((kw) =>
         props.filteredRecipes
-            .map(
-                (r) =>
-                    r.keywords &&
-                    r.keywords.split(',').includes(kw.name),
-            )
+            .map((r) => r.keywords && r.keywords.split(',').includes(kw.name))
             .reduce((l, r) => l || r, false),
     );
 });
@@ -192,11 +184,12 @@ const unselectedKeywords = computed(() => {
 /**
  * Watch array of selected keywords for changes
  */
-watch(() => props.value,
+watch(
+    () => props.value,
     () => {
-        selectedKeywordsBuffer.value = props.value.slice()
+        selectedKeywordsBuffer.value = props.value.slice();
     },
-    { deep: true }
+    { deep: true },
 );
 
 // Methods
@@ -204,7 +197,7 @@ watch(() => props.value,
  * Callback for click on keyword, add to or remove from list
  */
 const keywordClicked = (keyword) => {
-    const index = selectedKeywordsBuffer.value.indexOf(keyword.name)
+    const index = selectedKeywordsBuffer.value.indexOf(keyword.name);
     if (index > -1) {
         selectedKeywordsBuffer.value.splice(index, 1);
     } else {
@@ -222,7 +215,7 @@ const toggleOrderCriterion = () => {
 
 <script>
 export default {
-    name: 'RecipeListKeywordCloud'
+    name: 'RecipeListKeywordCloud',
 };
 </script>
 

@@ -14,6 +14,6 @@ export default {
 import { defineProps } from 'vue';
 
 const props = defineProps({
-    title: { type: String, default: "",}
+    title: { type: String, default: '' },
 });
 </script>

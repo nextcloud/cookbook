@@ -32,12 +32,12 @@ const clicked = () => {
     if (!link.value.classList.contains('disabled')) {
         emit('keyword-clicked');
     }
-}
+};
 </script>
 
 <script>
 export default {
-    name: 'RecipeKeyword'
+    name: 'RecipeKeyword',
 };
 </script>
 

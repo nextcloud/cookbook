@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { computed,  onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import lozad from 'lozad';
 
 const props = defineProps({
@@ -65,7 +65,7 @@ const fullImage = ref(null);
 const previewImage = ref(null);
 
 const style = computed(() => {
-    const style = {}
+    const style = {};
     if (props.width) {
         style.width = `${props.width}px`;
     }
@@ -82,7 +82,7 @@ onMounted(() => {
         enableAutoReload: true,
         load(el) {
             previewImage.value.addEventListener(
-                "load",
+                'load',
                 onThumbnailPreviewLoaded,
             );
             previewImage.value.src = props.blurredPreviewSrc;
@@ -91,43 +91,39 @@ onMounted(() => {
     observer.observe();
 });
 
-
 // callback for fully-loaded image event
 const onThumbnailFullyLoaded = () => {
-    fullImage.value.removeEventListener("load", onThumbnailFullyLoaded);
+    fullImage.value.removeEventListener('load', onThumbnailFullyLoaded);
     pictureElement.value.removeChild(previewImage.value);
     isLoading.value = false;
-}
+};
 
 // callback for preview-image-loaded event
 const onThumbnailPreviewLoaded = () => {
     // cleanup event listener on preview
-    previewImage.value.removeEventListener(
-        "load",
-        onThumbnailPreviewLoaded,
-    );
+    previewImage.value.removeEventListener('load', onThumbnailPreviewLoaded);
     // add event listener for full-resolution image
-    fullImage.value.addEventListener("load", onThumbnailFullyLoaded);
+    fullImage.value.addEventListener('load', onThumbnailFullyLoaded);
     fullImage.value.src = props.lazySrc;
     isPreviewLoading.value = false;
 };
 
 onUnmounted(() => {
-    if(previewImage.value !== 'undefined' && previewImage.value != null){
+    if (previewImage.value !== 'undefined' && previewImage.value != null) {
         previewImage.value.removeEventListener(
-            "load",
+            'load',
             onThumbnailPreviewLoaded,
         );
     }
-    if(fullImage.value !== 'undefined' && fullImage.value != null) {
-        fullImage.value.removeEventListener("load", onThumbnailFullyLoaded);
+    if (fullImage.value !== 'undefined' && fullImage.value != null) {
+        fullImage.value.removeEventListener('load', onThumbnailFullyLoaded);
     }
 });
 </script>
 
 <script>
 export default {
-    name: 'LazyPicture'
+    name: 'LazyPicture',
 };
 </script>
 

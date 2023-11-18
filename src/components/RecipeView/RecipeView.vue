@@ -55,7 +55,7 @@
                         class="markdown-description"
                     />
                     <p v-if="$store.state.recipe.url">
-                        <strong>{{ t("cookbook", "Source") }}: </strong
+                        <strong>{{ t('cookbook', 'Source') }}: </strong
                         ><a
                             target="_blank"
                             :href="$store.state.recipe.url"
@@ -65,7 +65,7 @@
                     </p>
                     <div>
                         <p v-if="$store.state.recipe.recipeYield != null">
-                            <strong>{{ t("cookbook", "Servings") }}: </strong>
+                            <strong>{{ t('cookbook', 'Servings') }}: </strong>
                             <span>
                                 <button
                                     :disabled="recipeYield === 1"
@@ -130,7 +130,7 @@
             <section class="container">
                 <section class="ingredients">
                     <h3 v-if="scaledIngredients.length" class="section-title">
-                        <span>{{ t("cookbook", "Ingredients") }}</span>
+                        <span>{{ t('cookbook', 'Ingredients') }}</span>
                         <NcButton
                             class="copy-ingredients"
                             :type="'tertiary'"
@@ -178,7 +178,7 @@
 
                 <section v-if="visibleInfoBlocks.tools" class="tools">
                     <h3 v-if="parsedTools.length">
-                        {{ t("cookbook", "Tools") }}
+                        {{ t('cookbook', 'Tools') }}
                     </h3>
                     <ul v-if="parsedTools.length">
                         <RecipeTool
@@ -190,7 +190,7 @@
                 </section>
 
                 <section v-if="showNutritionData" class="nutrition">
-                    <h3>{{ t("cookbook", "Nutrition Information") }}</h3>
+                    <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
                     <ul class="nutrition-items">
                         <recipe-nutrition-info-item
                             v-if="
@@ -306,7 +306,7 @@
                 </section>
 
                 <main v-if="parsedInstructions.length">
-                    <h3>{{ t("cookbook", "Instructions") }}</h3>
+                    <h3>{{ t('cookbook', 'Instructions') }}</h3>
                     <ol class="instructions">
                         <RecipeInstruction
                             v-for="(instruction, idx) in parsedInstructions"
@@ -322,7 +322,11 @@
 
 <script setup>
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router/composables';
+import {
+    onBeforeRouteUpdate,
+    useRoute,
+    useRouter,
+} from 'vue-router/composables';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -330,7 +334,7 @@ import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { useStore } from '../../store';
 import emitter from '../../bus';
-import { parseDateTime } from "../../composables/dateTimeHandling";
+import { parseDateTime } from '../../composables/dateTimeHandling';
 import yieldCalculator from 'cookbook/js/yieldCalculator';
 
 import ContentCopyIcon from 'icons/ContentCopy.vue';
@@ -349,7 +353,6 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
-
 
 /**
  * This is one tricky feature of Vue router. If different paths lead to
@@ -426,9 +429,7 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.description) {
-        recipe.description = helpers.escapeHTML(
-            store.state.recipe.description,
-        );
+        recipe.description = helpers.escapeHTML(store.state.recipe.description);
     }
 
     if (store.state.recipe.recipeIngredient) {
@@ -444,14 +445,11 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.keywords) {
-        recipe.keywords = String(
-            store.state.recipe.keywords,
-        ).split(',');
+        recipe.keywords = String(store.state.recipe.keywords).split(',');
     }
 
     if (store.state.recipe.cookTime) {
-        const cookT =
-            store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/);
+        const cookT = store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/);
         const hh = parseInt(cookT[1], 10);
         const mm = parseInt(cookT[2], 10);
         if (hh > 0 || mm > 0) {
@@ -460,8 +458,7 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.prepTime) {
-        const prepT =
-            store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/);
+        const prepT = store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/);
         const hh = parseInt(prepT[1], 10);
         const mm = parseInt(prepT[2], 10);
         if (hh > 0 || mm > 0) {
@@ -470,8 +467,7 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.totalTime) {
-        const totalT =
-            store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/);
+        const totalT = store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/);
         const hh = parseInt(totalT[1], 10);
         const mm = parseInt(totalT[2], 10);
         if (hh > 0 || mm > 0) {
@@ -486,17 +482,13 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.dateCreated) {
-        const date = parseDateTime(
-            store.state.recipe.dateCreated,
-        );
+        const date = parseDateTime(store.state.recipe.dateCreated);
         recipe.dateCreated =
             date != null ? date.format('L, LT').toString() : null;
     }
 
     if (store.state.recipe.dateModified) {
-        const date = parseDateTime(
-            store.state.recipe.dateModified,
-        );
+        const date = parseDateTime(store.state.recipe.dateModified);
         recipe.dateModified =
             date != null ? date.format('L, LT').toString() : null;
     }
@@ -517,11 +509,7 @@ const recipe = computed(() => {
 const recipeIngredientsHaveSubgroups = computed(() => {
     if (recipe.value.ingredients && recipe.value.ingredients.length > 0) {
         for (let idx = 0; idx < recipe.value.ingredients.length; ++idx) {
-            if (
-                recipe.value.ingredients[idx].startsWith(
-                    headerPrefix,
-                )
-            ) {
+            if (recipe.value.ingredients[idx].startsWith(headerPrefix)) {
                 return true;
             }
         }
@@ -540,8 +528,7 @@ const showModifiedDate = computed(() => {
     return !(
         store.state.recipe.dateCreated &&
         store.state.recipe.dateModified &&
-        store.state.recipe.dateCreated ===
-        store.state.recipe.dateModified
+        store.state.recipe.dateCreated === store.state.recipe.dateModified
     );
 });
 
@@ -567,9 +554,7 @@ const scaledIngredients = computed(() => {
 });
 
 const ingredientsWithValidSyntax = computed(() => {
-    return parsedIngredients.value.map(
-        yieldCalculator.isValidIngredientSyntax,
-    );
+    return parsedIngredients.value.map(yieldCalculator.isValidIngredientSyntax);
 });
 
 const ingredientsSyntaxCorrect = computed(() => {
@@ -577,82 +562,88 @@ const ingredientsSyntaxCorrect = computed(() => {
 });
 
 // Watchers
-watch(() => recipe.value, (r) => {
-    log.debug('Recipe has been updated');
-    if (r) {
-        log.debug('Recipe', r);
+watch(
+    () => recipe.value,
+    (r) => {
+        log.debug('Recipe has been updated');
+        if (r) {
+            log.debug('Recipe', r);
 
-        if (r.description) {
-            parsedDescription.value = t('cookbook', 'Loading…');
-            normalizeMarkdown(r.description).then((x) => {
-                parsedDescription.value = x;
-            });
-        } else {
-            parsedDescription.value = '';
+            if (r.description) {
+                parsedDescription.value = t('cookbook', 'Loading…');
+                normalizeMarkdown(r.description).then((x) => {
+                    parsedDescription.value = x;
+                });
+            } else {
+                parsedDescription.value = '';
+            }
+
+            if (r.ingredients) {
+                parsedIngredients.value = r.ingredients.map(() =>
+                    t('cookbook', 'Loading…'),
+                );
+                r.ingredients.forEach((ingredient, idx) => {
+                    normalizeMarkdown(ingredient)
+                        .then((x) => {
+                            parsedIngredients.value.splice(idx, 1, x);
+                        })
+                        .catch((ex) => {
+                            log.error(ex);
+                        });
+                });
+            } else {
+                parsedIngredients.value = [];
+            }
+
+            if (r.instructions) {
+                parsedInstructions.value = r.instructions.map(() =>
+                    t('cookbook', 'Loading…'),
+                );
+                r.instructions.forEach((instruction, idx) => {
+                    normalizeMarkdown(instruction)
+                        .then((x) => {
+                            parsedInstructions.value.splice(idx, 1, x);
+                        })
+                        .catch((ex) => {
+                            log.error(ex);
+                        });
+                });
+            } else {
+                parsedInstructions.value = [];
+            }
+
+            if (r.tools) {
+                parsedTools.value = r.tools.map(() =>
+                    t('cookbook', 'Loading…'),
+                );
+                r.tools.forEach((tool, idx) => {
+                    normalizeMarkdown(tool)
+                        .then((x) => {
+                            parsedTools.value.splice(idx, 1, x);
+                        })
+                        .catch((ex) => {
+                            log.error(ex);
+                        });
+                });
+            } else {
+                parsedTools.value = [];
+            }
         }
+    },
+);
 
-        if (r.ingredients) {
-            parsedIngredients.value = r.ingredients.map(() =>
-                t('cookbook', 'Loading…'),
-            );
-            r.ingredients.forEach((ingredient, idx) => {
-                normalizeMarkdown(ingredient)
-                    .then((x) => {
-                        parsedIngredients.value.splice(idx, 1, x);
-                    })
-                    .catch((ex) => {
-                        log.error(ex);
-                    });
-            });
-        } else {
-            parsedIngredients.value = [];
+watch(
+    () => recipeYield.value,
+    () => {
+        if (recipeYield.value < 0) {
+            restoreOriginalRecipeYield();
         }
-
-        if (r.instructions) {
-            parsedInstructions.value = r.instructions.map(() =>
-                t('cookbook', 'Loading…'),
-            );
-            r.instructions.forEach((instruction, idx) => {
-                normalizeMarkdown(instruction)
-                    .then((x) => {
-                        parsedInstructions.value.splice(idx, 1, x);
-                    })
-                    .catch((ex) => {
-                        log.error(ex);
-                    })
-            });
-        } else {
-            parsedInstructions.value = [];
-        }
-
-        if (r.tools) {
-            parsedTools.value = r.tools.map(() =>
-                t('cookbook', 'Loading…'),
-            );
-            r.tools.forEach((tool, idx) => {
-                normalizeMarkdown(tool)
-                    .then((x) => {
-                        parsedTools.value.splice(idx, 1, x);
-                    })
-                    .catch((ex) => {
-                        log.error(ex);
-                    })
-            });
-        } else {
-            parsedTools.value = [];
-        }
-    }
-});
-
-watch(() => recipeYield.value, () => {
-    if (recipeYield.value < 0) {
-        restoreOriginalRecipeYield();
-    }
-});
+    },
+);
 
 // Methods
 const isNullOrEmpty = (str) => {
-    return !str || (typeof str === 'string' && str.trim().length === 0)
+    return !str || (typeof str === 'string' && str.trim().length === 0);
 };
 
 /**
@@ -670,10 +661,7 @@ const setup = async () => {
         store.dispatch('setLoadingRecipe', { recipe: -1 });
 
         // Make the control row show that the recipe is reloading
-    } else if (
-        store.state.recipe.id ===
-        parseInt(route.params.id, 10)
-    ) {
+    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
         store.dispatch('setReloadingRecipe', {
             recipe: route.params.id,
         });
@@ -708,16 +696,14 @@ const setup = async () => {
 
         store.dispatch('setPage', { page: 'recipe' });
 
-        await showSimpleAlertModal(
-            t('cookbook', 'Loading recipe failed'),
-        );
+        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
     }
 
     recipeYield.value = store.state.recipe.recipeYield;
 };
 
 const changeRecipeYield = (increase = true) => {
-    recipeYield.value = recipeYield.value + (increase ? 1 : -1)
+    recipeYield.value = recipeYield.value + (increase ? 1 : -1);
 };
 
 const copyIngredientsToClipboard = () => {
@@ -726,12 +712,8 @@ const copyIngredientsToClipboard = () => {
     if (navigator.clipboard) {
         navigator.clipboard
             .writeText(ingredientsToCopy)
-            .then(() =>
-                log.info('JSON array copied to clipboard'),
-            )
-            .catch((err) =>
-                log.error('Failed to copy JSON array: ', err),
-            );
+            .then(() => log.info('JSON array copied to clipboard'))
+            .catch((err) => log.error('Failed to copy JSON array: ', err));
     } else {
         // fallback solution
         const input = document.createElement('textarea');
@@ -762,7 +744,7 @@ const restoreOriginalRecipeYield = () => {
 
 <script>
 export default {
-    name: 'RecipeView'
+    name: 'RecipeView',
 };
 </script>
 
@@ -786,7 +768,7 @@ export default {
     }
 
     .header a::after {
-        content: "";
+        content: '';
     }
 }
 
@@ -899,7 +881,7 @@ section {
 section::after {
     display: table;
     clear: both;
-    content: "";
+    content: '';
 }
 
 .content {
@@ -935,7 +917,7 @@ aside ul li {
 }
 
 aside ul li span,
-aside ul li input[type="checkbox"] {
+aside ul li input[type='checkbox'] {
     display: inline-block;
     width: 1rem;
     height: auto;
@@ -1021,7 +1003,7 @@ main {
 }
 
 .instructions .instruction.done::before {
-    content: "✔";
+    content: '✔';
 }
 
 .content > .container {

@@ -17,14 +17,14 @@
 <script setup>
 import { computed, ref } from 'vue';
 
-const headerPrefix = "## ";
+const headerPrefix = '## ';
 
 const props = defineProps({
     /* Ingredient HTML string to display. Content should be sanitized.
      */
     ingredient: {
         type: String,
-        default: "",
+        default: '',
     },
     ingredientHasCorrectSyntax: {
         type: Boolean,
@@ -57,7 +57,7 @@ const toggleDone = () => {
 
 <script>
 export default {
-    name: 'RecipeIngredient'
+    name: 'RecipeIngredient',
 };
 </script>
 

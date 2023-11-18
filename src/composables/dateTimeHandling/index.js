@@ -1,4 +1,4 @@
-import moment from "@nextcloud/moment";
+import moment from '@nextcloud/moment';
 
 /**
  * The schema.org standard requires the dates formatted as Date (https://schema.org/Date)
@@ -6,11 +6,11 @@ import moment from "@nextcloud/moment";
  * @param dt
  * @returns {null|moment.Moment|*}
  */
- export function parseDateTime(dt) {
+export function parseDateTime(dt) {
     if (!dt) return null;
     const date = moment(dt, moment.ISO_8601);
     if (!date.isValid()) {
         return null;
     }
     return date;
-};
+}

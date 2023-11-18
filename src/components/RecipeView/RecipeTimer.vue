@@ -21,7 +21,7 @@ const props = defineProps({
     value: {
         type: Object,
         default() {
-            return { hours: 0, minutes: 0 }
+            return { hours: 0, minutes: 0 };
         },
     },
     label: {
@@ -71,9 +71,12 @@ const displayTime = computed(() => {
 });
 
 // Watchers
-watch(() => props.value, () => {
-    resetTimeDisplay();
-});
+watch(
+    () => props.value,
+    () => {
+        resetTimeDisplay();
+    },
+);
 
 onMounted(() => {
     resetTimeDisplay();
@@ -82,9 +85,7 @@ onMounted(() => {
 
     // Source for the sound https://pixabay.com/sound-effects/alarm-clock-short-6402/
     // Voted by poll https://nextcloud.christian-wolf.click/nextcloud/apps/polls/s/Wke3s6CscDwQEjPV
-    audio.value = new Audio(
-        linkTo('cookbook', 'assets/alarm-continuous.mp3'),
-    );
+    audio.value = new Audio(linkTo('cookbook', 'assets/alarm-continuous.mp3'));
 
     // For now, the alarm should play continuously until it is dismissed
     // See https://github.com/nextcloud/cookbook/issues/671#issuecomment-1279030452
@@ -164,7 +165,7 @@ const timerToggle = () => {
 
 <script>
 export default {
-    name: 'RecipeTimer'
+    name: 'RecipeTimer',
 };
 </script>
 

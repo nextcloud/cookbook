@@ -18,6 +18,17 @@ rules:
     no-plusplus:
         - error
         - allowForLoopAfterthoughts: true
+    quotes:
+        - error
+        - single
+        - avoidEscape: true
+    string-quotes:
+        - error
+        - single
+        - avoidEscape: true
+    selector-attribute-quotes:
+        - error
+        - always
 
 root: true
 

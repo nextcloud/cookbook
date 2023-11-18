@@ -115,7 +115,7 @@
 </template>
 
 <script setup>
-import { computed,onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router/composables';
 import { useStore } from '../../store';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
@@ -190,7 +190,7 @@ const orderBy = ref(recipeOrderingOptions.value[0]);
 
 onMounted(() => {
     store.dispatch('clearRecipeFilters');
-})
+});
 
 // Computed properties
 /**
@@ -252,7 +252,9 @@ const filteredRecipes = computed(() => {
     let ret = recipesFilteredByKeywords.value;
     if (!!store.state.recipeFilters) {
         ret = ret.filter((r) =>
-            r.name.toLowerCase().includes(store.state.recipeFilters.toLowerCase()),
+            r.name
+                .toLowerCase()
+                .includes(store.state.recipeFilters.toLowerCase()),
         );
     }
     return ret;
@@ -314,7 +316,7 @@ const recipeObjects = computed(() => {
     }
     if (orderBy.value.recipeProperty === 'dateModified') {
         if (orderBy.value.order === 'ascending') {
-            return recipesDateModifiedAsc.value.map(makeObject)
+            return recipesDateModifiedAsc.value.map(makeObject);
         }
         return recipesDateModifiedDesc.value.map(makeObject);
     }
@@ -346,18 +348,13 @@ const sortRecipes = (recipes, recipeProperty, order) => {
                 recipeProperty === 'dateModified'
             ) {
                 return (
-                    new Date(r1[recipeProperty]) -
-                    new Date(r2[recipeProperty])
+                    new Date(r1[recipeProperty]) - new Date(r2[recipeProperty])
                 );
             }
             if (recipeProperty === 'name') {
-                return r1[recipeProperty].localeCompare(
-                    r2[recipeProperty],
-                );
+                return r1[recipeProperty].localeCompare(r2[recipeProperty]);
             }
-            if (
-                !Number.isNaN(r1[recipeProperty] - r2[recipeProperty])
-            ) {
+            if (!Number.isNaN(r1[recipeProperty] - r2[recipeProperty])) {
                 return r1[recipeProperty] - r2[recipeProperty];
             }
             return 0;
@@ -367,10 +364,7 @@ const sortRecipes = (recipes, recipeProperty, order) => {
             recipeProperty === 'dateCreated' ||
             recipeProperty === 'dateModified'
         ) {
-            return (
-                new Date(r2[recipeProperty]) -
-                new Date(r1[recipeProperty])
-            );
+            return new Date(r2[recipeProperty]) - new Date(r1[recipeProperty]);
         }
         if (recipeProperty === 'name') {
             return r2[recipeProperty].localeCompare(r1[recipeProperty]);
@@ -385,7 +379,7 @@ const sortRecipes = (recipes, recipeProperty, order) => {
 
 <script>
 export default {
-    name: 'RecipeList'
+    name: 'RecipeList',
 };
 </script>
 

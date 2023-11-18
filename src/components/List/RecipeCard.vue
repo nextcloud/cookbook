@@ -42,29 +42,29 @@
 </template>
 
 <script setup>
-import moment from "@nextcloud/moment"
-import LazyPicture from "../Utilities/LazyPicture.vue"
+import moment from '@nextcloud/moment';
+import LazyPicture from '../Utilities/LazyPicture.vue';
 
 defineProps({
     recipe: {
         type: Object,
         default: () => null,
-    }
+    },
 });
 
 const formatDateTime = (dt) => {
-    if (!dt) return null
-    const date = moment(dt, moment.ISO_8601)
+    if (!dt) return null;
+    const date = moment(dt, moment.ISO_8601);
     if (!date.isValid()) {
-        return null
+        return null;
     }
-    return date.format("L, LT").toString()
+    return date.format('L, LT').toString();
 };
 </script>
 
 <script>
 export default {
-    name: 'RecipeCard'
+    name: 'RecipeCard',
 };
 </script>
 

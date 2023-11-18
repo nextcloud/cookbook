@@ -5,10 +5,9 @@
 <script>
 export default {
     name: 'Location',
-}
+};
 </script>
 <script setup>
-
 import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
@@ -27,7 +26,7 @@ const recipes = ref([]);
  * Is the Cookbook recipe directory currently being changed?
  */
 const updatingRecipeDirectory = computed(() => {
-    return store.state.updatingRecipeDirectory
+    return store.state.updatingRecipeDirectory;
 });
 
 /**
@@ -43,23 +42,23 @@ watch(updatingRecipeDirectory, async (newVal, oldVal) => {
 onMounted(() => {
     getCurrentInstance().proxy.$log.info('AppIndex mounted');
     loadAll();
-})
+});
 
 /**
  * Load all recipes from the database
  */
-const loadAll = () =>  {
+const loadAll = () => {
     api.recipes
         .getAll()
         .then((response) => {
-            recipes.value = response.data
+            recipes.value = response.data;
 
             // Always set page name last
-            store.dispatch('setPage', { page: 'index' })
+            store.dispatch('setPage', { page: 'index' });
         })
         .catch(() => {
             // Always set page name last
-            store.dispatch('setPage', { page: 'index' })
+            store.dispatch('setPage', { page: 'index' });
         });
 };
 </script>

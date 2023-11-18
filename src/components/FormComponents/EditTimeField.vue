@@ -36,7 +36,7 @@ const props = defineProps({
     },
     fieldLabel: {
         type: String,
-        default: "",
+        default: '',
     },
 });
 
@@ -49,20 +49,23 @@ const hours = ref(null);
  */
 const minutes = ref(null);
 
-watch(() => props.value, () => {
-    hours.value = props.value.time[0];
-    minutes.value = props.value.time[1];
-});
+watch(
+    () => props.value,
+    () => {
+        hours.value = props.value.time[0];
+        minutes.value = props.value.time[1];
+    },
+);
 
 const handleInput = () => {
     minutes.value = minutes.value ? minutes.value : 0;
     hours.value = hours.value ? hours.value : 0;
 
     // create padded time string
-    const hoursPadded = hours.value.toString().padStart(2, "0");
-    const minutesPadded = minutes.value.toString().padStart(2, "0");
+    const hoursPadded = hours.value.toString().padStart(2, '0');
+    const minutesPadded = minutes.value.toString().padStart(2, '0');
 
-    emit("input", {
+    emit('input', {
         time: [hours.value, minutes.value],
         paddedTime: `PT${hoursPadded}H${minutesPadded}M`,
     });
@@ -71,7 +74,7 @@ const handleInput = () => {
 
 <script>
 export default {
-    name: 'EditTimeField'
+    name: 'EditTimeField',
 };
 </script>
 

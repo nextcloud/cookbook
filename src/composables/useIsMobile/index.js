@@ -22,20 +22,21 @@
  *
  */
 
-import { readonly, ref } from 'vue'
+import { readonly, ref } from 'vue';
 
 /**
  * The minimal width of the viewport to be considered a desktop device
  */
-export const MOBILE_BREAKPOINT = 1024
+export const MOBILE_BREAKPOINT = 1024;
 
-const checkIfIsMobile = () => document.documentElement.clientWidth < MOBILE_BREAKPOINT
+const checkIfIsMobile = () =>
+    document.documentElement.clientWidth < MOBILE_BREAKPOINT;
 
-const isMobile = ref(checkIfIsMobile())
+const isMobile = ref(checkIfIsMobile());
 
 window.addEventListener('resize', () => {
-    isMobile.value = checkIfIsMobile()
-})
+    isMobile.value = checkIfIsMobile();
+});
 
 /**
  * Use global isMobile state, based on the viewport width
@@ -43,7 +44,7 @@ window.addEventListener('resize', () => {
  * @return {import('vue').DeepReadonly<import('vue').Ref<boolean>>}
  */
 export function useIsMobile() {
-    return readonly(isMobile)
+    return readonly(isMobile);
 }
 
 /**
@@ -51,4 +52,4 @@ export function useIsMobile() {
  *             Use `composables/useIsMobile` instead.
  *             Defined and exported only for isMobile mixin.
  */
-export const isMobileState = readonly(isMobile)
+export const isMobileState = readonly(isMobile);

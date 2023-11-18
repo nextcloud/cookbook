@@ -25,34 +25,33 @@
 </template>
 
 <script setup>
-import { FilePickerType, getFilePickerBuilder } from "@nextcloud/dialogs";
-import { defineProps } from "vue";
-
+import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs';
+import { defineProps } from 'vue';
 
 const emit = defineEmits(['input']);
 const props = defineProps({
-    value: { type: String, default: ''},
-    fieldLabel: { type: String, default: ""}
+    value: { type: String, default: '' },
+    fieldLabel: { type: String, default: '' },
 });
 
 const pickImage = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const filePicker = getFilePickerBuilder(
-        t("cookbook", "Path to your recipe image"),
+        t('cookbook', 'Path to your recipe image'),
     )
-        .addMimeTypeFilter("image/jpeg")
-        .addMimeTypeFilter("image/png")
+        .addMimeTypeFilter('image/jpeg')
+        .addMimeTypeFilter('image/png')
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
         emit('input', path);
     });
-}
+};
 </script>
 
 <script>
 export default {
-    name: 'EditImageField'
+    name: 'EditImageField',
 };
 </script>
 

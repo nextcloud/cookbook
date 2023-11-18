@@ -113,16 +113,28 @@
                             : 'icon-checkmark'
                     "
                 ></span>
-                {{ t("cookbook", "Save") }}
+                {{ t('cookbook', 'Save') }}
             </button>
         </div>
     </div>
 </template>
 
 <script setup>
-import {computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, ref, watch} from 'vue';
+import {
+    computed,
+    getCurrentInstance,
+    nextTick,
+    onBeforeUnmount,
+    onMounted,
+    ref,
+    watch,
+} from 'vue';
 
-import {onBeforeRouteLeave, onBeforeRouteUpdate, useRoute} from 'vue-router/composables';
+import {
+    onBeforeRouteLeave,
+    onBeforeRouteUpdate,
+    useRoute,
+} from 'vue-router/composables';
 
 import NcActions from '@nextcloud/vue/dist/Components/NcActions';
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
@@ -320,14 +332,13 @@ const overlayVisible = computed(() => {
         store.state.loadingRecipe ||
         store.state.reloadingRecipe ||
         (store.state.categoryUpdating &&
-            store.state.categoryUpdating ===
-            recipe.value.recipeCategory)
+            store.state.categoryUpdating === recipe.value.recipeCategory)
     );
 });
 const recipeWithCorrectedYield = computed(() => {
     const r = recipe.value;
     if (!showRecipeYield.value) {
-        r.recipeYield = null
+        r.recipeYield = null;
     }
     return r;
 });
@@ -337,41 +348,45 @@ const isNavigationDangerous = computed(() => {
     return !savingRecipe.value && formDirty.value;
 });
 
-
 // ===================
 // Watchers
 // ===================
 
-watch(() => prepTime.value,
+watch(
+    () => prepTime.value,
     () => {
         recipe.value.prepTime = prepTime.value.paddedTime;
     },
-    { deep: true }
+    { deep: true },
 );
-watch(() => cookTime.value,
+watch(
+    () => cookTime.value,
     () => {
         recipe.value.cookTime = cookTime.value.paddedTime;
     },
-    { deep: true }
+    { deep: true },
 );
-watch(() => totalTime.value,
+watch(
+    () => totalTime.value,
     () => {
         recipe.value.totalTime = totalTime.value.paddedTime;
     },
-    { deep: true }
+    { deep: true },
 );
-watch(() => selectedKeywords.value,
+watch(
+    () => selectedKeywords.value,
     () => {
         // convert keyword array to comma-separated string
         recipe.value.keywords = selectedKeywords.value.join();
     },
-    { deep: true }
+    { deep: true },
 );
-watch(() => recipe.value,
+watch(
+    () => recipe.value,
     () => {
-        formDirty.value = true
+        formDirty.value = true;
     },
-    { deep: true }
+    { deep: true },
 );
 
 // ===================
@@ -436,7 +451,7 @@ onMounted(() => {
     // Register data load method hook for access from the controls components
     emitter.off('reloadRecipeEdit');
     emitter.on('reloadRecipeEdit', () => {
-        loadRecipeData()
+        loadRecipeData();
     });
     emitter.off('categoryRenamed');
     emitter.on('categoryRenamed', (val) => {
@@ -465,13 +480,12 @@ onMounted(() => {
         .then(() => {
             // finally
             loadingRecipeReferences.value = false;
-        })
+        });
 });
 
 onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', beforeWindowUnload);
 });
-
 
 // ===================
 // Methods
@@ -521,9 +535,7 @@ const fetchCategories = async () => {
         }
         isFetchingCategories.value = false;
     } catch (e) {
-        await showSimpleAlertModal(
-            t('cookbook', 'Failed to fetch categories'),
-        );
+        await showSimpleAlertModal(t('cookbook', 'Failed to fetch categories'));
         if (e && e instanceof Error) {
             throw e;
         }
@@ -546,9 +558,7 @@ const fetchKeywords = async () => {
         }
         isFetchingKeywords.value = false;
     } catch (e) {
-        await showSimpleAlertModal(
-            t('cookbook', 'Failed to fetch keywords'),
-        );
+        await showSimpleAlertModal(t('cookbook', 'Failed to fetch keywords'));
         if (e && e instanceof Error) {
             throw e;
         }
@@ -560,10 +570,7 @@ const loadRecipeData = async () => {
         store.dispatch('setLoadingRecipe', {
             recipe: -1,
         });
-    } else if (
-        store.state.recipe.id ===
-        parseInt(route.params.id, 10)
-    ) {
+    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
         // Make the control row show that the recipe is reloading
         store.dispatch('setReloadingRecipe', {
             recipe: route.params.id,
@@ -575,12 +582,10 @@ const loadRecipeData = async () => {
         store.dispatch('setRecipe', { recipe });
         setup();
     } catch {
-        await showSimpleAlertModal(
-            t('cookbook', 'Loading recipe failed'),
-        );
+        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
         // Disable loading indicator
         if (store.state.loadingRecipe) {
-            store.dispatch('setLoadingRecipe', { recipe: 0 })
+            store.dispatch('setLoadingRecipe', { recipe: 0 });
         } else if ($store.state.reloadingRecipe) {
             store.dispatch('setReloadingRecipe', {
                 recipe: 0,
@@ -643,7 +648,7 @@ const save = async () => {
         savingRecipe.value = false;
     }
 };
-const setup = async () =>{
+const setup = async () => {
     fetchCategories();
     fetchKeywords();
     if (route.params.id) {
@@ -687,7 +692,7 @@ const setup = async () =>{
         // fallback if fetching all keywords fails
         selectedKeywords.value.forEach((kw) => {
             if (!allKeywords.value.includes(kw)) {
-                allKeywords.value.push(kw)
+                allKeywords.value.push(kw);
             }
         });
 
@@ -752,7 +757,6 @@ loadRecipeData();
 </script>
 
 <script>
-
 export default {
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a

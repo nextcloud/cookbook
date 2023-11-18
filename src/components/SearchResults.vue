@@ -6,7 +6,7 @@
 
 <script setup>
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
-import { onBeforeRouteUpdate, useRoute } from "vue-router/composables";
+import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
@@ -119,9 +119,7 @@ const setup = async () => {
     } else {
         // General search
         try {
-            const response = await api.recipes.search(
-                route.params.value,
-            );
+            const response = await api.recipes.search(route.params.value);
             results.value = response.data;
         } catch (e) {
             results.value = [];

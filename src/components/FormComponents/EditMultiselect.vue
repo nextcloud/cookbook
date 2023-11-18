@@ -15,14 +15,14 @@ import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
 defineProps({
     fieldLabel: {
         type: String,
-        default: "",
-    }
+        default: '',
+    },
 });
 </script>
 
 <script>
 export default {
-    name: 'EditMultiselect'
+    name: 'EditMultiselect',
 };
 </script>
 

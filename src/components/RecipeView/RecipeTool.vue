@@ -15,7 +15,7 @@ defineProps({
 
 <script>
 export default {
-    name: 'RecipeTool'
+    name: 'RecipeTool',
 };
 </script>
 

@@ -4,16 +4,16 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from "vue"
-import VueRouter from "vue-router"
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-import Index from "../components/AppIndex.vue"
-import NotFound from "../components/NotFound.vue"
-import RecipeView from "../components/RecipeView/RecipeView.vue"
-import RecipeEdit from "../components/RecipeEdit.vue"
-import Search from "../components/SearchResults.vue"
+import Index from '../components/AppIndex.vue';
+import NotFound from '../components/NotFound.vue';
+import RecipeView from '../components/RecipeView/RecipeView.vue';
+import RecipeEdit from '../components/RecipeEdit.vue';
+import Search from '../components/SearchResults.vue';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 // The router will try to match routers in a descending order.
 // Routes that share the same root, must be listed from the
@@ -26,28 +26,28 @@ Vue.use(VueRouter)
 const routes = [
     // Search routes
     {
-        path: "/category/:value",
-        name: "search-category",
+        path: '/category/:value',
+        name: 'search-category',
         component: Search,
-        props: { query: "cat" },
+        props: { query: 'cat' },
     },
     {
-        path: "/name/:value",
-        name: "search-name",
+        path: '/name/:value',
+        name: 'search-name',
         component: Search,
-        props: { query: "name" },
+        props: { query: 'name' },
     },
     {
-        path: "/search/:value",
-        name: "search-general",
+        path: '/search/:value',
+        name: 'search-general',
         component: Search,
-        props: { query: "general" },
+        props: { query: 'general' },
     },
     {
-        path: "/tags/:value",
-        name: "search-tags",
+        path: '/tags/:value',
+        name: 'search-tags',
         component: Search,
-        props: { query: "tags" },
+        props: { query: 'tags' },
     },
 
     // Recipe routes
@@ -59,17 +59,17 @@ const routes = [
     // - View: /{item}/:id
     // - Edit: /{item}/:id/edit
     // - Create: /{item}/create
-    { path: "/recipe/create", name: "recipe-create", component: RecipeEdit },
-    { path: "/recipe/:id/edit", name: "recipe-edit", component: RecipeEdit },
-    { path: "/recipe/:id", name: "recipe-view", component: RecipeView },
+    { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
+    { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
+    { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
 
     // Index is the last defined route
-    { path: "/", name: "index", component: Index },
+    { path: '/', name: 'index', component: Index },
 
     // Anything not matched goes to NotFound
-    { path: "*", name: "not-found", component: NotFound },
-]
+    { path: '*', name: 'not-found', component: NotFound },
+];
 
 export default new VueRouter({
     routes,
-})
+});

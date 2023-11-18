@@ -2,7 +2,6 @@
     <span class="mode-indicator">{{ title }}</span>
 </template>
 
-
 <script>
 export default {
     name: 'ModeIndicator',
@@ -10,9 +9,9 @@ export default {
 </script>
 
 <script setup>
-import {defineProps} from 'vue';
+import { defineProps } from 'vue';
 
 defineProps({
-    title: { type: String, default: '' }
+    title: { type: String, default: '' },
 });
 </script>

@@ -69,20 +69,22 @@
                     ref="suggestionsPopupElement"
                     v-bind="suggestionsData"
                     :options="filteredSuggestionOptions"
-                    v-on:suggestions-selected="handleSuggestionsPopupSelectedEvent"
+                    v-on:suggestions-selected="
+                        handleSuggestionsPopupSelectedEvent
+                    "
                 />
             </li>
         </ul>
         <button class="button add-list-item pad-icon" @click="addNewEntry()">
-            <span class="icon-add"></span> {{ t("cookbook", "Add") }}
+            <span class="icon-add"></span> {{ t('cookbook', 'Add') }}
         </button>
     </fieldset>
 </template>
 
 <script setup>
-import { getCurrentInstance, nextTick, ref, watch } from "vue";
-import TriangleUpIcon from "icons/TriangleSmallUp.vue";
-import TriangleDownIcon from "icons/TriangleSmallDown.vue";
+import { getCurrentInstance, nextTick, ref, watch } from 'vue';
+import TriangleUpIcon from 'icons/TriangleSmallUp.vue';
+import TriangleDownIcon from 'icons/TriangleSmallDown.vue';
 
 import SuggestionsPopup from '../Modals/SuggestionsPopup';
 import useSuggestionPopup from '../../composables/useSuggestionsPopup';
@@ -97,11 +99,11 @@ const props = defineProps({
     },
     fieldType: {
         type: String,
-        default: "text",
+        default: 'text',
     },
     fieldName: {
         type: String,
-        default: "",
+        default: '',
     },
     showStepNumber: {
         type: Boolean,
@@ -109,7 +111,7 @@ const props = defineProps({
     },
     fieldLabel: {
         type: String,
-        default: "",
+        default: '',
     },
     // If true, add new fields, for newlines in pasted data
     createFieldsOnNewlines: {
@@ -117,7 +119,7 @@ const props = defineProps({
         default: false,
     },
     suggestionOptions: {
-        type: Array
+        type: Array,
     },
 });
 
@@ -145,9 +147,12 @@ const lastCursorPosition = ref(-1);
  */
 const ignoreNextKeyUp = ref(false);
 
-watch(() => props.value, (newValue) => {
-    buffer.value = newValue.slice();
-});
+watch(
+    () => props.value,
+    (newValue) => {
+        buffer.value = newValue.slice();
+    },
+);
 
 // deconstruct composable
 let {
@@ -166,14 +171,22 @@ let {
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
-} = useSuggestionPopup(suggestionsPopupElement, lastCursorPosition, suggestionsData, buffer, emit, log, props);
+} = useSuggestionPopup(
+    suggestionsPopupElement,
+    lastCursorPosition,
+    suggestionsData,
+    buffer,
+    emit,
+    log,
+    props,
+);
 
-
-watch(() => props.value,
+watch(
+    () => props.value,
     (val) => {
         buffer.value = val.slice();
     },
-    { deep: true }
+    { deep: true },
 );
 
 const linesMatchAtPosition = (lines, i) =>
@@ -184,7 +197,7 @@ const findCommonPrefix = (lines) => {
     // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
 
     // Check border cases size 1 array and empty first word)
-    if (!lines[0] || lines.length === 1) return lines[0] || ""
+    if (!lines[0] || lines.length === 1) return lines[0] || '';
 
     // Loop up index until the characters do not match
     for (let i = 0; ; i++) {
@@ -192,7 +205,7 @@ const findCommonPrefix = (lines) => {
         // or the character of each line at position i is not identical
         if (!lines[0][i] || !linesMatchAtPosition(lines, i)) {
             // Then the desired prefix is the substring from the beginning to i
-            return lines[0].substr(0, i)
+            return lines[0].substr(0, i);
         }
     }
 };
@@ -201,12 +214,16 @@ const findCommonPrefix = (lines) => {
  * if focusAfterInsert=true, the element is focussed after inserting
  * the content is inserted into the newly created field
  * */
-const addNewEntry = async (index = -1, focusAfterInsert = true, content = "") => {
-    let entryIdx = index
+const addNewEntry = async (
+    index = -1,
+    focusAfterInsert = true,
+    content = '',
+) => {
+    let entryIdx = index;
     if (entryIdx === -1) {
-        entryIdx = buffer.value.length
+        entryIdx = buffer.value.length;
     }
-    buffer.value.splice(entryIdx, 0, content)
+    buffer.value.splice(entryIdx, 0, content);
 
     if (focusAfterInsert) {
         await nextTick();
@@ -222,7 +239,7 @@ const addNewEntry = async (index = -1, focusAfterInsert = true, content = "") =>
  */
 const deleteEntry = (index) => {
     buffer.value.splice(index, 1);
-    emit("input", buffer.value);
+    emit('input', buffer.value);
 };
 
 /**
@@ -234,12 +251,12 @@ const handleInput = (e) => {
     // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
     // https://rawgit.com/w3c/input-events/v1/index.html#interface-InputEvent-Attributes
     if (
-        e.inputType === "insertFromPaste" ||
-        e.inputType === "insertFromPasteAsQuotation"
+        e.inputType === 'insertFromPaste' ||
+        e.inputType === 'insertFromPasteAsQuotation'
     ) {
         return;
     }
-    emit("input", buffer.value);
+    emit('input', buffer.value);
 };
 
 /**
@@ -249,16 +266,16 @@ const handlePaste = async (e) => {
     // get data from clipboard to keep newline characters, which are stripped
     // from the data pasted in the input field (e.target.value)
     const clipboardData = e.clipboardData || window.clipboardData;
-    const pastedData = clipboardData.getData("Text");
+    const pastedData = clipboardData.getData('Text');
     const inputLinesArray = pastedData
         .split(/\r\n|\r|\n/g)
         // Remove empty lines
-        .filter((line) => line.trim() !== "");
+        .filter((line) => line.trim() !== '');
 
     // If only a single line pasted, emit that line and exit
     // Treat it as if that single line was typed
     if (inputLinesArray.length === 1) {
-        emit("input", buffer.value);
+        emit('input', buffer.value);
         return;
     }
 
@@ -267,14 +284,11 @@ const handlePaste = async (e) => {
         return;
     }
 
-    e.preventDefault()
+    e.preventDefault();
 
-    const $li = e.currentTarget.closest("li");
-    const $ul = $li.closest("ul");
-    const $insertedIndex = Array.prototype.indexOf.call(
-        $ul.childNodes,
-        $li,
-    );
+    const $li = e.currentTarget.closest('li');
+    const $ul = $li.closest('ul');
+    const $insertedIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
 
     // Remove the common prefix from each line of the pasted text
     // For example, if the pasted text uses - for a bullet list
@@ -287,9 +301,7 @@ const handlePaste = async (e) => {
     // as it should work for any alphabet
     const re =
         /[^\s\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,\-./:;<=>?@[\]^_`{|}~]/g;
-    const prefixLength = re.test(prefix)
-        ? prefix.search(re)
-        : prefix.length;
+    const prefixLength = re.test(prefix) ? prefix.search(re) : prefix.length;
 
     for (let i = 0; i < inputLinesArray.length; ++i) {
         inputLinesArray[i] = inputLinesArray[i].slice(prefixLength);
@@ -300,24 +312,18 @@ const handlePaste = async (e) => {
     // to accidentally replace all newlines with spaces before splitting
     // Fixes #713
     for (let i = 0; i < inputLinesArray.length; ++i) {
-        inputLinesArray[i] = inputLinesArray[i]
-            .trim()
-            .replaceAll(/\s+/g, " ");
+        inputLinesArray[i] = inputLinesArray[i].trim().replaceAll(/\s+/g, ' ');
     }
 
     for (let i = 0; i < inputLinesArray.length; ++i) {
-        await addNewEntry(
-            $insertedIndex + i + 1,
-            false,
-            inputLinesArray[i],
-        );
+        await addNewEntry($insertedIndex + i + 1, false, inputLinesArray[i]);
     }
-    emit("input", buffer.value)
+    emit('input', buffer.value);
 
     await nextTick();
-    let indexToFocus = $insertedIndex + inputLinesArray.length
+    let indexToFocus = $insertedIndex + inputLinesArray.length;
     // Delete field if it's empty
-    if (buffer.value[$insertedIndex].trim() === "") {
+    if (buffer.value[$insertedIndex].trim() === '') {
         deleteEntry($insertedIndex);
         indexToFocus -= 1;
     }
@@ -354,7 +360,7 @@ const keyDown = async (e) => {
     }
 
     // Only do anything for enter
-    if (e.key !== "Enter") {
+    if (e.key !== 'Enter') {
         return;
     }
 
@@ -363,21 +369,18 @@ const keyDown = async (e) => {
     e.preventDefault();
 
     // Get the index of the pressed list item
-    const $li = e.currentTarget.closest("li");
-    const $ul = $li.closest("ul");
-    const $pressedLiIndex = Array.prototype.indexOf.call(
-        $ul.childNodes,
-        $li,
-    );
+    const $li = e.currentTarget.closest('li');
+    const $ul = $li.closest('ul');
+    const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
 
-    if ($pressedLiIndex >= this.$refs["list-field"].length - 1) {
+    if ($pressedLiIndex >= this.$refs['list-field'].length - 1) {
         await addNewEntry();
     } else {
         // Focus the next input or textarea
         // We have to check for both, as inputs are used for
         // ingredients and textareas are used for instructions
         $ul.children[$pressedLiIndex + 1]
-            .querySelector("input, textarea")
+            .querySelector('input, textarea')
             .focus();
     }
 };
@@ -393,15 +396,12 @@ const keyUp = (e) => {
         return;
     }
 
-    const $li = e.currentTarget.closest("li");
-    const $ul = $li.closest("ul");
+    const $li = e.currentTarget.closest('li');
+    const $ul = $li.closest('ul');
     // noinspection UnnecessaryLocalVariableJS
-    const $pressedLiIndex = Array.prototype.indexOf.call(
-        $ul.childNodes,
-        $li,
-    );
-    lastFocusedFieldIndex.value = $pressedLiIndex
-    handleSuggestionsPopupKeyUp(e)
+    const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    lastFocusedFieldIndex.value = $pressedLiIndex;
+    handleSuggestionsPopupKeyUp(e);
 };
 
 const moveEntryDown = (index) => {
@@ -415,7 +415,7 @@ const moveEntryDown = (index) => {
     } else {
         buffer.value.push(entry);
     }
-    emit("input", buffer.value);
+    emit('input', buffer.value);
 };
 
 const moveEntryUp = (index) => {
@@ -425,18 +425,15 @@ const moveEntryUp = (index) => {
     }
     const entry = buffer.value.splice(index, 1)[0];
     buffer.value.splice(index - 1, 0, entry);
-    emit("input", buffer.value);
+    emit('input', buffer.value);
 };
 
 const pasteCanceled = async () => {
     const field = listField[this.lastFocusedFieldIndex];
     // set cursor back to previous position
-    await nextTick()
+    await nextTick();
     field.focus();
-    field.setSelectionRange(
-        lastCursorPosition.value,
-        lastCursorPosition.value,
-    );
+    field.setSelectionRange(lastCursorPosition.value, lastCursorPosition.value);
 };
 
 /**
@@ -453,7 +450,7 @@ const pasteString = async (str, ignoreKeyup = true) => {
         str +
         content.slice(lastCursorPosition.value);
     buffer.value[lastFocusedFieldIndex.value] = updatedContent;
-    emit("input", buffer.value);
+    emit('input', buffer.value);
 
     // set cursor to position after pasted string. Waiting two ticks is necessary for
     // the data to be updated in the field
@@ -468,7 +465,7 @@ const pasteString = async (str, ignoreKeyup = true) => {
 
 <script>
 export default {
-    name: 'EditInputGroup'
+    name: 'EditInputGroup',
 };
 </script>
 
@@ -561,7 +558,7 @@ li .controls > button:last-child:not(:hover):not(:focus) {
 .textarea::after {
     display: table;
     clear: both;
-    content: "";
+    content: '';
 }
 
 .step-number {
