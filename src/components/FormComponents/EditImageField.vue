@@ -28,12 +28,12 @@
 import { FilePickerType, getFilePickerBuilder } from "@nextcloud/dialogs";
 import { defineProps } from "vue";
 
-defineProps({
+
+const emit = defineEmits(['input']);
+const props = defineProps({
     value: { type: String, default: ''},
     fieldLabel: { type: String, default: ""}
 });
-
-const emit = defineEmits(['input']);
 
 const pickImage = (e) => {
     e.preventDefault()

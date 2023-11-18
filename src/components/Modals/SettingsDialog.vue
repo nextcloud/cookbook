@@ -216,18 +216,51 @@ const visibleInfoBlocksDecode = (obj) =>
         .filter(([, v]) => v)
         .map(([k]) => k);
 
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const isOpen = ref(false);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const printImage = ref(false);
+/**
+ * @type {import('vue').Ref<string>}
+ */
 const recipeFolder = ref('');
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const resetPrintImage = ref(true);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const showTagCloudInRecipeList = ref(true);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const resetTagCloud = ref(true);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const scanningLibrary = ref(false);
 // By setting the reset value initially to true, it will skip one watch event
 // (the one when config is loaded at page load)
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const resetInterval = ref(true);
+/**
+ * @type {import('vue').Ref<number>}
+ */
 const updateInterval = ref(0);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const visibleInfoBlocks = ref([...INFO_BLOCK_KEYS]);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const resetVisibleInfoBlocks = ref(true);
 
 // Watchers

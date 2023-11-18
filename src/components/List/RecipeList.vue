@@ -134,11 +134,20 @@ const props = defineProps({
         default: () => [],
     },
 });
-// String-based filters applied to the list
-const filters = ref('');
 
-// All keywords to filter the recipes for (conjunctively)
+/**
+ * String-based filters applied to the list
+ * @type {import('vue').Ref<string>}
+ */
+const filters = ref('');
+/**
+ * All keywords to filter the recipes for (conjunctively)
+ * @type {import('vue').Ref<Array>}
+ */
 const keywordFilter = ref([]);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const recipeOrderingOptions = ref([
     {
         label: t('cookbook', 'Name'),

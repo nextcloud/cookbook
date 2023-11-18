@@ -323,7 +323,6 @@
 <script setup>
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router/composables';
-import moment from '@nextcloud/moment';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';

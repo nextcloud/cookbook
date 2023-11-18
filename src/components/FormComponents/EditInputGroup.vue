@@ -90,11 +90,6 @@ const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
 
-// Template refs
-const listField = ref(null);
-
-const suggestionsData = ref(null);
-
 const props = defineProps({
     value: {
         type: Array,
@@ -126,10 +121,28 @@ const props = defineProps({
     },
 });
 
+// Template refs
+/**
+ * @type {import('vue').Ref<HTMLElement | null>}
+ */
+const listField = ref(null);
+const suggestionsData = ref(null);
 // helper variables
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const buffer = ref(props.value.slice());
+/**
+ * @type {import('vue').Ref<number | null>}
+ */
 const lastFocusedFieldIndex = ref(null);
+/**
+ * @type {import('vue').Ref<number>}
+ */
 const lastCursorPosition = ref(-1);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const ignoreNextKeyUp = ref(false);
 
 watch(() => props.value, (newValue) => {

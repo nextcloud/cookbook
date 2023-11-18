@@ -22,7 +22,8 @@
 import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
 import { ref, defineProps, defineEmits, nextTick, watch } from 'vue';
 
-// const props = defineProps(['fieldLabel', 'value', 'options']);
+const emits = defineEmits(['input']);
+
 const props = defineProps({
     fieldLabel: {
         type: String,
@@ -50,7 +51,10 @@ const props = defineProps({
         required: true,
     },
 });
-const emits = defineEmits(['input']);
+
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const rows = ref([]);
 
 watch(() => props.value, async (newModelValue) => {

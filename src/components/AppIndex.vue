@@ -17,7 +17,10 @@ import { useStore } from '../store';
 
 let store = useStore();
 
-// The known recipes in the cookbook
+/**
+ * The known recipes in the cookbook
+ * @type {import('vue').Ref<Array>}
+ */
 const recipes = ref([]);
 
 /**

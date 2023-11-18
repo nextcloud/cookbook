@@ -23,9 +23,6 @@
 <script setup>
 import { ref, watch } from 'vue';
 
-const minutes = ref(null);
-const hours = ref(null);
-
 const emit = defineEmits(['input']);
 
 const props = defineProps({
@@ -42,6 +39,15 @@ const props = defineProps({
         default: "",
     },
 });
+
+/**
+ * @type {import('vue').Ref<number>}
+ */
+const hours = ref(null);
+/**
+ * @type {import('vue').Ref<number>}
+ */
+const minutes = ref(null);
 
 watch(() => props.value, () => {
     hours.value = props.value.time[0];

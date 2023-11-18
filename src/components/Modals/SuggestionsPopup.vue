@@ -30,12 +30,16 @@
 <script setup>
 import { computed, defineProps, onMounted, ref, watch } from "vue";
 const SUGGESTIONS_POPUP_WIDTH = 300;
-defineExpose({
-    SUGGESTIONS_POPUP_WIDTH
-});
+
 const emit = defineEmits(['suggestions-selected']);
 
+/**
+ * @type {import('vue').Ref<HTMLElement | null>}
+ */
 const scroller = ref(null);
+/**
+ * @type {import('vue').Ref<number>}
+ */
 const width = ref(SUGGESTIONS_POPUP_WIDTH);
 
 const props = defineProps({

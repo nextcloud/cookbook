@@ -189,19 +189,43 @@ const recipeInit = ref(null);
 // ==========================
 // These are helper variables
 
-// Changes have been made to the initial values of the form
+/**
+ * Changes have been made to the initial values of the form
+ * @type {import('vue').Ref<boolean>}
+ */
 const formDirty = ref(false);
-// the save button has been clicked
+/**
+ * the save button has been clicked
+ * @type {import('vue').Ref<boolean>}
+ */
 const savingRecipe = ref(false);
 const prepTime = ref({ time: [0, 0], paddedTime: '' });
 const cookTime = ref({ time: [0, 0], paddedTime: '' });
 const totalTime = ref({ time: [0, 0], paddedTime: '' });
 const allCategories = ref([]);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const isFetchingCategories = ref(true);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const isFetchingKeywords = ref(true);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const allKeywords = ref([]);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const selectedKeywords = ref([]);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const allRecipes = ref([]);
+/**
+ * @type {import('vue').Ref<Array>}
+ */
 const availableNutritionFields = ref([
     {
         key: 'calories',
@@ -266,8 +290,17 @@ const availableNutritionFields = ref([
         placeholder: t('cookbook', 'E.g.: 2 g (amount & unit)'),
     },
 ]);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const referencesPopupFocused = ref(false);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const loadingRecipeReferences = ref(true);
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
 const showRecipeYield = ref(true);
 
 // ===================

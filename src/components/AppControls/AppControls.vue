@@ -203,7 +203,6 @@ import ModeIndicator from "./ModeIndicator.vue";
 import { useStore } from '../../store';
 import emitter from '../../bus';
 
-const rootEl = getCurrentInstance().proxy.$root;
 const route = useRoute();
 const store = useStore();
 const filterValue = ref("");
@@ -274,7 +273,7 @@ const searchTitle = computed(() => {
     return t("cookbook", "Search for recipes");
 });
 
-/** methods **/
+// Methods
 
 const deleteRecipe = async () => {
     // Confirm delete

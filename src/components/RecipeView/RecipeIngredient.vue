@@ -19,11 +19,6 @@ import { computed, ref } from 'vue';
 
 const headerPrefix = "## ";
 
-/**
- * @type {import('vue').Ref<boolean>}
- */
-const isDone = ref(false);
-
 const props = defineProps({
     /* Ingredient HTML string to display. Content should be sanitized.
      */
@@ -38,6 +33,11 @@ const props = defineProps({
         type: Boolean,
     },
 });
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isDone = ref(false);
 
 const displayIngredient = computed(() => {
     if (isHeader()) {

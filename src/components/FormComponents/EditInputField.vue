@@ -47,12 +47,6 @@ const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
 
-// Template refs
-const inputField = ref(null);
-
-
-const suggestionsData = ref(null);
-
 const props = defineProps({
     fieldLabel: {
         type: String,
@@ -79,7 +73,20 @@ const props = defineProps({
     },
 });
 
+// Template refs
+
+/**
+ * @type {import('vue').Ref<HTMLElement | null>}
+ */
+const inputField = ref(null);
+const suggestionsData = ref(null);
+/**
+ * @type {import('vue').Ref<string>}
+ */
 const content = ref(props.value);
+/**
+ * @type {import('vue').Ref<number>}
+ */
 const lastCursorPosition = ref(-1);
 
 // deconstruct composable
