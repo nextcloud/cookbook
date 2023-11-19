@@ -91,6 +91,8 @@
   [#1843](https://github.com/nextcloud/cookbook/pull/1843) @christianlupus
 - Update helper dependency for DB testing
   [#1873](https://github.com/nextcloud/cookbook/pull/1873) @dependabot
+- Use non-deprecated prop name for navigation items
+  [#1893](https://github.com/nextcloud/cookbook/pull/1893) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24
