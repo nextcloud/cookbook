@@ -69,7 +69,7 @@
                     ref="suggestionsPopupElement"
                     v-bind="suggestionsData"
                     :options="filteredSuggestionOptions"
-                    v-on:suggestions-selected="
+                    @suggestions-selected="
                         handleSuggestionsPopupSelectedEvent
                     "
                 />
@@ -86,8 +86,9 @@ import { getCurrentInstance, nextTick, ref, watch } from 'vue';
 import TriangleUpIcon from 'icons/TriangleSmallUp.vue';
 import TriangleDownIcon from 'icons/TriangleSmallDown.vue';
 
-import SuggestionsPopup from '../Modals/SuggestionsPopup';
+import SuggestionsPopup from '../Modals/SuggestionsPopup.vue';
 import useSuggestionPopup from '../../composables/useSuggestionsPopup';
+
 const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
@@ -120,6 +121,7 @@ const props = defineProps({
     },
     suggestionOptions: {
         type: Array,
+        default: () => []
     },
 });
 
@@ -139,10 +141,6 @@ const buffer = ref(props.value.slice());
  */
 const lastFocusedFieldIndex = ref(null);
 /**
- * @type {import('vue').Ref<number>}
- */
-const lastCursorPosition = ref(-1);
-/**
  * @type {import('vue').Ref<boolean>}
  */
 const ignoreNextKeyUp = ref(false);
@@ -155,25 +153,17 @@ watch(
 );
 
 // deconstruct composable
-let {
-    handleSuggestionsPopupCancel,
+const {
     suggestionsPopupVisible,
     filteredSuggestionOptions,
     suggestionsPopupElement,
-    // mounted
-    handleSuggestionsPopupSelected,
-    handleSuggestionsPopupOpenKeyUp,
-    getClosestListItemIndex,
     handleSuggestionsPopupKeyUp,
     handleSuggestionsPopupKeyDown,
-    handleSuggestionsPopupOpenKeyDown,
     handleSuggestionsPopupFocus,
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
 } = useSuggestionPopup(
-    suggestionsPopupElement,
-    lastCursorPosition,
     suggestionsData,
     buffer,
     emit,
@@ -315,9 +305,14 @@ const handlePaste = async (e) => {
         inputLinesArray[i] = inputLinesArray[i].trim().replaceAll(/\s+/g, ' ');
     }
 
+    const addNewEntriesAwaitables = [];
     for (let i = 0; i < inputLinesArray.length; ++i) {
-        await addNewEntry($insertedIndex + i + 1, false, inputLinesArray[i]);
+        addNewEntriesAwaitables.push(
+            addNewEntry($insertedIndex + i + 1, false, inputLinesArray[i])
+        );
     }
+    await Promise.all(addNewEntriesAwaitables);
+
     emit('input', buffer.value);
 
     await nextTick();
@@ -328,7 +323,7 @@ const handlePaste = async (e) => {
         indexToFocus -= 1;
     }
     // this.$refs["list-field"][indexToFocus].focus()
-    listField[indexToFocus].focus();
+    listField.value[indexToFocus].focus();
 };
 
 /**
@@ -426,40 +421,6 @@ const moveEntryUp = (index) => {
     const entry = buffer.value.splice(index, 1)[0];
     buffer.value.splice(index - 1, 0, entry);
     emit('input', buffer.value);
-};
-
-const pasteCanceled = async () => {
-    const field = listField[this.lastFocusedFieldIndex];
-    // set cursor back to previous position
-    await nextTick();
-    field.focus();
-    field.setSelectionRange(lastCursorPosition.value, lastCursorPosition.value);
-};
-
-/**
- * Paste string at the last saved cursor position
- */
-const pasteString = async (str, ignoreKeyup = true) => {
-    const field = listField[lastFocusedFieldIndex.value];
-
-    // insert str
-    const content = field.value;
-    // noinspection UnnecessaryLocalVariableJS
-    const updatedContent =
-        content.slice(0, lastCursorPosition.value) +
-        str +
-        content.slice(lastCursorPosition.value);
-    buffer.value[lastFocusedFieldIndex.value] = updatedContent;
-    emit('input', buffer.value);
-
-    // set cursor to position after pasted string. Waiting two ticks is necessary for
-    // the data to be updated in the field
-    await nextTick();
-    await nextTick();
-    ignoreNextKeyUp.value = ignoreKeyup;
-    field.focus();
-    const newCursorPos = lastCursorPosition.value + str.length;
-    field.setSelectionRange(newCursorPos, newCursorPos);
 };
 </script>
 

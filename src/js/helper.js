@@ -1,5 +1,17 @@
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
+
+/**
+ * Clamps val between the minimum min and maximum max value.
+ * @param val The value to be clamped between min and max
+ * @param min The upper limit
+ * @param max The lower limit
+ * @returns {number} min if val is <= min, max if val is >= max and val if min <= val <= max.
+ */
+function clamp(val, min, max) {
+    return Math.min(max, Math.max(min, val));
+}
+
 // Check if two routes point to the same component but have different content
 function shouldReloadContent(url1, url2) {
     if (url1 === url2) {
@@ -150,6 +162,7 @@ function notify(title, options) {
 }
 
 export default {
+    clamp,
     shouldReloadContent,
     isSameItemInstance,
     escapeHTML,

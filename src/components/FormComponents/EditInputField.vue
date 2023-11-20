@@ -36,15 +36,16 @@
             ref="suggestionsPopupElement"
             v-bind="suggestionsData"
             :options="filteredSuggestionOptions"
-            v-on:suggestions-selected="handleSuggestionsPopupSelectedEvent"
+            @suggestions-selected="handleSuggestionsPopupSelectedEvent"
         />
     </fieldset>
 </template>
 
 <script setup>
-import { getCurrentInstance, nextTick, ref, watch } from 'vue';
-import SuggestionsPopup from '../Modals/SuggestionsPopup';
+import { getCurrentInstance, ref, watch } from 'vue';
+import SuggestionsPopup from '../Modals/SuggestionsPopup.vue';
 import useSuggestionPopup from '../../composables/useSuggestionsPopup';
+
 const log = getCurrentInstance().proxy.$log;
 
 const emit = defineEmits(['input']);
@@ -65,6 +66,7 @@ const props = defineProps({
     },
     suggestionOptions: {
         type: Array,
+        default: () => []
     },
     // Value (passed in v-model)
     // eslint-disable-next-line vue/require-prop-types
@@ -86,31 +88,19 @@ const suggestionsData = ref(null);
  * @type {import('vue').Ref<string>}
  */
 const content = ref(props.value);
-/**
- * @type {import('vue').Ref<number>}
- */
-const lastCursorPosition = ref(-1);
 
 // deconstruct composable
-let {
-    handleSuggestionsPopupCancel,
+const {
     suggestionsPopupVisible,
     filteredSuggestionOptions,
     suggestionsPopupElement,
-    // mounted
-    handleSuggestionsPopupSelected,
-    handleSuggestionsPopupOpenKeyUp,
-    getClosestListItemIndex,
     handleSuggestionsPopupKeyUp,
     handleSuggestionsPopupKeyDown,
-    handleSuggestionsPopupOpenKeyDown,
     handleSuggestionsPopupFocus,
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
 } = useSuggestionPopup(
-    suggestionsPopupElement,
-    lastCursorPosition,
     suggestionsData,
     null,
     emit,
@@ -133,62 +123,6 @@ const keyDown = (e) => {
     // Redirect to suggestions handler if in suggestion mode
     if (suggestionsPopupVisible) {
         handleSuggestionsPopupKeyDown(e);
-    }
-};
-
-const pasteCanceled = async () => {
-    // set cursor to position after pasted string
-    await nextTick();
-    const field = inputField;
-    if (props.fieldType === 'markdown') {
-        field.editor.setCursor(lastCursorPosition.value);
-        field.editor.focus();
-    } else {
-        field.focus();
-        field.setSelectionRange(
-            lastCursorPosition.value,
-            lastCursorPosition.value,
-        );
-    }
-};
-
-/**
- * Paste string at the last saved cursor position
- */
-const pasteString = async (str) => {
-    const field = inputField;
-
-    if (props.fieldType === 'markdown') {
-        // insert at last cursor position
-        field.editor.replaceRange(str, {
-            line: lastCursorPosition.value.line,
-            ch: lastCursorPosition.value.ch,
-        });
-        emit('input', content.value);
-        await nextTick();
-        await nextTick();
-
-        field.editor.focus();
-        field.editor.setCursor({
-            line: lastCursorPosition.value.line,
-            ch: lastCursorPosition.value.ch + str.length,
-        });
-    } else {
-        // insert str
-        content.value =
-            content.value.slice(0, lastCursorPosition.value) +
-            str +
-            content.value.slice(lastCursorPosition.value);
-        emit('input', content.value);
-
-        // set cursor to position after pasted string. Waiting two ticks is necessary for
-        // the data to be updated in the field
-        await nextTick();
-        await nextTick();
-
-        field.focus();
-        const newCursorPos = lastCursorPosition.value + str.length;
-        field.setSelectionRange(newCursorPos, newCursorPos);
     }
 };
 </script>

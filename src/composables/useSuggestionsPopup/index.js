@@ -1,16 +1,19 @@
 import { position as caretPosition } from 'caret-pos';
 import { computed, nextTick, ref } from 'vue';
+import helpers from '../../js/helper';
 
+/* eslint no-param-reassign: ["error", { "props": false }] */
+/**
+ * Make sure you have included the `<SuggestionsPopup/>` element in your template and set
+ * `ref="suggestionsPopupElement"` on the element when using this composable.
+ */
 export default function useSuggestionsPopup(
-    suggestionsPopupElementA,
-    lastCursorPosition,
     suggestionsData,
     buffer,
     emit,
     log,
     props,
 ) {
-    const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
 
     /**
      * Reference to the SuggestionsPopup DOM element.
@@ -25,9 +28,7 @@ export default function useSuggestionsPopup(
         suggestionsData.value = null;
     };
 
-    const suggestionsPopupVisible = computed(() => {
-        return suggestionsData.value !== null && !suggestionsData.value.blurred;
-    });
+    const suggestionsPopupVisible = computed(() => suggestionsData.value !== null && !suggestionsData.value.blurred);
 
     const filteredSuggestionOptions = computed(() => {
         const { searchText } = suggestionsData.value;
@@ -38,14 +39,6 @@ export default function useSuggestionsPopup(
                 option.title.toLowerCase().includes(searchText.toLowerCase()),
         );
     });
-
-    /**
-     * Handles the 'suggestions-selected' event emitted by the
-     * SuggestionPopup component.
-     */
-    const handleSuggestionsPopupSelectedEvent = (opt) => {
-        handleSuggestionsPopupSelected(opt.recipe_id);
-    };
 
     /**
      * Handle something selected by click or by `Enter`
@@ -76,6 +69,14 @@ export default function useSuggestionsPopup(
         field.focus();
         const newCursorPos = hashPosition + replace.length;
         field.setSelectionRange(newCursorPos, newCursorPos);
+    };
+
+    /**
+     * Handles the 'suggestions-selected' event emitted by the
+     * SuggestionPopup component.
+     */
+    const handleSuggestionsPopupSelectedEvent = (opt) => {
+        handleSuggestionsPopupSelected(opt.recipe_id);
     };
 
     /**
@@ -175,13 +176,6 @@ export default function useSuggestionsPopup(
             caretIndex: field.selectionStart,
             fieldIndex: getClosestListItemIndex(field),
         };
-        lastCursorPosition = cursorPos;
-    };
-
-    const handleSuggestionsPopupKeyDown = (e) => {
-        if (!suggestionsPopupVisible.value) return;
-
-        handleSuggestionsPopupOpenKeyDown(e);
     };
 
     /**
@@ -194,9 +188,9 @@ export default function useSuggestionsPopup(
         if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
             e.preventDefault();
 
-            // Increment/decrement focuse index based on which key was pressed
+            // Increment/decrement focus index based on which key was pressed
             // and constrain between 0 and length - 1
-            const focusIndex = clamp(
+            const focusIndex = helpers.clamp(
                 suggestionsData.value.focusIndex +
                     {
                         ArrowUp: -1,
@@ -219,6 +213,12 @@ export default function useSuggestionsPopup(
             const selection = filteredSuggestionOptions.value[focusIndex];
             handleSuggestionsPopupSelected(selection.recipe_id);
         }
+    };
+
+    const handleSuggestionsPopupKeyDown = (e) => {
+        if (!suggestionsPopupVisible.value) return;
+
+        handleSuggestionsPopupOpenKeyDown(e);
     };
 
     /**
@@ -269,19 +269,14 @@ export default function useSuggestionsPopup(
     };
 
     return {
-        handleSuggestionsPopupCancel,
         suggestionsPopupVisible,
         filteredSuggestionOptions,
         suggestionsPopupElement,
-        handleSuggestionsPopupSelected,
-        handleSuggestionsPopupOpenKeyUp,
-        getClosestListItemIndex,
         handleSuggestionsPopupKeyUp,
         handleSuggestionsPopupKeyDown,
-        handleSuggestionsPopupOpenKeyDown,
         handleSuggestionsPopupFocus,
         handleSuggestionsPopupBlur,
         handleSuggestionsPopupMouseUp,
-        handleSuggestionsPopupSelectedEvent,
+        handleSuggestionsPopupSelectedEvent
     };
 }
