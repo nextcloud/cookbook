@@ -14,7 +14,6 @@ export default function useSuggestionsPopup(
     log,
     props,
 ) {
-
     /**
      * Reference to the SuggestionsPopup DOM element.
      * @type {Ref<HTMLElement | null>}
@@ -28,7 +27,9 @@ export default function useSuggestionsPopup(
         suggestionsData.value = null;
     };
 
-    const suggestionsPopupVisible = computed(() => suggestionsData.value !== null && !suggestionsData.value.blurred);
+    const suggestionsPopupVisible = computed(
+        () => suggestionsData.value !== null && !suggestionsData.value.blurred,
+    );
 
     const filteredSuggestionOptions = computed(() => {
         const { searchText } = suggestionsData.value;
@@ -277,6 +278,6 @@ export default function useSuggestionsPopup(
         handleSuggestionsPopupFocus,
         handleSuggestionsPopupBlur,
         handleSuggestionsPopupMouseUp,
-        handleSuggestionsPopupSelectedEvent
+        handleSuggestionsPopupSelectedEvent,
     };
 }

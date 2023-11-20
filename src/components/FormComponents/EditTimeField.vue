@@ -52,8 +52,7 @@ const minutes = ref(null);
 watch(
     () => props.value,
     () => {
-        hours.value = props.value.time[0];
-        minutes.value = props.value.time[1];
+        [hours.value, minutes.value] = props.value.time;
     },
 );
 

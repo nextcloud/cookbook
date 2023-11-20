@@ -69,9 +69,7 @@
                     ref="suggestionsPopupElement"
                     v-bind="suggestionsData"
                     :options="filteredSuggestionOptions"
-                    @suggestions-selected="
-                        handleSuggestionsPopupSelectedEvent
-                    "
+                    @suggestions-selected="handleSuggestionsPopupSelectedEvent"
                 />
             </li>
         </ul>
@@ -121,7 +119,7 @@ const props = defineProps({
     },
     suggestionOptions: {
         type: Array,
-        default: () => []
+        default: () => [],
     },
 });
 
@@ -163,13 +161,7 @@ const {
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
-} = useSuggestionPopup(
-    suggestionsData,
-    buffer,
-    emit,
-    log,
-    props,
-);
+} = useSuggestionPopup(suggestionsData, buffer, emit, log, props);
 
 watch(
     () => props.value,
@@ -308,7 +300,7 @@ const handlePaste = async (e) => {
     const addNewEntriesAwaitables = [];
     for (let i = 0; i < inputLinesArray.length; ++i) {
         addNewEntriesAwaitables.push(
-            addNewEntry($insertedIndex + i + 1, false, inputLinesArray[i])
+            addNewEntry($insertedIndex + i + 1, false, inputLinesArray[i]),
         );
     }
     await Promise.all(addNewEntriesAwaitables);

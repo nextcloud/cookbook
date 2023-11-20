@@ -29,6 +29,7 @@
 
 <script setup>
 import { computed, defineProps, onMounted, ref, watch } from 'vue';
+
 const SUGGESTIONS_POPUP_WIDTH = 300;
 
 const emit = defineEmits(['suggestions-selected']);
@@ -49,11 +50,11 @@ const props = defineProps({
     },
     focusIndex: {
         type: Number,
-        required: true,
+        default: 0,
     },
     searchText: {
         type: String,
-        required: true,
+        default: '',
     },
     field: {
         type: HTMLElement,
@@ -66,8 +67,8 @@ const props = defineProps({
 });
 
 const offset = computed(() => {
-    const caretPos = props.caretPos;
-    const field = props.field;
+    const { caretPos } = props;
+    const { field } = props;
 
     return {
         left: Math.min(
@@ -105,8 +106,6 @@ watch(
 onMounted(() => {
     scroller.value.scrollTo(0, 0);
 });
-
-const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
 
 const handleClick = (e) => {
     e.preventDefault();

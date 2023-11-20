@@ -39,20 +39,20 @@ const props = defineProps({
  */
 const isDone = ref(false);
 
+// Methods
+const isHeader = () => props.ingredient.startsWith(headerPrefix);
+
+const toggleDone = () => {
+    isDone.value = !isDone.value;
+};
+
+// Computed properties
 const displayIngredient = computed(() => {
     if (isHeader()) {
         return props.ingredient.substring(headerPrefix.length);
     }
     return props.ingredient;
 });
-
-const isHeader = () => {
-    return props.ingredient.startsWith(headerPrefix);
-};
-
-const toggleDone = () => {
-    isDone.value = !isDone.value;
-};
 </script>
 
 <script>

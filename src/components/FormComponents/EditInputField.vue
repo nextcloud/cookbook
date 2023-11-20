@@ -66,7 +66,7 @@ const props = defineProps({
     },
     suggestionOptions: {
         type: Array,
-        default: () => []
+        default: () => [],
     },
     // Value (passed in v-model)
     // eslint-disable-next-line vue/require-prop-types
@@ -100,13 +100,7 @@ const {
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
-} = useSuggestionPopup(
-    suggestionsData,
-    null,
-    emit,
-    log,
-    props,
-);
+} = useSuggestionPopup(suggestionsData, null, emit, log, props);
 
 watch(
     () => props.value,

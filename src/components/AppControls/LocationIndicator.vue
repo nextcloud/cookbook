@@ -4,16 +4,16 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'Location',
-};
-</script>
-
 <script setup>
 import { defineProps } from 'vue';
 
-const props = defineProps({
+defineProps({
     title: { type: String, default: '' },
 });
+</script>
+
+<script>
+export default {
+    name: 'LocationIndicator',
+};
 </script>

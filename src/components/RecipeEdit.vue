@@ -148,7 +148,7 @@ import {
 } from 'cookbook/js/modals';
 
 import EditImageField from './FormComponents/EditImageField.vue';
-import EditInputField from './FormComponents/EditInputField';
+import EditInputField from './FormComponents/EditInputField.vue';
 import EditInputGroup from './FormComponents/EditInputGroup.vue';
 import EditMultiselect from './FormComponents/EditMultiselect.vue';
 import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGroup.vue';
@@ -194,13 +194,9 @@ const recipe = ref({
     recipeInstructions: [],
     nutrition: {},
 });
-// This will hold the above configuration after recipe is loaded, so we don't have to
-// keep it up to date in multiple places if it changes later
-const recipeInit = ref(null);
 
 // ==========================
 // These are helper variables
-
 /**
  * Changes have been made to the initial values of the form
  * @type {import('vue').Ref<boolean>}
@@ -305,10 +301,6 @@ const availableNutritionFields = ref([
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const referencesPopupFocused = ref(false);
-/**
- * @type {import('vue').Ref<boolean>}
- */
 const loadingRecipeReferences = ref(true);
 /**
  * @type {import('vue').Ref<boolean>}
@@ -318,23 +310,19 @@ const showRecipeYield = ref(true);
 // ===================
 // Computed properties
 // ===================
-const allRecipeOptions = computed(() => {
-    return allRecipes.value.map((r) => ({
+const allRecipeOptions = computed(() =>
+    allRecipes.value.map((r) => ({
         recipe_id: r.recipe_id,
         title: `${r.recipe_id}: ${r.name}`,
-    }));
-});
-const categoryUpdating = computed(() => {
-    return store.state.categoryUpdating;
-});
-const overlayVisible = computed(() => {
-    return (
+    })),
+);
+const overlayVisible = computed(
+    () =>
         store.state.loadingRecipe ||
         store.state.reloadingRecipe ||
         (store.state.categoryUpdating &&
-            store.state.categoryUpdating === recipe.value.recipeCategory)
-    );
-});
+            store.state.categoryUpdating === recipe.value.recipeCategory),
+);
 const recipeWithCorrectedYield = computed(() => {
     const r = recipe.value;
     if (!showRecipeYield.value) {
@@ -344,9 +332,9 @@ const recipeWithCorrectedYield = computed(() => {
 });
 
 // Whether navigation would lose data, etc.
-const isNavigationDangerous = computed(() => {
-    return !savingRecipe.value && formDirty.value;
-});
+const isNavigationDangerous = computed(
+    () => !savingRecipe.value && formDirty.value,
+);
 
 // ===================
 // Watchers
@@ -390,104 +378,6 @@ watch(
 );
 
 // ===================
-// Vue lifecycle
-// ===================
-
-onBeforeRouteUpdate((to, from, next) => {
-    // beforeRouteUpdate is called when the static route stays the same
-    next();
-
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
-    }
-});
-
-/**
- * This is one tricky feature of Vue router. If different paths lead to
- * the same component (such as '/recipe/create' and '/recipe/xxx/edit
- * or /recipe/xxx/edit and /recipe/yyy/edit)', the view will not automatically
- * reload. So we have to check for these conditions and reload manually.
- * This can also be used to confirm that the user wants to leave the page
- * if there are unsaved changes.
- */
-onBeforeRouteLeave(async (to, from, next) => {
-    // beforeRouteLeave is called when the static route changes.
-    // Cancel the navigation, if the form has unsaved edits and the user did not
-    // confirm leave. This prevents accidentally losing changes
-    if (
-        isNavigationDangerous.value &&
-        !(await showSimpleConfirmModal(CONFIRM_MSG))
-    ) {
-        next(false);
-    } else {
-        // We have to check if the target component stays the same and reload.
-        // However, we should not reload if the component changes; otherwise
-        // reloaded data may overwrite the data loaded at the target component
-        // which will at the very least result in incorrect breadcrumb path!
-        next();
-    }
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
-    }
-});
-
-onMounted(() => {
-    log.info('RecipeEdit mounted');
-    window.addEventListener('beforeunload', beforeWindowUnload);
-
-    // Store the initial recipe configuration for possible later use
-    if (recipe.valueInit === null) {
-        recipe.valueInit = recipe.value;
-    }
-    // Register save method hook for access from the controls components
-    // The event hook must first be destroyed to avoid it from firing multiple
-    // times if the same component is loaded again
-    emitter.off('saveRecipe');
-    emitter.on('saveRecipe', () => {
-        save();
-    });
-    // Register data load method hook for access from the controls components
-    emitter.off('reloadRecipeEdit');
-    emitter.on('reloadRecipeEdit', () => {
-        loadRecipeData();
-    });
-    emitter.off('categoryRenamed');
-    emitter.on('categoryRenamed', (val) => {
-        // Update selectable categories
-        const idx = allCategories.value.findIndex((c) => c === val[1]);
-        if (idx >= 0) {
-            allCategories.value[idx] = val[0];
-        }
-        // Update selected category if the currently selected was renamed
-        if (recipe.value.recipeCategory === val[1]) {
-            // eslint-disable-next-line prefer-destructuring
-            recipe.value.recipeCategory = val[0];
-        }
-    });
-    savingRecipe.value = false;
-
-    // Load data for all recipes to be used in recipe-reference popup suggestions
-    api.recipes
-        .getAll()
-        .then((response) => {
-            allRecipes.value = response.data;
-        })
-        .catch((e) => {
-            log.error(e);
-        })
-        .then(() => {
-            // finally
-            loadingRecipeReferences.value = false;
-        });
-});
-
-onBeforeUnmount(() => {
-    window.removeEventListener('beforeunload', beforeWindowUnload);
-});
-
-// ===================
 // Methods
 // ===================
 
@@ -505,9 +395,6 @@ const addKeyword = (newKeyword) => {
     allKeywords.value.push(newKeyword);
     selectedKeywords.value.push(newKeyword);
 };
-const addEntry = (field, index, content = '') => {
-    recipe.value[field].splice(index, 0, content);
-};
 const beforeWindowUnload = (e) => {
     // We cannot use our fancy modal here because `beforeunload` does not wait for promises to resolve
     // However, we can avoid `window.confirm` by using `e.returnValue`
@@ -516,9 +403,6 @@ const beforeWindowUnload = (e) => {
         e.preventDefault();
         e.returnValue = CONFIRM_MSG;
     }
-};
-const deleteEntry = (field, index) => {
-    recipe.value[field].splice(index, 1);
 };
 /**
  * Fetch and display recipe categories
@@ -562,37 +446,6 @@ const fetchKeywords = async () => {
         if (e && e instanceof Error) {
             throw e;
         }
-    }
-};
-const loadRecipeData = async () => {
-    if (!store.state.recipe) {
-        // Make the control row show that a recipe is loading
-        store.dispatch('setLoadingRecipe', {
-            recipe: -1,
-        });
-    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
-        // Make the control row show that the recipe is reloading
-        store.dispatch('setReloadingRecipe', {
-            recipe: route.params.id,
-        });
-    }
-    try {
-        const response = await api.recipes.get(route.params.id);
-        const recipe = response.data;
-        store.dispatch('setRecipe', { recipe });
-        setup();
-    } catch {
-        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
-        // Disable loading indicator
-        if (store.state.loadingRecipe) {
-            store.dispatch('setLoadingRecipe', { recipe: 0 });
-        } else if ($store.state.reloadingRecipe) {
-            store.dispatch('setReloadingRecipe', {
-                recipe: 0,
-            });
-        }
-        // Browse to new recipe creation
-        helpers.goTo('/recipe/create');
     }
 };
 const save = async () => {
@@ -648,6 +501,32 @@ const save = async () => {
         savingRecipe.value = false;
     }
 };
+const initEmptyRecipe = () => {
+    prepTime.value = { time: [0, 0], paddedTime: '' };
+    cookTime.value = { time: [0, 0], paddedTime: '' };
+    totalTime.value = { time: [0, 0], paddedTime: '' };
+    // this.nutrition = {}
+    recipe.value = {
+        id: 0,
+        name: null,
+        description: '',
+        url: '',
+        image: '',
+        prepTime: '',
+        cookTime: '',
+        totalTime: '',
+        recipeCategory: '',
+        keywords: '',
+        recipeYield: '',
+        tool: [],
+        recipeIngredient: [],
+        recipeInstructions: [],
+        nutrition: {},
+    };
+    formDirty.value = false;
+    showRecipeYield.value = true;
+};
+
 const setup = async () => {
     fetchCategories();
     fetchKeywords();
@@ -716,39 +595,144 @@ const setup = async () => {
         initEmptyRecipe();
         store.dispatch('setPage', { page: 'create' });
     }
-    recipe.valueInit = JSON.parse(JSON.stringify(recipe.value));
+    recipe.value.valueInit = JSON.parse(JSON.stringify(recipe.value));
     await nextTick();
     formDirty.value = false;
-};
-const initEmptyRecipe = () => {
-    prepTime.value = { time: [0, 0], paddedTime: '' };
-    cookTime.value = { time: [0, 0], paddedTime: '' };
-    totalTime.value = { time: [0, 0], paddedTime: '' };
-    // this.nutrition = {}
-    recipe.value = {
-        id: 0,
-        name: null,
-        description: '',
-        url: '',
-        image: '',
-        prepTime: '',
-        cookTime: '',
-        totalTime: '',
-        recipeCategory: '',
-        keywords: '',
-        recipeYield: '',
-        tool: [],
-        recipeIngredient: [],
-        recipeInstructions: [],
-        nutrition: {},
-    };
-    formDirty.value = false;
-    showRecipeYield.value = true;
 };
 const toggleShowRecipeYield = () => {
     showRecipeYield.value = !showRecipeYield.value;
     formDirty.value = true;
 };
+const loadRecipeData = async () => {
+    if (!store.state.recipe) {
+        // Make the control row show that a recipe is loading
+        store.dispatch('setLoadingRecipe', {
+            recipe: -1,
+        });
+    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
+        // Make the control row show that the recipe is reloading
+        store.dispatch('setReloadingRecipe', {
+            recipe: route.params.id,
+        });
+    }
+    try {
+        const response = await api.recipes.get(route.params.id);
+
+        store.dispatch('setRecipe', { recipe: response.data });
+        await setup();
+    } catch {
+        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
+        // Disable loading indicator
+        if (store.state.loadingRecipe) {
+            store.dispatch('setLoadingRecipe', { recipe: 0 });
+        } else if (store.state.reloadingRecipe) {
+            store.dispatch('setReloadingRecipe', {
+                recipe: 0,
+            });
+        }
+        // Browse to new recipe creation
+        helpers.goTo('/recipe/create');
+    }
+};
+
+// ===================
+// Vue lifecycle
+// ===================
+
+onBeforeRouteUpdate((to, from, next) => {
+    // beforeRouteUpdate is called when the static route stays the same
+    next();
+
+    // Check if we should reload the component content
+    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
+        setup();
+    }
+});
+
+/**
+ * This is one tricky feature of Vue router. If different paths lead to
+ * the same component (such as '/recipe/create' and '/recipe/xxx/edit
+ * or /recipe/xxx/edit and /recipe/yyy/edit)', the view will not automatically
+ * reload. So we have to check for these conditions and reload manually.
+ * This can also be used to confirm that the user wants to leave the page
+ * if there are unsaved changes.
+ */
+onBeforeRouteLeave(async (to, from, next) => {
+    // beforeRouteLeave is called when the static route changes.
+    // Cancel the navigation, if the form has unsaved edits and the user did not
+    // confirm leave. This prevents accidentally losing changes
+    if (
+        isNavigationDangerous.value &&
+        !(await showSimpleConfirmModal(CONFIRM_MSG))
+    ) {
+        next(false);
+    } else {
+        // We have to check if the target component stays the same and reload.
+        // However, we should not reload if the component changes; otherwise
+        // reloaded data may overwrite the data loaded at the target component
+        // which will at the very least result in incorrect breadcrumb path!
+        next();
+    }
+    // Check if we should reload the component content
+    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
+        setup();
+    }
+});
+
+onMounted(() => {
+    log.info('RecipeEdit mounted');
+    window.addEventListener('beforeunload', beforeWindowUnload);
+
+    // Store the initial recipe configuration for possible later use
+    if (recipe.value.valueInit === null) {
+        recipe.value.valueInit = recipe.value;
+    }
+    // Register save method hook for access from the controls components
+    // The event hook must first be destroyed to avoid it from firing multiple
+    // times if the same component is loaded again
+    emitter.off('saveRecipe');
+    emitter.on('saveRecipe', () => {
+        save();
+    });
+    // Register data load method hook for access from the controls components
+    emitter.off('reloadRecipeEdit');
+    emitter.on('reloadRecipeEdit', () => {
+        loadRecipeData();
+    });
+    emitter.off('categoryRenamed');
+    emitter.on('categoryRenamed', (val) => {
+        // Update selectable categories
+        const idx = allCategories.value.findIndex((c) => c === val[1]);
+        if (idx >= 0) {
+            // eslint-disable-next-line prefer-destructuring
+            allCategories.value[idx] = val[0];
+        }
+        // Update selected category if the currently selected was renamed
+        if (recipe.value.recipeCategory === val[1]) {
+            // eslint-disable-next-line prefer-destructuring
+            recipe.value.recipeCategory = val[0];
+        }
+    });
+    savingRecipe.value = false;
+
+    // Load data for all recipes to be used in recipe-reference popup suggestions
+    api.recipes
+        .getAll()
+        .then((response) => {
+            allRecipes.value = response.data;
+        })
+        .catch((e) => {
+            log.error(e);
+        })
+        .then(() => {
+            // finally
+            loadingRecipeReferences.value = false;
+        });
+});
+
+onBeforeUnmount(() => {
+    window.removeEventListener('beforeunload', beforeWindowUnload);
+});
 
 // TODO This always loads recipe data even when navigating from recipe view to editor.
 // This might offer some performance improvements: See commented beforeRouteEnter section below,

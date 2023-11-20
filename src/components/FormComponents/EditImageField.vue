@@ -29,7 +29,7 @@ import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs';
 import { defineProps } from 'vue';
 
 const emit = defineEmits(['input']);
-const props = defineProps({
+defineProps({
     value: { type: String, default: '' },
     fieldLabel: { type: String, default: '' },
 });

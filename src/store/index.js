@@ -11,7 +11,7 @@ import api from 'cookbook/js/api-interface';
 Vue.use(Vuex);
 
 // We are using the vuex store linking changes within the components to updates in the navigation panel.
-var store = new Vuex.Store({
+const store = new Vuex.Store({
     // Vuex store handles value changes through actions and mutations.
     // From the App, you trigger an action, that changes the store
     //  state through a set mutation. You can process the data within
@@ -251,4 +251,5 @@ var store = new Vuex.Store({
     },
 });
 
+// eslint-disable-next-line import/prefer-default-export
 export const useStore = () => store;

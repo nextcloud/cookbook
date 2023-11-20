@@ -15,9 +15,10 @@ import RecipeList from './List/RecipeList.vue';
 import { useStore } from '../store';
 import emitter from '../bus';
 
-let route = useRoute();
-let store = useStore();
+const route = useRoute();
+const store = useStore();
 
+// Props
 const props = defineProps({
     query: {
         type: String,
@@ -38,37 +39,6 @@ const results = ref([]);
 // watch(route, (to, from) => {
 //     keywordFilter.value = [];
 // });
-
-// Lifecycle hooks
-onBeforeRouteUpdate((to, from, next) => {
-    // Move to next route as expected
-    next();
-    // Reload view
-    setup();
-});
-
-onMounted(() => {
-    setup();
-    emitter.off('categoryRenamed');
-    emitter.on('categoryRenamed', (val) => {
-        if (
-            // eslint-disable-next-line no-underscore-dangle
-            isComponentActive &&
-            props.query === 'cat' &&
-            route.params.value === val[1]
-        ) {
-            helpers.goTo(`/category/${val[0]}`);
-        }
-    });
-});
-
-onActivated(() => {
-    isComponentActive.value = true;
-});
-
-onDeactivated(() => {
-    isComponentActive.value = false;
-});
 
 // Methods
 const setup = async () => {
@@ -134,6 +104,37 @@ const setup = async () => {
     }
     store.dispatch('setPage', { page: 'search' });
 };
+
+// Lifecycle hooks
+onBeforeRouteUpdate((to, from, next) => {
+    // Move to next route as expected
+    next();
+    // Reload view
+    setup();
+});
+
+onMounted(() => {
+    setup();
+    emitter.off('categoryRenamed');
+    emitter.on('categoryRenamed', (val) => {
+        if (
+            // eslint-disable-next-line no-underscore-dangle
+            isComponentActive.value &&
+            props.query === 'cat' &&
+            route.params.value === val[1]
+        ) {
+            helpers.goTo(`/category/${val[0]}`);
+        }
+    });
+});
+
+onActivated(() => {
+    isComponentActive.value = true;
+});
+
+onDeactivated(() => {
+    isComponentActive.value = false;
+});
 </script>
 
 <script>

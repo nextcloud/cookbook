@@ -55,8 +55,6 @@ const props = defineProps({
 const isPreviewLoading = ref(true);
 /** @type {Ref<UnwrapRef<boolean>>} */
 const isLoading = ref(true);
-/** @type {Ref<UnwrapRef<boolean>>} */
-const isBlurred = ref(true);
 /** @type {HTMLElement|null} */
 const pictureElement = ref(null);
 /** @type {HTMLElement|null} */
@@ -64,33 +62,7 @@ const fullImage = ref(null);
 /** @type {HTMLElement|null} */
 const previewImage = ref(null);
 
-const style = computed(() => {
-    const style = {};
-    if (props.width) {
-        style.width = `${props.width}px`;
-    }
-    if (isLoading.value && props.height && !props.blurredPreviewSrc) {
-        style.height = 0;
-        style.paddingTop = `${props.height}px`;
-    }
-    return style;
-});
-
-onMounted(() => {
-    // init lozad
-    const observer = lozad(pictureElement.value, {
-        enableAutoReload: true,
-        load(el) {
-            previewImage.value.addEventListener(
-                'load',
-                onThumbnailPreviewLoaded,
-            );
-            previewImage.value.src = props.blurredPreviewSrc;
-        },
-    });
-    observer.observe();
-});
-
+// Methods
 // callback for fully-loaded image event
 const onThumbnailFullyLoaded = () => {
     fullImage.value.removeEventListener('load', onThumbnailFullyLoaded);
@@ -107,6 +79,35 @@ const onThumbnailPreviewLoaded = () => {
     fullImage.value.src = props.lazySrc;
     isPreviewLoading.value = false;
 };
+
+// Computed properties
+const style = computed(() => {
+    const tmpStyle = {};
+    if (props.width) {
+        tmpStyle.width = `${props.width}px`;
+    }
+    if (isLoading.value && props.height && !props.blurredPreviewSrc) {
+        tmpStyle.height = 0;
+        tmpStyle.paddingTop = `${props.height}px`;
+    }
+    return tmpStyle;
+});
+
+// Vue lifecycle
+onMounted(() => {
+    // init lozad
+    const observer = lozad(pictureElement.value, {
+        enableAutoReload: true,
+        load() {
+            previewImage.value.addEventListener(
+                'load',
+                onThumbnailPreviewLoaded,
+            );
+            previewImage.value.src = props.blurredPreviewSrc;
+        },
+    });
+    observer.observe();
+});
 
 onUnmounted(() => {
     if (previewImage.value !== 'undefined' && previewImage.value != null) {

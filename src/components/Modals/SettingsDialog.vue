@@ -243,10 +243,6 @@ const showTagCloudInRecipeList = ref(true);
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const resetTagCloud = ref(true);
-/**
- * @type {import('vue').Ref<boolean>}
- */
 const scanningLibrary = ref(false);
 // By setting the reset value initially to true, it will skip one watch event
 // (the one when config is loaded at page load)
@@ -351,19 +347,6 @@ watch(
     },
 );
 
-onMounted(() => {
-    setup();
-    subscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
-});
-
-onBeforeUnmount(() => {
-    unsubscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
-});
-
-const handleShowSettings = () => {
-    isOpen.value = true;
-};
-
 /**
  * Select a recipe folder using the Nextcloud file picker
  */
@@ -444,9 +427,11 @@ const reindex = () => {
             if (['index', 'search'].indexOf(store.state.page) > -1) {
                 // This refreshes the current router view in case items in it changed during reindex
                 router.go();
-            } else {
-                getCategories();
             }
+            // todo this ws here before but no function was defined. what is it supposed to do?
+            // else {
+            //     getCategories();
+            // }
         })
         .catch(() => {
             scanningLibrary.value = false;
@@ -457,6 +442,20 @@ const reindex = () => {
 const enableLogger = () => {
     enableLogging();
 };
+
+const handleShowSettings = () => {
+    isOpen.value = true;
+};
+
+// Vue lifecycle
+onMounted(() => {
+    setup();
+    subscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
+});
+
+onBeforeUnmount(() => {
+    unsubscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
+});
 </script>
 
 <script>

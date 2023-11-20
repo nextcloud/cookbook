@@ -4,13 +4,13 @@
         <ul ref="list">
             <li v-for="(row, index) in rows" :key="index">
                 <NcMultiselect
-                    :options="row.options"
                     v-model="row.selectedOption"
-                    @change="handleMultiselectChange(index)"
+                    :options="row.options"
                     track-by="key"
                     label="label"
                     :placeholder="labelSelectPlaceholder"
                     class="key"
+                    @change="handleMultiselectChange(index)"
                 />
                 <input
                     v-model="row.customText"
@@ -61,39 +61,22 @@ const props = defineProps({
  */
 const rows = ref([]);
 
-watch(
-    () => props.value,
-    async (newModelValue) => {
-        // React to external changes in modelValue
-        await createRowsBasedOnModelValue(newModelValue);
-    },
-);
+// Methods
+const getAvailableOptions = async () => {
+    // Calculate available options by excluding those already selected
+    const selectedOptions = rows.value.map((row) => row.selectedOption);
+    return props.options.filter((option) => !selectedOptions.includes(option));
+};
 
-const createRowsBasedOnModelValue = async () => {
-    const initialModelValue = props.value || {};
-    const keys = Object.keys(initialModelValue);
-
-    for (const key of keys) {
-        const option = props.options.find((opt) => opt.key === key);
-        const row = rows.value.find((row) => row.selectedOption.key === key);
-        // Update row with key if it already exists
-        if (row) {
-            row.customText = initialModelValue[key] || '';
+const getSelectedValues = () => {
+    const selectedValues = {};
+    rows.value.forEach((row) => {
+        // Only include rows with selected values
+        if (row.selectedOption) {
+            selectedValues[row.selectedOption.key] = row.customText;
         }
-        // otherwise create new row
-        else {
-            if (option) {
-                rows.value.push({
-                    options: await getAvailableOptions(),
-                    selectedOption: option,
-                    customText: initialModelValue[key] || '',
-                });
-            }
-        }
-    }
-
-    await recalculateAvailableOptions();
-    await createRow(); // Create an additional row for future selections
+    });
+    return selectedValues;
 };
 
 const createRow = async () => {
@@ -115,14 +98,51 @@ const createRow = async () => {
     }
 };
 
+const recalculateAvailableOptions = async () => {
+    // Update options in all rows based on the current selections
+    const availableOptions = await getAvailableOptions();
+    for (let i = 0; i < rows.value.length; i++) {
+        rows.value[i].options = availableOptions;
+    }
+};
+
+const createRowsBasedOnModelValue = async () => {
+    const initialModelValue = props.value || {};
+    const keys = Object.keys(initialModelValue);
+
+    const availableOptions = await getAvailableOptions();
+    for (const key of keys) {
+        const option = props.options.find((opt) => opt.key === key);
+        const row = rows.value.find(
+            (myRow) => myRow.selectedOption.key === key,
+        );
+        // Update row with key if it already exists
+        if (row) {
+            row.customText = initialModelValue[key] || '';
+        }
+        // otherwise create new row
+        else if (option) {
+            rows.value.push({
+                options: availableOptions,
+                selectedOption: option,
+                customText: initialModelValue[key] || '',
+            });
+        }
+    }
+
+    await recalculateAvailableOptions();
+    await createRow(); // Create an additional row for future selections
+};
+
 const handleMultiselectChange = async (changedIndex) => {
     // Wait for the DOM to update after the multiselect change
     await nextTick();
 
     // Update options in all other rows based on the changed selection
+    const availableOptions = await getAvailableOptions();
     for (let i = 0; i < rows.value.length; i++) {
         if (i !== changedIndex) {
-            rows.value[i].options = await getAvailableOptions();
+            rows.value[i].options = availableOptions;
         }
     }
     // Emit the updated modelValue
@@ -131,29 +151,15 @@ const handleMultiselectChange = async (changedIndex) => {
     await createRow();
 };
 
-const recalculateAvailableOptions = async () => {
-    // Update options in all rows based on the current selections
-    for (let i = 0; i < rows.value.length; i++) {
-        rows.value[i].options = await getAvailableOptions();
-    }
-};
+// Watchers
 
-const getAvailableOptions = async () => {
-    // Calculate available options by excluding those already selected
-    const selectedOptions = rows.value.map((row) => row.selectedOption);
-    return props.options.filter((option) => !selectedOptions.includes(option));
-};
-
-const getSelectedValues = () => {
-    const selectedValues = {};
-    rows.value.forEach((row, index) => {
-        // Only include rows with selected values
-        if (row.selectedOption) {
-            selectedValues[row.selectedOption.key] = row.customText;
-        }
-    });
-    return selectedValues;
-};
+watch(
+    () => props.value,
+    async (newModelValue) => {
+        // React to external changes in modelValue
+        await createRowsBasedOnModelValue(newModelValue);
+    },
+);
 </script>
 
 <script>

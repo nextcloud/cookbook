@@ -2,11 +2,6 @@
     <recipe-list :recipes="recipes" />
 </template>
 
-<script>
-export default {
-    name: 'Location',
-};
-</script>
 <script setup>
 import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
@@ -14,7 +9,7 @@ import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 import RecipeList from './List/RecipeList.vue';
 import { useStore } from '../store';
 
-let store = useStore();
+const store = useStore();
 
 /**
  * The known recipes in the cookbook
@@ -25,25 +20,11 @@ const recipes = ref([]);
 /**
  * Is the Cookbook recipe directory currently being changed?
  */
-const updatingRecipeDirectory = computed(() => {
-    return store.state.updatingRecipeDirectory;
-});
+const updatingRecipeDirectory = computed(
+    () => store.state.updatingRecipeDirectory,
+);
 
-/**
- * If the Cookbook recipe directory currently was changed, reload
- * the recipes in the index component.
- */
-watch(updatingRecipeDirectory, async (newVal, oldVal) => {
-    if (newVal === false && newVal !== oldVal) {
-        loadAll();
-    }
-});
-
-onMounted(() => {
-    getCurrentInstance().proxy.$log.info('AppIndex mounted');
-    loadAll();
-});
-
+// Methods
 /**
  * Load all recipes from the database
  */
@@ -60,5 +41,28 @@ const loadAll = () => {
             // Always set page name last
             store.dispatch('setPage', { page: 'index' });
         });
+};
+
+// Watchers
+/**
+ * If the Cookbook recipe directory currently was changed, reload
+ * the recipes in the index component.
+ */
+watch(updatingRecipeDirectory, async (newVal, oldVal) => {
+    if (newVal === false && newVal !== oldVal) {
+        loadAll();
+    }
+});
+
+// Vue lifecycle
+onMounted(() => {
+    getCurrentInstance().proxy.$log.info('AppIndex mounted');
+    loadAll();
+});
+</script>
+
+<script>
+export default {
+    name: 'AppIndex',
 };
 </script>

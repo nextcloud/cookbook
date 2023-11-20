@@ -12,7 +12,7 @@ import { ref } from 'vue';
 
 const emit = defineEmits(['keyword-clicked']);
 
-const props = defineProps({
+defineProps({
     name: {
         type: String,
         required: true,

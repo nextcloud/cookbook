@@ -81,24 +81,28 @@
                 :placeholder="t('cookbook', 'Select order')"
                 :options="recipeOrderingOptions"
             >
-                <template slot="placeholder">
+                <template #placeholder>
                     <span class="icon-triangle-n" style="margin-right: -8px" />
                     <span class="ordering-item-icon icon-triangle-s" />
                     {{ t('cookbook', 'Select order') }}
                 </template>
-                <template #singleLabel="props">
+                <template #singleLabel="options">
                     <span
                         class="ordering-item-icon"
-                        :class="props.option.icon"
+                        :class="options.option.icon"
                     />
-                    <span class="option__title">{{ props.option.label }}</span>
+                    <span class="option__title">{{
+                        options.option.label
+                    }}</span>
                 </template>
-                <template #option="props">
+                <template #option="options">
                     <span
                         class="ordering-item-icon"
-                        :class="props.option.icon"
+                        :class="options.option.icon"
                     />
-                    <span class="option__title">{{ props.option.label }}</span>
+                    <span class="option__title">{{
+                        options.option.label
+                    }}</span>
                 </template>
             </NcMultiselect>
         </div>
@@ -117,11 +121,11 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router/composables';
-import { useStore } from '../../store';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton';
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent';
 import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
+import { useStore } from '../../store';
 import RecipeCard from './RecipeCard.vue';
 import RecipeListKeywordCloud from './RecipeListKeywordCloud.vue';
 
@@ -135,11 +139,12 @@ const props = defineProps({
     },
 });
 
+// todo: Find out why this is here
 /**
  * String-based filters applied to the list
  * @type {import('vue').Ref<string>}
  */
-const filters = ref('');
+// const filters = ref('');
 /**
  * All keywords to filter the recipes for (conjunctively)
  * @type {import('vue').Ref<Array>}
@@ -192,147 +197,6 @@ onMounted(() => {
     store.dispatch('clearRecipeFilters');
 });
 
-// Computed properties
-/**
- * True, if the recipe list is shown for a selected category or the 'undefined' category and not "All recipes".
- */
-const isCategorySelected = computed(() => {
-    return route.name.substring(1, 9) === 'category';
-});
-
-/**
- * An array of all keywords in all recipes. These are neither sorted nor unique
- */
-const rawKeywords = computed(() => {
-    const keywordArray = props.recipes.map((r) => {
-        if (!('keywords' in r)) {
-            return [];
-        }
-        if (r.keywords != null) {
-            return r.keywords.split(',');
-        }
-        return [];
-    });
-    return [].concat(...keywordArray);
-});
-
-/**
- * An array of all recipes that are part in all filtered keywords
- * @returns {Array}
- */
-const recipesFilteredByKeywords = computed(() => {
-    return props.recipes.filter((r) => {
-        if (keywordFilter.value.length === 0) {
-            // No filtering, keep all
-            return true;
-        }
-
-        if (r.keywords === null) {
-            return false;
-        }
-
-        function keywordInRecipePresent(kw, r2) {
-            if (!r2.keywords) {
-                return false;
-            }
-            const keywords = r2.keywords.split(',');
-            return keywords.includes(kw);
-        }
-
-        return keywordFilter.value
-            .map((kw) => keywordInRecipePresent(kw, r))
-            .reduce((l, rec) => l && rec);
-    });
-});
-
-/**
- * An array of the finally filtered recipes, that is both filtered for keywords as well as string-based name filtering
- */
-const filteredRecipes = computed(() => {
-    let ret = recipesFilteredByKeywords.value;
-    if (!!store.state.recipeFilters) {
-        ret = ret.filter((r) =>
-            r.name
-                .toLowerCase()
-                .includes(store.state.recipeFilters.toLowerCase()),
-        );
-    }
-    return ret;
-});
-
-// Recipes ordered ascending by name
-const recipesNameAsc = computed(() => {
-    return sortRecipes(props.recipes, 'name', 'ascending');
-});
-
-// Recipes ordered descending by name
-const recipesNameDesc = computed(() => {
-    return sortRecipes(props.recipes, 'name', 'descending');
-});
-
-// Recipes ordered ascending by creation date
-const recipesDateCreatedAsc = computed(() => {
-    return sortRecipes(props.recipes, 'dateCreated', 'ascending');
-});
-
-// Recipes ordered descending by creation date
-const recipesDateCreatedDesc = computed(() => {
-    return sortRecipes(props.recipes, 'dateCreated', 'descending');
-});
-
-// Recipes ordered ascending by modification date
-const recipesDateModifiedAsc = computed(() => {
-    return sortRecipes(props.recipes, 'dateModified', 'ascending');
-});
-
-// Recipes ordered descending by modification date
-const recipesDateModifiedDesc = computed(() => {
-    return sortRecipes(props.recipes, 'dateModified', 'descending');
-});
-
-// An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
-const recipeObjects = computed(() => {
-    function makeObject(rec) {
-        return {
-            recipe: rec,
-            show: filteredRecipes.value
-                .map((r) => r.recipe_id)
-                .includes(rec.recipe_id),
-        };
-    }
-
-    if (
-        orderBy.value === null ||
-        (orderBy.value.order !== 'ascending' &&
-            orderBy.value.order !== 'descending')
-    ) {
-        return props.recipes.map(makeObject);
-    }
-    if (orderBy.value.recipeProperty === 'dateCreated') {
-        if (orderBy.value.order === 'ascending') {
-            return recipesDateCreatedAsc.value.map(makeObject);
-        }
-        return recipesDateCreatedDesc.value.map(makeObject);
-    }
-    if (orderBy.value.recipeProperty === 'dateModified') {
-        if (orderBy.value.order === 'ascending') {
-            return recipesDateModifiedAsc.value.map(makeObject);
-        }
-        return recipesDateModifiedDesc.value.map(makeObject);
-    }
-    if (orderBy.value.recipeProperty === 'name') {
-        if (orderBy.value.order === 'ascending') {
-            return recipesNameAsc.value.map(makeObject);
-        }
-        return recipesNameDesc.value.map(makeObject);
-    }
-    return props.recipes.map(makeObject);
-});
-
-const showTagCloudInRecipeList = computed(() => {
-    return store.state.localSettings.showTagCloudInRecipeList;
-});
-
 // Methods
 
 /* Sort recipes according to the property of the recipe ascending or
@@ -375,6 +239,147 @@ const sortRecipes = (recipes, recipeProperty, order) => {
         return 0;
     });
 };
+
+// Computed properties
+/**
+ * True, if the recipe list is shown for a selected category or the 'undefined' category and not "All recipes".
+ */
+const isCategorySelected = computed(
+    () => route.name.substring(1, 9) === 'category',
+);
+
+/**
+ * An array of all keywords in all recipes. These are neither sorted nor unique
+ */
+const rawKeywords = computed(() => {
+    const keywordArray = props.recipes.map((r) => {
+        if (!('keywords' in r)) {
+            return [];
+        }
+        if (r.keywords != null) {
+            return r.keywords.split(',');
+        }
+        return [];
+    });
+    return [].concat(...keywordArray);
+});
+
+/**
+ * An array of all recipes that are part in all filtered keywords
+ * @returns {Array}
+ */
+const recipesFilteredByKeywords = computed(() =>
+    props.recipes.filter((r) => {
+        if (keywordFilter.value.length === 0) {
+            // No filtering, keep all
+            return true;
+        }
+
+        if (r.keywords === null) {
+            return false;
+        }
+
+        function keywordInRecipePresent(kw, r2) {
+            if (!r2.keywords) {
+                return false;
+            }
+            const keywords = r2.keywords.split(',');
+            return keywords.includes(kw);
+        }
+
+        return keywordFilter.value
+            .map((kw) => keywordInRecipePresent(kw, r))
+            .reduce((l, rec) => l && rec);
+    }),
+);
+
+/**
+ * An array of the finally filtered recipes, that is both filtered for keywords as well as string-based name filtering
+ */
+const filteredRecipes = computed(() => {
+    let ret = recipesFilteredByKeywords.value;
+    if (store.state.recipeFilters) {
+        ret = ret.filter((r) =>
+            r.name
+                .toLowerCase()
+                .includes(store.state.recipeFilters.toLowerCase()),
+        );
+    }
+    return ret;
+});
+
+// Recipes ordered ascending by name
+const recipesNameAsc = computed(() =>
+    sortRecipes(props.recipes, 'name', 'ascending'),
+);
+
+// Recipes ordered descending by name
+const recipesNameDesc = computed(() =>
+    sortRecipes(props.recipes, 'name', 'descending'),
+);
+
+// Recipes ordered ascending by creation date
+const recipesDateCreatedAsc = computed(() =>
+    sortRecipes(props.recipes, 'dateCreated', 'ascending'),
+);
+
+// Recipes ordered descending by creation date
+const recipesDateCreatedDesc = computed(() =>
+    sortRecipes(props.recipes, 'dateCreated', 'descending'),
+);
+
+// Recipes ordered ascending by modification date
+const recipesDateModifiedAsc = computed(() =>
+    sortRecipes(props.recipes, 'dateModified', 'ascending'),
+);
+
+// Recipes ordered descending by modification date
+const recipesDateModifiedDesc = computed(() =>
+    sortRecipes(props.recipes, 'dateModified', 'descending'),
+);
+
+// An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
+const recipeObjects = computed(() => {
+    function makeObject(rec) {
+        return {
+            recipe: rec,
+            show: filteredRecipes.value
+                .map((r) => r.recipe_id)
+                .includes(rec.recipe_id),
+        };
+    }
+
+    if (
+        orderBy.value === null ||
+        (orderBy.value.order !== 'ascending' &&
+            orderBy.value.order !== 'descending')
+    ) {
+        return props.recipes.map(makeObject);
+    }
+    if (orderBy.value.recipeProperty === 'dateCreated') {
+        if (orderBy.value.order === 'ascending') {
+            return recipesDateCreatedAsc.value.map(makeObject);
+        }
+        return recipesDateCreatedDesc.value.map(makeObject);
+    }
+    if (orderBy.value.recipeProperty === 'dateModified') {
+        if (orderBy.value.order === 'ascending') {
+            return recipesDateModifiedAsc.value.map(makeObject);
+        }
+        return recipesDateModifiedDesc.value.map(makeObject);
+    }
+    if (orderBy.value.recipeProperty === 'name') {
+        if (orderBy.value.order === 'ascending') {
+            return recipesNameAsc.value.map(makeObject);
+        }
+        return recipesNameDesc.value.map(makeObject);
+    }
+    return props.recipes.map(makeObject);
+});
+
+const showTagCloudInRecipeList = computed(
+    () => store.state.localSettings.showTagCloudInRecipeList,
+);
 </script>
 
 <script>

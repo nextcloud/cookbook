@@ -1,6 +1,5 @@
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
-
 /**
  * Clamps val between the minimum min and maximum max value.
  * @param val The value to be clamped between min and max

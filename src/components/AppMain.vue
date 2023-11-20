@@ -48,15 +48,7 @@ const isNavigationOpen = ref(false);
 //     // },
 // },
 
-onMounted(() => {
-    log.info('AppMain mounted');
-    subscribe('navigation-toggled', updateAppNavigationOpen);
-});
-
-onUnmounted(() => {
-    unsubscribe('navigation-toggled', updateAppNavigationOpen);
-});
-
+// Methods
 /**
  * Listen for event-bus events about the app navigation opening and closing
  */
@@ -67,6 +59,16 @@ const updateAppNavigationOpen = ({ open }) => {
 const closeNavigation = () => {
     emit('toggle-navigation', { open: false });
 };
+
+// Vue lifecycle
+onMounted(() => {
+    log.info('AppMain mounted');
+    subscribe('navigation-toggled', updateAppNavigationOpen);
+});
+
+onUnmounted(() => {
+    unsubscribe('navigation-toggled', updateAppNavigationOpen);
+});
 </script>
 
 <script>

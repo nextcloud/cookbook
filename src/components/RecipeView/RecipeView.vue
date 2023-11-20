@@ -132,12 +132,12 @@
                     <h3 v-if="scaledIngredients.length" class="section-title">
                         <span>{{ t('cookbook', 'Ingredients') }}</span>
                         <NcButton
+                            v-if="scaledIngredients.length"
                             class="copy-ingredients"
                             :type="'tertiary'"
-                            v-if="scaledIngredients.length"
-                            @click="copyIngredientsToClipboard"
-                            ariaLabel="Copy all ingredients to the clipboard"
+                            aria-label="Copy all ingredients to the clipboard"
                             :title="t('cookbook', 'Copy ingredients')"
+                            @click="copyIngredientsToClipboard"
                         >
                             <template #icon>
                                 <ContentCopyIcon :size="20" />
@@ -332,14 +332,12 @@ import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
+import yieldCalculator from 'cookbook/js/yieldCalculator';
+import ContentCopyIcon from 'icons/ContentCopy.vue';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
-import yieldCalculator from 'cookbook/js/yieldCalculator';
-
-import ContentCopyIcon from 'icons/ContentCopy.vue';
-
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
 
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredient from './RecipeIngredient.vue';
@@ -353,33 +351,6 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
-
-/**
- * This is one tricky feature of Vue router. If different paths lead to
- * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
- * the component will not automatically reload. So we have to manually
- * reload the page contents.
- * This can also be used to confirm that the user wants to leave the page
- * if there are unsaved changes.
- */
-onBeforeRouteUpdate((to, from, next) => {
-    // beforeRouteUpdate is called when the static route stays the same
-    next();
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
-    }
-});
-
-onMounted(() => {
-    log.info('RecipeView mounted');
-    setup();
-    // Register data load method hook for access from the controls components
-    emitter.off('reloadRecipeView');
-    emitter.on('reloadRecipeView', () => {
-        setup();
-    });
-});
 
 /**
  * @type {string}
@@ -406,10 +377,11 @@ const parsedTools = ref([]);
  */
 const recipeYield = ref(0);
 
+// ===================
 // Computed properties
-
+// ===================
 const recipe = computed(() => {
-    const recipe = {
+    const tmpRecipe = {
         description: '',
         ingredients: [],
         instructions: [],
@@ -425,27 +397,29 @@ const recipe = computed(() => {
 
     if (store.state.recipe === null) {
         log.debug('Recipe is null');
-        return recipe;
+        return tmpRecipe;
     }
 
     if (store.state.recipe.description) {
-        recipe.description = helpers.escapeHTML(store.state.recipe.description);
+        tmpRecipe.description = helpers.escapeHTML(
+            store.state.recipe.description,
+        );
     }
 
     if (store.state.recipe.recipeIngredient) {
-        recipe.ingredients = Object.values(
+        tmpRecipe.ingredients = Object.values(
             store.state.recipe.recipeIngredient,
         ).map((i) => helpers.escapeHTML(i));
     }
 
     if (store.state.recipe.recipeInstructions) {
-        recipe.instructions = Object.values(
+        tmpRecipe.instructions = Object.values(
             store.state.recipe.recipeInstructions,
         ).map((i) => helpers.escapeHTML(i));
     }
 
     if (store.state.recipe.keywords) {
-        recipe.keywords = String(store.state.recipe.keywords).split(',');
+        tmpRecipe.keywords = String(store.state.recipe.keywords).split(',');
     }
 
     if (store.state.recipe.cookTime) {
@@ -453,7 +427,7 @@ const recipe = computed(() => {
         const hh = parseInt(cookT[1], 10);
         const mm = parseInt(cookT[2], 10);
         if (hh > 0 || mm > 0) {
-            recipe.timerCook = { hours: hh, minutes: mm };
+            tmpRecipe.timerCook = { hours: hh, minutes: mm };
         }
     }
 
@@ -462,7 +436,7 @@ const recipe = computed(() => {
         const hh = parseInt(prepT[1], 10);
         const mm = parseInt(prepT[2], 10);
         if (hh > 0 || mm > 0) {
-            recipe.timerPrep = { hours: hh, minutes: mm };
+            tmpRecipe.timerPrep = { hours: hh, minutes: mm };
         }
     }
 
@@ -471,39 +445,39 @@ const recipe = computed(() => {
         const hh = parseInt(totalT[1], 10);
         const mm = parseInt(totalT[2], 10);
         if (hh > 0 || mm > 0) {
-            recipe.timerTotal = { hours: hh, minutes: mm };
+            tmpRecipe.timerTotal = { hours: hh, minutes: mm };
         }
     }
 
     if (store.state.recipe.tool) {
-        recipe.tools = store.state.recipe.tool.map((i) =>
+        tmpRecipe.tools = store.state.recipe.tool.map((i) =>
             helpers.escapeHTML(i),
         );
     }
 
     if (store.state.recipe.dateCreated) {
         const date = parseDateTime(store.state.recipe.dateCreated);
-        recipe.dateCreated =
+        tmpRecipe.dateCreated =
             date != null ? date.format('L, LT').toString() : null;
     }
 
     if (store.state.recipe.dateModified) {
         const date = parseDateTime(store.state.recipe.dateModified);
-        recipe.dateModified =
+        tmpRecipe.dateModified =
             date != null ? date.format('L, LT').toString() : null;
     }
 
     if (store.state.recipe.nutrition) {
         if (store.state.recipe.nutrition instanceof Array) {
-            recipe.nutrition = {};
+            tmpRecipe.nutrition = {};
         } else {
-            recipe.nutrition = store.state.recipe.nutrition;
+            tmpRecipe.nutrition = store.state.recipe.nutrition;
         }
     } else {
-        recipe.nutrition = {};
+        tmpRecipe.nutrition = {};
     }
 
-    return recipe;
+    return tmpRecipe;
 });
 
 const recipeIngredientsHaveSubgroups = computed(() => {
@@ -517,9 +491,7 @@ const recipeIngredientsHaveSubgroups = computed(() => {
     return false;
 });
 
-const showCreatedDate = computed(() => {
-    return recipe.value.dateCreated;
-});
+const showCreatedDate = computed(() => recipe.value.dateCreated);
 
 const showModifiedDate = computed(() => {
     if (!recipe.value.dateModified) {
@@ -532,36 +504,139 @@ const showModifiedDate = computed(() => {
     );
 });
 
-const showNutritionData = computed(() => {
-    return (
+const visibleInfoBlocks = computed(
+    () => store.state.config?.visibleInfoBlocks ?? {},
+);
+
+const showNutritionData = computed(
+    () =>
         recipe.value.nutrition &&
         !(recipe.value.nutrition instanceof Array) &&
         Object.keys(recipe.value.nutrition).length > 1 &&
-        visibleInfoBlocks.value['nutrition-information']
-    );
-});
+        visibleInfoBlocks.value['nutrition-information'],
+);
 
-const visibleInfoBlocks = computed(() => {
-    return store.state.config?.visibleInfoBlocks ?? {};
-});
-
-const scaledIngredients = computed(() => {
-    return yieldCalculator.recalculateIngredients(
+const scaledIngredients = computed(() =>
+    yieldCalculator.recalculateIngredients(
         parsedIngredients.value,
         recipeYield.value,
         store.state.recipe.recipeYield,
-    );
-});
+    ),
+);
 
-const ingredientsWithValidSyntax = computed(() => {
-    return parsedIngredients.value.map(yieldCalculator.isValidIngredientSyntax);
-});
+const ingredientsWithValidSyntax = computed(() =>
+    parsedIngredients.value.map(yieldCalculator.isValidIngredientSyntax),
+);
 
-const ingredientsSyntaxCorrect = computed(() => {
-    return ingredientsWithValidSyntax.value.every((x) => x);
-});
+const ingredientsSyntaxCorrect = computed(() =>
+    ingredientsWithValidSyntax.value.every((x) => x),
+);
 
+// ===================
+// Methods
+// ===================
+const isNullOrEmpty = (str) =>
+    !str || (typeof str === 'string' && str.trim().length === 0);
+
+/**
+ * Callback for click on keyword
+ */
+const keywordClicked = (keyword) => {
+    if (keyword) {
+        router.push(`/tags/${keyword}`);
+    }
+};
+
+const setup = async () => {
+    // Make the control row show that a recipe is loading
+    if (!store.state.recipe) {
+        store.dispatch('setLoadingRecipe', { recipe: -1 });
+
+        // Make the control row show that the recipe is reloading
+    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
+        store.dispatch('setReloadingRecipe', {
+            recipe: route.params.id,
+        });
+
+        // Make the control row show that a new recipe is loading
+    } else {
+        store.dispatch('setLoadingRecipe', {
+            recipe: route.params.id,
+        });
+    }
+
+    try {
+        const response = await api.recipes.get(route.params.id);
+        const tmpRecipe = response.data;
+        // Store recipe data in vuex
+        store.dispatch('setRecipe', { recipe: tmpRecipe });
+
+        // Always set the active page last!
+        store.dispatch('setPage', { page: 'recipe' });
+    } catch {
+        if (store.state.loadingRecipe) {
+            // Reset loading recipe
+            store.dispatch('setLoadingRecipe', { recipe: 0 });
+        }
+
+        if (store.state.reloadingRecipe) {
+            // Reset reloading recipe
+            store.dispatch('setReloadingRecipe', {
+                recipe: 0,
+            });
+        }
+
+        store.dispatch('setPage', { page: 'recipe' });
+
+        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
+    }
+
+    recipeYield.value = store.state.recipe.recipeYield;
+};
+
+const changeRecipeYield = (increase = true) => {
+    recipeYield.value += increase ? 1 : -1;
+};
+
+const copyIngredientsToClipboard = () => {
+    const ingredientsToCopy = scaledIngredients.value.join('\n');
+
+    if (navigator.clipboard) {
+        navigator.clipboard
+            .writeText(ingredientsToCopy)
+            .then(() => log.info('JSON array copied to clipboard'))
+            .catch((err) => log.error('Failed to copy JSON array: ', err));
+    } else {
+        // fallback solution
+        const input = document.createElement('textarea');
+        input.style.position = 'absolute';
+        input.style.left = '-1000px';
+        input.style.top = '-1000px';
+        input.value = ingredientsToCopy;
+        document.body.appendChild(input);
+        input.select();
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                log.info('JSON array copied to clipboard');
+            } else {
+                log.error('Failed to copy JSON array');
+            }
+        } catch (err) {
+            log.error('Failed to copy JSON array: ', err);
+        }
+        document.body.removeChild(input);
+    }
+};
+
+const restoreOriginalRecipeYield = () => {
+    recipeYield.value = store.state.recipe.recipeYield;
+};
+
+// ===================
 // Watchers
+// ===================
+
 watch(
     () => recipe.value,
     (r) => {
@@ -641,105 +716,36 @@ watch(
     },
 );
 
-// Methods
-const isNullOrEmpty = (str) => {
-    return !str || (typeof str === 'string' && str.trim().length === 0);
-};
+// ===================
+// Vue lifecycle
+// ===================
 
 /**
- * Callback for click on keyword
+ * This is one tricky feature of Vue router. If different paths lead to
+ * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
+ * the component will not automatically reload. So we have to manually
+ * reload the page contents.
+ * This can also be used to confirm that the user wants to leave the page
+ * if there are unsaved changes.
  */
-const keywordClicked = (keyword) => {
-    if (keyword) {
-        router.push(`/tags/${keyword}`);
+onBeforeRouteUpdate((to, from, next) => {
+    // beforeRouteUpdate is called when the static route stays the same
+    next();
+    // Check if we should reload the component content
+    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
+        setup();
     }
-};
+});
 
-const setup = async () => {
-    // Make the control row show that a recipe is loading
-    if (!store.state.recipe) {
-        store.dispatch('setLoadingRecipe', { recipe: -1 });
-
-        // Make the control row show that the recipe is reloading
-    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
-        store.dispatch('setReloadingRecipe', {
-            recipe: route.params.id,
-        });
-
-        // Make the control row show that a new recipe is loading
-    } else {
-        store.dispatch('setLoadingRecipe', {
-            recipe: route.params.id,
-        });
-    }
-
-    try {
-        const response = await api.recipes.get(route.params.id);
-        const recipe = response.data;
-        // Store recipe data in vuex
-        store.dispatch('setRecipe', { recipe });
-
-        // Always set the active page last!
-        store.dispatch('setPage', { page: 'recipe' });
-    } catch {
-        if (store.state.loadingRecipe) {
-            // Reset loading recipe
-            store.dispatch('setLoadingRecipe', { recipe: 0 });
-        }
-
-        if (store.state.reloadingRecipe) {
-            // Reset reloading recipe
-            store.dispatch('setReloadingRecipe', {
-                recipe: 0,
-            });
-        }
-
-        store.dispatch('setPage', { page: 'recipe' });
-
-        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
-    }
-
-    recipeYield.value = store.state.recipe.recipeYield;
-};
-
-const changeRecipeYield = (increase = true) => {
-    recipeYield.value = recipeYield.value + (increase ? 1 : -1);
-};
-
-const copyIngredientsToClipboard = () => {
-    const ingredientsToCopy = scaledIngredients.value.join('\n');
-
-    if (navigator.clipboard) {
-        navigator.clipboard
-            .writeText(ingredientsToCopy)
-            .then(() => log.info('JSON array copied to clipboard'))
-            .catch((err) => log.error('Failed to copy JSON array: ', err));
-    } else {
-        // fallback solution
-        const input = document.createElement('textarea');
-        input.style.position = 'absolute';
-        input.style.left = '-1000px';
-        input.style.top = '-1000px';
-        input.value = ingredientsToCopy;
-        document.body.appendChild(input);
-        input.select();
-        try {
-            const successful = document.execCommand('copy');
-            if (successful) {
-                log.info('JSON array copied to clipboard');
-            } else {
-                log.error('Failed to copy JSON array');
-            }
-        } catch (err) {
-            log.error('Failed to copy JSON array: ', err);
-        }
-        document.body.removeChild(input);
-    }
-};
-
-const restoreOriginalRecipeYield = () => {
-    recipeYield.value = store.state.recipe.recipeYield;
-};
+onMounted(() => {
+    log.info('RecipeView mounted');
+    setup();
+    // Register data load method hook for access from the controls components
+    emitter.off('reloadRecipeView');
+    emitter.on('reloadRecipeView', () => {
+        setup();
+    });
+});
 </script>
 
 <script>

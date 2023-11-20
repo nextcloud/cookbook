@@ -10,7 +10,7 @@
             </NcAppNavigationNew>
         </router-link>
 
-        <template slot="list">
+        <template #list>
             <NcActionInput
                 class="download"
                 :disabled="downloading ? 'disabled' : null"
@@ -77,7 +77,7 @@
             </NcAppNavigationItem>
         </template>
 
-        <template slot="footer">
+        <template #footer>
             <NcAppNavigationNew
                 :text="t('cookbook', 'Cookbook settings')"
                 :button-class="['create', 'icon-settings']"
@@ -124,10 +124,6 @@ const store = useStore();
  */
 const categoryItemElements = ref([]);
 /**
- * @type {import('vue').Ref<boolean>}
- */
-const catRenamingEnabled = ref(false);
-/**
  * @type {import('vue').Ref<Array>}
  */
 const categories = ref([]);
@@ -149,11 +145,6 @@ const uncatRecipes = ref(0);
  */
 const importUrl = ref('');
 
-onMounted(() => {
-    log.info('AppNavi mounted');
-    getCategories();
-});
-
 // Computed properties
 const totalRecipeCount = computed(() => {
     log.debug('Calling totalRecipeCount');
@@ -166,33 +157,11 @@ const totalRecipeCount = computed(() => {
 
 // Computed property to watch the Vuex state. If there are more in the
 // future, consider using the Vue mapState helper
-const refreshRequired = computed(() => {
-    return store.state.appNavigation.refreshRequired;
-});
-
-const categoryUpdating = computed(() => {
-    return isCategoryUpdating.value;
-});
-
-// Watchers
-// Register a method hook for navigation refreshing
-watch(
-    () => refreshRequired.value,
-    (newVal, oldVal) => {
-        if (newVal !== oldVal && newVal === true) {
-            log.debug('Calling getCategories from refreshRequired');
-            getCategories();
-        }
-    },
+const refreshRequired = computed(
+    () => store.state.appNavigation.refreshRequired,
 );
 
 // Methods
-/**
- * Enable renaming of categories.
- */
-const toggleCategoryRenaming = () => {
-    catRenamingEnabled.value = !catRenamingEnabled.value;
-};
 
 /**
  * Opens a category
@@ -344,6 +313,9 @@ const getCategories = async () => {
         }
         await nextTick();
 
+        // Do not await in for loop
+        const loadingCategoriesAwaitable = [];
+
         for (let i = 0; i < categories.value.length; i++) {
             // Reload recipes in open categories
             if (!categoryItemElements[i]) {
@@ -354,9 +326,11 @@ const getCategories = async () => {
                 log.info(
                     `Reloading recipes in ${categoryItemElements[i][0].title}`,
                 );
-                await openCategory(i);
+                loadingCategoriesAwaitable.push(openCategory(i));
             }
         }
+        await Promise.all(loadingCategoriesAwaitable);
+
         // Refreshing component data has been finished
         store.dispatch('setAppNavigationRefreshRequired', {
             isRequired: false,
@@ -371,25 +345,27 @@ const getCategories = async () => {
     }
 };
 
-/**
- * Set loading recipe index to show the loading icon
- */
-const setLoadingRecipe = (id) => {
-    store.dispatch('setLoadingRecipe', { recipe: id });
-};
-
-/**
- * Toggle the left navigation pane
- */
-const toggleNavigation = () => {
-    store.dispatch('setAppNavigationVisible', {
-        isVisible: !store.state.appNavigation.visible,
-    });
-};
-
 const handleOpenSettings = () => {
     emit(SHOW_SETTINGS_EVENT, null);
 };
+
+// Watchers
+// Register a method hook for navigation refreshing
+watch(
+    () => refreshRequired.value,
+    (newVal, oldVal) => {
+        if (newVal !== oldVal && newVal === true) {
+            log.debug('Calling getCategories from refreshRequired');
+            getCategories();
+        }
+    },
+);
+
+// Vue lifecycle
+onMounted(() => {
+    log.info('AppNavi mounted');
+    getCategories();
+});
 </script>
 
 <script>

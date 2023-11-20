@@ -94,21 +94,21 @@ const selectedKeywordsBuffer = ref([]);
 
 // Computed properties
 /** Text shown on the button for ordering the keywords */
-const orderButtonText = computed(() => {
-    return isOrderedAlphabetically.value ? '321' : 'ABC';
-});
+const orderButtonText = computed(() =>
+    isOrderedAlphabetically.value ? '321' : 'ABC',
+);
 /** Title of the button for ordering the keywords */
-const orderButtonTitle = computed(() => {
-    return isOrderedAlphabetically.value
+const orderButtonTitle = computed(() =>
+    isOrderedAlphabetically.value
         ? t('cookbook', 'Order keywords by number of recipes')
-        : t('cookbook', 'Order keywords alphabetically');
-});
+        : t('cookbook', 'Order keywords alphabetically'),
+);
 /**
  * Which icon to show for the size-toggle button
  */
-const toggleSizeIcon = computed(() => {
-    return isMaximized.value ? 'icon-triangle-n' : 'icon-triangle-s';
-});
+const toggleSizeIcon = computed(() =>
+    isMaximized.value ? 'icon-triangle-n' : 'icon-triangle-s',
+);
 /**
  * An array of sorted and unique keywords over all the recipes
  */
@@ -122,8 +122,8 @@ const uniqKeywords = computed(() => {
 /**
  * An array of objects that contain the keywords plus a count of recipes associated with these keywords
  */
-const keywordsWithCount = computed(() => {
-    return uniqKeywords.value
+const keywordsWithCount = computed(() =>
+    uniqKeywords.value
         .map((kw) => ({
             name: kw,
             count: props.keywords.filter((kw2) => kw === kw2).length,
@@ -139,8 +139,24 @@ const keywordsWithCount = computed(() => {
             }
             // Distinguish by keyword name
             return k1.name.toLowerCase() > k2.name.toLowerCase() ? 1 : -1;
-        });
-});
+        }),
+);
+/**
+ * An array of keyword objects that are currently in use for filtering
+ */
+const selectedKeywordsWithCount = computed(() =>
+    keywordsWithCount.value.filter((kw) =>
+        selectedKeywordsBuffer.value.includes(kw.name),
+    ),
+);
+/**
+ * An array of those keyword objects that are currently not in use for filtering
+ */
+const unselectedKeywords = computed(() =>
+    keywordsWithCount.value.filter(
+        (kw) => !selectedKeywordsWithCount.value.includes(kw),
+    ),
+);
 /**
  * An array of keywords that are yet unselected but some visible recipes are associated
  */
@@ -156,29 +172,13 @@ const selectableKeywords = computed(() => {
     );
 });
 /**
- * An array of keyword objects that are currently in use for filtering
- */
-const selectedKeywordsWithCount = computed(() => {
-    return keywordsWithCount.value.filter((kw) =>
-        selectedKeywordsBuffer.value.includes(kw.name),
-    );
-});
-/**
  * An array of known keywords that are not associated with any visible recipe
  */
-const unavailableKeywords = computed(() => {
-    return unselectedKeywords.value.filter(
+const unavailableKeywords = computed(() =>
+    unselectedKeywords.value.filter(
         (kw) => !selectableKeywords.value.includes(kw),
-    );
-});
-/**
- * An array of those keyword objects that are currently not in use for filtering
- */
-const unselectedKeywords = computed(() => {
-    return keywordsWithCount.value.filter(
-        (kw) => !selectedKeywordsWithCount.value.includes(kw),
-    );
-});
+    ),
+);
 
 // Watchers
 /**

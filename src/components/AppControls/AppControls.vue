@@ -12,8 +12,11 @@
                 :title="t('cookbook', 'Viewing recipe')"
             />
             <!-- INDEX PAGE -->
-            <Location v-if="isIndex" :title="t('cookbook', 'All recipes')" />
-            <Location
+            <LocationIndicator
+                v-if="isIndex"
+                :title="t('cookbook', 'All recipes')"
+            />
+            <LocationIndicator
                 v-else-if="isSearch && route.params.value"
                 :title="
                     route.params.value === '_' // TRANSLATORS Shown, e.g., as the recipe category in the navigation/title bar for uncategorized recipes.
@@ -22,32 +25,32 @@
                 "
             />
             <!-- Recipe view / edit -->
-            <Location
+            <LocationIndicator
                 v-else-if="isEdit || isRecipe"
                 :title="store.state.recipe.name"
             />
             <!-- Is app loading? -->
-            <Location
+            <LocationIndicator
                 v-else-if="isLoading"
                 :title="t('cookbook', 'Loading app')"
             />
             <!-- Is a recipe loading? -->
-            <Location
+            <LocationIndicator
                 v-else-if="!!store.state.loadingRecipe"
                 :title="t('cookbook', 'Loading recipe')"
             />
             <!-- No recipe found -->
-            <Location
+            <LocationIndicator
                 v-else-if="recipeNotFound"
                 :title="t('cookbook', 'Recipe not found')"
             />
             <!-- No page found -->
-            <Location
+            <LocationIndicator
                 v-else-if="pageNotFound"
                 :title="t('cookbook', 'Page not found')"
             />
             <!-- Create new recipe -->
-            <Location
+            <LocationIndicator
                 v-else-if="isCreate"
                 :title="t('cookbook', 'Creating new recipe')"
             />
@@ -170,14 +173,8 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'AppControls',
-};
-</script>
-
 <script setup>
-import { computed, getCurrentInstance, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router/composables';
 import NcActions from '@nextcloud/vue/dist/Components/NcActions';
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
@@ -198,7 +195,7 @@ import {
     showSimpleConfirmModal,
 } from 'cookbook/js/modals';
 
-import Location from './Location.vue';
+import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
 import { useStore } from '../../store';
 import emitter from '../../bus';
@@ -207,14 +204,12 @@ const route = useRoute();
 const store = useStore();
 const filterValue = ref('');
 
-/** Computed values **/
+/** Computed values * */
 
-const isCreate = computed(() => {
-    return store.state.page === 'create';
-});
+const isCreate = computed(() => store.state.page === 'create');
 const isEdit = computed(() => {
     //  A recipe is being loaded
-    if (!!store.state.loadingRecipe) {
+    if (store.state.loadingRecipe) {
         return false; // Do not show both at the same time
     }
     // Editing requires that a recipe was found
@@ -222,18 +217,19 @@ const isEdit = computed(() => {
 });
 const isIndex = computed(() => {
     //  A recipe is being loaded
-    if (!!store.state.loadingRecipe) {
+    if (store.state.loadingRecipe) {
         return false; // Do not show both at the same time
     }
     return store.state.page === 'index';
 });
-const isLoading = computed(() => {
-    //  The page is being loaded
-    return store.state.page === null;
-});
+const isLoading = computed(
+    () =>
+        //  The page is being loaded
+        store.state.page === null,
+);
 const isRecipe = computed(() => {
     //  A recipe is being loaded
-    if (!!store.state.loadingRecipe) {
+    if (store.state.loadingRecipe) {
         return false; // Do not show both at the same time
     }
     // Viewing recipe requires that one was found
@@ -241,21 +237,18 @@ const isRecipe = computed(() => {
 });
 const isSearch = computed(() => {
     //  A recipe is being loaded
-    if (!!store.state.loadingRecipe) {
+    if (store.state.loadingRecipe) {
         return false; // Do not show both at the same time
     }
     return store.state.page === 'search';
 });
-const pageNotFound = computed(() => {
-    return store.state.page === 'notfound';
-});
-const recipeNotFound = computed(() => {
-    // Editing or viewing recipe was attempted, but no recipe was found
-    return (
+const pageNotFound = computed(() => store.state.page === 'notfound');
+const recipeNotFound = computed(
+    () =>
+        // Editing or viewing recipe was attempted, but no recipe was found
         ['edit', 'recipe'].indexOf(store.state.page) !== -1 &&
-        !store.state.recipe
-    );
-});
+        !store.state.recipe,
+);
 const searchTitle = computed(() => {
     if (route.name === 'search-category') {
         return t('cookbook', 'Category');
@@ -276,7 +269,7 @@ const deleteRecipe = async () => {
     if (
         !(await showSimpleConfirmModal(
             // prettier-ignore
-            t("cookbook", "Are you sure you want to delete this recipe?"),
+            t('cookbook', 'Are you sure you want to delete this recipe?'),
         ))
     ) {
         return;
@@ -326,6 +319,12 @@ const goToRecipe = (id) => {
 
 const goToRecipeEdit = (id) => {
     helpers.goTo(`/recipe/${id}/edit`);
+};
+</script>
+
+<script>
+export default {
+    name: 'AppControls',
 };
 </script>
 
