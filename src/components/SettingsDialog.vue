@@ -188,6 +188,8 @@ import { showSimpleAlertModal } from "cookbook/js/modals"
 
 import { enableLogging } from "cookbook/js/logging"
 
+import Vue from "vue"
+
 export const SHOW_SETTINGS_EVENT = "show-settings"
 
 const INFO_BLOCK_KEYS = [
@@ -221,25 +223,19 @@ export default {
             isOpen: false,
             printImage: false,
             recipeFolder: "",
-            resetPrintImage: true,
             showTagCloudInRecipeList: true,
-            resetTagCloud: true,
             scanningLibrary: false,
-            // By setting the reset value initially to true, it will skip one watch event
-            // (the one when config is loaded at page load)
-            resetInterval: true,
             updateInterval: 0,
             visibleInfoBlocks: [...INFO_BLOCK_KEYS],
-            resetVisibleInfoBlocks: true,
+            writeChanges: true,
         }
     },
     watch: {
         async printImage(newVal, oldVal) {
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetPrintImage) {
-                this.resetPrintImage = false
+            if (!this.writeChanges) {
                 return
             }
+
             try {
                 await api.config.printImage.update(newVal)
                 // Should this check the response of the query? To catch some errors that redirect the page
@@ -248,25 +244,26 @@ export default {
                     // prettier-ignore
                     t("cookbook","Could not set preference for image printing"),
                 )
-                this.resetPrintImage = true
                 this.printImage = oldVal
             }
         },
         // eslint-disable-next-line no-unused-vars
         showTagCloudInRecipeList(newVal, oldVal) {
+            if (!this.writeChanges) {
+                return
+            }
+
             this.$store.dispatch("setShowTagCloudInRecipeList", {
                 showTagCloud: newVal,
             })
         },
         async updateInterval(newVal, oldVal) {
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetInterval) {
-                this.resetInterval = false
+            if (!this.writeChanges) {
                 return
             }
+
             try {
                 await api.config.updateInterval.update(newVal)
-                // Should this check the response of the query? To catch some errors that redirect the page
             } catch {
                 await showSimpleAlertModal(
                     // prettier-ignore
@@ -276,40 +273,56 @@ export default {
                         }
                     ),
                 )
-                this.resetInterval = true
                 this.updateInterval = oldVal
             }
         },
         async visibleInfoBlocks(newVal, oldVal) {
-            // Avoid infinite loop on page load and when reseting value after failed submit
-            if (this.resetVisibleInfoBlocks) {
-                this.resetVisibleInfoBlocks = false
+            if (!this.writeChanges) {
                 return
             }
+
             try {
                 const data = visibleInfoBlocksEncode(newVal)
                 await api.config.visibleInfoBlocks.update(data)
                 await this.$store.dispatch("refreshConfig")
-                // Should this check the response of the query? To catch some errors that redirect the page
             } catch (err) {
                 // eslint-disable-next-line no-console
                 console.error("Error while trying to save info blocks", err)
                 await showSimpleAlertModal(
                     t("cookbook", "Could not save visible info blocks"),
                 )
-                this.resetVisibleInfoBlocks = true
                 this.visibleInfoBlocks = oldVal
             }
         },
     },
     mounted() {
-        this.setup()
-
         subscribe(SHOW_SETTINGS_EVENT, this.handleShowSettings)
     },
     methods: {
         handleShowSettings() {
             this.isOpen = true
+
+            // Temporarily disable the storage of data
+            this.writeChanges = false
+
+            const { config } = this.$store.state
+
+            if (!config) {
+                throw new Error()
+            }
+
+            this.printImage = config.print_image
+            this.visibleInfoBlocks = visibleInfoBlocksDecode(
+                config.visibleInfoBlocks,
+            )
+            this.showTagCloudInRecipeList =
+                this.$store.state.localSettings.showTagCloudInRecipeList
+            this.updateInterval = config.update_interval
+            this.recipeFolder = config.folder
+
+            Vue.nextTick(() => {
+                this.writeChanges = true
+            })
         },
 
         /**
@@ -346,36 +359,6 @@ export default {
                         ),
                     )
             })
-        },
-
-        /**
-         * Initial setup
-         */
-        async setup() {
-            try {
-                await this.$store.dispatch("refreshConfig")
-                const { config } = this.$store.state
-                this.resetPrintImage = false
-                this.resetVisibleInfoBlocks = false
-
-                if (!config) {
-                    throw new Error()
-                }
-
-                this.printImage = config.print_image
-                this.visibleInfoBlocks = visibleInfoBlocksDecode(
-                    config.visibleInfoBlocks,
-                )
-                this.showTagCloudInRecipeList =
-                    this.$store.state.localSettings.showTagCloudInRecipeList
-                this.updateInterval = config.update_interval
-                this.recipeFolder = config.folder
-            } catch (err) {
-                this.$log.error("Error setting up SettingsDialog", err)
-                await showSimpleAlertModal(
-                    t("cookbook", "Loading config failed"),
-                )
-            }
         },
 
         /**
@@ -438,16 +421,4 @@ export default {
     display: block;
     width: 100%;
 }
-
-/* #app-settings .button { */
-/*     z-index: 2; */
-/*     height: 44px; */
-/*     padding: 0; */
-/*     border-radius: var(--border-radius); */
-/* } */
-
-/* #app-settings .button p { */
-/*     margin: auto; */
-/*     font-size: 13px; */
-/* } */
 </style>

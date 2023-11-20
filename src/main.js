@@ -57,6 +57,8 @@ Vue.use(ModalDialogs)
 
 setupLogging(Vue)
 
+store.dispatch("refreshConfig")
+
 // Pass translation engine to Vue
 Vue.prototype.t = window.t
 
