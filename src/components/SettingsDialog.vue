@@ -284,6 +284,7 @@ export default {
             try {
                 const data = visibleInfoBlocksEncode(newVal)
                 await api.config.visibleInfoBlocks.update(data)
+                await this.$store.dispatch("refreshConfig")
             } catch (err) {
                 // eslint-disable-next-line no-console
                 console.error("Error while trying to save info blocks", err)
