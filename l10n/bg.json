@@ -191,7 +191,6 @@
     "Could not set recipe update interval to {interval}" : "Интервалът за актуализиране на рецептата не можа да бъде зададен на {interval}",
     "Could not save visible info blocks" : "Не можаха да се запишат видимите информационни блокове",
     "Could not set recipe folder to {path}" : "Папка с рецепти не можа да се зададе на {path}",
-    "Loading config failed" : "Зареждането на конфигурацията е неуспешно",
     "Dismiss" : "Отхвърляне",
     "Cancel" : "Отказ",
     "OK" : "Добре"

@@ -139,7 +139,6 @@
     "Could not set preference for image printing" : "Kuvan tulostuksen määritys epäonnistui",
     "Could not set recipe update interval to {interval}" : "Reseptin päivitysvälin määrittäminen arvoon {interval} epäonnistui",
     "Could not set recipe folder to {path}" : "Reseptihakemistoa ei voitu määrittää kohteeseen {path}",
-    "Loading config failed" : "Asetusten lataus epäonnistui",
     "Dismiss" : "Hylkää",
     "Cancel" : "Peruuta",
     "OK" : "OK"

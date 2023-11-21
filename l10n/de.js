@@ -202,7 +202,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Could not save visible info blocks" : "Konnte Sichtbarkeit der Infoblöcke nicht speichern.",
     "Could not set recipe folder to {path}" : "Konnte den Pfad '{path}' nicht als Rezept-Ordner setzen",
-    "Loading config failed" : "Laden der Konfiguration fehlgeschlagen",
     "Dismiss" : "Abbrechen",
     "Cancel" : "Abbrechen",
     "OK" : "OK"

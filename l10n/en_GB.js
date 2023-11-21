@@ -196,7 +196,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Could not set recipe update interval to {interval}",
     "Could not save visible info blocks" : "Could not save visible info blocks",
     "Could not set recipe folder to {path}" : "Could not set recipe folder to {path}",
-    "Loading config failed" : "Loading configuration failed",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
     "OK" : "OK"

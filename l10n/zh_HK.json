@@ -194,7 +194,6 @@
     "Could not set recipe update interval to {interval}" : "無法將食譜更新間距設置為 {interval}",
     "Could not save visible info blocks" : "無法保存可見資料塊",
     "Could not set recipe folder to {path}" : "無法將食譜資料夾路徑設置為 {path}",
-    "Loading config failed" : "加載配置失敗",
     "Dismiss" : "撤銷",
     "Cancel" : "取消",
     "OK" : "OK"

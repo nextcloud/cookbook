@@ -108,7 +108,6 @@
     "Could not set preference for image printing" : "Δεν μπορούν να οριστούν προτιμήσεις για εκτύπωση εικόνας",
     "Could not set recipe update interval to {interval}" : "Δεν μπορεί να οριστεί εσωτερική ενημέρωση συνταγής σε {interval}",
     "Could not set recipe folder to {path}" : "Δεν μπορεί να οριστεί φάκελος συνταγών σε {path}",
-    "Loading config failed" : "Η φόρτωση των ρυθμίσεων απέτυχε",
     "Dismiss" : "Τους ζυγούς λύσατε!",
     "Cancel" : "Ακύρωση",
     "OK" : "OK"

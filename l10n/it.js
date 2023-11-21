@@ -141,7 +141,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Impossibile impostare la preferenze per la stampa dell'immagine",
     "Could not set recipe update interval to {interval}" : "Impossibile impostare l'intervallo di aggiornamento delle ricette a {interval}",
     "Could not set recipe folder to {path}" : "Impossibile impostare la cartella delle ricette a {path}",
-    "Loading config failed" : "Caricamento della configurazione non riuscito",
     "Dismiss" : "Annulla",
     "Cancel" : "Annulla",
     "OK" : "OK"

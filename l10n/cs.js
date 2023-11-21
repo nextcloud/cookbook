@@ -19,6 +19,7 @@ OC.L10N.register(
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Pro zpracování kolonky „recipeYield“ (výtěžnost), představující počet porcí z receptu {name}, použít heuristiku.",
     "_Only a single number was found in the \"recipeYield\" field. Using it as number of servings._::_There are %n numbers found in the \"recipeYield\" field. Using the highest number found as number of servings._" : ["V kolonce „recipeYield“ nalezeno pouze jedno číslo. Bude použito jako počet porcí.","V kolonce „recipeYield“ nalezena %n čísla. Nejvyšší z nich bude použito jako počet porcí.","V kolonce „recipeYield“ nalezeno %n čísel. Nejvyšší z nich bude použito jako počet porcí. ","V kolonce „recipeYield“ nalezena %n čísla. Nejvyšší z nich bude použito jako počet porcí."],
     "Could not parse \"recipeYield\" field. Falling back to 1 serving." : "Nedaří se zpracovat kolonku „recipeYield“. Náhradně je předpokládána jedna porce.",
+    "Could not parse recipe tools. Expected array or string." : "Nepodařilo se zpracovat nástroje receptu. Očekáváno pole nebo znak.",
     "Could not find recipe in HTML code." : "V HTML zdrojovém kódu se nedaří najít recept.",
     "JSON cannot be decoded." : "JSON se nedaří dekódovat.",
     "No recipe was found." : "Nebyl nalezen žádný recept.",
@@ -201,7 +202,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptů na {interval}",
     "Could not save visible info blocks" : "Nedaří se uložit viditelnost bloků informací",
     "Could not set recipe folder to {path}" : "Nepodařilo se nastavit složku pro recepty na {path}",
-    "Loading config failed" : "Načítání nastavení se nezdařilo",
     "Dismiss" : "Zahodit",
     "Cancel" : "Storno",
     "OK" : "OK"

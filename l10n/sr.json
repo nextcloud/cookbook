@@ -200,7 +200,6 @@
     "Could not set recipe update interval to {interval}" : "Не могу да постави време ажурирања на {interval}",
     "Could not save visible info blocks" : "Није успело чување видљивих инфо блокова",
     "Could not set recipe folder to {path}" : "Не могу да поставим фасциклу са рецептима на {path}",
-    "Loading config failed" : "Учитавање конфигурације није успело",
     "Dismiss" : "Уклони",
     "Cancel" : "Поништи",
     "OK" : "У реду"

@@ -194,7 +194,6 @@
     "Could not set recipe update interval to {interval}" : "Não foi possível definir o intervalo de atualização da receita para {interval}",
     "Could not save visible info blocks" : "Não foi possível salvar os blocos de informações visíveis",
     "Could not set recipe folder to {path}" : "Não foi possível definir a pasta de receitas para {path}",
-    "Loading config failed" : "Erro ao carregar a configuração",
     "Dismiss" : "Dispensar",
     "Cancel" : "Cancelar",
     "OK" : "OK"

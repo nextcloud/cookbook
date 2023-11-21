@@ -81,7 +81,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Nepavyko nustatyti nuostatos paveikslų spausdinimui",
     "Could not set recipe update interval to {interval}" : "Nepavyko nustatyti recepto atnaujinimo intervalo į {interval}",
     "Could not set recipe folder to {path}" : "Nepavyko nustatyti receptų aplanko į {path}",
-    "Loading config failed" : "Konfigūracijos įkėlimas nepavyko",
     "Dismiss" : "Atmesti",
     "Cancel" : "Atsisakyti",
     "OK" : "Gerai"

@@ -202,7 +202,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Yemek tarifi güncelleme sıklığı {interval} olarak ayarlanamadı",
     "Could not save visible info blocks" : "Görünür bilgi blokları kaydedilemedi",
     "Could not set recipe folder to {path}" : "Yemek tarifi derleme klasörü {path} olarak ayarlanamadı",
-    "Loading config failed" : "Yapılandırma yüklenemedi",
     "Dismiss" : "Yok say",
     "Cancel" : "İptal",
     "OK" : "Tamam"

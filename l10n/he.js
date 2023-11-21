@@ -60,7 +60,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "לא ניתן להגדיר העדפה להדפסת תמונות",
     "Could not set recipe update interval to {interval}" : "לא ניתן להגדיר את ההפרש בין עדכוני המתכון לכדי {interval}",
     "Could not set recipe folder to {path}" : "לא ניתן להגדיר את תיקיית המתכונים לכדי {path}",
-    "Loading config failed" : "טעינת ההגדרות נכשלה",
     "Dismiss" : "התעלמות",
     "Cancel" : "ביטול",
     "OK" : "אישור"
