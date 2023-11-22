@@ -1,69 +1,7 @@
 <template>
     <div>
         <div v-if="recipeObjects.length === 0">
-            <NcEmptyContent v-if="!isCategorySelected">
-                <template #description>
-                    <div class="center p-4">
-                        <div>
-                            {{
-                                t('cookbook', 'No recipes created or imported.')
-                            }}
-                        </div>
-                        <div>
-                            {{
-                                t(
-                                    'cookbook',
-                                    'To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.',
-                                )
-                            }}
-                        </div>
-                    </div>
-                </template>
-                <template #icon>
-                    <RecipeIcon />
-                </template>
-                <template #name>
-                    <h1 class="empty-content__name">
-                        {{ t('cookbook', 'No recipes') }}
-                    </h1>
-                </template>
-                <template #action>
-                    <router-link :to="'/recipe/create'">
-                        <NcButton type="primary"> Create new recipe! </NcButton>
-                    </router-link>
-                </template>
-            </NcEmptyContent>
-
-            <NcEmptyContent v-if="isCategorySelected">
-                <template #description>
-                    <div class="center p-4">
-                        <div>
-                            {{
-                                t(
-                                    'cookbook',
-                                    'No recipes matching the selected category found.',
-                                )
-                            }}
-                        </div>
-                        <div>
-                            {{
-                                t(
-                                    'cookbook',
-                                    'Try selecting a category from the left navigation bar.',
-                                )
-                            }}
-                        </div>
-                    </div>
-                </template>
-                <template #icon>
-                    <RecipeIcon />
-                </template>
-                <template #name>
-                    <h1 class="empty-content__name">
-                        {{ t('cookbook', 'No recipes') }}
-                    </h1>
-                </template>
-            </NcEmptyContent>
+            <EmptyList :delay="1000" />
         </div>
         <RecipeListKeywordCloud
             v-if="showTagCloudInRecipeList"
@@ -120,16 +58,12 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router/composables';
-import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent';
 import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
 import { useStore } from '../../store';
+import EmptyList from './EmptyList.vue';
 import RecipeCard from './RecipeCard.vue';
 import RecipeListKeywordCloud from './RecipeListKeywordCloud.vue';
 
-const route = useRoute();
 const store = useStore();
 
 const props = defineProps({
@@ -139,7 +73,7 @@ const props = defineProps({
     },
 });
 
-// todo: Find out why this is here
+// todo: Find out why this was here
 /**
  * String-based filters applied to the list
  * @type {import('vue').Ref<string>}
@@ -197,7 +131,9 @@ onMounted(() => {
     store.dispatch('clearRecipeFilters');
 });
 
+// ===================
 // Methods
+// ===================
 
 /* Sort recipes according to the property of the recipe ascending or
  * descending
@@ -240,14 +176,9 @@ const sortRecipes = (recipes, recipeProperty, order) => {
     });
 };
 
+// ===================
 // Computed properties
-/**
- * True, if the recipe list is shown for a selected category or the 'undefined' category and not "All recipes".
- */
-const isCategorySelected = computed(
-    () => route.name.substring(1, 9) === 'category',
-);
-
+// ===================
 /**
  * An array of all keywords in all recipes. These are neither sorted nor unique
  */
