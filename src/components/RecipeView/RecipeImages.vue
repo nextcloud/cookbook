@@ -23,7 +23,7 @@ import { ref } from 'vue';
 const collapsed = ref(true);
 
 const toggleCollapsed = () => {
-    this.collapsed = !this.collapsed;
+    collapsed.value = !collapsed.value;
 };
 </script>
 
