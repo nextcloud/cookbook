@@ -33,7 +33,9 @@
   [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
 - Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
   [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
-
+- Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- 
 ### Maintenance
 - Preparation for migration to vue.js 3
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
