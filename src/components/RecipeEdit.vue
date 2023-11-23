@@ -514,6 +514,7 @@ const save = async () => {
         savingRecipe.value = false;
     }
 };
+
 const initEmptyRecipe = () => {
     prepTime.value = { time: [0, 0], paddedTime: '' };
     cookTime.value = { time: [0, 0], paddedTime: '' };
@@ -544,8 +545,6 @@ const setup = async () => {
     fetchCategories();
     fetchKeywords();
     if (route.params.id) {
-        // Load the recipe from store and make edits to a local copy first
-        recipe.value = { ...store.state.recipe };
         // Parse time values
         let timeComps = recipe.value.prepTime
             ? recipe.value.prepTime.match(/PT(\d+?)H(\d+?)M/)
@@ -612,10 +611,7 @@ const setup = async () => {
     await nextTick();
     formDirty.value = false;
 };
-const toggleShowRecipeYield = () => {
-    showRecipeYield.value = !showRecipeYield.value;
-    formDirty.value = true;
-};
+
 const loadRecipeData = async () => {
     isLoading.value = true;
     if (!store.state.recipe) {
@@ -633,6 +629,7 @@ const loadRecipeData = async () => {
         const response = await api.recipes.get(route.params.id);
 
         store.dispatch('setRecipe', { recipe: response.data });
+        recipe.value = response.data;
         await setup();
     } catch {
         await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
@@ -649,6 +646,11 @@ const loadRecipeData = async () => {
     } finally {
         isLoading.value = false;
     }
+};
+
+const toggleShowRecipeYield = () => {
+    showRecipeYield.value = !showRecipeYield.value;
+    formDirty.value = true;
 };
 
 // ===================
@@ -750,10 +752,19 @@ onBeforeUnmount(() => {
     window.removeEventListener('beforeunload', beforeWindowUnload);
 });
 
-// TODO This always loads recipe data even when navigating from recipe view to editor.
-// This might offer some performance improvements: See commented beforeRouteEnter section below,
-// which needs to be handled differently in Vue.js v3
-loadRecipeData();
+// Initially load recipe data if necessary
+if (route.params.id) {
+    if (store.state.recipe?.id === route.params.id) {
+        // Load the recipe from store and make edits to a local copy first
+        recipe.value = { ...store.state.recipe };
+    } else {
+        loadRecipeData();
+    }
+}
+// Creating new recipe
+else {
+    setup();
+}
 </script>
 
 <script>
