@@ -35,7 +35,8 @@
   [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
 - Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
-- 
+- Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870)) [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+
 ### Maintenance
 - Preparation for migration to vue.js 3
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
