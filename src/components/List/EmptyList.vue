@@ -1,8 +1,8 @@
 <template>
     <NcEmptyContent
         v-if="!isCategorySelected"
-        class="empty-recipe-list animated"
-        :class="isVisible ? '' : 'hidden'"
+        class="empty-recipe-list opacity-transition"
+        :class="delayedDisplay.isVisible.value ? '' : 'hidden'"
     >
         <template #description>
             <div class="center p-4">
@@ -36,23 +36,22 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton';
 import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent';
 import { useRoute } from 'vue-router/composables';
+import useDelayedDisplay, {
+    DelayedDisplayProps,
+} from '../../composables/useDelayedDisplay';
 
 const route = useRoute();
 
 const props = defineProps({
-    /** Delay in milliseconds before the component is displayed */
-    delay: {
-        type: Number,
-        default: 0,
-    },
+    ...DelayedDisplayProps,
 });
 
-const isVisible = ref(false);
+const delayedDisplay = useDelayedDisplay(props.delay);
 
 // Computed properties
 /**
@@ -61,13 +60,6 @@ const isVisible = ref(false);
 const isCategorySelected = computed(
     () => route.name.substring(1, 9) === 'category',
 );
-
-// Vue lifecycle
-onMounted(() => {
-    window.setTimeout(() => {
-        isVisible.value = true;
-    }, props.delay);
-});
 </script>
 <script>
 export default {
@@ -76,7 +68,7 @@ export default {
 </script>
 
 <style scoped>
-.animated {
+.opacity-transition {
     transition: opacity 0.25s ease-in-out;
 }
 

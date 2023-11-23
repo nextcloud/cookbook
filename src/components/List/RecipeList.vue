@@ -1,58 +1,66 @@
 <template>
     <div>
-        <div v-if="recipeObjects.length === 0">
-            <EmptyList :delay="1000" />
+        <div v-if="loading" class="loading-indicator">
+            <LoadingIndicator :delay="800" :size="40" />
         </div>
-        <RecipeListKeywordCloud
-            v-if="showTagCloudInRecipeList"
-            v-model="keywordFilter"
-            :keywords="rawKeywords"
-            :filtered-recipes="filteredRecipes"
-        />
-        <div id="recipes-submenu" class="recipes-submenu-container">
-            <NcMultiselect
-                v-if="recipes.length > 0"
-                v-model="orderBy"
-                class="recipes-sorting-dropdown"
-                :multiple="false"
-                :searchable="false"
-                :placeholder="t('cookbook', 'Select order')"
-                :options="recipeOrderingOptions"
-            >
-                <template #placeholder>
-                    <span class="icon-triangle-n" style="margin-right: -8px" />
-                    <span class="ordering-item-icon icon-triangle-s" />
-                    {{ t('cookbook', 'Select order') }}
-                </template>
-                <template #singleLabel="options">
-                    <span
-                        class="ordering-item-icon"
-                        :class="options.option.icon"
-                    />
-                    <span class="option__title">{{
-                        options.option.label
-                    }}</span>
-                </template>
-                <template #option="options">
-                    <span
-                        class="ordering-item-icon"
-                        :class="options.option.icon"
-                    />
-                    <span class="option__title">{{
-                        options.option.label
-                    }}</span>
-                </template>
-            </NcMultiselect>
+        <div v-else>
+            <div v-if="recipeObjects.length === 0">
+                <EmptyList />
+            </div>
+            <RecipeListKeywordCloud
+                v-if="showTagCloudInRecipeList"
+                v-model="keywordFilter"
+                :keywords="rawKeywords"
+                :filtered-recipes="filteredRecipes"
+            />
+            <div id="recipes-submenu" class="recipes-submenu-container">
+                <NcMultiselect
+                    v-if="recipes.length > 0"
+                    v-model="orderBy"
+                    class="recipes-sorting-dropdown"
+                    :multiple="false"
+                    :searchable="false"
+                    :placeholder="t('cookbook', 'Select order')"
+                    :options="recipeOrderingOptions"
+                >
+                    <template #placeholder>
+                        <span
+                            class="icon-triangle-n"
+                            style="margin-right: -8px"
+                        />
+                        <span class="ordering-item-icon icon-triangle-s" />
+                        {{ t('cookbook', 'Select order') }}
+                    </template>
+                    <template #singleLabel="options">
+                        <span
+                            class="ordering-item-icon"
+                            :class="options.option.icon"
+                        />
+                        <span class="option__title">{{
+                            options.option.label
+                        }}</span>
+                    </template>
+                    <template #option="options">
+                        <span
+                            class="ordering-item-icon"
+                            :class="options.option.icon"
+                        />
+                        <span class="option__title">{{
+                            options.option.label
+                        }}</span>
+                    </template>
+                </NcMultiselect>
+            </div>
+            <ul class="recipes">
+                <li
+                    v-for="recipeObj in recipeObjects"
+                    v-show="recipeObj.show"
+                    :key="recipeObj.recipe.recipe_id"
+                >
+                    <RecipeCard :recipe="recipeObj.recipe" />
+                </li>
+            </ul>
         </div>
-        <ul class="recipes">
-            <li
-                v-for="recipeObj in recipeObjects"
-                v-show="recipeObj.show"
-                :key="recipeObj.recipe.recipe_id"
-            >
-                <RecipeCard :recipe="recipeObj.recipe" />
-            </li>
-        </ul>
     </div>
 </template>
 
@@ -61,15 +69,21 @@ import { computed, onMounted, ref } from 'vue';
 import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
 import { useStore } from '../../store';
 import EmptyList from './EmptyList.vue';
+import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
 import RecipeListKeywordCloud from './RecipeListKeywordCloud.vue';
 
 const store = useStore();
 
 const props = defineProps({
+    loading: {
+        type: Boolean,
+        default: false,
+    },
     recipes: {
         type: Array,
         default: () => [],
+        required: true,
     },
 });
 
@@ -328,6 +342,12 @@ export default {
 </style>
 
 <style scoped>
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
+}
+
 .recipes-submenu-container {
     padding-left: 16px;
     margin-bottom: 0.75ex;

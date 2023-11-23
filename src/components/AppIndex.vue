@@ -1,5 +1,5 @@
 <template>
-    <recipe-list :recipes="recipes" />
+    <RecipeList :recipes="recipes" :loading="isLoadingRecipeList" />
 </template>
 
 <script setup>
@@ -18,6 +18,12 @@ const store = useStore();
 const recipes = ref([]);
 
 /**
+ * If the list of recipes is currently being fetched from the server.
+ * @type {import('vue').Ref<boolean>}
+ */
+const isLoadingRecipeList = ref(false);
+
+/**
  * Is the Cookbook recipe directory currently being changed?
  */
 const updatingRecipeDirectory = computed(
@@ -29,6 +35,7 @@ const updatingRecipeDirectory = computed(
  * Load all recipes from the database
  */
 const loadAll = () => {
+    isLoadingRecipeList.value = true;
     api.recipes
         .getAll()
         .then((response) => {
@@ -40,6 +47,9 @@ const loadAll = () => {
         .catch(() => {
             // Always set page name last
             store.dispatch('setPage', { page: 'index' });
+        })
+        .finally(() => {
+            isLoadingRecipeList.value = false;
         });
 };
 
