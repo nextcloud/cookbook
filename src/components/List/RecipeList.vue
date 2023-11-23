@@ -68,6 +68,7 @@
 import { computed, onMounted, ref } from 'vue';
 import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
 import { useStore } from '../../store';
+import { normalize as normalizeString } from '../../js/string-utils';
 import EmptyList from './EmptyList.vue';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
@@ -244,11 +245,11 @@ const recipesFilteredByKeywords = computed(() =>
 const filteredRecipes = computed(() => {
     let ret = recipesFilteredByKeywords.value;
     if (store.state.recipeFilters) {
-        ret = ret.filter((r) =>
-            r.name
-                .toLowerCase()
-                .includes(store.state.recipeFilters.toLowerCase()),
-        );
+        ret = ret.filter((r) => {
+            const normalizedRecipeName = normalizeString(r.name);
+            const normalizedFilter = normalizeString(store.state.recipeFilters);
+            return normalizedRecipeName.includes(normalizedFilter);
+        });
     }
     return ret;
 });
