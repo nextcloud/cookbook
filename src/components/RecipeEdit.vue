@@ -1,121 +1,127 @@
 <template>
     <div class="wrapper">
-        <div class="overlay" :class="{ hidden: !overlayVisible }" />
-        <EditInputField
-            v-model="recipe['name']"
-            :field-type="'text'"
-            :field-label="t('cookbook', 'Name')"
-        />
-        <EditInputField
-            v-model="recipe['description']"
-            :field-type="'markdown'"
-            :field-label="t('cookbook', 'Description')"
-            :suggestion-options="allRecipeOptions"
-        />
-        <EditInputField
-            v-model="recipe['url']"
-            :field-type="'url'"
-            :field-label="t('cookbook', 'URL')"
-        />
-        <EditImageField
-            v-model="recipe['image']"
-            :field-label="t('cookbook', 'Image')"
-        />
-        <EditTimeField
-            v-model="prepTime"
-            :field-label="t('cookbook', 'Preparation time (hours:minutes)')"
-        />
-        <EditTimeField
-            v-model="cookTime"
-            :field-label="t('cookbook', 'Cooking time (hours:minutes)')"
-        />
-        <EditTimeField
-            v-model="totalTime"
-            :field-label="t('cookbook', 'Total time (hours:minutes)')"
-        />
-        <EditMultiselect
-            v-model="recipe['recipeCategory']"
-            :field-label="t('cookbook', 'Category')"
-            :placeholder="t('cookbook', 'Choose category')"
-            :options="allCategories"
-            :taggable="true"
-            :multiple="false"
-            :loading="isFetchingCategories"
-            @tag="addCategory"
-        />
-        <EditMultiselect
-            v-model="selectedKeywords"
-            :field-label="t('cookbook', 'Keywords')"
-            :placeholder="t('cookbook', 'Choose keywords')"
-            :options="allKeywords"
-            :taggable="true"
-            :multiple="true"
-            :tag-width="60"
-            :loading="isFetchingKeywords"
-            @tag="addKeyword"
-        />
-        <EditInputField
-            v-model="recipe['recipeYield']"
-            :field-type="'number'"
-            :field-label="t('cookbook', 'Servings')"
-            :hide="!showRecipeYield"
-        >
-            <NcActions>
-                <NcActionButton
-                    class="btn-enable-recipe-yield"
-                    :aria-label="
-                        // prettier-ignore
-                        t('cookbook', 'Toggle if the number of servings is present')
-                    "
-                    @click="toggleShowRecipeYield"
-                >
-                    <template #icon><numeric-icon :size="20" /></template>
-                </NcActionButton>
-            </NcActions>
-        </EditInputField>
-        <EditMultiselectInputGroup
-            v-model="recipe['nutrition']"
-            :field-label="t('cookbook', 'Nutrition Information')"
-            :options="availableNutritionFields"
-            :label-select-placeholder="t('cookbook', 'Pick option')"
-        />
-        <EditInputGroup
-            v-model="recipe['tool']"
-            :field-name="'tool'"
-            :field-type="'text'"
-            :field-label="t('cookbook', 'Tools')"
-            :create-fields-on-newlines="true"
-            :suggestion-options="allRecipeOptions"
-        />
-        <EditInputGroup
-            v-model="recipe['recipeIngredient']"
-            :field-name="'recipeIngredient'"
-            :field-type="'text'"
-            :field-label="t('cookbook', 'Ingredients')"
-            :create-fields-on-newlines="true"
-            :suggestion-options="allRecipeOptions"
-        />
-        <EditInputGroup
-            v-model="recipe['recipeInstructions']"
-            :field-name="'recipeInstructions'"
-            :field-type="'textarea'"
-            :field-label="t('cookbook', 'Instructions')"
-            :create-fields-on-newlines="true"
-            :show-step-number="true"
-            :suggestion-options="allRecipeOptions"
-        />
-        <div class="cookbook-footer">
-            <button class="button" @click="save()">
-                <span
-                    :class="
-                        $store.state.savingRecipe
-                            ? 'icon-loading-small'
-                            : 'icon-checkmark'
-                    "
-                ></span>
-                {{ t('cookbook', 'Save') }}
-            </button>
+        <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
+            <LoadingIndicator size="40" delay="800" />
         </div>
+        <div v-else>
+            <div class="overlay" :class="{ hidden: !overlayVisible }" />
+            <EditInputField
+                v-model="recipe['name']"
+                :field-type="'text'"
+                :field-label="t('cookbook', 'Name')"
+            />
+            <EditInputField
+                v-model="recipe['description']"
+                :field-type="'markdown'"
+                :field-label="t('cookbook', 'Description')"
+                :suggestion-options="allRecipeOptions"
+            />
+            <EditInputField
+                v-model="recipe['url']"
+                :field-type="'url'"
+                :field-label="t('cookbook', 'URL')"
+            />
+            <EditImageField
+                v-model="recipe['image']"
+                :field-label="t('cookbook', 'Image')"
+            />
+            <EditTimeField
+                v-model="prepTime"
+                :field-label="t('cookbook', 'Preparation time (hours:minutes)')"
+            />
+            <EditTimeField
+                v-model="cookTime"
+                :field-label="t('cookbook', 'Cooking time (hours:minutes)')"
+            />
+            <EditTimeField
+                v-model="totalTime"
+                :field-label="t('cookbook', 'Total time (hours:minutes)')"
+            />
+            <EditMultiselect
+                v-model="recipe['recipeCategory']"
+                :field-label="t('cookbook', 'Category')"
+                :placeholder="t('cookbook', 'Choose category')"
+                :options="allCategories"
+                :taggable="true"
+                :multiple="false"
+                :loading="isFetchingCategories"
+                @tag="addCategory"
+            />
+            <EditMultiselect
+                v-model="selectedKeywords"
+                :field-label="t('cookbook', 'Keywords')"
+                :placeholder="t('cookbook', 'Choose keywords')"
+                :options="allKeywords"
+                :taggable="true"
+                :multiple="true"
+                :tag-width="60"
+                :loading="isFetchingKeywords"
+                @tag="addKeyword"
+            />
+            <EditInputField
+                v-model="recipe['recipeYield']"
+                :field-type="'number'"
+                :field-label="t('cookbook', 'Servings')"
+                :hide="!showRecipeYield"
+            >
+                <NcActions>
+                    <NcActionButton
+                        class="btn-enable-recipe-yield"
+                        :aria-label="
+                            // prettier-ignore
+                            t('cookbook', 'Toggle if the number of servings is present')
+                        "
+                        @click="toggleShowRecipeYield"
+                    >
+                        <template #icon><numeric-icon :size="20" /></template>
+                    </NcActionButton>
+                </NcActions>
+            </EditInputField>
+            <EditMultiselectInputGroup
+                v-model="recipe['nutrition']"
+                :field-label="t('cookbook', 'Nutrition Information')"
+                :options="availableNutritionFields"
+                :label-select-placeholder="t('cookbook', 'Pick option')"
+            />
+            <EditInputGroup
+                v-model="recipe['tool']"
+                :field-name="'tool'"
+                :field-type="'text'"
+                :field-label="t('cookbook', 'Tools')"
+                :create-fields-on-newlines="true"
+                :suggestion-options="allRecipeOptions"
+            />
+            <EditInputGroup
+                v-model="recipe['recipeIngredient']"
+                :field-name="'recipeIngredient'"
+                :field-type="'text'"
+                :field-label="t('cookbook', 'Ingredients')"
+                :create-fields-on-newlines="true"
+                :suggestion-options="allRecipeOptions"
+            />
+            <EditInputGroup
+                v-model="recipe['recipeInstructions']"
+                :field-name="'recipeInstructions'"
+                :field-type="'textarea'"
+                :field-label="t('cookbook', 'Instructions')"
+                :create-fields-on-newlines="true"
+                :show-step-number="true"
+                :suggestion-options="allRecipeOptions"
+            />
+            <div class="cookbook-footer">
+                <button class="button" @click="save()">
+                    <span
+                        :class="
+                            $store.state.savingRecipe
+                                ? 'icon-loading-small'
+                                : 'icon-checkmark'
+                        "
+                    ></span>
+                    {{ t('cookbook', 'Save') }}
+                </button>
+            </div>
+        </div>
+        <!-- Recipe editor container -->
     </div>
 </template>
 
@@ -153,6 +159,8 @@ import EditInputGroup from './FormComponents/EditInputGroup.vue';
 import EditMultiselect from './FormComponents/EditMultiselect.vue';
 import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGroup.vue';
 import EditTimeField from './FormComponents/EditTimeField.vue';
+import LoadingIndicator from './Utilities/LoadingIndicator.vue';
+
 import { useStore } from '../store';
 import emitter from '../bus';
 
@@ -176,6 +184,11 @@ defineProps({
 // ===================
 // Reactive properties
 // ===================
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isLoading = ref(false);
 // Initialize the recipe schema, otherwise v-models in child components may not work
 const recipe = ref({
     id: 0,
@@ -604,6 +617,7 @@ const toggleShowRecipeYield = () => {
     formDirty.value = true;
 };
 const loadRecipeData = async () => {
+    isLoading.value = true;
     if (!store.state.recipe) {
         // Make the control row show that a recipe is loading
         store.dispatch('setLoadingRecipe', {
@@ -632,6 +646,8 @@ const loadRecipeData = async () => {
         }
         // Browse to new recipe creation
         helpers.goTo('/recipe/create');
+    } finally {
+        isLoading.value = false;
     }
 };
 
@@ -772,6 +788,12 @@ export default {
 .wrapper {
     width: 100%;
     padding: 1rem;
+}
+
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
 }
 
 .overlay {

@@ -1,322 +1,351 @@
 <template>
     <div class="wrapper">
-        <div
-            v-if="$store.state.recipe"
-            class="header"
-            :class="{ responsive: $store.state.recipe.image }"
-        >
-            <div v-if="$store.state.recipe.image" class="image">
-                <RecipeImages />
-            </div>
+        <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
+            <LoadingIndicator size="40" delay="800" />
+        </div>
+        <div v-else>
+            this
+            <div
+                v-if="$store.state.recipe"
+                class="header"
+                :class="{ responsive: $store.state.recipe.image }"
+            >
+                <div v-if="$store.state.recipe.image" class="image">
+                    <RecipeImages />
+                </div>
 
-            <div class="meta">
-                <h2 class="heading">{{ $store.state.recipe.name }}</h2>
-                <div class="details">
-                    <div v-if="recipe.keywords.length">
-                        <ul v-if="recipe.keywords.length">
-                            <RecipeKeyword
-                                v-for="(keyword, idx) in recipe.keywords"
-                                :key="'keyw' + idx"
-                                :name="keyword"
-                                :title="
-                                    // prettier-ignore
-                                    t('cookbook','Search recipes with this keyword')
-                                "
-                                @keyword-clicked="keywordClicked(keyword)"
-                            />
-                        </ul>
-                    </div>
-
-                    <p class="dates">
-                        <span
-                            v-if="showCreatedDate"
-                            class="date"
-                            :title="t('cookbook', 'Date created')"
-                        >
-                            <span class="icon-calendar-dark date-icon" />
-                            <span class="date-text">{{
-                                recipe.dateCreated
-                            }}</span>
-                        </span>
-                        <span
-                            v-if="showModifiedDate"
-                            class="date"
-                            :title="t('cookbook', 'Last modified')"
-                        >
-                            <span class="icon-rename date-icon" />
-                            <span class="date-text">{{
-                                recipe.dateModified
-                            }}</span>
-                        </span>
-                    </p>
-
-                    <VueShowdown
-                        :markdown="parsedDescription"
-                        class="markdown-description"
-                    />
-                    <p v-if="$store.state.recipe.url">
-                        <strong>{{ t('cookbook', 'Source') }}: </strong
-                        ><a
-                            target="_blank"
-                            :href="$store.state.recipe.url"
-                            class="source-url"
-                            >{{ $store.state.recipe.url }}</a
-                        >
-                    </p>
-                    <div>
-                        <p v-if="$store.state.recipe.recipeYield != null">
-                            <strong>{{ t('cookbook', 'Servings') }}: </strong>
-                            <span>
-                                <button
-                                    :disabled="recipeYield === 1"
-                                    @click="changeRecipeYield(false)"
-                                >
-                                    <span class="icon-view-previous" />
-                                </button>
-                                <input
-                                    v-model="recipeYield"
-                                    type="number"
-                                    min="0"
-                                    style="width: 65px"
-                                />
-                                <button @click="changeRecipeYield">
-                                    <span class="icon-view-next" />
-                                </button>
-                                <button
-                                    v-if="
-                                        recipeYield !==
-                                        $store.state.recipe.recipeYield
+                <div class="meta">
+                    <h2 class="heading">{{ $store.state.recipe.name }}</h2>
+                    <div class="details">
+                        <div v-if="recipe.keywords.length">
+                            <ul v-if="recipe.keywords.length">
+                                <RecipeKeyword
+                                    v-for="(keyword, idx) in recipe.keywords"
+                                    :key="'keyw' + idx"
+                                    :name="keyword"
+                                    :title="
+                                        // prettier-ignore
+                                        t('cookbook','Search recipes with this keyword')
                                     "
-                                    @click="restoreOriginalRecipeYield"
-                                >
-                                    <span class="icon-history" />
-                                </button>
+                                    @keyword-clicked="keywordClicked(keyword)"
+                                />
+                            </ul>
+                        </div>
+
+                        <p class="dates">
+                            <span
+                                v-if="showCreatedDate"
+                                class="date"
+                                :title="t('cookbook', 'Date created')"
+                            >
+                                <span class="icon-calendar-dark date-icon" />
+                                <span class="date-text">{{
+                                    recipe.dateCreated
+                                }}</span>
+                            </span>
+                            <span
+                                v-if="showModifiedDate"
+                                class="date"
+                                :title="t('cookbook', 'Last modified')"
+                            >
+                                <span class="icon-rename date-icon" />
+                                <span class="date-text">{{
+                                    recipe.dateModified
+                                }}</span>
                             </span>
                         </p>
+
+                        <VueShowdown
+                            :markdown="parsedDescription"
+                            class="markdown-description"
+                        />
+                        <p v-if="$store.state.recipe.url">
+                            <strong>{{ t('cookbook', 'Source') }}: </strong
+                            ><a
+                                target="_blank"
+                                :href="$store.state.recipe.url"
+                                class="source-url"
+                                >{{ $store.state.recipe.url }}</a
+                            >
+                        </p>
+                        <div>
+                            <p v-if="$store.state.recipe.recipeYield != null">
+                                <strong
+                                    >{{ t('cookbook', 'Servings') }}:
+                                </strong>
+                                <span>
+                                    <button
+                                        :disabled="recipeYield === 1"
+                                        @click="changeRecipeYield(false)"
+                                    >
+                                        <span class="icon-view-previous" />
+                                    </button>
+                                    <input
+                                        v-model="recipeYield"
+                                        type="number"
+                                        min="0"
+                                        style="width: 65px"
+                                    />
+                                    <button @click="changeRecipeYield">
+                                        <span class="icon-view-next" />
+                                    </button>
+                                    <button
+                                        v-if="
+                                            recipeYield !==
+                                            $store.state.recipe.recipeYield
+                                        "
+                                        @click="restoreOriginalRecipeYield"
+                                    >
+                                        <span class="icon-history" />
+                                    </button>
+                                </span>
+                            </p>
+                        </div>
                     </div>
-                </div>
-                <div class="times">
-                    <RecipeTimer
-                        v-if="
-                            recipe.timerPrep &&
-                            visibleInfoBlocks['preparation-time']
-                        "
-                        :value="recipe.timerPrep"
-                        :timer="false"
-                        :label="t('cookbook', 'Preparation time (H:MM)')"
-                    />
-                    <RecipeTimer
-                        v-if="
-                            recipe.timerCook &&
-                            visibleInfoBlocks['cooking-time']
-                        "
-                        :value="recipe.timerCook"
-                        :timer="true"
-                        :label="t('cookbook', 'Cooking time (H:MM)')"
-                    />
-                    <RecipeTimer
-                        v-if="
-                            recipe.timerTotal && visibleInfoBlocks['total-time']
-                        "
-                        :value="recipe.timerTotal"
-                        :timer="false"
-                        :label="t('cookbook', 'Total time (H:MM)')"
-                    />
+                    <div class="times">
+                        <RecipeTimer
+                            v-if="
+                                recipe.timerPrep &&
+                                visibleInfoBlocks['preparation-time']
+                            "
+                            :value="recipe.timerPrep"
+                            :timer="false"
+                            :label="t('cookbook', 'Preparation time (H:MM)')"
+                        />
+                        <RecipeTimer
+                            v-if="
+                                recipe.timerCook &&
+                                visibleInfoBlocks['cooking-time']
+                            "
+                            :value="recipe.timerCook"
+                            :timer="true"
+                            :label="t('cookbook', 'Cooking time (H:MM)')"
+                        />
+                        <RecipeTimer
+                            v-if="
+                                recipe.timerTotal &&
+                                visibleInfoBlocks['total-time']
+                            "
+                            :value="recipe.timerTotal"
+                            :timer="false"
+                            :label="t('cookbook', 'Total time (H:MM)')"
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div v-if="$store.state.recipe" class="content">
-            <section class="container">
-                <section class="ingredients">
-                    <h3 v-if="scaledIngredients.length" class="section-title">
-                        <span>{{ t('cookbook', 'Ingredients') }}</span>
-                        <NcButton
+            <div v-if="$store.state.recipe" class="content">
+                <section class="container">
+                    <section class="ingredients">
+                        <h3
                             v-if="scaledIngredients.length"
-                            class="copy-ingredients"
-                            :type="'tertiary'"
-                            aria-label="Copy all ingredients to the clipboard"
-                            :title="t('cookbook', 'Copy ingredients')"
-                            @click="copyIngredientsToClipboard"
+                            class="section-title"
                         >
-                            <template #icon>
-                                <ContentCopyIcon :size="20" />
-                            </template>
-                        </NcButton>
-                    </h3>
-                    <ul v-if="scaledIngredients.length">
-                        <RecipeIngredient
-                            v-for="(ingredient, idx) in scaledIngredients"
-                            :key="'ingr' + idx"
-                            :ingredient="ingredient"
-                            :ingredient-has-correct-syntax="
-                                ingredientsWithValidSyntax[idx]
-                            "
-                            :recipe-ingredients-have-subgroups="
-                                recipeIngredientsHaveSubgroups
-                            "
-                            :style="{
-                                'font-style': ingredientsWithValidSyntax[idx]
-                                    ? 'normal'
-                                    : 'italic',
-                            }"
-                        />
-                    </ul>
+                            <span>{{ t('cookbook', 'Ingredients') }}</span>
+                            <NcButton
+                                v-if="scaledIngredients.length"
+                                class="copy-ingredients"
+                                :type="'tertiary'"
+                                aria-label="Copy all ingredients to the clipboard"
+                                :title="t('cookbook', 'Copy ingredients')"
+                                @click="copyIngredientsToClipboard"
+                            >
+                                <template #icon>
+                                    <ContentCopyIcon :size="20" />
+                                </template>
+                            </NcButton>
+                        </h3>
+                        <ul v-if="scaledIngredients.length">
+                            <RecipeIngredient
+                                v-for="(ingredient, idx) in scaledIngredients"
+                                :key="'ingr' + idx"
+                                :ingredient="ingredient"
+                                :ingredient-has-correct-syntax="
+                                    ingredientsWithValidSyntax[idx]
+                                "
+                                :recipe-ingredients-have-subgroups="
+                                    recipeIngredientsHaveSubgroups
+                                "
+                                :style="{
+                                    'font-style': ingredientsWithValidSyntax[
+                                        idx
+                                    ]
+                                        ? 'normal'
+                                        : 'italic',
+                                }"
+                            />
+                        </ul>
 
-                    <div
-                        v-if="!ingredientsSyntaxCorrect"
-                        class="ingredient-parsing-error"
-                    >
-                        <hr />
-                        <span class="icon-error" />
-                        {{
-                            // prettier-ignore
-                            t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt")
-                        }}
-                    </div>
+                        <div
+                            v-if="!ingredientsSyntaxCorrect"
+                            class="ingredient-parsing-error"
+                        >
+                            <hr />
+                            <span class="icon-error" />
+                            {{
+                                // prettier-ignore
+                                t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt")
+                            }}
+                        </div>
+                    </section>
+
+                    <section v-if="visibleInfoBlocks.tools" class="tools">
+                        <h3 v-if="parsedTools.length">
+                            {{ t('cookbook', 'Tools') }}
+                        </h3>
+                        <ul v-if="parsedTools.length">
+                            <RecipeTool
+                                v-for="(tool, idx) in parsedTools"
+                                :key="'tool' + idx"
+                                :tool="tool"
+                            />
+                        </ul>
+                    </section>
+
+                    <section v-if="showNutritionData" class="nutrition">
+                        <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
+                        <ul class="nutrition-items">
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'servingSize' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['servingSize'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Serving Size')"
+                                :data="recipe.nutrition['servingSize']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'calories' in recipe.nutrition &&
+                                    !isNullOrEmpty(recipe.nutrition['calories'])
+                                "
+                                :title="t('cookbook', 'Energy')"
+                                :data="recipe.nutrition['calories']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'sugarContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['sugarContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Sugar')"
+                                :data="recipe.nutrition['sugarContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'carbohydrateContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['carbohydrateContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Carbohydrate')"
+                                :data="recipe.nutrition['carbohydrateContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'cholesterolContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['cholesterolContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Cholesterol')"
+                                :data="recipe.nutrition['cholesterolContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'fiberContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['fiberContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Fiber')"
+                                :data="recipe.nutrition['fiberContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'proteinContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['proteinContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Protein')"
+                                :data="recipe.nutrition['proteinContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'sodiumContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['sodiumContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Sodium')"
+                                :data="recipe.nutrition['sodiumContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'fatContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['fatContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Fat total')"
+                                :data="recipe.nutrition['fatContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'saturatedFatContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['saturatedFatContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Saturated Fat')"
+                                :data="recipe.nutrition['saturatedFatContent']"
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'unsaturatedFatContent' in
+                                        recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition[
+                                            'unsaturatedFatContent'
+                                        ],
+                                    )
+                                "
+                                :title="t('cookbook', 'Unsaturated Fat')"
+                                :data="
+                                    recipe.nutrition['unsaturatedFatContent']
+                                "
+                            />
+                            <recipe-nutrition-info-item
+                                v-if="
+                                    'transFatContent' in recipe.nutrition &&
+                                    !isNullOrEmpty(
+                                        recipe.nutrition['transFatContent'],
+                                    )
+                                "
+                                :title="t('cookbook', 'Trans Fat')"
+                                :data="recipe.nutrition['transFatContent']"
+                            />
+                        </ul>
+                    </section>
+
+                    <main v-if="parsedInstructions.length">
+                        <h3>{{ t('cookbook', 'Instructions') }}</h3>
+                        <ol class="instructions">
+                            <RecipeInstruction
+                                v-for="(instruction, idx) in parsedInstructions"
+                                :key="'instr' + idx"
+                                :instruction="instruction"
+                            />
+                        </ol>
+                    </main>
                 </section>
-
-                <section v-if="visibleInfoBlocks.tools" class="tools">
-                    <h3 v-if="parsedTools.length">
-                        {{ t('cookbook', 'Tools') }}
-                    </h3>
-                    <ul v-if="parsedTools.length">
-                        <RecipeTool
-                            v-for="(tool, idx) in parsedTools"
-                            :key="'tool' + idx"
-                            :tool="tool"
-                        />
-                    </ul>
-                </section>
-
-                <section v-if="showNutritionData" class="nutrition">
-                    <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
-                    <ul class="nutrition-items">
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'servingSize' in recipe.nutrition &&
-                                !isNullOrEmpty(recipe.nutrition['servingSize'])
-                            "
-                            :title="t('cookbook', 'Serving Size')"
-                            :data="recipe.nutrition['servingSize']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'calories' in recipe.nutrition &&
-                                !isNullOrEmpty(recipe.nutrition['calories'])
-                            "
-                            :title="t('cookbook', 'Energy')"
-                            :data="recipe.nutrition['calories']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'sugarContent' in recipe.nutrition &&
-                                !isNullOrEmpty(recipe.nutrition['sugarContent'])
-                            "
-                            :title="t('cookbook', 'Sugar')"
-                            :data="recipe.nutrition['sugarContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'carbohydrateContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['carbohydrateContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Carbohydrate')"
-                            :data="recipe.nutrition['carbohydrateContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'cholesterolContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['cholesterolContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Cholesterol')"
-                            :data="recipe.nutrition['cholesterolContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'fiberContent' in recipe.nutrition &&
-                                !isNullOrEmpty(recipe.nutrition['fiberContent'])
-                            "
-                            :title="t('cookbook', 'Fiber')"
-                            :data="recipe.nutrition['fiberContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'proteinContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['proteinContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Protein')"
-                            :data="recipe.nutrition['proteinContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'sodiumContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['sodiumContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Sodium')"
-                            :data="recipe.nutrition['sodiumContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'fatContent' in recipe.nutrition &&
-                                !isNullOrEmpty(recipe.nutrition['fatContent'])
-                            "
-                            :title="t('cookbook', 'Fat total')"
-                            :data="recipe.nutrition['fatContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'saturatedFatContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['saturatedFatContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Saturated Fat')"
-                            :data="recipe.nutrition['saturatedFatContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'unsaturatedFatContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['unsaturatedFatContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Unsaturated Fat')"
-                            :data="recipe.nutrition['unsaturatedFatContent']"
-                        />
-                        <recipe-nutrition-info-item
-                            v-if="
-                                'transFatContent' in recipe.nutrition &&
-                                !isNullOrEmpty(
-                                    recipe.nutrition['transFatContent'],
-                                )
-                            "
-                            :title="t('cookbook', 'Trans Fat')"
-                            :data="recipe.nutrition['transFatContent']"
-                        />
-                    </ul>
-                </section>
-
-                <main v-if="parsedInstructions.length">
-                    <h3>{{ t('cookbook', 'Instructions') }}</h3>
-                    <ol class="instructions">
-                        <RecipeInstruction
-                            v-for="(instruction, idx) in parsedInstructions"
-                            :key="'instr' + idx"
-                            :instruction="instruction"
-                        />
-                    </ol>
-                </main>
-            </section>
+                se
+            </div>
         </div>
+        <!-- RecipeView container -->
     </div>
 </template>
 
@@ -339,6 +368,7 @@ import { useStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
+import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredient from './RecipeIngredient.vue';
 import RecipeInstruction from './RecipeInstruction.vue';
@@ -352,6 +382,10 @@ const router = useRouter();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
 
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isLoading = ref(false);
 /**
  * @type {string}
  */
@@ -548,6 +582,8 @@ const keywordClicked = (keyword) => {
 };
 
 const setup = async () => {
+    isLoading.value = true;
+
     // Make the control row show that a recipe is loading
     if (!store.state.recipe) {
         store.dispatch('setLoadingRecipe', { recipe: -1 });
@@ -581,14 +617,14 @@ const setup = async () => {
 
         if (store.state.reloadingRecipe) {
             // Reset reloading recipe
-            store.dispatch('setReloadingRecipe', {
-                recipe: 0,
-            });
+            store.dispatch('setReloadingRecipe', { recipe: 0 });
         }
 
         store.dispatch('setPage', { page: 'recipe' });
 
         await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
+    } finally {
+        isLoading.value = false;
     }
 
     recipeYield.value = store.state.recipe.recipeYield;
@@ -757,6 +793,12 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
     width: 100%;
+}
+
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    padding: 3rem 0;
 }
 
 @media print {
