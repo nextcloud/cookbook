@@ -65,18 +65,20 @@ const previewImage = ref(null);
 // Methods
 // callback for fully-loaded image event
 const onThumbnailFullyLoaded = () => {
-    fullImage.value.removeEventListener('load', onThumbnailFullyLoaded);
-    pictureElement.value.removeChild(previewImage.value);
+    fullImage.value?.removeEventListener('load', onThumbnailFullyLoaded);
+    pictureElement.value?.removeChild(previewImage.value);
     isLoading.value = false;
 };
 
 // callback for preview-image-loaded event
 const onThumbnailPreviewLoaded = () => {
     // cleanup event listener on preview
-    previewImage.value.removeEventListener('load', onThumbnailPreviewLoaded);
+    previewImage.value?.removeEventListener('load', onThumbnailPreviewLoaded);
     // add event listener for full-resolution image
-    fullImage.value.addEventListener('load', onThumbnailFullyLoaded);
-    fullImage.value.src = props.lazySrc;
+    if (fullImage.value) {
+        fullImage.value.addEventListener('load', onThumbnailFullyLoaded);
+        fullImage.value.src = props.lazySrc;
+    }
     isPreviewLoading.value = false;
 };
 
@@ -99,7 +101,7 @@ onMounted(() => {
     const observer = lozad(pictureElement.value, {
         enableAutoReload: true,
         load() {
-            previewImage.value.addEventListener(
+            previewImage.value?.addEventListener(
                 'load',
                 onThumbnailPreviewLoaded,
             );
