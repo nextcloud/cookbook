@@ -60,6 +60,7 @@ const routes = [
     // - Edit: /{item}/:id/edit
     // - Create: /{item}/create
     { path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
+    { path: '/recipe/:id/clone', name: 'recipe-clone', component: RecipeEdit },
     { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
     { path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
 

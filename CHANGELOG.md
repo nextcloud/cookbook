@@ -13,6 +13,8 @@
   [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
 - Show info for empty cookbook or categories in recipe overview
   [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
+- Allow editing existing recipe as new (see [1867](https://github.com/nextcloud/cookbook/issues/1867)) 
+  [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
 
 ### Fixed
 - Fix translation string to not contain quotes
@@ -27,7 +29,7 @@
   [#1832](https://github.com/nextcloud/cookbook/pull/1832) @christianlupus
 - Provide id of recipe stub in API endpoints as well to make API consistend with recipe API
   [#1834](https://github.com/nextcloud/cookbook/pull/1834) @christianlupus
-- Hode the button to copy ingredients unless there are some ingredients to copy
+- Hide the button to copy ingredients unless there are some ingredients to copy
   [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
 - Allow single tool in JSON+LD import, fixes #1641
   [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb

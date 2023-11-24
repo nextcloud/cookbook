@@ -192,7 +192,7 @@ const isLoading = ref(false);
 // Initialize the recipe schema, otherwise v-models in child components may not work
 const recipe = ref({
     id: 0,
-    name: null,
+    name: '',
     description: '',
     url: '',
     image: '',
@@ -465,7 +465,7 @@ const save = async () => {
     savingRecipe.value = true;
     store.dispatch('setSavingRecipe', { saving: true });
     const request = (() => {
-        if (route.params.id ?? false) {
+        if (route.name !== 'recipe-clone' && (route.params.id ?? false)) {
             return store.dispatch('updateRecipe', {
                 recipe: recipeWithCorrectedYield.value,
             });
@@ -541,6 +541,21 @@ const initEmptyRecipe = () => {
     showRecipeYield.value = true;
 };
 
+/**
+ * Modifies the current recipe's name property to indicate that it is a clone.
+ * Resets id to prevent overwriting original recipe.
+ */
+const initClone = () => {
+    // Reset id to prevent overwriting original
+    recipe.value.id = 0;
+
+    // Update
+    // eslint-disable-next-line no-template-curly-in-string
+    recipe.value.name = t('cookbook', 'Clone of {name}', {
+        name: recipe.value.name,
+    });
+};
+
 const setup = async () => {
     fetchCategories();
     fetchKeywords();
@@ -601,8 +616,18 @@ const setup = async () => {
             showRecipeYield.value = true;
         }
 
+        // Modify title and update id for clone to indicate difference from original recipe and prevent overwriting
+        // original recipe
+        if (route.name === 'recipe-clone') {
+            initClone();
+        }
+
         // Always set the active page last!
-        store.dispatch('setPage', { page: 'edit' });
+        if (route.name !== 'recipe-clone') {
+            store.dispatch('setPage', { page: 'edit' });
+        } else {
+            store.dispatch('setPage', { page: 'create' });
+        }
     } else {
         initEmptyRecipe();
         store.dispatch('setPage', { page: 'create' });
@@ -761,10 +786,7 @@ if (route.params.id) {
         loadRecipeData();
     }
 }
-// Creating new recipe
-else {
-    setup();
-}
+setup();
 </script>
 
 <script>

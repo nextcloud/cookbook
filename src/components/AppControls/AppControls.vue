@@ -162,6 +162,17 @@
             </NcActionButton>
             <NcActionButton
                 v-if="isRecipe"
+                class="action-button"
+                :aria-label="t('cookbook', 'Clone recipe')"
+                @click="goToRecipeClone(store.state.recipe.id)"
+            >
+                {{ t('cookbook', 'Clone recipe') }}
+                <template #icon>
+                    <ContentDuplicateIcon />
+                </template>
+            </NcActionButton>
+            <NcActionButton
+                v-if="isRecipe"
                 icon="icon-delete"
                 class="action-button"
                 :aria-label="t('cookbook', 'Delete recipe')"
@@ -188,6 +199,7 @@ import LoadingIcon from 'icons/Loading.vue';
 import CheckmarkIcon from 'icons/Check.vue';
 import PrinterIcon from 'icons/Printer.vue';
 import EyeIcon from 'icons/Eye.vue';
+import ContentDuplicateIcon from 'icons/ContentDuplicate.vue';
 
 import helpers from 'cookbook/js/helper';
 import {
@@ -315,6 +327,10 @@ const updateFilters = (e) => {
 
 const goToRecipe = (id) => {
     helpers.goTo(`/recipe/${id}`);
+};
+
+const goToRecipeClone = (id) => {
+    helpers.goTo(`/recipe/${id}/clone`);
 };
 
 const goToRecipeEdit = (id) => {
