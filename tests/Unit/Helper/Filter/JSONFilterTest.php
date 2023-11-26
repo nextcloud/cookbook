@@ -12,6 +12,7 @@ use OCA\Cookbook\Helper\Filter\JSON\FixInstructionsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixKeywordsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixNutritionFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixRecipeYieldFilter;
+use OCA\Cookbook\Helper\Filter\JSON\FixTimestampsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixUrlFilter;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
@@ -32,6 +33,7 @@ class JSONFilterTest extends TestCase {
 	private $cleanCategoryFilter;
 	private $fixRecipeYieldFilter;
 	private $fixKeywordsFilter;
+	private $fixTimestampsFilter;
 	private $fixToolsFilter;
 	private $fixIngredientsFilter;
 	private $fixInstructionsFilter;
@@ -50,6 +52,7 @@ class JSONFilterTest extends TestCase {
 		$this->fixRecipeYieldFilter = $this->createStub(FixRecipeYieldFilter::class);
 		$this->fixKeywordsFilter = $this->createStub(FixKeywordsFilter::class);
 		$this->fixToolsFilter = $this->createStub(FixToolsFilter::class);
+		$this->fixTimestampsFilter = $this->createStub(FixTimestampsFilter::class);
 		$this->fixIngredientsFilter = $this->createStub(FixIngredientsFilter::class);
 		$this->fixInstructionsFilter = $this->createStub(FixInstructionsFilter::class);
 		$this->fixDescriptionFilter = $this->createStub(FixDescriptionFilter::class);
@@ -67,6 +70,7 @@ class JSONFilterTest extends TestCase {
 			$this->cleanCategoryFilter,
 			$this->fixRecipeYieldFilter,
 			$this->fixKeywordsFilter,
+			$this->fixTimestampsFilter,
 			$this->fixToolsFilter,
 			$this->fixIngredientsFilter,
 			$this->fixInstructionsFilter,
@@ -98,6 +102,7 @@ class JSONFilterTest extends TestCase {
 		$this->cleanCategoryFilter->method('apply')->willReturnCallback($closure());
 		$this->fixRecipeYieldFilter->method('apply')->willReturnCallback($closure());
 		$this->fixKeywordsFilter->method('apply')->willReturnCallback($closure());
+		$this->fixTimestampsFilter->method('apply')->willReturnCallback($closure());
 		$this->fixToolsFilter->method('apply')->willReturnCallback($closure());
 		$this->fixIngredientsFilter->method('apply')->willReturnCallback($closure());
 		$this->fixInstructionsFilter->method('apply')->willReturnCallback($closure());
