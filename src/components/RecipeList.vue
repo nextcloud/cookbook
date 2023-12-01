@@ -6,7 +6,7 @@
                     <div class="center p-4">
                         <div>
                             {{
-                                t("cookbook", "No recipes created or imported.")
+                                t("cookbook", "No recipes created nor imported.")
                             }}
                         </div>
                         <div>
