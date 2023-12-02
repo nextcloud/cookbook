@@ -1,10 +1,9 @@
 <template>
     <div class="wrapper">
         <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
-            <LoadingIndicator size="40" delay="800" />
+            <LoadingIndicator :size="40" :delay="800" />
         </div>
         <div v-else>
-            this
             <div
                 v-if="$store.state.recipe"
                 class="header"
