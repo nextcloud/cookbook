@@ -13,6 +13,8 @@
   [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
 - Show info for empty cookbook or categories in recipe overview
   [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
+- Replace checkmark with strikethrough for recipe ingredients
+  [#1908](https://github.com/nextcloud/cookbook/pull/1908) @j0hannesr0th
 
 ### Fixed
 - Fix translation string to not contain quotes

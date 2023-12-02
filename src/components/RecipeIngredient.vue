@@ -7,7 +7,7 @@
         @click="toggleDone"
     >
         <div class="ingredient">
-            <VueShowdown :markdown="formattedIngredient" flavor="github"/>
+            <VueShowdown :markdown="formattedIngredient" flavor="github" />
         </div>
         <span v-if="!ingredientHasCorrectSyntax" class="icon-error" />
     </li>
@@ -44,7 +44,9 @@ export default {
             return this.ingredient
         },
         formattedIngredient() {
-            return this.isDone ? `~~${this.displayIngredient}~~` : `**${this.displayIngredient}**`;
+            return this.isDone
+                ? `~~${this.displayIngredient}~~`
+                : `**${this.displayIngredient}**`
         },
     },
     methods: {
