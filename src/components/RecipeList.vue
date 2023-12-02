@@ -6,15 +6,14 @@
                     <div class="center p-4">
                         <div>
                             {{
-                                t("cookbook", "No recipes created or imported.")
+                                // prettier-ignore
+                                t("cookbook", "No recipes created nor imported.")
                             }}
                         </div>
                         <div>
                             {{
-                                t(
-                                    "cookbook",
-                                    "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.",
-                                )
+                                // prettier-ignore
+                                t("cookbook", "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.",)
                             }}
                         </div>
                     </div>
@@ -39,18 +38,14 @@
                     <div class="center p-4">
                         <div>
                             {{
-                                t(
-                                    "cookbook",
-                                    "No recipes matching the selected category found.",
-                                )
+                                // prettier-ignore
+                                t("cookbook","No recipes matching the selected category found.",)
                             }}
                         </div>
                         <div>
                             {{
-                                t(
-                                    "cookbook",
-                                    "Try selecting a category from the left navigation bar.",
-                                )
+                                // prettier-ignore
+                                t("cookbook", "Try selecting a category from the left navigation bar.",)
                             }}
                         </div>
                     </div>
