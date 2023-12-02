@@ -161,7 +161,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Не удалось заменить интервал обновления рецептов на {interval}",
     "Could not save visible info blocks" : "Не удалось сохранить видимые информационные блоки",
     "Could not set recipe folder to {path}" : "Не удалось заменить папку с рецептами на {path}",
-    "Loading config failed" : "Не удалась загрузить конфигурацию",
     "Dismiss" : "Отклонить",
     "Cancel" : "Отменить",
     "OK" : "ОК"

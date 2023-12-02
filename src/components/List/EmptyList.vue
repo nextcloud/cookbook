@@ -11,10 +11,8 @@
                 </div>
                 <div>
                     {{
-                        t(
-                            'cookbook',
-                            'To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.',
-                        )
+                        // prettier-ignore
+                        t('cookbook', 'To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.',)
                     }}
                 </div>
             </div>

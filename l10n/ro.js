@@ -35,6 +35,8 @@ OC.L10N.register(
     "Name" : "Nume",
     "Description" : "Descriere",
     "URL" : "URL",
+    "Image" : "Imagine",
+    "Tools" : "Unelte",
     "Loading…" : "Se încarcă…",
     "Dismiss" : "Elimină",
     "Cancel" : "Anulare",

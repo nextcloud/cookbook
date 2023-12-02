@@ -202,7 +202,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "تعذر تعيين الفاصل الزمني لتحديث الوصفة بـ {interval}",
     "Could not save visible info blocks" : "تعذّر حفظ صناديق المعلونات المرئية visible info blocks",
     "Could not set recipe folder to {path}" : "تعذر تعيين مجلد الوصفة في {path}",
-    "Loading config failed" : "فشل تحميل التكوين",
     "Dismiss" : "تجاهل",
     "Cancel" : "إلغاء",
     "OK" : "موافق"

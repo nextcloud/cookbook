@@ -155,7 +155,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Kon de voorkeur voor afbeelding afdrukken niet instellen",
     "Could not set recipe update interval to {interval}" : "Kon de update-interval voor recepten niet instellen op {interval}",
     "Could not set recipe folder to {path}" : "Kan de receptenmap niet instellen op {path}",
-    "Loading config failed" : "Laden configuratie mislukt",
     "Dismiss" : "Wissen",
     "Cancel" : "Annuleren",
     "OK" : "OK"

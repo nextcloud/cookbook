@@ -57,10 +57,11 @@ Vue.use(ModalDialogs);
 
 setupLogging(Vue);
 
+const store = useStore();
+store.dispatch('refreshConfig');
+
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
-
-const store = useStore();
 
 // Start the app once document is done loading
 Vue.$log.info('Main is done. Creating App.');

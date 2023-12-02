@@ -194,7 +194,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "A recept frissítési idejét nem lehet erre állítani: {interval}",
     "Could not save visible info blocks" : "Nem sikerült a látható információs blokkok mentése",
     "Could not set recipe folder to {path}" : "A recept mappát nem lehet erre állítani: {path}",
-    "Loading config failed" : "A konfiguráció betöltése sikertelen",
     "Dismiss" : "Eltüntetés",
     "Cancel" : "Mégse",
     "OK" : "Rendben"

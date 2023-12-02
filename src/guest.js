@@ -29,6 +29,8 @@ Vue.prototype.t = window.t;
 
 const store = useStore();
 
+store.dispatch('refreshConfig');
+
 // Start the app once document is done loading
 const App = Vue.extend(AppInvalidGuest);
 new App({

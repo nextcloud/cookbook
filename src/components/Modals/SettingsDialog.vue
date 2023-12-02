@@ -180,6 +180,7 @@ import {
     onMounted,
     ref,
     watch,
+    nextTick,
 } from 'vue';
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
 import { getFilePickerBuilder } from '@nextcloud/dialogs';
@@ -235,21 +236,11 @@ const recipeFolder = ref('');
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const resetPrintImage = ref(true);
-/**
- * @type {import('vue').Ref<boolean>}
- */
 const showTagCloudInRecipeList = ref(true);
 /**
  * @type {import('vue').Ref<boolean>}
  */
 const scanningLibrary = ref(false);
-// By setting the reset value initially to true, it will skip one watch event
-// (the one when config is loaded at page load)
-/**
- * @type {import('vue').Ref<boolean>}
- */
-const resetInterval = ref(true);
 /**
  * @type {import('vue').Ref<number>}
  */
@@ -261,15 +252,14 @@ const visibleInfoBlocks = ref([...INFO_BLOCK_KEYS]);
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const resetVisibleInfoBlocks = ref(true);
+const writeChanges = ref(true);
 
 // Watchers
 watch(
     () => printImage.value,
     async (newVal, oldVal) => {
         // Avoid infinite loop on page load and when resetting value after failed submit
-        if (resetPrintImage.value) {
-            resetPrintImage.value = false;
+        if (!writeChanges.value) {
             return;
         }
         try {
@@ -280,7 +270,6 @@ watch(
                 // prettier-ignore
                 t('cookbook','Could not set preference for image printing'),
             );
-            resetPrintImage.value = true;
             printImage.value = oldVal;
         }
     },
@@ -290,6 +279,10 @@ watch(
 watch(
     () => showTagCloudInRecipeList.value,
     (newVal) => {
+        if (!writeChanges.value) {
+            return;
+        }
+
         store.dispatch('setShowTagCloudInRecipeList', {
             showTagCloud: newVal,
         });
@@ -300,8 +293,7 @@ watch(
     () => updateInterval.value,
     async (newVal, oldVal) => {
         // Avoid infinite loop on page load and when resetting value after failed submit
-        if (resetInterval.value) {
-            resetInterval.value = false;
+        if (!writeChanges.value) {
             return;
         }
         try {
@@ -316,7 +308,6 @@ watch(
                 }
             ),
             );
-            resetInterval.value = true;
             updateInterval.value = oldVal;
         }
     },
@@ -326,8 +317,7 @@ watch(
     () => visibleInfoBlocks.value,
     async (newVal, oldVal) => {
         // Avoid infinite loop on page load and when resetting value after failed submit
-        if (resetVisibleInfoBlocks.value) {
-            resetVisibleInfoBlocks.value = false;
+        if (!writeChanges.value) {
             return;
         }
         try {
@@ -341,7 +331,6 @@ watch(
             await showSimpleAlertModal(
                 t('cookbook', 'Could not save visible info blocks'),
             );
-            resetVisibleInfoBlocks.value = true;
             visibleInfoBlocks.value = oldVal;
         }
     },
@@ -386,28 +375,24 @@ const pickRecipeFolder = () => {
  * Initial setup
  */
 const setup = async () => {
-    try {
-        await store.dispatch('refreshConfig');
-        const { config } = store.state;
-        resetPrintImage.value = false;
-        resetVisibleInfoBlocks.value = false;
+    writeChanges.value = false;
 
-        if (!config) {
-            throw new Error();
-        }
+    const { config } = store.state;
 
-        printImage.value = config.print_image;
-        visibleInfoBlocks.value = visibleInfoBlocksDecode(
-            config.visibleInfoBlocks,
-        );
-        showTagCloudInRecipeList.value =
-            store.state.localSettings.showTagCloudInRecipeList;
-        updateInterval.value = config.update_interval;
-        recipeFolder.value = config.folder;
-    } catch (err) {
-        log.error('Error setting up SettingsDialog', err);
-        await showSimpleAlertModal(t('cookbook', 'Loading config failed'));
+    if (!config) {
+        throw new Error();
     }
+
+    printImage.value = config.print_image;
+    visibleInfoBlocks.value = visibleInfoBlocksDecode(config.visibleInfoBlocks);
+    showTagCloudInRecipeList.value =
+        store.state.localSettings.showTagCloudInRecipeList;
+    updateInterval.value = config.update_interval;
+    recipeFolder.value = config.folder;
+
+    nextTick(() => {
+        writeChanges.value = true;
+    });
 };
 
 /**

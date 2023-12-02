@@ -186,7 +186,6 @@
     "Could not set preference for image printing" : "Valen för bildutskrift gick inte att ställa in",
     "Could not set recipe update interval to {interval}" : "Kunde inte ställa in uppdateringsintervall till {interval}",
     "Could not set recipe folder to {path}" : "Kunde inte ange {path} som receptmapp",
-    "Loading config failed" : "Laddning av konfiguration misslyckades",
     "Dismiss" : "Avfärda",
     "Cancel" : "Avbryt",
     "OK" : "OK"

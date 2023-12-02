@@ -128,7 +128,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Impossìbile a impostare preferèntzias pro s'imprenta de s'immàgine",
     "Could not set recipe update interval to {interval}" : "Impossìbile a impostare s'intervallu de agiornamentu de is retzetas a {interval}",
     "Could not set recipe folder to {path}" : "Impossìbile a impostare sa cartella de is retzetas a {path}",
-    "Loading config failed" : "Carrigamentu de sa cunfiguratzione faddidu",
     "Dismiss" : "Iscarta",
     "Cancel" : "Annulla",
     "OK" : "AB"

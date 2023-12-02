@@ -35,9 +35,14 @@
   [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
 - Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
   [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
+- Load config at app loading only once and do not rewrite complete config
+  [#1892](https://github.com/nextcloud/cookbook/pull/1892) @christianlupus
+- Fix English grammar in translatable string
+  [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
 - Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
-- Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870)) [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 
 ### Maintenance
 - Preparation for migration to vue.js 3

@@ -131,7 +131,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "无法设置图片打印选项",
     "Could not set recipe update interval to {interval}" : "无法将菜谱更新间隔设置为 {interval}",
     "Could not set recipe folder to {path}" : "无法将菜谱文件夹路径设置为 {path}",
-    "Loading config failed" : "加载配置失败",
     "Dismiss" : "不予理会",
     "Cancel" : "取消",
     "OK" : "好"

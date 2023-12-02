@@ -221,16 +221,16 @@
         },
         {
             "name": "nextcloud/ocp",
-            "version": "v27.1.3",
+            "version": "v27.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "f3f6202dcd304d5280356a57d41dd9cb4ab21e95"
+                "reference": "4b22dae0cacc0e776d4cb83aa4c3b54fea99794a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/f3f6202dcd304d5280356a57d41dd9cb4ab21e95",
-                "reference": "f3f6202dcd304d5280356a57d41dd9cb4ab21e95",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/4b22dae0cacc0e776d4cb83aa4c3b54fea99794a",
+                "reference": "4b22dae0cacc0e776d4cb83aa4c3b54fea99794a",
                 "shasum": ""
             },
             "require": {
@@ -259,9 +259,9 @@
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
             "support": {
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
-                "source": "https://github.com/nextcloud-deps/ocp/tree/v27.1.3"
+                "source": "https://github.com/nextcloud-deps/ocp/tree/v27.1.4"
             },
-            "time": "2023-10-10T00:31:16+00:00"
+            "time": "2023-11-17T00:33:22+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -972,16 +972,16 @@
         },
         {
             "name": "psalm/phar",
-            "version": "5.15.0",
+            "version": "5.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/psalm/phar.git",
-                "reference": "19dde3eba5901ff50ca43a5e4c43540f097e0511"
+                "reference": "be4f93e50edf473d60a6e6f9c1d78546a3a32b90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phar/zipball/19dde3eba5901ff50ca43a5e4c43540f097e0511",
-                "reference": "19dde3eba5901ff50ca43a5e4c43540f097e0511",
+                "url": "https://api.github.com/repos/psalm/phar/zipball/be4f93e50edf473d60a6e6f9c1d78546a3a32b90",
+                "reference": "be4f93e50edf473d60a6e6f9c1d78546a3a32b90",
                 "shasum": ""
             },
             "require": {
@@ -1001,9 +1001,9 @@
             "description": "Composer-based Psalm Phar",
             "support": {
                 "issues": "https://github.com/psalm/phar/issues",
-                "source": "https://github.com/psalm/phar/tree/5.15.0"
+                "source": "https://github.com/psalm/phar/tree/5.16.0"
             },
-            "time": "2023-08-21T03:20:52+00:00"
+            "time": "2023-11-22T22:05:24+00:00"
         },
         {
             "name": "psr/clock",

@@ -135,7 +135,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Kunne ikke indstille præferencer for print med/uden billede.",
     "Could not set recipe update interval to {interval}" : "Kunne ikke sætte opdaterings interval til {interval}.",
     "Could not set recipe folder to {path}" : "Kunne ikke sætte opskrifts mappen til {path}.",
-    "Loading config failed" : "Indlæsning af konfiguration fejlet!",
     "Dismiss" : "Afvis",
     "Cancel" : "Annuller",
     "OK" : "OK"

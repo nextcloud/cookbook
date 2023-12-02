@@ -132,7 +132,6 @@
     "Could not set preference for image printing" : "Ni mogoče nastaviti lastnostni za tiskanje slike",
     "Could not set recipe update interval to {interval}" : "Ni mogoče nastaviti posodobitve receptov na {interval}",
     "Could not set recipe folder to {path}" : "Ni mogoče nastaviti mape receptov na {path}",
-    "Loading config failed" : "Nalaganje nastavitev je spodletelo",
     "Dismiss" : "Opusti",
     "Cancel" : "Prekliči",
     "OK" : "V redu"

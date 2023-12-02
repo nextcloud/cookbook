@@ -153,7 +153,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Không thể đặt tùy chọn in ảnh",
     "Could not set recipe update interval to {interval}" : "Không thể đặt khoảng thời gian cập nhật công thức thành {interval}",
     "Could not set recipe folder to {path}" : "Không thể đặt thư mục công thức thành {path}",
-    "Loading config failed" : "Tải cấu hình không thành công",
     "Dismiss" : "Bỏ qua",
     "Cancel" : "Hủy",
     "OK" : "OK"

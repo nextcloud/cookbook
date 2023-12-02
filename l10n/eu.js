@@ -196,7 +196,6 @@ OC.L10N.register(
     "Could not set recipe update interval to {interval}" : "Ezin izan da ezarri errezeta eguneratzeko tartea {interval}-era",
     "Could not save visible info blocks" : "Ezin izan dira gorde ikusgai dauden informazio-blokeak",
     "Could not set recipe folder to {path}" : "Ezin izan da ezarri errezeta karpetaren bidea hona {path}",
-    "Loading config failed" : "Konfigurazioa kargatzeak huts egin du",
     "Dismiss" : "Baztertu",
     "Cancel" : "Utzi",
     "OK" : "Ados"

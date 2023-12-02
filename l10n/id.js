@@ -17,6 +17,8 @@ OC.L10N.register(
     "Name" : "Nama",
     "Description" : "Deskrisi",
     "URL" : "URL",
+    "Image" : "Gambar",
+    "Tools" : "Peralatan",
     "Creation date" : "Tanggal pembuatan",
     "Last modified" : "Terakhir diubah",
     "Loading…" : "Memuat…",

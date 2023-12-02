@@ -128,7 +128,6 @@ OC.L10N.register(
     "Could not set preference for image printing" : "Postavljanje željenih značajki za ispis slike nije uspjelo",
     "Could not set recipe update interval to {interval}" : "Postavljanje intervala ažuriranja recepta na {interval} nije uspjelo",
     "Could not set recipe folder to {path}" : "Postavljanje mape recepata na {path} nije uspjelo",
-    "Loading config failed" : "Učitavanje konfiguracije nije uspjelo",
     "Dismiss" : "Zanemari",
     "Cancel" : "Odustani",
     "OK" : "U redu"
