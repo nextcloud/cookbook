@@ -35,6 +35,8 @@
   [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
 - Load config at app loading only once and do not rewrite complete config
   [#1892](https://github.com/nextcloud/cookbook/pull/1892) @christianlupus
+- Fix English grammar in translatable string
+  [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
 
 ### Maintenance
 - Fix URL of Transifex after upstream subdomain change
