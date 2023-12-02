@@ -6,9 +6,8 @@
         }"
         @click="toggleDone"
     >
-        <div class="checkmark" :class="{ done: isDone }">✔</div>
         <div class="ingredient">
-            <VueShowdown :markdown="displayIngredient" />
+            <VueShowdown :markdown="formattedIngredient" flavor="github"/>
         </div>
         <span v-if="!ingredientHasCorrectSyntax" class="icon-error" />
     </li>
@@ -44,6 +43,9 @@ export default {
             }
             return this.ingredient
         },
+        formattedIngredient() {
+            return this.isDone ? `~~${this.displayIngredient}~~` : `**${this.displayIngredient}**`;
+        },
     },
     methods: {
         isHeader() {
@@ -69,35 +71,10 @@ li {
     list-style-type: none;
 }
 
-.unindented {
-    position: relative;
-    left: -1.25em;
-}
-
-li > .checkmark {
-    display: inline;
-    visibility: hidden;
-}
-
-li > .done {
-    visibility: visible;
-}
-
-li:hover > .checkmark {
-    color: var(--color-primary-element);
-    opacity: 0.5;
-    visibility: visible;
-}
-
 li > .ingredient {
     display: inline;
     padding-left: 1em;
-    margin-left: 0.3em;
     text-indent: -1em;
-}
-
-.ingredient:deep(a) {
-    text-decoration: underline;
 }
 
 li > span.icon-error {
