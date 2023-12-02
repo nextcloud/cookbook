@@ -372,30 +372,6 @@ const pickRecipeFolder = () => {
 };
 
 /**
- * Initial setup
- */
-const setup = async () => {
-    writeChanges.value = false;
-
-    const { config } = store.state;
-
-    if (!config) {
-        throw new Error();
-    }
-
-    printImage.value = config.print_image;
-    visibleInfoBlocks.value = visibleInfoBlocksDecode(config.visibleInfoBlocks);
-    showTagCloudInRecipeList.value =
-        store.state.localSettings.showTagCloudInRecipeList;
-    updateInterval.value = config.update_interval;
-    recipeFolder.value = config.folder;
-
-    nextTick(() => {
-        writeChanges.value = true;
-    });
-};
-
-/**
  * Reindex all recipes
  */
 const reindex = () => {
@@ -430,11 +406,30 @@ const enableLogger = () => {
 
 const handleShowSettings = () => {
     isOpen.value = true;
+
+    // Temporarily disable the storage of settings to allow for initialization
+    writeChanges.value = false;
+
+    const { config } = store.state;
+
+    if (!config) {
+        throw new Error();
+    }
+
+    printImage.value = config.print_image;
+    visibleInfoBlocks.value = visibleInfoBlocksDecode(config.visibleInfoBlocks);
+    showTagCloudInRecipeList.value =
+        store.state.localSettings.showTagCloudInRecipeList;
+    updateInterval.value = config.update_interval;
+    recipeFolder.value = config.folder;
+
+    nextTick(() => {
+        writeChanges.value = true;
+    });
 };
 
 // Vue lifecycle
 onMounted(() => {
-    setup();
     subscribe(SHOW_SETTINGS_EVENT, handleShowSettings);
 });
 
