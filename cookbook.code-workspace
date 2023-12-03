@@ -23,11 +23,11 @@
 			".github/actions/run-tests/volumes/output/**/*": true,
 			".github/actions/run-tests/volumes/postgres/**/*": true,
 			".github/actions/run-tests/volumes/nextcloud/custom_apps/cookbook/**/*": true,
-			".github/actions/run-tests/volumes/**/*": true
+			".github/actions/run-tests/volumes/**/*": true,
+			".hook-checkout/**/*": true
 		},
 		"files.watcherExclude": {
-			".github/actions/run-tests/volumes/nextcloud/custom_apps/cookbook/**/*": true,
-			".github/actions/run-tests/volumes/nextcloud/**/*": true
+			".github/actions/run-tests/volumes/**/*": true
 		},
 		//"intelephense.trace.server": "message",
 		"intelephense.files.exclude": [
@@ -43,6 +43,7 @@
 			"**/vendor/**/vendor/**",
 			// "3rdparty/**"
 			".github/actions/**",
+			".hook-checkout/**"
 		],
 		"cSpell.words": [
 			"Nextcloud"
