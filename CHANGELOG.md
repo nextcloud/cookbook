@@ -16,7 +16,7 @@
 - Allow editing existing recipe as new (see [1867](https://github.com/nextcloud/cookbook/issues/1867)) 
   [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
 - Replace checkmark with strikethrough for recipe ingredients
-  [#1908](https://github.com/nextcloud/cookbook/pull/1908) @j0hannesr0th
+  [#1910](https://github.com/nextcloud/cookbook/pull/1910) @j0hannesr0th
 
 ### Fixed
 - Fix translation string to not contain quotes
