@@ -264,6 +264,7 @@ watch(
         }
         try {
             await api.config.printImage.update(newVal);
+            await store.dispatch('refreshConfig');
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch {
             await showSimpleAlertModal(
@@ -298,7 +299,7 @@ watch(
         }
         try {
             await api.config.updateInterval.update(newVal);
-            // Should this check the response of the query? To catch some errors that redirect the page
+            await store.dispatch('refreshConfig');
         } catch {
             await showSimpleAlertModal(
                 // prettier-ignore
@@ -352,6 +353,7 @@ const pickRecipeFolder = () => {
     filePicker.pick().then((path) => {
         store
             .dispatch('updateRecipeDirectory', { dir: path })
+            .then(() => store.dispatch('refreshConfig'))
             .then(() => {
                 recipeFolder.value = path;
                 if (route.path !== '/') {
