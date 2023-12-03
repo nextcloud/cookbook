@@ -43,6 +43,8 @@
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- Make API interface cleaner by only using string identifiers for recipes
+  [#1909](https://github.com/nextcloud/cookbook/pull/1909) @christianlupus
 
 ### Maintenance
 - Preparation for migration to vue.js 3
@@ -105,6 +107,10 @@
   [#1873](https://github.com/nextcloud/cookbook/pull/1873) @dependabot
 - Use non-deprecated prop name for navigation items
   [#1893](https://github.com/nextcloud/cookbook/pull/1893) @christianlupus
+
+### Deprecated
+- Old integer-based ids should no longer be used.
+  [#1909](https://github.com/nextcloud/cookbook/pull/1909) @christianlupus
 
 
 ## 0.10.2 - 2023-03-24

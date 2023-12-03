@@ -2,8 +2,6 @@
 
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
-
 /**
  * Fix the data type of the id of a recipe.
  *

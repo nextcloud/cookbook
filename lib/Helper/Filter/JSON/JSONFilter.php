@@ -1,22 +1,6 @@
 <?php
 
-namespace OCA\Cookbook\Helper\Filter;
-
-use OCA\Cookbook\Helper\Filter\JSON\CleanCategoryFilter;
-use OCA\Cookbook\Helper\Filter\JSON\ExtractImageUrlFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixDescriptionFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixDurationsFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixImageSchemeFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixIngredientsFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixInstructionsFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixKeywordsFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixNutritionFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixRecipeYieldFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
-use OCA\Cookbook\Helper\Filter\JSON\FixUrlFilter;
-use OCA\Cookbook\Helper\Filter\JSON\RecipeIdTypeFilter;
-use OCA\Cookbook\Helper\Filter\JSON\RecipeNameFilter;
-use OCA\Cookbook\Helper\Filter\JSON\SchemaConformityFilter;
+namespace OCA\Cookbook\Helper\Filter\JSON;
 
 class JSONFilter {
 	/** @var AbstractJSONFilter[] */

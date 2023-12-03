@@ -7,7 +7,8 @@ use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
-use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
@@ -41,6 +42,8 @@ class RecipeImplementationTest extends TestCase {
 	private $restParser;
 	/** @var RecipeJSONOutputFilter|MockObject */
 	private $recipeFilter;
+	/** @var RecipeStubFilter|MockObject */
+	private $stubFilter;
 	/** @var AcceptHeaderParsingHelper|MockObject */
 	private $acceptHeaderParser;
 
@@ -58,6 +61,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
 		$this->recipeFilter = $this->createMock(RecipeJSONOutputFilter::class);
+		$this->stubFilter = $this->createMock(RecipeStubFilter::class);
 		$this->acceptHeaderParser = $this->createMock(AcceptHeaderParsingHelper::class);
 
 		/** @var IL10N|Stub */
@@ -71,6 +75,7 @@ class RecipeImplementationTest extends TestCase {
 			$this->urlGenerator,
 			$this->restParser,
 			$this->recipeFilter,
+			$this->stubFilter,
 			$this->acceptHeaderParser,
 			$l
 		);
@@ -684,6 +689,8 @@ class RecipeImplementationTest extends TestCase {
 			$size = $params['size'];
 			return "/path/to/controller/$id/$size";
 		}));
+
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		/**
 		 * @var JSONResponse $ret

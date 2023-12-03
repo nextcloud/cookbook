@@ -1,8 +1,7 @@
 <?php
 
-namespace OCA\Cookbook\Helper\Filter;
+namespace OCA\Cookbook\Helper\Filter\DB;
 
-use OCA\Cookbook\Helper\Filter\DB\RecipeDatesFilter;
 use OCP\Files\File;
 
 class NormalizeRecipeFileFilter {
@@ -32,7 +31,8 @@ class NormalizeRecipeFileFilter {
 
 		foreach ($this->filters as $filter) {
 			/** @var AbstractRecipeFilter $filter */
-			$changed |= $filter->apply($json, $recipeFile);
+			$ret = $filter->apply($json, $recipeFile);
+			$changed = $changed || $ret;
 		}
 
 		if ($changed && $updateFiles) {

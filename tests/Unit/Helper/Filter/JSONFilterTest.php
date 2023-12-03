@@ -14,10 +14,10 @@ use OCA\Cookbook\Helper\Filter\JSON\FixNutritionFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixRecipeYieldFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixToolsFilter;
 use OCA\Cookbook\Helper\Filter\JSON\FixUrlFilter;
+use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\Filter\JSON\RecipeIdTypeFilter;
 use OCA\Cookbook\Helper\Filter\JSON\RecipeNameFilter;
 use OCA\Cookbook\Helper\Filter\JSON\SchemaConformityFilter;
-use OCA\Cookbook\Helper\Filter\JSONFilter;
 use PHPUnit\Framework\TestCase;
 
 class JSONFilterTest extends TestCase {

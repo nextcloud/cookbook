@@ -4,7 +4,7 @@ namespace OCA\Cookbook\Service;
 
 use OCA\Cookbook\Db\RecipeDb;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
-use OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter;
+use OCA\Cookbook\Helper\Filter\DB\NormalizeRecipeFileFilter;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;

@@ -1,8 +1,8 @@
 <?php
 
-namespace OCA\Cookbook\Helper\Filter;
+namespace OCA\Cookbook\Helper\Filter\Output;
 
-use OCA\Cookbook\Helper\Filter\Output\EnsureNutritionPresentFilter;
+use OCA\Cookbook\Helper\Filter\JSON\AbstractJSONFilter;
 use OCP\Files\File;
 
 class RecipeJSONOutputFilter {
