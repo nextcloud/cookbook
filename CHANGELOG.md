@@ -13,6 +13,8 @@
   [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
 - Show info for empty cookbook or categories in recipe overview
   [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
+- Allow editing existing recipe as new (see [1867](https://github.com/nextcloud/cookbook/issues/1867)) 
+  [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
 
 ### Fixed
 - Fix translation string to not contain quotes
@@ -37,8 +39,14 @@
   [#1892](https://github.com/nextcloud/cookbook/pull/1892) @christianlupus
 - Fix English grammar in translatable string
   [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
+- Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 
 ### Maintenance
+- Preparation for migration to vue.js 3
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Fix URL of Transifex after upstream subdomain change
   [#1598](https://github.com/nextcloud/cookbook/pull/1598) @rakekniven
 - Fix webpack dev server settings to allow for docker dev environment

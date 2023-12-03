@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <!-- Use $store.state.page for page matching to make sure everything else has been set beforehand! -->
+        <!-- Use $page for page matching to make sure everything else has been set beforehand! -->
         <div class="status-header">
             <ModeIndicator v-if="isSearch" :title="searchTitle" />
             <ModeIndicator
@@ -12,42 +12,45 @@
                 :title="t('cookbook', 'Viewing recipe')"
             />
             <!-- INDEX PAGE -->
-            <Location v-if="isIndex" :title="t('cookbook', 'All recipes')" />
-            <Location
-                v-else-if="isSearch && $route.params.value"
+            <LocationIndicator
+                v-if="isIndex"
+                :title="t('cookbook', 'All recipes')"
+            />
+            <LocationIndicator
+                v-else-if="isSearch && route.params.value"
                 :title="
-                    $route.params.value === '_' // TRANSLATORS Shown, e.g., as the recipe category in the navigation/title bar for uncategorized recipes.
+                    route.params.value === '_' // TRANSLATORS Shown, e.g., as the recipe category in the navigation/title bar for uncategorized recipes.
                         ? t('cookbook', 'None')
-                        : decodeURIComponent($route.params.value)
+                        : decodeURIComponent(route.params.value)
                 "
             />
             <!-- Recipe view / edit -->
-            <Location
+            <LocationIndicator
                 v-else-if="isEdit || isRecipe"
-                :title="$store.state.recipe.name"
+                :title="store.state.recipe.name"
             />
             <!-- Is app loading? -->
-            <Location
+            <LocationIndicator
                 v-else-if="isLoading"
                 :title="t('cookbook', 'Loading app')"
             />
             <!-- Is a recipe loading? -->
-            <Location
-                v-else-if="isLoadingRecipe"
+            <LocationIndicator
+                v-else-if="!!store.state.loadingRecipe"
                 :title="t('cookbook', 'Loading recipe')"
             />
             <!-- No recipe found -->
-            <Location
+            <LocationIndicator
                 v-else-if="recipeNotFound"
                 :title="t('cookbook', 'Recipe not found')"
             />
             <!-- No page found -->
-            <Location
+            <LocationIndicator
                 v-else-if="pageNotFound"
                 :title="t('cookbook', 'Page not found')"
             />
             <!-- Create new recipe -->
-            <Location
+            <LocationIndicator
                 v-else-if="isCreate"
                 :title="t('cookbook', 'Creating new recipe')"
             />
@@ -57,12 +60,12 @@
             v-if="isRecipe"
             type="primary"
             :aria-label="t('cookbook', 'Edit')"
-            @click="goToRecipeEdit($store.state.recipe.id)"
+            @click="goToRecipeEdit(store.state.recipe.id)"
         >
             <template #icon>
                 <PencilIcon :size="20" />
             </template>
-            {{ t("cookbook", "Edit") }}
+            {{ t('cookbook', 'Edit') }}
         </NcButton>
         <NcButton
             v-if="isEdit || isCreate"
@@ -72,13 +75,13 @@
         >
             <template #icon>
                 <LoadingIcon
-                    v-if="$store.state.savingRecipe"
+                    v-if="store.state.savingRecipe"
                     :size="20"
                     class="animation-rotate"
                 />
                 <CheckmarkIcon v-else :size="20" />
             </template>
-            {{ t("cookbook", "Save") }}
+            {{ t('cookbook', 'Save') }}
         </NcButton>
         <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
         <NcActions
@@ -92,10 +95,10 @@
                 :value="filterValue"
                 @update:value="updateFilters"
             >
-                {{ t("cookbook", "Filter") }}
+                {{ t('cookbook', 'Filter') }}
             </NcActionInput>
             <NcActionInput icon="icon-search" @submit="search">
-                {{ t("cookbook", "Search") }}
+                {{ t('cookbook', 'Search') }}
             </NcActionInput>
         </NcActions>
         {{/* Overflow buttons (3-dot menu) */}}
@@ -107,7 +110,7 @@
             <NcActionButton
                 v-if="isEdit"
                 :icon="
-                    $store.state.reloadingRecipe === parseInt($route.params.id)
+                    store.state.reloadingRecipe === parseInt(route.params.id)
                         ? 'icon-loading-small'
                         : 'icon-history'
                 "
@@ -115,20 +118,20 @@
                 :aria-label="t('cookbook', 'Reload recipe')"
                 @click="reloadRecipeEdit()"
             >
-                {{ t("cookbook", "Reload recipe") }}
+                {{ t('cookbook', 'Reload recipe') }}
             </NcActionButton>
             <NcActionButton
                 v-if="isEdit"
                 class="action-button"
                 :aria-label="t('cookbook', 'Abort editing')"
-                @click="goToRecipe($store.state.recipe.id)"
+                @click="goToRecipe(store.state.recipe.id)"
             >
-                {{ t("cookbook", "Abort editing") }}
+                {{ t('cookbook', 'Abort editing') }}
                 <template #icon>
                     <NcLoadingIcon
                         v-if="
-                            $store.state.reloadingRecipe ===
-                            parseInt($route.params.id)
+                            store.state.reloadingRecipe ===
+                            parseInt(route.params.id)
                         "
                         :size="20"
                     />
@@ -138,7 +141,7 @@
             <NcActionButton
                 v-if="isRecipe"
                 :icon="
-                    $store.state.reloadingRecipe === parseInt($route.params.id)
+                    store.state.reloadingRecipe === parseInt(route.params.id)
                         ? 'icon-loading-small'
                         : 'icon-history'
                 "
@@ -146,7 +149,7 @@
                 :aria-label="t('cookbook', 'Reload recipe')"
                 @click="reloadRecipeView()"
             >
-                {{ t("cookbook", "Reload recipe") }}
+                {{ t('cookbook', 'Reload recipe') }}
             </NcActionButton>
             <NcActionButton
                 v-if="isRecipe"
@@ -155,7 +158,18 @@
                 @click="printRecipe()"
             >
                 <template #icon=""><printer-icon :size="20" /></template>
-                {{ t("cookbook", "Print recipe") }}
+                {{ t('cookbook', 'Print recipe') }}
+            </NcActionButton>
+            <NcActionButton
+                v-if="isRecipe"
+                class="action-button"
+                :aria-label="t('cookbook', 'Clone recipe')"
+                @click="goToRecipeClone(store.state.recipe.id)"
+            >
+                {{ t('cookbook', 'Clone recipe') }}
+                <template #icon>
+                    <ContentDuplicateIcon />
+                </template>
             </NcActionButton>
             <NcActionButton
                 v-if="isRecipe"
@@ -164,172 +178,170 @@
                 :aria-label="t('cookbook', 'Delete recipe')"
                 @click="deleteRecipe()"
             >
-                {{ t("cookbook", "Delete recipe") }}
+                {{ t('cookbook', 'Delete recipe') }}
             </NcActionButton>
         </NcActions>
     </div>
 </template>
 
-<script>
-import NcActions from "@nextcloud/vue/dist/Components/NcActions"
-import NcActionButton from "@nextcloud/vue/dist/Components/NcActionButton"
+<script setup>
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router/composables';
+import NcActions from '@nextcloud/vue/dist/Components/NcActions';
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
-import NcButton from "@nextcloud/vue/dist/Components/NcButton"
-import NcActionInput from "@nextcloud/vue/dist/Components/NcActionInput"
-import NcLoadingIcon from "@nextcloud/vue/dist/Components/NcLoadingIcon"
+import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput';
+import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon';
 
-import PencilIcon from "icons/Pencil.vue"
-import LoadingIcon from "icons/Loading.vue"
-import CheckmarkIcon from "icons/Check.vue"
-import PrinterIcon from "icons/Printer.vue"
-import EyeIcon from "icons/Eye.vue"
+import PencilIcon from 'icons/Pencil.vue';
+import LoadingIcon from 'icons/Loading.vue';
+import CheckmarkIcon from 'icons/Check.vue';
+import PrinterIcon from 'icons/Printer.vue';
+import EyeIcon from 'icons/Eye.vue';
+import ContentDuplicateIcon from 'icons/ContentDuplicate.vue';
 
-import helpers from "cookbook/js/helper"
+import helpers from 'cookbook/js/helper';
 import {
     showSimpleAlertModal,
     showSimpleConfirmModal,
-} from "cookbook/js/modals"
+} from 'cookbook/js/modals';
 
-import Location from "./Location.vue"
-import ModeIndicator from "./ModeIndicator.vue"
+import LocationIndicator from './LocationIndicator.vue';
+import ModeIndicator from './ModeIndicator.vue';
+import { useStore } from '../../store';
+import emitter from '../../bus';
 
-export default {
-    name: "AppControls",
-    components: {
-        NcActions,
-        NcActionButton,
-        NcActionInput,
-        NcLoadingIcon,
-        PrinterIcon,
-        NcButton,
-        PencilIcon,
-        LoadingIcon,
-        CheckmarkIcon,
-        EyeIcon,
-        ModeIndicator,
-        Location,
-    },
-    data() {
-        return {
-            filterValue: "",
+const route = useRoute();
+const store = useStore();
+const filterValue = ref('');
+
+/** Computed values * */
+
+const isCreate = computed(() => store.state.page === 'create');
+const isEdit = computed(() => {
+    //  A recipe is being loaded
+    if (store.state.loadingRecipe) {
+        return false; // Do not show both at the same time
+    }
+    // Editing requires that a recipe was found
+    return !!(store.state.page === 'edit' && store.state.recipe);
+});
+const isIndex = computed(() => {
+    //  A recipe is being loaded
+    if (store.state.loadingRecipe) {
+        return false; // Do not show both at the same time
+    }
+    return store.state.page === 'index';
+});
+const isLoading = computed(
+    () =>
+        //  The page is being loaded
+        store.state.page === null,
+);
+const isRecipe = computed(() => {
+    //  A recipe is being loaded
+    if (store.state.loadingRecipe) {
+        return false; // Do not show both at the same time
+    }
+    // Viewing recipe requires that one was found
+    return !!(store.state.page === 'recipe' && store.state.recipe);
+});
+const isSearch = computed(() => {
+    //  A recipe is being loaded
+    if (store.state.loadingRecipe) {
+        return false; // Do not show both at the same time
+    }
+    return store.state.page === 'search';
+});
+const pageNotFound = computed(() => store.state.page === 'notfound');
+const recipeNotFound = computed(
+    () =>
+        // Editing or viewing recipe was attempted, but no recipe was found
+        ['edit', 'recipe'].indexOf(store.state.page) !== -1 &&
+        !store.state.recipe,
+);
+const searchTitle = computed(() => {
+    if (route.name === 'search-category') {
+        return t('cookbook', 'Category');
+    }
+    if (route.name === 'search-name') {
+        return t('cookbook', 'Recipe name');
+    }
+    if (route.name === 'search-tags') {
+        return t('cookbook', 'Tags');
+    }
+    return t('cookbook', 'Search for recipes');
+});
+
+// Methods
+
+const deleteRecipe = async () => {
+    // Confirm delete
+    if (
+        !(await showSimpleConfirmModal(
+            // prettier-ignore
+            t('cookbook', 'Are you sure you want to delete this recipe?'),
+        ))
+    ) {
+        return;
+    }
+
+    try {
+        await store.dispatch('deleteRecipe', {
+            id: store.state.recipe.id,
+        });
+        helpers.goTo('/');
+    } catch (e) {
+        await showSimpleAlertModal(t('cookbook', 'Delete failed'));
+        if (e && e instanceof Error) {
+            throw e;
         }
-    },
-    computed: {
-        isCreate() {
-            return this.$store.state.page === "create"
-        },
-        isEdit() {
-            if (this.isLoadingRecipe) {
-                return false // Do not show both at the same time
-            }
-            // Editing requires that a recipe was found
-            return !!(
-                this.$store.state.page === "edit" && this.$store.state.recipe
-            )
-        },
-        isIndex() {
-            if (this.isLoadingRecipe) {
-                return false // Do not show both at the same time
-            }
-            return this.$store.state.page === "index"
-        },
-        isLoading() {
-            //  The page is being loaded
-            return this.$store.state.page === null
-        },
-        isLoadingRecipe() {
-            //  A recipe is being loaded
-            return !!this.$store.state.loadingRecipe
-        },
-        isRecipe() {
-            if (this.isLoadingRecipe) {
-                return false // Do not show both at the same time
-            }
-            // Viewing recipe requires that one was found
-            return !!(
-                this.$store.state.page === "recipe" && this.$store.state.recipe
-            )
-        },
-        isSearch() {
-            if (this.isLoadingRecipe) {
-                return false // Do not show both at the same time
-            }
-            return this.$store.state.page === "search"
-        },
-        pageNotFound() {
-            return this.$store.state.page === "notfound"
-        },
-        recipeNotFound() {
-            // Editing or viewing recipe was attempted, but no recipe was found
-            return (
-                ["edit", "recipe"].indexOf(this.$store.state.page) !== -1 &&
-                !this.$store.state.recipe
-            )
-        },
-        searchTitle() {
-            if (this.$route.name === "search-category") {
-                return t("cookbook", "Category")
-            }
-            if (this.$route.name === "search-name") {
-                return t("cookbook", "Recipe name")
-            }
-            if (this.$route.name === "search-tags") {
-                return t("cookbook", "Tags")
-            }
-            return t("cookbook", "Search for recipes")
-        },
-    },
-    methods: {
-        async deleteRecipe() {
-            // Confirm delete
-            if (
-                !(await showSimpleConfirmModal(
-                    // prettier-ignore
-                    t("cookbook", "Are you sure you want to delete this recipe?"),
-                ))
-            ) {
-                return
-            }
+    }
+};
 
-            try {
-                await this.$store.dispatch("deleteRecipe", {
-                    id: this.$store.state.recipe.id,
-                })
-                helpers.goTo("/")
-            } catch (e) {
-                await showSimpleAlertModal(t("cookbook", "Delete failed"))
-                if (e && e instanceof Error) {
-                    throw e
-                }
-            }
-        },
-        printRecipe() {
-            window.print()
-        },
-        reloadRecipeEdit() {
-            this.$root.$emit("reloadRecipeEdit")
-        },
-        reloadRecipeView() {
-            this.$root.$emit("reloadRecipeView")
-        },
-        saveChanges() {
-            this.$root.$emit("saveRecipe")
-        },
-        search(e) {
-            helpers.goTo(`/search/${e.target[1].value}`)
-        },
-        updateFilters(e) {
-            this.filterValue = e
-            this.$root.$emit("applyRecipeFilter", e)
-        },
-        goToRecipe(id) {
-            helpers.goTo(`/recipe/${id}`)
-        },
-        goToRecipeEdit(id) {
-            helpers.goTo(`/recipe/${id}/edit`)
-        },
-    },
-}
+const printRecipe = () => {
+    window.print();
+};
+
+const reloadRecipeEdit = () => {
+    emitter.emit('reloadRecipeEdit');
+};
+
+const reloadRecipeView = () => {
+    emitter.emit('reloadRecipeView');
+};
+
+const saveChanges = () => {
+    emitter.emit('saveRecipe');
+};
+
+const search = (e) => {
+    helpers.goTo(`/search/${e.target[1].value}`);
+};
+
+const updateFilters = (e) => {
+    filterValue.value = e;
+    store.dispatch('setRecipeFilters', e);
+};
+
+const goToRecipe = (id) => {
+    helpers.goTo(`/recipe/${id}`);
+};
+
+const goToRecipeClone = (id) => {
+    helpers.goTo(`/recipe/${id}/clone`);
+};
+
+const goToRecipeEdit = (id) => {
+    helpers.goTo(`/recipe/${id}/edit`);
+};
+</script>
+
+<script>
+export default {
+    name: 'AppControls',
+};
 </script>
 
 <style scoped>
@@ -347,7 +359,7 @@ export default {
     z-index: 2;
 
     /* The height of the nextcloud header */
-    top: 0px;
+    top: 0;
     display: flex;
     width: 100%;
     /* Make sure the wrapper is always at least as tall as the tallest element
@@ -372,22 +384,6 @@ export default {
     flex-shrink: 1;
     align-items: flex-start;
     justify-content: space-around;
-}
-
-.mode-indicator {
-    font-size: 0.9em;
-    line-height: 0.9em;
-}
-
-.location-wrapper {
-    width: 100%;
-}
-
-.location-wrapper:only-child {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
 }
 
 /* The .status-header is justify-content: space-around. If there is no

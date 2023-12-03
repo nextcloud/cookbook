@@ -5,9 +5,9 @@ plugins:
 extends:
     - airbnb-base
     - "plugin:vue/base"
-    - "plugin:vue/essential"
-    - "plugin:vue/strongly-recommended"
-    - "plugin:vue/recommended"
+    - "plugin:vue/vue3-essential"
+    - "plugin:vue/vue3-strongly-recommended"
+    - "plugin:vue/vue3-recommended"
     - prettier
 
 globals:
@@ -18,6 +18,25 @@ rules:
     no-plusplus:
         - error
         - allowForLoopAfterthoughts: true
+    quotes:
+        - error
+        - single
+        - avoidEscape: true
+    semi:
+        - error
+        - always
+    # disallow certain syntax forms
+    # http://eslint.org/docs/rules/no-restricted-syntax
+    no-restricted-syntax:
+      - error
+      - ForInStatement
+      - LabeledStatement
+      - WithStatement
+    # While we are still on Vue2, we need this. Remove once on Vue3
+    vue/no-deprecated-dollar-listeners-api: off
+    # While we are still on Vue2, we need this. Remove once on Vue3
+    vue/no-deprecated-v-bind-sync: off
+
 
 root: true
 
@@ -27,3 +46,10 @@ settings:
             map:
                 - ["cookbook", "./src"]
                 - ["icons", "./node_modules/vue-material-design-icons"]
+
+
+overrides:
+    - files: [ "src/composables/**/*.js" ]
+      rules:
+        import/prefer-default-export: off
+
