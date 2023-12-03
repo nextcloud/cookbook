@@ -54,7 +54,7 @@ const displayIngredient = computed(() => {
 });
 
 const formattedIngredient = computed(() =>
-    this.isDone ? `~~${this.displayIngredient}~~` : `**${this.displayIngredient}**`
+    isDone.value ? `~~${displayIngredient.value}~~` : `**${displayIngredient.value}**`
 );
 </script>
 
