@@ -144,7 +144,6 @@
     "Could not start request to save recipe." : "Yemek tarifini kaydetme isteği başlatılamadı.",
     "Recipe image" : "Tarif görseli",
     "Select order" : "Sıralamayı seçin",
-    "No recipes created or imported." : "Oluşturulmuş ya da içe aktarılmış bir tarif yok.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Başlamak için yeni bir tarifi içe aktarmak üzere sol gezinme çubuğundaki metin kutusunu kullanabilirsiniz. Sıfırdan bir tarif oluşturmak için aşağıya tıklayın.",
     "No recipes" : "Herhangi bir tarif yok",
     "No recipes matching the selected category found." : "Seçilmiş kategoriye uyan bir tarif bulunamadı.",

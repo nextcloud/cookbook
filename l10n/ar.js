@@ -146,7 +146,6 @@ OC.L10N.register(
     "Could not start request to save recipe." : "تعذر بدء طلب حفظ الوصفة.",
     "Recipe image" : "صورة الوصفة",
     "Select order" : "إختَر ترتيباً",
-    "No recipes created or imported." : "لا توجد أي وصفات مُستحدَثة أو مُستورَدة",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "للبدء، يمكنك استعمال صندوق النص في شريط التنقل الجانبي لاستيراد وصفة جديدة. إضغط أدناه لإنشاء وصفة جديدة.",
     "No recipes" : "لا توجد أيّ وصفاتٍ",
     "No recipes matching the selected category found." : "لا توجد أي وصفات مطابقة للفئة المحددة",

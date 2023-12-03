@@ -145,7 +145,6 @@ OC.L10N.register(
     "Could not start request to save recipe." : "Impossible de lancer la requête pour sauvegarder la recette.",
     "Recipe image" : "Image de la recette",
     "Select order" : "Choisir l'ordre",
-    "No recipes created or imported." : "Aucune recette créée ou importée.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Pour commencer, vous pouvez utiliser la zone de texte dans la barre de navigation de gauche pour importer une nouvelle recette. Cliquez ci-dessous pour créer une recette de zéro.",
     "No recipes" : "Aucune recette",
     "No recipes matching the selected category found." : "Aucune recette n'a été trouvée dans à la catégorie sélectionnée.",

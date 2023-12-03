@@ -146,7 +146,6 @@ OC.L10N.register(
     "Could not start request to save recipe." : "Could not start request to save recipe.",
     "Recipe image" : "Recipe image",
     "Select order" : "Select order",
-    "No recipes created or imported." : "No recipes created or imported.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.",
     "No recipes" : "No recipes",
     "No recipes matching the selected category found." : "No recipes matching the selected category found.",

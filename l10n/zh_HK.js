@@ -146,7 +146,6 @@ OC.L10N.register(
     "Could not start request to save recipe." : "無法啟動保存食譜的請求。",
     "Recipe image" : "食譜圖像",
     "Select order" : "選擇排序",
-    "No recipes created or imported." : "未創建或導入任何食譜。",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "要開始，您可以使用左側導覽列中的文字框來匯入新食譜。點擊下方以從零開始創建食譜。",
     "No recipes" : "沒有食譜",
     "No recipes matching the selected category found." : "找不到符合所選分類的食譜。",
