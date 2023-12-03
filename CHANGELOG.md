@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.10.3 - 2023-12-04
+
 ### Added
 - Add yield calculator
   [#1573](https://github.com/nextcloud/cookbook/pull/1573) @j0hannesr0th
