@@ -59,10 +59,11 @@
                 @tag="addKeyword"
             />
             <EditInputField
-                v-model="recipe['recipeYield']"
+                :value="String(recipe['recipeYield'])"
                 :field-type="'number'"
                 :field-label="t('cookbook', 'Servings')"
                 :hide="!showRecipeYield"
+                @input="recipe['recipeYield'] = Number($event)"
             >
                 <NcActions>
                     <NcActionButton
