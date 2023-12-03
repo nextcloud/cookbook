@@ -7,7 +7,7 @@
         @click="toggleDone"
     >
         <div class="ingredient">
-            <VueShowdown :markdown="formattedIngredient" flavor="github"/>
+            <VueShowdown :markdown="formattedIngredient" flavor="github" />
         </div>
         <span v-if="!ingredientHasCorrectSyntax" class="icon-error" />
     </li>
@@ -54,7 +54,7 @@ const displayIngredient = computed(() => {
 });
 
 const formattedIngredient = computed(() =>
-    this.isDone ? `~~${this.displayIngredient}~~` : `**${this.displayIngredient}**`;
+    this.isDone ? `~~${this.displayIngredient}~~` : `**${this.displayIngredient}**`
 );
 </script>
 
