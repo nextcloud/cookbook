@@ -47,6 +47,8 @@
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Make API interface cleaner by only using string identifiers for recipes
   [#1909](https://github.com/nextcloud/cookbook/pull/1909) @christianlupus
+- Add filter for timestamps to output canonical ISO8601 timestamps in the form of YYYY-MM-DDTHH:mm:ss±hh:mm See issue [#1543](https://github.com/nextcloud/cookbook/issues/1543)
+  [#1903](https://github.com/nextcloud/cookbook/pull/1903) @seyfeb
 
 ### Maintenance
 - Preparation for migration to vue.js 3
