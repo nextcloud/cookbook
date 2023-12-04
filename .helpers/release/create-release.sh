@@ -100,7 +100,7 @@ update_git() {
 	git checkout "$stable_branch"
 
 	echo "Merge release branch $current_branch"
-	git merge --no-ff "$current_branch" -m "Merging release branch $current_branch into stable branch $stable_branch." -s
+	git merge --no-ff "$current_branch" -m "Merging release branch $current_branch into stable branch $stable_branch."
 
 	if [ -n "$pre_release" ]; then
 		# We want to build a pre-release
@@ -126,7 +126,7 @@ update_git() {
 
 	echo "Forwarding main branch $master_branch to be on tie with stable branch $stable_branch"
 	git checkout $master_branch
-	git merge --no-ff $stable_branch -s -m "Updating main branch $master_branch with latest stable version information from $stable_branch" --no-verify
+	git merge --no-ff $stable_branch -m "Updating main branch $master_branch with latest stable version information from $stable_branch" --no-verify
 
 	if [ -n "$push" ]
 	then
