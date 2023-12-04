@@ -130,11 +130,11 @@ update_git() {
 
 	if [ -n "$push" ]
 	then
-		echo "Pushing data to remote server called $origin"
-		git push "$origin" "$stable_branch" "$master_branch" "$tag_name"
+		echo "Pushing data to remote server called $remote"
+		git push "$remote" "$stable_branch" "$master_branch" "$tag_name"
 	else
 		echo "Not pushing to server, please push manually. Example command:"
-		echo git push "$origin" "$stable_branch" "$master_branch" "$tag_name"
+		echo git push "$remote" "$stable_branch" "$master_branch" "$tag_name"
 	fi
 }
 
