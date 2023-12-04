@@ -11,14 +11,13 @@ OC.L10N.register(
     "Categories" : "төрөл",
     "Rename" : "Нэрлэнэ үү",
     "Add" : "нэмэх",
-    "Close" : "Хаах",
     "Name" : "Нэр",
+    "Dismiss" : "Арилгах",
+    "Cancel" : "болиулах",
+    "OK" : "ок",
     "Description" : "Тодорхойлолт",
     "URL" : "URL",
     "Last modified" : "Сүүлд өөрчилсөн",
-    "Loading…" : "уншиж байна",
-    "Dismiss" : "Арилгах",
-    "Cancel" : "болиулах",
-    "OK" : "ок"
+    "Loading…" : "уншиж байна"
 },
 "nplurals=2; plural=(n != 1);");

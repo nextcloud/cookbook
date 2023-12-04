@@ -9,13 +9,12 @@ OC.L10N.register(
     "Tags" : "Tags",
     "Rename" : "Ëmbenennen",
     "Add" : "Derbäimaachen",
-    "Close" : "Zoumaachen",
     "Name" : "Numm",
-    "Description" : "Beschreiwung",
-    "URL" : "URL",
-    "Loading…" : "Et gëtt gelueden",
     "Dismiss" : "Ofbriechen",
     "Cancel" : "Ofbriechen",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Description" : "Beschreiwung",
+    "URL" : "URL",
+    "Loading…" : "Et gëtt gelueden"
 },
 "nplurals=2; plural=(n != 1);");

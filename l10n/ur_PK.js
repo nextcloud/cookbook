@@ -6,11 +6,10 @@ OC.L10N.register(
     "Search" : "Search",
     "Rename" : "Rename",
     "Add" : "شامل کریں",
-    "Close" : "بند ",
     "Name" : "اسم",
-    "Description" : "تصریح",
-    "URL" : "یو ار ایل",
     "Cancel" : "منسوخ کریں",
-    "OK" : "اوکے"
+    "OK" : "اوکے",
+    "Description" : "تصریح",
+    "URL" : "یو ار ایل"
 },
 "nplurals=2; plural=(n != 1);");

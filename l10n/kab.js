@@ -10,11 +10,10 @@ OC.L10N.register(
     "Tags" : "Tibzimin",
     "Rename" : "Beddel isem",
     "Add" : "Rnu",
-    "Close" : "Mdel",
     "Name" : "Nom",
-    "Loading…" : "Asali...",
     "Dismiss" : "Agi",
     "Cancel" : "Sefsex",
-    "OK" : "IH"
+    "OK" : "IH",
+    "Loading…" : "Asali..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -7,11 +7,10 @@ OC.L10N.register(
     "Tags" : "Tags",
     "Rename" : "Rename",
     "Add" : "Add",
-    "Close" : "Close",
     "Name" : "Name",
-    "Loading…" : "Loading…",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Loading…" : "Loading…"
 },
 "nplurals=1; plural=0;");

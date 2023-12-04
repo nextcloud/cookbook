@@ -5,11 +5,10 @@
     "Tags" : "Tags",
     "Rename" : "Rename",
     "Add" : "Add",
-    "Close" : "Close",
     "Name" : "Name",
-    "Loading…" : "Loading…",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Loading…" : "Loading…"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

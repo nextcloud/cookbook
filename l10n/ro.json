@@ -16,10 +16,10 @@
     "Edit" : "Editează",
     "Save" : "Salvează",
     "Search" : "Caută",
+    "Filter" : "Filtru",
     "Reload recipe" : "Reîncărcați rețeta",
     "Print recipe" : "Tipăriți rețeta",
     "Delete recipe" : "Ștergeți rețeta",
-    "Filter" : "Filtru",
     "Category" : "Categorie",
     "Recipe name" : "Numele rețetei",
     "Tags" : "Etichete",
@@ -29,15 +29,14 @@
     "Categories" : "Categorii",
     "Rename" : "Redenumire",
     "Add" : "Adaugă",
-    "Close" : "Închide",
     "Name" : "Nume",
+    "Tools" : "Unelte",
+    "Dismiss" : "Elimină",
+    "Cancel" : "Anulare",
+    "OK" : "OK",
     "Description" : "Descriere",
     "URL" : "URL",
     "Image" : "Imagine",
-    "Tools" : "Unelte",
-    "Loading…" : "Se încarcă…",
-    "Dismiss" : "Elimină",
-    "Cancel" : "Anulare",
-    "OK" : "OK"
+    "Loading…" : "Se încarcă…"
 },"pluralForm" :"nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));"
 }

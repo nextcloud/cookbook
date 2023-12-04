@@ -7,10 +7,9 @@ OC.L10N.register(
     "Search" : "Search",
     "Rename" : "﻿ಮರುಹೆಸರಿಸು",
     "Add" : "﻿ಸೇರಿಸಿ",
-    "Close" : "ಮುಚ್ಚು",
     "Name" : "﻿ಹೆಸರು",
-    "URL" : "ಜಾಲದ ಕೊಂಡಿ",
     "Cancel" : "﻿ರದ್ದು",
-    "OK" : "ಸರಿ"
+    "OK" : "ಸರಿ",
+    "URL" : "ಜಾಲದ ಕೊಂಡಿ"
 },
 "nplurals=2; plural=(n > 1);");

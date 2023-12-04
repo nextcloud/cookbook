@@ -10,13 +10,13 @@ OC.L10N.register(
     "Tags" : "Etiquetes",
     "Add" : "Amestar",
     "Name" : "Nome",
+    "Nutrition information" : "Información nutricional",
+    "Tools" : "Ferramientes",
+    "Cancel" : "Encaboxar",
     "Description" : "Descripción",
     "URL" : "URL",
     "Image" : "Imaxe",
-    "Tools" : "Ferramientes",
     "Calories" : "Caloríes",
-    "Loading…" : "Cargando…",
-    "Nutrition information" : "Información nutricional",
-    "Cancel" : "Encaboxar"
+    "Loading…" : "Cargando…"
 },
 "nplurals=2; plural=(n != 1);");

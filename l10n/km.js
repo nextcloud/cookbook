@@ -8,11 +8,10 @@ OC.L10N.register(
     "Tags" : "ស្លាក",
     "Rename" : "ប្ដូរ​ឈ្មោះ",
     "Add" : "បញ្ចូល",
-    "Close" : "បិទ",
     "Name" : "ឈ្មោះ",
-    "Description" : "ការ​អធិប្បាយ",
-    "URL" : "URL",
     "Cancel" : "បោះបង់",
-    "OK" : "ព្រម"
+    "OK" : "ព្រម",
+    "Description" : "ការ​អធិប្បាយ",
+    "URL" : "URL"
 },
 "nplurals=1; plural=0;");

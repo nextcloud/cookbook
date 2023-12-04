@@ -12,14 +12,13 @@ OC.L10N.register(
     "Tags" : "Emneord",
     "Rename" : "Gje nytt namn",
     "Add" : "Legg til",
-    "Close" : "Lukk",
     "Name" : "Namn",
+    "Dismiss" : "Forkast",
+    "Cancel" : "Avbryt",
+    "OK" : "OK",
     "Description" : "Skildring",
     "URL" : "URL",
     "Last modified" : "Siste endra",
-    "Loading…" : "Laster...",
-    "Dismiss" : "Forkast",
-    "Cancel" : "Avbryt",
-    "OK" : "OK"
+    "Loading…" : "Laster..."
 },
 "nplurals=2; plural=(n != 1);");

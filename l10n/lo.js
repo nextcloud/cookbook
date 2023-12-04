@@ -8,12 +8,11 @@ OC.L10N.register(
     "Tags" : "ປ້າຍກຳກັບ",
     "Rename" : "ປ່ຽນຊື່",
     "Add" : "ເພີ່ມ",
-    "Close" : "ປິດ",
     "Name" : "ຊື່",
-    "URL" : "URL",
-    "Loading…" : "ກຳລັງໂຫຼດ",
     "Dismiss" : "ຍົກເລີກ",
     "Cancel" : "ຍົກເລີກ",
-    "OK" : "ຕົກລົງ"
+    "OK" : "ຕົກລົງ",
+    "URL" : "URL",
+    "Loading…" : "ກຳລັງໂຫຼດ"
 },
 "nplurals=1; plural=0;");

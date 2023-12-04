@@ -13,15 +13,14 @@ OC.L10N.register(
     "Categories" : "კატეგორიები",
     "Rename" : "სახელის შეცვლა",
     "Add" : "დამატება",
-    "Close" : "დახურვა",
     "Name" : "სახელი",
-    "Description" : "აღწერილობა",
-    "URL" : "მისამართი",
     "Tools" : "ხელსაწყოები",
-    "Last modified" : "ბოლო ცვლილება",
-    "Loading…" : "იტვირთება…",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "უარყოფა",
-    "OK" : "კარგი"
+    "OK" : "კარგი",
+    "Description" : "აღწერილობა",
+    "URL" : "მისამართი",
+    "Last modified" : "ბოლო ცვლილება",
+    "Loading…" : "იტვირთება…"
 },
 "nplurals=2; plural=(n!=1);");

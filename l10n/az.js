@@ -9,11 +9,10 @@ OC.L10N.register(
     "Tags" : "Işarələr",
     "Rename" : "Adı dəyiş",
     "Add" : "Əlavə etmək",
-    "Close" : "Bağla",
     "Name" : "Ad",
-    "Description" : "Açıqlanma",
-    "URL" : "URL",
     "Cancel" : "Dayandır",
-    "OK" : "Oldu"
+    "OK" : "Oldu",
+    "Description" : "Açıqlanma",
+    "URL" : "URL"
 },
 "nplurals=2; plural=(n != 1);");

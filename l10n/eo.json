@@ -20,19 +20,18 @@
     "Rename" : "Alinomi",
     "Pick a local image" : "Elektu lokan bildon",
     "Add" : "Aldoni",
-    "Close" : "Malfermi",
     "Name" : "Nomo",
+    "Creation date" : "Krea dato",
+    "Tools" : "Iloj",
+    "Dismiss" : "Preterpasi",
+    "Cancel" : "Nuligi",
+    "OK" : "Bone",
     "Description" : "Priskribo",
     "URL" : "Retadreso",
     "Keywords" : "Ŝlosilvortoj",
-    "Tools" : "Iloj",
     "Calories" : "Kalorioj",
-    "Creation date" : "Krea dato",
     "Last modified" : "Laste modifita",
     "Sugar" : "Sukero",
-    "Loading…" : "Ŝargado...",
-    "Dismiss" : "Preterpasi",
-    "Cancel" : "Nuligi",
-    "OK" : "Bone"
+    "Loading…" : "Ŝargado..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

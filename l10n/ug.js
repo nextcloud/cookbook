@@ -8,11 +8,10 @@ OC.L10N.register(
     "Tags" : "بەلگەلەر",
     "Rename" : "ئات ئۆزگەرت",
     "Add" : "قوش",
-    "Close" : "ياپ",
     "Name" : "ئاتى",
-    "Description" : "چۈشەندۈرۈش",
-    "URL" : "URL",
     "Cancel" : "ۋاز كەچ",
-    "OK" : "جەزملە"
+    "OK" : "جەزملە",
+    "Description" : "چۈشەندۈرۈش",
+    "URL" : "URL"
 },
 "nplurals=2; plural=(n != 1);");

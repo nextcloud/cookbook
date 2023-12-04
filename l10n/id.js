@@ -13,17 +13,16 @@ OC.L10N.register(
     "Categories" : "Kategori",
     "Rename" : "Ubah nama",
     "Add" : "Masukkan",
-    "Close" : "Tutup",
     "Name" : "Nama",
+    "Creation date" : "Tanggal pembuatan",
+    "Tools" : "Peralatan",
+    "Dismiss" : "Batal",
+    "Cancel" : "Membatalkan",
+    "OK" : "OK",
     "Description" : "Deskrisi",
     "URL" : "URL",
     "Image" : "Gambar",
-    "Tools" : "Peralatan",
-    "Creation date" : "Tanggal pembuatan",
     "Last modified" : "Terakhir diubah",
-    "Loading…" : "Memuat…",
-    "Dismiss" : "Batal",
-    "Cancel" : "Membatalkan",
-    "OK" : "OK"
+    "Loading…" : "Memuat…"
 },
 "nplurals=1; plural=0;");

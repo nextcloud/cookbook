@@ -13,15 +13,14 @@ OC.L10N.register(
     "Categories" : "Kategorieë",
     "Rename" : "Hernoem",
     "Add" : "Voeg by",
-    "Close" : "Sluit",
     "Name" : "Naam",
-    "Description" : "Beskrywing",
-    "URL" : "Bronadres",
     "Tools" : "Nutsmiddels",
-    "Last modified" : "Laas gewysig",
-    "Loading…" : "Laai…",
     "Dismiss" : "Ontslaan",
     "Cancel" : "Kanselleer",
-    "OK" : "Goed"
+    "OK" : "Goed",
+    "Description" : "Beskrywing",
+    "URL" : "Bronadres",
+    "Last modified" : "Laas gewysig",
+    "Loading…" : "Laai…"
 },
 "nplurals=2; plural=(n != 1);");

@@ -7,11 +7,10 @@ OC.L10N.register(
     "Search" : "Search",
     "Rename" : "Namakan",
     "Add" : "Tambah",
-    "Close" : "Tutup",
     "Name" : "Nama",
-    "Description" : "Keterangan",
-    "URL" : "URL",
     "Cancel" : "Batal",
-    "OK" : "OK"
+    "OK" : "OK",
+    "Description" : "Keterangan",
+    "URL" : "URL"
 },
 "nplurals=1; plural=0;");

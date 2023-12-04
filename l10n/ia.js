@@ -10,13 +10,12 @@ OC.L10N.register(
     "Tags" : "Etiquettas",
     "Rename" : "Renominar",
     "Add" : "Adder",
-    "Close" : "Clauder",
     "Name" : "Nomine",
-    "Description" : "Description",
-    "URL" : "URL",
-    "Loading…" : "Cargante...",
     "Dismiss" : "Dimitter",
     "Cancel" : "Cancellar",
-    "OK" : "Ok"
+    "OK" : "Ok",
+    "Description" : "Description",
+    "URL" : "URL",
+    "Loading…" : "Cargante..."
 },
 "nplurals=2; plural=(n != 1);");

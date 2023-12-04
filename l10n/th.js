@@ -13,13 +13,12 @@ OC.L10N.register(
     "Categories" : "หมวดหมู่",
     "Rename" : "เปลี่ยนชื่อ",
     "Add" : "เพิ่ม",
-    "Close" : "ปิด",
     "Name" : "ชื่อ",
-    "Description" : "คำอธิบาย",
-    "URL" : "URL",
-    "Loading…" : "กำลังโหลด...",
     "Dismiss" : "ปิดทิ้ง",
     "Cancel" : "ยกเลิก",
-    "OK" : "ตกลง"
+    "OK" : "ตกลง",
+    "Description" : "คำอธิบาย",
+    "URL" : "URL",
+    "Loading…" : "กำลังโหลด..."
 },
 "nplurals=1; plural=0;");

@@ -7,11 +7,10 @@ OC.L10N.register(
     "Search" : "Gözlemek",
     "Tags" : "Bellikler",
     "Rename" : "Adyny üýtgetmek",
-    "Close" : "Ýap",
     "Name" : "Ady",
-    "Loading…" : "Ýüklenýär…",
     "Dismiss" : "Ýapmak.",
     "Cancel" : "ýatyrmak",
-    "OK" : "Bolýar"
+    "OK" : "Bolýar",
+    "Loading…" : "Ýüklenýär…"
 },
 "nplurals=2; plural=(n != 1);");
