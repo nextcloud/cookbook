@@ -1,27 +1,26 @@
 
-name: Deploy to Appstore
+name: Deploy to app store
 
 on:
     push:
-        branches:
-            - stable*
-
+        tags:
+            - v*
 jobs:
     
     deploy:
-        name: Deploy codebase
-        runs-on: ubuntu-latest
+        name: Deploy codebase to app store
+        runs-on: ubuntu-22.04
         
         defaults:
             run:
                 shell: bash
                 working-directory: cookbook
         
-        if: github.actor != 'nextcloud-cookbook-bot'
+        if: github.repository == 'christianlupus-nextcloud/cookbook-releases'
 
         steps:
             -   name: Checkout the project
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     path: cookbook
                     ref: ${{ github.ref }}
@@ -31,7 +30,7 @@ jobs:
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Use cache for NPM
-                uses: actions/cache@v3.3.1
+                uses: actions/cache@v3.3.2
                 with:
                     path: |
                         ~/.npm
@@ -40,87 +39,52 @@ jobs:
                     restore-keys: |
                         ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                         ${{ runner.os }}-node-
-
-            -   name: Store the merge commit message in file
-                run: git log HEAD~1...HEAD --max-count=1 --format='%s%n%b' > /tmp/MERGE_COMMIT_MSG
-            
-            -   name: Bump the version
-                id: bump
-                run: ./.github/actions/deploy/create-version.sh /tmp/MERGE_COMMIT_MSG
-                env:
-                    BOT_TOKEN: ${{ secrets.COOKBOOK_BOT_TOKEN }}
             
             -   name: Install the NPM packages
                 run: npm ci
-
             -   name: Build NPM
                 run: npm run build
                 
             -   name: Install composer packages
                 run: make composer_dist
-                
+            
+            -   name: Extract app version
+                id: appversion
+                run: |
+                    version=$(echo ${{ github.ref }} | sed 's@^refs/tags/@@;s@^v@@i')
+                    echo -n "version=" >> $GITHUB_OUTPUT
+                    echo "$version" >> $GITHUB_OUTPUT
+                    if echo $version | grep '^[0-9]*\.[0-9]*\.[0-9]*$' > /dev/null
+                    then
+                    echo 'type=stable' >> $GITHUB_OUTPUT
+                    else
+                    echo 'type=beta' >> $GITHUB_OUTPUT
+                    fi
+
             -   name: Build the appstore package
                 run: make appstore
                 
             -   name: Move the tarball to temp folder
-                run: cp build/artifacts/appstore/cookbook.tar.gz /tmp
+                run: cp build/artifacts/appstore/cookbook.tar.gz /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
             -   name: Show the size of the tarball
-                run: ls -lh /tmp/cookbook.tar.gz
+                run: ls -lh /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
                 
-            -   name: Save key in file
-                env:
-                    PEM: ${{ secrets.APPSTORE_PRIV_KEY_PEM }}
-                run: |
-                    touch /tmp/key.pem
-                    chmod 600 /tmp/key.pem
-                    echo "$PEM" > /tmp/key.pem
-            
-            -   name: Create a signature for the tarball
-                run: >-
-                    openssl dgst -sha512
-                    -sign /tmp/key.pem
-                    /tmp/cookbook.tar.gz 
-                    | openssl base64
-                    | tee /tmp/signature
-            
-            -   name: Create the release in GitHub
-                uses: actions/create-release@v1
-                id: create_release
-                env:
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Create release
+                uses: softprops/action-gh-release@v0.1.15
+                id: release
                 with:
-                    tag_name: v${{ steps.bump.outputs.version }}
-                    release_name: "Version ${{ steps.bump.outputs.version }}"
-                    draft: false
-            -   name: Upload the asset to the version
-                uses: actions/upload-release-asset@v1.0.2
-                id: upload_asset
-                env:
-                    GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-                with:
-                    upload_url: "${{ steps.create_release.outputs.upload_url }}"
-                    asset_path: /tmp/cookbook.tar.gz
-                    asset_name: Cookbook-${{ steps.bump.outputs.version }}.tar.gz
-                    asset_content_type: application/gzip
-            
+                    files: /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
+                    prerelease: "${{ steps.appversion.outputs.type == 'beta' }}"
+
             -   name: Output asset URL
-                run: echo "Download URL is ${{ steps.upload_asset.outputs.browser_download_url }}"
-            -   name: Register the release with the app store via REST API request
-                env:
-                    TOKEN: ${{ secrets.APP_STORE_TOKEN }}
-                run: >-
-                    CONTENT="{\"download\": \"${{ steps.upload_asset.outputs.browser_download_url }}\", \"signature\": \"$(cat /tmp/signature | tr -d '\n')\"}" &&
-                    echo "$CONTENT" &&
-                    curl_out=$(curl -X POST
-                    https://apps.nextcloud.com/api/v1/apps/releases
-                    -H "Authorization: Token $TOKEN"
-                    -H "Content-Type: application/json"
-                    -d "$CONTENT"
-                    -w '\n%{http_code}\n');
-                    ret=$? &&
-                    code=$(echo "$curl_out" | tail -n 1) &&
-                    msg=$(echo "$curl_out" | head -n -1) &&
-                    echo "code=$code" >> $GITHUB_OUTPUT &&
-                    echo "msg=$msg" >> $GITHUB_OUTPUT &&
-                    echo "Result ($code): $msg" &&
-                    echo "$code" | grep '^\([^45][0-9][0-9]\)$'
+                run: echo "Download URL is ${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}"
+            
+            -   name: Upload app to Nextcloud appstore
+                uses: nextcloud-releases/nextcloud-appstore-push-action@a011fe619bcf6e77ddebc96f9908e1af4071b9c1 # v1
+                with:
+                    app_name: cookbook
+                    appstore_token: ${{ secrets.APPSTORE_TOKEN }}
+                    download_url: ${{ fromJSON(steps.release.outputs.assets)[0].browser_download_url }}
+                    app_private_key: ${{ secrets.PRIVATE_KEY }}
+
+

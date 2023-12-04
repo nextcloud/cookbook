@@ -4,7 +4,7 @@
             <div class="main">
                 <div class="dialog">
                     <div class="message">
-                        {{ t("cookbook", "Cannot access recipe folder.") }}
+                        {{ t('cookbook', 'Cannot access recipe folder.') }}
                     </div>
                     <div>
                         {{
@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <button @click.prevent="selectFolder">
-                            {{ t("cookbook", "Select recipe folder") }}
+                            {{ t('cookbook', 'Select recipe folder') }}
                         </button>
                     </div>
                 </div>
@@ -23,35 +23,32 @@
     </NcContent>
 </template>
 
-<script>
-import NcContent from "@nextcloud/vue/dist/Components/NcContent"
-import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
+<script setup>
+import NcContent from '@nextcloud/vue/dist/Components/NcContent';
+import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent';
+import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
+const selectFolder = () => {
+    const filePicker = getFilePickerBuilder(
+        t('cookbook', 'Path to your recipe collection'),
+    )
+        .addMimeTypeFilter('httpd/unix-directory')
+        .setType(FilePickerType.Choose)
+        .build();
+    filePicker.pick().then((path) => {
+        this.$store
+            .dispatch('updateRecipeDirectory', { dir: path })
+            .then(() => {
+                window.location.reload();
+            });
+    });
+};
+</script>
+
+<script>
 export default {
-    name: "InvalidGuest",
-    components: {
-        // eslint-disable-next-line vue/no-reserved-component-names
-        NcContent,
-        NcAppContent,
-    },
-    methods: {
-        selectFolder() {
-            OC.dialogs.filepicker(
-                t("cookbook", "Path to your recipe collection"),
-                (path) => {
-                    this.$store
-                        .dispatch("updateRecipeDirectory", { dir: path })
-                        .then(() => {
-                            window.location.reload()
-                        })
-                },
-                false, // Single result
-                ["httpd/unix-directory"], // Desired MIME type
-                true // Make modal dialog
-            )
-        },
-    },
-}
+    name: 'InvalidGuest',
+};
 </script>
 
 <style lang="scss" scoped>

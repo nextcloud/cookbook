@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "kaustas %s",
+    "None" : "Pole",
     "Page not found" : "Lehekülge ei leitud",
     "Edit" : "Redigeeri",
     "Save" : "Salvesta",
@@ -12,16 +13,15 @@ OC.L10N.register(
     "Categories" : "Kategooriad",
     "Rename" : "Nimeta ümber",
     "Add" : "Lisa",
-    "Close" : "Sulge",
     "Name" : "Nimi",
-    "Description" : "Kirjeldus",
-    "URL" : "URL",
     "Tools" : "Tööriistad",
-    "Last modified" : "Viimati muudetud",
-    "Loading…" : "Laadimine…",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",
     "OK" : "OK",
-    "None" : "Pole"
+    "Description" : "Kirjeldus",
+    "URL" : "URL",
+    "Last modified" : "Viimati muudetud",
+    "Copy ingredients" : "Kopeeri koostisosad",
+    "Loading…" : "Laadimine…"
 },
 "nplurals=2; plural=(n != 1);");

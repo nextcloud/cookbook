@@ -20,57 +20,61 @@
     </NcContent>
 </template>
 
-<script>
-import isMobile from "@nextcloud/vue/dist/Mixins/isMobile"
-import NcAppContent from "@nextcloud/vue/dist/Components/NcAppContent"
-import NcContent from "@nextcloud/vue/dist/Components/NcContent"
-import AppControls from "cookbook/components/AppControls/AppControls.vue"
-import { emit, subscribe, unsubscribe } from "@nextcloud/event-bus"
-import AppNavi from "./AppNavi.vue"
-import SettingsDialog from "./SettingsDialog.vue"
+<script setup>
+import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
+import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent';
+import NcContent from '@nextcloud/vue/dist/Components/NcContent';
+import AppControls from 'cookbook/components/AppControls/AppControls.vue';
+import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus';
+import AppNavi from './AppNavi.vue';
+import SettingsDialog from './Modals/SettingsDialog.vue';
+import { useIsMobile } from '../composables/useIsMobile';
 
+const log = getCurrentInstance().proxy.$log;
+const isMobile = useIsMobile();
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isNavigationOpen = ref(false);
+
+// previously there was this commented section in this component. I leave it here for reference:
+// watch: {
+//     // This might be handy when routing of Vue components needs fixing.
+//     // $route(to, from) {
+//     //     this.$log.debug(
+//     //         this.$window.isSameBaseRoute(from.fullPath, to.fullPath)
+//     //     )
+//     // },
+// },
+
+// Methods
+/**
+ * Listen for event-bus events about the app navigation opening and closing
+ */
+const updateAppNavigationOpen = ({ open }) => {
+    isNavigationOpen.value = open;
+};
+
+const closeNavigation = () => {
+    emit('toggle-navigation', { open: false });
+};
+
+// Vue lifecycle
+onMounted(() => {
+    log.info('AppMain mounted');
+    subscribe('navigation-toggled', updateAppNavigationOpen);
+});
+
+onUnmounted(() => {
+    unsubscribe('navigation-toggled', updateAppNavigationOpen);
+});
+</script>
+
+<script>
 export default {
-    name: "AppMain",
-    components: {
-        NcAppContent,
-        AppControls,
-        AppNavi,
-        SettingsDialog,
-        // eslint-disable-next-line vue/no-reserved-component-names
-        NcContent,
-    },
-    mixins: [isMobile],
-    data() {
-        return {
-            isNavigationOpen: false,
-        }
-    },
-    watch: {
-        $route(to, from) {
-            this.$log.debug(
-                this.$window.isSameBaseRoute(from.fullPath, to.fullPath)
-            )
-        },
-    },
-    mounted() {
-        this.$log.info("AppMain mounted")
-        subscribe("navigation-toggled", this.updateAppNavigationOpen)
-    },
-    unmounted() {
-        unsubscribe("navigation-toggled", this.updateAppNavigationOpen)
-    },
-    methods: {
-        /**
-         * Listen for event-bus events about the app navigation opening and closing
-         */
-        updateAppNavigationOpen({ open }) {
-            this.isNavigationOpen = open
-        },
-        closeNavigation() {
-            emit("toggle-navigation", { open: false })
-        },
-    },
-}
+    name: 'AppMain',
+};
 </script>
 
 <style lang="scss" scoped>
@@ -155,7 +159,7 @@ export default {
 
     a:link::after,
     a:visited::after {
-        content: " [" attr(href) "] ";
+        content: ' [' attr(href) '] ';
     }
 
     body {

@@ -2,20 +2,21 @@
 
 namespace OCA\Cookbook\Controller\Implementation;
 
-use OCP\IL10N;
-use OCP\IURLGenerator;
-use OCP\AppFramework\Http;
-use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Helper\RestParameterParser;
-use OCP\AppFramework\Http\DataDisplayResponse;
-use OCP\AppFramework\Http\FileDisplayResponse;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
-use OCA\Cookbook\Exception\NoRecipeNameGivenException;
-use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
+use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Service\RecipeService;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\FileDisplayResponse;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
 use OCP\IRequest;
+use OCP\IURLGenerator;
 
 class RecipeImplementation {
 	/** @var RecipeService */
@@ -28,12 +29,15 @@ class RecipeImplementation {
 	private $restParser;
 	/** @var RecipeJSONOutputFilter */
 	private $outputFilter;
+	/** @var RecipeStubFilter */
+	private $stubFilter;
 	/** @var AcceptHeaderParsingHelper */
 	private $acceptHeaderParser;
 	/** @var IRequest */
 	private $request;
 	/** @var IL10N */
 	private $l;
+
 
 	public function __construct(
 		IRequest $request,
@@ -42,6 +46,7 @@ class RecipeImplementation {
 		IURLGenerator $iURLGenerator,
 		RestParameterParser $restParameterParser,
 		RecipeJSONOutputFilter $recipeJSONOutputFilter,
+		RecipeStubFilter $stubFilter,
 		AcceptHeaderParsingHelper $acceptHeaderParsingHelper,
 		IL10N $iL10N
 	) {
@@ -51,6 +56,7 @@ class RecipeImplementation {
 		$this->urlGenerator = $iURLGenerator;
 		$this->restParser = $restParameterParser;
 		$this->outputFilter = $recipeJSONOutputFilter;
+		$this->stubFilter = $stubFilter;
 		$this->acceptHeaderParser = $acceptHeaderParsingHelper;
 		$this->l = $iL10N;
 	}
@@ -69,6 +75,8 @@ class RecipeImplementation {
 		foreach ($recipes as $i => $recipe) {
 			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
 			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
+
+			$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
 		}
 		return new JSONResponse($recipes, Http::STATUS_OK);
 	}
@@ -109,6 +117,13 @@ class RecipeImplementation {
 		$recipeData = $this->restParser->getParameters();
 		try {
 			$file = $this->service->addRecipe($recipeData);
+		} catch (RecipeExistsException $ex) {
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
 			$json = [
 				'msg' => $ex->getMessage(),

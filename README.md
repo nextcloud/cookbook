@@ -36,9 +36,25 @@ The currently available clients are:
 Nook  
 [<img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80">](https://play.google.com/store/apps/details?id=org.capacitor.cookbook.app)
 
+[Nextcloud Cookbook](https://lneugebauer.github.io/nextcloud-cookbook/) (by lneugebauer)  
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/packages/de.lukasneugebauer.nextcloudcookbook/) [<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" alt="Get it on Play Store" height="80">](https://play.google.com/store/apps/details?id=de.lukasneugebauer.nextcloudcookbook)
+
+[Cookbook Client](https://github.com/VincentMeilinger/Nextcloud-Cookbook-iOS/)  
+[<img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store" height="80" width="160">](https://apps.apple.com/de/app/cookbook-client/id6467141985)
+
 ### Browser plugins/scripts
 
 - [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
+
+## Sponsoring
+
+We thank the sponsrs of this project for their support as open source software.
+
+### Blackfire
+[<img alt="Blackfire Logo" src=".img/blackfire-io.png" style="height: 60px;">](https://www.blackfire.io)
+
+### Browser Stack
+[<img alt="Browserstack Logo" src=".img/BrowserStack.png" style="height: 60px;">](https://www.browserstack.com/)
 
 ## F.A.Q.
 
@@ -54,5 +70,5 @@ A lot of websites are unfortunately not following the schema.org/Recipe standard
 The parser is far from perfect. If you can help out in any way, please [have a look at the parseRecipeHtml() method](https://github.com/nextcloud/nextcloud-cookbook/blob/master/lib/Service/RecipeService.php) and create a pull request with your changes.
 
 #### All of the text is in English?
-This app uses the [Transifex](https://www.transifex.com/nextcloud/nextcloud/cookbook/) translation system.
+This app uses the [Transifex](https://app.transifex.com/nextcloud/nextcloud/cookbook/) translation system.
 You might want to register there to help translating the app to new languages or report errors in existing translations.

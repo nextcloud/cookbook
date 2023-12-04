@@ -8,11 +8,11 @@ jobs:
     
     changelog:
         name: Check if the changelog was updated
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     fetch-depth: 2
             
@@ -32,7 +32,7 @@ jobs:
                     totalcnt="$(echo "$lines" | wc -l)"
                     echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
                     #
-                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | grep -v '^\.github/workflows/' | wc -l)"
+                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | wc -l)"
                     echo "num=$cnt" >> $GITHUB_OUTPUT
                     #
                     echo "That are $totalcnt changed files. After reducing the number there are $cnt files left."
@@ -49,7 +49,7 @@ jobs:
     
     todo-checker:
         name: Check for added todo messages
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         steps:
             -   name: Git version output
                 run: git version
@@ -60,11 +60,14 @@ jobs:
 
                     git clone --filter=tree:0 "$REPO" .
             -   name: Manual checkout of the app (PR head)
+                env:
+                    URL: ${{ github.event.pull_request.head.repo.html_url }}
+                    HEAD_REF: ${{ github.head_ref }}
                 run: |
-                    git remote add head "${{ github.event.pull_request.head.repo.html_url }}"
+                    git remote add head "$URL"
                     git fetch head --filter=tree:0
                     
-                    git checkout -b head-branch head/${{ github.head_ref }}
+                    git checkout -b head-branch head/$HEAD_REF
             -   name: Status of current git workspace
                 run: |
                     git branch
@@ -74,11 +77,11 @@ jobs:
 
     appinfo:
         name: Check for matching app info file
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     fetch-depth: 1
                 
@@ -87,6 +90,7 @@ jobs:
                     sudo apt-get update
                     sudo apt-get install jq
                     pip install yq
+                    echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
             -   name: Perform the test
                 env:
@@ -117,18 +121,18 @@ jobs:
     
     package-lint:
         name: Make sure the package.json is well-formatted
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
                 with:
                     fetch-depth: 1
             -   name: Get the date
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Cache NPM cache
-                uses: actions/cache@v3.3.1
+                uses: actions/cache@v3.3.2
                 with:
                     path: |
                         ~/.npm

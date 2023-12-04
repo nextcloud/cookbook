@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "во %s",
+    "None" : "Ништо",
     "Page not found" : "Страницата не е пронајдена",
     "Edit" : "Уреди",
     "Save" : "Зачувај",
@@ -10,21 +11,19 @@
     "Categories" : "Категории",
     "Rename" : "Преименувај",
     "Add" : "Додади",
-    "Close" : "Затвори",
     "Name" : "Име",
+    "Tools" : "Алатки",
+    "Dismiss" : "Отфрли",
+    "Cancel" : "Откажи",
+    "OK" : "Добро",
     "Description" : "Опис",
     "URL" : "Адреса",
     "Image" : "Слика",
     "Keywords" : "Клучни зборови",
-    "Tools" : "Алатки",
     "Instructions" : "Инструкции",
     "Date created" : "Датум на креирање",
     "Last modified" : "Скоро изменети",
     "Source" : "Извор",
-    "Loading…" : "Се вчитува…",
-    "Dismiss" : "Отфрли",
-    "Cancel" : "Откажи",
-    "OK" : "Добро",
-    "None" : "Ништо"
+    "Loading…" : "Се вчитува…"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

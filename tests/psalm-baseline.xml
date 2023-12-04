@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+  <file src="lib/Controller/Implementation/CategoryImplementation.php">
+    <InvalidArgument>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA['New category name not found in data']]></code>
+    </InvalidArgument>
+  </file>
+  <file src="lib/Controller/Implementation/ConfigImplementation.php">
+    <InvalidArgument>
+      <code><![CDATA['OK']]></code>
+      <code><![CDATA['Search index rebuilt successfully']]></code>
+    </InvalidArgument>
+  </file>
+  <file src="lib/Controller/Implementation/RecipeImplementation.php">
+    <InvalidArgument>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$e->getMessage()]]></code>
+      <code><![CDATA[$file->getParent()->getId()]]></code>
+      <code><![CDATA[$file->getParent()->getId()]]></code>
+      <code>$id</code>
+      <code><![CDATA['Field "url" is required']]></code>
+      <code><![CDATA['Recipe ' . $id . ' deleted successfully']]></code>
+    </InvalidArgument>
+    <TooManyArguments>
+      <code><![CDATA[new JSONResponse($recipes, 200, ['Content-Type' => 'application/json'])]]></code>
+      <code><![CDATA[new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json'])]]></code>
+      <code><![CDATA[new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json'])]]></code>
+    </TooManyArguments>
+  </file>
+  <file src="lib/Db/RecipeDb.php">
+    <RedundantCondition>
+      <code><![CDATA[$keywords && is_array($keywords)]]></code>
+      <code>is_array($keywords)</code>
+    </RedundantCondition>
+  </file>
+  <file src="lib/Helper/Filter/JSON/FixInstructionsFilter.php">
+    <NamedArgumentNotAllowed>
+      <code>$instructions</code>
+      <code>$newElements</code>
+    </NamedArgumentNotAllowed>
+  </file>
+  <file src="lib/Helper/Filter/JSON/SchemaConformityFilter.php">
+    <FalseOperand>
+      <code>$changed</code>
+    </FalseOperand>
+    <InvalidOperand>
+      <code><![CDATA[$this->setJSONValue($json, '@type', 'Recipe')]]></code>
+    </InvalidOperand>
+  </file>
+  <file src="lib/Helper/HTMLParser/HttpMicrodataParser.php">
+    <UndefinedMethod>
+      <code>getAttribute</code>
+      <code>getAttribute</code>
+      <code>getElementsByTagName</code>
+      <code>hasAttribute</code>
+    </UndefinedMethod>
+  </file>
+  <file src="lib/Helper/ImageService/ThumbnailFileHelper.php">
+    <UndefinedDocblockClass>
+      <code>GenericFileException</code>
+      <code>GenericFileException</code>
+      <code>InvalidPathException</code>
+      <code>InvalidPathException</code>
+      <code>InvalidThumbnailTypeException</code>
+      <code>InvalidThumbnailTypeException</code>
+      <code>LockedException</code>
+      <code>LockedException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Helper/RestParameterParser.php">
+    <InvalidReturnType>
+      <code>array</code>
+    </InvalidReturnType>
+  </file>
+  <file src="lib/Helper/UserConfigHelper.php">
+    <InvalidScalarArgument>
+      <code>$value</code>
+    </InvalidScalarArgument>
+  </file>
+  <file src="lib/Helper/UserFolderHelper.php">
+    <MissingDependency>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code>IRootFolder</code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+  </file>
+  <file src="lib/Service/ImageService.php">
+    <UndefinedDocblockClass>
+      <code>GenericFileException</code>
+      <code>InvalidPathException</code>
+      <code>InvalidThumbnailTypeException</code>
+      <code>NoRecipeImageFoundException</code>
+      <code>NoRecipeImageFoundException</code>
+      <code>NoRecipeImageFoundException</code>
+      <code>RecipeImageExistsException</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="lib/Service/RecipeService.php">
+    <MissingDependency>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$this->root]]></code>
+      <code>IRootFolder</code>
+    </MissingDependency>
+    <RedundantCondition>
+      <code><![CDATA[!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')]]></code>
+    </RedundantCondition>
+    <UndefinedInterfaceMethod>
+      <code>newFile</code>
+      <code>newFile</code>
+      <code>newFile</code>
+      <code>nodeExists</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="lib/Service/ThumbnailService.php">
+    <MissingDependency>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>$img</code>
+      <code>Image</code>
+    </MissingDependency>
+  </file>
+</files>

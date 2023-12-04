@@ -2,16 +2,16 @@
 
 namespace OCA\Cookbook\Helper;
 
-use OCP\IL10N;
-use OCP\Files\Node;
-use OCP\Files\Folder;
-use OCP\Files\NotPermittedException;
 use OCA\Cookbook\Exception\UserFolderNotValidException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCP\Files\FileInfo;
+use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\Node;
 use OCP\Files\NotFoundException;
+use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 
 /**
  * This class caches the access to the user folder throughout the app.
@@ -108,7 +108,7 @@ class UserFolderHelper {
 		return $this->cache;
 	}
 
-	private function getOrCreateFolder($path): Folder {
+	private function getOrCreateFolder(string $path): Folder {
 		try {
 			$node = $this->root->get($path);
 		} catch (NotFoundException $ex) {

@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "dalam %s",
+    "None" : "Tidak ada",
     "Page not found" : "Halaman tidak ditemukan",
     "Edit" : "Sunting",
     "Save" : "Simpan",
@@ -12,16 +13,16 @@ OC.L10N.register(
     "Categories" : "Kategori",
     "Rename" : "Ubah nama",
     "Add" : "Masukkan",
-    "Close" : "Tutup",
     "Name" : "Nama",
-    "Description" : "Deskrisi",
-    "URL" : "URL",
     "Creation date" : "Tanggal pembuatan",
-    "Last modified" : "Terakhir diubah",
-    "Loading…" : "Memuat…",
+    "Tools" : "Peralatan",
     "Dismiss" : "Batal",
     "Cancel" : "Membatalkan",
     "OK" : "OK",
-    "None" : "Tidak ada"
+    "Description" : "Deskrisi",
+    "URL" : "URL",
+    "Image" : "Gambar",
+    "Last modified" : "Terakhir diubah",
+    "Loading…" : "Memuat…"
 },
 "nplurals=1; plural=0;");

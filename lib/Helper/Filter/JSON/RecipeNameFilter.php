@@ -2,7 +2,6 @@
 
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 
 /**

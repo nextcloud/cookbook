@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "%s-ში",
+    "None" : "არც ერთი",
     "Page not found" : "გვერდი არაა ნაპოვნი",
     "Edit" : "შეცვლა",
     "Save" : "შენახვა",
@@ -12,16 +13,14 @@ OC.L10N.register(
     "Categories" : "კატეგორიები",
     "Rename" : "სახელის შეცვლა",
     "Add" : "დამატება",
-    "Close" : "დახურვა",
     "Name" : "სახელი",
-    "Description" : "აღწერილობა",
-    "URL" : "მისამართი",
     "Tools" : "ხელსაწყოები",
-    "Last modified" : "ბოლო ცვლილება",
-    "Loading…" : "იტვირთება…",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "უარყოფა",
     "OK" : "კარგი",
-    "None" : "არც ერთი"
+    "Description" : "აღწერილობა",
+    "URL" : "მისამართი",
+    "Last modified" : "ბოლო ცვლილება",
+    "Loading…" : "იტვირთება…"
 },
 "nplurals=2; plural=(n!=1);");

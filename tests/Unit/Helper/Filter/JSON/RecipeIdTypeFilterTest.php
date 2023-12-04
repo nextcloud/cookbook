@@ -22,6 +22,7 @@ class RecipeIdTypeFilterTest extends TestCase {
 
 		$stub['id'] = 123;
 		$expected = $stub;
+		$expected['id'] = '123';
 		yield [$stub, $expected, true];
 
 		$stub['id'] = '123';
@@ -32,7 +33,7 @@ class RecipeIdTypeFilterTest extends TestCase {
 	public function testFilter($input, $expected, $changed) {
 		$ret = $this->dut->apply($input);
 
-		$this->assertEquals($expected, $input);
+		$this->assertSame($expected, $input);
 		$this->assertEquals($changed, $ret);
 		$this->assertTrue(is_string($input['id']));
 	}

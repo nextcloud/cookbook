@@ -3,25 +3,26 @@
 namespace OCA\Cookbook\Service;
 
 use Exception;
-use OCP\Files\NotFoundException;
-use OCP\Image;
-use OCP\IL10N;
-use OCP\Files\IRootFolder;
-use OCP\Files\File;
-use OCP\Files\Folder;
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
-use OCP\PreConditionNotMetException;
-use Psr\Log\LoggerInterface;
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\RecipeExistsException;
+use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
+use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
-use OCA\Cookbook\Exception\HtmlParsingException;
-use OCA\Cookbook\Exception\ImportException;
-use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
-use OCA\Cookbook\Helper\Filter\JSONFilter;
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\Files\File;
+use OCP\Files\Folder;
+use OCP\Files\IRootFolder;
+use OCP\Files\NotFoundException;
+use OCP\IL10N;
+use OCP\Image;
+use OCP\PreConditionNotMetException;
+use Psr\Log\LoggerInterface;
 
 /**
  * Main service class for the cookbook app.
@@ -97,7 +98,7 @@ class RecipeService {
 	 *
 	 * @param int $id
 	 *
-	 * @return array|null
+	 * @return ?array
 	 */
 	public function getRecipeById(int $id) {
 		$file = $this->getRecipeFileByFolderId($id);
@@ -113,10 +114,8 @@ class RecipeService {
 	 * Get a recipe's modification time by its folder id.
 	 *
 	 * @param int $id
-	 *
-	 * @return int
 	 */
-	public function getRecipeMTime(int $id) {
+	public function getRecipeMTime(int $id): ?int {
 		$file = $this->getRecipeFileByFolderId($id);
 
 		if (!$file) {
@@ -184,7 +183,7 @@ class RecipeService {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
-		if ($recipe_folder && count($recipe_folder) > 0) {
+		if ($recipe_folder) {
 			$recipe_folder[0]->delete();
 		}
 
@@ -216,8 +215,8 @@ class RecipeService {
 
 		$recipeFolderName = $this->recipeNameHelper->getFolderName($json['name']);
 
-		// Recipe already has an id, update it
 		if (isset($json['id']) && $json['id']) {
+			// Recipe already has an id, update it
 			$recipe_folder = $user_folder->getById($json['id'])[0];
 
 			$old_path = $recipe_folder->getPath();
@@ -232,8 +231,8 @@ class RecipeService {
 				$recipe_folder->move($new_path);
 			}
 
-		// This is a new recipe, create it
 		} else {
+			// This is a new recipe, create it
 			$json['dateCreated'] = $now;
 
 			if ($user_folder->nodeExists($recipeFolderName)) {
@@ -268,13 +267,13 @@ class RecipeService {
 		$full_image_data = null;
 
 		if (isset($json['image']) && $json['image']) {
-			// The image is a URL
 			if (strpos($json['image'], 'http') === 0) {
+				// The image is a URL
 				$json['image'] = str_replace(' ', '%20', $json['image']);
 				$full_image_data = file_get_contents($json['image']);
 
-			// The image is a local path
 			} else {
+				// The image is a local path
 				try {
 					$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
 					$full_image_data = $full_image_file->getContent();
@@ -283,8 +282,8 @@ class RecipeService {
 				}
 			}
 
-		// The image field was empty, remove images in the recipe folder
 		} else {
+			// The image field was empty, remove images in the recipe folder
 			$this->imageService->dropImage($recipe_folder);
 		}
 
@@ -391,8 +390,8 @@ class RecipeService {
 
 				$node->move($recipe_folder->getPath() . '/recipe.json');
 
-			// Rename folders with .json extensions (this was likely caused by a migration bug)
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
+				// Rename folders with .json extensions (this was likely caused by a migration bug)
 				$node->move(str_replace('.json', '', $node->getPath()));
 			}
 		}
@@ -462,7 +461,7 @@ class RecipeService {
 	 * @param string $keywords Keywords/tags as a comma-separated string.
 	 *
 	 * @return array
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 * @throws DoesNotExistException
 	 */
 	public function getRecipesByKeywords($keywords): array {
 		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
@@ -473,11 +472,14 @@ class RecipeService {
 	/**
 	 * Search for recipes by keywords
 	 *
-	 * @param $keywords_string
+	 * @param string $keywords_string
+	 *
 	 * @return array
-	 * @throws \OCP\AppFramework\Db\DoesNotExistException
+	 *
+	 * @throws DoesNotExistException
+	 *
 	 */
-	public function findRecipesInSearchIndex($keywords_string): array {
+	public function findRecipesInSearchIndex(string $keywords_string): array {
 		$keywords_string = strtolower($keywords_string);
 		$keywords_array = [];
 		preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -535,10 +537,8 @@ class RecipeService {
 	 * Get recipe file contents as an array
 	 *
 	 * @param File $file
-	 *
-	 * @return array
 	 */
-	public function parseRecipeFile($file) {
+	public function parseRecipeFile($file): ?array {
 		if (!$file) {
 			return null;
 		}

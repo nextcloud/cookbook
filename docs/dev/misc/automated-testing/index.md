@@ -32,7 +32,10 @@ If you would like to learn more or use non-default options, you may read [Overvi
 1. Activate the virtual environment: `source venv/bin/activate`.
 1. Install Python dependencies: `pip install -r ./requirements.txt`.
 1. Pull required Docker images: `./run-locally.py --pull`.
-1. Create a testing fixture: `./run-locally.py --create-fixture stable25 stable25`.
+1. (optinal) If you are running different instances (NC server versions) of the framework, give them a unique name in the file `.env`. Do not commit this.
+1. Build the docker containers finally: `./run-locally.py --create-images`.
+1. Create and activate a testing fixture: `./run-locally.py --create-fixture stable25 stable25 --activate-fixture stable25`. The default uses MariaDB and you might consider adding `--use-db-dump`.
+1. Start the helper containers (like DB) of the environment via `./run-locally.py --start-helpers`.
 1. Run the tests: `./run-locally.py --run-default-tests`.
 
 ## Frontend testing

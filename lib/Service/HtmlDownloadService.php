@@ -105,8 +105,11 @@ class HtmlDownloadService {
 
 	/**
 	 * Fetch an HTML page from the internet
+	 *
 	 * @param string $url The URL of the page to fetch
+	 *
 	 * @throws ImportException If the given URL was not fetched
+	 *
 	 * @return string The content of the page as a plain string
 	 */
 	private function fetchHtmlPage(string $url): string {

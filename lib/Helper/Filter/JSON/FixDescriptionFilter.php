@@ -2,10 +2,9 @@
 
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
+use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
-use OCA\Cookbook\Helper\TextCleanupHelper;
 
 /**
  * Fix the description of a recipe.
@@ -16,7 +15,7 @@ use OCA\Cookbook\Helper\TextCleanupHelper;
  * Apart from that the description is cleaned from malicious chars.
  */
 class FixDescriptionFilter extends AbstractJSONFilter {
-	private const NUTRITION = 'description';
+	private const DESCRIPTION = 'description';
 
 	/** @var IL10N */
 	private $l;
@@ -38,16 +37,16 @@ class FixDescriptionFilter extends AbstractJSONFilter {
 	}
 
 	public function apply(array &$json): bool {
-		if (!isset($json[self::NUTRITION])) {
-			$json[self::NUTRITION] = '';
+		if (!isset($json[self::DESCRIPTION])) {
+			$json[self::DESCRIPTION] = '';
 			return true;
 		}
 
-		$description = $this->textCleaner->cleanUp($json[self::NUTRITION], false);
+		$description = $this->textCleaner->cleanUp($json[self::DESCRIPTION], false);
 		$description = trim($description);
 
-		$changed = $description !== $json[self::NUTRITION];
-		$json[self::NUTRITION] = $description;
+		$changed = $description !== $json[self::DESCRIPTION];
+		$json[self::DESCRIPTION] = $description;
 		return $changed;
 	}
 }

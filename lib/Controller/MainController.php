@@ -2,14 +2,14 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCP\IRequest;
-use OCP\Util;
-use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Controller;
-use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Service\DbCacheService;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\TemplateResponse;
+use OCP\IRequest;
+use OCP\Util;
 
 class MainController extends Controller {
 	/** @var string */

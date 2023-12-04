@@ -5,10 +5,10 @@ namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 use OCA\Cookbook\Helper\Filter\JSON\FixUrlFilter;
 use OCA\Cookbook\Helper\TextCleanupHelper;
 use OCP\IL10N;
-use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class FixUrlFilterTest extends TestCase {
 	/** @var FixUrlFilter */

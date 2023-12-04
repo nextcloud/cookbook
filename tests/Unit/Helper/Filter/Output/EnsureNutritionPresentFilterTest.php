@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\Output;
 
-use OCP\IL10N;
-use Psr\Log\LoggerInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
 use OCA\Cookbook\Helper\Filter\Output\EnsureNutritionPresentFilter;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class EnsureNutritionPresentFilterTest extends TestCase {
 	/** @var EnsureNutritionPresentFilter */

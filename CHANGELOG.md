@@ -1,6 +1,125 @@
 ## [Unreleased]
 
 
+## 0.10.3 - 2023-12-04
+
+### Added
+- Add yield calculator
+  [#1573](https://github.com/nextcloud/cookbook/pull/1573) @j0hannesr0th
+- Add copy to clipboard action for ingredients
+  [#1602](https://github.com/nextcloud/cookbook/pull/1602) @j0hannesr0th
+- Enhance recipe recalculation algorithm
+  [#1723](https://github.com/nextcloud/cookbook/pull/1723) @j0hannesr0th
+- Enhance recipe recalculation algorithm
+  [#1723](https://github.com/nextcloud/cookbook/pull/1743) @j0hannesr0th
+- Add Android client to README
+  [#1767](https://github.com/nextcloud/cookbook/pull/1767) @lneugebauer
+- Show info for empty cookbook or categories in recipe overview
+  [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
+- Allow editing existing recipe as new (see [1867](https://github.com/nextcloud/cookbook/issues/1867)) 
+  [#1866](https://github.com/nextcloud/cookbook/pull/1866) @seyfeb
+- Replace checkmark with strikethrough for recipe ingredients
+  [#1910](https://github.com/nextcloud/cookbook/pull/1910) @j0hannesr0th
+
+### Fixed
+- Fix translation string to not contain quotes
+  [#1582](https://github.com/nextcloud/cookbook/pull/1582) @roliverio
+- Make time input fields wider to view multiple digits in chrome
+  [#1687](https://github.com/nextcloud/cookbook/pull/1687) @christianlupus
+- Prevent popup from falsely showing during loading of the app
+  [#1764](https://github.com/nextcloud/cookbook/pull/1764) @christianlupus
+- Fix unclear error message if recipe is already existing
+  [#1770](https://github.com/nextcloud/cookbook/pull/1770) @SethFalco
+- Restore dialog to select files
+  [#1832](https://github.com/nextcloud/cookbook/pull/1832) @christianlupus
+- Provide id of recipe stub in API endpoints as well to make API consistend with recipe API
+  [#1834](https://github.com/nextcloud/cookbook/pull/1834) @christianlupus
+- Hide the button to copy ingredients unless there are some ingredients to copy
+  [#1844](https://github.com/nextcloud/cookbook/pull/1844) @christianlupus
+- Allow single tool in JSON+LD import, fixes #1641
+  [#1864](https://github.com/nextcloud/cookbook/pull/1844) @seyfeb
+- Allow parsing more ISO 8601 duration strings. See issue [#1749](https://github.com/nextcloud/cookbook/issues/1749)
+  [#1871](https://github.com/nextcloud/cookbook/pull/1871) @seyfeb
+- Load config at app loading only once and do not rewrite complete config
+  [#1892](https://github.com/nextcloud/cookbook/pull/1892) @christianlupus
+- Fix English grammar in translatable string
+  [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
+- Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- Make API interface cleaner by only using string identifiers for recipes
+  [#1909](https://github.com/nextcloud/cookbook/pull/1909) @christianlupus
+- Add filter for timestamps to output canonical ISO8601 timestamps in the form of YYYY-MM-DDTHH:mm:ss±hh:mm See issue [#1543](https://github.com/nextcloud/cookbook/issues/1543)
+  [#1903](https://github.com/nextcloud/cookbook/pull/1903) @seyfeb
+
+### Maintenance
+- Preparation for migration to vue.js 3
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+- Fix URL of Transifex after upstream subdomain change
+  [#1598](https://github.com/nextcloud/cookbook/pull/1598) @rakekniven
+- Fix webpack dev server settings to allow for docker dev environment
+  [#1607](https://github.com/nextcloud/cookbook/pull/1607) @christianlupus
+- Fix alphabetical ordering of PHP imports
+  [#1614](https://github.com/nextcloud/cookbook/pull/1614) @dependabot @christianlupus
+- Remove support for old 0.9.x branch to simplify development (NC v24 is no longer supported)
+  [#1683](https://github.com/nextcloud/cookbook/pull/1683) @christianlupus
+- Update dependencies for Jekyll building
+  [#1684](https://github.com/nextcloud/cookbook/pull/1684) @dependabot @christianlupus
+- Update dependency @nextcloud/event-bus and allow automatic updates of dependencies
+  [#1680](https://github.com/nextcloud/cookbook/pull/1680) @dependabot
+- Fix bug in browser console
+  [#1686](https://github.com/nextcloud/cookbook/pull/1686) @christianlupus
+- Make OpenAPI specs more compatible regarding `@type`
+  [#1700](https://github.com/nextcloud/cookbook/pull/1700) @christianlupus
+- Add psalm run to CI/CD
+  [#1691](https://github.com/nextcloud/cookbook/pull/1691) @christianlupus
+- Fix some comments and updated PHP coding style
+  [#1710](https://github.com/nextcloud/cookbook/pull/1710) @dependabot @christianlupus
+- Update Psalm and fix some introduced issues
+  [#1707](https://github.com/nextcloud/cookbook/pull/1707) @christianlupus
+- Allow remote debugging of the test python scripts
+  [#1713](https://github.com/nextcloud/cookbook/pull/1713) @christianlupus
+- Update PHP dependencies
+  [#1729](https://github.com/nextcloud/cookbook/pull/1729) @dependabot @christianlupus
+- Update Node to new LTS version
+  [#1735](https://github.com/nextcloud/cookbook/pull/1735) @nextcloud-command
+- Update major prettier version
+  [#1746](https://github.com/nextcloud/cookbook/pull/1746) @dependabot @christianlupus
+- Update major stylelint version
+  [#1750](https://github.com/nextcloud/cookbook/pull/1750) @dependabot @christianlupus
+- Fix dev mode with bug introduced by prettier
+  [#1758](https://github.com/nextcloud/cookbook/pull/1758) @christianlupus
+- Update browserlist by nextcloud
+  [#1792](https://github.com/nextcloud/cookbook/pull/1792) @dependabot
+- Fix workaround introduced in #1758
+  [#1802](https://github.com/nextcloud/cookbook/pull/1802) @christianlupus
+- Update lint config
+  [#1783](https://github.com/nextcloud/cookbook/pull/1783) @dependabot
+- Add editorconfig file for better cooperation
+  [#1771](https://github.com/nextcloud/cookbook/pull/1771) @SethFalco
+- Use docker compose for tests by default
+  [#1772](https://github.com/nextcloud/cookbook/pull/1772) @SethFalco
+- Update hooks to avoid cluttering the git repository and speed up a bit
+  [#1803](https://github.com/nextcloud/cookbook/pull/1803) @christianlupus
+- Fix building docker images for CI/automated tests
+  [#1810](https://github.com/nextcloud/cookbook/pull/1810) @christianlupus
+- Reimplement appstore build scripts
+  [#1822](https://github.com/nextcloud/cookbook/pull/1822) @christianlupus
+- Added new description in README to external app
+  [#1837](https://github.com/nextcloud/cookbook/pull/1837) @VincentMeilinger
+- Drop old polyfill code related to global search
+  [#1843](https://github.com/nextcloud/cookbook/pull/1843) @christianlupus
+- Update helper dependency for DB testing
+  [#1873](https://github.com/nextcloud/cookbook/pull/1873) @dependabot
+- Use non-deprecated prop name for navigation items
+  [#1893](https://github.com/nextcloud/cookbook/pull/1893) @christianlupus
+
+### Deprecated
+- Old integer-based ids should no longer be used.
+  [#1909](https://github.com/nextcloud/cookbook/pull/1909) @christianlupus
+
+
 ## 0.10.2 - 2023-03-24
 
 ### Changed

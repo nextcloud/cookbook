@@ -1,5 +1,6 @@
 { "translations": {
     "in %s" : "in %s",
+    "None" : "Nulle",
     "Edit" : "Modificar",
     "Save" : "Salveguardar",
     "Search" : "Cercar",
@@ -7,14 +8,12 @@
     "Tags" : "Etiquettas",
     "Rename" : "Renominar",
     "Add" : "Adder",
-    "Close" : "Clauder",
     "Name" : "Nomine",
-    "Description" : "Description",
-    "URL" : "URL",
-    "Loading…" : "Cargante...",
     "Dismiss" : "Dimitter",
     "Cancel" : "Cancellar",
     "OK" : "Ok",
-    "None" : "Nulle"
+    "Description" : "Description",
+    "URL" : "URL",
+    "Loading…" : "Cargante..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -12,12 +12,12 @@ jobs:
   
   code-lint:
     name: Run PHP Linter and Code Style checker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
         -   name: Setup node and NPM
-            uses: actions/setup-node@v3
+            uses: actions/setup-node@v4
             with:
                 node-version: '16'
         -   name: Install npm
@@ -28,7 +28,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@v3.3.1
+            uses: actions/cache@v3.3.2
             with:
                 path: |
                     ~/.npm
@@ -38,7 +38,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v3.3.1
+            uses: actions/cache@v3.3.2
             with:
                 path: |
                     vendor
@@ -69,10 +69,11 @@ jobs:
             run: composer lint:lint
         -   name: Run PHP code style checker
             shell: bash
-            env:
-                PHP_CS_FIXER_IGNORE_ENV: 1
             run: composer cs:check
-            
+        -   name: Run PHP type checker Psalm
+            shell: bash
+            run: composer psalm
+
         -   name: Check for formatting issues with vue files (prettier)
             shell: bash
             run: >-
@@ -103,7 +104,7 @@ jobs:
   
   unit-tests:
     name: Run the unittests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     
     strategy:
         fail-fast: false
@@ -112,41 +113,42 @@ jobs:
                 - mysql
             coreVersion:
                 - 25
-                # - 26
+                - 26
+                - 27
             phpVersion:
                 - "8.1"
             httpServer:
                 - "apache"
             include:
-                # Test different databses
+                # Test different databases
                 -   database: sqlite
-                    coreVersion: 25
+                    coreVersion: 27
                     phpVersion: "8.1"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 25
+                    coreVersion: 27
                     phpVersion: "8.1"
                     httpServer: "apache"
                 
                 # Test different PHP versions additionally
                 -   database: mysql
-                    coreVersion: 25
+                    coreVersion: 27
                     phpVersion: "8.0"
                     httpServer: "apache"
                 -   database: mysql
-                    coreVersion: 25
-                    phpVersion: "7.4"
+                    coreVersion: 27
+                    phpVersion: "8.2"
                     httpServer: "apache"
                 
                 # Test different HTTP server
                 -   database: mysql
-                    coreVersion: 25
+                    coreVersion: 27
                     phpVersion: "8.1"
                     httpServer: "nginx"
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
             fetch-depth: 2
       
@@ -161,6 +163,7 @@ jobs:
         shell: bash
         run: |-
           pip install yq
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
           
       - name: Get the min and max compatible server versions from manifest XML file
         shell: bash
@@ -226,11 +229,11 @@ jobs:
   
   unit-tests-master:
     name: Run the tests against the master branch of the NC server
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
             fetch-depth: 2
       
@@ -281,7 +284,7 @@ jobs:
     name: Upload artifacts to codecov.io
     needs: 
         - unit-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
         - name: Create folder structure
@@ -293,7 +296,7 @@ jobs:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@v3
+          uses: actions/checkout@v4
           with:
             path: code
             fetch-depth: 2
@@ -370,13 +373,13 @@ jobs:
     needs:
         - unit-tests
         - code-lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@v3
+            uses: actions/checkout@v4
         -   name: Setup node and NPM
-            uses: actions/setup-node@v3
+            uses: actions/setup-node@v4
             with:
                 node-version: '16'
         -   name: Install npm
@@ -387,7 +390,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@v3.3.1
+            uses: actions/cache@v3.3.2
             with:
                 path: |
                     ~/.npm
@@ -397,7 +400,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v3.3.1
+            uses: actions/cache@v3.3.2
             with:
                 path: |
                     vendor
@@ -431,7 +434,7 @@ jobs:
             
   event_file:
     name: "Upload Event File"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
     - name: Upload
       uses: actions/upload-artifact@v3

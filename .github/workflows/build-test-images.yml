@@ -8,15 +8,14 @@ on:
 jobs:
     push:
         name: Build and push the latest test images
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-22.04
         
         strategy:
             matrix:
                 phpVersion:
-                    - "7.4"
-                    - "7.3"
                     - "8.0"
                     - "8.1"
+                    - "8.2"
                     # - "8"
         steps:
             - name: Check if secret is known
@@ -32,20 +31,26 @@ jobs:
                 fi
             
             - name: Checkout the app
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
               if: ${{ steps.check.outputs.skip == 'false' }}
             - name: Make sure the appinfo is built
               shell: bash
               run: make appinfo/info.xml
               if: ${{ steps.check.outputs.skip == 'false' }}
               
-            - name: Log into docker regestry as user
+            - name: Log into docker registry as user
               shell: bash
               run: >-
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
                 | docker login 
                 --username ${{ secrets.DOCKER_HUB_USERNAME }} 
                 --password-stdin
+
+            - name: Install dependencies for runner
+              shell: bash
+              run: >-
+                cd .github/actions/run-tests &&
+                pip install -r requirements.txt
 
             - name: Build and push the image
               shell: bash

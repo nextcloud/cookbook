@@ -30,7 +30,7 @@ RUN pecl update-channels && \
 	pecl install xdebug >/dev/null && \
 	docker-php-ext-enable xdebug > /dev/null
 
-RUN npm install -g --quiet --loglevel warn npm@latest
+RUN npm install -g --quiet --loglevel warn npm@^9
 
 COPY install-composer.sh /tmp/install-composer.sh
 RUN /tmp/install-composer.sh

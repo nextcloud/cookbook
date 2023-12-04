@@ -3,24 +3,25 @@
 namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use Exception;
-use OCP\IL10N;
-use OCP\IRequest;
-use OCP\Files\File;
-use OCP\IURLGenerator;
-use OCP\AppFramework\Http;
-use PHPUnit\Framework\TestCase;
-use OCP\AppFramework\Http\IOutput;
-use PHPUnit\Framework\MockObject\Stub;
-use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Service\DbCacheService;
-use OCA\Cookbook\Helper\RestParameterParser;
-use PHPUnit\Framework\MockObject\MockObject;
+use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
+use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
-use OCA\Cookbook\Exception\NoRecipeNameGivenException;
-use OCA\Cookbook\Helper\Filter\RecipeJSONOutputFilter;
-use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
+use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
+use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
+use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Service\RecipeService;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\IOutput;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\Files\File;
+use OCP\IL10N;
+use OCP\IRequest;
+use OCP\IURLGenerator;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Controller\Implementation\RecipeImplementation
@@ -41,6 +42,8 @@ class RecipeImplementationTest extends TestCase {
 	private $restParser;
 	/** @var RecipeJSONOutputFilter|MockObject */
 	private $recipeFilter;
+	/** @var RecipeStubFilter|MockObject */
+	private $stubFilter;
 	/** @var AcceptHeaderParsingHelper|MockObject */
 	private $acceptHeaderParser;
 
@@ -58,6 +61,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->urlGenerator = $this->createMock(IURLGenerator::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
 		$this->recipeFilter = $this->createMock(RecipeJSONOutputFilter::class);
+		$this->stubFilter = $this->createMock(RecipeStubFilter::class);
 		$this->acceptHeaderParser = $this->createMock(AcceptHeaderParsingHelper::class);
 
 		/** @var IL10N|Stub */
@@ -71,6 +75,7 @@ class RecipeImplementationTest extends TestCase {
 			$this->urlGenerator,
 			$this->restParser,
 			$this->recipeFilter,
+			$this->stubFilter,
 			$this->acceptHeaderParser,
 			$l
 		);
@@ -416,6 +421,24 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals($errorMsg, $ret->getData()['msg']);
 	}
 
+	public function testUpdateConflictingName(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['a', 'recipe', 'as', 'array'];
+
+		$errorMsg = "Another recipe with that name already exists";
+		$ex = new RecipeExistsException($errorMsg);
+
+		$this->restParser->method('getParameters')->willReturn($recipe);
+		$this->recipeService->expects($this->once())->method('addRecipe')->with($recipe)->willThrowException($ex);
+		$this->dbCacheService->expects($this->never())->method('addRecipe');
+
+		$ret = $this->sut->update(1);
+
+		$this->assertEquals(409, $ret->getStatus());
+		$this->assertEquals($errorMsg, $ret->getData()['msg']);
+	}
+
 	public function testCreate(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -666,6 +689,8 @@ class RecipeImplementationTest extends TestCase {
 			$size = $params['size'];
 			return "/path/to/controller/$id/$size";
 		}));
+
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		/**
 		 * @var JSONResponse $ret

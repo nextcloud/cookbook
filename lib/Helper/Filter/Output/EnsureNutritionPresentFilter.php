@@ -2,9 +2,9 @@
 
 namespace OCA\Cookbook\Helper\Filter\Output;
 
+use OCA\Cookbook\Helper\Filter\JSON\AbstractJSONFilter;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
-use OCA\Cookbook\Helper\Filter\AbstractJSONFilter;
 
 /**
  * Ensure the nutrition field can be detected as a schema.org object

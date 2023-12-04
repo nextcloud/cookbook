@@ -13,12 +13,21 @@
     },
     "require-dev": {
         "nextcloud/coding-standard": "^1.0.0",
-        "christophwurst/nextcloud_testing": "^0.12.4"
+        "christophwurst/nextcloud_testing": "^1.0.0",
+        "psalm/phar": "^5.12",
+        "nextcloud/ocp": "^27.0"
     },
     "scripts": {
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
         "cs:fix": "./vendor/bin/php-cs-fixer fix",
-        "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -not -path './node_modules/*' -not -path './tests/phpunit/*' -print0 | xargs -0 -n1 php -l"
+        "lint:lint": "find . -name '*.php' -not -path './vendor/*' -not -path './.github/*' -not -path './node_modules/*' -not -path './tests/phpunit/*' -print0 | xargs -0 -n1 php -l",
+        "psalm": "psalm.phar --threads=1 --no-diff",
+        "psalm:nobaseline": "psalm.phar --threads=1 --no-diff --ignore-baseline",
+        "psalm:nocache": "psalm.phar --no-cache --threads=1",
+        "psalm:update-baseline": "psalm.phar --threads=1 --no-diff --update-baseline",
+        "psalm:update-baseline:force": "psalm.phar --threads=1 --no-diff --update-baseline --set-baseline=tests/psalm-baseline.xml",
+        "psalm:clear": "psalm.phar --clear-cache && psalm.phar --clear-global-cache",
+        "psalm:fix": "psalm.phar --alter --no-cache --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
     },
     "config": {
         "platform": {

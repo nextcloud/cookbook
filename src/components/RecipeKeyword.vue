@@ -7,31 +7,38 @@
     </a>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+
+const emit = defineEmits(['keyword-clicked']);
+
+defineProps({
+    name: {
+        type: String,
+        required: true,
+    },
+    count: {
+        type: Number,
+        default: null,
+    },
+});
+
+/**
+ * @type {import('vue').Ref<HTMLElement | null>}
+ */
+const link = ref(null);
+
+const clicked = () => {
+    if (!link.value.classList.contains('disabled')) {
+        emit('keyword-clicked');
+    }
+};
+</script>
+
 <script>
 export default {
-    name: "RecipeKeyword",
-    props: {
-        name: {
-            type: String,
-            required: true,
-        },
-        count: {
-            type: Number,
-            default: null,
-        },
-    },
-    data() {
-        return {}
-    },
-    computed: {},
-    methods: {
-        clicked() {
-            if (!this.$refs.link.classList.contains("disabled")) {
-                this.$emit("keyword-clicked")
-            }
-        },
-    },
-}
+    name: 'RecipeKeyword',
+};
 </script>
 
 <style scoped>

@@ -11,9 +11,6 @@ const webpack = require('webpack')
 const webpackConfig = require('@nextcloud/webpack-vue-config')
 const { merge } = require('webpack-merge')
 
-const buildMode = process.env.NODE_ENV
-const isDev = buildMode === 'development'
-
 function cookbookConfig (env) {
     const config = merge(webpackConfig, {
         context: path.resolve(__dirname),
@@ -37,7 +34,6 @@ function cookbookConfig (env) {
             }
         },
     })
-    // console.log(config)
     return config
 }
 

@@ -2,9 +2,9 @@
 
 namespace OCA\Cookbook\Controller\Implementation;
 
+use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Service\DbCacheService;
 
 class KeywordImplementation {
 	/** @var RecipeService */

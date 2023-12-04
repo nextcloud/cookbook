@@ -3,11 +3,11 @@
 namespace OCA\Cookbook\Service;
 
 use OCA\Cookbook\Db\RecipeDb;
-use OCP\Files\File;
-use OCP\AppFramework\Db\DoesNotExistException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
-use OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter;
+use OCA\Cookbook\Helper\Filter\DB\NormalizeRecipeFileFilter;
 use OCA\Cookbook\Helper\UserConfigHelper;
+use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\Files\File;
 use OCP\IL10N;
 
 class DbCacheService {
@@ -37,6 +37,9 @@ class DbCacheService {
 	/** @var NormalizeRecipeFileFilter */
 	private $normalizeFileFilter;
 
+	/**
+	 * @var array<int, mixed>
+	 */
 	private $jsonFiles;
 	private $dbReceipeFiles;
 	private $dbKeywords;
@@ -223,7 +226,7 @@ class DbCacheService {
 
 	//     private function
 
-	private function isDbEntryUpToDate($id) {
+	private function isDbEntryUpToDate(int $id) {
 		$dbEntry = $this->dbReceipeFiles[$id];
 		$fileEntry = $this->jsonFiles[$id];
 

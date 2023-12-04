@@ -3,9 +3,9 @@
 namespace OCA\Cookbook\Helper\ImageService;
 
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
+use OCA\Cookbook\Service\ThumbnailService;
 use OCP\Files\File;
 use OCP\Files\Folder;
-use OCA\Cookbook\Service\ThumbnailService;
 use OCP\Files\GenericFileException;
 use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;

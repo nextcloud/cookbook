@@ -1,85 +1,85 @@
-import api from "cookbook/js/api-interface"
+import api from 'cookbook/js/api-interface';
 
-import { generateUrl } from "@nextcloud/router"
+import { generateUrl } from '@nextcloud/router';
 
-const baseUrl = generateUrl("apps/cookbook")
+const baseUrl = generateUrl('apps/cookbook');
 
 function extractAllRecipeLinkIds(content) {
-    const re = /(?:^|[^#])#r\/([0-9]+)/g
-    let ret = []
-    let matches
+    const re = /(?:^|[^#])#r\/([0-9]+)/g;
+    let ret = [];
+    let matches;
     for (
         matches = re.exec(content);
         matches !== null;
         matches = re.exec(content)
     ) {
-        ret.push(matches[1])
+        ret.push(matches[1]);
     }
 
     // Make the ids unique, see https://stackoverflow.com/a/14438954/882756
     function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index
+        return self.indexOf(value) === index;
     }
-    ret = ret.filter(onlyUnique)
+    ret = ret.filter(onlyUnique);
 
-    return ret
+    return ret;
 }
 
 async function getRecipesFromLinks(linkIds) {
     return Promise.all(
         linkIds.map(async (x) => {
-            let recipe
+            let recipe;
             try {
-                recipe = await api.recipes.get(x)
+                recipe = await api.recipes.get(x);
             } catch (ex) {
-                recipe = null
+                recipe = null;
             }
-            return recipe
-        })
-    )
+            return recipe;
+        }),
+    );
 }
 
 function cleanUpRecipeList(recipes) {
-    return recipes.filter((r) => r !== null).map((x) => x.data)
+    return recipes.filter((r) => r !== null).map((x) => x.data);
 }
 
 function getRecipeUrl(id) {
-    return `${baseUrl}/#/recipe/${id}`
+    return `${baseUrl}/#/recipe/${id}`;
 }
 
 function insertMarkdownLinks(content, recipes) {
-    let ret = content
+    let ret = content;
     recipes.forEach((r) => {
-        const { id } = r
+        const { id } = r;
 
         // Replace link urls in dedicated links (like [this example](#r/123))
-        ret = ret.replace(`](${id})`, `](${getRecipeUrl(id)})`)
+        ret = ret.replace(`](${id})`, `](${getRecipeUrl(id)})`);
 
         // Replace plain references with recipe name
         const rePlain = RegExp(
             `(^|\\s|[,._+&?!-])#r/${id}($|\\s|[,._+&?!-])`,
-            "g"
-        )
+            'g',
+        );
         // const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
         ret = ret.replace(
             rePlain,
-            `$1[${r.name} (\\#r/${id})](${getRecipeUrl(id)})$2`
-        )
-    })
-    return ret
+            `$1[${r.name} (\\#r/${id})](${getRecipeUrl(id)})$2`,
+        );
+    });
+    return ret;
 }
 
 async function normalizeNamesMarkdown(content) {
     // console.log(`Content: ${content}`)
-    const linkIds = extractAllRecipeLinkIds(content)
-    let recipes = await getRecipesFromLinks(linkIds)
-    recipes = cleanUpRecipeList(recipes)
+    const linkIds = extractAllRecipeLinkIds(content);
+    let recipes = await getRecipesFromLinks(linkIds);
+    recipes = cleanUpRecipeList(recipes);
     // console.log("List of recipes", recipes)
 
-    const markdown = insertMarkdownLinks(content, recipes)
+    const markdown = insertMarkdownLinks(content, recipes);
     // console.log("Formatted markdown:", markdown)
 
-    return markdown
+    return markdown;
 }
 
-export default normalizeNamesMarkdown
+export default normalizeNamesMarkdown;

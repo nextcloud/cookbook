@@ -2,12 +2,12 @@
 
 namespace OCA\Cookbook\Helper\HTMLParser;
 
-use DOMNode;
-use DOMXPath;
-use OCP\IL10N;
 use DOMDocument;
+use DOMNode;
 use DOMNodeList;
+use DOMXPath;
 use OCA\Cookbook\Exception\HtmlParsingException;
+use OCP\IL10N;
 
 /**
  * This class is an AbstractHtmlParser which tries to extract micro data from the HTML page.
@@ -233,7 +233,6 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	private function extractAttribute(DOMNodeList $nodes, array $attributes): array {
 		$foundEntries = [];
 
-		/** @var $node \DOMElement */
 		foreach ($nodes as $node) {
 			try {
 				$foundEntries[] = $this->extractSingeAttribute($node, $attributes);

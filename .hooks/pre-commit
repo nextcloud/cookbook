@@ -2,26 +2,61 @@
 
 # set -x
 
-lines_before=`git stash list | wc -l`
-git stash push --keep-index --include-untracked -q --message "You should never see this commit message. If you do, please repair your git setup manully!"
-lines_after=`git stash list | wc -l`
+if git diff --cached --name-only | grep '^lib/' > /dev/null
+then
+	check_php=1
+fi
 
-cleanup() {
-	if [ $lines_before -lt $lines_after ]; then
-		git stash pop -q
-	fi
-}
-
-trap cleanup EXIT
+if git diff --cached --name-only | grep '^src/' > /dev/null
+then
+	check_js=1
+fi
 
 retVal=0
 
-if [ -e 'vendor/bin/php-cs-fixer' ]; then
-	composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
-fi
+if [ -n "$check_php" -o -n "$check_js" ]
+then
 
-if [ -e 'node_modules/.bin/eslint' ]; then
-	npm run --silent eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
+	echo "Some checks need to be carried out"
+	
+	# Clean current folder
+	rm -rf .hook-checkout/checkout
+	mkdir .hook-checkout/checkout
+
+	# Clone the latest code base to the folder and apply the staged changes
+	git archive --format tar HEAD | tar x -C .hook-checkout/checkout
+	git diff --cached | ( cd .hook-checkout/checkout; patch -Nsp1 )
+
+	# Link the imported dependencies to the checkout folder (for fast working)
+	ln -sr node_modules .hook-checkout/checkout
+	ln -sr vendor .hook-checkout/checkout
+
+	cd .hook-checkout/checkout
+
+	if [ -n "$check_php" ]
+	then
+		# Run the PHP linter
+		if [ -e 'vendor/bin/php-cs-fixer' ]
+		then
+			composer cs:check || { echo "The PHP code is not validly formatted."; (( retVal |= 1 )); }
+		else
+			echo "WARNING: The PHP check could not be carried out!"
+		fi
+	fi
+
+	if [ -n "$check_js" ]
+	then
+		# Run the JS linter
+		if [ -e 'node_modules/.bin/eslint' ]
+		then
+			npm run --silent eslint || { echo 'The javascript code seems to be not satifying the eslint linter.'; (( retVal |= 2 )); }
+		else
+			echo "WARNING: The JS/Vue check could not be carried out!"
+		fi
+	fi
+
+	cd ../..
+	rm -r .hook-checkout/checkout
 fi
 
 exit $retVal

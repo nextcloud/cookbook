@@ -1,4 +1,4 @@
-extends: "../../.eslintrc.yml"
+extends: '../../.eslintrc.yml'
 
 rules:
     no-param-reassign:

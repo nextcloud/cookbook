@@ -2,12 +2,12 @@
 
 namespace OCA\Cookbook\Helper\ImageService;
 
-use OCP\IL10N;
+use OCA\Cookbook\Exception\NoRecipeImageFoundException;
 use OCP\Files\File;
 use OCP\Files\Folder;
 use OCP\Files\NotFoundException;
-use OCA\Cookbook\Exception\NoRecipeImageFoundException;
 use OCP\Files\NotPermittedException;
+use OCP\IL10N;
 
 /**
  * This class allows to handle the files of the thumbnails

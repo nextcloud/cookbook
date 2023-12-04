@@ -2,10 +2,9 @@
 
 namespace OCA\Cookbook\Service;
 
-use OCA\Cookbook\Helper\HTMLParser\AbstractHtmlParser;
+use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
-use OCA\Cookbook\Exception\HtmlParsingException;
 use OCP\IL10N;
 
 class RecipeExtractionService {
@@ -34,7 +33,6 @@ class RecipeExtractionService {
 	 * @return array The data as returned from the parser
 	 */
 	public function parse(\DOMDocument $document, ?string $url): array {
-		/** @var $parser AbstractHtmlParser */
 		foreach ($this->parsers as $parser) {
 			try {
 				return $parser->parse($document, $url);

@@ -1,17 +1,16 @@
 OC.L10N.register(
     "cookbook",
     {
+    "None" : "None",
     "Save" : "Save",
     "Search" : "Search",
     "Tags" : "Tags",
     "Rename" : "Rename",
     "Add" : "Add",
-    "Close" : "Close",
     "Name" : "Name",
-    "Loading…" : "Loading…",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
     "OK" : "OK",
-    "None" : "None"
+    "Loading…" : "Loading…"
 },
 "nplurals=1; plural=0;");

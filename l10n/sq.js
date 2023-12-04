@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "në %s",
+    "None" : "Asnjë",
     "Page not found" : "Faqja nuk u gjet ",
     "Edit" : "Përpuno",
     "Save" : "Ruaj",
@@ -12,16 +13,14 @@ OC.L10N.register(
     "Categories" : "Kategoritë",
     "Rename" : "Rename",
     "Add" : "Shto",
-    "Close" : "Mbylleni",
     "Name" : "Emri",
-    "Description" : "Përshkrim",
-    "URL" : "Url",
     "Tools" : "Mjete",
-    "Last modified" : "Ndryshuar së fundmi",
-    "Loading…" : "Duke u ngarkuar…",
     "Dismiss" : "Hiq",
     "Cancel" : "Anullo",
     "OK" : "OK",
-    "None" : "Asnjë"
+    "Description" : "Përshkrim",
+    "URL" : "Url",
+    "Last modified" : "Ndryshuar së fundmi",
+    "Loading…" : "Duke u ngarkuar…"
 },
 "nplurals=2; plural=(n != 1);");

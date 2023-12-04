@@ -3,17 +3,17 @@
 namespace OCA\Cookbook\tests\unit\Helper\ImageService;
 
 use OCA\Cookbook\Exception\NoRecipeImageFoundException;
-use OCP\IL10N;
+use OCA\Cookbook\Helper\ImageService\ImageFileHelper;
+use OCA\Cookbook\Helper\ImageService\ImageGenerationHelper;
+use OCA\Cookbook\Helper\ImageService\ImageSize;
+use OCA\Cookbook\Helper\ImageService\ThumbnailFileHelper;
 use OCP\Files\File;
 use OCP\Files\Folder;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\Stub;
-use PHPUnit\Framework\MockObject\MockObject;
-use OCA\Cookbook\Helper\ImageService\ImageSize;
-use OCA\Cookbook\Helper\ImageService\ImageFileHelper;
-use OCA\Cookbook\Helper\ImageService\ThumbnailFileHelper;
-use OCA\Cookbook\Helper\ImageService\ImageGenerationHelper;
 use OCP\Files\NotFoundException;
+use OCP\IL10N;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\MockObject\Stub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @covers OCA\Cookbook\Helper\ImageService\ThumbnailFileHelper

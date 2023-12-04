@@ -2,9 +2,9 @@
 
 namespace OCA\Cookbook\tests\Unit\Controller;
 
+use OCA\Cookbook\Controller\UtilApiController;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
-use OCA\Cookbook\Controller\UtilApiController;
 
 /**
  * @covers \OCA\Cookbook\Controller\UtilApiController

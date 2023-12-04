@@ -18,7 +18,7 @@ class DownloadHelper {
 	/**
 	 * The content of the last download
 	 *
-	 * @var ?string
+	 * @var string
 	 */
 	private $content;
 	/**
@@ -30,7 +30,7 @@ class DownloadHelper {
 	/**
 	 * The HTTP status of the last download
 	 *
-	 * @var ?int
+	 * @var int
 	 */
 	private $status;
 
@@ -43,6 +43,8 @@ class DownloadHelper {
 		$this->downloaded = false;
 		$this->l = $l;
 		$this->headers = [];
+		$this->status = 0;
+		$this->content = '';
 	}
 
 	/**
@@ -94,6 +96,7 @@ class DownloadHelper {
 	 * Note: You must first trigger the download using downloadFile method.
 	 *
 	 * @return string The content of the downloaded file
+	 *
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
 	public function getContent(): string {
@@ -133,6 +136,7 @@ class DownloadHelper {
 	 * Note: You must first trigger the download using downloadFile method.
 	 *
 	 * @return int The HTTP status code
+	 *
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
 	public function getStatus(): int {

@@ -2,11 +2,11 @@
 
 namespace OCA\Cookbook\Controller\Implementation;
 
-use OCP\AppFramework\Http;
-use OCA\Cookbook\Service\RecipeService;
-use OCP\AppFramework\Http\JSONResponse;
-use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Service\DbCacheService;
+use OCA\Cookbook\Service\RecipeService;
+use OCP\AppFramework\Http;
+use OCP\AppFramework\Http\JSONResponse;
 
 class CategoryImplementation {
 	/** @var RecipeService */

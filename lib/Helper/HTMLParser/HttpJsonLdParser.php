@@ -3,8 +3,8 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
-use OCP\IL10N;
 use OCA\Cookbook\Service\JsonService;
+use OCP\IL10N;
 
 /**
  * This class is an AbstractHtmlParser which tries to extract a JSON+LD script from the HTML page.

@@ -2,12 +2,12 @@
 
 namespace OCA\Cookbook\Helper;
 
-use Exception;
-use OCP\IL10N;
 use DOMDocument;
+use Exception;
 use LibXMLError;
-use Psr\Log\LoggerInterface;
 use OCA\Cookbook\Exception\ImportException;
+use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 /**
  * This class allows to parse an HTML document into a DOMDocument.

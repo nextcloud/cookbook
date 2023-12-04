@@ -3,10 +3,10 @@
 namespace OCA\Cookbook\Db;
 
 use DateTimeImmutable;
-use OCP\DB\QueryBuilder\IQueryBuilder;
-use OCP\IDBConnection;
 use OCP\AppFramework\Db\DoesNotExistException;
+use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\DB\Types;
+use OCP\IDBConnection;
 use OCP\IL10N;
 
 class RecipeDb {
@@ -122,7 +122,7 @@ class RecipeDb {
 		return $this->unique($recipesGroupedTags);
 	}
 
-	private function mapDbNames($results) {
+	private function mapDbNames(array $results) {
 		return array_map(function ($x) {
 			$x['dateCreated'] = $x['date_created'];
 			$x['dateModified'] = $x['date_modified'];
@@ -347,7 +347,7 @@ class RecipeDb {
 	 * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
 	 */
 	public function findRecipes(array $keywords, string $user_id) {
-		$has_keywords = $keywords && is_array($keywords) && sizeof($keywords) > 0 && $keywords[0];
+		$has_keywords = $keywords && is_array($keywords) && $keywords[0];
 
 		if (!$has_keywords) {
 			return $this->findAllRecipes($user_id);
@@ -453,7 +453,7 @@ class RecipeDb {
 	 * @param array $ids
 	 */
 	public function deleteRecipes(array $ids, string $userId) {
-		if (!is_array($ids) || empty($ids)) {
+		if (empty($ids)) {
 			return;
 		}
 
@@ -488,7 +488,7 @@ class RecipeDb {
 	 * @param array $recipes
 	 */
 	public function insertRecipes(array $recipes, string $userId) {
-		if (!is_array($recipes) || empty($recipes)) {
+		if (empty($recipes)) {
 			return;
 		}
 
@@ -520,7 +520,7 @@ class RecipeDb {
 	}
 
 	public function updateRecipes(array $recipes, string $userId) {
-		if (!is_array($recipes) || empty($recipes)) {
+		if (empty($recipes)) {
 			return;
 		}
 
@@ -635,7 +635,7 @@ class RecipeDb {
 	}
 
 	public function addKeywordPairs(array $pairs, string $userId) {
-		if (!is_array($pairs) || empty($pairs)) {
+		if (empty($pairs)) {
 			return;
 		}
 
@@ -657,7 +657,7 @@ class RecipeDb {
 	}
 
 	public function removeKeywordPairs(array $pairs, string $userId) {
-		if (!is_array($pairs) || empty($pairs)) {
+		if (empty($pairs)) {
 			return;
 		}
 

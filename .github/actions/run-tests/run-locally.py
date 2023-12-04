@@ -1,11 +1,19 @@
 #!/usr/bin/env python
 
+import debugpy
+
 import test_runner
 import test_runner.ci_printer as l
 
 (args, subArgs) = test_runner.argument_parser.parseArguments()
 
+if args.debug_python:
+	print("Debugging Python")
+	debugpy.listen(5678)
+	debugpy.wait_for_client()
+
 # print(args)
+test_runner.docker_helper.initialize(args)
 
 test_runner.ci_printer.logger = test_runner.ci_printer.CILogger(args.ci)
 

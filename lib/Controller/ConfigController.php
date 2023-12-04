@@ -2,10 +2,10 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCP\IRequest;
-use OCP\AppFramework\Controller;
-
 use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
+use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\JSONResponse;
+use OCP\IRequest;
 
 class ConfigController extends Controller {
 	/** @var ConfigImplementation */
