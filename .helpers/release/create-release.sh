@@ -9,6 +9,7 @@ deploy_path='.github/actions/deploy'
 
 stable_branch=$(cat "$deploy_path/stable_name")
 master_branch=$(cat "$deploy_path/trunk_name")
+current_branch=$(git branch --show-current)
 
 major=$(cat "$deploy_path/major")
 minor=$(cat "$deploy_path/minor")
@@ -98,7 +99,8 @@ update_git() {
 	echo "Checkout stable branch $stable_branch"
 	git checkout "$stable_branch"
 
-	git merge --no-ff "$master_branch"
+	echo "Merge release branch $current_branch"
+	git merge --no-ff "$current_branch"
 
 	if [ -n "$pre_release" ]; then
 		# We want to build a pre-release
@@ -116,14 +118,13 @@ update_git() {
 	"$deploy_path/update-data.sh" "$version" "$major" "$minor" "$patch" "$prerelease"
 
 	git add "$deploy_path/major" "$deploy_path/minor" "$deploy_path/patch" "$deploy_path/last_release"
-
-	# exit
-
 	git commit -s -m "Bump to version $version"
 
 	tag_name="v$version"
+	echo "Creating release tag $tag_name"
 	git tag "$tag_name"
 
+	echo "Forwarding main branch $master_branch to be on tie with stable branch $stable_branch"
 	git checkout $master_branch
 	git merge --no-ff $stable_branch
 
