@@ -1,6 +1,6 @@
 <template>
     <div>
-        <recipe-list :recipes="results" />
+        <RecipeList :recipes="results" :loading="isLoadingRecipeList" />
     </div>
 </template>
 
@@ -32,6 +32,11 @@ const props = defineProps({
  */
 const isComponentActive = ref(true);
 /**
+ * If the list of recipes is currently being fetched from the server.
+ * @type {import('vue').Ref<boolean>}
+ */
+const isLoadingRecipeList = ref(false);
+/**
  * @type {import('vue').Ref<Array>}
  */
 const results = ref([]);
@@ -50,6 +55,7 @@ const setup = async () => {
         // Search by tags
         const tags = route.params.value;
         try {
+            isLoadingRecipeList.value = true;
             const response = await api.recipes.allWithTag(tags);
             results.value = response.data;
         } catch (e) {
@@ -65,11 +71,14 @@ const setup = async () => {
             if (e && e instanceof Error) {
                 throw e;
             }
+        } finally {
+            isLoadingRecipeList.value = false;
         }
     } else if (props.query === 'cat') {
         // Search by category
         const cat = route.params.value;
         try {
+            isLoadingRecipeList.value = true;
             const response = await api.recipes.allInCategory(cat);
             results.value = response.data;
         } catch (e) {
@@ -85,10 +94,13 @@ const setup = async () => {
             if (e && e instanceof Error) {
                 throw e;
             }
+        } finally {
+            isLoadingRecipeList.value = false;
         }
     } else {
         // General search
         try {
+            isLoadingRecipeList.value = true;
             const response = await api.recipes.search(route.params.value);
             results.value = response.data;
         } catch (e) {
@@ -99,6 +111,8 @@ const setup = async () => {
             if (e && e instanceof Error) {
                 throw e;
             }
+        } finally {
+            isLoadingRecipeList.value = false;
         }
         store.dispatch('setPage', { page: 'search' });
     }

@@ -45,7 +45,8 @@
 - Fix English grammar in translatable string
   [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
 - Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
-  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896)
+ [#1918](https://github.com/nextcloud/cookbook/pull/1918)@seyfeb
 - Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Make API interface cleaner by only using string identifiers for recipes
