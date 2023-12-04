@@ -16,7 +16,7 @@ jobs:
                 shell: bash
                 working-directory: cookbook
         
-        if: github.repository != 'christianlupus-nextcloud/cookbook-releases'
+        if: github.repository == 'christianlupus-nextcloud/cookbook-releases'
 
         steps:
             -   name: Checkout the project
