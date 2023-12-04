@@ -126,7 +126,7 @@ update_git() {
 
 	echo "Forwarding main branch $master_branch to be on tie with stable branch $stable_branch"
 	git checkout $master_branch
-	git merge --no-ff $stable_branch -s -m "Updating main branch $master_branch with latest stable version information from $stable_branch"
+	git merge --no-ff $stable_branch -s -m "Updating main branch $master_branch with latest stable version information from $stable_branch" --no-verify
 
 	if [ -n "$push" ]
 	then
