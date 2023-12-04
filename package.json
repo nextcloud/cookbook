@@ -46,7 +46,7 @@
     "vue-material-design-icons": "^5.2.0",
     "vue-modal-dialogs": "3.0.0",
     "vue-router": "^3.6.5",
-    "vue-showdown": "^2.4.1",
+    "vue-showdown": "^4.2.0",
     "vuejs-logger": "^1.5.5",
     "vuex": "^3.6.2"
   },
