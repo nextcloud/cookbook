@@ -30,3 +30,46 @@ jobs:
           pull-request-number: ${{ github.event.issue.number }}
           review-message: "Automatically approved by GitHub action on behalf of `/approve`"
 
+  backport:
+    name: Backport PR
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request
+    env:
+      admins: '["seyfeb", "christianlupus"]'
+    steps:
+      - name: Collect data
+        run: |-
+          echo "Admins: $admins"
+          echo "User is permitted: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}"
+          echo "permitted_user=${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT"
+          echo "Comment body matches /approve: ${{ startsWith(github.event.comment.body, '/backport')}}"
+          echo "use_backport=${{ startsWith(github.event.comment.body, '/backport')}}" >> "$GITHUB_OUTPUT"
+          echo "number=${{ github.event.issue.number }}" >> "$GITHUB_ENV"
+          echo "${{ github.event.comment.body }}" > /tmp/comment
+        id: config
+      - name: Add reaction unon start
+        if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
+        uses: peter-evans/create-or-update-comment@v3.0.1
+        with:
+          token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
+          repository: ${{ github.event.repository.full_name }}
+          comment-id: ${{ github.event.comment.id }}
+          reaction-type: "+1"
+      - name: Carry out the backport
+        if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
+        run: .github/actions/backport/backport.sh
+        id: backport
+      - name: Create a pull request
+        if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
+          branch: ${{ steps.backport.outputs.branchName }}
+          base: ${{ steps.backport.outputs.targetBranch }}
+          title: Backport of ${{ github.event.pull_request.title }}
+          body: |-
+            Backport of #${{ github.event.issue.number }}
+
+            ${{ github.event.body }}
+
+
