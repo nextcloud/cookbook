@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Maintenance
+- Add PHP lint checker to ensure valid (legacy) PHP syntax
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+
 
 ## 0.10.3 - 2023-12-04
 

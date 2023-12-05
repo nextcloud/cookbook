@@ -370,9 +370,6 @@ jobs:
     
   source-package:
     name: Create source code artifacts
-    needs:
-        - unit-tests
-        - code-lint
     runs-on: ubuntu-22.04
     
     steps:
@@ -443,4 +440,30 @@ jobs:
         path: ${{ github.event_path }}
         retention-days: 1
 
+  lint-php:
+    name: "Lint PHP files to be compatible"
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - name: Checkout of the app
+      uses: actions/checkout@v4
+    - name: build docker container image
+      run: docker build -t php-lint-tester .github/actions/php-linter
+    - name: Check the code base
+      run: docker run --rm -v $(pwd):/work:ro php-lint-tester
 
+  successful_run:
+    name: The tests have successfully run
+    runs-on: ubuntu-22.04
+    needs:
+      - unit-tests
+      - code-lint
+      - source-package
+      - lint-php
+      - event_file
+    steps:
+      - name: Run successfully
+        shell: bash
+        run: echo "The tests have been running successfully"
