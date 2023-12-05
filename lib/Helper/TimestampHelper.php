@@ -45,7 +45,7 @@ class TimestampHelper {
 		// For now, we only support the ISO8601 format because it is required in the schema.org standard
 		try {
 			return $this->parseIsoFormat($timestamp);
-		} catch (InvalidTimestampException) {
+		} catch (InvalidTimestampException $ex) {
 			// We do nothing here. Check the next format
 		}
 
@@ -65,15 +65,15 @@ class TimestampHelper {
 	private function parseIsoFormat(string $timestamp): string {
 		try {
 			return $this->parseIsoCalendarDateFormat($timestamp, '-');
-		} catch (InvalidTimestampException) { // Check next format
+		} catch (InvalidTimestampException $ex) { // Check next format
 		}
 		try {
 			return $this->parseIsoCalendarDateFormat($timestamp, '');
-		} catch (InvalidTimestampException) { // Check next format
+		} catch (InvalidTimestampException $ex) { // Check next format
 		}
 		try {
 			return $this->parseIsoWeekDateFormat($timestamp, '-');
-		} catch (InvalidTimestampException) { // Check next format
+		} catch (InvalidTimestampException $ex) { // Check next format
 		}
 
 		return $this->parseIsoWeekDateFormat($timestamp, '');
