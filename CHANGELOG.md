@@ -1,5 +1,15 @@
 ## [Unreleased]
 
+## 0.10.4 - 2023-12-05
+
+### Fixed
+- Make app compatible with PHP 7.4
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+
+### Maintenance
+- Add PHP lint checker to ensure valid (legacy) PHP syntax
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+
 
 ## 0.10.3 - 2023-12-04
 
@@ -45,7 +55,8 @@
 - Fix English grammar in translatable string
   [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
 - Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
-  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896)
+ [#1918](https://github.com/nextcloud/cookbook/pull/1918)@seyfeb
 - Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Make API interface cleaner by only using string identifiers for recipes
