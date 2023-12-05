@@ -440,7 +440,7 @@ jobs:
         path: ${{ github.event_path }}
         retention-days: 1
 
-  lint_php:
+  lint-php:
     name: "Lint PHP files to be compatible"
     runs-on: ubuntu-22.04
     defaults:
@@ -462,6 +462,7 @@ jobs:
       - code-lint
       - source-package
       - lint-php
+      - event_file
     steps:
       - name: Run successfully
         shell: bash
