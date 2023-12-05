@@ -19,11 +19,11 @@ class UtilApiController extends ApiController {
 	 */
 	public function getApiVersion(): JSONResponse {
 		$response = [
-			'cookbook_version' => [0, 10, 3], /* VERSION_TAG do not change this line manually */
+			'cookbook_version' => [0, 10, 4], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 1,
-				'minor' => 1
+				'minor' => 2
 			]
 		];
 		return new JSONResponse($response, 200);

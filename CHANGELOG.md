@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+## 0.10.4 - 2023-12-05
+
+### Fixed
+- Make app compatible with PHP 7.4
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
