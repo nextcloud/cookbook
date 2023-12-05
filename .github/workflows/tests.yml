@@ -450,7 +450,7 @@ jobs:
     - name: Checkout of the app
       uses: actions/checkout@v4
     - name: build docker container image
-      run: docker build -t php-lint-tester .github/actions/php-lint-tester
+      run: docker build -t php-lint-tester .github/actions/php-linter
     - name: Check the code base
       run: docker run --rm -v $(pwd):/work:ro php-lint-tester
 
