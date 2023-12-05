@@ -67,7 +67,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-22.04
-    if: github.event.ref == 'refs/heads/master'
+    if: github.event.ref == 'refs/heads/master' && github.repository == 'nextcloud/cookbook'
     needs: build
     steps:
       - name: Deploy to GitHub Pages
