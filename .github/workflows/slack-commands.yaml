@@ -42,23 +42,35 @@ jobs:
           echo "Admins: $admins"
           echo "User is permitted: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}"
           echo "permitted_user=${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT"
-          echo "Comment body matches /approve: ${{ startsWith(github.event.comment.body, '/backport')}}"
-          echo "use_backport=${{ startsWith(github.event.comment.body, '/backport')}}" >> "$GITHUB_OUTPUT"
+          echo "Comment body matches /backport: ${{ startsWith(github.event.comment.body, '/cb-backport')}}"
+          echo "use_backport=${{ startsWith(github.event.comment.body, '/cb-backport')}}" >> "$GITHUB_OUTPUT"
           echo "number=${{ github.event.issue.number }}" >> "$GITHUB_ENV"
-          echo "${{ github.event.comment.body }}" > /tmp/comment
+          echo "$BODY" > /tmp/comment
         id: config
-      - name: Add reaction unon start
+        env:
+          BODY: "${{ github.event.comment.body }}"
+      - name: Add reaction upon start
         if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
-        uses: peter-evans/create-or-update-comment@v3.0.1
+        uses: peter-evans/create-or-update-comment@v3.1.0
         with:
           token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
           repository: ${{ github.event.repository.full_name }}
           comment-id: ${{ github.event.comment.id }}
-          reaction-type: "+1"
+          reactions: "+1"
+      - name: Checkout of the app data
+        if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
       - name: Carry out the backport
         if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
         run: .github/actions/backport/backport.sh
+        env:
+          DEBUG: ${{ runner.debug }}
         id: backport
+      - name: Git log
+        run: git log --all --decorate --oneline --graph
       - name: Create a pull request
         if: steps.config.outputs.permitted_user && steps.config.outputs.use_backport
         uses: peter-evans/create-pull-request@v5
