@@ -35,6 +35,7 @@ OC.L10N.register(
     "Cannot parse non-POST multipart encoding. This is a bug." : "Nedaří se zpracovat ne-POST znakovou sadu z více částí. Toto je chyba.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Nedaří se zjistit typ přenášených dat. Toto je chyba – prosíme, nahlaste ji.",
     "Invalid URL-encoded string found. Please report a bug." : "Nalezen neplatný řetězec v URL. Prosím nahlaste chybu.",
+    "Could not parse timestamp {timestamp}" : "Nepodařilo se zpracovat časové razítko {timestamp}",
     "The user is not logged in. No user configuration can be obtained." : "Uživatel není přihlášený. Není proto možné získat žádná nastavení pro něho.",
     "Recipes" : "Recepty",
     "The user folder cannot be created due to missing permissions." : "Složku uživatele není možné vytvořit kvůli chybějícím oprávněním.",
