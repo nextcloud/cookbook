@@ -3,6 +3,8 @@
 ### Fixed
 - Allow translation of string _Enable debugging_ in settings
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
+- Fix wrong parsing of recipe yield input
+  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
 
 
 ## 0.10.4 - 2023-12-05
@@ -10,15 +12,14 @@
 ### Fixed
 - Make app compatible with PHP 7.4
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+- Remove constant se in RecipeView
+  [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
 - Add backport script to simplify development
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
-- remove constant se in RecipeView
-  [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
-
 
 ## 0.10.3 - 2023-12-04
 
