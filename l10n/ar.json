@@ -33,6 +33,7 @@
     "Cannot parse non-POST multipart encoding. This is a bug." : "لا يمكن تحليل ترميز متعدد الأجزاء  غير الموافق لـ POST. هذا خطأ.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "لا يمكن الكشف عن نوع البيانات المرسلة. هذا خطأ، يرجى الإبلاغ عنه.",
     "Invalid URL-encoded string found. Please report a bug." : "تم العثور على سلسلة مرمزة بعنوان URL غير صالحة. الرجاء الإبلاغ عن خطأ.",
+    "Could not parse timestamp {timestamp}" : "تعذّر تحليل timestamp الطابع الزمني {timestamp}",
     "The user is not logged in. No user configuration can be obtained." : "لم يتم تسجيل دخول المستخدم. لا يمكن الحصول على تكوين المستخدم.",
     "Recipes" : "وصفات طبخ Recipes",
     "The user folder cannot be created due to missing permissions." : "لا يمكن إنشاء مجلد المستخدم بسبب نقص الأذونات.",

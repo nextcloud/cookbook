@@ -33,6 +33,7 @@
     "Cannot parse non-POST multipart encoding. This is a bug." : "Multipart-Kodierung von Nicht-POST kann nicht geparst werden. Dies ist ein Fehler.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Kann den Typ der übertragenen Daten nicht erkennen. Dies ist ein Fehler, bitte melden Sie diesen.",
     "Invalid URL-encoded string found. Please report a bug." : "Ungültige URL-kodierte Zeichenfolge gefunden. Bitte melden Sie den Fehler.",
+    "Could not parse timestamp {timestamp}" : "Der Zeitstempel {timestamp} konnte nicht ausgewertet werden",
     "The user is not logged in. No user configuration can be obtained." : "Der Benutzer ist nicht angemeldet. Es kann keine Benutzerkonfiguration abgerufen werden.",
     "Recipes" : "Rezepte",
     "The user folder cannot be created due to missing permissions." : "Der Benutzerordner kann aufgrund fehlender Berechtigungen nicht erstellt werden.",
