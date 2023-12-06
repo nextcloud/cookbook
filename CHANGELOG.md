@@ -7,7 +7,8 @@
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
 - remove constant se in RecipeView
   [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
-
+- fix wrong parsing of recipe yield input
+  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
 
 ## 0.10.3 - 2023-12-04
 
