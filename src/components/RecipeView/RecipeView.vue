@@ -629,7 +629,7 @@ const setup = async () => {
 };
 
 const changeRecipeYield = (increase = true) => {
-    recipeYield.value += increase ? 1 : -1;
+    recipeYield.value = +recipeYield.value + (increase ? 1 : -1);
 };
 
 const copyIngredientsToClipboard = () => {
