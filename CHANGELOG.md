@@ -5,6 +5,8 @@
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
 - Add backport script to simplify development
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
+- remove constant se in RecipeView
+  [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
 
 
 ## 0.10.3 - 2023-12-04
