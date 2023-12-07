@@ -25,7 +25,7 @@ git config user.name "Cookbook bot"
 git config user.email "bot@noreply.github.com"
 
 backportBranch() {
-	backportBranchName="backport-$branchName/$headRef"
+	backportBranchName="backport-$branchName-$number/$headRef"
 	echo "::debug::Backport branch name to create is $backportBranchName"
 	echo "branchName=$backportBranchName" >> "$GITHUB_OUTPUT"
 	echo "targetBranch=$branchName" >> "$GITHUB_OUTPUT"
