@@ -44,7 +44,7 @@ jobs:
           echo "permitted_user=${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT"
           echo "Comment body matches /backport: ${{ startsWith(github.event.comment.body, '/cb-backport')}}"
           echo "use_backport=${{ startsWith(github.event.comment.body, '/cb-backport')}}" >> "$GITHUB_OUTPUT"
-          echo "startBackport=${{ startsWith(github.event.comment.body, '/cb-backport') && contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT""
+          echo "startBackport=${{ startsWith(github.event.comment.body, '/cb-backport') && contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT"
           echo "number=${{ github.event.issue.number }}" >> "$GITHUB_ENV"
           echo "$BODY" > /tmp/comment
         id: config
