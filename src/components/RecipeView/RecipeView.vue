@@ -72,7 +72,10 @@
                                 <strong
                                     >{{ t('cookbook', 'Servings') }}:
                                 </strong>
-                                <span>
+                                <span class="print-only">
+                                    {{ recipeYield }}
+                                </span>
+                                <span class="print-hidden">
                                     <button
                                         :disabled="recipeYield === 1"
                                         @click="changeRecipeYield(false)"
@@ -143,7 +146,7 @@
                             <span>{{ t('cookbook', 'Ingredients') }}</span>
                             <NcButton
                                 v-if="scaledIngredients.length"
-                                class="copy-ingredients"
+                                class="copy-ingredients print-hidden"
                                 :type="'tertiary'"
                                 aria-label="Copy all ingredients to the clipboard"
                                 :title="t('cookbook', 'Copy ingredients')"
@@ -177,7 +180,7 @@
 
                         <div
                             v-if="!ingredientsSyntaxCorrect"
-                            class="ingredient-parsing-error"
+                            class="ingredient-parsing-error print-hidden"
                         >
                             <hr />
                             <span class="icon-error" />
@@ -799,6 +802,10 @@ export default {
     padding: 3rem 0;
 }
 
+.print-only {
+    display: none;
+}
+
 @media print {
     .header {
         display: flex;
@@ -815,6 +822,14 @@ export default {
 
     .header a::after {
         content: '';
+    }
+
+    .print-hidden {
+        display: none !important;
+    }
+
+    .print-only {
+        display: initial !important;
     }
 }
 
