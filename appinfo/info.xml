@@ -20,7 +20,7 @@
     <screenshot>https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot2.png</screenshot>
     <dependencies>
         <php min-version="7.4"/>
-        <nextcloud min-version="28" max-version="28"/>
+        <nextcloud min-version="28" max-version="29"/>
     </dependencies>
     <navigations>
         <navigation>
