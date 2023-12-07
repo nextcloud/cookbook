@@ -177,7 +177,7 @@
     "Unknown answer returned from server. See logs." : "Unbekannte Antwort vom Server zurückgegeben. Siehe Protokolle.",
     "No answer for request was received." : "Keine Antwort auf die Anfrage erhalten.",
     "Could not start request to save recipe." : "Die Anforderung zum Speichern des Rezepts konnte nicht gestartet werden.",
-    "Clone of {name}" : "Klon von{name}",
+    "Clone of {name}" : "Klon von {name}",
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Recipe image" : "Rezept-Bild",
     "Cooking time is up!" : "Die Kochzeit ist vorbei!",
