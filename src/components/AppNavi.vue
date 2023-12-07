@@ -45,7 +45,7 @@
 
             <NcAppNavigationCaption
                 v-if="loading.categories || categories.length > 0"
-                :title="t('cookbook', 'Categories')"
+                :name="t('cookbook', 'Categories')"
                 :loading="loading.categories"
             >
             </NcAppNavigationCaption>

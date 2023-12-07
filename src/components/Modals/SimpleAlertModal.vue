@@ -1,5 +1,5 @@
 <template>
-    <NcModal :title="title" @close="$close">
+    <NcModal :name="title" @close="$close">
         <div class="modal__wrapper">
             <div class="modal__content">{{ content }}</div>
             <div class="modal__button-bar">
