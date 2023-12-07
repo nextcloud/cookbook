@@ -8,6 +8,9 @@
 - remove constant se in RecipeView
   [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
 
+### Fixed
+- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
+  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
 
 ## 0.10.3 - 2023-12-04
 
