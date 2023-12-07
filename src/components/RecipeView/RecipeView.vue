@@ -168,13 +168,11 @@
                                 :recipe-ingredients-have-subgroups="
                                     recipeIngredientsHaveSubgroups
                                 "
-                                :style="{
-                                    'font-style': ingredientsWithValidSyntax[
-                                        idx
-                                    ]
-                                        ? 'normal'
-                                        : 'italic',
-                                }"
+                                :class="
+                                    ingredientsWithValidSyntax[idx]
+                                        ? ''
+                                        : 'ingredient-highlighted'
+                                "
                             />
                         </ul>
 
@@ -873,6 +871,16 @@ export default {
 
 .copy-ingredients {
     float: right;
+}
+
+.ingredient-highlighted {
+    font-style: italic;
+}
+
+@media print {
+    .ingredient-highlighted {
+        font-style: initial;
+    }
 }
 
 .description {
