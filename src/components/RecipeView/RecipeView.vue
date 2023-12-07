@@ -80,10 +80,10 @@
                                         <span class="icon-view-previous" />
                                     </button>
                                     <input
-                                        v-model="recipeYield"
+                                        v-model.number="recipeYield"
                                         type="number"
                                         min="0"
-                                        style="width: 65px"
+                                        class="recipeYieldInput"
                                     />
                                     <button @click="changeRecipeYield">
                                         <span class="icon-view-next" />
@@ -629,7 +629,7 @@ const setup = async () => {
 };
 
 const changeRecipeYield = (increase = true) => {
-    recipeYield.value = +recipeYield.value + (increase ? 1 : -1);
+    recipeYield.value += increase ? 1 : -1;
 };
 
 const copyIngredientsToClipboard = () => {
@@ -1106,6 +1106,22 @@ main {
 
 .ingredient-parsing-error span.icon-error {
     display: inline-block;
+}
+
+.recipeYieldInput {
+    width: 75px;
+}
+
+/* Chrome, Safari, Edge */
+.recipeYieldInput::-webkit-inner-spin-button,
+.recipeYieldInput::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.recipeYieldInput {
+    -moz-appearance: textfield;
 }
 </style>
 
