@@ -1110,17 +1110,15 @@ main {
 
 .recipeYieldInput {
     width: 75px;
-}
 
-/* Chrome, Safari, Edge */
-.recipeYieldInput::-webkit-inner-spin-button,
-.recipeYieldInput::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
+    /* Chrome, Safari, Edge */
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+    }
 
-/* Firefox */
-.recipeYieldInput {
+    /* Firefox */
     -moz-appearance: textfield;
 }
 </style>
