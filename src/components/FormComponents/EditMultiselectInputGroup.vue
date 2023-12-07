@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
+import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect.js';
 import { ref, defineProps, defineEmits, nextTick, watch } from 'vue';
 
 const emits = defineEmits(['input']);

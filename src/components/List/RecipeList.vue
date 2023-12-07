@@ -66,7 +66,7 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
+import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect.js';
 import { useStore } from '../../store';
 import { normalize as normalizeString } from '../../js/string-utils';
 import EmptyList from './EmptyList.vue';

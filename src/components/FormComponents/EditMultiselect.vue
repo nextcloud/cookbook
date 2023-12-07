@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect';
+import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect.js';
 
 defineProps({
     fieldLabel: {

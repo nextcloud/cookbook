@@ -143,8 +143,8 @@ import {
     useRoute,
 } from 'vue-router/composables';
 
-import NcActions from '@nextcloud/vue/dist/Components/NcActions';
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
