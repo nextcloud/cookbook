@@ -83,10 +83,10 @@
                                         <span class="icon-view-previous" />
                                     </button>
                                     <input
-                                        v-model="recipeYield"
+                                        v-model.number="recipeYield"
                                         type="number"
                                         min="0"
-                                        style="width: 65px"
+                                        class="recipeYieldInput"
                                     />
                                     <button @click="changeRecipeYield">
                                         <span class="icon-view-next" />
@@ -1129,6 +1129,20 @@ main {
 
 .ingredient-parsing-error span.icon-error {
     display: inline-block;
+}
+
+.recipeYieldInput {
+    width: 75px;
+
+    /* Chrome, Safari, Edge */
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+        margin: 0;
+        -webkit-appearance: none;
+    }
+
+    /* Firefox */
+    -moz-appearance: textfield;
 }
 </style>
 

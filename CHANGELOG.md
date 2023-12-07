@@ -1,5 +1,12 @@
 ## [Unreleased]
 
+
+### Fixed
+- Make app compatible with PHP 7.4
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+- Allow translation of string _Enable debugging_ in settings
+  [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
+
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
@@ -11,6 +18,8 @@
 ### Fixed
 - **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
   [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
+- fix wrong parsing of recipe yield input
+  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
 
 ## 0.10.3 - 2023-12-04
 
