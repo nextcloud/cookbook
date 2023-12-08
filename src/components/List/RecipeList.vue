@@ -14,42 +14,26 @@
                 :filtered-recipes="filteredRecipes"
             />
             <div id="recipes-submenu" class="recipes-submenu-container">
-                <NcMultiselect
+                <NcSelect
                     v-if="recipes.length > 0"
                     v-model="orderBy"
                     class="recipes-sorting-dropdown"
+                    :clearable="false"
                     :multiple="false"
                     :searchable="false"
                     :placeholder="t('cookbook', 'Select order')"
                     :options="recipeOrderingOptions"
                 >
-                    <template #placeholder>
-                        <span
-                            class="icon-triangle-n"
-                            style="margin-right: -8px"
-                        />
-                        <span class="ordering-item-icon icon-triangle-s" />
-                        {{ t('cookbook', 'Select order') }}
+                    <template #option="option">
+                        <div class="ordering-selection-entry">
+                            <TriangleSmallUpIcon v-if="option.iconUp" :size="20" />
+                            <TriangleSmallDownIcon v-if="! option.iconUp" :size="20" />
+                            <span class="option__title">{{
+                                option.label
+                            }}</span>
+                        </div>
                     </template>
-                    <template #singleLabel="options">
-                        <span
-                            class="ordering-item-icon"
-                            :class="options.option.icon"
-                        />
-                        <span class="option__title">{{
-                            options.option.label
-                        }}</span>
-                    </template>
-                    <template #option="options">
-                        <span
-                            class="ordering-item-icon"
-                            :class="options.option.icon"
-                        />
-                        <span class="option__title">{{
-                            options.option.label
-                        }}</span>
-                    </template>
-                </NcMultiselect>
+                </NcSelect>
             </div>
             <ul class="recipes">
                 <li
@@ -66,7 +50,10 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
-import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect.js';
+import TriangleSmallUpIcon from 'vue-material-design-icons/TriangleSmallUp.vue';
+import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue';
+
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import { useStore } from '../../store';
 import { normalize as normalizeString } from '../../js/string-utils';
 import EmptyList from './EmptyList.vue';
@@ -106,36 +93,42 @@ const recipeOrderingOptions = ref([
     {
         label: t('cookbook', 'Name'),
         icon: 'icon-triangle-n',
+        iconUp: true,
         recipeProperty: 'name',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Name'),
         icon: 'icon-triangle-s',
+        iconUp: false,
         recipeProperty: 'name',
         order: 'descending',
     },
     {
         label: t('cookbook', 'Creation date'),
         icon: 'icon-triangle-n',
+        iconUp: true,
         recipeProperty: 'dateCreated',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Creation date'),
         icon: 'icon-triangle-s',
+        iconUp: false,
         recipeProperty: 'dateCreated',
         order: 'descending',
     },
     {
         label: t('cookbook', 'Modification date'),
         icon: 'icon-triangle-n',
+        iconUp: true,
         recipeProperty: 'dateModified',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Modification date'),
         icon: 'icon-triangle-s',
+        iconUp: false,
         recipeProperty: 'dateModified',
         order: 'descending',
     },
@@ -367,5 +360,10 @@ export default {
 
 .p-4 {
     padding: 1.5rem !important;
+}
+
+.ordering-selection-entry {
+    display: flex;
+    align-items: baseline;
 }
 </style>

@@ -1,16 +1,17 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <NcMultiselect
+        <NcSelect
             class="edit-multiselect"
             v-bind="$attrs"
+            :multiple="true"
             v-on="$listeners"
         />
     </fieldset>
 </template>
 
 <script setup>
-import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect.js';
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 
 defineProps({
     fieldLabel: {
