@@ -134,6 +134,7 @@
     "Tools" : "Алати",
     "Frontend debug settings" : "Подешавања отклањања грешака предњег приказа",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Овим можете привремено да укључите логовање у конзолу приказивача када постоје проблеми. У општем случају вам неће бити потребна ова подешавања.",
+    "Enable debugging" : "Укључи дибагинг",
     "Could not set preference for image printing" : "Не могу да поставим поставке за штампање слика",
     "Could not set recipe update interval to {interval}" : "Не могу да постави време ажурирања на {interval}",
     "Could not save visible info blocks" : "Није успело чување видљивих инфо блокова",
