@@ -32,7 +32,7 @@
                 />
                 <input
                     :value="additionalRow.customText"
-                    :placeholder="t('cookbook', 'Please select nutrition category first.')"
+                    :placeholder="t('cookbook', 'Please select option first.')"
                     :disabled="true"
                     class="val"
                 />
@@ -43,8 +43,7 @@
 
 <script setup>
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
-import { ref, defineProps, defineEmits, nextTick, watch, computed } from 'vue';
-import { prop } from 'lodash/fp';
+import { ref, defineProps, defineEmits, computed } from 'vue';
 
 const emits = defineEmits(['input']);
 
@@ -76,27 +75,9 @@ const props = defineProps({
     },
 });
 
-/**
- * @type {import('vue').Ref<Array>}
- */
-const rows = ref([]);
-
 const additionalRow = ref({
     selectedOption: null,
     customText: '',
-});
-
-// Methods
-const getAvailableOptions = async () => {
-    // Calculate available options by excluding those already selected
-    const selectedOptions = rows.value.map((row) => row.selectedOption);
-    return props.options.filter((option) => !selectedOptions.includes(option));
-};
-
-const availableOptionsOld = computed(() => {
-    // Calculate available options by excluding those already selected
-    const selectedOptions = rows.value.map((row) => row.selectedOption);
-    return props.options.filter((option) => !selectedOptions.includes(option));
 });
 
 // All resistered keys in the options set in props
@@ -111,20 +92,28 @@ const rowsFromValue = computed(() => valueFilteredKeys.value.map((x) => ({
     customText: props.value[x],
 })));
 
+// Should the additional row to add new nutrition entries be shown (or hidden)
 const showAdditionalRow = computed(() => (valueFilteredKeys.value.length < props.options.length));
 
+// A list of all nutrition options that are not yet used (just the internal keys)
 const unusedOptionKeys = computed(() => optionKeys.value.filter(x => ! valueFilteredKeys.value.includes(x)));
 
+// A list of all nutrition options that are not yet used (complete objects, sorted according to prop)
 const unusedOptions = computed(() => props.options.filter(x => unusedOptionKeys.value.includes(x.key)));
 
+// Create a list of lists of available options for the individual rows (just the internal keys)
+// This will be a list. Each (top) list entry represents the internal keys of the available options for the corresponding row.
+// Note that each row can set the option to any yet unused option or the currently selected one.
 const availabeOptionKeys = computed(() => 
     valueFilteredKeys.value.map((x) => [...unusedOptionKeys.value, x])
 );
 
+// This is mainly the same as the availabelOptionKeys but uses full objects and sorts these according to the input property
 const availableOptionsPure = computed(() => 
     availabeOptionKeys.value.map(x => props.options.filter(y => x.includes(y.key)))
 );
 
+// The actual available options per row are augmented by an option to remove a row.
 const availableOptions = computed(() => 
     availableOptionsPure.value.map(x => [{
         key: null,
@@ -132,20 +121,21 @@ const availableOptions = computed(() =>
     }, ...x])
 );
 
-// const clearable = computed(() => valueFilteredKeys.value.map(x => props.value[x].length === 0));
-
+// Add a new row to the model
 function newRowByOption(ev) {
     const data = {... props.value};
     data[ev.key] = '';
     emits('input', data);
 }
 
+// Update the text of an existing row
 function updateByText(ev, idx) {
     const data = { ... props.value };
     data[rowsFromValue.value[idx].selectedOption.key] = ev.target.value;
     emits('input', data);
 }
 
+// Change the actual option. This might change the option or plainly delete it.
 function updateByOption(ev, index) {
     const data = { ... props.value };
     const { key } = rowsFromValue.value[index].selectedOption;
@@ -155,127 +145,10 @@ function updateByOption(ev, index) {
     } else {
         data[ev.key] = data[key];
         delete data[key];
-        emits('input', data)
+        emits('input', data);
     }
-    //
 }
 
-const getSelectedValues = () => {
-    const selectedValues = {};
-    rows.value.forEach((row) => {
-        // Only include rows with selected values
-        if (row.selectedOption) {
-            selectedValues[row.selectedOption.key] = row.customText;
-        }
-    });
-    return selectedValues;
-};
-
-const selectedValues = computed(() => {
-    const ret = {};
-    rows.value.forEach((row) => {
-        // Only include rows with selected values
-        if (row.selectedOption) {
-            ret[row.selectedOption.key] = row.customText;
-        }
-    });
-    return ret;
-});
-
-const createRow = async () => {
-    // Remove empty rows at the end before creating a new one
-    for (let i = rows.value.length - 1; i >= 0; i--) {
-        if (!rows.value[i].selectedOption) {
-            rows.value.pop();
-        }
-    }
-
-    // Create row only if there are still options to select from
-    if (rows.value.length < props.options.length) {
-        const availableOptions = await getAvailableOptions();
-        rows.value.push({
-            options: availableOptions,
-            selectedOption: null,
-            customText: '',
-        });
-    }
-};
-
-const recalculateAvailableOptions = async () => {
-    // Update options in all rows based on the current selections
-    const availableOptions = await getAvailableOptions();
-    for (let i = 0; i < rows.value.length; i++) {
-        rows.value[i].options = availableOptions;
-    }
-};
-
-
-
-// const presentedRows = computed(() => {
-//     const tmp = rowsFromValue.value;
-//     if (rows.value.length < props.options.length){
-//         tmp.push({
-//             options: availableOptions.value,
-//             selectedOption: null,
-//             customText: '',
-//         });
-//     }
-//     return tmp;
-// });
-
-const createRowsBasedOnModelValue = async () => {
-    const initialModelValue = props.value || {};
-    const keys = Object.keys(initialModelValue);
-
-    for (const key of keys) {
-        const option = props.options.find((opt) => opt.key === key);
-        const row = rows.value.find(
-            (myRow) => myRow.selectedOption.key === key,
-        );
-        // Update row with key if it already exists
-        if (row) {
-            row.customText = initialModelValue[key] || '';
-        }
-        // otherwise create new row
-        else if (option) {
-            rows.value.push({
-                options: availableOptions,
-                selectedOption: option,
-                customText: initialModelValue[key] || '',
-            });
-        }
-    }
-
-    await recalculateAvailableOptions();
-    await createRow(); // Create an additional row for future selections
-};
-
-const handleMultiselectChange = async (changedIndex) => {
-    // Wait for the DOM to update after the multiselect change
-    await nextTick();
-
-    // Update options in all other rows based on the changed selection
-    const availableOptions = await getAvailableOptions();
-    for (let i = 0; i < rows.value.length; i++) {
-        if (i !== changedIndex) {
-            rows.value[i].options = availableOptions;
-        }
-    }
-    // Emit the updated modelValue
-    emits('input', getSelectedValues());
-
-    await createRow();
-};
-
-// Watchers
-
-// watch(
-//     () => props.value,
-//     async (newModelValue) => {
-//         // React to external changes in modelValue
-//         await createRowsBasedOnModelValue(newModelValue);
-//     },
-// );
 </script>
 
 <script>
