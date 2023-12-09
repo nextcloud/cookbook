@@ -14,6 +14,10 @@
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
 - remove constant se in RecipeView
   [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
+
+### Fixed
+- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
+  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
 - fix wrong parsing of recipe yield input
   [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
 
