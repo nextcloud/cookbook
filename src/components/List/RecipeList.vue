@@ -26,8 +26,14 @@
                 >
                     <template #option="option">
                         <div class="ordering-selection-entry">
-                            <TriangleSmallUpIcon v-if="option.iconUp" :size="20" />
-                            <TriangleSmallDownIcon v-if="! option.iconUp" :size="20" />
+                            <TriangleSmallUpIcon
+                                v-if="option.iconUp"
+                                :size="20"
+                            />
+                            <TriangleSmallDownIcon
+                                v-if="!option.iconUp"
+                                :size="20"
+                            />
                             <span class="option__title">{{
                                 option.label
                             }}</span>

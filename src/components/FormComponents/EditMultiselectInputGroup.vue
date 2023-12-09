@@ -84,62 +84,77 @@ const additionalRow = ref({
 const optionKeys = computed(() => props.options.map((x) => x.key));
 
 // All possible keys that are provided in the prop value
-const valueFilteredKeys = computed(() => Object.keys(props.value).filter((x) => optionKeys.value.includes(x)));
+const valueFilteredKeys = computed(() =>
+    Object.keys(props.value).filter((x) => optionKeys.value.includes(x)),
+);
 
-const rowsFromValue = computed(() => valueFilteredKeys.value.map((x) => ({
-    options: [],
-    selectedOption: props.options.find((y) => y.key === x),
-    customText: props.value[x],
-})));
+const rowsFromValue = computed(() =>
+    valueFilteredKeys.value.map((x) => ({
+        options: [],
+        selectedOption: props.options.find((y) => y.key === x),
+        customText: props.value[x],
+    })),
+);
 
 // Should the additional row to add new nutrition entries be shown (or hidden)
-const showAdditionalRow = computed(() => (valueFilteredKeys.value.length < props.options.length));
+const showAdditionalRow = computed(
+    () => valueFilteredKeys.value.length < props.options.length,
+);
 
 // A list of all nutrition options that are not yet used (just the internal keys)
-const unusedOptionKeys = computed(() => optionKeys.value.filter(x => ! valueFilteredKeys.value.includes(x)));
+const unusedOptionKeys = computed(() =>
+    optionKeys.value.filter((x) => !valueFilteredKeys.value.includes(x)),
+);
 
 // A list of all nutrition options that are not yet used (complete objects, sorted according to prop)
-const unusedOptions = computed(() => props.options.filter(x => unusedOptionKeys.value.includes(x.key)));
+const unusedOptions = computed(() =>
+    props.options.filter((x) => unusedOptionKeys.value.includes(x.key)),
+);
 
 // Create a list of lists of available options for the individual rows (just the internal keys)
 // This will be a list. Each (top) list entry represents the internal keys of the available options for the corresponding row.
 // Note that each row can set the option to any yet unused option or the currently selected one.
-const availabeOptionKeys = computed(() => 
-    valueFilteredKeys.value.map((x) => [...unusedOptionKeys.value, x])
+const availabeOptionKeys = computed(() =>
+    valueFilteredKeys.value.map((x) => [...unusedOptionKeys.value, x]),
 );
 
 // This is mainly the same as the availabelOptionKeys but uses full objects and sorts these according to the input property
-const availableOptionsPure = computed(() => 
-    availabeOptionKeys.value.map(x => props.options.filter(y => x.includes(y.key)))
+const availableOptionsPure = computed(() =>
+    availabeOptionKeys.value.map((x) =>
+        props.options.filter((y) => x.includes(y.key)),
+    ),
 );
 
 // The actual available options per row are augmented by an option to remove a row.
-const availableOptions = computed(() => 
-    availableOptionsPure.value.map(x => [{
-        key: null,
-        label: '---',
-    }, ...x])
+const availableOptions = computed(() =>
+    availableOptionsPure.value.map((x) => [
+        {
+            key: null,
+            label: '---',
+        },
+        ...x,
+    ]),
 );
 
 // Add a new row to the model
 function newRowByOption(ev) {
-    const data = {... props.value};
+    const data = { ...props.value };
     data[ev.key] = '';
     emits('input', data);
 }
 
 // Update the text of an existing row
 function updateByText(ev, idx) {
-    const data = { ... props.value };
+    const data = { ...props.value };
     data[rowsFromValue.value[idx].selectedOption.key] = ev.target.value;
     emits('input', data);
 }
 
 // Change the actual option. This might change the option or plainly delete it.
 function updateByOption(ev, index) {
-    const data = { ... props.value };
+    const data = { ...props.value };
     const { key } = rowsFromValue.value[index].selectedOption;
-    if(ev.key === null) {
+    if (ev.key === null) {
         delete data[key];
         emits('input', data);
     } else {
@@ -148,7 +163,6 @@ function updateByOption(ev, index) {
         emits('input', data);
     }
 }
-
 </script>
 
 <script>
