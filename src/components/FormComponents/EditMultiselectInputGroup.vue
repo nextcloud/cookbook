@@ -2,19 +2,38 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <ul ref="list">
-            <li v-for="(row, index) in rows" :key="index">
-                <NcMultiselect
-                    v-model="row.selectedOption"
-                    :options="row.options"
+            <li v-for="(row, index) in rowsFromValue" :key="index">
+                <NcSelect
+                    :value="row.selectedOption"
+                    :options="availableOptions[index]"
                     track-by="key"
                     label="label"
-                    :placeholder="labelSelectPlaceholder"
+                    :multiple="false"
+                    :clearable="false"
                     class="key"
-                    @change="handleMultiselectChange(index)"
+                    @input="updateByOption($event, index)"
                 />
                 <input
-                    v-model="row.customText"
-                    :placeholder="row.options.placeholder"
+                    :value="row.customText"
+                    :placeholder="row.selectedOption.placeholder"
+                    class="val"
+                    @change="updateByText($event, index)"
+                />
+            </li>
+            <li v-if="showAdditionalRow">
+                <NcSelect
+                    :value="additionalRow.selectedOption"
+                    :options="unusedOptions"
+                    label="label"
+                    :placeholder="labelSelectPlaceholder"
+                    :multiple="false"
+                    class="key"
+                    @input="newRowByOption"
+                />
+                <input
+                    :value="additionalRow.customText"
+                    :placeholder="t('cookbook', 'Please select nutrition category first.')"
+                    :disabled="true"
                     class="val"
                 />
             </li>
@@ -23,8 +42,9 @@
 </template>
 
 <script setup>
-import NcMultiselect from '@nextcloud/vue/dist/Components/NcMultiselect.js';
-import { ref, defineProps, defineEmits, nextTick, watch } from 'vue';
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { ref, defineProps, defineEmits, nextTick, watch, computed } from 'vue';
+import { prop } from 'lodash/fp';
 
 const emits = defineEmits(['input']);
 
@@ -61,12 +81,84 @@ const props = defineProps({
  */
 const rows = ref([]);
 
+const additionalRow = ref({
+    selectedOption: null,
+    customText: '',
+});
+
 // Methods
 const getAvailableOptions = async () => {
     // Calculate available options by excluding those already selected
     const selectedOptions = rows.value.map((row) => row.selectedOption);
     return props.options.filter((option) => !selectedOptions.includes(option));
 };
+
+const availableOptionsOld = computed(() => {
+    // Calculate available options by excluding those already selected
+    const selectedOptions = rows.value.map((row) => row.selectedOption);
+    return props.options.filter((option) => !selectedOptions.includes(option));
+});
+
+// All resistered keys in the options set in props
+const optionKeys = computed(() => props.options.map((x) => x.key));
+
+// All possible keys that are provided in the prop value
+const valueFilteredKeys = computed(() => Object.keys(props.value).filter((x) => optionKeys.value.includes(x)));
+
+const rowsFromValue = computed(() => valueFilteredKeys.value.map((x) => ({
+    options: [],
+    selectedOption: props.options.find((y) => y.key === x),
+    customText: props.value[x],
+})));
+
+const showAdditionalRow = computed(() => (valueFilteredKeys.value.length < props.options.length));
+
+const unusedOptionKeys = computed(() => optionKeys.value.filter(x => ! valueFilteredKeys.value.includes(x)));
+
+const unusedOptions = computed(() => props.options.filter(x => unusedOptionKeys.value.includes(x.key)));
+
+const availabeOptionKeys = computed(() => 
+    valueFilteredKeys.value.map((x) => [...unusedOptionKeys.value, x])
+);
+
+const availableOptionsPure = computed(() => 
+    availabeOptionKeys.value.map(x => props.options.filter(y => x.includes(y.key)))
+);
+
+const availableOptions = computed(() => 
+    availableOptionsPure.value.map(x => [{
+        key: null,
+        label: '---',
+    }, ...x])
+);
+
+// const clearable = computed(() => valueFilteredKeys.value.map(x => props.value[x].length === 0));
+
+function newRowByOption(ev) {
+    const data = {... props.value};
+    data[ev.key] = '';
+    emits('input', data);
+}
+
+function updateByText(ev, idx) {
+    const data = { ... props.value };
+    data[rowsFromValue.value[idx].selectedOption.key] = ev.target.value;
+    emits('input', data);
+}
+
+function updateByOption(ev, index) {
+    const data = { ... props.value };
+    const { key } = rowsFromValue.value[index].selectedOption;
+    if(ev.key === null) {
+        delete data[key];
+        emits('input', data);
+    } else {
+        data[ev.key] = data[key];
+        delete data[key];
+        emits('input', data)
+    }
+    //
+}
 
 const getSelectedValues = () => {
     const selectedValues = {};
@@ -78,6 +170,17 @@ const getSelectedValues = () => {
     });
     return selectedValues;
 };
+
+const selectedValues = computed(() => {
+    const ret = {};
+    rows.value.forEach((row) => {
+        // Only include rows with selected values
+        if (row.selectedOption) {
+            ret[row.selectedOption.key] = row.customText;
+        }
+    });
+    return ret;
+});
 
 const createRow = async () => {
     // Remove empty rows at the end before creating a new one
@@ -106,11 +209,24 @@ const recalculateAvailableOptions = async () => {
     }
 };
 
+
+
+// const presentedRows = computed(() => {
+//     const tmp = rowsFromValue.value;
+//     if (rows.value.length < props.options.length){
+//         tmp.push({
+//             options: availableOptions.value,
+//             selectedOption: null,
+//             customText: '',
+//         });
+//     }
+//     return tmp;
+// });
+
 const createRowsBasedOnModelValue = async () => {
     const initialModelValue = props.value || {};
     const keys = Object.keys(initialModelValue);
 
-    const availableOptions = await getAvailableOptions();
     for (const key of keys) {
         const option = props.options.find((opt) => opt.key === key);
         const row = rows.value.find(
@@ -153,13 +269,13 @@ const handleMultiselectChange = async (changedIndex) => {
 
 // Watchers
 
-watch(
-    () => props.value,
-    async (newModelValue) => {
-        // React to external changes in modelValue
-        await createRowsBasedOnModelValue(newModelValue);
-    },
-);
+// watch(
+//     () => props.value,
+//     async (newModelValue) => {
+//         // React to external changes in modelValue
+//         await createRowsBasedOnModelValue(newModelValue);
+//     },
+// );
 </script>
 
 <script>
