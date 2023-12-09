@@ -136,6 +136,7 @@ OC.L10N.register(
     "Tools" : "الأدوات",
     "Frontend debug settings" : "إعدادات تنقيح الواجهة الأمامية",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "يسمح هذا بتمكين تسجيل الدخول مؤقتًا في وحدة تحكم المتصفح browser console في حالة حدوث مشكلات. لن تحتاج إلى هذه الإعدادات افتراضيًا.",
+    "Enable debugging" : "تمكين التنقيح",
     "Could not set preference for image printing" : "تعذر تعيين التفضيل في طباعة الصور",
     "Could not set recipe update interval to {interval}" : "تعذر تعيين الفاصل الزمني لتحديث الوصفة بـ {interval}",
     "Could not save visible info blocks" : "تعذّر حفظ صناديق المعلونات المرئية visible info blocks",

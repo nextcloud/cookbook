@@ -136,6 +136,7 @@ OC.L10N.register(
     "Tools" : "Utensilien",
     "Frontend debug settings" : "Frontend-Debuggen",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Dadurch kann bei Problemen die Protokollierung in der Browserkonsole vorübergehend aktiviert werden. Standardmäßig wird diese Einstellung nicht benötigt.",
+    "Enable debugging" : "Fehlersuche aktivieren",
     "Could not set preference for image printing" : "Die Voreinstellung für den Druck von Bildern konnten nicht festgelegt werden",
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Could not save visible info blocks" : "Konnte Sichtbarkeit der Infoblöcke nicht speichern.",
