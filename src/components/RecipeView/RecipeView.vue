@@ -72,7 +72,10 @@
                                 <strong
                                     >{{ t('cookbook', 'Servings') }}:
                                 </strong>
-                                <span>
+                                <span class="print-only">
+                                    {{ recipeYield }}
+                                </span>
+                                <span class="print-hidden">
                                     <button
                                         :disabled="recipeYield === 1"
                                         @click="changeRecipeYield(false)"
@@ -143,7 +146,7 @@
                             <span>{{ t('cookbook', 'Ingredients') }}</span>
                             <NcButton
                                 v-if="scaledIngredients.length"
-                                class="copy-ingredients"
+                                class="copy-ingredients print-hidden"
                                 :type="'tertiary'"
                                 aria-label="Copy all ingredients to the clipboard"
                                 :title="t('cookbook', 'Copy ingredients')"
@@ -165,19 +168,17 @@
                                 :recipe-ingredients-have-subgroups="
                                     recipeIngredientsHaveSubgroups
                                 "
-                                :style="{
-                                    'font-style': ingredientsWithValidSyntax[
-                                        idx
-                                    ]
-                                        ? 'normal'
-                                        : 'italic',
-                                }"
+                                :class="
+                                    ingredientsWithValidSyntax[idx]
+                                        ? ''
+                                        : 'ingredient-highlighted'
+                                "
                             />
                         </ul>
 
                         <div
                             v-if="!ingredientsSyntaxCorrect"
-                            class="ingredient-parsing-error"
+                            class="ingredient-parsing-error print-hidden"
                         >
                             <hr />
                             <span class="icon-error" />
@@ -799,6 +800,10 @@ export default {
     padding: 3rem 0;
 }
 
+.print-only {
+    display: none;
+}
+
 @media print {
     .header {
         display: flex;
@@ -815,6 +820,14 @@ export default {
 
     .header a::after {
         content: '';
+    }
+
+    .print-hidden {
+        display: none !important;
+    }
+
+    .print-only {
+        display: initial !important;
     }
 }
 
@@ -858,6 +871,16 @@ export default {
 
 .copy-ingredients {
     float: right;
+}
+
+.ingredient-highlighted {
+    font-style: italic;
+}
+
+@media print {
+    .ingredient-highlighted {
+        font-style: initial;
+    }
 }
 
 .description {

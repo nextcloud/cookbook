@@ -5,6 +5,8 @@
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 - Fix wrong parsing of recipe yield input
   [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
+- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
+  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
 
 
 ## 0.10.4 - 2023-12-05

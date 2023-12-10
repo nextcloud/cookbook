@@ -88,4 +88,10 @@ li > .ingredient {
 li > span.icon-error {
     margin-left: 0.3em;
 }
+
+@media print {
+    li > span.icon-error {
+        display: none;
+    }
+}
 </style>
