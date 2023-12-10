@@ -45,7 +45,7 @@
 
             <NcAppNavigationCaption
                 v-if="loading.categories || categories.length > 0"
-                :title="t('cookbook', 'Categories')"
+                :name="t('cookbook', 'Categories')"
                 :loading="loading.categories"
             >
             </NcAppNavigationCaption>
@@ -98,12 +98,12 @@ import {
 } from 'vue';
 
 import { emit } from '@nextcloud/event-bus';
-import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput';
-import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation';
-import NcAppNavigationCaption from '@nextcloud/vue/dist/Components/NcAppNavigationCaption';
-import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem';
-import NcAppNavigationNew from '@nextcloud/vue/dist/Components/NcAppNavigationNew';
-import NcCounterBubble from '@nextcloud/vue/dist/Components/NcCounterBubble';
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput.js';
+import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation.js';
+import NcAppNavigationCaption from '@nextcloud/vue/dist/Components/NcAppNavigationCaption.js';
+import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem.js';
+import NcAppNavigationNew from '@nextcloud/vue/dist/Components/NcAppNavigationNew.js';
+import NcCounterBubble from '@nextcloud/vue/dist/Components/NcCounterBubble.js';
 
 import PlusIcon from 'icons/Plus.vue';
 

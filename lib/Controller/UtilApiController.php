@@ -23,7 +23,7 @@ class UtilApiController extends ApiController {
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 1,
-				'minor' => 1
+				'minor' => 2
 			]
 		];
 		return new JSONResponse($response, 200);

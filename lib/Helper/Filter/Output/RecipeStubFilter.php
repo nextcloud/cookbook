@@ -12,7 +12,7 @@ class RecipeStubFilter {
 
 	public function __construct(
 		RecipeIdTypeFilter $recipeIdTypeFilter,
-		RecipeIdCopyFilter $recipeIdCopyFilter,
+		RecipeIdCopyFilter $recipeIdCopyFilter
 	) {
 		$this->filters = [
 			$recipeIdCopyFilter,

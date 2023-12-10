@@ -1,13 +1,13 @@
 <template>
     <NcAppSettingsDialog
         :open.sync="isOpen"
-        :title="t('cookbook', 'Cookbook settings')"
+        :name="t('cookbook', 'Cookbook settings')"
         :show-navigation="true"
         first-selected-section="keyboard shortcuts"
     >
         <NcAppSettingsSection
             id="settings-recipe-folder"
-            :title="t('cookbook', 'Recipe folder')"
+            :name="t('cookbook', 'Recipe folder')"
             class="app-settings-section"
         >
             <fieldset>
@@ -48,7 +48,7 @@
         </NcAppSettingsSection>
         <NcAppSettingsSection
             id="settings-recipe-display"
-            :title="t('cookbook', 'Recipe display settings')"
+            :name="t('cookbook', 'Recipe display settings')"
             class="app-settings-section"
         >
             <fieldset>
@@ -83,7 +83,7 @@
         </NcAppSettingsSection>
         <NcAppSettingsSection
             id="settings-info-blocks"
-            :title="t('cookbook', 'Info blocks')"
+            :name="t('cookbook', 'Info blocks')"
             class="app-settings-section"
         >
             <fieldset>
@@ -159,7 +159,7 @@
         </NcAppSettingsSection>
         <NcAppSettingsSection
             id="debug"
-            :title="t('cookbook', 'Frontend debug settings')"
+            :name="t('cookbook', 'Frontend debug settings')"
             class="app-settings-section"
         >
             <legend class="settings-info-blocks__legend">
@@ -168,7 +168,9 @@
                     t('cookbook', 'This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.')
                 }}
             </legend>
-            <NcButton @click="enableLogger">Enable debugging</NcButton>
+            <NcButton @click="enableLogger">{{
+                t('cookbook', 'Enable debugging')
+            }}</NcButton>
         </NcAppSettingsSection>
     </NcAppSettingsDialog>
 </template>
@@ -185,9 +187,9 @@ import {
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
 import { getFilePickerBuilder } from '@nextcloud/dialogs';
 
-import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog';
-import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog.js';
+import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection.js';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import { NcLoadingIcon as LoadingIcon } from '@nextcloud/vue';
 import ReloadIcon from 'icons/Cached.vue';
 

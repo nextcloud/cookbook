@@ -1,5 +1,29 @@
 ## [Unreleased]
 
+### Fixed
+- Make app compatible with PHP 7.4
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+- Allow translation of string _Enable debugging_ in settings
+  [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
+- Allow translation of string _Enable debugging_ in settings
+  [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
+
+### Maintenance
+- Add PHP lint checker to ensure valid (legacy) PHP syntax
+  [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+- Add backport script to simplify development
+  [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
+- remove constant se in RecipeView
+  [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
+
+### Fixed
+- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
+  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
+- fix wrong parsing of recipe yield input
+  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
+- Update compatibility of app to NC28
+  [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
+
 
 ## 0.10.3 - 2023-12-04
 
@@ -45,7 +69,8 @@
 - Fix English grammar in translatable string
   [#1907](https://github.com/nextcloud/cookbook/pull/1907) @rakekniven
 - Fix flashing pages on fast internet connections. See [#1891]((https://github.com/nextcloud/cookbook/issues/1891))
-  [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
+  [#1896](https://github.com/nextcloud/cookbook/pull/1896)
+ [#1918](https://github.com/nextcloud/cookbook/pull/1918)@seyfeb
 - Less strict character matching when filtering `RecipeList`, ignoring accents and some letters. Closes [#1870]((https://github.com/nextcloud/cookbook/issues/1870))
   [#1896](https://github.com/nextcloud/cookbook/pull/1896) @seyfeb
 - Make API interface cleaner by only using string identifiers for recipes
