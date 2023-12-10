@@ -124,8 +124,11 @@ update_git() {
 	echo "Creating release tag $tag_name"
 	git tag "$tag_name"
 
-	echo "Forwarding main branch $master_branch to be on tie with stable branch $stable_branch"
+	echo "Switching to main branch $master_branch and updating to latest commit"
 	git checkout $master_branch
+	git pull --ff-only
+
+	echo "Forwarding main branch $master_branch to be on tie with stable branch $stable_branch"
 	git merge --no-ff $stable_branch -m "Updating main branch $master_branch with latest stable version information from $stable_branch" --no-verify
 
 	if [ -n "$push" ]
