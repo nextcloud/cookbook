@@ -136,6 +136,7 @@ OC.L10N.register(
     "Tools" : "Utensilios",
     "Frontend debug settings" : "Axustes da depuración da interface",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Isto permite activar temporalmente o rexistro na consola do navegador en caso de problemas. Non necesitará esta configuración de xeito predeterminado.",
+    "Enable debugging" : "Activar a depuración",
     "Could not set preference for image printing" : "Non foi posíbel estabelecer a preferencia para a impresión de imaxes",
     "Could not set recipe update interval to {interval}" : "Non foi posíbel estabelecer o intervalo de actualización de receitas a {interval}",
     "Could not save visible info blocks" : "Non foi posíbel gardar os bloques de información visíbeis",
