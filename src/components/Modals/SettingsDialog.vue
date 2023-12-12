@@ -351,27 +351,34 @@ const pickRecipeFolder = () => {
         .allowDirectories(true)
         .setType(FilePickerType.Choose)
         .build();
-    filePicker.pick().then((path) => {
-        store
-            .dispatch('updateRecipeDirectory', { dir: path })
-            .then(() => store.dispatch('refreshConfig'))
-            .then(() => {
-                recipeFolder.value = path;
-                if (route.path !== '/') {
-                    router.push('/');
-                }
-            })
-            .catch(() =>
-                showSimpleAlertModal(
-                    // prettier-ignore
-                    t('cookbook','Could not set recipe folder to {path}',
+    filePicker
+        .pick()
+        .then((path) => {
+            store
+                .dispatch('updateRecipeDirectory', { dir: path })
+                .then(() => store.dispatch('refreshConfig'))
+                .then(() => {
+                    recipeFolder.value = path;
+                    if (route.path !== '/') {
+                        router.push('/');
+                    }
+                })
+                .catch(() =>
+                    showSimpleAlertModal(
+                        // prettier-ignore
+                        t('cookbook','Could not set recipe folder to {path}',
                         {
                             path
                         }
                     ),
-                ),
+                    ),
+                );
+        })
+        .catch((ev) => {
+            log.warn(
+                `Could not select new recipe folder. Error Message: ${ev.message}`,
             );
-    });
+        });
 };
 
 /**
