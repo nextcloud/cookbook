@@ -36,8 +36,8 @@
 <script setup>
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js';
 import { useRoute } from 'vue-router/composables';
 import useDelayedDisplay, {
     DelayedDisplayProps,

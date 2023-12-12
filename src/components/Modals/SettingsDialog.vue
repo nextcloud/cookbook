@@ -1,13 +1,13 @@
 <template>
     <NcAppSettingsDialog
         :open.sync="isOpen"
-        :title="t('cookbook', 'Cookbook settings')"
+        :name="t('cookbook', 'Cookbook settings')"
         :show-navigation="true"
         first-selected-section="keyboard shortcuts"
     >
         <NcAppSettingsSection
             id="settings-recipe-folder"
-            :title="t('cookbook', 'Recipe folder')"
+            :name="t('cookbook', 'Recipe folder')"
             class="app-settings-section"
         >
             <fieldset>
@@ -48,7 +48,7 @@
         </NcAppSettingsSection>
         <NcAppSettingsSection
             id="settings-recipe-display"
-            :title="t('cookbook', 'Recipe display settings')"
+            :name="t('cookbook', 'Recipe display settings')"
             class="app-settings-section"
         >
             <fieldset>
@@ -83,7 +83,7 @@
         </NcAppSettingsSection>
         <NcAppSettingsSection
             id="settings-info-blocks"
-            :title="t('cookbook', 'Info blocks')"
+            :name="t('cookbook', 'Info blocks')"
             class="app-settings-section"
         >
             <fieldset>
@@ -159,7 +159,7 @@
         </NcAppSettingsSection>
         <NcAppSettingsSection
             id="debug"
-            :title="t('cookbook', 'Frontend debug settings')"
+            :name="t('cookbook', 'Frontend debug settings')"
             class="app-settings-section"
         >
             <legend class="settings-info-blocks__legend">
@@ -185,11 +185,12 @@ import {
     nextTick,
 } from 'vue';
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
-import { getFilePickerBuilder } from '@nextcloud/dialogs';
+import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
+import '@nextcloud/dialogs/style.css';
 
-import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog';
-import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog.js';
+import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection.js';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import { NcLoadingIcon as LoadingIcon } from '@nextcloud/vue';
 import ReloadIcon from 'icons/Cached.vue';
 
@@ -347,32 +348,37 @@ const pickRecipeFolder = () => {
         t('cookbook', 'Path to your recipe collection'),
     )
         .addMimeTypeFilter('httpd/unix-directory')
-        .addButton({
-            label: 'Pick',
-            type: 'primary',
-        })
+        .allowDirectories(true)
+        .setType(FilePickerType.Choose)
         .build();
-    filePicker.pick().then((path) => {
-        store
-            .dispatch('updateRecipeDirectory', { dir: path })
-            .then(() => store.dispatch('refreshConfig'))
-            .then(() => {
-                recipeFolder.value = path;
-                if (route.path !== '/') {
-                    router.push('/');
-                }
-            })
-            .catch(() =>
-                showSimpleAlertModal(
-                    // prettier-ignore
-                    t('cookbook','Could not set recipe folder to {path}',
+    filePicker
+        .pick()
+        .then((path) => {
+            store
+                .dispatch('updateRecipeDirectory', { dir: path })
+                .then(() => store.dispatch('refreshConfig'))
+                .then(() => {
+                    recipeFolder.value = path;
+                    if (route.path !== '/') {
+                        router.push('/');
+                    }
+                })
+                .catch(() =>
+                    showSimpleAlertModal(
+                        // prettier-ignore
+                        t('cookbook','Could not set recipe folder to {path}',
                         {
                             path
                         }
                     ),
-                ),
+                    ),
+                );
+        })
+        .catch((ev) => {
+            log.warn(
+                `Could not select new recipe folder. Error Message: ${ev.message}`,
             );
-    });
+        });
 };
 
 /**

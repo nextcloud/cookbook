@@ -1,9 +1,10 @@
 ## [Unreleased]
 
-
 ### Fixed
 - Make app compatible with PHP 7.4
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
+- Allow translation of string _Enable debugging_ in settings
+  [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 - Allow translation of string _Enable debugging_ in settings
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 
@@ -20,6 +21,9 @@
   [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
 - fix wrong parsing of recipe yield input
   [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
+- Update compatibility of app to NC28
+  [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
+
 
 ## 0.10.3 - 2023-12-04
 

@@ -1,5 +1,5 @@
 <template>
-    <NcModal :title="title" @close="$close">
+    <NcModal :name="title" @close="$close">
         <div class="modal__wrapper">
             <div class="modal__content">{{ content }}</div>
             <div class="modal__button-bar">
@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import NcModal from '@nextcloud/vue/dist/Components/NcModal';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 </script>
 
 <script>

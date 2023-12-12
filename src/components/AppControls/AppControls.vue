@@ -187,12 +187,12 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router/composables';
-import NcActions from '@nextcloud/vue/dist/Components/NcActions';
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
-import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput';
-import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon';
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput.js';
+import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 
 import PencilIcon from 'icons/Pencil.vue';
 import LoadingIcon from 'icons/Loading.vue';

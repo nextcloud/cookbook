@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
-            <LoadingIndicator size="40" delay="800" />
+            <LoadingIndicator :size="40" :delay="800" />
         </div>
         <div v-else>
             <div class="overlay" :class="{ hidden: !overlayVisible }" />
@@ -143,8 +143,8 @@ import {
     useRoute,
 } from 'vue-router/composables';
 
-import NcActions from '@nextcloud/vue/dist/Components/NcActions';
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton';
+import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
+import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
