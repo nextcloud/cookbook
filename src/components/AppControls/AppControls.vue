@@ -317,7 +317,7 @@ const saveChanges = () => {
 };
 
 const search = (e) => {
-    helpers.goTo(`/search/${e.target[1].value}`);
+    helpers.goTo(`/search/${e.target[0].value}`);
 };
 
 const updateFilters = (e) => {
