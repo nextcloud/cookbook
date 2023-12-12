@@ -19,6 +19,8 @@
   [#1965](https://github.com/nextcloud/cookbook/pull/1965) @seyfeb
 - Replace eye icon with close icon for cancelling recipe edit
   [#1971](https://github.com/nextcloud/cookbook/pull/1971) @seyfeb
+- Fill prep, cook, and total time in `RecipeEdit` after loading
+  [#1973](https://github.com/nextcloud/cookbook/pull/1973) @seyfeb
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
