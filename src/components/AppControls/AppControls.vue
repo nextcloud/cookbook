@@ -142,7 +142,7 @@
                         "
                         :size="20"
                     />
-                    <eye-icon v-else :size="20" />
+                    <AbortIcon v-else :size="20" />
                 </template>
             </NcActionButton>
             <NcActionButton
@@ -206,7 +206,7 @@ import LoadingIcon from 'icons/Loading.vue';
 import CheckmarkIcon from 'icons/Check.vue';
 import FilterIcon from 'icons/FilterOutline.vue';
 import PrinterIcon from 'icons/Printer.vue';
-import EyeIcon from 'icons/Eye.vue';
+import AbortIcon from 'icons/Close.vue';
 import ContentDuplicateIcon from 'icons/ContentDuplicate.vue';
 import SearchIcon from 'icons/Magnify.vue';
 
