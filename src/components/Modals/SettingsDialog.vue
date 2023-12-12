@@ -185,7 +185,8 @@ import {
     nextTick,
 } from 'vue';
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
-import { getFilePickerBuilder } from '@nextcloud/dialogs';
+import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
+import '@nextcloud/dialogs/style.css';
 
 import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog.js';
 import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection.js';
@@ -347,10 +348,8 @@ const pickRecipeFolder = () => {
         t('cookbook', 'Path to your recipe collection'),
     )
         .addMimeTypeFilter('httpd/unix-directory')
-        .addButton({
-            label: 'Pick',
-            type: 'primary',
-        })
+        .allowDirectories(true)
+        .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
         store
