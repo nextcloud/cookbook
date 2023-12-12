@@ -49,7 +49,6 @@ const hours = ref(null);
  */
 const minutes = ref(null);
 
-
 // Methods
 
 const handleInput = () => {
@@ -67,7 +66,7 @@ const handleInput = () => {
 };
 
 const setLocalValueFromProps = () => {
-    if(props.value?.time) {
+    if (props.value?.time) {
         [hours.value, minutes.value] = props.value.time;
     }
 };
@@ -76,13 +75,11 @@ const setLocalValueFromProps = () => {
 
 watch(() => props.value, setLocalValueFromProps);
 
-
 // Vue lifecycle
 
 onMounted(() => {
     setLocalValueFromProps();
 });
-
 </script>
 
 <script>
