@@ -94,10 +94,17 @@
                 icon="icon-quota"
                 :value="filterValue"
                 @update:value="updateFilters"
+                aria-label="Filter current recipes"
             >
+                <template #icon>
+                    <FilterIcon :size="20" />
+                </template>
                 {{ t('cookbook', 'Filter') }}
             </NcActionInput>
-            <NcActionInput icon="icon-search" @submit="search">
+            <NcActionInput @submit="search" aria-label="Search recipes">
+                <template #icon>
+                    <SearchIcon :size="20" />
+                </template>
                 {{ t('cookbook', 'Search') }}
             </NcActionInput>
         </NcActions>
@@ -197,9 +204,11 @@ import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon';
 import PencilIcon from 'icons/Pencil.vue';
 import LoadingIcon from 'icons/Loading.vue';
 import CheckmarkIcon from 'icons/Check.vue';
+import FilterIcon from 'icons/FilterOutline.vue';
 import PrinterIcon from 'icons/Printer.vue';
 import EyeIcon from 'icons/Eye.vue';
 import ContentDuplicateIcon from 'icons/ContentDuplicate.vue';
+import SearchIcon from 'icons/Magnify.vue';
 
 import helpers from 'cookbook/js/helper';
 import {
@@ -317,7 +326,7 @@ const saveChanges = () => {
 };
 
 const search = (e) => {
-    helpers.goTo(`/search/${e.target[1].value}`);
+    helpers.goTo(`/search/${e.target[0].value}`);
 };
 
 const updateFilters = (e) => {
