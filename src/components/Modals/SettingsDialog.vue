@@ -300,6 +300,7 @@ watch(
             return;
         }
         try {
+            if (newVal === '') return;
             await api.config.updateInterval.update(newVal);
             await store.dispatch('refreshConfig');
         } catch {
