@@ -20,6 +20,15 @@
                     class="val"
                     @change="updateByText($event, index)"
                 />
+                <NcButton
+                    class="ml-2"
+                    :aria-label="t('cookbook', 'Delete nutrition item')"
+                    @click="deleteEntry(index)"
+                >
+                    <template #icon>
+                        <DeleteIcon :size="20" />
+                    </template>
+                </NcButton>
             </li>
             <li v-if="showAdditionalRow">
                 <NcSelect
@@ -43,8 +52,11 @@
 </template>
 
 <script setup>
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import { ref, defineProps, defineEmits, computed } from 'vue';
+
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import DeleteIcon from 'vue-material-design-icons/Delete.vue';
 
 const emits = defineEmits(['input']);
 
@@ -115,27 +127,27 @@ const unusedOptions = computed(() =>
 // Create a list of lists of available options for the individual rows (just the internal keys)
 // This will be a list. Each (top) list entry represents the internal keys of the available options for the corresponding row.
 // Note that each row can set the option to any yet unused option or the currently selected one.
-const availabeOptionKeys = computed(() =>
+const availableOptionKeys = computed(() =>
     valueFilteredKeys.value.map((x) => [...unusedOptionKeys.value, x]),
 );
 
-// This is mainly the same as the availabelOptionKeys but uses full objects and sorts these according to the input property
-const availableOptionsPure = computed(() =>
-    availabeOptionKeys.value.map((x) =>
+// This is mainly the same as the availableOptionKeys but uses full objects and sorts these according to the input property
+const availableOptions = computed(() =>
+    availableOptionKeys.value.map((x) =>
         props.options.filter((y) => x.includes(y.key)),
     ),
 );
 
-// The actual available options per row are augmented by an option to remove a row.
-const availableOptions = computed(() =>
-    availableOptionsPure.value.map((x) => [
-        {
-            key: null,
-            label: '---',
-        },
-        ...x,
-    ]),
-);
+/**
+ * Delete a nutrition item.
+ * @param index The index of the item to delete in the `value` property.
+ */
+function deleteEntry(index) {
+    const data = { ...props.value };
+    const { key } = rowsFromValue.value[index].selectedOption;
+    delete data[key];
+    emits('input', data);
+}
 
 // Add a new row to the model
 function newRowByOption(ev) {
@@ -155,14 +167,9 @@ function updateByText(ev, idx) {
 function updateByOption(ev, index) {
     const data = { ...props.value };
     const { key } = rowsFromValue.value[index].selectedOption;
-    if (ev.key === null) {
-        delete data[key];
-        emits('input', data);
-    } else {
-        data[ev.key] = data[key];
-        delete data[key];
-        emits('input', data);
-    }
+    data[ev.key] = data[key];
+    delete data[key];
+    emits('input', data);
 }
 </script>
 
@@ -173,6 +180,10 @@ export default {
 </script>
 
 <style scoped>
+.ml-2 {
+    margin-left: 0.5rem;
+}
+
 fieldset {
     width: 100%;
     margin-bottom: 1em;
