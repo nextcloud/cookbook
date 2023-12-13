@@ -2,7 +2,10 @@
     <fieldset>
         <label>{{ fieldLabel }}</label>
         <transition-group name="list" tag="ul">
-            <li v-for="(row, index) in rowsFromValue" :key="String(rowKeys[row.selectedOption.key])">
+            <li
+                v-for="(row, index) in rowsFromValue"
+                :key="String(rowKeys[row.selectedOption.key])"
+            >
                 <NcSelect
                     :value="row.selectedOption"
                     :options="availableOptions[index]"
@@ -52,7 +55,15 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits, computed, onBeforeMount, set, del } from 'vue';
+import {
+    ref,
+    defineProps,
+    defineEmits,
+    computed,
+    onBeforeMount,
+    set,
+    del,
+} from 'vue';
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
@@ -107,7 +118,7 @@ const currentKeys = computed(() => Object.keys(props.value));
 
 // All possible keys that are provided in the prop value
 const valueFilteredKeys = computed(() =>
-    optionKeys.value.filter(x => currentKeys.value.includes(x))
+    optionKeys.value.filter((x) => currentKeys.value.includes(x)),
 );
 
 const rowsFromValue = computed(() =>
@@ -190,9 +201,9 @@ onBeforeMount(() => {
     valueFilteredKeys.value.forEach((x, idx) => {
         set(rowKeys.value, x, idx);
     });
-    Object.keys(rowKeys.value).forEach(rkKey => {
+    Object.keys(rowKeys.value).forEach((rkKey) => {
         const rk = rowKeys.value[rkKey];
-        if(rk >= nextKey.value) {
+        if (rk >= nextKey.value) {
             nextKey.value = rk + 1;
         }
     });
