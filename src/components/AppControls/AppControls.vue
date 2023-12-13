@@ -93,7 +93,7 @@
             <NcActionInput
                 icon="icon-quota"
                 :value="filterValue"
-                aria-label="Filter current recipes"
+                :aria-label="t('cookbook', 'Filter current recipes')"
                 @update:value="updateFilters"
             >
                 <template #icon>
@@ -101,7 +101,10 @@
                 </template>
                 {{ t('cookbook', 'Filter') }}
             </NcActionInput>
-            <NcActionInput aria-label="Search recipes" @submit="search">
+            <NcActionInput
+                aria-label="t('cookbook', 'Search recipes')"
+                @submit="search"
+            >
                 <template #icon>
                     <SearchIcon :size="20" />
                 </template>
