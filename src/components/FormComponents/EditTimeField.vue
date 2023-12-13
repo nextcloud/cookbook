@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 const emit = defineEmits(['input']);
 
@@ -49,12 +49,7 @@ const hours = ref(null);
  */
 const minutes = ref(null);
 
-watch(
-    () => props.value,
-    () => {
-        [hours.value, minutes.value] = props.value.time;
-    },
-);
+// Methods
 
 const handleInput = () => {
     minutes.value = minutes.value ? minutes.value : 0;
@@ -69,6 +64,22 @@ const handleInput = () => {
         paddedTime: `PT${hoursPadded}H${minutesPadded}M`,
     });
 };
+
+const setLocalValueFromProps = () => {
+    if (props.value?.time) {
+        [hours.value, minutes.value] = props.value.time;
+    }
+};
+
+// Watchers
+
+watch(() => props.value, setLocalValueFromProps);
+
+// Vue lifecycle
+
+onMounted(() => {
+    setLocalValueFromProps();
+});
 </script>
 
 <script>
