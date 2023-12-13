@@ -21,6 +21,8 @@
   [#1971](https://github.com/nextcloud/cookbook/pull/1971) @seyfeb
 - Fill prep, cook, and total time in `RecipeEdit` after loading
   [#1973](https://github.com/nextcloud/cookbook/pull/1973) @seyfeb
+- Remove unclear nutrition option for deleting nutrition info items and replace with designated delete button
+  [#1978](https://github.com/nextcloud/cookbook/pull/1978) @seyfeb
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
