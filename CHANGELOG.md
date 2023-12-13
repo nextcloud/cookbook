@@ -11,6 +11,8 @@
   [#1963](https://github.com/nextcloud/cookbook/pull/1963) @seyfeb
 - Fix searching recipes by string.
   [#1965](https://github.com/nextcloud/cookbook/pull/1965) @seyfeb
+- Replace eye icon with close icon for cancelling recipe edit
+  [#1971](https://github.com/nextcloud/cookbook/pull/1971) @seyfeb
 
 ### Maintenance
 - Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
