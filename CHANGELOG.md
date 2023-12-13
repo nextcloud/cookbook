@@ -21,6 +21,8 @@
   [#1971](https://github.com/nextcloud/cookbook/pull/1971) @seyfeb
 - Fill prep, cook, and total time in `RecipeEdit` after loading
   [#1973](https://github.com/nextcloud/cookbook/pull/1973) @seyfeb
+- Strange cursor in input field while editing nutrition data
+  [#1977](https://github.com/nextcloud/cookbook/pull/1977) @christianlupus
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
