@@ -7,6 +7,8 @@
   [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
 - **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
   [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
+- **Settings:** Don't show error when update interval field is empty while typing.
+  [#1963](https://github.com/nextcloud/cookbook/pull/1963) @seyfeb
 
 ### Maintenance
 - Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
