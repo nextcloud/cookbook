@@ -7,6 +7,12 @@
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 - Allow translation of string _Enable debugging_ in settings
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
+- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
+  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
+- fix wrong parsing of recipe yield input
+  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
+- Update compatibility of app to NC28
+  [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
@@ -15,14 +21,7 @@
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
 - remove constant se in RecipeView
   [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
-
-### Fixed
-- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
-  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
-- fix wrong parsing of recipe yield input
-  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
-- Update compatibility of app to NC28
-  [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
+- Update dependencies (stylelint-idiomatic-ordering) by @dependabot
 
 
 ## 0.10.3 - 2023-12-04
