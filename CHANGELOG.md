@@ -13,6 +13,8 @@
   [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
 - Update compatibility of app to NC28
   [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
+- **Settings:** Don't show error when update interval field is empty while typing.
+  [#1963](https://github.com/nextcloud/cookbook/pull/1963) @seyfeb
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
