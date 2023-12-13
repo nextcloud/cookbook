@@ -10,6 +10,7 @@
                     label="label"
                     :multiple="false"
                     :clearable="false"
+                    :searchable="false"
                     class="key"
                     @input="updateByOption($event, index)"
                 />
