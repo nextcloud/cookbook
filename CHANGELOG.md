@@ -25,6 +25,8 @@
   [#1977](https://github.com/nextcloud/cookbook/pull/1977) @christianlupus
 - Remove unclear nutrition option for deleting nutrition info items and replace with designated delete button
   [#1978](https://github.com/nextcloud/cookbook/pull/1978) @seyfeb
+- Make reordering of nutrition data more smooth
+  [#1979](https://github.com/nextcloud/cookbook/pull/1979) @christianlupus
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
