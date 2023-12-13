@@ -21,6 +21,8 @@
   [#1971](https://github.com/nextcloud/cookbook/pull/1971) @seyfeb
 - Fill prep, cook, and total time in `RecipeEdit` after loading
   [#1973](https://github.com/nextcloud/cookbook/pull/1973) @seyfeb
+- Strange cursor in input field while editing nutrition data
+  [#1977](https://github.com/nextcloud/cookbook/pull/1977) @christianlupus
 - Remove unclear nutrition option for deleting nutrition info items and replace with designated delete button
   [#1978](https://github.com/nextcloud/cookbook/pull/1978) @seyfeb
 
