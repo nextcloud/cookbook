@@ -8,6 +8,8 @@
 - **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
   [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
 
+### Maintenance
+- Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
 
 ## 0.10.4 - 2023-12-05
 
@@ -22,6 +24,7 @@
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
 - Add backport script to simplify development
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
+
 
 ## 0.10.3 - 2023-12-04
 
