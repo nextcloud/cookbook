@@ -93,15 +93,15 @@
             <NcActionInput
                 icon="icon-quota"
                 :value="filterValue"
-                @update:value="updateFilters"
                 aria-label="Filter current recipes"
+                @update:value="updateFilters"
             >
                 <template #icon>
                     <FilterIcon :size="20" />
                 </template>
                 {{ t('cookbook', 'Filter') }}
             </NcActionInput>
-            <NcActionInput @submit="search" aria-label="Search recipes">
+            <NcActionInput aria-label="Search recipes" @submit="search">
                 <template #icon>
                     <SearchIcon :size="20" />
                 </template>
@@ -142,7 +142,7 @@
                         "
                         :size="20"
                     />
-                    <eye-icon v-else :size="20" />
+                    <AbortIcon v-else :size="20" />
                 </template>
             </NcActionButton>
             <NcActionButton
@@ -206,7 +206,7 @@ import LoadingIcon from 'icons/Loading.vue';
 import CheckmarkIcon from 'icons/Check.vue';
 import FilterIcon from 'icons/FilterOutline.vue';
 import PrinterIcon from 'icons/Printer.vue';
-import EyeIcon from 'icons/Eye.vue';
+import AbortIcon from 'icons/Close.vue';
 import ContentDuplicateIcon from 'icons/ContentDuplicate.vue';
 import SearchIcon from 'icons/Magnify.vue';
 
