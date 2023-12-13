@@ -9,6 +9,8 @@
   [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
 - **Settings:** Don't show error when update interval field is empty while typing.
   [#1963](https://github.com/nextcloud/cookbook/pull/1963) @seyfeb
+- Fix searching recipes by string.
+  [#1965](https://github.com/nextcloud/cookbook/pull/1965) @seyfeb
 
 ### Maintenance
 - Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
