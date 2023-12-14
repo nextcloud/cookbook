@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/assets/icon256x256.png" alt="Nextcloud Cookbook icon" width="100"/>
+<img src="docs/assets/icon256x256.png#gh-dark-mode-only" alt="Nextcloud Cookbook icon" width="100"/>
 <img src="docs/assets/icon256x256-dark.png#gh-light-mode-only" alt="Nextcloud Cookbook icon" width="100"/>
 
 # Nextcloud Cookbook
