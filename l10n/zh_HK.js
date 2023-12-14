@@ -207,6 +207,7 @@ OC.L10N.register(
     "Loading…" : "載入中…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "由於語法錯誤，無法重新計算成分。請將其更改為以下語法：[數量] [單位] [成分]。示例：200 克胡蘿蔔，1 撮鹽",
     "Failed to load recipes with keywords: {tags}" : "無法加載帶有關鍵字的食譜：{tags}",
-    "Failed to load search results" : "無法加載搜尋結果"
+    "Failed to load search results" : "無法加載搜尋結果",
+    "Please select option first." : "請先選擇選項。"
 },
 "nplurals=1; plural=0;");

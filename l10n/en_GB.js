@@ -207,6 +207,7 @@ OC.L10N.register(
     "Loading…" : "Loading…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt",
     "Failed to load recipes with keywords: {tags}" : "Failed to load recipes with keywords: {tags}",
-    "Failed to load search results" : "Failed to load search results"
+    "Failed to load search results" : "Failed to load search results",
+    "Please select option first." : "Please select option first."
 },
 "nplurals=2; plural=(n != 1);");

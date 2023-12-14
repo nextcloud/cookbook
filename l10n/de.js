@@ -207,6 +207,7 @@ OC.L10N.register(
     "Loading…" : "Lade …",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Die Menge der Zutat kann aufgrund einer falschen Syntax nicht neu berechnet werden. Bitte ändere sie in diese Syntax: Menge Einheit Zutat. Beispiele: 200 g Karotten oder 1 Prise Salz",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlüsselwörter: {tags}",
-    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse"
+    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
+    "Please select option first." : "Bitte wähle zuerst eine Option aus."
 },
 "nplurals=2; plural=(n != 1);");
