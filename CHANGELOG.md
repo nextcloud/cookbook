@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+### Documentation
+- Improve  structure of `README.md` [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
 
 ## 0.11.0 - 2023-12-14
 
