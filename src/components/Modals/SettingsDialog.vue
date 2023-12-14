@@ -185,7 +185,8 @@ import {
     nextTick,
 } from 'vue';
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
-import { getFilePickerBuilder } from '@nextcloud/dialogs';
+import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
+import '@nextcloud/dialogs/style.css';
 
 import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog.js';
 import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection.js';
@@ -300,6 +301,7 @@ watch(
             return;
         }
         try {
+            if (newVal === '') return;
             await api.config.updateInterval.update(newVal);
             await store.dispatch('refreshConfig');
         } catch {
@@ -347,32 +349,37 @@ const pickRecipeFolder = () => {
         t('cookbook', 'Path to your recipe collection'),
     )
         .addMimeTypeFilter('httpd/unix-directory')
-        .addButton({
-            label: 'Pick',
-            type: 'primary',
-        })
+        .allowDirectories(true)
+        .setType(FilePickerType.Choose)
         .build();
-    filePicker.pick().then((path) => {
-        store
-            .dispatch('updateRecipeDirectory', { dir: path })
-            .then(() => store.dispatch('refreshConfig'))
-            .then(() => {
-                recipeFolder.value = path;
-                if (route.path !== '/') {
-                    router.push('/');
-                }
-            })
-            .catch(() =>
-                showSimpleAlertModal(
-                    // prettier-ignore
-                    t('cookbook','Could not set recipe folder to {path}',
+    filePicker
+        .pick()
+        .then((path) => {
+            store
+                .dispatch('updateRecipeDirectory', { dir: path })
+                .then(() => store.dispatch('refreshConfig'))
+                .then(() => {
+                    recipeFolder.value = path;
+                    if (route.path !== '/') {
+                        router.push('/');
+                    }
+                })
+                .catch(() =>
+                    showSimpleAlertModal(
+                        // prettier-ignore
+                        t('cookbook','Could not set recipe folder to {path}',
                         {
                             path
                         }
                     ),
-                ),
+                    ),
+                );
+        })
+        .catch((ev) => {
+            log.warn(
+                `Could not select new recipe folder. Error Message: ${ev.message}`,
             );
-    });
+        });
 };
 
 /**

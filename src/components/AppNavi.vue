@@ -65,7 +65,7 @@
                 :edit-label="t('cookbook', 'Rename')"
                 :edit-placeholder="t('cookbook', 'Enter new category name')"
                 @update:open="categoryOpen(idx)"
-                @update:title="
+                @update:name="
                     (val) => {
                         categoryUpdateName(idx, val);
                     }

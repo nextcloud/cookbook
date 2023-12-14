@@ -69,4 +69,5 @@ export default function setupLogging(Vue) {
 
 export function enableLogging() {
     localStorage.setItem(KEY_ENABLED, true);
+    localStorage.setItem(KEY_LOG_LEVEL, 'debug');
 }

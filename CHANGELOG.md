@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.11.0 - 2023-12-14
+
 ### Fixed
 - Make app compatible with PHP 7.4
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
@@ -7,6 +10,26 @@
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 - Allow translation of string _Enable debugging_ in settings
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
+- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
+  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
+- fix wrong parsing of recipe yield input
+  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
+- Update compatibility of app to NC28
+  [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
+- **Settings:** Don't show error when update interval field is empty while typing.
+  [#1963](https://github.com/nextcloud/cookbook/pull/1963) @seyfeb
+- Fix searching recipes by string.
+  [#1965](https://github.com/nextcloud/cookbook/pull/1965) @seyfeb
+- Replace eye icon with close icon for cancelling recipe edit
+  [#1971](https://github.com/nextcloud/cookbook/pull/1971) @seyfeb
+- Fill prep, cook, and total time in `RecipeEdit` after loading
+  [#1973](https://github.com/nextcloud/cookbook/pull/1973) @seyfeb
+- Strange cursor in input field while editing nutrition data
+  [#1977](https://github.com/nextcloud/cookbook/pull/1977) @christianlupus
+- Remove unclear nutrition option for deleting nutrition info items and replace with designated delete button
+  [#1978](https://github.com/nextcloud/cookbook/pull/1978) @seyfeb
+- Make reordering of nutrition data more smooth
+  [#1979](https://github.com/nextcloud/cookbook/pull/1979) @christianlupus
 
 ### Maintenance
 - Add PHP lint checker to ensure valid (legacy) PHP syntax
@@ -15,14 +38,7 @@
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
 - remove constant se in RecipeView
   [#1942](https://github.com/nextcloud/cookbook/pull/1942) @j0hannesr0th
-
-### Fixed
-- **Print view:** Hide yield calculator, ingredient-copy button, yield-calculation warnings
-  [#1949](https://github.com/nextcloud/cookbook/pull/1949) @seyfeb
-- fix wrong parsing of recipe yield input
-  [#1944](https://github.com/nextcloud/cookbook/pull/1944) @j0hannesr0th
-- Update compatibility of app to NC28
-  [#1950](https://github.com/nextcloud/cookbook/pull/1950) @christianlupus
+- Update dependencies (stylelint-idiomatic-ordering) by @dependabot
 
 
 ## 0.10.3 - 2023-12-04

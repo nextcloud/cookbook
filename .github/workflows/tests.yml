@@ -112,38 +112,19 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 25
-                - 26
-                - 27
+                - 28
             phpVersion:
-                - "8.1"
+                - "8.3"
             httpServer:
                 - "apache"
             include:
-                # Test different databases
                 -   database: sqlite
-                    coreVersion: 27
+                    coreVersion: 28
                     phpVersion: "8.1"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 27
-                    phpVersion: "8.1"
-                    httpServer: "apache"
-                
-                # Test different PHP versions additionally
-                -   database: mysql
-                    coreVersion: 27
-                    phpVersion: "8.0"
-                    httpServer: "apache"
-                -   database: mysql
-                    coreVersion: 27
+                    coreVersion: 28
                     phpVersion: "8.2"
-                    httpServer: "apache"
-                
-                # Test different HTTP server
-                -   database: mysql
-                    coreVersion: 27
-                    phpVersion: "8.1"
                     httpServer: "nginx"
                     
     steps:

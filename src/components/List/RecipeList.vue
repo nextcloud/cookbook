@@ -98,42 +98,36 @@ const keywordFilter = ref([]);
 const recipeOrderingOptions = ref([
     {
         label: t('cookbook', 'Name'),
-        icon: 'icon-triangle-n',
         iconUp: true,
         recipeProperty: 'name',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Name'),
-        icon: 'icon-triangle-s',
         iconUp: false,
         recipeProperty: 'name',
         order: 'descending',
     },
     {
         label: t('cookbook', 'Creation date'),
-        icon: 'icon-triangle-n',
         iconUp: true,
         recipeProperty: 'dateCreated',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Creation date'),
-        icon: 'icon-triangle-s',
         iconUp: false,
         recipeProperty: 'dateCreated',
         order: 'descending',
     },
     {
         label: t('cookbook', 'Modification date'),
-        icon: 'icon-triangle-n',
         iconUp: true,
         recipeProperty: 'dateModified',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Modification date'),
-        icon: 'icon-triangle-s',
         iconUp: false,
         recipeProperty: 'dateModified',
         order: 'descending',

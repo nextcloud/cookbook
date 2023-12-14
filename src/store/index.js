@@ -227,13 +227,12 @@ const store = new Vuex.Store({
             c.dispatch('setRecipe', { recipe: null });
             const request = api.config.directory.update(dir);
 
-            request.then(() => {
+            return request.then(() => {
                 c.dispatch('setAppNavigationRefreshRequired', {
                     isRequired: true,
                 });
                 c.commit('setUpdatingRecipeDirectory', { b: false });
             });
-            return request;
         },
         /**
          * Update existing recipe on the server

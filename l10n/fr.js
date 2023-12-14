@@ -136,6 +136,7 @@ OC.L10N.register(
     "Tools" : "Ustensiles",
     "Frontend debug settings" : "Paramètres de débogage de l'interface",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Ceci permet de temporairement activer l'enregistrement de la console du navigateur en cas de problème. Vous n'aurez pas besoin de ces paramètres par défaut.",
+    "Enable debugging" : "Activer le débogage",
     "Could not set preference for image printing" : "Impossible de définir le paramètre d'impression des images",
     "Could not set recipe update interval to {interval}" : "Impossible de définir l'intervalle de mise à jour à {interval}",
     "Could not save visible info blocks" : "Impossible d'enregistrer les blocs d'infos visibles",
