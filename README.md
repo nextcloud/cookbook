@@ -16,7 +16,6 @@
 [![codecov](https://codecov.io/gh/nextcloud/cookbook/branch/master/graph/badge.svg?token=J1DI0KGEX3)](https://codecov.io/gh/nextcloud/cookbook)
 ![GitHub](https://img.shields.io/github/license/nextcloud/cookbook)
 ![GitHub language count](https://img.shields.io/github/languages/count/nextcloud/cookbook)
-![GitHub Repo stars](https://img.shields.io/github/stars/nextcloud/cookbook?logo=github)
 ![GitHub all releases](https://img.shields.io/github/downloads/nextcloud/cookbook/total?logo=github)
 
 </div>
