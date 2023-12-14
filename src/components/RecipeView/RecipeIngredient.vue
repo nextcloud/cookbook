@@ -53,11 +53,16 @@ const displayIngredient = computed(() => {
     return props.ingredient;
 });
 
-const formattedIngredient = computed(() =>
-    isDone.value
+const formattedIngredient = computed(() => {
+    // for headlines or step descriptions in ingredients list
+    if (/^_.+_$/.test(displayIngredient.value)) {
+        return `__${displayIngredient.value}__`;
+    }
+
+    return isDone.value
         ? `~~${displayIngredient.value}~~`
-        : `**${displayIngredient.value}**`,
-);
+        : `**${displayIngredient.value}**`;
+});
 </script>
 
 <script>
