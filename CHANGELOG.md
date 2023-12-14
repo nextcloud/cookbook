@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+- Prevent ingredient warning for headings
+  [#1990](https://github.com/nextcloud/cookbook/pull/1990) @j0hannesr0th
+
 ### Documentation
 - Improve  structure of `README.md` [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
 
