@@ -35,6 +35,7 @@ OC.L10N.register(
     "Cannot parse non-POST multipart encoding. This is a bug." : "Multipart-Kodierung von Nicht-POST kann nicht geparst werden. Dies ist ein Fehler.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Kann den Typ der übertragenen Daten nicht erkennen. Dies ist ein Fehler, bitte melden Sie diesen.",
     "Invalid URL-encoded string found. Please report a bug." : "Ungültige URL-kodierte Zeichenfolge gefunden. Bitte melden Sie den Fehler.",
+    "Could not parse timestamp {timestamp}" : "Der Zeitstempel {timestamp} konnte nicht ausgewertet werden",
     "The user is not logged in. No user configuration can be obtained." : "Der Benutzer ist nicht angemeldet. Es kann keine Benutzerkonfiguration abgerufen werden.",
     "Recipes" : "Rezepte",
     "The user folder cannot be created due to missing permissions." : "Der Benutzerordner kann aufgrund fehlender Berechtigungen nicht erstellt werden.",
@@ -135,6 +136,7 @@ OC.L10N.register(
     "Tools" : "Utensilien",
     "Frontend debug settings" : "Frontend-Debug-Einstellungen",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Dadurch kann die Protokollierung bei Problemen in der Browserkonsole vorübergehend aktiviert werden. Standardmäßig wird diese Einstellung nicht benötigt.",
+    "Enable debugging" : "Fehlersuche aktivieren",
     "Could not set preference for image printing" : "Die Voreinstellung für den Druck von Bildern konnten nicht festgelegt werden",
     "Could not set recipe update interval to {interval}" : "Konnte das Rezept-Aktualisierungsintervall nicht auf {interval} setzen",
     "Could not save visible info blocks" : "Sichtbare Infoblöcke konnten nicht gespeichert werden",
@@ -178,7 +180,7 @@ OC.L10N.register(
     "Unknown answer returned from server. See logs." : "Unbekannte Antwort vom Server zurückgegeben. Siehe Protokolle.",
     "No answer for request was received." : "Keine Antwort auf die Anfrage erhalten.",
     "Could not start request to save recipe." : "Die Anforderung zum Speichern des Rezepts konnte nicht gestartet werden.",
-    "Clone of {name}" : "Klon von{name}",
+    "Clone of {name}" : "Klon von {name}",
     "Loading recipe failed" : "Laden des Rezepts fehlgeschlagen",
     "Recipe image" : "Rezept-Bild",
     "Cooking time is up!" : "Die Kochzeit ist vorbei!",
@@ -205,6 +207,7 @@ OC.L10N.register(
     "Loading…" : "Lade …",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Die Menge der Zutat kann aufgrund einer falschen Syntax nicht neu berechnet werden. Bitte in diese Syntax ändern: Menge Einheit Zutat. Beispiele: 200 g Karotten oder 1 Prise Salz",
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlagworten: {tags}",
-    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse"
+    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
+    "Please select option first." : "Bitte zuerst eine Option auswählen."
 },
 "nplurals=2; plural=(n != 1);");

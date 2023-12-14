@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "Uppskriftir",
     "in %s" : "í %s",
     "Cookbook" : "Uppskriftabók",
     "An integrated cookbook using schema.org JSON files as recipes" : "Innbyggð uppskriftabók sem notar schema.org JSON-skrár sem uppskriftir",

@@ -168,7 +168,9 @@
                     t('cookbook', 'This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.')
                 }}
             </legend>
-            <NcButton @click="enableLogger">Enable debugging</NcButton>
+            <NcButton @click="enableLogger">{{
+                t('cookbook', 'Enable debugging')
+            }}</NcButton>
         </NcAppSettingsSection>
     </NcAppSettingsDialog>
 </template>
@@ -298,6 +300,7 @@ watch(
             return;
         }
         try {
+            if (newVal === '') return;
             await api.config.updateInterval.update(newVal);
             await store.dispatch('refreshConfig');
         } catch {

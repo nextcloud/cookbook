@@ -33,6 +33,7 @@
     "Cannot parse non-POST multipart encoding. This is a bug." : "لا يمكن تحليل ترميز متعدد الأجزاء  غير الموافق لـ POST. هذا خطأ.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "لا يمكن الكشف عن نوع البيانات المرسلة. هذا خطأ، يرجى الإبلاغ عنه.",
     "Invalid URL-encoded string found. Please report a bug." : "تم العثور على سلسلة مرمزة بعنوان URL غير صالحة. الرجاء الإبلاغ عن خطأ.",
+    "Could not parse timestamp {timestamp}" : "تعذّر تحليل timestamp الطابع الزمني {timestamp}",
     "The user is not logged in. No user configuration can be obtained." : "لم يتم تسجيل دخول المستخدم. لا يمكن الحصول على تكوين المستخدم.",
     "Recipes" : "وصفات طبخ Recipes",
     "The user folder cannot be created due to missing permissions." : "لا يمكن إنشاء مجلد المستخدم بسبب نقص الأذونات.",
@@ -133,6 +134,7 @@
     "Tools" : "الأدوات",
     "Frontend debug settings" : "إعدادات تنقيح الواجهة الأمامية",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "يسمح هذا بتمكين تسجيل الدخول مؤقتًا في وحدة تحكم المتصفح browser console في حالة حدوث مشكلات. لن تحتاج إلى هذه الإعدادات افتراضيًا.",
+    "Enable debugging" : "تمكين التنقيح",
     "Could not set preference for image printing" : "تعذر تعيين التفضيل في طباعة الصور",
     "Could not set recipe update interval to {interval}" : "تعذر تعيين الفاصل الزمني لتحديث الوصفة بـ {interval}",
     "Could not save visible info blocks" : "تعذّر حفظ صناديق المعلونات المرئية visible info blocks",
@@ -203,6 +205,7 @@
     "Loading…" : "التحميل جارٍ…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "لا يمكن إعادة حساب المكون بسبب تركيب غير صحيح. يرجى تغييره بحسب التسلسل التالي: كمية ثم وحدة المكون. أمثلة: 200 جرام جزر أو 1 رشة من الملح",
     "Failed to load recipes with keywords: {tags}" : "فشل تحميل الوصفات بالكلمات الدلالية: {tags}",
-    "Failed to load search results" : "فشل تحميل نتائج البحث"
+    "Failed to load search results" : "فشل تحميل نتائج البحث",
+    "Please select option first." : "حدِّد أوّلاً خيارك، من فضلك."
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }
