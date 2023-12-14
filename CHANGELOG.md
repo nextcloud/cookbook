@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+
+## 0.11.0 - 2023-12-14
+
 ### Fixed
 - Make app compatible with PHP 7.4
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
