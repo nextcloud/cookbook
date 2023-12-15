@@ -53,11 +53,15 @@ const displayIngredient = computed(() => {
     return props.ingredient;
 });
 
-const formattedIngredient = computed(() =>
-    isDone.value
+const formattedIngredient = computed(() => {
+    if (isHeader()) {
+        return displayIngredient.value;
+    }
+
+    return isDone.value
         ? `~~${displayIngredient.value}~~`
-        : `**${displayIngredient.value}**`,
-);
+        : `**${displayIngredient.value}**`;
+});
 </script>
 
 <script>
@@ -73,7 +77,6 @@ li {
 
 .header {
     position: relative;
-    left: -1.25em;
     margin-top: 0.25em;
     font-variant: small-caps;
     list-style-type: none;
