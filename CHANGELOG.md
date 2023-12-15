@@ -1,5 +1,8 @@
 ## [Unreleased]
 
+### Fixed
+- Prevent yield calculation for ## as ingredient headline [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
+
 ### Documentation
 - Improve  structure of `README.md` [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
 
