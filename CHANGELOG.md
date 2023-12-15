@@ -1,5 +1,6 @@
 ## [Unreleased]
 
+### Fixed
 - Prevent ingredient warning for headings
   [#1990](https://github.com/nextcloud/cookbook/pull/1990) @j0hannesr0th
 
