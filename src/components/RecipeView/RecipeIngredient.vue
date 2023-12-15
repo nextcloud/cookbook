@@ -54,9 +54,8 @@ const displayIngredient = computed(() => {
 });
 
 const formattedIngredient = computed(() => {
-    // for headlines or step descriptions in ingredients list
-    if (/^_.+_$/.test(displayIngredient.value)) {
-        return `__${displayIngredient.value}__`;
+    if (isHeader()) {
+        return displayIngredient.value;
     }
 
     return isDone.value
@@ -78,7 +77,6 @@ li {
 
 .header {
     position: relative;
-    left: -1.25em;
     margin-top: 0.25em;
     font-variant: small-caps;
     list-style-type: none;

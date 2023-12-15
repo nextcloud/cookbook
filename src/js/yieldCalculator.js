@@ -20,12 +20,12 @@ function isValidIngredientSyntax(ingredient) {
     const ingredientMultipleSeparatorsRegExp = /^-?\d+(?:[.,]\d+){2,}.*/;
 
     /*
-        The underscoreSyntaxRegExp checks whether the ingredient string starts and ends with __.
+        startsWithDoubleHashRegExp checks if the ingredient string begins with "## " followed by any characters.
     */
-    const underscoreSyntaxRegExp = /^_.+_$/;
+    const startsWithDoubleHashRegExp = /^## .+$/;
 
     return (
-        underscoreSyntaxRegExp.test(ingredient) ||
+        startsWithDoubleHashRegExp.test(ingredient) ||
         (ingredientSyntaxRegExp.test(ingredient) &&
             !ingredientMultipleSeparatorsRegExp.test(ingredient))
     );
@@ -37,7 +37,7 @@ function isIngredientsArrayValid(ingredients) {
 
 function recalculateIngredients(ingredients, currentYield, originalYield) {
     return ingredients.map((ingredient) => {
-        if (ingredient.startsWith('_') && ingredient.endsWith('_')) {
+        if (ingredient.startsWith('## ')) {
             return ingredient;
         }
 
