@@ -206,6 +206,10 @@
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "由於語法錯誤，無法重新計算成分。請將其更改為以下語法：[數量] [單位] [成分]。示例：200 克胡蘿蔔，1 撮鹽",
     "Failed to load recipes with keywords: {tags}" : "無法加載帶有關鍵字的食譜：{tags}",
     "Failed to load search results" : "無法加載搜尋結果",
-    "Please select option first." : "請先選擇選項。"
+    "Filter current recipes" : "過濾目前食譜",
+    "Search recipes" : "搜尋食譜",
+    "Delete nutrition item" : "刪除營養項目",
+    "Please select option first." : "請先選擇選項。",
+    "Copy ingredients to the clipboard" : "將材料複製到剪貼板"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
