@@ -77,7 +77,6 @@ li {
 
 .header {
     position: relative;
-    left: -1.25em;
     margin-top: 0.25em;
     font-variant: small-caps;
     list-style-type: none;
