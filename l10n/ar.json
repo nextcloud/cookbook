@@ -206,6 +206,10 @@
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "لا يمكن إعادة حساب المكون بسبب تركيب غير صحيح. يرجى تغييره بحسب التسلسل التالي: كمية ثم وحدة المكون. أمثلة: 200 جرام جزر أو 1 رشة من الملح",
     "Failed to load recipes with keywords: {tags}" : "فشل تحميل الوصفات بالكلمات الدلالية: {tags}",
     "Failed to load search results" : "فشل تحميل نتائج البحث",
-    "Please select option first." : "حدِّد أوّلاً خيارك، من فضلك."
+    "Filter current recipes" : "فلتِر الوصفات الحالية",
+    "Search recipes" : "البحث في الوصفات",
+    "Delete nutrition item" : "إحذف العنصر الغذائي",
+    "Please select option first." : "حدِّد أوّلاً خيارك، من فضلك.",
+    "Copy ingredients to the clipboard" : "إنسَخ المُكوِّنات إلى الحافظة"
 },"pluralForm" :"nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;"
 }
