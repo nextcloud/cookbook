@@ -208,6 +208,10 @@ OC.L10N.register(
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "O ingrediente não pode ser recalculado devido à sintaxe incorreta. Por favor, altere para esta sintaxe: quantidade unidade ingrediente. Exemplos: 200 g de cenoura ou 1 pitada de sal",
     "Failed to load recipes with keywords: {tags}" : "Falhou em carregar receitas com palavras-chave: {tags}",
     "Failed to load search results" : "Falha ao carregar os resultados da pesquisa",
-    "Please select option first." : "Selecione a opção primeiro."
+    "Filter current recipes" : "Filtrar receitas atuais",
+    "Search recipes" : "Pesquisar receitas",
+    "Delete nutrition item" : "Excluir item nutricional",
+    "Please select option first." : "Selecione a opção primeiro.",
+    "Copy ingredients to the clipboard" : "Copie os ingredientes para a área de transferência"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
