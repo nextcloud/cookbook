@@ -8,6 +8,7 @@
 - Prevent yield calculation for ## as ingredient headline [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
 - Improved styling of times in recipe view [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
 - Add missing translatable string for recipe-creation button in empty list view [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
+- Prevent recalculation algorithm if no yield is given [#2003](https://github.com/nextcloud/cookbook/pull/2003) @j0hannesr0th
 
 ### Documentation
 - Improve  structure of `README.md` [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
