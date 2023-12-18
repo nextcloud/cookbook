@@ -51,7 +51,7 @@ const seconds = ref(0);
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const showFullTime = ref(false);
+const countdownStarted = ref(false);
 // Create a ref for the audio element
 const audio = ref(new Audio());
 
@@ -88,7 +88,7 @@ const onTimerEnd = () => {
         audio.value.pause();
 
         countdown.value = null;
-        showFullTime.value = false;
+        countdownStarted.value = false;
         resetTimeDisplay();
     }, 100);
 };
@@ -97,8 +97,8 @@ const timerToggle = () => {
     // We will switch to full time display the first time this method is invoked.
     // There should probably also be a way to reset the timer other than by letting
     //  it run its course...
-    if (!showFullTime.value) {
-        showFullTime.value = true;
+    if (!countdownStarted.value) {
+        countdownStarted.value = true;
     }
     if (countdown.value === null) {
         countdown.value = window.setInterval(() => {
@@ -128,14 +128,23 @@ const timerToggle = () => {
 // Computed properties
 const displayTime = computed(() => {
     let text = '';
-    if (showFullTime.value) {
-        text += `${hours.value.toString().padStart(2, '0')}:`;
-    } else {
-        text += `${hours.value.toString()}:`;
+    // TRANSLATORS hours part of timer text
+    text += n('cookbook', '{hours}h', '{hours}h', hours.value, {
+        hours: `${hours.value.toString().padStart(2, '0')}`,
+    });
+    // Show during countdown, if value is not 0, or if a value for seconds is given
+    if (countdownStarted.value || minutes.value > 0 || seconds.value > 0) {
+        // TRANSLATORS minutes part of timer text
+        text += n('cookbook', '{minutes}m', '{minutes}m', minutes.value, {
+            minutes: `${minutes.value.toString().padStart(2, '0')}`,
+        });
+        // text += n('cookbook', '%minutes m', '%minutes m', minutes.value);
     }
-    text += minutes.value.toString().padStart(2, '0');
-    if (showFullTime.value) {
-        text += `:${seconds.value.toString().padStart(2, '0')}`;
+    // Show during countdown or if value is not 0
+    if (countdownStarted.value || seconds.value > 0) {
+        text += n('cookbook', '{seconds}s', '{seconds}s', seconds.value, {
+            seconds: `${seconds.value.toString().padStart(2, '0')}`,
+        });
     }
     return text;
 });
