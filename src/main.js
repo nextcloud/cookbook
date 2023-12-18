@@ -62,6 +62,7 @@ store.dispatch('refreshConfig');
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
+Vue.prototype.n = window.n;
 
 // Start the app once document is done loading
 Vue.$log.info('Main is done. Creating App.');

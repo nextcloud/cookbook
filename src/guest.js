@@ -26,6 +26,7 @@ Vue.prototype.OC = OC;
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
+Vue.prototype.n = window.n;
 
 const store = useStore();
 
