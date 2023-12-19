@@ -126,6 +126,13 @@ const timerToggle = () => {
     }
 };
 
+/**
+ * Add style to the unit of the value.
+ * @param str Complete translated string with value and unit
+ * @param value The value without the unit
+ * @param isPadded If value should be padded with zeros to ensure it has two digits
+ * @returns {string} Complete styled string with value and unit
+ */
 const styleUnit = (str, value, isPadded = true) => {
     // Remove value
     const unit = str.replace(`${value.toString()}`, '');
@@ -173,7 +180,24 @@ const displaySeconds = computed(() => {
 });
 
 const displayTime = computed(() => {
-    return displayHours.value + displayMinutes.value + displaySeconds.value;
+    let text = '';
+    if (props.value.hours && props.value.hours > 0) {
+        text += displayHours.value;
+    }
+    if (
+        (props.value.hours && props.value.hours > 0) ||
+        (props.value.minutes && props.value.minutes > 0)
+    ) {
+        text += displayMinutes.value;
+    }
+    if (
+        (props.value.hours && props.value.hours > 0) ||
+        (props.value.minutes && props.value.minutes > 0) ||
+        (props.value.seconds && props.value.seconds > 0)
+    ) {
+        text += displaySeconds.value;
+    }
+    return text;
 });
 
 // Watchers
