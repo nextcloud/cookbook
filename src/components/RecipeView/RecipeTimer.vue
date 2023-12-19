@@ -7,7 +7,10 @@
             @click="timerToggle"
         ></button>
         <h4>{{ label }}</h4>
-        <p v-html="displayTime"></p>
+        <div class="timeContainer">
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <p v-html="displayTime"></p>
+        </div>
     </div>
 </template>
 
@@ -244,6 +247,8 @@ export default {
 <style scoped>
 .time {
     position: relative;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
     border-radius: 3px;
@@ -268,7 +273,11 @@ export default {
     font-weight: bold;
 }
 
-.time p {
+.time > .timeContainer {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
     padding: 0.5rem;
 }
 
@@ -276,7 +285,7 @@ export default {
 .time :deep(.timerUnit) {
     color: var(--color-text-lighter);
     font-size: 0.8em;
-    margin-inline-end: 0.5rem;
+    margin-inline-end: 0.3em;
 }
 
 @media print {
