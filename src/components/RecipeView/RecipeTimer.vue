@@ -185,15 +185,23 @@ const displayTime = computed(() => {
         text += displayHours.value;
     }
     if (
-        (props.value.hours && props.value.hours > 0) ||
-        (props.value.minutes && props.value.minutes > 0)
+        (countdownStarted.value &&
+            ((props.value.hours && props.value.hours > 0) ||
+                (props.value.minutes && props.value.minutes > 0))) ||
+        (!countdownStarted.value &&
+            props.value.minutes &&
+            props.value.minutes > 0)
     ) {
         text += displayMinutes.value;
     }
     if (
-        (props.value.hours && props.value.hours > 0) ||
-        (props.value.minutes && props.value.minutes > 0) ||
-        (props.value.seconds && props.value.seconds > 0)
+        (countdownStarted.value &&
+            ((props.value.hours && props.value.hours > 0) ||
+                (props.value.minutes && props.value.minutes > 0) ||
+                (props.value.seconds && props.value.seconds > 0))) ||
+        (!countdownStarted.value &&
+            props.value.seconds &&
+            props.value.seconds > 0)
     ) {
         text += displaySeconds.value;
     }
