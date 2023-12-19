@@ -7,7 +7,7 @@
             @click="timerToggle"
         ></button>
         <h4>{{ label }}</h4>
-        <p>{{ displayTime }}</p>
+        <p v-html="displayTime"></p>
     </div>
 </template>
 
@@ -15,6 +15,7 @@
 import { computed, defineProps, onMounted, ref, watch } from 'vue';
 import { linkTo } from '@nextcloud/router';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
+import helper from 'cookbook/js/helper';
 
 // Properties
 const props = defineProps({
@@ -125,28 +126,54 @@ const timerToggle = () => {
     }
 };
 
-// Computed properties
-const displayTime = computed(() => {
-    let text = '';
-    // TRANSLATORS hours part of timer text
-    text += n('cookbook', '{hours}h', '{hours}h', hours.value, {
-        hours: `${hours.value.toString().padStart(2, '0')}`,
-    });
-    // Show during countdown, if value is not 0, or if a value for seconds is given
-    if (countdownStarted.value || minutes.value > 0 || seconds.value > 0) {
-        // TRANSLATORS minutes part of timer text
-        text += n('cookbook', '{minutes}m', '{minutes}m', minutes.value, {
-            minutes: `${minutes.value.toString().padStart(2, '0')}`,
-        });
-        // text += n('cookbook', '%minutes m', '%minutes m', minutes.value);
-    }
-    // Show during countdown or if value is not 0
-    if (countdownStarted.value || seconds.value > 0) {
-        text += n('cookbook', '{seconds}s', '{seconds}s', seconds.value, {
-            seconds: `${seconds.value.toString().padStart(2, '0')}`,
-        });
+const styleUnit = (str, value, isPadded = true) => {
+    // Remove value
+    const unit = str.replace(`${value.toString()}`, '');
+    // Style unit
+    let text = `<span class="timerUnit">${helper.escapeHTML(unit)}</span>`;
+    // Reassemble value and unit.
+    // Make sure that value is a number to prevent XSS attacks (due to the v-html directive)
+    if (isPadded) {
+        text = `${Number(value).toString().padStart(2, '0')}${text}`;
+    } else {
+        text = `${Number(value).toString()}${text}`;
     }
     return text;
+};
+
+// Computed properties
+const displayHours = computed(() => {
+    let hoursText = '';
+    // TRANSLATORS hours part of timer text
+    hoursText += n('cookbook', '{hours}h', '{hours}h', hours.value, {
+        hours: `${hours.value.toString()}`,
+    });
+
+    return styleUnit(hoursText, hours.value);
+});
+
+const displayMinutes = computed(() => {
+    let minutesText = '';
+    // TRANSLATORS minutes part of timer text
+    minutesText += n('cookbook', '{minutes}m', '{minutes}m', minutes.value, {
+        minutes: `${minutes.value.toString()}`,
+    });
+
+    return styleUnit(minutesText, minutes.value);
+});
+
+const displaySeconds = computed(() => {
+    let secondsText = '';
+    // TRANSLATORS seconds part of timer text
+    secondsText += n('cookbook', '{seconds}s', '{seconds}s', seconds.value, {
+        seconds: `${seconds.value.toString()}`,
+    });
+
+    return styleUnit(secondsText, seconds.value);
+});
+
+const displayTime = computed(() => {
+    return displayHours.value + displayMinutes.value + displaySeconds.value;
 });
 
 // Watchers
@@ -207,6 +234,13 @@ export default {
 
 .time p {
     padding: 0.5rem;
+}
+
+/* The :deep selector prevents a data attribute from being added to the scoped element. */
+.time :deep(.timerUnit) {
+    color: var(--color-text-lighter);
+    font-size: 0.8em;
+    margin-inline-end: 0.5rem;
 }
 
 @media print {
