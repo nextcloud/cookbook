@@ -22,7 +22,7 @@ const props = defineProps({
     value: {
         type: Object,
         default() {
-            return { hours: 0, minutes: 0 };
+            return { hours: 0, minutes: 0, seconds: 0 };
         },
     },
     label: {
@@ -68,7 +68,11 @@ const resetTimeDisplay = () => {
     } else {
         minutes.value = 0;
     }
-    seconds.value = 0;
+    if (props.value.seconds) {
+        seconds.value = parseInt(props.value.seconds, 10);
+    } else {
+        seconds.value = 0;
+    }
 };
 
 const onTimerEnd = () => {
