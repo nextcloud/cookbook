@@ -2,9 +2,11 @@
 
 ### Added
 - Toast with success/error message after trying to copy ingredients [#2040](https://github.com/nextcloud/cookbook/pull/2040) @seyfeb
+- Seconds can now be specified for recipe times [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
 
 ### Fixed
 - Prevent yield calculation for ## as ingredient headline [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
+- Improved styling of times in recipe view [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
 - Add missing translatable string for recipe-creation button in empty list view [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
 
 ### Documentation
