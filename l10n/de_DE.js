@@ -212,6 +212,7 @@ OC.L10N.register(
     "Search recipes" : "Rezepte suchen",
     "Delete nutrition item" : "Nährstoffelement löschen",
     "Please select option first." : "Bitte zuerst eine Option auswählen.",
+    "Create new recipe!" : "Neues Rezept erstellen!",
     "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren"
 },
 "nplurals=2; plural=(n != 1);");
