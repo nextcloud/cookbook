@@ -1,7 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
-    "No image with the matching MIME type was found on the server." : "لم يتم العثور على أي صورة بنوع MIME المطابق على الخادوم.",
+    "No image with the matching MIME type was found on the server." : "لم يتم العثور على أي صورة من النوع MIME على الخادوم.",
     "Recipe with ID %d was not found in database." : "لم يتم العثور على الوصفة رقم %dفي قاعدة البيانات.",
     "Downloading of a file failed returned the following error message: %s" : "فشل تنزيل ملف و أرجع رسالة الخطأ التالية : %s",
     "No content encoding was detected in the content." : "تعذّر التعرُّف على ماهية ترميز المحتوى في المحتوى",
@@ -212,6 +212,7 @@ OC.L10N.register(
     "Search recipes" : "البحث في الوصفات",
     "Delete nutrition item" : "إحذف العنصر الغذائي",
     "Please select option first." : "حدِّد أوّلاً خيارك، من فضلك.",
+    "Create new recipe!" : "إستحداث وصفة جديدة!",
     "Copy ingredients to the clipboard" : "إنسَخ المُكوِّنات إلى الحافظة"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");
