@@ -1,6 +1,8 @@
 ## [Unreleased]
 
 ### Fixed
+- Prevent yield calculation for ## as ingredient headline [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
+- Add missing translatable string for recipe-creation button in empty list view [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
 - Allow translation of string _Enable debugging_ in settings
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 - Fix wrong parsing of recipe yield input
