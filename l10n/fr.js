@@ -211,6 +211,7 @@ OC.L10N.register(
     "Filter current recipes" : "Filtrer les recettes actuelles",
     "Search recipes" : "Rechercher des recettes",
     "Please select option first." : "Veuillez d'abord sélectionner l'option.",
+    "Create new recipe!" : "Créer une nouvelle recette !",
     "Copy ingredients to the clipboard" : "Copier les ingrédients dans le presse-papier"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
