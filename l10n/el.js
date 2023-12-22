@@ -81,6 +81,7 @@ OC.L10N.register(
     "Nutrition Information" : "Διατροφικές πληροφορίες",
     "Ingredients" : "Συστατικά",
     "Instructions" : "Οδηγίες",
+    "You have unsaved changes! Do you still want to leave?" : "Έχετε μη αποθηκευμένες αλλαγές! Θέλετε ακόμα να αποχωρήσετε;",
     "Calories" : "Θερμίδες",
     "E.g.: 450 kcal (amount & unit)" : "Π.χ .: 450 kcal (ποσό & μονάδα)",
     "Carbohydrate content" : "Περιεκτικότητα σε υδατάνθρακες",
