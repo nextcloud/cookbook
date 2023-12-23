@@ -111,6 +111,7 @@ OC.L10N.register(
     "No recipes created or imported." : "لا توجد أي وصفات مُستحدَثة أو مُستورَدة",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "للبدء، يمكنك استعمال صندوق النص في شريط التنقل الجانبي لاستيراد وصفة جديدة. إضغط أدناه لإنشاء وصفة جديدة.",
     "No recipes" : "لا توجد أيّ وصفاتٍ",
+    "Create new recipe!" : "إستحداث وصفة جديدة!",
     "Select order" : "إختَر ترتيباً",
     "Name" : "الاسم",
     "Creation date" : "تاريخ الإنشاء",
@@ -212,7 +213,6 @@ OC.L10N.register(
     "Search recipes" : "البحث في الوصفات",
     "Delete nutrition item" : "إحذف العنصر الغذائي",
     "Please select option first." : "حدِّد أوّلاً خيارك، من فضلك.",
-    "Create new recipe!" : "إستحداث وصفة جديدة!",
     "Copy ingredients to the clipboard" : "إنسَخ المُكوِّنات إلى الحافظة"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

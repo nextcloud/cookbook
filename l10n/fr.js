@@ -111,6 +111,7 @@ OC.L10N.register(
     "No recipes created or imported." : "Aucune recette créée ou importée.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Pour commencer, vous pouvez utiliser la zone de texte dans la barre de navigation de gauche pour importer une nouvelle recette. Cliquez ci-dessous pour créer une recette de zéro.",
     "No recipes" : "Aucune recette",
+    "Create new recipe!" : "Créer une nouvelle recette !",
     "Select order" : "Choisir l'ordre",
     "Name" : "Nom",
     "Creation date" : "Date de création",
@@ -211,7 +212,6 @@ OC.L10N.register(
     "Filter current recipes" : "Filtrer les recettes actuelles",
     "Search recipes" : "Rechercher des recettes",
     "Please select option first." : "Veuillez d'abord sélectionner l'option.",
-    "Create new recipe!" : "Créer une nouvelle recette !",
     "Copy ingredients to the clipboard" : "Copier les ingrédients dans le presse-papier"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
