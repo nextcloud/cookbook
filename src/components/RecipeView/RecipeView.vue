@@ -828,9 +828,11 @@ export default {
 .mb-0 {
     margin-bottom: 0 !important;
 }
+
 .mb-3 {
     margin-bottom: 0.75rem !important;
 }
+
 .wrapper {
     width: 100%;
 }
