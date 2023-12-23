@@ -111,6 +111,7 @@ OC.L10N.register(
     "No recipes created or imported." : "Oluşturulmuş ya da içe aktarılmış bir tarif yok.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Başlamak için yeni bir tarifi içe aktarmak üzere sol gezinme çubuğundaki metin kutusunu kullanabilirsiniz. Sıfırdan bir tarif oluşturmak için aşağıya tıklayın.",
     "No recipes" : "Herhangi bir tarif yok",
+    "Create new recipe!" : "Yeni tarif ekle!",
     "Select order" : "Sıralamayı seçin",
     "Name" : "Ad",
     "Creation date" : "Eklenme tarihi",
@@ -212,7 +213,6 @@ OC.L10N.register(
     "Search recipes" : "Tarif ara",
     "Delete nutrition item" : "Beslenme ögesini sil",
     "Please select option first." : "Lütfen önce bir seçim yapın.",
-    "Create new recipe!" : "Yeni tarif ekle!",
     "Copy ingredients to the clipboard" : "İçindekileri panoya kopyala"
 },
 "nplurals=2; plural=(n > 1);");

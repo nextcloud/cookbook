@@ -109,6 +109,7 @@
     "No recipes created or imported." : "Keine Rezepte erstellt oder importiert",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Um zu beginnen, können Sie das Textfeld in der linken Navigationsleiste verwenden, um ein neues Rezept zu importieren. Klicken Sie unten, um ein Rezept von Grund auf neu zu erstellen.",
     "No recipes" : "Keine Rezepte",
+    "Create new recipe!" : "Neues Rezept erstellen!",
     "Select order" : "Sortierung auswählen",
     "Name" : "Name",
     "Creation date" : "Erstellungsdatum",
@@ -210,7 +211,6 @@
     "Search recipes" : "Rezepte suchen",
     "Delete nutrition item" : "Nährstoffelement löschen",
     "Please select option first." : "Bitte zuerst eine Option auswählen.",
-    "Create new recipe!" : "Neues Rezept erstellen!",
     "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

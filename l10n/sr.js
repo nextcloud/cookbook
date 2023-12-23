@@ -111,6 +111,7 @@ OC.L10N.register(
     "No recipes created or imported." : "Није креиран или увезен ниједан рецепт.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Да бисте почели, можете да употребите текст поље у левој навигациониј траци да увезете нови рецепт. Кликлните испод да креирате нови празан рецепт.",
     "No recipes" : "Нема рецепата",
+    "Create new recipe!" : "Креирај нови рецепт!",
     "Select order" : "Изаберите редослед",
     "Name" : "Име",
     "Creation date" : "Датум креирања",
@@ -212,7 +213,6 @@ OC.L10N.register(
     "Search recipes" : "Претрага рецепата",
     "Delete nutrition item" : "Обриши нутрициону ставку",
     "Please select option first." : "Молимо вас да најпре изаберете опцију.",
-    "Create new recipe!" : "Креирај нови рецепт!",
     "Copy ingredients to the clipboard" : "Копирај састојке у клипборд"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");

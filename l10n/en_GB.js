@@ -111,6 +111,7 @@ OC.L10N.register(
     "No recipes created or imported." : "No recipes created or imported.",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch.",
     "No recipes" : "No recipes",
+    "Create new recipe!" : "Create new recipe!",
     "Select order" : "Select order",
     "Name" : "Name",
     "Creation date" : "Creation date",
@@ -212,7 +213,6 @@ OC.L10N.register(
     "Search recipes" : "Search recipes",
     "Delete nutrition item" : "Delete nutrition item",
     "Please select option first." : "Please select option first.",
-    "Create new recipe!" : "Create new recipe!",
     "Copy ingredients to the clipboard" : "Copy ingredients to the clipboard"
 },
 "nplurals=2; plural=(n != 1);");
