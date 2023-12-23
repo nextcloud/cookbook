@@ -3,6 +3,7 @@
 ### Added
 - Toast with success/error message after trying to copy ingredients [#2040](https://github.com/nextcloud/cookbook/pull/2040) @seyfeb
 - Seconds can now be specified for recipe times [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
+- Added support for citation field [#2023](https://github.com/nextcloud/cookbook/pull/2023) @seyfeb
 
 ### Fixed
 - Prevent yield calculation for ## as ingredient headline [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
