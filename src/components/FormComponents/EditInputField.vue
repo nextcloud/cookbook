@@ -9,7 +9,9 @@
             "
             ref="inputField"
             v-model="content"
+            :placeholder="placeholder"
             :aria-labelledby="inputLabelId"
+            :aria-placeholder="placeholder"
             @input="handleInput"
             @keydown="keyDown"
             @keyup="handleSuggestionsPopupKeyUp"
@@ -24,7 +26,9 @@
                 ref="inputField"
                 v-model="content"
                 :type="props.fieldType"
+                :placeholder="placeholder"
                 :aria-labelledby="inputLabelId"
+                :aria-placeholder="placeholder"
                 @input="handleInput"
                 @keydown="keyDown"
                 @keyup="handleSuggestionsPopupKeyUp"
@@ -65,6 +69,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
         required: false,
+    },
+    placeholder: {
+        type: String,
+        default: '',
     },
     suggestionOptions: {
         type: Array,
