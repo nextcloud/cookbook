@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "Resep",
     "in %s" : "dalam %s",
     "None" : "Tidak ada",
     "Page not found" : "Halaman tidak ditemukan",
