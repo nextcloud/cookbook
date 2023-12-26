@@ -61,7 +61,7 @@ import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.v
 
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import { useStore } from '../../store';
-import { normalize as normalizeString } from '../../js/string-utils';
+import { normalize as normalizeString } from '../../js/utils/string-utils';
 import EmptyList from './EmptyList.vue';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
