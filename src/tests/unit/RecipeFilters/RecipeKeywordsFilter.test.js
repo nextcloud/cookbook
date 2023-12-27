@@ -1,129 +1,192 @@
 import RecipeKeywordsFilter from '../../../js/RecipeFilters/RecipeKeywordsFilter';
-import applyFilters from '../../../js/utils/applyRecipeFilters';
+import { AndOperator, OrOperator } from '../../../js/LogicOperators';
 
+/**
+ * Test suite for the RecipeKeywordsFilter class.
+ */
 describe('RecipeKeywordsFilter', () => {
-    test('it should filter recipes by keywords', () => {
-        const filter = new RecipeKeywordsFilter(['pasta', 'salty']);
-        const recipes = [
-            {
-                name: 'Spaghetti Bolognese',
-                keywords: ['pasta', 'salty'],
-                category: ['main'],
-            },
-            {
-                name: 'Chicken Stir Fry',
-                keywords: ['chicken', 'salty'],
-                category: ['main'],
-            },
-            {
-                name: 'Chocolate Cake',
-                keywords: ['chocolate'],
-                category: ['dessert'],
-            },
-        ];
+    /** @type {Object[]} recipes - Array of recipe objects for testing. */
+    const recipes = [
+        { keywords: ['easy', 'quick', 'pasta'] },
+        { keywords: ['healthy', 'salad'] },
+        { keywords: 'dessert' },
+        { keywords: ['vegetarian', 'pizza'] },
+        { keywords: ['salami', 'pizza'] },
+        { keywords: 'pizza' },
+        { keywords: ['italian', 'pasta', 'spaghetti'] },
+        { keywords: 'breakfast' },
+        { keywords: ['chocolate', 'cake'] },
+        { keywords: ['chocolate', 'cake', 'almond'] },
+        { keywords: ['chocolate', 'soufflé'] },
+        { keywords: ['lemon', 'cake'] },
+        { keywords: 'cake' },
+    ];
 
-        const result = applyFilters(recipes, [filter]);
-
-        expect(result).toEqual([
-            {
-                name: 'Spaghetti Bolognese',
-                keywords: ['pasta', 'salty'],
-                category: ['main'],
-            },
+    /**
+     * Test case: it should filter recipes by a single keyword using AND operator.
+     */
+    test('it should filter recipes by a single keyword using AND operator', () => {
+        const filter = new RecipeKeywordsFilter('pasta', new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(2);
+        expect(filteredRecipes[0].keywords).toEqual(['easy', 'quick', 'pasta']);
+        expect(filteredRecipes[1].keywords).toEqual([
+            'italian',
+            'pasta',
+            'spaghetti',
         ]);
     });
 
-    test('it should filter recipes with non-array keyword property', () => {
-        const filter = new RecipeKeywordsFilter('salty');
-        const recipes = [
-            {
-                name: 'Spaghetti Bolognese',
-                keywords: 'salty',
-                category: ['main'],
-            },
-            {
-                name: 'Chicken Stir Fry',
-                keywords: ['chicken', 'salty'],
-                category: ['main'],
-            },
-            {
-                name: 'Chocolate Cake',
-                keywords: ['chocolate'],
-                category: ['dessert'],
-            },
-        ];
-
-        const result = applyFilters(recipes, [filter]);
-
-        expect(result).toEqual([
-            {
-                name: 'Spaghetti Bolognese',
-                keywords: 'salty',
-                category: ['main'],
-            },
-            {
-                name: 'Chicken Stir Fry',
-                keywords: ['chicken', 'salty'],
-                category: ['main'],
-            },
+    /**
+     * Test case: it should filter recipes by a single keyword using OR operator.
+     */
+    test('it should filter recipes by a single keyword using OR operator', () => {
+        const filter = new RecipeKeywordsFilter('pizza', new OrOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(3);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['vegetarian', 'pizza'],
+            ['salami', 'pizza'],
+            'pizza',
         ]);
     });
 
+    /**
+     * Test case: it should filter recipes by multiple keywords using AND operator.
+     */
+    test('it should filter recipes by multiple keywords using AND operator', () => {
+        const filter = new RecipeKeywordsFilter(
+            ['chocolate', 'cake'],
+            new AndOperator(),
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(2);
+        expect(filteredRecipes[0].keywords).toEqual(['chocolate', 'cake']);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['chocolate', 'cake'],
+            ['chocolate', 'cake', 'almond'],
+        ]);
+    });
+
+    /**
+     * Test case: it should filter recipes by multiple keywords using OR operator.
+     */
+    test('it should filter recipes by multiple keywords using OR operator', () => {
+        const filter = new RecipeKeywordsFilter(
+            ['chocolate', 'cake'],
+            new OrOperator(),
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(5);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['chocolate', 'cake'],
+            ['chocolate', 'cake', 'almond'],
+            ['chocolate', 'soufflé'],
+            ['lemon', 'cake'],
+            'cake',
+        ]);
+    });
+
+    /**
+     * Test case: it should handle case-insensitive filtering.
+     */
     test('it should handle case-insensitive filtering', () => {
-        const filter = new RecipeKeywordsFilter(['Pasta', 'SALTY']);
-        const recipes = [
-            {
-                name: 'Spaghetti Bolognese',
-                keywords: ['pasta', 'salty'],
-                category: ['main'],
-            },
-            {
-                name: 'Chicken Stir Fry',
-                keywords: ['chicken', 'salty'],
-                category: ['main'],
-            },
-            {
-                name: 'Chocolate Cake',
-                keywords: ['chocolate'],
-                category: ['dessert'],
-            },
-        ];
+        const filter = new RecipeKeywordsFilter('DEssERT', new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(1);
+        expect(filteredRecipes[0].keywords).toBe('dessert');
+    });
 
-        const result = applyFilters(recipes, [filter]);
-
-        expect(result).toEqual([
-            {
-                name: 'Spaghetti Bolognese',
-                keywords: ['pasta', 'salty'],
-                category: ['main'],
-            },
+    /**
+     * Test case: it should handle empty keywords and return all recipes with OR operator.
+     */
+    test('it should handle empty keywords and return all recipes with OR operator', () => {
+        const filter = new RecipeKeywordsFilter([], new OrOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['easy', 'quick', 'pasta'],
+            ['healthy', 'salad'],
+            'dessert',
+            ['vegetarian', 'pizza'],
+            ['salami', 'pizza'],
+            'pizza',
+            ['italian', 'pasta', 'spaghetti'],
+            'breakfast',
+            ['chocolate', 'cake'],
+            ['chocolate', 'cake', 'almond'],
+            ['chocolate', 'soufflé'],
+            ['lemon', 'cake'],
+            'cake',
         ]);
     });
 
-    test('it should handle missing keywords property', () => {
-        const filter = new RecipeKeywordsFilter(['chicken']);
-        const recipes = [
-            { name: 'Spaghetti Bolognese', category: ['main'] },
-            {
-                name: 'Chicken Stir Fry',
-                keywords: ['chicken'],
-                category: ['main'],
-            },
-            {
-                name: 'Chocolate Cake',
-                keywords: ['chocolate'],
-                category: ['dessert'],
-            },
-        ];
+    /**
+     * Test case: it should handle empty keywords and return all recipes with AND operator.
+     */
+    test('it should handle empty keywords and return no recipes with AND operator', () => {
+        const filter = new RecipeKeywordsFilter([], new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['easy', 'quick', 'pasta'],
+            ['healthy', 'salad'],
+            'dessert',
+            ['vegetarian', 'pizza'],
+            ['salami', 'pizza'],
+            'pizza',
+            ['italian', 'pasta', 'spaghetti'],
+            'breakfast',
+            ['chocolate', 'cake'],
+            ['chocolate', 'cake', 'almond'],
+            ['chocolate', 'soufflé'],
+            ['lemon', 'cake'],
+            'cake',
+        ]);
+    });
 
-        const result = applyFilters(recipes, [filter]);
+    /**
+     * Test case: it should filter recipes when keywords property is a string using AND operator.
+     */
+    test('it should filter recipes when keywords property is a string using AND operator', () => {
+        const filter = new RecipeKeywordsFilter(
+            'vegetarian',
+            new AndOperator(),
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(1);
+        expect(filteredRecipes[0].keywords).toEqual(['vegetarian', 'pizza']);
+    });
 
-        expect(result).toEqual([
-            {
-                name: 'Chicken Stir Fry',
-                keywords: ['chicken'],
-                category: ['main'],
-            },
+    /**
+     * Test case: it should filter recipes when keywords property is a string using OR operator.
+     */
+    test('it should filter recipes when keywords property is a string using OR operator', () => {
+        const filter = new RecipeKeywordsFilter('pizza', new OrOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(3);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['vegetarian', 'pizza'],
+            ['salami', 'pizza'],
+            'pizza',
         ]);
     });
 });
