@@ -32,13 +32,13 @@ class RecipeCategoriesFilter extends RecipeFilter {
         // If no filter is set, return all recipes
         if (this.categories.length === 0) return true;
 
-        if (!recipe.recipeCategory) {
+        if (!recipe.category) {
             return false;
         }
 
-        const recipeCategories = Array.isArray(recipe.recipeCategory)
-            ? recipe.recipeCategory.map((category) => normalizeString(category))
-            : [normalizeString(recipe.recipeCategory)];
+        const recipeCategories = Array.isArray(recipe.category)
+            ? recipe.category.map((category) => normalizeString(category))
+            : [normalizeString(recipe.category)];
 
         let result = this.operator instanceof AndOperator;
 

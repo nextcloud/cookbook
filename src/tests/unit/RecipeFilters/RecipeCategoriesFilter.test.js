@@ -7,19 +7,19 @@ import { AndOperator, OrOperator } from '../../../js/LogicOperators';
 describe('RecipeCategoriesFilter', () => {
     /** @type {Object[]} recipes - Array of recipe objects for testing. */
     const recipes = [
-        { recipeCategory: 'main course' },
-        { recipeCategory: ['salad', 'appetizer'] },
-        { recipeCategory: 'dessert' },
-        { recipeCategory: ['vegetarian', 'pizza'] },
-        { recipeCategory: ['pizza', 'appetizer'] },
-        { recipeCategory: 'pizza' },
-        { recipeCategory: ['pasta', 'main course'] },
-        { recipeCategory: 'breakfast' },
-        { recipeCategory: ['cake', 'dessert'] },
-        { recipeCategory: ['cake', 'dessert', 'gluten-free'] },
-        { recipeCategory: ['soufflé', 'dessert'] },
-        { recipeCategory: ['cake', 'gluten-free'] },
-        { recipeCategory: 'cake' },
+        { category: 'main course' },
+        { category: ['salad', 'appetizer'] },
+        { category: 'dessert' },
+        { category: ['vegetarian', 'pizza'] },
+        { category: ['pizza', 'appetizer'] },
+        { category: 'pizza' },
+        { category: ['pasta', 'main course'] },
+        { category: 'breakfast' },
+        { category: ['cake', 'dessert'] },
+        { category: ['cake', 'dessert', 'gluten-free'] },
+        { category: ['soufflé', 'dessert'] },
+        { category: ['cake', 'gluten-free'] },
+        { category: 'cake' },
     ];
 
     /**
@@ -34,11 +34,8 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(2);
-        expect(filteredRecipes[0].recipeCategory).toBe('main course');
-        expect(filteredRecipes[1].recipeCategory).toEqual([
-            'pasta',
-            'main course',
-        ]);
+        expect(filteredRecipes[0].category).toBe('main course');
+        expect(filteredRecipes[1].category).toEqual(['pasta', 'main course']);
     });
 
     /**
@@ -50,7 +47,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(3);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             ['vegetarian', 'pizza'],
             ['pizza', 'appetizer'],
             'pizza',
@@ -69,7 +66,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(1);
-        expect(filteredRecipes[0].recipeCategory).toBe('breakfast');
+        expect(filteredRecipes[0].category).toBe('breakfast');
     });
 
     /**
@@ -84,7 +81,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(1);
-        expect(filteredRecipes[0].recipeCategory).toBe('breakfast');
+        expect(filteredRecipes[0].category).toBe('breakfast');
     });
 
     /**
@@ -99,8 +96,8 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(2);
-        expect(filteredRecipes[0].recipeCategory).toEqual(['cake', 'dessert']);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes[0].category).toEqual(['cake', 'dessert']);
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             ['cake', 'dessert'],
             ['cake', 'dessert', 'gluten-free'],
         ]);
@@ -118,7 +115,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(5);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             'dessert',
             'breakfast',
             ['cake', 'dessert'],
@@ -139,7 +136,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(1);
-        expect(filteredRecipes[0].recipeCategory).toBe('breakfast');
+        expect(filteredRecipes[0].category).toBe('breakfast');
     });
 
     /**
@@ -151,7 +148,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(recipes.length);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             'main course',
             ['salad', 'appetizer'],
             'dessert',
@@ -177,7 +174,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(recipes.length);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             'main course',
             ['salad', 'appetizer'],
             'dessert',
@@ -203,7 +200,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(recipes.length);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             'main course',
             ['salad', 'appetizer'],
             'dessert',
@@ -229,7 +226,7 @@ describe('RecipeCategoriesFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(recipes.length);
-        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+        expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
             'main course',
             ['salad', 'appetizer'],
             'dessert',
