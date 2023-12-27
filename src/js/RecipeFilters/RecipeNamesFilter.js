@@ -17,6 +17,9 @@ class RecipeNamesFilter extends RecipeFilter {
         this.names = Array.isArray(names)
             ? names.map((name) => normalizeString(name))
             : [normalizeString(names)];
+
+        // Ignore empty strings
+        this.names = this.names.filter((n) => n !== '');
     }
 
     /**
@@ -26,13 +29,12 @@ class RecipeNamesFilter extends RecipeFilter {
      * @returns {boolean} True if the recipe passes the filter, false otherwise.
      */
     filter(recipe) {
+        // If no filter is set, return all recipes
+        if (this.names.length === 0) return true;
+
         if (!recipe.name) {
             return false;
         }
-
-        // If no filter is set, return all recipes
-        if ((this.names.length === 0) | this.names.every((n) => n === ''))
-            return true;
 
         const recipeNames = Array.isArray(recipe.name)
             ? recipe.name.map((name) => normalizeString(name))

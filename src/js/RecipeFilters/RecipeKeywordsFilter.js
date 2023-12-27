@@ -17,6 +17,9 @@ class RecipeKeywordsFilter extends RecipeFilter {
         this.keywords = Array.isArray(keywords)
             ? keywords.map((keyword) => normalizeString(keyword))
             : [normalizeString(keywords)];
+
+        // Ignore empty strings
+        this.keywords = this.keywords.filter((k) => k !== '');
     }
 
     /**
@@ -26,13 +29,12 @@ class RecipeKeywordsFilter extends RecipeFilter {
      * @returns {boolean} True if the recipe passes the filter, false otherwise.
      */
     filter(recipe) {
+        // If no filter is set, return all recipes
+        if (this.keywords.length === 0) return true;
+
         if (!recipe.keywords) {
             return false;
         }
-
-        // If no filter is set, return all recipes
-        if ((this.keywords.length === 0) | this.keywords.every((k) => k === ''))
-            return true;
 
         const recipeKeywords = Array.isArray(recipe.keywords)
             ? recipe.keywords.map((keyword) => normalizeString(keyword))

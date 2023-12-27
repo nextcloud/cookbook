@@ -17,6 +17,9 @@ class RecipeCategoriesFilter extends RecipeFilter {
         this.categories = Array.isArray(categories)
             ? categories.map((category) => normalizeString(category))
             : [normalizeString(categories)];
+
+        // Ignore empty strings
+        this.categories = this.categories.filter((c) => c !== '');
     }
 
     /**
@@ -26,16 +29,12 @@ class RecipeCategoriesFilter extends RecipeFilter {
      * @returns {boolean} True if the recipe passes the filter, false otherwise.
      */
     filter(recipe) {
+        // If no filter is set, return all recipes
+        if (this.categories.length === 0) return true;
+
         if (!recipe.recipeCategory) {
             return false;
         }
-
-        // If no filter is set, return all recipes
-        if (
-            (this.categories.length === 0) |
-            this.categories.every((c) => c === '')
-        )
-            return true;
 
         const recipeCategories = Array.isArray(recipe.recipeCategory)
             ? recipe.recipeCategory.map((category) => normalizeString(category))
