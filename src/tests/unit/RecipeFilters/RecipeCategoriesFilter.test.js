@@ -143,9 +143,9 @@ describe('RecipeCategoriesFilter', () => {
     });
 
     /**
-     * Test case: it should handle empty categories and return all recipes with OR operator.
+     * Test case: it should handle empty categories list and return all recipes with OR operator.
      */
-    test('it should handle empty categories and return all recipes with OR operator', () => {
+    test('it should handle empty categories list and return all recipes with OR operator', () => {
         const filter = new RecipeCategoriesFilter([], new OrOperator());
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
@@ -169,10 +169,62 @@ describe('RecipeCategoriesFilter', () => {
     });
 
     /**
-     * Test case: it should handle empty categories and return all recipes with AND operator.
+     * Test case: it should handle empty categories list and return all recipes with AND operator.
      */
-    test('it should handle empty categories and return no recipes with AND operator', () => {
+    test('it should handle empty categories list and return no recipes with AND operator', () => {
         const filter = new RecipeCategoriesFilter([], new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+            'main course',
+            ['salad', 'appetizer'],
+            'dessert',
+            ['vegetarian', 'pizza'],
+            ['pizza', 'appetizer'],
+            'pizza',
+            ['pasta', 'main course'],
+            'breakfast',
+            ['cake', 'dessert'],
+            ['cake', 'dessert', 'gluten-free'],
+            ['soufflé', 'dessert'],
+            ['cake', 'gluten-free'],
+            'cake',
+        ]);
+    });
+
+    /**
+     * Test case: it should handle empty-string categories and return all recipes with OR operator.
+     */
+    test('it should handle empty-string categories and return all recipes with OR operator', () => {
+        const filter = new RecipeCategoriesFilter([''], new OrOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
+            'main course',
+            ['salad', 'appetizer'],
+            'dessert',
+            ['vegetarian', 'pizza'],
+            ['pizza', 'appetizer'],
+            'pizza',
+            ['pasta', 'main course'],
+            'breakfast',
+            ['cake', 'dessert'],
+            ['cake', 'dessert', 'gluten-free'],
+            ['soufflé', 'dessert'],
+            ['cake', 'gluten-free'],
+            'cake',
+        ]);
+    });
+
+    /**
+     * Test case: it should handle empty-string categories and return all recipes with AND operator.
+     */
+    test('it should handle empty-string categories and return no recipes with AND operator', () => {
+        const filter = new RecipeCategoriesFilter([''], new AndOperator());
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
         );

@@ -108,9 +108,9 @@ describe('RecipeKeywordsFilter', () => {
     });
 
     /**
-     * Test case: it should handle empty keywords and return all recipes with OR operator.
+     * Test case: it should handle empty keywords list and return all recipes with OR operator.
      */
-    test('it should handle empty keywords and return all recipes with OR operator', () => {
+    test('it should handle empty keywords list and return all recipes with OR operator', () => {
         const filter = new RecipeKeywordsFilter([], new OrOperator());
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
@@ -134,10 +134,62 @@ describe('RecipeKeywordsFilter', () => {
     });
 
     /**
-     * Test case: it should handle empty keywords and return all recipes with AND operator.
+     * Test case: it should handle empty keywords list and return all recipes with AND operator.
      */
-    test('it should handle empty keywords and return no recipes with AND operator', () => {
+    test('it should handle empty keywords list and return no recipes with AND operator', () => {
         const filter = new RecipeKeywordsFilter([], new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['easy', 'quick', 'pasta'],
+            ['healthy', 'salad'],
+            'dessert',
+            ['vegetarian', 'pizza'],
+            ['salami', 'pizza'],
+            'pizza',
+            ['italian', 'pasta', 'spaghetti'],
+            'breakfast',
+            ['chocolate', 'cake'],
+            ['chocolate', 'cake', 'almond'],
+            ['chocolate', 'soufflé'],
+            ['lemon', 'cake'],
+            'cake',
+        ]);
+    });
+
+    /**
+     * Test case: it should handle empty-string keywords and return all recipes with OR operator.
+     */
+    test('it should handle empty keywords and return all recipes with OR operator', () => {
+        const filter = new RecipeKeywordsFilter([''], new OrOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            ['easy', 'quick', 'pasta'],
+            ['healthy', 'salad'],
+            'dessert',
+            ['vegetarian', 'pizza'],
+            ['salami', 'pizza'],
+            'pizza',
+            ['italian', 'pasta', 'spaghetti'],
+            'breakfast',
+            ['chocolate', 'cake'],
+            ['chocolate', 'cake', 'almond'],
+            ['chocolate', 'soufflé'],
+            ['lemon', 'cake'],
+            'cake',
+        ]);
+    });
+
+    /**
+     * Test case: it should handle empty-string keywords and return all recipes with AND operator.
+     */
+    test('it should handle empty-string keywords and return no recipes with AND operator', () => {
+        const filter = new RecipeKeywordsFilter([''], new AndOperator());
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
         );

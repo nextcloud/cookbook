@@ -103,7 +103,7 @@ describe('RecipeNamesFilter', () => {
     });
 
     /**
-     * Test case: it should handle empty names and return all recipes with OR operator.
+     * Test case: it should handle empty names list and return all recipes with OR operator.
      */
     test('it should handle empty names and return all recipes with OR operator', () => {
         const filter = new RecipeNamesFilter([], new OrOperator());
@@ -123,10 +123,50 @@ describe('RecipeNamesFilter', () => {
     });
 
     /**
-     * Test case: it should handle empty names and return all recipes with AND operator.
+     * Test case: it should handle empty names list and return all recipes with AND operator.
      */
     test('it should handle empty names and return no recipes with AND operator', () => {
         const filter = new RecipeNamesFilter([], new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.name)).toEqual([
+            'Pasta Carbonara',
+            ['Pasta Carbonara', 'Italian pasta'],
+            ['Chocolate Cake', 'Brownie'],
+            'Salad',
+            ['Pizza', 'Calzone'],
+            'Pizza',
+            ['Spaghetti Bolognese', 'Garlic Bread'],
+        ]);
+    });
+
+    /**
+     * Test case: it should handle empty-string names and return all recipes with OR operator.
+     */
+    test('it should handle empty-string names and return all recipes with OR operator', () => {
+        const filter = new RecipeNamesFilter([''], new OrOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(recipes.length);
+        expect(filteredRecipes.map((recipe) => recipe.name)).toEqual([
+            'Pasta Carbonara',
+            ['Pasta Carbonara', 'Italian pasta'],
+            ['Chocolate Cake', 'Brownie'],
+            'Salad',
+            ['Pizza', 'Calzone'],
+            'Pizza',
+            ['Spaghetti Bolognese', 'Garlic Bread'],
+        ]);
+    });
+
+    /**
+     * Test case: it should handle empty-string names and return all recipes with AND operator.
+     */
+    test('it should handle empty-string names and return all recipes with AND operator', () => {
+        const filter = new RecipeNamesFilter([''], new AndOperator());
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
         );
