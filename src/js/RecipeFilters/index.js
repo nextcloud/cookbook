@@ -1,5 +1,5 @@
-import RecipeCategoryFilter from './RecipeCategoriesFilter';
+import RecipeCategoriesFilter from './RecipeCategoriesFilter';
 import RecipeKeywordsFilter from './RecipeKeywordsFilter';
-import RecipeNameFilter from './RecipeNamesFilter';
+import RecipeNamesFilter from './RecipeNamesFilter';
 
-export { RecipeCategoryFilter, RecipeKeywordsFilter, RecipeNameFilter };
+export { RecipeCategoriesFilter, RecipeKeywordsFilter, RecipeNamesFilter };

@@ -21,6 +21,7 @@ class RecipeNamesFilter extends RecipeFilter {
 
     /**
      * Implementation of the filter method for RecipeNamesFilter.
+     * An empty filter list or only empty strings are ignored and evaluate to true.
      * @param {Object} recipe - The recipe object to be filtered.
      * @returns {boolean} True if the recipe passes the filter, false otherwise.
      */
@@ -30,7 +31,8 @@ class RecipeNamesFilter extends RecipeFilter {
         }
 
         // If no filter is set, return all recipes
-        if (this.names.length === 0) return true;
+        if ((this.names.length === 0) | this.names.every((n) => n === ''))
+            return true;
 
         const recipeNames = Array.isArray(recipe.name)
             ? recipe.name.map((name) => normalizeString(name))
