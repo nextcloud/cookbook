@@ -109,6 +109,7 @@
     "No recipes created or imported." : "Nevytvořeny nebo neimportovány žádné recepty",
     "To get started, you may use the text box in the left navigation bar to import a new recipe. Click below to create a recipe from scratch." : "Pro začátek můžete použít textové pole v navigačním panelu vlevo a naimportovat nový recept. Kliknutím níže vytvoříte recept od začátku.",
     "No recipes" : "Žádné recepty",
+    "Create new recipe!" : "Vytvořte nový recept!",
     "Select order" : "Vyberte pořadí",
     "Name" : "Název",
     "Creation date" : "Datum vytvoření",
@@ -134,6 +135,7 @@
     "Tools" : "Nástroje",
     "Frontend debug settings" : "Nastavení pro ladění nadstavby",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "V případě problémů, toto umožňuje dočasně zapnout zaznamenávání událostí v konzoli webového prohlížeče. Ve výchozím stavu tato nastavení nepotřebujete.",
+    "Enable debugging" : "Zapnout ladění",
     "Could not set preference for image printing" : "Nedaří se nastavit předvolby pro tisk obrázku",
     "Could not set recipe update interval to {interval}" : "Nepodařilo se nastavit interval aktualizace receptů na {interval}",
     "Could not save visible info blocks" : "Nedaří se uložit viditelnost bloků informací",
@@ -204,6 +206,10 @@
     "Loading…" : "Načítání…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Přísady není možné přepočítat kvůli nesprávné syntaxi. Změňte ji na tuto: počet jednotek přísady. Příklady: 200g mrkve nebo 1 špetka soli",
     "Failed to load recipes with keywords: {tags}" : "Nepodařilo se načíst recepty, obsahující klíčová slova: {tags}",
-    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
+    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání",
+    "Filter current recipes" : "Filtrovat ve stávajících receptech",
+    "Search recipes" : "Hledat recepty",
+    "Delete nutrition item" : "Smazat výživovou položku",
+    "Please select option first." : "Nejprve vyberte volbu"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }
