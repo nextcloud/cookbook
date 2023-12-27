@@ -1,3 +1,5 @@
+import { BinaryOperator } from '../LogicOperators';
+
 /**
  * Abstract class for a recipe filter.
  * @abstract
@@ -5,12 +7,14 @@
 class RecipeFilter {
     /**
      * Constructor for the abstract class.
-     * @throws {TypeError} Cannot instantiate abstract class.
+     * @param {BinaryOperator} operator - The binary operator for combining filter conditions.
+     * @throws {TypeError} Invalid operator.
      */
-    constructor() {
-        if (new.target === RecipeFilter) {
-            throw new TypeError('Cannot instantiate abstract class');
+    constructor(operator) {
+        if (!(operator instanceof BinaryOperator)) {
+            throw new TypeError('Invalid operator');
         }
+        this.operator = operator;
     }
 
     /**
