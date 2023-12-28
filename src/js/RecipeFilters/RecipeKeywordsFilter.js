@@ -10,16 +10,50 @@ class RecipeKeywordsFilter extends RecipeFilter {
     /**
      * Constructor for RecipeKeywordsFilter.
      * @param {string|string[]} keywords - The keywords to filter by.
+     * @param {boolean} isCommaSeparated - If the keywords field of the recipe should be handled as a comma-separated list.
      * @param {BinaryOperator} operator - The binary operator for combining filter conditions.
      */
-    constructor(keywords, operator = new AndOperator()) {
+    constructor(
+        keywords,
+        operator = new AndOperator(),
+        isCommaSeparated = false,
+    ) {
         super(operator);
         this.keywords = Array.isArray(keywords)
             ? keywords.map((keyword) => normalizeString(keyword))
             : [normalizeString(keywords)];
 
+        this.isCommaSeparated = isCommaSeparated;
+
         // Ignore empty strings
         this.keywords = this.keywords.filter((k) => k !== '');
+    }
+
+    /**
+     * Returns a normalized list of keywords attached to the recipe. Takes into account if the isCommaSeparated property
+     * is set on this class.
+     * @param {Object} recipe - The recipe object whose keywords are to be filtered.
+     * @returns {string[]} List of normalized keywords.
+     */
+    getNormalizedKeywords(recipe) {
+        let keywords = [];
+
+        if (this.isCommaSeparated) {
+            if (Array.isArray(recipe.keywords)) {
+                keywords = recipe.keywords
+                    .map((keyword) => keyword.split(','))
+                    .flat();
+            } else {
+                keywords = recipe.keywords.split(',');
+            }
+            keywords = keywords.map((keyword) => normalizeString(keyword));
+        } else {
+            keywords = Array.isArray(recipe.keywords)
+                ? recipe.keywords.map((keyword) => normalizeString(keyword))
+                : [normalizeString(recipe.keywords)];
+        }
+        keywords = keywords.filter((k) => k !== '');
+        return keywords;
     }
 
     /**
@@ -36,9 +70,7 @@ class RecipeKeywordsFilter extends RecipeFilter {
             return false;
         }
 
-        const recipeKeywords = Array.isArray(recipe.keywords)
-            ? recipe.keywords.map((keyword) => normalizeString(keyword))
-            : [normalizeString(recipe.keywords)];
+        const recipeKeywords = this.getNormalizedKeywords(recipe);
 
         let result = this.operator instanceof AndOperator;
 

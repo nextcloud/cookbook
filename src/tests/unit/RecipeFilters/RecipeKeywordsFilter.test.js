@@ -20,6 +20,8 @@ describe('RecipeKeywordsFilter', () => {
         { keywords: ['chocolate', 'soufflé'] },
         { keywords: ['lemon', 'cake'] },
         { keywords: 'cake' },
+        { keywords: 'soup, carrot' },
+        { keywords: 'soup, tomato' },
     ];
 
     /**
@@ -67,7 +69,6 @@ describe('RecipeKeywordsFilter', () => {
             filter.filter(recipe),
         );
         expect(filteredRecipes).toHaveLength(2);
-        expect(filteredRecipes[0].keywords).toEqual(['chocolate', 'cake']);
         expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
             ['chocolate', 'cake'],
             ['chocolate', 'cake', 'almond'],
@@ -92,6 +93,43 @@ describe('RecipeKeywordsFilter', () => {
             ['chocolate', 'soufflé'],
             ['lemon', 'cake'],
             'cake',
+        ]);
+    });
+
+    /**
+     * Test case: it should filter recipes by multiple comma-separated keywords using AND operator.
+     */
+    test('it should filter recipes by multiple comma-separated keywords using AND operator', () => {
+        const filter = new RecipeKeywordsFilter(
+            ['soup', 'carrot'],
+            new AndOperator(),
+            true,
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(1);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            'soup, carrot',
+        ]);
+    });
+
+    /**
+     * Test case: it should filter recipes by multiple comma-separated keywords using OR operator.
+     */
+    test('it should filter recipes by multiple comma-separated keywords using OR operator', () => {
+        const filter = new RecipeKeywordsFilter(
+            ['soup', 'carrot'],
+            new OrOperator(),
+            true,
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(2);
+        expect(filteredRecipes.map((recipe) => recipe.keywords)).toEqual([
+            'soup, carrot',
+            'soup, tomato',
         ]);
     });
 
@@ -130,6 +168,8 @@ describe('RecipeKeywordsFilter', () => {
             ['chocolate', 'soufflé'],
             ['lemon', 'cake'],
             'cake',
+            'soup, carrot',
+            'soup, tomato',
         ]);
     });
 
@@ -156,6 +196,8 @@ describe('RecipeKeywordsFilter', () => {
             ['chocolate', 'soufflé'],
             ['lemon', 'cake'],
             'cake',
+            'soup, carrot',
+            'soup, tomato',
         ]);
     });
 
@@ -182,6 +224,8 @@ describe('RecipeKeywordsFilter', () => {
             ['chocolate', 'soufflé'],
             ['lemon', 'cake'],
             'cake',
+            'soup, carrot',
+            'soup, tomato',
         ]);
     });
 
@@ -208,6 +252,8 @@ describe('RecipeKeywordsFilter', () => {
             ['chocolate', 'soufflé'],
             ['lemon', 'cake'],
             'cake',
+            'soup, carrot',
+            'soup, tomato',
         ]);
     });
 
