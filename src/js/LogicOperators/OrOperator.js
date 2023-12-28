@@ -11,6 +11,7 @@ class OrOperator extends BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @returns {boolean} The result after applying the OR operation.
      */
+    // eslint-disable-next-line class-methods-use-this
     apply(result, current) {
         return result || current;
     }

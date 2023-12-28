@@ -36,7 +36,7 @@ class RecipeKeywordsFilter extends RecipeFilter {
      * @returns {string[]} List of normalized keywords.
      */
     getNormalizedKeywords(recipe) {
-        let keywords = [];
+        let keywords;
 
         if (this.isCommaSeparated) {
             if (Array.isArray(recipe.keywords)) {

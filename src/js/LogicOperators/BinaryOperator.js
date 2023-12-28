@@ -19,7 +19,8 @@ class BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @throws {Error} Method 'apply' must be implemented by subclasses.
      */
-    apply(result, current) {
+    // eslint-disable-next-line no-unused-vars
+    static apply(result, current) {
         throw new Error("Method 'apply' must be implemented by subclasses");
     }
 }
