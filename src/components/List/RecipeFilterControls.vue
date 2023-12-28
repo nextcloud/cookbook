@@ -87,7 +87,7 @@ const localValue = computed(() => ({
 }));
 
 /**
- * An array of all keywords in the recipes. These are neither sorted nor unique
+ * An array of all categories in the recipes. These are neither sorted nor unique
  */
 const rawCategories = computed(() => {
     const categoriesArray = props.recipes.map((r) => {

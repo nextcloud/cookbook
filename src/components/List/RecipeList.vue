@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pt-2">
         <div v-if="loading" class="loading-indicator">
             <LoadingIndicator :delay="800" :size="40" />
         </div>
@@ -7,17 +7,18 @@
             <div v-if="recipeObjects.length === 0">
                 <EmptyList />
             </div>
-            <RecipeListKeywordCloud
-                v-if="showTagCloudInRecipeList"
-                v-model="keywordFilter"
-                :keywords="rawKeywords"
-                :filtered-recipes="filteredRecipes"
+            <RecipeFilterControls
+                v-model="filterValue"
+                :recipes="recipes"
+                :is-loading="loading"
+                :is-visible="isFilterControlsVisible"
+                @close="() => (isFilterControlsVisible = false)"
             />
             <div id="recipes-submenu" class="recipes-submenu-container">
                 <NcSelect
                     v-if="recipes.length > 0"
                     v-model="orderBy"
-                    class="recipes-sorting-dropdown"
+                    class="recipes-sorting-dropdown mr-4"
                     :clearable="false"
                     :multiple="false"
                     :searchable="false"
@@ -40,6 +41,18 @@
                         </div>
                     </template>
                 </NcSelect>
+                <NcButton
+                    v-if="isMobile"
+                    class="copy-ingredients print-hidden"
+                    :type="'secondary'"
+                    aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                    :title="t('cookbook', 'Show filter settings')"
+                    @click="toggleFilterControls"
+                >
+                    <template #icon>
+                        <FilterIcon :size="20" />
+                    </template>
+                </NcButton>
             </div>
             <ul class="recipes">
                 <li
@@ -56,16 +69,25 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';
+import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 import TriangleSmallUpIcon from 'vue-material-design-icons/TriangleSmallUp.vue';
 import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue';
 
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { isMobile } from '@nextcloud/vue';
 import { useStore } from '../../store';
-import { normalize as normalizeString } from '../../js/utils/string-utils';
+import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
+import {
+    RecipeCategoriesFilter as CategoriesFilter,
+    RecipeKeywordsFilter as KeywordsFilter,
+    RecipeNamesFilter as NamesFilter,
+} from '../../js/RecipeFilters';
 import EmptyList from './EmptyList.vue';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
-import RecipeListKeywordCloud from './RecipeListKeywordCloud.vue';
+import RecipeFilterControls from './RecipeFilterControls.vue';
+import { AndOperator } from '../../js/LogicOperators';
 
 const store = useStore();
 
@@ -81,17 +103,17 @@ const props = defineProps({
     },
 });
 
-// todo: Find out why this was here
 /**
- * String-based filters applied to the list
- * @type {import('vue').Ref<string>}
+ * If the filter controls are visible
+ * @type {import('vue').Ref<boolean>}
  */
-// const filters = ref('');
+const isFilterControlsVisible = ref(false);
 /**
- * All keywords to filter the recipes for (conjunctively)
- * @type {import('vue').Ref<Array>}
+ *
+ * @type {import('vue').Ref<object>}
  */
-const keywordFilter = ref([]);
+const filterValue = ref({ categories: [], keywords: [] });
+
 /**
  * @type {import('vue').Ref<Array>}
  */
@@ -184,67 +206,24 @@ const sortRecipes = (recipes, recipeProperty, order) => {
     });
 };
 
+function toggleFilterControls() {
+    isFilterControlsVisible.value = !isFilterControlsVisible.value;
+}
+
 // ===================
 // Computed properties
 // ===================
-/**
- * An array of all keywords in all recipes. These are neither sorted nor unique
- */
-const rawKeywords = computed(() => {
-    const keywordArray = props.recipes.map((r) => {
-        if (!('keywords' in r)) {
-            return [];
-        }
-        if (r.keywords != null) {
-            return r.keywords.split(',');
-        }
-        return [];
-    });
-    return [].concat(...keywordArray);
-});
 
 /**
- * An array of all recipes that are part in all filtered keywords
- * @returns {Array}
- */
-const recipesFilteredByKeywords = computed(() =>
-    props.recipes.filter((r) => {
-        if (keywordFilter.value.length === 0) {
-            // No filtering, keep all
-            return true;
-        }
-
-        if (r.keywords === null) {
-            return false;
-        }
-
-        function keywordInRecipePresent(kw, r2) {
-            if (!r2.keywords) {
-                return false;
-            }
-            const keywords = r2.keywords.split(',');
-            return keywords.includes(kw);
-        }
-
-        return keywordFilter.value
-            .map((kw) => keywordInRecipePresent(kw, r))
-            .reduce((l, rec) => l && rec);
-    }),
-);
-
-/**
- * An array of the finally filtered recipes, that is both filtered for keywords as well as string-based name filtering
+ * An array of the filtered recipes, with all filters applied.
  */
 const filteredRecipes = computed(() => {
-    let ret = recipesFilteredByKeywords.value;
-    if (store.state.recipeFilters) {
-        ret = ret.filter((r) => {
-            const normalizedRecipeName = normalizeString(r.name);
-            const normalizedFilter = normalizeString(store.state.recipeFilters);
-            return normalizedRecipeName.includes(normalizedFilter);
-        });
-    }
-    return ret;
+    const recipeFilters = [
+        new CategoriesFilter(filterValue.value.categories),
+        new KeywordsFilter(filterValue.value.keywords, new AndOperator(), true),
+        new NamesFilter(store.state.recipeFilters),
+    ];
+    return applyRecipeFilters(props.recipes, recipeFilters);
 });
 
 // Recipes ordered ascending by name
@@ -315,10 +294,6 @@ const recipeObjects = computed(() => {
     }
     return props.recipes.map(makeObject);
 });
-
-const showTagCloudInRecipeList = computed(
-    () => store.state.localSettings.showTagCloudInRecipeList,
-);
 </script>
 
 <script>
@@ -336,6 +311,13 @@ export default {
 </style>
 
 <style scoped>
+.mr-4 {
+    margin-right: 1rem;
+}
+.pt-2 {
+    padding-top: 0.5rem;
+}
+
 .loading-indicator {
     display: flex;
     justify-content: center;
@@ -343,7 +325,8 @@ export default {
 }
 
 .recipes-submenu-container {
-    padding-left: 16px;
+    display: flex;
+    padding: 0.5rem 16px 16px;
     margin-bottom: 0.75ex;
 }
 
