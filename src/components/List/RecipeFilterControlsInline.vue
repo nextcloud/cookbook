@@ -94,7 +94,6 @@ const {
     uniqueKeywords,
     selectedKeywords,
     hiddenSections,
-    clearSearchTerm,
     searchTerm,
     localValue,
     store,
@@ -104,6 +103,11 @@ function submitFilters() {
     emit('input', localValue.value);
     store.dispatch('setRecipeFilters', searchTerm.value);
     emit('close');
+}
+
+function clearSearchTerm() {
+    searchTerm.value = '';
+    store.dispatch('setRecipeFilters', searchTerm.value);
 }
 
 function clearFilters() {

@@ -90,17 +90,12 @@ export default function useRecipeFilterControls(props) {
      */
     const uniqueKeywords = computed(() => [...new Set(rawKeywords.value)]);
 
-    function clearSearchTerm() {
-        searchTerm.value = '';
-    }
-
     return {
         uniqueCategories,
         selectedCategories,
         uniqueKeywords,
         selectedKeywords,
         hiddenSections,
-        clearSearchTerm,
         searchTerm,
         localValue,
         store,

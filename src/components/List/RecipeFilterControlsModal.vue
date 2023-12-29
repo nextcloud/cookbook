@@ -105,7 +105,6 @@ const {
     uniqueKeywords,
     selectedKeywords,
     hiddenSections,
-    clearSearchTerm,
     searchTerm,
     localValue,
     store,
@@ -115,6 +114,11 @@ function clearFilters() {
     selectedCategories.value = [];
     selectedKeywords.value = [];
     clearSearchTerm();
+}
+
+function clearSearchTerm() {
+    searchTerm.value = '';
+    store.dispatch('setRecipeFilters', searchTerm.value);
 }
 
 function closeModal() {
