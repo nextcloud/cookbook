@@ -4,8 +4,25 @@
             <h2>{{ t('cookbook', 'Recipe filters') }}</h2>
 
             <div class="form-group">
+                <NcTextField
+                    :value.sync="searchTerm"
+                    :label="t('cookbook', 'Name')"
+                    :placeholder="t('cookbook', 'Search term')"
+                    :aria-placeholder="t('cookbook', 'Search term')"
+                    trailing-button-icon="close"
+                    :show-trailing-button="searchTerm !== ''"
+                    @trailing-button-click="clearSearchTerm"
+                    ><MagnifyIcon :size="20"
+                /></NcTextField>
+            </div>
+
+            <div class="form-group">
+                <label for="categoriesFilterInput">{{
+                    t('cookbook', 'Categories')
+                }}</label>
                 <NcSelect
                     v-model="selectedCategories"
+                    input-id="categoriesFilterInput"
                     :options="uniqueCategories"
                     :loading="isLoading"
                     :close-on-select="false"
@@ -17,8 +34,12 @@
             </div>
 
             <div class="form-group">
+                <label for="keywordsFilterInput">{{
+                    t('cookbook', 'Keywords')
+                }}</label>
                 <NcSelect
                     v-model="selectedKeywords"
+                    input-id="keywordsFilterInput"
                     :options="uniqueKeywords"
                     :loading="isLoading"
                     :close-on-select="false"
@@ -52,9 +73,14 @@
 
 <script setup>
 import { computed, defineEmits, defineProps, ref } from 'vue';
+import MagnifyIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
+import { useStore } from '../../store';
+
+const store = useStore();
 
 const props = defineProps({
     value: {
@@ -72,6 +98,11 @@ const props = defineProps({
 const emit = defineEmits(['close', 'input']);
 
 /**
+ * @type {import('vue').Ref<string>}
+ */
+const searchTerm = ref('');
+
+/**
  * @type {import('vue').Ref<Array>}
  */
 const selectedCategories = ref([]);
@@ -84,6 +115,7 @@ const selectedKeywords = ref([]);
 const localValue = computed(() => ({
     categories: selectedCategories.value,
     keywords: selectedKeywords.value,
+    searchTerm: searchTerm.value,
 }));
 
 /**
@@ -128,9 +160,13 @@ const rawKeywords = computed(() => {
  */
 const uniqueKeywords = computed(() => [...new Set(rawKeywords.value)]);
 
+function clearSearchTerm() {
+    searchTerm.value = '';
+}
 function clearFilters() {
     selectedCategories.value = [];
     selectedKeywords.value = [];
+    clearSearchTerm();
 }
 
 function closeModal() {
@@ -139,6 +175,7 @@ function closeModal() {
 
 function submitFilters() {
     emit('input', localValue.value);
+    store.dispatch('setRecipeFilters', searchTerm.value);
     emit('close');
 }
 </script>
@@ -179,6 +216,10 @@ function submitFilters() {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+
+        label {
+            margin-bottom: 0.75em;
+        }
 
         .select {
             width: 100%;
