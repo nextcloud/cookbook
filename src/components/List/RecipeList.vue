@@ -7,7 +7,17 @@
             <div v-if="recipeObjects.length === 0">
                 <EmptyList />
             </div>
-            <RecipeFilterControls
+            <RecipeFilterControlsModal
+                v-if="isMobile"
+                v-model="filterValue"
+                :preapplied-filters="props.preappliedFilters"
+                :recipes="recipes"
+                :is-loading="loading"
+                :is-visible="isFilterControlsVisible"
+                @close="() => (isFilterControlsVisible = false)"
+            />
+            <RecipeFilterControlsInline
+                v-else
                 v-model="filterValue"
                 :preapplied-filters="props.preappliedFilters"
                 :recipes="recipes"
@@ -76,7 +86,7 @@ import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.v
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
-import { isMobile } from '@nextcloud/vue';
+import { useIsMobile } from '../../composables/useIsMobile';
 import { useStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
@@ -87,9 +97,11 @@ import {
 import EmptyList from './EmptyList.vue';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
-import RecipeFilterControls from './RecipeFilterControls.vue';
+import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
+import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
 import { AndOperator } from '../../js/LogicOperators';
 
+const isMobile = useIsMobile();
 const store = useStore();
 
 const props = defineProps({
