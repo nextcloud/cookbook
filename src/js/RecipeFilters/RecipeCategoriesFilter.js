@@ -12,7 +12,7 @@ class RecipeCategoriesFilter extends RecipeFilter {
      * @param {string|string[]} categories - The categories to filter by.
      * @param {BinaryOperator} operator - The binary operator for combining filter conditions.
      */
-    constructor(categories, operator = new AndOperator()) {
+    constructor(categories, operator = new OrOperator()) {
         super(operator);
         this.categories = Array.isArray(categories)
             ? categories.map((category) => normalizeString(category))

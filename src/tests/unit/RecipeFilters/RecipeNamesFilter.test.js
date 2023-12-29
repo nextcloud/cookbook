@@ -217,4 +217,36 @@ describe('RecipeNamesFilter', () => {
             ['Pizza', 'Calzone'],
         ]);
     });
+
+    /**
+     * Test case: it should filter recipes if part of name is included using AND operator.
+     */
+    test('it should filter recipes if part of name is included using AND operator', () => {
+        const filter = new RecipeNamesFilter('pasta', new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(2);
+        expect(filteredRecipes[0].name).toBe('Pasta Carbonara');
+        expect(filteredRecipes[1].name).toStrictEqual([
+            'Pasta Carbonara',
+            'Italian pasta',
+        ]);
+    });
+
+    /**
+     * Test case: it should filter recipes if part of name is included using OR operator.
+     */
+    test('it should filter recipes if part of name is included using OR operator', () => {
+        const filter = new RecipeNamesFilter('pasta', new AndOperator());
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(2);
+        expect(filteredRecipes[0].name).toBe('Pasta Carbonara');
+        expect(filteredRecipes[1].name).toStrictEqual([
+            'Pasta Carbonara',
+            'Italian pasta',
+        ]);
+    });
 });

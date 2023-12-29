@@ -11,13 +11,14 @@ class RecipeNamesFilter extends RecipeFilter {
      * Constructor for RecipeNamesFilter.
      * @param {string|string[]} names - The names to filter by.
      * @param {BinaryOperator} operator - The binary operator for combining filter conditions.
+     * @param {boolean} filterSubstring - If true, filter searches in substrings of the name for matches.
      */
-    constructor(names, operator = new OrOperator()) {
+    constructor(names, operator = new OrOperator(), filterSubstring = true) {
         super(operator);
         this.names = Array.isArray(names)
             ? names.map((name) => normalizeString(name))
             : [normalizeString(names)];
-
+        this.filterSubstring = filterSubstring;
         // Ignore empty strings
         this.names = this.names.filter((n) => n !== '');
     }
@@ -43,7 +44,14 @@ class RecipeNamesFilter extends RecipeFilter {
         let result = this.operator instanceof AndOperator;
 
         for (const name of this.names) {
-            const nameMatch = recipeNames.includes(name);
+            let nameMatch;
+
+            // If the filter value should be searched in substrings of the recipe names
+            if (this.filterSubstring) {
+                nameMatch = recipeNames.some((n) => n.includes(name));
+            } else {
+                nameMatch = recipeNames.includes(name);
+            }
             result = this.operator.apply(result, nameMatch);
 
             // If using OrOperator and the result is already true, no need to continue checking
