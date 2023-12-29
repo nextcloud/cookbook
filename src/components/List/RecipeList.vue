@@ -9,6 +9,7 @@
             </div>
             <RecipeFilterControls
                 v-model="filterValue"
+                :preapplied-filters="props.preappliedFilters"
                 :recipes="recipes"
                 :is-loading="loading"
                 :is-visible="isFilterControlsVisible"
@@ -95,6 +96,13 @@ const props = defineProps({
     loading: {
         type: Boolean,
         default: false,
+    },
+    /**
+     * Array of `RecipeFilter`s which have already been applied in advance
+     */
+    preappliedFilters: {
+        type: Array,
+        default: () => [],
     },
     recipes: {
         type: Array,

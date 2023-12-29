@@ -1,6 +1,10 @@
 <template>
     <div>
-        <RecipeList :recipes="results" :loading="isLoadingRecipeList" />
+        <RecipeList
+            :recipes="results"
+            :loading="isLoadingRecipeList"
+            :preapplied-filters="filters"
+        />
     </div>
 </template>
 
@@ -10,6 +14,7 @@ import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
+import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters';
 
 import RecipeList from './List/RecipeList.vue';
 import { useStore } from '../store';
@@ -40,6 +45,12 @@ const isLoadingRecipeList = ref(false);
  * @type {import('vue').Ref<Array>}
  */
 const results = ref([]);
+/**
+ * List of filters that are pre-applied to the list. This can be used to hide filters from the selection since they are
+ * already applied.
+ * @type {import('vue').Ref<Array>}
+ */
+const filters = ref([]);
 
 // watch(route, (to, from) => {
 //     keywordFilter.value = [];
@@ -77,6 +88,7 @@ const setup = async () => {
     } else if (props.query === 'cat') {
         // Search by category
         const cat = route.params.value;
+        filters.value = [new CategoriesFilter(cat)];
         try {
             isLoadingRecipeList.value = true;
             const response = await api.recipes.allInCategory(cat);

@@ -16,7 +16,7 @@
                 /></NcTextField>
             </div>
 
-            <div class="form-group">
+            <div v-if="!hiddenSections['categories']" class="form-group">
                 <label for="categoriesFilterInput">{{
                     t('cookbook', 'Categories')
                 }}</label>
@@ -78,6 +78,11 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
+import {
+    RecipeCategoriesFilter as CategoriesFilter,
+    RecipeKeywordsFilter as KeywordsFilter,
+    RecipeNamesFilter as NamesFilter,
+} from '../../js/RecipeFilters';
 import { useStore } from '../../store';
 
 const store = useStore();
@@ -90,6 +95,10 @@ const props = defineProps({
         },
     },
     fieldLabel: { type: String, default: '' },
+    /**
+     * List of sections that should be hidden from the filters list, e.g., `['categories', 'keywords']`
+     */
+    preappliedFilters: { type: Array, default: () => [] },
     isLoading: { type: Boolean, default: false },
     isVisible: { type: Boolean, default: false },
     recipes: { type: Array, default: () => [] },
@@ -132,6 +141,22 @@ const rawCategories = computed(() => {
         return [];
     });
     return [].concat(...categoriesArray);
+});
+
+/**
+ * List of sections with their visible state.
+ * @type {ComputedRef<boolean>}
+ */
+const hiddenSections = computed(() => {
+    return {
+        categories: props.preappliedFilters.some(
+            (f) => f instanceof CategoriesFilter,
+        ),
+        keywords: props.preappliedFilters.some(
+            (f) => f instanceof KeywordsFilter,
+        ),
+        names: props.preappliedFilters.some((f) => f instanceof NamesFilter),
+    };
 });
 
 /**
