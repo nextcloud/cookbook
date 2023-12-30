@@ -1,6 +1,16 @@
 <template>
     <div class="container">
         <div class="form-group">
+            <RecipeSortSelect
+                v-model="localOrderBy"
+                aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                :label="t('cookbook', 'Order')"
+                class="mr-4"
+                :title="t('cookbook', 'Show filter settings')"
+                @input="submitOrderBy"
+            />
+        </div>
+        <div class="form-group">
             <NcTextField
                 class="input"
                 :value.sync="searchTerm"
@@ -17,8 +27,8 @@
 
         <div v-if="!hiddenSections['categories']" class="form-group">
             <NcSelect
-                class="input"
                 v-model="selectedCategories"
+                class="input"
                 input-id="categoriesFilterInput"
                 :options="uniqueCategories"
                 :loading="isLoading"
@@ -29,14 +39,29 @@
                 :aria-label="t('cookbook', 'Categories')"
                 :aria-placeholder="t('cookbook', 'All categories')"
                 @input="submitFilters"
-            />
+            >
+                <template #list-header>
+                    <li style="padding: 0.25rem; text-align: center">
+                        {{
+                            n(
+                                'cookbook',
+                                '1 category selected',
+                                '{n} categories selected',
+                                selectedCategories.length,
+                                {
+                                    n: `${selectedCategories.length.toString()}`,
+                                },
+                            )
+                        }}
+                    </li>
+                </template></NcSelect
+            >
         </div>
 
-        <div class="form-group">
+        <div class="form-group d-flex flex-row">
             <NcSelect
-                class="input"
-                :noWrap="false"
                 v-model="selectedKeywords"
+                class="input"
                 input-id="keywordsFilterInput"
                 :options="uniqueKeywords"
                 :loading="isLoading"
@@ -46,11 +71,27 @@
                 :placeholder="t('cookbook', 'All keywords')"
                 :aria-label="t('cookbook', 'Keywords')"
                 :aria-placeholder="t('cookbook', 'All keywords')"
-                @input="submitFilters"
                 style="max-width: 25%"
-            />
-        </div>
-        <div class="form-group">
+                @input="submitFilters"
+            >
+                <template #list-header>
+                    <li style="padding: 0.25rem; text-align: center">
+                        {{
+                            n(
+                                'cookbook',
+                                '1 keyword selected',
+                                '{n} keywords selected',
+                                selectedKeywords.length,
+                                {
+                                    n: `${selectedKeywords.length.toString()}`,
+                                },
+                            )
+                        }}
+                    </li>
+                </template></NcSelect
+            >
+
+            <!--        Keep button together in a line with the last input so it does not get lonely -->
             <NcButton type="tertiary" @click="clearFilters">
                 {{
                     // TRANSLATORS Button text for applying recipe-filter values
@@ -66,17 +107,24 @@ import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
-import { defineEmits, defineProps } from 'vue';
+import { computed, defineEmits, defineProps, ref } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
+import RecipeSortSelect from './RecipeSortSelect.vue';
 
 const emit = defineEmits(['close', 'input']);
 
 const props = defineProps({
     value: {
         type: Object,
-        default() {
-            return { categories: [], keywords: [] };
-        },
+        default: () => ({
+            filters: { categories: [], keywords: [] },
+            orderBy: {
+                label: t('cookbook', 'Name'),
+                iconUp: true,
+                recipeProperty: 'name',
+                order: 'ascending',
+            },
+        }),
     },
     fieldLabel: { type: String, default: '' },
     /**
@@ -87,6 +135,8 @@ const props = defineProps({
     isVisible: { type: Boolean, default: false },
     recipes: { type: Array, default: () => [] },
 });
+
+const localOrderBy = ref(props.orderBy);
 
 const {
     uniqueCategories,
@@ -99,10 +149,19 @@ const {
     store,
 } = useRecipeFilterControls(props);
 
+const emittedValue = computed(() => ({
+    filters: localValue.value,
+    orderBy: localOrderBy,
+}));
+
 function submitFilters() {
-    emit('input', localValue.value);
+    emit('input', emittedValue.value);
     store.dispatch('setRecipeFilters', searchTerm.value);
     emit('close');
+}
+
+function submitOrderBy() {
+    emit('input', emittedValue.value);
 }
 
 function clearSearchTerm() {
@@ -130,9 +189,11 @@ function submitNameFilter() {
 .d-flex {
     display: flex;
 }
+
 .flex-row {
     flex-direction: row;
 }
+
 .justify-end {
     justify-content: end;
 }
@@ -140,6 +201,7 @@ function submitNameFilter() {
 .mt-4 {
     margin-top: 1rem;
 }
+
 .self-end {
     align-self: end;
 }
@@ -153,11 +215,13 @@ function submitNameFilter() {
 .container {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     padding: 16px;
 
     .form-group {
-        margin-right: 0.75rem;
+        min-width: 150px;
+        margin: 0.25rem;
 
         .input-field {
             margin-top: 0;
