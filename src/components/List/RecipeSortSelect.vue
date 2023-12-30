@@ -3,6 +3,7 @@
         v-model="orderBy"
         class="recipes-sorting-dropdown mr-4"
         :clearable="false"
+        label="selectedLabel"
         :multiple="false"
         :searchable="false"
         :placeholder="t('cookbook', 'Select order')"
@@ -33,36 +34,42 @@ const emit = defineEmits(['input']);
 const recipeOrderingOptions = ref([
     {
         label: t('cookbook', 'Name'),
+        selectedLabel: `▲  ${t('cookbook', 'Name')}`,
         iconUp: true,
         recipeProperty: 'name',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Name'),
+        selectedLabel: `▼  ${t('cookbook', 'Name')}`,
         iconUp: false,
         recipeProperty: 'name',
         order: 'descending',
     },
     {
         label: t('cookbook', 'Creation date'),
+        selectedLabel: `▲  ${t('cookbook', 'Creation date')}`,
         iconUp: true,
         recipeProperty: 'dateCreated',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Creation date'),
+        selectedLabel: `▼  ${t('cookbook', 'Creation date')}`,
         iconUp: false,
         recipeProperty: 'dateCreated',
         order: 'descending',
     },
     {
         label: t('cookbook', 'Modification date'),
+        selectedLabel: `▲  ${t('cookbook', 'Modification date')}`,
         iconUp: true,
         recipeProperty: 'dateModified',
         order: 'ascending',
     },
     {
         label: t('cookbook', 'Modification date'),
+        selectedLabel: `▼  ${t('cookbook', 'Modification date')}`,
         iconUp: false,
         recipeProperty: 'dateModified',
         order: 'descending',
