@@ -50,19 +50,15 @@ export default function useRecipeFilterControls(props) {
      * List of sections with their visible state.
      * @type {ComputedRef<boolean>}
      */
-    const hiddenSections = computed(() => {
-        return {
-            categories: props.preappliedFilters.some(
-                (f) => f instanceof CategoriesFilter,
-            ),
-            keywords: props.preappliedFilters.some(
-                (f) => f instanceof KeywordsFilter,
-            ),
-            names: props.preappliedFilters.some(
-                (f) => f instanceof NamesFilter,
-            ),
-        };
-    });
+    const hiddenSections = computed(() => ({
+        categories: props.preappliedFilters.some(
+            (f) => f instanceof CategoriesFilter,
+        ),
+        keywords: props.preappliedFilters.some(
+            (f) => f instanceof KeywordsFilter,
+        ),
+        names: props.preappliedFilters.some((f) => f instanceof NamesFilter),
+    }));
 
     /**
      * A unique set of all categories in the recipes.

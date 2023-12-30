@@ -30,7 +30,22 @@
                     :no-wrap="true"
                     :placeholder="t('cookbook', 'All categories')"
                     :aria-placeholder="t('cookbook', 'All categories')"
-                />
+                    ><template #list-header>
+                        <li style="padding: 0.25rem; text-align: center">
+                            {{
+                                n(
+                                    'cookbook',
+                                    '1 category selected',
+                                    '{n} categories selected',
+                                    selectedCategories.length,
+                                    {
+                                        n: `${selectedCategories.length.toString()}`,
+                                    },
+                                )
+                            }}
+                        </li>
+                    </template></NcSelect
+                >
             </div>
 
             <div class="form-group">
@@ -47,7 +62,23 @@
                     :no-wrap="true"
                     :placeholder="t('cookbook', 'All keywords')"
                     :aria-placeholder="t('cookbook', 'All keywords')"
-                />
+                >
+                    <template #list-header>
+                        <li style="padding: 0.25rem; text-align: center">
+                            {{
+                                n(
+                                    'cookbook',
+                                    '1 keyword selected',
+                                    '{n} keywords selected',
+                                    selectedKeywords.length,
+                                    {
+                                        n: `${selectedKeywords.length.toString()}`,
+                                    },
+                                )
+                            }}
+                        </li>
+                    </template></NcSelect
+                >
             </div>
             <div class="d-flex flex-row justify-end mt-4">
                 <NcButton type="tertiary" @click="clearFilters">
@@ -110,15 +141,15 @@ const {
     store,
 } = useRecipeFilterControls(props);
 
+function clearSearchTerm() {
+    searchTerm.value = '';
+    store.dispatch('setRecipeFilters', searchTerm.value);
+}
+
 function clearFilters() {
     selectedCategories.value = [];
     selectedKeywords.value = [];
     clearSearchTerm();
-}
-
-function clearSearchTerm() {
-    searchTerm.value = '';
-    store.dispatch('setRecipeFilters', searchTerm.value);
 }
 
 function closeModal() {
@@ -140,9 +171,11 @@ function submitFilters() {
 .d-flex {
     display: flex;
 }
+
 .flex-row {
     flex-direction: row;
 }
+
 .justify-end {
     justify-content: end;
 }
@@ -150,6 +183,7 @@ function submitFilters() {
 .mt-4 {
     margin-top: 1rem;
 }
+
 .self-end {
     align-self: end;
 }
@@ -164,10 +198,10 @@ function submitFilters() {
     }
 
     .form-group {
-        margin: calc(var(--default-grid-baseline) * 2) 0;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        margin: calc(var(--default-grid-baseline) * 2) 0;
 
         label {
             margin-bottom: 0.75em;
