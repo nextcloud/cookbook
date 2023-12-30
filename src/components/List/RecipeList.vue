@@ -18,43 +18,27 @@
             />
             <RecipeFilterControlsInline
                 v-else
-                v-model="filterValue"
+                v-model="inlineControlsValue"
                 :preapplied-filters="props.preappliedFilters"
                 :recipes="recipes"
                 :is-loading="loading"
                 :is-visible="isFilterControlsVisible"
+                @input="handleInlineControlsValueUpdated"
                 @close="() => (isFilterControlsVisible = false)"
             />
-            <div id="recipes-submenu" class="recipes-submenu-container">
-                <NcSelect
+            <div
+                v-if="isMobile"
+                id="recipes-submenu"
+                class="recipes-submenu-container"
+            >
+                <RecipeSortSelect
                     v-if="recipes.length > 0"
                     v-model="orderBy"
-                    class="recipes-sorting-dropdown mr-4"
-                    :clearable="false"
-                    :multiple="false"
-                    :searchable="false"
-                    :placeholder="t('cookbook', 'Select order')"
-                    :options="recipeOrderingOptions"
-                >
-                    <template #option="option">
-                        <div class="ordering-selection-entry">
-                            <TriangleSmallUpIcon
-                                v-if="option.iconUp"
-                                :size="20"
-                            />
-                            <TriangleSmallDownIcon
-                                v-if="!option.iconUp"
-                                :size="20"
-                            />
-                            <span class="option__title">{{
-                                option.label
-                            }}</span>
-                        </div>
-                    </template>
-                </NcSelect>
+                    class="mr-4"
+                    :title="t('cookbook', 'Show filter settings')"
+                    aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                />
                 <NcButton
-                    v-if="isMobile"
-                    class="copy-ingredients print-hidden"
                     :type="'secondary'"
                     aria-label="t('cookbook', 'Show settings for filtering recipe list')"
                     :title="t('cookbook', 'Show filter settings')"
@@ -81,11 +65,8 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
-import TriangleSmallUpIcon from 'vue-material-design-icons/TriangleSmallUp.vue';
-import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue';
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import { useIsMobile } from '../../composables/useIsMobile';
 import { useStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
@@ -100,6 +81,7 @@ import RecipeCard from './RecipeCard.vue';
 import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
 import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
 import { AndOperator } from '../../js/LogicOperators';
+import RecipeSortSelect from './RecipeSortSelect.vue';
 
 const isMobile = useIsMobile();
 const store = useStore();
@@ -135,47 +117,17 @@ const isFilterControlsVisible = ref(false);
 const filterValue = ref({ categories: [], keywords: [] });
 
 /**
- * @type {import('vue').Ref<Array>}
+ * Workaround. Should be replaced by two v-models in vue3
+ * @type {import('vue').Ref<object>}
  */
-const recipeOrderingOptions = ref([
-    {
-        label: t('cookbook', 'Name'),
-        iconUp: true,
-        recipeProperty: 'name',
-        order: 'ascending',
-    },
-    {
-        label: t('cookbook', 'Name'),
-        iconUp: false,
-        recipeProperty: 'name',
-        order: 'descending',
-    },
-    {
-        label: t('cookbook', 'Creation date'),
-        iconUp: true,
-        recipeProperty: 'dateCreated',
-        order: 'ascending',
-    },
-    {
-        label: t('cookbook', 'Creation date'),
-        iconUp: false,
-        recipeProperty: 'dateCreated',
-        order: 'descending',
-    },
-    {
-        label: t('cookbook', 'Modification date'),
-        iconUp: true,
-        recipeProperty: 'dateModified',
-        order: 'ascending',
-    },
-    {
-        label: t('cookbook', 'Modification date'),
-        iconUp: false,
-        recipeProperty: 'dateModified',
-        order: 'descending',
-    },
-]);
-const orderBy = ref(recipeOrderingOptions.value[0]);
+const inlineControlsValue = ref();
+
+const orderBy = ref({
+    label: t('cookbook', 'Name'),
+    iconUp: true,
+    recipeProperty: 'name',
+    order: 'ascending',
+});
 
 onMounted(() => {
     store.dispatch('clearRecipeFilters');
@@ -184,6 +136,14 @@ onMounted(() => {
 // ===================
 // Methods
 // ===================
+
+/**
+ * Handle updated value of the inline filter controls. Should be fixed in vue3 by using two v-model directives.
+ */
+function handleInlineControlsValueUpdated() {
+    filterValue.value = inlineControlsValue.value.filters;
+    orderBy.value = inlineControlsValue.value.orderBy;
+}
 
 /* Sort recipes according to the property of the recipe ascending or
  * descending
@@ -334,6 +294,7 @@ export default {
 .mr-4 {
     margin-right: 1rem;
 }
+
 .pt-2 {
     padding-top: 0.5rem;
 }
@@ -363,10 +324,5 @@ export default {
 
 .p-4 {
     padding: 1.5rem !important;
-}
-
-.ordering-selection-entry {
-    display: flex;
-    align-items: baseline;
 }
 </style>
