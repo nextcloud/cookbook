@@ -5,6 +5,11 @@ import BinaryOperator from './BinaryOperator';
  * @extends BinaryOperator
  */
 class OrOperator extends BinaryOperator {
+    // eslint-disable-next-line class-methods-use-this
+    get toString() {
+        return 'OR';
+    }
+
     /**
      * Applies the OR operation.
      * @param {boolean} result - The result accumulated so far.

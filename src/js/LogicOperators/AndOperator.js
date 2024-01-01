@@ -5,6 +5,11 @@ import BinaryOperator from './BinaryOperator';
  * @extends BinaryOperator
  */
 class AndOperator extends BinaryOperator {
+    // eslint-disable-next-line class-methods-use-this
+    get toString() {
+        return 'AND';
+    }
+
     /**
      * Applies the AND operation.
      * @param {boolean} result - The result accumulated so far.

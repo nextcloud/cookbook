@@ -3,6 +3,11 @@
  * @abstract
  */
 class BinaryOperator {
+    // eslint-disable-next-line class-methods-use-this
+    get toString() {
+        return 'Abstract operation base class';
+    }
+
     /**
      * Constructor for the abstract class.
      * @throws {TypeError} Cannot instantiate abstract class.
