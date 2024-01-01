@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     /**
@@ -70,7 +70,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(['check', 'uncheck', 'update']);
+const emit = defineEmits(['input', 'check', 'uncheck', 'update']);
 
 /**
  * Local value of the input.
@@ -90,6 +90,7 @@ watch(
  * Toggle the value on the input between `true` and `false`.
  */
 function toggle() {
+    emit('input', isChecked.value);
     emit('update', isChecked.value);
     if (isChecked.value) {
         emit('check');
