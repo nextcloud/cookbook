@@ -9,6 +9,7 @@ OC.L10N.register(
     "Search" : "Buscar",
     "Category" : "Categoría",
     "Tags" : "Etiquetes",
+    "Categories" : "Categories",
     "Add" : "Amestar",
     "Name" : "Nome",
     "Nutrition information" : "Información nutricional",
