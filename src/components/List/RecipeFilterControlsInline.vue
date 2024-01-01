@@ -26,71 +26,118 @@
         </div>
 
         <div v-if="!hiddenSections['categories']" class="form-group">
-            <NcSelect
-                v-model="selectedCategories"
-                class="input"
-                input-id="categoriesFilterInput"
-                :options="uniqueCategories"
-                :loading="isLoading"
-                :close-on-select="false"
-                :multiple="true"
-                :no-wrap="true"
-                :placeholder="t('cookbook', 'All categories')"
-                :aria-label="t('cookbook', 'Categories')"
-                :aria-placeholder="t('cookbook', 'All categories')"
-                @input="submitFilters"
-            >
-                <template #list-header>
-                    <li style="padding: 0.25rem; text-align: center">
-                        {{
-                            n(
-                                'cookbook',
-                                '1 category selected',
-                                '{n} categories selected',
-                                selectedCategories.length,
-                                {
-                                    n: `${selectedCategories.length.toString()}`,
-                                },
-                            )
-                        }}
-                    </li>
-                </template></NcSelect
-            >
+            <div class="d-flex flex-row align-items-center">
+                <NcSelect
+                    v-model="selectedCategories"
+                    class="input input--with-operator"
+                    input-id="categoriesFilterInput"
+                    :options="uniqueCategories"
+                    :loading="isLoading"
+                    :close-on-select="false"
+                    :multiple="true"
+                    :no-wrap="true"
+                    :placeholder="t('cookbook', 'All categories')"
+                    :aria-label="t('cookbook', 'Categories')"
+                    :aria-placeholder="t('cookbook', 'All categories')"
+                    @input="submitFilters"
+                >
+                    <template #list-header>
+                        <li style="padding: 0.25rem; text-align: center">
+                            {{
+                                n(
+                                    'cookbook',
+                                    '1 category selected',
+                                    '{n} categories selected',
+                                    selectedCategories.length,
+                                    {
+                                        n: `${selectedCategories.length.toString()}`,
+                                    },
+                                )
+                            }}
+                        </li>
+                    </template></NcSelect
+                >
+                <ToggleIcon
+                    v-model="categoriesOperatorToggleValue"
+                    :checked-icon="AndIcon"
+                    :icon-props="{
+                        size: 25,
+                        fillColor: 'var(--color-primary-light-text)',
+                    }"
+                    :checked-icon-props="{
+                        title: t(
+                            'cookbook',
+                            'Show recipes containing any selected category',
+                        ),
+                    }"
+                    :unchecked-icon="OrIcon"
+                    :unchecked-icon-props="{
+                        title: t(
+                            'cookbook',
+                            'Show recipes containing all selected categories',
+                        ),
+                    }"
+                    @update="submitFilters"
+                />
+            </div>
         </div>
 
         <div class="form-group d-flex flex-row">
-            <NcSelect
-                v-model="selectedKeywords"
-                class="input"
-                input-id="keywordsFilterInput"
-                :options="uniqueKeywords"
-                :loading="isLoading"
-                :close-on-select="false"
-                :multiple="true"
-                :no-wrap="true"
-                :placeholder="t('cookbook', 'All keywords')"
-                :aria-label="t('cookbook', 'Keywords')"
-                :aria-placeholder="t('cookbook', 'All keywords')"
-                style="max-width: 25%"
-                @input="submitFilters"
-            >
-                <template #list-header>
-                    <li style="padding: 0.25rem; text-align: center">
-                        {{
-                            n(
-                                'cookbook',
-                                '1 keyword selected',
-                                '{n} keywords selected',
-                                selectedKeywords.length,
-                                {
-                                    n: `${selectedKeywords.length.toString()}`,
-                                },
-                            )
-                        }}
-                    </li>
-                </template></NcSelect
-            >
-
+            <div class="d-flex flex-row align-items-center">
+                <NcSelect
+                    v-model="selectedKeywords"
+                    class="input input--with-operator"
+                    input-id="keywordsFilterInput"
+                    :options="uniqueKeywords"
+                    :loading="isLoading"
+                    :close-on-select="false"
+                    :multiple="true"
+                    :no-wrap="true"
+                    :placeholder="t('cookbook', 'All keywords')"
+                    :aria-label="t('cookbook', 'Keywords')"
+                    :aria-placeholder="t('cookbook', 'All keywords')"
+                    style="max-width: 25%"
+                    @input="submitFilters"
+                >
+                    <template #list-header>
+                        <li style="padding: 0.25rem; text-align: center">
+                            {{
+                                n(
+                                    'cookbook',
+                                    '1 keyword selected',
+                                    '{n} keywords selected',
+                                    selectedKeywords.length,
+                                    {
+                                        n: `${selectedKeywords.length.toString()}`,
+                                    },
+                                )
+                            }}
+                        </li>
+                    </template></NcSelect
+                >
+                <ToggleIcon
+                    v-model="keywordsOperatorToggleValue"
+                    :checked-icon="AndIcon"
+                    :icon-props="{
+                        size: 25,
+                        fillColor: 'var(--color-primary-light-text)',
+                    }"
+                    :checked-icon-props="{
+                        title: t(
+                            'cookbook',
+                            'Show recipes containing any selected keyword',
+                        ),
+                    }"
+                    :unchecked-icon="OrIcon"
+                    :unchecked-icon-props="{
+                        title: t(
+                            'cookbook',
+                            'Show recipes containing all selected keywords',
+                        ),
+                    }"
+                    @update="submitFilters"
+                />
+            </div>
             <!--        Keep button together in a line with the last input so it does not get lonely -->
             <NcButton type="tertiary" @click="clearFilters">
                 {{
@@ -103,12 +150,15 @@
 </template>
 
 <script setup>
+import AndIcon from 'vue-material-design-icons/SetCenter.vue';
+import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
 import { computed, defineEmits, defineProps, ref } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
+import ToggleIcon from '../Utilities/ToggleIconButton.vue';
 import RecipeSortSelect from './RecipeSortSelect.vue';
 
 const emit = defineEmits(['close', 'input']);
@@ -117,7 +167,7 @@ const props = defineProps({
     value: {
         type: Object,
         default: () => ({
-            filters: { categories: [], keywords: [] },
+            filters: { categories: null, keywords: null },
             orderBy: {
                 label: t('cookbook', 'Name'),
                 iconUp: true,
@@ -145,13 +195,15 @@ const {
     selectedKeywords,
     hiddenSections,
     searchTerm,
-    localValue,
+    localFiltersValue,
+    categoriesOperatorToggleValue,
+    keywordsOperatorToggleValue,
     store,
 } = useRecipeFilterControls(props);
 
 const emittedValue = computed(() => ({
-    filters: localValue.value,
-    orderBy: localOrderBy,
+    filters: localFiltersValue.value,
+    orderBy: localOrderBy.value,
 }));
 
 function submitFilters() {
@@ -198,6 +250,10 @@ function submitNameFilter() {
     justify-content: end;
 }
 
+.align-items-center {
+    align-items: center;
+}
+
 .mt-4 {
     margin-top: 1rem;
 }
@@ -227,5 +283,9 @@ function submitNameFilter() {
             margin-top: 0;
         }
     }
+}
+
+.input--with-operator {
+    margin-inline-end: 0.25rem;
 }
 </style>

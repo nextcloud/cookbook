@@ -5,6 +5,7 @@ import {
     RecipeNamesFilter as NamesFilter,
 } from '../../js/RecipeFilters';
 import { useStore } from '../../store';
+import { AndOperator, OrOperator } from '../../js/LogicOperators';
 
 export default function useRecipeFilterControls(props) {
     const store = useStore();
@@ -15,18 +16,67 @@ export default function useRecipeFilterControls(props) {
     const searchTerm = ref('');
 
     /**
+     * List of all selected categories.
      * @type {import('vue').Ref<Array>}
      */
     const selectedCategories = ref([]);
 
     /**
+     * Value of the toggle for switching between the `AND` and `OR` operator fot the categories filter.
+     *
+     * `true` is associated with the `AndOperator`, `false` with the `OrOperator`.
+     * @type {import('vue').Ref<boolean>}
+     */
+    const categoriesOperatorToggleValue = ref(false);
+
+    /**
+     * Logic operator to be used for filtering categories.
+     * @type {import('vue').Ref<AndOperator|OrOperator>}
+     */
+    const categoriesOperator = computed(() =>
+        categoriesOperatorToggleValue.value
+            ? new AndOperator()
+            : new OrOperator(),
+    );
+
+    /**
+     * List of all selected keywords.
      * @type {import('vue').Ref<Array>}
      */
     const selectedKeywords = ref([]);
 
-    const localValue = computed(() => ({
-        categories: selectedCategories.value,
-        keywords: selectedKeywords.value,
+    /**
+     * Value of the toggle for switching between the `AND` and `OR` operator fot the keywords filter.
+     *
+     * `true` is associated with the `AndOperator`, `false` with the `OrOperator`.
+     * @type {import('vue').Ref<boolean>}
+     */
+    const keywordsOperatorToggleValue = ref(true);
+
+    /**
+     * Logic operator to be used for filtering keywords.
+     * @type {import('vue').Ref<AndOperator|OrOperator>}
+     */
+    const keywordsOperator = computed(() =>
+        keywordsOperatorToggleValue.value
+            ? new AndOperator()
+            : new OrOperator(),
+    );
+
+    /**
+     * Local value of all set filters.
+     * @type {ComputedRef<{searchTerm: string, keywords: RecipeKeywordsFilter, categories: RecipeCategoriesFilter}>}
+     */
+    const localFiltersValue = computed(() => ({
+        categories: new CategoriesFilter(
+            selectedCategories.value,
+            categoriesOperator.value,
+        ),
+        keywords: new KeywordsFilter(
+            selectedKeywords.value,
+            keywordsOperator.value,
+            true,
+        ),
         searchTerm: searchTerm.value,
     }));
 
@@ -62,6 +112,7 @@ export default function useRecipeFilterControls(props) {
 
     /**
      * A unique set of all categories in the recipes.
+     * @type {ComputedRef<Array<string>>}
      */
     const uniqueCategories = computed(() => [...new Set(rawCategories.value)]);
 
@@ -93,7 +144,11 @@ export default function useRecipeFilterControls(props) {
         selectedKeywords,
         hiddenSections,
         searchTerm,
-        localValue,
+        localFiltersValue,
+        categoriesOperatorToggleValue,
+        categoriesOperator,
+        keywordsOperatorToggleValue,
+        keywordsOperator,
         store,
     };
 }

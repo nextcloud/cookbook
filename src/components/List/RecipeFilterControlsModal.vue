@@ -137,7 +137,7 @@ const {
     selectedKeywords,
     hiddenSections,
     searchTerm,
-    localValue,
+    localFiltersValue,
     store,
 } = useRecipeFilterControls(props);
 
@@ -157,7 +157,7 @@ function closeModal() {
 }
 
 function submitFilters() {
-    emit('input', localValue.value);
+    emit('input', localFiltersValue.value);
     store.dispatch('setRecipeFilters', searchTerm.value);
     emit('close');
 }

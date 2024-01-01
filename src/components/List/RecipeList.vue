@@ -114,7 +114,10 @@ const isFilterControlsVisible = ref(false);
  *
  * @type {import('vue').Ref<object>}
  */
-const filterValue = ref({ categories: [], keywords: [] });
+const filterValue = ref({
+    categories: new CategoriesFilter([]),
+    keywords: new KeywordsFilter([]),
+});
 
 /**
  * Workaround. Should be replaced by two v-models in vue3
@@ -199,8 +202,8 @@ function toggleFilterControls() {
  */
 const filteredRecipes = computed(() => {
     const recipeFilters = [
-        new CategoriesFilter(filterValue.value.categories),
-        new KeywordsFilter(filterValue.value.keywords, new AndOperator(), true),
+        filterValue.value.categories,
+        filterValue.value.keywords,
         new NamesFilter(store.state.recipeFilters),
     ];
     return applyRecipeFilters(props.recipes, recipeFilters);
@@ -249,6 +252,7 @@ const recipeObjects = computed(() => {
 
     if (
         orderBy.value === null ||
+        orderBy.value === undefined ||
         (orderBy.value.order !== 'ascending' &&
             orderBy.value.order !== 'descending')
     ) {
