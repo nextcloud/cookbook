@@ -65,7 +65,7 @@ export default function useRecipeFilterControls(props) {
 
     /**
      * Local value of all set filters.
-     * @type {ComputedRef<{searchTerm: string, keywords: RecipeKeywordsFilter, categories: RecipeCategoriesFilter}>}
+     * @type {import('vue').ComputedRef<{searchTerm: string, keywords: RecipeKeywordsFilter, categories: RecipeCategoriesFilter}>}
      */
     const localFiltersValue = computed(() => ({
         categories: new CategoriesFilter(
@@ -98,7 +98,7 @@ export default function useRecipeFilterControls(props) {
 
     /**
      * List of sections with their visible state.
-     * @type {ComputedRef<boolean>}
+     * @type {import('vue').ComputedRef<boolean>}
      */
     const hiddenSections = computed(() => ({
         categories: props.preappliedFilters.some(
@@ -112,7 +112,7 @@ export default function useRecipeFilterControls(props) {
 
     /**
      * A unique set of all categories in the recipes.
-     * @type {ComputedRef<Array<string>>}
+     * @type {import('vue').ComputedRef<Array<string>>}
      */
     const uniqueCategories = computed(() => [...new Set(rawCategories.value)]);
 

@@ -47,7 +47,7 @@
                     </template></NcSelect
                 >
                 <div class="d-flex">
-                    <ToggleIcon
+                    <ToggleIconButton
                         v-model="categoriesOperatorToggleValue"
                         :checked-icon="AndIcon"
                         :icon-props="{
@@ -126,7 +126,7 @@
                     </template></NcSelect
                 >
                 <div class="d-flex">
-                    <ToggleIcon
+                    <ToggleIconButton
                         v-model="keywordsOperatorToggleValue"
                         :checked-icon="AndIcon"
                         :icon-props="{
@@ -193,16 +193,16 @@
 </template>
 
 <script setup>
+import { defineEmits, defineProps } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
-import { defineEmits, defineProps } from 'vue';
-import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
-import ToggleIcon from '../Utilities/ToggleIconButton.vue';
+import ToggleIconButton from '../Utilities/ToggleIconButton.vue';
+import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 
 const emit = defineEmits(['close', 'input']);
 

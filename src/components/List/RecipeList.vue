@@ -80,7 +80,6 @@ import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
 import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
 import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
-import { AndOperator } from '../../js/LogicOperators';
 import RecipeSortSelect from './RecipeSortSelect.vue';
 
 const isMobile = useIsMobile();
@@ -315,18 +314,10 @@ export default {
     margin-bottom: 0.75ex;
 }
 
-.ordering-item-icon {
-    margin-right: 0.5em;
-}
-
 .recipes {
     display: flex;
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-}
-
-.p-4 {
-    padding: 1.5rem !important;
 }
 </style>

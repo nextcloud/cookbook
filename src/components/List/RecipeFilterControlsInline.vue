@@ -57,7 +57,7 @@
                         </li>
                     </template></NcSelect
                 >
-                <ToggleIcon
+                <ToggleIconButton
                     v-model="categoriesOperatorToggleValue"
                     :checked-icon="AndIcon"
                     :icon-props="{
@@ -115,7 +115,7 @@
                         </li>
                     </template></NcSelect
                 >
-                <ToggleIcon
+                <ToggleIconButton
                     v-model="keywordsOperatorToggleValue"
                     :checked-icon="AndIcon"
                     :icon-props="{
@@ -158,8 +158,8 @@ import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
 import { computed, defineEmits, defineProps, ref } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
-import ToggleIcon from '../Utilities/ToggleIconButton.vue';
 import RecipeSortSelect from './RecipeSortSelect.vue';
+import ToggleIconButton from '../Utilities/ToggleIconButton.vue';
 
 const emit = defineEmits(['close', 'input']);
 

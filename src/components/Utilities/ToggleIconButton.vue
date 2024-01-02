@@ -104,29 +104,30 @@ function toggle() {
 .checkbox {
     cursor: pointer;
 }
+
 input[type='checkbox'] {
     display: none;
 }
-.checkbox__label {
-    cursor: pointer;
-    display: flex;
 
+.checkbox__label {
     position: relative;
-    width: fit-content;
+    display: flex;
     overflow: hidden;
-    border: 0;
-    padding: 0;
-    font-size: var(--default-font-size);
-    font-weight: bold;
-    min-height: 44px;
+    width: fit-content;
     min-width: 44px;
+    min-height: 44px;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    border: 0;
     border-radius: 22px;
-    transition-property: color, border-color, background-color;
-    transition-duration: 0.1s;
-    transition-timing-function: linear;
     color: var(--color-primary-element-light-text);
+    cursor: pointer;
+    font-size: var(--default-font-size);
+    font-weight: bold;
+    transition-duration: 0.1s;
+    transition-property: color, border-color, background-color;
+    transition-timing-function: linear;
 
     span {
         cursor: pointer;
