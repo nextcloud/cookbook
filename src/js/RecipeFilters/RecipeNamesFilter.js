@@ -1,3 +1,4 @@
+import Fuse from 'fuse.js';
 import RecipeFilter from './RecipeFilter';
 import { AndOperator, OrOperator } from '../LogicOperators';
 import { normalize as normalizeString } from '../utils/string-utils';
@@ -11,16 +12,33 @@ class RecipeNamesFilter extends RecipeFilter {
      * Constructor for RecipeNamesFilter.
      * @param {string|string[]} names - The names to filter by.
      * @param {BinaryOperator} operator - The binary operator for combining filter conditions.
-     * @param {boolean} filterSubstring - If true, filter searches in substrings of the name for matches.
+     * @param {('exact'|'fuzzy'|'matchSubstring')} filterMode - The mode how to filter the recipe names. Exact match; search in substrings of the name; and a fuzzy matching;
      */
-    constructor(names, operator = new OrOperator(), filterSubstring = true) {
+    constructor(names, operator = new OrOperator(), filterMode = 'exact') {
         super(operator);
         this.names = Array.isArray(names)
             ? names.map((name) => normalizeString(name))
             : [normalizeString(names)];
-        this.filterSubstring = filterSubstring;
         // Ignore empty strings
         this.names = this.names.filter((n) => n !== '');
+        this.filterMode = filterMode;
+    }
+
+    // eslint-disable-next-line class-methods-use-this
+    get fuseOptions() {
+        return {
+            isCaseSensitive: false,
+            shouldSort: true,
+            minMatchCharLength: 1,
+            threshold: 0.45,
+            distance: 100,
+            // Maybe later
+            // useExtendedSearch: false,
+        };
+    }
+
+    fuseSearch(name) {
+        return this.fuse.search(name).length > 0;
     }
 
     /**
@@ -43,12 +61,20 @@ class RecipeNamesFilter extends RecipeFilter {
 
         let result = this.operator instanceof AndOperator;
 
+        // Setup fuzzy search
+        if (this.filterMode === 'fuzzy') {
+            this.fuse = new Fuse(recipeNames, this.fuseOptions);
+        }
+
         for (const name of this.names) {
             let nameMatch;
 
             // If the filter value should be searched in substrings of the recipe names
-            if (this.filterSubstring) {
+            if (this.filterMode === 'matchSubstring') {
                 nameMatch = recipeNames.some((n) => n.includes(name));
+            } else if (this.filterMode === 'fuzzy') {
+                nameMatch = this.fuseSearch(name);
+                // this.fuse.search(name);
             } else {
                 nameMatch = recipeNames.includes(name);
             }

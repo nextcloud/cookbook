@@ -81,6 +81,7 @@ import RecipeCard from './RecipeCard.vue';
 import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
 import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
 import RecipeSortSelect from './RecipeSortSelect.vue';
+import { AndOperator } from '../../js/LogicOperators';
 
 const isMobile = useIsMobile();
 const store = useStore();
@@ -203,7 +204,7 @@ const filteredRecipes = computed(() => {
     const recipeFilters = [
         filterValue.value.categories,
         filterValue.value.keywords,
-        new NamesFilter(store.state.recipeFilters),
+        new NamesFilter(store.state.recipeFilters, new AndOperator(), 'fuzzy'),
     ];
     return applyRecipeFilters(props.recipes, recipeFilters);
 });
