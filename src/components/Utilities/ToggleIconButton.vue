@@ -111,8 +111,29 @@ input[type='checkbox'] {
     cursor: pointer;
     display: flex;
 
+    position: relative;
+    width: fit-content;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    font-size: var(--default-font-size);
+    font-weight: bold;
+    min-height: 44px;
+    min-width: 44px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    transition-property: color, border-color, background-color;
+    transition-duration: 0.1s;
+    transition-timing-function: linear;
+    color: var(--color-primary-element-light-text);
+
     span {
         cursor: pointer;
+    }
+
+    &:hover {
+        background-color: var(--color-background-hover);
     }
 }
 </style>
