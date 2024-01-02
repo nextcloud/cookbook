@@ -12,8 +12,9 @@ describe('RecipeNamesFilter', () => {
         { name: ['Pasta Carbonara', 'Italian pasta'] },
         { name: ['Chocolate Cake', 'Brownie'] },
         { name: 'Salad' },
-        { name: ['Pizza', 'Calzone'] },
+        { name: ['Pizza', 'Calzone', 'Pizza Calzone'] },
         { name: 'Pizza' },
+        { name: ['Pizza', 'Pizza Carcassonne'] },
         { name: ['Spaghetti Bolognese', 'Garlic Bread'] },
     ];
 
@@ -44,10 +45,11 @@ describe('RecipeNamesFilter', () => {
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
         );
-        expect(filteredRecipes).toHaveLength(2);
+        expect(filteredRecipes).toHaveLength(3);
         expect(filteredRecipes.map((recipe) => recipe.name)).toEqual([
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
             'Pizza',
+            ['Pizza', 'Pizza Carcassonne'],
         ]);
     });
 
@@ -80,7 +82,7 @@ describe('RecipeNamesFilter', () => {
         expect(filteredRecipes).toHaveLength(2);
         expect(filteredRecipes.map((recipe) => recipe.name)).toEqual([
             'Salad',
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
         ]);
     });
 
@@ -116,8 +118,9 @@ describe('RecipeNamesFilter', () => {
             ['Pasta Carbonara', 'Italian pasta'],
             ['Chocolate Cake', 'Brownie'],
             'Salad',
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
             'Pizza',
+            ['Pizza', 'Pizza Carcassonne'],
             ['Spaghetti Bolognese', 'Garlic Bread'],
         ]);
     });
@@ -136,8 +139,9 @@ describe('RecipeNamesFilter', () => {
             ['Pasta Carbonara', 'Italian pasta'],
             ['Chocolate Cake', 'Brownie'],
             'Salad',
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
             'Pizza',
+            ['Pizza', 'Pizza Carcassonne'],
             ['Spaghetti Bolognese', 'Garlic Bread'],
         ]);
     });
@@ -156,8 +160,9 @@ describe('RecipeNamesFilter', () => {
             ['Pasta Carbonara', 'Italian pasta'],
             ['Chocolate Cake', 'Brownie'],
             'Salad',
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
             'Pizza',
+            ['Pizza', 'Pizza Carcassonne'],
             ['Spaghetti Bolognese', 'Garlic Bread'],
         ]);
     });
@@ -176,8 +181,9 @@ describe('RecipeNamesFilter', () => {
             ['Pasta Carbonara', 'Italian pasta'],
             ['Chocolate Cake', 'Brownie'],
             'Salad',
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
             'Pizza',
+            ['Pizza', 'Pizza Carcassonne'],
             ['Spaghetti Bolognese', 'Garlic Bread'],
         ]);
     });
@@ -214,7 +220,7 @@ describe('RecipeNamesFilter', () => {
         expect(filteredRecipes).toHaveLength(2);
         expect(filteredRecipes.map((recipe) => recipe.name)).toStrictEqual([
             'Salad',
-            ['Pizza', 'Calzone'],
+            ['Pizza', 'Calzone', 'Pizza Calzone'],
         ]);
     });
 
@@ -222,7 +228,11 @@ describe('RecipeNamesFilter', () => {
      * Test case: it should filter recipes if part of name is included using AND operator.
      */
     test('it should filter recipes if part of name is included using AND operator', () => {
-        const filter = new RecipeNamesFilter('pasta', new AndOperator());
+        const filter = new RecipeNamesFilter(
+            'pasta',
+            new AndOperator(),
+            'matchSubstring',
+        );
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
         );
@@ -238,7 +248,11 @@ describe('RecipeNamesFilter', () => {
      * Test case: it should filter recipes if part of name is included using OR operator.
      */
     test('it should filter recipes if part of name is included using OR operator', () => {
-        const filter = new RecipeNamesFilter('pasta', new AndOperator());
+        const filter = new RecipeNamesFilter(
+            'pasta',
+            new OrOperator(),
+            'matchSubstring',
+        );
         const filteredRecipes = recipes.filter((recipe) =>
             filter.filter(recipe),
         );
@@ -247,6 +261,66 @@ describe('RecipeNamesFilter', () => {
         expect(filteredRecipes[1].name).toStrictEqual([
             'Pasta Carbonara',
             'Italian pasta',
+        ]);
+    });
+
+    /**
+     * Test case: it should filter recipes with fuzzy search using AND operator.
+     */
+    test('it should filter recipes with fuzzy search using AND operator', () => {
+        const filter = new RecipeNamesFilter(
+            'Piza Car',
+            new AndOperator(),
+            'fuzzy',
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(5);
+        expect(filteredRecipes[0].name).toBe('Pasta Carbonara');
+        expect(filteredRecipes[1].name).toStrictEqual([
+            'Pasta Carbonara',
+            'Italian pasta',
+        ]);
+        expect(filteredRecipes[2].name).toStrictEqual([
+            'Pizza',
+            'Calzone',
+            'Pizza Calzone',
+        ]);
+        expect(filteredRecipes[3].name).toBe('Pizza');
+        expect(filteredRecipes[4].name).toStrictEqual([
+            'Pizza',
+            'Pizza Carcassonne',
+        ]);
+    });
+
+    /**
+     * Test case: it should filter recipes with fuzzy search using OR operator.
+     */
+    test('it should filter recipes with fuzzy search using OR operator', () => {
+        const filter = new RecipeNamesFilter(
+            'Piza Car',
+            new OrOperator(),
+            'fuzzy',
+        );
+        const filteredRecipes = recipes.filter((recipe) =>
+            filter.filter(recipe),
+        );
+        expect(filteredRecipes).toHaveLength(5);
+        expect(filteredRecipes[0].name).toBe('Pasta Carbonara');
+        expect(filteredRecipes[1].name).toStrictEqual([
+            'Pasta Carbonara',
+            'Italian pasta',
+        ]);
+        expect(filteredRecipes[2].name).toStrictEqual([
+            'Pizza',
+            'Calzone',
+            'Pizza Calzone',
+        ]);
+        expect(filteredRecipes[3].name).toBe('Pizza');
+        expect(filteredRecipes[4].name).toStrictEqual([
+            'Pizza',
+            'Pizza Carcassonne',
         ]);
     });
 });
