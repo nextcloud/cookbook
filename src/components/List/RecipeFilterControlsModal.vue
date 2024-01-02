@@ -46,6 +46,52 @@
                         </li>
                     </template></NcSelect
                 >
+                <div class="d-flex">
+                    <ToggleIcon
+                        v-model="categoriesOperatorToggleValue"
+                        :checked-icon="AndIcon"
+                        :icon-props="{
+                            size: 25,
+                            fillColor: 'var(--color-primary-light-text)',
+                        }"
+                        :checked-icon-props="{
+                            title: t(
+                                'cookbook',
+                                'Show recipes containing any selected category',
+                            ),
+                        }"
+                        :unchecked-icon="OrIcon"
+                        :unchecked-icon-props="{
+                            title: t(
+                                'cookbook',
+                                'Show recipes containing all selected categories',
+                            ),
+                        }"
+                    />
+
+                    <span
+                        v-if="categoriesOperatorToggleValue"
+                        class="operator-toggle-text"
+                        @click="
+                            categoriesOperatorToggleValue =
+                                !categoriesOperatorToggleValue
+                        "
+                        >{{
+                            t('cookbook', 'Match all selected categories')
+                        }}</span
+                    >
+                    <span
+                        v-else
+                        class="operator-toggle-text"
+                        @click="
+                            categoriesOperatorToggleValue =
+                                !categoriesOperatorToggleValue
+                        "
+                        >{{
+                            t('cookbook', 'Match any selected category')
+                        }}</span
+                    >
+                </div>
             </div>
 
             <div class="form-group">
@@ -79,6 +125,50 @@
                         </li>
                     </template></NcSelect
                 >
+                <div class="d-flex">
+                    <ToggleIcon
+                        v-model="keywordsOperatorToggleValue"
+                        :checked-icon="AndIcon"
+                        :icon-props="{
+                            size: 25,
+                            fillColor: 'var(--color-primary-light-text)',
+                        }"
+                        :checked-icon-props="{
+                            title: t(
+                                'cookbook',
+                                'Show recipes containing any selected category',
+                            ),
+                        }"
+                        :unchecked-icon="OrIcon"
+                        :unchecked-icon-props="{
+                            title: t(
+                                'cookbook',
+                                'Show recipes containing all selected categories',
+                            ),
+                        }"
+                    />
+
+                    <span
+                        v-if="keywordsOperatorToggleValue"
+                        class="operator-toggle-text"
+                        @click="
+                            keywordsOperatorToggleValue =
+                                !keywordsOperatorToggleValue
+                        "
+                        >{{
+                            t('cookbook', 'Match all selected keywords')
+                        }}</span
+                    >
+                    <span
+                        v-else
+                        class="operator-toggle-text"
+                        @click="
+                            keywordsOperatorToggleValue =
+                                !keywordsOperatorToggleValue
+                        "
+                        >{{ t('cookbook', 'Match any selected keyword') }}</span
+                    >
+                </div>
             </div>
             <div class="d-flex flex-row justify-end mt-4">
                 <NcButton type="tertiary" @click="clearFilters">
@@ -110,6 +200,9 @@ import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
 import { defineEmits, defineProps } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
+import AndIcon from 'vue-material-design-icons/SetCenter.vue';
+import OrIcon from 'vue-material-design-icons/SetAll.vue';
+import ToggleIcon from '../Utilities/ToggleIconButton.vue';
 
 const emit = defineEmits(['close', 'input']);
 
@@ -138,6 +231,8 @@ const {
     hiddenSections,
     searchTerm,
     localFiltersValue,
+    categoriesOperatorToggleValue,
+    keywordsOperatorToggleValue,
     store,
 } = useRecipeFilterControls(props);
 
@@ -164,10 +259,6 @@ function submitFilters() {
 </script>
 
 <style lang="scss" scoped>
-//@media (min-width: 1200px) {
-
-//}
-
 .d-flex {
     display: flex;
 }
@@ -178,6 +269,14 @@ function submitFilters() {
 
 .justify-end {
     justify-content: end;
+}
+
+.mb-2 {
+    margin-bottom: 0.5rem;
+}
+
+.mr-2 {
+    margin-right: 0.5rem;
 }
 
 .mt-4 {
@@ -210,6 +309,11 @@ function submitFilters() {
         .select {
             width: 100%;
         }
+    }
+    .operator-toggle-text {
+        display: flex;
+        align-items: center;
+        color: var(--text-muted);
     }
 }
 
