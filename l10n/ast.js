@@ -14,6 +14,7 @@ OC.L10N.register(
     "Name" : "Nome",
     "Nutrition information" : "Información nutricional",
     "Tools" : "Ferramientes",
+    "Dismiss" : "Escartar",
     "Cancel" : "Encaboxar",
     "OK" : "Normal",
     "Description" : "Descripción",
