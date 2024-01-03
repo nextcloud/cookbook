@@ -363,6 +363,7 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import { showError, showSuccess } from '@nextcloud/dialogs';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
@@ -633,14 +634,27 @@ const changeRecipeYield = (increase = true) => {
     recipeYield.value += increase ? 1 : -1;
 };
 
+function showCopySuccess(item) {
+    showSuccess(t('cookbook', '{item} copied to clipboard', { item }));
+}
+function showCopyError(item) {
+    showError(t('cookbook', 'Copying {item} to clipboard failed', { item }));
+}
+
 const copyIngredientsToClipboard = () => {
     const ingredientsToCopy = scaledIngredients.value.join('\n');
 
     if (navigator.clipboard) {
         navigator.clipboard
             .writeText(ingredientsToCopy)
-            .then(() => log.info('JSON array copied to clipboard'))
-            .catch((err) => log.error('Failed to copy JSON array: ', err));
+            .then(() => {
+                log.info('JSON array copied to clipboard');
+                showCopySuccess(t('cookbook', 'Ingredients'));
+            })
+            .catch((err) => {
+                log.error('Failed to copy JSON array: ', err);
+                showCopyError(t('cookbook', 'ingredients'));
+            });
     } else {
         // fallback solution
         const input = document.createElement('textarea');
@@ -654,11 +668,14 @@ const copyIngredientsToClipboard = () => {
             const successful = document.execCommand('copy');
             if (successful) {
                 log.info('JSON array copied to clipboard');
+                showCopySuccess(t('cookbook', 'Ingredients'));
             } else {
                 log.error('Failed to copy JSON array');
+                showCopyError(t('cookbook', 'ingredients'));
             }
         } catch (err) {
             log.error('Failed to copy JSON array: ', err);
+            showCopyError(t('cookbook', 'ingredients'));
         }
         document.body.removeChild(input);
     }
