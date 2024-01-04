@@ -46,7 +46,7 @@ const store = new Vuex.Store({
         // Category which is being updated (name)
         categoryUpdating: null,
         localSettings: {
-            showTagCloudInRecipeList: true,
+            showFiltersInRecipeList: true,
         },
         config: null,
     },
@@ -56,12 +56,12 @@ const store = new Vuex.Store({
             state.config = config;
         },
         initializeStore(state) {
-            if (localStorage.getItem('showTagCloudInRecipeList')) {
-                state.localSettings.showTagCloudInRecipeList = JSON.parse(
-                    localStorage.getItem('showTagCloudInRecipeList'),
+            if (localStorage.getItem('showFiltersInRecipeList')) {
+                state.localSettings.showFiltersInRecipeList = JSON.parse(
+                    localStorage.getItem('showFiltersInRecipeList'),
                 );
             } else {
-                state.localSettings.showTagCloudInRecipeList = true;
+                state.localSettings.showFiltersInRecipeList = true;
             }
         },
         setAppNavigationRefreshRequired(state, { b }) {
@@ -106,9 +106,9 @@ const store = new Vuex.Store({
         setSavingRecipe(state, { b }) {
             state.savingRecipe = b;
         },
-        setShowTagCloudInRecipeList(state, { b }) {
-            localStorage.setItem('showTagCloudInRecipeList', JSON.stringify(b));
-            state.localSettings.showTagCloudInRecipeList = b;
+        setShowFiltersInRecipeList(state, { b }) {
+            localStorage.setItem('showFiltersInRecipeList', JSON.stringify(b));
+            state.localSettings.showFiltersInRecipeList = b;
         },
         setUser(state, { u }) {
             state.user = u;
@@ -191,8 +191,8 @@ const store = new Vuex.Store({
         setCategoryUpdating(c, { category }) {
             c.commit('setCategoryUpdating', { c: category });
         },
-        setShowTagCloudInRecipeList(c, { showTagCloud }) {
-            c.commit('setShowTagCloudInRecipeList', { b: showTagCloud });
+        setShowFiltersInRecipeList(c, { showFilters }) {
+            c.commit('setShowFiltersInRecipeList', { b: showFilters });
         },
         updateCategoryName(c, { categoryNames }) {
             const oldName = categoryNames[0];

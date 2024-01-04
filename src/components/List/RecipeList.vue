@@ -7,57 +7,59 @@
             <div v-if="recipeObjects.length === 0">
                 <EmptyList />
             </div>
-            <RecipeFilterControlsModal
-                v-if="isMobile"
-                v-model="filterValue"
-                :preapplied-filters="props.preappliedFilters"
-                :recipes="recipes"
-                :is-loading="loading"
-                :is-visible="isFilterControlsVisible"
-                @close="() => (isFilterControlsVisible = false)"
-            />
-            <RecipeFilterControlsInline
-                v-else
-                v-model="inlineControlsValue"
-                :preapplied-filters="props.preappliedFilters"
-                :recipes="recipes"
-                :is-loading="loading"
-                :is-visible="isFilterControlsVisible"
-                @input="handleInlineControlsValueUpdated"
-                @close="() => (isFilterControlsVisible = false)"
-            />
-            <div
-                v-if="isMobile"
-                id="recipes-submenu"
-                class="recipes-submenu-container"
-            >
-                <RecipeSortSelect
-                    v-if="recipes.length > 0"
-                    v-model="orderBy"
-                    class="mr-4"
-                    :title="t('cookbook', 'Show filter settings')"
-                    aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+            <div v-else>
+                <RecipeFilterControlsModal
+                    v-if="isMobile && showFiltersInRecipeList"
+                    v-model="filterValue"
+                    :preapplied-filters="props.preappliedFilters"
+                    :recipes="recipes"
+                    :is-loading="loading"
+                    :is-visible="isFilterControlsVisible"
+                    @close="() => (isFilterControlsVisible = false)"
                 />
-                <NcButton
-                    :type="'secondary'"
-                    aria-label="t('cookbook', 'Show settings for filtering recipe list')"
-                    :title="t('cookbook', 'Show filter settings')"
-                    @click="toggleFilterControls"
+                <RecipeFilterControlsInline
+                    v-else-if="showFiltersInRecipeList"
+                    v-model="inlineControlsValue"
+                    :preapplied-filters="props.preappliedFilters"
+                    :recipes="recipes"
+                    :is-loading="loading"
+                    :is-visible="isFilterControlsVisible"
+                    @input="handleInlineControlsValueUpdated"
+                    @close="() => (isFilterControlsVisible = false)"
+                />
+                <div
+                    v-if="isMobile && showFiltersInRecipeList"
+                    id="recipes-submenu"
+                    class="recipes-submenu-container"
                 >
-                    <template #icon>
-                        <FilterIcon :size="20" />
-                    </template>
-                </NcButton>
+                    <RecipeSortSelect
+                        v-if="recipes.length > 0"
+                        v-model="orderBy"
+                        class="mr-4"
+                        :title="t('cookbook', 'Show filter settings')"
+                        aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                    />
+                    <NcButton
+                        :type="'secondary'"
+                        aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                        :title="t('cookbook', 'Show filter settings')"
+                        @click="toggleFilterControls"
+                    >
+                        <template #icon>
+                            <FilterIcon :size="20" />
+                        </template>
+                    </NcButton>
+                </div>
+                <ul class="recipes">
+                    <li
+                        v-for="recipeObj in recipeObjects"
+                        v-show="recipeObj.show"
+                        :key="recipeObj.recipe.recipe_id"
+                    >
+                        <RecipeCard :recipe="recipeObj.recipe" />
+                    </li>
+                </ul>
             </div>
-            <ul class="recipes">
-                <li
-                    v-for="recipeObj in recipeObjects"
-                    v-show="recipeObj.show"
-                    :key="recipeObj.recipe.recipe_id"
-                >
-                    <RecipeCard :recipe="recipeObj.recipe" />
-                </li>
-            </ul>
         </div>
     </div>
 </template>
@@ -278,6 +280,10 @@ const recipeObjects = computed(() => {
     }
     return props.recipes.map(makeObject);
 });
+
+const showFiltersInRecipeList = computed(
+    () => store.state.localSettings.showFiltersInRecipeList,
+);
 </script>
 
 <script>
