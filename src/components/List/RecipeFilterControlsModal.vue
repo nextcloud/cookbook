@@ -77,7 +77,7 @@
                                 !categoriesOperatorToggleValue
                         "
                         >{{
-                            t('cookbook', 'Match all selected categories')
+                            t('cookbook', 'Matching all selected categories')
                         }}</span
                     >
                     <span
@@ -88,7 +88,7 @@
                                 !categoriesOperatorToggleValue
                         "
                         >{{
-                            t('cookbook', 'Match any selected category')
+                            t('cookbook', 'Matching any selected category')
                         }}</span
                     >
                 </div>
@@ -156,7 +156,7 @@
                                 !keywordsOperatorToggleValue
                         "
                         >{{
-                            t('cookbook', 'Match all selected keywords')
+                            t('cookbook', 'Matching all selected keywords')
                         }}</span
                     >
                     <span
@@ -166,7 +166,9 @@
                             keywordsOperatorToggleValue =
                                 !keywordsOperatorToggleValue
                         "
-                        >{{ t('cookbook', 'Match any selected keyword') }}</span
+                        >{{
+                            t('cookbook', 'Matching any selected keyword')
+                        }}</span
                     >
                 </div>
             </div>
