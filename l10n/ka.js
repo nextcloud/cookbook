@@ -1,0 +1,28 @@
+OC.L10N.register(
+    "cookbook",
+    {
+    "Recipes" : "Recipes",
+    "in %s" : "in %s",
+    "None" : "None",
+    "Page not found" : "Page not found",
+    "Edit" : "Edit",
+    "Save" : "Save",
+    "Search" : "Search",
+    "Filter" : "Filter",
+    "Category" : "Category",
+    "Tags" : "Tags",
+    "Categories" : "Categories",
+    "Rename" : "Rename",
+    "Add" : "Add",
+    "Name" : "Name",
+    "Tools" : "Tools",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Description",
+    "URL" : "URL",
+    "Image" : "Image",
+    "Last modified" : "Last modified",
+    "Loading…" : "Loading…"
+},
+"nplurals=2; plural=(n!=1);");
