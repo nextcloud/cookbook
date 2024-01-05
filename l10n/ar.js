@@ -213,6 +213,9 @@ OC.L10N.register(
     "Search recipes" : "البحث في الوصفات",
     "Delete nutrition item" : "إحذف العنصر الغذائي",
     "Please select option first." : "حدِّد أوّلاً خيارك، من فضلك.",
-    "Copy ingredients to the clipboard" : "إنسَخ المُكوِّنات إلى الحافظة"
+    "Copy ingredients to the clipboard" : "إنسَخ المُكوِّنات إلى الحافظة",
+    "{item} copied to clipboard" : "{item} تمّ نسخه إلى الحافظة",
+    "Copying {item} to clipboard failed" : "أخفق نسخ {item} إلى الحافظة",
+    "ingredients" : "المُكوِّنات"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

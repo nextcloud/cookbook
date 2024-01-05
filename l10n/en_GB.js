@@ -213,6 +213,9 @@ OC.L10N.register(
     "Search recipes" : "Search recipes",
     "Delete nutrition item" : "Delete nutrition item",
     "Please select option first." : "Please select option first.",
-    "Copy ingredients to the clipboard" : "Copy ingredients to the clipboard"
+    "Copy ingredients to the clipboard" : "Copy ingredients to the clipboard",
+    "{item} copied to clipboard" : "{item} copied to clipboard",
+    "Copying {item} to clipboard failed" : "Copying {item} to clipboard failed",
+    "ingredients" : "ingredients"
 },
 "nplurals=2; plural=(n != 1);");

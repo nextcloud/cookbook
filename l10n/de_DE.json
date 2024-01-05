@@ -211,6 +211,9 @@
     "Search recipes" : "Rezepte suchen",
     "Delete nutrition item" : "Nährstoffelement löschen",
     "Please select option first." : "Bitte zuerst eine Option auswählen.",
-    "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren"
+    "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren",
+    "{item} copied to clipboard" : "{item} wurde in die Zwischenablage kopiert",
+    "Copying {item} to clipboard failed" : "Fehler beim Kopieren von {item} in die Zwischenablage",
+    "ingredients" : "Zutaten"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

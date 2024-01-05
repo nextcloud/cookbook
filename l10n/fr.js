@@ -212,6 +212,9 @@ OC.L10N.register(
     "Filter current recipes" : "Filtrer les recettes actuelles",
     "Search recipes" : "Rechercher des recettes",
     "Please select option first." : "Veuillez d'abord sélectionner l'option.",
-    "Copy ingredients to the clipboard" : "Copier les ingrédients dans le presse-papier"
+    "Copy ingredients to the clipboard" : "Copier les ingrédients dans le presse-papier",
+    "{item} copied to clipboard" : "{item} copié dans le presse-papier",
+    "Copying {item} to clipboard failed" : "La copie de {item} dans le presse-papier a échoué",
+    "ingredients" : "ingrédients"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
