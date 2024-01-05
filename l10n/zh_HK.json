@@ -211,6 +211,9 @@
     "Search recipes" : "搜尋食譜",
     "Delete nutrition item" : "刪除營養項目",
     "Please select option first." : "請先選擇選項。",
-    "Copy ingredients to the clipboard" : "將材料複製到剪貼板"
+    "Copy ingredients to the clipboard" : "將材料複製到剪貼板",
+    "{item} copied to clipboard" : "已複製 {item} 到剪貼板",
+    "Copying {item} to clipboard failed" : "複製 {item} 到剪貼板失敗",
+    "ingredients" : "材料"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

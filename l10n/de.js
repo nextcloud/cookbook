@@ -213,6 +213,9 @@ OC.L10N.register(
     "Search recipes" : "Rezepte suchen",
     "Delete nutrition item" : "Nährstoffelement löschen",
     "Please select option first." : "Bitte wähle zuerst eine Option aus.",
-    "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren"
+    "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren",
+    "{item} copied to clipboard" : "{item} wurde in die Zwischenablage kopiert.",
+    "Copying {item} to clipboard failed" : "Fehler beim Kopieren von {item} in die Zwischenablage",
+    "ingredients" : "Zutaten"
 },
 "nplurals=2; plural=(n != 1);");
