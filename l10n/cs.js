@@ -212,6 +212,10 @@ OC.L10N.register(
     "Filter current recipes" : "Filtrovat ve stávajících receptech",
     "Search recipes" : "Hledat recepty",
     "Delete nutrition item" : "Smazat výživovou položku",
-    "Please select option first." : "Nejprve vyberte volbu"
+    "Please select option first." : "Nejprve vyberte volbu",
+    "Copy ingredients to the clipboard" : "Zkopírovat přísady do schránky",
+    "{item} copied to clipboard" : "{item} zkopírováno do schránky",
+    "Copying {item} to clipboard failed" : "Zkopírování {item} do schránky se nezdařilo",
+    "ingredients" : "Přísady"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
