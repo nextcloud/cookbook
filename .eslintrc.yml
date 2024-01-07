@@ -12,6 +12,7 @@ extends:
 
 globals:
     OC: readonly
+    n: readonly
     t: readonly
 
 rules:

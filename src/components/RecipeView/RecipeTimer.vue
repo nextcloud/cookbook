@@ -7,7 +7,10 @@
             @click="timerToggle"
         ></button>
         <h4>{{ label }}</h4>
-        <p>{{ displayTime }}</p>
+        <div class="timeContainer">
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <p v-html="displayTime"></p>
+        </div>
     </div>
 </template>
 
@@ -15,13 +18,14 @@
 import { computed, defineProps, onMounted, ref, watch } from 'vue';
 import { linkTo } from '@nextcloud/router';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
+import helper from 'cookbook/js/helper';
 
 // Properties
 const props = defineProps({
     value: {
         type: Object,
         default() {
-            return { hours: 0, minutes: 0 };
+            return { hours: 0, minutes: 0, seconds: 0 };
         },
     },
     label: {
@@ -51,7 +55,7 @@ const seconds = ref(0);
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const showFullTime = ref(false);
+const countdownStarted = ref(false);
 // Create a ref for the audio element
 const audio = ref(new Audio());
 
@@ -67,7 +71,11 @@ const resetTimeDisplay = () => {
     } else {
         minutes.value = 0;
     }
-    seconds.value = 0;
+    if (props.value.seconds) {
+        seconds.value = parseInt(props.value.seconds, 10);
+    } else {
+        seconds.value = 0;
+    }
 };
 
 const onTimerEnd = () => {
@@ -88,7 +96,7 @@ const onTimerEnd = () => {
         audio.value.pause();
 
         countdown.value = null;
-        showFullTime.value = false;
+        countdownStarted.value = false;
         resetTimeDisplay();
     }, 100);
 };
@@ -97,8 +105,8 @@ const timerToggle = () => {
     // We will switch to full time display the first time this method is invoked.
     // There should probably also be a way to reset the timer other than by letting
     //  it run its course...
-    if (!showFullTime.value) {
-        showFullTime.value = true;
+    if (!countdownStarted.value) {
+        countdownStarted.value = true;
     }
     if (countdown.value === null) {
         countdown.value = window.setInterval(() => {
@@ -125,17 +133,84 @@ const timerToggle = () => {
     }
 };
 
+/**
+ * Add style to the unit of the value.
+ * @param str Complete translated string with value and unit
+ * @param value The value without the unit
+ * @param isPadded If value should be padded with zeros to ensure it has two digits
+ * @returns {string} Complete styled string with value and unit
+ */
+const styleUnit = (str, value, isPadded = true) => {
+    // Remove value
+    const unit = str.replace(`${value.toString()}`, '');
+    // Style unit
+    let text = `<span class="timerUnit">${helper.escapeHTML(unit)}</span>`;
+    // Reassemble value and unit.
+    // Make sure that value is a number to prevent XSS attacks (due to the v-html directive)
+    if (isPadded) {
+        text = `${Number(value).toString().padStart(2, '0')}${text}`;
+    } else {
+        text = `${Number(value).toString()}${text}`;
+    }
+    return text;
+};
+
 // Computed properties
+const displayHours = computed(() => {
+    let hoursText = '';
+    // TRANSLATORS hours part of timer text
+    hoursText += n('cookbook', '{hours}h', '{hours}h', hours.value, {
+        hours: `${hours.value.toString()}`,
+    });
+
+    return styleUnit(hoursText, hours.value);
+});
+
+const displayMinutes = computed(() => {
+    let minutesText = '';
+    // TRANSLATORS minutes part of timer text
+    minutesText += n('cookbook', '{minutes}m', '{minutes}m', minutes.value, {
+        minutes: `${minutes.value.toString()}`,
+    });
+
+    return styleUnit(minutesText, minutes.value);
+});
+
+const displaySeconds = computed(() => {
+    let secondsText = '';
+    // TRANSLATORS seconds part of timer text
+    secondsText += n('cookbook', '{seconds}s', '{seconds}s', seconds.value, {
+        seconds: `${seconds.value.toString()}`,
+    });
+
+    return styleUnit(secondsText, seconds.value);
+});
+
 const displayTime = computed(() => {
     let text = '';
-    if (showFullTime.value) {
-        text += `${hours.value.toString().padStart(2, '0')}:`;
-    } else {
-        text += `${hours.value.toString()}:`;
+    if (props.value.hours && props.value.hours > 0) {
+        text += displayHours.value;
     }
-    text += minutes.value.toString().padStart(2, '0');
-    if (showFullTime.value) {
-        text += `:${seconds.value.toString().padStart(2, '0')}`;
+    if (
+        (countdownStarted.value &&
+            ((props.value.hours && props.value.hours > 0) ||
+                (props.value.minutes && props.value.minutes > 0))) ||
+        (!countdownStarted.value &&
+            props.value.minutes &&
+            props.value.minutes > 0)
+    ) {
+        text += displayMinutes.value;
+    }
+    if (
+        (countdownStarted.value &&
+            ((props.value.hours && props.value.hours > 0) ||
+                (props.value.minutes && props.value.minutes > 0) ||
+                (props.value.seconds && props.value.seconds > 0))) ||
+        (!countdownStarted.value &&
+            props.value.seconds &&
+            props.value.seconds > 0)
+    ) {
+        text += displaySeconds.value;
     }
     return text;
 });
@@ -172,6 +247,8 @@ export default {
 <style scoped>
 .time {
     position: relative;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
     border: 1px solid var(--color-border-dark);
     border-radius: 3px;
@@ -196,8 +273,19 @@ export default {
     font-weight: bold;
 }
 
-.time p {
+.time > .timeContainer {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
     padding: 0.5rem;
+}
+
+/* The :deep selector prevents a data attribute from being added to the scoped element. */
+.time :deep(.timerUnit) {
+    color: var(--color-text-lighter);
+    font-size: 0.8em;
+    margin-inline-end: 0.3em;
 }
 
 @media print {

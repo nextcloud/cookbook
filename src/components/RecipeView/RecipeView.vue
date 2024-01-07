@@ -112,7 +112,7 @@
                             "
                             :value="recipe.timerPrep"
                             :timer="false"
-                            :label="t('cookbook', 'Preparation time (H:MM)')"
+                            :label="t('cookbook', 'Preparation time')"
                         />
                         <RecipeTimer
                             v-if="
@@ -121,7 +121,7 @@
                             "
                             :value="recipe.timerCook"
                             :timer="true"
-                            :label="t('cookbook', 'Cooking time (H:MM)')"
+                            :label="t('cookbook', 'Cooking time')"
                         />
                         <RecipeTimer
                             v-if="
@@ -130,7 +130,7 @@
                             "
                             :value="recipe.timerTotal"
                             :timer="false"
-                            :label="t('cookbook', 'Total time (H:MM)')"
+                            :label="t('cookbook', 'Total time')"
                         />
                     </div>
                 </div>
@@ -457,29 +457,38 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.cookTime) {
-        const cookT = store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/);
+        const cookT = store.state.recipe.cookTime.match(
+            /PT(\d+?)H(\d+?)M(\d+?)S/,
+        );
         const hh = parseInt(cookT[1], 10);
         const mm = parseInt(cookT[2], 10);
-        if (hh > 0 || mm > 0) {
-            tmpRecipe.timerCook = { hours: hh, minutes: mm };
+        const ss = parseInt(cookT[3], 10);
+        if (hh > 0 || mm > 0 || ss > 0) {
+            tmpRecipe.timerCook = { hours: hh, minutes: mm, seconds: ss };
         }
     }
 
     if (store.state.recipe.prepTime) {
-        const prepT = store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/);
+        const prepT = store.state.recipe.prepTime.match(
+            /PT(\d+?)H(\d+?)M(\d+?)S/,
+        );
         const hh = parseInt(prepT[1], 10);
         const mm = parseInt(prepT[2], 10);
-        if (hh > 0 || mm > 0) {
-            tmpRecipe.timerPrep = { hours: hh, minutes: mm };
+        const ss = parseInt(prepT[3], 10);
+        if (hh > 0 || mm > 0 || ss > 0) {
+            tmpRecipe.timerPrep = { hours: hh, minutes: mm, seconds: ss };
         }
     }
 
     if (store.state.recipe.totalTime) {
-        const totalT = store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/);
+        const totalT = store.state.recipe.totalTime.match(
+            /PT(\d+?)H(\d+?)M(\d+?)S/,
+        );
         const hh = parseInt(totalT[1], 10);
         const mm = parseInt(totalT[2], 10);
-        if (hh > 0 || mm > 0) {
-            tmpRecipe.timerTotal = { hours: hh, minutes: mm };
+        const ss = parseInt(totalT[3], 10);
+        if (hh > 0 || mm > 0 || ss > 0) {
+            tmpRecipe.timerTotal = { hours: hh, minutes: mm, seconds: ss };
         }
     }
 

@@ -27,15 +27,21 @@
             />
             <EditTimeField
                 v-model="prepTime"
-                :field-label="t('cookbook', 'Preparation time (hours:minutes)')"
+                :field-label="
+                    t('cookbook', 'Preparation time (hours:minutes:seconds)')
+                "
             />
             <EditTimeField
                 v-model="cookTime"
-                :field-label="t('cookbook', 'Cooking time (hours:minutes)')"
+                :field-label="
+                    t('cookbook', 'Cooking time (hours:minutes:seconds)')
+                "
             />
             <EditTimeField
                 v-model="totalTime"
-                :field-label="t('cookbook', 'Total time (hours:minutes)')"
+                :field-label="
+                    t('cookbook', 'Total time (hours:minutes:seconds)')
+                "
             />
             <EditMultiselect
                 v-model="recipe['recipeCategory']"
@@ -221,9 +227,9 @@ const formDirty = ref(false);
  * @type {import('vue').Ref<boolean>}
  */
 const savingRecipe = ref(false);
-const prepTime = ref({ time: [0, 0], paddedTime: '' });
-const cookTime = ref({ time: [0, 0], paddedTime: '' });
-const totalTime = ref({ time: [0, 0], paddedTime: '' });
+const prepTime = ref({ time: [0, 0, 0], paddedTime: '' });
+const cookTime = ref({ time: [0, 0, 0], paddedTime: '' });
+const totalTime = ref({ time: [0, 0, 0], paddedTime: '' });
 const allCategories = ref([]);
 /**
  * @type {import('vue').Ref<boolean>}
@@ -517,9 +523,9 @@ const save = async () => {
 };
 
 const initEmptyRecipe = () => {
-    prepTime.value = { time: [0, 0], paddedTime: '' };
-    cookTime.value = { time: [0, 0], paddedTime: '' };
-    totalTime.value = { time: [0, 0], paddedTime: '' };
+    prepTime.value = { time: [0, 0, 0], paddedTime: '' };
+    cookTime.value = { time: [0, 0, 0], paddedTime: '' };
+    totalTime.value = { time: [0, 0, 0], paddedTime: '' };
     // this.nutrition = {}
     recipe.value = {
         id: 0,
@@ -563,27 +569,33 @@ const setup = async () => {
     if (route.params.id) {
         // Parse time values
         let timeComps = recipe.value.prepTime
-            ? recipe.value.prepTime.match(/PT(\d+?)H(\d+?)M/)
+            ? recipe.value.prepTime.match(/PT(\d+?)H(\d+?)M(\d+?)S/)
             : null;
         prepTime.value = {
-            time: timeComps ? [timeComps[1], timeComps[2]] : [0, 0],
+            time: timeComps
+                ? [timeComps[1], timeComps[2], timeComps[3]]
+                : [0, 0, 0],
             paddedTime: recipe.value.prepTime,
         };
 
         timeComps = recipe.value.cookTime
-            ? recipe.value.cookTime.match(/PT(\d+?)H(\d+?)M/)
+            ? recipe.value.cookTime.match(/PT(\d+?)H(\d+?)M(\d+?)S/)
             : null;
         cookTime.value = {
-            time: timeComps ? [timeComps[1], timeComps[2]] : [0, 0],
+            time: timeComps
+                ? [timeComps[1], timeComps[2], timeComps[3]]
+                : [0, 0, 0],
             paddedTime: recipe.value.cookTime,
         };
 
         timeComps = recipe.value.totalTime
-            ? recipe.value.totalTime.match(/PT(\d+?)H(\d+?)M/)
+            ? recipe.value.totalTime.match(/PT(\d+?)H(\d+?)M(\d+?)S/)
             : null;
 
         totalTime.value = {
-            time: timeComps ? [timeComps[1], timeComps[2]] : [0, 0],
+            time: timeComps
+                ? [timeComps[1], timeComps[2], timeComps[3]]
+                : [0, 0, 0],
             paddedTime: recipe.value.totalTime,
         };
 
