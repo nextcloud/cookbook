@@ -77,7 +77,7 @@
                                 </span>
                                 <span class="print-hidden">
                                     <button
-                                        :disabled="recipeYield === 1"
+                                        :disabled="recipeYield <= 1"
                                         @click="changeRecipeYield(false)"
                                     >
                                         <span class="icon-view-previous" />
@@ -640,7 +640,7 @@ const setup = async () => {
 };
 
 const changeRecipeYield = (increase = true) => {
-    recipeYield.value += increase ? 1 : -1;
+    recipeYield.value = +recipeYield.value + (increase ? 1 : -1);
 };
 
 function showCopySuccess(item) {

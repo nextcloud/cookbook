@@ -14,7 +14,7 @@ function isValidIngredientSyntax(ingredient) {
 
     /*
         The ingredientMultipleSeperatorsRegExp is used to check whether the string contains
-        more than one separators (.,) after a number. This is used to exclude strings that
+        more than one separator (.,) after a number. This is used to exclude strings that
         contain more than one separator from being valid.
     */
     const ingredientMultipleSeparatorsRegExp = /^-?\d+(?:[.,]\d+){2,}.*/;
