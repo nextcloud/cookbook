@@ -213,6 +213,9 @@ OC.L10N.register(
     "Search recipes" : "Tarif ara",
     "Delete nutrition item" : "Beslenme ögesini sil",
     "Please select option first." : "Lütfen önce bir seçim yapın.",
-    "Copy ingredients to the clipboard" : "İçindekileri panoya kopyala"
+    "Copy ingredients to the clipboard" : "İçindekileri panoya kopyala",
+    "{item} copied to clipboard" : "{item} öge panoya kopyalandı",
+    "Copying {item} to clipboard failed" : "{item} panoya kopyalanamadı",
+    "ingredients" : "Malzemeler"
 },
 "nplurals=2; plural=(n > 1);");
