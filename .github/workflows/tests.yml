@@ -446,6 +446,19 @@ jobs:
     steps:
     - name: Checkout of the app
       uses: actions/checkout@v4
+    - name: Get the date
+      id: date
+      run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+    - name: Cache NPM cache
+      uses: actions/cache@v3.3.2
+      with:
+        path: |
+          ~/.npm
+          node_modules
+        key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+          ${{ runner.os }}-node-
     - name: Install the NPM dependencies
       run: npm ci
     - name: Run the tests
