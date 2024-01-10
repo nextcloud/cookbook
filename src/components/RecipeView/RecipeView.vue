@@ -14,9 +14,18 @@
                 </div>
 
                 <div class="meta">
-                    <h2 class="heading">{{ $store.state.recipe.name }}</h2>
+                    <div class="heading">
+                        <h2 class="mb-0">{{ $store.state.recipe.name }}</h2>
+                        <p v-if="$store.state.recipe.citation">
+                            {{
+                                // TRANSLATORS Indicates citation/source of recipe. Ex. "by Grandma Betty"
+                                t('cookbook', 'by')
+                            }}
+                            <span>{{ $store.state.recipe.citation }}</span>
+                        </p>
+                    </div>
                     <div class="details">
-                        <div v-if="recipe.keywords.length">
+                        <div v-if="recipe.keywords.length" class="mb-3">
                             <ul v-if="recipe.keywords.length">
                                 <RecipeKeyword
                                     v-for="(keyword, idx) in recipe.keywords"
@@ -816,6 +825,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-3 {
+    margin-bottom: 0.75rem !important;
+}
+
 .wrapper {
     width: 100%;
 }
@@ -873,6 +890,7 @@ export default {
 
 .heading {
     margin-top: 12px;
+    margin-bottom: 1rem;
 }
 
 .dates {

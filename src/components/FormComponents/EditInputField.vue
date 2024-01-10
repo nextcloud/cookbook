@@ -1,6 +1,6 @@
 <template>
     <fieldset>
-        <label>
+        <label :id="inputLabelId">
             {{ fieldLabel }}
         </label>
         <textarea
@@ -9,6 +9,9 @@
             "
             ref="inputField"
             v-model="content"
+            :placeholder="placeholder"
+            :aria-labelledby="inputLabelId"
+            :aria-placeholder="placeholder"
             @input="handleInput"
             @keydown="keyDown"
             @keyup="handleSuggestionsPopupKeyUp"
@@ -23,6 +26,9 @@
                 ref="inputField"
                 v-model="content"
                 :type="props.fieldType"
+                :placeholder="placeholder"
+                :aria-labelledby="inputLabelId"
+                :aria-placeholder="placeholder"
                 @input="handleInput"
                 @keydown="keyDown"
                 @keyup="handleSuggestionsPopupKeyUp"
@@ -64,6 +70,10 @@ const props = defineProps({
         default: false,
         required: false,
     },
+    placeholder: {
+        type: String,
+        default: '',
+    },
     suggestionOptions: {
         type: Array,
         default: () => [],
@@ -88,6 +98,12 @@ const suggestionsData = ref(null);
  * @type {import('vue').Ref<string>}
  */
 const content = ref(props.value);
+
+/**
+ * Unique identifier used for identifying the input label for accessibility reasons.
+ * @type {import('vue').Ref<string>}
+ */
+const inputLabelId = ref(`input-label-${Math.floor(Math.random() * 10000000)}`);
 
 // deconstruct composable
 const {

@@ -17,6 +17,15 @@
                 :suggestion-options="allRecipeOptions"
             />
             <EditInputField
+                v-model="recipe['citation']"
+                :field-type="'text'"
+                :field-label="t('cookbook', 'Source')"
+                :placeholder="
+                    // TRANSLATORS Example (placeholder) name for a citation of the recipe's source
+                    t('cookbook', 'Grandma Betty')
+                "
+            />
+            <EditInputField
                 v-model="recipe['url']"
                 :field-type="'url'"
                 :field-label="t('cookbook', 'URL')"
@@ -201,6 +210,7 @@ const recipe = ref({
     id: 0,
     name: '',
     description: '',
+    citation: '',
     url: '',
     image: '',
     prepTime: '',
@@ -531,6 +541,7 @@ const initEmptyRecipe = () => {
         id: 0,
         name: null,
         description: '',
+        citation: '',
         url: '',
         image: '',
         prepTime: '',
