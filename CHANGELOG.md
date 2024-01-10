@@ -1,17 +1,26 @@
 ## [Unreleased]
 
 ### Added
-- Toast with success/error message after trying to copy ingredients [#2040](https://github.com/nextcloud/cookbook/pull/2040) @seyfeb
-- Seconds can now be specified for recipe times [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
+- Toast with success/error message after trying to copy ingredients
+  [#2040](https://github.com/nextcloud/cookbook/pull/2040) @seyfeb
+- Seconds can now be specified for recipe times
+  [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
+- New filter UI in recipe lists
+  [#2037](https://github.com/nextcloud/cookbook/pull/2037) @seyfeb
 
 ### Fixed
-- Prevent yield calculation for ## as ingredient headline [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
-- Improved styling of times in recipe view [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
-- Add missing translatable string for recipe-creation button in empty list view [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
-- Prevent recalculation algorithm if no yield is given [#2003](https://github.com/nextcloud/cookbook/pull/2003) @j0hannesr0th
+- Prevent yield calculation for ## as ingredient headline
+  [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
+- Improved styling of times in recipe view
+  [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
+- Add missing translatable string for recipe-creation button in empty list view
+  [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
+- Prevent recalculation algorithm if no yield is given
+  [#2003](https://github.com/nextcloud/cookbook/pull/2003) @j0hannesr0th
 
 ### Documentation
-- Improve  structure of `README.md` [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
+- Improve  structure of `README.md`
+  [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
 
 ## 0.11.0 - 2023-12-14
 

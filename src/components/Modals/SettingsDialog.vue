@@ -66,15 +66,15 @@
                     </li>
                     <li>
                         <input
-                            id="tag-cloud"
-                            v-model="showTagCloudInRecipeList"
+                            id="filters"
+                            v-model="showFiltersInRecipeList"
                             type="checkbox"
                             class="checkbox"
                         />
-                        <label for="tag-cloud">
+                        <label for="filters">
                             {{
                                 // prettier-ignore
-                                t('cookbook', 'Show keyword cloud in recipe lists')
+                                t('cookbook', 'Show filters and sorting in recipe lists')
                             }}
                         </label>
                     </li>
@@ -239,7 +239,7 @@ const recipeFolder = ref('');
 /**
  * @type {import('vue').Ref<boolean>}
  */
-const showTagCloudInRecipeList = ref(true);
+const showFiltersInRecipeList = ref(true);
 /**
  * @type {import('vue').Ref<boolean>}
  */
@@ -281,14 +281,14 @@ watch(
 
 // eslint-disable-next-line no-unused-vars
 watch(
-    () => showTagCloudInRecipeList.value,
+    () => showFiltersInRecipeList.value,
     (newVal) => {
         if (!writeChanges.value) {
             return;
         }
 
-        store.dispatch('setShowTagCloudInRecipeList', {
-            showTagCloud: newVal,
+        store.dispatch('setShowFiltersInRecipeList', {
+            showFilters: newVal,
         });
     },
 );
@@ -429,8 +429,8 @@ const handleShowSettings = () => {
 
     printImage.value = config.print_image;
     visibleInfoBlocks.value = visibleInfoBlocksDecode(config.visibleInfoBlocks);
-    showTagCloudInRecipeList.value =
-        store.state.localSettings.showTagCloudInRecipeList;
+    showFiltersInRecipeList.value =
+        store.state.localSettings.showFiltersInRecipeList;
     updateInterval.value = config.update_interval;
     recipeFolder.value = config.folder;
 

@@ -53,4 +53,7 @@ overrides:
     - files: [ "src/composables/**/*.js" ]
       rules:
         import/prefer-default-export: off
+    - files: [ "src/tests/**/*.test.js"]
+      env:
+          jest: true
 

@@ -91,6 +91,7 @@
             :primary="true"
         >
             <NcActionInput
+                v-if="isMobile"
                 icon="icon-quota"
                 :value="filterValue"
                 :aria-label="t('cookbook', 'Filter current recipes')"
@@ -221,9 +222,11 @@ import {
 
 import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
+import { useIsMobile } from '../../composables/useIsMobile';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 
+const isMobile = useIsMobile();
 const route = useRoute();
 const store = useStore();
 const filterValue = ref('');
