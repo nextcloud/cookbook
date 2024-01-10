@@ -435,6 +435,23 @@ jobs:
     - name: Check the code base
       run: docker run --rm -v $(pwd):/work:ro php-lint-tester
 
+
+  run-jest:
+    name: "Run JS tests"
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout of the app
+      uses: actions/checkout@v4
+    - name: Install the NPM dependencies
+      run: npm ci
+    - name: Run the tests
+      run: npm run ci-test
+
+
   successful_run:
     name: The tests have successfully run
     runs-on: ubuntu-22.04
@@ -444,6 +461,7 @@ jobs:
       - source-package
       - lint-php
       - event_file
+      - run-jest
     steps:
       - name: Run successfully
         shell: bash

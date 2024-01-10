@@ -26,7 +26,8 @@
     "serve": "npx webpack serve --node-env development --progress --config webpack.config.js --env dev_server --allowed-hosts all",
     "stylelint": "npx stylelint src",
     "stylelint-fix": "npx stylelint --fix src",
-    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest"
+    "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest",
+    "ci-test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest --ci"
   },
   "dependencies": {
     "@nextcloud/axios": "^2.0.0",
