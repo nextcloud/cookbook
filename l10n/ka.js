@@ -23,6 +23,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Image",
     "Last modified" : "Last modified",
-    "Loading…" : "Loading…"
+    "Loading…" : "Loading…",
+    "Clear" : "Clear"
 },
 "nplurals=2; plural=(n!=1);");

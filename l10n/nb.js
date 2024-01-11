@@ -82,6 +82,9 @@ OC.L10N.register(
     "Total time (H:MM)" : "Total tid (T:MM)",
     "Serving Size" : "Porsjonsstørrelse",
     "Energy" : "Energi",
-    "Loading…" : "Laster…"
+    "Loading…" : "Laster…",
+    "Order" : "Sortering",
+    "Clear" : "Tøm",
+    "Apply" : "Bruk"
 },
 "nplurals=2; plural=(n != 1);");

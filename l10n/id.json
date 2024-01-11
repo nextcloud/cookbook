@@ -22,6 +22,9 @@
     "URL" : "URL",
     "Image" : "Gambar",
     "Last modified" : "Terakhir diubah",
-    "Loading…" : "Memuat…"
+    "Loading…" : "Memuat…",
+    "Order" : "Pesan",
+    "Clear" : "Bersihkan",
+    "Apply" : "Terapkan"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

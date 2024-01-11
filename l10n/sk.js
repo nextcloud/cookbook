@@ -192,6 +192,10 @@ OC.L10N.register(
     "Trans Fat" : "Trans-tuky",
     "Loading…" : "Načítava sa...",
     "Failed to load recipes with keywords: {tags}" : "Zlyhalo načítavanie receptov s kľúčovými slovami : {tags}",
-    "Failed to load search results" : "Zlyhalo načítavanie výsledkov vyhľadávania"
+    "Failed to load search results" : "Zlyhalo načítavanie výsledkov vyhľadávania",
+    "Order" : "Zoradiť",
+    "Search term" : "Hľadaný výraz",
+    "Clear" : "Vyčistiť",
+    "Apply" : "Použiť"
 },
 "nplurals=4; plural=(n % 1 == 0 && n == 1 ? 0 : n % 1 == 0 && n >= 2 && n <= 4 ? 1 : n % 1 != 0 ? 2: 3);");

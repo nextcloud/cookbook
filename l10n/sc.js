@@ -129,6 +129,9 @@ OC.L10N.register(
     "Trans Fat" : "Grassos trans",
     "Loading…" : "Carrighende...",
     "Failed to load recipes with keywords: {tags}" : "Impossìbile a carrigare retzetas cun faeddos is crae: {tags}",
-    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca"
+    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca",
+    "Order" : "Ordinamentu",
+    "Clear" : "Lìmpia",
+    "Apply" : "Àplica"
 },
 "nplurals=2; plural=(n != 1);");

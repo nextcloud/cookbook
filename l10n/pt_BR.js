@@ -212,6 +212,10 @@ OC.L10N.register(
     "Search recipes" : "Pesquisar receitas",
     "Delete nutrition item" : "Excluir item nutricional",
     "Please select option first." : "Selecione a opção primeiro.",
+    "Order" : "Pedido",
+    "Search term" : "Termo de busca",
+    "Clear" : "Limpar",
+    "Apply" : "Aplicar",
     "Copy ingredients to the clipboard" : "Copie os ingredientes para a área de transferência"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

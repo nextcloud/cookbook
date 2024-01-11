@@ -15,6 +15,7 @@ OC.L10N.register(
     "OK" : "OK",
     "Description" : "Beschreiwung",
     "URL" : "URL",
-    "Loading…" : "Et gëtt gelueden"
+    "Loading…" : "Et gëtt gelueden",
+    "Apply" : "Uwenden"
 },
 "nplurals=2; plural=(n != 1);");

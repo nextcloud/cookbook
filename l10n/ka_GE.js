@@ -21,6 +21,8 @@ OC.L10N.register(
     "Description" : "აღწერილობა",
     "URL" : "მისამართი",
     "Last modified" : "ბოლო ცვლილება",
-    "Loading…" : "იტვირთება…"
+    "Loading…" : "იტვირთება…",
+    "Clear" : "გასუფთავება",
+    "Apply" : "გამოყენება"
 },
 "nplurals=2; plural=(n!=1);");

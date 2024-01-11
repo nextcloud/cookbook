@@ -20,6 +20,8 @@ OC.L10N.register(
     "Description" : "Descripcion",
     "URL" : "URL",
     "Calories" : "Calorias",
-    "Loading…" : "Cargament…"
+    "Loading…" : "Cargament…",
+    "Clear" : "Escafar",
+    "Apply" : "Aplicar"
 },
 "nplurals=2; plural=(n > 1);");

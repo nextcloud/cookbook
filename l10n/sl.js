@@ -136,6 +136,10 @@ OC.L10N.register(
     "Trans Fat" : "Trans maščobne",
     "Loading…" : "Poteka nalaganje …",
     "Failed to load recipes with keywords: {tags}" : "Spodletelo je nalaganje receptov za ključne besede: {tags}",
-    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo"
+    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo",
+    "Order" : "Razvrstitev",
+    "Search term" : "Poišči izraz",
+    "Clear" : "Počisti",
+    "Apply" : "Uveljavi"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

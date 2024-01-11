@@ -19,6 +19,8 @@ OC.L10N.register(
     "OK" : "ตกลง",
     "Description" : "คำอธิบาย",
     "URL" : "URL",
-    "Loading…" : "กำลังโหลด..."
+    "Loading…" : "กำลังโหลด...",
+    "Clear" : "ล้าง",
+    "Apply" : "นำไปใช้"
 },
 "nplurals=1; plural=0;");

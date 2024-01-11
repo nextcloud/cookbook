@@ -157,6 +157,9 @@ OC.L10N.register(
     "Trans Fat" : "Trans vet",
     "Loading…" : "Laden…",
     "Failed to load recipes with keywords: {tags}" : "Kon recepten met sleutelwoorden niet laden: (labels)",
-    "Failed to load search results" : "Kon zoekresultaten niet laden"
+    "Failed to load search results" : "Kon zoekresultaten niet laden",
+    "Order" : "Volgorde",
+    "Clear" : "Terug",
+    "Apply" : "Pas toe"
 },
 "nplurals=2; plural=(n != 1);");
