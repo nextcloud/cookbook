@@ -213,6 +213,8 @@ OC.L10N.register(
     "Search recipes" : "Rezepte suchen",
     "Delete nutrition item" : "Nährstoffelement löschen",
     "Please select option first." : "Bitte wähle zuerst eine Option aus.",
+    "Order" : "Benötigt keine Übersetzung. Hier wird nur die formelle Übersetzung verwendet (de_DE).",
+    "Clear" : "Löschen",
     "Preparation time (hours:minutes:seconds)" : "Vorbereitungszeit (Stunden:Minuten:Sekunden)",
     "Cooking time (hours:minutes:seconds)" : "Kochzeit (Stunden:Minuten:Sekunden)",
     "Total time (hours:minutes:seconds)" : "Gesamtzeit (Stunden:Minuten:Sekunden)",

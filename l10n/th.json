@@ -17,6 +17,8 @@
     "OK" : "ตกลง",
     "Description" : "คำอธิบาย",
     "URL" : "URL",
-    "Loading…" : "กำลังโหลด..."
+    "Loading…" : "กำลังโหลด...",
+    "Clear" : "ล้าง",
+    "Apply" : "นำไปใช้"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

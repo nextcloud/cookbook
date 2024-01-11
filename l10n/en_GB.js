@@ -213,6 +213,8 @@ OC.L10N.register(
     "Search recipes" : "Search recipes",
     "Delete nutrition item" : "Delete nutrition item",
     "Please select option first." : "Please select option first.",
+    "Order" : "Order",
+    "Clear" : "Clear",
     "Preparation time (hours:minutes:seconds)" : "Preparation time (hours:minutes:seconds)",
     "Cooking time (hours:minutes:seconds)" : "Cooking time (hours:minutes:seconds)",
     "Total time (hours:minutes:seconds)" : "Total time (hours:minutes:seconds)",

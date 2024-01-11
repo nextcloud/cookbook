@@ -116,6 +116,8 @@ OC.L10N.register(
     "Protein" : "Proteína",
     "Sodium" : "Sal",
     "Fat total" : "Total de gordura",
-    "Loading…" : "A carregar..."
+    "Loading…" : "A carregar...",
+    "Clear" : "Limpar",
+    "Apply" : "Aplicar"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

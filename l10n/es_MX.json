@@ -20,6 +20,8 @@
     "URL" : "URL",
     "Last modified" : "Última modificación",
     "Energy" : "Energía",
-    "Loading…" : "Cargando..."
+    "Loading…" : "Cargando...",
+    "Clear" : "Limpiar",
+    "Apply" : "Aplicar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

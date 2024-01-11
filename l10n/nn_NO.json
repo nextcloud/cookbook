@@ -17,6 +17,7 @@
     "Description" : "Skildring",
     "URL" : "URL",
     "Last modified" : "Siste endra",
-    "Loading…" : "Laster..."
+    "Loading…" : "Laster...",
+    "Apply" : "Anvend"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

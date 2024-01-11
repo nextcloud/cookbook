@@ -16,6 +16,7 @@ OC.L10N.register(
     "OK" : "Ok",
     "Description" : "Description",
     "URL" : "URL",
-    "Loading…" : "Cargante..."
+    "Loading…" : "Cargante...",
+    "Apply" : "Applicar"
 },
 "nplurals=2; plural=(n != 1);");

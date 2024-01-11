@@ -29,6 +29,9 @@ OC.L10N.register(
     "Keywords" : "키워드",
     "Calories" : "칼로리",
     "Last modified" : "수정한 날짜",
-    "Loading…" : "불러오는 중…"
+    "Loading…" : "불러오는 중…",
+    "Order" : "순서",
+    "Clear" : "비우기",
+    "Apply" : "적용"
 },
 "nplurals=1; plural=0;");

@@ -195,6 +195,10 @@
     "Loading…" : "Kargatzen…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Osagaia ezin da berriro kalkulatu sintaxi okerragatik. Mesedez, aldatu sintaxi honetara: zenbatekoa unitate osagaia. Adibideak: 200 g azenario edo gatz pittin bat",
     "Failed to load recipes with keywords: {tags}" : "Huts egin du gako-hitz hau duten errezetak kargatzeak: {tags}",
-    "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu"
+    "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu",
+    "Order" : "Ordena",
+    "Search term" : "Bilaketa terminoa",
+    "Clear" : "Garbitu",
+    "Apply" : "Aplikatu"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

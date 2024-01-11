@@ -189,6 +189,10 @@ OC.L10N.register(
     "Trans Fat" : "Transfett",
     "Loading…" : "Läser in…",
     "Failed to load recipes with keywords: {tags}" : "Misslyckades med att ladda recept med nyckelorden: {tags}",
-    "Failed to load search results" : "Misslyckades att ladda sökresultat"
+    "Failed to load search results" : "Misslyckades att ladda sökresultat",
+    "Order" : "Ordning",
+    "Search term" : "Sökterm",
+    "Clear" : "Rensa",
+    "Apply" : "Tillämpa"
 },
 "nplurals=2; plural=(n != 1);");

@@ -24,6 +24,9 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Gambar",
     "Last modified" : "Terakhir diubah",
-    "Loading…" : "Memuat…"
+    "Loading…" : "Memuat…",
+    "Order" : "Pesan",
+    "Clear" : "Bersihkan",
+    "Apply" : "Terapkan"
 },
 "nplurals=1; plural=0;");

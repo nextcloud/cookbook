@@ -213,6 +213,7 @@ OC.L10N.register(
     "Search recipes" : "Hledat recepty",
     "Delete nutrition item" : "Smazat výživovou položku",
     "Please select option first." : "Nejprve vyberte volbu",
+    "Order" : "Pořadí",
     "Copy ingredients to the clipboard" : "Zkopírovat přísady do schránky",
     "{item} copied to clipboard" : "{item} zkopírováno do schránky",
     "Copying {item} to clipboard failed" : "Zkopírování {item} do schránky se nezdařilo",

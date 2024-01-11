@@ -143,6 +143,9 @@ OC.L10N.register(
     "Trans Fat" : "Grassi trans",
     "Loading…" : "Caricamento…",
     "Failed to load recipes with keywords: {tags}" : "Caricamento delle ricette con parole chiave non riuscito: {tags}",
-    "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito"
+    "Failed to load search results" : "Caricamento dei risultati di ricerca non riuscito",
+    "Order" : "Ordinamento",
+    "Clear" : "Pulisci",
+    "Apply" : "Applica"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

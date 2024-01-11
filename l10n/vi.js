@@ -154,6 +154,9 @@ OC.L10N.register(
     "Trans Fat" : "Chất béo trans",
     "Loading…" : "Đang tải…",
     "Failed to load recipes with keywords: {tags}" : "Không tải được các công thức nấu ăn có từ khóa: {tags}",
-    "Failed to load search results" : "Không tải được kết quả tìm kiếm"
+    "Failed to load search results" : "Không tải được kết quả tìm kiếm",
+    "Order" : "Thứ tự",
+    "Clear" : "Xóa",
+    "Apply" : "Áp dụng"
 },
 "nplurals=1; plural=0;");

@@ -193,6 +193,10 @@
     "Loading…" : "Cargando...",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "No se puede recalcular el ingrediente debido a una sintaxis incorrecta. Por favor, cámbialo a esta sintaxis: cantidad unidad ingrediente. Ejemplos: 200 g de zanahorias o 1 pizca de sal",
     "Failed to load recipes with keywords: {tags}" : "Error al cargar las recetas con las palabras clave: {tags}",
-    "Failed to load search results" : "Error al cargar los resultados de búsqueda"
+    "Failed to load search results" : "Error al cargar los resultados de búsqueda",
+    "Order" : "Orden",
+    "Search term" : "Término de búsqueda",
+    "Clear" : "Limpiar",
+    "Apply" : "Aplicar"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

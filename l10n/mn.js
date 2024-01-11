@@ -18,6 +18,7 @@ OC.L10N.register(
     "Description" : "Тодорхойлолт",
     "URL" : "URL",
     "Last modified" : "Сүүлд өөрчилсөн",
-    "Loading…" : "уншиж байна"
+    "Loading…" : "уншиж байна",
+    "Apply" : "хэрэглэх"
 },
 "nplurals=2; plural=(n != 1);");

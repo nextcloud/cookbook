@@ -112,6 +112,8 @@ OC.L10N.register(
     "Sodium" : "Νάτριο",
     "Loading…" : "Φορτώνει…",
     "Failed to load recipes with keywords: {tags}" : "Αποτυχία φόρτωσης συνταγών με λέξεις κλειδιά: {tags}",
-    "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης"
+    "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης",
+    "Order" : "Σειρά",
+    "Clear" : "Εκκαθάριση"
 },
 "nplurals=2; plural=(n != 1);");

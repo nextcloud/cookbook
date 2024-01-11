@@ -102,6 +102,9 @@ OC.L10N.register(
     "Trans Fat" : "トランス脂肪酸",
     "Loading…" : "読み込み中…",
     "Failed to load recipes with keywords: {tags}" : "キーワードでレシピの読み込みに失敗しました: {tags}",
-    "Failed to load search results" : "検索結果の読み込みに失敗しました"
+    "Failed to load search results" : "検索結果の読み込みに失敗しました",
+    "Order" : "並び替え",
+    "Clear" : "クリア",
+    "Apply" : "適用"
 },
 "nplurals=1; plural=0;");

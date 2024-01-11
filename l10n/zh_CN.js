@@ -133,6 +133,10 @@ OC.L10N.register(
     "Trans Fat" : "反式脂肪 ",
     "Loading…" : "正在加载…",
     "Failed to load recipes with keywords: {tags}" : "加载带这些关键词的菜谱失败：{tags}",
-    "Failed to load search results" : "加载搜索结果失败"
+    "Failed to load search results" : "加载搜索结果失败",
+    "Order" : "顺序",
+    "Search term" : "关键字",
+    "Clear" : "清空",
+    "Apply" : "应用"
 },
 "nplurals=1; plural=0;");

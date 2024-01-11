@@ -136,6 +136,7 @@ OC.L10N.register(
     "Trans Fat" : "Transfedtsyre",
     "Loading…" : "Indlæser…",
     "Failed to load recipes with keywords: {tags}" : "Kunne ikke indlæse opskrifter med nøgleord: {tags}",
-    "Failed to load search results" : "Kunne ikke indlæse søgeresultater"
+    "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
+    "Clear" : "Ryd"
 },
 "nplurals=2; plural=(n != 1);");
