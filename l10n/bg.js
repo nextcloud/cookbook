@@ -194,6 +194,10 @@ OC.L10N.register(
     "Loading…" : "Зареждане…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Съставката не може да бъде преизчислена поради неправилен синтаксис. Моля, променете го със следният синтаксис: количество за всяка една от съставките. Примери: 200 г моркови или 1 щипка сол",
     "Failed to load recipes with keywords: {tags}" : "Неуспешно зареждане на рецепти с ключови думи: {tags}",
-    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно "
+    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
+    "Order" : "Ред/поръчка/",
+    "Search term" : "Термин за търсене",
+    "Clear" : "Изчистване",
+    "Apply" : "Приложи"
 },
 "nplurals=2; plural=(n != 1);");
