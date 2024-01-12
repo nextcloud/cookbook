@@ -137,6 +137,8 @@ OC.L10N.register(
     "Loading…" : "Indlæser…",
     "Failed to load recipes with keywords: {tags}" : "Kunne ikke indlæse opskrifter med nøgleord: {tags}",
     "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
-    "Clear" : "Ryd"
+    "Search term" : "Søgeterm",
+    "Clear" : "Ryd",
+    "Apply" : "Anvend"
 },
 "nplurals=2; plural=(n != 1);");
