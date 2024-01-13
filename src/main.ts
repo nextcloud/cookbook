@@ -12,20 +12,44 @@ import Vue from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
-import helpers from 'cookbook/js/helper';
-import setupLogging from 'cookbook/js/logging';
-
 import { linkTo } from '@nextcloud/router';
+import helpers from './js/helper';
+import setupLogging from './js/logging';
 
 import router from './router';
 import { useStore } from './store';
 
 import AppMain from './components/AppMain.vue';
 
+declare global {
+	interface Window {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		OC: any;
+		n: string;
+		t: string;
+		escapeHTML(text: string): string;
+	}
+}
+
+declare module 'vue/types/vue' {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	export interface VueConstructor<V extends Vue = Vue> {
+		$log: {
+			debug(...args: (string | object)[]): void;
+			info(...args: (string | object)[]): void;
+			warn(...args: (string | object)[]): void;
+			error(...args: (string | object)[]): void;
+			fatal(...args: (string | object)[]): void;
+		};
+	}
+}
+
+const isDevServer = process.env.WEBPACK_DEV_SERVER;
+
 // eslint-disable-next-line camelcase,no-undef
-if (__webpack_use_dev_server__ || false) {
-    // eslint-disable-next-line camelcase,no-undef
-    __webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
+if (isDevServer || false) {
+	// eslint-disable-next-line camelcase,no-undef
+	__webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
 }
 
 // eslint-disable-next-line camelcase,no-undef
@@ -33,7 +57,7 @@ __webpack_public_path__ = `${linkTo('cookbook', 'js')}/`;
 
 // Fetch Nextcloud nonce identifier for dynamic script loading
 // eslint-disable-next-line camelcase,no-undef
-__webpack_nonce__ = btoa(OC.requestToken);
+__webpack_nonce__ = btoa(window.OC.requestToken);
 
 helpers.useRouter(router);
 
@@ -43,12 +67,12 @@ window.escapeHTML = helpers.escapeHTML;
 
 // Also make the injections available in Vue components
 Vue.prototype.$window = window;
-Vue.prototype.OC = OC;
+Vue.prototype.OC = window.OC;
 
 // Markdown for Vue
 Vue.use(VueShowdown, {
-    // set default flavor for Markdown
-    flavor: 'vanilla',
+	// set default flavor for Markdown
+	flavor: 'vanilla',
 });
 
 // TODO: Equivalent library for Vue3 when we make that transition:
@@ -68,9 +92,9 @@ Vue.prototype.n = window.n;
 Vue.$log.info('Main is done. Creating App.');
 const App = Vue.extend(AppMain);
 new App({
-    store,
-    router,
-    beforeCreate() {
-        this.$store.commit('initializeStore');
-    },
+	store,
+	router,
+	beforeCreate() {
+		this.$store.commit('initializeStore');
+	},
 }).$mount('#content');

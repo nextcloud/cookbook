@@ -1,0 +1,23 @@
+{
+	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.vue"],
+	"exclude": ["node_modules"],
+	"compilerOptions": {
+		"lib": [
+			"dom",
+			"es2015.promise",
+			"es6"
+		],
+		"module": "ES6",
+		"moduleResolution": "node",
+		"target": "ES6",
+		"allowJs": true,
+		"allowSyntheticDefaultImports": true,
+		"strictNullChecks": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"paths": {
+			"cookbook/*": ["./src/*"],
+			"icons/*": ["./node_modules/vue-material-design-icons/*"]
+		}
+	}
+}

@@ -22,7 +22,7 @@ class RecipeFilter {
      * @param {Object} recipe - The recipe object to be filtered.
      * @throws {Error} Method 'filter' must be implemented by subclasses.
      */
-    // eslint-disable-next-line class-methods-use-this,no-unused-vars
+    // eslint-disable-next-line class-methods-use-this,no-unused-vars,@typescript-eslint/no-unused-vars
     filter(recipe) {
         throw new Error("Method 'filter' must be implemented by subclasses");
     }

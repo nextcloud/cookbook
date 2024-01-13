@@ -11,18 +11,29 @@ import { useStore } from './store';
 
 import AppInvalidGuest from './components/AppInvalidGuest.vue';
 
+declare global {
+	interface Window {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		OC: any;
+		n: string;
+		t: string;
+	}
+}
+
+const isDevServer = process.env.WEBPACK_DEV_SERVER;
+
 // eslint-disable-next-line camelcase,no-undef
-if (__webpack_use_dev_server__ || false) {
-    // eslint-disable-next-line camelcase,no-undef
-    __webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
+if (isDevServer || false) {
+	// eslint-disable-next-line camelcase,no-undef
+	__webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
 }
 
 // Fetch Nextcloud nonce identifier for dynamic script loading
 // eslint-disable-next-line camelcase,no-undef
-__webpack_nonce__ = btoa(OC.requestToken);
+__webpack_nonce__ = btoa(window.OC.requestToken);
 
 // Also make the injections available in Vue components
-Vue.prototype.OC = OC;
+Vue.prototype.OC = window.OC;
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
@@ -35,6 +46,6 @@ store.dispatch('refreshConfig');
 // Start the app once document is done loading
 const App = Vue.extend(AppInvalidGuest);
 new App({
-    store,
-    // router,
+	store,
+	// router,
 }).$mount('#content');

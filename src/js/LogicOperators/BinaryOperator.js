@@ -24,7 +24,7 @@ class BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @throws {Error} Method 'apply' must be implemented by subclasses.
      */
-    // eslint-disable-next-line no-unused-vars,class-methods-use-this
+    // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars,class-methods-use-this
     apply(result, current) {
         throw new Error("Method 'apply' must be implemented by subclasses");
     }
