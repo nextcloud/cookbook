@@ -35,6 +35,7 @@ OC.L10N.register(
     "Last modified" : "Laste modifita",
     "Sugar" : "Sukero",
     "Loading…" : "Ŝargado...",
-    "Clear" : "Viŝi"
+    "Clear" : "Viŝi",
+    "Apply" : "Validigi"
 },
 "nplurals=2; plural=(n != 1);");
