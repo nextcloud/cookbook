@@ -129,7 +129,7 @@ class UserFolderHelper {
 			);
 		}
 
-		if (! $node->isCreatable()) {
+		if (!$node->isCreatable()) {
 			throw new UserFolderNotWritableException(
 				$this->l->t('User cannot create recipe folder')
 			);

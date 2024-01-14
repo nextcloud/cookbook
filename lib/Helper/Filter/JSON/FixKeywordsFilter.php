@@ -40,7 +40,7 @@ class FixKeywordsFilter extends AbstractJSONFilter {
 			return true;
 		}
 
-		if (!is_string($json[self::KEYWORDS]) && ! is_array($json[self::KEYWORDS])) {
+		if (!is_string($json[self::KEYWORDS]) && !is_array($json[self::KEYWORDS])) {
 			$this->logger->info($this->l->t('Could not parse the keywords for recipe {recipe}.', ['recipe' => $json['name']]));
 			$json[self::KEYWORDS] = '';
 			return true;

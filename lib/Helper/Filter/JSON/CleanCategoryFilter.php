@@ -20,7 +20,7 @@ class CleanCategoryFilter extends AbstractJSONFilter {
 	}
 
 	public function apply(array &$json): bool {
-		if (! isset($json['recipeCategory'])) {
+		if (!isset($json['recipeCategory'])) {
 			$json['recipeCategory'] = '';
 			return true;
 		}
