@@ -151,7 +151,7 @@ class HtmlToDomParser {
 		 */
 		foreach ($errors as $error) {
 			if (isset($ret[$error->code])) {
-				$ret[$error->code]['count'] ++;
+				$ret[$error->code]['count']++;
 			} else {
 				$ret[$error->code] = [
 					'count' => 1,

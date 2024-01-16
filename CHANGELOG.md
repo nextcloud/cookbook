@@ -22,6 +22,10 @@
 - Improve  structure of `README.md`
   [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
 
+### Maintenance
+- Add Typescript support
+  [#2059](https://github.com/nextcloud/cookbook/pull/2059) @seyfeb
+
 ## 0.11.0 - 2023-12-14
 
 ### Fixed

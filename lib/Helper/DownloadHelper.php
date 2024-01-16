@@ -116,7 +116,7 @@ class DownloadHelper {
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
 	public function getContentType(): ?string {
-		if (! $this->downloaded) {
+		if (!$this->downloaded) {
 			throw new NoDownloadWasCarriedOutException();
 		}
 
@@ -140,7 +140,7 @@ class DownloadHelper {
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
 	public function getStatus(): int {
-		if (! $this->downloaded) {
+		if (!$this->downloaded) {
 			throw new NoDownloadWasCarriedOutException();
 		}
 

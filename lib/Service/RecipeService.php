@@ -256,7 +256,7 @@ class RecipeService {
 
 		$recipe_file->putContent(json_encode($json));
 
-		if (! is_null($importedHtml)) {
+		if (!is_null($importedHtml)) {
 			// We imported a recipe. Save the import html file as a backup
 			$importFile = $recipe_folder->newFile('import.html');
 			$importFile->putContent($importedHtml);
@@ -423,7 +423,7 @@ class RecipeService {
 	 */
 	private function addDatesToRecipes(array &$recipes) {
 		foreach ($recipes as $i => $recipe) {
-			if (! array_key_exists('dateCreated', $recipe) || ! array_key_exists('dateModified', $recipe)) {
+			if (!array_key_exists('dateCreated', $recipe) || !array_key_exists('dateModified', $recipe)) {
 				$r = $this->getRecipeById($recipe['recipe_id']);
 				$recipes[$i]['dateCreated'] = $r['dateCreated'];
 				$recipes[$i]['dateModified'] = $r['dateModified'];

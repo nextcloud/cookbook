@@ -78,7 +78,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 
 		// Reinstall app partially (just before the migration)
 		$migrationBefore = $this->getPreviousMigrationName();
-		if (! empty($migrationBefore)) {
+		if (!empty($migrationBefore)) {
 			// We need to run a migration beforehand
 			$this->migrationService->migrate($migrationBefore);
 			$this->renewSchema();
@@ -101,7 +101,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	}
 
 	private function hideMigrations() {
-		if (! file_exists(self::TMP_MIGRATIONS)) {
+		if (!file_exists(self::TMP_MIGRATIONS)) {
 			mkdir(self::TMP_MIGRATIONS);
 		}
 

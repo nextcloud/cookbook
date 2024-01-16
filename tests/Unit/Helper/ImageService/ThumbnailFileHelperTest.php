@@ -208,11 +208,11 @@ class ThumbnailFileHelperTest extends TestCase {
 		$f->method('get')->willReturnMap($fileMap);
 
 		$cnt = 0;
-		if (! $thumbExists) {
-			$cnt ++;
+		if (!$thumbExists) {
+			$cnt++;
 		}
-		if (! $miniExists) {
-			$cnt ++;
+		if (!$miniExists) {
+			$cnt++;
 		}
 		$newFileMap = [
 			['thumb.jpg', null, $thumb],
