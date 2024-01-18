@@ -103,6 +103,7 @@ OC.L10N.register(
     "Insert entry above" : "Txertatu sarrera gainean",
     "Delete entry" : "Ezabatu sarrera",
     "Add" : "Gehitu",
+    "Select option" : "Hautatu aukera",
     "Select order" : "Hautatu ordena",
     "Name" : "Izena",
     "Creation date" : "Sorrera-data",
