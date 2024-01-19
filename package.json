@@ -54,6 +54,7 @@
     "vuex": "^3.6.2"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.23.3",
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^3.0.0",
     "@nextcloud/stylelint-config": "^2.3.1",
