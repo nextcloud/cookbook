@@ -116,11 +116,22 @@ function goTo(url: string): Promise<Route> {
 /**
  * Ensures that item is an array. If not, wraps it in an array.
  * @template T
+ * @param {T|T[]} value Item to be wrapped in an array if it isn't an array itself.
+ * @returns {T[]}
+ */
+export function asArray<T>(value: T | T[]): T[] {
+	return Array.isArray(value) ? value : [value];
+}
+
+/**
+ * Ensures that item is an array. If not, wraps it in an array. Removes all `null` or `undefined` values.
+ * @template T
  * @param {T|T[]} item Item to be wrapped in an array if it isn't an array itself.
  * @returns {T[]}
  */
-export function asArray<T>(item: T | T[]): T[] {
-	return Array.isArray(item) ? item : [item];
+export function asCleanedArray<T>(item: T | T[]): NonNullable<T>[] {
+	const arr = asArray(item);
+	return arr.filter((i) => !!i).map((i) => i as NonNullable<T>);
 }
 
 export default {
