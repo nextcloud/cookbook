@@ -2,6 +2,10 @@
 module.exports = {
     testEnvironment: 'node',
     moduleFileExtensions: ['js', 'ts', 'vue'],
+    moduleNameMapper: {
+        '^cookbook/(.*)$': '<rootDir>/src/$1',
+        '^icons/(.*)$': '<rootDir>/node_modules/vue-material-design-icons/$1',
+    },
     modulePaths: ['<rootDir>/src/'],
     modulePathIgnorePatterns: ['<rootDir>/.github/'],
     transform: {
