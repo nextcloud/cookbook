@@ -1,3 +1,5 @@
+import { mapString } from 'cookbook/js/utils/jsonMapper';
+import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import QuantitativeValue from './QuantitativeValue';
 
 /**
@@ -54,5 +56,51 @@ export default class HowToSupply {
 		if (args[1]) this.description = args[1];
 		// eslint-disable-next-line prefer-destructuring
 		if (args[2]) this.requiredQuantity = args[2];
+	}
+
+	/**
+	 * Create a `HowToSupply` instance from a JSON string.
+	 * @param {string | object} json - The JSON string or object.
+	 * @returns {HowToSupply} - The created HowToSupply instance.
+	 * @throws {Error} If the input JSON is invalid or missing required properties.
+	 */
+	static fromJSON(json: string | object): HowToSupply {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let jsonObj: any;
+		try {
+			jsonObj = typeof json === 'string' ? JSON.parse(json) : json;
+		} catch {
+			throw new JsonMappingException(
+				`Error mapping to "HowToSupply". Received invalid JSON: "${json}"`,
+			);
+		}
+
+		const name = mapString(
+			jsonObj.name,
+			"HowToSupply 'name'",
+		) as NonNullable<string>;
+
+		const identifier = mapString(
+			jsonObj.identifier,
+			"HowToSupply 'identifier'",
+			true,
+		);
+
+		const description = mapString(
+			jsonObj.description,
+			"HowToSupply 'description'",
+			true,
+		);
+
+		const requiredQuantity = jsonObj.requiredQuantity
+			? QuantitativeValue.fromJSON(jsonObj.requiredQuantity)
+			: undefined;
+
+		return new HowToSupply(
+			name,
+			identifier || undefined,
+			description || undefined,
+			requiredQuantity,
+		);
 	}
 }
