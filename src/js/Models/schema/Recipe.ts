@@ -54,7 +54,12 @@ interface RecipeOptions {
 }
 
 /**
- * Represents a Recipe in Schema.org standard.
+ * Represents a Recipe in `schema.org` standard. Does not support simple string values (or arrays of strings) for `tool`,
+ * `supply`, `nutritionInformation`, and `recipeInstructions`. This simplifies usage in the frontend, since those types
+ * do not have to be checked if they are string.
+ *
+ * When parsed from JSON the subclasses (`HowToStep`, etc.) should support the `string` values as defined in the
+ * `schema.org` standard. These are then mapped to the internally supported classes for above reasons.
  * @class
  */
 export default class Recipe {
@@ -237,19 +242,46 @@ export default class Recipe {
 			true,
 		);
 		const supply = jsonObj.supply
-			? asArray(jsonObj.supply).map((s) => HowToSupply.fromJSON(s))
+			? asArray(jsonObj.supply).map((suppl) => {
+					try {
+						return HowToSupply.fromJSON(suppl);
+					} catch (ex) {
+						if (typeof suppl === 'string') {
+							// Did not receive a valid HowToSupply, treat as simple string.
+							return new HowToSupply(suppl as string);
+						}
+						throw ex;
+					}
+				})
 			: [];
 		const recipeInstructions = jsonObj.recipeInstructions
-			? asArray(jsonObj.recipeInstructions).map((i) => {
-					if (i['@type'] === 'HowToSection') {
-						return HowToSection.fromJSON(i);
-					} else {
-						return HowToDirection.fromJSON(i);
+			? asArray(jsonObj.recipeInstructions).map((instruction) => {
+					try {
+						if (instruction['@type'] === 'HowToSection') {
+							return HowToSection.fromJSON(instruction);
+						}
+						return HowToDirection.fromJSON(instruction);
+					} catch (ex) {
+						if (typeof instruction === 'string') {
+							// Did not receive a valid HowToDirection or HowToSection object, treat as simple string.
+							return new HowToDirection(instruction as string);
+						}
+						throw ex;
 					}
 				})
 			: [];
 		const tool = jsonObj.tool
-			? asArray(jsonObj.tool).map((t) => HowToTool.fromJSON(t))
+			? asArray(jsonObj.tool).map((t) => {
+					try {
+						return HowToTool.fromJSON(t);
+					} catch (ex) {
+						if (typeof t === 'string') {
+							// Did not receive a valid HowToTool, treat as simple string.
+							return new HowToTool(t as string);
+						}
+						throw ex;
+					}
+				})
 			: [];
 		const url = mapStringOrStringArray(jsonObj.url, "Recipe 'url'", true);
 
