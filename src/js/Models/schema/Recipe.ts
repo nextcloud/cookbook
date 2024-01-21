@@ -1,3 +1,9 @@
+import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import {
+	mapInteger,
+	mapString,
+	mapStringOrStringArray,
+} from 'cookbook/js/utils/jsonMapper';
 import HowToDirection from './HowToDirection';
 import HowToSection from './HowToSection';
 import HowToSupply from './HowToSupply';
@@ -145,5 +151,127 @@ export default class Recipe {
 	 */
 	get id(): string {
 		return this.identifier;
+	}
+
+	/**
+	 * Create a `Recipe` instance from a JSON string or object.
+	 * @param {string | object} json - The JSON string or object.
+	 * @returns {Recipe} - The created Recipe instance.
+	 * @throws {Error} If the input JSON is invalid or missing required properties.
+	 */
+	static fromJSON(json: string | object): Recipe {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let jsonObj: any;
+		try {
+			jsonObj = typeof json === 'string' ? JSON.parse(json) : json;
+		} catch {
+			throw new JsonMappingException(
+				`Error mapping to "Recipe". Received invalid JSON: "${json}"`,
+			);
+		}
+
+		// Required
+		const identifier = mapString(
+			jsonObj.identifier,
+			"Recipe 'identifier'",
+		) as NonNullable<string>;
+		const name = mapString(
+			jsonObj.name,
+			"Recipe 'name'",
+		) as NonNullable<string>;
+
+		// Optional
+		const recipeCategory = mapString(
+			jsonObj.recipeCategory,
+			"Recipe 'recipeCategory'",
+			true,
+		);
+		const description = mapString(
+			jsonObj.description,
+			"Recipe 'description'",
+			true,
+		);
+		const dateCreated = mapString(
+			jsonObj.dateCreated,
+			"Recipe 'dateCreated'",
+			true,
+		);
+		const dateModified = mapString(
+			jsonObj.dateModified,
+			"Recipe 'dateModified'",
+			true,
+		);
+		const image = mapStringOrStringArray(
+			jsonObj.image,
+			"Recipe 'image'",
+			true,
+		);
+		const imageUrl = mapStringOrStringArray(
+			jsonObj.imageUrl,
+			"Recipe 'imageUrl'",
+			true,
+		);
+		const keywords = mapStringOrStringArray(
+			jsonObj.keywords,
+			"Recipe 'keywords'",
+			true,
+		);
+		const cookTime = mapString(jsonObj.cookTime, "Recipe 'cookTime'", true);
+		const prepTime = mapString(jsonObj.prepTime, "Recipe 'prepTime'", true);
+		const totalTime = mapString(
+			jsonObj.totalTime,
+			"Recipe 'totalTime'",
+			true,
+		);
+		const nutrition = jsonObj.nutrition
+			? NutritionInformation.fromJSON(jsonObj.nutrition)
+			: undefined;
+		const recipeIngredient = mapStringOrStringArray(
+			jsonObj.recipeIngredient,
+			"Recipe 'recipeIngredient'",
+			true,
+		);
+		const recipeYield = mapInteger(
+			jsonObj.recipeYield,
+			"Recipe 'recipeYield'",
+			true,
+		);
+		const supply = jsonObj.supply
+			? asArray(jsonObj.supply).map((s) => HowToSupply.fromJSON(s))
+			: [];
+		const recipeInstructions = jsonObj.recipeInstructions
+			? asArray(jsonObj.recipeInstructions).map((i) => {
+					if (i['@type'] === 'HowToSection') {
+						return HowToSection.fromJSON(i);
+					} else {
+						return HowToDirection.fromJSON(i);
+					}
+				})
+			: [];
+		const tool = jsonObj.tool
+			? asArray(jsonObj.tool).map((t) => HowToTool.fromJSON(t))
+			: [];
+		const url = mapStringOrStringArray(jsonObj.url, "Recipe 'url'", true);
+
+		// Create and return the Recipe instance
+		return new Recipe(identifier, name, {
+			recipeCategory: recipeCategory || undefined,
+			description: description || undefined,
+			dateCreated: dateCreated || undefined,
+			dateModified: dateModified || undefined,
+			image: image || undefined,
+			imageUrl: imageUrl || undefined,
+			keywords: keywords || undefined,
+			cookTime: cookTime || undefined,
+			prepTime: prepTime || undefined,
+			totalTime: totalTime || undefined,
+			nutrition,
+			recipeIngredient: recipeIngredient || [],
+			recipeYield: recipeYield || undefined,
+			supply,
+			recipeInstructions,
+			tool,
+			url: url || [],
+		});
 	}
 }
