@@ -1,3 +1,5 @@
+import JsonMappingException from '../../Exceptions/JsonMappingException';
+
 /**
  * Interface representing the properties of the NutritionInformation class.
  * @interface
@@ -91,5 +93,63 @@ export default class NutritionInformation {
 
 		// Set the properties from the provided object, or default to undefined
 		Object.assign(this, properties);
+	}
+
+	/**
+	 * Create a `NutritionInformation` instance from a JSON string.
+	 * @param {string | object} json - The JSON string or object.
+	 * @returns {NutritionInformation} - The created NutritionInformation instance.
+	 * @throws {Error} If the input JSON is invalid or missing required properties.
+	 */
+	static fromJSON(json: string | object): NutritionInformation {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let jsonObj: any;
+		try {
+			jsonObj = typeof json === 'string' ? JSON.parse(json) : json;
+		} catch {
+			throw new JsonMappingException(
+				`Error mapping to "NutritionInformation". Received invalid JSON: "${json}"`,
+			);
+		}
+
+		const validateStringProperty = (propertyName: string) => {
+			if (
+				jsonObj[propertyName] !== undefined &&
+				jsonObj[propertyName] !== null &&
+				typeof jsonObj[propertyName] !== 'string'
+			) {
+				throw new JsonMappingException(
+					`Invalid property value: "${propertyName}" must be a string`,
+				);
+			}
+		};
+
+		validateStringProperty('calories');
+		validateStringProperty('carbohydrateContent');
+		validateStringProperty('cholesterolContent');
+		validateStringProperty('fatContent');
+		validateStringProperty('fiberContent');
+		validateStringProperty('proteinContent');
+		validateStringProperty('saturatedFatContent');
+		validateStringProperty('servingSize');
+		validateStringProperty('sodiumContent');
+		validateStringProperty('sugarContent');
+		validateStringProperty('transFatContent');
+		validateStringProperty('unsaturatedFatContent');
+
+		return new NutritionInformation({
+			calories: jsonObj.calories,
+			carbohydrateContent: jsonObj.carbohydrateContent,
+			cholesterolContent: jsonObj.cholesterolContent,
+			fatContent: jsonObj.fatContent,
+			fiberContent: jsonObj.fiberContent,
+			proteinContent: jsonObj.proteinContent,
+			saturatedFatContent: jsonObj.saturatedFatContent,
+			servingSize: jsonObj.servingSize,
+			sodiumContent: jsonObj.sodiumContent,
+			sugarContent: jsonObj.sugarContent,
+			transFatContent: jsonObj.transFatContent,
+			unsaturatedFatContent: jsonObj.unsaturatedFatContent,
+		});
 	}
 }
