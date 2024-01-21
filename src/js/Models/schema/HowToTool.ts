@@ -1,6 +1,6 @@
 import { mapString } from 'cookbook/js/utils/jsonMapper';
-import QuantitativeValue from './QuantitativeValue';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import QuantitativeValue from './QuantitativeValue';
 
 /**
  * Represents a tool used in the recipe instructions.
