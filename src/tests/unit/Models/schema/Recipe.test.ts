@@ -333,7 +333,7 @@ describe('Recipe', () => {
 
 		test('should handle variations of valid JSON with arrays for properties supporting single values', () => {
 			const jsonWithArrays = {
-				identifier: 'recipeArrays',
+				identifier: 'recipeSingleValues',
 				name: 'Recipe with arrays',
 				image: 'image1.jpg', // Single value
 				imageUrl: 'image3.jpg', // Single value
@@ -348,7 +348,7 @@ describe('Recipe', () => {
 			const recipe = Recipe.fromJSON(jsonWithArrays);
 
 			// Assertions
-			expect(recipe.identifier).toBe('recipeArrays');
+			expect(recipe.identifier).toBe('recipeSingleValues');
 			expect(recipe.name).toBe('Recipe with arrays');
 			expect(recipe.image).toEqual(['image1.jpg']); // Converted to array
 			expect(recipe.imageUrl).toEqual(['image3.jpg']); // Converted to array
@@ -365,6 +365,58 @@ describe('Recipe', () => {
 			expect(recipe.tool).toBeInstanceOf(Array<HowToTool>); // Converted to array
 			expect((recipe.tool[0] as HowToTool).name).toBe('Tool1');
 			expect(recipe.url).toEqual(['https://example.com/recipe']); // Converted to array
+		});
+
+		test('should handle variations of valid JSON with simple strings in arrays', () => {
+			const jsonWithArrays = {
+				identifier: 'recipeArrays',
+				name: 'Recipe with arrays',
+				recipeInstructions: ['Step 1: Do something'], // Array value
+				supply: ['Supply1'], // Array value
+				tool: ['Tool1'], // Array value
+			};
+
+			const recipe = Recipe.fromJSON(jsonWithArrays);
+
+			// Assertions
+			expect(recipe.identifier).toBe('recipeArrays');
+			expect(recipe.name).toBe('Recipe with arrays');
+			expect(recipe.recipeInstructions).toBeInstanceOf(
+				Array<HowToDirection>,
+			); // Converted to HowToDirection[]
+			expect((recipe.recipeInstructions[0] as HowToDirection).text).toBe(
+				'Step 1: Do something',
+			);
+			expect(recipe.supply).toBeInstanceOf(Array<HowToSupply>); // Converted to HowToSupply[]
+			expect((recipe.supply[0] as HowToSupply).name).toBe('Supply1');
+			expect(recipe.tool).toBeInstanceOf(Array<HowToTool>); // Converted to HowToTool[]
+			expect((recipe.tool[0] as HowToTool).name).toBe('Tool1');
+		});
+
+		test('should handle variations of valid JSON with simple strings', () => {
+			const jsonWithArrays = {
+				identifier: 'recipeSingleValues',
+				name: 'Recipe with arrays',
+				recipeInstructions: 'Step 1: Do something', // Single value
+				supply: 'Supply1', // Single value
+				tool: 'Tool1', // Single value
+			};
+
+			const recipe = Recipe.fromJSON(jsonWithArrays);
+
+			// Assertions
+			expect(recipe.identifier).toBe('recipeSingleValues');
+			expect(recipe.name).toBe('Recipe with arrays');
+			expect(recipe.recipeInstructions).toBeInstanceOf(
+				Array<HowToDirection>,
+			); // Converted to array
+			expect((recipe.recipeInstructions[0] as HowToDirection).text).toBe(
+				'Step 1: Do something',
+			);
+			expect(recipe.supply).toBeInstanceOf(Array<HowToSupply>); // Converted to array
+			expect((recipe.supply[0] as HowToSupply).name).toBe('Supply1');
+			expect(recipe.tool).toBeInstanceOf(Array<HowToTool>); // Converted to array
+			expect((recipe.tool[0] as HowToTool).name).toBe('Tool1');
 		});
 	});
 });
