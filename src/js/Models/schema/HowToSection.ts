@@ -1,3 +1,9 @@
+import {
+	mapInteger,
+	mapString,
+	mapStringOrStringArray,
+} from 'cookbook/js/utils/jsonMapper';
+import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import HowToDirection from './HowToDirection';
 import { asArray, asCleanedArray } from '../../helper';
 
@@ -59,5 +65,68 @@ export default class HowToSection {
 		this.image = asCleanedArray(options.image);
 		this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
 		this.itemListElement = asCleanedArray(options.itemListElement);
+	}
+
+	/**
+	 * Create a `HowToSection` instance from a JSON string or object.
+	 * @param {string | object} json - The JSON string or object.
+	 * @returns {HowToSection} - The created HowToSection instance.
+	 * @throws {Error} If the input JSON is invalid or missing required properties.
+	 */
+	static fromJSON(json: string | object): HowToSection {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let jsonObj: any;
+		try {
+			jsonObj = typeof json === 'string' ? JSON.parse(json) : json;
+		} catch {
+			throw new JsonMappingException(
+				`Error mapping to "HowToSection". Received invalid JSON: "${json}"`,
+			);
+		}
+
+		const name = mapString(
+			jsonObj.name,
+			"HowToSection 'name'",
+		) as NonNullable<string>;
+
+		const description = mapString(
+			jsonObj.description,
+			"HowToSection 'description'",
+			true,
+		);
+
+		const position = mapInteger(
+			jsonObj.position,
+			"HowToSection 'position'",
+			true,
+		);
+
+		const image = mapStringOrStringArray(
+			jsonObj.image,
+			"HowToSection 'image'",
+			true,
+		);
+
+		const thumbnailUrl = mapStringOrStringArray(
+			jsonObj.thumbnailUrl,
+			"HowToSection 'thumbnailUrl'",
+			true,
+		);
+
+		// itemListElement
+		let itemListElement: HowToDirection[] = [];
+		if (jsonObj.itemListElement) {
+			itemListElement = asArray(jsonObj.itemListElement).map((item) =>
+				HowToDirection.fromJSON(item),
+			);
+		}
+
+		return new HowToSection(name, {
+			description: description || undefined,
+			position: position || undefined,
+			image: image || [],
+			thumbnailUrl: thumbnailUrl || [],
+			itemListElement: itemListElement || [],
+		});
 	}
 }
