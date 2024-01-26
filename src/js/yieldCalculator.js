@@ -41,6 +41,10 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             return ingredient;
         }
 
+        if (!Number.isInteger(originalYield) || originalYield < 1) {
+            return ingredient;
+        }
+
         const matches = ingredient.match(fractionRegExp);
 
         if (matches) {
