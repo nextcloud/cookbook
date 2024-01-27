@@ -17,6 +17,8 @@
   [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
 - Prevent recalculation algorithm if no yield is given
   [#2003](https://github.com/nextcloud/cookbook/pull/2003) @j0hannesr0th
+- Fix yield not set calculation error
+  [#2099](https://github.com/nextcloud/cookbook/pull/2099) @j0hannesr0th
 
 ### Documentation
 - Improve  structure of `README.md`
