@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "將材料複製到剪貼板",
     "{item} copied to clipboard" : "已複製 {item} 到剪貼板",
     "Copying {item} to clipboard failed" : "複製 {item} 到剪貼板失敗",
-    "ingredients" : "材料"
+    "ingredients" : "材料",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "材料由於語法錯誤而無法重新計算。請確保語法遵循此格式：數量 單位 材料，並且為此功能正確工作設置了特定數量的部分。示例：200 克 胡蘿蔔或 1 撮 鹽。"
 },
 "nplurals=1; plural=0;");

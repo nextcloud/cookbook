@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "Zutaten in die Zwischenablage kopieren",
     "{item} copied to clipboard" : "{item} wurde in die Zwischenablage kopiert",
     "Copying {item} to clipboard failed" : "Fehler beim Kopieren von {item} in die Zwischenablage",
-    "ingredients" : "Zutaten"
+    "ingredients" : "Zutaten",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Die Menge der Zutat kann aufgrund einer nicht unterstützen Syntax nicht neu berechnet werden. Bitte stelle sicher, dass die Syntax diesem Format folgt: Menge Einheit Zutat und dass eine bestimmte Anzahl von Portionen eingegegeben ist, damit diese Funktion korrekt funktioniert. Beispiele: 200 g Karotten oder 1 Prise Salz."
 },
 "nplurals=2; plural=(n != 1);");
