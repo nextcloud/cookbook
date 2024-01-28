@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "Kopiera ingredienser till urklipp",
     "{item} copied to clipboard" : "{item} kopierades till urklipp",
     "Copying {item} to clipboard failed" : "Kopiering av {item} till urklipp misslyckades",
-    "ingredients" : "ingredienser"
+    "ingredients" : "ingredienser",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Ingrediensen kan inte omräknas på grund av felaktig syntax. Se till att syntaxen följer detta format: mängd enhet ingrediens och att ett specifikt antal portioner är inställt för att denna funktion ska fungera korrekt. Exempel: 200 g morötter eller 1 nypa salt."
 },
 "nplurals=2; plural=(n != 1);");

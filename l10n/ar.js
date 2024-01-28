@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "إنسَخ المُكوِّنات إلى الحافظة",
     "{item} copied to clipboard" : "{item} تمّ نسخه إلى الحافظة",
     "Copying {item} to clipboard failed" : "أخفق نسخ {item} إلى الحافظة",
-    "ingredients" : "المُكوِّنات"
+    "ingredients" : "المُكوِّنات",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "لا يمكن إعادة احتساب المُكوِّن بسبب أن بناء الجملة غير صحيح. يرجى التأكد من أن بناء الجملة يتبع التنسيق التالي: الكمية المُكوِّن الوحدة؛ مثلاً: 200 جرام جزر أو 1 رشة ملح."
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

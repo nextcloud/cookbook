@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "Copy ingredients to the clipboard",
     "{item} copied to clipboard" : "{item} copied to clipboard",
     "Copying {item} to clipboard failed" : "Copying {item} to clipboard failed",
-    "ingredients" : "ingredients"
+    "ingredients" : "ingredients",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt."
 },
 "nplurals=2; plural=(n != 1);");
