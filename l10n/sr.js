@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "Копирај састојке у клипборд",
     "{item} copied to clipboard" : "{item} је копирано у клипборд",
     "Copying {item} to clipboard failed" : "Није успело копирање {item} у клипборд",
-    "ingredients" : "Састојци"
+    "ingredients" : "Састојци",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Састојак не може да се поново израчуна због неисправне синтаксе. Да би ова функција радила како треба, молимо вас да синтакса следи овакав формат: количина јединица састојак и да се постави одређени број порција. Примери: 200 g шаргарепа или 1 прстохват соли."
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);");
