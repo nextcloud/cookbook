@@ -91,16 +91,12 @@ const store = new Vuex.Store({
 		setPage(state, { p }) {
 			state.page = p;
 		},
-		setRecipe(state, { r }) {
-			const rec = JSON.parse(JSON.stringify(r));
-			if (rec === null) {
+		setRecipe(state, { r }: { r?: Recipe }) {
+			if (!r) {
 				state.recipe = null;
 				return;
 			}
-			if ('nutrition' in rec && rec.nutrition instanceof Array) {
-				rec.nutrition = {};
-			}
-			state.recipe = rec;
+			state.recipe = r;
 
 			// Setting recipe also means that loading/reloading the recipe has finished
 			state.loadingRecipe = 0;
@@ -187,7 +183,7 @@ const store = new Vuex.Store({
 		setPage(c, { page }) {
 			c.commit('setPage', { p: page });
 		},
-		setRecipe(c, { recipe }) {
+		setRecipe(c, { recipe }: { recipe: Recipe }) {
 			c.commit('setRecipe', { r: recipe });
 		},
 		setRecipeFilters(c, filters) {
