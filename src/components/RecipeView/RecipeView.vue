@@ -58,13 +58,13 @@
                             :markdown="parsedDescription"
                             class="markdown-description"
                         />
-                        <p v-if="$store.state.recipe.url">
+                        <p v-if="$store.state.recipe.url?.[0]">
                             <strong>{{ t('cookbook', 'Source') }}: </strong
                             ><a
                                 target="_blank"
                                 :href="$store.state.recipe.url"
                                 class="source-url"
-                                >{{ $store.state.recipe.url }}</a
+                                >{{ $store.state.recipe.url?.[0] }}</a
                             >
                         </p>
                         <div>
@@ -449,7 +449,7 @@ const recipe = computed(() => {
     if (store.state.recipe.recipeInstructions) {
         tmpRecipe.instructions = Object.values(
             store.state.recipe.recipeInstructions,
-        ).map((i) => helpers.escapeHTML(i));
+        ).map((i) => helpers.escapeHTML(i.text));
     }
 
     if (store.state.recipe.keywords) {
@@ -513,6 +513,10 @@ const recipe = computed(() => {
     if (store.state.recipe.nutrition) {
         if (store.state.recipe.nutrition instanceof Array) {
             tmpRecipe.nutrition = {};
+        } else if (
+            store.state.recipe.nutrition['@type'] === 'NutritionInformation'
+        ) {
+            tmpRecipe.nutrition = store.state.recipe.nutrition;
         } else {
             tmpRecipe.nutrition = store.state.recipe.nutrition;
         }
@@ -553,10 +557,10 @@ const visibleInfoBlocks = computed(
 
 const showNutritionData = computed(
     () =>
+        visibleInfoBlocks.value['nutrition-information'] &&
         recipe.value.nutrition &&
-        !(recipe.value.nutrition instanceof Array) &&
-        Object.keys(recipe.value.nutrition).length > 1 &&
-        visibleInfoBlocks.value['nutrition-information'],
+        recipe.value.nutrition['@type'] === 'NutritionInformation' &&
+        !recipe.value.nutrition.isUndefined,
 );
 
 const scaledIngredients = computed(() =>
@@ -611,14 +615,14 @@ const setup = async () => {
     }
 
     try {
-        const response = await api.recipes.get(route.params.id);
-        const tmpRecipe = response.data;
+        const tmpRecipe = await api.recipes.get(route.params.id);
+
         // Store recipe data in vuex
         store.dispatch('setRecipe', { recipe: tmpRecipe });
 
         // Always set the active page last!
         store.dispatch('setPage', { page: 'recipe' });
-    } catch {
+    } catch (ex) {
         if (store.state.loadingRecipe) {
             // Reset loading recipe
             store.dispatch('setLoadingRecipe', { recipe: 0 });
