@@ -64,15 +64,22 @@ export default class HowToDirection {
 	 * @param {string} text - The text content of the direction.
 	 * @param {HowToDirectionOptions} options - An options object containing additional properties.
 	 */
-	public constructor(text: string, options: HowToDirectionOptions = {}) {
+	public constructor(text: string, options?: HowToDirectionOptions) {
 		this['@type'] = 'HowToDirection';
 		this.text = text;
-		this.position = options.position;
-		this.image = asCleanedArray(options.image);
-		this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
-		this.timeRequired = options.timeRequired;
-		this.supply = asCleanedArray(options.supply);
-		this.tool = asCleanedArray(options.tool);
+		if (options) {
+			this.position = options.position;
+			this.image = asCleanedArray(options.image);
+			this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
+			this.timeRequired = options.timeRequired;
+			this.supply = asCleanedArray(options.supply);
+			this.tool = asCleanedArray(options.tool);
+		} else {
+			this.image = [];
+			this.thumbnailUrl = [];
+			this.supply = [];
+			this.tool = [];
+		}
 	}
 
 	/**

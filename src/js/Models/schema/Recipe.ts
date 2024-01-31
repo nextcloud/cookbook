@@ -4,7 +4,7 @@ import {
 	mapString,
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
-import HowToDirection from './HowToDirection';
+import HowToStep from 'cookbook/js/Models/schema/HowToStep';
 import HowToSection from './HowToSection';
 import HowToSupply from './HowToSupply';
 import HowToTool from './HowToTool';
@@ -45,8 +45,8 @@ interface RecipeOptions {
 	/** The step-by-step instructions for the recipe. */
 	recipeInstructions?:
 		| HowToSection
-		| HowToDirection
-		| (HowToSection | HowToDirection)[];
+		| HowToStep
+		| (HowToSection | HowToStep)[];
 	/** The tools required for the recipe. */
 	tool?: HowToTool | HowToTool[];
 	/** The URL of the recipe. */
@@ -113,7 +113,7 @@ export default class Recipe {
 	public supply: HowToSupply[];
 
 	/** The step-by-step instructions for the recipe. */
-	public recipeInstructions: (HowToSection | HowToDirection)[];
+	public recipeInstructions: (HowToSection | HowToStep)[];
 
 	/** The tools required for the recipe. */
 	public tool: HowToTool[];
@@ -176,10 +176,13 @@ export default class Recipe {
 		}
 
 		// Required
+
+		// The cookbook API returns the `identifier` property under the name `id`
 		const identifier = mapString(
 			jsonObj.identifier,
 			"Recipe 'identifier'",
 		) as NonNullable<string>;
+
 		const name = mapString(
 			jsonObj.name,
 			"Recipe 'name'",
@@ -216,9 +219,11 @@ export default class Recipe {
 			"Recipe 'imageUrl'",
 			true,
 		);
+		// The cookbook API returns the `keywords` property as a comma-separated list instead of an array
 		const keywords = mapStringOrStringArray(
 			jsonObj.keywords,
 			"Recipe 'keywords'",
+			true,
 			true,
 		);
 		const cookTime = mapString(jsonObj.cookTime, "Recipe 'cookTime'", true);
@@ -241,6 +246,24 @@ export default class Recipe {
 			"Recipe 'recipeYield'",
 			true,
 		);
+		// Supported values for recipe instruction are: string, HowToSection, HowToStep or an array of those
+		const recipeInstructions = jsonObj.recipeInstructions
+			? asArray(jsonObj.recipeInstructions).map((instruction) => {
+					try {
+						if (instruction['@type'] === 'HowToSection') {
+							return HowToSection.fromJSON(instruction);
+						}
+						return HowToStep.fromJSON(instruction);
+					} catch (ex) {
+						if (typeof instruction === 'string') {
+							// Did not receive a valid HowToStep or HowToSection object, treat as simple string.
+							return new HowToStep(instruction, []);
+						}
+						throw ex;
+					}
+				})
+			: [];
+		// Supported values for supply are: string, HowToTool, or an array of those
 		const supply = jsonObj.supply
 			? asArray(jsonObj.supply).map((suppl) => {
 					try {
@@ -254,22 +277,7 @@ export default class Recipe {
 					}
 				})
 			: [];
-		const recipeInstructions = jsonObj.recipeInstructions
-			? asArray(jsonObj.recipeInstructions).map((instruction) => {
-					try {
-						if (instruction['@type'] === 'HowToSection') {
-							return HowToSection.fromJSON(instruction);
-						}
-						return HowToDirection.fromJSON(instruction);
-					} catch (ex) {
-						if (typeof instruction === 'string') {
-							// Did not receive a valid HowToDirection or HowToSection object, treat as simple string.
-							return new HowToDirection(instruction as string);
-						}
-						throw ex;
-					}
-				})
-			: [];
+		// Supported values for tools are: string, HowToTool, or an array of those
 		const tool = jsonObj.tool
 			? asArray(jsonObj.tool).map((t) => {
 					try {

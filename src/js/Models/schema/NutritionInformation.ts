@@ -96,6 +96,31 @@ export default class NutritionInformation {
 	}
 
 	/**
+	 * Checks if any nutrition value in this object is a non-empty string.
+	 * @returns {boolean} - `true` if there is a nutrition value defined. `false` otherwise.
+	 */
+	public isUndefined(): boolean {
+		return !(
+			// Does any of these have a value?
+			(
+				(this.calories && this.calories !== '') ||
+				(this.carbohydrateContent && this.carbohydrateContent !== '') ||
+				(this.cholesterolContent && this.cholesterolContent !== '') ||
+				(this.fatContent && this.fatContent !== '') ||
+				(this.fiberContent && this.fiberContent !== '') ||
+				(this.proteinContent && this.proteinContent !== '') ||
+				(this.saturatedFatContent && this.saturatedFatContent !== '') ||
+				(this.servingSize && this.servingSize !== '') ||
+				(this.sodiumContent && this.sodiumContent !== '') ||
+				(this.sugarContent && this.sugarContent !== '') ||
+				(this.transFatContent && this.transFatContent !== '') ||
+				(this.unsaturatedFatContent &&
+					this.unsaturatedFatContent !== '')
+			)
+		);
+	}
+
+	/**
 	 * Create a `NutritionInformation` instance from a JSON string.
 	 * @param {string | object} json - The JSON string or object.
 	 * @returns {NutritionInformation} - The created NutritionInformation instance.

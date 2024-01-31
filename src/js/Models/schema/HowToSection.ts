@@ -21,6 +21,9 @@ interface HowToSectionOptions {
 	/** The images associated with the section. */
 	image?: string | string[];
 
+	/** The time required for the direction. */
+	timeRequired?: string;
+
 	/** The thumbnail URLs for the images defined in `image`. */
 	thumbnailUrl?: string | string[];
 
@@ -43,13 +46,16 @@ export default class HowToSection {
 	public description?: string;
 
 	/** The images associated with the section. */
-	public image: string[];
+	public image: string[] = [];
+
+	/** The time required for the section. */
+	public timeRequired?: string;
 
 	/** The thumbnail URLs for the images defined in `image`. */
-	public thumbnailUrl: string[];
+	public thumbnailUrl: string[] = [];
 
 	/** The list of directions within the section. */
-	public itemListElement: HowToDirection[];
+	public itemListElement: HowToDirection[] = [];
 
 	/**
 	 * Creates a HowToSection instance.
@@ -57,14 +63,17 @@ export default class HowToSection {
 	 * @param {string} name - The name of the section.
 	 * @param {HowToSectionOptions} options - An options object containing additional properties.
 	 */
-	public constructor(name: string, options: HowToSectionOptions = {}) {
+	public constructor(name: string, options?: HowToSectionOptions) {
 		this['@type'] = 'HowToSection';
 		this.name = name;
-		this.description = options.description;
-		this.position = options.position;
-		this.image = asCleanedArray(options.image);
-		this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
-		this.itemListElement = asCleanedArray(options.itemListElement);
+		if (options) {
+			this.description = options.description;
+			this.position = options.position;
+			this.image = asCleanedArray(options.image);
+			this.timeRequired = options.timeRequired;
+			this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
+			this.itemListElement = asCleanedArray(options.itemListElement);
+		}
 	}
 
 	/**
@@ -107,6 +116,12 @@ export default class HowToSection {
 			true,
 		);
 
+		const timeRequired = mapString(
+			jsonObj.timeRequired,
+			"HowToSection 'timeRequired'",
+			true,
+		);
+
 		const thumbnailUrl = mapStringOrStringArray(
 			jsonObj.thumbnailUrl,
 			"HowToSection 'thumbnailUrl'",
@@ -125,6 +140,7 @@ export default class HowToSection {
 			description: description || undefined,
 			position: position || undefined,
 			image: image || [],
+			timeRequired: timeRequired || undefined,
 			thumbnailUrl: thumbnailUrl || [],
 			itemListElement: itemListElement || [],
 		});
