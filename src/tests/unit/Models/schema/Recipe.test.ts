@@ -1,5 +1,6 @@
 import HowToDirection from 'cookbook/js/Models/schema/HowToDirection';
 import HowToSection from 'cookbook/js/Models/schema/HowToSection';
+import HowToStep from 'cookbook/js/Models/schema/HowToStep';
 import HowToSupply from 'cookbook/js/Models/schema/HowToSupply';
 import HowToTool from 'cookbook/js/Models/schema/HowToTool';
 import NutritionInformation from 'cookbook/js/Models/schema/NutritionInformation';
@@ -49,7 +50,7 @@ describe('Recipe', () => {
 				recipeIngredient: '1 cup flour',
 				recipeYield: 4,
 				supply: new HowToSupply('Flour', '1 cup'),
-				recipeInstructions: new HowToDirection('Mix the ingredients'),
+				recipeInstructions: new HowToStep('Mix the ingredients', []),
 				tool: new HowToTool('Mixing Bowl'),
 				url: 'https://example.com/recipe',
 			};
@@ -230,7 +231,7 @@ describe('Recipe', () => {
 				supply: { name: 'Supply1' },
 				recipeInstructions: [
 					{
-						'@type': 'HowToDirection',
+						'@type': 'HowToStep',
 						text: 'Step 1: Do something',
 					},
 					{
@@ -262,7 +263,7 @@ describe('Recipe', () => {
 			expect(recipe.recipeYield).toBeUndefined();
 			expect(recipe.supply[0].name).toBe('Supply1');
 			expect(recipe.recipeInstructions).toHaveLength(2);
-			expect(recipe.recipeInstructions[0]).toBeInstanceOf(HowToDirection);
+			expect(recipe.recipeInstructions[0]).toBeInstanceOf(HowToStep);
 			expect(recipe.recipeInstructions[1]).toBeInstanceOf(HowToSection);
 			expect(recipe.tool).toEqual([]);
 			expect(recipe.url).toStrictEqual([
@@ -287,8 +288,8 @@ describe('Recipe', () => {
 				keywords: ['keyword1', 'keyword2'], // Array value
 				recipeIngredient: ['1 cup flour', '1 kg butter'], // Array value
 				recipeInstructions: [
-					{ text: 'Step 1: Do something' },
-					{ text: 'Step 2: So something else' },
+					{ '@type': 'HowToStep', text: 'Step 1: Do something' },
+					{ '@type': 'HowToStep', text: 'Step 2: So something else' },
 				], // Array value
 				supply: [{ name: 'Supply1' }, { name: 'Supply2' }], // Array value
 				tool: [{ name: 'Tool1' }, { name: 'Tool2' }], // Array value
@@ -313,10 +314,10 @@ describe('Recipe', () => {
 			expect(recipe.recipeInstructions).toBeInstanceOf(
 				Array<HowToDirection>,
 			);
-			expect((recipe.recipeInstructions[0] as HowToDirection).text).toBe(
+			expect((recipe.recipeInstructions[0] as HowToStep).text).toBe(
 				'Step 1: Do something',
 			);
-			expect((recipe.recipeInstructions[1] as HowToDirection).text).toBe(
+			expect((recipe.recipeInstructions[1] as HowToStep).text).toBe(
 				'Step 2: So something else',
 			);
 			expect(recipe.supply).toBeInstanceOf(Array<HowToSupply>);
@@ -357,7 +358,7 @@ describe('Recipe', () => {
 			expect(recipe.recipeInstructions).toBeInstanceOf(
 				Array<HowToDirection>,
 			); // Converted to array
-			expect((recipe.recipeInstructions[0] as HowToDirection).text).toBe(
+			expect((recipe.recipeInstructions[0] as HowToStep).text).toBe(
 				'Step 1: Do something',
 			);
 			expect(recipe.supply).toBeInstanceOf(Array<HowToSupply>); // Converted to array
@@ -384,7 +385,7 @@ describe('Recipe', () => {
 			expect(recipe.recipeInstructions).toBeInstanceOf(
 				Array<HowToDirection>,
 			); // Converted to HowToDirection[]
-			expect((recipe.recipeInstructions[0] as HowToDirection).text).toBe(
+			expect((recipe.recipeInstructions[0] as HowToStep).text).toBe(
 				'Step 1: Do something',
 			);
 			expect(recipe.supply).toBeInstanceOf(Array<HowToSupply>); // Converted to HowToSupply[]
@@ -410,7 +411,7 @@ describe('Recipe', () => {
 			expect(recipe.recipeInstructions).toBeInstanceOf(
 				Array<HowToDirection>,
 			); // Converted to array
-			expect((recipe.recipeInstructions[0] as HowToDirection).text).toBe(
+			expect((recipe.recipeInstructions[0] as HowToStep).text).toBe(
 				'Step 1: Do something',
 			);
 			expect(recipe.supply).toBeInstanceOf(Array<HowToSupply>); // Converted to array

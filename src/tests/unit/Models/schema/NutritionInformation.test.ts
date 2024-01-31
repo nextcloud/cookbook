@@ -135,4 +135,11 @@ describe('NutritionInformation', () => {
 			);
 		});
 	});
+
+	describe('isUndefined', () => {
+		it('return true if no value is defined', () => {
+			const nutritionInfo = new NutritionInformation();
+			expect(nutritionInfo.isUndefined()).toBe(true);
+		});
+	});
 });

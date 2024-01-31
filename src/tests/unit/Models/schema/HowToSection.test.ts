@@ -16,6 +16,7 @@ describe('HowToSection', () => {
 				description: 'Section description',
 				position: 2,
 				image: 'section-image.jpg',
+				timeRequired: '5 minutes',
 				thumbnailUrl: 'thumbnail.jpg',
 				itemListElement: new HowToDirection('Step 1'),
 			};
@@ -25,6 +26,7 @@ describe('HowToSection', () => {
 			expect(section.description).toBe(options.description);
 			expect(section.position).toBe(options.position);
 			expect(section.image).toEqual([options.image]);
+			expect(section.timeRequired).toEqual(options.timeRequired);
 			expect(section.thumbnailUrl).toEqual([options.thumbnailUrl]);
 			expect(section.itemListElement).toEqual([options.itemListElement]);
 		});
@@ -35,6 +37,7 @@ describe('HowToSection', () => {
 			expect(section.description).toBeUndefined();
 			expect(section.position).toBeUndefined();
 			expect(section.image).toEqual([]);
+			expect(section.timeRequired).toBeUndefined();
 			expect(section.thumbnailUrl).toEqual([]);
 			expect(section.itemListElement).toEqual([]);
 		});
@@ -44,6 +47,7 @@ describe('HowToSection', () => {
 				description: undefined,
 				position: undefined,
 				image: undefined,
+				timeRequired: undefined,
 				thumbnailUrl: undefined,
 				itemListElement: undefined,
 			};
@@ -53,6 +57,7 @@ describe('HowToSection', () => {
 			expect(section.description).toBeUndefined();
 			expect(section.position).toBeUndefined();
 			expect(section.image).toEqual([]);
+			expect(section.timeRequired).toBeUndefined();
 			expect(section.thumbnailUrl).toEqual([]);
 			expect(section.itemListElement).toEqual([]);
 		});
@@ -66,6 +71,7 @@ describe('HowToSection', () => {
 				description: 'Mixing ingredients',
 				position: 2,
 				image: 'section_image.jpg',
+				timeRequired: '5 minutes',
 				thumbnailUrl: 'section_thumbnail.jpg',
 				itemListElement: [
 					{
@@ -90,6 +96,7 @@ describe('HowToSection', () => {
 			expect(result.description).toEqual('Mixing ingredients');
 			expect(result.position).toEqual(2);
 			expect(result.image).toEqual(['section_image.jpg']);
+			expect(result.timeRequired).toEqual('5 minutes');
 			expect(result.thumbnailUrl).toEqual(['section_thumbnail.jpg']);
 
 			// Validate itemListElement property
@@ -110,9 +117,6 @@ describe('HowToSection', () => {
 			expect(result.itemListElement[1].text).toEqual('Stir the mixture');
 			expect(result.itemListElement[1].position).toEqual(2);
 			expect(result.itemListElement[1].image).toEqual(['stir_image.jpg']);
-			expect(result.itemListElement[1].thumbnailUrl).toEqual([
-				'stir_thumbnail.jpg',
-			]);
 		});
 
 		test('should handle missing optional properties', () => {
@@ -133,6 +137,7 @@ describe('HowToSection', () => {
 			expect(result.description).toBeUndefined();
 			expect(result.position).toBeUndefined();
 			expect(result.image).toEqual([]);
+			expect(result.timeRequired).toBeUndefined();
 			expect(result.thumbnailUrl).toEqual([]);
 
 			// Validate itemListElement property
@@ -169,6 +174,7 @@ describe('HowToSection', () => {
 				position: undefined,
 				image: null,
 				thumbnailUrl: undefined,
+				timeRequired: undefined,
 				itemListElement: null,
 			};
 
@@ -179,6 +185,7 @@ describe('HowToSection', () => {
 			expect(result.description).toBeUndefined();
 			expect(result.position).toBeUndefined();
 			expect(result.image).toEqual([]);
+			expect(result.timeRequired).toBeUndefined();
 			expect(result.thumbnailUrl).toEqual([]);
 			expect(result.itemListElement).toEqual([]);
 		});
