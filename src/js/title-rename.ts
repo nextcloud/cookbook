@@ -1,7 +1,6 @@
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 
 import { generateUrl } from '@nextcloud/router';
-import { AxiosResponse } from 'axios/index';
 
 interface Recipe {
 	id: string;
@@ -46,10 +45,10 @@ function extractAllRecipeLinkIds(content: string): string[] {
  */
 async function getRecipesFromLinks(
 	linkIds: string[],
-): Promise<(AxiosResponse<Recipe> | null)[]> {
+): Promise<(Recipe | null)[]> {
 	return Promise.all(
-		linkIds.map(async (x): Promise<AxiosResponse<Recipe> | null> => {
-			let recipeResponse: AxiosResponse<Recipe> | null;
+		linkIds.map(async (x): Promise<Recipe | null> => {
+			let recipeResponse: Recipe | null;
 			try {
 				recipeResponse = await api.recipes.get(x);
 			} catch (ex) {
@@ -65,10 +64,8 @@ async function getRecipesFromLinks(
  * @param recipes List of response objects.
  * @returns The response data without null objects.
  */
-function cleanUpRecipeList(
-	recipes: (AxiosResponse<Recipe> | null)[],
-): Recipe[] {
-	return recipes.filter((r) => r !== null).map((x) => x!.data);
+function cleanUpRecipeList(recipes: (Recipe | null)[]): Recipe[] {
+	return recipes.filter((r) => r !== null).map((x) => x!);
 }
 
 /**

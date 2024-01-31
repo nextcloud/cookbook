@@ -107,7 +107,7 @@ import NcCounterBubble from '@nextcloud/vue/dist/Components/NcCounterBubble.js';
 
 import PlusIcon from 'icons/Plus.vue';
 
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 

@@ -13,7 +13,7 @@
                 <input
                     v-if="fieldType === 'text'"
                     ref="listField"
-                    v-model="buffer[idx]"
+                    v-model="editedStringsModel[idx]"
                     type="text"
                     @keydown="keyDown"
                     @keyup="keyUp"
@@ -26,10 +26,10 @@
                 <textarea
                     v-else-if="fieldType === 'textarea'"
                     ref="listField"
-                    v-model="buffer[idx]"
+                    v-model="editedStringsModel[idx]"
                     @keydown="keyDown"
                     @keyup="keyUp"
-                    @input="handleInput"
+                    @input="(e) => handleInput(idx, e)"
                     @paste="handlePaste"
                     @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, nextTick, ref, watch } from 'vue';
+import { computed, getCurrentInstance, nextTick, ref, watch } from 'vue';
 import TriangleUpIcon from 'icons/TriangleSmallUp.vue';
 import TriangleDownIcon from 'icons/TriangleSmallDown.vue';
 
@@ -121,6 +121,14 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
+    /**
+     * The property name that holds the string value to be edited. Allows passing in a list of objects that have string
+     * properties which should be edited. If `null` or empty, the `value` array is treated to hold the strings directly.
+     */
+    property: {
+        type: String,
+        default: null,
+    },
 });
 
 // Template refs
@@ -131,9 +139,10 @@ const listField = ref(null);
 const suggestionsData = ref(null);
 // helper variables
 /**
+ * Local copy of the string values. Emitted to parent elements on update.
  * @type {import('vue').Ref<Array>}
  */
-const buffer = ref(props.value.slice());
+const buffer = ref(createBuffer(props.value));
 /**
  * @type {import('vue').Ref<number | null>}
  */
@@ -146,7 +155,7 @@ const ignoreNextKeyUp = ref(false);
 watch(
     () => props.value,
     (newValue) => {
-        buffer.value = newValue.slice();
+        buffer.value = createBuffer(newValue);
     },
 );
 
@@ -170,6 +179,17 @@ watch(
     },
     { deep: true },
 );
+
+/**
+ * List of strings edited by this `EditInputGroup` that is used in the v-model prop of the text inputs.
+ * @type {import('vue').ComputedRef<string[]>}
+ */
+const editedStringsModel = computed(() => {
+    const b = props.property
+        ? buffer.value.map((itm) => itm[props.property])
+        : buffer.value;
+    return b;
+});
 
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i]);
@@ -217,6 +237,15 @@ const addNewEntry = async (
 };
 
 /**
+ * Creates a copy of the string values which should be edited here.
+ * @param {object[]|string[]} value The new value of `props.value`.
+ * @returns {string[]}
+ */
+function createBuffer(value) {
+    return JSON.parse(JSON.stringify(value));
+}
+
+/**
  * Delete an entry from the list
  */
 const deleteEntry = (index) => {
@@ -227,7 +256,7 @@ const deleteEntry = (index) => {
 /**
  * Handle typing in input or field or textarea
  */
-const handleInput = (e) => {
+const handleInput = (idx, e) => {
     // Exit early if input was pasted. Let `handlePaste` handle this.
     // References:
     // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
@@ -237,6 +266,10 @@ const handleInput = (e) => {
         e.inputType === 'insertFromPasteAsQuotation'
     ) {
         return;
+    }
+
+    if (props.property) {
+        buffer.value[idx][props.property] = e.target.value;
     }
     emit('input', buffer.value);
 };

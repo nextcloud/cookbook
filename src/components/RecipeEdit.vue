@@ -114,6 +114,7 @@
                 :create-fields-on-newlines="true"
                 :show-step-number="true"
                 :suggestion-options="allRecipeOptions"
+                property="text"
             />
             <div class="cookbook-footer">
                 <button class="button" @click="save()">
@@ -152,7 +153,7 @@ import {
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import NumericIcon from 'icons/Numeric.vue';
 import {
@@ -170,6 +171,7 @@ import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 
 import { useStore } from '../store';
 import emitter from '../bus';
+import { Recipe } from 'cookbook/js/Models/schema';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
@@ -197,23 +199,7 @@ defineProps({
  */
 const isLoading = ref(false);
 // Initialize the recipe schema, otherwise v-models in child components may not work
-const recipe = ref({
-    id: 0,
-    name: '',
-    description: '',
-    url: '',
-    image: '',
-    prepTime: '',
-    cookTime: '',
-    totalTime: '',
-    recipeCategory: '',
-    keywords: '',
-    recipeYield: '',
-    tool: [],
-    recipeIngredient: [],
-    recipeInstructions: [],
-    nutrition: {},
-});
+const recipe = ref(new Recipe('', ''));
 
 // ==========================
 // These are helper variables
@@ -382,14 +368,6 @@ watch(
     { deep: true },
 );
 watch(
-    () => selectedKeywords.value,
-    () => {
-        // convert keyword array to comma-separated string
-        recipe.value.keywords = selectedKeywords.value.join();
-    },
-    { deep: true },
-);
-watch(
     () => recipe.value,
     () => {
         formDirty.value = true;
@@ -473,10 +451,13 @@ const save = async () => {
     store.dispatch('setSavingRecipe', { saving: true });
     const request = (() => {
         if (route.name !== 'recipe-clone' && (route.params.id ?? false)) {
+            console.log('Updating recipe');
+            console.log(recipeWithCorrectedYield.value);
             return store.dispatch('updateRecipe', {
                 recipe: recipeWithCorrectedYield.value,
             });
         }
+
         return store.dispatch('createRecipe', {
             recipe: recipeWithCorrectedYield.value,
         });
@@ -526,24 +507,7 @@ const initEmptyRecipe = () => {
     prepTime.value = { time: [0, 0, 0], paddedTime: '' };
     cookTime.value = { time: [0, 0, 0], paddedTime: '' };
     totalTime.value = { time: [0, 0, 0], paddedTime: '' };
-    // this.nutrition = {}
-    recipe.value = {
-        id: 0,
-        name: null,
-        description: '',
-        url: '',
-        image: '',
-        prepTime: '',
-        cookTime: '',
-        totalTime: '',
-        recipeCategory: '',
-        keywords: '',
-        recipeYield: '',
-        tool: [],
-        recipeIngredient: [],
-        recipeInstructions: [],
-        nutrition: {},
-    };
+    recipe.value = new Recipe('', null);
     formDirty.value = false;
     showRecipeYield.value = true;
 };
@@ -564,6 +528,8 @@ const initClone = () => {
 };
 
 const setup = async () => {
+    console.log('setup');
+
     fetchCategories();
     fetchKeywords();
     if (route.params.id) {
@@ -599,14 +565,8 @@ const setup = async () => {
             paddedTime: recipe.value.totalTime,
         };
 
-        selectedKeywords.value = recipe.value.keywords
-            .split(',')
-            .map((kw) => kw.trim())
-            // Remove any empty keywords
-            // If the response from the server is just an empty
-            // string, split will create an array of a single empty
-            // string
-            .filter((kw) => kw !== '');
+        console.log(recipe.value);
+        selectedKeywords.value = recipe.value.keywords;
 
         // fallback if fetching all keywords fails
         selectedKeywords.value.forEach((kw) => {
@@ -651,6 +611,8 @@ const setup = async () => {
 };
 
 const loadRecipeData = async () => {
+    console.log('loadRecipeData');
+
     isLoading.value = true;
     if (!store.state.recipe) {
         // Make the control row show that a recipe is loading
@@ -664,10 +626,12 @@ const loadRecipeData = async () => {
         });
     }
     try {
-        const response = await api.recipes.get(route.params.id);
+        // const response = await api.recipes.get(route.params.id);
+        // const tmpRecipe = Recipe.fromJSON(response.data);
+        const tmpRecipe = await api.recipes.get(route.params.id);
 
-        store.dispatch('setRecipe', { recipe: response.data });
-        recipe.value = response.data;
+        store.dispatch('setRecipe', { recipe: tmpRecipe });
+        recipe.value = tmpRecipe;
         await setup();
     } catch {
         await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));

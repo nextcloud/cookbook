@@ -2,6 +2,11 @@ import Vue from 'vue';
 import axios from '@nextcloud/axios';
 
 import { generateUrl } from '@nextcloud/router';
+import { Recipe } from 'cookbook/js/Models/schema';
+import {
+	mapApiRecipeResponseToRecipe,
+	mapRecipeToApiRecipe,
+} from 'cookbook/js/Api/Mappers/RecipeMappers';
 
 const baseUrl = `${generateUrl('apps/cookbook')}/webapp`;
 
@@ -41,8 +46,10 @@ function createNewRecipe(recipe) {
 	return axios.post(`${baseUrl}/recipes`, recipe);
 }
 
-function getRecipe(id) {
-	return axios.get(`${baseUrl}/recipes/${id}`);
+async function getRecipe(id: string): Promise<Recipe> {
+	const response = await axios.get(`${baseUrl}/recipes/${id}`);
+	console.log(response);
+	return mapApiRecipeResponseToRecipe(response.data);
 }
 
 function getAllRecipes() {
@@ -61,8 +68,9 @@ function searchRecipes(search) {
 	return axios.get(`${baseUrl}/search/${search}`);
 }
 
-function updateRecipe(id, recipe) {
-	return axios.put(`${baseUrl}/recipes/${id}`, recipe);
+function updateRecipe(id: string, recipe: Recipe) {
+	const recipeDTO = mapRecipeToApiRecipe(recipe);
+	return axios.put(`${baseUrl}/recipes/${id}`, recipeDTO);
 }
 
 function deleteRecipe(id) {

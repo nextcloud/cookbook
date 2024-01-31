@@ -356,7 +356,7 @@ import {
     useRouter,
 } from 'vue-router/composables';
 
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';

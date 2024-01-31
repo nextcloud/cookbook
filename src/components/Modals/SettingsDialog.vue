@@ -194,7 +194,7 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import { NcLoadingIcon as LoadingIcon } from '@nextcloud/vue';
 import ReloadIcon from 'icons/Cached.vue';
 
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import { enableLogging } from 'cookbook/js/logging';
