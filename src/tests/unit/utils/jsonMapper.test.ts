@@ -94,6 +94,16 @@ describe('mapStringOrStringArray', () => {
 		expect(result).toEqual(['test1', 'test2']);
 	});
 
+	it('should map comma-separated list of strings to array if option is set', () => {
+		const result = mapStringOrStringArray('test1, test2', '', false, true);
+		expect(result).toEqual(['test1', 'test2']);
+	});
+
+	it('should NOT map comma-separated list of strings to array if option is NOT set', () => {
+		const result = mapStringOrStringArray('test1, test2', '', false, false);
+		expect(result).toEqual('test1, test2');
+	});
+
 	it('should throw an error for non-string and non-array value', () => {
 		const invalidValue = 42;
 		const invalidValue2 = { prop: '42' };
