@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "Copiar ingredientes al portapapeles",
     "{item} copied to clipboard" : "{item} copiado al portapapeles",
     "Copying {item} to clipboard failed" : "Fallo al copiar {item} al portapapeles",
-    "ingredients" : "ingredientes"
+    "ingredients" : "ingredientes",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "El ingrediente no puede ser re-calculado debido a una sintaxis incorrecta. Por favor, asegúrese de que la sintaxis cumpla con este formato: cantidad unidad ingrediente y que una cantidad específica de porciones está establecida para que esta función opere correctamente. Ejemplos: 200 g zanahorias o 1 pizca de sal."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
