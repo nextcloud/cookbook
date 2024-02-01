@@ -72,7 +72,7 @@ jobs:
         id: backport
       - name: Create a pull request
         if: steps.config.outputs.startBackport == 'true'
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.COOKBOOK_BOT_TOKEN }}
           branch: ${{ steps.backport.outputs.branchName }}
