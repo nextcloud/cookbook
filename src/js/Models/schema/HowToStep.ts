@@ -56,6 +56,7 @@ export default class HowToStep {
 	 * Creates a `HowToStep` instance.
 	 * @constructor
 	 * @param {string} text - The text content of the step.
+	 * @param itemListElements - List of step items.
 	 * @param {HowToStepOptions} options - An options object containing additional properties.
 	 */
 	public constructor(
@@ -183,10 +184,14 @@ export default class HowToStep {
 			}
 			try {
 				return HowToDirection.fromJSON(item);
-			} catch {}
+			} catch {
+				/* empty */
+			}
 			try {
 				return HowToTip.fromJSON(item);
-			} catch {}
+			} catch {
+				/* empty */
+			}
 			return null;
 		});
 

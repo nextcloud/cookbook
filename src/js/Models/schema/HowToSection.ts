@@ -4,8 +4,10 @@ import {
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import { asCleanedArray } from 'cookbook/js/helper';
 import HowToDirection from './HowToDirection';
-import { asArray, asCleanedArray } from '../../helper';
+import HowToStep from './HowToStep';
+import HowToTip from './HowToTip';
 
 /**
  * Interface representing the options for constructing a HowToSection instance.
@@ -28,7 +30,11 @@ interface HowToSectionOptions {
 	thumbnailUrl?: string | string[];
 
 	/** The list of directions within the section. */
-	itemListElement?: HowToDirection | HowToDirection[];
+	itemListElement?:
+		| HowToDirection
+		| HowToStep
+		| HowToTip
+		| (HowToDirection | HowToStep | HowToTip)[];
 }
 
 /**
@@ -55,7 +61,7 @@ export default class HowToSection {
 	public thumbnailUrl: string[] = [];
 
 	/** The list of directions within the section. */
-	public itemListElement: HowToDirection[] = [];
+	public itemListElement: (HowToDirection | HowToStep | HowToTip)[] = [];
 
 	/**
 	 * Creates a HowToSection instance.
@@ -129,10 +135,42 @@ export default class HowToSection {
 		);
 
 		// itemListElement
-		let itemListElement: HowToDirection[] = [];
+		let itemListElement: (HowToDirection | HowToStep | HowToTip)[] = [];
 		if (jsonObj.itemListElement) {
-			itemListElement = asArray(jsonObj.itemListElement).map((item) =>
-				HowToDirection.fromJSON(item),
+			itemListElement = asCleanedArray(
+				jsonObj.itemListElement.map((item: string | object) => {
+					if (typeof item === 'string') {
+						return new HowToDirection(item);
+					}
+					if (item['@type'] === 'HowToStep') {
+						try {
+							return HowToStep.fromJSON(item);
+						} catch {
+							/* empty */
+						}
+					}
+					if (item['@type'] === 'HowToDirection') {
+						try {
+							return HowToDirection.fromJSON(item);
+						} catch {
+							/* empty */
+						}
+					}
+					if (item['@type'] === 'HowToTip') {
+						try {
+							return HowToTip.fromJSON(item);
+						} catch {
+							/* empty */
+						}
+					}
+					// Type not set, in a final try, try to map to direction
+					try {
+						return HowToDirection.fromJSON(item);
+					} catch {
+						/* empty */
+					}
+					return null;
+				}),
 			);
 		}
 

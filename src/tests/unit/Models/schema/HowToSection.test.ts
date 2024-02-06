@@ -1,5 +1,7 @@
 import HowToDirection from '../../../../js/Models/schema/HowToDirection';
 import HowToSection from '../../../../js/Models/schema/HowToSection';
+import HowToTip from 'cookbook/js/Models/schema/HowToTip';
+import HowToStep from 'cookbook/js/Models/schema/HowToStep';
 
 describe('HowToSection', () => {
 	// constructor tests
@@ -65,7 +67,7 @@ describe('HowToSection', () => {
 
 	// fromJSON tests
 	describe('fromJSON', () => {
-		test('should create a HowToSection instance from valid JSON', () => {
+		test('should create a HowToSection instance with HowToDirection, HowToStep, and HowToTip elements', () => {
 			const json = {
 				name: 'Mixing',
 				description: 'Mixing ingredients',
@@ -75,16 +77,25 @@ describe('HowToSection', () => {
 				thumbnailUrl: 'section_thumbnail.jpg',
 				itemListElement: [
 					{
+						'@type': 'HowToDirection',
 						text: 'Mix the flour and water',
 						position: 1,
 						image: ['direction_image.jpg'],
 						thumbnailUrl: ['direction_thumbnail.jpg'],
 					},
 					{
+						'@type': 'HowToStep',
 						text: 'Stir the mixture',
 						position: 2,
 						image: 'stir_image.jpg',
 						thumbnailUrl: 'stir_thumbnail.jpg',
+					},
+					{
+						'@type': 'HowToTip',
+						text: 'Preheat the oven before mixing',
+						position: 3,
+						image: 'tip_image.jpg',
+						thumbnailUrl: 'tip_thumbnail.jpg',
 					},
 				],
 			};
@@ -101,6 +112,9 @@ describe('HowToSection', () => {
 
 			// Validate itemListElement property
 			expect(result.itemListElement).toBeInstanceOf(Array);
+			expect(result.itemListElement.length).toEqual(3);
+
+			// Validate HowToDirection
 			expect(result.itemListElement[0]).toBeInstanceOf(HowToDirection);
 			expect(result.itemListElement[0].text).toEqual(
 				'Mix the flour and water',
@@ -113,10 +127,25 @@ describe('HowToSection', () => {
 				'direction_thumbnail.jpg',
 			]);
 
-			expect(result.itemListElement[1]).toBeInstanceOf(HowToDirection);
+			// Validate HowToStep
+			expect(result.itemListElement[1]).toBeInstanceOf(HowToStep);
 			expect(result.itemListElement[1].text).toEqual('Stir the mixture');
 			expect(result.itemListElement[1].position).toEqual(2);
 			expect(result.itemListElement[1].image).toEqual(['stir_image.jpg']);
+			expect(result.itemListElement[1].thumbnailUrl).toEqual([
+				'stir_thumbnail.jpg',
+			]);
+
+			// Validate HowToTip
+			expect(result.itemListElement[2]).toBeInstanceOf(HowToTip);
+			expect(result.itemListElement[2].text).toEqual(
+				'Preheat the oven before mixing',
+			);
+			expect(result.itemListElement[2].position).toEqual(3);
+			expect(result.itemListElement[2].image).toEqual(['tip_image.jpg']);
+			expect(result.itemListElement[2].thumbnailUrl).toEqual([
+				'tip_thumbnail.jpg',
+			]);
 		});
 
 		test('should handle missing optional properties', () => {
