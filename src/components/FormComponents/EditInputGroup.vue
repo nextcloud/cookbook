@@ -137,7 +137,18 @@ const props = defineProps({
  */
 const listField = ref(null);
 const suggestionsData = ref(null);
+
 // helper variables
+
+/**
+ * Creates a copy of the string values which should be edited here.
+ * @param {object[]|string[]} value The new value of `props.value`.
+ * @returns {string[]}
+ */
+function createBuffer(value) {
+    return JSON.parse(JSON.stringify(value));
+}
+
 /**
  * Local copy of the string values. Emitted to parent elements on update.
  * @type {import('vue').Ref<Array>}
@@ -235,15 +246,6 @@ const addNewEntry = async (
         }
     }
 };
-
-/**
- * Creates a copy of the string values which should be edited here.
- * @param {object[]|string[]} value The new value of `props.value`.
- * @returns {string[]}
- */
-function createBuffer(value) {
-    return JSON.parse(JSON.stringify(value));
-}
 
 /**
  * Delete an entry from the list

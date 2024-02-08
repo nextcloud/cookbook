@@ -32,7 +32,7 @@ interface HowToStepOptions {
  */
 export default class HowToStep {
 	/** The text content of the step. Required if `itemListElement` is not set. */
-	public _text?: string;
+	private _text?: string;
 
 	/** The position of the step in the sequence. */
 	public position?: number;
@@ -41,7 +41,7 @@ export default class HowToStep {
 	public image: string[];
 
 	/** A list of substeps. This may include directions or tips. Required if `text` is not set. */
-	public _itemListElement: (HowToDirection | HowToTip)[];
+	private _itemListElement: (HowToDirection | HowToTip)[];
 
 	/** The thumbnail URLs for the images. */
 	public thumbnailUrl: string[];
@@ -49,7 +49,11 @@ export default class HowToStep {
 	/** The time required for the step. */
 	public timeRequired?: string;
 
-	private validationMsg =
+	/**
+	 * Error message const for local use in this class.
+	 * @private
+	 */
+	private ValidationMsg =
 		'HowToStep requires either `text` or `itemListElement` to be set';
 
 	/**
@@ -65,12 +69,14 @@ export default class HowToStep {
 		options?: HowToStepOptions,
 	) {
 		if (!text && !itemListElements) {
-			throw Error(this.validationMsg);
+			throw Error(this.ValidationMsg);
 		}
 
 		this['@type'] = 'HowToStep';
+		// eslint-disable-next-line no-underscore-dangle
 		this._text = text;
 		if (options) {
+			// eslint-disable-next-line no-underscore-dangle
 			this._itemListElement = itemListElements;
 			this.position = options.position;
 			this.image = asCleanedArray(options.image);
@@ -81,6 +87,7 @@ export default class HowToStep {
 
 	/** A list of substeps. This may include directions or tips. Required if `text` is not set. */
 	public get itemListElement(): (HowToDirection | HowToTip)[] {
+		// eslint-disable-next-line no-underscore-dangle
 		return this._itemListElement;
 	}
 
@@ -93,21 +100,25 @@ export default class HowToStep {
 			| undefined,
 	) {
 		if (!this.text && !value) {
-			throw Error(this.validationMsg);
+			throw Error(this.ValidationMsg);
 		}
+		// eslint-disable-next-line no-underscore-dangle
 		this._itemListElement = value ? asArray(value) : [];
 	}
 
 	/** The text content of the step. Required if `itemListElement` is not set. */
 	public get text(): string | undefined {
+		// eslint-disable-next-line no-underscore-dangle
 		return this._text;
 	}
 
 	/** The text content of the step. Required if `itemListElement` is not set. */
 	public set text(value: string | undefined) {
+		// eslint-disable-next-line no-underscore-dangle
 		if (!this._itemListElement && !value) {
-			throw Error(this.validationMsg);
+			throw Error(this.ValidationMsg);
 		}
+		// eslint-disable-next-line no-underscore-dangle
 		this._text = value;
 	}
 

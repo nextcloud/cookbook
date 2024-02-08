@@ -1,7 +1,7 @@
-import HowToDirection from '../../../../js/Models/schema/HowToDirection';
-import HowToSection from '../../../../js/Models/schema/HowToSection';
-import HowToTip from 'cookbook/js/Models/schema/HowToTip';
+import HowToDirection from 'cookbook/js/Models/schema/HowToDirection';
+import HowToSection from 'cookbook/js/Models/schema/HowToSection';
 import HowToStep from 'cookbook/js/Models/schema/HowToStep';
+import HowToTip from 'cookbook/js/Models/schema/HowToTip';
 
 describe('HowToSection', () => {
 	// constructor tests

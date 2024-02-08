@@ -48,7 +48,6 @@ function createNewRecipe(recipe) {
 
 async function getRecipe(id: string): Promise<Recipe> {
 	const response = await axios.get(`${baseUrl}/recipes/${id}`);
-	console.log(response);
 	return mapApiRecipeResponseToRecipe(response.data);
 }
 

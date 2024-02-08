@@ -6,7 +6,7 @@
  */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import api from '../js/utils/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import { Recipe } from 'cookbook/js/Models/schema';
 
 Vue.use(Vuex);
