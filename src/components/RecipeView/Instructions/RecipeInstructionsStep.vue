@@ -17,6 +17,7 @@
                     v-if="
                         step.itemListElement && step.itemListElement.length > 0
                     "
+                    class="step-children"
                 >
                     <component
                         :is="childComponentType(item)"
@@ -105,20 +106,30 @@ watch(
         isDone.value = parentIsDone;
     },
 );
+watch(
+    () => props.step,
+    (step) => {
+        console.log(step);
+    },
+);
 </script>
 
 <style scoped lang="scss">
-ol {
-    counter-reset: item;
+ol.step-children {
+    //counter-reset: innerSectionIndex;
     list-style-type: none;
 }
+
+/** For top level steps outside a section, show top-level count */
+//ol.instructions > li.instructions-step::before {
+//    content: counter(sectionIndex);
+//}
 
 li.instructions-step {
     position: relative;
     padding-left: calc(36px + 1rem);
     margin-bottom: 2rem;
     clear: both;
-    counter-increment: item;
     cursor: pointer;
     white-space: pre-line;
 
@@ -133,7 +144,9 @@ li.instructions-step {
         background-color: var(--color-background-dark);
         background-position: center;
         background-repeat: no-repeat;
-        content: counters(item);
+        //counter-increment: innerSectionIndex 1;
+        //content: counters(item);
+        //content: counters(innerSectionIndex, '.', decimal);
         line-height: 30px;
         outline: none;
         text-align: center;
@@ -153,6 +166,7 @@ li.instructions-step {
 
     .instructions-step__text {
         white-space: normal;
+        margin-bottom: 0.5rem;
     }
 
     :deep(.instructions-direction) {

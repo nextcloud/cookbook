@@ -63,7 +63,6 @@ li.instructions-direction {
     padding-left: calc(36px + 1rem);
     margin-bottom: 2rem;
     clear: both;
-    counter-increment: item;
     cursor: pointer;
     white-space: pre-line;
 
@@ -71,15 +70,14 @@ li.instructions-direction {
         position: absolute;
         top: 0;
         left: 0;
-        width: 36px;
-        height: 36px;
+        width: 30px;
+        height: 30px;
         border: 1px solid var(--color-border-dark);
         border-radius: 50%;
         background-color: var(--color-background-dark);
         background-position: center;
         background-repeat: no-repeat;
-        content: counters(item);
-        line-height: 36px;
+        line-height: 30px;
         outline: none;
         text-align: center;
     }
@@ -94,6 +92,22 @@ li.instructions-direction {
 
     &.done::before {
         content: '✔';
+    }
+}
+
+/* If there is a list and a text, numbers are shown for the substeps - add padding. */
+.instructions-step__text ~ .step-children {
+    .instructions-direction {
+        padding-left: calc(36px + 1rem);
+    }
+}
+
+/** For top level directions outside a section, show top-level count */
+ol.instructions > li.instructions-direction {
+    //counter-increment: sectionIndex;
+
+    ::before {
+        //content: counter(sectionIndex);
     }
 }
 </style>

@@ -111,15 +111,6 @@ li.instructions-section-root {
 }
 
 ol {
-    counter-reset: item;
     list-style-type: none;
-}
-
-ol > li {
-    counter-increment: item;
-}
-
-ol > li::before {
-    content: counters(item, '.');
 }
 </style>

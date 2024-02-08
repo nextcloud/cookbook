@@ -1,13 +1,13 @@
 <template>
     <div>
-        <ul v-if="instructions">
+        <ol v-if="instructions" class="instructions">
             <component
                 :is="childComponentType(item)"
                 v-for="(item, idx) in instructions"
                 :key="`instructions_item-${idx}}`"
                 v-bind="childComponentProps(item, idx)"
             />
-        </ul>
+        </ol>
     </div>
 </template>
 
@@ -83,4 +83,30 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+ol.instructions {
+    counter-reset: sectionIndex 0;
+}
+
+ol.instructions > li {
+    list-style-type: none;
+}
+
+ol.instructions > li::before {
+    counter-increment: sectionIndex 1;
+    content: counter(sectionIndex);
+}
+
+ol.instructions > li.instructions-section-root::before {
+    content: none;
+}
+
+/** Handle counting within sections */
+:deep(ol:not(.instructions)) {
+    counter-reset: innerSectionIndex 0;
+}
+:deep(ol:not(.instructions) > li::before) {
+    counter-increment: innerSectionIndex 1;
+    content: counters(innerSectionIndex, '.', decimal);
+}
+</style>
