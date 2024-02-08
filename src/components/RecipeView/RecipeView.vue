@@ -331,15 +331,11 @@
                         </ul>
                     </section>
 
-                    <main v-if="parsedInstructions.length">
+                    <main v-if="recipe.instructions.length">
                         <h3>{{ t('cookbook', 'Instructions') }}</h3>
-                        <ol class="instructions">
-                            <RecipeInstruction
-                                v-for="(instruction, idx) in parsedInstructions"
-                                :key="'instr' + idx"
-                                :instruction="instruction"
-                            />
-                        </ol>
+                        <RecipeInstructions
+                            :instructions="recipe.instructions"
+                        />
                     </main>
                 </section>
             </div>
@@ -364,6 +360,7 @@ import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import { showError, showSuccess } from '@nextcloud/dialogs';
+import RecipeInstructions from 'cookbook/components/RecipeView/Instructions/RecipeInstructions.vue';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
@@ -371,7 +368,6 @@ import { parseDateTime } from '../../composables/dateTimeHandling';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredient from './RecipeIngredient.vue';
-import RecipeInstruction from './RecipeInstruction.vue';
 import RecipeKeyword from '../RecipeKeyword.vue';
 import RecipeNutritionInfoItem from './RecipeNutritionInfoItem.vue';
 import RecipeTimer from './RecipeTimer.vue';
@@ -398,10 +394,6 @@ const parsedDescription = ref('');
  * @type {import('vue').Ref<Array.<string>>}
  */
 const parsedIngredients = ref([]);
-/**
- * @type {import('vue').Ref<Array.<string>>}
- */
-const parsedInstructions = ref([]);
 /**
  * @type {import('vue').Ref<Array.<string>>}
  */
@@ -449,7 +441,8 @@ const recipe = computed(() => {
     if (store.state.recipe.recipeInstructions) {
         tmpRecipe.instructions = Object.values(
             store.state.recipe.recipeInstructions,
-        ).map((i) => helpers.escapeHTML(i.text));
+        );
+        // .map((i) => helpers.escapeHTML(i.text));
     }
 
     if (store.state.recipe.keywords) {
@@ -711,6 +704,7 @@ watch(
 
             if (r.description) {
                 parsedDescription.value = t('cookbook', 'Loading…');
+                parsedDescription.value = r.description;
                 normalizeMarkdown(r.description).then((x) => {
                     parsedDescription.value = x;
                 });
@@ -733,23 +727,6 @@ watch(
                 });
             } else {
                 parsedIngredients.value = [];
-            }
-
-            if (r.instructions) {
-                parsedInstructions.value = r.instructions.map(() =>
-                    t('cookbook', 'Loading…'),
-                );
-                r.instructions.forEach((instruction, idx) => {
-                    normalizeMarkdown(instruction)
-                        .then((x) => {
-                            parsedInstructions.value.splice(idx, 1, x);
-                        })
-                        .catch((ex) => {
-                            log.error(ex);
-                        });
-                });
-            } else {
-                parsedInstructions.value = [];
             }
 
             if (r.tools) {
