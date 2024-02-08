@@ -63,14 +63,19 @@ const props = defineProps({
 // ===================
 
 /** Normalized description property with recipe-reference links. */
-const normalizedDescription = computedAsync(async () => {
-    try {
-        return await normalizeMarkdown(props.section.description);
-    } catch (e) {
-        log.warn(`Could not normalize Markdown. Error Message: ${e.message}`);
-    }
-    return '';
-}, '');
+const normalizedDescription = computedAsync(
+    async () => {
+        try {
+            return await normalizeMarkdown(props.section.description);
+        } catch (e) {
+            log.warn(
+                `Could not normalize Markdown. Error Message: ${e.message}`,
+            );
+        }
+        return '';
+    },
+    t('cookbook', 'Loading…'),
+);
 
 /**
  * Determines the type of component to render as the child list item.

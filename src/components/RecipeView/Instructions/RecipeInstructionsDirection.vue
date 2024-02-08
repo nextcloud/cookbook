@@ -54,14 +54,19 @@ const isDone = ref(false);
 // ===================
 
 /** Normalized text property with recipe-reference links. */
-const normalizedText = computedAsync(async () => {
-    try {
-        return await normalizeMarkdown(props.direction.text);
-    } catch (e) {
-        log.warn(`Could not normalize Markdown. Error Message: ${e.message}`);
-    }
-    return '';
-}, '');
+const normalizedText = computedAsync(
+    async () => {
+        try {
+            return await normalizeMarkdown(props.direction.text);
+        } catch (e) {
+            log.warn(
+                `Could not normalize Markdown. Error Message: ${e.message}`,
+            );
+        }
+        return '';
+    },
+    t('cookbook', 'Loading…'),
+);
 
 /** Toggles the completed state on this step. */
 function toggleDone(evt) {
