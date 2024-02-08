@@ -8,7 +8,11 @@
         <div style="display: table; min-height: 32px">
             <div style="display: table-cell; vertical-align: middle">
                 <div v-if="step.text" class="instructions-step__text">
-                    {{ normalizedText }}
+                    <VueShowdown
+                        :markdown="normalizedText"
+                        class="markdown-instruction"
+                    />
+                    <!--                    {{ normalizedText }}-->
                 </div>
                 <!--        TODO Add support for missing properties -->
                 <!--        <div>{{ step.timeRequired }}</div>-->

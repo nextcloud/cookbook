@@ -6,7 +6,12 @@
         <!--        TODO Add support for missing properties -->
         <!--        <div>{{ tip.timeRequired }}</div>-->
         <!--        <div>{{ tip.image }}</div>-->
-        <div v-if="tip.text" class="pl-3">{{ normalizedText }}</div>
+        <div v-if="tip.text" class="pl-3">
+            <VueShowdown
+                :markdown="normalizedText"
+                class="markdown-instruction"
+            />
+        </div>
     </div>
 </template>
 

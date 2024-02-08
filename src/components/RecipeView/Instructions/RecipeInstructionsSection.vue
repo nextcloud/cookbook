@@ -4,7 +4,12 @@
             <legend v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
             </legend>
-            <div v-if="section.description">{{ normalizedDescription }}</div>
+            <div v-if="section.description" class="mb-4">
+                <VueShowdown
+                    :markdown="normalizedDescription"
+                    class="markdown-instruction"
+                />
+            </div>
             <!--        TODO Add support for missing properties -->
             <!--        <div>{{ section.timeRequired }}</div>-->
             <!--        <div>{{ section.image }}</div>-->
@@ -109,6 +114,10 @@ function childComponentProps(item, index) {
 </script>
 
 <style scoped lang="scss">
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
 li.instructions-section-root {
     list-style-type: none;
 }

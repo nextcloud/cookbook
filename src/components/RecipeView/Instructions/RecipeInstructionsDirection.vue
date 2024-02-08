@@ -13,7 +13,10 @@
                 <!--        <div>{{ direction.timeRequired }}</div>-->
                 <!--        <div>{{ direction.image }}</div>-->
                 <div v-if="direction.text" class="instructions-direction__text">
-                    {{ normalizedText }}
+                    <VueShowdown
+                        :markdown="normalizedText"
+                        class="markdown-instruction"
+                    />
                 </div>
             </div>
         </div>

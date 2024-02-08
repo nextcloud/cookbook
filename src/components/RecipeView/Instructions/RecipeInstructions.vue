@@ -110,4 +110,25 @@ ol.instructions > li.instructions-section-root::before {
     content: counters(innerSectionIndex, '.', decimal);
     counter-increment: innerSectionIndex 1;
 }
+
+/** Style Markdown for all children */
+
+:deep(.markdown-instruction ol > li) {
+    list-style-type: numbered;
+}
+
+:deep(.markdown-instruction ul > li) {
+    list-style-type: disc;
+}
+
+:deep(.markdown-instruction ol > li),
+:deep(.markdown-instruction ul > li) {
+    margin-left: 20px;
+}
+
+:deep(.markdown-instruction a) {
+    text-decoration: underline;
+}
+
+/** /end Style Markdown */
 </style>
