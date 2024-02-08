@@ -12,7 +12,9 @@
                 <!--        <div>{{ direction.tool }}</div>-->
                 <!--        <div>{{ direction.timeRequired }}</div>-->
                 <!--        <div>{{ direction.image }}</div>-->
-                <div v-if="direction.text">{{ direction.text }}</div>
+                <div v-if="direction.text" class="instructions-direction__text">
+                    {{ direction.text }}
+                </div>
             </div>
         </div>
     </li>
@@ -41,7 +43,9 @@ const props = defineProps({
 const isDone = ref(false);
 
 /** Toggles the completed state on this step. */
-function toggleDone() {
+function toggleDone(evt) {
+    // evt.preventDefault();
+    evt.stopPropagation();
     isDone.value = !isDone.value;
 }
 
@@ -82,7 +86,8 @@ li.instructions-direction {
         text-align: center;
     }
 
-    &:hover::before {
+    /** Color item number when text element is hovered */
+    &:has(.instructions-direction__text:hover)::before {
         border-color: var(--color-primary-element);
     }
 
@@ -93,6 +98,11 @@ li.instructions-direction {
     &.done::before {
         content: '✔';
     }
+}
+
+.instructions-direction__text {
+    white-space: normal;
+    pointer-events: all;
 }
 
 /* If there is a list and a text, numbers are shown for the substeps - add padding. */

@@ -133,6 +133,8 @@ li.instructions-step {
     cursor: pointer;
     white-space: pre-line;
 
+    pointer-events: none;
+
     &::before {
         position: absolute;
         top: 0;
@@ -144,15 +146,15 @@ li.instructions-step {
         background-color: var(--color-background-dark);
         background-position: center;
         background-repeat: no-repeat;
-        //counter-increment: innerSectionIndex 1;
-        //content: counters(item);
-        //content: counters(innerSectionIndex, '.', decimal);
         line-height: 30px;
         outline: none;
         text-align: center;
+
+        pointer-events: auto;
     }
 
-    &:hover::before {
+    /** Color item number when text element is hovered */
+    &:has(.instructions-step__text:hover)::before {
         border-color: var(--color-primary-element);
     }
 
@@ -167,6 +169,7 @@ li.instructions-step {
     .instructions-step__text {
         white-space: normal;
         margin-bottom: 0.5rem;
+        pointer-events: auto;
     }
 
     :deep(.instructions-direction) {
