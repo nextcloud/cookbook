@@ -13,7 +13,7 @@
                 <!--        <div>{{ direction.timeRequired }}</div>-->
                 <!--        <div>{{ direction.image }}</div>-->
                 <div v-if="direction.text" class="instructions-direction__text">
-                    {{ direction.text }}
+                    {{ normalizedText }}
                 </div>
             </div>
         </div>
@@ -21,7 +21,11 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { getCurrentInstance, ref, watch } from 'vue';
+import { computedAsync } from '@vueuse/core';
+import normalizeMarkdown from 'cookbook/js/title-rename';
+
+const log = getCurrentInstance().proxy.$log;
 
 const props = defineProps({
     /** @type {HowToDirection|null} */
@@ -41,6 +45,20 @@ const props = defineProps({
  * @type {import('vue').Ref<boolean>}
  */
 const isDone = ref(false);
+
+// ===================
+// Computed properties
+// ===================
+
+/** Normalized text property with recipe-reference links. */
+const normalizedText = computedAsync(async () => {
+    try {
+        return await normalizeMarkdown(props.direction.text);
+    } catch (e) {
+        log.warn(`Could not normalize Markdown. Error Message: ${e.message}`);
+    }
+    return '';
+}, '');
 
 /** Toggles the completed state on this step. */
 function toggleDone(evt) {
@@ -101,8 +119,8 @@ li.instructions-direction {
 }
 
 .instructions-direction__text {
-    white-space: normal;
     pointer-events: all;
+    white-space: normal;
 }
 
 /* If there is a list and a text, numbers are shown for the substeps - add padding. */

@@ -93,8 +93,8 @@ ol.instructions > li {
 }
 
 ol.instructions > li::before {
-    counter-increment: sectionIndex 1;
     content: counter(sectionIndex);
+    counter-increment: sectionIndex 1;
 }
 
 ol.instructions > li.instructions-section-root::before {
@@ -105,8 +105,9 @@ ol.instructions > li.instructions-section-root::before {
 :deep(ol:not(.instructions)) {
     counter-reset: innerSectionIndex 0;
 }
+
 :deep(ol:not(.instructions) > li::before) {
-    counter-increment: innerSectionIndex 1;
     content: counters(innerSectionIndex, '.', decimal);
+    counter-increment: innerSectionIndex 1;
 }
 </style>

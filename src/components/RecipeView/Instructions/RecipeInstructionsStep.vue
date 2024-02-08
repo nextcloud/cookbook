@@ -8,7 +8,7 @@
         <div style="display: table; min-height: 32px">
             <div style="display: table-cell; vertical-align: middle">
                 <div v-if="step.text" class="instructions-step__text">
-                    {{ step.text }}
+                    {{ normalizedText }}
                 </div>
                 <!--        TODO Add support for missing properties -->
                 <!--        <div>{{ step.timeRequired }}</div>-->
@@ -33,9 +33,13 @@
 </template>
 
 <script setup>
+import { getCurrentInstance, ref, watch } from 'vue';
+import { computedAsync } from '@vueuse/core';
+import normalizeMarkdown from 'cookbook/js/title-rename';
 import RecipeInstructionsDirection from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsDirection.vue';
 import RecipeInstructionsTip from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTip.vue';
-import { ref, watch } from 'vue';
+
+const log = getCurrentInstance().proxy.$log;
 
 const props = defineProps({
     /** @type {HowToStep} */
@@ -60,6 +64,20 @@ const props = defineProps({
  * @type {import('vue').Ref<boolean>}
  */
 const isDone = ref(false);
+
+// ===================
+// Computed properties
+// ===================
+
+/** Normalized text property with recipe-reference links. */
+const normalizedText = computedAsync(async () => {
+    try {
+        return await normalizeMarkdown(props.step.text);
+    } catch (e) {
+        log.warn(`Could not normalize Markdown. Error Message: ${e.message}`);
+    }
+    return '';
+}, '');
 
 /** Toggles the completed state on this step. */
 function toggleDone() {
@@ -106,24 +124,12 @@ watch(
         isDone.value = parentIsDone;
     },
 );
-watch(
-    () => props.step,
-    (step) => {
-        console.log(step);
-    },
-);
 </script>
 
 <style scoped lang="scss">
 ol.step-children {
-    //counter-reset: innerSectionIndex;
     list-style-type: none;
 }
-
-/** For top level steps outside a section, show top-level count */
-//ol.instructions > li.instructions-step::before {
-//    content: counter(sectionIndex);
-//}
 
 li.instructions-step {
     position: relative;
@@ -131,9 +137,9 @@ li.instructions-step {
     margin-bottom: 2rem;
     clear: both;
     cursor: pointer;
-    white-space: pre-line;
 
     pointer-events: none;
+    white-space: pre-line;
 
     &::before {
         position: absolute;
@@ -148,9 +154,9 @@ li.instructions-step {
         background-repeat: no-repeat;
         line-height: 30px;
         outline: none;
-        text-align: center;
 
         pointer-events: auto;
+        text-align: center;
     }
 
     /** Color item number when text element is hovered */
@@ -167,9 +173,9 @@ li.instructions-step {
     }
 
     .instructions-step__text {
-        white-space: normal;
         margin-bottom: 0.5rem;
         pointer-events: auto;
+        white-space: normal;
     }
 
     :deep(.instructions-direction) {

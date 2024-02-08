@@ -6,14 +6,19 @@
         <!--        TODO Add support for missing properties -->
         <!--        <div>{{ tip.timeRequired }}</div>-->
         <!--        <div>{{ tip.image }}</div>-->
-        <div class="pl-3">{{ tip.text }}</div>
+        <div v-if="tip.text" class="pl-3">{{ normalizedText }}</div>
     </div>
 </template>
 
 <script setup>
+import { computedAsync } from '@vueuse/core';
 import InfoIcon from 'icons/InformationVariant.vue';
+import normalizeMarkdown from 'cookbook/js/title-rename';
+import { getCurrentInstance } from 'vue';
 
-defineProps({
+const log = getCurrentInstance().proxy.$log;
+
+const props = defineProps({
     /** @type {HowToTip|null} */
     tip: {
         type: Object,
@@ -25,6 +30,20 @@ defineProps({
         default: false,
     },
 });
+
+// ===================
+// Computed properties
+// ===================
+
+/** Normalized text property with recipe-reference links. */
+const normalizedText = computedAsync(async () => {
+    try {
+        return await normalizeMarkdown(props.tip.text);
+    } catch (e) {
+        log.warn(`Could not normalize Markdown. Error Message: ${e.message}`);
+    }
+    return '';
+}, '');
 </script>
 
 <style scoped lang="scss">
@@ -41,10 +60,10 @@ defineProps({
     display: flex;
     flex-direction: row;
 
-    margin-top: 0.5rem;
-
     /* Adjusted to have the same alignment as directions, steps, etc. due to item numbering labels. */
     padding-left: 6px;
+
+    margin-top: 0.5rem;
 
     clear: both;
     white-space: pre-line;

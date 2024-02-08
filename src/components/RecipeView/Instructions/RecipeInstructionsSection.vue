@@ -4,7 +4,7 @@
             <legend v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
             </legend>
-            <div v-if="section.description">{{ section.description }}</div>
+            <div v-if="section.description">{{ normalizedDescription }}</div>
             <!--        TODO Add support for missing properties -->
             <!--        <div>{{ section.timeRequired }}</div>-->
             <!--        <div>{{ section.image }}</div>-->
@@ -26,9 +26,14 @@
 </template>
 
 <script setup>
+import { computedAsync } from '@vueuse/core';
+import normalizeMarkdown from 'cookbook/js/title-rename';
+import { getCurrentInstance } from 'vue';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
+
+const log = getCurrentInstance().proxy.$log;
 
 const props = defineProps({
     /** @type {HowToSection|null} */
@@ -47,6 +52,20 @@ const props = defineProps({
         default: false,
     },
 });
+
+// ===================
+// Computed properties
+// ===================
+
+/** Normalized description property with recipe-reference links. */
+const normalizedDescription = computedAsync(async () => {
+    try {
+        return await normalizeMarkdown(props.section.description);
+    } catch (e) {
+        log.warn(`Could not normalize Markdown. Error Message: ${e.message}`);
+    }
+    return '';
+}, '');
 
 /**
  * Determines the type of component to render as the child list item.
