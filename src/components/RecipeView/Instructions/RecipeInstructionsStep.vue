@@ -5,21 +5,29 @@
         :class="{ done: isDone }"
         @click="toggleDone"
     >
-        <div v-if="step.text" class="instructions-step__text">
-            {{ step.text }}
+        <div style="display: table; min-height: 32px">
+            <div style="display: table-cell; vertical-align: middle">
+                <div v-if="step.text" class="instructions-step__text">
+                    {{ step.text }}
+                </div>
+                <!--        TODO Add support for missing properties -->
+                <!--        <div>{{ step.timeRequired }}</div>-->
+                <!--        <div>{{ step.image }}</div>-->
+                <ol
+                    v-if="
+                        step.itemListElement && step.itemListElement.length > 0
+                    "
+                >
+                    <component
+                        :is="childComponentType(item)"
+                        v-for="(item, idx) in step.itemListElement"
+                        :key="`${parentId}_step-${item.position ?? ''}-${item['name'] ?? ''}_item-${idx}`"
+                        v-bind="childComponentProps(item)"
+                    >
+                    </component>
+                </ol>
+            </div>
         </div>
-        <!--        TODO Add support for missing properties -->
-        <!--        <div>{{ step.timeRequired }}</div>-->
-        <!--        <div>{{ step.image }}</div>-->
-        <ol v-if="step.itemListElement">
-            <component
-                :is="childComponentType(item)"
-                v-bind="childComponentProps(item)"
-                v-for="(item, idx) in step.itemListElement"
-                :key="`${parentId}_step-${item.position}-${item['name']}_item-${idx}`"
-            >
-            </component>
-        </ol>
     </li>
 </template>
 
@@ -118,15 +126,15 @@ li.instructions-step {
         position: absolute;
         top: 0;
         left: 0;
-        width: 36px;
-        height: 36px;
+        width: 30px;
+        height: 30px;
         border: 1px solid var(--color-border-dark);
         border-radius: 50%;
         background-color: var(--color-background-dark);
         background-position: center;
         background-repeat: no-repeat;
         content: counters(item);
-        line-height: 36px;
+        line-height: 30px;
         outline: none;
         text-align: center;
     }
@@ -144,7 +152,6 @@ li.instructions-step {
     }
 
     .instructions-step__text {
-        margin-bottom: 0.5rem;
         white-space: normal;
     }
 

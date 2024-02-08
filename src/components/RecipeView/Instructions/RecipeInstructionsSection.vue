@@ -8,25 +8,29 @@
             <!--        TODO Add support for missing properties -->
             <!--        <div>{{ section.timeRequired }}</div>-->
             <!--        <div>{{ section.image }}</div>-->
-            <ol v-if="section.itemListElement">
+            <ol
+                v-if="
+                    section.itemListElement &&
+                    section.itemListElement.length > 0
+                "
+            >
                 <component
                     :is="childComponentType(item)"
-                    v-bind="childComponentProps(item)"
                     v-for="(item, idx) in section.itemListElement"
-                    :key="`${parentId}_section-${item.position}-${item['name']}_item-${idx}`"
-                >
-                </component>
+                    :key="`${parentId}_section-${item.position ?? ''}-${item['name'] ?? ''}_item-${idx}`"
+                    v-bind="childComponentProps(item, idx)"
+                />
             </ol>
         </fieldset>
     </li>
 </template>
 
 <script setup>
-import RecipeInstructionsDirection from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsDirection.vue';
-import RecipeInstructionsTip from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTip.vue';
-import RecipeInstructionsStep from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsStep.vue';
+import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
+import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
+import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 
-defineProps({
+const props = defineProps({
     /** @type {HowToSection|null} */
     section: {
         type: Object,
@@ -64,13 +68,18 @@ function childComponentType(item) {
 /**
  * Determines the props to pass for the type of component to render as the child list item.
  * @param {HowToDirection|HowToStep|HowToTip} item List item to render.
+ * @param {number} index Index of the item in the sections array.
  */
-function childComponentProps(item) {
+function childComponentProps(item, index) {
     switch (item['@type']) {
         case 'HowToDirection':
             return { direction: item, parentIsDone: false };
         case 'HowToStep':
-            return { step: item, parentIsDone: false };
+            return {
+                step: item,
+                parentIsDone: false,
+                parentId: `${props.parentId.value}_section-${item.position ?? ''}-${item.name ?? ''}_item-${index}`,
+            };
 
         case 'HowToTip':
             return { tip: item, parentIsDone: false };
@@ -86,7 +95,7 @@ li.instructions-section-root {
 }
 
 .instructions-section {
-    padding: 1.5em 1.8em 0.5em;
+    padding: 1.5em 1.8em 2em;
     border: solid 1px var(--color-border);
     border-radius: 5px;
     margin: 1em 0 3em;
@@ -94,6 +103,10 @@ li.instructions-section-root {
     .instructions-section__title {
         padding: 0 0.5em;
         font-size: 1.3em;
+    }
+
+    :deep(ol > li:last-child) {
+        margin-bottom: 0;
     }
 }
 

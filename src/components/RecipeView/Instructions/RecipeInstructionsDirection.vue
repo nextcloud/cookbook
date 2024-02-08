@@ -5,19 +5,23 @@
         :class="{ done: isDone }"
         @click="toggleDone"
     >
-        <!--        TODO Add support for missing properties -->
-        <!--        <div>{{ direction.supply }}</div>-->
-        <!--        <div>{{ direction.tool }}</div>-->
-        <!--        <div>{{ direction.timeRequired }}</div>-->
-        <!--        <div>{{ direction.image }}</div>-->
-        <div v-if="direction.text">{{ direction.text }}</div>
+        <div style="display: table; min-height: 32px">
+            <div style="display: table-cell; vertical-align: middle">
+                <!--        TODO Add support for missing properties -->
+                <!--        <div>{{ direction.supply }}</div>-->
+                <!--        <div>{{ direction.tool }}</div>-->
+                <!--        <div>{{ direction.timeRequired }}</div>-->
+                <!--        <div>{{ direction.image }}</div>-->
+                <div v-if="direction.text">{{ direction.text }}</div>
+            </div>
+        </div>
     </li>
 </template>
 
 <script setup>
 import { ref, watch } from 'vue';
 
-defineProps({
+const props = defineProps({
     /** @type {HowToDirection|null} */
     direction: {
         type: Object,

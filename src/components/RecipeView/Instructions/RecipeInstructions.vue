@@ -2,9 +2,9 @@
     <div>
         <ul v-if="instructions">
             <component
+                :is="childComponentType(item)"
                 v-for="(item, idx) in instructions"
                 :key="`instructions_item-${idx}}`"
-                :is="childComponentType(item)"
                 v-bind="childComponentProps(item, idx)"
             />
         </ul>

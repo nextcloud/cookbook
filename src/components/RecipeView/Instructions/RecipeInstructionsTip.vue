@@ -41,9 +41,10 @@ defineProps({
     display: flex;
     flex-direction: row;
 
-    /* Same padding as due to item numbering labels of directions, steps, etc. minus the icon width. */
+    margin-top: 0.5rem;
+
+    /* Adjusted to have the same alignment as directions, steps, etc. due to item numbering labels. */
     padding-left: 6px;
-    margin-bottom: 2rem;
 
     clear: both;
     white-space: pre-line;
