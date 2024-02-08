@@ -216,6 +216,10 @@ OC.L10N.register(
     "Search term" : "Termo de busca",
     "Clear" : "Limpar",
     "Apply" : "Aplicar",
-    "Copy ingredients to the clipboard" : "Copie os ingredientes para a área de transferência"
+    "_{hours}h_::_{hours}h_" : ["{horas}h","{hours}h","{horas}h"],
+    "_{minutes}m_::_{minutes}m_" : ["{minutos}m","{minutos}m","{minutos}m"],
+    "_{seconds}s_::_{seconds}s_" : ["{segundos}s","{segundos}s","{segundos}s"],
+    "Copy ingredients to the clipboard" : "Copie os ingredientes para a área de transferência",
+    "ingredients" : "Ingredientes"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
