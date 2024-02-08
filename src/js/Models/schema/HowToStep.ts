@@ -193,15 +193,19 @@ export default class HowToStep {
 			if (typeof item === 'string') {
 				return new HowToDirection(item);
 			}
-			try {
-				return HowToDirection.fromJSON(item);
-			} catch {
-				/* empty */
+			if (item['@type'] === 'HowToDirection') {
+				try {
+					return HowToDirection.fromJSON(item);
+				} catch (ex) {
+					/* empty */
+				}
 			}
-			try {
-				return HowToTip.fromJSON(item);
-			} catch {
-				/* empty */
+			if (item['@type'] === 'HowToTip') {
+				try {
+					return HowToTip.fromJSON(item);
+				} catch {
+					/* empty */
+				}
 			}
 			return null;
 		});

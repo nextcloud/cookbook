@@ -1,4 +1,5 @@
 import HowToSupply from 'cookbook/js/Models/schema/HowToSupply';
+import { QuantitativeValue } from 'cookbook/js/Models/schema';
 
 describe('HowToSupply', () => {
 	describe('constructor', () => {
@@ -31,6 +32,7 @@ describe('HowToSupply', () => {
 				'FLR123',
 				'High-quality flour',
 				{
+					'@type': 'QuantitativeValue',
 					value: 2,
 					unitText: 'cup',
 					unitCode: undefined,
@@ -49,7 +51,7 @@ describe('HowToSupply', () => {
 		});
 	});
 
-	describe('parseJSON', () => {
+	describe('fromJSON', () => {
 		const createValidJSON = () => ({
 			name: 'Flour',
 			identifier: 'FLR123',
@@ -62,34 +64,34 @@ describe('HowToSupply', () => {
 
 		it('should create an instance from valid JSON', () => {
 			const validJSON = createValidJSON();
-			const tool = HowToSupply.fromJSON(validJSON);
-			expect(tool).toBeInstanceOf(HowToSupply);
-			expect(tool.name).toBe(validJSON.name);
-			expect(tool.identifier).toBe(validJSON.identifier);
-			expect(tool.description).toBe(validJSON.description);
-			expect(tool.requiredQuantity).toBeDefined();
+			const supply = HowToSupply.fromJSON(validJSON);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe(validJSON.name);
+			expect(supply.identifier).toBe(validJSON.identifier);
+			expect(supply.description).toBe(validJSON.description);
+			expect(supply.requiredQuantity).toBeDefined();
 			// Add more specific checks for QuantitativeValue if needed
 		});
 
 		it('should create an instance from valid JSON string', () => {
 			const validJSON = createValidJSON();
-			const tool = HowToSupply.fromJSON(JSON.stringify(validJSON));
-			expect(tool).toBeInstanceOf(HowToSupply);
-			expect(tool.name).toBe(validJSON.name);
-			expect(tool.identifier).toBe(validJSON.identifier);
-			expect(tool.description).toBe(validJSON.description);
-			expect(tool.requiredQuantity).toBeDefined();
+			const supply = HowToSupply.fromJSON(JSON.stringify(validJSON));
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe(validJSON.name);
+			expect(supply.identifier).toBe(validJSON.identifier);
+			expect(supply.description).toBe(validJSON.description);
+			expect(supply.requiredQuantity).toBeDefined();
 			// Add more specific checks for QuantitativeValue if needed
 		});
 
 		it('should handle missing optional properties', () => {
 			const validJSON = { name: 'Knife' };
-			const tool = HowToSupply.fromJSON(validJSON);
-			expect(tool).toBeInstanceOf(HowToSupply);
-			expect(tool.name).toBe(validJSON.name);
-			expect(tool.identifier).toBeUndefined();
-			expect(tool.description).toBeUndefined();
-			expect(tool.requiredQuantity).toBeUndefined();
+			const supply = HowToSupply.fromJSON(validJSON);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe(validJSON.name);
+			expect(supply.identifier).toBeUndefined();
+			expect(supply.description).toBeUndefined();
+			expect(supply.requiredQuantity).toBeUndefined();
 		});
 
 		it('should throw an error for invalid JSON', () => {
@@ -122,6 +124,54 @@ describe('HowToSupply', () => {
 			expect(() => HowToSupply.fromJSON(invalidJson)).toThrow(
 				'Error mapping to "HowToSupply". Received invalid JSON: "Invalid JSON string"',
 			);
+		});
+	});
+
+	describe('fromJSONOrString', () => {
+		const createValidJSON = () => ({
+			name: 'Flour',
+			identifier: 'FLR123',
+			description: 'High-quality flour',
+			requiredQuantity: {
+				value: 1,
+				unitText: 'cup',
+			},
+		});
+
+		it('should create an instance from valid JSON', () => {
+			const validJSON = createValidJSON();
+			const supply = HowToSupply.fromJSONOrString(validJSON);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe(validJSON.name);
+			expect(supply.identifier).toBe(validJSON.identifier);
+			expect(supply.description).toBe(validJSON.description);
+			expect(supply.requiredQuantity).toBeDefined();
+			// Add more specific checks for QuantitativeValue if needed
+		});
+
+		it('should create an instance from valid JSON string', () => {
+			const validJSON = createValidJSON();
+			const supply = HowToSupply.fromJSONOrString(
+				JSON.stringify(validJSON),
+			);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe(validJSON.name);
+			expect(supply.identifier).toBe(validJSON.identifier);
+			expect(supply.description).toBe(validJSON.description);
+			expect(supply.requiredQuantity).toBeDefined();
+			// Add more specific checks for QuantitativeValue if needed
+		});
+
+		it('should create new supply for invalid JSON string', () => {
+			const invalidJSONString = 'Some flour'; // 'name' should be a string
+			const supply = HowToSupply.fromJSONOrString(invalidJSONString);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe(invalidJSONString);
+		});
+
+		it('should throw an error for invalid JSON', () => {
+			const invalidJSONString = { prop: 123 }; // 'name' should be a string
+			expect(() => HowToSupply.fromJSON(invalidJSONString)).toThrow();
 		});
 	});
 });

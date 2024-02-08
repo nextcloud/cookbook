@@ -178,6 +178,25 @@ describe('HowToSection', () => {
 			expect(result.itemListElement[0].thumbnailUrl).toEqual([]);
 		});
 
+		test('should handle string subitems', () => {
+			const json = {
+				name: 'Baking',
+				itemListElement: ['Preheat the oven', 'Chop the olives'],
+			};
+
+			const result = HowToSection.fromJSON(json);
+
+			expect(result).toBeInstanceOf(HowToSection);
+			expect(result.name).toEqual('Baking');
+
+			// Validate itemListElement property
+			expect(result.itemListElement).toBeInstanceOf(Array);
+			expect(result.itemListElement[0]).toBeInstanceOf(HowToDirection);
+			expect(result.itemListElement[0].text).toEqual('Preheat the oven');
+			expect(result.itemListElement[1]).toBeInstanceOf(HowToDirection);
+			expect(result.itemListElement[1].text).toEqual('Chop the olives');
+		});
+
 		test('should throw an error for invalid JSON', () => {
 			const invalidJson = 'Invalid JSON string';
 

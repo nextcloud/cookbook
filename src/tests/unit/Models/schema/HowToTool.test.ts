@@ -31,6 +31,7 @@ describe('HowToTool', () => {
 				'TB123',
 				'High-quality tool',
 				{
+					'@type': 'QuantitativeValue',
 					value: 2,
 					unitText: 'pcs',
 					unitCode: undefined,
@@ -49,12 +50,13 @@ describe('HowToTool', () => {
 		});
 	});
 
-	describe('parseJSON', () => {
+	describe('fromJSON', () => {
 		const createValidJSON = () => ({
 			name: 'Knife',
 			identifier: 'tool123',
 			description: 'A sharp cutting tool',
 			requiredQuantity: {
+				'@type': 'QuantitativeValue',
 				value: 1,
 				unitText: 'unit',
 			},
@@ -122,6 +124,54 @@ describe('HowToTool', () => {
 			expect(() => HowToTool.fromJSON(invalidJson)).toThrow(
 				'Error mapping to "HowToTool". Received invalid JSON: "Invalid JSON string"',
 			);
+		});
+	});
+
+	describe('fromJSONOrString', () => {
+		const createValidJSON = () => ({
+			name: 'Knife',
+			identifier: 'tool123',
+			description: 'A sharp cutting tool',
+			requiredQuantity: {
+				'@type': 'QuantitativeValue',
+				value: 1,
+				unitText: 'unit',
+			},
+		});
+
+		it('should create an instance from valid JSON', () => {
+			const validJSON = createValidJSON();
+			const tool = HowToTool.fromJSONOrString(validJSON);
+			expect(tool).toBeInstanceOf(HowToTool);
+			expect(tool.name).toBe(validJSON.name);
+			expect(tool.identifier).toBe(validJSON.identifier);
+			expect(tool.description).toBe(validJSON.description);
+			expect(tool.requiredQuantity).toBeDefined();
+			// Add more specific checks for QuantitativeValue if needed
+		});
+
+		it('should create an instance from valid JSON string', () => {
+			const validJSON = createValidJSON();
+			const tool = HowToTool.fromJSONOrString(JSON.stringify(validJSON));
+			expect(tool).toBeInstanceOf(HowToTool);
+			expect(tool.name).toBe(validJSON.name);
+			expect(tool.identifier).toBe(validJSON.identifier);
+			expect(tool.description).toBe(validJSON.description);
+			expect(tool.requiredQuantity).toBeDefined();
+			// Add more specific checks for QuantitativeValue if needed
+		});
+
+		it('should throw an error for invalid JSON', () => {
+			const invalidJSON = { name: 123 }; // 'name' should be a string
+			expect(() => HowToTool.fromJSONOrString(invalidJSON)).toThrow();
+		});
+
+		it('should create new supply for invalid JSON string', () => {
+			const invalidJSONString = 'Red spatula'; // 'name' should be a string
+			expect(() => HowToTool.fromJSON(invalidJSONString)).toThrow();
+			const tool = HowToTool.fromJSONOrString(invalidJSONString);
+			expect(tool).toBeInstanceOf(HowToTool);
+			expect(tool.name).toBe(invalidJSONString);
 		});
 	});
 });

@@ -39,8 +39,12 @@ describe('HowToDirection', () => {
 		test('should create an instance with all properties', () => {
 			const image = ['image1.jpg', 'image2.jpg'];
 			const thumbnailUrl = ['thumb1.jpg', 'thumb2.jpg'];
-			const supply: HowToSupply[] = [{ name: 'Ingredient 1' }];
-			const tool: HowToTool[] = [{ name: 'Tool 1' }];
+			const supply: HowToSupply[] = [
+				{ '@type': 'HowToSupply', name: 'Ingredient 1' },
+			];
+			const tool: HowToTool[] = [
+				{ '@type': 'HowToTool', name: 'Tool 1' },
+			];
 
 			const direction = new HowToDirection('Step 3', {
 				position: 3,
@@ -91,6 +95,7 @@ describe('HowToDirection', () => {
 				timeRequired: '10 minutes',
 				supply: [
 					{
+						'@type': 'HowToSupply',
 						name: 'Flour',
 						requiredQuantity: {
 							value: 200,
@@ -98,6 +103,7 @@ describe('HowToDirection', () => {
 						},
 					},
 					{
+						'@type': 'HowToSupply',
 						name: 'Water',
 						requiredQuantity: {
 							value: 150,
@@ -107,9 +113,11 @@ describe('HowToDirection', () => {
 				],
 				tool: [
 					{
+						'@type': 'HowToTool',
 						name: 'Mixing Bowl',
 					},
 					{
+						'@type': 'HowToTool',
 						name: 'Spoon',
 					},
 				],
@@ -150,6 +158,7 @@ describe('HowToDirection', () => {
 				thumbnailUrl: ['thumbnail1.jpg', 'thumbnail2.jpg'],
 				timeRequired: '10 minutes',
 				supply: {
+					'@type': 'HowToSupply',
 					name: 'Flour',
 					requiredQuantity: {
 						value: 200,
@@ -157,6 +166,7 @@ describe('HowToDirection', () => {
 					},
 				},
 				tool: {
+					'@type': 'HowToTool',
 					name: 'Mixing Bowl',
 				},
 			};
@@ -181,6 +191,29 @@ describe('HowToDirection', () => {
 			expect(result.supply[0].requiredQuantity?.unitText).toEqual(
 				'grams',
 			);
+
+			// Validate tool property
+			expect(result.tool).toBeInstanceOf(Array);
+			expect(result.tool[0]).toBeInstanceOf(HowToTool);
+			expect(result.tool[0].name).toEqual('Mixing Bowl');
+		});
+
+		test('should create a HowToDirection instance from valid JSON with string tool and supply', () => {
+			const json = {
+				text: 'Mix the ingredients',
+				supply: 'Flour',
+				tool: 'Mixing Bowl',
+			};
+
+			const result = HowToDirection.fromJSON(json);
+
+			expect(result).toBeInstanceOf(HowToDirection);
+			expect(result.text).toEqual('Mix the ingredients');
+
+			// Validate supply property
+			expect(result.supply).toBeInstanceOf(Array);
+			expect(result.supply[0]).toBeInstanceOf(HowToSupply);
+			expect(result.supply[0].name).toEqual('Flour');
 
 			// Validate tool property
 			expect(result.tool).toBeInstanceOf(Array);

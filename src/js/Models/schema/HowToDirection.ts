@@ -132,9 +132,11 @@ export default class HowToDirection {
 		let supply: HowToSupply | HowToSupply[] = [];
 		if (jsonObj.supply) {
 			if (Array.isArray(jsonObj.supply)) {
-				supply = jsonObj.supply.map((s) => HowToSupply.fromJSON(s));
+				supply = jsonObj.supply.map((s) =>
+					HowToSupply.fromJSONOrString(s),
+				);
 			} else {
-				supply = HowToSupply.fromJSON(jsonObj.supply);
+				supply = HowToSupply.fromJSONOrString(jsonObj.supply);
 			}
 		}
 
@@ -142,9 +144,9 @@ export default class HowToDirection {
 		let tool: HowToTool | HowToTool[] = [];
 		if (jsonObj.tool) {
 			if (Array.isArray(jsonObj.tool)) {
-				tool = jsonObj.tool.map((t) => HowToTool.fromJSON(t));
+				tool = jsonObj.tool.map((t) => HowToTool.fromJSONOrString(t));
 			} else {
-				tool = HowToTool.fromJSON(jsonObj.tool);
+				tool = HowToTool.fromJSONOrString(jsonObj.tool);
 			}
 		}
 

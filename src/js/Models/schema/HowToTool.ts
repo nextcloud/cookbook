@@ -103,4 +103,22 @@ export default class HowToTool {
 			requiredQuantity,
 		);
 	}
+
+	/**
+	 * Create a `HowToTool` instance from a JSON string or a simple string. If the string can't be parsed as a JSON
+	 * object it will be used as the tool's name.
+	 * @param {string | object} json - The JSON string or object.
+	 * @returns {HowToTool} - The created HowToTool instance.
+	 * @throws {Error} If the input JSON is invalid or missing required properties.
+	 */
+	static fromJSONOrString(json: string | object): HowToTool {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let jsonObj: any;
+		try {
+			jsonObj = typeof json === 'string' ? JSON.parse(json) : json;
+		} catch {
+			if (typeof json === 'string') return new HowToTool(json);
+		}
+		return this.fromJSON(jsonObj);
+	}
 }
