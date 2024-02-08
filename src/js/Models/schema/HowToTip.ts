@@ -5,6 +5,7 @@ import {
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import { asCleanedArray } from '../../helper';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 
 /**
  * Interface representing the options for constructing a `HowToTip` instance.
@@ -28,7 +29,11 @@ interface HowToTipOptions {
  * Represents a tip in the recipe instructions.
  * @class
  */
-export default class HowToTip {
+export default class HowToTip extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'HowToTip';
+
 	/** The text content of the tip. */
 	public text: string;
 
@@ -51,7 +56,7 @@ export default class HowToTip {
 	 * @param {HowToTipOptions} options - An options object containing additional properties.
 	 */
 	public constructor(text: string, options?: HowToTipOptions) {
-		this['@type'] = 'HowToTip';
+		super();
 		this.text = text;
 		if (options) {
 			this.position = options.position;

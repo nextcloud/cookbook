@@ -4,6 +4,7 @@ import {
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToDirection from 'cookbook/js/Models/schema/HowToDirection';
 import HowToTip from 'cookbook/js/Models/schema/HowToTip';
 import { asArray, asCleanedArray } from '../../helper';
@@ -30,7 +31,11 @@ interface HowToStepOptions {
  * Represents a step in the recipe instructions.
  * @class
  */
-export default class HowToStep {
+export default class HowToStep extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'HowToStep';
+
 	/** The text content of the step. Required if `itemListElement` is not set. */
 	private _text?: string;
 
@@ -68,11 +73,11 @@ export default class HowToStep {
 		itemListElements: (HowToDirection | HowToTip)[],
 		options?: HowToStepOptions,
 	) {
+		super();
 		if (!text && !itemListElements) {
 			throw Error(this.ValidationMsg);
 		}
 
-		this['@type'] = 'HowToStep';
 		// eslint-disable-next-line no-underscore-dangle
 		this._text = text;
 		if (options) {

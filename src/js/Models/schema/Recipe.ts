@@ -4,8 +4,9 @@ import {
 	mapString,
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
-import HowToStep from 'cookbook/js/Models/schema/HowToStep';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToSection from './HowToSection';
+import HowToStep from './HowToStep';
 import HowToSupply from './HowToSupply';
 import HowToTool from './HowToTool';
 import NutritionInformation from './NutritionInformation';
@@ -62,7 +63,11 @@ interface RecipeOptions {
  * `schema.org` standard. These are then mapped to the internally supported classes for above reasons.
  * @class
  */
-export default class Recipe {
+export default class Recipe extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'Recipe';
+
 	/** The unique identifier of the recipe */
 	public identifier: string;
 
@@ -123,8 +128,8 @@ export default class Recipe {
 	public url: string[];
 
 	constructor(identifier: string, name: string, options: RecipeOptions = {}) {
+		super();
 		this['@context'] = 'https://schema.org';
-		this['@type'] = 'Recipe';
 		this.identifier = identifier;
 		this.name = name;
 		// if (options) {

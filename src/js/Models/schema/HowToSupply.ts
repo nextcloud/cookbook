@@ -1,12 +1,17 @@
 import { mapString } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import QuantitativeValue from './QuantitativeValue';
 
 /**
  * Represents a supply item in the `HowToSupply` section.
  * @class
  */
-export default class HowToSupply {
+export default class HowToSupply extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'HowToSupply';
+
 	/** The name of the supply item. */
 	public name: string;
 
@@ -48,7 +53,7 @@ export default class HowToSupply {
 	 * @param args - Remaining supported arguments.
 	 */
 	constructor(name: string, ...args: never[]) {
-		this['@type'] = 'HowToSupply';
+		super();
 		this.name = name;
 		// eslint-disable-next-line prefer-destructuring
 		if (args[0]) this.identifier = args[0];

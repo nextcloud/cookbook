@@ -5,6 +5,7 @@ import {
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import { asCleanedArray } from 'cookbook/js/helper';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToDirection from './HowToDirection';
 import HowToStep from './HowToStep';
 import HowToTip from './HowToTip';
@@ -41,7 +42,11 @@ interface HowToSectionOptions {
  * Represents a section in the recipe instructions.
  * @class
  */
-export default class HowToSection {
+export default class HowToSection extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'HowToSection';
+
 	/** The name of the section. */
 	public name: string;
 
@@ -70,7 +75,7 @@ export default class HowToSection {
 	 * @param {HowToSectionOptions} options - An options object containing additional properties.
 	 */
 	public constructor(name: string, options?: HowToSectionOptions) {
-		this['@type'] = 'HowToSection';
+		super();
 		this.name = name;
 		if (options) {
 			this.description = options.description;

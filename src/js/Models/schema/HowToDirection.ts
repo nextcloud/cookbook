@@ -4,6 +4,7 @@ import {
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToSupply from './HowToSupply';
 import HowToTool from './HowToTool';
 import { asCleanedArray } from '../../helper';
@@ -36,7 +37,11 @@ interface HowToDirectionOptions {
  * Represents a step or direction in the recipe instructions.
  * @class
  */
-export default class HowToDirection {
+export default class HowToDirection extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'HowToDirection';
+
 	/** The text content of the direction. */
 	public text: string;
 
@@ -65,7 +70,7 @@ export default class HowToDirection {
 	 * @param {HowToDirectionOptions} options - An options object containing additional properties.
 	 */
 	public constructor(text: string, options?: HowToDirectionOptions) {
-		this['@type'] = 'HowToDirection';
+		super();
 		this.text = text;
 		if (options) {
 			this.position = options.position;

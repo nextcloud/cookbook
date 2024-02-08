@@ -1,4 +1,5 @@
 import JsonMappingException from '../../Exceptions/JsonMappingException';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 
 /**
  * Interface representing the properties of the NutritionInformation class.
@@ -46,7 +47,11 @@ export interface NutritionInformationProperties {
  * Represents nutrition information.
  * @class
  */
-export default class NutritionInformation {
+export default class NutritionInformation extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'NutritionInformation';
+
 	/** The number of calories. */
 	public calories?: string;
 
@@ -89,7 +94,7 @@ export default class NutritionInformation {
 	 * @param properties - An optional object containing the nutrition information properties.
 	 */
 	constructor(properties?: NutritionInformationProperties) {
-		this['@type'] = 'NutritionInformation';
+		super();
 
 		// Set the properties from the provided object, or default to undefined
 		Object.assign(this, properties);

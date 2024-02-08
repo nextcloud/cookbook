@@ -1,12 +1,17 @@
 import { mapString } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import QuantitativeValue from './QuantitativeValue';
 
 /**
  * Represents a tool used in the recipe instructions.
  * @class
  */
-export default class HowToTool {
+export default class HowToTool extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'HowToTool';
+
 	/** The name of the tool. */
 	public name: string;
 
@@ -48,7 +53,7 @@ export default class HowToTool {
 	 * @param args - Remaining supported arguments.
 	 */
 	constructor(name: string, ...args: never[]) {
-		this['@type'] = 'HowToTool';
+		super();
 		this.name = name;
 		// eslint-disable-next-line prefer-destructuring
 		if (args[0]) this.identifier = args[0];

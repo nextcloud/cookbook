@@ -1,11 +1,16 @@
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import { mapInteger, mapString } from 'cookbook/js/utils/jsonMapper';
+import BaseSchemaOrgModel from 'cookbook/js/Models/schema/BaseSchemaOrgModel';
 
 /**
  * Represents a quantitative value with unit information.
  * @class
  */
-export default class QuantitativeValue {
+export default class QuantitativeValue extends BaseSchemaOrgModel {
+	/** @inheritDoc */
+	// eslint-disable-next-line class-methods-use-this
+	public readonly '@type' = 'QuantitativeValue';
+
 	/** The numerical value. */
 	public value: number;
 
@@ -37,7 +42,7 @@ export default class QuantitativeValue {
 	 * @constructor
 	 */
 	constructor(value: number, unitText: string, ...args: never[]) {
-		this['@type'] = 'QuantitativeValue';
+		super();
 		this.value = value;
 		this.unitText = unitText;
 		// eslint-disable-next-line prefer-destructuring
