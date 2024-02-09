@@ -104,10 +104,7 @@ export default class HowToSection extends BaseSchemaOrgModel {
 			);
 		}
 
-		const name = mapString(
-			jsonObj.name,
-			"HowToSection 'name'",
-		) as NonNullable<string>;
+		const name = mapString(jsonObj.name, "HowToSection 'name'", true) ?? '';
 
 		const description = mapString(
 			jsonObj.description,

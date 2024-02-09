@@ -181,8 +181,6 @@ export default class Recipe extends BaseSchemaOrgModel {
 		}
 
 		// Required
-
-		// The cookbook API returns the `identifier` property under the name `id`
 		const identifier = mapString(
 			jsonObj.identifier,
 			"Recipe 'identifier'",

@@ -16,8 +16,10 @@
                 <div class="meta">
                     <h2 class="heading">{{ $store.state.recipe.name }}</h2>
                     <div class="details">
-                        <div v-if="recipe.keywords.length">
-                            <ul v-if="recipe.keywords.length">
+                        <div
+                            v-if="recipe.keywords && recipe.keywords.length > 0"
+                        >
+                            <ul>
                                 <RecipeKeyword
                                     v-for="(keyword, idx) in recipe.keywords"
                                     :key="'keyw' + idx"
@@ -445,9 +447,7 @@ const recipe = computed(() => {
         // .map((i) => helpers.escapeHTML(i.text));
     }
 
-    if (store.state.recipe.keywords) {
-        tmpRecipe.keywords = String(store.state.recipe.keywords).split(',');
-    }
+    tmpRecipe.keywords = store.state.recipe.keywords;
 
     if (store.state.recipe.cookTime) {
         const cookT = store.state.recipe.cookTime.match(
