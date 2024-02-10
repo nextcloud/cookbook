@@ -191,13 +191,20 @@
                         </div>
                     </section>
 
-                    <section v-if="visibleInfoBlocks.tools" class="tools">
-                        <h3 v-if="parsedTools.length">
+                    <section
+                        v-if="
+                            visibleInfoBlocks.tools &&
+                            recipe.tools &&
+                            recipe.tools.length > 0
+                        "
+                        class="tools"
+                    >
+                        <h3>
                             {{ t('cookbook', 'Tools') }}
                         </h3>
-                        <ul v-if="parsedTools.length">
+                        <ul>
                             <RecipeTool
-                                v-for="(tool, idx) in parsedTools"
+                                v-for="(tool, idx) in recipe.tools"
                                 :key="'tool' + idx"
                                 :tool="tool"
                             />
@@ -397,10 +404,6 @@ const parsedDescription = ref('');
  */
 const parsedIngredients = ref([]);
 /**
- * @type {import('vue').Ref<Array.<string>>}
- */
-const parsedTools = ref([]);
-/**
  * @type {import('vue').Ref<number>}
  */
 const recipeYield = ref(0);
@@ -485,11 +488,7 @@ const recipe = computed(() => {
         }
     }
 
-    if (store.state.recipe.tool) {
-        tmpRecipe.tools = store.state.recipe.tool.map((i) =>
-            helpers.escapeHTML(i),
-        );
-    }
+    tmpRecipe.tools = store.state.recipe.tool;
 
     if (store.state.recipe.dateCreated) {
         const date = parseDateTime(store.state.recipe.dateCreated);
@@ -727,23 +726,6 @@ watch(
                 });
             } else {
                 parsedIngredients.value = [];
-            }
-
-            if (r.tools) {
-                parsedTools.value = r.tools.map(() =>
-                    t('cookbook', 'Loading…'),
-                );
-                r.tools.forEach((tool, idx) => {
-                    normalizeMarkdown(tool)
-                        .then((x) => {
-                            parsedTools.value.splice(idx, 1, x);
-                        })
-                        .catch((ex) => {
-                            log.error(ex);
-                        });
-                });
-            } else {
-                parsedTools.value = [];
             }
         }
     },
