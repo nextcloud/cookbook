@@ -3,12 +3,16 @@ import QuantitativeValue from '../../../../js/Models/schema/QuantitativeValue';
 describe('QuantitativeValue', () => {
 	describe('constructor', () => {
 		test('should set the @type property to "QuantitativeValue"', () => {
-			const quantitativeValue = new QuantitativeValue(15, 'meter');
+			const quantitativeValue = new QuantitativeValue(15, {
+				unitText: 'meter',
+			});
 			expect(quantitativeValue['@type']).toBe('QuantitativeValue');
 		});
 
 		test('should create an instance of QuantitativeValue with unitCode undefined', () => {
-			const quantitativeValue = new QuantitativeValue(10, 'cup');
+			const quantitativeValue = new QuantitativeValue(10, {
+				unitText: 'cup',
+			});
 			expect(quantitativeValue).toBeInstanceOf(QuantitativeValue);
 			expect(quantitativeValue.value).toBe(10);
 			expect(quantitativeValue.unitText).toBe('cup');
@@ -16,11 +20,10 @@ describe('QuantitativeValue', () => {
 		});
 
 		test('should create an instance of QuantitativeValue with specified unitCode', () => {
-			const quantitativeValue = new QuantitativeValue(
-				5,
-				'kilogram',
-				'KGM',
-			);
+			const quantitativeValue = new QuantitativeValue(5, {
+				unitText: 'kilogram',
+				unitCode: 'KGM',
+			});
 			expect(quantitativeValue).toBeInstanceOf(QuantitativeValue);
 			expect(quantitativeValue.value).toBe(5);
 			expect(quantitativeValue.unitText).toBe('kilogram');
@@ -84,6 +87,51 @@ describe('QuantitativeValue', () => {
 			expect(() => QuantitativeValue.fromJSON(invalidJson)).toThrow(
 				'Error mapping to "QuantitativeValue". Received invalid JSON: "Invalid JSON string"',
 			);
+		});
+	});
+
+	describe('fromJSONOrString', () => {
+		it('should create a QuantitativeValue instance from valid JSON', () => {
+			const json = '{"value": 10, "unitText": "cup"}';
+			const expected = new QuantitativeValue(10, { unitText: 'cup' });
+			expect(QuantitativeValue.fromJSONOrString(json)).toEqual(expected);
+		});
+
+		it('should create a QuantitativeValue instance from valid JSON string', () => {
+			const jsonString = '{"value": 10, "unitText": "cup"}';
+			const expected = new QuantitativeValue(10, { unitText: 'cup' });
+			expect(QuantitativeValue.fromJSONOrString(jsonString)).toEqual(
+				expected,
+			);
+		});
+
+		it('should create a QuantitativeValue instance from a valid string', () => {
+			const stringValue = '10';
+			const expected = new QuantitativeValue(10);
+			expect(QuantitativeValue.fromJSONOrString(stringValue)).toEqual(
+				expected,
+			);
+		});
+
+		it('should throw an error for invalid JSON', () => {
+			const invalidJson = '{value: 10}';
+			expect(() =>
+				QuantitativeValue.fromJSONOrString(invalidJson),
+			).toThrow();
+		});
+
+		it('should throw an error for invalid JSON string', () => {
+			const invalidJsonString = '{"value": 10, unitText: "cup"}'; // missing quotes
+			expect(() =>
+				QuantitativeValue.fromJSONOrString(invalidJsonString),
+			).toThrow();
+		});
+
+		it('should throw an error for invalid string', () => {
+			const invalidString = 'invalid'; // no number
+			expect(() =>
+				QuantitativeValue.fromJSONOrString(invalidString),
+			).toThrow();
 		});
 	});
 });

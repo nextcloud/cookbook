@@ -44,6 +44,7 @@ describe('HowToSupply', () => {
 			expect(howToSupply.identifier).toBe('FLR123');
 			expect(howToSupply.description).toBe('High-quality flour');
 			expect(howToSupply.requiredQuantity).toEqual({
+				'@type': 'QuantitativeValue',
 				value: 2,
 				unitText: 'cup',
 				unitCode: undefined,

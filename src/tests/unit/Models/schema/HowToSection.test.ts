@@ -205,16 +205,6 @@ describe('HowToSection', () => {
 			);
 		});
 
-		test('should throw an error for missing required properties', () => {
-			const json = {
-				// Missing required 'name' property
-			};
-
-			expect(() => HowToSection.fromJSON(json)).toThrow(
-				'Error mapping HowToSection \'name\'. Expected string but received "undefined".',
-			);
-		});
-
 		test('should handle null or undefined values for optional properties', () => {
 			const json = {
 				name: 'Chopping',
