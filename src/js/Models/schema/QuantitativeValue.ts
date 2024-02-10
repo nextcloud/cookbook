@@ -3,6 +3,18 @@ import { mapInteger, mapString } from 'cookbook/js/utils/jsonMapper';
 import BaseSchemaOrgModel from 'cookbook/js/Models/schema/BaseSchemaOrgModel';
 
 /**
+ * Interface representing the options for constructing a QuantitativeValue instance.
+ * @interface
+ */
+interface QuantitativeValueOptions {
+	/** The unit of measurement (e.g., "cup", "kilogram"). */
+	unitText?: string;
+
+	/** The unit code (e.g., "CU", "KGM"). */
+	unitCode?: string;
+}
+
+/**
  * Represents a quantitative value with unit information.
  * @class
  */
@@ -15,38 +27,27 @@ export default class QuantitativeValue extends BaseSchemaOrgModel {
 	public value: number;
 
 	/** The unit of measurement (e.g., "cup", "kilogram"). */
-	public unitText: string;
+	public unitText?: string;
 
 	/** The unit code (e.g., "CU", "KGM"). */
 	public unitCode?: string;
 
 	/**
-	 * Creates a QuantitativeValue instance.
+	 * Creates a `QuantitativeValue` instance.
 	 * @constructor
-	 * @param value - The numerical value.
-	 * @param unitText - The unit of measurement (e.g., "cup", "kilogram").
+	 * @param {number} value - The numeric value (amount).
+	 * @param {QuantitativeValueOptions} options - An options object containing additional properties regarding the unit.
 	 */
-	constructor(value: number, unitText: string);
-
-	/**
-	 * Creates a QuantitativeValue instance.
-	 * @constructor
-	 * @param value - The numerical value.
-	 * @param unitText - The unit of measurement (e.g., "cup", "kilogram").
-	 * @param unitCode - The unit code (e.g., "CU", "KGM").
-	 */
-	constructor(value: number, unitText: string, unitCode?: string);
-
-	/**
-	 * Creates a QuantitativeValue instance.
-	 * @constructor
-	 */
-	constructor(value: number, unitText: string, ...args: never[]) {
+	public constructor(value: number, options?: QuantitativeValueOptions) {
 		super();
 		this.value = value;
-		this.unitText = unitText;
-		// eslint-disable-next-line prefer-destructuring
-		if (args[0]) this.unitCode = args[0];
+		if (options) {
+			this.unitText = options.unitText;
+			this.unitCode = options.unitCode;
+		} else {
+			this.unitText = undefined;
+			this.unitCode = undefined;
+		}
 	}
 
 	/**
@@ -82,6 +83,29 @@ export default class QuantitativeValue extends BaseSchemaOrgModel {
 			true,
 		);
 
-		return new QuantitativeValue(value, unitText, unitCode || undefined);
+		return new QuantitativeValue(value, {
+			unitText,
+			unitCode: unitCode || undefined,
+		});
+	}
+
+	/**
+	 * Create a `QuantitativeValue` instance from a JSON string.
+	 * @param {string | object} json - The JSON string or object.
+	 * @returns {QuantitativeValue} - The created QuantitativeValue instance.
+	 * @throws {Error} If the input JSON is invalid or missing required properties.
+	 */
+	static fromJSONOrString(json: string | object): QuantitativeValue {
+		try {
+			return QuantitativeValue.fromJSON(json);
+		} catch {
+			const number = parseFloat(json as string);
+			if (!Number.isNaN(number)) {
+				return new QuantitativeValue(number);
+			}
+		}
+		throw new JsonMappingException(
+			`Error mapping to "QuantitativeValue". Received invalid JSON: "${json}"`,
+		);
 	}
 }

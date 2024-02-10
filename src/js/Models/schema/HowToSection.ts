@@ -48,19 +48,19 @@ export default class HowToSection extends BaseSchemaOrgModel {
 	public readonly '@type' = 'HowToSection';
 
 	/** The name of the section. */
-	public name: string;
+	public name?: string = undefined;
 
 	/** The position of the section in the sequence. */
-	public position?: number;
+	public position?: number = undefined;
 
 	/** The description of the section. */
-	public description?: string;
+	public description?: string = undefined;
 
 	/** The images associated with the section. */
 	public image: string[] = [];
 
 	/** The time required for the section. */
-	public timeRequired?: string;
+	public timeRequired?: string = undefined;
 
 	/** The thumbnail URLs for the images defined in `image`. */
 	public thumbnailUrl: string[] = [];
