@@ -18,6 +18,7 @@
                     <div class="details">
                         <div
                             v-if="recipe.keywords && recipe.keywords.length > 0"
+                            class="section"
                         >
                             <ul>
                                 <RecipeKeyword
@@ -33,7 +34,7 @@
                             </ul>
                         </div>
 
-                        <p class="dates">
+                        <p class="dates section">
                             <span
                                 v-if="showCreatedDate"
                                 class="date"
@@ -58,9 +59,9 @@
 
                         <VueShowdown
                             :markdown="parsedDescription"
-                            class="markdown-description"
+                            class="markdown-description section"
                         />
-                        <p v-if="$store.state.recipe.url?.[0]">
+                        <p v-if="$store.state.recipe.url?.[0]" class="section">
                             <strong>{{ t('cookbook', 'Source') }}: </strong
                             ><a
                                 target="_blank"
@@ -741,6 +742,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h2 {
+    font-size: 2rem;
+    font-weight: 250;
+    line-height: 2.3rem;
+
+    @media (min-width: 1200px) {
+        font-size: 2.5rem;
+        font-weight: 250;
+        line-height: 2.8rem;
+    }
+}
+h3 {
+    font-size: 1.5rem;
+    line-height: 1.8rem;
+    margin: 12px 0 20px;
+
+    @media (min-width: 1200px) {
+        font-size: 1.4rem;
+        line-height: 1.7rem;
+    }
+}
+
 .wrapper {
     width: 100%;
 }
@@ -792,10 +815,6 @@ export default {
     }
 }
 
-.meta {
-    margin: 0 1rem;
-}
-
 .heading {
     margin-top: 12px;
 }
@@ -839,8 +858,15 @@ export default {
     white-space: pre-line;
 }
 
-.details p {
-    margin: 0.5em 0;
+.meta {
+    padding: 0 1em;
+
+    .details {
+        .section {
+            margin: 0.75em 0;
+            padding: 0;
+        }
+    }
 }
 
 .times {
