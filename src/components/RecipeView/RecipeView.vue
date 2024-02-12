@@ -69,41 +69,19 @@
                                 >{{ $store.state.recipe.url?.[0] }}</a
                             >
                         </p>
-                        <div>
-                            <p v-if="$store.state.recipe.recipeYield != null">
-                                <strong
-                                    >{{ t('cookbook', 'Servings') }}:
-                                </strong>
-                                <span class="print-only">
-                                    {{ recipeYield }}
-                                </span>
-                                <span class="print-hidden">
-                                    <button
-                                        :disabled="recipeYield <= 1"
-                                        @click="changeRecipeYield(false)"
-                                    >
-                                        <span class="icon-view-previous" />
-                                    </button>
-                                    <input
-                                        v-model.number="recipeYield"
-                                        type="number"
-                                        min="0"
-                                        class="recipeYieldInput"
-                                    />
-                                    <button @click="changeRecipeYield">
-                                        <span class="icon-view-next" />
-                                    </button>
-                                    <button
-                                        v-if="
-                                            recipeYield !==
-                                            $store.state.recipe.recipeYield
-                                        "
-                                        @click="restoreOriginalRecipeYield"
-                                    >
-                                        <span class="icon-history" />
-                                    </button>
-                                </span>
-                            </p>
+                        <div
+                            v-if="$store.state.recipe.recipeYield != null"
+                            class="d-flex flex-row align-items-center section"
+                        >
+                            <strong class="mr-4"
+                                >{{ t('cookbook', 'Servings') }}:
+                            </strong>
+                            <RecipeYield
+                                v-model="recipeYield"
+                                :original-yield="
+                                    $store.state.recipe.recipeYield
+                                "
+                            />
                         </div>
                     </div>
                     <div class="times">
@@ -381,6 +359,7 @@ import RecipeKeyword from '../RecipeKeyword.vue';
 import RecipeNutritionInfoItem from './RecipeNutritionInfoItem.vue';
 import RecipeTimer from './RecipeTimer.vue';
 import RecipeTool from './RecipeTool.vue';
+import RecipeYield from './RecipeYield.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -635,10 +614,6 @@ const setup = async () => {
     recipeYield.value = store.state.recipe.recipeYield;
 };
 
-const changeRecipeYield = (increase = true) => {
-    recipeYield.value = +recipeYield.value + (increase ? 1 : -1);
-};
-
 function showCopySuccess(item) {
     showSuccess(t('cookbook', '{item} copied to clipboard', { item }));
 }
@@ -686,10 +661,6 @@ const copyIngredientsToClipboard = () => {
     }
 };
 
-const restoreOriginalRecipeYield = () => {
-    recipeYield.value = store.state.recipe.recipeYield;
-};
-
 // ===================
 // Watchers
 // ===================
@@ -727,15 +698,6 @@ watch(
             } else {
                 parsedIngredients.value = [];
             }
-        }
-    },
-);
-
-watch(
-    () => recipeYield.value,
-    () => {
-        if (recipeYield.value < 0) {
-            restoreOriginalRecipeYield();
         }
     },
 );
@@ -789,7 +751,7 @@ export default {
     padding: 3rem 0;
 }
 
-.print-only {
+:deep(.print-only) {
     display: none;
 }
 
@@ -811,11 +773,11 @@ export default {
         content: '';
     }
 
-    .print-hidden {
+    :deep(.print-hidden) {
         display: none !important;
     }
 
-    .print-only {
+    :deep(.print-only) {
         display: initial !important;
     }
 }
@@ -1118,20 +1080,6 @@ main {
 
 .ingredient-parsing-error span.icon-error {
     display: inline-block;
-}
-
-.recipeYieldInput {
-    width: 75px;
-
-    /* Chrome, Safari, Edge */
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-        margin: 0;
-        -webkit-appearance: none;
-    }
-
-    /* Firefox */
-    -moz-appearance: textfield;
 }
 </style>
 
