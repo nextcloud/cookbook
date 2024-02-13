@@ -209,10 +209,10 @@ class ThumbnailFileHelperTest extends TestCase {
 
 		$cnt = 0;
 		if (! $thumbExists) {
-			$cnt ++;
+			$cnt++;
 		}
 		if (! $miniExists) {
-			$cnt ++;
+			$cnt++;
 		}
 		$newFileMap = [
 			['thumb.jpg', null, $thumb],
