@@ -70,19 +70,19 @@ export default {
 <style scoped>
 .image-container {
     img.inline-img {
-        width: 100%;
-        height: 100%;
-        max-width: 100%;
-        max-height: 100%;
+        top: 0;
+        left: 0;
         display: block;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
         cursor: pointer;
+        object-fit: cover;
 
         @media (min-width: 767px) {
             position: absolute;
         }
-        top: 0;
-        left: 0;
-        object-fit: cover;
     }
 }
 @media print {

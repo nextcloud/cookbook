@@ -20,8 +20,8 @@
                 <span class="icon-view-next" />
             </button>
             <button
-                style="background: none; border: none"
                 v-if="yieldBuffer !== originalYield"
+                style=" border: none;background: none"
                 @click="restoreOriginalRecipeYield"
             >
                 <span class="icon-history" />
@@ -107,17 +107,20 @@ watch(
 
         button {
             display: inline-flex;
-            padding: 0.25em 0.1em;
+            width: 32px;
             height: 32px;
             min-height: 32px;
-            width: 32px;
-            vertical-align: middle;
             justify-content: center;
+            padding: 0.25em 0.1em;
+            vertical-align: middle;
         }
 
         input.recipe-yield-input {
             width: 47px;
             padding: 0 6px;
+
+            /* Firefox */
+            -moz-appearance: textfield;
             text-align: center;
 
             /* Chrome, Safari, Edge */
@@ -126,9 +129,6 @@ watch(
                 margin: 0;
                 -webkit-appearance: none;
             }
-
-            /* Firefox */
-            -moz-appearance: textfield;
 
             &.changed {
                 border-color: var(--color-primary-element);

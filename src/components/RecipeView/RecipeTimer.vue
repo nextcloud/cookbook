@@ -3,13 +3,18 @@
         <button
             v-if="timer"
             type="button"
-            :class="countdown === null ? 'icon-play' : 'icon-pause'"
+            class="print-hidden"
             @click="timerToggle"
-        ></button>
+        >
+            <span :class="countdown === null ? 'icon-play' : 'icon-pause'" />
+        </button>
         <h4>{{ label }}</h4>
-        <div class="timeContainer">
+        <div
+            class="timeContainer"
+            :class="countdownStarted ? 'timer-running' : ''"
+        >
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <p v-html="displayTime"></p>
+            <p v-html="displayTime" />
         </div>
     </div>
 </template>
@@ -152,6 +157,7 @@ const styleUnit = (str, value, isPadded = true) => {
     } else {
         text = `${Number(value).toString()}${text}`;
     }
+    text = `<nobr>${text}</nobr>`;
     return text;
 };
 
@@ -250,47 +256,41 @@ export default {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    border: 1px solid var(--color-border-dark);
-    border-radius: 3px;
-    margin: 1rem 2rem;
-    font-size: 1.2rem;
     text-align: center;
-}
 
-.time button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 36px;
-    height: 36px;
-    transform: translate(-50%, -50%);
-}
-
-.time h4 {
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--color-border-dark);
-    background-color: var(--color-background-dark);
-    font-weight: bold;
-}
-
-.time > .timeContainer {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem;
-}
-
-/* The :deep selector prevents a data attribute from being added to the scoped element. */
-.time :deep(.timerUnit) {
-    color: var(--color-text-lighter);
-    font-size: 0.8em;
-    margin-inline-end: 0.3em;
-}
-
-@media print {
     button {
-        display: none !important;
+        position: absolute;
+        top: 0;
+        right: -16px;
+        display: inline-flex;
+        width: 32px;
+        height: 32px;
+        min-height: 32px;
+        justify-content: center;
+        padding: 0.25em 0.1em;
+        transform: translate(0, -50%);
+        vertical-align: middle;
+    }
+
+    & > .timeContainer {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.5rem 0.25rem;
+
+        border-top: 1px solid var(--color-border-dark);
+
+        &.timer-running {
+            font-size: 1.2em;
+        }
+    }
+
+    /* The :deep selector prevents a data attribute from being added to the scoped element. */
+    :deep(.timerUnit) {
+        color: var(--color-text-lighter);
+        font-size: 0.8em;
+        margin-inline-end: 0.3em;
     }
 }
 </style>

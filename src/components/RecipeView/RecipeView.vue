@@ -77,13 +77,17 @@
                                 >{{ $store.state.recipe.url?.[0] }}</a
                             >
                         </p>
+                    </div>
+                    <div
+                        class="flex flex-row flex-wrap gap-4 gap-x-lg-16 gap-y-lg-8 justify-center align-items-center mt-6"
+                    >
                         <div
                             v-if="$store.state.recipe.recipeYield != null"
-                            class="d-flex flex-row align-items-center section"
+                            class="d-flex flex-col align-items-center mt-2"
                         >
-                            <strong class="mr-4"
-                                >{{ t('cookbook', 'Servings') }}:
-                            </strong>
+                            <h4>
+                                {{ t('cookbook', 'Servings') }}
+                            </h4>
                             <RecipeYield
                                 v-model="recipeYield"
                                 :original-yield="
@@ -91,35 +95,47 @@
                                 "
                             />
                         </div>
-                    </div>
-                    <div class="times">
-                        <RecipeTimer
-                            v-if="
-                                recipe.timerPrep &&
-                                visibleInfoBlocks['preparation-time']
-                            "
-                            :value="recipe.timerPrep"
-                            :timer="false"
-                            :label="t('cookbook', 'Preparation time')"
-                        />
-                        <RecipeTimer
-                            v-if="
-                                recipe.timerCook &&
-                                visibleInfoBlocks['cooking-time']
-                            "
-                            :value="recipe.timerCook"
-                            :timer="true"
-                            :label="t('cookbook', 'Cooking time')"
-                        />
-                        <RecipeTimer
-                            v-if="
-                                recipe.timerTotal &&
-                                visibleInfoBlocks['total-time']
-                            "
-                            :value="recipe.timerTotal"
-                            :timer="false"
-                            :label="t('cookbook', 'Total time')"
-                        />
+                        <div class="times flex flex-wrap gap-4 mx-0 mt-2">
+                            <RecipeTimer
+                                v-if="
+                                    recipe.timerTotal &&
+                                    visibleInfoBlocks['total-time']
+                                "
+                                :value="recipe.timerTotal"
+                                :timer="false"
+                                :label="
+                                    //TRANSLATORS Short for total time
+                                    t('cookbook', 'Total')
+                                "
+                                class="time"
+                            />
+                            <RecipeTimer
+                                v-if="
+                                    recipe.timerPrep &&
+                                    visibleInfoBlocks['preparation-time']
+                                "
+                                :value="recipe.timerPrep"
+                                :timer="false"
+                                :label="
+                                    //TRANSLATORS Short for preparation time
+                                    t('cookbook', 'Prep')
+                                "
+                                class="time"
+                            />
+                            <RecipeTimer
+                                v-if="
+                                    recipe.timerCook &&
+                                    visibleInfoBlocks['cooking-time']
+                                "
+                                :value="recipe.timerCook"
+                                :timer="true"
+                                :label="
+                                    //TRANSLATORS Short for cooking time
+                                    t('cookbook', 'Cook')
+                                "
+                                class="time"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,18 +148,6 @@
                             class="section-title"
                         >
                             <span>{{ t('cookbook', 'Ingredients') }}</span>
-                            <NcButton
-                                v-if="scaledIngredients.length"
-                                class="copy-ingredients print-hidden"
-                                :type="'tertiary'"
-                                aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
-                                :title="t('cookbook', 'Copy ingredients')"
-                                @click="copyIngredientsToClipboard"
-                            >
-                                <template #icon>
-                                    <ContentCopyIcon :size="20" />
-                                </template>
-                            </NcButton>
                             <div class="inline-flex h-0 align-items-center">
                                 <NcButton
                                     v-if="scaledIngredients.length"
@@ -774,17 +778,24 @@ h2 {
         line-height: 2.8rem;
     }
 }
+
 h3 {
-    font-size: 1.5rem;
-    line-height: 1.8rem;
     margin: 12px 0 0.6em;
+    font-size: 1.5rem;
     font-weight: 200;
+    line-height: 1.8rem;
 
     @media (min-width: 1200px) {
         font-size: 1.4rem;
         font-weight: 250;
         line-height: 1.7rem;
     }
+}
+
+:deep(h4) {
+    padding: 0.5rem 0.5rem 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 200;
 }
 
 .wrapper {
@@ -884,61 +895,18 @@ h3 {
 
     .details {
         .section {
-            margin: 0.75em 0;
             padding: 0;
+            margin: 0.75em 0;
         }
     }
 }
 
 .times {
-    display: flex;
-    margin-top: 10px;
-}
-
-@media (max-width: 991px) {
-    .times {
-        flex-direction: column;
+    .time {
+        max-width: 100%;
+        flex-basis: 0;
+        flex-grow: 1;
     }
-}
-
-@media print {
-    .times {
-        flex-direction: row;
-    }
-}
-
-.times > div {
-    margin: 1rem 0.75rem;
-}
-
-.times .time {
-    position: relative;
-    flex-grow: 1;
-    border: 1px solid var(--color-border-dark);
-    border-radius: 3px;
-    margin: 1rem 2rem;
-    font-size: 1.2rem;
-    text-align: center;
-}
-
-.times .time button {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 36px;
-    height: 36px;
-    transform: translate(-50%, -50%);
-}
-
-.times .time h4 {
-    padding: 0.5rem;
-    border-bottom: 1px solid var(--color-border-dark);
-    background-color: var(--color-background-dark);
-    font-weight: bold;
-}
-
-.times .time p {
-    padding: 0.5rem;
 }
 
 section {
