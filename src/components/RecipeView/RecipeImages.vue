@@ -7,22 +7,40 @@
     >
         <img
             :alt="t('cookbook', 'Recipe image')"
-            :src="image"
-            @click="toggleCollapsed()"
-            class="absolute-md"
+            :src="image[0]"
+            class="inline-img absolute-md"
+            @click="openFullImage()"
         />
+        <NcModal
+            :show.sync="isImageModalVisible"
+            size="large"
+            :name="t('Recipe image', 'cookbook')"
+            :out-transition="true"
+            class="print-hidden"
+            @close="closeImageModal"
+        >
+            <div class="modal__content">
+                <img
+                    class="full-img"
+                    :alt="t('cookbook', 'Recipe image')"
+                    :src="image[0]"
+                />
+            </div>
+        </NcModal>
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
 
-const props = defineProps({
+defineProps({
     /** Main recipe image.
-     * @type {string}
+     * @type {string[]}
      */
     image: {
-        type: String,
-        default: '',
+        type: Array,
+        default: () => [],
     },
     /** If the image should be visible when printed.
      * @type {boolean}
@@ -32,6 +50,15 @@ const props = defineProps({
         default: true,
     },
 });
+
+const isImageModalVisible = ref(false);
+
+function openFullImage() {
+    isImageModalVisible.value = true;
+}
+function closeImageModal() {
+    isImageModalVisible.value = false;
+}
 </script>
 
 <script>
@@ -42,12 +69,13 @@ export default {
 
 <style scoped>
 .image-container {
-    img {
+    img.inline-img {
         width: 100%;
         height: 100%;
         max-width: 100%;
         max-height: 100%;
         display: block;
+        cursor: pointer;
 
         @media (min-width: 767px) {
             position: absolute;
@@ -60,6 +88,16 @@ export default {
 @media print {
     .image-container:not(.printable) {
         display: none !important;
+    }
+}
+
+.modal__content {
+    height: 100%;
+
+    img.full-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 }
 </style>

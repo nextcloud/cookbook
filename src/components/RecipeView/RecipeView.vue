@@ -9,8 +9,15 @@
                 class="header w-full relative position-md-absolute flex d-md-grid flex-col flex-nowrap gap-4 gap-md-8"
                 :class="{ responsive: $store.state.recipe.image }"
             >
-                <div v-if="$store.state.recipe.image" class="image w-full max-w-md-full self-md-stretch relative">
-                    <RecipeImages v-if="$store.state.recipe.image" :image="$store.state.recipe.imageUrl" :is-printed="$store.state.recipe.printImage"/>
+                <div
+                    v-if="$store.state.recipe.image"
+                    class="image w-full max-w-md-full self-md-stretch relative"
+                >
+                    <RecipeImages
+                        v-if="$store.state.recipe.image"
+                        :image="$store.state.recipe.imageUrl"
+                        :is-printed="$store.state.recipe.printImage"
+                    />
                 </div>
 
                 <div class="meta w-full max-w-md-full self-md-start">
