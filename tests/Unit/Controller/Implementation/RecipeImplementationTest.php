@@ -204,7 +204,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->urlGenerator->method('linkToRoute')->with(
 			'cookbook.recipe.image',
 			$this->callback(function ($p) use ($ids) {
-				return isset($p['id']) && isset($p['size']) && false !== array_search($p['id'], $ids);
+				return isset($p['id']) && isset($p['size']) && array_search($p['id'], $ids) !== false;
 			})
 		)->willReturnCallback(function ($name, $p) use ($ret) {
 			// return $ret[$idx[$p['id']]];

@@ -92,7 +92,7 @@ class RecipeImplementation {
 
 		$json = $this->service->getRecipeById($id);
 
-		if (null === $json) {
+		if ($json === null) {
 			return new JSONResponse($id, Http::STATUS_NOT_FOUND);
 		}
 
