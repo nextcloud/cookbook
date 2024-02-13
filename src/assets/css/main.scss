@@ -1,11 +1,94 @@
-.d-flex{
+.absolute {
+	position: absolute;
+}
+
+.position-md-absolute {
+	@media (min-width: 768px) {
+		position: absolute;
+	}
+}
+
+.relative {
+	position: relative;
+}
+
+.position-md-relative {
+	@media (min-width: 768px) {
+		position: relative;
+	}
+}
+
+.d-flex, .flex {
 	display: flex;
+}
+
+.flex-col {
+	flex-direction: column;
 }
 .flex-row {
 	flex-direction: row;
 }
+
+.grid, .d-grid {
+	display:grid;
+}
+
+.d-md-grid {
+	@media (min-width: 768px) {
+		display: grid;
+	}
+}
+
+.flex-md-row{
+	@media (min-width: 768px) {
+		flex-direction: row;
+	}
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.flex-nowrap {
+	flex-wrap: nowrap;
+}
+
+.flex-auto {
+	flex: 1 1 auto;
+}
+
+.flex-md-auto {
+	@media (min-width: 768px) {
+		flex: 1 1 auto;
+	}
+}
+
 .align-items-center{
 	align-items: center;
+}
+
+.align-items-stretch {
+	align-items: stretch;
+}
+
+.self-start {
+	align-self: start;
+}
+
+.self-md-start {
+	@media (min-width: 768px) {
+		align-self: start;
+	}
+}
+
+.self-md-stretch {
+	align-self: stretch;
+}
+
+.self-md-stretch {
+	@media (min-width: 768px) {
+		align-self: stretch;
+	}
 }
 
 .mr-2 {
@@ -15,3 +98,63 @@
 .mr-4 {
 	margin-right: 1rem;
 }
+
+.gap-4 {
+	gap: 1rem;
+}
+
+.gap-md-4 {
+	@media (min-width: 768px) {
+		gap: 1rem;
+	}
+}
+
+.gap-8 {
+	gap: 2rem;
+}
+
+.gap-md-8 {
+	@media (min-width: 768px) {
+		gap: 2rem;
+	}
+}
+
+.w-32
+{
+	width: 8rem;
+}
+.w-md-32
+{
+	@media (min-width: 768px) {
+		width: 8rem;
+	}
+}
+
+.w-64
+{
+	width: 16rem;
+}
+.w-md-64
+{
+	@media (min-width: 768px) {
+		width: 16rem;
+	}
+}
+
+.w-full {
+	width: 100%;
+}
+
+.max-w-full {
+	max-width: 100%;
+}
+
+.max-w-md-full {
+	@media (min-width: 768px) {
+		max-width: 100%;
+	}
+}
+
+
+
+

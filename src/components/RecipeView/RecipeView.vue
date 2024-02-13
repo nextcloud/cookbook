@@ -6,14 +6,14 @@
         <div v-else>
             <div
                 v-if="$store.state.recipe"
-                class="header"
+                class="header w-full relative position-md-absolute flex d-md-grid flex-col flex-nowrap gap-4 gap-md-8"
                 :class="{ responsive: $store.state.recipe.image }"
             >
-                <div v-if="$store.state.recipe.image" class="image">
-                    <RecipeImages />
+                <div v-if="$store.state.recipe.image" class="image w-full max-w-md-full self-md-stretch relative">
+                    <RecipeImages v-if="$store.state.recipe.image" :image="$store.state.recipe.imageUrl" :is-printed="$store.state.recipe.printImage"/>
                 </div>
 
-                <div class="meta">
+                <div class="meta w-full max-w-md-full self-md-start">
                     <h2 class="heading">{{ $store.state.recipe.name }}</h2>
                     <div class="details">
                         <div
@@ -780,12 +780,7 @@ h3 {
 
 @media print {
     .header {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .header > .image {
-        flex: 600px 0 0;
+        width: 100%;
     }
 
     .header > .meta {
@@ -805,13 +800,16 @@ h3 {
     }
 }
 
-@media only screen and (min-width: 1500px) {
-    .header.responsive {
-        display: flex;
+.header {
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 2fr;
+        .image {
+            max-height: initial;
+        }
     }
 
-    .header.responsive > .image {
-        flex: 700px 0 0;
+    .image {
+        max-height: 66.6vh;
     }
 }
 

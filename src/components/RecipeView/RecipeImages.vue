@@ -1,30 +1,37 @@
 <template>
     <div
-        v-if="$store.state.recipe.image"
+        class="image-container"
         :class="{
-            collapsed: collapsed,
-            printable: $store.state.recipe.printImage,
+            printable: isPrinted,
         }"
     >
         <img
             :alt="t('cookbook', 'Recipe image')"
-            :src="$store.state.recipe.imageUrl"
+            :src="image"
             @click="toggleCollapsed()"
+            class="absolute-md"
         />
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
 
-/**
- * @type {import('vue').Ref<boolean>}
- */
-const collapsed = ref(true);
-
-const toggleCollapsed = () => {
-    collapsed.value = !collapsed.value;
-};
+const props = defineProps({
+    /** Main recipe image.
+     * @type {string}
+     */
+    image: {
+        type: String,
+        default: '',
+    },
+    /** If the image should be visible when printed.
+     * @type {boolean}
+     */
+    isPrinted: {
+        type: Boolean,
+        default: true,
+    },
+});
 </script>
 
 <script>
@@ -34,34 +41,24 @@ export default {
 </script>
 
 <style scoped>
-div {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-    text-align: center;
-}
+.image-container {
+    img {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
 
-img {
-    width: 100%;
-    max-width: 950px;
-    background-color: #bebdbd;
-    cursor: pointer;
+        @media (min-width: 767px) {
+            position: absolute;
+        }
+        top: 0;
+        left: 0;
+        object-fit: cover;
+    }
 }
-
-.collapsed {
-    overflow: hidden;
-    height: 40vh;
-}
-
-.collapsed img {
-    display: block;
-    margin: 0 auto;
-    margin-top: 20vh;
-    transform: translateY(-50%);
-}
-
 @media print {
-    div:not(.printable) {
+    .image-container:not(.printable) {
         display: none !important;
     }
 }
