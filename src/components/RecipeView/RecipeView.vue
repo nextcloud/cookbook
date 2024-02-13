@@ -144,6 +144,20 @@
                                     <ContentCopyIcon :size="20" />
                                 </template>
                             </NcButton>
+                            <div class="inline-flex h-0 align-items-center">
+                                <NcButton
+                                    v-if="scaledIngredients.length"
+                                    class="copy-ingredients print-hidden"
+                                    :type="'tertiary'"
+                                    aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
+                                    :title="t('cookbook', 'Copy ingredients')"
+                                    @click="copyIngredientsToClipboard"
+                                >
+                                    <template #icon>
+                                        <ContentCopyIcon :size="20" />
+                                    </template>
+                                </NcButton>
+                            </div>
                         </h3>
                         <ul v-if="scaledIngredients.length">
                             <RecipeIngredient
@@ -763,10 +777,12 @@ h2 {
 h3 {
     font-size: 1.5rem;
     line-height: 1.8rem;
-    margin: 12px 0 20px;
+    margin: 12px 0 0.6em;
+    font-weight: 200;
 
     @media (min-width: 1200px) {
         font-size: 1.4rem;
+        font-weight: 250;
         line-height: 1.7rem;
     }
 }
