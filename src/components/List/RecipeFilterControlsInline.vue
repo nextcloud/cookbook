@@ -26,7 +26,7 @@
         </div>
 
         <div v-if="!hiddenSections['categories']" class="form-group">
-            <div class="d-flex flex-row align-items-center">
+            <div class="flex flex-row align-items-center">
                 <NcSelect
                     v-model="selectedCategories"
                     class="input input--with-operator"
@@ -82,8 +82,8 @@
             </div>
         </div>
 
-        <div class="form-group d-flex flex-row">
-            <div class="d-flex flex-row align-items-center">
+        <div class="form-group flex flex-row">
+            <div class="flex flex-row align-items-center">
                 <NcSelect
                     v-model="selectedKeywords"
                     class="input input--with-operator"
@@ -234,34 +234,6 @@ function submitNameFilter() {
 </script>
 
 <style lang="scss" scoped>
-//@media (min-width: 1200px) {
-
-//}
-
-.d-flex {
-    display: flex;
-}
-
-.flex-row {
-    flex-direction: row;
-}
-
-.justify-end {
-    justify-content: end;
-}
-
-.align-items-center {
-    align-items: center;
-}
-
-.mt-4 {
-    margin-top: 1rem;
-}
-
-.self-end {
-    align-self: end;
-}
-
 @media (min-width: 1200px) {
     .modal__content {
         margin: 50px;

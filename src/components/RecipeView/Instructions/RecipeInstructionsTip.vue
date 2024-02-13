@@ -57,14 +57,6 @@ const normalizedText = computedAsync(
 </script>
 
 <style scoped lang="scss">
-.mr-1 {
-    margin-right: 0.25rem;
-}
-
-.pl-3 {
-    padding-left: 0.75rem;
-}
-
 .instructions-tip {
     position: relative;
     display: flex;

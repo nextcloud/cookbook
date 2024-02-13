@@ -46,7 +46,7 @@
                         </li>
                     </template></NcSelect
                 >
-                <div class="d-flex">
+                <div class="flex">
                     <ToggleIconButton
                         v-model="categoriesOperatorToggleValue"
                         :checked-icon="AndIcon"
@@ -125,7 +125,7 @@
                         </li>
                     </template></NcSelect
                 >
-                <div class="d-flex">
+                <div class="flex">
                     <ToggleIconButton
                         v-model="keywordsOperatorToggleValue"
                         :checked-icon="AndIcon"
@@ -172,7 +172,7 @@
                     >
                 </div>
             </div>
-            <div class="d-flex flex-row justify-end mt-4">
+            <div class="flex flex-row justify-end mt-4">
                 <NcButton type="tertiary" @click="clearFilters">
                     {{
                         // TRANSLATORS Button text for applying recipe-filter values
@@ -261,34 +261,6 @@ function submitFilters() {
 </script>
 
 <style lang="scss" scoped>
-.d-flex {
-    display: flex;
-}
-
-.flex-row {
-    flex-direction: row;
-}
-
-.justify-end {
-    justify-content: end;
-}
-
-.mb-2 {
-    margin-bottom: 0.5rem;
-}
-
-.mr-2 {
-    margin-right: 0.5rem;
-}
-
-.mt-4 {
-    margin-top: 1rem;
-}
-
-.self-end {
-    align-self: end;
-}
-
 .modal__content {
     display: flex;
     flex-direction: column;

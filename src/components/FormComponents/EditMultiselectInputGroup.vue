@@ -217,10 +217,6 @@ export default {
 </script>
 
 <style scoped>
-.ml-2 {
-    margin-left: 0.5rem;
-}
-
 fieldset {
     width: 100%;
     margin-bottom: 1em;
