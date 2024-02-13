@@ -44,7 +44,7 @@ class FixToolsFilter extends AbstractJSONFilter {
 			throw new InvalidRecipeException($this->l->t('Could not parse recipe tools. Expected array or string.'));
 		}
 
-		$tools = array();
+		$tools = [];
 
 		if (!is_array($json[self::TOOLS])) {
 			$t = trim($json[self::TOOLS]);
