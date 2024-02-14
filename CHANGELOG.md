@@ -21,6 +21,8 @@
 ### Maintenance
 - Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
 - Update code styling by @dependabot
+- Update dependency @nextcloud/router by @dependabot
+
 
 ## 0.10.4 - 2023-12-05
 
