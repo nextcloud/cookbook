@@ -1,5 +1,4 @@
 import HowToSupply from 'cookbook/js/Models/schema/HowToSupply';
-import { QuantitativeValue } from 'cookbook/js/Models/schema';
 
 describe('HowToSupply', () => {
 	describe('constructor', () => {

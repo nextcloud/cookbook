@@ -195,12 +195,11 @@ watch(
  * List of strings edited by this `EditInputGroup` that is used in the v-model prop of the text inputs.
  * @type {import('vue').ComputedRef<string[]>}
  */
-const editedStringsModel = computed(() => {
-    const b = props.property
+const editedStringsModel = computed(() =>
+    props.property
         ? buffer.value.map((itm) => itm[props.property])
-        : buffer.value;
-    return b;
-});
+        : buffer.value,
+);
 
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i]);

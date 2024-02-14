@@ -4,9 +4,9 @@ import {
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
-import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToDirection from 'cookbook/js/Models/schema/HowToDirection';
 import HowToTip from 'cookbook/js/Models/schema/HowToTip';
+import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import { asArray, asCleanedArray } from '../../helper';
 
 /**

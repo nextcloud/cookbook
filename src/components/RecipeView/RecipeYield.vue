@@ -21,7 +21,7 @@
             </button>
             <button
                 v-if="yieldBuffer !== originalYield"
-                style=" border: none;background: none"
+                style="border: none; background: none"
                 @click="restoreOriginalRecipeYield"
             >
                 <span class="icon-history" />

@@ -161,6 +161,7 @@ import {
     showSimpleConfirmModal,
 } from 'cookbook/js/modals';
 
+import { Recipe } from 'cookbook/js/Models/schema';
 import EditImageField from './FormComponents/EditImageField.vue';
 import EditInputField from './FormComponents/EditInputField.vue';
 import EditInputGroup from './FormComponents/EditInputGroup.vue';
@@ -171,7 +172,6 @@ import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 
 import { useStore } from '../store';
 import emitter from '../bus';
-import { Recipe } from 'cookbook/js/Models/schema';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
@@ -451,8 +451,6 @@ const save = async () => {
     store.dispatch('setSavingRecipe', { saving: true });
     const request = (() => {
         if (route.name !== 'recipe-clone' && (route.params.id ?? false)) {
-            console.log('Updating recipe');
-            console.log(recipeWithCorrectedYield.value);
             return store.dispatch('updateRecipe', {
                 recipe: recipeWithCorrectedYield.value,
             });
@@ -528,8 +526,6 @@ const initClone = () => {
 };
 
 const setup = async () => {
-    console.log('setup');
-
     fetchCategories();
     fetchKeywords();
     if (route.params.id) {
@@ -565,7 +561,6 @@ const setup = async () => {
             paddedTime: recipe.value.totalTime,
         };
 
-        console.log(recipe.value);
         selectedKeywords.value = recipe.value.keywords;
 
         // fallback if fetching all keywords fails
@@ -611,8 +606,6 @@ const setup = async () => {
 };
 
 const loadRecipeData = async () => {
-    console.log('loadRecipeData');
-
     isLoading.value = true;
     if (!store.state.recipe) {
         // Make the control row show that a recipe is loading
