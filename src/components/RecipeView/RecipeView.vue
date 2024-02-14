@@ -144,13 +144,13 @@
                 <section class="container">
                     <section class="ingredients">
                         <h3
-                            v-if="scaledIngredients.length"
+                            v-if="recipe.ingredients.length"
                             class="section-title"
                         >
                             <span>{{ t('cookbook', 'Ingredients') }}</span>
                             <div class="inline-flex h-0 align-items-center">
                                 <NcButton
-                                    v-if="scaledIngredients.length"
+                                    v-if="recipe.ingredients.length"
                                     class="copy-ingredients print-hidden"
                                     :type="'tertiary'"
                                     aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
@@ -163,27 +163,19 @@
                                 </NcButton>
                             </div>
                         </h3>
-                        <ul v-if="scaledIngredients.length">
-                            <RecipeIngredient
-                                v-for="(ingredient, idx) in scaledIngredients"
-                                :key="'ingr' + idx"
-                                :ingredient="ingredient"
-                                :ingredient-has-correct-syntax="
-                                    ingredientsWithValidSyntax[idx]
-                                "
-                                :recipe-ingredients-have-subgroups="
-                                    recipeIngredientsHaveSubgroups
-                                "
-                                :class="
-                                    ingredientsWithValidSyntax[idx]
-                                        ? ''
-                                        : 'ingredient-highlighted'
-                                "
-                            />
-                        </ul>
+
+                        <RecipeIngredients
+                            ref="recipeIngredients"
+                            :ingredients="recipe.ingredients"
+                            :current-yield="recipeYield"
+                            :original-yield="store.state.recipe.recipeYield"
+                            @syntax-validity-changed="
+                                (valid) => (isIngredientsSyntaxValid = valid)
+                            "
+                        />
 
                         <div
-                            v-if="!ingredientsSyntaxCorrect"
+                            v-if="!isIngredientsSyntaxValid"
                             class="ingredient-parsing-error print-hidden"
                         >
                             <hr />
@@ -369,10 +361,8 @@ import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
-import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import { showError, showSuccess } from '@nextcloud/dialogs';
 import RecipeInstructions from 'cookbook/components/RecipeView/Instructions/RecipeInstructions.vue';
 import { useStore } from '../../store';
 import emitter from '../../bus';
@@ -380,7 +370,7 @@ import { parseDateTime } from '../../composables/dateTimeHandling';
 
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeImages from './RecipeImages.vue';
-import RecipeIngredient from './RecipeIngredient.vue';
+import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeKeyword from '../RecipeKeyword.vue';
 import RecipeNutritionInfoItem from './RecipeNutritionInfoItem.vue';
 import RecipeTimer from './RecipeTimer.vue';
@@ -397,21 +387,23 @@ const log = getCurrentInstance().proxy.$log;
  */
 const isLoading = ref(false);
 /**
- * @type {string}
- */
-const headerPrefix = '## ';
-/**
  * @type {import('vue').Ref<string>}
  */
 const parsedDescription = ref('');
 /**
- * @type {import('vue').Ref<Array.<string>>}
- */
-const parsedIngredients = ref([]);
-/**
  * @type {import('vue').Ref<number>}
  */
 const recipeYield = ref(0);
+/**
+ * Reference to the vue component showing the recipe ingredients.
+ * @type {import('vue').Ref<RecipeIngredients>}
+ */
+const recipeIngredients = ref(null);
+/**
+ * If the syntax of all ingredient items is valid in the sense that the amount can be recalculated with the yield.
+ * @type {import('vue').Ref<boolean>}
+ */
+const isIngredientsSyntaxValid = ref(true);
 
 // ===================
 // Computed properties
@@ -425,6 +417,7 @@ const recipe = computed(() => {
         timerCook: null,
         timerPrep: null,
         timerTotal: null,
+        supply: [],
         tools: [],
         dateCreated: null,
         dateModified: null,
@@ -440,6 +433,10 @@ const recipe = computed(() => {
         tmpRecipe.description = helpers.escapeHTML(
             store.state.recipe.description,
         );
+    }
+
+    if (store.state.recipe.supply) {
+        tmpRecipe.supply = Object.values(store.state.recipe.supply);
     }
 
     if (store.state.recipe.recipeIngredient) {
@@ -524,17 +521,6 @@ const recipe = computed(() => {
     return tmpRecipe;
 });
 
-const recipeIngredientsHaveSubgroups = computed(() => {
-    if (recipe.value.ingredients && recipe.value.ingredients.length > 0) {
-        for (let idx = 0; idx < recipe.value.ingredients.length; ++idx) {
-            if (recipe.value.ingredients[idx].startsWith(headerPrefix)) {
-                return true;
-            }
-        }
-    }
-    return false;
-});
-
 const showCreatedDate = computed(() => recipe.value.dateCreated);
 
 const showModifiedDate = computed(() => {
@@ -558,22 +544,6 @@ const showNutritionData = computed(
         recipe.value.nutrition &&
         recipe.value.nutrition['@type'] === 'NutritionInformation' &&
         !recipe.value.nutrition.isUndefined,
-);
-
-const scaledIngredients = computed(() =>
-    yieldCalculator.recalculateIngredients(
-        parsedIngredients.value,
-        recipeYield.value,
-        store.state.recipe.recipeYield,
-    ),
-);
-
-const ingredientsWithValidSyntax = computed(() =>
-    parsedIngredients.value.map(yieldCalculator.isValidIngredientSyntax),
-);
-
-const ingredientsSyntaxCorrect = computed(() =>
-    ingredientsWithValidSyntax.value.every((x) => x),
 );
 
 // ===================
@@ -640,52 +610,9 @@ const setup = async () => {
     recipeYield.value = store.state.recipe.recipeYield;
 };
 
-function showCopySuccess(item) {
-    showSuccess(t('cookbook', '{item} copied to clipboard', { item }));
+function copyIngredientsToClipboard() {
+    recipeIngredients.value.copyIngredientsToClipboard();
 }
-function showCopyError(item) {
-    showError(t('cookbook', 'Copying {item} to clipboard failed', { item }));
-}
-
-const copyIngredientsToClipboard = () => {
-    const ingredientsToCopy = scaledIngredients.value.join('\n');
-
-    if (navigator.clipboard) {
-        navigator.clipboard
-            .writeText(ingredientsToCopy)
-            .then(() => {
-                log.info('JSON array copied to clipboard');
-                showCopySuccess(t('cookbook', 'Ingredients'));
-            })
-            .catch((err) => {
-                log.error('Failed to copy JSON array: ', err);
-                showCopyError(t('cookbook', 'ingredients'));
-            });
-    } else {
-        // fallback solution
-        const input = document.createElement('textarea');
-        input.style.position = 'absolute';
-        input.style.left = '-1000px';
-        input.style.top = '-1000px';
-        input.value = ingredientsToCopy;
-        document.body.appendChild(input);
-        input.select();
-        try {
-            const successful = document.execCommand('copy');
-            if (successful) {
-                log.info('JSON array copied to clipboard');
-                showCopySuccess(t('cookbook', 'Ingredients'));
-            } else {
-                log.error('Failed to copy JSON array');
-                showCopyError(t('cookbook', 'ingredients'));
-            }
-        } catch (err) {
-            log.error('Failed to copy JSON array: ', err);
-            showCopyError(t('cookbook', 'ingredients'));
-        }
-        document.body.removeChild(input);
-    }
-};
 
 // ===================
 // Watchers
@@ -706,23 +633,6 @@ watch(
                 });
             } else {
                 parsedDescription.value = '';
-            }
-
-            if (r.ingredients) {
-                parsedIngredients.value = r.ingredients.map(() =>
-                    t('cookbook', 'Loading…'),
-                );
-                r.ingredients.forEach((ingredient, idx) => {
-                    normalizeMarkdown(ingredient)
-                        .then((x) => {
-                            parsedIngredients.value.splice(idx, 1, x);
-                        })
-                        .catch((ex) => {
-                            log.error(ex);
-                        });
-                });
-            } else {
-                parsedIngredients.value = [];
             }
         }
     },
@@ -873,10 +783,6 @@ h3 {
 
 .copy-ingredients {
     float: right;
-}
-
-.ingredient-highlighted {
-    font-style: italic;
 }
 
 @media print {
