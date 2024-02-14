@@ -167,6 +167,7 @@
                         <RecipeIngredients
                             ref="recipeIngredients"
                             :ingredients="recipe.ingredients"
+                            :supplies="recipe.supply"
                             :current-yield="recipeYield"
                             :original-yield="store.state.recipe.recipeYield"
                             @syntax-validity-changed="

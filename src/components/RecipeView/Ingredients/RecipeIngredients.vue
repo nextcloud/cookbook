@@ -1,8 +1,14 @@
 <template>
     <ul>
         <RecipeIngredient
+            v-for="(supply, idx) in scaledSupplies"
+            :key="'supply-' + idx"
+            :ingredient="asIngredientString(supply)"
+            :ingredient-has-correct-syntax="true"
+        />
+        <RecipeIngredient
             v-for="(ingredient, idx) in scaledIngredients"
-            :key="'ingr' + idx"
+            :key="'ingredient-' + idx"
             :ingredient="ingredient"
             :ingredient-has-correct-syntax="ingredientsWithValidSyntax[idx]"
             :class="
@@ -20,6 +26,7 @@ import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showError, showSuccess } from '@nextcloud/dialogs';
 import { computedAsync } from '@vueuse/core';
 import { asCleanedArray } from 'cookbook/js/helper';
+import { HowToSupply } from 'cookbook/js/Models/schema';
 
 const log = getCurrentInstance().proxy.$log;
 
@@ -29,6 +36,14 @@ const props = defineProps({
      * @type {string[]}
      */
     ingredients: {
+        type: Array,
+        default: () => [],
+    },
+    /**
+     * List of supply.
+     * @type {HowToSupply[]}
+     */
+    supplies: {
         type: Array,
         default: () => [],
     },
@@ -100,9 +115,90 @@ const scaledIngredients = computed(() =>
     ),
 );
 
+/**
+ * List of supplies with their original amounts with recipe references in name and description replaced with Markdown
+ * links.
+ * @type {Ref<NonNullable<HowToSupply>[] | string[]>}
+ */
+const parsedSupplies = computedAsync(
+    async () => {
+        if (props.supplies) {
+            const normalizedSuppliesPromises = props.supplies.map(
+                async (supply) => {
+                    try {
+                        const copy = JSON.parse(JSON.stringify(supply));
+                        copy.name = await normalizeMarkdown(supply.name);
+                        copy.description = await normalizeMarkdown(
+                            supply.description,
+                        );
+                        return copy;
+                    } catch (ex) {
+                        log.error(ex);
+                    }
+                    return null;
+                },
+            );
+            // return asCleanedArray(normalizedSuppliesPromises);
+
+            const normalizedSupplies = await Promise.all(
+                normalizedSuppliesPromises,
+            );
+            return asCleanedArray(normalizedSupplies);
+        }
+        return [];
+    },
+    props.supplies ? props.supplies.map(() => t('cookbook', 'Loading…')) : [],
+);
+
+/**
+ * List of normalized supplies with updated amounts based on the current recipe yield.
+ * @type {ComputedRef<HowToSupply[]>}
+ */
+const scaledSupplies = computed(() => {
+    const factor = props.currentYield / props.originalYield;
+    return parsedSupplies.value.map((supply) => {
+        // This is still the loading string 'Loading...'
+        if (typeof supply === 'string') {
+            return new HowToSupply(supply);
+        }
+        // No quantity to recalculate
+        if (!supply.requiredQuantity) return supply;
+
+        const copy = JSON.parse(JSON.stringify(supply));
+        copy.requiredQuantity.value *= factor;
+        return copy;
+    });
+});
+
 const ingredientsWithValidSyntax = computed(() =>
     parsedIngredients.value.map(yieldCalculator.isValidIngredientSyntax),
 );
+
+// ===================
+// Methods
+// ===================
+
+/**
+ * The stringified version of the supply to be used as the ingredient.
+ * @param {HowToSupply} supply
+ */
+function asIngredientString(supply) {
+    let str = '';
+    const quantity = supply?.requiredQuantity;
+    if (quantity?.value) {
+        str += `${quantity.value}`;
+        if (quantity.unitText) {
+            str += ` ${quantity.unitText}&nbsp;`;
+        }
+    }
+    if (supply?.name) {
+        str += supply.name;
+        if (supply.description) {
+            str += `, ${supply.description}`;
+        }
+    }
+    return str;
+}
 
 /**
  * Shows success notification when ingredient copying succeeded.

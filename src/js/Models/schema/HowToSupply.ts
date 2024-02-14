@@ -98,7 +98,7 @@ export default class HowToSupply extends BaseSchemaOrgModel {
 		);
 
 		const requiredQuantity = jsonObj.requiredQuantity
-			? QuantitativeValue.fromJSON(jsonObj.requiredQuantity)
+			? QuantitativeValue.fromJSONOrString(jsonObj.requiredQuantity)
 			: undefined;
 
 		return new HowToSupply(
