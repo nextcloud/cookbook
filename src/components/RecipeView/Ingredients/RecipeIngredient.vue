@@ -2,7 +2,6 @@
     <li
         :class="{
             header: isHeader(),
-            unindented: !recipeIngredientsHaveSubgroups,
         }"
         @click="toggleDone"
     >
@@ -26,9 +25,6 @@ const props = defineProps({
         default: '',
     },
     ingredientHasCorrectSyntax: {
-        type: Boolean,
-    },
-    recipeIngredientsHaveSubgroups: {
         type: Boolean,
     },
 });
@@ -73,6 +69,11 @@ export default {
 <style scoped>
 li {
     display: flex;
+
+    /* indent ingredient if it has a .header before and is not a header itself */
+    .header ~ &:not(.header) {
+        margin-left: 0.5em;
+    }
 }
 
 .header {

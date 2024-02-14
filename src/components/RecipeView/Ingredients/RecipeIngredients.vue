@@ -5,7 +5,6 @@
             :key="'ingr' + idx"
             :ingredient="ingredient"
             :ingredient-has-correct-syntax="ingredientsWithValidSyntax[idx]"
-            :recipe-ingredients-have-subgroups="recipeIngredientsHaveSubgroups"
             :class="
                 ingredientsWithValidSyntax[idx] ? '' : 'ingredient-highlighted'
             "
@@ -56,26 +55,9 @@ const emit = defineEmits({
     'syntax-validity-changed': null,
 });
 
-/**
- * Prefix used for ingredient strings to be used as a header for ingredient sections.
- * @type {string}
- */
-const headerPrefix = '## ';
-
 // ===================
 // Computed properties
 // ===================
-
-const recipeIngredientsHaveSubgroups = computed(() => {
-    if (props.ingredients && props.ingredients.length > 0) {
-        for (let idx = 0; idx < props.ingredients.length; ++idx) {
-            if (props.ingredients[idx].startsWith(headerPrefix)) {
-                return true;
-            }
-        }
-    }
-    return false;
-});
 
 /**
  * List of ingredients with their original amounts with recipe references replaced with Markdown links.
