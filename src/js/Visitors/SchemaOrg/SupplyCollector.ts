@@ -11,6 +11,10 @@ import { ISchemaOrgVisitor } from 'cookbook/js/Interfaces/Visitors/ISchemaOrgVis
  * Visitor implementation to collect `HowToSupply` items.
  */
 export default class SupplyCollector implements ISchemaOrgVisitor {
+	/**
+	 * Local list of collected supplies.
+	 * @private
+	 */
 	private supplies: HowToSupply[] = [];
 
 	/**
