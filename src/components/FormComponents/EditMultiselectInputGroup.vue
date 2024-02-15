@@ -55,15 +55,7 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    defineProps,
-    defineEmits,
-    computed,
-    onBeforeMount,
-    set,
-    del,
-} from 'vue';
+import { ref, computed, onBeforeMount, set, del } from 'vue';
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';

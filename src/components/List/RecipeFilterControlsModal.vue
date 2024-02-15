@@ -195,7 +195,6 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';

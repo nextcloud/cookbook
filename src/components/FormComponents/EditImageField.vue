@@ -26,7 +26,6 @@
 
 <script setup>
 import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs';
-import { defineProps } from 'vue';
 
 const emit = defineEmits(['input']);
 defineProps({

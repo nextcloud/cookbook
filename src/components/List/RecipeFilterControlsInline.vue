@@ -156,7 +156,7 @@ import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
 import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
-import { computed, defineEmits, defineProps, ref } from 'vue';
+import { computed, ref } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 import RecipeSortSelect from './RecipeSortSelect.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';

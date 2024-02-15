@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { linkTo } from '@nextcloud/router';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import helper from 'cookbook/js/helper';
