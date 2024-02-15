@@ -6,6 +6,7 @@ import {
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import HowToDirection from 'cookbook/js/Models/schema/HowToDirection';
 import HowToTip from 'cookbook/js/Models/schema/HowToTip';
+import { ISchemaOrgVisitor } from 'cookbook/js/Interfaces/Visitors/ISchemaOrgVisitor';
 import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import { asArray, asCleanedArray } from '../../helper';
 
@@ -43,13 +44,13 @@ export default class HowToStep extends BaseSchemaOrgModel {
 	public position?: number;
 
 	/** The images associated with the step. */
-	public image: string[];
+	public image: string[] = [];
 
 	/** A list of substeps. This may include directions or tips. Required if `text` is not set. */
-	private _itemListElement: (HowToDirection | HowToTip)[];
+	private _itemListElement: (HowToDirection | HowToTip)[] = [];
 
 	/** The thumbnail URLs for the images. */
-	public thumbnailUrl: string[];
+	public thumbnailUrl: string[] = [];
 
 	/** The time required for the step. */
 	public timeRequired?: string;
@@ -80,9 +81,10 @@ export default class HowToStep extends BaseSchemaOrgModel {
 
 		// eslint-disable-next-line no-underscore-dangle
 		this._text = text;
+		// eslint-disable-next-line no-underscore-dangle
+		this._itemListElement = itemListElements;
+
 		if (options) {
-			// eslint-disable-next-line no-underscore-dangle
-			this._itemListElement = itemListElements;
 			this.position = options.position;
 			this.image = asCleanedArray(options.image);
 			this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
@@ -128,6 +130,14 @@ export default class HowToStep extends BaseSchemaOrgModel {
 	}
 
 	/**
+	 * Accepts a visitor and invokes the appropriate visit method based on the type of the element.
+	 * @param {ISchemaOrgVisitor} visitor - The visitor to accept.
+	 */
+	accept(visitor: ISchemaOrgVisitor) {
+		visitor.visitHowToStep(this);
+	}
+
+	/**
 	 * Create a `HowToStep` instance from a JSON string or object.
 	 * @param {string | object} json - The JSON string or object.
 	 * @returns {HowToStep} - The created HowToStep instance.
@@ -144,10 +154,7 @@ export default class HowToStep extends BaseSchemaOrgModel {
 			);
 		}
 
-		const text = mapString(
-			jsonObj.text,
-			"HowToStep 'text'",
-		) as NonNullable<string>;
+		const text = mapString(jsonObj.text, "HowToStep 'text'", true);
 
 		const itemListElements = this.mapDirectionOrTipArray(
 			jsonObj.itemListElement,
@@ -177,7 +184,7 @@ export default class HowToStep extends BaseSchemaOrgModel {
 			true,
 		);
 
-		return new HowToStep(text, itemListElements, {
+		return new HowToStep(text ?? '', itemListElements, {
 			position: position || undefined,
 			image: image || [],
 			thumbnailUrl: thumbnailUrl || [],

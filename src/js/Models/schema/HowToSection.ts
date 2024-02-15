@@ -5,6 +5,7 @@ import {
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import { asCleanedArray } from 'cookbook/js/helper';
+import { ISchemaOrgVisitor } from 'cookbook/js/Interfaces/Visitors/ISchemaOrgVisitor';
 import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToDirection from './HowToDirection';
 import HowToStep from './HowToStep';
@@ -85,6 +86,14 @@ export default class HowToSection extends BaseSchemaOrgModel {
 			this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
 			this.itemListElement = asCleanedArray(options.itemListElement);
 		}
+	}
+
+	/**
+	 * Accepts a visitor and invokes the appropriate visit method based on the type of the element.
+	 * @param {ISchemaOrgVisitor} visitor - The visitor to accept.
+	 */
+	accept(visitor: ISchemaOrgVisitor) {
+		visitor.visitHowToSection(this);
 	}
 
 	/**

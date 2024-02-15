@@ -3,6 +3,7 @@ import {
 	mapString,
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
+import { ISchemaOrgVisitor } from 'cookbook/js/Interfaces/Visitors/ISchemaOrgVisitor';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToSupply from './HowToSupply';
@@ -85,6 +86,14 @@ export default class HowToDirection extends BaseSchemaOrgModel {
 			this.supply = [];
 			this.tool = [];
 		}
+	}
+
+	/**
+	 * Accepts a visitor and invokes the appropriate visit method based on the type of the element.
+	 * @param {ISchemaOrgVisitor} visitor - The visitor to accept.
+	 */
+	accept(visitor: ISchemaOrgVisitor) {
+		visitor.visitHowToDirection(this);
 	}
 
 	/**

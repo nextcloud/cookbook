@@ -4,6 +4,7 @@ import {
 	mapStringOrStringArray,
 } from 'cookbook/js/utils/jsonMapper';
 import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
+import { ISchemaOrgVisitor } from 'cookbook/js/Interfaces/Visitors/ISchemaOrgVisitor';
 import { asCleanedArray } from '../../helper';
 import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 
@@ -64,6 +65,14 @@ export default class HowToTip extends BaseSchemaOrgModel {
 			this.thumbnailUrl = asCleanedArray(options.thumbnailUrl);
 			this.timeRequired = options.timeRequired;
 		}
+	}
+
+	/**
+	 * Accepts a visitor and invokes the appropriate visit method based on the type of the element.
+	 * @param {ISchemaOrgVisitor} visitor - The visitor to accept.
+	 */
+	accept(visitor: ISchemaOrgVisitor) {
+		visitor.visitHowToTip(this);
 	}
 
 	/**
