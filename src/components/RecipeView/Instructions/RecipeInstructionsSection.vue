@@ -4,6 +4,17 @@
             <legend v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
             </legend>
+            <ul
+                v-if="collectedSupplies.length > 0"
+                class="supplies flex flex-row flex-wrap gap-x-2 mb-4 p-2 border-2 rounded"
+            >
+                <RecipeInstructionsIngredient
+                    v-for="(supply, idx) in collectedSupplies"
+                    :key="`${parentId}_section-${section.name}_supply-${idx}`"
+                    :ingredient="supply"
+                    :add-comma-separator="idx < collectedSupplies.length - 1"
+                />
+            </ul>
             <div v-if="section.description" class="mb-4">
                 <VueShowdown
                     :markdown="normalizedDescription"
@@ -34,8 +45,10 @@
 import { computedAsync } from '@vueuse/core';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { getCurrentInstance } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
+import SupplyCollector from 'cookbook/js/Visitors/SchemaOrg/SupplyCollector';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
-import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
+import RecipeInstructionsIngredient from './RecipeInstructionsIngredient.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 
 const log = getCurrentInstance().proxy.$log;
@@ -76,6 +89,18 @@ const normalizedDescription = computedAsync(
     },
     t('cookbook', 'Loading…'),
 );
+
+/** List of all supply items defined in this section's subitems */
+const collectedSupplies = computed(() => {
+    const collector = new SupplyCollector();
+    collector.visitHowToSection(props.section);
+    return collector.getSupplies();
+});
+
+
+// ===================
+// Methods
+// ===================
 
 /**
  * Determines the type of component to render as the child list item.
@@ -119,10 +144,6 @@ function childComponentProps(item, index) {
 </script>
 
 <style scoped lang="scss">
-.mb-4 {
-    margin-bottom: 1rem;
-}
-
 li.instructions-section-root {
     list-style-type: none;
 }
@@ -145,5 +166,9 @@ li.instructions-section-root {
 
 ol {
     list-style-type: none;
+}
+
+.supplies {
+    background-color: var(--color-border);
 }
 </style>

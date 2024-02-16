@@ -1,3 +1,5 @@
+/** position */
+
 .absolute {
 	position: absolute;
 }
@@ -18,9 +20,16 @@
 	}
 }
 
+
+/** display */
+
 .d-flex,
 .flex {
 	display: flex;
+}
+
+.inline-block {
+	display: inline-block;
 }
 
 .inline-flex {
@@ -45,6 +54,9 @@
 		display: grid;
 	}
 }
+
+
+/** flex */
 
 .flex-md-row {
 	@media (min-width: 768px) {
@@ -114,8 +126,15 @@
 	justify-content: end;
 }
 
+
+/** margin */
+
 .mb-2 {
 	margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+	margin-bottom: 1rem;
 }
 
 .ml-2 {
@@ -151,12 +170,30 @@
 	margin-left: 0;
 }
 
+.-ml-1 {
+	margin-left: -0.25rem;
+}
+
+
+/** padding */
+
+.p-2 {
+	padding: 0.5rem;
+}
+
 .pl-3 {
 	padding-left: 0.75rem;
 }
 
 .pt-2 {
 	padding-top: 0.5rem;
+}
+
+
+/** gap */
+
+.gap-2 {
+	gap: 0.5rem;
 }
 
 .gap-4 {
@@ -195,6 +232,10 @@
 	@media (min-width: 1024px) {
 		column-gap: 4rem;
 	}
+}
+
+.gap-x-2 {
+	column-gap: 0.5rem;
 }
 
 /** Height */
@@ -249,4 +290,19 @@
 
 .border-none {
 	border-style: none;
+}
+
+.rounded {
+	border-radius: 0.25rem;
+}
+
+.border-2 {
+	border-width: 2px;
+}
+
+
+/** Cursor */
+
+.hover\:cursor-pointer:hover {
+	cursor: pointer;
 }

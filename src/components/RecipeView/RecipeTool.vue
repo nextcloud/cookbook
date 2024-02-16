@@ -75,10 +75,6 @@ export default {
 </script>
 
 <style scoped>
-.inline-block {
-    display: inline-block;
-}
-
 li.tool {
     margin-left: 1.25em;
 }

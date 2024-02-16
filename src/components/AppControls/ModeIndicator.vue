@@ -2,8 +2,6 @@
     <span class="mode-indicator">{{ title }}</span>
 </template>
 
-<script></script>
-
 <script setup>
 // Props
 defineProps({

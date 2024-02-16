@@ -8,7 +8,7 @@ import JsonMappingException from 'cookbook/js/Exceptions/JsonMappingException';
 import BaseSchemaOrgModel from './BaseSchemaOrgModel';
 import HowToSupply from './HowToSupply';
 import HowToTool from './HowToTool';
-import { asCleanedArray } from '../../helper';
+import { asArray, asCleanedArray } from '../../helper';
 
 /**
  * Interface representing the options for constructing a HowToDirection instance.
@@ -155,14 +155,20 @@ export default class HowToDirection extends BaseSchemaOrgModel {
 		}
 
 		// tool
-		let tool: HowToTool | HowToTool[] = [];
-		if (jsonObj.tool) {
-			if (Array.isArray(jsonObj.tool)) {
-				tool = jsonObj.tool.map((t) => HowToTool.fromJSONOrString(t));
-			} else {
-				tool = HowToTool.fromJSONOrString(jsonObj.tool);
-			}
-		}
+		// Supported values for tools are: string, HowToTool, or an array of those
+		const tool = jsonObj.tool
+			? asArray(jsonObj.tool).map((t) => {
+					try {
+						return HowToTool.fromJSON(t);
+					} catch (ex) {
+						if (typeof t === 'string') {
+							// Did not receive a valid HowToTool, treat as simple string.
+							return new HowToTool(t as string);
+						}
+						throw ex;
+					}
+				})
+			: [];
 
 		return new HowToDirection(text, {
 			position: position || undefined,
