@@ -4,6 +4,13 @@
             <legend v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
             </legend>
+            <ul v-if="collectedTools.length > 0" class="tools mb-4">
+                <RecipeInstructionsTool
+                    v-for="(tool, idx) in collectedTools"
+                    :key="`${parentId}_section-${section.name}_tool-${idx}`"
+                    :tool="tool"
+                />
+            </ul>
             <ul
                 v-if="collectedSupplies.length > 0"
                 class="supplies flex flex-row flex-wrap gap-x-2 mb-4 p-2 border-2 rounded"
@@ -44,12 +51,14 @@
 <script setup>
 import { computedAsync } from '@vueuse/core';
 import normalizeMarkdown from 'cookbook/js/title-rename';
-import { getCurrentInstance } from 'vue';
 import { computed, getCurrentInstance } from 'vue';
 import SupplyCollector from 'cookbook/js/Visitors/SchemaOrg/SupplyCollector';
+import ToolsCollector from 'cookbook/js/Visitors/SchemaOrg/ToolsCollector';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
 import RecipeInstructionsIngredient from './RecipeInstructionsIngredient.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
+import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
+import RecipeInstructionsTool from './RecipeInstructionsTool.vue';
 
 const log = getCurrentInstance().proxy.$log;
 
@@ -97,6 +106,12 @@ const collectedSupplies = computed(() => {
     return collector.getSupplies();
 });
 
+/** List of all tool items defined in this section's subitems */
+const collectedTools = computed(() => {
+    const collector = new ToolsCollector();
+    collector.visitHowToSection(props.section);
+    return collector.getTools();
+});
 
 // ===================
 // Methods

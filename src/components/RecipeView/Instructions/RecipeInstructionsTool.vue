@@ -1,24 +1,26 @@
 <template>
-    <li class="ingredient">
-        <span v-if="ingredient.requiredQuantity"
-            ><RecipeQuantity
-                :quantity="ingredient.requiredQuantity"
-            />&nbsp;</span
+    <li class="tool">
+        <span v-if="tool.requiredQuantity"
+            ><RecipeQuantity :quantity="tool.requiredQuantity" />&nbsp;</span
         ><VueShowdown
             v-if="normalizedName"
             :markdown="normalizedName"
             tag="span"
-            class="markdown-ingredient inline-block"
+            class="markdown-tool inline-block"
         />
-        <NcPopover :focus-trap="false" class="inline-flex align-items-center">
+        <NcPopover
+            v-if="hasDescription"
+            :focus-trap="false"
+            class="popover inline-flex align-items-center ml-1"
+        >
             <template #trigger>
                 <span
                     v-if="hasDescription"
                     class="icon-container inline-flex align-items-center"
                 >
                     <InfoIcon
-                        :size="18"
-                        class="inline-flex align-self-center hover:cursor-pointer"
+                        :size="16"
+                        class="icon inline-flex align-self-center hover:cursor-pointer"
                     />
                 </span>
             </template>
@@ -26,13 +28,18 @@
                 <VueShowdown
                     :markdown="normalizedDescription"
                     tag="span"
-                    class="markdown-ingredient__description inline-block px-3 py-2"
+                    class="markdown-tool__description inline-block px-3 py-2"
                 />
             </template>
         </NcPopover>
-        <span v-if="addCommaSeparator" :class="hasDescription ? '-ml-1' : ''"
-            >,
-        </span>
+
+        <!--        <span v-if="normalizedDescription"-->
+        <!--            >,-->
+        <!--            <VueShowdown-->
+        <!--                :markdown="normalizedDescription"-->
+        <!--                tag="span"-->
+        <!--                class="markdown-tool__description inline-block"-->
+        <!--        /></span>-->
     </li>
 </template>
 
@@ -47,18 +54,10 @@ import NcPopover from '@nextcloud/vue/dist/Components/NcPopover.js';
 const log = getCurrentInstance().proxy.$log;
 
 const props = defineProps({
-    /** @type {HowToSupply|null} */
-    ingredient: {
+    /** @type {HowToTool|null} */
+    tool: {
         type: Object,
         default: () => null,
-    },
-    /**
-     * If a comma and whitespace should be added after the ingredient element.
-     * @type {boolean}
-     */
-    addCommaSeparator: {
-        type: Boolean,
-        default: false,
     },
 });
 
@@ -67,19 +66,17 @@ const props = defineProps({
 // ===================
 
 /**
- * true, if the `HowToSupply` description has a non-null, -empty, or undefined value.
+ * true, if the `HowToTool` description has a non-null, -empty, or undefined value.
  */
 const hasDescription = computed(
-    () =>
-        props.ingredient.description &&
-        props.ingredient.description.trim() !== '',
+    () => props.tool.description && props.tool.description.trim() !== '',
 );
 
 /** Normalized description property with recipe-reference links. */
 const normalizedDescription = computedAsync(
     async () => {
         try {
-            return await normalizeMarkdown(props.ingredient.description);
+            return await normalizeMarkdown(props.tool.description);
         } catch (e) {
             log.warn(
                 `Could not normalize Markdown. Error Message: ${e.message}`,
@@ -94,7 +91,7 @@ const normalizedDescription = computedAsync(
 const normalizedName = computedAsync(
     async () => {
         try {
-            return await normalizeMarkdown(props.ingredient.name);
+            return await normalizeMarkdown(props.tool.name);
         } catch (e) {
             log.warn(
                 `Could not normalize Markdown. Error Message: ${e.message}`,
@@ -108,25 +105,39 @@ const normalizedName = computedAsync(
 
 <script>
 export default {
-    name: 'RecipeIngredient',
+    name: 'RecipeTool',
 };
 </script>
 
 <style scoped>
-li.ingredient {
+li.tool {
     display: inline-flex;
-    align-items: center;
+    padding: 0 0.5em;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--border-radius-pill);
+    margin-right: 0.3em;
+    margin-bottom: 0.3em;
+
+    &:has(.popover) {
+        padding-right: 4px;
+    }
+
     /* prevent text selection - doesn't look good */
     user-select: none; /* Standard */
 }
 
-.markdown-ingredient {
+.markdown-tool {
     &:deep(a) {
         text-decoration: underline;
     }
 }
 
-.markdown-ingredient__description {
+.icon {
+    border-radius: 9999px;
+    background-color: var(--color-border-dark);
+}
+
+.markdown-tool__description {
     font-size: 0.8em;
 }
 </style>
