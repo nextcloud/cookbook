@@ -23,10 +23,12 @@
                     class="step-children"
                 >
                     <component
+                        ref="children"
                         :is="childComponentType(item)"
                         v-for="(item, idx) in step.itemListElement"
                         :key="`${parentId}_step-${item.position ?? ''}-${item['name'] ?? ''}_item-${idx}`"
                         v-bind="childComponentProps(item)"
+                        @update-completed="handleChildCompletedStateUpdate"
                     >
                     </component>
                 </ol>
@@ -67,6 +69,11 @@ const props = defineProps({
  * @type {import('vue').Ref<boolean>}
  */
 const isDone = ref(false);
+
+/**
+ * References of child items.
+ */
+const children = ref(null);
 
 // ===================
 // Computed properties
@@ -120,6 +127,26 @@ function childComponentProps(item) {
         default:
             return '';
     }
+}
+
+/**
+ * Handles update of the complete state in children.
+ */
+function handleChildCompletedStateUpdate() {
+    let allChildrenDone = true;
+    for (const child of children.value) {
+        if (child?.isDone !== undefined) {
+            if (!child.isDone.value && isDone.value) {
+                isDone.value = false;
+                return;
+            }
+            if (!child.isDone) {
+                allChildrenDone = false;
+            }
+        }
+    }
+    // Only mark as done if all children are done
+    isDone.value = allChildrenDone;
 }
 
 // ===================

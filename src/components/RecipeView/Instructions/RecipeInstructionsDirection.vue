@@ -43,6 +43,11 @@ const props = defineProps({
     },
 });
 
+const emit = defineEmits({
+    /** Emitted if the user changed the direction's completed state. */
+    'update-completed': null,
+});
+
 /**
  * If this step has been marked as completed.
  * @type {import('vue').Ref<boolean>}
@@ -73,6 +78,7 @@ function toggleDone(evt) {
     // evt.preventDefault();
     evt.stopPropagation();
     isDone.value = !isDone.value;
+    emit('update-completed', isDone.value);
 }
 
 // ===================
@@ -85,6 +91,12 @@ watch(
         isDone.value = parentIsDone;
     },
 );
+
+// ===================
+// Expose
+// ===================
+
+defineExpose({ isDone });
 </script>
 
 <style scoped lang="scss">
@@ -112,11 +124,6 @@ li.instructions-direction {
         text-align: center;
     }
 
-    /** If there is only a single direction in the list, do not add a sub-item numbering */
-    &:only-child::before {
-        content: none;
-    }
-
     /** Color item number when text element is hovered */
     &:has(.instructions-direction__text:hover)::before {
         border-color: var(--color-primary-element);
@@ -128,6 +135,12 @@ li.instructions-direction {
 
     &.done::before {
         content: '✔';
+    }
+
+    /** If there is only a single direction in the list, do not add a sub-item numbering */
+    &:only-child::before,
+    &.done:only-child::before {
+        content: none;
     }
 }
 
