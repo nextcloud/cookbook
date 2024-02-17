@@ -24,7 +24,7 @@
                     />
                 </span>
             </template>
-            <template>
+            <template #default>
                 <VueShowdown
                     :markdown="normalizedDescription"
                     tag="span"

@@ -20,7 +20,6 @@
 	}
 }
 
-
 /** display */
 
 .d-flex,
@@ -54,7 +53,6 @@
 		display: grid;
 	}
 }
-
 
 /** flex */
 
@@ -126,7 +124,6 @@
 	justify-content: end;
 }
 
-
 /** margin */
 
 .mb-2 {
@@ -178,7 +175,6 @@
 	margin-left: -0.25rem;
 }
 
-
 /** padding */
 
 .p-2 {
@@ -193,15 +189,15 @@
 	padding-top: 0.5rem;
 }
 
-.px-3{
-	padding-left: 0.75rem;
+.px-3 {
 	padding-right: 0.75rem;
+	padding-left: 0.75rem;
 }
 
-.py-2{
-	padding-bottom: 0.5rem;
+.py-2 {
 	padding-top: 0.5rem;
-  }
+	padding-bottom: 0.5rem;
+}
 
 /** gap */
 
@@ -312,7 +308,6 @@
 .border-2 {
 	border-width: 2px;
 }
-
 
 /** Cursor */
 
