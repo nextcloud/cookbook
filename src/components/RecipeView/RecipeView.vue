@@ -207,134 +207,11 @@
                             />
                         </ul>
                     </section>
-
                     <section v-if="showNutritionData" class="nutrition">
                         <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
-                        <ul class="nutrition-items">
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'servingSize' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['servingSize'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Serving Size')"
-                                :data="recipe.nutrition['servingSize']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'calories' in recipe.nutrition &&
-                                    !isNullOrEmpty(recipe.nutrition['calories'])
-                                "
-                                :title="t('cookbook', 'Energy')"
-                                :data="recipe.nutrition['calories']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'sugarContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['sugarContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Sugar')"
-                                :data="recipe.nutrition['sugarContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'carbohydrateContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['carbohydrateContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Carbohydrate')"
-                                :data="recipe.nutrition['carbohydrateContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'cholesterolContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['cholesterolContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Cholesterol')"
-                                :data="recipe.nutrition['cholesterolContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'fiberContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['fiberContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Fiber')"
-                                :data="recipe.nutrition['fiberContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'proteinContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['proteinContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Protein')"
-                                :data="recipe.nutrition['proteinContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'sodiumContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['sodiumContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Sodium')"
-                                :data="recipe.nutrition['sodiumContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'fatContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['fatContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Fat total')"
-                                :data="recipe.nutrition['fatContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'saturatedFatContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['saturatedFatContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Saturated Fat')"
-                                :data="recipe.nutrition['saturatedFatContent']"
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'unsaturatedFatContent' in
-                                        recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition[
-                                            'unsaturatedFatContent'
-                                        ],
-                                    )
-                                "
-                                :title="t('cookbook', 'Unsaturated Fat')"
-                                :data="
-                                    recipe.nutrition['unsaturatedFatContent']
-                                "
-                            />
-                            <recipe-nutrition-info-item
-                                v-if="
-                                    'transFatContent' in recipe.nutrition &&
-                                    !isNullOrEmpty(
-                                        recipe.nutrition['transFatContent'],
-                                    )
-                                "
-                                :title="t('cookbook', 'Trans Fat')"
-                                :data="recipe.nutrition['transFatContent']"
-                            />
-                        </ul>
+                        <RecipeNutritionInformation
+                            :nutrition="recipe.nutrition"
+                        />
                     </section>
 
                     <main v-if="recipe.instructions.length">
@@ -358,22 +235,22 @@ import {
     useRouter,
 } from 'vue-router/composables';
 
+import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import ContentCopyIcon from 'icons/ContentCopy.vue';
 import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
-import ContentCopyIcon from 'icons/ContentCopy.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import RecipeInstructions from 'cookbook/components/RecipeView/Instructions/RecipeInstructions.vue';
-import { useStore } from '../../store';
 import emitter from '../../bus';
+import { useStore } from '../../store';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
+import RecipeInstructions from './Instructions/RecipeInstructions.vue';
 import RecipeKeyword from '../RecipeKeyword.vue';
-import RecipeNutritionInfoItem from './RecipeNutritionInfoItem.vue';
+import RecipeNutritionInformation from './NutritionInformation/RecipeNutritionInformation.vue';
 import RecipeTimer from './RecipeTimer.vue';
 import RecipeTool from './RecipeTool.vue';
 import RecipeYield from './RecipeYield.vue';
@@ -505,19 +382,7 @@ const recipe = computed(() => {
             date != null ? date.format('L, LT').toString() : null;
     }
 
-    if (store.state.recipe.nutrition) {
-        if (store.state.recipe.nutrition instanceof Array) {
-            tmpRecipe.nutrition = {};
-        } else if (
-            store.state.recipe.nutrition['@type'] === 'NutritionInformation'
-        ) {
-            tmpRecipe.nutrition = store.state.recipe.nutrition;
-        } else {
-            tmpRecipe.nutrition = store.state.recipe.nutrition;
-        }
-    } else {
-        tmpRecipe.nutrition = {};
-    }
+    tmpRecipe.nutrition = store.state.recipe.nutrition;
 
     return tmpRecipe;
 });
@@ -539,20 +404,21 @@ const visibleInfoBlocks = computed(
     () => store.state.config?.visibleInfoBlocks ?? {},
 );
 
+/**
+ * If nutrition information should be shown depending on available data and user preferences.
+ * @type {import('vue').ComputedRef<boolean>}
+ */
 const showNutritionData = computed(
     () =>
         visibleInfoBlocks.value['nutrition-information'] &&
         recipe.value.nutrition &&
         recipe.value.nutrition['@type'] === 'NutritionInformation' &&
-        !recipe.value.nutrition.isUndefined,
+        !recipe.value.nutrition.isUndefined(),
 );
 
 // ===================
 // Methods
 // ===================
-const isNullOrEmpty = (str) =>
-    !str || (typeof str === 'string' && str.trim().length === 0);
-
 /**
  * Callback for click on keyword
  */
@@ -884,10 +750,6 @@ aside ul li input[type='checkbox'] {
 
 .markdown-description :deep(a) {
     text-decoration: underline;
-}
-
-.nutrition-items {
-    list-style-type: none;
 }
 
 main {
