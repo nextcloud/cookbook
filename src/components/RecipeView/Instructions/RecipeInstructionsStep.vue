@@ -12,7 +12,6 @@
                         :markdown="normalizedText"
                         class="markdown-instruction"
                     />
-                    <!--                    {{ normalizedText }}-->
                 </div>
                 <!--        TODO Add support for missing properties -->
                 <!--        <div>{{ step.timeRequired }}</div>-->

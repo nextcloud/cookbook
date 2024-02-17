@@ -112,6 +112,11 @@ li.instructions-direction {
         text-align: center;
     }
 
+    /** If there is only a single direction in the list, do not add a sub-item numbering */
+    &:only-child::before {
+        content: none;
+    }
+
     /** Color item number when text element is hovered */
     &:has(.instructions-direction__text:hover)::before {
         border-color: var(--color-primary-element);
@@ -135,15 +140,6 @@ li.instructions-direction {
 .instructions-step__text ~ .step-children {
     .instructions-direction {
         padding-left: calc(36px + 1rem);
-    }
-}
-
-/** For top level directions outside a section, show top-level count */
-ol.instructions > li.instructions-direction {
-    //counter-increment: sectionIndex;
-
-    ::before {
-        //content: counter(sectionIndex);
     }
 }
 </style>
