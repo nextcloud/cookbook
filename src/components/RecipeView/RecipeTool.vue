@@ -75,10 +75,6 @@ export default {
 </script>
 
 <style scoped>
-li.tool {
-    margin-left: 1.25em;
-}
-
 .markdown-tool {
     &:deep(a) {
         text-decoration: underline;

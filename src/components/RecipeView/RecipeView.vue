@@ -199,7 +199,7 @@
                         <h3>
                             {{ t('cookbook', 'Tools') }}
                         </h3>
-                        <ul>
+                        <ul class="pl-2">
                             <RecipeTool
                                 v-for="(tool, idx) in recipe.tools"
                                 :key="'tool' + idx"

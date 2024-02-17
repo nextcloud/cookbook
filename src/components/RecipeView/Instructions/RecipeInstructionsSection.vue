@@ -13,7 +13,7 @@
             </ul>
             <ul
                 v-if="collectedSupplies.length > 0"
-                class="supplies flex flex-row flex-wrap gap-x-2 mb-4 p-2 border-2 rounded"
+                class="supplies flex flex-row flex-wrap gap-x-2 mb-4 px-3 py-2 border-2 rounded"
             >
                 <RecipeInstructionsIngredient
                     v-for="(supply, idx) in collectedSupplies"

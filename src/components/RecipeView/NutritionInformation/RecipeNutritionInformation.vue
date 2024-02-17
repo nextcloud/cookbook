@@ -1,18 +1,24 @@
 <template>
-    <ul class="nutrition-items">
+    <ul class="nutrition-items pl-2">
         <RecipeNutritionInfoItem
             v-if="
                 'servingSize' in nutrition &&
                 !isNullOrEmpty(nutrition['servingSize'])
             "
-            :title="t('cookbook', 'Serving Size')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Serving Size')
+            "
             :data="nutrition['servingSize']"
         />
         <RecipeNutritionInfoItem
             v-if="
                 'calories' in nutrition && !isNullOrEmpty(nutrition['calories'])
             "
-            :title="t('cookbook', 'Energy')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Energy')
+            "
             :data="nutrition['calories']"
         />
         <RecipeNutritionInfoItem
@@ -20,7 +26,10 @@
                 'sugarContent' in nutrition &&
                 !isNullOrEmpty(nutrition['sugarContent'])
             "
-            :title="t('cookbook', 'Sugar')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Sugar')
+            "
             :data="nutrition['sugarContent']"
         />
         <RecipeNutritionInfoItem
@@ -28,7 +37,10 @@
                 'carbohydrateContent' in nutrition &&
                 !isNullOrEmpty(nutrition['carbohydrateContent'])
             "
-            :title="t('cookbook', 'Carbohydrate')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Carbohydrate')
+            "
             :data="nutrition['carbohydrateContent']"
         />
         <RecipeNutritionInfoItem
@@ -36,7 +48,10 @@
                 'cholesterolContent' in nutrition &&
                 !isNullOrEmpty(nutrition['cholesterolContent'])
             "
-            :title="t('cookbook', 'Cholesterol')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Cholesterol')
+            "
             :data="nutrition['cholesterolContent']"
         />
         <RecipeNutritionInfoItem
@@ -44,7 +59,10 @@
                 'fiberContent' in nutrition &&
                 !isNullOrEmpty(nutrition['fiberContent'])
             "
-            :title="t('cookbook', 'Fiber')"
+            :title="
+                // TRANSLATORS Nutrition
+                t('cookbook', 'Fiber')
+            "
             :data="nutrition['fiberContent']"
         />
         <RecipeNutritionInfoItem
@@ -52,7 +70,10 @@
                 'proteinContent' in nutrition &&
                 !isNullOrEmpty(nutrition['proteinContent'])
             "
-            :title="t('cookbook', 'Protein')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Protein')
+            "
             :data="nutrition['proteinContent']"
         />
         <RecipeNutritionInfoItem
@@ -60,7 +81,10 @@
                 'sodiumContent' in nutrition &&
                 !isNullOrEmpty(nutrition['sodiumContent'])
             "
-            :title="t('cookbook', 'Sodium')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Sodium')
+            "
             :data="nutrition['sodiumContent']"
         />
         <RecipeNutritionInfoItem
@@ -68,7 +92,10 @@
                 'fatContent' in nutrition &&
                 !isNullOrEmpty(nutrition['fatContent'])
             "
-            :title="t('cookbook', 'Fat total')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Fat total')
+            "
             :data="nutrition['fatContent']"
         />
         <RecipeNutritionInfoItem
@@ -76,7 +103,10 @@
                 'saturatedFatContent' in nutrition &&
                 !isNullOrEmpty(nutrition['saturatedFatContent'])
             "
-            :title="t('cookbook', 'Saturated Fat')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Saturated Fat')
+            "
             :data="nutrition['saturatedFatContent']"
         />
         <RecipeNutritionInfoItem
@@ -84,7 +114,10 @@
                 'unsaturatedFatContent' in nutrition &&
                 !isNullOrEmpty(nutrition['unsaturatedFatContent'])
             "
-            :title="t('cookbook', 'Unsaturated Fat')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Unsaturated Fat')
+            "
             :data="nutrition['unsaturatedFatContent']"
         />
         <RecipeNutritionInfoItem
@@ -92,7 +125,10 @@
                 'transFatContent' in nutrition &&
                 !isNullOrEmpty(nutrition['transFatContent'])
             "
-            :title="t('cookbook', 'Trans Fat')"
+            :title="
+                // TRANSLATORS Nutrition value
+                t('cookbook', 'Trans Fat')
+            "
             :data="nutrition['transFatContent']"
         />
     </ul>

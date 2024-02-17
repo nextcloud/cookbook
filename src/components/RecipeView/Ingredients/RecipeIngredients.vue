@@ -1,5 +1,5 @@
 <template>
-    <ul>
+    <ul class="pl-2">
         <RecipeIngredient
             v-for="(supply, idx) in scaledSupplies"
             :key="'supply-' + idx"

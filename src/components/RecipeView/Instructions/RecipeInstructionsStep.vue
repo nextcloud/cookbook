@@ -23,9 +23,9 @@
                     class="step-children"
                 >
                     <component
-                        ref="children"
                         :is="childComponentType(item)"
                         v-for="(item, idx) in step.itemListElement"
+                        ref="children"
                         :key="`${parentId}_step-${item.position ?? ''}-${item['name'] ?? ''}_item-${idx}`"
                         v-bind="childComponentProps(item)"
                         @update-completed="handleChildCompletedStateUpdate"
