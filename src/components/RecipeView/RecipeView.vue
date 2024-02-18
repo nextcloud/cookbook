@@ -95,47 +95,20 @@
                                 "
                             />
                         </div>
-                        <div class="times flex flex-wrap gap-4 mx-0 mt-2">
-                            <RecipeTimer
-                                v-if="
-                                    recipe.timerTotal &&
-                                    visibleInfoBlocks['total-time']
-                                "
-                                :value="recipe.timerTotal"
-                                :timer="false"
-                                :label="
-                                    //TRANSLATORS Short for total time
-                                    t('cookbook', 'Total')
-                                "
-                                class="time"
-                            />
-                            <RecipeTimer
-                                v-if="
-                                    recipe.timerPrep &&
-                                    visibleInfoBlocks['preparation-time']
-                                "
-                                :value="recipe.timerPrep"
-                                :timer="false"
-                                :label="
-                                    //TRANSLATORS Short for preparation time
-                                    t('cookbook', 'Prep')
-                                "
-                                class="time"
-                            />
-                            <RecipeTimer
-                                v-if="
-                                    recipe.timerCook &&
-                                    visibleInfoBlocks['cooking-time']
-                                "
-                                :value="recipe.timerCook"
-                                :timer="true"
-                                :label="
-                                    //TRANSLATORS Short for cooking time
-                                    t('cookbook', 'Cook')
-                                "
-                                class="time"
-                            />
-                        </div>
+                        <RecipeTimes
+                            :cook-time-visible="
+                                visibleInfoBlocks['cooking-time']
+                            "
+                            :timer-cook="recipe.timerCook"
+                            :prep-time-visible="
+                                visibleInfoBlocks['preparation-time']
+                            "
+                            :timer-prep="recipe.timerPrep"
+                            :total-time-visible="
+                                visibleInfoBlocks['total-time']
+                            "
+                            :timer-total="recipe.timerTotal"
+                        />
                     </div>
                 </div>
             </div>
@@ -148,7 +121,7 @@
                             class="section-title"
                         >
                             <span>{{ t('cookbook', 'Ingredients') }}</span>
-                            <div class="inline-flex h-0 align-items-center">
+                            <span class="inline-flex h-0 align-items-center">
                                 <NcButton
                                     v-if="recipe.ingredients.length"
                                     class="copy-ingredients print-hidden"
@@ -161,7 +134,7 @@
                                         <ContentCopyIcon :size="20" />
                                     </template>
                                 </NcButton>
-                            </div>
+                            </span>
                         </h3>
 
                         <RecipeIngredients
@@ -251,7 +224,7 @@ import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
 import RecipeKeyword from '../RecipeKeyword.vue';
 import RecipeNutritionInformation from './NutritionInformation/RecipeNutritionInformation.vue';
-import RecipeTimer from './RecipeTimer.vue';
+import RecipeTimes from './Timers/RecipeTimes.vue';
 import RecipeTool from './RecipeTool.vue';
 import RecipeYield from './RecipeYield.vue';
 
@@ -671,14 +644,6 @@ h3 {
             padding: 0;
             margin: 0.75em 0;
         }
-    }
-}
-
-.times {
-    .time {
-        max-width: 100%;
-        flex-basis: 0;
-        flex-grow: 1;
     }
 }
 
