@@ -40,28 +40,11 @@
                                 />
                             </ul>
                         </div>
-
                         <p class="dates section">
-                            <span
-                                v-if="showCreatedDate"
-                                class="date"
-                                :title="t('cookbook', 'Date created')"
-                            >
-                                <span class="icon-calendar-dark date-icon" />
-                                <span class="date-text">{{
-                                    recipe.dateCreated
-                                }}</span>
-                            </span>
-                            <span
-                                v-if="showModifiedDate"
-                                class="date"
-                                :title="t('cookbook', 'Last modified')"
-                            >
-                                <span class="icon-rename date-icon" />
-                                <span class="date-text">{{
-                                    recipe.dateModified
-                                }}</span>
-                            </span>
+                            <RecipeDates
+                                :date-created="recipe.dateCreated"
+                                :date-modified="recipe.dateModified"
+                            />
                         </p>
 
                         <VueShowdown
@@ -219,6 +202,7 @@ import { useStore } from '../../store';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
+import RecipeDates from './RecipeDates.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
@@ -358,19 +342,6 @@ const recipe = computed(() => {
     tmpRecipe.nutrition = store.state.recipe.nutrition;
 
     return tmpRecipe;
-});
-
-const showCreatedDate = computed(() => recipe.value.dateCreated);
-
-const showModifiedDate = computed(() => {
-    if (!recipe.value.dateModified) {
-        return false;
-    }
-    return !(
-        store.state.recipe.dateCreated &&
-        store.state.recipe.dateModified &&
-        store.state.recipe.dateCreated === store.state.recipe.dateModified
-    );
 });
 
 const visibleInfoBlocks = computed(
@@ -597,28 +568,12 @@ h3 {
     }
 }
 
-.heading {
-    margin-top: 12px;
-}
-
 .dates {
     font-size: 0.9em;
 }
 
-.date {
-    margin-right: 1.5em;
-}
-
-.date-icon {
-    display: inline-block;
-    margin-right: 0.2em;
-    margin-bottom: 0.2em;
-    background-size: 1em;
-    vertical-align: middle;
-}
-
-.date-text {
-    vertical-align: middle;
+.heading {
+    margin-top: 12px;
 }
 
 .copy-ingredients {
