@@ -2,8 +2,8 @@
     <li
         v-if="direction"
         class="instructions-direction"
-        :class="{ done: isDone }"
-        @click="toggleDone"
+        :class="{ completed: isCompleted }"
+        @click="toggleCompleted"
     >
         <div style="display: table; min-height: 32px">
             <div style="display: table-cell; vertical-align: middle">
@@ -24,9 +24,10 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, ref, watch } from 'vue';
+import { getCurrentInstance } from 'vue';
 import { computedAsync } from '@vueuse/core';
 import normalizeMarkdown from 'cookbook/js/title-rename';
+import useCompletable from 'cookbook/composables/useCompleteable';
 
 const log = getCurrentInstance().proxy.$log;
 
@@ -36,11 +37,6 @@ const props = defineProps({
         type: Object,
         default: null,
     },
-    /** @type {bool} The parent is marked as completed */
-    parentIsDone: {
-        type: Boolean,
-        default: false,
-    },
 });
 
 const emit = defineEmits({
@@ -48,11 +44,7 @@ const emit = defineEmits({
     'update-completed': null,
 });
 
-/**
- * If this step has been marked as completed.
- * @type {import('vue').Ref<boolean>}
- */
-const isDone = ref(false);
+const { isCompleted, setCompleted, toggleCompleted } = useCompletable(emit);
 
 // ===================
 // Computed properties
@@ -73,30 +65,11 @@ const normalizedText = computedAsync(
     t('cookbook', 'Loading…'),
 );
 
-/** Toggles the completed state on this step. */
-function toggleDone(evt) {
-    // evt.preventDefault();
-    evt.stopPropagation();
-    isDone.value = !isDone.value;
-    emit('update-completed', isDone.value);
-}
-
-// ===================
-// Watchers
-// ===================
-
-watch(
-    () => props.parentIsDone,
-    (parentIsDone) => {
-        isDone.value = parentIsDone;
-    },
-);
-
 // ===================
 // Expose
 // ===================
 
-defineExpose({ isDone });
+defineExpose({ isCompleted, setCompleted });
 </script>
 
 <style scoped lang="scss">
@@ -129,17 +102,17 @@ li.instructions-direction {
         border-color: var(--color-primary-element);
     }
 
-    &.done {
+    &.completed {
         color: var(--color-text-lighter);
     }
 
-    &.done::before {
+    &.completed::before {
         content: '✔';
     }
 
     /** If there is only a single direction in the list, do not add a sub-item numbering */
     &:only-child::before,
-    &.done:only-child::before {
+    &.completed:only-child::before {
         content: none;
     }
 }

@@ -2,8 +2,8 @@
     <li
         v-if="step"
         class="instructions-step"
-        :class="{ done: isDone }"
-        @click="toggleDone"
+        :class="{ completed: isCompleted }"
+        @click="toggleCompleted"
     >
         <div style="display: table; min-height: 32px">
             <div style="display: table-cell; vertical-align: middle">
@@ -38,11 +38,12 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, ref, watch } from 'vue';
+import { getCurrentInstance, ref } from 'vue';
 import { computedAsync } from '@vueuse/core';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import RecipeInstructionsDirection from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsDirection.vue';
 import RecipeInstructionsTip from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTip.vue';
+import useCompletable from 'cookbook/composables/useCompleteable';
 
 const log = getCurrentInstance().proxy.$log;
 
@@ -57,23 +58,19 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    /** @type {bool} The parent is marked as completed */
-    parentIsDone: {
-        type: Boolean,
-        default: false,
-    },
 });
 
-/**
- * If this step has been marked as completed.
- * @type {import('vue').Ref<boolean>}
- */
-const isDone = ref(false);
+const emit = defineEmits(['update-completed']);
 
 /**
  * References of child items.
  */
 const children = ref(null);
+
+const { isCompleted, setCompleted, toggleCompleted } = useCompletable(
+    emit,
+    children,
+);
 
 // ===================
 // Computed properties
@@ -93,11 +90,6 @@ const normalizedText = computedAsync(
     },
     t('cookbook', 'Loading…'),
 );
-
-/** Toggles the completed state on this step. */
-function toggleDone() {
-    isDone.value = !isDone.value;
-}
 
 /**
  * Determines the type of component to render as the child list item.
@@ -121,9 +113,15 @@ function childComponentType(item) {
 function childComponentProps(item) {
     switch (item['@type']) {
         case 'HowToDirection':
-            return { direction: item, parentIsDone: isDone.value };
+            return {
+                direction: item,
+                // parentIsCompleted: isCompleted.value
+            };
         case 'HowToTip':
-            return { tip: item, parentIsDone: isDone.value };
+            return {
+                tip: item,
+                // parentIsCompleted: isCompleted.value
+            };
         default:
             return '';
     }
@@ -133,32 +131,28 @@ function childComponentProps(item) {
  * Handles update of the complete state in children.
  */
 function handleChildCompletedStateUpdate() {
-    let allChildrenDone = true;
+    // return;
+    let allChildrenCompleted = true;
     for (const child of children.value) {
-        if (child?.isDone !== undefined) {
-            if (!child.isDone.value && isDone.value) {
-                isDone.value = false;
+        if (child?.isCompleted !== undefined) {
+            if (!child.isCompleted.value && isCompleted.value) {
+                isCompleted.value = false;
                 return;
             }
-            if (!child.isDone) {
-                allChildrenDone = false;
+            if (!child.isCompleted) {
+                allChildrenCompleted = false;
             }
         }
     }
-    // Only mark as done if all children are done
-    isDone.value = allChildrenDone;
+    // Only mark as completed if all children are completed
+    isCompleted.value = allChildrenCompleted;
 }
 
 // ===================
-// Watchers
+// Expose
 // ===================
 
-watch(
-    () => props.parentIsDone,
-    (parentIsDone) => {
-        isDone.value = parentIsDone;
-    },
-);
+defineExpose({ isCompleted, setCompleted });
 </script>
 
 <style scoped lang="scss">
@@ -199,11 +193,11 @@ li.instructions-step {
         border-color: var(--color-primary-element);
     }
 
-    &.done {
+    &.completed {
         color: var(--color-text-lighter);
     }
 
-    &.done::before {
+    &.completed::before {
         content: '✔';
     }
 
