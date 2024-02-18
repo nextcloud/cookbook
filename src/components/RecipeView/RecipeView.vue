@@ -27,18 +27,7 @@
                             v-if="recipe.keywords && recipe.keywords.length > 0"
                             class="section"
                         >
-                            <ul>
-                                <RecipeKeyword
-                                    v-for="(keyword, idx) in recipe.keywords"
-                                    :key="'keyw' + idx"
-                                    :name="keyword"
-                                    :title="
-                                        // prettier-ignore
-                                        t('cookbook','Search recipes with this keyword')
-                                    "
-                                    @keyword-clicked="keywordClicked(keyword)"
-                                />
-                            </ul>
+                            <RecipeKeywords :keywords="recipe.keywords" />
                         </div>
                         <p class="dates section">
                             <RecipeDates
@@ -185,11 +174,7 @@
 
 <script setup>
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
-import {
-    onBeforeRouteUpdate,
-    useRoute,
-    useRouter,
-} from 'vue-router/composables';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
@@ -206,14 +191,13 @@ import RecipeDates from './RecipeDates.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
-import RecipeKeyword from '../RecipeKeyword.vue';
+import RecipeKeywords from './RecipeKeywords.vue';
 import RecipeNutritionInformation from './NutritionInformation/RecipeNutritionInformation.vue';
 import RecipeTimes from './Timers/RecipeTimes.vue';
 import RecipeTool from './RecipeTool.vue';
 import RecipeYield from './RecipeYield.vue';
 
 const route = useRoute();
-const router = useRouter();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
 
@@ -363,14 +347,6 @@ const showNutritionData = computed(
 // ===================
 // Methods
 // ===================
-/**
- * Callback for click on keyword
- */
-const keywordClicked = (keyword) => {
-    if (keyword) {
-        router.push(`/tags/${keyword}`);
-    }
-};
 
 const setup = async () => {
     isLoading.value = true;
