@@ -1,9 +1,9 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper flex justify-center">
         <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
             <LoadingIndicator :size="40" :delay="800" />
         </div>
-        <div v-else>
+        <div v-else class="wrapper-inner">
             <div
                 v-if="$store.state.recipe"
                 class="header w-full relative position-md-absolute flex d-md-grid flex-col flex-nowrap gap-4 gap-md-8"
@@ -497,6 +497,15 @@ h3 {
 
 .wrapper {
     width: 100%;
+
+    /* Limit max recipe width on very large screens to maintain readability */
+    @media (min-width: 1280px) {
+        padding: calc((100cqw - 1280px) * 0.05) calc((100cqw - 1280px) * 0.1) 0;
+    }
+
+    .wrapper-inner {
+        max-width: 1600px;
+    }
 }
 
 .loading-indicator {
@@ -648,20 +657,6 @@ aside ul li input[type='checkbox'] {
     text-decoration: underline;
 }
 
-main {
-    width: 70%;
-    flex-basis: calc(100% - 22rem);
-    float: left;
-    text-align: justify;
-}
-
-@media screen and (max-width: 1199px) {
-    main {
-        width: 100%;
-        flex-basis: 100%;
-    }
-}
-
 .section-title {
     display: flex;
     align-items: center;
@@ -709,51 +704,50 @@ main {
 .content > .container {
     display: grid;
 
-    grid-template-columns: 1fr 1em 2fr;
     grid-template-rows: 100% 100% 100% 1fr;
+    grid-template-columns: 1fr;
 
     .ingredients {
-        grid-column: 1/2;
         grid-row: 1/2;
     }
 
     .tools {
-        grid-column: 1/2;
         grid-row: 2/3;
     }
 
     .nutrition {
-        grid-column: 1/2;
-        grid-row: 3/4;
+        grid-row: 4/5;
     }
 
     main {
-        grid-column: 3/4;
-        grid-row: 1/5;
+        width: 100%;
+        grid-column: 1/2;
+        grid-row: 3/4;
+        float: left;
+        text-align: justify;
     }
 
-    @media screen and (max-width: 850px), print {
-        grid-template-columns: 1fr;
+    @media screen and (min-width: 851px), print {
+        grid-template-columns: 1fr 1em 2fr;
 
         .ingredients {
-            // grid-column: 1/2;
+            grid-column: 1/2;
             grid-row: 1/2;
         }
 
         .tools {
-            // grid-column: 1/2;
+            grid-column: 1/2;
             grid-row: 2/3;
         }
 
         .nutrition {
-            // grid-column: 1/2;
-            grid-row: 4/5;
+            grid-column: 1/2;
+            grid-row: 3/4;
         }
 
         main {
-            width: 100%;
-            grid-column: 1/2;
-            grid-row: 3/4;
+            grid-column: 3/4;
+            grid-row: 1/5;
         }
     }
 }
