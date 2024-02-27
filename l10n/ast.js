@@ -10,6 +10,7 @@ OC.L10N.register(
     "Category" : "Categoría",
     "Tags" : "Etiquetes",
     "Categories" : "Categories",
+    "Rename" : "Renomar",
     "Add" : "Amestar",
     "Name" : "Nome",
     "Nutrition information" : "Información nutricional",
