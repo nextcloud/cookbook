@@ -1,5 +1,6 @@
 { "translations": {
     "Recipes" : "Recetes",
+    "in %s" : "en «%s»",
     "Cookbook" : "Recetariu",
     "All recipes" : "Toles recetes",
     "Edit" : "Editar",
