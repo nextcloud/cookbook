@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Recetes",
+    "in %s" : "en «%s»",
     "Cookbook" : "Recetariu",
     "All recipes" : "Toles recetes",
     "Edit" : "Editar",
