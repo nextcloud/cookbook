@@ -5,6 +5,7 @@ OC.L10N.register(
     "in %s" : "en «%s»",
     "Cookbook" : "Recetariu",
     "All recipes" : "Toles recetes",
+    "Page not found" : "Nun s'atopó la páxina",
     "Edit" : "Editar",
     "Save" : "Guardar",
     "Search" : "Buscar",
@@ -23,6 +24,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Imaxe",
     "Calories" : "Caloríes",
-    "Loading…" : "Cargando…"
+    "Loading…" : "Cargando…",
+    "Clear" : "Borrar"
 },
 "nplurals=2; plural=(n != 1);");
