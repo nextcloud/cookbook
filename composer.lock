@@ -221,7 +221,7 @@
         },
         {
             "name": "nextcloud/ocp",
-            "version": "v27.1.6",
+            "version": "v27.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
@@ -259,7 +259,7 @@
             "description": "Composer package containing Nextcloud's public API (classes, interfaces)",
             "support": {
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
-                "source": "https://github.com/nextcloud-deps/ocp/tree/v27.1.6"
+                "source": "https://github.com/nextcloud-deps/ocp/tree/v27.1.7"
             },
             "time": "2024-01-03T00:33:16+00:00"
         },
