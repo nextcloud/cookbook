@@ -1,6 +1,6 @@
 {
 	"include": ["src/**/*.ts", "src/**/*.js", "src/**/*.vue"],
-	"exclude": ["node_modules"],
+	"exclude": ["node_modules", "js"],
 	"compilerOptions": {
 		"lib": [
 			"dom",
@@ -8,8 +8,8 @@
 			"es6"
 		],
 		"module": "ES6",
-		"moduleResolution": "node",
 		"target": "ES6",
+		"moduleResolution": "node",
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"strictNullChecks": true,

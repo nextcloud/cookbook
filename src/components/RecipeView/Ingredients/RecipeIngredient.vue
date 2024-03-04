@@ -1,8 +1,9 @@
 <template>
     <li
+        class="ingredient-item"
         :class="{
             header: isHeader(),
-            unindented: !recipeIngredientsHaveSubgroups,
+            completed: isDone,
         }"
         @click="toggleDone"
     >
@@ -26,9 +27,6 @@ const props = defineProps({
         default: '',
     },
     ingredientHasCorrectSyntax: {
-        type: Boolean,
-    },
-    recipeIngredientsHaveSubgroups: {
         type: Boolean,
     },
 });
@@ -60,7 +58,7 @@ const formattedIngredient = computed(() => {
 
     return isDone.value
         ? `~~${displayIngredient.value}~~`
-        : `**${displayIngredient.value}**`;
+        : `${displayIngredient.value}`;
 });
 </script>
 
@@ -71,8 +69,24 @@ export default {
 </script>
 
 <style scoped>
-li {
+li.ingredient-item {
     display: flex;
+
+    /* indent ingredient if it has a .header before and is not a header itself */
+    .header ~ &:not(.header) {
+        margin-left: 0.5em;
+    }
+
+    &.completed:not(.header) {
+        color: var(--color-text-maxcontrast);
+    }
+
+    &:not(.header) {
+        & > .ingredient:hover {
+            color: var(--color-text-maxcontrast);
+            cursor: pointer;
+        }
+    }
 }
 
 .header {
@@ -82,18 +96,18 @@ li {
     list-style-type: none;
 }
 
-li > .ingredient {
+li.ingredient-item > .ingredient {
     display: inline;
     padding-left: 1em;
     text-indent: -1em;
 }
 
-li > span.icon-error {
+li.ingredient-item > span.icon-error {
     margin-left: 0.3em;
 }
 
 @media print {
-    li > span.icon-error {
+    li.ingredient-item > span.icon-error {
         display: none;
     }
 }

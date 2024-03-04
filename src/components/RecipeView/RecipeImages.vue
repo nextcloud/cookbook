@@ -1,30 +1,64 @@
 <template>
     <div
-        v-if="$store.state.recipe.image"
+        class="image-container"
         :class="{
-            collapsed: collapsed,
-            printable: $store.state.recipe.printImage,
+            printable: isPrinted,
         }"
     >
         <img
             :alt="t('cookbook', 'Recipe image')"
-            :src="$store.state.recipe.imageUrl"
-            @click="toggleCollapsed()"
+            :src="image[0]"
+            class="inline-img absolute-md"
+            @click="openFullImage()"
         />
+        <NcModal
+            :show.sync="isImageModalVisible"
+            size="large"
+            :name="t('Recipe image', 'cookbook')"
+            :out-transition="true"
+            class="print-hidden"
+            @close="closeImageModal"
+        >
+            <div class="modal__content">
+                <img
+                    class="full-img"
+                    :alt="t('cookbook', 'Recipe image')"
+                    :src="image[0]"
+                />
+            </div>
+        </NcModal>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
 
-/**
- * @type {import('vue').Ref<boolean>}
- */
-const collapsed = ref(true);
+defineProps({
+    /** Main recipe image.
+     * @type {string[]}
+     */
+    image: {
+        type: Array,
+        default: () => [],
+    },
+    /** If the image should be visible when printed.
+     * @type {boolean}
+     */
+    isPrinted: {
+        type: Boolean,
+        default: true,
+    },
+});
 
-const toggleCollapsed = () => {
-    collapsed.value = !collapsed.value;
-};
+const isImageModalVisible = ref(false);
+
+function openFullImage() {
+    isImageModalVisible.value = true;
+}
+function closeImageModal() {
+    isImageModalVisible.value = false;
+}
 </script>
 
 <script>
@@ -34,35 +68,36 @@ export default {
 </script>
 
 <style scoped>
-div {
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-    text-align: center;
-}
+.image-container {
+    img.inline-img {
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+        cursor: pointer;
+        object-fit: cover;
 
-img {
-    width: 100%;
-    max-width: 950px;
-    background-color: #bebdbd;
-    cursor: pointer;
+        @media (min-width: 767px) {
+            position: absolute;
+        }
+    }
 }
-
-.collapsed {
-    overflow: hidden;
-    height: 40vh;
-}
-
-.collapsed img {
-    display: block;
-    margin: 0 auto;
-    margin-top: 20vh;
-    transform: translateY(-50%);
-}
-
 @media print {
-    div:not(.printable) {
+    .image-container:not(.printable) {
         display: none !important;
+    }
+}
+
+.modal__content {
+    height: 100%;
+
+    img.full-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 }
 </style>

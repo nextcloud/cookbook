@@ -55,15 +55,7 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    defineProps,
-    defineEmits,
-    computed,
-    onBeforeMount,
-    set,
-    del,
-} from 'vue';
+import { ref, computed, onBeforeMount, set, del } from 'vue';
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
@@ -217,10 +209,6 @@ export default {
 </script>
 
 <style scoped>
-.ml-2 {
-    margin-left: 0.5rem;
-}
-
 fieldset {
     width: 100%;
     margin-bottom: 1em;

@@ -15,9 +15,8 @@ extends:
 parser: "vue-eslint-parser"
 
 parserOptions:
-  parser: "@typescript-eslint/parser"
-  project: './tsconfig.json'
-  tsconfigRootDir: './'
+    parser: "@typescript-eslint/parser"
+    project: './tsconfig.json'
 
 plugins:
   - vue
@@ -25,6 +24,7 @@ plugins:
 
 env:
   browser: true
+#  jest: true
 
 globals:
   OC: readonly
@@ -74,9 +74,13 @@ rules:
   # While we are still on Vue2, we need this. Remove once on Vue3
   vue/no-deprecated-v-bind-sync: off
 
+
 overrides:
   - files: [ "src/composables/**/*.js" ]
     rules:
       import/prefer-default-export: off
+  - files: [ "./src/tests/**/*.test.{js,ts}"]
+    env:
+      jest: true
 
 

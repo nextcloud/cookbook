@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
 import RecipeList from './List/RecipeList.vue';

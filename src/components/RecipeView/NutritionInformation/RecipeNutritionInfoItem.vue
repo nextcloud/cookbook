@@ -1,6 +1,6 @@
 <template>
-    <li>
-        <div class="title">
+    <li class="mb-2">
+        <div class="title mb-0">
             {{ title }}
         </div>
         <div class="data">
@@ -29,13 +29,7 @@ export default {
 </script>
 
 <style scoped>
-li {
-    margin-bottom: 0.5em;
-    margin-left: 1.25em;
-}
-
 li .title {
-    margin-bottom: 0;
     color: var(--color-main-text);
     font-weight: bolder;
 }

@@ -26,7 +26,7 @@
             />
             <!-- Recipe view / edit -->
             <LocationIndicator
-                v-else-if="isEdit || isRecipe"
+                v-else-if="!isMobile && (isEdit || isRecipe)"
                 :title="store.state.recipe.name"
             />
             <!-- Is app loading? -->

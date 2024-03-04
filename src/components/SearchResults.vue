@@ -11,7 +11,7 @@
 <script setup>
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
-import api from 'cookbook/js/api-interface';
+import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters';

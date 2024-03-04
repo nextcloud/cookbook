@@ -301,14 +301,6 @@ export default {
 </style>
 
 <style scoped>
-.mr-4 {
-    margin-right: 1rem;
-}
-
-.pt-2 {
-    padding-top: 0.5rem;
-}
-
 .loading-indicator {
     display: flex;
     justify-content: center;

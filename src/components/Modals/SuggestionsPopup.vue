@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 
 const SUGGESTIONS_POPUP_WIDTH = 300;
 
