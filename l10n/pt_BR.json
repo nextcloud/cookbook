@@ -226,11 +226,22 @@
     "_1 category selected_::_{n} categories selected_" : ["{n} categorias selecionadas","{n} categorias selecionadas","{n} categorias selecionadas"],
     "_1 keyword selected_::_{n} keywords selected_" : ["{n} palavras-chave selecionadas","{n} palavras-chave selecionadas","{n} palavras-chave selecionadas"],
     "Recipe filters" : "Filtros de receita",
+    "Matching all selected categories" : "Correspondendo a todas as categorias selecionadas",
+    "Matching any selected category" : "Correspondendo a qualquer categoria selecionada",
+    "Matching all selected keywords" : "Correspondendo todas as palavras-chave selecionadas",
+    "Matching any selected keyword" : "Correspondendo a qualquer palavra-chave selecionada",
     "Apply" : "Aplicar",
+    "Show filters and sorting in recipe lists" : "Mostrar filtros e classificação em listas de receitas",
+    "Preparation time (hours:minutes:seconds)" : "Tempo de preparação (horas:minutos:segundos)",
+    "Cooking time (hours:minutes:seconds)" : "Tempo de cozimento (horas:minutos:segundos)",
+    "Total time (hours:minutes:seconds)" : "Tempo total (horas:minutos:segundos)",
     "_{hours}h_::_{hours}h_" : ["{horas}h","{hours}h","{horas}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutos}m","{minutos}m","{minutos}m"],
     "_{seconds}s_::_{seconds}s_" : ["{segundos}s","{segundos}s","{segundos}s"],
     "Copy ingredients to the clipboard" : "Copie os ingredientes para a área de transferência",
-    "ingredients" : "Ingredientes"
+    "{item} copied to clipboard" : "{item} copiado para a área de transferência",
+    "Copying {item} to clipboard failed" : "Falha ao copiar {item} para a área de transferência",
+    "ingredients" : "Ingredientes",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "O ingrediente não pode ser recalculado devido a sintaxe incorreta. Certifique-se de que a sintaxe segue este formato: quantidade unidade ingrediente e que um número específico de porções esteja definido para que esta função funcione corretamente. Exemplos: 200 g de cenoura ou 1 pitada de sal."
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
