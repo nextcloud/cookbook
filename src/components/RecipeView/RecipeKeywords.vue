@@ -40,5 +40,3 @@ function keywordClicked(keyword) {
     }
 }
 </script>
-
-<style scoped lang="scss"></style>

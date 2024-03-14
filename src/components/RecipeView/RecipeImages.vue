@@ -6,9 +6,10 @@
         }"
     >
         <img
-            :alt="t('cookbook', 'Recipe image')"
+            :alt="t('cookbook', 'Main recipe image')"
             :src="image[0]"
-            class="inline-img absolute-md"
+            class="inline-img"
+            style="object-fit: contain"
             @click="openFullImage()"
         />
         <NcModal
@@ -22,7 +23,7 @@
             <div class="modal__content">
                 <img
                     class="full-img"
-                    :alt="t('cookbook', 'Recipe image')"
+                    :alt="t('cookbook', 'Recipe image {number}', { number: 1 })"
                     :src="image[0]"
                 />
             </div>
@@ -69,20 +70,18 @@ export default {
 
 <style scoped>
 .image-container {
-    img.inline-img {
-        top: 0;
-        left: 0;
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        height: 100%;
-        max-height: 100%;
-        cursor: pointer;
-        object-fit: cover;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 33vh;
+    margin: 0;
 
-        @media (min-width: 767px) {
-            position: absolute;
-        }
+    img.inline-img {
+        position: absolute;
+        top: 50%;
+        max-width: 100%;
+        cursor: pointer;
+        transform: translateY(-50%);
     }
 }
 @media print {

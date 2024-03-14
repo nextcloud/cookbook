@@ -4,11 +4,7 @@
             <LoadingIndicator :size="40" :delay="800" />
         </div>
         <div v-else class="wrapper-inner">
-            <div
-                v-if="$store.state.recipe"
-                class="header w-full relative position-md-absolute flex d-md-grid flex-col flex-nowrap gap-4 gap-md-8"
-                :class="{ responsive: $store.state.recipe.image }"
-            >
+            <div v-if="$store.state.recipe" class="relative w-full">
                 <div
                     v-if="$store.state.recipe.image"
                     class="image w-full max-w-md-full self-md-stretch relative"
@@ -19,9 +15,75 @@
                         :is-printed="$store.state.recipe.printImage"
                     />
                 </div>
+                <div
+                    class="title-container absolute"
+                    style="
+                        bottom: 15px;
+                        left: 0;
+                        /*background: var(--color-main-text);*/
+                        padding: 0.25rem 0.6rem 0.3rem;
+                    "
+                >
+                    <h2 class="heading m-0">{{ $store.state.recipe.name }}</h2>
+                </div>
+            </div>
+
+            <div
+                v-if="$store.state.recipe"
+                class="header w-full relative position-md-absolute flex d-md-grid flex-col flex-nowrap gap-4 gap-md-8"
+            >
+                <div
+                    v-if="recipe.ingredients.length"
+                    class="w-full max-w-md-full self-md-stretch relative"
+                >
+                    <section class="ingredients">
+                        <h3
+                            v-if="recipe.ingredients.length"
+                            class="section-title"
+                        >
+                            <span>{{ t('cookbook', 'Ingredients') }}</span>
+                            <span class="inline-flex h-0 align-items-center">
+                                <NcButton
+                                    v-if="recipe.ingredients.length"
+                                    class="copy-ingredients print-hidden"
+                                    :type="'tertiary'"
+                                    aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
+                                    :title="t('cookbook', 'Copy ingredients')"
+                                    @click="copyIngredientsToClipboard"
+                                >
+                                    <template #icon>
+                                        <ContentCopyIcon :size="20" />
+                                    </template>
+                                </NcButton>
+                            </span>
+                        </h3>
+
+                        <RecipeIngredients
+                            ref="recipeIngredients"
+                            :ingredients="recipe.ingredients"
+                            :supplies="recipe.supply"
+                            :current-yield="recipeYield"
+                            :original-yield="store.state.recipe.recipeYield"
+                            @syntax-validity-changed="
+                                (valid) => (isIngredientsSyntaxValid = valid)
+                            "
+                        />
+
+                        <div
+                            v-if="!isIngredientsSyntaxValid"
+                            class="ingredient-parsing-error print-hidden"
+                        >
+                            <hr />
+                            <span class="icon-error" />
+                            {{
+                                // prettier-ignore
+                                t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt.")
+                            }}
+                        </div>
+                    </section>
+                </div>
 
                 <div class="meta w-full max-w-md-full self-md-start">
-                    <h2 class="heading">{{ $store.state.recipe.name }}</h2>
                     <div class="details">
                         <div
                             v-if="recipe.keywords && recipe.keywords.length > 0"
@@ -87,52 +149,6 @@
 
             <div v-if="$store.state.recipe" class="content">
                 <section class="container">
-                    <section class="ingredients">
-                        <h3
-                            v-if="recipe.ingredients.length"
-                            class="section-title"
-                        >
-                            <span>{{ t('cookbook', 'Ingredients') }}</span>
-                            <span class="inline-flex h-0 align-items-center">
-                                <NcButton
-                                    v-if="recipe.ingredients.length"
-                                    class="copy-ingredients print-hidden"
-                                    :type="'tertiary'"
-                                    aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
-                                    :title="t('cookbook', 'Copy ingredients')"
-                                    @click="copyIngredientsToClipboard"
-                                >
-                                    <template #icon>
-                                        <ContentCopyIcon :size="20" />
-                                    </template>
-                                </NcButton>
-                            </span>
-                        </h3>
-
-                        <RecipeIngredients
-                            ref="recipeIngredients"
-                            :ingredients="recipe.ingredients"
-                            :supplies="recipe.supply"
-                            :current-yield="recipeYield"
-                            :original-yield="store.state.recipe.recipeYield"
-                            @syntax-validity-changed="
-                                (valid) => (isIngredientsSyntaxValid = valid)
-                            "
-                        />
-
-                        <div
-                            v-if="!isIngredientsSyntaxValid"
-                            class="ingredient-parsing-error print-hidden"
-                        >
-                            <hr />
-                            <span class="icon-error" />
-                            {{
-                                // prettier-ignore
-                                t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt.")
-                            }}
-                        </div>
-                    </section>
-
                     <section
                         v-if="
                             visibleInfoBlocks.tools &&
@@ -470,9 +486,9 @@ h2 {
     line-height: 2.3rem;
 
     @media (min-width: 1200px) {
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: 250;
-        line-height: 2.8rem;
+        line-height: 2rem;
     }
 }
 
@@ -518,6 +534,16 @@ h3 {
     display: none;
 }
 
+.title-container {
+    padding: 0.2rem 0.4rem;
+    background: black;
+    filter: var(--background-invert-if-dark);
+    .heading {
+        margin: 0;
+        color: white;
+    }
+}
+
 @media print {
     .header {
         width: 100%;
@@ -541,24 +567,15 @@ h3 {
 }
 
 .header {
+    padding: 1rem;
+
     @media (min-width: 768px) {
         grid-template-columns: 1fr 2fr;
-        .image {
-            max-height: initial;
-        }
-    }
-
-    .image {
-        max-height: 66.6vh;
     }
 }
 
 .dates {
     font-size: 0.9em;
-}
-
-.heading {
-    margin-top: 12px;
 }
 
 .copy-ingredients {
@@ -703,9 +720,8 @@ aside ul li input[type='checkbox'] {
 
 .content > .container {
     display: grid;
-
-    grid-template-rows: 100% 100% 100% 1fr;
     grid-template-columns: 1fr;
+    grid-template-rows: 100% 100% 100% 1fr;
 
     .ingredients {
         grid-row: 1/2;
@@ -721,9 +737,9 @@ aside ul li input[type='checkbox'] {
 
     main {
         width: 100%;
+        float: left;
         grid-column: 1/2;
         grid-row: 3/4;
-        float: left;
         text-align: justify;
     }
 
