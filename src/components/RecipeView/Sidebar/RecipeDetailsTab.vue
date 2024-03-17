@@ -7,13 +7,13 @@
         <section class="organizational">
             <h3 class="mt-0">{{ t('cookbook', 'Organizational') }}</h3>
             <div class="section-content mb-0.5">
-                <span>{{ t('cookbook', 'Category') }}:</span>
-
-                <span
+                <span>{{ t('cookbook', 'Category') }}:</span
+                ><RecipeCategory
                     v-if="recipe?.recipeCategory"
-                    class="category inline-block ml-3"
-                    >{{ recipe.recipeCategory }}</span
-                >
+                    class="inline-block ml-3"
+                    :name="recipe.recipeCategory"
+                    @category-clicked="categoryClicked(recipe.recipeCategory)"
+                />
                 <span v-else class="ml-3">
                     {{ 't("cookbook", "Uncategorized")' }}</span
                 >
@@ -60,10 +60,13 @@ import { computed } from 'vue';
 import NcAppSidebarTab from '@nextcloud/vue/dist/Components/NcAppSidebarTab.js';
 import DetailsIcon from 'icons/InformationOutline.vue';
 import RecipeNutritionInformation from 'cookbook/components/RecipeView/NutritionInformation/RecipeNutritionInformation.vue';
+import { useRouter } from 'vue-router/composables';
 import { useStore } from 'cookbook/store';
+import RecipeCategory from 'cookbook/components/RecipeView/RecipeCategory.vue';
 import RecipeDates from 'cookbook/components/RecipeView/RecipeDates.vue';
 import RecipeKeywords from 'cookbook/components/RecipeView/RecipeKeywords.vue';
 
+const router = useRouter();
 const store = useStore();
 
 // ===================
@@ -91,6 +94,19 @@ const showNutritionData = computed(
         recipe.value.nutrition['@type'] === 'NutritionInformation' &&
         !recipe.value.nutrition.isUndefined(),
 );
+
+// ===================
+// Methods
+// ===================
+/**
+ * Callback for click on a category.
+ * @param category Category that has been clicked.
+ */
+function categoryClicked(category) {
+    if (category) {
+        router.push(`/category/${category}`);
+    }
+}
 </script>
 
 <style lang="scss">
@@ -107,17 +123,6 @@ section {
     .section-content {
         margin-left: 1rem;
     }
-}
-
-.category {
-    padding: 0 0.5em;
-    border: 1px solid var(--color-border-dark);
-    border-radius: var(--border-radius-pill);
-    margin-right: 0.3em;
-    margin-bottom: 0.3em;
-
-    /* prevent text selection - doesn't look good */
-    user-select: none; /* Standard */
 }
 
 .nutrition {
