@@ -91,12 +91,6 @@
                         >
                             <RecipeKeywords :keywords="recipe.keywords" />
                         </div>
-                        <p class="dates section">
-                            <RecipeDates
-                                :date-created="recipe.dateCreated"
-                                :date-modified="recipe.dateModified"
-                            />
-                        </p>
 
                         <VueShowdown
                             :markdown="parsedDescription"
@@ -197,7 +191,6 @@ import { useStore } from '../../store';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
-import RecipeDates from './RecipeDates.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
@@ -553,10 +546,6 @@ h3 {
     @media (min-width: 768px) {
         grid-template-columns: 1fr 2fr;
     }
-}
-
-.dates {
-    font-size: 0.9em;
 }
 
 .copy-ingredients {
