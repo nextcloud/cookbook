@@ -3,19 +3,37 @@
         <template #icon>
             <DetailsIcon :size="20" />
         </template>
+
         <section class="organizational">
             <h3 class="mt-0">{{ t('cookbook', 'Organizational') }}</h3>
-            <div class="section-content mb-4">
-                <span class="mr-1">{{ t('cookbook', 'Category') }}:</span>
+            <div class="section-content mb-0.5">
+                <span>{{ t('cookbook', 'Category') }}:</span>
 
                 <span
                     v-if="recipe?.recipeCategory"
-                    class="inline-block border-1 border-solid rounded-full px-2.5 py-0.5"
+                    class="category inline-block ml-3"
                     >{{ recipe.recipeCategory }}</span
                 >
-                <span v-else> {{ 't("cookbook", "Uncategorized")' }}</span>
+                <span v-else class="ml-3">
+                    {{ 't("cookbook", "Uncategorized")' }}</span
+                >
+            </div>
+            <div
+                v-if="recipe?.keywords"
+                class="section-content mb-0.5 flex flex-wrap"
+            >
+                <span class="mb-1">{{ t('cookbook', 'Keywords') }}:</span>
+                <RecipeKeywords
+                    v-if="recipe.keywords.length > 0"
+                    :keywords="recipe.keywords"
+                    class="inline-block ml-3"
+                />
+                <span v-else>
+                    {{ 't("cookbook", "No keyword assigned")' }}</span
+                >
             </div>
         </section>
+
         <section v-if="isMetadataShown" class="metadata">
             <h3 class="mt-0">{{ t('cookbook', 'Metadata') }}</h3>
             <div class="section-content mb-4">
@@ -25,9 +43,14 @@
                 />
             </div>
         </section>
-        <section v-if="showNutritionData" class="nutrition p-4 rounded">
-            <h3 class="mt-0">{{ t('cookbook', 'Nutrition Information') }}</h3>
-            <RecipeNutritionInformation :nutrition="recipe.nutrition" />
+
+        <section v-if="showNutritionData">
+            <div class="nutrition p-4 rounded">
+                <h3 class="mt-0">
+                    {{ t('cookbook', 'Nutrition Information') }}
+                </h3>
+                <RecipeNutritionInformation :nutrition="recipe.nutrition" />
+            </div>
         </section>
     </NcAppSidebarTab>
 </template>
@@ -39,6 +62,7 @@ import DetailsIcon from 'icons/InformationOutline.vue';
 import RecipeNutritionInformation from 'cookbook/components/RecipeView/NutritionInformation/RecipeNutritionInformation.vue';
 import { useStore } from 'cookbook/store';
 import RecipeDates from 'cookbook/components/RecipeView/RecipeDates.vue';
+import RecipeKeywords from 'cookbook/components/RecipeView/RecipeKeywords.vue';
 
 const store = useStore();
 
@@ -72,6 +96,8 @@ const showNutritionData = computed(
 <style lang="scss">
 section {
     margin-bottom: 1.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
 
     h3 {
         margin-bottom: 6px;
@@ -81,6 +107,17 @@ section {
     .section-content {
         margin-left: 1rem;
     }
+}
+
+.category {
+    padding: 0 0.5em;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--border-radius-pill);
+    margin-right: 0.3em;
+    margin-bottom: 0.3em;
+
+    /* prevent text selection - doesn't look good */
+    user-select: none; /* Standard */
 }
 
 .nutrition {
