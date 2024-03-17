@@ -17,6 +17,9 @@
         </NcAppContent>
         <dialogs-wrapper></dialogs-wrapper>
         <SettingsDialog />
+
+        <!-- Sidebar -->
+        <router-view name="sidebar" />
     </NcContent>
 </template>
 

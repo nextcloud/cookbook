@@ -7,6 +7,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import RecipeViewSidebar from 'cookbook/components/RecipeView/Sidebar/RecipeViewSidebar.vue';
 import Index from '../components/AppIndex.vue';
 import NotFound from '../components/NotFound.vue';
 import RecipeView from '../components/RecipeView/RecipeView.vue';
@@ -62,7 +63,12 @@ const routes = [
 	{ path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
 	{ path: '/recipe/:id/clone', name: 'recipe-clone', component: RecipeEdit },
 	{ path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
-	{ path: '/recipe/:id', name: 'recipe-view', component: RecipeView },
+	{
+		path: '/recipe/:id',
+		name: 'recipe-view',
+		// Vue Named Views
+		components: { default: RecipeView, sidebar: RecipeViewSidebar },
+	},
 
 	// Index is the last defined route
 	{ path: '/', name: 'index', component: Index },

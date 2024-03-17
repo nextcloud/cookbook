@@ -192,6 +192,33 @@
                 {{ t('cookbook', 'Delete recipe') }}
             </NcActionButton>
         </NcActions>
+        <NcButton
+            v-if="isRecipe"
+            type="tertiary"
+            :aria-label="t('cookbook', 'More info')"
+            @click="showRecipeViewSidebar"
+        >
+            <template #icon>
+                <OpenSidebarIcon :size="20" />
+            </template>
+        </NcButton>
+        <!--        <router-link-->
+        <!--            class="app-name&#45;&#45;link"-->
+        <!--            :to="{-->
+        <!--                name: 'apps-details',-->
+        <!--                params: {-->
+        <!--                    category: category,-->
+        <!--                    id: app.id,-->
+        <!--                },-->
+        <!--            }"-->
+        <!--            :aria-label="-->
+        <!--                t('settings', 'Show details for {appName} app', {-->
+        <!--                    appName: app.name,-->
+        <!--                })-->
+        <!--            "-->
+        <!--        >-->
+        <!--            {{ app.name }}-->
+        <!--        </router-link>-->
     </div>
 </template>
 
@@ -205,13 +232,14 @@ import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
 import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput.js';
 import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
 
-import PencilIcon from 'icons/Pencil.vue';
-import LoadingIcon from 'icons/Loading.vue';
-import CheckmarkIcon from 'icons/Check.vue';
-import FilterIcon from 'icons/FilterOutline.vue';
-import PrinterIcon from 'icons/Printer.vue';
 import AbortIcon from 'icons/Close.vue';
+import CheckmarkIcon from 'icons/Check.vue';
 import ContentDuplicateIcon from 'icons/ContentDuplicate.vue';
+import FilterIcon from 'icons/FilterOutline.vue';
+import LoadingIcon from 'icons/Loading.vue';
+import OpenSidebarIcon from 'icons/Menu.vue';
+import PencilIcon from 'icons/Pencil.vue';
+import PrinterIcon from 'icons/Printer.vue';
 import SearchIcon from 'icons/Magnify.vue';
 
 import helpers from 'cookbook/js/helper';
@@ -351,6 +379,10 @@ const goToRecipeClone = (id) => {
 const goToRecipeEdit = (id) => {
     helpers.goTo(`/recipe/${id}/edit`);
 };
+
+function showRecipeViewSidebar() {
+    store.dispatch('setRecipeSidebarVisible', true);
+}
 </script>
 
 <script>
