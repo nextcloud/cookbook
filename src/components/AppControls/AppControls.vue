@@ -193,7 +193,7 @@
             </NcActionButton>
         </NcActions>
         <NcButton
-            v-if="isRecipe"
+            v-if="isRecipe && !store.state.isRecipeSidebarVisible"
             type="tertiary"
             :aria-label="t('cookbook', 'More info')"
             @click="showRecipeViewSidebar"
@@ -202,23 +202,6 @@
                 <OpenSidebarIcon :size="20" />
             </template>
         </NcButton>
-        <!--        <router-link-->
-        <!--            class="app-name&#45;&#45;link"-->
-        <!--            :to="{-->
-        <!--                name: 'apps-details',-->
-        <!--                params: {-->
-        <!--                    category: category,-->
-        <!--                    id: app.id,-->
-        <!--                },-->
-        <!--            }"-->
-        <!--            :aria-label="-->
-        <!--                t('settings', 'Show details for {appName} app', {-->
-        <!--                    appName: app.name,-->
-        <!--                })-->
-        <!--            "-->
-        <!--        >-->
-        <!--            {{ app.name }}-->
-        <!--        </router-link>-->
     </div>
 </template>
 
