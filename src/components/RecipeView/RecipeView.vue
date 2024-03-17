@@ -168,12 +168,6 @@
                             />
                         </ul>
                     </section>
-                    <section v-if="showNutritionData" class="nutrition">
-                        <h3>{{ t('cookbook', 'Nutrition Information') }}</h3>
-                        <RecipeNutritionInformation
-                            :nutrition="recipe.nutrition"
-                        />
-                    </section>
 
                     <main v-if="recipe.instructions.length">
                         <h3>{{ t('cookbook', 'Instructions') }}</h3>
@@ -208,7 +202,6 @@ import RecipeImages from './RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
 import RecipeKeywords from './RecipeKeywords.vue';
-import RecipeNutritionInformation from './NutritionInformation/RecipeNutritionInformation.vue';
 import RecipeTimes from './Timers/RecipeTimes.vue';
 import RecipeTool from './RecipeTool.vue';
 import RecipeYield from './RecipeYield.vue';
@@ -346,18 +339,6 @@ const recipe = computed(() => {
 
 const visibleInfoBlocks = computed(
     () => store.state.config?.visibleInfoBlocks ?? {},
-);
-
-/**
- * If nutrition information should be shown depending on available data and user preferences.
- * @type {import('vue').ComputedRef<boolean>}
- */
-const showNutritionData = computed(
-    () =>
-        visibleInfoBlocks.value['nutrition-information'] &&
-        recipe.value.nutrition &&
-        recipe.value.nutrition['@type'] === 'NutritionInformation' &&
-        !recipe.value.nutrition.isUndefined(),
 );
 
 // ===================
@@ -731,10 +712,6 @@ aside ul li input[type='checkbox'] {
         grid-row: 2/3;
     }
 
-    .nutrition {
-        grid-row: 4/5;
-    }
-
     main {
         width: 100%;
         float: left;
@@ -754,11 +731,6 @@ aside ul li input[type='checkbox'] {
         .tools {
             grid-column: 1/2;
             grid-row: 2/3;
-        }
-
-        .nutrition {
-            grid-column: 1/2;
-            grid-row: 3/4;
         }
 
         main {

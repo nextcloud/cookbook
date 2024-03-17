@@ -6,7 +6,7 @@
         "
         @close="hideSidebar"
     >
-        <RecipeDetailsTab :recipe="recipe" />
+        <RecipeDetailsTab />
     </NcAppSidebar>
 </template>
 

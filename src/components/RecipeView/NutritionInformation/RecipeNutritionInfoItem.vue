@@ -1,11 +1,9 @@
 <template>
-    <li class="mb-2">
-        <div class="title mb-0">
-            {{ title }}
-        </div>
-        <div class="data">
+    <li>
+        <span class="title"> {{ title }} </span>
+        <span class="data">
             {{ data }}
-        </div>
+        </span>
     </li>
 </template>
 
@@ -29,8 +27,28 @@ export default {
 </script>
 
 <style scoped>
+li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 6px 0;
+    span {
+        width: 50%;
+    }
+
+    & + li {
+        border-top: 1px solid var(--color-border-dark);
+    }
+}
+
 li .title {
+    margin-bottom: 0;
     color: var(--color-main-text);
-    font-weight: bolder;
+    font-weight: 250;
+}
+
+li .data {
+    font-weight: 400;
+    text-align: right;
 }
 </style>

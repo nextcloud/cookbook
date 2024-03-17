@@ -1,5 +1,5 @@
 <template>
-    <ul class="nutrition-items pl-2">
+    <ul class="nutrition-items">
         <RecipeNutritionInfoItem
             v-if="
                 'servingSize' in nutrition &&
@@ -150,6 +150,7 @@ const isNullOrEmpty = (str) =>
 
 <style scoped lang="scss">
 .nutrition-items {
+    padding-top: 5px;
     list-style-type: none;
 }
 </style>
