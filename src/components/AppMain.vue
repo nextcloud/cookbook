@@ -3,7 +3,10 @@
         <AppNavi class="app-navigation" />
         <NcAppContent>
             <div>
-                <AppControls />
+                <AppControls
+                    :is-sidebar-open="isSidebarOpen"
+                    @toggle-sidebar="toggleSidebarVisibility"
+                />
                 <div class="cookbook-app-content">
                     <router-view></router-view>
                 </div>
@@ -19,7 +22,11 @@
         <SettingsDialog />
 
         <!-- Sidebar -->
-        <router-view name="sidebar" />
+        <router-view
+            name="sidebar"
+            :is-open="isSidebarOpen"
+            @close="hideSidebar"
+        />
     </NcContent>
 </template>
 
@@ -40,6 +47,11 @@ const isMobile = useIsMobile();
  * @type {import('vue').Ref<boolean>}
  */
 const isNavigationOpen = ref(false);
+
+/**
+ * @type {import('vue').Ref<boolean>}
+ */
+const isSidebarOpen = ref(false);
 
 // previously there was this commented section in this component. I leave it here for reference:
 // watch: {
@@ -62,6 +74,20 @@ const updateAppNavigationOpen = ({ open }) => {
 const closeNavigation = () => {
     emit('toggle-navigation', { open: false });
 };
+
+/**
+ * Hide the sidebar.
+ */
+function hideSidebar() {
+    isSidebarOpen.value = false;
+}
+
+/**
+ * Toggle the visibility of the sidebar between visible and hidden.
+ */
+function toggleSidebarVisibility() {
+    isSidebarOpen.value = !isSidebarOpen.value;
+}
 
 // Vue lifecycle
 onMounted(() => {

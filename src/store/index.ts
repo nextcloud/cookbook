@@ -62,9 +62,6 @@ const store = new Vuex.Store({
 			showFiltersInRecipeList: true,
 		},
 		config: null,
-
-		// RecipeView
-		isRecipeSidebarVisible: false,
 	},
 
 	mutations: {
@@ -129,11 +126,6 @@ const store = new Vuex.Store({
 		},
 		setUpdatingRecipeDirectory(state, { b }) {
 			state.updatingRecipeDirectory = b;
-		},
-
-		// RecipeView
-		setRecipeSidebarVisible(state, { b }) {
-			state.isRecipeSidebarVisible = b;
 		},
 	},
 
@@ -265,14 +257,6 @@ const store = new Vuex.Store({
 				});
 			});
 			return request;
-		},
-
-		// RecipeView
-		/**
-		 * Update visibility of the recipe-view sidebar.
-		 */
-		setRecipeSidebarVisible(c, b) {
-			c.commit('setRecipeSidebarVisible', { b });
 		},
 	},
 });

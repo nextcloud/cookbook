@@ -1,10 +1,10 @@
 <template>
     <NcAppSidebar
-        v-if="showSidebar"
+        v-if="isOpen"
         :name="
             recipe !== null ? recipe.name : t('cookbook', 'No recipe selected')
         "
-        @close="hideSidebar"
+        @close="emit('close')"
     >
         <RecipeDetailsTab />
     </NcAppSidebar>
@@ -18,22 +18,18 @@ import { useStore } from 'cookbook/store';
 
 const store = useStore();
 
+const emit = defineEmits(['close']);
+
+defineProps({
+    isOpen: {
+        type: Boolean,
+        default: false,
+    },
+});
+
 /**
  * The recipe data
  * @type {import('vue').ComputedRef<import('cookbook/js/Models/schema/Recipe').Recipe>}
  */
 const recipe = computed(() => store.state.recipe);
-
-/**
- * If the recipe-details sidebar should be displayed.
- * @type {import('vue').ComputedRef<boolean>}
- */
-const showSidebar = computed(() => store.state.isRecipeSidebarVisible);
-
-/**
- * Hide the recipe-details sidebar.
- */
-function hideSidebar() {
-    store.dispatch('setRecipeSidebarVisible', false);
-}
 </script>

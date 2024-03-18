@@ -193,10 +193,10 @@
             </NcActionButton>
         </NcActions>
         <NcButton
-            v-if="isRecipe && !store.state.isRecipeSidebarVisible"
+            v-if="isRecipe && !isSidebarOpen"
             type="tertiary"
             :aria-label="t('cookbook', 'More info')"
-            @click="showRecipeViewSidebar"
+            @click="toggleRecipeViewSidebar"
         >
             <template #icon>
                 <OpenSidebarIcon :size="20" />
@@ -236,6 +236,19 @@ import ModeIndicator from './ModeIndicator.vue';
 import { useIsMobile } from '../../composables/useIsMobile';
 import { useStore } from '../../store';
 import emitter from '../../bus';
+
+const emit = defineEmits(['toggle-sidebar']);
+
+defineProps({
+    /**
+     * If the sidebar is currently shown.
+     * @type {boolean}
+     */
+    isSidebarOpen: {
+        type: Boolean,
+        default: false,
+    },
+});
 
 const isMobile = useIsMobile();
 const route = useRoute();
@@ -363,8 +376,11 @@ const goToRecipeEdit = (id) => {
     helpers.goTo(`/recipe/${id}/edit`);
 };
 
-function showRecipeViewSidebar() {
-    store.dispatch('setRecipeSidebarVisible', true);
+/**
+ * Emit event that the visibility of the sidebar should be updated.
+ */
+function toggleRecipeViewSidebar() {
+    emit('toggle-sidebar');
 }
 </script>
 
