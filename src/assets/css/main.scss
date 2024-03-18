@@ -4,17 +4,17 @@
 	position: absolute;
 }
 
-.position-md-absolute {
+.relative {
+	position: relative;
+}
+
+.md\:position-absolute {
 	@media (min-width: 768px) {
 		position: absolute;
 	}
 }
 
-.relative {
-	position: relative;
-}
-
-.position-md-relative {
+.md\:position-relative {
 	@media (min-width: 768px) {
 		position: relative;
 	}
@@ -41,6 +41,18 @@
 
 .flex-row {
 	flex-direction: row;
+}
+
+.md\:flex-row {
+	@media (min-width: 768px) {
+		flex-direction: row;
+	}
+}
+
+.md\:flex-row-reverse {
+	@media (min-width: 768px) {
+		flex-direction: row-reverse;
+	}
 }
 
 .grid,

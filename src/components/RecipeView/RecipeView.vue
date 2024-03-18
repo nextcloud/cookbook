@@ -28,47 +28,8 @@
                 </div>
             </div>
 
-            <div
-                v-if="$store.state.recipe"
-                class="header w-full relative position-md-absolute flex d-md-grid flex-col flex-nowrap gap-4 gap-md-8"
-            >
-                <div
-                    v-if="recipe.ingredients.length"
-                    class="w-full md:max-w-full self-md-stretch relative"
-                >
-                    <section class="ingredients">
-                        <h3
-                            v-if="recipe.ingredients.length"
-                            class="section-title"
-                        >
-                            <span>{{ t('cookbook', 'Ingredients') }}</span>
-                            <span class="inline-flex h-0 align-items-center">
-                                <NcButton
-                                    v-if="recipe.ingredients.length"
-                                    class="copy-ingredients print-hidden"
-                                    :type="'tertiary'"
-                                    aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
-                                    :title="t('cookbook', 'Copy ingredients')"
-                                    @click="copyIngredientsToClipboard"
-                                >
-                                    <template #icon>
-                                        <ContentCopyIcon :size="20" />
-                                    </template>
-                                </NcButton>
-                            </span>
-                        </h3>
-
-                        <RecipeIngredients
-                            ref="recipeIngredients"
-                            :ingredients="recipe.ingredients"
-                            :supplies="recipe.supply"
-                            :current-yield="recipeYield"
-                            :original-yield="store.state.recipe.recipeYield"
-                        />
-                    </section>
-                </div>
-
-                <div class="meta w-full md:max-w-full self-md-start">
+            <div v-if="$store.state.recipe" class="header w-full relative">
+                <div class="meta w-full md:max-w-full">
                     <div class="details">
                         <div
                             v-if="recipe.keywords && recipe.keywords.length > 0"
@@ -124,14 +85,45 @@
                         />
                     </div>
                 </div>
-            </div>
 
-            <div v-if="$store.state.recipe" class="content">
-                <section class="container">
+                <div
+                    v-if="recipe.ingredients.length"
+                    class="supplies w-full md:max-w-full"
+                >
+                    <section class="ingredients">
+                        <h3
+                            v-if="recipe.ingredients.length"
+                            class="section-title"
+                        >
+                            <span>{{ t('cookbook', 'Ingredients') }}</span>
+                            <span class="inline-flex h-0 align-items-center">
+                                <NcButton
+                                    v-if="recipe.ingredients.length"
+                                    class="copy-ingredients print-hidden"
+                                    :type="'tertiary'"
+                                    aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
+                                    :title="t('cookbook', 'Copy ingredients')"
+                                    @click="copyIngredientsToClipboard"
+                                >
+                                    <template #icon>
+                                        <ContentCopyIcon :size="20" />
+                                    </template>
+                                </NcButton>
+                            </span>
+                        </h3>
+
+                        <RecipeIngredients
+                            ref="recipeIngredients"
+                            :ingredients="recipe.ingredients"
+                            :supplies="recipe.supply"
+                            :current-yield="recipeYield"
+                            :original-yield="store.state.recipe.recipeYield"
+                        />
+                    </section>
                     <section
                         v-if="
                             visibleInfoBlocks.tools &&
-                            recipe.tools &&
+                            recipe?.tools &&
                             recipe.tools.length > 0
                         "
                         class="tools"
@@ -139,22 +131,36 @@
                         <h3>
                             {{ t('cookbook', 'Tools') }}
                         </h3>
-                        <ul class="pl-2">
-                            <RecipeTool
+
+                        <ul
+                            v-if="recipe.tools.length > 0"
+                            class="tools mb-4 pl-2"
+                        >
+                            <RecipeInstructionsTool
                                 v-for="(tool, idx) in recipe.tools"
-                                :key="'tool' + idx"
+                                :key="`tool-${idx}`"
                                 :tool="tool"
                             />
                         </ul>
-                    </section>
 
-                    <main v-if="recipe.instructions.length">
-                        <h3>{{ t('cookbook', 'Instructions') }}</h3>
-                        <RecipeInstructions
-                            :instructions="recipe.instructions"
-                        />
-                    </main>
-                </section>
+                        <!--                        <ul class="pl-2">-->
+                        <!--                            <RecipeTool-->
+                        <!--                                v-for="(tool, idx) in recipe.tools"-->
+                        <!--                                :key="'tool' + idx"-->
+                        <!--                                :tool="tool"-->
+                        <!--                            />-->
+                        <!--                        </ul>-->
+                    </section>
+                </div>
+            </div>
+
+            <div v-if="$store.state.recipe" class="content">
+                <!--                <section class="container">-->
+                <main v-if="recipe.instructions.length">
+                    <h3>{{ t('cookbook', 'Instructions') }}</h3>
+                    <RecipeInstructions :instructions="recipe.instructions" />
+                </main>
+                <!--                </section>-->
             </div>
         </div>
         <!-- RecipeView container -->
@@ -183,6 +189,7 @@ import RecipeKeywords from './RecipeKeywords.vue';
 import RecipeTimes from './Timers/RecipeTimes.vue';
 import RecipeTool from './RecipeTool.vue';
 import RecipeYield from './RecipeYield.vue';
+import RecipeInstructionsTool from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTool.vue';
 
 const route = useRoute();
 const store = useStore();
@@ -475,6 +482,9 @@ h3 {
 
     .wrapper-inner {
         max-width: 1600px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -521,10 +531,20 @@ h3 {
 }
 
 .header {
+    display: grid;
+
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    gap: 0.75rem;
+    grid-template-areas:
+        'meta'
+        'supplies';
+
     padding: 1rem;
 
     @media (min-width: 768px) {
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
+        grid-template-areas: 'supplies meta';
     }
 }
 
@@ -546,12 +566,18 @@ h3 {
 .meta {
     padding: 0 1em;
 
+    grid-area: meta;
+
     .details {
         .section {
             padding: 0;
             margin: 0.75em 0;
         }
     }
+}
+
+.supplies {
+    grid-area: supplies;
 }
 
 section {
@@ -629,88 +655,9 @@ aside ul li input[type='checkbox'] {
     align-items: center;
 }
 
-.instructions {
-    padding: 0;
-    margin-top: 2rem;
-    counter-reset: instruction-counter;
-    list-style: none;
-}
-
-.instructions .instruction {
-    margin-bottom: 2rem;
-    clear: both;
-    counter-increment: instruction-counter;
-    cursor: pointer;
-}
-
-.instructions .instruction::before {
-    display: block;
-    width: 36px;
-    height: 36px;
-    border: 1px solid var(--color-border-dark);
-    border-radius: 50%;
-    margin: -6px 1rem 1rem 0;
-    background-color: var(--color-background-dark);
-    background-position: center;
-    background-repeat: no-repeat;
-    content: counter(instruction-counter);
-    float: left;
-    line-height: 36px;
-    outline: none;
-    text-align: center;
-}
-
-.instructions .instruction:hover::before {
-    border-color: var(--color-primary-element);
-}
-
-.instructions .instruction.done::before {
-    content: '✔';
-}
-
-.content > .container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 100% 100% 100% 1fr;
-
-    .ingredients {
-        grid-row: 1/2;
-    }
-
-    .tools {
-        grid-row: 2/3;
-    }
-
-    main {
-        width: 100%;
-        float: left;
-        grid-column: 1/2;
-        grid-row: 3/4;
-        text-align: justify;
-    }
-
-    @media screen and (min-width: 851px), print {
-        grid-template-columns: 1fr 1em 2fr;
-
-        .ingredients {
-            grid-column: 1/2;
-            grid-row: 1/2;
-        }
-
-        .tools {
-            grid-column: 1/2;
-            grid-row: 2/3;
-        }
-
-        main {
-            grid-column: 3/4;
-            grid-row: 1/5;
-        }
-    }
-}
-
-.ingredient-parsing-error span.icon-error {
-    display: inline-block;
+.tools {
+    grid-row: 2/3;
+    margin-bottom: 0;
 }
 </style>
 
