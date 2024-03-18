@@ -229,14 +229,19 @@
 	padding-top: 0.625rem;
 }
 
-.px-3 {
-	padding-right: 0.75rem;
-	padding-left: 0.75rem;
+.px-2 {
+	padding-right: 0.5rem;
+	padding-left: 0.5rem;
 }
 
 .px-2\.5 {
 	padding-right: 0.625rem;
 	padding-left: 0.625rem;
+}
+
+.px-3 {
+	padding-right: 0.75rem;
+	padding-left: 0.75rem;
 }
 
 .py-0\.5 {
@@ -309,19 +314,31 @@
 	width: 8rem;
 }
 
-.w-md-32 {
+.w-64 {
+	width: 16rem;
+}
+
+.sm\:w-11\/12 {
+	@media (min-width: 640px) {
+		width: 91.666667%;
+	}
+}
+
+.md\:w-32 {
 	@media (min-width: 768px) {
 		width: 8rem;
 	}
 }
 
-.w-64 {
-	width: 16rem;
-}
-
-.w-md-64 {
+.md\:w-64 {
 	@media (min-width: 768px) {
 		width: 16rem;
+	}
+}
+
+.md\:w-96 {
+	@media (min-width: 768px) {
+		width: 24rem;
 	}
 }
 
@@ -333,7 +350,7 @@
 	max-width: 100%;
 }
 
-.max-w-md-full {
+.md\:max-w-full {
 	@media (min-width: 768px) {
 		max-width: 100%;
 	}
@@ -375,4 +392,10 @@
 
 .hover\:cursor-pointer:hover {
 	cursor: pointer;
+}
+
+
+/** Font */
+.italic {
+	font-style: italic;
 }

@@ -7,7 +7,7 @@
             <div v-if="$store.state.recipe" class="relative w-full">
                 <div
                     v-if="$store.state.recipe.image"
-                    class="image w-full max-w-md-full self-md-stretch relative"
+                    class="image w-full md:max-w-full self-md-stretch relative"
                 >
                     <RecipeImages
                         v-if="$store.state.recipe.image"
@@ -34,7 +34,7 @@
             >
                 <div
                     v-if="recipe.ingredients.length"
-                    class="w-full max-w-md-full self-md-stretch relative"
+                    class="w-full md:max-w-full self-md-stretch relative"
                 >
                     <section class="ingredients">
                         <h3
@@ -64,26 +64,11 @@
                             :supplies="recipe.supply"
                             :current-yield="recipeYield"
                             :original-yield="store.state.recipe.recipeYield"
-                            @syntax-validity-changed="
-                                (valid) => (isIngredientsSyntaxValid = valid)
-                            "
                         />
-
-                        <div
-                            v-if="!isIngredientsSyntaxValid"
-                            class="ingredient-parsing-error print-hidden"
-                        >
-                            <hr />
-                            <span class="icon-error" />
-                            {{
-                                // prettier-ignore
-                                t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt.")
-                            }}
-                        </div>
                     </section>
                 </div>
 
-                <div class="meta w-full max-w-md-full self-md-start">
+                <div class="meta w-full md:max-w-full self-md-start">
                     <div class="details">
                         <div
                             v-if="recipe.keywords && recipe.keywords.length > 0"
@@ -220,11 +205,6 @@ const recipeYield = ref(0);
  * @type {import('vue').Ref<RecipeIngredients>}
  */
 const recipeIngredients = ref(null);
-/**
- * If the syntax of all ingredient items is valid in the sense that the amount can be recalculated with the yield.
- * @type {import('vue').Ref<boolean>}
- */
-const isIngredientsSyntaxValid = ref(true);
 
 // ===================
 // Computed properties
