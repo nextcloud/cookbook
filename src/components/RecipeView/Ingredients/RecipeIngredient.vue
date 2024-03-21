@@ -15,7 +15,7 @@
             :focus-trap="false"
             popup-role="dialog"
             class="inline-flex align-items-center"
-            popoverBaseClass="sm:w-11/12 md:w-96 px-2"
+            popover-base-class="sm:w-11/12 md:w-96 px-2"
         >
             <template #trigger>
                 <span

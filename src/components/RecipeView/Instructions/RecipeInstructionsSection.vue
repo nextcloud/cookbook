@@ -4,46 +4,66 @@
             <legend v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
             </legend>
-            <ul v-if="collectedTools.length > 0" class="tools mb-4">
-                <RecipeInstructionsTool
-                    v-for="(tool, idx) in collectedTools"
-                    :key="`${parentId}_section-${section.name}_tool-${idx}`"
-                    :tool="tool"
-                />
-            </ul>
-            <ul
-                v-if="collectedSupplies.length > 0"
-                class="supplies flex flex-row flex-wrap gap-x-2 mb-4 px-3 py-2 border-2 rounded"
+
+            <div
+                class="instructions-section__inner-container"
+                :class="isSuppliesSectionVisible ? '' : 'supplies-hidden'"
             >
-                <RecipeInstructionsIngredient
-                    v-for="(supply, idx) in collectedSupplies"
-                    :key="`${parentId}_section-${section.name}_supply-${idx}`"
-                    :ingredient="supply"
-                    :add-comma-separator="idx < collectedSupplies.length - 1"
-                />
-            </ul>
-            <div v-if="section.description" class="mb-4">
-                <VueShowdown
-                    :markdown="normalizedDescription"
-                    class="markdown-instruction"
-                />
+                <div
+                    v-if="section.description"
+                    class="section-description mb-4"
+                >
+                    <VueShowdown
+                        :markdown="normalizedDescription"
+                        class="markdown-instruction"
+                    />
+
+                    <!--        TODO Add support for missing properties -->
+                    <!--        <div>{{ section.timeRequired }}</div>-->
+                    <!--        <div>{{ section.image }}</div>-->
+                </div>
+                <div
+                    v-if="isSuppliesSectionVisible"
+                    class="section-supplies-container"
+                >
+                    <ul
+                        v-if="collectedSupplies.length > 0"
+                        class="supplies flex flex-row flex-wrap gap-x-2 mb-4 px-3 py-2 border-2 rounded"
+                    >
+                        <RecipeInstructionsIngredient
+                            v-for="(supply, idx) in collectedSupplies"
+                            :key="`${parentId}_section-${section.name}_supply-${idx}`"
+                            :ingredient="supply"
+                            :add-comma-separator="
+                                idx < collectedSupplies.length - 1
+                            "
+                        />
+                    </ul>
+                    <ul v-if="collectedTools.length > 0" class="tools mb-4">
+                        <RecipeInstructionsTool
+                            v-for="(tool, idx) in collectedTools"
+                            :key="`${parentId}_section-${section.name}_tool-${idx}`"
+                            :tool="tool"
+                        />
+                    </ul>
+                </div>
+
+                <div class="section-instructions">
+                    <ol
+                        v-if="
+                            section.itemListElement &&
+                            section.itemListElement.length > 0
+                        "
+                    >
+                        <component
+                            :is="childComponentType(item)"
+                            v-for="(item, idx) in section.itemListElement"
+                            :key="`${parentId}_section-${item.position ?? ''}-${item['name'] ?? ''}_item-${idx}`"
+                            v-bind="childComponentProps(item, idx)"
+                        />
+                    </ol>
+                </div>
             </div>
-            <!--        TODO Add support for missing properties -->
-            <!--        <div>{{ section.timeRequired }}</div>-->
-            <!--        <div>{{ section.image }}</div>-->
-            <ol
-                v-if="
-                    section.itemListElement &&
-                    section.itemListElement.length > 0
-                "
-            >
-                <component
-                    :is="childComponentType(item)"
-                    v-for="(item, idx) in section.itemListElement"
-                    :key="`${parentId}_section-${item.position ?? ''}-${item['name'] ?? ''}_item-${idx}`"
-                    v-bind="childComponentProps(item, idx)"
-                />
-            </ol>
         </fieldset>
     </li>
 </template>
@@ -113,6 +133,11 @@ const collectedTools = computed(() => {
     return collector.getTools();
 });
 
+/** If the section containing ingredients and tools should be displayed. */
+const isSuppliesSectionVisible = computed(
+    () => collectedTools.value.length > 0 || collectedSupplies.value.length > 0,
+);
+
 // ===================
 // Methods
 // ===================
@@ -172,6 +197,50 @@ li.instructions-section-root {
     .instructions-section__title {
         padding: 0 0.5em;
         font-size: 1.3em;
+    }
+
+    .instructions-section__inner-container {
+        display: grid;
+        gap: 0.75rem;
+        grid-template-areas:
+            'description'
+            'supplies'
+            'instructions';
+
+        grid-template-columns: 100%;
+        grid-template-rows: auto;
+
+        @media (min-width: 768px) {
+            grid-template-areas:
+                'description description'
+                'supplies instructions';
+            grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
+        }
+
+        &.supplies-hidden {
+            grid-template-areas:
+                'description'
+                'instructions';
+
+            @media (min-width: 768px) {
+                grid-template-areas:
+                    'description description'
+                    'instructions instructions';
+                grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
+            }
+        }
+
+        .section-description {
+            grid-area: description;
+        }
+
+        .section-supplies-container {
+            grid-area: supplies;
+        }
+
+        .section-instructions {
+            grid-area: instructions;
+        }
     }
 
     :deep(ol > li:last-child) {

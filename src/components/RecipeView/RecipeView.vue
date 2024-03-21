@@ -142,14 +142,6 @@
                                 :tool="tool"
                             />
                         </ul>
-
-                        <!--                        <ul class="pl-2">-->
-                        <!--                            <RecipeTool-->
-                        <!--                                v-for="(tool, idx) in recipe.tools"-->
-                        <!--                                :key="'tool' + idx"-->
-                        <!--                                :tool="tool"-->
-                        <!--                            />-->
-                        <!--                        </ul>-->
                     </section>
                 </div>
             </div>
@@ -177,19 +169,18 @@ import api from 'cookbook/js/utils/api-interface';
 import helpers from 'cookbook/js/helper';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
+import RecipeInstructionsTool from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTool.vue';
 import emitter from '../../bus';
 import { useStore } from '../../store';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
-import RecipeImages from './RecipeImages.vue';
+import RecipeImages from './Images/RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
 import RecipeKeywords from './RecipeKeywords.vue';
 import RecipeTimes from './Timers/RecipeTimes.vue';
-import RecipeTool from './RecipeTool.vue';
 import RecipeYield from './RecipeYield.vue';
-import RecipeInstructionsTool from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTool.vue';
 
 const route = useRoute();
 const store = useStore();
@@ -481,9 +472,9 @@ h3 {
     }
 
     .wrapper-inner {
-        max-width: 1600px;
-        width: 100%;
         display: flex;
+        width: 100%;
+        max-width: 1600px;
         flex-direction: column;
     }
 }
@@ -533,18 +524,18 @@ h3 {
 .header {
     display: grid;
 
-    grid-template-columns: 100%;
-    grid-template-rows: auto;
+    padding: 1rem;
     gap: 0.75rem;
     grid-template-areas:
         'meta'
         'supplies';
 
-    padding: 1rem;
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
 
     @media (min-width: 768px) {
-        grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
         grid-template-areas: 'supplies meta';
+        grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
     }
 }
 
@@ -656,8 +647,8 @@ aside ul li input[type='checkbox'] {
 }
 
 .tools {
-    grid-row: 2/3;
     margin-bottom: 0;
+    grid-row: 2/3;
 }
 </style>
 
