@@ -11,8 +11,10 @@
                 >
                     <RecipeImages
                         v-if="$store.state.recipe.image"
-                        :image="$store.state.recipe.imageUrl"
+                        :images="$store.state.recipe.imageUrl"
+                        :thumbnails="$store.state.recipe.thumbnailUrl"
                         :is-printed="$store.state.recipe.printImage"
+                        :recipe-name="$store.state.recipe.name"
                     />
                 </div>
                 <div
