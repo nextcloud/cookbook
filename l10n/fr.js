@@ -214,6 +214,7 @@ OC.L10N.register(
     "Please select option first." : "Veuillez d'abord sélectionner l'option.",
     "Order" : "Trier",
     "Search term" : "Terme de recherche",
+    "All categories" : "Toutes les catégories",
     "Show recipes containing any selected category" : "Afficher les recettes contenant n'importe laquelle des catégories sélectionnées",
     "Show recipes containing all selected categories" : "Afficher les recettes contenant toutes les catégories sélectionnées",
     "All keywords" : "Tous les mots-clés",
