@@ -10,7 +10,7 @@
 ![Screenshot of the app](assets/screen_structure.png)
 
 1. Button to create a new recipe
-1. Field to download a recipe from an URL
+1. Field to download a recipe from a URL
 1. List of categories with the number of recipes per category
 1. Button to open/close the sidebar
 1. The actual selected category
