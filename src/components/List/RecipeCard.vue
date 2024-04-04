@@ -6,8 +6,8 @@
                 class="recipe-thumbnail"
                 :lazy-src="recipe.imageUrl"
                 :blurred-preview-src="recipe.imagePlaceholderUrl"
-                :width="105"
-                :height="105"
+                width="105px"
+                height="105px"
             />
             <div class="recipe-info-container">
                 <span class="recipe-title">{{ recipe.name }}</span>
