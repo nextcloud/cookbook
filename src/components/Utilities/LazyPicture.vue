@@ -6,27 +6,42 @@
         :data-alt="alt"
         :style="style"
     >
-        <span v-if="isPreviewLoading" class="loading-indicator icon-loading" />
+        <span
+            v-if="isPreviewLoading && !hasPlaceholder"
+            class="loading-indicator icon-loading"
+        />
         <img
+            v-if="blurredPreviewSrc"
             ref="previewImage"
             class="low-resolution blurred"
             :class="{ 'preview-loaded': !isPreviewLoading }"
-            :width="width ? width + 'px' : ''"
-            :height="height ? height + 'px' : ''"
+            :width="width ?? ''"
+            :height="height ?? ''"
+            :style="[objectFit]"
         />
         <img
             ref="fullImage"
             class="full-resolution"
             :class="{ 'image-loaded': !isLoading }"
-            :width="width ? width + 'px' : ''"
-            :height="height ? height + 'px' : ''"
+            :width="width ?? ''"
+            :height="height ?? ''"
+            :style="[objectFit]"
+            @click="emit('click')"
         />
+        <div
+            v-if="isLoading && (isPreviewLoading || !blurredPreviewSrc)"
+            class="absolute w-full h-full placeholder-wrapper"
+        >
+            <slot />
+        </div>
     </picture>
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, useSlots } from 'vue';
 import lozad from 'lozad';
+
+const slots = useSlots();
 
 const props = defineProps({
     alt: {
@@ -35,48 +50,67 @@ const props = defineProps({
     },
     blurredPreviewSrc: {
         type: String,
-        default: null,
+        default: undefined,
+    },
+    // Resizes the background image to cover the entire container.
+    cover: {
+        type: Boolean,
+        default: false,
     },
     lazySrc: {
         type: String,
-        default: null,
+        default: undefined,
+        required: true,
     },
     width: {
-        type: Number,
+        type: String,
         default: null,
     },
     height: {
-        type: Number,
+        type: String,
         default: null,
     },
 });
+
+const emit = defineEmits(['click', 'loadingComplete']);
 
 /** @type {Ref<UnwrapRef<boolean>>} */
 const isPreviewLoading = ref(true);
 /** @type {Ref<UnwrapRef<boolean>>} */
 const isLoading = ref(true);
-/** @type {HTMLElement|null} */
+/** @type {Ref<UnwrapRef<HTMLElement|null>>} */
 const pictureElement = ref(null);
-/** @type {HTMLElement|null} */
+/** @type {Ref<UnwrapRef<HTMLElement|null>>} */
 const fullImage = ref(null);
-/** @type {HTMLElement|null} */
+/** @type {Ref<UnwrapRef<HTMLElement|null>>} */
 const previewImage = ref(null);
+
+/**
+ * True if a placeholder element while loading has been defined
+ * @type {ComputedRef<boolean>}
+ */
+const hasPlaceholder = computed(() => !!slots.default);
+
+const objectFit = computed(() => (props.cover ? { objectFit: 'cover' } : {}));
 
 // Methods
 // callback for fully-loaded image event
-const onThumbnailFullyLoaded = () => {
-    fullImage.value?.removeEventListener('load', onThumbnailFullyLoaded);
-    pictureElement.value?.removeChild(previewImage.value);
+const onImageFullyLoaded = () => {
+    fullImage.value?.removeEventListener('load', onImageFullyLoaded);
+    if (previewImage.value) {
+        pictureElement.value?.removeChild(previewImage.value);
+    }
     isLoading.value = false;
+    emit('loadingComplete');
 };
 
 // callback for preview-image-loaded event
-const onThumbnailPreviewLoaded = () => {
+const onImagePreviewLoaded = () => {
     // cleanup event listener on preview
-    previewImage.value?.removeEventListener('load', onThumbnailPreviewLoaded);
+    previewImage.value?.removeEventListener('load', onImagePreviewLoaded);
     // add event listener for full-resolution image
     if (fullImage.value) {
-        fullImage.value.addEventListener('load', onThumbnailFullyLoaded);
+        fullImage.value.addEventListener('load', onImageFullyLoaded);
         fullImage.value.src = props.lazySrc;
     }
     isPreviewLoading.value = false;
@@ -86,11 +120,11 @@ const onThumbnailPreviewLoaded = () => {
 const style = computed(() => {
     const tmpStyle = {};
     if (props.width) {
-        tmpStyle.width = `${props.width}px`;
+        tmpStyle.width = props.width;
     }
     if (isLoading.value && props.height && !props.blurredPreviewSrc) {
         tmpStyle.height = 0;
-        tmpStyle.paddingTop = `${props.height}px`;
+        tmpStyle.paddingTop = props.height;
     }
     return tmpStyle;
 });
@@ -101,11 +135,21 @@ onMounted(() => {
     const observer = lozad(pictureElement.value, {
         enableAutoReload: true,
         load() {
-            previewImage.value?.addEventListener(
-                'load',
-                onThumbnailPreviewLoaded,
-            );
-            previewImage.value.src = props.blurredPreviewSrc;
+            isPreviewLoading.value = !!props.blurredPreviewSrc;
+
+            // Listen to preview-loaded event if preview src is set
+            if (props.blurredPreviewSrc) {
+                previewImage.value?.addEventListener(
+                    'load',
+                    onImagePreviewLoaded,
+                );
+                previewImage.value.src = props.blurredPreviewSrc;
+            }
+            // Listen to full-image-loaded event if no preview src is set
+            else if (fullImage.value) {
+                fullImage.value.addEventListener('load', onImageFullyLoaded);
+                fullImage.value.src = props.lazySrc;
+            }
         },
     });
     observer.observe();
@@ -113,13 +157,10 @@ onMounted(() => {
 
 onUnmounted(() => {
     if (previewImage.value !== 'undefined' && previewImage.value != null) {
-        previewImage.value.removeEventListener(
-            'load',
-            onThumbnailPreviewLoaded,
-        );
+        previewImage.value.removeEventListener('load', onImagePreviewLoaded);
     }
     if (fullImage.value !== 'undefined' && fullImage.value != null) {
-        fullImage.value.removeEventListener('load', onThumbnailFullyLoaded);
+        fullImage.value.removeEventListener('load', onImageFullyLoaded);
     }
 });
 </script>
@@ -138,27 +179,28 @@ export default {
     vertical-align: middle;
 }
 
-picture .loading-indicator {
-    display: contents;
-    align-content: center;
-}
-
-picture .blurred {
-    filter: blur(0.5rem);
-}
-
-picture .low-resolution.preview-loaded {
-    display: inline;
-    animation: fadeIn 1s linear 0s;
-}
-
-picture .full-resolution {
-    display: none;
-}
-
-picture .full-resolution.image-loaded {
-    display: inline;
-    animation: unblur 1s linear 0s;
+picture {
+    .placeholder-wrapper > * {
+        height: 100%;
+    }
+    .loading-indicator {
+        display: contents;
+        align-content: center;
+    }
+    .blurred {
+        filter: blur(0.5rem);
+    }
+    .low-resolution.preview-loaded {
+        display: inline;
+        animation: fadeIn 1s linear 0s;
+    }
+    .full-resolution {
+        display: none;
+    }
+    .full-resolution.image-loaded {
+        display: inline;
+        animation: unblur 1s linear 0s;
+    }
 }
 
 @keyframes fadeIn {
