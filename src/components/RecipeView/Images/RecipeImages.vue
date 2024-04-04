@@ -5,13 +5,24 @@
             printable: isPrinted,
         }"
     >
-        <img
+        <LazyPicture
             :alt="t('cookbook', 'Main recipe image')"
-            :src="images[0]"
+            :lazy-src="images[0]"
             class="inline-img"
+            height="100%"
             style="object-fit: contain"
+            :cover="true"
+            width="100%"
+            @loading-complete="isLoadingMainImage = false"
             @click="openFullImage()"
-        />
+        >
+            <LoadingSkeleton
+                :type="SkeletonType.Image"
+                width="100%"
+                :loading="isLoadingMainImage"
+            />
+        </LazyPicture>
+
         <div v-if="imagePreviews.length > 0" class="image-previews">
             <img
                 v-for="(prevImage, index) in imagePreviews"
@@ -27,6 +38,7 @@
                 @click="openFullImage(index + 1)"
             />
         </div>
+
         <RecipeImagesViewer
             :show.sync="isImageModalVisible"
             :images="images"
@@ -40,6 +52,9 @@
 <script setup>
 import { computed, ref } from 'vue';
 import RecipeImagesViewer from 'cookbook/components/RecipeView/Images/RecipeImagesViewer.vue';
+import LoadingSkeleton from 'cookbook/components/Utilities/LoadingSkeleton/LoadingSkeleton.vue';
+import LazyPicture from 'cookbook/components/Utilities/LazyPicture.vue';
+import SkeletonType from 'cookbook/components/Utilities/LoadingSkeleton/SkeletonType';
 
 const props = defineProps({
     /** Main recipe image.
@@ -74,6 +89,12 @@ const props = defineProps({
 
 const isImageModalVisible = ref(false);
 const currentFullImageIndex = ref(0);
+
+/**
+ * If the main image is currently being loaded.
+ * @type {Ref<UnwrapRef<boolean>>}
+ */
+const isLoadingMainImage = ref(true);
 
 /**
  * List of URLs for images previews.
