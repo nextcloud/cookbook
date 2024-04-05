@@ -6,7 +6,11 @@
         "
         @close="emit('close')"
     >
-        <RecipeDetailsTab />
+        <RecipeViewSidebarLoadingSkeleton
+            v-if="store.loadingRecipe"
+            :delay="800"
+        />
+        <RecipeDetailsTab v-else />
     </NcAppSidebar>
 </template>
 
@@ -15,6 +19,7 @@ import NcAppSidebar from '@nextcloud/vue/dist/Components/NcAppSidebar.js';
 import RecipeDetailsTab from 'cookbook/components/RecipeView/Sidebar/RecipeDetailsTab.vue';
 import { computed } from 'vue';
 import { useStore } from 'cookbook/store';
+import RecipeViewSidebarLoadingSkeleton from './RecipeViewSidebarLoadingSkeleton.vue';
 
 const store = useStore();
 
