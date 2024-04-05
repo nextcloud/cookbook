@@ -1,4 +1,6 @@
 /** see https://m3.material.io/styles/elevation/overview */
+@use 'sass:map';
+
 $elevations: (
 	0: none,
 	1: (
@@ -102,6 +104,6 @@ $elevations: (
 // Generate the elevation classes
 @for $level from 1 through 24 {
 	.elevation-#{$level} {
-		box-shadow: map-get($elevations, $level);
+		box-shadow: map.get($elevations, $level);
 	}
 }

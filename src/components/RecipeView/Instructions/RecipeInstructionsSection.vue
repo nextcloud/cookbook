@@ -85,12 +85,12 @@ import CbDivider from 'cookbook/components/Utilities/Divider/CbDivider.vue';
 import CbSheet from 'cookbook/components/Utilities/CbSheet.vue';
 import SupplyCollector from 'cookbook/js/Visitors/SchemaOrg/SupplyCollector';
 import ToolsCollector from 'cookbook/js/Visitors/SchemaOrg/ToolsCollector';
+import DividerType from 'cookbook/components/Utilities/Divider/DividerType';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
 import RecipeInstructionsIngredient from './RecipeInstructionsIngredient.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
 import RecipeInstructionsTool from './RecipeInstructionsTool.vue';
-import DividerType from 'cookbook/components/Utilities/Divider/DividerType';
 
 const log = getCurrentInstance().proxy.$log;
 

@@ -51,10 +51,10 @@ defineProps({
 <style scoped lang="scss">
 .cb-divider {
     flex-shrink: 0;
-    margin: 0;
-    border-style: solid none none none;
     border-width: 1px;
+    border-style: solid none none none;
     border-color: var(--color-border-dark);
+    margin: 0;
 }
 
 .cb-divider-absolute {
@@ -66,8 +66,8 @@ defineProps({
 
 .cb-divider-inset {
     margin-left: 72px;
-    margin-inline-start: 72px;
     margin-inline-end: unset;
+    margin-inline-start: 72px;
 }
 
 .cb-divider-light {
@@ -75,22 +75,22 @@ defineProps({
 }
 
 .cb-divider-middle {
-    margin-left: 16px;
     margin-right: 16px;
+    margin-left: 16px;
 }
 
 .cb-divider-vertical {
-    border-style: none solid none none;
     height: 100%;
+    border-style: none solid none none;
 }
 
 .cb-divider-flexitem {
-    align-self: stretch;
     height: auto;
+    align-self: stretch;
 }
 
 .cb-divider-fullwidth {
-    flex-grow: 1;
     width: 100%;
+    flex-grow: 1;
 }
 </style>
