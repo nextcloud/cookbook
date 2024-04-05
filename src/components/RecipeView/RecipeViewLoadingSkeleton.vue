@@ -130,11 +130,11 @@ export default {
 
 <style scoped>
 .title-container {
-    display: flex;
     bottom: 15px;
     left: 0;
-    padding: 0.25rem 0.6rem 0.3rem;
+    display: flex;
     width: 60%;
+    padding: 0.25rem 0.6rem 0.3rem;
 }
 
 .image-container {

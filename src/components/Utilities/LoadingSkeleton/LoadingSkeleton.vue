@@ -106,13 +106,13 @@ $loading-skeleton-text-height: 12px !default;
 
 .loading-skeleton {
     position: relative;
+    display: flex;
     overflow: hidden;
     flex: 1 1 100%;
+    flex-wrap: wrap;
 
     align-items: center;
     border-radius: 4px;
-    display: flex;
-    flex-wrap: wrap;
     vertical-align: top;
 
     &__content {
@@ -148,28 +148,28 @@ $loading-skeleton-text-height: 12px !default;
     }
 
     &.avatar {
-        border-radius: 50%;
-        flex: 0 1 auto;
-        margin: 8px 16px;
-        max-height: 48px;
-        min-height: 48px;
-        height: 48px;
-        max-width: 48px;
-        min-width: 48px;
         width: 48px;
+        min-width: 48px;
+        max-width: 48px;
+        height: 48px;
+        min-height: 48px;
+        max-height: 48px;
+        flex: 0 1 auto;
+        border-radius: 50%;
+        margin: 8px 16px;
     }
 
     &.chip {
+        max-width: 96px;
+        height: 24px;
         border-radius: var(--border-radius-pill);
         margin-right: 12px;
         margin-bottom: 12px;
-        height: 24px;
-        max-width: 96px;
     }
 
     &.heading {
-        height: $loading-skeleton-heading-height;
         max-width: 100%;
+        height: $loading-skeleton-heading-height;
     }
 
     &.image {
