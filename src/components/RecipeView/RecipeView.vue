@@ -11,8 +11,16 @@
                 >
                     <RecipeImages
                         v-if="$store.state.recipe.image"
-                        :images="$store.state.recipe.imageUrl"
-                        :thumbnails="$store.state.recipe.thumbnailUrl"
+                        :images="[
+                            $store.state.recipe.imageUrl[0],
+                            $store.state.recipe.imageUrl[0],
+                            $store.state.recipe.imageUrl[0],
+                        ]"
+                        :thumbnails="[
+                            $store.state.recipe.imageUrl[0],
+                            $store.state.recipe.imageUrl[0],
+                            $store.state.recipe.imageUrl[0],
+                        ]"
                         :is-printed="$store.state.recipe.printImage"
                         :recipe-name="$store.state.recipe.name"
                     />
@@ -37,7 +45,8 @@
                             class="markdown-description section"
                         />
                         <p v-if="$store.state.recipe.url?.[0]" class="section">
-                            <strong>{{ t('cookbook', 'Source') }}: </strong
+                            <span class="label"
+                                >{{ t('cookbook', 'Source') }}: </span
                             ><a
                                 target="_blank"
                                 :href="$store.state.recipe.url"
@@ -553,6 +562,11 @@ h3 {
         .section {
             padding: 0;
             margin: 0.75em 0;
+
+            .label {
+                color: var(--color-text-lighter);
+                font-weight: lighter;
+            }
         }
     }
 }
