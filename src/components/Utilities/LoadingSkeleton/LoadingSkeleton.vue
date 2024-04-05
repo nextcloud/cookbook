@@ -13,6 +13,22 @@
         :class="type"
     >
         <div class="loading-skeleton__content" />
+        <LoadingSkeleton
+            v-if="type === SkeletonType.Paragraph"
+            :type="SkeletonType.Text"
+        />
+        <LoadingSkeleton
+            v-if="type === SkeletonType.Paragraph"
+            :type="SkeletonType.Text"
+        />
+        <LoadingSkeleton
+            v-if="type === SkeletonType.Paragraph"
+            :type="SkeletonType.Text"
+        />
+        <LoadingSkeleton
+            v-if="type === SkeletonType.ListItem"
+            :type="SkeletonType.Text"
+        />
     </div>
     <div v-else>
         <slot />
@@ -90,8 +106,14 @@ $loading-skeleton-text-height: 12px !default;
 
 .loading-skeleton {
     position: relative;
-    display: inline-block;
     overflow: hidden;
+    flex: 1 1 100%;
+
+    align-items: center;
+    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    vertical-align: top;
 
     &__content {
         position: relative;
@@ -125,21 +147,50 @@ $loading-skeleton-text-height: 12px !default;
         }
     }
 
+    &.avatar {
+        border-radius: 50%;
+        flex: 0 1 auto;
+        margin: 8px 16px;
+        max-height: 48px;
+        min-height: 48px;
+        height: 48px;
+        max-width: 48px;
+        min-width: 48px;
+        width: 48px;
+    }
+
     &.chip {
-        border-radius: 16px;
+        border-radius: var(--border-radius-pill);
+        margin-right: 12px;
+        margin-bottom: 12px;
+        height: 24px;
+        max-width: 96px;
     }
 
     &.heading {
         height: $loading-skeleton-heading-height;
+        max-width: 100%;
     }
 
     &.image {
         height: $loading-skeleton-image-height;
     }
 
+    &.list-item {
+        margin: 16px;
+    }
+
     &.text {
         height: $loading-skeleton-text-height;
         margin-bottom: 8px;
+
+        + .text {
+            max-width: 50%;
+        }
+
+        + .text + .text {
+            max-width: 70%;
+        }
     }
 }
 </style>
