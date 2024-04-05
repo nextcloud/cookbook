@@ -1,13 +1,13 @@
 <template>
     <div class="wrapper flex justify-center">
-        <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
-            <LoadingIndicator :size="40" :delay="800" />
+        <div v-if="isLoading || store.loadingRecipe" class="wrapper-inner">
+            <RecipeViewLoadingSkeleton :delay="800" />
         </div>
         <div v-else class="wrapper-inner">
             <div v-if="$store.state.recipe" class="relative w-full">
                 <div
                     v-if="$store.state.recipe.image"
-                    class="image w-full md:max-w-full self-md-stretch relative"
+                    class="w-full md:max-w-full self-md-stretch relative"
                 >
                     <RecipeImages
                         v-if="$store.state.recipe.image"
@@ -17,15 +17,7 @@
                         :recipe-name="$store.state.recipe.name"
                     />
                 </div>
-                <div
-                    class="title-container absolute"
-                    style="
-                        bottom: 15px;
-                        left: 0;
-                        /*background: var(--color-main-text);*/
-                        padding: 0.25rem 0.6rem 0.3rem;
-                    "
-                >
+                <div class="title-container absolute">
                     <h2 class="heading m-0">{{ $store.state.recipe.name }}</h2>
                 </div>
             </div>
@@ -176,7 +168,7 @@ import emitter from '../../bus';
 import { useStore } from '../../store';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
-import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
+import RecipeViewLoadingSkeleton from './RecipeViewLoadingSkeleton.vue';
 import RecipeImages from './Images/RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
 import RecipeInstructions from './Instructions/RecipeInstructions.vue';
@@ -481,18 +473,14 @@ h3 {
     }
 }
 
-.loading-indicator {
-    display: flex;
-    justify-content: center;
-    padding: 3rem 0;
-}
-
 :deep(.print-only) {
     display: none;
 }
 
 .title-container {
-    padding: 0.2rem 0.4rem;
+    bottom: 15px;
+    left: 0;
+    padding: 0.25rem 0.6rem 0.3rem;
     background: black;
     filter: var(--background-invert-if-dark);
     .heading {
