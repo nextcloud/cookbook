@@ -1,9 +1,14 @@
 <template>
     <li class="instructions-section-root">
-        <fieldset v-if="section" class="instructions-section">
-            <legend v-if="section.name" class="instructions-section__title">
+        <CbSheet
+            class="instructions-section"
+            :elevation="1"
+            :rounded="true"
+            style="background-color: var(--color-background-hover)"
+        >
+            <div v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
-            </legend>
+            </div>
 
             <div
                 class="instructions-section__inner-container"
@@ -15,12 +20,16 @@
                 >
                     <VueShowdown
                         :markdown="normalizedDescription"
-                        class="markdown-instruction"
+                        class="mb-6"
                     />
 
                     <!--        TODO Add support for missing properties -->
                     <!--        <div>{{ section.timeRequired }}</div>-->
                     <!--        <div>{{ section.image }}</div>-->
+                    <CbDivider
+                        :divider-type="DividerType.Middle"
+                        :light="true"
+                    />
                 </div>
                 <div
                     v-if="isSuppliesSectionVisible"
@@ -64,7 +73,7 @@
                     </ol>
                 </div>
             </div>
-        </fieldset>
+        </CbSheet>
     </li>
 </template>
 
@@ -72,6 +81,8 @@
 import { computedAsync } from '@vueuse/core';
 import normalizeMarkdown from 'cookbook/js/title-rename';
 import { computed, getCurrentInstance } from 'vue';
+import CbDivider from 'cookbook/components/Utilities/Divider/CbDivider.vue';
+import CbSheet from 'cookbook/components/Utilities/CbSheet.vue';
 import SupplyCollector from 'cookbook/js/Visitors/SchemaOrg/SupplyCollector';
 import ToolsCollector from 'cookbook/js/Visitors/SchemaOrg/ToolsCollector';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
@@ -79,6 +90,7 @@ import RecipeInstructionsIngredient from './RecipeInstructionsIngredient.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
 import RecipeInstructionsTool from './RecipeInstructionsTool.vue';
+import DividerType from 'cookbook/components/Utilities/Divider/DividerType';
 
 const log = getCurrentInstance().proxy.$log;
 
@@ -195,8 +207,9 @@ li.instructions-section-root {
     margin: 1em 0 3em;
 
     .instructions-section__title {
-        padding: 0 0.5em;
-        font-size: 1.3em;
+        margin-bottom: 1.3rem;
+        font-size: 1.7rem;
+        font-weight: 300;
     }
 
     .instructions-section__inner-container {
