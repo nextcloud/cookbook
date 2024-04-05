@@ -66,6 +66,10 @@
 	}
 }
 
+.hidden {
+	display: none;
+}
+
 /** flex */
 
 .flex-md-row {
@@ -330,6 +334,10 @@
 
 /** Width */
 
+.w-24 {
+	width: 6rem;
+}
+
 .w-32 {
 	width: 8rem;
 }
@@ -364,6 +372,22 @@
 
 .w-full {
 	width: 100%;
+}
+
+.w-2\/3 {
+	width: 66.666667%;
+}
+
+.w-3\/4 {
+	width: 75%;
+}
+
+.max-w-52 {
+	max-width: 13rem;
+}
+
+.max-w-64 {
+	max-width: 16rem;
 }
 
 .max-w-full {
@@ -418,3 +442,4 @@
 .italic {
 	font-style: italic;
 }
+
