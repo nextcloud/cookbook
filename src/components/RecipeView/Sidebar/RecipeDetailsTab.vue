@@ -14,7 +14,7 @@
                     :name="recipe.recipeCategory"
                     @category-clicked="categoryClicked(recipe.recipeCategory)"
                 />
-                <span v-else class="ml-3">
+                <span v-else class="ml-3 italic">
                     {{ 't("cookbook", "Uncategorized")' }}</span
                 >
             </div>
@@ -28,8 +28,8 @@
                     :keywords="recipe.keywords"
                     class="inline-block ml-3"
                 />
-                <span v-else>
-                    {{ 't("cookbook", "No keyword assigned")' }}</span
+                <span v-else class="ml-3 italic">
+                    {{ t('cookbook', 'No keyword assigned') }}</span
                 >
             </div>
         </section>
@@ -111,9 +111,9 @@ function categoryClicked(category) {
 
 <style lang="scss">
 section {
-    margin-bottom: 1.5rem;
-    padding-left: 10px;
     padding-right: 10px;
+    padding-left: 10px;
+    margin-bottom: 1.5rem;
 
     h3 {
         margin-bottom: 6px;
