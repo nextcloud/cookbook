@@ -16,7 +16,7 @@ import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters';
 
-import RecipeList from './List/RecipeList.vue';
+import RecipeList from './List/RecipeGrid.vue';
 import { useStore } from '../store';
 import emitter from '../bus';
 

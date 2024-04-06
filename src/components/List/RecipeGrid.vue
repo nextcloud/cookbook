@@ -77,7 +77,7 @@ import {
     RecipeKeywordsFilter as KeywordsFilter,
     RecipeNamesFilter as NamesFilter,
 } from '../../js/RecipeFilters';
-import EmptyList from './EmptyList.vue';
+import EmptyList from './EmptyGrid.vue';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
 import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';

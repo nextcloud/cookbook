@@ -6,7 +6,7 @@
 import api from 'cookbook/js/utils/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
-import RecipeList from './List/RecipeList.vue';
+import RecipeList from './List/RecipeGrid.vue';
 import { useStore } from '../store';
 
 const store = useStore();
