@@ -138,7 +138,7 @@ RecipeStub:
     - type: object
       properties:
         recipe_id:
-          type: int
+          type: integer
           description: |
             The index of the recipe. Note this is a string and might change its appearance in the future.
 
