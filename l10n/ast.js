@@ -87,6 +87,7 @@ OC.L10N.register(
     "Nutrition Information" : "Información nutricional\n",
     "Ingredients" : "Ingredientes",
     "Instructions" : "Instrucciones",
+    "You have unsaved changes! Do you still want to leave?" : "¡Tienes cambeos ensin guardar! ¿Quies colar de toes toes?",
     "Calories" : "Caloríes",
     "Sodium content" : "Conteníu en sodiu",
     "Sugar content" : "Conteníu n'azucre",
