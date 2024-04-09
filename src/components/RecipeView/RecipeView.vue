@@ -464,6 +464,7 @@ h3 {
     padding: 0.5rem 0.5rem 0.2rem;
     font-size: 1.1rem;
     font-weight: 200;
+    color: var(--color-text-lighter);
 }
 
 .wrapper {

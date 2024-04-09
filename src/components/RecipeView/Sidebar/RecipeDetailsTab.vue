@@ -7,7 +7,7 @@
         <section class="organizational">
             <h3 class="mt-0">{{ t('cookbook', 'Organizational') }}</h3>
             <div class="section-content mb-0.5">
-                <span>{{ t('cookbook', 'Category') }}:</span
+                <span class="label">{{ t('cookbook', 'Category') }}:</span
                 ><RecipeCategory
                     v-if="recipe?.recipeCategory"
                     class="inline-block ml-3"
@@ -15,14 +15,14 @@
                     @category-clicked="categoryClicked(recipe.recipeCategory)"
                 />
                 <span v-else class="ml-3 italic">
-                    {{ 't("cookbook", "Uncategorized")' }}</span
+                    {{ t('cookbook', 'Uncategorized') }}</span
                 >
             </div>
             <div
                 v-if="recipe?.keywords"
                 class="section-content mb-0.5 flex flex-wrap"
             >
-                <span class="mb-1">{{ t('cookbook', 'Keywords') }}:</span>
+                <span class="mb-1 label">{{ t('cookbook', 'Keywords') }}:</span>
                 <RecipeKeywords
                     v-if="recipe.keywords.length > 0"
                     :keywords="recipe.keywords"
@@ -123,6 +123,10 @@ section {
     .section-content {
         margin-left: 1rem;
     }
+}
+
+.label {
+    color: var(--color-text-lighter);
 }
 
 .nutrition {
