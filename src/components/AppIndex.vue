@@ -1,12 +1,12 @@
 <template>
-    <RecipeList :recipes="recipes" :loading="isLoadingRecipeList" />
+    <RecipeGrid :recipes="recipes" :loading="isLoadingRecipeList" />
 </template>
 
 <script setup>
 import api from 'cookbook/js/utils/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
-import RecipeList from './List/RecipeGrid.vue';
+import RecipeGrid from './List/RecipesGrid.vue';
 import { useStore } from '../store';
 
 const store = useStore();

@@ -63,7 +63,7 @@ const isCategorySelected = computed(
 </script>
 <script>
 export default {
-    name: 'RecipeList',
+    name: 'EmptyGrid',
 };
 </script>
 

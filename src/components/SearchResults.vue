@@ -1,6 +1,6 @@
 <template>
     <div>
-        <RecipeList
+        <RecipesGrid
             :recipes="results"
             :loading="isLoadingRecipeList"
             :preapplied-filters="filters"
@@ -16,7 +16,7 @@ import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters';
 
-import RecipeList from './List/RecipeGrid.vue';
+import RecipesGrid from './List/RecipesGrid.vue';
 import { useStore } from '../store';
 import emitter from '../bus';
 
