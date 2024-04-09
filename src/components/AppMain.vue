@@ -32,6 +32,13 @@
 
 <script setup>
 import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
+import {
+    getCurrentInstance,
+    onMounted,
+    onUnmounted,
+    provide,
+    ref,
+} from 'vue';
 import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent.js';
 import NcContent from '@nextcloud/vue/dist/Components/NcContent.js';
 import AppControls from 'cookbook/components/AppControls/AppControls.vue';
@@ -42,6 +49,16 @@ import { useIsMobile } from '../composables/useIsMobile';
 
 const log = getCurrentInstance().proxy.$log;
 const isMobile = useIsMobile();
+
+import { useStore } from '../store';
+
+const store = useStore();
+
+// Dependency injection here!
+// Provide the recipeRepository as a global property
+const recipeRepository = new RecipeRepository();
+provide('RecipeRepository', recipeRepository);
+provide('Store', store);
 
 /**
  * @type {import('vue').Ref<boolean>}
