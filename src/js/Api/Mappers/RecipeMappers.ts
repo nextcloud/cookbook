@@ -5,9 +5,13 @@ export function mapApiRecipeResponseToRecipe(recipeDTO: {
 	id: string;
 	identifier: string;
 	keywords: string | string[];
+	category: string | string[];
 }): Recipe {
 	// Create copy
 	const recipe = JSON.parse(JSON.stringify(recipeDTO));
+
+	// The cookbook API returns the `recipeCategory` property as `category`
+	recipe.recipeCategory = recipeDTO.category;
 
 	// The cookbook API returns the `identifier` property as `id`
 	recipe.identifier = recipeDTO.id;
