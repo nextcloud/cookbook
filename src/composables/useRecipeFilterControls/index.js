@@ -88,6 +88,7 @@ export default function useRecipeFilterControls(props) {
             if (!('category' in r)) {
                 return [];
             }
+            if (Array.isArray(r.category)) return r.category;
             if (r.category != null) {
                 return r.category.split(',');
             }
@@ -124,6 +125,8 @@ export default function useRecipeFilterControls(props) {
             if (!('keywords' in r)) {
                 return [];
             }
+            if (Array.isArray(r.keywords)) return r.keywords;
+
             if (r.keywords != null) {
                 return r.keywords.split(',');
             }
