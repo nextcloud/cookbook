@@ -29,6 +29,8 @@
   [#2059](https://github.com/nextcloud/cookbook/pull/2059) @seyfeb
 - Update coding standards
   [#2122](https://github.com/nextcloud/cookbook/pull/2122) @dependabot
+- Import NC core components correctly
+  [#2250](https://github.com/nextcloud/cookbook/pull/2250) @christianlupus
 
 ## 0.11.0 - 2023-12-14
 
