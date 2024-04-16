@@ -22,8 +22,7 @@
 
 <script setup>
 import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
-import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent';
-import NcContent from '@nextcloud/vue/dist/Components/NcContent';
+import { NcAppContent, NcContent } from '@nextcloud/vue';
 import AppControls from 'cookbook/components/AppControls/AppControls.vue';
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus';
 import AppNavi from './AppNavi.vue';

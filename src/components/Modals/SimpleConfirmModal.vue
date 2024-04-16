@@ -15,8 +15,7 @@
 </template>
 
 <script setup>
-import NcModal from '@nextcloud/vue/dist/Components/NcModal';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton';
+import { NcModal, NcButton } from '@nextcloud/vue';
 </script>
 
 <script>
