@@ -22,6 +22,8 @@
 - Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
 - Update code styling by @dependabot
 - Update dependency @nextcloud/router by @dependabot
+- Backport of #2250 to use correct imports of NC core components
+  [#2252](https://github.com/nextcloud/cookbook/pull/2252) @seyfeb
 
 
 ## 0.10.4 - 2023-12-05
