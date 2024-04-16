@@ -153,9 +153,7 @@
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
-import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
+import { NcButton, NcSelect, NcTextField } from '@nextcloud/vue';
 import { computed, defineEmits, defineProps, ref } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 import RecipeSortSelect from './RecipeSortSelect.vue';

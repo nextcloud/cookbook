@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { NcSelect } from '@nextcloud/vue';
 import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue';
 import TriangleSmallUpIcon from 'vue-material-design-icons/TriangleSmallUp.vue';
 import { ref } from 'vue';

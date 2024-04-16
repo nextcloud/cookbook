@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { NcSelect } from '@nextcloud/vue';
 
 defineProps({
     fieldLabel: {

@@ -188,10 +188,12 @@ import { subscribe, unsubscribe } from '@nextcloud/event-bus';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 import '@nextcloud/dialogs/style.css';
 
-import NcAppSettingsDialog from '@nextcloud/vue/dist/Components/NcAppSettingsDialog.js';
-import NcAppSettingsSection from '@nextcloud/vue/dist/Components/NcAppSettingsSection.js';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import { NcLoadingIcon as LoadingIcon } from '@nextcloud/vue';
+import {
+    NcAppSettingsDialog,
+    NcAppSettingsSection,
+    NcButton,
+    NcLoadingIcon as LoadingIcon,
+} from '@nextcloud/vue';
 import ReloadIcon from 'icons/Cached.vue';
 
 import api from 'cookbook/js/api-interface';
