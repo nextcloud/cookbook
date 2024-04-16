@@ -197,10 +197,7 @@
 <script setup>
 import { defineEmits, defineProps } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcModal from '@nextcloud/vue/dist/Components/NcModal.js';
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
-import NcTextField from '@nextcloud/vue/dist/Components/NcTextField.js';
+import { NcButton, NcModal, NcSelect, NcTextField } from '@nextcloud/vue';
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';

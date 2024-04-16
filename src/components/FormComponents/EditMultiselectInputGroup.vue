@@ -65,8 +65,7 @@ import {
     del,
 } from 'vue';
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { NcButton, NcSelect } from '@nextcloud/vue';
 import DeleteIcon from 'vue-material-design-icons/Delete.vue';
 
 const emits = defineEmits(['input']);

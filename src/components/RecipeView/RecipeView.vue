@@ -362,7 +362,7 @@ import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import { NcButton } from '@nextcloud/vue';
 import { showError, showSuccess } from '@nextcloud/dialogs';
 import { useStore } from '../../store';
 import emitter from '../../bus';
