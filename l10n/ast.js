@@ -98,6 +98,7 @@ OC.L10N.register(
     "Loading recipe failed" : "La carga de la receta falló",
     "Recipe image" : "Imaxe de la receta",
     "Date created" : "Data de creación",
+    "Last modified" : "Última modificación",
     "Source" : "Orixe",
     "Preparation time (H:MM)" : "Tiempu de preparación (H:MM)",
     "Cooking time (H:MM)" : "Tiempu de cocináu (H:MM)",
