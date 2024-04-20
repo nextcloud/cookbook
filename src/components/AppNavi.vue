@@ -25,6 +25,7 @@
                 :name="t('cookbook', 'All recipes')"
                 icon="icon-category-organization"
                 :to="'/'"
+                :exact="true"
             >
                 <template #counter>
                     <nc-counter-bubble>{{
