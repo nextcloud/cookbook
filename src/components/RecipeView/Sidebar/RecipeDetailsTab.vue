@@ -11,7 +11,7 @@
                 ><RecipeCategory
                     v-if="recipe?.recipeCategory"
                     class="inline-block ml-3"
-                    :name="recipe.recipeCategory"
+                    :name="asArray(recipe.recipeCategory)[0]"
                     @category-clicked="categoryClicked(recipe.recipeCategory)"
                 />
                 <span v-else class="ml-3 italic">
@@ -65,6 +65,7 @@ import { useStore } from 'cookbook/store';
 import RecipeCategory from 'cookbook/components/RecipeView/RecipeCategory.vue';
 import RecipeDates from 'cookbook/components/RecipeView/RecipeDates.vue';
 import RecipeKeywords from 'cookbook/components/RecipeView/RecipeKeywords.vue';
+import { asArray } from 'cookbook/js/helper';
 
 const router = useRouter();
 const store = useStore();
