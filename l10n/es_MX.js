@@ -20,6 +20,7 @@ OC.L10N.register(
     "OK" : "OK",
     "Description" : "Descripción",
     "URL" : "URL",
+    "Image" : "Imagen",
     "Last modified" : "Última modificación",
     "Energy" : "Energía",
     "Loading…" : "Cargando...",
