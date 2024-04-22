@@ -30,7 +30,8 @@ defineProps({
         default: false,
     },
     dividerType: {
-        type: Object,
+        // Change to String as PropType<DividerType>, when updating this component to use typescript
+        type: String,
         default: DividerType.FullWidth,
     },
     flexItem: {
