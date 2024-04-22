@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref, useSlots } from 'vue';
+import { computed, onMounted, onUnmounted, ref, useSlots, watch } from 'vue';
 import lozad from 'lozad';
 
 const slots = useSlots();
@@ -74,15 +74,15 @@ const props = defineProps({
 
 const emit = defineEmits(['click', 'loadingComplete']);
 
-/** @type {Ref<UnwrapRef<boolean>>} */
+/** @type {import('vue').Ref<UnwrapRef<boolean>>} */
 const isPreviewLoading = ref(true);
-/** @type {Ref<UnwrapRef<boolean>>} */
+/** @type {import('vue').Ref<UnwrapRef<boolean>>} */
 const isLoading = ref(true);
-/** @type {Ref<UnwrapRef<HTMLElement|null>>} */
+/** @type {import('vue').Ref<UnwrapRef<HTMLElement|null>>} */
 const pictureElement = ref(null);
-/** @type {Ref<UnwrapRef<HTMLElement|null>>} */
+/** @type {import('vue').Ref<UnwrapRef<HTMLElement|null>>} */
 const fullImage = ref(null);
-/** @type {Ref<UnwrapRef<HTMLElement|null>>} */
+/** @type {import('vue').Ref<UnwrapRef<HTMLElement|null>>} */
 const previewImage = ref(null);
 
 /**
@@ -93,19 +93,21 @@ const hasPlaceholder = computed(() => !!slots.default);
 
 const objectFit = computed(() => (props.cover ? { objectFit: 'cover' } : {}));
 
+// ========================================
 // Methods
-// callback for fully-loaded image event
-const onImageFullyLoaded = () => {
+// ========================================
+/**  Callback for fully-loaded image event */
+function onImageFullyLoaded() {
     fullImage.value?.removeEventListener('load', onImageFullyLoaded);
     if (previewImage.value) {
         pictureElement.value?.removeChild(previewImage.value);
     }
     isLoading.value = false;
     emit('loadingComplete');
-};
+}
 
-// callback for preview-image-loaded event
-const onImagePreviewLoaded = () => {
+/** Callback for preview-image-loaded event */
+function onImagePreviewLoaded() {
     // cleanup event listener on preview
     previewImage.value?.removeEventListener('load', onImagePreviewLoaded);
     // add event listener for full-resolution image
@@ -114,23 +116,12 @@ const onImagePreviewLoaded = () => {
         fullImage.value.src = props.lazySrc;
     }
     isPreviewLoading.value = false;
-};
+}
 
-// Computed properties
-const style = computed(() => {
-    const tmpStyle = {};
-    if (props.width) {
-        tmpStyle.width = props.width;
-    }
-    if (isLoading.value && props.height && !props.blurredPreviewSrc) {
-        tmpStyle.height = 0;
-        tmpStyle.paddingTop = props.height;
-    }
-    return tmpStyle;
-});
-
-// Vue lifecycle
-onMounted(() => {
+/**
+ * Initializes lazy loading preview and full image if available.
+ */
+function init() {
     // init lozad
     const observer = lozad(pictureElement.value, {
         enableAutoReload: true,
@@ -153,15 +144,69 @@ onMounted(() => {
         },
     });
     observer.observe();
-});
+}
 
-onUnmounted(() => {
+/**
+ * Resets the event listeners and loading state.
+ */
+function reset() {
+    isLoading.value = true;
+    isPreviewLoading.value = true;
+    fullImage.value.src = undefined;
+    pictureElement.value?.setAttribute('data-loaded', false);
+    removeEventListeners();
+}
+
+/**
+ * Removes the event listeners.
+ */
+function removeEventListeners() {
     if (previewImage.value !== 'undefined' && previewImage.value != null) {
         previewImage.value.removeEventListener('load', onImagePreviewLoaded);
     }
     if (fullImage.value !== 'undefined' && fullImage.value != null) {
         fullImage.value.removeEventListener('load', onImageFullyLoaded);
     }
+}
+
+// ========================================
+// Computed properties
+// ========================================
+const style = computed(() => {
+    const tmpStyle = {};
+    if (props.width) {
+        tmpStyle.width = props.width;
+    }
+    if (isLoading.value && props.height && !props.blurredPreviewSrc) {
+        tmpStyle.height = 0;
+        tmpStyle.paddingTop = props.height;
+    }
+    return tmpStyle;
+});
+
+// ========================================
+// Watchers
+// ========================================
+/**
+ * Reload image when source has changed. This may be the case when the component is reused for a different image.
+ */
+watch(
+    () => props.lazySrc,
+    () => {
+        reset();
+        init();
+    },
+);
+
+// ========================================
+// Vue lifecycle
+// ========================================
+onMounted(() => {
+    init();
+});
+
+onUnmounted(() => {
+    removeEventListeners();
 });
 </script>
 
