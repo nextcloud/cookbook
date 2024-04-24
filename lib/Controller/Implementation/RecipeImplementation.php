@@ -280,6 +280,8 @@ class RecipeImplementation {
 						'size' => 'thumb16'
 					]
 				);
+
+				$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
 			}
 
 			return new JSONResponse($recipes, 200, ['Content-Type' => 'application/json']);
@@ -316,6 +318,8 @@ class RecipeImplementation {
 						'size' => 'thumb16'
 					]
 				);
+
+				$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
 			}
 
 			return new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
@@ -356,6 +360,8 @@ class RecipeImplementation {
 						'size' => 'thumb16'
 					]
 				);
+
+				$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
 			}
 
 			return new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
