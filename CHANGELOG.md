@@ -19,6 +19,8 @@
   [#2003](https://github.com/nextcloud/cookbook/pull/2003) @j0hannesr0th
 - Fix yield not set calculation error
   [#2099](https://github.com/nextcloud/cookbook/pull/2099) @j0hannesr0th
+- Output correct stubs for tags, search and categories in the API
+  [#2270](https://github.com/nextcloud/cookbook/pull/2270) @christianlupus
 
 ### Documentation
 - Improve  structure of `README.md`
