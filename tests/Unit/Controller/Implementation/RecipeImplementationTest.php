@@ -178,6 +178,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$this->recipeService->method('getRecipesByCategory')->with($cat)->willReturn($recipes);
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		$expected = $this->getExpectedRecipes($recipes);
 
@@ -263,6 +264,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$this->recipeService->method('getRecipesByKeywords')->with($keywords)->willReturn($recipes);
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		$expected = $this->getExpectedRecipes($recipes);
 
@@ -336,6 +338,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$this->recipeService->expects($this->once())->method('findRecipesInSearchIndex')->with($query)->willReturn($recipes);
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		$expected = $this->getExpectedRecipes($recipes);
 
