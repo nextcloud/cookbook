@@ -14,7 +14,7 @@ import * as ModalDialogs from 'vue-modal-dialogs';
 
 import { linkTo } from '@nextcloud/router';
 import helpers from './js/helper';
-import navigation from 'cookbook/js/utils/navigation';
+import navigation from './js/utils/navigation';
 import setupLogging from './js/logging';
 
 import router from './router';
