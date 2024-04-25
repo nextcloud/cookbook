@@ -3,6 +3,28 @@
         <div v-if="isLoading || store.loadingRecipe" class="wrapper-inner">
             <RecipeViewLoadingSkeleton :delay="800" />
         </div>
+        <div v-else-if="loadingFailed">
+            <NcEmptyContent class="p-8">
+                <template #icon>
+                    <NoRecipeIcon />
+                </template>
+                <template #name>
+                    <h1 class="empty-content__name">
+                        {{ t('cookbook', 'Recipe not found') }}
+                    </h1>
+                </template>
+                <template #description>
+                    <h1 class="empty-content__name">
+                        {{
+                            t(
+                                'cookbook',
+                                'Either the recipe is unknown or loading has failed.',
+                            )
+                        }}
+                    </h1>
+                </template>
+            </NcEmptyContent>
+        </div>
         <div v-else class="wrapper-inner">
             <div v-if="$store.state.recipe" class="relative w-full">
                 <div
@@ -150,12 +172,10 @@
             </div>
 
             <div v-if="$store.state.recipe" class="content">
-                <!--                <section class="container">-->
                 <main v-if="recipe.instructions.length">
                     <h3>{{ t('cookbook', 'Instructions') }}</h3>
                     <RecipeInstructions :instructions="recipe.instructions" />
                 </main>
-                <!--                </section>-->
             </div>
         </div>
         <!-- RecipeView container -->
@@ -163,19 +183,26 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
-import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
+import {
+    computed,
+    getCurrentInstance,
+    inject,
+    onMounted,
+    ref,
+    watch,
+} from 'vue';
+import { useRoute } from 'vue-router/composables';
 
 import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
-import api from 'cookbook/js/utils/api-interface';
+import NoRecipeIcon from 'icons/FoodOff.vue';
 import helpers from 'cookbook/js/helper';
 import normalizeMarkdown from 'cookbook/js/title-rename';
-import { showSimpleAlertModal } from 'cookbook/js/modals';
 import RecipeInstructionsTool from 'cookbook/components/RecipeView/Instructions/RecipeInstructionsTool.vue';
-import emitter from '../../bus';
-import { useStore } from '../../store';
-import { parseDateTime } from '../../composables/dateTimeHandling';
+import emitter from 'cookbook/bus';
+import { useStore } from 'cookbook/store';
+import { parseDateTime } from 'cookbook/composables/dateTimeHandling';
 
 import RecipeViewLoadingSkeleton from './RecipeViewLoadingSkeleton.vue';
 import RecipeImages from './Images/RecipeImages.vue';
@@ -189,10 +216,26 @@ const route = useRoute();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
 
+// DI
+const RecipeRepository = inject('RecipeRepository');
+
+const props = defineProps({
+    id: {
+        type: Number,
+        default: null,
+        required: true,
+    },
+});
+
 /**
  * @type {import('vue').Ref<boolean>}
  */
 const isLoading = ref(false);
+/**
+ * True, if fetching the recipe data from the server failed.
+ * @type {import('vue').Ref<boolean>}
+ */
+const loadingFailed = ref(false);
 /**
  * @type {import('vue').Ref<string>}
  */
@@ -227,7 +270,7 @@ const recipe = computed(() => {
     };
 
     if (store.state.recipe === null) {
-        log.debug('Recipe is null');
+        log.debug('Recipe in store is null');
         return tmpRecipe;
     }
 
@@ -319,8 +362,9 @@ const visibleInfoBlocks = computed(
 // Methods
 // ===================
 
-const setup = async () => {
+async function setup() {
     isLoading.value = true;
+    loadingFailed.value = false;
 
     // Make the control row show that a recipe is loading
     if (!store.state.recipe) {
@@ -340,7 +384,8 @@ const setup = async () => {
     }
 
     try {
-        const tmpRecipe = await api.recipes.get(route.params.id);
+        // const tmpRecipe = await api.recipes.get(route.params.id);
+        const tmpRecipe = await RecipeRepository.getRecipeById(props.id);
 
         // Store recipe data in vuex
         store.dispatch('setRecipe', { recipe: tmpRecipe });
@@ -348,6 +393,8 @@ const setup = async () => {
         // Always set the active page last!
         store.dispatch('setPage', { page: 'recipe' });
     } catch (ex) {
+        loadingFailed.value = true;
+
         if (store.state.loadingRecipe) {
             // Reset loading recipe
             store.dispatch('setLoadingRecipe', { recipe: 0 });
@@ -359,15 +406,11 @@ const setup = async () => {
         }
 
         store.dispatch('setPage', { page: 'recipe' });
-
-        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
     } finally {
         isLoading.value = false;
     }
-
-    recipeYield.value = store.state.recipe.recipeYield;
-};
-
+    recipeYield.value = store.state.recipe?.recipeYield;
+}
 function copyIngredientsToClipboard() {
     recipeIngredients.value.copyIngredientsToClipboard();
 }
@@ -396,6 +439,18 @@ watch(
     },
 );
 
+/**
+ * (Re-)Load recipe data when the id has changed.
+ */
+watch(
+    () => props.id,
+    (newId, oldId) => {
+        if (newId !== oldId) {
+            setup();
+        }
+    },
+);
+
 // ===================
 // Vue lifecycle
 // ===================
@@ -408,14 +463,18 @@ watch(
  * This can also be used to confirm that the user wants to leave the page
  * if there are unsaved changes.
  */
-onBeforeRouteUpdate((to, from, next) => {
-    // beforeRouteUpdate is called when the static route stays the same
-    next();
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
-    }
-});
+// onBeforeRouteUpdate((to, from, next) => {
+//     // beforeRouteUpdate is called when the static route stays the same
+//     next();
+//     // Check if we should reload the component content
+//     if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
+//         console.log(
+//             `RecipeView: Route has changed to ${to.fullPath}, id is ${props.id}, setup()`,
+//         );
+//
+//         setup();
+//     }
+// });
 
 onMounted(() => {
     log.info('RecipeView mounted');
