@@ -15,7 +15,7 @@ import { asArray } from '../../helper';
 /** Options for creating a recipe */
 interface RecipeOptions {
 	/** The category of the recipe. */
-	recipeCategory?: string;
+	recipeCategory?: string | string[];
 	/** The timestamp of the recipe's creation date. */
 	dateCreated?: string;
 	/** The timestamp of the recipe's modification date. */
@@ -75,7 +75,7 @@ export default class Recipe extends BaseSchemaOrgModel {
 	public name: string;
 
 	/** The category of the recipe. */
-	public recipeCategory?: string;
+	public recipeCategory?: string | string[];
 
 	/** The original image Urls of the recipe. */
 	public image: string[];
@@ -132,7 +132,6 @@ export default class Recipe extends BaseSchemaOrgModel {
 		this['@context'] = 'https://schema.org';
 		this.identifier = identifier;
 		this.name = name;
-		// if (options) {
 		this.recipeCategory = options.recipeCategory || undefined;
 		this.description = options.description || undefined;
 		this.dateCreated = options.dateCreated || undefined;
@@ -192,7 +191,7 @@ export default class Recipe extends BaseSchemaOrgModel {
 		) as NonNullable<string>;
 
 		// Optional
-		const recipeCategory = mapString(
+		const recipeCategory = mapStringOrStringArray(
 			jsonObj.recipeCategory,
 			"Recipe 'recipeCategory'",
 			true,
@@ -249,6 +248,7 @@ export default class Recipe extends BaseSchemaOrgModel {
 			"Recipe 'recipeYield'",
 			true,
 		);
+
 		// Supported values for recipe instruction are: string, HowToSection, HowToStep or an array of those
 		const recipeInstructions = jsonObj.recipeInstructions
 			? asArray(jsonObj.recipeInstructions).map((instruction) => {
