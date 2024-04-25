@@ -1,10 +1,15 @@
 <template>
     <div v-if="recipe !== null" class="recipe-card">
-        <router-link :to="'/recipe/' + recipe.recipe_id">
+        <router-link
+            :to="{
+                path: `${route.path}/${recipe.identifier}`,
+                query: route.query,
+            }"
+        >
             <lazy-picture
                 v-if="recipe.imageUrl"
                 class="recipe-thumbnail"
-                :lazy-src="recipe.imageUrl"
+                :lazy-src="recipe.imageUrl[0]"
                 :blurred-preview-src="recipe.imagePlaceholderUrl"
                 width="105px"
                 height="105px"
@@ -43,9 +48,15 @@
 
 <script setup>
 import moment from '@nextcloud/moment';
-import LazyPicture from '../Utilities/LazyPicture.vue';
+import { useRoute } from 'vue-router/composables';
+import LazyPicture from 'cookbook/components/Utilities/LazyPicture.vue';
+
+const route = useRoute();
 
 defineProps({
+    /**
+     * @type {Recipe}
+     */
     recipe: {
         type: Object,
         default: () => null,
@@ -70,9 +81,8 @@ export default {
 
 <style scoped>
 .recipe-card {
-    width: 300px;
+    min-width: 300px;
     max-width: 100%;
-    margin: 0.5rem 1rem 1rem;
 }
 
 .recipe-card a {
