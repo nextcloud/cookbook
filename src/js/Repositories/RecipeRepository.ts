@@ -7,6 +7,7 @@ import {
 	mapApiRecipeResponseToRecipe,
 	mapRecipeToApiRecipe,
 } from 'cookbook/js/Api/Mappers/RecipeMappers';
+import { mapString } from 'cookbook/js/utils/jsonMapper';
 
 const baseUrl = `${generateUrl('apps/cookbook')}/webapp`;
 
@@ -78,14 +79,14 @@ class RecipeRepository {
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	async updateRecipe(id: string, recipe: Recipe): Promise<Recipe> {
+	async updateRecipe(id: string, recipe: Recipe): Promise<string> {
 		try {
 			const recipeDTO = mapRecipeToApiRecipe(recipe);
 			const response = await axios.put(
 				`${baseUrl}/recipes/${id}`,
 				recipeDTO,
 			);
-			return mapApiRecipeResponseToRecipe(response.data);
+			return mapString(response.data) as string;
 		} catch (error) {
 			Vue.$log.error(error);
 			throw new Error(`Failed to update recipe with ID ${id}`);
