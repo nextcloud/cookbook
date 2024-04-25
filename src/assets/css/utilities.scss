@@ -227,8 +227,8 @@
 }
 
 .my-2 {
-	margin-bottom: 0.5rem;
 	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
 }
 
 .-ml-1 {
@@ -238,7 +238,6 @@
 .-mr-1 {
 	margin-right: -0.25rem;
 }
-
 
 /** padding */
 
@@ -320,7 +319,6 @@
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 }
-
 
 .md\:px-4 {
 	@media (min-width: 768px) {

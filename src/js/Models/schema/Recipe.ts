@@ -179,7 +179,8 @@ export default class Recipe extends BaseSchemaOrgModel {
 			);
 		}
 
-		// Required
+		// ====================
+		// Required properties
 		const identifier = mapString(
 			jsonObj.identifier,
 			"Recipe 'identifier'",
@@ -190,7 +191,8 @@ export default class Recipe extends BaseSchemaOrgModel {
 			"Recipe 'name'",
 		) as NonNullable<string>;
 
-		// Optional
+		// ====================
+		// Optional properties
 		const recipeCategory = mapStringOrStringArray(
 			jsonObj.recipeCategory,
 			"Recipe 'recipeCategory'",
@@ -296,6 +298,7 @@ export default class Recipe extends BaseSchemaOrgModel {
 			: [];
 		const url = mapStringOrStringArray(jsonObj.url, "Recipe 'url'", true);
 
+		// ====================
 		// Create and return the Recipe instance
 		return new Recipe(identifier, name, {
 			recipeCategory: recipeCategory || undefined,

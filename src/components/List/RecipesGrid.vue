@@ -150,8 +150,8 @@ export default {
     row-gap: 1.5rem;
 
     li {
-        flex: 1 1 auto;
         max-width: 350px;
+        flex: 1 1 auto;
     }
 }
 </style>
