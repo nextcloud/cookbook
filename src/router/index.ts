@@ -5,18 +5,20 @@
  * @license AGPL3 or later
  */
 import Vue from 'vue';
-import VueRouter from 'vue-router';
+import VueRouter, { Route, RouteConfig } from 'vue-router';
 
+import RouteName from 'cookbook/js/Enums/RouteName';
+import { routeToQueryProp } from 'cookbook/js/utils/routeUtils';
 import RecipeViewSidebar from 'cookbook/components/RecipeView/Sidebar/RecipeViewSidebar.vue';
-import Index from '../components/AppIndex.vue';
-import NotFound from '../components/NotFound.vue';
-import RecipeView from '../components/RecipeView/RecipeView.vue';
-import RecipeEdit from '../components/RecipeEdit.vue';
-import Search from '../components/SearchResults.vue';
+import Index from 'cookbook/components/AppIndex.vue';
+import NotFound from 'cookbook/components/NotFound.vue';
+import RecipeView from 'cookbook/components/RecipeView/RecipeView.vue';
+import RecipeEdit from 'cookbook/components/RecipeEdit.vue';
+import SearchResults from 'cookbook/components/SearchResults.vue';
 
 Vue.use(VueRouter);
 
-// The router will try to match routers in a descending order.
+// The router will try to match routers in descending order.
 // Routes that share the same root, must be listed from the
 //  most descriptive to the least descriptive, e.g.
 //  /section/component/subcomponent/edit/:id
@@ -24,31 +26,173 @@ Vue.use(VueRouter);
 //  /section/component/subcomponent/:id
 //  /section/component/:id
 //  /section/:id
-const routes = [
+const routes: RouteConfig[] = [
 	// Search routes
 	{
 		path: '/category/:value',
-		name: 'search-category',
-		component: Search,
-		props: { query: 'cat' },
+		name: RouteName.SearchRecipesByCategory,
+		components: { default: SearchResults, 'content-list': SearchResults },
+		props: {
+			default: (route: Route) => ({
+				query: 'cat',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'cat',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+		},
 	},
+	{
+		path: '/category/:value/:id',
+		name: RouteName.ShowRecipeInCategory,
+		components: {
+			default: RecipeView,
+			'content-list': SearchResults,
+			'main-view__active-list': RecipeView,
+			sidebar: RecipeViewSidebar,
+		},
+		props: {
+			default: (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'cat',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'main-view__active-list': (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+		},
+	},
+
+	// Name
 	{
 		path: '/name/:value',
-		name: 'search-name',
-		component: Search,
-		props: { query: 'name' },
+		name: RouteName.SearchRecipesByName,
+		components: { default: SearchResults, 'content-list': SearchResults },
+		props: {
+			default: (route: Route) => ({
+				query: 'name',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'name',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+		},
 	},
+	{
+		path: '/name/:value/:id',
+		name: RouteName.ShowRecipeInNames,
+		components: {
+			default: RecipeView,
+			'content-list': SearchResults,
+			'main-view__active-list': RecipeView,
+			sidebar: RecipeViewSidebar,
+		},
+		props: {
+			default: (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'name',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'main-view__active-list': (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+		},
+	},
+
+	// General search
 	{
 		path: '/search/:value',
-		name: 'search-general',
-		component: Search,
-		props: { query: 'general' },
+		name: RouteName.SearchRecipesByAnything,
+		components: { default: SearchResults, 'content-list': SearchResults },
+		props: {
+			default: (route: Route) => ({
+				query: 'general',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'general',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+		},
 	},
 	{
+		path: '/search/:value/:id',
+		name: RouteName.ShowRecipeInGeneralSearch,
+		components: {
+			default: RecipeView,
+			'content-list': SearchResults,
+			'main-view__active-list': RecipeView,
+			sidebar: RecipeViewSidebar,
+		},
+		props: {
+			default: (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'general',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'main-view__active-list': (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+		},
+	},
+
+	// Tags
+	{
 		path: '/tags/:value',
-		name: 'search-tags',
-		component: Search,
-		props: { query: 'tags' },
+		name: RouteName.SearchRecipesByTags,
+		components: { default: SearchResults, 'content-list': SearchResults },
+		props: {
+			default: (route: Route) => ({
+				query: 'tags',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'tags',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+		},
+	},
+	{
+		path: '/tags/:value/:id',
+		name: RouteName.ShowRecipeInTags,
+		components: {
+			default: RecipeView,
+			'content-list': SearchResults,
+			'main-view__active-list': RecipeView,
+			sidebar: RecipeViewSidebar,
+		},
+		props: {
+			default: (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'tags',
+				value: `"${route.params.value}"`,
+				searchQuery: routeToQueryProp(route),
+			}),
+			'main-view__active-list': (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+		},
 	},
 
 	// Recipe routes
