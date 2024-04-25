@@ -14,6 +14,7 @@ import * as ModalDialogs from 'vue-modal-dialogs';
 
 import { linkTo } from '@nextcloud/router';
 import helpers from './js/helper';
+import navigation from 'cookbook/js/utils/navigation';
 import setupLogging from './js/logging';
 
 import router from './router';
@@ -60,6 +61,7 @@ __webpack_public_path__ = `${linkTo('cookbook', 'js')}/`;
 __webpack_nonce__ = btoa(window.OC.requestToken);
 
 helpers.useRouter(router);
+navigation.useRouter(router);
 
 // A simple function to sanitize HTML tags
 // eslint-disable-next-line no-param-reassign
