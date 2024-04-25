@@ -5,9 +5,11 @@
  * @license AGPL3 or later
  */
 import Vue from 'vue';
-import Vuex from 'vuex';
+import Vuex, { StoreOptions } from 'vuex';
 import api from 'cookbook/js/utils/api-interface';
 import { Recipe } from 'cookbook/js/Models/schema';
+import RecipeFilter from 'cookbook/js/RecipeFilters/RecipeFilter';
+import ListStyle from 'cookbook/js/Enums/ListStyle';
 
 Vue.use(Vuex);
 
@@ -18,8 +20,34 @@ function showFiltersInRecipeList(): string {
 	return localStorage.getItem('showFiltersInRecipeList') || 'true';
 }
 
+/**
+ *  Interface defining the shape of the Vuex state.
+ */
+interface State {
+	appNavigation: {
+		visible: boolean;
+		refreshRequired: boolean;
+	};
+	user: string | null;
+	page: string | null;
+	recipe: Recipe | null;
+	recipeFilters: RecipeFilter[];
+	loadingRecipe: number;
+	reloadingRecipe: number;
+	savingRecipe: boolean;
+	updatingRecipeDirectory: boolean;
+	categoryUpdating: boolean | null;
+	localSettings: {
+		showFiltersInRecipeList: boolean;
+		recipesListStyle: ListStyle; // Assuming ListStyle is defined elsewhere
+	};
+	config: object | null;
+}
+
 // We are using the vuex store linking changes within the components to updates in the navigation panel.
-const store = new Vuex.Store({
+
+// Create the store with type annotations
+const storeOptions: StoreOptions<State> = {
 	// Vuex store handles value changes through actions and mutations.
 	// From the App, you trigger an action, that changes the store
 	//  state through a set mutation. You can process the data within
@@ -42,9 +70,11 @@ const store = new Vuex.Store({
 		 * @type {Object|null}
 		 */
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		recipe: <any>null,
-		// Filter applied to a list of recipes
-		recipeFilters: '',
+		recipe: null as Recipe | null,
+		/** List of filters applied to a list of recipes
+		 * @type {RecipeFilter[]}
+		 */
+		recipeFilters: [],
 		// Loading and saving states to determine which loader icons to show.
 		// State of -1 is reserved for recipe and edit views to be set when the
 		// User loads the app at one of these locations and has to wait for an
@@ -57,9 +87,11 @@ const store = new Vuex.Store({
 		// Updating the recipe directory is in progress
 		updatingRecipeDirectory: false,
 		// Category which is being updated (name)
-		categoryUpdating: null,
+		categoryUpdating: null as boolean | null,
 		localSettings: {
 			showFiltersInRecipeList: true,
+			recipesListStyle: ListStyle.List,
+			// recipesListStyle: ListStyle.Grid,
 		},
 		config: null,
 	},
@@ -105,10 +137,21 @@ const store = new Vuex.Store({
 		},
 		setRecipeCategory(state, { c }) {
 			if (state.recipe !== null) {
-				state.recipe.category = c;
+				state.recipe.recipeCategory = c;
 			}
 		},
-		setRecipeFilters(state, { f }) {
+		addRecipeFilter(
+			state,
+			{ newFilter }: { newFilter: RecipeFilter },
+		): void {
+			const isDuplicate = state.recipeFilters.some((existingFilter) =>
+				existingFilter.equals(newFilter),
+			);
+			if (!isDuplicate) {
+				state.recipeFilters.push(newFilter);
+			}
+		},
+		setRecipeFilters(state, { f }: { f: RecipeFilter[] }): void {
 			state.recipeFilters = f;
 		},
 		setReloadingRecipe(state, { r }) {
@@ -137,14 +180,6 @@ const store = new Vuex.Store({
 			const config = (await api.config.get()).data;
 			c.commit('setConfig', { config });
 		},
-
-		/*
-		 * Clears all filters currently applied for listing recipes.
-		 */
-		clearRecipeFilters(c) {
-			c.commit('setRecipeFilters', { f: '' });
-		},
-
 		/**
 		 * Create new recipe on the server
 		 */
@@ -187,9 +222,21 @@ const store = new Vuex.Store({
 		setRecipe(c, { recipe }: { recipe: Recipe }) {
 			c.commit('setRecipe', { r: recipe });
 		},
-		setRecipeFilters(c, filters) {
+
+		// ========================
+		// Recipe filtering
+		addRecipeFilter(c, newFilter: RecipeFilter): void {
+			c.commit('addRecipeFilters', { newFilter });
+		},
+		/* Clears all filters currently used for listing recipes. */
+		clearRecipeFilters(c) {
+			c.commit('setRecipeFilters', { f: [] });
+		},
+		setRecipeFilters(c, filters: RecipeFilter[]): void {
 			c.commit('setRecipeFilters', { f: filters });
 		},
+		// ========================
+
 		setReloadingRecipe(c, { recipe }) {
 			c.commit('setReloadingRecipe', { r: parseInt(recipe, 10) });
 		},
@@ -259,7 +306,9 @@ const store = new Vuex.Store({
 			return request;
 		},
 	},
-});
+};
+
+const store = new Vuex.Store<State>(storeOptions);
 
 // eslint-disable-next-line import/prefer-default-export
 export const useStore = () => store;
