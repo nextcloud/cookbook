@@ -1,37 +1,44 @@
 <template>
     <NcAppContentList v-if="useRecipesList" class="content-list">
-        <div v-if="showFiltersInRecipeList">
-            <RecipeFilterControlsModal
-                v-model="filterControlsValue"
-                :recipes="recipes"
-                :is-loading="loading"
-                :hide-filter-types="hideFilterTypes"
-                class="ml-12 mr-1 mt-2 mb-2"
-                @input="handleFilterControlsValueUpdated"
-            />
+        <div v-if="loading" class="mt-12">
+            <RecipesListLoadingSkeleton :delay="800" />
         </div>
-        <ul>
-            <RecipesListItem
-                v-for="recipeObj in recipeObjects"
-                v-show="recipeObj.show"
-                :key="recipeObj.recipe.id"
-                :recipe="recipeObj.recipe"
-                :renaming="isRenaming(recipeObj.recipe.id)"
-                @recipe-selected="onRecipeSelected"
-                @start-renaming="onStartRenaming"
-                @recipe-deletion-requested="onDeleteRecipe"
-            />
-        </ul>
+        <div v-else>
+            <div v-if="showFiltersInRecipeList">
+                <RecipeFilterControlsModal
+                    v-model="filterControlsValue"
+                    :recipes="recipes"
+                    :is-loading="loading"
+                    :hide-filter-types="hideFilterTypes"
+                    class="ml-12 mr-1 mt-2 mb-2"
+                    @input="handleFilterControlsValueUpdated"
+                />
+            </div>
+            <ul>
+                <RecipesListItem
+                    v-for="recipeObj in recipeObjects"
+                    v-show="recipeObj.show"
+                    :key="recipeObj.recipe.id"
+                    :recipe="recipeObj.recipe"
+                    :renaming="isRenaming(recipeObj.recipe.id)"
+                    @recipe-selected="onRecipeSelected"
+                    @start-renaming="onStartRenaming"
+                    @recipe-deletion-requested="onDeleteRecipe"
+                />
+            </ul>
+        </div>
     </NcAppContentList>
 </template>
 
 <script setup>
 import { computed, inject, ref, watch } from 'vue';
 import NcAppContentList from '@nextcloud/vue/dist/Components/NcAppContentList.js';
+import RecipesListLoadingSkeleton from 'cookbook/components/List/Loading/RecipesListLoadingSkeleton.vue';
 import RecipeFilterControlsModal from 'cookbook/components/List/RecipeFilterControlsModal.vue';
 import RecipesListItem from 'cookbook/components/List/RecipeListItem.vue';
 import ListStyle from 'cookbook/js/Enums/ListStyle';
 import useRecipeFiltering from 'cookbook/composables/useRecipeFiltering';
+import RecipeViewLoadingSkeleton from 'cookbook/components/RecipeView/RecipeViewLoadingSkeleton.vue';
 
 // DI
 const store = inject('Store');
