@@ -129,12 +129,17 @@ export function mapString(
 	}
 
 	// Only strings can be mapped. Early return.
-	if (typeof value !== 'string') {
-		throw new JsonMappingException(
-			`Error mapping ${targetName}. Expected string but received "${typeof value}".`,
-		);
+	if (typeof value === 'string') {
+		// `value` is a string, return.
+		return value;
 	}
 
-	// `value` is a string, return.
-	return value;
+	// `value` is an integer, map to string.
+	if (Number.isInteger(value)) {
+		return value.toString();
+	}
+
+	throw new JsonMappingException(
+		`Error mapping ${targetName}. Expected string but received "${typeof value}".`,
+	);
 }
