@@ -12,7 +12,8 @@
 export function normalize(
     str,
     toLowercase = true,
-    removeSpaces = true,
+    removeAllSpaces = false,
+    trim = true,
     removeDiacritics = true,
     substituteLetters = true,
 ) {
@@ -23,8 +24,11 @@ export function normalize(
     if (removeDiacritics) {
         r = r.normalize('NFD').replace(/\p{Diacritic}/gu, '');
     }
-    if (removeSpaces) {
+    if (removeAllSpaces) {
         r = r.replace(/\s/g, '');
+    }
+    if (trim) {
+        r.trim();
     }
     if (substituteLetters) {
         r = r.replace(/æ/g, 'ae');
