@@ -181,12 +181,24 @@
 	margin-left: 0.75rem;
 }
 
+.ml-4 {
+	margin-left: 1rem;
+}
+
+.ml-12 {
+	margin-left: 3rem;
+}
+
 .mr-1 {
 	margin-right: 0.25rem;
 }
 
 .mr-2 {
 	margin-right: 0.5rem;
+}
+
+.mr-3 {
+	margin-right: 0.75rem;
 }
 
 .mr-4 {
@@ -214,9 +226,19 @@
 	margin-left: 0;
 }
 
+.my-2 {
+	margin-bottom: 0.5rem;
+	margin-top: 0.5rem;
+}
+
 .-ml-1 {
 	margin-left: -0.25rem;
 }
+
+.-mr-1 {
+	margin-right: -0.25rem;
+}
+
 
 /** padding */
 
@@ -226,6 +248,10 @@
 
 .p-4 {
 	padding: 1rem;
+}
+
+.p-8 {
+	padding: 2rem;
 }
 
 .pb-2 {
@@ -242,6 +268,14 @@
 
 .pl-3 {
 	padding-left: 0.75rem;
+}
+
+.pl-4 {
+	padding-left: 1rem;
+}
+
+.pr-3 {
+	padding-right: 0.75rem;
 }
 
 .pt-2 {
@@ -267,6 +301,16 @@
 	padding-left: 0.75rem;
 }
 
+.px-3\.5 {
+	padding-right: 0.875rem;
+	padding-left: 0.875rem;
+}
+
+.px-4 {
+	padding-right: 1rem;
+	padding-left: 1rem;
+}
+
 .py-0\.5 {
 	padding-top: 0.125rem;
 	padding-bottom: 0.125rem;
@@ -275,6 +319,21 @@
 .py-2 {
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
+}
+
+
+.md\:px-4 {
+	@media (min-width: 768px) {
+		padding-right: 1rem;
+		padding-left: 1rem;
+	}
+}
+
+.md\:px-8 {
+	@media (min-width: 768px) {
+		padding-right: 2rem;
+		padding-left: 2rem;
+	}
 }
 
 /** gap */
