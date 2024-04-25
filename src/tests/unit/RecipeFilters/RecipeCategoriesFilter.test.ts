@@ -1,25 +1,32 @@
-import RecipeCategoriesFilter from '../../../js/RecipeFilters/RecipeCategoriesFilter';
-import { AndOperator, OrOperator } from '../../../js/LogicOperators';
+import RecipeCategoriesFilter from 'cookbook/js/RecipeFilters/RecipeCategoriesFilter';
+import { AndOperator, OrOperator } from 'cookbook/js/LogicOperators';
+import { Recipe } from 'cookbook/js/Models/schema';
+
+function createRecipeWithCategories(categories: string | string[]): Recipe {
+	const recipe = new Recipe('123', 'recipe');
+	recipe.recipeCategory = categories;
+	return recipe;
+}
 
 /**
  * Test suite for the RecipeCategoriesFilter class.
  */
 describe('RecipeCategoriesFilter', () => {
 	/** @type {Object[]} recipes - Array of recipe objects for testing. */
-	const recipes = [
-		{ category: 'main course' },
-		{ category: ['salad', 'appetizer'] },
-		{ category: 'dessert' },
-		{ category: ['vegetarian', 'pizza'] },
-		{ category: ['pizza', 'appetizer'] },
-		{ category: 'pizza' },
-		{ category: ['pasta', 'main course'] },
-		{ category: 'breakfast' },
-		{ category: ['cake', 'dessert'] },
-		{ category: ['cake', 'dessert', 'gluten-free'] },
-		{ category: ['soufflé', 'dessert'] },
-		{ category: ['cake', 'gluten-free'] },
-		{ category: 'cake' },
+	const recipes: Recipe[] = [
+		createRecipeWithCategories('main course'),
+		createRecipeWithCategories(['salad', 'appetizer']),
+		createRecipeWithCategories('dessert'),
+		createRecipeWithCategories(['vegetarian', 'pizza']),
+		createRecipeWithCategories(['pizza', 'appetizer']),
+		createRecipeWithCategories('pizza'),
+		createRecipeWithCategories(['pasta', 'main course']),
+		createRecipeWithCategories('breakfast'),
+		createRecipeWithCategories(['cake', 'dessert']),
+		createRecipeWithCategories(['cake', 'dessert', 'gluten-free']),
+		createRecipeWithCategories(['soufflé', 'dessert']),
+		createRecipeWithCategories(['cake', 'gluten-free']),
+		createRecipeWithCategories('cake'),
 	];
 
 	/**
@@ -34,8 +41,11 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(2);
-		expect(filteredRecipes[0].category).toBe('main course');
-		expect(filteredRecipes[1].category).toEqual(['pasta', 'main course']);
+		expect(filteredRecipes[0].recipeCategory).toBe('main course');
+		expect(filteredRecipes[1].recipeCategory).toEqual([
+			'pasta',
+			'main course',
+		]);
 	});
 
 	/**
@@ -47,7 +57,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(3);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			['vegetarian', 'pizza'],
 			['pizza', 'appetizer'],
 			'pizza',
@@ -66,7 +76,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(1);
-		expect(filteredRecipes[0].category).toBe('breakfast');
+		expect(filteredRecipes[0].recipeCategory).toBe('breakfast');
 	});
 
 	/**
@@ -81,7 +91,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(1);
-		expect(filteredRecipes[0].category).toBe('breakfast');
+		expect(filteredRecipes[0].recipeCategory).toBe('breakfast');
 	});
 
 	/**
@@ -96,8 +106,8 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(2);
-		expect(filteredRecipes[0].category).toEqual(['cake', 'dessert']);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes[0].recipeCategory).toEqual(['cake', 'dessert']);
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			['cake', 'dessert'],
 			['cake', 'dessert', 'gluten-free'],
 		]);
@@ -115,7 +125,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(5);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			'dessert',
 			'breakfast',
 			['cake', 'dessert'],
@@ -136,7 +146,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(1);
-		expect(filteredRecipes[0].category).toBe('breakfast');
+		expect(filteredRecipes[0].recipeCategory).toBe('breakfast');
 	});
 
 	/**
@@ -148,7 +158,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(recipes.length);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			'main course',
 			['salad', 'appetizer'],
 			'dessert',
@@ -174,7 +184,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(recipes.length);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			'main course',
 			['salad', 'appetizer'],
 			'dessert',
@@ -200,7 +210,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(recipes.length);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			'main course',
 			['salad', 'appetizer'],
 			'dessert',
@@ -226,7 +236,7 @@ describe('RecipeCategoriesFilter', () => {
 			filter.filter(recipe),
 		);
 		expect(filteredRecipes).toHaveLength(recipes.length);
-		expect(filteredRecipes.map((recipe) => recipe.category)).toEqual([
+		expect(filteredRecipes.map((recipe) => recipe.recipeCategory)).toEqual([
 			'main course',
 			['salad', 'appetizer'],
 			'dessert',
@@ -241,5 +251,47 @@ describe('RecipeCategoriesFilter', () => {
 			['cake', 'gluten-free'],
 			'cake',
 		]);
+	});
+
+	/**
+	 * Test case: it should handle comparison with equal filters correctly.
+	 */
+	test('it should handle comparison with equal filters correctly', () => {
+		const filter = new RecipeCategoriesFilter(
+			['dessert', 'main course'],
+			new AndOperator(),
+		);
+		const sameFilter = new RecipeCategoriesFilter(
+			['dessert', 'main course'],
+			new AndOperator(),
+		);
+
+		expect(filter.equals(sameFilter)).toBeTruthy();
+	});
+
+	/**
+	 * Test case: it should handle comparison with unequal filters correctly.
+	 */
+	test('it should handle comparison with unequal filters correctly', () => {
+		const filter = new RecipeCategoriesFilter(
+			['dessert', 'main course'],
+			new AndOperator(),
+		);
+		const differentFilter = new RecipeCategoriesFilter(
+			['dessert'],
+			new AndOperator(),
+		);
+		const differentFilter2 = new RecipeCategoriesFilter(
+			['dessert', 'lunch'],
+			new AndOperator(),
+		);
+		const differentFilter3 = new RecipeCategoriesFilter(
+			['dessert', 'main course'],
+			new OrOperator(),
+		);
+
+		expect(filter.equals(differentFilter)).toBeFalsy();
+		expect(filter.equals(differentFilter2)).toBeFalsy();
+		expect(filter.equals(differentFilter3)).toBeFalsy();
 	});
 });

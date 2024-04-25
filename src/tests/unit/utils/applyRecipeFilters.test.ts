@@ -1,7 +1,9 @@
 // eslint-disable-next-line max-classes-per-file
-import applyFilters from '../../../js/utils/applyRecipeFilters';
-import RecipeFilter from '../../../js/RecipeFilters/RecipeFilter';
-import { AndOperator } from '../../../js/LogicOperators';
+import applyFilters from 'cookbook/js/utils/applyRecipeFilters';
+import RecipeFilter from 'cookbook/js/RecipeFilters/RecipeFilter';
+import { Recipe } from 'cookbook/js/Models/schema';
+import { AndOperator } from 'cookbook/js/LogicOperators';
+
 // Mocked filter classes
 class MockFilter extends RecipeFilter {
 	constructor(predicate) {
@@ -10,37 +12,28 @@ class MockFilter extends RecipeFilter {
 	}
 }
 
+function createRecipe(
+	name: string,
+	keywords: string[],
+	category: string | string[],
+) {
+	const recipe = new Recipe('123', name);
+	recipe.keywords = keywords;
+	recipe.recipeCategory = category;
+	return recipe;
+}
+
 /**
  * Test suite for the applyFilters method.
  */
 describe('applyFilters', () => {
 	/** @type {Object[]} recipes - Array of recipe objects for testing. */
 	const recipes = [
-		{
-			name: 'Pasta Carbonara',
-			keywords: ['pasta', 'italian'],
-			recipeCategory: ['main course'],
-		},
-		{
-			name: 'Pasta Carbonara',
-			keywords: ['italian'],
-			recipeCategory: ['main course'],
-		},
-		{
-			name: 'Pasta Carbonara',
-			keywords: ['pasta', 'creamy'],
-			recipeCategory: ['main course'],
-		},
-		{
-			name: 'Chocolate Cake',
-			keywords: ['chocolate', 'cake'],
-			recipeCategory: ['dessert'],
-		},
-		{
-			name: 'Salad',
-			keywords: ['healthy', 'salad'],
-			recipeCategory: ['appetizer'],
-		},
+		createRecipe('Pasta Carbonara', ['pasta', 'italian'], ['main course']),
+		createRecipe('Pasta Carbonara', ['italian'], ['main course']),
+		createRecipe('Pasta Carbonara', ['pasta', 'creamy'], ['main course']),
+		createRecipe('Chocolate Cake', ['chocolate', 'cake'], ['dessert']),
+		createRecipe('Salad', ['healthy', 'salad'], ['appetizer']),
 	];
 
 	/**
