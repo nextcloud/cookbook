@@ -231,11 +231,12 @@ import {
     showSimpleConfirmModal,
 } from 'cookbook/js/modals';
 
-import LocationIndicator from './LocationIndicator.vue';
+import { useIsMobile } from 'cookbook/composables/useIsMobile';
+import { useStore } from 'cookbook/store';
+import emitter from 'cookbook/bus';
+import RouteName from 'cookbook/js/Enums/RouteName';
 import ModeIndicator from './ModeIndicator.vue';
-import { useIsMobile } from '../../composables/useIsMobile';
-import { useStore } from '../../store';
-import emitter from '../../bus';
+import LocationIndicator from './LocationIndicator.vue';
 
 const emit = defineEmits(['toggle-sidebar']);
 
@@ -301,13 +302,13 @@ const recipeNotFound = computed(
         !store.state.recipe,
 );
 const searchTitle = computed(() => {
-    if (route.name === 'search-category') {
+    if (route.name === RouteName.SearchRecipesByCategory) {
         return t('cookbook', 'Category');
     }
-    if (route.name === 'search-name') {
+    if (route.name === RouteName.SearchRecipesByName) {
         return t('cookbook', 'Recipe name');
     }
-    if (route.name === 'search-tags') {
+    if (route.name === RouteName.SearchRecipesByTags) {
         return t('cookbook', 'Tags');
     }
     return t('cookbook', 'Search for recipes');
