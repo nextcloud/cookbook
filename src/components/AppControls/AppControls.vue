@@ -3,14 +3,7 @@
         <!-- Use $page for page matching to make sure everything else has been set beforehand! -->
         <div class="status-header">
             <ModeIndicator v-if="isSearch" :title="searchTitle" />
-            <ModeIndicator
-                v-else-if="isEdit"
-                :title="t('cookbook', 'Editing recipe')"
-            />
-            <ModeIndicator
-                v-else-if="isRecipe"
-                :title="t('cookbook', 'Viewing recipe')"
-            />
+
             <!-- INDEX PAGE -->
             <LocationIndicator
                 v-if="isIndex"
