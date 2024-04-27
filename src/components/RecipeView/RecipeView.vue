@@ -521,9 +521,9 @@ h3 {
 
 :deep(h4) {
     padding: 0.5rem 0.5rem 0.2rem;
+    color: var(--color-text-lighter);
     font-size: 1.1rem;
     font-weight: 200;
-    color: var(--color-text-lighter);
 }
 
 .wrapper {
@@ -549,7 +549,7 @@ h3 {
 .title-container {
     bottom: 15px;
     left: 0;
-    padding: 0.25rem 0.6rem 0.3rem;
+    padding: 0.25rem 16px 0.3rem;
     background: black;
     filter: var(--background-invert-if-dark);
     .heading {
@@ -583,7 +583,7 @@ h3 {
 .header {
     display: grid;
 
-    padding: 1rem;
+    padding: 16px;
     gap: 0.75rem;
     grid-template-areas:
         'meta'
@@ -614,8 +614,6 @@ h3 {
 }
 
 .meta {
-    padding: 0 1em;
-
     grid-area: meta;
 
     .details {
@@ -637,6 +635,7 @@ h3 {
 
 section {
     margin-bottom: 1rem;
+    padding: 0;
 }
 
 section::after {
