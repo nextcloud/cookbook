@@ -23,6 +23,8 @@
 ### Documentation
 - Improve  structure of `README.md`
   [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
+- Fix wrong type definition in OpenAPI specs
+  [#2232](https://github.com/nextcloud/cookbook/pull/2232) @Leptopoda
 
 ### Maintenance
 - Add Typescript support
