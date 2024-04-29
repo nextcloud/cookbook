@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div ref="appControls" class="wrapper">
         <!-- Use $page for page matching to make sure everything else has been set beforehand! -->
         <div class="status-header">
             <ModeIndicator v-if="isSearch" :title="searchTitle" />
@@ -55,10 +55,10 @@
             :aria-label="t('cookbook', 'Edit')"
             @click="goToRecipeEdit(store.state.recipe.id)"
         >
-            <template #icon>
+            <template slot="icon">
                 <PencilIcon :size="20" />
             </template>
-            {{ t('cookbook', 'Edit') }}
+            <template v-if="isWide">{{ t('cookbook', 'Edit') }}</template>
         </NcButton>
         <NcButton
             v-if="isEdit || isCreate"
@@ -199,7 +199,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router/composables';
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
@@ -248,8 +248,20 @@ const isMobile = useIsMobile();
 const route = useRoute();
 const store = useStore();
 const filterValue = ref('');
+const isWide = ref(true);
 
-/** Computed values * */
+/**
+ * Reference to the controls container element.
+ * @type {import('vue').Ref<UnwrapRef<HTMLElement|null>>}
+ */
+const appControls = ref(null);
+
+watch(
+    () => appControls.value?.getBoundingClientRect(),
+    (rect) => {
+        isWide.value = rect.width > 768;
+    },
+);
 
 const isCreate = computed(() => store.state.page === 'create');
 const isEdit = computed(() => {
