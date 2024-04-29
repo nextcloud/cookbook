@@ -12,7 +12,7 @@
 
             <div
                 class="instructions-section__inner-container"
-                :class="isSuppliesSectionVisible ? '' : 'supplies-hidden'"
+                :class="doesSuppliesSectionHaveContent ? '' : 'supplies-hidden'"
             >
                 <div
                     v-if="section.description"
@@ -28,33 +28,47 @@
                     <!--        <div>{{ section.image }}</div>-->
                     <CbDivider
                         :divider-type="DividerType.Middle"
-                        :light="true"
+                        :light="false"
                     />
                 </div>
-                <div
-                    v-if="isSuppliesSectionVisible"
-                    class="section-supplies-container"
-                >
-                    <ul
-                        v-if="collectedSupplies.length > 0"
-                        class="supplies flex flex-row flex-wrap gap-x-2 mb-4 px-3 py-2 border-2 rounded"
-                    >
-                        <RecipeInstructionsIngredient
-                            v-for="(supply, idx) in collectedSupplies"
-                            :key="`${parentId}_section-${section.name}_supply-${idx}`"
-                            :ingredient="supply"
-                            :add-comma-separator="
-                                idx < collectedSupplies.length - 1
-                            "
-                        />
-                    </ul>
-                    <ul v-if="collectedTools.length > 0" class="tools mb-4">
-                        <RecipeInstructionsTool
-                            v-for="(tool, idx) in collectedTools"
-                            :key="`${parentId}_section-${section.name}_tool-${idx}`"
-                            :tool="tool"
-                        />
-                    </ul>
+                <div class="section-supplies-container">
+                    <div v-if="doesSuppliesSectionHaveContent">
+                        <ul
+                            v-if="collectedSupplies.length > 0"
+                            class="supplies flex flex-row flex-wrap gap-x-2 mb-4 px-3 py-2 border-2 rounded"
+                        >
+                            <RecipeInstructionsIngredient
+                                v-for="(supply, idx) in collectedSupplies"
+                                :key="`${parentId}_section-${section.name}_supply-${idx}`"
+                                :ingredient="supply"
+                                :add-comma-separator="
+                                    idx < collectedSupplies.length - 1
+                                "
+                            />
+                        </ul>
+                        <ul v-if="collectedTools.length > 0" class="tools mb-4">
+                            <RecipeInstructionsTool
+                                v-for="(tool, idx) in collectedTools"
+                                :key="`${parentId}_section-${section.name}_tool-${idx}`"
+                                :tool="tool"
+                            />
+                        </ul>
+                    </div>
+                    <div v-else>
+                        <span style="color: var(--color-text-maxcontrast)">{{
+                            t(
+                                'cookbook',
+                                'No ingredients or tools defined for this section.',
+                            )
+                        }}</span>
+                        <div class="pt-2">
+                            <router-link
+                                class="underline"
+                                :to="editLinkTarget"
+                                >{{ t('cookbook', 'Add') }}</router-link
+                            >
+                        </div>
+                    </div>
                 </div>
 
                 <div class="section-instructions">
@@ -91,8 +105,10 @@ import RecipeInstructionsIngredient from './RecipeInstructionsIngredient.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
 import RecipeInstructionsTool from './RecipeInstructionsTool.vue';
+import { useRoute } from 'vue-router/composables';
 
 const log = getCurrentInstance().proxy.$log;
+const route = useRoute();
 
 const props = defineProps({
     /** @type {HowToSection|null} */
@@ -146,9 +162,18 @@ const collectedTools = computed(() => {
 });
 
 /** If the section containing ingredients and tools should be displayed. */
-const isSuppliesSectionVisible = computed(
+const doesSuppliesSectionHaveContent = computed(
     () => collectedTools.value.length > 0 || collectedSupplies.value.length > 0,
 );
+
+/**
+ * Path to the editor page for the recipe.
+ * @type {import('vue').ComputedRef<{path: string, query: Dictionary<string | (string | null)[]>}>}
+ */
+const editLinkTarget = computed(() => ({
+    path: `${route.path}/edit`,
+    query: route.query,
+}));
 
 // ===================
 // Methods
@@ -216,7 +241,7 @@ li.instructions-section-root {
 
     .instructions-section__inner-container {
         display: grid;
-        gap: 0.75rem;
+        gap: 0.75rem 1.5rem;
         grid-template-areas:
             'description'
             'supplies'
@@ -232,7 +257,8 @@ li.instructions-section-root {
             grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
         }
 
-        &.supplies-hidden {
+        /* If we would want to hide supplies section: */
+        /*        &.supplies-hidden {
             grid-template-areas:
                 'description'
                 'instructions';
@@ -243,7 +269,7 @@ li.instructions-section-root {
                     'instructions instructions';
                 grid-template-columns: minmax(200px, 1fr) minmax(300px, 2fr);
             }
-        }
+        }*/
 
         .section-description {
             grid-area: description;
