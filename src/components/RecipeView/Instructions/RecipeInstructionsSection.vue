@@ -6,9 +6,9 @@
             :rounded="true"
             style="background-color: var(--color-background-hover)"
         >
-            <div v-if="section.name" class="instructions-section__title">
+            <h4 v-if="section.name" class="instructions-section__title">
                 {{ section.name }}
-            </div>
+            </h4>
 
             <div
                 class="instructions-section__inner-container"
@@ -235,8 +235,10 @@ li.instructions-section-root {
 
     .instructions-section__title {
         margin-bottom: 1.3rem;
+        padding: 0;
         font-size: 1.7rem;
         font-weight: 300;
+        color: var(--color-main-text);
     }
 
     .instructions-section__inner-container {
