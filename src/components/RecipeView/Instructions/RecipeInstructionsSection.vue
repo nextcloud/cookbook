@@ -196,15 +196,17 @@ function childComponentProps(item, index) {
 </script>
 
 <style scoped lang="scss">
+$sectionHorizontalPadding: 16px;
+
 li.instructions-section-root {
     list-style-type: none;
 }
 
 .instructions-section {
-    padding: 1.5em 1.8em 2em;
+    padding: 1.5em $sectionHorizontalPadding 2em;
     border: solid 1px var(--color-border);
     border-radius: 5px;
-    margin: 1em 0 3em;
+    margin: 1em (-$sectionHorizontalPadding) 3em;
 
     .instructions-section__title {
         margin-bottom: 1.3rem;

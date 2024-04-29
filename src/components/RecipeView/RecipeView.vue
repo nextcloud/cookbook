@@ -157,10 +157,7 @@
                             {{ t('cookbook', 'Tools') }}
                         </h3>
 
-                        <ul
-                            v-if="recipe.tools.length > 0"
-                            class="tools mb-4 pl-2"
-                        >
+                        <ul v-if="recipe.tools.length > 0" class="tools mb-4">
                             <RecipeInstructionsTool
                                 v-for="(tool, idx) in recipe.tools"
                                 :key="`tool-${idx}`"
