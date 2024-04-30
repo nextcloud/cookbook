@@ -3,7 +3,6 @@
         <!-- Use $page for page matching to make sure everything else has been set beforehand! -->
         <div class="status-header">
             <ModeIndicator v-if="isSearch" :title="searchTitle" />
-
             <!-- INDEX PAGE -->
             <LocationIndicator
                 v-if="isIndex"
@@ -47,6 +46,7 @@
                 v-else-if="isCreate"
                 :title="t('cookbook', 'Creating new recipe')"
             />
+            <ModeIndicator v-if="isRecipe && subtitle" :title="subtitle" />
         </div>
         {{/* Primary buttons */}}
         <NcButton
@@ -251,6 +251,12 @@ const filterValue = ref('');
 const isWide = ref(true);
 
 /**
+ * Subtitle of the title bar.
+ * @type {import('vue').Ref<UnwrapRef<string>>}
+ */
+const subtitle = ref('');
+
+/**
  * Reference to the controls container element.
  * @type {import('vue').Ref<UnwrapRef<HTMLElement|null>>}
  */
@@ -388,6 +394,13 @@ const goToRecipeEdit = (id) => {
 function toggleRecipeViewSidebar() {
     emit('toggle-sidebar');
 }
+
+/**
+ * Update recipe subtitle when a section comes into view.
+ */
+emitter.on('recipe-view:section-visible', (sectionName) => {
+    subtitle.value = sectionName;
+});
 </script>
 
 <script>

@@ -100,12 +100,12 @@ import CbSheet from 'cookbook/components/Utilities/CbSheet.vue';
 import SupplyCollector from 'cookbook/js/Visitors/SchemaOrg/SupplyCollector';
 import ToolsCollector from 'cookbook/js/Visitors/SchemaOrg/ToolsCollector';
 import DividerType from 'cookbook/components/Utilities/Divider/DividerType';
+import { useRoute } from 'vue-router/composables';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
 import RecipeInstructionsIngredient from './RecipeInstructionsIngredient.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
 import RecipeInstructionsTool from './RecipeInstructionsTool.vue';
-import { useRoute } from 'vue-router/composables';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();

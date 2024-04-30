@@ -3,23 +3,33 @@
         <ol v-if="instructions" class="instructions">
             <component
                 :is="childComponentType(item)"
+                :ref="(el) => assignChildComponentRef(item, idx, el)"
                 v-for="(item, idx) in instructions"
                 :key="`instructions_item-${idx}}`"
                 v-bind="childComponentProps(item, idx)"
+                :data-section="item.name ?? null"
             />
         </ol>
     </div>
 </template>
 
 <script setup>
+import { inject, onMounted, ref } from 'vue';
+import { useIntersectionObserver } from '@vueuse/core';
 import RecipeInstructionsSection from './RecipeInstructionsSection.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
+import emitter from 'cookbook/bus';
+
+// DI
+const RecipeViewContainer = inject('RecipeViewContainer');
 
 defineProps({
     instructions: { type: Array, default: () => [] },
 });
+
+const sectionElements = ref([]);
 
 /**
  * Determines the type of component to render as the child list item.
@@ -75,6 +85,45 @@ function childComponentProps(item, index) {
             return '';
     }
 }
+
+function assignChildComponentRef(item, index, element) {
+    if (item['@type'] === 'HowToSection') {
+        sectionElements.value[index] = element;
+    } else {
+        sectionElements.value[index] = null;
+    }
+}
+
+const callback = (entries, observer) => {
+    let noSectionVisible = true;
+    entries.forEach((entry) => {
+        // Each entry describes an intersection change for one observed
+        if (entry.isIntersecting) {
+            emitter.emit(
+                'recipe-view:section-visible',
+                entry.target.dataset.section,
+            );
+            noSectionVisible = false;
+        }
+    });
+    if (noSectionVisible) {
+        emitter.emit('recipe-view:section-visible', null);
+    }
+};
+
+// // Vue lifecycle
+onMounted(() => {
+    // Setup intersection observer for the sections
+    useIntersectionObserver(
+        sectionElements.value.filter((el) => el !== null),
+        callback,
+        {
+            root: RecipeViewContainer,
+            immediate: true,
+            threshold: 0.1, // Only a part of the section needs to be visible
+        },
+    );
+});
 </script>
 
 <script>

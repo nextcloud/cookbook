@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper flex justify-center">
+    <div class="wrapper flex justify-center" ref="recipeViewElement">
         <div v-if="isLoading || store.loadingRecipe" class="wrapper-inner">
             <RecipeViewLoadingSkeleton :delay="800" />
         </div>
@@ -185,6 +185,7 @@ import {
     getCurrentInstance,
     inject,
     onMounted,
+    provide,
     ref,
     watch,
 } from 'vue';
@@ -208,6 +209,7 @@ import RecipeInstructions from './Instructions/RecipeInstructions.vue';
 import RecipeKeywords from './RecipeKeywords.vue';
 import RecipeTimes from './Timers/RecipeTimes.vue';
 import RecipeYield from './RecipeYield.vue';
+import { findParentByClass } from 'cookbook/js/utils/domUtils';
 
 const route = useRoute();
 const store = useStore();
@@ -215,6 +217,26 @@ const log = getCurrentInstance().proxy.$log;
 
 // DI
 const RecipeRepository = inject('RecipeRepository');
+
+const recipeViewElement = ref(null);
+
+/**
+ * The container element of the recipe view.
+ * @type {import('vue').Ref<HTMLElement | null>}
+ */
+const recipeViewContainer = ref(null);
+onMounted(() => {
+    const visibleArea = findParentByClass(
+        recipeViewElement.value,
+        'splitpanes__pane-details',
+    );
+    if (visibleArea) {
+        recipeViewContainer.value = visibleArea;
+    } else {
+        log.error('Could not find visible-area element for recipe view');
+    }
+});
+provide('RecipeViewContainer', recipeViewContainer);
 
 const props = defineProps({
     id: {
