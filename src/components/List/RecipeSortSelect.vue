@@ -4,6 +4,7 @@
         class="recipes-sorting-dropdown mr-4"
         :clearable="false"
         label="selectedLabel"
+        :label-outside="true"
         :multiple="false"
         :searchable="false"
         :placeholder="t('cookbook', 'Select order')"
