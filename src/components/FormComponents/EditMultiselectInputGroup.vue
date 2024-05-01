@@ -14,6 +14,7 @@
                     :multiple="false"
                     :clearable="false"
                     :searchable="false"
+                    :label-outside="true"
                     class="key"
                     @input="updateByOption($event, index)"
                 />
@@ -38,6 +39,7 @@
                     :value="additionalRow.selectedOption"
                     :options="unusedOptions"
                     label="label"
+                    :label-outside="true"
                     :placeholder="labelSelectPlaceholder"
                     :multiple="false"
                     class="key"

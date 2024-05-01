@@ -4,6 +4,7 @@
         <NcSelect
             class="edit-multiselect"
             v-bind="$attrs"
+            :label-outside="true"
             :multiple="true"
             v-on="$listeners"
         />
