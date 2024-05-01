@@ -41,6 +41,8 @@
   [#2250](https://github.com/nextcloud/cookbook/pull/2250) @christianlupus
 - Update typescript
   [#2281](https://github.com/nextcloud/cookbook/pull/2281) @dependabot
+- Update nextcloud router
+  [#2279](https://github.com/nextcloud/cookbook/pull/2279) @dependabot
 
 ## 0.11.0 - 2023-12-14
 
