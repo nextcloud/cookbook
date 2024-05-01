@@ -47,6 +47,8 @@
   [#2142](https://github.com/nextcloud/cookbook/pull/2142) @christianlupus
 - Update eslint config for typescript
   [#2141](https://github.com/nextcloud/cookbook/pull/2141) @dependabot
+- Update vue plugin for eslint with typescript
+  [#2188](https://github.com/nextcloud/cookbook/pull/2188) @dependabot
 
 ## 0.11.0 - 2023-12-14
 
