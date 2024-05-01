@@ -1104,8 +1104,8 @@ main {
 .content > .container {
     display: grid;
 
-    grid-template-columns: 1fr 2fr;
     gap: 1em;
+    grid-template-columns: 1fr 2fr;
 
     .ingredients {
         grid-column: 1/2;
