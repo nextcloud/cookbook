@@ -10,6 +10,7 @@ If you need additional information or find any missing parts, feel free to conta
 The first step, when you want to help with coding on the app, will be to setup your development environment.
 We prepared a [page on the setup](setup) to help you get started with the technical requirements.
 See also the page on [code coverage](code_coverage).
+Please also note that the [changelog process](../changelog) needs some addressing as well.
 
 ## Translating
 Feel free to have a look at the [transifex page on the cookbook app](https://app.transifex.com/nextcloud/nextcloud/cookbook/).
