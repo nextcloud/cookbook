@@ -551,7 +551,7 @@ h3 {
 
     /* Limit max recipe width on very large screens to maintain readability */
     @media (min-width: 1280px) {
-        padding: calc((100cqw - 1280px) * 0.05) calc((100cqw - 1280px) * 0.1) 0;
+        padding: 0 calc((100cqw - 1280px) * 0.1);
     }
 
     .wrapper-inner {
