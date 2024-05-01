@@ -547,6 +547,7 @@ h3 {
 
 .wrapper {
     width: 100%;
+    margin-bottom: 30vh;
 
     /* Limit max recipe width on very large screens to maintain readability */
     @media (min-width: 1280px) {
