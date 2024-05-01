@@ -45,6 +45,8 @@ Sorry for the inconvience.
   [#2281](https://github.com/nextcloud/cookbook/pull/2281) @christianlupus
 - Fix warning in browser console for edits
   [#2287](https://github.com/nextcloud/cookbook/pull/2287) @christianlupus
+- Fix CSS grid layout causing whitespace issues
+  [#2236](https://github.com/nextcloud/cookbook/pull/2236) @philiprenich
 
 ### Documentation
 
