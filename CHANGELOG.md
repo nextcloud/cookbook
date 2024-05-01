@@ -23,6 +23,8 @@
   [#2270](https://github.com/nextcloud/cookbook/pull/2270) @christianlupus
 - Fix warning in browser console
   [#2281](https://github.com/nextcloud/cookbook/pull/2281) @christianlupus
+- Fix warning in browser console for edits
+  [#2287](https://github.com/nextcloud/cookbook/pull/2287) @christianlupus
 
 ### Documentation
 - Improve  structure of `README.md`
