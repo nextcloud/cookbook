@@ -43,6 +43,8 @@
   [#2281](https://github.com/nextcloud/cookbook/pull/2281) @dependabot
 - Update nextcloud router
   [#2279](https://github.com/nextcloud/cookbook/pull/2279) @dependabot
+- Update NPM and Node version
+  [#2142](https://github.com/nextcloud/cookbook/pull/2142) @christianlupus
 
 ## 0.11.0 - 2023-12-14
 
