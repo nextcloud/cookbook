@@ -14,14 +14,12 @@
                     </h1>
                 </template>
                 <template #description>
-                    <h1 class="empty-content__name">
-                        {{
-                            t(
-                                'cookbook',
-                                'Either the recipe is unknown or loading has failed.',
-                            )
-                        }}
-                    </h1>
+                    {{
+                        t(
+                            'cookbook',
+                            'Either the recipe is unknown or loading has failed.',
+                        )
+                    }}
                 </template>
             </NcEmptyContent>
         </div>
