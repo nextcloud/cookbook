@@ -35,6 +35,8 @@
   [#2122](https://github.com/nextcloud/cookbook/pull/2122) @dependabot
 - Import NC core components correctly
   [#2250](https://github.com/nextcloud/cookbook/pull/2250) @christianlupus
+- Update typescript
+  [#2281](https://github.com/nextcloud/cookbook/pull/2281) @dependabot
 
 ## 0.11.0 - 2023-12-14
 
