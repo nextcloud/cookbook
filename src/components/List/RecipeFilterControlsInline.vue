@@ -33,6 +33,7 @@
                     input-id="categoriesFilterInput"
                     :options="uniqueCategories"
                     :loading="isLoading"
+                    :label-outside="true"
                     :close-on-select="false"
                     :multiple="true"
                     :no-wrap="true"
@@ -96,6 +97,7 @@
                     :placeholder="t('cookbook', 'All keywords')"
                     :aria-label="t('cookbook', 'Keywords')"
                     :aria-placeholder="t('cookbook', 'All keywords')"
+                    :label-outside="true"
                     style="max-width: 25%"
                     @input="submitFilters"
                 >

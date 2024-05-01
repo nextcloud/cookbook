@@ -21,6 +21,8 @@
   [#2099](https://github.com/nextcloud/cookbook/pull/2099) @j0hannesr0th
 - Output correct stubs for tags, search and categories in the API
   [#2270](https://github.com/nextcloud/cookbook/pull/2270) @christianlupus
+- Fix warning in browser console
+  [#2281](https://github.com/nextcloud/cookbook/pull/2281) @christianlupus
 
 ### Documentation
 - Improve  structure of `README.md`
