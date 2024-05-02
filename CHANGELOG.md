@@ -32,7 +32,7 @@
 - Fix wrong type definition in OpenAPI specs
   [#2232](https://github.com/nextcloud/cookbook/pull/2232) @Leptopoda
 - Removed no longer existing app Nook
-  [#2225](https://github.com/nextcloud/cookbook/pull/2225) @Leptopoda
+  [#2225](https://github.com/nextcloud/cookbook/pull/2225) @shagn
 
 ### Maintenance
 - Add Typescript support
