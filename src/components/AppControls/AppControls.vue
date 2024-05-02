@@ -200,7 +200,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
-import { useRoute } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router/composables';
 import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
 import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
 // Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
@@ -246,6 +246,7 @@ defineProps({
 
 const isMobile = useIsMobile();
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 const filterValue = ref('');
 const isWide = ref(true);
@@ -385,7 +386,7 @@ const goToRecipeClone = (id) => {
 };
 
 const goToRecipeEdit = (id) => {
-    helpers.goTo(`/recipe/${id}/edit`);
+    router.push({ path: `${route.path}/edit`, query: route.query });
 };
 
 /**

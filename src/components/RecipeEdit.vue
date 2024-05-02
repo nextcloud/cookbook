@@ -187,6 +187,7 @@ defineProps({
     id: {
         type: String,
         default: '',
+        required: true,
     },
 });
 
