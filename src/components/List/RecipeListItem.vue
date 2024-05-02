@@ -100,6 +100,7 @@ import AlertOctagonIcon from 'vue-material-design-icons/AlertOctagon.vue';
 import FileDocumentOutlineIcon from 'vue-material-design-icons/FileDocumentOutline.vue';
 import PencilIcon from 'vue-material-design-icons/Pencil.vue';
 import StarIcon from 'vue-material-design-icons/Star.vue';
+import api from 'cookbook/js/utils/api-interface';
 import LazyPicture from 'cookbook/components/Utilities/LazyPicture.vue';
 import { showError } from '@nextcloud/dialogs';
 import { useStore } from 'cookbook/store';
@@ -109,8 +110,6 @@ const store = useStore();
 const log = getCurrentInstance().proxy.$log;
 
 // DI
-/** @type {RecipeRepository} */
-const recipeRepository = inject('RecipeRepository');
 const recipesLinkBasePath = inject('recipes-link-base-path');
 
 const props = defineProps({
@@ -182,9 +181,9 @@ function startRenaming() {
 async function updateName(recipeId, updatedName) {
     // TODO Add API endpoint for renaming?
     try {
-        const recipe = await recipeRepository.getRecipeById(recipeId);
+        const recipe = await api.recipes.get(recipeId);
         recipe.name = updatedName;
-        await recipeRepository.updateRecipe(recipeId, recipe);
+        await api.recipes.update(recipeId, recipe);
     } catch (e) {
         log.error(
             t('cookbook', 'Renaming recipe {id} has failed.', { id: recipeId }),
