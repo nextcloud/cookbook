@@ -213,9 +213,6 @@ const route = useRoute();
 const store = useStore();
 const log = getCurrentInstance().proxy.$log;
 
-// DI
-const RecipeRepository = inject('RecipeRepository');
-
 const recipeViewElement = ref(null);
 
 /**
@@ -223,19 +220,15 @@ const recipeViewElement = ref(null);
  * @type {import('vue').Ref<HTMLElement | null>}
  */
 const recipeViewContainer = ref(null);
-onMounted(() => {
-    const visibleArea = findParentByClass(
-        recipeViewElement.value,
-        'splitpanes__pane-details',
-    );
-    if (visibleArea) {
-        recipeViewContainer.value = visibleArea;
-    } else {
-        log.error('Could not find visible-area element for recipe view');
-    }
-});
+
+// ==============================
+// DI
+const RecipeRepository = inject('RecipeRepository');
+
 provide('RecipeViewContainer', recipeViewContainer);
 
+// ==============================
+// Props
 const props = defineProps({
     id: {
         type: Number,
@@ -502,6 +495,21 @@ onMounted(() => {
         setup();
     });
 });
+
+/**
+ * Get visible area container.
+ */
+onMounted(() => {
+    const visibleArea = findParentByClass(
+        recipeViewElement.value,
+        'splitpanes__pane-details',
+    );
+    if (visibleArea) {
+        recipeViewContainer.value = visibleArea;
+    } else {
+        log.error('Could not find visible-area element for recipe view');
+    }
+});
 </script>
 
 <script>
@@ -567,7 +575,7 @@ h3 {
 .title-container {
     bottom: 15px;
     left: 0;
-    padding: 0.25rem 16px 0.3rem;
+    padding: 0.25rem 22px 0.3rem;
     background: black;
     filter: var(--background-invert-if-dark);
     .heading {
@@ -601,7 +609,7 @@ h3 {
 .header {
     display: grid;
 
-    padding: 16px;
+    padding: 22px;
     gap: 0.75rem;
     grid-template-areas:
         'meta'
@@ -665,7 +673,7 @@ section::after {
 .content {
     width: 100%;
     flex-basis: 100%;
-    padding: 1rem;
+    padding: 22px;
 }
 
 aside {
