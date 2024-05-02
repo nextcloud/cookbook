@@ -26,7 +26,7 @@ export function adjustToInteger(value, step) {
 
 	// Round the value to the nearest integer
 	let adjustedValue =
-		step > 0 ? Math.floor(modifiedValue) : Math.floor(modifiedValue);
+		step > 0 ? Math.floor(modifiedValue) : Math.ceil(modifiedValue);
 
 	// Ensure the adjusted value is at least 1
 	adjustedValue = Math.max(adjustedValue, 1);
