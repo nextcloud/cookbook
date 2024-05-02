@@ -53,6 +53,12 @@ const recipesLinkBasePath = computed(() => {
     switch (props.query) {
         case 'cat':
             return `/category/${cleanedValue}/`;
+        case 'general':
+            return `/search/${cleanedValue}/`;
+        case 'name':
+            return `/name/${cleanedValue}/`;
+        case 'tags':
+            return `/tags/${cleanedValue}/`;
         default:
             return '/recipe/';
     }
