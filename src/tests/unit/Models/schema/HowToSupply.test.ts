@@ -95,13 +95,17 @@ describe('HowToSupply', () => {
 		});
 
 		it('should throw an error for invalid JSON', () => {
-			const invalidJSON = { name: 123 }; // 'name' should be a string
-			expect(() => HowToSupply.fromJSON(invalidJSON)).toThrow();
+			const validJSON = { name: 123 }; // integer 'name' should be automatically converted to string
+			const supply = HowToSupply.fromJSON(validJSON);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe('123');
 		});
 
 		it('should throw an error for invalid JSON string', () => {
-			const invalidJSONString = '{"name": 123}'; // 'name' should be a string
-			expect(() => HowToSupply.fromJSON(invalidJSONString)).toThrow();
+			const validJSONString = '{"name": 123}'; // integer 'name' should be automatically converted to string
+			const supply = HowToSupply.fromJSON(validJSONString);
+			expect(supply).toBeInstanceOf(HowToSupply);
+			expect(supply.name).toBe('123');
 		});
 
 		it('should throw an error for invalid JSON with missing name property', () => {

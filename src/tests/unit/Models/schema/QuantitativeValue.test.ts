@@ -73,12 +73,12 @@ describe('QuantitativeValue', () => {
 			);
 		});
 
-		it('should throw an error for invalid "unitCode" property type', () => {
+		it('should convert integer "unitCode" property to string', () => {
 			const jsonString =
-				'{"value": 250, "unitText": "grams", "unitCode": 123}';
-			expect(() => QuantitativeValue.fromJSON(jsonString)).toThrow(
-				'Error mapping QuantitativeValue \'value\'. Expected string but received "number".',
-			);
+				'{"value": 250, "unitText": "grams", "unitCode": 12}'; // Integer unitCode should be automatically mapped to string
+			const quantitativeValue = QuantitativeValue.fromJSON(jsonString);
+			expect(quantitativeValue).toBeInstanceOf(QuantitativeValue);
+			expect(quantitativeValue.unitCode).toBe('12');
 		});
 
 		test('should throw an error for invalid JSON', () => {

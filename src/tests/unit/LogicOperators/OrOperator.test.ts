@@ -7,7 +7,7 @@ describe('OrOperator', () => {
 	const operator = new OrOperator();
 
 	test('it should return correct search string for multiple items with a given label', () => {
-		const items = ['pizza', 'pasta'];
+		const items = ['"pizza"', '"pasta"'];
 		const label = 'tag';
 		const expectedOutput = 'tag:"pizza","pasta"';
 		expect(
@@ -19,7 +19,7 @@ describe('OrOperator', () => {
 	});
 
 	test('it should return correct search string for a single item with a given label', () => {
-		const items = ['pizza'];
+		const items = ['"pizza"'];
 		const label = 'tag';
 		const expectedOutput = 'tag:"pizza"';
 		expect(

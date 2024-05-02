@@ -154,13 +154,13 @@ describe('mapString', () => {
 		expect(result).toBe('test');
 	});
 
-	it('should throw an error for non-string value', () => {
-		const invalidValueNumber = 42;
-		const invalidValueObject = { value: '42' };
+	it('should map integer value to string', () => {
+		const result = mapString(42);
+		expect(result).toBe('42');
+	});
 
-		expect(() => mapString(invalidValueNumber, 'property')).toThrow(
-			'Error mapping property. Expected string but received "number".',
-		);
+	it('should throw an error for object value', () => {
+		const invalidValueObject = { value: '42' };
 
 		expect(() => mapString(invalidValueObject, 'property')).toThrow(
 			'Error mapping property. Expected string but received "object".',

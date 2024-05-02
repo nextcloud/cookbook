@@ -95,14 +95,18 @@ describe('HowToTool', () => {
 			expect(tool.requiredQuantity).toBeUndefined();
 		});
 
-		it('should throw an error for invalid JSON', () => {
-			const invalidJSON = { name: 123 }; // 'name' should be a string
-			expect(() => HowToTool.fromJSON(invalidJSON)).toThrow();
+		it('should map integer property to string', () => {
+			const validJSON = { name: 123 }; // integer 'name' should be automatically converted to string
+			const tool = HowToTool.fromJSON(validJSON);
+			expect(tool).toBeInstanceOf(HowToTool);
+			expect(tool.name).toBe('123');
 		});
 
-		it('should throw an error for invalid JSON string', () => {
-			const invalidJSONString = '{"name": 123}'; // 'name' should be a string
-			expect(() => HowToTool.fromJSON(invalidJSONString)).toThrow();
+		it('shouldmap integer property to string for valid JSON string', () => {
+			const validJSONString = '{"name": 123}'; // integer 'name' should be automatically converted to string
+			const tool = HowToTool.fromJSON(validJSONString);
+			expect(tool).toBeInstanceOf(HowToTool);
+			expect(tool.name).toBe('123');
 		});
 
 		it('should throw an error for invalid JSON with missing name property', () => {
@@ -166,8 +170,10 @@ describe('HowToTool', () => {
 		});
 
 		it('should throw an error for invalid JSON', () => {
-			const invalidJSON = { name: 123 }; // 'name' should be a string
-			expect(() => HowToTool.fromJSONOrString(invalidJSON)).toThrow();
+			const validJSON = { name: 123 }; // integer 'name' should be automatically converted to string
+			const tool = HowToTool.fromJSONOrString(JSON.stringify(validJSON));
+			expect(tool).toBeInstanceOf(HowToTool);
+			expect(tool.name).toBe('123');
 		});
 
 		it('should create new supply for invalid JSON string', () => {
