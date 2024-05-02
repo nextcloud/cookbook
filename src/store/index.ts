@@ -90,8 +90,8 @@ const storeOptions: StoreOptions<State> = {
 		categoryUpdating: null as boolean | null,
 		localSettings: {
 			showFiltersInRecipeList: true,
-			// recipesListStyle: ListStyle.List,
-			recipesListStyle: ListStyle.Grid,
+			recipesListStyle: ListStyle.List,
+			// recipesListStyle: ListStyle.Grid,
 		},
 		config: null,
 	},
