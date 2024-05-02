@@ -24,22 +24,22 @@ import SkeletonType from 'cookbook/components/Utilities/LoadingSkeleton/Skeleton
 
 <style scoped lang="scss">
 .container {
-    display: block;
-    box-sizing: border-box;
     position: relative;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
     flex: 0 0 auto;
     justify-content: flex-start;
     padding: 8px 10px;
     border-radius: 32px;
     margin: 2px 0;
-    width: 100%;
     cursor: pointer;
-    transition: background-color var(--animation-quick) ease-in-out;
     list-style: none;
+    transition: background-color var(--animation-quick) ease-in-out;
     .wrapper {
         display: flex;
-        align-items: center;
         height: 48px;
+        align-items: center;
 
         .content {
             display: flex;
@@ -50,13 +50,13 @@ import SkeletonType from 'cookbook/components/Utilities/LoadingSkeleton/Skeleton
 
             .first-line {
                 display: flex;
-                flex-grow: 1;
+                overflow: hidden;
                 width: 100%;
+                flex-grow: 1;
                 align-items: center;
                 justify-content: space-between;
-                white-space: nowrap;
                 margin: 0 auto 5px 0;
-                overflow: hidden;
+                white-space: nowrap;
             }
 
             .second-line {

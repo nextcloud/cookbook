@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper flex justify-center" ref="recipeViewElement">
+    <div ref="recipeViewElement" class="wrapper flex justify-center">
         <div v-if="isLoading || store.loadingRecipe" class="wrapper-inner">
             <RecipeViewLoadingSkeleton :delay="800" />
         </div>
@@ -200,6 +200,7 @@ import emitter from 'cookbook/bus';
 import { useStore } from 'cookbook/store';
 import { parseDateTime } from 'cookbook/composables/dateTimeHandling';
 
+import { findParentByClass } from 'cookbook/js/utils/domUtils';
 import RecipeViewLoadingSkeleton from './RecipeViewLoadingSkeleton.vue';
 import RecipeImages from './Images/RecipeImages.vue';
 import RecipeIngredients from './Ingredients/RecipeIngredients.vue';
@@ -207,7 +208,6 @@ import RecipeInstructions from './Instructions/RecipeInstructions.vue';
 import RecipeKeywords from './RecipeKeywords.vue';
 import RecipeTimes from './Timers/RecipeTimes.vue';
 import RecipeYield from './RecipeYield.vue';
-import { findParentByClass } from 'cookbook/js/utils/domUtils';
 
 const route = useRoute();
 const store = useStore();
@@ -660,8 +660,8 @@ h3 {
 }
 
 section {
-    margin-bottom: 1rem;
     padding: 0;
+    margin-bottom: 1rem;
 }
 
 section::after {

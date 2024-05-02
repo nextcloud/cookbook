@@ -38,7 +38,6 @@ import RecipeFilterControlsModal from 'cookbook/components/List/RecipeFilterCont
 import RecipesListItem from 'cookbook/components/List/RecipeListItem.vue';
 import ListStyle from 'cookbook/js/Enums/ListStyle';
 import useRecipeFiltering from 'cookbook/composables/useRecipeFiltering';
-import RecipeViewLoadingSkeleton from 'cookbook/components/RecipeView/RecipeViewLoadingSkeleton.vue';
 
 // DI
 const store = inject('Store');

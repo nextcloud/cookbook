@@ -3,8 +3,8 @@
         <ol v-if="instructions" class="instructions">
             <component
                 :is="childComponentType(item)"
-                :ref="(el) => assignChildComponentRef(item, idx, el)"
                 v-for="(item, idx) in instructions"
+                :ref="(el) => assignChildComponentRef(item, idx, el)"
                 :key="`instructions_item-${idx}}`"
                 v-bind="childComponentProps(item, idx)"
                 :data-section="item.name ?? null"
@@ -16,11 +16,11 @@
 <script setup>
 import { inject, onMounted, ref } from 'vue';
 import { useIntersectionObserver } from '@vueuse/core';
+import emitter from 'cookbook/bus';
 import RecipeInstructionsSection from './RecipeInstructionsSection.vue';
 import RecipeInstructionsStep from './RecipeInstructionsStep.vue';
 import RecipeInstructionsDirection from './RecipeInstructionsDirection.vue';
 import RecipeInstructionsTip from './RecipeInstructionsTip.vue';
-import emitter from 'cookbook/bus';
 
 // DI
 const RecipeViewContainer = inject('RecipeViewContainer');
@@ -94,7 +94,7 @@ function assignChildComponentRef(item, index, element) {
     }
 }
 
-const callback = (entries, observer) => {
+const callback = (entries) => {
     let noSectionVisible = true;
     entries.forEach((entry) => {
         // Each entry describes an intersection change for one observed

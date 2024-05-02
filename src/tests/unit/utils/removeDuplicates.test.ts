@@ -74,7 +74,6 @@ describe('removeDuplicatesInNestedStringArray', () => {
 		];
 
 		const result = removeDuplicatesInNestedStringArray(input);
-		console.log(result);
 
 		// Check if the result has the expected length
 		expect(result.length).toBe(expectedOutput.length);

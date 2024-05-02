@@ -55,7 +55,7 @@
             :aria-label="t('cookbook', 'Edit')"
             @click="goToRecipeEdit(store.state.recipe.id)"
         >
-            <template slot="icon">
+            <template #icon>
                 <PencilIcon :size="20" />
             </template>
             <template v-if="isWide">{{ t('cookbook', 'Edit') }}</template>

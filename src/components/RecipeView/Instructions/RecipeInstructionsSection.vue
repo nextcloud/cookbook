@@ -234,11 +234,11 @@ li.instructions-section-root {
     margin: 1em (-$sectionHorizontalPadding) 3em;
 
     .instructions-section__title {
-        margin-bottom: 1.3rem;
         padding: 0;
+        margin-bottom: 1.3rem;
+        color: var(--color-main-text);
         font-size: 1.7rem;
         font-weight: 300;
-        color: var(--color-main-text);
     }
 
     .instructions-section__inner-container {
