@@ -312,7 +312,9 @@ function onRouteUpdated() {
         // Change from, e.g., /#/category to /#/tags
         (routeParts[1] !== prevRouteParts[1] ||
             // Change from, e.g., /#/category/Dinner to /#/category/Soup
-            routeParts[2] !== prevRouteParts[2]) &&
+            // but not from, e.g., /#/recipe/1 to /#/recipe/2
+            (routeParts[1] !== 'recipe' &&
+                routeParts[2] !== prevRouteParts[2])) &&
         Object.keys(route.query).length !== 0
     ) {
         store.dispatch('clearRecipeFilters');
