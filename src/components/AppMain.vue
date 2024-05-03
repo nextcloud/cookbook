@@ -160,9 +160,11 @@ const isAppContentDetailsVisible = computed(() => {
     const val =
         showRecipe.value &&
         [
+            RouteName.ShowRecipeInIndex,
             RouteName.ShowRecipeInCategory,
             RouteName.ShowRecipeInNames,
             RouteName.ShowRecipeInTags,
+            RouteName.ShowRecipeInGeneralSearch,
         ].includes(route.name);
     return !useRecipesList.value || val;
 });
