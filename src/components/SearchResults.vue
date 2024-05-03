@@ -7,6 +7,7 @@
             :hide-filter-types="hiddenFilterTypes"
             @filters-updated="onFiltersUpdated"
             @recipe-deletion-requested="onDeleteRecipe"
+            @recipe-renamed="onRecipeRenamed"
         />
         <RecipesGrid
             v-else
@@ -354,6 +355,18 @@ async function onDeleteRecipe(id) {
         });
     } catch (e) {
         showError(t('cookbook', 'Error during preparing recipe for deletion.'));
+    }
+}
+
+/**
+ * Handle recipe that has been renamed by a child.
+ * @param args
+ */
+function onRecipeRenamed(args) {
+    const { id, name } = args;
+    const idx = results.value.findIndex((r) => r.identifier === id);
+    if (idx !== -1) {
+        results.value[idx].name = name;
     }
 }
 

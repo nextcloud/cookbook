@@ -124,6 +124,7 @@ const emit = defineEmits([
     'recipe-deletion-requested',
     'recipe-selected',
     'start-renaming',
+    'recipe-renamed',
 ]);
 
 const loading = ref({ recipe: false, category: false });
@@ -205,6 +206,10 @@ async function onRename() {
     updateName(props.recipe.identifier, updatedName)
         .then(() => {
             newName.value = '';
+            emit('recipe-renamed', {
+                id: props.recipe.identifier,
+                name: updatedName,
+            });
         })
         .catch((e) => {
             log.error('Failed to rename recipe', e);

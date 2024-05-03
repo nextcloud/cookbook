@@ -24,6 +24,7 @@
                     @recipe-selected="onRecipeSelected"
                     @start-renaming="onStartRenaming"
                     @recipe-deletion-requested="onDeleteRecipe"
+                    @recipe-renamed="(args) => emit('recipe-renamed', args)"
                 />
             </ul>
         </div>
@@ -44,6 +45,7 @@ const store = inject('Store');
 
 const emit = defineEmits([
     'recipe-deletion-requested',
+    'recipe-renamed',
     'recipe-selected',
     'filters-updated',
 ]);
