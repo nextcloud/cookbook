@@ -44,6 +44,15 @@
             </div>
         </section>
 
+        <section v-if="isSourceSectionShown" class="metadata">
+            <h3 class="mt-0">{{ t('cookbook', 'Source') }}</h3>
+            <div class="section-content mb-4">
+                <a target="_blank" :href="recipe.url[0]" class="source-url">{{
+                    recipe.url?.[0]
+                }}</a>
+            </div>
+        </section>
+
         <section v-if="showNutritionData">
             <div class="nutrition p-4 rounded">
                 <h3 class="mt-0">
@@ -81,6 +90,10 @@ const recipe = computed(() => store.state.recipe);
 
 const isMetadataShown = computed(
     () => recipe.value?.dateCreated || recipe.value?.dateModified,
+);
+
+const isSourceSectionShown = computed(
+    () => recipe.value?.url && recipe.value?.url.length > 0,
 );
 
 /**

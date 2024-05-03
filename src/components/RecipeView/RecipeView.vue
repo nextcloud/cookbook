@@ -64,16 +64,6 @@
                             :markdown="parsedDescription"
                             class="markdown-description section"
                         />
-                        <p v-if="$store.state.recipe.url?.[0]" class="section">
-                            <span class="label"
-                                >{{ t('cookbook', 'Source') }}: </span
-                            ><a
-                                target="_blank"
-                                :href="$store.state.recipe.url"
-                                class="source-url"
-                                >{{ $store.state.recipe.url?.[0] }}</a
-                            >
-                        </p>
                     </div>
                     <div
                         class="flex flex-row flex-wrap gap-4 gap-x-lg-16 gap-y-lg-8 justify-center align-items-center mt-6"
