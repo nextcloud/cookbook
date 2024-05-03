@@ -12,7 +12,7 @@
                 </div>
                 <input
                     v-if="fieldType === 'text'"
-                    ref="listField"
+                    :ref="(el) => (listFields[idx] = el)"
                     v-model="editedStringsModel[idx]"
                     type="text"
                     @keydown="keyDown"
@@ -25,7 +25,7 @@
                 />
                 <textarea
                     v-else-if="fieldType === 'textarea'"
-                    ref="listField"
+                    :ref="(el) => (listFields[idx] = el)"
                     v-model="editedStringsModel[idx]"
                     @keydown="keyDown"
                     @keyup="keyUp"
@@ -133,9 +133,9 @@ const props = defineProps({
 
 // Template refs
 /**
- * @type {import('vue').Ref<HTMLElement | null>}
+ * @type {import('vue').Ref<(HTMLElement | null)[]>}
  */
-const listField = ref(null);
+const listFields = ref([]);
 const suggestionsData = ref(null);
 
 // helper variables
@@ -239,9 +239,8 @@ const addNewEntry = async (
 
     if (focusAfterInsert) {
         await nextTick();
-        const listFields = listField.value;
-        if (listFields.length > entryIdx) {
-            listFields[entryIdx].focus();
+        if (listFields.value.length > entryIdx) {
+            listFields.value[entryIdx].focus();
         }
     }
 };
@@ -349,7 +348,7 @@ const handlePaste = async (e) => {
         indexToFocus -= 1;
     }
     // this.$refs["list-field"][indexToFocus].focus()
-    listField.value[indexToFocus].focus();
+    listFields.value[indexToFocus].focus();
 };
 
 /**
@@ -364,7 +363,7 @@ const keyDown = async (e) => {
     }
 
     // Redirect to suggestions handler if in suggestion mode
-    if (suggestionsPopupVisible) {
+    if (suggestionsPopupVisible.value) {
         handleSuggestionsPopupKeyDown(e);
         return;
     }
@@ -394,7 +393,7 @@ const keyDown = async (e) => {
     const $ul = $li.closest('ul');
     const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
 
-    if ($pressedLiIndex >= this.$refs['list-field'].length - 1) {
+    if ($pressedLiIndex >= listFields.value.length - 1) {
         await addNewEntry();
     } else {
         // Focus the next input or textarea
