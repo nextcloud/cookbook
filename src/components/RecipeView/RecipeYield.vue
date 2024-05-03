@@ -32,7 +32,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { adjustToInteger } from 'cookbook/js/helper';
+import { adjustToInteger } from 'cookbook/js/utils/mathUtils';
 
 const props = defineProps({
     /** Recipe yield

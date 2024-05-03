@@ -1,44 +1,5 @@
 import VueRouter, { Route } from 'vue-router';
 
-/**
- * Clamps val between the minimum min and maximum max value.
- * @param val The value to be clamped between min and max
- * @param min The upper limit
- * @param max The lower limit
- * @returns {number} min if val is <= min, max if val is >= max and val if min <= val <= max.
- */
-function clamp(val: number, min: number, max: number): number {
-	return Math.min(max, Math.max(min, val));
-}
-
-/**
- * Adjusts a numeric value by a specified step size.
- * If the original value is a float, it will be rounded to the nearest integer.
- * The adjusted value will always be greater than 0.
- *
- * @param {number} value - The original numeric value.
- * @param {number} step - The step size by which to adjust the value.
- * @returns {number} - The adjusted value.
- */
-export function adjustToInteger(value, step) {
-	// Add the step
-	const modifiedValue = value + step;
-
-	// Round the value to the nearest integer
-	let adjustedValue =
-		step > 0 ? Math.floor(modifiedValue) : Math.ceil(modifiedValue);
-
-	// Ensure the adjusted value is at least 1
-	adjustedValue = Math.max(adjustedValue, 1);
-
-	// If the original value is between 0 and 1 and the step is negative, adjust accordingly
-	if (value > 0 && value < 1 && step < 0) {
-		adjustedValue = Math.min(value, adjustedValue);
-	}
-
-	return adjustedValue;
-}
-
 // Check if two routes point to the same component but have different content
 function shouldReloadContent(url1: string, url2: string): boolean {
 	if (url1 === url2) {
@@ -163,9 +124,7 @@ export function asCleanedArray<T>(item: T | T[]): NonNullable<T>[] {
 }
 
 export default {
-	adjustToInteger,
 	asArray,
-	clamp,
 	shouldReloadContent,
 	isSameItemInstance,
 	escapeHTML,

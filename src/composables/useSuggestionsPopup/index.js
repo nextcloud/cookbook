@@ -1,6 +1,7 @@
 import { position as caretPosition } from 'caret-pos';
 import { computed, nextTick, ref } from 'vue';
 import helpers from '../../js/helper';
+import { clamp } from 'cookbook/js/utils/mathUtils';
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
 /**
@@ -191,7 +192,7 @@ export default function useSuggestionsPopup(
 
             // Increment/decrement focus index based on which key was pressed
             // and constrain between 0 and length - 1
-            const focusIndex = helpers.clamp(
+            const focusIndex = clamp(
                 suggestionsData.value.focusIndex +
                     {
                         ArrowUp: -1,
