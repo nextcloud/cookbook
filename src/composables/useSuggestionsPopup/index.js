@@ -1,6 +1,5 @@
 import { position as caretPosition } from 'caret-pos';
 import { computed, nextTick, ref } from 'vue';
-import helpers from '../../js/helper';
 import { clamp } from 'cookbook/js/utils/mathUtils';
 
 /* eslint no-param-reassign: ["error", { "props": false }] */
