@@ -10,7 +10,6 @@ import VueRouter, { Route, RouteConfig } from 'vue-router';
 import RouteName from 'cookbook/js/Enums/RouteName';
 import { routeToQueryProp } from 'cookbook/js/utils/routeUtils';
 import RecipeViewSidebar from 'cookbook/components/RecipeView/Sidebar/RecipeViewSidebar.vue';
-import Index from 'cookbook/components/AppIndex.vue';
 import NotFound from 'cookbook/components/NotFound.vue';
 import RecipeView from 'cookbook/components/RecipeView/RecipeView.vue';
 import RecipeEdit from 'cookbook/components/RecipeEdit.vue';
@@ -109,7 +108,7 @@ const routes: RouteConfig[] = [
 	},
 	{
 		path: '/category/:value/:id/edit',
-		name: RouteName.ShowRecipeInCategory,
+		name: RouteName.EditRecipeInCategory,
 		components: componentsForRecipeEditInSearchRoute,
 		props: getPropsForRecipeInSearchRoute('cat'),
 	},
@@ -129,7 +128,7 @@ const routes: RouteConfig[] = [
 	},
 	{
 		path: '/name/:value/:id/edit',
-		name: RouteName.ShowRecipeInCategory,
+		name: RouteName.EditRecipeInNames,
 		components: componentsForRecipeEditInSearchRoute,
 		props: getPropsForRecipeInSearchRoute('name'),
 	},
@@ -149,7 +148,7 @@ const routes: RouteConfig[] = [
 	},
 	{
 		path: '/search/:value/:id/edit',
-		name: RouteName.ShowRecipeInCategory,
+		name: RouteName.EditRecipeInGeneralSearch,
 		components: componentsForRecipeEditInSearchRoute,
 		props: getPropsForRecipeInSearchRoute('general'),
 	},
@@ -169,7 +168,7 @@ const routes: RouteConfig[] = [
 	},
 	{
 		path: '/tags/:value/:id/edit',
-		name: RouteName.ShowRecipeInCategory,
+		name: RouteName.EditRecipeInTags,
 		components: componentsForRecipeEditInSearchRoute,
 		props: getPropsForRecipeInSearchRoute('tags'),
 	},
@@ -185,16 +184,59 @@ const routes: RouteConfig[] = [
 	// - Create: /{item}/create
 	{ path: '/recipe/create', name: 'recipe-create', component: RecipeEdit },
 	{ path: '/recipe/:id/clone', name: 'recipe-clone', component: RecipeEdit },
-	{ path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
+	// { path: '/recipe/:id/edit', name: 'recipe-edit', component: RecipeEdit },
+	// {
+	// 	path: '/recipe/:id',
+	// 	name: 'recipe-view',
+	// 	// Vue Named Views
+	// 	components: { default: RecipeView, sidebar: RecipeViewSidebar },
+	// },
+
 	{
 		path: '/recipe/:id',
-		name: 'recipe-view',
-		// Vue Named Views
-		components: { default: RecipeView, sidebar: RecipeViewSidebar },
+		name: RouteName.ShowRecipeInIndex,
+		components: componentsForRecipeInSearchRoute,
+		props: {
+			default: (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'index',
+				value: '',
+				searchQuery: routeToQueryProp(route),
+			}),
+			'main-view__active-list': (route: Route) => ({
+				id: parseInt(route.params.id, 10),
+			}),
+		},
+	},
+	{
+		path: '/recipe/:id/edit',
+		name: RouteName.EditRecipeInIndex,
+		components: componentsForRecipeEditInSearchRoute,
+		props: getPropsForRecipeInSearchRoute('index'),
 	},
 
 	// Index is the last defined route
-	{ path: '/', name: 'index', component: Index },
+	// { path: '/', name: 'index', component: Index },
+
+	{
+		path: '/',
+		name: RouteName.Index,
+		components: componentsForSearchRoute,
+		props: {
+			default: (route: Route) => ({
+				query: 'index',
+				value: '',
+				searchQuery: routeToQueryProp(route),
+			}),
+			'content-list': (route: Route) => ({
+				query: 'index',
+				value: '',
+				searchQuery: routeToQueryProp(route),
+			}),
+		},
+	},
 
 	// Anything not matched goes to NotFound
 	{ path: '*', name: 'not-found', component: NotFound },

@@ -59,6 +59,8 @@ const recipesLinkBasePath = computed(() => {
             return `/name/${cleanedValue}/`;
         case 'tags':
             return `/tags/${cleanedValue}/`;
+        case 'index':
+            return '/recipe/';
         default:
             return '/recipe/';
     }
@@ -208,6 +210,33 @@ const setup = async () => {
                         category: cat,
                     }
                 ),
+            );
+            if (e && e instanceof Error) {
+                throw e;
+            }
+        } finally {
+            isLoadingRecipeList.value = false;
+        }
+    } else if (props.query === 'index') {
+        // No filters need to be hidden, since all recipes are listed
+        hiddenFilterTypes.value = [];
+
+        // List of filters defined by the query params
+        const queryFilters = props.searchQuery
+            ? parseSearchString(props.searchQuery)
+            : [];
+
+        // Update filters in store
+        await store.dispatch('setRecipeFilters', queryFilters);
+
+        try {
+            isLoadingRecipeList.value = true;
+            results.value = await recipeRepository.getRecipes();
+        } catch (e) {
+            results.value = [];
+            await showSimpleAlertModal(
+                // prettier-ignore
+                t('cookbook', 'Failed to load all recipes'),
             );
             if (e && e instanceof Error) {
                 throw e;

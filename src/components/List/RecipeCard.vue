@@ -1,11 +1,6 @@
 <template>
     <div v-if="recipe !== null" class="recipe-card">
-        <router-link
-            :to="{
-                path: `${route.path}/${recipe.identifier}`,
-                query: route.query,
-            }"
-        >
+        <router-link :to="routingTarget">
             <lazy-picture
                 v-if="recipe.imageUrl"
                 class="recipe-thumbnail"
@@ -50,10 +45,14 @@
 import moment from '@nextcloud/moment';
 import { useRoute } from 'vue-router/composables';
 import LazyPicture from 'cookbook/components/Utilities/LazyPicture.vue';
+import { computed, inject } from 'vue';
 
 const route = useRoute();
 
-defineProps({
+// DI
+const recipesLinkBasePath = inject('recipes-link-base-path');
+
+const props = defineProps({
     /**
      * @type {Recipe}
      */
@@ -63,14 +62,19 @@ defineProps({
     },
 });
 
-const formatDateTime = (dt) => {
+const routingTarget = computed(() => ({
+    path: `${recipesLinkBasePath.value}${props.recipe.identifier}`,
+    query: route.query,
+}));
+
+function formatDateTime(dt) {
     if (!dt) return null;
     const date = moment(dt, moment.ISO_8601);
     if (!date.isValid()) {
         return null;
     }
     return date.format('L, LT').toString();
-};
+}
 </script>
 
 <script>
