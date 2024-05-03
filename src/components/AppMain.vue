@@ -149,9 +149,16 @@ watch(
     () => route.name,
     (name) => {
         showRecipe.value = [
+            RouteName.ShowRecipeInIndex,
             RouteName.ShowRecipeInCategory,
             RouteName.ShowRecipeInNames,
             RouteName.ShowRecipeInTags,
+            RouteName.ShowRecipeInGeneralSearch,
+            RouteName.EditRecipeInIndex,
+            RouteName.EditRecipeInCategory,
+            RouteName.EditRecipeInGeneralSearch,
+            RouteName.EditRecipeInNames,
+            RouteName.EditRecipeInTags,
         ].includes(name);
     },
 );
@@ -165,6 +172,11 @@ const isAppContentDetailsVisible = computed(() => {
             RouteName.ShowRecipeInNames,
             RouteName.ShowRecipeInTags,
             RouteName.ShowRecipeInGeneralSearch,
+            RouteName.EditRecipeInIndex,
+            RouteName.EditRecipeInCategory,
+            RouteName.EditRecipeInGeneralSearch,
+            RouteName.EditRecipeInNames,
+            RouteName.EditRecipeInTags,
         ].includes(route.name);
     return !useRecipesList.value || val;
 });
