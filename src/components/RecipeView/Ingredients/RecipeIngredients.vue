@@ -1,11 +1,13 @@
 <template>
     <ul>
+        {{/* Supplies */}}
         <RecipeIngredient
             v-for="(supply, idx) in scaledSupplies"
             :key="'supply-' + idx"
             :ingredient="asIngredientString(supply)"
             :ingredient-has-correct-syntax="true"
         />
+        {{/* Ingredients */}}
         <RecipeIngredient
             v-for="(ingredient, idx) in scaledIngredients"
             :key="'ingredient-' + idx"
@@ -27,6 +29,7 @@ import { showError, showSuccess } from '@nextcloud/dialogs';
 import { computedAsync } from '@vueuse/core';
 import { asCleanedArray } from 'cookbook/js/helper';
 import { HowToSupply } from 'cookbook/js/Models/schema';
+import { roundTo } from 'cookbook/js/utils/mathUtils';
 
 const log = getCurrentInstance().proxy.$log;
 
@@ -165,7 +168,9 @@ const scaledSupplies = computed(() => {
         if (!supply.requiredQuantity) return supply;
 
         const copy = JSON.parse(JSON.stringify(supply));
-        copy.requiredQuantity.value *= factor;
+        let newValue = copy.requiredQuantity.value;
+        newValue *= factor;
+        copy.requiredQuantity.value = roundTo(newValue, 2);
         return copy;
     });
 });
