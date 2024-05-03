@@ -185,8 +185,8 @@ const CONFIRM_MSG = t('cookbook', 'You have unsaved changes! Do you still want t
 // ===================
 defineProps({
     id: {
-        type: String,
-        default: '',
+        type: Number,
+        default: null,
         required: true,
     },
 });
