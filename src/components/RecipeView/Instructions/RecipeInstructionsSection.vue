@@ -85,6 +85,21 @@
                             v-bind="childComponentProps(item, idx)"
                         />
                     </ol>
+                    <div v-else>
+                        <span style="color: var(--color-text-maxcontrast)">{{
+                            t(
+                                'cookbook',
+                                'No instructions defined for this section.',
+                            )
+                        }}</span>
+                        <div class="pt-2">
+                            <router-link
+                                class="underline"
+                                :to="editLinkTarget"
+                                >{{ t('cookbook', 'Add') }}</router-link
+                            >
+                        </div>
+                    </div>
                 </div>
             </div>
         </CbSheet>
