@@ -7,7 +7,7 @@
             <div v-if="recipeObjects.length === 0">
                 <EmptyList />
             </div>
-            <div v-else>
+            <div v-else style="margin-bottom: 30vh">
                 <div v-if="showFiltersInRecipeList">
                     <RecipeFilterControlsModal
                         v-if="isMobile"
