@@ -1,22 +1,20 @@
 <template>
-    <div>
-        <RecipesList
-            v-if="useRecipesList"
-            :recipes="results"
-            :loading="isLoadingRecipeList"
-            :hide-filter-types="hiddenFilterTypes"
-            @filters-updated="onFiltersUpdated"
-            @recipe-deletion-requested="onDeleteRecipe"
-            @recipe-renamed="onRecipeRenamed"
-        />
-        <RecipesGrid
-            v-else
-            :recipes="results"
-            :loading="isLoadingRecipeList"
-            :hide-filter-types="hiddenFilterTypes"
-            @filters-updated="onFiltersUpdated"
-        />
-    </div>
+    <RecipesList
+        v-if="useRecipesList"
+        :recipes="results"
+        :loading="isLoadingRecipeList"
+        :hide-filter-types="hiddenFilterTypes"
+        @filters-updated="onFiltersUpdated"
+        @recipe-deletion-requested="onDeleteRecipe"
+        @recipe-renamed="onRecipeRenamed"
+    />
+    <RecipesGrid
+        v-else
+        :recipes="results"
+        :loading="isLoadingRecipeList"
+        :hide-filter-types="hiddenFilterTypes"
+        @filters-updated="onFiltersUpdated"
+    />
 </template>
 
 <script setup>
