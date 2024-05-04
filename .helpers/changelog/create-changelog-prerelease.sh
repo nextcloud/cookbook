@@ -1,12 +1,8 @@
 #!/bin/sh
 
-if [ $# -lt 1 ]
-then
-	echo "Please give the path to the old changelog snippets"
-	exit 1
-fi
+localdir="$(dirname "$0")"
 
-versions_dir="$1"
+versions_dir="$localdir/../../.changelog/versions"
 shift
 
 . .helpers/changelog/venv/bin/activate
@@ -18,5 +14,5 @@ echo "## [Unreleased]"
 	python -m changelog_builder "$@"
 )
 
-find "$versions_dir" -type f | sort -Vr | xargs -n 1 cat
+find "$versions_dir" -type f | sort -Vr | xargs -n 1 cat > "$localdir/../../CHANGELOG.md"
 
