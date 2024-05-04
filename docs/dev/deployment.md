@@ -38,6 +38,10 @@ Go to the folder `.helper/changelog` in a console.
 Create a virtual python environment valled `venv`.
 Typically this can be done by `virtualenv venv` (Linux) or `python -m venv venv` (Windows) in that folder.
 
+Also, you need a personal access token for your GitHub account to prevent API rate limit issues.
+Just create a token and put it in `.helpers/changelog/token`.
+Do not commit this file ever!
+
 #### Update the changelog for a release
 
 There is a convinence script availabe at `.helper/changelog/create-changelog-release.sh`.
@@ -48,6 +52,14 @@ You have to provie at least one option to th script:
 1. The version to create. In out example, this would be `1.2.4`.
 
 Any additional parameters are passed to the python script `changelog_bilder` as located in `.helpers/changelog`.
+
+Please note that the script expects all current snippets as parameters.
+Also, it expects a GitHub personal access token stored in a file.
+So, typically, one would call it like this:
+
+```shell
+./.helpers/changelog/create-changelog-release.sh 1.2.4 --token .helpers/changelog/token .changelog/current/*
+```
 
 The script will alter a few files in the repository:
 
@@ -67,6 +79,14 @@ There is a convinence script availabe at `.helper/changelog/create-changelog-pre
 This will call the python script and carry out the actual work for you.
 
 Any parameters are passed to the python script `changelog_bilder` as located in `.helpers/changelog`.
+
+Please note that the script expects all current snippets as parameters.
+Also, it expects a GitHub personal access token stored in a file.
+So, typically, one would call it like this:
+
+```shell
+./.helpers/changelog/create-changelog-prerelease.sh --token .helpers/changelog/token .changelog/current/*
+```
 
 The script will only update the `CHANGELOG.md` file in the root folder of the repository.
 

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 if [ $# -lt 1 ]
 then
@@ -14,9 +14,11 @@ shift
 
 . .helpers/changelog/venv/bin/activate
 
-echo "## [Unreleased]"
-echo ""
-echo ""
+changelog="$localdir/../../CHANGELOG.md"
+
+echo "## [Unreleased]" > "$changelog"
+echo "" >> "$changelog"
+echo "" >> "$changelog"
 
 (
 	export PYTHONPATH="$(pwd)/.helpers/changelog"
@@ -25,5 +27,5 @@ echo ""
 
 rm .changelog/current/*
 
-find "$versions_dir" -type f | sort -Vr | xargs -n 1 cat > "$localdir/../../CHANGELOG.md"
+find "$versions_dir" -type f | sort -Vr | xargs -n 1 cat >> "$changelog"
 
