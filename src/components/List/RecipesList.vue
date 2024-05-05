@@ -39,6 +39,7 @@ import RecipeFilterControlsModal from 'cookbook/components/List/RecipeFilterCont
 import RecipesListItem from 'cookbook/components/List/RecipeListItem.vue';
 import ListStyle from 'cookbook/js/Enums/ListStyle';
 import useRecipeFiltering from 'cookbook/composables/useRecipeFiltering';
+import emitter from 'cookbook/bus';
 
 // DI
 const store = inject('Store');
@@ -46,7 +47,6 @@ const store = inject('Store');
 const emit = defineEmits([
     'recipe-deletion-requested',
     'recipe-renamed',
-    'recipe-selected',
     'filters-updated',
 ]);
 
@@ -153,6 +153,6 @@ function isRenaming(recipeId) {
 function onRecipeSelected(recipeId) {
     // Store current filters in the store and URL if not already done
     store.dispatch('setRecipeFilters', localRecipeFilters.value);
-    emit('recipe-selected', recipeId);
+    emitter.emit('recipe-selected', recipeId);
 }
 </script>

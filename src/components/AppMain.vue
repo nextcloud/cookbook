@@ -89,6 +89,7 @@ import { useStore } from 'cookbook/store';
 import { goToRecipeParent } from 'cookbook/js/utils/navigation';
 import ListStyle from 'cookbook/js/Enums/ListStyle';
 import RouteName from 'cookbook/js/Enums/RouteName';
+import emitter from 'cookbook/bus';
 
 const log = getCurrentInstance().proxy.$log;
 const isMobile = useIsMobile();
@@ -213,10 +214,19 @@ function toggleSidebarVisibility() {
     });
 }
 
+/**
+ * Handles recipe selection.
+ * @param recipeId - Identifier of the selected recipe
+ */
+function onRecipeSelected() {
+    showRecipe.value = true;
+}
+
 // Vue lifecycle
 onMounted(() => {
     log.info('AppMain mounted');
     subscribe('navigation-toggled', updateAppNavigationOpen);
+    emitter.on('recipe-selected', onRecipeSelected);
     loadAll();
 });
 
