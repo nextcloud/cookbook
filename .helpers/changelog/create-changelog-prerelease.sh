@@ -4,7 +4,7 @@ localdir="$(dirname "$0")"
 
 versions_dir="$localdir/../../.changelog/versions"
 
-. .helpers/changelog/venv/bin/activate
+. "$localdir/venv/bin/activate"
 
 changelog="$localdir/../../CHANGELOG.md"
 

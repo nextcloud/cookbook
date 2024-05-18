@@ -2,21 +2,23 @@ import logging
 import coloredlogs
 import subprocess
 import datetime
+import json
 
 from . import cli
 from . import parser
 from . import github
 
 _l = logging.getLogger(__name__)
-coloredlogs.install(level=logging.DEBUG, logger=_l)
+coloredlogs.install(level=5, logger=_l)
 logLevelMap = {
 	0: logging.WARNING,
 	1: logging.INFO,
+	2: logging.DEBUG,
 }
 
 def main():
 	args = cli.parseParams()
-	_l.setLevel(logLevelMap.get(args.verbose, logging.DEBUG))
+	_l.setLevel(logLevelMap.get(args.verbose, 5))
 	_l.debug('Found arguments %s', args)
 
 	p = parser.Parser()
@@ -38,8 +40,10 @@ def main():
 		with open(args.token) as fp:
 			token = fp.read().strip()
 
+		dropPrs = []
+
 		for pr in prs.keys():
-			_l.debug('Fetching data for PR %d', pr)
+			_l.info('Fetching data for PR %d', pr)
 			with github.getGitHubPullInformation(pr, token) as res:
 				if res.status_code >= 400:
 					_l.error('Cannot read pull request information for PR %d', pr)
@@ -47,7 +51,12 @@ def main():
 				
 				data = res.json()
 
-			_l.log(5, 'Result %s', data)
+			_l.log(5, 'Result %s', json.dumps(data))
+
+			if data['state'] != 'closed':
+				_l.error('The PR %d is not closed but has a changelog attached. This might be an inconsistency in the code. Skipping it.', pr)
+				dropPrs.append(pr)
+				continue
 			
 			if prs[pr]['author'] is None:
 				ghAuthor = f'@{data["user"]["login"]}'
@@ -57,6 +66,9 @@ def main():
 			
 			prs[pr]['merge_sha'] = data['merge_commit_sha']
 
+		for pr in dropPrs:
+			prs.pop(pr)
+		
 		return prs
 
 	prs = fixByUpstream(prs)	

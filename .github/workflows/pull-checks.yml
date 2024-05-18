@@ -14,38 +14,96 @@ jobs:
             -   name: Checkout the app
                 uses: actions/checkout@v4
                 with:
-                    fetch-depth: 2
+                    filter: "blob:none"
+                    fetch-depth: 0
             
             -   name: Get the diff
                 id: diff
                 run: |
-                    git diff HEAD~1 -- CHANGELOG.md
-                    lines=$(git diff HEAD~1 -- CHANGELOG.md | wc -l)
-                    echo "lines=$lines" >> $GITHUB_OUTPUT
+                    filename_prefix=".changelog/current/${{ github.event.number }}-"
+                    git diff HEAD~1 --name-only -- $filename_prefix* > /tmp/changed-cl-files
+                    echo "Possibly matching changelog files:"
+                    cat /tmp/changed-cl-files
+                    num_lines=$(wc -l /tmp/changed-cl-files)
+                    if [ "$num_lines" -gt 1 ]
+                    then
+                    {
+                        echo "### Too many changelog files match"
+                        echo ""
+                        echo "There are too many changelog entries found for the PR #${{ github.event.number }} found."
+                        echo "There must be only one entry."
+                        echo ""
+                        echo "The following entries were found:"
+                        echo ""
+                        sed 's@^@- @' /tmp/changed-cl-files
+                        echo ""
+                        echo "Please fix this manually."
+                    } > $GITHUB_STEP_SUMMARY
+                    exit 1
+                    fi
+                    echo "num_lines=$(wc -l /tmp/changed-cl-files)" >> $GITHUB_OUTPUT
             
             -   name: Get all changed file names
                 id: file-names
                 run: |
-                    lines="$(git diff HEAD~1 --name-only)"
+                    git diff HEAD~1 --name-only > /tmp/changed-files-in-pr
                     echo "Changed files:"
-                    echo "$lines"
-                    totalcnt="$(echo "$lines" | wc -l)"
+                    cat /tmp/changed-files-in-pr
+                    totalcnt="$(cat /tmp/changed-files-in-pr | wc -l)"
                     echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
                     #
-                    cnt="$(echo "$lines" | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' | wc -l)"
+                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' > /tmp/relevant-files-in-pr
+                    cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
                     echo "num=$cnt" >> $GITHUB_OUTPUT
                     #
                     echo "That are $totalcnt changed files. After reducing the number there are $cnt files left."
 
-            -   name: Error/warn if the number of diff lines is zero
+            -   name: Error/warn if no changelog entry was found
                 run: |
                     if [ ${{ steps.file-names.outputs.num }} -gt 0 ]; then
-                    echo "::error file=CHANGELOG.md::There was no change in the changelog detected. Please fill in a valid entry into that file."
+                    echo "::error::There was no change in the changelog detected. Please fill in a valid entry into that file."
+                    {
+                        echo "### No changelog was found"
+                        echo ""
+                        echo "You have in total ${{ steps.file-names.outputs.totalcount }} file(s) changed in the pull request."
+                        echo "From these, there are ${{ steps.file-names.outputs.num }} file(s) which make a changelog entry mandatory."
+                        echo "These files are:"
+                        echo ""
+                        sed 's@^@- @' /tmp/relevant-files-in-pr
+                        echo ""
+                        echo "Please provide a file `.changelog/current/${{ github.event.number }}-foo` where you can set the text `foo` as you like."
+                        echo "A good suggestion is to summarize the PR's content and to replace any non-chars with dashes."
+                        echo "An example file name could be `.changelog/current/1234-update-nc-release-script`.
+                    } > $GITHUB_STEP_SUMMARY
                     exit 1
                     else
                     echo "::warning file=CHANGELOG.md::There was no change in the changelog detected. There are in total ${{ steps.file-names.outputs.totalcount }} changed files."
+                    {
+                        echo "### No changelog was needed"
+                        echo ""
+                        echo "No changelog entry was found so far."
+                        echo "This is okay, as no files have been modified that would require a changelog entry."
+                        echo "You might consider if adding a changelog entry would be benefical as significant changes have been made."
+                    } > $GITHUB_STEP_SUMMARY
                     fi
-                if: ${{ steps.diff.outputs.lines == 0 }}
+                if: ${{ steps.diff.outputs.num_lines == 0 }}
+            -   name: Install Python package
+                run: pip install --user virtualenv pipenv
+            -   name: Test creation of changelog
+                run: |
+                    cd .helpers/changelog
+                    virtualenv venv
+                    source venv/bin/activate
+                    pipenv sync
+                    echo "${{ secrets.GITHUB_TOKEN }}" > token
+                    {
+                        echo ""
+                        echo "### Output of changelog generation"
+                        echo ""
+                        echo '```'
+                    } >> $GITHUB_STEP_SUMMARY
+                    ./create-changelog-prerelease.sh --token token ../../.changelog/current/* 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+                    echo '```' >> $GITHUB_STEP_SUMMARY
     
     todo-checker:
         name: Check for added todo messages
