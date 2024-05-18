@@ -55,6 +55,8 @@ def main():
 
 			if data['state'] != 'closed':
 				_l.error('The PR %d is not closed but has a changelog attached. This might be an inconsistency in the code. Skipping it.', pr)
+				if args.ci:
+					exit(1)
 				dropPrs.append(pr)
 				continue
 			
