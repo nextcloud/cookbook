@@ -146,6 +146,16 @@ The script uses pipenv and has some CLI parameters to be used.
 It outputs on the stdout the content of the `[Unreleased]` section.
 Finally, the different versions need to be appended in reverded versioning order (see `sort -V`).
 
+In order for the python script to run, some python packages need tp be present.
+Best is if you create a virtual environment for this program.
+If you do not have the pipenv program available, install it as user by `pip install --user pipenv`.
+You can do this my means of `venv .helpers/changelog/venv` and acticate it by `source .helpers/changelog/venv/bin/activate`.
+Then, you need to install the dependencies:
+Go to the folder `.helpers/changelog` and finally installing the actual dependencies by `pipenv sync`.
+
+You need to activate the venv every time, you start a new shell.
+Otherwiese the dependencies might not be found.
+
 ### Creating of changelogs for relaeses
 
 In order to make the usage as convinient for the dev/admin as possible, there are two scripts `.helpers/changelog/create-changelog-prerelease.sh` and `.helpers/changelog/create-changelog-release.sh`.
