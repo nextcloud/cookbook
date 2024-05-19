@@ -16,7 +16,9 @@ shift
 
 changelog="$localdir/../../CHANGELOG.md"
 
-echo "## [Unreleased]" > "$changelog"
+cat "$localdir/../../.changelog/prefix.md" > "$changelog"
+
+echo "## [Unreleased]" >> "$changelog"
 echo "" >> "$changelog"
 echo "" >> "$changelog"
 

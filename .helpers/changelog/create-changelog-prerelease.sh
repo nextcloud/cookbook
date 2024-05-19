@@ -8,7 +8,9 @@ versions_dir="$localdir/../../.changelog/versions"
 
 changelog="$localdir/../../CHANGELOG.md"
 
-echo "## [Unreleased]" > "$changelog"
+cat "$localdir/../../.changelog/prefix.md" > "$changelog"
+
+echo "## [Unreleased]" >> "$changelog"
 
 (
 	export PYTHONPATH="$(pwd)/.helpers/changelog"
