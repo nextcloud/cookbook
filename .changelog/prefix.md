@@ -1,7 +1,11 @@
-## Note on incomplete changelogs
+## Note on incomplete changelogs and releases
 
 Please note that the changelog in this branch is not complete.
 This is due to the way, how the changelog file is managed and generated.
+
+Any changes to the branch not yet released are not guaranteed to be part of the changelog file.
+This file is auto-generated during the release process.
+See also the other files in `.changelog/current` for all merged changes since the last release.
 
 To be precise:
 Releses on parallel development branches will not appear in this CHANGELOG.
