@@ -102,7 +102,7 @@ jobs:
                         echo ""
                         echo '```'
                     } >> $GITHUB_STEP_SUMMARY
-                    ./create-changelog-prerelease.sh --token token --ci ../../.changelog/current/* 2>&1 | tee -a $GITHUB_STEP_SUMMARY
+                    ./create-changelog-prerelease.sh --token token --ci --pr ${{ github.event.number }} ../../.changelog/current/* 2>&1 | tee -a $GITHUB_STEP_SUMMARY
                     echo '```' >> $GITHUB_STEP_SUMMARY
     
     todo-checker:

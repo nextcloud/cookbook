@@ -54,11 +54,15 @@ def main():
 			_l.log(5, 'Result %s', json.dumps(data))
 
 			if data['state'] != 'closed':
-				_l.error('The PR %d is not closed but has a changelog attached. This might be an inconsistency in the code. Skipping it.', pr)
-				if args.ci:
-					exit(1)
-				dropPrs.append(pr)
-				continue
+				if args.pr == str(pr):
+					_l.info('The PR %d is the current pull_request to be checked. No commit can be found.', pr)
+					prs[pr]['merge_sha'] = 'xxxxxxxx'
+				else:
+					_l.error('The PR %d is not closed but has a changelog attached. This might be an inconsistency in the code. Skipping it.', pr)
+					if args.ci:
+						exit(1)
+					dropPrs.append(pr)
+					continue
 			
 			if prs[pr]['author'] is None:
 				ghAuthor = f'@{data["user"]["login"]}'
@@ -66,7 +70,8 @@ def main():
 					ghAuthor = ghAuthor[:-5]
 				prs[pr]['author'] = ghAuthor
 			
-			prs[pr]['merge_sha'] = data['merge_commit_sha']
+			if args.pr is None or int(args.pr) != pr:
+				prs[pr]['merge_sha'] = data['merge_commit_sha']
 
 		for pr in dropPrs:
 			prs.pop(pr)
@@ -74,9 +79,15 @@ def main():
 		return prs
 
 	prs = fixByUpstream(prs)	
-	_l.debug('Fixed data: %s', prs)
 
-	def getSortedPRIds():
+	prsFixed = { k:v for k,v in prs.items() }
+	if args.pr is not None:
+		prsFixed.pop(int(args.pr))
+
+	_l.debug('Fixed data: %s', prs)
+	_l.debug('Fixed data (PR filtered out): %s', prsFixed)
+
+	def getSortedPRIds(prs):
 		mergeMap = {}
 		for pr in prs:
 			mergeMap[prs[pr]['merge_sha']] = pr
@@ -86,7 +97,13 @@ def main():
 		gitLog = ['git', 'log', '--topo-order', '--pretty=format:%H'] + [prs[pr]['merge_sha'] for pr in prs]
 		_l.debug('Command to execute: %s', gitLog)
 		proc = subprocess.run(gitLog, text=True, capture_output=True)
-		proc.check_returncode()
+
+		try:
+			proc.check_returncode()
+		except subprocess.CalledProcessError:
+			_l.error('Git log-based sorting failed. Error log:')
+			_l.error(proc.stderr)
+			raise
 
 		procLines = proc.stdout.split('\n')
 
@@ -97,9 +114,13 @@ def main():
 				_l.debug('Found PR %d in topo sorted list', prId)
 				mergeOrder.append(prId)
 		mergeOrder.reverse()
+
+		if args.pr is not None:
+			mergeOrder.append(int(args.pr))
+
 		return mergeOrder
 	
-	mergeOrder = getSortedPRIds()
+	mergeOrder = getSortedPRIds(prsFixed)
 	_l.debug('Sorted PRs: %s', mergeOrder)
 
 	def getTotalChangelog():
