@@ -32,7 +32,7 @@ The process depends if you want to create an actual new release or just a pre-re
 Both variants require that a python script is called to build the changelog from the various files.
 Please install this first.
 
-#### Installation of script (onlly once needed)
+#### Installation of script (only once needed)
 
 Go to the folder `.helper/changelog` in a console.
 Create a virtual python environment valled `venv`.
@@ -41,6 +41,13 @@ Typically this can be done by `virtualenv venv` (Linux) or `python -m venv venv`
 Also, you need a personal access token for your GitHub account to prevent API rate limit issues.
 Just create a token and put it in `.helpers/changelog/token`.
 Do not commit this file ever!
+
+#### Activate the virtual environemnt
+
+The venv has a means of enabling it.
+It depends on your shell and OS about the detailed steps.
+For example, in Bash, you have to `source .helpers/changelog/venv/bin/activate`.
+Adjust to your setup.
 
 #### Update the changelog for a release
 
