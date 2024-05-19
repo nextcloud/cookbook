@@ -21,7 +21,7 @@ build:
 	${BUNDLER} exec jekyll build
 
 watch:
-	${BUNDLER} exec jekyll serve --host ${HOST}
+	${BUNDLER} exec jekyll serve --host ${HOST} --livereload
 
 install:
 	${BUNDLER} install
