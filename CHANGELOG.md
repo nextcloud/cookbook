@@ -19,10 +19,25 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 ### Fixed
-- Prevent yield calculation for ## as ingredient headline
-  [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
+
 - Add missing translatable string for recipe-creation button in empty list view
-  [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
+  [backported #2015](https://github.com/nextcloud/cookbook/pull/2015)
+  [#2016](https://github.com/nextcloud/cookbook/pull/2016) j0hannesr0th @seyfeb @christianlupus
+
+### Maintenance
+
+- Update code styling
+  [#2123](https://github.com/nextcloud/cookbook/pull/2123) @dependabot
+- Update dependency @nextcloud/router
+  [#2124](https://github.com/nextcloud/cookbook/pull/2124) @dependabot
+- Backport of #2250 to use correct imports of NC core components
+  [backported #2250](https://github.com/nextcloud/cookbook/pull/2250)
+  [#2252](https://github.com/nextcloud/cookbook/pull/2252) seyfeb @christianlupus
+
+
+## 0.10.5 - 2023-12-14
+
+### Fixed
 - Allow translation of string _Enable debugging_ in settings
   [#1947](https://github.com/nextcloud/cookbook/pull/1947) @christianlupus
 - Fix wrong parsing of recipe yield input
@@ -40,10 +55,6 @@ Sorry for the inconvience.
 
 ### Maintenance
 - Update dependencies (stylelint-config-idiomatic-ordering) by @dependabot
-- Update code styling by @dependabot
-- Update dependency @nextcloud/router by @dependabot
-- Backport of #2250 to use correct imports of NC core components
-  [#2252](https://github.com/nextcloud/cookbook/pull/2252) @seyfeb
 
 
 ## 0.10.4 - 2023-12-05
@@ -59,7 +70,6 @@ Sorry for the inconvience.
   [#1931](https://github.com/nextcloud/cookbook/pull/1931) @christianlupus
 - Add backport script to simplify development
   [#1935](https://github.com/nextcloud/cookbook/pull/1935) @christianlupus
-
 
 ## 0.10.3 - 2023-12-04
 
@@ -1173,3 +1183,14 @@ The changed will be duplicated to the next release as this release should not be
 ### Fixed
 - Swapping ingredients and instructions cause items been deleted
   [#278](https://github.com/nextcloud/cookbook/pull/278) @sam-19
+### Fixed
+- Prevent yield calculation for ## as ingredient headline
+  [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
+- Add missing translatable string for recipe-creation button in empty list view
+  [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
+
+### Maintenance
+- Update code styling by @dependabot
+- Update dependency @nextcloud/router by @dependabot
+- Backport of #2250 to use correct imports of NC core components
+  [#2252](https://github.com/nextcloud/cookbook/pull/2252) @seyfeb
