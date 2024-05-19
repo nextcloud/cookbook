@@ -1,20 +1,40 @@
+## Note on incomplete changelogs and releases
+
+Please note that the changelog in this branch is not complete.
+This is due to the way, how the changelog file is managed and generated.
+
+Any changes to the branch not yet released are not guaranteed to be part of the changelog file.
+This file is auto-generated during the release process.
+See also the other files in `.changelog/current` for all merged changes since the last release.
+
+To be precise:
+Releses on parallel development branches will not appear in this CHANGELOG.
+Instead have a look at the correpsonding branches for an appropriate CHANGELOG.
+
+Also note, that the releases on this repository are not the actual releases of the cookbook.
+The releases are stored for technical reasins in the repository [christianlupus-nextcloud/cookbook-releases](https://github.com/christianlupus-nextcloud/cookbook-releases).
+Sorry for the inconvience.
+
+
 ## [Unreleased]
 
 ### Added
+
 - Toast with success/error message after trying to copy ingredients
-  [#2040](https://github.com/nextcloud/cookbook/pull/2040) @seyfeb
+  [#2040](https://github.com/nextcloud/cookbook/pull/2040) @dependabot
 - Seconds can now be specified for recipe times
   [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
 - New filter UI in recipe lists
   [#2037](https://github.com/nextcloud/cookbook/pull/2037) @seyfeb
 
 ### Fixed
+
 - Prevent yield calculation for ## as ingredient headline
   [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
-- Improved styling of times in recipe view
-  [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
 - Add missing translatable string for recipe-creation button in empty list view
   [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
+- Improved styling of times in recipe view
+  [#2014](https://github.com/nextcloud/cookbook/pull/2014) @seyfeb
 - Prevent recalculation algorithm if no yield is given
   [#2003](https://github.com/nextcloud/cookbook/pull/2003) @j0hannesr0th
 - Fix yield not set calculation error
@@ -27,6 +47,7 @@
   [#2287](https://github.com/nextcloud/cookbook/pull/2287) @christianlupus
 
 ### Documentation
+
 - Improve  structure of `README.md`
   [#1989](https://github.com/nextcloud/cookbook/pull/1989) @seyfeb
 - Fix wrong type definition in OpenAPI specs
@@ -35,6 +56,7 @@
   [#2225](https://github.com/nextcloud/cookbook/pull/2225) @shagn
 
 ### Maintenance
+
 - Add Typescript support
   [#2059](https://github.com/nextcloud/cookbook/pull/2059) @seyfeb
 - Update coding standards
@@ -42,7 +64,7 @@
 - Import NC core components correctly
   [#2250](https://github.com/nextcloud/cookbook/pull/2250) @christianlupus
 - Update typescript
-  [#2281](https://github.com/nextcloud/cookbook/pull/2281) @dependabot
+  [#2281](https://github.com/nextcloud/cookbook/pull/2281) @christianlupus
 - Update nextcloud router
   [#2279](https://github.com/nextcloud/cookbook/pull/2279) @dependabot
 - Update NPM and Node version
@@ -51,6 +73,9 @@
   [#2141](https://github.com/nextcloud/cookbook/pull/2141) @dependabot
 - Update vue plugin for eslint with typescript
   [#2188](https://github.com/nextcloud/cookbook/pull/2188) @dependabot
+- Update changlog process to allow for backports
+  [#2291](https://github.com/nextcloud/cookbook/pull/2291) @christianlupus
+
 
 ## 0.11.0 - 2023-12-14
 
