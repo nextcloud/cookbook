@@ -59,6 +59,7 @@ class MarkdownParser:
 		matcherAuthor = self._reAuthors.fullmatch(line)
 		if matcherAuthor is not None:
 			self._author = matcherAuthor.group(1)
+			return
 		
 		if not self._headerMatched(line):
 			self._l.error('No heading line is defined')
