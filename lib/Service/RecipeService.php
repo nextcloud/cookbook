@@ -82,7 +82,7 @@ class RecipeService {
 		HtmlDownloadService $downloadService,
 		RecipeExtractionService $extractionService,
 		JSONFilter $jsonFilter,
-		DownloadHelper $downloadHelper,
+		DownloadHelper $downloadHelper
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
