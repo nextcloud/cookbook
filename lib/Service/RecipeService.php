@@ -9,6 +9,7 @@ use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
@@ -65,6 +66,9 @@ class RecipeService {
 	/** @var JSONFilter */
 	private $jsonFilter;
 
+	/** @var DownloadHelper */
+	private $downloadHelper;
+
 	public function __construct(
 		?string $UserId,
 		IRootFolder $root,
@@ -77,7 +81,8 @@ class RecipeService {
 		LoggerInterface $logger,
 		HtmlDownloadService $downloadService,
 		RecipeExtractionService $extractionService,
-		JSONFilter $jsonFilter
+		JSONFilter $jsonFilter,
+		DownloadHelper $downloadHelper,
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -91,6 +96,7 @@ class RecipeService {
 		$this->htmlDownloadService = $downloadService;
 		$this->recipeExtractionService = $extractionService;
 		$this->jsonFilter = $jsonFilter;
+		$this->downloadHelper = $downloadHelper;
 	}
 
 	/**
@@ -275,7 +281,12 @@ class RecipeService {
 				if (strpos($json['image'], 'http') === 0) {
 					// The image is a URL
 					$json['image'] = str_replace(' ', '%20', $json['image']);
-					$full_image_data = file_get_contents($json['image']);
+					try {
+						$full_image_data = $this->downloadImage($json['image']);
+					} catch (Exception $ex) {
+						$this->logger->warning('Failed to download an image using curl. Falling back to PHP default behavior.');
+						$full_image_data = file_get_contents($json['image']);
+					}
 
 				} else {
 					// The image is a local path
@@ -307,6 +318,15 @@ class RecipeService {
 		$recipe_folder->touch();
 
 		return $recipe_file;
+	}
+
+	private function downloadImage(string $url) {
+		$this->downloadHelper->downloadFile($url);
+		$status = $this->downloadHelper->getStatus();
+		if($status >= 400) {
+			throw new Exception($this->il10n->t('Cannot download image using curl'));
+		}
+		return $this->downloadHelper->getContent();
 	}
 
 	/**
