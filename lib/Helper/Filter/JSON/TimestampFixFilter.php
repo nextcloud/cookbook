@@ -11,7 +11,7 @@ class TimestampFixFilter extends AbstractJSONFilter {
 	public function apply(array &$json): bool {
 		$changed = false;
 		foreach(['dateCreated', 'dateModified'] as $key) {
-			if($json[$key]) {
+			if(isset($json[$key]) && $json[$key]) {
 				$json[$key] = $this->handleTimestamp($json[$key], $changed);
 			}
 		}
