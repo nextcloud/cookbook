@@ -98,12 +98,12 @@ jobs:
                     echo "${{ secrets.GITHUB_TOKEN }}" > token
                     {
                         echo ""
-                        echo "### Output of changelog generation"
+                        echo "### Output of changelog generation unreleased section"
                         echo ""
                         echo '```'
+                        python -m changelog_builder --token token --ci --pr ${{ github.event.number }} ../../.changelog/current/* 2>&1
+                        echo '```'
                     } >> $GITHUB_STEP_SUMMARY
-                    ./create-changelog-prerelease.sh --token token --ci --pr ${{ github.event.number }} ../../.changelog/current/* 2>&1 | tee -a $GITHUB_STEP_SUMMARY
-                    echo '```' >> $GITHUB_STEP_SUMMARY
     
     todo-checker:
         name: Check for added todo messages
