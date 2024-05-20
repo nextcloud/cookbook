@@ -27,12 +27,75 @@ git checkout -b release/1.2.4 master
 ### Update the changelogs
 
 In the release branch you will have to prepare the changelog file.
-This means, you have to add a new second level heading to the unreleased changes so far.
-You might need to add
+The process depends if you want to create an actual new release or just a pre-release.
+
+Both variants require that a python script is called to build the changelog from the various files.
+Please install this first.
+
+#### Installation of script (only once needed)
+
+Go to the folder `.helper/changelog` in a console.
+Create a virtual python environment valled `venv`.
+Typically this can be done by `virtualenv venv` (Linux) or `python -m venv venv` (Windows) in that folder.
+
+Also, you need a personal access token for your GitHub account to prevent API rate limit issues.
+Just create a token and put it in `.helpers/changelog/token`.
+Do not commit this file ever!
+
+#### Activate the virtual environemnt
+
+The venv has a means of enabling it.
+It depends on your shell and OS about the detailed steps.
+For example, in Bash, you have to `source .helpers/changelog/venv/bin/activate`.
+Adjust to your setup.
+
+#### Update the changelog for a release
+
+There is a convinence script availabe at `.helper/changelog/create-changelog-release.sh`.
+This will call the python script and carry out the actual work for you.
+
+You have to provie at least one option to th script:
+
+1. The version to create. In out example, this would be `1.2.4`.
+
+Any additional parameters are passed to the python script `changelog_bilder` as located in `.helpers/changelog`.
+
+Please note that the script expects all current snippets as parameters.
+Also, it expects a GitHub personal access token stored in a file.
+So, typically, one would call it like this:
+
+```shell
+./.helpers/changelog/create-changelog-release.sh 1.2.4 --token .helpers/changelog/token .changelog/current/*
 ```
-## 1.2.4 - YYYY-mm-dd
+
+The script will alter a few files in the repository:
+
+1. The files in `.changelog/current` are removed.
+2. A new snippet in `.changelog/versions` called `v1.2.4.md` is created.
+3. The `CHANGELOG.md` in the root folder of the repository is updated appropriately.
+
+Also check if any pending API change is present.
+Update the API changelog (in `/docs/dev/api/changelog/*.md`) accordingly.
+
+Commit the changes.
+Pushing them to GitHub is neither needed nor adviced.
+
+#### Update the changelog for a pre-release
+
+There is a convinence script availabe at `.helper/changelog/create-changelog-prerelease.sh`.
+This will call the python script and carry out the actual work for you.
+
+Any parameters are passed to the python script `changelog_bilder` as located in `.helpers/changelog`.
+
+Please note that the script expects all current snippets as parameters.
+Also, it expects a GitHub personal access token stored in a file.
+So, typically, one would call it like this:
+
+```shell
+./.helpers/changelog/create-changelog-prerelease.sh --token .helpers/changelog/token .changelog/current/*
 ```
-as one of the first few lines with `YYYY-mm-dd` the current date.
+
+The script will only update the `CHANGELOG.md` file in the root folder of the repository.
 
 Also check if any pending API change is present.
 Update the API changelog (in `/docs/dev/api/changelog/*.md`) accordingly.
@@ -81,7 +144,7 @@ The following table shows the effect of the parameters if the last version was `
 
 It is also possible to publish a pre-release like `1.4.2-beta1` or `4.0.2-rc1`.
 The user/developer is responsible to provide a valid suffix for the pre-release.
-The created pre-release version is **not permanently stored**.
+The created pre-release version suffix/name is **not permanently stored**.
 
 The reasoning of not storing the last pre-release version is that the next regular release (of whatever version level) must not increase the major/minor/patch version multiple times.
 Also it might be required to change from a patch to minor or from minor to major level updates:
