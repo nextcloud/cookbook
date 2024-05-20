@@ -9,9 +9,6 @@ use OCP\Files\File;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OCA\Cookbook\Helper\Filter\NormalizeRecipeFileFilter
- */
 class NormalizeRecipeFileFilterTest extends TestCase {
 	/** @var MockObject|RecipeDatesFilter */
 	private $datesFilter;
