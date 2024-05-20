@@ -4,7 +4,6 @@ namespace OCA\Cookbook\tests\Unit\Helper\Filter\DB;
 
 use OCA\Cookbook\Helper\Filter\DB\RecipeNameLengthFilter;
 use OCP\Files\File;
-use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 
 /**
