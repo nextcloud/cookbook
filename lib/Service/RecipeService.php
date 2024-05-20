@@ -247,6 +247,10 @@ class RecipeService {
 
 		if (!$recipe_file) {
 			$recipe_file = $recipe_folder->newFile('recipe.json');
+			$recipeIsNew = true;
+		} else {
+			$recipeIsNew = false;
+			$oldJson = json_decode($recipe_file->getContent(), true);
 		}
 
 		// Rename .json file if it's not "recipe.json"
@@ -267,18 +271,20 @@ class RecipeService {
 		$full_image_data = null;
 
 		if (isset($json['image']) && $json['image']) {
-			if (strpos($json['image'], 'http') === 0) {
-				// The image is a URL
-				$json['image'] = str_replace(' ', '%20', $json['image']);
-				$full_image_data = file_get_contents($json['image']);
+			if($recipeIsNew || !isset($oldJson['image']) || !$oldJson['image'] || $json['image'] !== $oldJson['image']) {
+				if (strpos($json['image'], 'http') === 0) {
+					// The image is a URL
+					$json['image'] = str_replace(' ', '%20', $json['image']);
+					$full_image_data = file_get_contents($json['image']);
 
-			} else {
-				// The image is a local path
-				try {
-					$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
-					$full_image_data = $full_image_file->getContent();
-				} catch (NotFoundException $e) {
-					$full_image_data = null;
+				} else {
+					// The image is a local path
+					try {
+						$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
+						$full_image_data = $full_image_file->getContent();
+					} catch (NotFoundException $e) {
+						$full_image_data = null;
+					}
 				}
 			}
 
