@@ -32,6 +32,9 @@ export default function useSuggestionsPopup(
     );
 
     const filteredSuggestionOptions = computed(() => {
+        if (suggestionsData.value === null) {
+            return [];
+        }
         const { searchText } = suggestionsData.value;
 
         return props.suggestionOptions.filter(

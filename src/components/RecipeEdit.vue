@@ -528,7 +528,7 @@ const initEmptyRecipe = () => {
     // this.nutrition = {}
     recipe.value = {
         id: 0,
-        name: null,
+        name: '',
         description: '',
         url: '',
         image: '',
