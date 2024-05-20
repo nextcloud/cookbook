@@ -33,6 +33,9 @@ Sorry for the inconvience.
 - Backport of #2250 to use correct imports of NC core components
   [backported #2250](https://github.com/nextcloud/cookbook/pull/2250)
   [#2252](https://github.com/nextcloud/cookbook/pull/2252) seyfeb @christianlupus
+- Update changlog process to allow for backports
+  [backported #2291](https://github.com/nextcloud/cookbook/pull/2291)
+  [#2317](https://github.com/nextcloud/cookbook/pull/2317) @christianlupus
 
 
 ## 0.10.5 - 2023-12-14
@@ -1183,14 +1186,3 @@ The changed will be duplicated to the next release as this release should not be
 ### Fixed
 - Swapping ingredients and instructions cause items been deleted
   [#278](https://github.com/nextcloud/cookbook/pull/278) @sam-19
-### Fixed
-- Prevent yield calculation for ## as ingredient headline
-  [#1998](https://github.com/nextcloud/cookbook/pull/1998) @j0hannesr0th
-- Add missing translatable string for recipe-creation button in empty list view
-  [#2015](https://github.com/nextcloud/cookbook/pull/2015) @seyfeb
-
-### Maintenance
-- Update code styling by @dependabot
-- Update dependency @nextcloud/router by @dependabot
-- Backport of #2250 to use correct imports of NC core components
-  [#2252](https://github.com/nextcloud/cookbook/pull/2252) @seyfeb
