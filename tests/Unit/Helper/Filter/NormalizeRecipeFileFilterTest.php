@@ -4,6 +4,7 @@ namespace OCA\Cookbook\tests\Unit\Helper\Filter;
 
 use OCA\Cookbook\Helper\Filter\DB\NormalizeRecipeFileFilter;
 use OCA\Cookbook\Helper\Filter\DB\RecipeDatesFilter;
+use OCA\Cookbook\Helper\Filter\DB\RecipeNameLengthFilter;
 use OCP\Files\File;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -20,7 +21,11 @@ class NormalizeRecipeFileFilterTest extends TestCase {
 
 	protected function setUp(): void {
 		$this->datesFilter = $this->createMock(RecipeDatesFilter::class);
-		$this->dut = new NormalizeRecipeFileFilter($this->datesFilter);
+
+		$recipeLengthFilter = $this->createStub(RecipeNameLengthFilter::class);
+		$recipeLengthFilter->method('apply')->willReturn(false);
+
+		$this->dut = new NormalizeRecipeFileFilter($this->datesFilter, $recipeLengthFilter);
 	}
 
 	public function dp() {
