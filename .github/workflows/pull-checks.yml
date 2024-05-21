@@ -51,9 +51,12 @@ jobs:
                     cat /tmp/changed-files-in-pr
                     totalcnt="$(cat /tmp/changed-files-in-pr | wc -l)"
                     echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
+                    echo "In total that are $totalcnt files."
                     #
-                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' > /tmp/relevant-files-in-pr
+                    echo "Filtering out automatically updatable files"
+                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' | tee /tmp/relevant-files-in-pr
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
+                    echo "That are $cnt files relevant."
                     echo "num=$cnt" >> $GITHUB_OUTPUT
                     #
                     echo "That are $totalcnt changed files. After reducing the number there are $cnt files left."

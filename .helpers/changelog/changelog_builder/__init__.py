@@ -81,13 +81,17 @@ def main():
 	prs = fixByUpstream(prs)	
 
 	prsFixed = { k:v for k,v in prs.items() }
+	dropProvidedPRId = False
 	if args.pr is not None:
-		prsFixed.pop(int(args.pr))
+		try:
+			prsFixed.pop(int(args.pr))
+		except KeyError:
+			dropProvidedPRId = True
 
 	_l.debug('Fixed data: %s', prs)
 	_l.debug('Fixed data (PR filtered out): %s', prsFixed)
 
-	def getSortedPRIds(prs):
+	def getSortedPRIds(prs, dropProvidedPRId):
 		mergeMap = {}
 		for pr in prs:
 			mergeMap[prs[pr]['merge_sha']] = pr
@@ -115,12 +119,12 @@ def main():
 				mergeOrder.append(prId)
 		mergeOrder.reverse()
 
-		if args.pr is not None:
+		if args.pr is not None and not dropProvidedPRId:
 			mergeOrder.append(int(args.pr))
 
 		return mergeOrder
 	
-	mergeOrder = getSortedPRIds(prsFixed)
+	mergeOrder = getSortedPRIds(prsFixed, dropProvidedPRId)
 	_l.debug('Sorted PRs: %s', mergeOrder)
 
 	def getTotalChangelog():
