@@ -2,6 +2,8 @@
 
 namespace OCA\Cookbook\Controller\Implementation;
 
+use Exception;
+use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
@@ -12,11 +14,13 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
+use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
+use Psr\Log\LoggerInterface;
 
 class RecipeImplementation {
 	/** @var RecipeService */
@@ -37,6 +41,8 @@ class RecipeImplementation {
 	private $request;
 	/** @var IL10N */
 	private $l;
+	/** @var LoggerInterface */
+	private $logger;
 
 
 	public function __construct(
@@ -48,7 +54,8 @@ class RecipeImplementation {
 		RecipeJSONOutputFilter $recipeJSONOutputFilter,
 		RecipeStubFilter $stubFilter,
 		AcceptHeaderParsingHelper $acceptHeaderParsingHelper,
-		IL10N $iL10N
+		IL10N $iL10N,
+		LoggerInterface $logger
 	) {
 		$this->request = $request;
 		$this->service = $recipeService;
@@ -59,6 +66,7 @@ class RecipeImplementation {
 		$this->stubFilter = $stubFilter;
 		$this->acceptHeaderParser = $acceptHeaderParsingHelper;
 		$this->l = $iL10N;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -132,7 +140,24 @@ class RecipeImplementation {
 			];
 			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
-		$this->dbCacheService->addRecipe($file);
+
+		try {
+			$this->dbCacheService->addRecipe($file);
+		} catch(InvalidJSONFileException $ex) {
+
+			try {
+				$this->service->deleteRecipe($file->getParent()->getId());
+			} catch (Exception $ex) {
+				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
+			}
+
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+		}
 
 		return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);
 	}
@@ -148,9 +173,6 @@ class RecipeImplementation {
 		$recipeData = $this->restParser->getParameters();
 		try {
 			$file = $this->service->addRecipe($recipeData);
-			$this->dbCacheService->addRecipe($file);
-
-			return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);
 		} catch (RecipeExistsException $ex) {
 			$json = [
 				'msg' => $ex->getMessage(),
@@ -166,6 +188,26 @@ class RecipeImplementation {
 			];
 			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
+
+		try {
+			$this->dbCacheService->addRecipe($file);
+		} catch(InvalidJSONFileException $ex) {
+
+			try {
+				$this->service->deleteRecipe($file->getParent()->getId());
+			} catch (Exception $ex) {
+				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
+			}
+
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+		}
+
+		return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);
 	}
 
 	/**
@@ -236,9 +278,7 @@ class RecipeImplementation {
 		try {
 			$recipe_file = $this->service->downloadRecipe($data['url']);
 			$recipe_json = $this->service->parseRecipeFile($recipe_file);
-			$this->dbCacheService->addRecipe($recipe_file);
 
-			return new JSONResponse($recipe_json, Http::STATUS_OK);
 		} catch (RecipeExistsException $ex) {
 			$json = [
 				'msg' => $ex->getMessage(),
@@ -249,6 +289,21 @@ class RecipeImplementation {
 		} catch (\Exception $e) {
 			return new JSONResponse($e->getMessage(), 400);
 		}
+
+		try {
+			$this->dbCacheService->addRecipe($recipe_file);
+		} catch(InvalidJSONFileException $ex) {
+
+			try {
+				$this->service->deleteRecipe($recipe_file->getParent()->getId());
+			} catch (Exception $ex) {
+				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
+			}
+
+			return new DataResponse($ex->getMessage(), 400);
+		}
+
+		return new JSONResponse($recipe_json, Http::STATUS_OK);
 	}
 
 	/**
