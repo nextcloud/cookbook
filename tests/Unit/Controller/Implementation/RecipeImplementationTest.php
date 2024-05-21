@@ -22,6 +22,7 @@ use OCP\IURLGenerator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @covers \OCA\Cookbook\Controller\Implementation\RecipeImplementation
@@ -68,6 +69,8 @@ class RecipeImplementationTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
+		$logger = $this->createStub(LoggerInterface::class);
+
 		$this->sut = new RecipeImplementation(
 			$this->request,
 			$this->recipeService,
@@ -77,7 +80,8 @@ class RecipeImplementationTest extends TestCase {
 			$this->recipeFilter,
 			$this->stubFilter,
 			$this->acceptHeaderParser,
-			$l
+			$l,
+			$logger
 		);
 	}
 
