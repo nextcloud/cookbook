@@ -180,6 +180,7 @@ OC.L10N.register(
     "Loading…" : "正在加载…",
     "Failed to load recipes with keywords: {tags}" : "加载带这些关键词的菜谱失败：{tags}",
     "Failed to load search results" : "加载搜索结果失败",
+    "Cannot download image using curl" : "无法使用 curl 下载镜像",
     "Order" : "顺序",
     "Search term" : "关键字",
     "Show recipes containing any selected category" : "显示包含任何选定类别的食谱",
