@@ -8,7 +8,7 @@ OC.L10N.register(
     "All recipes" : "Visas receptes",
     "None" : "Nav",
     "Page not found" : "Lapa nav atrasta",
-    "Edit" : "Rediģēt",
+    "Edit" : "Labot",
     "Save" : "Saglabāt",
     "Search" : "Meklēt",
     "Print recipe" : "Drukāt recepti",

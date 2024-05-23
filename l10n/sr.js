@@ -209,6 +209,7 @@ OC.L10N.register(
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Услед неисправне синтаксе састојак не може понова да се прорачуна. Молимо вас да га промените на следећу синтаксу: количина јединица састојак. Примери: 200 g шаргарепа или 1 прстохват соли",
     "Failed to load recipes with keywords: {tags}" : "Није успело учитавање рецепата са кључним речима: {tags}",
     "Failed to load search results" : "Грешка приликом учитавања резултата претраге",
+    "Cannot read content of JSON file %s" : "Не може да се прочита садржај JSON фајла %s",
     "Cannot download image using curl" : "Слика не може да се преузме програмом curl",
     "Filter current recipes" : "Филтрирај у тренутне рецепте",
     "Search recipes" : "Претрага рецепата",

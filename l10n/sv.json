@@ -207,6 +207,8 @@
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Ingrediensen kan inte räknas om på grund av felaktig syntax. Ändra det till denna syntax: mängd enhet ingrediens. Exempel: 200 g morötter eller 1 nypa salt",
     "Failed to load recipes with keywords: {tags}" : "Misslyckades med att ladda recept med nyckelorden: {tags}",
     "Failed to load search results" : "Misslyckades att ladda sökresultat",
+    "Cannot read content of JSON file %s" : "Kan inte läsa innehållet i JSON-filen %s",
+    "Cannot download image using curl" : "Kan inte ladda ner bilden med curl",
     "Filter current recipes" : "Filtrera aktuella recept",
     "Search recipes" : "Sök recept",
     "Delete nutrition item" : "Ta bort näringsämne",
