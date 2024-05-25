@@ -7,6 +7,7 @@ OC.L10N.register(
     "Save" : "Sábháil",
     "Search" : "Cuardach",
     "Filter" : "Scagaire",
+    "Tags" : "Clibeanna",
     "Categories" : "Catagóirí",
     "Rename" : "Athainmnigh",
     "Add" : "Cuir",
@@ -14,6 +15,7 @@ OC.L10N.register(
     "Dismiss" : "Díbhe",
     "Cancel" : "Cealaigh",
     "OK" : "Ceart go leor",
-    "Description" : "Cur síos"
+    "Description" : "Cur síos",
+    "URL" : "URL"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
