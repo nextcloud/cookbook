@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - 'l10n/**'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   
