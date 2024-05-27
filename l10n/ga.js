@@ -16,6 +16,8 @@ OC.L10N.register(
     "Cancel" : "Cealaigh",
     "OK" : "Ceart go leor",
     "Description" : "Cur síos",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Image" : "Íomha",
+    "Order" : "Ordú"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
