@@ -209,6 +209,8 @@ OC.L10N.register(
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "O ingrediente não pode ser recalculado devido à sintaxe incorreta. Por favor, altere para esta sintaxe: quantidade unidade ingrediente. Exemplos: 200 g de cenoura ou 1 pitada de sal",
     "Failed to load recipes with keywords: {tags}" : "Falhou em carregar receitas com palavras-chave: {tags}",
     "Failed to load search results" : "Falha ao carregar os resultados da pesquisa",
+    "Cannot read content of JSON file %s" : "Não é possível ler o conteúdo do arquivo JSON %s",
+    "Cannot download image using curl" : "Não é possível baixar a imagem usando curl",
     "Filter current recipes" : "Filtrar receitas atuais",
     "Search recipes" : "Pesquisar receitas",
     "Delete nutrition item" : "Excluir item nutricional",
