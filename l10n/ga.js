@@ -18,6 +18,7 @@ OC.L10N.register(
     "Description" : "Cur síos",
     "URL" : "URL",
     "Image" : "Íomha",
+    "Loading…" : "Á lódáil…",
     "Order" : "Ordú"
 },
 "nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");
