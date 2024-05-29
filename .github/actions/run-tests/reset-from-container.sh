@@ -21,7 +21,7 @@ restore_mysql_dump () {
 	cat /tmp/mysql_tables | sed 's@.*@DROP TABLE \0;@' | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE"
 
 	echo "Restoring MySQL from single file dump"
-	mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql < "$SF_DIR/sql/dump.sql"
+	mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE" < "$SF_DIR/sql/dump.sql"
 }
 
 restore_postgres_dump () {
