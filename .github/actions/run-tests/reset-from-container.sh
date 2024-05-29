@@ -12,10 +12,13 @@ is_file_dump () {
 
 restore_mysql_dump () {
 	echo "Dropping old data from the database"
-	mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql <<- EOF | tail -n +2 > /tmp/mysql_tables
+	echo "Getting tables"
+	mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE" <<- EOF | tail -n +2 > /tmp/mysql_tables
 		SHOW TABLES;
 		EOF
-	cat /tmp/mysql_tables | sed 's@.*@DROP TABE \0;@' | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql
+	echo "Got:"
+	cat /tmp/mysql_tables
+	cat /tmp/mysql_tables | sed 's@.*@DROP TABLE \0;@' | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE"
 
 	echo "Restoring MySQL from single file dump"
 	mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql < "$SF_DIR/sql/dump.sql"
