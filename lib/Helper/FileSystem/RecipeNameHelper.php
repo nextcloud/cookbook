@@ -36,7 +36,7 @@ class RecipeNameHelper {
 		$recipeName = preg_replace($pattern, '_', $recipeName);
 
 		if (strlen($recipeName) > 100) {
-			$recipeName = substr($recipeName, 0, 97) . '...';
+			$recipeName = substr($recipeName, 0, 97) . '___';
 		}
 
 		return $recipeName;
