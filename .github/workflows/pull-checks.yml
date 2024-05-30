@@ -56,7 +56,7 @@ jobs:
                     totalcnt="$(cat /tmp/changed-files-in-pr | wc -l)"
                     echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
                     #
-                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' > /tmp/relevant-files-in-pr
+                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' > /tmp/relevant-files-in-pr || true
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
                     echo "num=$cnt" >> $GITHUB_OUTPUT
                     #
