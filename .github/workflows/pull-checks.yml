@@ -46,13 +46,17 @@ jobs:
             -   name: Get all changed file names
                 id: file-names
                 run: |
+                    if [ -n "$RUNNER_DEBUG" ]
+                    then
+                    set -x
+                    fi
                     git diff HEAD~1 --name-only > /tmp/changed-files-in-pr
                     echo "Changed files:"
                     cat /tmp/changed-files-in-pr
                     totalcnt="$(cat /tmp/changed-files-in-pr | wc -l)"
                     echo "totalcount=$totalcnt" >> $GITHUB_OUTPUT
                     #
-                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' > /tmp/relevant-files-in-pr
+                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' > /tmp/relevant-files-in-pr || true
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
                     echo "num=$cnt" >> $GITHUB_OUTPUT
                     #
