@@ -46,6 +46,10 @@ jobs:
             -   name: Get all changed file names
                 id: file-names
                 run: |
+                    if [ -n "$RUNNER_DEBUG" ]
+                    then
+                    set -x
+                    fi
                     git diff HEAD~1 --name-only > /tmp/changed-files-in-pr
                     echo "Changed files:"
                     cat /tmp/changed-files-in-pr
