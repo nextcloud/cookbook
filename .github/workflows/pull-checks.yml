@@ -20,11 +20,15 @@ jobs:
             -   name: Get the diff
                 id: diff
                 run: |
+                    if [ -n "$RUNNER_DEBUG" ]
+                    then
+                    set -x
+                    fi
                     filename_prefix=".changelog/current/${{ github.event.number }}-"
                     git diff HEAD~1 --name-only -- $filename_prefix* > /tmp/changed-cl-files
                     echo "Possibly matching changelog files:"
                     cat /tmp/changed-cl-files
-                    num_lines=$(wc -l /tmp/changed-cl-files)
+                    num_lines=$(cat /tmp/changed-cl-files | wc -l)
                     if [ "$num_lines" -gt 1 ]
                     then
                     {
@@ -41,11 +45,15 @@ jobs:
                     } > $GITHUB_STEP_SUMMARY
                     exit 1
                     fi
-                    echo "num_lines=$(wc -l /tmp/changed-cl-files)" >> $GITHUB_OUTPUT
+                    echo "num_lines=$(cat /tmp/changed-cl-files | wc -l)" >> $GITHUB_OUTPUT
             
             -   name: Get all changed file names
                 id: file-names
                 run: |
+                    if [ -n "$RUNNER_DEBUG" ]
+                    then
+                    set -x
+                    fi
                     git diff HEAD~1 --name-only > /tmp/changed-files-in-pr
                     echo "Changed files:"
                     cat /tmp/changed-files-in-pr
@@ -63,6 +71,10 @@ jobs:
 
             -   name: Error/warn if no changelog entry was found
                 run: |
+                    if [ -n "$RUNNER_DEBUG" ]
+                    then
+                    set -x
+                    fi
                     if [ ${{ steps.file-names.outputs.num }} -gt 0 ]; then
                     echo "::error::There was no change in the changelog detected. Please fill in a valid entry into that file."
                     {
@@ -74,9 +86,9 @@ jobs:
                         echo ""
                         sed 's@^@- @' /tmp/relevant-files-in-pr
                         echo ""
-                        echo "Please provide a file `.changelog/current/${{ github.event.number }}-foo` where you can set the text `foo` as you like."
+                        echo 'Please provide a file `.changelog/current/${{ github.event.number }}-foo` where you can set the text `foo` as you like.'
                         echo "A good suggestion is to summarize the PR's content and to replace any non-chars with dashes."
-                        echo "An example file name could be `.changelog/current/1234-update-nc-release-script`.
+                        echo 'An example file name could be `.changelog/current/1234-update-nc-release-script`.'
                     } > $GITHUB_STEP_SUMMARY
                     exit 1
                     else
@@ -94,6 +106,10 @@ jobs:
                 run: pip install --user virtualenv pipenv
             -   name: Test creation of changelog
                 run: |
+                    if [ -n "$RUNNER_DEBUG" ]
+                    then
+                    set -x
+                    fi
                     cd .helpers/changelog
                     virtualenv venv
                     source venv/bin/activate
