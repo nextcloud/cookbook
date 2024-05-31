@@ -24,7 +24,7 @@ jobs:
                     git diff HEAD~1 --name-only -- $filename_prefix* > /tmp/changed-cl-files
                     echo "Possibly matching changelog files:"
                     cat /tmp/changed-cl-files
-                    num_lines=$(wc -l /tmp/changed-cl-files)
+                    num_lines=$(cat /tmp/changed-cl-files | wc -l)
                     if [ "$num_lines" -gt 1 ]
                     then
                     {
@@ -41,7 +41,7 @@ jobs:
                     } > $GITHUB_STEP_SUMMARY
                     exit 1
                     fi
-                    echo "num_lines=$(wc -l /tmp/changed-cl-files)" >> $GITHUB_OUTPUT
+                    echo "num_lines=$(cat /tmp/changed-cl-files | wc -l)" >> $GITHUB_OUTPUT
             
             -   name: Get all changed file names
                 id: file-names
