@@ -86,9 +86,9 @@ jobs:
                         echo ""
                         sed 's@^@- @' /tmp/relevant-files-in-pr
                         echo ""
-                        echo "Please provide a file `.changelog/current/${{ github.event.number }}-foo` where you can set the text `foo` as you like."
+                        echo 'Please provide a file `.changelog/current/${{ github.event.number }}-foo` where you can set the text `foo` as you like.'
                         echo "A good suggestion is to summarize the PR's content and to replace any non-chars with dashes."
-                        echo "An example file name could be `.changelog/current/1234-update-nc-release-script`.
+                        echo 'An example file name could be `.changelog/current/1234-update-nc-release-script`.'
                     } > $GITHUB_STEP_SUMMARY
                     exit 1
                     else
