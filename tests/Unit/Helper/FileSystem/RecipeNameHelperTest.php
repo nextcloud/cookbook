@@ -8,7 +8,7 @@ use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 
-class RecipeNameHelperFilter extends TestCase {
+class RecipeNameHelperTest extends TestCase {
 	/** @var RecipeNameHelper */
 	private $dut;
 
@@ -34,6 +34,7 @@ class RecipeNameHelperFilter extends TestCase {
 			'102 chars' => ["{$ninetyChars}123456789012", "{$ninetyChars}1234567___"],
 			'105 chars' => ["{$ninetyChars}123456789012345", "{$ninetyChars}1234567___"],
 			'special chars' => ['a/b:c?d!e"f|g\\h\'i^j&k#l', 'a_b_c_d_e_f_g_h_i_j_k_l'],
+			'greek chars' => ["Τραγανή granola χωρίς ζάχαρη με ό,τι ξηρούς καρπούς & αποξηραμένα φρούτα έχεις στο ντουλάπι σου", "Τραγανή granola χωρίς ζάχαρη με ό,τι ξηρούς καρπούς _ αποξηραμένα φρούτα έχεις στο ντουλάπι σου"],
 		];
 	}
 

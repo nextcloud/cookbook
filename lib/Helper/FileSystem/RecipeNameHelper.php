@@ -15,6 +15,9 @@ class RecipeNameHelper {
 	/** @var LoggerInterface */
 	private $logger;
 
+	/** @var int */
+	protected const MAX_LEN = 100;
+
 	public function __construct(
 		IL10N $l,
 		LoggerInterface $logger
@@ -35,8 +38,8 @@ class RecipeNameHelper {
 		$pattern = '/[\\/:?!"\\\\\'|&^#]/';
 		$recipeName = preg_replace($pattern, '_', $recipeName);
 
-		if (strlen($recipeName) > 100) {
-			$recipeName = substr($recipeName, 0, 97) . '___';
+		if (mb_strlen($recipeName) > self::MAX_LEN) {
+			$recipeName = mb_substr($recipeName, 0, self::MAX_LEN - 3) . '___';
 		}
 
 		return $recipeName;
