@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Oidis",
+    "in %s" : "i %s",
     "None" : "aon cheann",
     "Page not found" : "Ní bhfuarthas an leathanach",
     "Edit" : "Cuir in eagar",

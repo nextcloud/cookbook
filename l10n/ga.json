@@ -1,5 +1,6 @@
 { "translations": {
     "Recipes" : "Oidis",
+    "in %s" : "i %s",
     "None" : "aon cheann",
     "Page not found" : "Ní bhfuarthas an leathanach",
     "Edit" : "Cuir in eagar",
