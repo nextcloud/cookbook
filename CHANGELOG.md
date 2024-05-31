@@ -45,8 +45,30 @@ Sorry for the inconvience.
   [#2281](https://github.com/nextcloud/cookbook/pull/2281) @christianlupus
 - Fix warning in browser console for edits
   [#2287](https://github.com/nextcloud/cookbook/pull/2287) @christianlupus
+- Prevent redownloading of images already present
+  [#2319](https://github.com/nextcloud/cookbook/pull/2319) @christianlupus
+- Fix JS errors in browser console while creating new recipes
+  [#2320](https://github.com/nextcloud/cookbook/pull/2320) @christianlupus
+- The date types for recipe stubs should be in ISO compatible format according to API specs
+  [#2322](https://github.com/nextcloud/cookbook/pull/2322) @christianlupus
+- The name of a recipe is automatically truncated to fit in the database column
+  [#2324](https://github.com/nextcloud/cookbook/pull/2324) @christianlupus
+- Bug in CI scripts related to automerge dependabot PRs
+  [#2325](https://github.com/nextcloud/cookbook/pull/2325) dependabot @christianlupus
+- Added more verbose error logs in NC logs in case of problems during parsing
+  [#2330](https://github.com/nextcloud/cookbook/pull/2330) @christianlupus
+- Allow slashes in recipe names
+  [#2329](https://github.com/nextcloud/cookbook/pull/2329) @christianlupus
+- Use server time zone for presentation of recipe information
+  [#2333](https://github.com/nextcloud/cookbook/pull/2333) @christianlupus
+- Prevent dot at end of file/folder name when abbreviating
+  [#2343](https://github.com/nextcloud/cookbook/pull/2343) @christianlupus
 - Fix CSS grid layout causing whitespace issues
   [#2236](https://github.com/nextcloud/cookbook/pull/2236) @philiprenich
+- Allow for `&quot;` in JSON imports (only temporary fix)
+  [#2345](https://github.com/nextcloud/cookbook/pull/2345) @christianlupus
+- Fix abbreviation of long file names even with UTF chars
+  [#2346](https://github.com/nextcloud/cookbook/pull/2346) @christianlupus
 
 ### Documentation
 
@@ -77,6 +99,12 @@ Sorry for the inconvience.
   [#2188](https://github.com/nextcloud/cookbook/pull/2188) @dependabot
 - Update changlog process to allow for backports
   [#2291](https://github.com/nextcloud/cookbook/pull/2291) @christianlupus
+- Remove deprecated PHP style from test code
+  [#2321](https://github.com/nextcloud/cookbook/pull/2321) @christianlupus
+- Use cURL for import of recipe images as well
+  [#2323](https://github.com/nextcloud/cookbook/pull/2323) @christianlupus
+- Update @typescript-eslint/parser
+  [#2325](https://github.com/nextcloud/cookbook/pull/2325) dependabot @christianlupus
 
 
 ## 0.11.0 - 2023-12-14
