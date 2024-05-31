@@ -1,0 +1,128 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://www.vkusnyblog.com/#person",
+      "name": "Татьяна Назарук",
+      "url": "https://www.vkusnyblog.com/about/"
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://www.vkusnyblog.com/#website",
+      "name": "Вкусный блог",
+      "url": "https://www.vkusnyblog.com",
+      "author": {
+        "@id": "https://www.vkusnyblog.com/#person"
+      },
+      "sameAs": [
+        "https://www.facebook.com/vkusnyblog/",
+        "https://www.instagram.com/mild_n/"
+      ],
+      "publisher": {
+        "@id": "https://www.vkusnyblog.com/#person"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://www.vkusnyblog.com/search/?searchid=2298405&text={search_term_string}&web=0"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "image": {
+        "@type": "ImageObject",
+        "@id": "https://www.vkusnyblog.com/#logo",
+        "url": "https://www.vkusnyblog.com/logo_685.png",
+        "width": "685",
+        "height": "426",
+        "caption": "Вкусный Блог"
+      }
+    },
+    {
+      "@context": "https://schema.org/",
+      "@type": "Recipe",
+      "name": "Мятный лимонад",
+      "url": "https://www.vkusnyblog.com/recipe/myatnyj-limonad/",
+      "image": {
+        "@context": "https://schema.org/",
+        "@type": "ImageObject",
+        "@id": "https://static.vkusnyblog.com/full/uploads/2013/07/myatnyi-limonad.jpg#image",
+        "url": "https://static.vkusnyblog.com/full/uploads/2013/07/myatnyi-limonad.jpg",
+        "contentUrl": "https://static.vkusnyblog.com/full/uploads/2013/07/myatnyi-limonad.jpg",
+        "license": "https://www.vkusnyblog.com/copyright",
+        "acquireLicensePage": "https://www.vkusnyblog.com/copyright",
+        "creator": {
+          "@id": "https://www.vkusnyblog.com/#person"
+        },
+        "creditText": "Вкусный блог",
+        "copyrightNotice": "Татьяна Назарук",
+        "caption": "Мятный лимонад"
+      },
+      "author": {
+        "@id": "https://www.vkusnyblog.com/#person"
+      },
+      "publisher": {
+        "@id": "https://www.vkusnyblog.com/#person"
+      },
+      "copyrightHolder": {
+        "@id": "https://www.vkusnyblog.com/#person"
+      },
+      "datePublished": "2013-07-10T09:00:09+03:00",
+      "dateModified": "2021-12-01T21:38:51+03:00",
+      "description": "Сегодня я хочу поделиться с вами рецептом еще одного освежающего летнего напитка. В моем варианте он готовится на основе \"Спрайта\" или другой аналогичной сладкой газировки. Если вам это не очень нравится, вы можете сделать этот лимонад на основе простой газированной воды, но при этом увеличить количество сахара в сиропе вдвое. Лимон при желании вы можете заменить на лаймы - количество по вашему вкусу. ",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.00",
+        "reviewCount": 7,
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "keywords": "Мятный лимонад",
+      "recipeCategory": "Напитки",
+      "mainEntityOfPage": "https://www.vkusnyblog.com/recipe/myatnyj-limonad/",
+      "recipeCuisine": "Европейская",
+      "cookTime": "PT20M",
+      "totalTime": "PT20M",
+      "recipeIngredient": [
+        "вода — 250 мл.",
+        "сахар — 125 грамм",
+        "веточки свежей мяты — 4-5 шт.",
+        "апельсин крупный — 2 шт.",
+        "лимон крупный — 1 шт.",
+        "спрайт или другая аналогичная газировка — 1 литр",
+        "листья мяты и ломтики цитрусов для подачи"
+      ],
+      "recipeInstructions": [
+        {
+          "@type": "HowToStep",
+          "image": "//www.vkusnyblog.com/wp-content/uploads/2013/07/myatnyi-limonad-3.jpg",
+          "text": "Сахар кладем в ковшик, вливаем воду и доводим до кипения. Варим 5 минут. Выключаем огонь, кладем в сироп мяту и оставляем остывать."
+        },
+        {
+          "@type": "HowToStep",
+          "image": "//www.vkusnyblog.com/wp-content/uploads/2013/07/myatnyi-limonad-2.jpg",
+          "text": "Из цитрусов выжимаем сок. Если вы хотите получить более эстетичный напиток - процедите сок от мякоти."
+        },
+        {
+          "@type": "HowToStep",
+          "image": "//www.vkusnyblog.com/wp-content/uploads/2013/07/myatnyi-limonad.jpg",
+          "text": "Смешиваем в кувшине сок и остывший сироп (мяту выбросить), доливаем газировку. Подаем в стаканах со льдом, с веточкой мяты и ломтиками лимона и/или апельсина."
+        }
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "name": "Напитки",
+          "item": "https://www.vkusnyblog.com/razdel/napitki/",
+          "position": 1
+        }
+      ]
+    }
+  ]
+}

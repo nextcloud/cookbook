@@ -28,6 +28,7 @@ class HttpJsonLdParserTest extends TestCase {
 			'caseH' => ['caseH.html', true, 'caseH.json'],
 			'caseI' => ['caseI.html', true, 'caseI.json'],
 			'caseJ' => ['caseJ.html', true, 'caseJ.json'],
+			//'caseK' => ['caseK.html', true, 'caseK.json'],
 		];
 	}
 
@@ -80,8 +81,8 @@ class HttpJsonLdParserTest extends TestCase {
 			$jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
 			$expected = json_decode($jsonDest, true);
 
-			$this->assertTrue($valid);
 			$this->assertEquals($expected, $res);
+			$this->assertTrue($valid);
 		} catch (HtmlParsingException $ex) {
 			$this->assertFalse($valid);
 		}
