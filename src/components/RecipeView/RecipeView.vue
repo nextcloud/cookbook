@@ -1104,8 +1104,8 @@ main {
 .content > .container {
     display: grid;
 
-    grid-template-columns: 1fr 1em 2fr;
-    grid-template-rows: 100% 100% 100% 1fr;
+    gap: 1em;
+    grid-template-columns: 1fr 2fr;
 
     .ingredients {
         grid-column: 1/2;
@@ -1123,8 +1123,8 @@ main {
     }
 
     main {
-        grid-column: 3/4;
-        grid-row: 1/5;
+        grid-column: 2/3;
+        grid-row: 1/4;
     }
 
     @media screen and (max-width: 850px), print {
