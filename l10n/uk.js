@@ -29,6 +29,7 @@ OC.L10N.register(
     "Create recipe" : "Створити рецепт",
     "Categories" : "Категорії",
     "Rename" : "Перейменувати",
+    "Failed to fetch categories" : "Не вдалося отримати категорії",
     "Add" : "Додати",
     "Name" : "Ім'я",
     "Tools" : "Інструменти",
@@ -39,6 +40,7 @@ OC.L10N.register(
     "URL" : "URL-адреса",
     "Image" : "Зображення",
     "You have unsaved changes! Do you still want to leave?" : "Наявні незбережені зміни! Ви справді хочете залишити сторінку?",
+    "Failed to fetch keywords" : "Не вдалося отримати ключові слова",
     "Date created" : "Створено",
     "Last modified" : "Змінено",
     "Source" : "Джерело",
@@ -54,6 +56,8 @@ OC.L10N.register(
     "Unsaturated Fat" : "Ненасичені жири",
     "Trans Fat" : "Транс-жири",
     "Loading…" : "Завантаження…",
-    "Failed to load search results" : "Помилка при завантаженні результатів пошуку"
+    "Failed to load search results" : "Помилка при завантаженні результатів пошуку",
+    "Clear" : "Очистити",
+    "Apply" : "Застосувати"
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");

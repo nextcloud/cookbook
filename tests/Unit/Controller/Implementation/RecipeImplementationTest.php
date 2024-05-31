@@ -22,6 +22,7 @@ use OCP\IURLGenerator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @covers \OCA\Cookbook\Controller\Implementation\RecipeImplementation
@@ -68,6 +69,8 @@ class RecipeImplementationTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
+		$logger = $this->createStub(LoggerInterface::class);
+
 		$this->sut = new RecipeImplementation(
 			$this->request,
 			$this->recipeService,
@@ -77,7 +80,8 @@ class RecipeImplementationTest extends TestCase {
 			$this->recipeFilter,
 			$this->stubFilter,
 			$this->acceptHeaderParser,
-			$l
+			$l,
+			$logger
 		);
 	}
 
@@ -178,6 +182,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$this->recipeService->method('getRecipesByCategory')->with($cat)->willReturn($recipes);
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		$expected = $this->getExpectedRecipes($recipes);
 
@@ -204,7 +209,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->urlGenerator->method('linkToRoute')->with(
 			'cookbook.recipe.image',
 			$this->callback(function ($p) use ($ids) {
-				return isset($p['id']) && isset($p['size']) && false !== array_search($p['id'], $ids);
+				return isset($p['id']) && isset($p['size']) && array_search($p['id'], $ids) !== false;
 			})
 		)->willReturnCallback(function ($name, $p) use ($ret) {
 			// return $ret[$idx[$p['id']]];
@@ -263,6 +268,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$this->recipeService->method('getRecipesByKeywords')->with($keywords)->willReturn($recipes);
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		$expected = $this->getExpectedRecipes($recipes);
 
@@ -336,6 +342,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$this->recipeService->expects($this->once())->method('findRecipesInSearchIndex')->with($query)->willReturn($recipes);
+		$this->stubFilter->method('apply')->willReturnArgument(0);
 
 		$expected = $this->getExpectedRecipes($recipes);
 

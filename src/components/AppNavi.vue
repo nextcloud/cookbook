@@ -98,12 +98,14 @@ import {
 } from 'vue';
 
 import { emit } from '@nextcloud/event-bus';
-import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput.js';
-import NcAppNavigation from '@nextcloud/vue/dist/Components/NcAppNavigation.js';
-import NcAppNavigationCaption from '@nextcloud/vue/dist/Components/NcAppNavigationCaption.js';
-import NcAppNavigationItem from '@nextcloud/vue/dist/Components/NcAppNavigationItem.js';
-import NcAppNavigationNew from '@nextcloud/vue/dist/Components/NcAppNavigationNew.js';
-import NcCounterBubble from '@nextcloud/vue/dist/Components/NcCounterBubble.js';
+import {
+    NcActionInput,
+    NcAppNavigation,
+    NcAppNavigationCaption,
+    NcAppNavigationItem,
+    NcAppNavigationNew,
+    NcCounterBubble,
+} from '@nextcloud/vue';
 
 import PlusIcon from 'icons/Plus.vue';
 

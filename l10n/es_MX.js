@@ -20,8 +20,12 @@ OC.L10N.register(
     "OK" : "OK",
     "Description" : "Descripción",
     "URL" : "URL",
+    "Image" : "Imagen",
     "Last modified" : "Última modificación",
     "Energy" : "Energía",
-    "Loading…" : "Cargando..."
+    "Loading…" : "Cargando...",
+    "Clear" : "Limpiar",
+    "Apply" : "Aplicar",
+    "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"]
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

@@ -26,7 +26,7 @@ class Version000000Date20210427082010 extends SimpleMigrationStep {
 		$schema = $schemaClosure();
 
 		$categoriesTable = $schema->getTable('cookbook_categories');
-		if (! $categoriesTable->hasIndex('categories_recipe_idx')) {
+		if (!$categoriesTable->hasIndex('categories_recipe_idx')) {
 			$categoriesTable->addIndex([
 				'user_id',
 				'recipe_id',
@@ -34,7 +34,7 @@ class Version000000Date20210427082010 extends SimpleMigrationStep {
 		}
 
 		$keywordsTable = $schema->getTable('cookbook_keywords');
-		if (! $keywordsTable->hasIndex('keywords_recipe_idx')) {
+		if (!$keywordsTable->hasIndex('keywords_recipe_idx')) {
 			$keywordsTable->addIndex([
 				'user_id',
 				'recipe_id',

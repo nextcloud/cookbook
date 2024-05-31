@@ -1,0 +1,28 @@
+OC.L10N.register(
+    "cookbook",
+    {
+    "Recipes" : "Oidis",
+    "in %s" : "i %s",
+    "None" : "aon cheann",
+    "Page not found" : "Ní bhfuarthas an leathanach",
+    "Edit" : "Cuir in eagar",
+    "Save" : "Sábháil",
+    "Search" : "Cuardach",
+    "Filter" : "Scagaire",
+    "Category" : "Catagóir",
+    "Tags" : "Clibeanna",
+    "Categories" : "Catagóirí",
+    "Rename" : "Athainmnigh",
+    "Add" : "Cuir",
+    "Name" : "Ainm",
+    "Tools" : "Uirlisí",
+    "Dismiss" : "Díbhe",
+    "Cancel" : "Cealaigh",
+    "OK" : "Ceart go leor",
+    "Description" : "Cur síos",
+    "URL" : "URL",
+    "Image" : "Íomha",
+    "Loading…" : "Á lódáil…",
+    "Order" : "Ordú"
+},
+"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);");

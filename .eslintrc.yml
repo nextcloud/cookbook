@@ -1,55 +1,82 @@
-
-plugins:
-    - vue
-
-extends:
-    - airbnb-base
-    - "plugin:vue/base"
-    - "plugin:vue/vue3-essential"
-    - "plugin:vue/vue3-strongly-recommended"
-    - "plugin:vue/vue3-recommended"
-    - prettier
-
-globals:
-    OC: readonly
-    t: readonly
-
-rules:
-    no-plusplus:
-        - error
-        - allowForLoopAfterthoughts: true
-    quotes:
-        - error
-        - single
-        - avoidEscape: true
-    semi:
-        - error
-        - always
-    # disallow certain syntax forms
-    # http://eslint.org/docs/rules/no-restricted-syntax
-    no-restricted-syntax:
-      - error
-      - ForInStatement
-      - LabeledStatement
-      - WithStatement
-    # While we are still on Vue2, we need this. Remove once on Vue3
-    vue/no-deprecated-dollar-listeners-api: off
-    # While we are still on Vue2, we need this. Remove once on Vue3
-    vue/no-deprecated-v-bind-sync: off
-
-
 root: true
 
-settings:
-    "import/resolver":
-        alias:
-            map:
-                - ["cookbook", "./src"]
-                - ["icons", "./node_modules/vue-material-design-icons"]
+extends:
+  - 'eslint:recommended'
+  - 'airbnb-base'
+  - 'airbnb-typescript/base'
+  - 'plugin:vue/base'
+  - 'plugin:vue/vue3-essential'
+  - 'plugin:vue/vue3-strongly-recommended'
+  - 'plugin:vue/vue3-recommended'
+  - 'plugin:import/typescript'
+  - '@vue/typescript/recommended'
+  - 'prettier'
 
+parser: "vue-eslint-parser"
+
+parserOptions:
+  parser: "@typescript-eslint/parser"
+  project: './tsconfig.json'
+  tsconfigRootDir: './'
+
+plugins:
+  - vue
+  - '@typescript-eslint'
+
+env:
+  browser: true
+
+globals:
+  OC: readonly
+  n: readonly
+  t: readonly
+
+settings:
+  import/resolver:
+    node:
+      paths: ['src']
+      extensions: ['.js','.ts','.d.ts']
+    typescript:
+      project: './tsconfig.json'
+    alias:
+      map:
+        - ['cookbook', './src']
+        - ['icons', './node_modules/vue-material-design-icons']
+      extensions: ['.js','.ts','.d.ts']
+
+rules:
+  import/extensions:
+    - error
+    - ignorePackages
+    - js: 'never'
+      jsx: 'never'
+      ts: 'never'
+      tsx: 'never'
+  no-plusplus:
+    - error
+    - allowForLoopAfterthoughts: true
+  quotes:
+    - error
+    - single
+    - avoidEscape: true
+  semi:
+    - error
+    - always
+  # disallow certain syntax forms
+  # http://eslint.org/docs/rules/no-restricted-syntax
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+    - LabeledStatement
+    - WithStatement
+  # While we are still on Vue2, we need this. Remove once on Vue3
+  vue/no-deprecated-dollar-listeners-api: off
+  # While we are still on Vue2, we need this. Remove once on Vue3
+  vue/no-deprecated-v-bind-sync: off
 
 overrides:
-    - files: [ "src/composables/**/*.js" ]
-      rules:
-        import/prefer-default-export: off
+  - files: [ "src/composables/**/*.js" ]
+    rules:
+      import/prefer-default-export: off
+
 

@@ -60,7 +60,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 			throw new HtmlParsingException($this->l->t('JSON cannot be decoded.'));
 		}
 
-		if ($json === false || $json === true || ! is_array($json)) {
+		if ($json === false || $json === true || !is_array($json)) {
 			throw new HtmlParsingException($this->l->t('No recipe was found.'));
 		}
 

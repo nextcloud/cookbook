@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Service;
 
+use Exception;
 use OCA\Cookbook\Db\RecipeDb;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Helper\Filter\DB\NormalizeRecipeFileFilter;
@@ -9,6 +10,7 @@ use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;
 use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 class DbCacheService {
 	private $userId;
@@ -33,6 +35,8 @@ class DbCacheService {
 	 * @var IL10N
 	 */
 	private $l;
+	/** @var LoggerInterface */
+	private $logger;
 
 	/** @var NormalizeRecipeFileFilter */
 	private $normalizeFileFilter;
@@ -55,7 +59,8 @@ class DbCacheService {
 		RecipeService $recipeService,
 		UserConfigHelper $userConfigHelper,
 		NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
-		IL10N $l
+		IL10N $l,
+		LoggerInterface $logger
 	) {
 		$this->userId = $UserId;
 		$this->db = $db;
@@ -63,6 +68,7 @@ class DbCacheService {
 		$this->userConfigHelper = $userConfigHelper;
 		$this->normalizeFileFilter = $normalizeRecipeFileFilter;
 		$this->l = $l;
+		$this->logger = $logger;
 	}
 
 	public function updateCache() {
@@ -79,8 +85,8 @@ class DbCacheService {
 		try {
 			$json = $this->parseJSONFile($recipeFile);
 		} catch (InvalidJSONFileException $e) {
-			// XXX Put a log message and infor the user of problem.
-			return;
+			$this->logger->error('Cannot parse JSON file {file}: {ex}', ['file' => $recipeFile->getPath(), 'ex' => $e]);
+			throw $e;
 		}
 
 		$id = $json['id'];
@@ -123,6 +129,7 @@ class DbCacheService {
 			try {
 				$json = $this->parseJSONFile($jsonFile);
 			} catch (InvalidJSONFileException $e) {
+				$this->logger->error('Cannot parse file {path}. Skipping it. Please fix manually.', ['path' => $jsonFile->getPath()]);
 				continue;
 			}
 			$id = $json['id'];
@@ -139,8 +146,13 @@ class DbCacheService {
 	 * @return array
 	 */
 	private function parseJSONFile(File $jsonFile): array {
+		try {
+			$content = $jsonFile->getContent();
+		} catch (Exception $ex) {
+			throw new InvalidJSONFileException($this->l->t('Cannot read content of JSON file %s', [$jsonFile->getPath()]), 0, $ex);
+		}
 		// XXX Export of file reading into library/service?
-		$json = json_decode($jsonFile->getContent(), true);
+		$json = json_decode($content, true);
 
 		if (!$json || !isset($json['name']) || $json['name'] === 'No name') {
 			$id = $jsonFile->getParent()->getId();

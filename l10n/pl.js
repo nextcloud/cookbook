@@ -195,6 +195,10 @@ OC.L10N.register(
     "Loading…" : "Wczytywanie…",
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Nie można ponownie obliczyć ilości składnika z powodu nieprawidłowej składni. Zmień ją na następującą składnię: jednostkowa ilość składnika. Przykłady: 200 g marchwi lub 1 szczypta soli",
     "Failed to load recipes with keywords: {tags}" : "Nie udało się załadować przepisów ze słowami kluczowymi: {tags}",
-    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania"
+    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania",
+    "Order" : "Kolejność",
+    "Search term" : "Szukany termin",
+    "Clear" : "Wyczyść ",
+    "Apply" : "Zastosuj"
 },
 "nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);");

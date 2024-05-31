@@ -27,7 +27,9 @@
         </template>
         <template #action>
             <router-link :to="'/recipe/create'">
-                <NcButton type="primary"> Create new recipe! </NcButton>
+                <NcButton type="primary">{{
+                    t('cookbook', 'Create new recipe!')
+                }}</NcButton>
             </router-link>
         </template>
     </NcEmptyContent>
@@ -36,8 +38,7 @@
 <script setup>
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcEmptyContent from '@nextcloud/vue/dist/Components/NcEmptyContent.js';
+import { NcButton, NcEmptyContent } from '@nextcloud/vue';
 import { useRoute } from 'vue-router/composables';
 import useDelayedDisplay, {
     DelayedDisplayProps,
@@ -65,13 +66,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .opacity-transition {
     transition: opacity 0.25s ease-in-out;
 }
 
-.empty-recipe-list :deep(.empty-content__action) {
-    margin-top: 24px;
+.empty-recipe-list {
+    padding: 20px;
+
+    :deep(.empty-content__action) {
+        margin-top: 24px;
+    }
 }
 
 .hidden {

@@ -58,7 +58,7 @@ class AcceptHeaderParsingHelper {
 
 		usort($weightedParts, function ($a, $b) {
 			$tmp = $a['weight'] - $b['weight'];
-			if ($tmp < - 0.001) {
+			if ($tmp < -0.001) {
 				return -1;
 			} elseif ($tmp > 0.001) {
 				return 1;

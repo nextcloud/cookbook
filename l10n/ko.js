@@ -1,8 +1,14 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Parsing of HTML failed." : "HTML 구문 분석 실패",
+    "Unsupported error level during parsing of XML output." : "XML 출력 구문 분석 중 지원하지 않는 오류 발생",
+    "_Warning %u occurred while parsing %s._::_Warning %u occurred %n times while parsing %s._" : ["%s 구문 분석 중 경고 %u이(가) %n회 발생함."],
+    "_Error %u occurred while parsing %s._::_Error %u occurred %n times while parsing %s._" : ["%s 구문 분석 중 오류 %u이(가) %n회 발생함."],
+    "_Fatal error %u occurred while parsing %s._::_Fatal error %u occurred %n times while parsing %s._" : ["%s 구문 분석 중 치명적 오류 %u이(가) %n회 발생함."],
     "Recipes" : "조리법들",
     "in %s" : "%s",
+    "Could not find a valid encoding when parsing %s." : "%s 구문 분석 중 유효한 인코딩을 찾을 수 없음.",
     "The full-sized image is not a thumbnail." : "완전한 크기의 이미지는 썸네일이 아닙니다.",
     "The thumbnail type %d is not known." : "썸네일 타입 %d은(는) 알려지지 않았습니다.",
     "None" : "없음",
@@ -20,6 +26,8 @@ OC.L10N.register(
     "Name" : "이름",
     "Modification date" : "수정일",
     "Tools" : "도구",
+    "Frontend debug settings" : "프론트엔드 디버그 설정",
+    "Enable debugging" : "디버깅 활성화",
     "Dismiss" : "무시",
     "Cancel" : "취소",
     "OK" : "확인",
@@ -29,6 +37,9 @@ OC.L10N.register(
     "Keywords" : "키워드",
     "Calories" : "칼로리",
     "Last modified" : "수정한 날짜",
-    "Loading…" : "불러오는 중…"
+    "Loading…" : "불러오는 중…",
+    "Order" : "순서",
+    "Clear" : "비우기",
+    "Apply" : "적용"
 },
 "nplurals=1; plural=0;");

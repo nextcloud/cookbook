@@ -24,8 +24,7 @@
 </template>
 
 <script setup>
-import NcContent from '@nextcloud/vue/dist/Components/NcContent.js';
-import NcAppContent from '@nextcloud/vue/dist/Components/NcAppContent.js';
+import { NcContent, NcAppContent } from '@nextcloud/vue';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
 const selectFolder = () => {

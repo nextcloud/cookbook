@@ -34,6 +34,8 @@ OC.L10N.register(
     "Calories" : "Kalorioj",
     "Last modified" : "Laste modifita",
     "Sugar" : "Sukero",
-    "Loading…" : "Ŝargado..."
+    "Loading…" : "Ŝargado...",
+    "Clear" : "Viŝi",
+    "Apply" : "Validigi"
 },
 "nplurals=2; plural=(n != 1);");

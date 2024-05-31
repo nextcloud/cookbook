@@ -21,6 +21,8 @@ OC.L10N.register(
     "Description" : "Descripción",
     "URL" : "URL",
     "Last modified" : "Última modificación",
-    "Loading…" : "Cargando…"
+    "Loading…" : "Cargando…",
+    "Clear" : "Borrar",
+    "Apply" : "Aplicar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

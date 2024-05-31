@@ -9,6 +9,7 @@ use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
@@ -65,6 +66,9 @@ class RecipeService {
 	/** @var JSONFilter */
 	private $jsonFilter;
 
+	/** @var DownloadHelper */
+	private $downloadHelper;
+
 	public function __construct(
 		?string $UserId,
 		IRootFolder $root,
@@ -77,7 +81,8 @@ class RecipeService {
 		LoggerInterface $logger,
 		HtmlDownloadService $downloadService,
 		RecipeExtractionService $extractionService,
-		JSONFilter $jsonFilter
+		JSONFilter $jsonFilter,
+		DownloadHelper $downloadHelper
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -91,6 +96,7 @@ class RecipeService {
 		$this->htmlDownloadService = $downloadService;
 		$this->recipeExtractionService = $extractionService;
 		$this->jsonFilter = $jsonFilter;
+		$this->downloadHelper = $downloadHelper;
 	}
 
 	/**
@@ -247,6 +253,10 @@ class RecipeService {
 
 		if (!$recipe_file) {
 			$recipe_file = $recipe_folder->newFile('recipe.json');
+			$recipeIsNew = true;
+		} else {
+			$recipeIsNew = false;
+			$oldJson = json_decode($recipe_file->getContent(), true);
 		}
 
 		// Rename .json file if it's not "recipe.json"
@@ -256,7 +266,7 @@ class RecipeService {
 
 		$recipe_file->putContent(json_encode($json));
 
-		if (! is_null($importedHtml)) {
+		if (!is_null($importedHtml)) {
 			// We imported a recipe. Save the import html file as a backup
 			$importFile = $recipe_folder->newFile('import.html');
 			$importFile->putContent($importedHtml);
@@ -267,18 +277,25 @@ class RecipeService {
 		$full_image_data = null;
 
 		if (isset($json['image']) && $json['image']) {
-			if (strpos($json['image'], 'http') === 0) {
-				// The image is a URL
-				$json['image'] = str_replace(' ', '%20', $json['image']);
-				$full_image_data = file_get_contents($json['image']);
+			if($recipeIsNew || !isset($oldJson['image']) || !$oldJson['image'] || $json['image'] !== $oldJson['image']) {
+				if (strpos($json['image'], 'http') === 0) {
+					// The image is a URL
+					$json['image'] = str_replace(' ', '%20', $json['image']);
+					try {
+						$full_image_data = $this->downloadImage($json['image']);
+					} catch (Exception $ex) {
+						$this->logger->warning('Failed to download an image using curl. Falling back to PHP default behavior.');
+						$full_image_data = file_get_contents($json['image']);
+					}
 
-			} else {
-				// The image is a local path
-				try {
-					$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
-					$full_image_data = $full_image_file->getContent();
-				} catch (NotFoundException $e) {
-					$full_image_data = null;
+				} else {
+					// The image is a local path
+					try {
+						$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
+						$full_image_data = $full_image_file->getContent();
+					} catch (NotFoundException $e) {
+						$full_image_data = null;
+					}
 				}
 			}
 
@@ -301,6 +318,15 @@ class RecipeService {
 		$recipe_folder->touch();
 
 		return $recipe_file;
+	}
+
+	private function downloadImage(string $url) {
+		$this->downloadHelper->downloadFile($url);
+		$status = $this->downloadHelper->getStatus();
+		if($status >= 400) {
+			throw new Exception($this->il10n->t('Cannot download image using curl'));
+		}
+		return $this->downloadHelper->getContent();
 	}
 
 	/**
@@ -423,7 +449,7 @@ class RecipeService {
 	 */
 	private function addDatesToRecipes(array &$recipes) {
 		foreach ($recipes as $i => $recipe) {
-			if (! array_key_exists('dateCreated', $recipe) || ! array_key_exists('dateModified', $recipe)) {
+			if (!array_key_exists('dateCreated', $recipe) || !array_key_exists('dateModified', $recipe)) {
 				$r = $this->getRecipeById($recipe['recipe_id']);
 				$recipes[$i]['dateCreated'] = $r['dateCreated'];
 				$recipes[$i]['dateModified'] = $r['dateModified'];

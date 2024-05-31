@@ -4,6 +4,7 @@
         <NcSelect
             class="edit-multiselect"
             v-bind="$attrs"
+            :label-outside="true"
             :multiple="true"
             v-on="$listeners"
         />
@@ -11,7 +12,7 @@
 </template>
 
 <script setup>
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { NcSelect } from '@nextcloud/vue';
 
 defineProps({
     fieldLabel: {

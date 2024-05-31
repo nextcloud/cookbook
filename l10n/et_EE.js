@@ -22,6 +22,8 @@ OC.L10N.register(
     "URL" : "URL",
     "Last modified" : "Viimati muudetud",
     "Copy ingredients" : "Kopeeri koostisosad",
-    "Loading…" : "Laadimine…"
+    "Loading…" : "Laadimine…",
+    "Clear" : "Tühjenda",
+    "Apply" : "Rakenda"
 },
 "nplurals=2; plural=(n != 1);");

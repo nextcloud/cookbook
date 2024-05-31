@@ -9,6 +9,7 @@ If you want to **help contributing**, please see the [page about contributing](c
 
 ## Github related information
 
+- [Notes on the changelog mechanism](changelog)
 - [Automatic deployment of new releases](deployment)
 - [Documentation using github pages](docs)
 - [Using a committed version for testing](use-autobuild)

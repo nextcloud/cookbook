@@ -91,6 +91,7 @@
             :primary="true"
         >
             <NcActionInput
+                v-if="isMobile"
                 icon="icon-quota"
                 :value="filterValue"
                 :aria-label="t('cookbook', 'Filter current recipes')"
@@ -197,12 +198,13 @@
 <script setup>
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router/composables';
-import NcActions from '@nextcloud/vue/dist/Components/NcActions.js';
-import NcActionButton from '@nextcloud/vue/dist/Components/NcActionButton.js';
-// Cannot use `Button` else get `vue/no-reserved-component-names` eslint errors
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcActionInput from '@nextcloud/vue/dist/Components/NcActionInput.js';
-import NcLoadingIcon from '@nextcloud/vue/dist/Components/NcLoadingIcon.js';
+import {
+    NcActions,
+    NcActionButton,
+    NcActionInput,
+    NcLoadingIcon,
+    NcButton,
+} from '@nextcloud/vue';
 
 import PencilIcon from 'icons/Pencil.vue';
 import LoadingIcon from 'icons/Loading.vue';
@@ -221,9 +223,11 @@ import {
 
 import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
+import { useIsMobile } from '../../composables/useIsMobile';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 
+const isMobile = useIsMobile();
 const route = useRoute();
 const store = useStore();
 const filterValue = ref('');

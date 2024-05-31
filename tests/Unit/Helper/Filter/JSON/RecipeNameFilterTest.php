@@ -47,7 +47,7 @@ class RecipeNameFilterTest extends TestCase {
 		$recipe['name'] = $oldName;
 
 		$this->textCleaner->method('cleanUp')->willReturnMap([
-			[$oldName, true, true, $retCleaning],
+			[$oldName, true, false, false, $retCleaning],
 		]);
 
 		$this->assertEquals($isChanged, $this->dut->apply($recipe));

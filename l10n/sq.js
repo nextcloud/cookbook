@@ -21,6 +21,8 @@ OC.L10N.register(
     "Description" : "Përshkrim",
     "URL" : "Url",
     "Last modified" : "Ndryshuar së fundmi",
-    "Loading…" : "Duke u ngarkuar…"
+    "Loading…" : "Duke u ngarkuar…",
+    "Clear" : "Pastro",
+    "Apply" : "Apliko"
 },
 "nplurals=2; plural=(n != 1);");

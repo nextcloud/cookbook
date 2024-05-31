@@ -25,7 +25,7 @@ OC.L10N.register(
     "Delete recipe" : "Slet opskrift",
     "Category" : "Katergori",
     "Recipe name" : "Opskrifts navn",
-    "Tags" : "Mærkater",
+    "Tags" : "Tags",
     "Search for recipes" : "Søg efter opskrifter",
     "Are you sure you want to delete this recipe?" : "Er du sikker på du vil slette denne opskrift?",
     "Delete failed" : "Sletning fejlede",
@@ -136,6 +136,9 @@ OC.L10N.register(
     "Trans Fat" : "Transfedtsyre",
     "Loading…" : "Indlæser…",
     "Failed to load recipes with keywords: {tags}" : "Kunne ikke indlæse opskrifter med nøgleord: {tags}",
-    "Failed to load search results" : "Kunne ikke indlæse søgeresultater"
+    "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
+    "Search term" : "Søgeterm",
+    "Clear" : "Ryd",
+    "Apply" : "Anvend"
 },
 "nplurals=2; plural=(n != 1);");

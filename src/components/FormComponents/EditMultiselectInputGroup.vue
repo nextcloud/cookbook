@@ -14,6 +14,7 @@
                     :multiple="false"
                     :clearable="false"
                     :searchable="false"
+                    :label-outside="true"
                     class="key"
                     @input="updateByOption($event, index)"
                 />
@@ -38,6 +39,7 @@
                     :value="additionalRow.selectedOption"
                     :options="unusedOptions"
                     label="label"
+                    :label-outside="true"
                     :placeholder="labelSelectPlaceholder"
                     :multiple="false"
                     class="key"
@@ -65,8 +67,7 @@ import {
     del,
 } from 'vue';
 
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
-import NcSelect from '@nextcloud/vue/dist/Components/NcSelect.js';
+import { NcButton, NcSelect } from '@nextcloud/vue';
 import DeleteIcon from 'vue-material-design-icons/Delete.vue';
 
 const emits = defineEmits(['input']);

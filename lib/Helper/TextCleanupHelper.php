@@ -14,7 +14,8 @@ class TextCleanupHelper {
 	public function cleanUp(
 		?string $str,
 		bool $removeNewlines = true,
-		bool $removeSlashes = false
+		bool $removeSlashes = false,
+		bool $removeBackslashes = true
 	): string {
 		if (!$str) {
 			return '';
@@ -27,7 +28,9 @@ class TextCleanupHelper {
 		}
 
 		$str = str_replace("\t", ' ', $str);
-		$str = str_replace("\\", '_', $str);
+		if($removeBackslashes) {
+			$str = str_replace("\\", '_', $str);
+		}
 
 		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
 		if ($removeSlashes) {

@@ -66,6 +66,9 @@ OC.L10N.register(
     "Sodium" : "Sodium",
     "Fat total" : "Fat total",
     "Saturated Fat" : "Saturated Fat",
-    "Loading…" : "Hleð inn…"
+    "Loading…" : "Hleð inn…",
+    "Order" : "Röðun",
+    "Clear" : "Hreinsa",
+    "Apply" : "Virkja"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

@@ -77,7 +77,7 @@
                                 </span>
                                 <span class="print-hidden">
                                     <button
-                                        :disabled="recipeYield === 1"
+                                        :disabled="recipeYield <= 1"
                                         @click="changeRecipeYield(false)"
                                     >
                                         <span class="icon-view-previous" />
@@ -112,7 +112,7 @@
                             "
                             :value="recipe.timerPrep"
                             :timer="false"
-                            :label="t('cookbook', 'Preparation time (H:MM)')"
+                            :label="t('cookbook', 'Preparation time')"
                         />
                         <RecipeTimer
                             v-if="
@@ -121,7 +121,7 @@
                             "
                             :value="recipe.timerCook"
                             :timer="true"
-                            :label="t('cookbook', 'Cooking time (H:MM)')"
+                            :label="t('cookbook', 'Cooking time')"
                         />
                         <RecipeTimer
                             v-if="
@@ -130,7 +130,7 @@
                             "
                             :value="recipe.timerTotal"
                             :timer="false"
-                            :label="t('cookbook', 'Total time (H:MM)')"
+                            :label="t('cookbook', 'Total time')"
                         />
                     </div>
                 </div>
@@ -184,7 +184,7 @@
                             <span class="icon-error" />
                             {{
                                 // prettier-ignore
-                                t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt")
+                                t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt.")
                             }}
                         </div>
                     </section>
@@ -362,7 +362,8 @@ import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
-import NcButton from '@nextcloud/vue/dist/Components/NcButton.js';
+import { NcButton } from '@nextcloud/vue';
+import { showError, showSuccess } from '@nextcloud/dialogs';
 import { useStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
@@ -456,29 +457,38 @@ const recipe = computed(() => {
     }
 
     if (store.state.recipe.cookTime) {
-        const cookT = store.state.recipe.cookTime.match(/PT(\d+?)H(\d+?)M/);
+        const cookT = store.state.recipe.cookTime.match(
+            /PT(\d+?)H(\d+?)M(\d+?)S/,
+        );
         const hh = parseInt(cookT[1], 10);
         const mm = parseInt(cookT[2], 10);
-        if (hh > 0 || mm > 0) {
-            tmpRecipe.timerCook = { hours: hh, minutes: mm };
+        const ss = parseInt(cookT[3], 10);
+        if (hh > 0 || mm > 0 || ss > 0) {
+            tmpRecipe.timerCook = { hours: hh, minutes: mm, seconds: ss };
         }
     }
 
     if (store.state.recipe.prepTime) {
-        const prepT = store.state.recipe.prepTime.match(/PT(\d+?)H(\d+?)M/);
+        const prepT = store.state.recipe.prepTime.match(
+            /PT(\d+?)H(\d+?)M(\d+?)S/,
+        );
         const hh = parseInt(prepT[1], 10);
         const mm = parseInt(prepT[2], 10);
-        if (hh > 0 || mm > 0) {
-            tmpRecipe.timerPrep = { hours: hh, minutes: mm };
+        const ss = parseInt(prepT[3], 10);
+        if (hh > 0 || mm > 0 || ss > 0) {
+            tmpRecipe.timerPrep = { hours: hh, minutes: mm, seconds: ss };
         }
     }
 
     if (store.state.recipe.totalTime) {
-        const totalT = store.state.recipe.totalTime.match(/PT(\d+?)H(\d+?)M/);
+        const totalT = store.state.recipe.totalTime.match(
+            /PT(\d+?)H(\d+?)M(\d+?)S/,
+        );
         const hh = parseInt(totalT[1], 10);
         const mm = parseInt(totalT[2], 10);
-        if (hh > 0 || mm > 0) {
-            tmpRecipe.timerTotal = { hours: hh, minutes: mm };
+        const ss = parseInt(totalT[3], 10);
+        if (hh > 0 || mm > 0 || ss > 0) {
+            tmpRecipe.timerTotal = { hours: hh, minutes: mm, seconds: ss };
         }
     }
 
@@ -630,8 +640,15 @@ const setup = async () => {
 };
 
 const changeRecipeYield = (increase = true) => {
-    recipeYield.value += increase ? 1 : -1;
+    recipeYield.value = +recipeYield.value + (increase ? 1 : -1);
 };
+
+function showCopySuccess(item) {
+    showSuccess(t('cookbook', '{item} copied to clipboard', { item }));
+}
+function showCopyError(item) {
+    showError(t('cookbook', 'Copying {item} to clipboard failed', { item }));
+}
 
 const copyIngredientsToClipboard = () => {
     const ingredientsToCopy = scaledIngredients.value.join('\n');
@@ -639,8 +656,14 @@ const copyIngredientsToClipboard = () => {
     if (navigator.clipboard) {
         navigator.clipboard
             .writeText(ingredientsToCopy)
-            .then(() => log.info('JSON array copied to clipboard'))
-            .catch((err) => log.error('Failed to copy JSON array: ', err));
+            .then(() => {
+                log.info('JSON array copied to clipboard');
+                showCopySuccess(t('cookbook', 'Ingredients'));
+            })
+            .catch((err) => {
+                log.error('Failed to copy JSON array: ', err);
+                showCopyError(t('cookbook', 'ingredients'));
+            });
     } else {
         // fallback solution
         const input = document.createElement('textarea');
@@ -654,11 +677,14 @@ const copyIngredientsToClipboard = () => {
             const successful = document.execCommand('copy');
             if (successful) {
                 log.info('JSON array copied to clipboard');
+                showCopySuccess(t('cookbook', 'Ingredients'));
             } else {
                 log.error('Failed to copy JSON array');
+                showCopyError(t('cookbook', 'ingredients'));
             }
         } catch (err) {
             log.error('Failed to copy JSON array: ', err);
+            showCopyError(t('cookbook', 'ingredients'));
         }
         document.body.removeChild(input);
     }
@@ -1078,8 +1104,8 @@ main {
 .content > .container {
     display: grid;
 
-    grid-template-columns: 1fr 1em 2fr;
-    grid-template-rows: 100% 100% 100% 1fr;
+    gap: 1em;
+    grid-template-columns: 1fr 2fr;
 
     .ingredients {
         grid-column: 1/2;
@@ -1097,8 +1123,8 @@ main {
     }
 
     main {
-        grid-column: 3/4;
-        grid-row: 1/5;
+        grid-column: 2/3;
+        grid-row: 1/4;
     }
 
     @media screen and (max-width: 850px), print {

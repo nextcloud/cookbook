@@ -19,6 +19,7 @@ OC.L10N.register(
     "Description" : "Skildring",
     "URL" : "URL",
     "Last modified" : "Siste endra",
-    "Loading…" : "Laster..."
+    "Loading…" : "Laster...",
+    "Apply" : "Anvend"
 },
 "nplurals=2; plural=(n != 1);");

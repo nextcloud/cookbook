@@ -142,6 +142,9 @@ OC.L10N.register(
     "Trans Fat" : "Transrasvat",
     "Loading…" : "Ladataan…",
     "Failed to load recipes with keywords: {tags}" : "Reseptien lataaminen epäonnistui seuraavilla avainsanoilla: {tags} ",
-    "Failed to load search results" : "Hakutulosten lataus epäonnistui"
+    "Failed to load search results" : "Hakutulosten lataus epäonnistui",
+    "Order" : "Järjestys",
+    "Clear" : "Tyhjennä",
+    "Apply" : "Toteuta"
 },
 "nplurals=2; plural=(n != 1);");

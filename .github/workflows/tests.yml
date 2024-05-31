@@ -7,6 +7,7 @@ on:
       - 'docs/**'
       - 'l10n/**'
   pull_request:
+  workflow_dispatch:
 
 jobs:
   
@@ -28,7 +29,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@v3.3.2
+            uses: actions/cache@v4.0.2
             with:
                 path: |
                     ~/.npm
@@ -38,7 +39,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v3.3.2
+            uses: actions/cache@v4.0.2
             with:
                 path: |
                     vendor
@@ -176,7 +177,7 @@ jobs:
     
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: Nextcloud-logs (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
@@ -190,19 +191,19 @@ jobs:
         
       - name: Upload the code coverage report for codecov as artifacts
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: Code coverage (XML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage/coverage.*.xml"
 
     #   - name: Upload the code coverage report (unit tests) as artifacts
-    #     uses: actions/upload-artifact@v3
+    #     uses: actions/upload-artifact@v4
     #     with:
     #         name: Code coverage (HTML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
     #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: Junit test log files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -235,7 +236,7 @@ jobs:
             installUntested: true
     
       - name: Upload the log file as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
             name: Nextcloud-logs (mysql, master, apache)
@@ -248,13 +249,13 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: Code coverage (XML) (mysql, master, apache)
             path: "/tmp/coverage/coverage.*.xml"
 
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
             name: Junit test log files (mysql, master, apache)
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -272,7 +273,7 @@ jobs:
           run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
           if: ${{ github.event_name == 'push' }}
-          uses: actions/download-artifact@v3.0.2
+          uses: actions/download-artifact@v4.1.7
           with:
             path: artifacts
         - name: Checkout of code base
@@ -368,7 +369,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@v3.3.2
+            uses: actions/cache@v4.0.2
             with:
                 path: |
                     ~/.npm
@@ -378,7 +379,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v3.3.2
+            uses: actions/cache@v4.0.2
             with:
                 path: |
                     vendor
@@ -405,7 +406,7 @@ jobs:
             run: >-
                 make appstore_package_name=/tmp/appstore appstore
         -   name: Publish the app store package as artifact
-            uses: actions/upload-artifact@v3
+            uses: actions/upload-artifact@v4
             with:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
@@ -415,7 +416,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: Upload
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Event File
         path: ${{ github.event_path }}
@@ -435,6 +436,36 @@ jobs:
     - name: Check the code base
       run: docker run --rm -v $(pwd):/work:ro php-lint-tester
 
+
+  run-jest:
+    name: "Run JS tests"
+    runs-on: ubuntu-22.04
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    - name: Checkout of the app
+      uses: actions/checkout@v4
+    - name: Get the date
+      id: date
+      run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+    - name: Cache NPM cache
+      uses: actions/cache@v4.0.2
+      with:
+        path: |
+          ~/.npm
+          node_modules
+        key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
+          ${{ runner.os }}-node-
+    - name: Install the NPM dependencies
+      run: npm ci
+    - name: Run the tests
+      run: npm run ci-test
+
+
   successful_run:
     name: The tests have successfully run
     runs-on: ubuntu-22.04
@@ -444,6 +475,7 @@ jobs:
       - source-package
       - lint-php
       - event_file
+      - run-jest
     steps:
       - name: Run successfully
         shell: bash

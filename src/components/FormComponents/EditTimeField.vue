@@ -17,6 +17,15 @@
             placeholder="00"
             @input="handleInput"
         />
+        <span>:</span>
+        <input
+            v-model="seconds"
+            type="number"
+            min="0"
+            max="59"
+            placeholder="00"
+            @input="handleInput"
+        />
     </fieldset>
 </template>
 
@@ -30,7 +39,7 @@ const props = defineProps({
         type: Object,
         required: true,
         default: () => ({
-            time: [null, null],
+            time: [null, null, null],
             paddedTime: null,
         }),
     },
@@ -48,26 +57,32 @@ const hours = ref(null);
  * @type {import('vue').Ref<number>}
  */
 const minutes = ref(null);
+/**
+ * @type {import('vue').Ref<number>}
+ */
+const seconds = ref(null);
 
 // Methods
 
 const handleInput = () => {
+    seconds.value = seconds.value ? seconds.value : 0;
     minutes.value = minutes.value ? minutes.value : 0;
     hours.value = hours.value ? hours.value : 0;
 
     // create padded time string
     const hoursPadded = hours.value.toString().padStart(2, '0');
     const minutesPadded = minutes.value.toString().padStart(2, '0');
+    const secondsPadded = seconds.value.toString().padStart(2, '0');
 
     emit('input', {
-        time: [hours.value, minutes.value],
-        paddedTime: `PT${hoursPadded}H${minutesPadded}M`,
+        time: [hours.value, minutes.value, seconds.value],
+        paddedTime: `PT${hoursPadded}H${minutesPadded}M${secondsPadded}S`,
     });
 };
 
 const setLocalValueFromProps = () => {
     if (props.value?.time) {
-        [hours.value, minutes.value] = props.value.time;
+        [hours.value, minutes.value, seconds.value] = props.value.time;
     }
 };
 

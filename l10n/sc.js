@@ -79,7 +79,7 @@ OC.L10N.register(
     "The page was not found" : "Pàgina no agatada",
     "Description" : "Descritzione",
     "URL" : "URL",
-    "Image" : "Imàgine",
+    "Image" : "Immàgine",
     "Choose category" : "Sèbera sa categoria",
     "Keywords" : "Faeddos crae",
     "Choose keywords" : "Sèbera faeddos crae",
@@ -109,7 +109,7 @@ OC.L10N.register(
     "No answer for request was received." : "Sa dimanda no at tentu peruna risposta.",
     "Could not start request to save recipe." : "No at fatu a cumintzare sa dimanda pro sarvare sa retzeta.",
     "Loading recipe failed" : "Non faghet a carrigare sa retzeta",
-    "Recipe image" : "Imàgine de sa retzeta",
+    "Recipe image" : "Immàgine de sa retzeta",
     "Cooking time is up!" : "Su tempus de cotura est acabbadu!",
     "Search recipes with this keyword" : "Sèbera retzetas cun custu faeddu crae",
     "Date created" : "Data de creatzione",
@@ -129,6 +129,9 @@ OC.L10N.register(
     "Trans Fat" : "Grassos trans",
     "Loading…" : "Carrighende...",
     "Failed to load recipes with keywords: {tags}" : "Impossìbile a carrigare retzetas cun faeddos is crae: {tags}",
-    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca"
+    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca",
+    "Order" : "Ordinamentu",
+    "Clear" : "Lìmpia",
+    "Apply" : "Àplica"
 },
 "nplurals=2; plural=(n != 1);");

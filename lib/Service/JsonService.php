@@ -20,14 +20,14 @@ class JsonService {
 	 * @param bool $uniqueType If false, also accept JSON objects that contain multiple types as @type.
 	 * @return bool true, if $obj is an object and optionally satisfies the type check
 	 */
-	public function isSchemaObject($obj, string $type = null, bool $checkContext = true, bool $uniqueType = true): bool {
-		if (! is_array($obj)) {
+	public function isSchemaObject($obj, ?string $type = null, bool $checkContext = true, bool $uniqueType = true): bool {
+		if (!is_array($obj)) {
 			// Objects must bve encoded as arrays in JSON
 			return false;
 		}
 
 		if ($checkContext) {
-			if (!isset($obj['@context']) || ! preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
+			if (!isset($obj['@context']) || !preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
 				// We have no correct context property
 				return false;
 			}
