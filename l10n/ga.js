@@ -23,6 +23,7 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Íomha",
     "Instructions" : "Comhaid Nextcloud ag teastáil",
+    "Last modified" : "Athraithe go deireanach",
     "Loading…" : "Á lódáil…",
     "Order" : "Ordú"
 },
