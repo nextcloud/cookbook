@@ -213,9 +213,18 @@ OC.L10N.register(
     "Delete nutrition item" : "Eliminar o elemento nutricional",
     "Please select option first." : "Seleccione antes a opción.",
     "Order" : "Orde",
+    "Filter name" : "Nome do filtro",
     "Search term" : "Buscar termo",
+    "All categories" : "Todas as categorías",
     "Clear" : "Limpar",
     "Apply" : "Aplicar",
-    "Copy ingredients to the clipboard" : "Copiar os ingredientes no portapapeis"
+    "Preparation time (hours:minutes:seconds)" : "Tempo de preparación (horas:minutos:segundos)",
+    "Cooking time (hours:minutes:seconds)" : "Tempo de cocción (horas:minutos:segundos)",
+    "Total time (hours:minutes:seconds)" : "Tempo total (horas:minutos:segundos)",
+    "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h"],
+    "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
+    "_{seconds}s_::_{seconds}s_" : ["{seconds}s","{seconds}s"],
+    "Copy ingredients to the clipboard" : "Copiar os ingredientes no portapapeis",
+    "ingredients" : "ingredientes"
 },
 "nplurals=2; plural=(n != 1);");
