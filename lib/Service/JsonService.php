@@ -21,13 +21,13 @@ class JsonService {
 	 * @return bool true, if $obj is an object and optionally satisfies the type check
 	 */
 	public function isSchemaObject($obj, ?string $type = null, bool $checkContext = true, bool $uniqueType = true): bool {
-		if (!is_array($obj)) {
+		if (! is_array($obj)) {
 			// Objects must bve encoded as arrays in JSON
 			return false;
 		}
 
 		if ($checkContext) {
-			if (!isset($obj['@context']) || !preg_match('@^https?://schema\.org/?$@', $obj['@context'])) {
+			if (!isset($obj['@context']) || ! $this->isSchemaContext($obj['@context'])) {
 				// We have no correct context property
 				return false;
 			}
@@ -62,6 +62,16 @@ class JsonService {
 
 		// Check if type matches
 		return (strcmp($obj['@type'], $type) === 0);
+	}
+
+	/**
+	 * Check if the value of a schema key matches that of a schema.org object
+	 *
+	 * @param string $context The value of some object's @schema property
+	 * @return bool true, if the schema matches that of a schema.org object
+	 */
+	public function isSchemaContext(string $context): bool {
+		return preg_match('@^https?://schema\.org/?$@', $context);
 	}
 
 	/**
