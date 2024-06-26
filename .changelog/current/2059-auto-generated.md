@@ -1,3 +1,0 @@
-### Maintenance
-
-- Add Typescript support
