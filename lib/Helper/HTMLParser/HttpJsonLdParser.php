@@ -124,7 +124,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		if (isset($json['@graph']) && is_array($json['@graph'])) {
 			// Sometimes the context is set once on the top level object for children to inherit
 			$parentSetsContext = isset($json['@context']) &&
-			                     $this->jsonService->isSchemaContext($json['@context']);
+								 $this->jsonService->isSchemaContext($json['@context']);
 
 			$tmp = $this->searchForRecipeInArray($json['@graph'], $parentSetsContext);
 
