@@ -18,6 +18,9 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+
+## 0.11.1 - 2024-06-26
+
 ### Added
 
 - Toast with success/error message after trying to copy ingredients
@@ -69,6 +72,8 @@ Sorry for the inconvience.
   [#2345](https://github.com/nextcloud/cookbook/pull/2345) @christianlupus
 - Fix abbreviation of long file names even with UTF chars
   [#2346](https://github.com/nextcloud/cookbook/pull/2346) @christianlupus
+- Enable parsing of websites based on the Recipe Maker plugin in wordpress
+  [#2385](https://github.com/nextcloud/cookbook/pull/2385) @nathanielhourt
 
 ### Documentation
 
@@ -105,6 +110,11 @@ Sorry for the inconvience.
   [#2323](https://github.com/nextcloud/cookbook/pull/2323) @christianlupus
 - Update @typescript-eslint/parser
   [#2325](https://github.com/nextcloud/cookbook/pull/2325) dependabot @christianlupus
+- Update the typescript transcompiler
+  [#2383](https://github.com/nextcloud/cookbook/pull/2383) @dependabot
+- Update ws dependency as it triggered a security alert
+  _No risk for users as only used in development mode._
+  [#2391](https://github.com/nextcloud/cookbook/pull/2391) @christianlupus
 
 
 ## 0.11.0 - 2023-12-14
