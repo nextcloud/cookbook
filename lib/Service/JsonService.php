@@ -71,7 +71,7 @@ class JsonService {
 	 * @return bool true, if the schema matches that of a schema.org object
 	 */
 	public function isSchemaContext(string $context): bool {
-		return preg_match('@^https?://schema\.org/?$@', $context);
+		return preg_match('@^https?://schema\.org/?$@', $context) == 1;
 	}
 
 	/**
