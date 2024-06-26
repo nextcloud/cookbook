@@ -1,0 +1,175 @@
+{
+   "@id" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#recipe",
+   "@context" : "https://schema.org",
+   "@type" : "Recipe",
+   "aggregateRating" : {
+      "@type" : "AggregateRating",
+      "ratingCount" : "117",
+      "ratingValue" : "4.89"
+   },
+   "author" : {
+      "@type" : "Person",
+      "name" : "Bianca Zapatka"
+   },
+   "cookTime" : "PT45M",
+   "datePublished" : "2020-04-22T15:00:10+00:00",
+   "description" : "Dies ist mit Abstand das beste Rezept für vegane schwedische Köttbullar (Grönsaksbullar) - Diese Hackbällchen ohne Fleisch sind unglaublich lecker, reich an pflanzlichem Protein aus Linsen und können ganz einfach sojafrei und glutenfrei zubereitet werden. Zusammen mit der cremigen veganen Rahm-Soße ist es das perfekte Wohlfühl-Gericht für Veganer, Vegetarier und alle Anderen!",
+   "image" : [
+      "https://biancazapatka.com/wp-content/uploads/2020/04/vegane-hackbaellchen-schwedische-koettbullar-rahm-sauce-1.jpg",
+      "https://biancazapatka.com/wp-content/uploads/2020/04/vegane-hackbaellchen-schwedische-koettbullar-rahm-sauce-1-500x500.jpg"
+   ],
+   "isPartOf" : {
+      "@id" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#article"
+   },
+   "keywords" : "Linsenbällchen, Vegane Fleischbällchen, Vegane Hackbällchen, Vegane Köttbullar",
+   "mainEntityOfPage" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/",
+   "name" : "Vegane Hackbällchen \"Schwedische Köttbullar\"",
+   "nutrition" : {
+      "@type" : "NutritionInformation",
+      "servingSize" : "1 Portion"
+   },
+   "prepTime" : "PT10M",
+   "recipeCategory" : [
+      "Hauptgericht",
+      "Lunch &amp; Dinner"
+   ],
+   "recipeCuisine" : [
+      "Schweden"
+   ],
+   "recipeIngredient" : [
+      "100 g trockene Linsen (grüne oder braune)",
+      "360 ml Wasser",
+      "1 EL Öl (+ mehr zum Bestreichen)",
+      "1 Zwiebel (gewürfelt)",
+      "4 Knoblauchzehen (gehackt)",
+      "150 g Pilze (grob gehackt)",
+      "2 TL Kreuzkümmel (gemahlen)",
+      "70 g Haferflocken (bei Bedarf glutenfrei)",
+      "3 EL frische Petersilie (gehackt (oder 1 EL getrocknete Kräuter))",
+      "2-3 EL Sojasauce (oder Tamari-Soße (falls glutenfrei))",
+      "⅓ TL Salz (oder nach Geschmack)",
+      "½ TL Pfeffer (oder nach Geschmack)",
+      "240 ml Gemüsebrühe",
+      "1 Dose Kokosmilch (oder 400 ml andere Pflanzenmilch/ Pflanzensahne)",
+      "2 EL Sojasauce (oder Tamari-Soße (falls glutenfrei))",
+      "1 TL Senf",
+      "1 TL Knoblauchpulver",
+      "1 TL Zwiebelpulver",
+      "Salz und Pfeffer (nach Geschmack)",
+      "1 EL Maisstärke (oder Speisestärke)",
+      "Pasta deiner Wahl"
+   ],
+   "recipeInstructions" : [
+      {
+         "@type" : "HowToSection",
+         "itemListElement" : [
+            {
+               "@type" : "HowToStep",
+               "name" : "Die Linsen 20 Minuten in einem Topf mit 360 ml Wasser oder gemäß der Packungsanleitung garkochen.",
+               "text" : "Die Linsen 20 Minuten in einem Topf mit 360 ml Wasser oder gemäß der Packungsanleitung garkochen.",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-0-0"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "Das Öl in einer Pfanne erhitzen und die Zwiebel ca. 3 Minuten glasig anbraten. Den Knoblauch hinzufügen und für eine weitere Minute anrösten. Dann die gehackten Pilze und den Kreuzkümmel hinzufügen und etwa 3 weitere Minuten anbraten oder bis die Pilze weich sind (*siehe Schritt-für-Schritt Fotos oder Rezept-Video oben).",
+               "text" : "Das Öl in einer Pfanne erhitzen und die Zwiebel ca. 3 Minuten glasig anbraten. Den Knoblauch hinzufügen und für eine weitere Minute anrösten. Dann die gehackten Pilze und den Kreuzkümmel hinzufügen und etwa 3 weitere Minuten anbraten oder bis die Pilze weich sind (*siehe Schritt-für-Schritt Fotos oder Rezept-Video oben).",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-0-1"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "Die Haferflocken in einen Mixer oder eine Küchenmaschine geben und zu Mehl mixen. Dann die gekochten Linsen, gebratene Zwiebeln, Knoblauch, Pilze, Petersilie, Sojasauce, Salz und Pfeffer hinzufügen. Pulsieren, bis alles gut vermischt und grob gehackt, aber nicht püriert ist. Abschmecken und bei Bedarf mehr Salz und Pfeffer zugeben. Dann die Mischung für 10 Minuten beiseitestellen (oder über Nacht in den Kühlschrank stellen, wenn die Bällchen erst am nächsten Tag zubereitet werden sollen).",
+               "text" : "Die Haferflocken in einen Mixer oder eine Küchenmaschine geben und zu Mehl mixen. Dann die gekochten Linsen, gebratene Zwiebeln, Knoblauch, Pilze, Petersilie, Sojasauce, Salz und Pfeffer hinzufügen. Pulsieren, bis alles gut vermischt und grob gehackt, aber nicht püriert ist. Abschmecken und bei Bedarf mehr Salz und Pfeffer zugeben. Dann die Mischung für 10 Minuten beiseitestellen (oder über Nacht in den Kühlschrank stellen, wenn die Bällchen erst am nächsten Tag zubereitet werden sollen).",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-0-2"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "Den Ofen auf 175°C vorheizen und ein Backblech mit Backpapier auslegen.",
+               "text" : "Den Ofen auf 175°C vorheizen und ein Backblech mit Backpapier auslegen.",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-0-3"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "Die Linsen-Mischung mit feuchten Händen zu Bällchen formen und auf das vorbereitete Backblech legen. Dann die Bällchen mit etwas Öl bepinseln oder besprühen und 25-30 Minuten backen, dabei nach der Hälfte der Zeit wenden.",
+               "text" : "Die Linsen-Mischung mit feuchten Händen zu Bällchen formen und auf das vorbereitete Backblech legen. Dann die Bällchen mit etwas Öl bepinseln oder besprühen und 25-30 Minuten backen, dabei nach der Hälfte der Zeit wenden.",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-0-4"
+            }
+         ],
+         "name" : "Vegane Hackbällchen"
+      },
+      {
+         "@type" : "HowToSection",
+         "itemListElement" : [
+            {
+               "@type" : "HowToStep",
+               "name" : "Alle Zutaten für die Soße (außer Maisstärke und Wasser) in einen Topf geben und zum Kochen bringen.",
+               "text" : "Alle Zutaten für die Soße (außer Maisstärke und Wasser) in einen Topf geben und zum Kochen bringen.",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-1-0"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "In einer kleinen Schüssel oder Tasse die Maisstärke in 2-3 Esslöffel Wasser aufzulösen. Dann in die Soße rühren und unter ständigem Rühren wieder zum Kochen bringen. Einige Minuten köcheln lassen, bis die Soße schön dick und cremig ist.",
+               "text" : "In einer kleinen Schüssel oder Tasse die Maisstärke in 2-3 Esslöffel Wasser aufzulösen. Dann in die Soße rühren und unter ständigem Rühren wieder zum Kochen bringen. Einige Minuten köcheln lassen, bis die Soße schön dick und cremig ist.",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-1-1"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "Serviere die Soße mit den Fleischbällchen über Nudeln, Spätzle oder Kartoffelpüree!",
+               "text" : "Serviere die Soße mit den Fleischbällchen über Nudeln, Spätzle oder Kartoffelpüree!",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-1-2"
+            },
+            {
+               "@type" : "HowToStep",
+               "name" : "Guten Appetit!",
+               "text" : "Guten Appetit!",
+               "url" : "https://biancazapatka.com/de/vegane-koettbullar-schwedische-hackbaellchen/#wprm-recipe-31647-step-1-3"
+            }
+         ],
+         "name" : "Rahm-Soße"
+      }
+   ],
+   "recipeYield" : [
+      "4",
+      "4 Portionen"
+   ],
+   "review" : [
+      {
+         "@type" : "Review",
+         "author" : {
+            "@type" : "Person",
+            "name" : "Andi"
+         },
+         "datePublished" : "2024-05-20",
+         "reviewBody" : "Geschmacklich gefällt mir das Rezept gut. Die Konsistenz dagegen gefällt mir garnicht. Ein paar habe ich in der Pfanne gemacht. Wenn man die vorsichtig auf die Gabel nimmt, lässt es sich auch gut servieren. Anpieksen geht aber nicht. Im Backofen aber die volle Katastrophe. Alles breit gelaufen, keine Bällchen mehr. Dachte ich könnte die mit zur Familie nehmen. Eigentlich ist es fast immer so, wenn man ohne Hilfsmittel Fleisch ersetzt. Das pflanzliche Eiweiß scheint sich anders zu verhalten als tierisches. Es ist ja genug enthalten. Leider würde ich sehr gerne andere überzeugen vegan oder wenigstens vegetarisch zu essen, aber so überzeuge ich niemanden. Muss ich wohl noch weiter experimentieren.",
+         "reviewRating" : {
+            "@type" : "Rating",
+            "ratingValue" : "4"
+         }
+      },
+      {
+         "@type" : "Review",
+         "author" : {
+            "@type" : "Person",
+            "name" : "Denise"
+         },
+         "datePublished" : "2024-02-06",
+         "reviewBody" : "Hallo Bianca! Bei mir ist die Sosse überhaupt nicht eingedickt, obwohl ich alles nach Plan gemacht habe. Ist sie so gedacht? Auch mehr Maisstärke und auch Reismehl haben nichts bewirkt.. LG Denise",
+         "reviewRating" : {
+            "@type" : "Rating",
+            "ratingValue" : "4"
+         }
+      },
+      {
+         "@type" : "Review",
+         "author" : {
+            "@type" : "Person",
+            "name" : "Alex"
+         },
+         "datePublished" : "2024-01-19",
+         "reviewBody" : "Hallo Bianca, \r\ndie veganen Köttbullar waren sehr gut. Ich habe Beluga Linsen genommen. kreuzkümmel weggelassen...dazu gab es Kartoffelpüree. \r\n\r\nLg Alex",
+         "reviewRating" : {
+            "@type" : "Rating",
+            "ratingValue" : "5"
+         }
+      }
+   ]
+}
