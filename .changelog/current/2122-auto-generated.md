@@ -1,3 +1,0 @@
-### Maintenance
-
-- Update coding standards

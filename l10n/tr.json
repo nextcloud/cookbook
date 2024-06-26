@@ -207,6 +207,8 @@
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Yanlış söz dizimi nedeniyle içerik yeniden hesaplanamadı. Lütfen bu söz dizimini şu şekilde değiştirin: miktar birim bileşen. Örnekler: 200 gr havuç ya da 1 tutam tuz",
     "Failed to load recipes with keywords: {tags}" : "Şu anahtar sözcüklerin bulunduğu yemek tarifleri yüklenemedi: {tags}",
     "Failed to load search results" : "Arama sonuçları yüklenemedi",
+    "Cannot read content of JSON file %s" : "%s JSON dosyasının içeriği okunamadı",
+    "Cannot download image using curl" : "Görsel cURL kullanılarak indirilemedi",
     "Filter current recipes" : "Geçerli yemek tariflerini süz",
     "Search recipes" : "Yemek tarifi ara",
     "Delete nutrition item" : "Beslenme ögesini sil",
