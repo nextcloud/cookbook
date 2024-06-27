@@ -210,7 +210,7 @@ OC.L10N.register(
     "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlagworten: {tags}",
     "Failed to load search results" : "Fehler beim Laden der Suchergebnisse",
     "Cannot read content of JSON file %s" : "Inhalt der JSON-Datei %s kann nicht gelesen werden",
-    "Cannot download image using curl" : "Bild kann mit curl nicht heruntergeladen werden.",
+    "Cannot download image using curl" : "Bild kann nicht mit curl heruntergeladen werden.",
     "Filter current recipes" : "Aktuelle Rezepte filtern",
     "Search recipes" : "Rezepte suchen",
     "Delete nutrition item" : "Nährstoffelement löschen",
