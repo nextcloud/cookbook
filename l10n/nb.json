@@ -207,6 +207,8 @@
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Ingrediensen kan ikke beregnes på nytt på grunn av feil syntaks. Vennligst endre den til denne syntaksen: mengde enhet ingrediens. Eksempler: 200 g gulrøtter eller 1 klype salt.",
     "Failed to load recipes with keywords: {tags}" : "Lasting av oppskrifter med nøkkelord feilet: {tags}",
     "Failed to load search results" : "Kunne ikke laste søkeresultater",
+    "Cannot read content of JSON file %s" : "Kan ikke lese innholdet i JSON-filen %s",
+    "Cannot download image using curl" : "Kan ikke laste ned bilde ved å bruke curl",
     "Filter current recipes" : "Filtrer gjeldende oppskrifter",
     "Search recipes" : "Søk etter oppskrifter",
     "Delete nutrition item" : "Slett ernæringselement",
