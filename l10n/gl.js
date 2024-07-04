@@ -90,7 +90,7 @@ OC.L10N.register(
     "Download recipe from URL" : "Descargar a receita do URL",
     "Uncategorized recipes" : "Receitas sen categorizar",
     "Categories" : "Categorías",
-    "Rename" : "Renomear",
+    "Rename" : "Cambiar o nome",
     "Enter new category name" : "Introduza o nome da nova categoría",
     "Cookbook settings" : "Axustes de Receitas de cociña",
     "Failed to load category {category} recipes" : "Produciuse un fallo ao cargar as receitas da categoría {category}",
