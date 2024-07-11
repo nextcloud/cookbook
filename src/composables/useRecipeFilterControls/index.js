@@ -10,6 +10,15 @@ import { AndOperator, OrOperator } from '../../js/LogicOperators';
 export default function useRecipeFilterControls(props) {
     const store = useStore();
 
+    // Helper method that sorts strings case insensitively
+    let caseInsensitiveSort = (a, b) => {
+        a = a.toUpperCase();
+        b = b.toUpperCase();
+        if (a < b) return -1;
+        if (b < a) return 1;
+        return 0;
+    };
+
     /**
      * @type {import('vue').Ref<string>}
      */
@@ -114,7 +123,8 @@ export default function useRecipeFilterControls(props) {
      * A unique set of all categories in the recipes.
      * @type {import('vue').ComputedRef<Array<string>>}
      */
-    const uniqueCategories = computed(() => [...new Set(rawCategories.value)]);
+    const uniqueCategories = computed(() =>
+        [...new Set(rawCategories.value)].sort(caseInsensitiveSort));
 
     /**
      * An array of all keywords in the recipes. These are neither sorted nor unique
@@ -133,9 +143,10 @@ export default function useRecipeFilterControls(props) {
     });
 
     /**
-     * A unique set of all keywords in all recipes.
+     * A unique and sorted set of all keywords in all recipes.
      */
-    const uniqueKeywords = computed(() => [...new Set(rawKeywords.value)]);
+    const uniqueKeywords = computed(() =>
+        [...new Set(rawKeywords.value)].sort(caseInsensitiveSort));
 
     return {
         uniqueCategories,
