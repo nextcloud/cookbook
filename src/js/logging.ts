@@ -53,7 +53,7 @@ const isEnabled = (): boolean => {
 	// Set the expiry so the logging isn't enabled forever
 	if (userValue !== null && expiry === null) {
 		expiry = moment().add(EXPIRY_MINUTES, 'm').valueOf().toString();
-		localStorage.setItem(KEY_EXPIRY, expiry);
+		localStorage.setItem(KEY_EXPIRY, expiry as string);
 	}
 
 	// Local storage converts everything to string

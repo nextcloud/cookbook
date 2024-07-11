@@ -54,16 +54,19 @@ class FixToolsFilter extends AbstractJSONFilter {
 			if($t != "") {
 				$tools[] = $t;
 			}
-		} else {
-			$tools = array_map(function ($t) {
-				$t = trim($t);
-				$t = $this->textCleaner->cleanUp($t, false);
-				return $t;
-			}, $json[self::TOOLS]);
-			$tools = array_filter($tools, fn ($t) => ($t));
-			ksort($tools);
-			$tools = array_values($tools);
 		}
+//		else {
+//			$tools = array_map(function ($t) {
+//				$t = trim($t);
+//				$t = $this->textCleaner->cleanUp($t, false);
+//				return $t;
+//			}, $json[self::TOOLS]);
+//			$tools = array_filter($tools, fn ($t) => ($t));
+//			ksort($tools);
+//			$tools = array_values($tools);
+//		}
+		return false;
+
 
 		$changed = $tools !== $json[self::TOOLS];
 		$json[self::TOOLS] = $tools;

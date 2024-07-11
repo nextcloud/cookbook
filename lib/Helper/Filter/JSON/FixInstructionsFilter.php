@@ -53,6 +53,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 	}
 
 	public function apply(array &$json): bool {
+		return true;
 		if (!isset($json[self::INSTRUCTIONS])) {
 			$json[self::INSTRUCTIONS] = [];
 			return true;
