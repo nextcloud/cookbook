@@ -15,6 +15,7 @@ import parseSearchString from 'cookbook/js/utils/parseSearchString';
 import compareRecipeFilters from 'cookbook/js/utils/compareRecipeFilters';
 import { asArray } from 'cookbook/js/helper';
 import { Recipe } from 'cookbook/js/Models/schema';
+import { caseInsensitiveStringSort } from 'cookbook/js/utils/sortingUtils';
 
 export default function useRecipeFilterControls(props, store) {
 	/**
@@ -153,12 +154,12 @@ export default function useRecipeFilterControls(props, store) {
 	});
 
 	/**
-	 * A unique set of all categories in the recipes.
+	 * A unique sorted set of all categories in the recipes.
 	 * @type {import('vue').ComputedRef<Array<string>>}
 	 */
-	const uniqueCategories: ComputedRef<string[]> = computed(() => [
-		...new Set(rawCategories.value),
-	]);
+	const uniqueCategories: ComputedRef<string[]> = computed(() =>
+		[...new Set(rawCategories.value)].sort(caseInsensitiveStringSort),
+	);
 
 	/**
 	 * An array of all keywords in the recipes. These are neither sorted nor unique
@@ -174,11 +175,11 @@ export default function useRecipeFilterControls(props, store) {
 	});
 
 	/**
-	 * A unique set of all keywords in all recipes.
+	 * A unique sorted set of all keywords in all recipes.
 	 */
-	const uniqueKeywords: ComputedRef<string[]> = computed(() => [
-		...new Set(rawKeywords.value),
-	]);
+	const uniqueKeywords: ComputedRef<string[]> = computed(() =>
+		[...new Set(rawKeywords.value)].sort(caseInsensitiveStringSort),
+	);
 
 	function onCategoriesSelectionUpdated() {
 		// Create new filter from current selection
