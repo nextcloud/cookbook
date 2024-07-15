@@ -2,15 +2,16 @@
     The ingredientFractionRegExp is used to identify fractions in the string.
     This is used to exclude strings that contain fractions from being valid.
 */
-const fractionRegExp = /^((\d+\s+)?(\d+)\s*\/\s*(\d+)).*/;
+const fractionRegExp = /^((\d+\s+)?(?:\p{No}|(\d+)\s*\/\s*(\d+))).*/u;
 
 function isValidIngredientSyntax(ingredient) {
     /*
-        The ingredientSyntaxRegExp checks whether the ingredient string starts with a number,
-        possibly followed by a fractional part or a fraction. Then there should be a space
-        and then any sequence of characters.
+        The ingredientSyntaxRegExp checks whether the ingredient string starts with a fraction,
+        or a whole part and fraction, or a decimal.
+        It may optionally have a unit but must be proceeded by a single whitespace and further text.
     */
-    const ingredientSyntaxRegExp = /^(?:\d+(?:\.\d+)?(?:\/\d+)?)\s?.*$/;
+    const ingredientSyntaxRegExp =
+        /^(?:(?:\d+\s)?(?:\d+\/\d+|\p{No})|\d+(?:\.\d+)?)[a-zA-z]*\s.*$/;
 
     /*
         The ingredientMultipleSeperatorsRegExp is used to check whether the string contains
@@ -47,6 +48,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
 
         const matches = ingredient.match(fractionRegExp);
 
+        // Fraction
         if (matches) {
             const [
                 ,
@@ -58,8 +60,18 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             const wholeNumberPart = wholeNumberPartRaw
                 ? parseInt(wholeNumberPartRaw, 10)
                 : 0;
-            const numerator = parseInt(numeratorRaw, 10);
-            const denominator = parseInt(denominatorRaw, 10);
+            let numerator = 0,
+                denominator = 0;
+            // Unicode fraction
+            if (numeratorRaw == null) {
+                [numerator, denominator] = fractionMatch
+                    .normalize('NFKD')
+                    .split('\u2044')
+                    .map((x) => parseInt(x, 10));
+            } else {
+                numerator = parseInt(numeratorRaw, 10);
+                denominator = parseInt(denominatorRaw, 10);
+            }
 
             const decimalAmount = wholeNumberPart + numerator / denominator;
             let newAmount = (decimalAmount / originalYield) * currentYield;
@@ -79,6 +91,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             return newIngredient;
         }
 
+        // Decimal
         if (isValidIngredientSyntax(ingredient)) {
             const possibleUnit = ingredient
                 .split(' ')[0]
