@@ -57,7 +57,7 @@
     "@nextcloud/browserslist-config": "^3.0.0",
     "@nextcloud/stylelint-config": "^2.3.1",
     "@nextcloud/webpack-vue-config": "^6.0.0",
-    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^7.8",
     "@vue/cli-plugin-typescript": "~5.0.8",
     "@vue/eslint-config-typescript": "^13.0.0",
