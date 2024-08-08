@@ -24,6 +24,7 @@ OC.L10N.register(
     "Last modified" : "Última modificación",
     "Energy" : "Energía",
     "Loading…" : "Cargando...",
+    "Order" : "Ordenar",
     "Clear" : "Limpiar",
     "Apply" : "Aplicar",
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"]
