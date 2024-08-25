@@ -67,6 +67,7 @@ jobs:
                       grep -v '^composer.lock$' | \
                       grep -v '^\.github/workflows/' | \
                       grep -v '^docs/Gemfile.lock' | \
+                      grep -v '^\.helpers/changelog/Pipfile.lock' | \
                       tee /tmp/relevant-files-in-pr
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
                     echo "That are $cnt files relevant."
