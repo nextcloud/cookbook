@@ -97,8 +97,9 @@ jobs:
                         echo "### No changelog was needed"
                         echo ""
                         echo "No changelog entry was found so far."
-                        echo "This is okay, as no files have been modified that would require a changelog entry."
-                        echo "You might consider if adding a changelog entry would be benefical as significant changes have been made."
+                        echo -n "This is okay, as no files have been modified that would require a changelog entry. "
+                        echo -n "You might consider if adding a changelog entry would be benefical as significant changes have been made. "
+                        echo 'The changelog should be in a file starting with `.changelog/current/${{ github.event.number }}-`.'
                     } > $GITHUB_STEP_SUMMARY
                     fi
                 if: ${{ steps.diff.outputs.num_lines == 0 }}
