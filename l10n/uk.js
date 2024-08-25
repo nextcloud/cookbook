@@ -32,6 +32,7 @@ OC.L10N.register(
     "Failed to fetch categories" : "Не вдалося отримати категорії",
     "Add" : "Додати",
     "Name" : "Ім'я",
+    "Rescan library" : "Пересканувати бібліотеку",
     "Tools" : "Інструменти",
     "Dismiss" : "Припинити",
     "Cancel" : "Скасувати",
