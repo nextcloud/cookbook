@@ -93,6 +93,7 @@ jobs:
                 if: ${{ steps.diff.outputs.num_lines == 0 }}
             -   name: Install Python package
                 run: pip install --user virtualenv pipenv
+                if: ${{ steps.diff.outputs.num_lines != 0 }}
             -   name: Test creation of changelog
                 run: |
                     cd .helpers/changelog
@@ -108,6 +109,7 @@ jobs:
                         python -m changelog_builder --token token --ci --pr ${{ github.event.number }} ../../.changelog/current/* 2>&1
                         echo '```'
                     } >> $GITHUB_STEP_SUMMARY
+                if: ${{ steps.diff.outputs.num_lines != 0 }}
     
     todo-checker:
         name: Check for added todo messages
