@@ -124,7 +124,8 @@ export default function useRecipeFilterControls(props) {
      * @type {import('vue').ComputedRef<Array<string>>}
      */
     const uniqueCategories = computed(() =>
-        [...new Set(rawCategories.value)].sort(caseInsensitiveSort));
+        [...new Set(rawCategories.value)].sort(caseInsensitiveSort),
+    );
 
     /**
      * An array of all keywords in the recipes. These are neither sorted nor unique
@@ -146,7 +147,8 @@ export default function useRecipeFilterControls(props) {
      * A unique and sorted set of all keywords in all recipes.
      */
     const uniqueKeywords = computed(() =>
-        [...new Set(rawKeywords.value)].sort(caseInsensitiveSort));
+        [...new Set(rawKeywords.value)].sort(caseInsensitiveSort),
+    );
 
     return {
         uniqueCategories,
