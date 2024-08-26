@@ -363,7 +363,7 @@ class RecipeService {
 			$this->migrateFolderStructure();
 		} catch (UserFolderNotWritableException $ex) {
 			// Ignore migration if not permitted.
-			$this->logger->warning("Cannot migrate cookbook file structure as not permitted.");
+			$this->logger->warning('Cannot migrate cookbook file structure as not permitted.');
 			throw $ex;
 		}
 	}

@@ -86,7 +86,7 @@ class HttpMicrodataParserTest extends TestCase {
 	public function testImageVariantsAsAttribute($attribute): void {
 		$l = $this->createStub(IL10N::class);
 		$parser = new HttpMicrodataParser($l);
-		$content = file_get_contents(__DIR__ . "/res_Microdata/caseImageAttribute.html");
+		$content = file_get_contents(__DIR__ . '/res_Microdata/caseImageAttribute.html');
 		$content = str_replace('%IMAGE_NAME%', $attribute, $content);
 
 		$this->finishTest($parser, $content, 'caseImage.json');
@@ -99,7 +99,7 @@ class HttpMicrodataParserTest extends TestCase {
 	public function testImageVariantsAsContent($attribute): void {
 		$l = $this->createStub(IL10N::class);
 		$parser = new HttpMicrodataParser($l);
-		$content = file_get_contents(__DIR__ . "/res_Microdata/caseImageContent.html");
+		$content = file_get_contents(__DIR__ . '/res_Microdata/caseImageContent.html');
 		$content = str_replace('%IMAGE_NAME%', $attribute, $content);
 
 		$this->finishTest($parser, $content, 'caseImage.json');
@@ -118,7 +118,7 @@ class HttpMicrodataParserTest extends TestCase {
 	public function testIngredientVariants($attribute): void {
 		$l = $this->createStub(IL10N::class);
 		$parser = new HttpMicrodataParser($l);
-		$content = file_get_contents(__DIR__ . "/res_Microdata/caseIngredient.html");
+		$content = file_get_contents(__DIR__ . '/res_Microdata/caseIngredient.html');
 		$content = str_replace('%INGREDIENT_NAME%', $attribute, $content);
 
 		$this->finishTest($parser, $content, 'caseIngredient.json');
@@ -138,7 +138,7 @@ class HttpMicrodataParserTest extends TestCase {
 	public function testInstructionVariants($attribute): void {
 		$l = $this->createStub(IL10N::class);
 		$parser = new HttpMicrodataParser($l);
-		$content = file_get_contents(__DIR__ . "/res_Microdata/caseInstruction.html");
+		$content = file_get_contents(__DIR__ . '/res_Microdata/caseInstruction.html');
 		$content = str_replace('%INSTRUCTION_NAME%', $attribute, $content);
 
 		$this->finishTest($parser, $content, 'caseInstruction.json');

@@ -27,7 +27,7 @@ class TextCleanupHelper {
 		}
 
 		$str = str_replace("\t", ' ', $str);
-		$str = str_replace("\\", '_', $str);
+		$str = str_replace('\\', '_', $str);
 
 		// We want to remove forward-slashes for the name of the recipe, to tie it to the directory structure, which cannot have slashes
 		if ($removeSlashes) {

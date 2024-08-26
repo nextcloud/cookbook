@@ -90,7 +90,7 @@ class TimestampHelper {
 	 * @throws InvalidTimestampException if $timestamp does not comply to ISO 8601 with week and weekday.
 	 */
 	private function parseIsoCalendarDateFormat(string $timestamp, string $dateSeparator = '-'): string {
-		$date = "Y".$dateSeparator."m".$dateSeparator."d";
+		$date = 'Y'.$dateSeparator.'m'.$dateSeparator.'d';
 
 		return $this->parseIsoTimestampWithTimeFormats($timestamp, $date);
 	}
@@ -143,19 +143,19 @@ class TimestampHelper {
 	 */
 	private function parseIsoTimestampWithTimeFormats(string $timestamp, string $dateFormat): string {
 		// Try parsing timestamp without milliseconds
-		$dt = DateTimeImmutable::createFromFormat($dateFormat . "\\TH:i:sP", $timestamp);
+		$dt = DateTimeImmutable::createFromFormat($dateFormat . '\\TH:i:sP', $timestamp);
 		if($dt) {
 			return $dt->format(self::OUTPUT_FORMAT);
 		}
 
 		// Try parsing timestamp with dot-separated milliseconds
-		$dt = DateTimeImmutable::createFromFormat($dateFormat . "\\TH:i:s.vP", $timestamp);
+		$dt = DateTimeImmutable::createFromFormat($dateFormat . '\\TH:i:s.vP', $timestamp);
 		if($dt) {
 			return $dt->format(self::OUTPUT_FORMAT);
 		}
 
 		// Try parsing timestamp with comma-separated milliseconds
-		$dt = DateTimeImmutable::createFromFormat($dateFormat . "\\TH:i:s,vP", $timestamp);
+		$dt = DateTimeImmutable::createFromFormat($dateFormat . '\\TH:i:s,vP', $timestamp);
 		if($dt) {
 			return $dt->format(self::OUTPUT_FORMAT);
 		}
