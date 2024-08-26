@@ -11,11 +11,11 @@ export default function useRecipeFilterControls(props) {
     const store = useStore();
 
     // Helper method that sorts strings case insensitively
-    let caseInsensitiveSort = (a, b) => {
-        a = a.toUpperCase();
-        b = b.toUpperCase();
-        if (a < b) return -1;
-        if (b < a) return 1;
+    const caseInsensitiveSort = (a, b) => {
+        const aUpper = a.toUpperCase();
+        const bUpper = b.toUpperCase();
+        if (aUpper < bUpper) return -1;
+        if (bUpper < aUpper) return 1;
         return 0;
     };
 
