@@ -17,17 +17,17 @@ class JsonServiceTest extends TestCase {
 
 	public function testIsSchemaObject() {
 		// Objects must be encoded as arrays in JSON
-		$testData = "notAnArray";
+		$testData = 'notAnArray';
 		$result = $this->service->isSchemaObject($testData);
 		self::assertFalse($result, 'The object must be an array');
 
 		// Objects must have a property @context
 		$testData = [
-			"@type" => "Recipe",
-			"name" => "Schema.org Ontology",
-			"subjectOf" => [
-				"@type" => "Book",
-				"name" => "The Complete History of Schema.org"
+			'@type' => 'Recipe',
+			'name' => 'Schema.org Ontology',
+			'subjectOf' => [
+				'@type' => 'Book',
+				'name' => 'The Complete History of Schema.org'
 			]
 		];
 		$result = $this->service->isSchemaObject($testData);
@@ -37,12 +37,12 @@ class JsonServiceTest extends TestCase {
 
 		// Context must be in schema.org domain
 		$testData = [
-			"@context" => "https://schema.com/",
+			'@context' => 'https://schema.com/',
 			'@type' => 'Recipe',
-			"name" => "Schema.org Ontology",
-			"subjectOf" => [
-				"@type" => "Book",
-				"name" => "The Complete History of Schema.org"
+			'name' => 'Schema.org Ontology',
+			'subjectOf' => [
+				'@type' => 'Book',
+				'name' => 'The Complete History of Schema.org'
 			]
 		];
 		$result = $this->service->isSchemaObject($testData);
@@ -51,11 +51,11 @@ class JsonServiceTest extends TestCase {
 
 		// Objects must have a property @type
 		$testData = [
-			"@context" => "https://schema.org/",
-			"name" => "Schema.org Ontology",
-			"subjectOf" => [
-				"@type" => "Book",
-				"name" => "The Complete History of Schema.org"
+			'@context' => 'https://schema.org/',
+			'name' => 'Schema.org Ontology',
+			'subjectOf' => [
+				'@type' => 'Book',
+				'name' => 'The Complete History of Schema.org'
 			]
 		];
 		$result = $this->service->isSchemaObject($testData);
@@ -64,12 +64,12 @@ class JsonServiceTest extends TestCase {
 
 		// No typecheck will be requested
 		$testData = [
-			"@context" => "https://schema.org/",
-			"@type" => "Thing",
-			"name" => "Schema.org Ontology",
-			"subjectOf" => [
-				"@type" => "Book",
-				"name" => "The Complete History of Schema.org"
+			'@context' => 'https://schema.org/',
+			'@type' => 'Thing',
+			'name' => 'Schema.org Ontology',
+			'subjectOf' => [
+				'@type' => 'Book',
+				'name' => 'The Complete History of Schema.org'
 			]
 		];
 		$result = $this->service->isSchemaObject($testData);
@@ -79,12 +79,12 @@ class JsonServiceTest extends TestCase {
 
 		// Check if type matches
 		$testData = [
-			"@context" => "https://schema.org/",
-			"@type" => "Thing",
-			"name" => "Schema.org Ontology",
-			"subjectOf" => [
-				"@type" => "Book",
-				"name" => "The Complete History of Schema.org"
+			'@context' => 'https://schema.org/',
+			'@type' => 'Thing',
+			'name' => 'Schema.org Ontology',
+			'subjectOf' => [
+				'@type' => 'Book',
+				'name' => 'The Complete History of Schema.org'
 			]
 		];
 		$result = $this->service->isSchemaObject($testData, 'Thing');
@@ -98,12 +98,12 @@ class JsonServiceTest extends TestCase {
 	public function testHasProperty() {
 		// The method isSchemaObject() is tested in another test and assumed as working properly
 		$testData = [
-			"@context" => "https://schema.org/",
-			"@type" => "Thing",
-			"name" => "Schema.org Ontology",
-			"subjectOf" => [
-				"@type" => "Book",
-				"name" => "The Complete History of Schema.org"
+			'@context' => 'https://schema.org/',
+			'@type' => 'Thing',
+			'name' => 'Schema.org Ontology',
+			'subjectOf' => [
+				'@type' => 'Book',
+				'name' => 'The Complete History of Schema.org'
 			]
 		];
 		$result = $this->service->hasProperty($testData, 'name');

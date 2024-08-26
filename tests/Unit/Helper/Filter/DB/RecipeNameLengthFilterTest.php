@@ -21,7 +21,7 @@ class RecipeNameLengthFilterTest extends TestCase {
 		yield ['abc', 'abc', false];
 		yield ['äöü', 'äöü', false];
 
-		$tenChars = "0123456789";
+		$tenChars = '0123456789';
 		$twentyChars = "$tenChars$tenChars";
 		$fiftyChars = $twentyChars . $twentyChars . $tenChars;
 		$hundredTwenty = $fiftyChars . $fiftyChars . $twentyChars;
