@@ -408,7 +408,7 @@ class RecipeImplementationTest extends TestCase {
 
 		$data = ['a', 'new', 'array'];
 
-		$errorMsg = "No name was given for the recipe.";
+		$errorMsg = 'No name was given for the recipe.';
 		$ex = new NoRecipeNameGivenException($errorMsg);
 
 		$this->restParser->method('getParameters')->willReturn($data);
@@ -426,7 +426,7 @@ class RecipeImplementationTest extends TestCase {
 
 		$recipe = ['a', 'recipe', 'as', 'array'];
 
-		$errorMsg = "Another recipe with that name already exists";
+		$errorMsg = 'Another recipe with that name already exists';
 		$ex = new RecipeExistsException($errorMsg);
 
 		$this->restParser->method('getParameters')->willReturn($recipe);
@@ -469,7 +469,7 @@ class RecipeImplementationTest extends TestCase {
 		$recipe = ['a', 'recipe', 'as', 'array'];
 		$this->restParser->method('getParameters')->willReturn($recipe);
 
-		$errorMsg = "The error that was triggered";
+		$errorMsg = 'The error that was triggered';
 		$ex = new NoRecipeNameGivenException($errorMsg);
 
 		$this->recipeService->expects($this->once())->method('addRecipe')->with($recipe)->willThrowException($ex);
@@ -509,13 +509,13 @@ class RecipeImplementationTest extends TestCase {
 
 		$id = 123;
 		$recipe = [
-			'name' => "My Name",
+			'name' => 'My Name',
 			'description' => 'a useful description',
 			'id' => $id,
 		];
 		$this->recipeService->method('getRecipeById')->with($id)->willReturn($recipe);
 		$this->recipeService->method('getPrintImage')->willReturn(true);
-		$imageUrl = "/path/to/image/of/id/123";
+		$imageUrl = '/path/to/image/of/id/123';
 
 		$this->urlGenerator->method('linkToRoute')->with(
 			'cookbook.recipe.image',

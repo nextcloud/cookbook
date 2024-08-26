@@ -148,7 +148,7 @@ class DbCacheService {
 			throw new InvalidJSONFileException($this->l->t('The JSON file in the folder with ID %d does not have a valid name.', [$id]));
 		}
 
-		$id = (int) $jsonFile->getParent()->getId();
+		$id = (int)$jsonFile->getParent()->getId();
 		$json['id'] = $id;
 
 		$json = $this->normalizeFileFilter->filter($json, $jsonFile, true);

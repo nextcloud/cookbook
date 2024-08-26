@@ -64,8 +64,8 @@ class ISO8601DurationHelper {
 			// $matches[5] is the tome part of the string (like T4H5M6S)
 			// $matches[6] to $matches[8] is hours to seconds (like 4H 5M 6S)
 			$hours = (int)$matches[6];
-			$minutes = (int) ($matches[7] ?? 0);
-			$seconds = (int) ($matches[8] ?? 0);
+			$minutes = (int)($matches[7] ?? 0);
+			$seconds = (int)($matches[8] ?? 0);
 
 			while ($seconds >= 60) {
 				$seconds -= 60;

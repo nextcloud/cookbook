@@ -100,10 +100,10 @@ class UserConfigHelperTest extends TestCase {
 			->willReturnOnConsecutiveCalls('0', '1', '0');
 
 		$this->config->expects($this->exactly(2))->method('setUserValue')
-		->withConsecutive(
-			[$this->userId, 'cookbook', 'print_image', '1'],
-			[$this->userId, 'cookbook', 'print_image', '0']
-		);
+			->withConsecutive(
+				[$this->userId, 'cookbook', 'print_image', '1'],
+				[$this->userId, 'cookbook', 'print_image', '0']
+			);
 
 		$this->assertFalse($this->dut->getPrintImage());
 		$this->dut->setPrintImage(true);

@@ -48,7 +48,7 @@ class RecipeDb {
 		$cursor->closeCursor();
 
 		if ($row === false) {
-			throw new DoesNotExistException($this->l->t("Recipe with ID %d was not found in database.", [$id]));
+			throw new DoesNotExistException($this->l->t('Recipe with ID %d was not found in database.', [$id]));
 		}
 
 		$ret = [];
@@ -177,7 +177,7 @@ class RecipeDb {
 		$cursor->closeCursor();
 
 		$result = array_map(function ($x) {
-			$x['recipe_count'] = (int) $x['recipe_count'];
+			$x['recipe_count'] = (int)$x['recipe_count'];
 			return $x;
 		}, $result);
 
@@ -206,7 +206,7 @@ class RecipeDb {
 		$cursor->closeCursor();
 
 		$result = array_map(function ($x) {
-			$x['recipe_count'] = (int) $x['recipe_count'];
+			$x['recipe_count'] = (int)$x['recipe_count'];
 			return $x;
 		}, $result);
 
@@ -235,7 +235,7 @@ class RecipeDb {
 
 		$result[] = [
 			'name' => '*',
-			'recipe_count' => (int) $row['cnt']
+			'recipe_count' => (int)$row['cnt']
 		];
 
 		$result = array_unique($result, SORT_REGULAR);
@@ -271,21 +271,21 @@ class RecipeDb {
 			$qb->orderBy('r.name');
 		} else {
 			$qb->select(['r.recipe_id', 'r.name', 'r.date_created', 'r.date_modified', 'k.name AS keywords'])
-			->from(self::DB_TABLE_RECIPES, 'r')
-			->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id')
-			->leftJoin(
-				'r',
-				self::DB_TABLE_CATEGORIES,
-				'c',
-				$qb->expr()->andX(
-					'r.user_id = c.user_id',
-					'r.recipe_id = c.recipe_id'
+				->from(self::DB_TABLE_RECIPES, 'r')
+				->leftJoin('r', self::DB_TABLE_KEYWORDS, 'k', 'r.recipe_id = k.recipe_id')
+				->leftJoin(
+					'r',
+					self::DB_TABLE_CATEGORIES,
+					'c',
+					$qb->expr()->andX(
+						'r.user_id = c.user_id',
+						'r.recipe_id = c.recipe_id'
+					)
 				)
-			)
-			->where(
-				$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
-				$qb->expr()->isNull('c.name')
-			);
+				->where(
+					$qb->expr()->eq('r.user_id', $qb->createNamedParameter($user_id, IQueryBuilder::PARAM_STR)),
+					$qb->expr()->isNull('c.name')
+				);
 		}
 
 		$cursor = $qb->execute();
@@ -400,7 +400,7 @@ class RecipeDb {
 
 	/**
 	 * @param array $results Array of recipes with double entries for different keywords
-	 * Group recipes by id and convert keywords to comma-separated list
+	 *                       Group recipes by id and convert keywords to comma-separated list
 	 */
 	public function groupKeywordInResult(array $result) {
 		$recipesGroupedTags = [];
@@ -477,7 +477,7 @@ class RecipeDb {
 			$qb->orWhere(
 				$qb->expr()->andX(
 					$qb->expr()->eq('recipe_id', $qb->createNamedParameter($id, IQueryBuilder::PARAM_INT)),
-					$qb->expr()->eq("user_id", $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
+					$qb->expr()->eq('user_id', $qb->createNamedParameter($userId, IQueryBuilder::PARAM_STR))
 				));
 		}
 
@@ -574,8 +574,8 @@ class RecipeDb {
 		$qb = $this->db->getQueryBuilder();
 
 		$qb->select('name')
-		->from(self::DB_TABLE_CATEGORIES)
-		->where('recipe_id = :rid', 'user_id = :uid');
+			->from(self::DB_TABLE_CATEGORIES)
+			->where('recipe_id = :rid', 'user_id = :uid');
 
 		$qb->setParameter('rid', $recipeId);
 		$qb->setParameter('uid', $userId);
