@@ -51,7 +51,7 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 		}
 
 		if (is_float($json[self::YIELD]) || is_double($json[self::YIELD])) {
-			$json[self::YIELD] = (int) $json[self::YIELD];
+			$json[self::YIELD] = (int)$json[self::YIELD];
 			return true;
 		}
 
@@ -82,7 +82,7 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 				$count
 			));
 
-			$json[self::YIELD] = (int) $last;
+			$json[self::YIELD] = (int)$last;
 			return true;
 		}
 

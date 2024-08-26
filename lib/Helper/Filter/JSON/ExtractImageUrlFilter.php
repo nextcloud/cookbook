@@ -81,7 +81,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 			$regex = preg_match_all('/\d+/', $img, $matches);
 
 			if ($regex !== false && $regex > 0) {
-				$sum = array_sum(array_map(fn ($x) => ((int) $x), $matches[0]));
+				$sum = array_sum(array_map(fn ($x) => ((int)$x), $matches[0]));
 
 				if ($sum > $maxSum) {
 					$json['image'] = $img;

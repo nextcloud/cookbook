@@ -47,9 +47,9 @@ class FixDescriptionFilterTest extends TestCase {
 
 	public function dpApply() {
 		return [
-			["abc", "abc", "abc", false],
+			['abc', 'abc', 'abc', false],
 			["abc\n\ndef", "abc\n\ndef", "abc\n\ndef", false],
-			["abc\n\n", "abc\n\n", "abc", true],
+			["abc\n\n", "abc\n\n", 'abc', true],
 			// ["abc\n\n", "abc", true],
 		];
 	}
