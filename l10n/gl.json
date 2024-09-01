@@ -241,7 +241,7 @@
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds}s","{seconds}s"],
     "Copy ingredients to the clipboard" : "Copiar os ingredientes no portapapeis",
-    "{item} copied to clipboard" : "{item} copiado no portapapeis.",
+    "{item} copied to clipboard" : "{item} copiado no portapapeis",
     "Copying {item} to clipboard failed" : "Produciuse un fallo ao copiar {item} no portapapeis",
     "ingredients" : "ingredientes",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Non é posíbel recalcular o ingrediente por mor dunha sintaxe incorrecta. Asegúrese de que a sintaxe segue este formato: cantidade unidade ingrediente e de que se axusta un número específico de racións para que esta función traballe correctamente. Exemplos: 200 g cenorias ou 1 chisca sal."
