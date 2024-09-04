@@ -85,7 +85,7 @@ OC.L10N.register(
     "Cannot access recipe folder." : "Non é posíbel acceder ao cartafol de receitas.",
     "Select recipe folder" : "Seleccione o cartafol de receitas",
     "Path to your recipe collection" : "Ruta á súa colección de receitas",
-    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Accedeu cunha conta de convidado. Polo tanto, non se lle permite xerar ficheiros e cartafoles arbitrarios nesta instancia de Nextcloud. Para poder usar a aplicación «Receitas de cociña» como convidado, cómpre especificar un cartafol onde se almacenen todas as receitas. Necesitará permiso de escritura nese cartafol.",
+    "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Accedeu cunha conta de convidado. Por tanto, non se lle permite xerar ficheiros e cartafoles arbitrarios nesta instancia de Nextcloud. Para poder usar a aplicación «Receitas de cociña» como convidado, cómpre especificar un cartafol onde se almacenen todas as receitas. Necesitará permiso de escritura nese cartafol.",
     "Create recipe" : "Crear unha receita",
     "Download recipe from URL" : "Descargar a receita do URL",
     "Uncategorized recipes" : "Receitas sen categorizar",
