@@ -202,6 +202,10 @@ OC.L10N.register(
     "Order" : "Ordena",
     "Search term" : "Bilaketa terminoa",
     "Clear" : "Garbitu",
-    "Apply" : "Aplikatu"
+    "Apply" : "Aplikatu",
+    "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h"],
+    "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
+    "_{seconds}s_::_{seconds}s_" : ["{seconds}s","{seconds}s"],
+    "ingredients" : "osagaiak"
 },
 "nplurals=2; plural=(n != 1);");
