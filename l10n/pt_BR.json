@@ -225,8 +225,6 @@
     "Show recipes containing any selected keyword" : "Mostrar receitas contendo qualquer palavra-chave selecionada",
     "Show recipes containing all selected keywords" : "Mostrar receitas contendo todas as palavras-chave selecionadas",
     "Clear" : "Limpar",
-    "_1 category selected_::_{n} categories selected_" : ["{n} categorias selecionadas","{n} categorias selecionadas","{n} categorias selecionadas"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["{n} palavras-chave selecionadas","{n} palavras-chave selecionadas","{n} palavras-chave selecionadas"],
     "Recipe filters" : "Filtros de receita",
     "Matching all selected categories" : "Correspondendo a todas as categorias selecionadas",
     "Matching any selected category" : "Correspondendo a qualquer categoria selecionada",

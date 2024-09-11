@@ -225,8 +225,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Zobraziť recept obsahujúci ktorékoľvek vybrané kľúčové slovo",
     "Show recipes containing all selected keywords" : "Zobraziť recept obsahujúci všetky vybrané kľúčové slová",
     "Clear" : "Vyčistiť",
-    "_1 category selected_::_{n} categories selected_" : ["vybraná 1 kategória","vybrané {n} kategórie","vybraných {n} kategórií ","vybraných {n} kategórií "],
-    "_1 keyword selected_::_{n} keywords selected_" : ["vybrané 1 kľúčové slovo","vybrané {n} kľúčové slová","vybraných {n} kľúčových slov ","vybraných {n} kľúčových slov "],
     "Recipe filters" : "Filtre receptu",
     "Matching all selected categories" : "Zhoduje sa so všetkými vybranými kategóriami",
     "Matching any selected category" : "Zhoduje sa s niektorými vybranými kategóriami",

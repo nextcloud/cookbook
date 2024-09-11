@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Taispeáin oidis ina bhfuil aon eochairfhocal roghnaithe",
     "Show recipes containing all selected keywords" : "Taispeáin oidis ina bhfuil na heochairfhocail roghnaithe go léir",
     "Clear" : "Glan",
-    "_1 category selected_::_{n} categories selected_" : ["1 chatagóir roghnaithe","{n} chatagóir roghnaithe","{n} chatagóir roghnaithe","{n} chatagóir roghnaithe","{n} chatagóir roghnaithe"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["1 eochairfhocal roghnaithe","{n} eochairfhocail roghnaithe","{n} eochairfhocail roghnaithe","{n} eochairfhocail roghnaithe","{n} eochairfhocail roghnaithe"],
     "Recipe filters" : "Scagairí oidis",
     "Matching all selected categories" : "Gach catagóir roghnaithe a mheaitseáil",
     "Matching any selected category" : "Ag meaitseáil aon chatagóir roghnaithe",

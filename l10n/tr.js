@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Seçilmiş anahtar sözcüklerden birine uyan yemek tariflerini görüntüle",
     "Show recipes containing all selected keywords" : "Seçilmiş anahtar sözcüklerin tümüne uyan yemek tariflerini görüntüle",
     "Clear" : "Temizle",
-    "_1 category selected_::_{n} categories selected_" : ["1 kategori seçilmiş","{n} kategori seçilmiş"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["1 anahtar sözcük seçilmiş","{n} anahtar sözcük seçilmiş"],
     "Recipe filters" : "Yemek tarifi süzgeçleri",
     "Matching all selected categories" : "Seçilmiş kategorilerin tümüne uyan",
     "Matching any selected category" : "Seçilmiş kategorilerden birine uyan",

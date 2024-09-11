@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Rezepte anzeigen, die irgendein ausgewähltes Schlüsselwort enthalten",
     "Show recipes containing all selected keywords" : "Rezepte anzeigen, die alle ausgewählten Schlüsselworte enthalten",
     "Clear" : "Leeren",
-    "_1 category selected_::_{n} categories selected_" : ["{n} Kategorie ausgewählt","{n} Kategorien ausgewählt"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["{n} Schlüsselwort ausgewählt","{n} Schlüsselworte ausgewählt"],
     "Recipe filters" : "Rezeptfilter",
     "Matching all selected categories" : "Passend zu allen ausgewählten Kategorien",
     "Matching any selected category" : "Passend zu irgendeiner der ausgewählten Kategorien",

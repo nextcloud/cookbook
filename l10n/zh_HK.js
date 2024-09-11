@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "顯示含有任何所選關鍵詞的食譜",
     "Show recipes containing all selected keywords" : "顯示含有所有所選關鍵詞的食譜",
     "Clear" : "清除",
-    "_1 category selected_::_{n} categories selected_" : ["已選擇 {n} 個分類"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["已選擇 {n} 個關鍵詞"],
     "Recipe filters" : "食譜過濾",
     "Matching all selected categories" : "匹配所有所選的類別",
     "Matching any selected category" : "匹配任何所選的分類",

@@ -221,8 +221,6 @@
     "Show recipes containing any selected keyword" : "Afficher les recettes contenant n'importe laquelle des mots-clés sélectionnés",
     "Show recipes containing all selected keywords" : "Afficher les recettes contenant tous les mots-clés sélectionnés",
     "Clear" : "Effacer",
-    "_1 category selected_::_{n} categories selected_" : ["1 catégorie sélectionnée","{n} catégories sélectionnées","{n} catégories sélectionnées"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["1 mot-clé sélectionné","{n} mots-clés sélectionnés","{n} mots-clés sélectionnés"],
     "Apply" : "Appliquer",
     "Preparation time (hours:minutes:seconds)" : "Temps de préparation (heures:minutes:secondes)",
     "Cooking time (hours:minutes:seconds)" : "Temps de cuisson (heures:minutes:secondes)",

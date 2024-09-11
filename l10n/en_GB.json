@@ -225,8 +225,6 @@
     "Show recipes containing any selected keyword" : "Show recipes containing any selected keyword",
     "Show recipes containing all selected keywords" : "Show recipes containing all selected keywords",
     "Clear" : "Clear",
-    "_1 category selected_::_{n} categories selected_" : ["1 category selected","{n} categories selected"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["1 keyword selected","{n} keywords selected"],
     "Recipe filters" : "Recipe filters",
     "Matching all selected categories" : "Matching all selected categories",
     "Matching any selected category" : "Matching any selected category",
