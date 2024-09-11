@@ -225,8 +225,6 @@
     "Show recipes containing any selected keyword" : "Rezepte anzeigen, die ein der ausgewählten Schlüsselworte enthalten",
     "Show recipes containing all selected keywords" : "Rezepte anzeigen, die alle der ausgewählten Schlüsselworte enthalten",
     "Clear" : "Löschen",
-    "_1 category selected_::_{n} categories selected_" : ["{n} Kategorie ausgewählt","{n} Kategorien ausgewählt"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["{n} Schlüsselwort ausgewählt","{n} Schlüsselworte ausgewählt"],
     "Recipe filters" : "Rezeptfilter",
     "Matching all selected categories" : "Passend zu allen ausgewählten Kategorien",
     "Matching any selected category" : "Passend zu einer der ausgewählten Kategorien",

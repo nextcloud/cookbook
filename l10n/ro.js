@@ -39,6 +39,7 @@ OC.L10N.register(
     "Description" : "Descriere",
     "URL" : "URL",
     "Image" : "Imagine",
+    "You have unsaved changes! Do you still want to leave?" : "Aveți modificări nesalvate! Sigur doriți să părăsiți pagina?",
     "Loading…" : "Se încarcă…",
     "Order" : "Ordine",
     "Clear" : "Șterge ",

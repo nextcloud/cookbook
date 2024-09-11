@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Vis oppskrifter som inneholder et valgt søkeord",
     "Show recipes containing all selected keywords" : "Vis oppskrifter som inneholder alle valgte søkeord",
     "Clear" : "Tøm",
-    "_1 category selected_::_{n} categories selected_" : ["1 kategori valgt","{n} kategorier valgt"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["1 søkeord valgt","{n} søkeord valgt"],
     "Recipe filters" : "Oppskriftsfiltre",
     "Matching all selected categories" : "Samsvarer med alle valgte kategorier",
     "Matching any selected category" : "Samsvarer med en hvilken som helst valgt kategori",

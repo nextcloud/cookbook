@@ -225,8 +225,6 @@
     "Show recipes containing any selected keyword" : "أعرُض الوصفات التي تحوي أيّاً من كلمات البحث",
     "Show recipes containing all selected keywords" : "أعرُض الوصفات التي تحوي جميع كلمات البحث",
     "Clear" : "محو",
-    "_1 category selected_::_{n} categories selected_" : ["{n} فئة تمّ تحديدها","1 فئة تمّ تحديدها","{n} فئة تمّ تحديدها","{n} فئة تمّ تحديدها","{n} فئات تمّ تحديدها","{n} فئة تمّ تحديدها"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["{n} كلمة بحثٍ تمّ تحديدها","1 كلمة بحثٍ تمّ تحديدها","{n} كلمة بحثٍ تمّ تحديدها","{n} كلمة بحثٍ تمّ تحديدها","{n} كلمات بحثٍ تمّ تحديدها","{n} كلمة بحثٍ تمّ تحديدها"],
     "Recipe filters" : "فلاتر الوصفات",
     "Matching all selected categories" : "مطابقة كل الفئات المحددة",
     "Matching any selected category" : "المطابقة مع أيٍّ من الفئات المحددة",

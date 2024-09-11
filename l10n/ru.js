@@ -6,6 +6,7 @@ OC.L10N.register(
     "Downloading of a file failed returned the following error message: %s" : "При неудачной загрузке файла было возвращено следующее сообщение об ошибке: %s",
     "No content encoding was detected in the content." : "Кодировка в содержимого не обнаружена.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Изображение для рецепта %s не может быть проанализировано. Прерываю анализ и пропускаю изображение.",
+    "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Использование эвристики для анализа поля «recipeYield», представляющего количество порций рецепта",
     "The recipe has already an image file. Cannot create a new one." : "В рецепте уже есть файл с изображением. Не удается создать новый файл.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Невозможно проанализировать составную кодировку, отличную от POST. Это ошибка.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Не удается определить тип передаваемых данных. Это ошибка, сообщите об этом.",
