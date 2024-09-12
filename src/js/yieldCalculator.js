@@ -60,8 +60,8 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             const wholeNumberPart = wholeNumberPartRaw
                 ? parseInt(wholeNumberPartRaw, 10)
                 : 0;
-            let numerator = 0,
-                denominator = 0;
+            let numerator = 0;
+            let denominator = 0;
             // Unicode fraction
             if (numeratorRaw == null) {
                 [numerator, denominator] = fractionMatch
@@ -78,11 +78,14 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             const newWholeNumberPart = parseInt(newAmount, 10);
             let newNumerator = (newAmount - newWholeNumberPart) * 16;
             if (Number.isInteger(newNumerator)) {
-                const gcd = (a, b) => b ? gcd(b, a % b) : a;
-                let div = gcd(newNumerator, 16);
+                const gcd = (a, b) => (b ? gcd(b, a % b) : a);
+                const div = gcd(newNumerator, 16);
                 newNumerator /= div;
-                let newDenominator = 16 / div;
-                newAmount = (newWholeNumberPart ? newWholeNumberPart + ' ' : '') + newNumerator + '/' + newDenominator;
+                const newDenominator = 16 / div;
+                const prefix = newWholeNumberPart
+                    ? `${newWholeNumberPart} `
+                    : '';
+                newAmount = `${prefix}${newNumerator}/${newDenominator}`;
             } else {
                 newAmount = newAmount.toFixed(2).replace(/[.]00$/, '');
             }
