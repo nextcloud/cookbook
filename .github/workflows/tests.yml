@@ -113,7 +113,7 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 28
+                - 30
             phpVersion:
                 - "8.3"
             httpServer:
@@ -124,7 +124,7 @@ jobs:
                     phpVersion: "8.1"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 28
+                    coreVersion: 29
                     phpVersion: "8.2"
                     httpServer: "nginx"
                     
