@@ -19,6 +19,39 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 
+## 0.11.2 - 2024-09-13
+
+### Fixed
+
+- Prevent failure of changlog builder when parsing dependabot PRs without explicit changelog stub
+  [#2461](https://github.com/nextcloud/cookbook/pull/2461) @christianlupus
+- Prevent duplicated keywords and categories that differ only in case
+  [#2470](https://github.com/nextcloud/cookbook/pull/2470) nathanielhourt
+- Fraction calculation keeps fractions if possible
+  [#2421](https://github.com/nextcloud/cookbook/pull/2421) @Weissnix4711
+
+### Documentation
+
+- Fix link to parser method in FAQ
+  [#2396](https://github.com/nextcloud/cookbook/pull/2396) @nathanielhourt
+
+### Maintenance
+
+- Allow automatic updates in the changlog helper dependencies by dependabot
+  [#2465](https://github.com/nextcloud/cookbook/pull/2465) @christianlupus
+- Update code styling of PHP files in accordance to Nextcloud preference
+  [#2468](https://github.com/nextcloud/cookbook/pull/2468) @dependabot
+- Mark the app as compatible with NC 30
+  [#2493](https://github.com/nextcloud/cookbook/pull/2493) @christianlupus
+- Update Typescript transpiler
+  [#2489](https://github.com/nextcloud/cookbook/pull/2489) @dependabot
+
+### Dependencies
+
+- Update webpack-merge to major version 6
+  [#2404](https://github.com/nextcloud/cookbook/pull/2404) @dependabot
+
+
 ## 0.11.1 - 2024-06-26
 
 ### Added
