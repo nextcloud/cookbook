@@ -20,7 +20,7 @@ class TextCleanupHelperTest extends TestCase {
 			["A\r\nfew\nlines with/NL", true, false, 'A few lines with/NL'],
 			["A/few/words with\nslashes", false, true, "A_few_words with\nslashes"],
 			["Both/newlines\nand//slashes", true, true, 'Both_newlines and__slashes'],
-			["With\tTabs", false, false, "With Tabs"],
+			["With\tTabs", false, false, 'With Tabs'],
 			['With\\backslash\\', false, false, 'With_backslash_'],
 			['&auml;&Uuml;&szlig;&amp;', false, false, 'äÜß&'],
 			[null, false, false, ''],

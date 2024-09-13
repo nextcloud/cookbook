@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "선택한 키워드가 포함된 레시피 표시",
     "Show recipes containing all selected keywords" : "선택한 키워드가 모두 포함된 레시피 표시",
     "Clear" : "비우기",
-    "_1 category selected_::_{n} categories selected_" : ["{n}개의 카테고리가 선택되었습니다"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["{n}개의 키워드가 선택되었습니다."],
     "Recipe filters" : "레시피 필터",
     "Matching all selected categories" : "선택한 모든 카테고리와 일치",
     "Matching any selected category" : "선택한 카테고리와 일치",

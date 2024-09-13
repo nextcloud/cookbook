@@ -113,7 +113,7 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 28
+                - 30
             phpVersion:
                 - "8.3"
             httpServer:
@@ -124,7 +124,7 @@ jobs:
                     phpVersion: "8.1"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 28
+                    coreVersion: 29
                     phpVersion: "8.2"
                     httpServer: "nginx"
                     
@@ -273,7 +273,7 @@ jobs:
           run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
           if: ${{ github.event_name == 'push' }}
-          uses: actions/download-artifact@v4.1.7
+          uses: actions/download-artifact@v4.1.8
           with:
             path: artifacts
         - name: Checkout of code base

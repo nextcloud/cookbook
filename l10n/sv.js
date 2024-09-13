@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Visa recept som innehåller valfritt valt nyckelord",
     "Show recipes containing all selected keywords" : "Visa recept som innehåller alla valda nyckelord",
     "Clear" : "Rensa",
-    "_1 category selected_::_{n} categories selected_" : ["1 kategori vald","{n} kategorier valda"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["1 nyckelord vald","{n} nyckelord valda"],
     "Recipe filters" : "Receptfilter",
     "Matching all selected categories" : "Matchning av alla valda kategorier",
     "Matching any selected category" : "Matchning av vald kategori",

@@ -158,21 +158,21 @@ class HtmlToDomParserTest extends TestCase {
 
 	public function dataProviderParsing() {
 		return [
-			"failedParsing" => [
+			'failedParsing' => [
 				false,
 				null,
 				[],
 				[0,0,0],
 				false,
 			],
-			"parsingWithoutErrors" => [
+			'parsingWithoutErrors' => [
 				true,
 				HtmlToDomParser::PARSING_SUCCESS,
 				[],
 				[0,0,0],
 				false,
 			],
-			"parsingWithSingleWarning" => [
+			'parsingWithSingleWarning' => [
 				true,
 				HtmlToDomParser::PARSING_WARNING,
 				[
@@ -181,7 +181,7 @@ class HtmlToDomParserTest extends TestCase {
 				[0,0,1],
 				false,
 			],
-			"parsingWithSingleError" => [
+			'parsingWithSingleError' => [
 				true,
 				HtmlToDomParser::PARSING_ERROR,
 				[
@@ -190,7 +190,7 @@ class HtmlToDomParserTest extends TestCase {
 				[0,1,0],
 				false,
 			],
-			"parsingWithSingleFatal" => [
+			'parsingWithSingleFatal' => [
 				true,
 				HtmlToDomParser::PARSING_FATAL_ERROR,
 				[
@@ -199,7 +199,7 @@ class HtmlToDomParserTest extends TestCase {
 				[1,0,0],
 				false,
 			],
-			"parsingWithAllTypes" => [
+			'parsingWithAllTypes' => [
 				true,
 				HtmlToDomParser::PARSING_FATAL_ERROR,
 				[
@@ -213,7 +213,7 @@ class HtmlToDomParserTest extends TestCase {
 				[1,2,3],
 				false,
 			],
-			"parsingWithAllTypes" => [
+			'parsingWithAllTypes' => [
 				true,
 				HtmlToDomParser::PARSING_ERROR,
 				[
@@ -230,7 +230,7 @@ class HtmlToDomParserTest extends TestCase {
 				[0,2,3],
 				false,
 			],
-			"parsingWithWrongXMLError" => [
+			'parsingWithWrongXMLError' => [
 				true,
 				HtmlToDomParser::PARSING_SUCCESS,
 				[
@@ -285,8 +285,8 @@ class HtmlToDomParserTest extends TestCase {
 		$this->logger->expects($this->exactly(2))
 			->method('warning')
 			->withConsecutive(
-				["libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message"],
-				["libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message"]
+				['libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message'],
+				['libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message']
 			);
 		$this->logger->expects($this->exactly(0))
 			->method('error');

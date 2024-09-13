@@ -63,7 +63,7 @@ A lot of websites are unfortunately not following the schema.org/Recipe standard
 
 <details>
   <summary><b>A website using correct schema.org markup is not being read correctly</b></summary>
-The parser is far from perfect. If you can help out in any way, please [have a look at the parseRecipeHtml() method](https://github.com/nextcloud/nextcloud-cookbook/blob/master/lib/Service/RecipeService.php) and create a pull request with your changes.
+The parser is far from perfect. If you can help out in any way, please <a href="https://github.com/nextcloud/nextcloud-cookbook/blob/master/lib/Service/RecipeExtractionService.php">have a look at the parse() method</a> and create a pull request with your changes.
 </details>
 
 <details>

@@ -51,7 +51,7 @@ class FixToolsFilter extends AbstractJSONFilter {
 			$t = $this->textCleaner->cleanUp($t, false);
 
 			// Empty string would mean no tools (i.e., empty array)
-			if($t != "") {
+			if($t != '') {
 				$tools[] = $t;
 			}
 		} else {

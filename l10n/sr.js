@@ -227,8 +227,6 @@ OC.L10N.register(
     "Show recipes containing any selected keyword" : "Приказује рецепте који садрже било коју од изабраних кључних речи",
     "Show recipes containing all selected keywords" : "Приказује рецепте који садрже све изабране кључне речи",
     "Clear" : "Очисти",
-    "_1 category selected_::_{n} categories selected_" : ["изабрана је 1 категорија","изабране су {n} категорије","изабрано је {n} категорија"],
-    "_1 keyword selected_::_{n} keywords selected_" : ["изабрана је 1 кључна реч","изабране су {n} кључне речи","изабрано је {n} кључних речи"],
     "Recipe filters" : "Филтери рецепата",
     "Matching all selected categories" : "Подудара се са свим изабраним категоријама",
     "Matching any selected category" : "Подудара се са било којом изабраном категоријом",

@@ -25,11 +25,11 @@ class TimezoneFixFilterTest extends TestCase {
 		$hours = sprintf('%+03d00', $offset / 3600);
 
 		yield ["2024-05-20T10:12:00$hours", "2024-05-20T10:12:00$hours", false];
-		yield ["2024-05-20T10:12:00", "2024-05-20T10:12:00$hours", true];
+		yield ['2024-05-20T10:12:00', "2024-05-20T10:12:00$hours", true];
 		yield ["2024-05-20T10:12:00.20$hours", "2024-05-20T10:12:00.20$hours", false];
-		yield ["2024-05-20T10:12:00.20", "2024-05-20T10:12:00.20$hours", true];
+		yield ['2024-05-20T10:12:00.20', "2024-05-20T10:12:00.20$hours", true];
 		yield ["2024-05-20T1:12:00$hours", "2024-05-20T1:12:00$hours", false];
-		yield ["2024-05-20T1:12:00", "2024-05-20T1:12:00$hours", true];
+		yield ['2024-05-20T1:12:00', "2024-05-20T1:12:00$hours", true];
 	}
 
 	/** @dataProvider db */

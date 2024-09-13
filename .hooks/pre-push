@@ -49,8 +49,8 @@ if [ -n "$run_check" ]
 then
 
 	# Clean current folder
-	rm -rf .hook-checkout/checkout
-	mkdir .hook-checkout/checkout
+	rm -rf .hook-checkout/checkout .hook-checkout/tmp
+	mkdir .hook-checkout/checkout .hook-checkout/tmp
 
 	# Clone the latest code base to the folder and apply the staged changes
 	git archive --format tar $localRef | tar x -C .hook-checkout/checkout
@@ -119,7 +119,8 @@ then
 		cd .hook-checkout/checkout
 		if [ -x "$(which xmllint)" ]
 		then
-			xmllint --noout --quiet --schema <(curl -sL 'https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd') appinfo/info.xml || { \
+			curl -sL 'https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd' -o '../tmp/info.xsd'
+			xmllint --noout --quiet --schema ../tmp/info.xsd appinfo/info.xml || { \
 				echo 'The app info file does not conform the XSD file.'; (( retVal |= 64 )); }
 		else
 			echo 'WARNING: Could not check the XML file as xmllint was not found in the path.'

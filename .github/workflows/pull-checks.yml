@@ -62,7 +62,13 @@ jobs:
                     echo "In total that are $totalcnt files."
                     #
                     echo "Filtering out automatically updatable files"
-                    cat /tmp/changed-files-in-pr | grep -v '^package-lock.json$' | grep -v '^composer.lock$' | grep -v '^\.github/workflows/' | grep -v '^docs/Gemfile.lock' | tee /tmp/relevant-files-in-pr
+                    cat /tmp/changed-files-in-pr | \
+                      grep -v '^package-lock.json$' | \
+                      grep -v '^composer.lock$' | \
+                      grep -v '^\.github/workflows/' | \
+                      grep -v '^docs/Gemfile.lock' | \
+                      grep -v '^\.helpers/changelog/Pipfile.lock' | \
+                      tee /tmp/relevant-files-in-pr
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
                     echo "That are $cnt files relevant."
                     echo "num=$cnt" >> $GITHUB_OUTPUT
@@ -97,13 +103,15 @@ jobs:
                         echo "### No changelog was needed"
                         echo ""
                         echo "No changelog entry was found so far."
-                        echo "This is okay, as no files have been modified that would require a changelog entry."
-                        echo "You might consider if adding a changelog entry would be benefical as significant changes have been made."
+                        echo -n "This is okay, as no files have been modified that would require a changelog entry. "
+                        echo -n "You might consider if adding a changelog entry would be benefical as significant changes have been made. "
+                        echo 'The changelog should be in a file starting with `.changelog/current/${{ github.event.number }}-`.'
                     } > $GITHUB_STEP_SUMMARY
                     fi
                 if: ${{ steps.diff.outputs.num_lines == 0 }}
             -   name: Install Python package
                 run: pip install --user virtualenv pipenv
+                if: ${{ steps.diff.outputs.num_lines != 0 }}
             -   name: Test creation of changelog
                 run: |
                     if [ -n "$RUNNER_DEBUG" ]
@@ -123,6 +131,7 @@ jobs:
                         python -m changelog_builder --token token --ci --pr ${{ github.event.number }} ../../.changelog/current/* 2>&1
                         echo '```'
                     } >> $GITHUB_STEP_SUMMARY
+                if: ${{ steps.diff.outputs.num_lines != 0 }}
     
     todo-checker:
         name: Check for added todo messages

@@ -34,7 +34,7 @@ abstract class AbstractDatabaseTestCase extends TestCase {
 	}
 
 	private function resetDataFolder() {
-		$cmd = "rsync -a --delete --delete-delay /dumps/current/plain/data/ /var/www/html/data";
+		$cmd = 'rsync -a --delete --delete-delay /dumps/current/plain/data/ /var/www/html/data';
 		$output = [];
 		$ret = 0;
 		exec($cmd, $output, $ret);
