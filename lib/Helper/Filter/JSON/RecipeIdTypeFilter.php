@@ -10,7 +10,9 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
 class RecipeIdTypeFilter extends AbstractJSONFilter {
 	public function apply(array &$json): bool {
 		$copy = $json;
-		$json['id'] = strval($json['id']);
+		if(array_key_exists('id', $json)) {
+			$json['id'] = strval($json['id']);
+		}
 		return $json !== $copy;
 	}
 }
