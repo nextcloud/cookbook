@@ -9,5 +9,16 @@ export default createAppConfig(
 		createEmptyCSSEntryPoints: true,
 		extractLicenseInformation: true,
 		thirdPartyLicense: false,
+		config: {
+			resolve: {
+				alias: {
+					cookbook: resolve(__dirname, 'src'),
+					icons: resolve(
+						__dirname,
+						'node_modules/vue-material-design-icons'
+					),
+				},
+			},
+		},
 	}
 )

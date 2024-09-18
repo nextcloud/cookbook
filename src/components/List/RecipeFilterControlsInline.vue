@@ -143,7 +143,7 @@
             <!--        Keep button together in a line with the last input so it does not get lonely -->
             <NcButton type="tertiary" @click="clearFilters">
                 {{
-                    // TRANSLATORS Button text for applying recipe-filter values
+                    /* TRANSLATORS Button text for applying recipe-filter values */
                     t('cookbook', 'Clear')
                 }}
             </NcButton>

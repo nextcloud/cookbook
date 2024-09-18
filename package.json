@@ -3,6 +3,7 @@
   "version": "0.11.2",
   "description": "",
   "license": "AGPL-3.0-or-later",
+  "type": "module",
   "author": "",
   "homepage": "https://github.com/nextcloud/nextcloud-cookbook#readme",
   "repository": {

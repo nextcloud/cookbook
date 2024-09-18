@@ -175,7 +175,7 @@
             <div class="d-flex flex-row justify-end mt-4">
                 <NcButton type="tertiary" @click="clearFilters">
                     {{
-                        // TRANSLATORS Button text for applying recipe-filter values
+                        /* TRANSLATORS Button text for applying recipe-filter values */ 
                         t('cookbook', 'Clear')
                     }}
                 </NcButton>
@@ -185,7 +185,7 @@
                     @click="submitFilters"
                 >
                     {{
-                        // TRANSLATORS Button text for applying recipe-filter values
+                        /* TRANSLATORS Button text for applying recipe-filter values */
                         t('cookbook', 'Apply')
                     }}
                 </NcButton>
