@@ -16,8 +16,8 @@
   "main": "src/main.ts",
   "scripts": {
     "build": "vite build",
-    "build-bundle-analyzer": "npx webpack --node-env development --progress --config webpack.devel.js --env BUNDLE_ANALYZER=true",
     "build-dev": "vite --mode development build",
+    "bundle-analyzer": "vite-bundle-visualizer --open true    ",
     "ci-test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest --ci",
     "dev": "vite --mode development build --watch",
     "eslint": "npx eslint --cache --cache-strategy content 'src/**/*.{vue,js,ts}'",
@@ -25,7 +25,6 @@
     "package-lint": "npx prettier-package-json --write ./package.json",
     "prettier": "npx prettier --check src",
     "prettier-fix": "npx prettier --write src",
-    "serve": "vite",
     "stylelint": "npx stylelint src",
     "stylelint-fix": "npx stylelint --fix src",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest"
