@@ -169,6 +169,7 @@
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Ингредиент не может быть пересчитан из-за неправильного синтаксиса. Пожалуйста, измените его на следующий синтаксис: количество единица измерения ингредиент. Примеры: 200 г моркови или 1 щепотка соли",
     "Failed to load recipes with keywords: {tags}" : "Не удалось загрузить рецепты с ключевыми словами: {tags}",
     "Failed to load search results" : "Не удалось загрузить результаты поиска",
+    "Search recipes" : "Поиск рецептов",
     "Show settings for filtering recipe list" : "Показать настройки для фильтрации списка рецептов",
     "Order" : "Порядок",
     "Show filter settings" : "Показать настройки фильтра",
