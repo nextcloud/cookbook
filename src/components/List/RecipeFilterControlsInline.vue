@@ -3,7 +3,9 @@
         <div class="form-group">
             <RecipeSortSelect
                 v-model="localOrderBy"
-                :aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                :aria-label="
+                    t('cookbook', 'Show settings for filtering recipe list')
+                "
                 :label="t('cookbook', 'Order')"
                 class="mr-4"
                 :title="t('cookbook', 'Show filter settings')"
