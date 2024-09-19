@@ -11,6 +11,7 @@ class RecipeIdTypeFilter extends AbstractJSONFilter {
 	public function apply(array &$json): bool {
 		$copy = $json;
 		$json['id'] = strval($json['id']);
+
 		return $json !== $copy;
 	}
 }

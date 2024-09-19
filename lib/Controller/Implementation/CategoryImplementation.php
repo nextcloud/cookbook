@@ -19,7 +19,7 @@ class CategoryImplementation {
 	public function __construct(
 		RecipeService $service,
 		DbCacheService $dbCacheService,
-		RestParameterParser $restParameterParser
+		RestParameterParser $restParameterParser,
 	) {
 		$this->service = $service;
 		$this->dbCacheService = $dbCacheService;
@@ -35,6 +35,7 @@ class CategoryImplementation {
 		$this->dbCacheService->triggerCheck();
 
 		$categories = $this->service->getAllCategoriesInSearchIndex();
+
 		return new JSONResponse($categories, 200);
 	}
 
@@ -60,6 +61,7 @@ class CategoryImplementation {
 				$r['recipeCategory'] = $json['name'];
 				$this->service->addRecipe($r);
 			}
+
 			// Update cache
 			$this->dbCacheService->updateCache();
 

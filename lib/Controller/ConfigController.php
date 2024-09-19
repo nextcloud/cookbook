@@ -14,7 +14,7 @@ class ConfigController extends Controller {
 	public function __construct(
 		$AppName,
 		IRequest $request,
-		ConfigImplementation $configImplementation
+		ConfigImplementation $configImplementation,
 	) {
 		parent::__construct($AppName, $request);
 

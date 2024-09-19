@@ -40,6 +40,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 			// It is neither a plain string nor a JSON object
 			$this->logger->info($this->l->t('The given image for the recipe %s cannot be parsed. Aborting and skipping it.', [$json['name']]));
 			$json['image'] = '';
+
 			return true;
 		}
 
@@ -47,6 +48,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 		if (isset($json['image']['url'])) {
 			// We have a single object. Use it.
 			$json['image'] = $json['image']['url'];
+
 			return true;
 		}
 
@@ -55,9 +57,11 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 			if (is_string($x)) {
 				return $x;
 			}
+
 			if (is_array($x) && isset($x['url']) && $x['url'] && is_string($x['url'])) {
 				return $x['url'];
 			}
+
 			return null;
 		}, $json['image']);
 		$images = array_filter($images);
@@ -65,12 +69,14 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 		if (count($images) === 1) {
 			reset($images);
 			$json['image'] = current($images);
+
 			return true;
 		}
 
 		if (count($images) === 0) {
 			$this->logger->info($this->l->t('No valid recipe was left after heuristics of recipe %s.', [$json['name']]));
 			$json['image'] = '';
+
 			return true;
 		}
 

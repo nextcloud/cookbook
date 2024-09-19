@@ -16,7 +16,7 @@ class RecipeApiController extends ApiController {
 	public function __construct(
 		string $AppName,
 		IRequest $request,
-		RecipeImplementation $recipeImplementation
+		RecipeImplementation $recipeImplementation,
 	) {
 		parent::__construct($AppName, $request);
 

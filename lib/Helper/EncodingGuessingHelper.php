@@ -14,7 +14,7 @@ class EncodingGuessingHelper {
 	private $l;
 
 	public function __construct(
-		IL10N $l
+		IL10N $l,
 	) {
 		$this->l = $l;
 	}
@@ -55,6 +55,7 @@ class EncodingGuessingHelper {
 				return $subparts[1];
 			}
 		}
+
 		// Fallback: We did not find anything in the Content-Type
 		return null;
 	}
@@ -65,6 +66,7 @@ class EncodingGuessingHelper {
 		if ($ret === 1) {
 			return $matches[1];
 		}
+
 		return null;
 	}
 }

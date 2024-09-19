@@ -89,6 +89,7 @@ class DownloadHelperTest extends TestCase {
 		if (file_exists('/www/test.txt')) {
 			unlink('/www/test.txt');
 		}
+
 		$this->dut->downloadFile('http://www/test.txt');
 		$this->assertEquals(404, $this->dut->getStatus());
 	}

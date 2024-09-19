@@ -24,7 +24,7 @@ class FixNutritionFilter extends AbstractJSONFilter {
 
 	public function __construct(
 		IL10N $l,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;
@@ -39,12 +39,14 @@ class FixNutritionFilter extends AbstractJSONFilter {
 		if (!is_array($json[self::NUTRITION])) {
 			$this->logger->info($this->l->t('Could not parse the nutrition information successfully for recipe {name}.', ['name' => $json['name']]));
 			$json[self::NUTRITION] = [];
+
 			return true;
 		}
 
 		$nutrition = $json[self::NUTRITION];
 
 		$json[self::NUTRITION] = array_filter($json[self::NUTRITION]);
+
 		return $json[self::NUTRITION] !== $nutrition;
 	}
 }

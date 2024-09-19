@@ -44,7 +44,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 		IL10N $l,
 		LoggerInterface $logger,
 		TextCleanupHelper $textCleanupHelper,
-		JsonService $jsonService
+		JsonService $jsonService,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;
@@ -110,7 +110,6 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 			$instructions = array_merge(...$instructions);
 		}
 
-
 		$instructions = array_map(function ($x) {
 			$x = trim($x);
 			$x = $this->textCleaner->cleanUp($x, false);
@@ -123,6 +122,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 
 		$changed = $instructions !== $json[self::INSTRUCTIONS];
 		$json[self::INSTRUCTIONS] = $instructions;
+
 		return $changed;
 	}
 
@@ -205,6 +205,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 		$pieces = preg_split('/[\n\r]+/', $json[self::INSTRUCTIONS]);
 		$pieces = array_map(fn ($x) => (strip_tags($x)), $pieces);
 		$pieces = array_filter($pieces);
+
 		return $pieces;
 	}
 

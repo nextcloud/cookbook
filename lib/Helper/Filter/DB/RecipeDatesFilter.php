@@ -54,6 +54,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 				$ret = true;
 			}
 		}
+
 		/*
 		The else case is not considered:
 			If only the creation time is given, this is a valid recipe (no modifications so far).
@@ -72,6 +73,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 		if ($timestamp === 0) {
 			$timestamp = $file->getUploadTime();
 		}
+
 		if ($timestamp === 0) {
 			$timestamp = $file->getMTime();
 		}
@@ -108,6 +110,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 			if ($json[$name] > 0) {
 				$json[$name] = $this->getDateFromTimestamp($json[$name]);
 				$ret = true;
+
 				return;
 			}
 		}
@@ -115,6 +118,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 		// We cannot read the format. Removing it from teh recipe
 		$json[$name] = null;
 		$ret = true;
+
 		return;
 	}
 }

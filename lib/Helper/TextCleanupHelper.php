@@ -14,7 +14,7 @@ class TextCleanupHelper {
 	public function cleanUp(
 		?string $str,
 		bool $removeNewlines = true,
-		bool $removeSlashes = false
+		bool $removeSlashes = false,
 	): string {
 		if (!$str) {
 			return '';

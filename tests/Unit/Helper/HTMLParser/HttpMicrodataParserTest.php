@@ -1,6 +1,6 @@
 <?php
 
-namespace  OCA\Cookbook\tests\Unit\Helper\HTMLParser;
+namespace OCA\Cookbook\tests\Unit\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
