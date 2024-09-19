@@ -26,6 +26,7 @@ class UtilApiController extends ApiController {
 				'minor' => 2
 			]
 		];
+
 		return new JSONResponse($response, 200);
 	}
 }

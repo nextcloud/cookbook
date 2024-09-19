@@ -16,7 +16,7 @@ class RecipeStubFilter {
 		RecipeIdTypeFilter $recipeIdTypeFilter,
 		RecipeIdCopyFilter $recipeIdCopyFilter,
 		TimestampFixFilter $timestampFixFilter,
-		TimezoneFixFilter $timezoneFixFilter
+		TimezoneFixFilter $timezoneFixFilter,
 	) {
 		$this->filters = [
 			$recipeIdCopyFilter,

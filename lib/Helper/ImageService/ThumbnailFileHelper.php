@@ -31,7 +31,7 @@ class ThumbnailFileHelper {
 	public function __construct(
 		ImageGenerationHelper $generationHelper,
 		ImageFileHelper $fileHelper,
-		IL10N $l
+		IL10N $l,
 	) {
 		$this->generationHelper = $generationHelper;
 		$this->fileHelper = $fileHelper;
@@ -58,6 +58,7 @@ class ThumbnailFileHelper {
 				$file = $recipeFolder->newFile($filename);
 
 				$this->generationHelper->generateThumbnail($full, $type, $file);
+
 				return $file;
 			} else {
 				throw new NoRecipeImageFoundException(

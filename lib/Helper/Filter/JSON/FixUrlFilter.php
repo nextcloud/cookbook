@@ -24,7 +24,7 @@ class FixUrlFilter extends AbstractJSONFilter {
 
 	public function __construct(
 		IL10N $l,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;
@@ -43,6 +43,7 @@ class FixUrlFilter extends AbstractJSONFilter {
 
 		$changed = $url !== $json[self::URL];
 		$json[self::URL] = $url;
+
 		return $changed;
 	}
 }

@@ -44,6 +44,7 @@ class SchemaConformityFilterTest extends TestCase {
 		if ($hasContext) {
 			$recipe['@context'] = $context;
 		}
+
 		if ($hasType) {
 			$recipe['@type'] = $type;
 		}

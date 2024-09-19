@@ -23,7 +23,7 @@ class MainController extends Controller {
 		string $AppName,
 		IRequest $request,
 		DbCacheService $dbCacheService,
-		UserFolderHelper $userFolder
+		UserFolderHelper $userFolder,
 	) {
 		parent::__construct($AppName, $request);
 
@@ -47,6 +47,7 @@ class MainController extends Controller {
 			Util::addScript('cookbook', 'cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}
+
 		/*
 		 * The UserNotLoggedInException will not be caught here. It should never happen as the middleware of NC
 		 * will prevent the controller to be called. If this does not happen for some reason, let the exception be
@@ -56,6 +57,7 @@ class MainController extends Controller {
 		$this->dbCacheService->triggerCheck();
 
 		Util::addScript('cookbook', 'cookbook-main');
+
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}
 }
