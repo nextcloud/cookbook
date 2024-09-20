@@ -130,7 +130,6 @@ class HtmlDownloadService {
 		$headers = [
 			'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8',
 			"Accept-Language: $langCode,en;q=0.5",
-			'Accept-Encoding: gzip, deflate, br, zstd',
 			'DNT: 1',
 			// 'Alt-Used: www.thefooddictator.com',
 			'Connection: keep-alive',

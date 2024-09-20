@@ -71,10 +71,10 @@ class DownloadHelper {
 		if (!empty($headers)) {
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 		}
-
 		curl_setopt_array($ch, $options);
 
 		$ret = curl_exec($ch);
+
 		if ($ret === false) {
 			$ex = new NoDownloadWasCarriedOutException($this->l->t('Downloading of a file failed returned the following error message: %s', [curl_error($ch)]));
 			fclose($hp);
