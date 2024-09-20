@@ -121,11 +121,31 @@ class HtmlDownloadService {
 		}
 
 		$opt = [
-			CURLOPT_USERAGENT => 'Nextcloud Cookbook App',
+			CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0',
+		];
+
+		$langCode = $this->l->getLocaleCode();
+		$langCode = str_replace('_', '-', $langCode);
+
+		$headers = [
+			'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/png,image/svg+xml,*/*;q=0.8',
+			"Accept-Language: $langCode,en;q=0.5",
+			'Accept-Encoding: gzip, deflate, br, zstd',
+			'DNT: 1',
+			// 'Alt-Used: www.thefooddictator.com',
+			'Connection: keep-alive',
+			'Cookie: nitroCachedPage=1',
+			'Upgrade-Insecure-Requests: 1',
+			'Sec-Fetch-Dest: document',
+			'Sec-Fetch-Mode: navigate',
+			'Sec-Fetch-Site: none',
+			'Sec-Fetch-User: ?1',
+			'Priority: u=0, i',
+			'TE: trailers'
 		];
 
 		try {
-			$this->downloadHelper->downloadFile($url, $opt);
+			$this->downloadHelper->downloadFile($url, $opt, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
 			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), 0, $ex);
 		}
