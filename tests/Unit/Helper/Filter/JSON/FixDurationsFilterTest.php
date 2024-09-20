@@ -51,9 +51,11 @@ class FixDurationsFilterTest extends TestCase {
 		if ($preExists) {
 			$this->stub['prepTime'] = '0:10';
 		}
+
 		if ($cookExists) {
 			$this->stub['cookTime'] = '0:20';
 		}
+
 		if ($totalExists) {
 			$this->stub['totalTime'] = '0:30';
 		}
@@ -84,7 +86,7 @@ class FixDurationsFilterTest extends TestCase {
 	public function testSuccess(
 		$originalPrep, $originalCook, $originalTotal,
 		$expectedPrep, $expectedCook, $expectedTotal,
-		$expectedChange
+		$expectedChange,
 	) {
 		$this->iso8601DurationHelper->method('parseDuration')->willReturnMap([
 			['0:10', 'PT0H10M'],
@@ -121,7 +123,7 @@ class FixDurationsFilterTest extends TestCase {
 	/** @dataProvider dpExceptions */
 	public function testExceptions(
 		$prepTime, $cookTime, $totalTime,
-		$expectedPrep, $expectedCook, $expectedTotal
+		$expectedPrep, $expectedCook, $expectedTotal,
 	) {
 		$this->iso8601DurationHelper->method('parseDuration')->willReturnCallback(function ($x) {
 			if ($x === 'invalid') {

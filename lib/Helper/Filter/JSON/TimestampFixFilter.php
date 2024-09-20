@@ -10,11 +10,12 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
 class TimestampFixFilter extends AbstractJSONFilter {
 	public function apply(array &$json): bool {
 		$changed = false;
-		foreach(['dateCreated', 'dateModified'] as $key) {
-			if(isset($json[$key]) && $json[$key]) {
+		foreach (['dateCreated', 'dateModified'] as $key) {
+			if (isset($json[$key]) && $json[$key]) {
 				$json[$key] = $this->handleTimestamp($json[$key], $changed);
 			}
 		}
+
 		return $changed;
 	}
 
@@ -23,9 +24,10 @@ class TimestampFixFilter extends AbstractJSONFilter {
 		$replacement = '${1}T${2}';
 		$nv = preg_replace($pattern, $replacement, $value);
 
-		if($nv !== $value) {
+		if ($nv !== $value) {
 			$changed = true;
 		}
+
 		return $nv;
 	}
 

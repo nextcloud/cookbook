@@ -127,6 +127,7 @@ class RecipeDatesFilterTest extends TestCase {
 		if ($creationPresent) {
 			$recipe['dateCreated'] = null;
 		}
+
 		if ($modificationPresent) {
 			$recipe['dateModified'] = null;
 		}

@@ -30,7 +30,7 @@ class FixDurationsFilter extends AbstractJSONFilter {
 	public function __construct(
 		IL10N $l,
 		LoggerInterface $logger,
-		ISO8601DurationHelper $isoHelper
+		ISO8601DurationHelper $isoHelper,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;
@@ -51,6 +51,7 @@ class FixDurationsFilter extends AbstractJSONFilter {
 		if (!isset($json[$type])) {
 			$json[$type] = null;
 			$changed = true;
+
 			return;
 		}
 

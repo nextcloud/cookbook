@@ -28,9 +28,11 @@ class RecipeJSONOutputFilterTest extends TestCase {
 			$callback = function ($x) use ($idx, &$counter) {
 				$this->assertEquals($idx, $counter);
 				$counter += 1;
+
 				return false;
 			};
 			$idx += 1;
+
 			return $callback;
 		};
 

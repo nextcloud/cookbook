@@ -14,7 +14,7 @@ class KeywordController extends Controller {
 	public function __construct(
 		string $AppName,
 		IRequest $request,
-		KeywordImplementation $keywordImplementation
+		KeywordImplementation $keywordImplementation,
 	) {
 		parent::__construct($AppName, $request);
 

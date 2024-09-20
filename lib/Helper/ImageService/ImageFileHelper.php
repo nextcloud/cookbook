@@ -18,7 +18,7 @@ class ImageFileHelper {
 	private $l;
 
 	public function __construct(
-		IL10N $l
+		IL10N $l,
 	) {
 		$this->l = $l;
 	}

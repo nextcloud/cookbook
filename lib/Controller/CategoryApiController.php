@@ -14,7 +14,7 @@ class CategoryApiController extends ApiController {
 	public function __construct(
 		string $AppName,
 		IRequest $request,
-		CategoryImplementation $categoryImplementation
+		CategoryImplementation $categoryImplementation,
 	) {
 		parent::__construct($AppName, $request);
 

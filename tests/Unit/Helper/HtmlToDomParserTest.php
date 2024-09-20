@@ -250,6 +250,7 @@ class HtmlToDomParserTest extends TestCase {
 		$ret->line = $line;
 		$ret->column = $column;
 		$ret->message = $msg;
+
 		return $ret;
 	}
 
@@ -331,29 +332,31 @@ class HtmlToDomParserTest extends TestCase {
 		if ($logWarn) {
 			$this->logger->expects($this->once())->method('info')
 				->with(
-					'libxml: Warning %u occurred while parsing %s. '.
+					'libxml: Warning %u occurred while parsing %s. ' .
 					'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->never())->method('error');
 		}
+
 		if ($logErr) {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->once())->method('warning')
 				->with(
-					'libxml: Error %u occurred while parsing %s. '.
+					'libxml: Error %u occurred while parsing %s. ' .
 					'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('error');
 		}
+
 		if ($logCrit) {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->once())->method('error')
 				->with(
-					'libxml: Fatal error %u occurred while parsing %s. '.
+					'libxml: Fatal error %u occurred while parsing %s. ' .
 					'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -391,29 +394,31 @@ class HtmlToDomParserTest extends TestCase {
 		if ($logWarn) {
 			$this->logger->expects($this->once())->method('info')
 				->with(
-					'libxml: Warning %u occurred %n times while parsing %s. '.
+					'libxml: Warning %u occurred %n times while parsing %s. ' .
 					'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->never())->method('error');
 		}
+
 		if ($logErr) {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->once())->method('warning')
 				->with(
-					'libxml: Error %u occurred %n times while parsing %s. '.
+					'libxml: Error %u occurred %n times while parsing %s. ' .
 					'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('error');
 		}
+
 		if ($logCrit) {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->once())->method('error')
 				->with(
-					'libxml: Fatal error %u occurred %n times while parsing %s. '.
+					'libxml: Fatal error %u occurred %n times while parsing %s. ' .
 					'First time it occurred in line %u and column %u: The message',
 					[]
 				);

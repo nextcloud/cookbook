@@ -29,7 +29,7 @@ class FixDescriptionFilter extends AbstractJSONFilter {
 	public function __construct(
 		IL10N $l,
 		LoggerInterface $logger,
-		TextCleanupHelper $textCleanupHelper
+		TextCleanupHelper $textCleanupHelper,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;
@@ -47,6 +47,7 @@ class FixDescriptionFilter extends AbstractJSONFilter {
 
 		$changed = $description !== $json[self::DESCRIPTION];
 		$json[self::DESCRIPTION] = $description;
+
 		return $changed;
 	}
 }

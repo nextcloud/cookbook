@@ -57,7 +57,7 @@ class HtmlDownloadService {
 		HtmlToDomParser $htmlParser,
 		DownloadHelper $downloadHelper,
 		EncodingGuessingHelper $encodingGuesser,
-		DownloadEncodingHelper $downloadEncodingHelper
+		DownloadEncodingHelper $downloadEncodingHelper,
 	) {
 		$this->htmlFilters = [
 			$htmlEntityDecodeFilter,
@@ -92,6 +92,7 @@ class HtmlDownloadService {
 
 		$dom = new DOMDocument();
 		$this->dom = $this->htmlParser->loadHtmlString($dom, $url, $html);
+
 		return $this->htmlParser->getState();
 	}
 

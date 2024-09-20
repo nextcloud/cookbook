@@ -83,12 +83,14 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 			));
 
 			$json[self::YIELD] = (int)$last;
+
 			return true;
 		}
 
 		// We did not find anything useful.
 		$this->logger->info($this->l->t('Could not parse "recipeYield" field. Falling back to 1 serving.'));
 		$json[self::YIELD] = 1;
+
 		return true;
 	}
 }

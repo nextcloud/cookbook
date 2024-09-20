@@ -38,6 +38,7 @@ class AcceptHeaderParsingHelper {
 				}
 			}
 		}
+
 		return $extensions;
 	}
 
@@ -103,6 +104,7 @@ class AcceptHeaderParsingHelper {
 			case '*/*':
 				return ['jpg', 'png', 'svg'];
 		}
+
 		return [];
 	}
 }

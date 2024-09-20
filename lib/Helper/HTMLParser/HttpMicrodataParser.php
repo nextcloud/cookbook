@@ -157,7 +157,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		DOMNode $recipeNode,
 		array $properties,
 		array $attributes,
-		string $dst
+		string $dst,
 	): bool {
 		foreach ($properties as $prop) {
 			$entries = $this->searchChildEntries($recipeNode, $prop);

@@ -14,7 +14,7 @@ class KeywordImplementation {
 
 	public function __construct(
 		RecipeService $recipeService,
-		DbCacheService $dbCacheService
+		DbCacheService $dbCacheService,
 	) {
 		$this->service = $recipeService;
 		$this->dbCacheService = $dbCacheService;
@@ -28,6 +28,7 @@ class KeywordImplementation {
 		$this->dbCacheService->triggerCheck();
 
 		$keywords = $this->service->getAllKeywordsInSearchIndex();
+
 		return new JSONResponse($keywords, 200);
 	}
 }

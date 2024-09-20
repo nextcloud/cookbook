@@ -11,6 +11,7 @@ class RecipeIdCopyFilter extends AbstractJSONFilter {
 		if (!isset($json['id'])) {
 			$json['id'] = $json['recipe_id'];
 		}
+
 		return $json !== $copy;
 	}
 }
