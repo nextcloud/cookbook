@@ -51,13 +51,14 @@ class FixToolsFilter extends AbstractJSONFilter {
 			$t = $this->textCleaner->cleanUp($t, false);
 
 			// Empty string would mean no tools (i.e., empty array)
-			if($t != '') {
+			if ($t != '') {
 				$tools[] = $t;
 			}
 		} else {
 			$tools = array_map(function ($t) {
 				$t = trim($t);
 				$t = $this->textCleaner->cleanUp($t, false);
+
 				return $t;
 			}, $json[self::TOOLS]);
 			$tools = array_filter($tools, fn ($t) => ($t));
@@ -67,6 +68,7 @@ class FixToolsFilter extends AbstractJSONFilter {
 
 		$changed = $tools !== $json[self::TOOLS];
 		$json[self::TOOLS] = $tools;
+
 		return $changed;
 	}
 }

@@ -28,7 +28,7 @@ class FixTimestampsFilter extends AbstractJSONFilter {
 	public function __construct(
 		IL10N $l,
 		LoggerInterface $logger,
-		TimestampHelper $tsHelper
+		TimestampHelper $tsHelper,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;
@@ -49,6 +49,7 @@ class FixTimestampsFilter extends AbstractJSONFilter {
 		if (!isset($json[$type])) {
 			$json[$type] = null;
 			$changed = true;
+
 			return;
 		}
 

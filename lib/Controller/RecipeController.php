@@ -15,7 +15,7 @@ class RecipeController extends Controller {
 	public function __construct(
 		$AppName,
 		IRequest $request,
-		RecipeImplementation $recipeImplementation
+		RecipeImplementation $recipeImplementation,
 	) {
 		parent::__construct($AppName, $request);
 

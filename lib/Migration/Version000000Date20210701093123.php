@@ -97,6 +97,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 		if ($namesTable->hasPrimaryKey()) {
 			$namesTable->dropPrimaryKey();
 		}
+
 		if (! $namesTable->hasIndex('names_recipe_idx')) {
 			$namesTable->addUniqueIndex([
 				'recipe_id',

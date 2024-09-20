@@ -30,7 +30,7 @@ class ImageService {
 
 	public function __construct(
 		ImageFileHelper $fileHelper,
-		ThumbnailFileHelper $thumbnailHelper
+		ThumbnailFileHelper $thumbnailHelper,
 	) {
 		$this->fileHelper = $fileHelper;
 		$this->thumbnailHelper = $thumbnailHelper;
@@ -134,6 +134,7 @@ class ImageService {
 		} else {
 			$this->fileHelper->createImage($recipeFolder)->putContent($data);
 		}
+
 		$this->thumbnailHelper->recreateThumbnails($recipeFolder);
 	}
 }

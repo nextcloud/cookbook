@@ -50,6 +50,7 @@ class JsonService {
 				if (count($obj['@type']) === 1 && $obj['@type'][0] === $type) {
 					return true;
 				}
+
 				return false;
 			}
 

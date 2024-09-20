@@ -10,7 +10,7 @@ class RecipeJSONOutputFilter {
 	private $filters;
 
 	public function __construct(
-		EnsureNutritionPresentFilter $ensureNutritionPresentFilter
+		EnsureNutritionPresentFilter $ensureNutritionPresentFilter,
 	) {
 		$this->filters = [
 			$ensureNutritionPresentFilter,

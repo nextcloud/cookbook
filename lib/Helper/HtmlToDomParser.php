@@ -85,6 +85,7 @@ class HtmlToDomParser {
 			} catch (Exception $ex) {
 				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex);
 			}
+
 			libxml_clear_errors();
 
 			if (!$parsedSuccessfully) {
@@ -215,6 +216,7 @@ class HtmlToDomParser {
 	private function formatError(string $errorMessage, LibXMLError $error): string {
 		$firstOccurence = $this->l->t('First time it occurred in line %u and column %u', [$error->line, $error->column]);
 		$msg = "libxml: $errorMessage $firstOccurence: {$error->message}";
+
 		return $msg;
 	}
 }

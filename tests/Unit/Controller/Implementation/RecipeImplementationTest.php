@@ -210,6 +210,7 @@ class RecipeImplementationTest extends TestCase {
 			// return $ret[$idx[$p['id']]];
 			$id = $p['id'];
 			$size = $p['size'];
+
 			return "/path/to/image/$id/$size";
 		});
 
@@ -687,6 +688,7 @@ class RecipeImplementationTest extends TestCase {
 
 			$id = $params['id'];
 			$size = $params['size'];
+
 			return "/path/to/controller/$id/$size";
 		}));
 

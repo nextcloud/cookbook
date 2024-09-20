@@ -51,9 +51,11 @@ class FixTimestampsFilterTest extends TestCase {
 		if ($preExists) {
 			$this->stub['dateCreated'] = '2000-01-01T01:01:00+00:00';
 		}
+
 		if ($cookExists) {
 			$this->stub['dateModified'] = '2001-01-01T01:01:00+01:00';
 		}
+
 		if ($totalExists) {
 			$this->stub['datePublished'] = '2002-01-01T01:01:00,123-01:30';
 		}
@@ -88,7 +90,7 @@ class FixTimestampsFilterTest extends TestCase {
 	public function testSuccess(
 		$originalCreated, $originalModified, $originalPublished,
 		$expectedCreated, $expectedModified, $expectedPublished,
-		$expectedChange
+		$expectedChange,
 	) {
 		$this->timestampHelper->method('parseTimestamp')->willReturnMap([
 			['2000-01-01T01:01:00+00:00', '2000-01-01T01:01:00+00:00'],
@@ -124,7 +126,7 @@ class FixTimestampsFilterTest extends TestCase {
 	/** @dataProvider dpExceptions */
 	public function testExceptions(
 		$dateCreated, $dateModified, $datePublished,
-		$expectedCreated, $expectedModified, $expectedPublished
+		$expectedCreated, $expectedModified, $expectedPublished,
 	) {
 		$this->timestampHelper->method('parseTimestamp')->willReturnCallback(function ($x) {
 			if ($x === 'invalid') {

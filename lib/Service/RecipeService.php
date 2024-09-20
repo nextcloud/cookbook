@@ -77,7 +77,7 @@ class RecipeService {
 		LoggerInterface $logger,
 		HtmlDownloadService $downloadService,
 		RecipeExtractionService $extractionService,
-		JSONFilter $jsonFilter
+		JSONFilter $jsonFilter,
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -439,6 +439,7 @@ class RecipeService {
 	public function getAllRecipesInSearchIndex(): array {
 		$recipes = $this->db->findAllRecipes($this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -452,6 +453,7 @@ class RecipeService {
 	public function getRecipesByCategory($category): array {
 		$recipes = $this->db->getRecipesByCategory($category, $this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -466,6 +468,7 @@ class RecipeService {
 	public function getRecipesByKeywords($keywords): array {
 		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -490,6 +493,7 @@ class RecipeService {
 
 		$recipes = $this->db->findRecipes($keywords_array, $this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -555,6 +559,7 @@ class RecipeService {
 		if (!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')) {
 			$json['dateCreated'] = $file->getCreationTime();
 		}
+
 		if (!array_key_exists('dateModified', $json)) {
 			$json['dateModified'] = $file->getMTime();
 		}
@@ -575,6 +580,7 @@ class RecipeService {
 		if (count($recipe_folders) < 1) {
 			throw new Exception($this->il10n->t('Recipe with ID %d not found.', [$id]));
 		}
+
 		$recipe_folder = $recipe_folders[0];
 
 		// TODO: Check that file is really an image

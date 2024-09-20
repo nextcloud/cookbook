@@ -50,7 +50,7 @@ class UserFolderHelper {
 		?string $UserId,
 		IRootFolder $root,
 		IL10N $l,
-		UserConfigHelper $configHelper
+		UserConfigHelper $configHelper,
 	) {
 		$this->userId = $UserId;
 		$this->root = $root;

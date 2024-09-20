@@ -9,7 +9,7 @@ class NormalizeRecipeFileFilter {
 	private $filters;
 
 	public function __construct(
-		RecipeDatesFilter $datesFilter
+		RecipeDatesFilter $datesFilter,
 	) {
 		$this->filters = [
 			$datesFilter,

@@ -29,7 +29,7 @@ class UserConfigHelper {
 	public function __construct(
 		?string $UserId,
 		IConfig $config,
-		IL10N $l
+		IL10N $l,
 	) {
 		$this->userId = $UserId;
 		$this->config = $config;
@@ -138,6 +138,7 @@ class UserConfigHelper {
 		if ($rawValue === '') {
 			return true;
 		}
+
 		return $rawValue === '1';
 	}
 
@@ -205,6 +206,7 @@ class UserConfigHelper {
 		if ($rawValue === '') {
 			$path = '/' . $this->l->t('Recipes');
 			$this->setFolderName($path);
+
 			return $path;
 		}
 
