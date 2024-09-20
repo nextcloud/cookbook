@@ -54,9 +54,10 @@ class DownloadHelper {
 	 *
 	 * @param string $url The URL of the file to fetch
 	 * @param array $options Options to pass on for curl. This allows to fine-tune the transfer.
+	 * @param array $headers Additinal headers to be sent to the server
 	 * @throws NoDownloadWasCarriedOutException if the download fails for some reason
 	 */
-	public function downloadFile(string $url, array $options = []): void {
+	public function downloadFile(string $url, array $options = [], array $headers = []): void {
 		$this->downloaded = false;
 
 		$ch = curl_init($url);
@@ -66,9 +67,14 @@ class DownloadHelper {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_WRITEHEADER, $hp);
+
+		if (!empty($headers)) {
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+		}
 		curl_setopt_array($ch, $options);
 
 		$ret = curl_exec($ch);
+
 		if ($ret === false) {
 			$ex = new NoDownloadWasCarriedOutException($this->l->t('Downloading of a file failed returned the following error message: %s', [curl_error($ch)]));
 			fclose($hp);
