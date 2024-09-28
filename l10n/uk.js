@@ -60,6 +60,8 @@ OC.L10N.register(
     "Failed to load search results" : "Помилка при завантаженні результатів пошуку",
     "Clear" : "Очистити",
     "Apply" : "Застосувати",
+    "_{hours}h_::_{hours}h_" : ["{hours} год","{hours} год","{hours} год","{hours} год"],
+    "_{minutes}m_::_{minutes}m_" : ["{minutes} хв","{minutes} хв","{minutes} хв","{minutes} хв"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds} сек","{seconds} сек","{seconds} сек","{seconds} сек"]
 },
 "nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);");
