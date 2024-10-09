@@ -75,7 +75,7 @@
                     <NcActionButton
                         class="btn-enable-recipe-yield"
                         :aria-label="
-                            // prettier-ignore
+                            /* prettier-ignore */
                             t('cookbook', 'Toggle if the number of servings is present')
                         "
                         @click="toggleShowRecipeYield"
@@ -174,7 +174,7 @@ const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
 const store = useStore();
 
-// prettier-ignore
+/* prettier-ignore */
 const CONFIRM_MSG = t('cookbook', 'You have unsaved changes! Do you still want to leave?');
 
 // ===================
@@ -257,7 +257,7 @@ const availableNutritionFields = ref([
     {
         key: 'calories',
         label: t('cookbook', 'Calories'),
-        // prettier-ignore
+        /* prettier-ignore */
         placeholder: t('cookbook','E.g.: 450 kcal (amount & unit)'),
     },
     {
@@ -293,7 +293,7 @@ const availableNutritionFields = ref([
     {
         key: 'servingSize',
         label: t('cookbook', 'Serving size'),
-        // prettier-ignore
+        /* prettier-ignore */
         placeholder: t('cookbook','Enter serving size (volume or mass)'),
     },
     {
@@ -496,7 +496,7 @@ const save = async () => {
 
                 default:
                     await showSimpleAlertModal(
-                        // prettier-ignore
+                        /* prettier-ignore */
                         t('cookbook','Unknown answer returned from server. See logs.'),
                     );
                     log.error(e.response);
@@ -508,7 +508,7 @@ const save = async () => {
             log.error(e);
         } else {
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook','Could not start request to save recipe.'),
             );
             log.error(e);

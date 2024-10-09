@@ -296,7 +296,7 @@ const deleteRecipe = async () => {
     // Confirm delete
     if (
         !(await showSimpleConfirmModal(
-            // prettier-ignore
+            /* prettier-ignore */
             t('cookbook', 'Are you sure you want to delete this recipe?'),
         ))
     ) {
