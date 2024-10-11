@@ -78,7 +78,7 @@ OC.L10N.register(
     "Delete recipe" : "حذف الوصفة",
     "Category" : "التصنيف",
     "Recipe name" : "اسم الوصفة",
-    "Tags" : "وُسُوم",
+    "Tags" : "الوسوم",
     "Search for recipes" : "البحث عن وصفاتٍ",
     "Are you sure you want to delete this recipe?" : "هل أنت متأكد أنك تريد حذف هذه الوصفة؟",
     "Delete failed" : "فشل الحذف",
