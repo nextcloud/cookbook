@@ -243,6 +243,7 @@ OC.L10N.register(
     "Copy ingredients to the clipboard" : "Zkopírovat přísady do schránky",
     "{item} copied to clipboard" : "{item} zkopírováno do schránky",
     "Copying {item} to clipboard failed" : "Zkopírování {item} do schránky se nezdařilo",
-    "ingredients" : "Přísady"
+    "ingredients" : "Přísady",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Přísadu nebylo možné přepočítat kvůli nesprávné formě zápisu. Aby toto fungovalo správně zajistěte, aby bylo v následujícím formátu: množství jednotka přísada a že je nastavený konkrétní počet porcí. Příklady: 200 g mrkve nebo 1 špetka soli."
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
