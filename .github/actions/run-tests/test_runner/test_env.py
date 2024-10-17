@@ -225,7 +225,7 @@ class Environment:
 		excludePairs = [['--exclude', x] for x in excludes]
 		excludeParams = [x for pair in excludePairs for x in pair]
 		p.pr.run(
-			['rsync', '-a', '../../../', 'volumes/cookbook', '--delete', '--delete-delay'] + excludeParams
+			['rsync', '-a', '../../../', 'volumes/cookbook', '--delete', '--delete-before'] + excludeParams
 		).check_returncode()
 
 		l.logger.printTask('Making appinfo file')

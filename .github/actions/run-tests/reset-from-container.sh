@@ -82,7 +82,7 @@ start_container() {
 restore_db_synced_data() {
 	local db_path="/db/${1}"
 	echo "Restoring synced DB data from $SF_DIR/sql to $db_path"
-	sudo rsync -a --delete --delete-delay "$SF_DIR/sql/" "$db_path"
+	sudo rsync -a --delete --delete-before "$SF_DIR/sql/" "$db_path"
 }
 
 test_mysql_is_running() {
@@ -129,7 +129,7 @@ restore_postgres_sync () {
 # exec >> /output/reset.log 2>&1
 
 echo "Cloning data files"
-rsync --archive --delete --delete-delay "$SF_DIR/data/" /var/www/html/data/
+rsync --archive --delete --delete-before "$SF_DIR/data/" /var/www/html/data/
 
 echo "Restoring DB"
 case "$INPUT_DB" in
