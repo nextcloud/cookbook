@@ -218,7 +218,7 @@ OC.L10N.register(
     "Show settings for filtering recipe list" : "أظهِِر إعدادات تصفية قائمة الوصفات",
     "Order" : "طلب",
     "Show filter settings" : "أظهِر إعدادات التصفية",
-    "Filter name" : "إسم الفِلتَر",
+    "Filter name" : "إسم عامل التصفية",
     "Search term" : "البحث عن عنصر",
     "All categories" : "كُلَّ الفئات",
     "Show recipes containing any selected category" : "عرض الوصفات التي تندرج تحت أيٍّ من الفئات المحددة",

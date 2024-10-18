@@ -53,6 +53,7 @@ OC.L10N.register(
     "Source" : "來源",
     "Loading…" : "載入中…",
     "Order" : "順序",
+    "Filter name" : "篩選器名稱",
     "Search term" : "搜尋字詞",
     "Clear" : "清除",
     "Apply" : "套用"
