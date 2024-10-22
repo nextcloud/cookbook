@@ -213,6 +213,7 @@
     "Please select option first." : "Veuillez d'abord sélectionner l'option.",
     "Order" : "Trier",
     "Show filter settings" : "Afficher les paramètres de filtrage",
+    "Filter name" : "Nom du filtre",
     "Search term" : "Terme de recherche",
     "All categories" : "Toutes les catégories",
     "Show recipes containing any selected category" : "Afficher les recettes contenant n'importe laquelle des catégories sélectionnées",
