@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "The recipe has already an image file. Cannot create a new one." : "Sa retzeta tenet giai un'archìviu de immàgine; non nde podes creare un'àteru.",
     "Cannot parse non-POST multipart encoding. This is a bug." : "Impossìbile a analizare sa codìfica multiparte non-POST. Custu est un'errore.",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "Impossìbile a rilevare sa genia de datos trasmitidos. Custu est un'errore, sinnala·ddu.",
     "Invalid URL-encoded string found. Please report a bug." : "URL non vàlidu-agatada istringa codificada. Sinnala un'errore.",
@@ -16,6 +17,7 @@ OC.L10N.register(
     "Loading recipe" : "Carrighende sa retzeta",
     "Recipe not found" : "Retzeta no agatada",
     "Page not found" : "Pàgina no agatada",
+    "Creating new recipe" : "Creende una retzeta noa",
     "Edit" : "Modìfica",
     "Save" : "Sarva",
     "Search" : "Chirca",
@@ -51,6 +53,7 @@ OC.L10N.register(
     "Insert entry above" : "Inserta elementu in subra",
     "Delete entry" : "Cantzella s'elementu",
     "Add" : "Agiunghe",
+    "Create new recipe!" : "Crea una retzeta noa!",
     "Select order" : "Seletziona òrdine",
     "Name" : "Nùmene",
     "Creation date" : "Data de creatzione",
