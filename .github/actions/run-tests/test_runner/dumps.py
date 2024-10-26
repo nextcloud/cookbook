@@ -16,7 +16,7 @@ except ImportError:
 
 class SubFixture:
 	
-	rsyncArgs = ['--delete', '--delete-delay', '--delete-excluded', '--archive']
+	rsyncArgs = ['--delete', '--delete-excluded', '--archive']
 
 	def __init__(self):
 		pass
