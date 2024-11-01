@@ -23,7 +23,7 @@
                                     :key="'keyw' + idx"
                                     :name="keyword"
                                     :title="
-                                        // prettier-ignore
+                                        /* prettier-ignore */
                                         t('cookbook','Search recipes with this keyword')
                                     "
                                     @keyword-clicked="keywordClicked(keyword)"
@@ -183,7 +183,7 @@
                             <hr />
                             <span class="icon-error" />
                             {{
-                                // prettier-ignore
+                                /* prettier-ignore */
                                 t("cookbook", "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt.")
                             }}
                         </div>
