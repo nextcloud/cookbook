@@ -29,7 +29,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@v4.1.2
+            uses: actions/cache@v4.2.0
             with:
                 path: |
                     ~/.npm
@@ -39,7 +39,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v4.1.2
+            uses: actions/cache@v4.2.0
             with:
                 path: |
                     vendor
@@ -369,7 +369,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@v4.1.2
+            uses: actions/cache@v4.2.0
             with:
                 path: |
                     ~/.npm
@@ -379,7 +379,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v4.1.2
+            uses: actions/cache@v4.2.0
             with:
                 path: |
                     vendor
@@ -451,7 +451,7 @@ jobs:
       id: date
       run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
     - name: Cache NPM cache
-      uses: actions/cache@v4.1.2
+      uses: actions/cache@v4.2.0
       with:
         path: |
           ~/.npm
