@@ -175,6 +175,7 @@ OC.L10N.register(
     "Show settings for filtering recipe list" : "Показать настройки для фильтрации списка рецептов",
     "Order" : "Порядок",
     "Show filter settings" : "Показать настройки фильтра",
+    "Filter name" : "Имя фильтра",
     "Search term" : "Поисковый запрос",
     "Clear" : "Очистить",
     "Apply" : "Применить"
