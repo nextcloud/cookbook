@@ -29,7 +29,7 @@
     "First time it occurred in line %u and column %u" : "第一次發生在 %u 行和 %u 列",
     "Could not parse duration {duration}" : "無法分析持續時間 {duration}",
     "The recipe has already an image file. Cannot create a new one." : "食譜已經有一個圖像檔案。無法創建新的。",
-    "There is no primary image for the recipe present." : "沒有當前食譜的主圖像。",
+    "There is no primary image for the recipe present." : "沒有目前食譜的主圖像。",
     "Cannot parse non-POST multipart encoding. This is a bug." : "無法分析 non-POST 多部分編碼。這是一個 bug。",
     "Cannot detect type of transmitted data. This is a bug, please report it." : "無法檢測傳輸數據的類型。這是一個錯誤。請向管理員報告。",
     "Invalid URL-encoded string found. Please report a bug." : "找到了無效的 URL 編碼的字符串。請報告一個 bug。",
