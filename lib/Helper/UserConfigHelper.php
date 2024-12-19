@@ -41,6 +41,7 @@ class UserConfigHelper {
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
+    protected const KEY_BROWSERLESS_ADDRESS = 'browserless_address';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -155,6 +156,27 @@ class UserConfigHelper {
 			$this->setRawValue(self::KEY_PRINT_IMAGE, '0');
 		}
 	}
+    /**
+     * Gets the browserless address from the configuration
+     *
+     * @return string The browserless address
+     * @throws UserNotLoggedInException if no user is logged in
+     */
+    public function getBrowserlessAddress(): string {
+        $rawValue = $this->getRawValue(self::KEY_BROWSERLESS_ADDRESS);
+
+        return $rawValue;
+    }
+
+    /**
+     * Sets the browserless address in the configuration
+     *
+     * @param string $address The browserless address to store
+     * @throws UserNotLoggedInException if no user is logged in
+     */
+    public function setBrowserlessAddress(string $address): void {
+        $this->setRawValue(self::KEY_BROWSERLESS_ADDRESS, $address);
+    }
 
 	/**
 	 * Determines which info blocks are displayed next to the recipe
