@@ -127,6 +127,9 @@ OC.L10N.register(
     "Description" : "描述",
     "URL" : "URL",
     "Image" : "图片",
+    "Preparation time (hours:minutes)" : "准备时间（小时：分钟）",
+    "Cooking time (hours:minutes)" : "烹饪时间（小时：分钟）",
+    "Total time (hours:minutes)" : "总时间（小时：分钟）",
     "Choose category" : "选择分类",
     "Keywords" : "关键词",
     "Choose keywords" : "选择关键词",
@@ -195,6 +198,8 @@ OC.L10N.register(
     "Matching any selected keyword" : "匹配任何选定的关键字",
     "Apply" : "应用",
     "Show filters and sorting in recipe lists" : "在食谱列表中显示过滤器和排序",
-    "Preparation time (hours:minutes:seconds)" : "准备时间 ( 时 : 分 : 秒 )"
+    "Preparation time (hours:minutes:seconds)" : "准备时间 ( 时 : 分 : 秒 )",
+    "Cooking time (hours:minutes:seconds)" : "烹饪时间（小时：分钟：秒）",
+    "Total time (hours:minutes:seconds)" : "总时间（时：分：秒）"
 },
 "nplurals=1; plural=0;");
