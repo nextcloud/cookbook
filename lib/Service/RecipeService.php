@@ -224,6 +224,9 @@ class RecipeService {
 		if (isset($json['id']) && $json['id']) {
 			// Recipe already has an id, update it
 			$recipe_folder = $user_folder->getById($json['id'])[0];
+			if (!($recipe_folder instanceof Folder)) {
+				throw new \RuntimeException($this->il10n->t('Unexpected node received for recipe folder.'));
+			}
 
 			$old_path = $recipe_folder->getPath();
 			$new_path = dirname($old_path) . '/' . $recipeFolderName;
