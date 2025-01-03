@@ -58,17 +58,6 @@
       <code><![CDATA[IRootFolder]]></code>
     </MissingDependency>
   </file>
-  <file src="lib/Service/ImageService.php">
-    <UndefinedDocblockClass>
-      <code><![CDATA[GenericFileException]]></code>
-      <code><![CDATA[InvalidPathException]]></code>
-      <code><![CDATA[InvalidThumbnailTypeException]]></code>
-      <code><![CDATA[NoRecipeImageFoundException]]></code>
-      <code><![CDATA[NoRecipeImageFoundException]]></code>
-      <code><![CDATA[NoRecipeImageFoundException]]></code>
-      <code><![CDATA[RecipeImageExistsException]]></code>
-    </UndefinedDocblockClass>
-  </file>
   <file src="lib/Service/RecipeService.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
