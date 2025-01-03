@@ -566,14 +566,8 @@ class RecipeService {
 
 	/**
 	 * Get recipe file contents as an array
-	 *
-	 * @param File $file
 	 */
-	public function parseRecipeFile($file): ?array {
-		if (!$file) {
-			return null;
-		}
-
+	public function parseRecipeFile(File $file): ?array {
 		$json = json_decode($file->getContent(), true);
 
 		if (!$json) {
@@ -583,7 +577,7 @@ class RecipeService {
 		$json['id'] = $file->getParent()->getId();
 
 
-		if (!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')) {
+		if (!array_key_exists('dateCreated', $json)) {
 			$json['dateCreated'] = $file->getCreationTime();
 		}
 

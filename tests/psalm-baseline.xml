@@ -77,9 +77,6 @@
       <code><![CDATA[$this->root]]></code>
       <code><![CDATA[IRootFolder]]></code>
     </MissingDependency>
-    <RedundantCondition>
-      <code><![CDATA[!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')]]></code>
-    </RedundantCondition>
     <UndefinedInterfaceMethod>
       <code><![CDATA[newFile]]></code>
       <code><![CDATA[newFile]]></code>
