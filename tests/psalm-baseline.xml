@@ -28,18 +28,6 @@
       <code><![CDATA[hasAttribute]]></code>
     </UndefinedMethod>
   </file>
-  <file src="lib/Helper/ImageService/ThumbnailFileHelper.php">
-    <UndefinedDocblockClass>
-      <code><![CDATA[GenericFileException]]></code>
-      <code><![CDATA[GenericFileException]]></code>
-      <code><![CDATA[InvalidPathException]]></code>
-      <code><![CDATA[InvalidPathException]]></code>
-      <code><![CDATA[InvalidThumbnailTypeException]]></code>
-      <code><![CDATA[InvalidThumbnailTypeException]]></code>
-      <code><![CDATA[LockedException]]></code>
-      <code><![CDATA[LockedException]]></code>
-    </UndefinedDocblockClass>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
