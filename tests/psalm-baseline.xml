@@ -6,12 +6,6 @@
       <code><![CDATA[is_array($keywords)]]></code>
     </RedundantCondition>
   </file>
-  <file src="lib/Helper/Filter/JSON/FixInstructionsFilter.php">
-    <NamedArgumentNotAllowed>
-      <code><![CDATA[$instructions]]></code>
-      <code><![CDATA[$newElements]]></code>
-    </NamedArgumentNotAllowed>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
