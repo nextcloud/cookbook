@@ -12,14 +12,6 @@
       <code><![CDATA[$newElements]]></code>
     </NamedArgumentNotAllowed>
   </file>
-  <file src="lib/Helper/Filter/JSON/SchemaConformityFilter.php">
-    <FalseOperand>
-      <code><![CDATA[$changed]]></code>
-    </FalseOperand>
-    <InvalidOperand>
-      <code><![CDATA[$this->setJSONValue($json, '@type', 'Recipe')]]></code>
-    </InvalidOperand>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
