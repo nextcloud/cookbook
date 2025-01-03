@@ -45,11 +45,6 @@
       <code><![CDATA[array]]></code>
     </InvalidReturnType>
   </file>
-  <file src="lib/Helper/UserConfigHelper.php">
-    <InvalidScalarArgument>
-      <code><![CDATA[$value]]></code>
-    </InvalidScalarArgument>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
