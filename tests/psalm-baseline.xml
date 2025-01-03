@@ -77,12 +77,6 @@
       <code><![CDATA[$this->root]]></code>
       <code><![CDATA[IRootFolder]]></code>
     </MissingDependency>
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[newFile]]></code>
-      <code><![CDATA[newFile]]></code>
-      <code><![CDATA[newFile]]></code>
-      <code><![CDATA[nodeExists]]></code>
-    </UndefinedInterfaceMethod>
   </file>
   <file src="lib/Service/ThumbnailService.php">
     <MissingDependency>
