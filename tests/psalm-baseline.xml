@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="5.26.1@d747f6500b38ac4f7dfc5edbcae6e4b637d7add0">
-  <file src="lib/Db/RecipeDb.php">
-    <RedundantCondition>
-      <code><![CDATA[$keywords && is_array($keywords)]]></code>
-      <code><![CDATA[is_array($keywords)]]></code>
-    </RedundantCondition>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
