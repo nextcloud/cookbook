@@ -26,12 +26,6 @@
       <code><![CDATA['Recipe ' . $id . ' deleted successfully']]></code>
     </InvalidArgument>
   </file>
-  <file src="lib/Db/RecipeDb.php">
-    <RedundantCondition>
-      <code><![CDATA[$keywords && is_array($keywords)]]></code>
-      <code><![CDATA[is_array($keywords)]]></code>
-    </RedundantCondition>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>
