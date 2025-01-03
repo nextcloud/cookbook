@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-      "ext-libxml": "*"
+		"ext-libxml": "*",
+        "ext-dom": "*"
     },
     "require-dev": {
         "nextcloud/coding-standard": "^1.0.0",
