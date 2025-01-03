@@ -20,14 +20,6 @@
       <code><![CDATA[$this->setJSONValue($json, '@type', 'Recipe')]]></code>
     </InvalidOperand>
   </file>
-  <file src="lib/Helper/HTMLParser/HttpMicrodataParser.php">
-    <UndefinedMethod>
-      <code><![CDATA[getAttribute]]></code>
-      <code><![CDATA[getAttribute]]></code>
-      <code><![CDATA[getElementsByTagName]]></code>
-      <code><![CDATA[hasAttribute]]></code>
-    </UndefinedMethod>
-  </file>
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
       <code><![CDATA[$this->root]]></code>

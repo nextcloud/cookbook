@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use DOMDocument;
+use DOMElement;
 use DOMNode;
 use DOMNodeList;
 use DOMXPath;
@@ -58,9 +59,9 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	/**
 	 * Parse a DOM node that represents a recipe
 	 *
-	 * @param DOMNode $recipeNode The DOM node to parse
+	 * @param DOMElement $recipeNode The DOM node to parse
 	 */
-	private function parseRecipe(DOMNode $recipeNode): void {
+	private function parseRecipe(DOMElement $recipeNode): void {
 		$this->searchSimpleProperties($recipeNode, 'name');
 		$this->searchSimpleProperties($recipeNode, 'keywords');
 		$this->searchSimpleProperties($recipeNode, 'category');
@@ -75,9 +76,9 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 
 	/**
 	 * Make one final desperate attempt at getting the instructions
-	 * @param DOMNode $recipeNode The recipe node to use
+	 * @param DOMElement $recipeNode The recipe node to use
 	 */
-	private function fixupInstructions(DOMNode $recipeNode): void {
+	private function fixupInstructions(DOMElement $recipeNode): void {
 		if (
 			!isset($this->recipe['recipeInstructions']) ||
 			!$this->recipe['recipeInstructions'] || sizeof($this->recipe['recipeInstructions']) < 1
@@ -254,12 +255,12 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * This can be used to extract a single attribute from the DOM tree.
 	 * The attributes are evaluated first to last and the first found attribute is returned.
 	 *
-	 * @param DOMNode $node The  node to evaluate
+	 * @param DOMElement $node The  node to evaluate
 	 * @param array $attributes The possible attributes to check
 	 * @throws AttributeNotFoundException If none of the named attributes is found
 	 * @return string The value of the attribute
 	 */
-	private function extractSingeAttribute(DOMNode $node, array $attributes): string {
+	private function extractSingeAttribute(DOMElement $node, array $attributes): string {
 		foreach ($attributes as $attr) {
 			if ($node->hasAttribute($attr) && !empty($node->getAttribute($attr))) {
 				return $node->getAttribute($attr);
