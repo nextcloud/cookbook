@@ -15,7 +15,7 @@
         "nextcloud/coding-standard": "^1.0.0",
         "christophwurst/nextcloud_testing": "^1.0.0",
         "psalm/phar": "^5.12",
-        "nextcloud/ocp": "^27.0"
+        "nextcloud/ocp": "dev-stable28"
     },
     "scripts": {
         "cs:check": "./vendor/bin/php-cs-fixer fix --dry-run --diff",
@@ -31,7 +31,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "8.0"
         }
     }
 }
