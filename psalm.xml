@@ -7,6 +7,7 @@
 		xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 		errorBaseline="tests/psalm-baseline.xml"
 		findUnusedBaselineEntry="true"
+		phpVersion="8.0"
 >
 	<!--
 	SPDX-FileCopyrightText: Christian Wolf <github@christianwolf.email>
