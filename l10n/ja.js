@@ -104,6 +104,7 @@ OC.L10N.register(
     "Failed to load recipes with keywords: {tags}" : "キーワードでレシピの読み込みに失敗しました: {tags}",
     "Failed to load search results" : "検索結果の読み込みに失敗しました",
     "Order" : "並び替え",
+    "Filter name" : "フィルター名",
     "Clear" : "クリア",
     "Apply" : "適用"
 },

@@ -209,6 +209,8 @@ OC.L10N.register(
     "The ingredient cannot be recalculated due to incorrect syntax. Please change it to this syntax: amount unit ingredient. Examples: 200 g carrots or 1 pinch of salt" : "Ingredienciu nie je možné prepočítať z dôvodu nesprávnej syntaxe. Zmeňte ho na túto syntax: množstvo ingrediencie. Príklady: 200 g mrkvy alebo 1 štipka soli",
     "Failed to load recipes with keywords: {tags}" : "Zlyhalo načítavanie receptov s kľúčovými slovami : {tags}",
     "Failed to load search results" : "Zlyhalo načítavanie výsledkov vyhľadávania",
+    "Cannot read content of JSON file %s" : "Nedá sa prečítať obsah JSON súboru %s",
+    "Cannot download image using curl" : "Nedá sa stiahnuť obrázok pomocou curl",
     "Filter current recipes" : "Filtrovať recepty",
     "Search recipes" : "Vyhľadať recepty",
     "Delete nutrition item" : "Odstrániť informáciu o nutričnej hodnote",
