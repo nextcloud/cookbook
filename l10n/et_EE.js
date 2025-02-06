@@ -20,6 +20,7 @@ OC.L10N.register(
     "OK" : "OK",
     "Description" : "Kirjeldus",
     "URL" : "URL",
+    "Image" : "Pilt",
     "Last modified" : "Viimati muudetud",
     "Copy ingredients" : "Kopeeri koostisosad",
     "Loading…" : "Laadimine…",
