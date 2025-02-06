@@ -107,7 +107,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 			}
 
 			ksort($instructions);
-			$instructions = array_merge(...$instructions);
+			$instructions = array_merge([], ...$instructions);
 		}
 
 		$instructions = array_map(function ($x) {
@@ -160,7 +160,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 		}
 
 		ksort($newElements);
-		$elements = array_merge(...$newElements);
+		$elements = array_merge([], ...$newElements);
 
 		return $elements;
 	}
