@@ -112,6 +112,10 @@ function reindex() {
     return instance.post(`${baseUrl}/reindex`);
 }
 
+function updateBrowserlessAddress(newAddress) {
+    return instance.post(`${baseUrl}/config`, { browserlessAddress: newAddress });
+}
+
 export default {
     recipes: {
         create: createNewRecipe,
@@ -145,6 +149,9 @@ export default {
         },
         visibleInfoBlocks: {
             update: updateVisibleInfoBlocks,
+        },
+        browserlessAddress: {
+            update: updateBrowserlessAddress,
         },
     },
 };
