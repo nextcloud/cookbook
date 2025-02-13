@@ -68,6 +68,7 @@ OC.L10N.register(
     "Saturated Fat" : "Saturated Fat",
     "Loading…" : "Hleð inn…",
     "Order" : "Röðun",
+    "Filter name" : "Heiti síu",
     "Clear" : "Hreinsa",
     "Apply" : "Virkja"
 },
