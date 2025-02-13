@@ -39,6 +39,7 @@ OC.L10N.register(
     "Categories" : "Kategorier",
     "Rename" : "Omdøb",
     "Enter new category name" : "Indtast nyt kategorinavn",
+    "Cookbook settings" : "Kogebogsindstillinger",
     "Failed to load category {category} recipes" : "Kunne ikke indlæse opskrifter fra kategorien {category}.",
     "The server reported an error. Please check." : "Serveren rapporterede en fejl. Kontroller venligst.",
     "Could not query the server. This might be a network problem." : "Kunne ikke forespørge serveren. Dette kan være et netværksproblem.",
@@ -137,6 +138,7 @@ OC.L10N.register(
     "Loading…" : "Indlæser…",
     "Failed to load recipes with keywords: {tags}" : "Kunne ikke indlæse opskrifter med nøgleord: {tags}",
     "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
+    "Order" : "Rækkefølge",
     "Search term" : "Søgeterm",
     "Clear" : "Ryd",
     "Apply" : "Anvend"

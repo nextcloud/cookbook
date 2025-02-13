@@ -66,6 +66,7 @@
     "Saturated Fat" : "Saturated Fat",
     "Loading…" : "Hleð inn…",
     "Order" : "Röðun",
+    "Filter name" : "Heiti síu",
     "Clear" : "Hreinsa",
     "Apply" : "Virkja"
 },"pluralForm" :"nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);"
