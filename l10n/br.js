@@ -2,12 +2,12 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "e %s",
+    "Tags" : "Klavioù",
     "None" : "Hini ebet",
     "Edit" : "Cheñch",
     "Save" : "Enrollañ",
     "Search" : "Klask",
     "Filter" : "Filtre",
-    "Tags" : "Klavioù",
     "Categories" : "Rummadoù",
     "Rename" : "Adenvel",
     "Add" : "Ouzhpennañ",

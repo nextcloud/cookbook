@@ -2,11 +2,11 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "ভেতর %s",
+    "Tags" : "ট্যাগ",
     "None" : "কোনটিই নয়",
     "Edit" : "সম্পাদনা",
     "Save" : "সংরক্ষণ",
     "Search" : "Search",
-    "Tags" : "ট্যাগ",
     "Rename" : "পূনঃনামকরণ",
     "Add" : "যোগ করুন",
     "Name" : "নাম",

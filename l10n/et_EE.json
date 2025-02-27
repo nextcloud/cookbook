@@ -1,13 +1,13 @@
 { "translations": {
     "in %s" : "kaustas %s",
+    "Category" : "Kategooria",
+    "Tags" : "Sildid",
     "None" : "Pole",
     "Page not found" : "Lehekülge ei leitud",
     "Edit" : "Redigeeri",
     "Save" : "Salvesta",
     "Search" : "Otsi",
     "Filter" : "Filter",
-    "Category" : "Kategooria",
-    "Tags" : "Sildid",
     "Categories" : "Kategooriad",
     "Rename" : "Nimeta ümber",
     "Add" : "Lisa",
@@ -19,9 +19,9 @@
     "Description" : "Kirjeldus",
     "URL" : "URL",
     "Image" : "Pilt",
+    "Loading…" : "Laadimine…",
     "Last modified" : "Viimati muudetud",
     "Copy ingredients" : "Kopeeri koostisosad",
-    "Loading…" : "Laadimine…",
     "Clear" : "Tühjenda",
     "Apply" : "Rakenda"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"

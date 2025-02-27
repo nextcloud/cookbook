@@ -2,14 +2,14 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "en %s",
+    "Category" : "Categoría",
+    "Tags" : "Etiquetas",
     "None" : "Ninguno",
     "Page not found" : "Página no encontrada",
     "Edit" : "Editar",
     "Save" : "Guardar",
     "Search" : "Buscar",
     "Filter" : "Filtrar",
-    "Category" : "Categoría",
-    "Tags" : "Etiquetas",
     "Categories" : "Categorías",
     "Rename" : "Renombrar",
     "Add" : "Agregar",
@@ -21,12 +21,11 @@ OC.L10N.register(
     "Description" : "Descripción",
     "URL" : "URL",
     "Image" : "Imagen",
+    "Loading…" : "Cargando...",
     "Last modified" : "Última modificación",
     "Energy" : "Energía",
-    "Loading…" : "Cargando...",
     "Order" : "Ordenar",
     "Clear" : "Limpiar",
-    "Apply" : "Aplicar",
-    "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"]
+    "Apply" : "Aplicar"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");
