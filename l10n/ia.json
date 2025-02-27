@@ -1,11 +1,11 @@
 { "translations": {
     "in %s" : "in %s",
+    "Category" : "Categoria",
+    "Tags" : "Etiquettas",
     "None" : "Nulle",
     "Edit" : "Modificar",
     "Save" : "Salveguardar",
     "Search" : "Cercar",
-    "Category" : "Categoria",
-    "Tags" : "Etiquettas",
     "Rename" : "Renominar",
     "Add" : "Adder",
     "Name" : "Nomine",

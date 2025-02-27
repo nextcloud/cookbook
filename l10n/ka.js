@@ -3,14 +3,14 @@ OC.L10N.register(
     {
     "Recipes" : "Recipes",
     "in %s" : "in %s",
+    "Category" : "Category",
+    "Tags" : "Tags",
     "None" : "None",
     "Page not found" : "Page not found",
     "Edit" : "Edit",
     "Save" : "Save",
     "Search" : "Search",
     "Filter" : "Filter",
-    "Category" : "Category",
-    "Tags" : "Tags",
     "Categories" : "Categories",
     "Rename" : "Rename",
     "Add" : "Add",
@@ -22,8 +22,8 @@ OC.L10N.register(
     "Description" : "Description",
     "URL" : "URL",
     "Image" : "Image",
-    "Last modified" : "Last modified",
     "Loading…" : "Loading…",
+    "Last modified" : "Last modified",
     "Clear" : "Clear"
 },
 "nplurals=2; plural=(n!=1);");

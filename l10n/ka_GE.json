@@ -1,13 +1,13 @@
 { "translations": {
     "in %s" : "%s-ში",
+    "Category" : "კატეგორია",
+    "Tags" : "ტეგები",
     "None" : "არც ერთი",
     "Page not found" : "გვერდი არაა ნაპოვნი",
     "Edit" : "შეცვლა",
     "Save" : "შენახვა",
     "Search" : "ძიება",
     "Filter" : "ფილტრი",
-    "Category" : "კატეგორია",
-    "Tags" : "ტეგები",
     "Categories" : "კატეგორიები",
     "Rename" : "სახელის შეცვლა",
     "Add" : "დამატება",
@@ -18,8 +18,8 @@
     "OK" : "კარგი",
     "Description" : "აღწერილობა",
     "URL" : "მისამართი",
-    "Last modified" : "ბოლო ცვლილება",
     "Loading…" : "იტვირთება…",
+    "Last modified" : "ბოლო ცვლილება",
     "Clear" : "გასუფთავება",
     "Apply" : "გამოყენება"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"

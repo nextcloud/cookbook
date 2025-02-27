@@ -1,11 +1,11 @@
 { "translations": {
     "in %s" : "u %s",
+    "Category" : "Kategorija",
+    "Tags" : "Oznake",
     "None" : "Ništa",
     "Edit" : "Izmeni",
     "Save" : "Sačuvaj",
     "Search" : "Traži",
-    "Category" : "Kategorija",
-    "Tags" : "Oznake",
     "Rename" : "Preimenuj",
     "Add" : "Dodaj",
     "Name" : "Ime",

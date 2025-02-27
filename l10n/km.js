@@ -1,11 +1,11 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Tags" : "ស្លាក",
     "None" : "គ្មាន",
     "Edit" : "កែប្រែ",
     "Save" : "រក្សាទុក",
     "Search" : "Search",
-    "Tags" : "ស្លាក",
     "Rename" : "ប្ដូរ​ឈ្មោះ",
     "Add" : "បញ្ចូល",
     "Name" : "ឈ្មោះ",
