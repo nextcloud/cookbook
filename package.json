@@ -55,7 +55,7 @@
   "devDependencies": {
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^3.0.0",
-    "@nextcloud/stylelint-config": "^2.3.1",
+    "@nextcloud/stylelint-config": "^3.0.1",
     "@nextcloud/webpack-vue-config": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.8",
