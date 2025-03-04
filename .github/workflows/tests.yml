@@ -2,10 +2,6 @@
 name: CI
 
 on:
-  push:
-    paths-ignore:
-      - 'docs/**'
-      - 'l10n/**'
   pull_request:
   workflow_dispatch:
 
