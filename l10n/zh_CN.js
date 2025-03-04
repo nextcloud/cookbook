@@ -185,6 +185,7 @@ OC.L10N.register(
     "Failed to load search results" : "加载搜索结果失败",
     "Cannot download image using curl" : "无法使用 curl 下载镜像",
     "Order" : "顺序",
+    "Filter name" : "筛选器名称",
     "Search term" : "关键字",
     "Show recipes containing any selected category" : "显示包含任何选定类别的食谱",
     "Show recipes containing all selected categories" : "显示包含所有选定类别的食谱",
