@@ -5,6 +5,8 @@
  * @license AGPL3 or later
  */
 
+/// <reference types="@nextcloud/typings" />
+
 import Vue from 'vue';
 
 import { useStore } from './store';

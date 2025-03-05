@@ -5,6 +5,8 @@
  * @license AGPL3 or later
  */
 
+/// <reference types="@nextcloud/typings" />
+
 // Markdown
 import VueShowdown from 'vue-showdown';
 
