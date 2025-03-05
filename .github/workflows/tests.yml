@@ -109,19 +109,19 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 30
+                - 31
             phpVersion:
-                - "8.3"
+                - "8.4"
             httpServer:
                 - "apache"
             include:
                 -   database: sqlite
-                    coreVersion: 28
-                    phpVersion: "8.1"
-                    httpServer: "apache"
-                -   database: pgsql
                     coreVersion: 29
                     phpVersion: "8.2"
+                    httpServer: "apache"
+                -   database: pgsql
+                    coreVersion: 30
+                    phpVersion: "8.3"
                     httpServer: "nginx"
                     
     steps:
@@ -227,7 +227,7 @@ jobs:
         with:
             db: mysql
             coreVersion: master
-            phpVersion: "8.1"
+            phpVersion: "8.4"
             server: apache
             installUntested: true
     
