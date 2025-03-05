@@ -29,6 +29,6 @@ class Version000000Date20241010200522Test extends AbstractMigrationTestCase {
 	}
 
 	protected function getPreviousMigrationName(): ?string {
-		return null;
+		return '000000Date20220703174647';
 	}
 }
