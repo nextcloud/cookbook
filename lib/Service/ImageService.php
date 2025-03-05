@@ -2,10 +2,15 @@
 
 namespace OCA\Cookbook\Service;
 
+use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
+use OCA\Cookbook\Exception\NoRecipeImageFoundException;
+use OCA\Cookbook\Exception\RecipeImageExistsException;
 use OCA\Cookbook\Helper\ImageService\ImageFileHelper;
 use OCA\Cookbook\Helper\ImageService\ThumbnailFileHelper;
 use OCP\Files\File;
 use OCP\Files\Folder;
+use OCP\Files\GenericFileException;
+use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\Lock\LockedException;

@@ -55,6 +55,8 @@ class RestParameterParser {
 					}
 
 					break;
+				default:
+					throw new \Exception($this->l->t('Unsupported type of transmitted data. This is a bug, please report it.'));
 			}
 		} else {
 			throw new \Exception($this->l->t('Cannot detect type of transmitted data. This is a bug, please report it.'));
