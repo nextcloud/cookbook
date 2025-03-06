@@ -45,7 +45,7 @@
     "sass": "^1.69.5",
     "sass-loader": "^16.0.5",
     "vue": "^2.7.15",
-    "vue-i18n": "^8.17.1",
+    "vue-i18n": "^11.1.1",
     "vue-material-design-icons": "^5.2.0",
     "vue-modal-dialogs": "3.0.0",
     "vue-router": "^3.6.5",
