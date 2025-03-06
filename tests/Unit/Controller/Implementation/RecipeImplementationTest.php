@@ -595,7 +595,7 @@ class RecipeImplementationTest extends TestCase {
 	 * @param mixed $setSize
 	 * @param mixed $size
 	 */
-	public function testImage($setSize, $size): void {
+	public function testImage($setSize, $size, $sizeToQuery): void {
 		$this->ensureCacheCheckTriggered();
 
 		if ($setSize) {
@@ -605,7 +605,7 @@ class RecipeImplementationTest extends TestCase {
 		/** @var File|Stub */
 		$file = $this->createStub(File::class);
 		$id = 123;
-		$this->recipeService->method('getRecipeImageFileByFolderId')->with($id, $size)->willReturn($file);
+		$this->recipeService->method('getRecipeImageFileByFolderId')->with($id, $sizeToQuery)->willReturn($file);
 
 		// Make the tests stable against PHP deprecation warnings
 		$file->method('getMTime')->willReturn(100);
@@ -635,9 +635,10 @@ class RecipeImplementationTest extends TestCase {
 
 	public function dataProviderImage(): array {
 		return [
-			[false, null],
-			[true, null],
-			[true, 'full'],
+			[false, null, 'full'],
+			[true, null, 'full'],
+			[true, 'full', 'full'],
+			[true, 'small', 'small'],
 		];
 	}
 
