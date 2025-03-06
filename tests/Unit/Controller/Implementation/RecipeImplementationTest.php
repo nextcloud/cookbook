@@ -594,6 +594,7 @@ class RecipeImplementationTest extends TestCase {
 	 * @todo Avoid business code in controller
 	 * @param mixed $setSize
 	 * @param mixed $size
+	 * @param mixed $sizeToQuery
 	 */
 	public function testImage($setSize, $size, $sizeToQuery): void {
 		$this->ensureCacheCheckTriggered();
