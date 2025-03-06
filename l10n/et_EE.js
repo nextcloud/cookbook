@@ -14,6 +14,8 @@ OC.L10N.register(
     "Rename" : "Nimeta ümber",
     "Add" : "Lisa",
     "Name" : "Nimi",
+    "Clear" : "Tühjenda",
+    "Apply" : "Rakenda",
     "Tools" : "Tööriistad",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",
@@ -23,8 +25,6 @@ OC.L10N.register(
     "Image" : "Pilt",
     "Loading…" : "Laadimine…",
     "Last modified" : "Viimati muudetud",
-    "Copy ingredients" : "Kopeeri koostisosad",
-    "Clear" : "Tühjenda",
-    "Apply" : "Rakenda"
+    "Copy ingredients" : "Kopeeri koostisosad"
 },
 "nplurals=2; plural=(n != 1);");

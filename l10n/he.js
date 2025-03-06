@@ -32,6 +32,8 @@ OC.L10N.register(
     "Pick a local image" : "נא לבחור תמונה מקומית",
     "Add" : "הוספה",
     "Name" : "שם",
+    "Clear" : "פינוי",
+    "Apply" : "החלה",
     "Creation date" : "מועד יצירה",
     "Could not set preference for image printing" : "לא ניתן להגדיר העדפה להדפסת תמונות",
     "Could not set recipe update interval to {interval}" : "לא ניתן להגדיר את ההפרש בין עדכוני המתכון לכדי {interval}",
@@ -61,8 +63,6 @@ OC.L10N.register(
     "Loading…" : "בטעינה…",
     "Last modified" : "מועד שינוי אחרון",
     "Source" : "מקור",
-    "Energy" : "אנרגיה",
-    "Clear" : "פינוי",
-    "Apply" : "החלה"
+    "Energy" : "אנרגיה"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

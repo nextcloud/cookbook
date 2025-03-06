@@ -25,6 +25,11 @@ OC.L10N.register(
     "Pick a local image" : "Veldu mynd á tölvunni",
     "Add" : "Bæta við",
     "Name" : "Nafn",
+    "Order" : "Röðun",
+    "Filter name" : "Heiti síu",
+    "Keywords" : "Stikkorð",
+    "Clear" : "Hreinsa",
+    "Apply" : "Virkja",
     "Creation date" : "Upprunadagsetning",
     "Modification date" : "Modification date",
     "Could not set preference for image printing" : "Gat ekki sett kjörstillingar fyrir prentun mynda",
@@ -48,7 +53,6 @@ OC.L10N.register(
     "Description" : "Lýsing",
     "URL" : "Slóð",
     "Image" : "Mynd",
-    "Keywords" : "Stikkorð",
     "Servings" : "Nóg fyrir",
     "Nutrition Information" : "Nutrition Information",
     "Ingredients" : "Innihaldsefni",
@@ -66,10 +70,6 @@ OC.L10N.register(
     "Protein" : "Protein",
     "Sodium" : "Sodium",
     "Fat total" : "Fat total",
-    "Saturated Fat" : "Saturated Fat",
-    "Order" : "Röðun",
-    "Filter name" : "Heiti síu",
-    "Clear" : "Hreinsa",
-    "Apply" : "Virkja"
+    "Saturated Fat" : "Saturated Fat"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

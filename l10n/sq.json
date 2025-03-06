@@ -12,6 +12,8 @@
     "Rename" : "Rename",
     "Add" : "Shto",
     "Name" : "Emri",
+    "Clear" : "Pastro",
+    "Apply" : "Apliko",
     "Tools" : "Mjete",
     "Dismiss" : "Hiq",
     "Cancel" : "Anullo",
@@ -19,8 +21,6 @@
     "Description" : "Përshkrim",
     "URL" : "Url",
     "Loading…" : "Duke u ngarkuar…",
-    "Last modified" : "Ndryshuar së fundmi",
-    "Clear" : "Pastro",
-    "Apply" : "Apliko"
+    "Last modified" : "Ndryshuar së fundmi"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

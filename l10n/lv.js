@@ -28,6 +28,11 @@ OC.L10N.register(
     "Pick a local image" : "Izvēlēties attēlu",
     "Add" : "Pievienot",
     "Name" : "Nosaukums",
+    "All keywords" : "Visi atslēgvārdi",
+    "Show recipes containing all selected keywords" : "Rādīt receptes, kas satur visus atlasītos atslēgvārdus",
+    "Clear" : "Notīrīt",
+    "Matching all selected keywords" : "Atbilst visiem atlasītajiem atslēgvārdiem",
+    "Apply" : "Apstiprināt",
     "Order keywords alphabetically" : "Kārtot atslēgvārdus alfabēta secībā",
     "Could not set recipe update interval to {interval}" : "Nevar iestatīt {interval} kā receptes atjaunināšanas intervālu",
     "Could not set recipe folder to {path}" : "Nevar iestatīt recepšu mapi {path}",
@@ -51,11 +56,6 @@ OC.L10N.register(
     "Cooking time is up!" : "Gatavošanas laiks beidzies.",
     "Loading…" : "Notiek ielāde...",
     "Last modified" : "Pēdējoreiz modificēts",
-    "Source" : "Avots",
-    "All keywords" : "Visi atslēgvārdi",
-    "Show recipes containing all selected keywords" : "Rādīt receptes, kas satur visus atlasītos atslēgvārdus",
-    "Clear" : "Notīrīt",
-    "Matching all selected keywords" : "Atbilst visiem atlasītajiem atslēgvārdiem",
-    "Apply" : "Apstiprināt"
+    "Source" : "Avots"
 },
 "nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);");

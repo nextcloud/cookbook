@@ -14,6 +14,10 @@ OC.L10N.register(
     "Rename" : "Преименувај",
     "Add" : "Додади",
     "Name" : "Име",
+    "Search term" : "Пребарувај термин",
+    "Keywords" : "Клучни зборови",
+    "Clear" : "Исчисти",
+    "Apply" : "Примени",
     "Tools" : "Алатки",
     "Dismiss" : "Отфрли",
     "Cancel" : "Откажи",
@@ -21,14 +25,10 @@ OC.L10N.register(
     "Description" : "Опис",
     "URL" : "Адреса",
     "Image" : "Слика",
-    "Keywords" : "Клучни зборови",
     "Instructions" : "Инструкции",
     "Loading…" : "Се вчитува…",
     "Date created" : "Датум на креирање",
     "Last modified" : "Скоро изменети",
-    "Source" : "Извор",
-    "Search term" : "Пребарувај термин",
-    "Clear" : "Исчисти",
-    "Apply" : "Примени"
+    "Source" : "Извор"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

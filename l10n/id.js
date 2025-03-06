@@ -15,6 +15,9 @@ OC.L10N.register(
     "Rename" : "Ubah nama",
     "Add" : "Masukkan",
     "Name" : "Nama",
+    "Order" : "Pesan",
+    "Clear" : "Bersihkan",
+    "Apply" : "Terapkan",
     "Creation date" : "Tanggal pembuatan",
     "Tools" : "Peralatan",
     "Dismiss" : "Batal",
@@ -24,9 +27,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Gambar",
     "Loading…" : "Memuat…",
-    "Last modified" : "Terakhir diubah",
-    "Order" : "Pesan",
-    "Clear" : "Bersihkan",
-    "Apply" : "Terapkan"
+    "Last modified" : "Terakhir diubah"
 },
 "nplurals=1; plural=0;");

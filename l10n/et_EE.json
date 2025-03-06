@@ -12,6 +12,8 @@
     "Rename" : "Nimeta ümber",
     "Add" : "Lisa",
     "Name" : "Nimi",
+    "Clear" : "Tühjenda",
+    "Apply" : "Rakenda",
     "Tools" : "Tööriistad",
     "Dismiss" : "Jäta vahele",
     "Cancel" : "Loobu",
@@ -21,8 +23,6 @@
     "Image" : "Pilt",
     "Loading…" : "Laadimine…",
     "Last modified" : "Viimati muudetud",
-    "Copy ingredients" : "Kopeeri koostisosad",
-    "Clear" : "Tühjenda",
-    "Apply" : "Rakenda"
+    "Copy ingredients" : "Kopeeri koostisosad"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

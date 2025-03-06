@@ -13,13 +13,13 @@ OC.L10N.register(
     "Rename" : "Gje nytt namn",
     "Add" : "Legg til",
     "Name" : "Namn",
+    "Apply" : "Anvend",
     "Dismiss" : "Forkast",
     "Cancel" : "Avbryt",
     "OK" : "OK",
     "Description" : "Skildring",
     "URL" : "URL",
     "Loading…" : "Laster...",
-    "Last modified" : "Siste endra",
-    "Apply" : "Anvend"
+    "Last modified" : "Siste endra"
 },
 "nplurals=2; plural=(n != 1);");

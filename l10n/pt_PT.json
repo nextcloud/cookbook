@@ -49,11 +49,14 @@
     "Delete entry" : "Apagar registo",
     "Add" : "Adicionar",
     "Name" : "Nome",
+    "Keywords" : "Palavras-chave",
+    "Clear" : "Limpar",
+    "Apply" : "Aplicar",
+    "Toggle keyword" : "Alternar palavra-passe",
+    "Keyword not contained in visible recipes" : "A palavra-passe não consta nas receitas visíveis",
     "Creation date" : "Data de criação",
     "Modification date" : "Data da modificação",
     "Select order" : "Selecionar ordem",
-    "Toggle keyword" : "Alternar palavra-passe",
-    "Keyword not contained in visible recipes" : "A palavra-passe não consta nas receitas visíveis",
     "Could not set preference for image printing" : "Não foi possível definir as preferências da impressão de imagens",
     "Could not set recipe update interval to {interval}" : "Não foi possível definir o intervalo de refrescamento da receita para {interval}",
     "Could not set recipe folder to {path}" : "Não foi possível definir a pasta de receitas para {path}",
@@ -92,7 +95,6 @@
     "URL" : "URL",
     "Image" : "Imagem",
     "Choose category" : "Escolha a categoria",
-    "Keywords" : "Palavras-chave",
     "Choose keywords" : "Escolha as palavras-chave",
     "Servings" : "Porções",
     "Nutrition Information" : "Informação nutricional",
@@ -114,8 +116,6 @@
     "Fiber" : "Fibra",
     "Protein" : "Proteína",
     "Sodium" : "Sal",
-    "Fat total" : "Total de gordura",
-    "Clear" : "Limpar",
-    "Apply" : "Aplicar"
+    "Fat total" : "Total de gordura"
 },"pluralForm" :"nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

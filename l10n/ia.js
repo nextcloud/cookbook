@@ -11,12 +11,12 @@ OC.L10N.register(
     "Rename" : "Renominar",
     "Add" : "Adder",
     "Name" : "Nomine",
+    "Apply" : "Applicar",
     "Dismiss" : "Dimitter",
     "Cancel" : "Cancellar",
     "OK" : "Ok",
     "Description" : "Description",
     "URL" : "URL",
-    "Loading…" : "Cargante...",
-    "Apply" : "Applicar"
+    "Loading…" : "Cargante..."
 },
 "nplurals=2; plural=(n != 1);");

@@ -44,10 +44,13 @@ OC.L10N.register(
     "Delete entry" : "Ištrinti įrašą",
     "Add" : "Pridėti",
     "Name" : "Pavadinimas",
-    "Creation date" : "Sukūrimo data",
+    "Keywords" : "Raktažodžiai",
+    "Clear" : "Išvalyti",
+    "Apply" : "Taikyti",
     "Order keywords alphabetically" : "Rikiuoti raktažodžius pagal abėcėlę",
     "Toggle keyword" : "Perjungti raktažodį",
     "Keyword not contained in visible recipes" : "Raktažodžio matomuose receptuose nėra",
+    "Creation date" : "Sukūrimo data",
     "Could not set preference for image printing" : "Nepavyko nustatyti nuostatos paveikslų spausdinimui",
     "Could not set recipe update interval to {interval}" : "Nepavyko nustatyti recepto atnaujinimo intervalo į {interval}",
     "Could not set recipe folder to {path}" : "Nepavyko nustatyti receptų aplanko į {path}",
@@ -71,7 +74,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Paveikslas",
     "Choose category" : "Pasirinkti kategoriją",
-    "Keywords" : "Raktažodžiai",
     "Choose keywords" : "Pasirinkti raktažodžius",
     "Servings" : "Porcijos",
     "Nutrition Information" : "Mitybos informacija",
@@ -83,8 +85,6 @@ OC.L10N.register(
     "Last modified" : "Paskutinis modifikavimas",
     "Source" : "Šaltinis",
     "Failed to load recipes with keywords: {tags}" : "Nepavyko įkelti receptų, kuriuose būtų raktažodžiai: {tags}",
-    "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų",
-    "Clear" : "Išvalyti",
-    "Apply" : "Taikyti"
+    "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

@@ -13,6 +13,8 @@ OC.L10N.register(
     "Rename" : "Renomenar",
     "Add" : "Ajustar",
     "Name" : "Nom",
+    "Clear" : "Escafar",
+    "Apply" : "Aplicar",
     "Tools" : "Aisinas",
     "Dismiss" : "Regetar",
     "Cancel" : "Anullar",
@@ -20,8 +22,6 @@ OC.L10N.register(
     "Calories" : "Calorias",
     "Description" : "Descripcion",
     "URL" : "URL",
-    "Loading…" : "Cargament…",
-    "Clear" : "Escafar",
-    "Apply" : "Aplicar"
+    "Loading…" : "Cargament…"
 },
 "nplurals=2; plural=(n > 1);");

@@ -15,6 +15,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Add" : "Add",
     "Name" : "Name",
+    "Clear" : "Clear",
     "Tools" : "Tools",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
@@ -23,7 +24,6 @@ OC.L10N.register(
     "URL" : "URL",
     "Image" : "Image",
     "Loading…" : "Loading…",
-    "Last modified" : "Last modified",
-    "Clear" : "Clear"
+    "Last modified" : "Last modified"
 },
 "nplurals=2; plural=(n!=1);");

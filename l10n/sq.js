@@ -14,6 +14,8 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Add" : "Shto",
     "Name" : "Emri",
+    "Clear" : "Pastro",
+    "Apply" : "Apliko",
     "Tools" : "Mjete",
     "Dismiss" : "Hiq",
     "Cancel" : "Anullo",
@@ -21,8 +23,6 @@ OC.L10N.register(
     "Description" : "Përshkrim",
     "URL" : "Url",
     "Loading…" : "Duke u ngarkuar…",
-    "Last modified" : "Ndryshuar së fundmi",
-    "Clear" : "Pastro",
-    "Apply" : "Apliko"
+    "Last modified" : "Ndryshuar së fundmi"
 },
 "nplurals=2; plural=(n != 1);");

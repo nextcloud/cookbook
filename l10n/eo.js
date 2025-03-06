@@ -23,6 +23,9 @@ OC.L10N.register(
     "Pick a local image" : "Elektu lokan bildon",
     "Add" : "Aldoni",
     "Name" : "Nomo",
+    "Keywords" : "Ŝlosilvortoj",
+    "Clear" : "Viŝi",
+    "Apply" : "Validigi",
     "Creation date" : "Krea dato",
     "Tools" : "Iloj",
     "Dismiss" : "Preterpasi",
@@ -31,11 +34,8 @@ OC.L10N.register(
     "Calories" : "Kalorioj",
     "Description" : "Priskribo",
     "URL" : "Retadreso",
-    "Keywords" : "Ŝlosilvortoj",
     "Loading…" : "Ŝargado...",
     "Last modified" : "Laste modifita",
-    "Sugar" : "Sukero",
-    "Clear" : "Viŝi",
-    "Apply" : "Validigi"
+    "Sugar" : "Sukero"
 },
 "nplurals=2; plural=(n != 1);");

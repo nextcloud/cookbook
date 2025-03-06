@@ -14,6 +14,8 @@ OC.L10N.register(
     "Rename" : "სახელის შეცვლა",
     "Add" : "დამატება",
     "Name" : "სახელი",
+    "Clear" : "გასუფთავება",
+    "Apply" : "გამოყენება",
     "Tools" : "ხელსაწყოები",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "უარყოფა",
@@ -21,8 +23,6 @@ OC.L10N.register(
     "Description" : "აღწერილობა",
     "URL" : "მისამართი",
     "Loading…" : "იტვირთება…",
-    "Last modified" : "ბოლო ცვლილება",
-    "Clear" : "გასუფთავება",
-    "Apply" : "გამოყენება"
+    "Last modified" : "ბოლო ცვლილება"
 },
 "nplurals=2; plural=(n!=1);");

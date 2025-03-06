@@ -43,6 +43,11 @@
     "Delete entry" : "エントリーを削除",
     "Add" : "追加",
     "Name" : "名前",
+    "Order" : "並び替え",
+    "Filter name" : "フィルター名",
+    "Keywords" : "キーワード",
+    "Clear" : "クリア",
+    "Apply" : "適用",
     "Creation date" : "作成日時",
     "Modification date" : "変更日時",
     "Recipe folder" : "レシピフォルダー",
@@ -75,7 +80,6 @@
     "URL" : "URL",
     "Image" : "画像",
     "Choose category" : "カテゴリを選択",
-    "Keywords" : "キーワード",
     "Choose keywords" : "キーワードを選択",
     "Servings" : "分量",
     "Nutrition Information" : "栄養情報",
@@ -86,7 +90,6 @@
     "Date created" : "作成日時",
     "Last modified" : "最終変更",
     "Source" : "出典",
-    "Cooking time (H:MM)" : "調理時間 (H:MM)",
     "Serving Size" : "分量サイズ",
     "Energy" : "エネルギー",
     "Sugar" : "糖",
@@ -100,10 +103,6 @@
     "Unsaturated Fat" : "不飽和脂肪酸",
     "Trans Fat" : "トランス脂肪酸",
     "Failed to load recipes with keywords: {tags}" : "キーワードでレシピの読み込みに失敗しました: {tags}",
-    "Failed to load search results" : "検索結果の読み込みに失敗しました",
-    "Order" : "並び替え",
-    "Filter name" : "フィルター名",
-    "Clear" : "クリア",
-    "Apply" : "適用"
+    "Failed to load search results" : "検索結果の読み込みに失敗しました"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

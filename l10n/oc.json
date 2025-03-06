@@ -11,6 +11,8 @@
     "Rename" : "Renomenar",
     "Add" : "Ajustar",
     "Name" : "Nom",
+    "Clear" : "Escafar",
+    "Apply" : "Aplicar",
     "Tools" : "Aisinas",
     "Dismiss" : "Regetar",
     "Cancel" : "Anullar",
@@ -18,8 +20,6 @@
     "Calories" : "Calorias",
     "Description" : "Descripcion",
     "URL" : "URL",
-    "Loading…" : "Cargament…",
-    "Clear" : "Escafar",
-    "Apply" : "Aplicar"
+    "Loading…" : "Cargament…"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

@@ -24,6 +24,12 @@
     "Delete entry" : "刪除項目",
     "Add" : "新增",
     "Name" : "名稱",
+    "Order" : "順序",
+    "Filter name" : "篩選器名稱",
+    "Search term" : "搜尋字詞",
+    "Keywords" : "關鍵字",
+    "Clear" : "清除",
+    "Apply" : "套用",
     "Creation date" : "建立時間",
     "Could not set recipe update interval to {interval}" : "無法將食譜更新時間更改為 {interval}",
     "Could not set recipe folder to {path}" : "無法將食譜資料夾設定為 {path}",
@@ -41,7 +47,6 @@
     "Description" : "描述",
     "URL" : "網址",
     "Image" : "圖片",
-    "Keywords" : "關鍵字",
     "Servings" : "份",
     "Ingredients" : "配料",
     "Instructions" : "說明",
@@ -49,11 +54,6 @@
     "Loading…" : "載入中…",
     "Date created" : "建立日期",
     "Last modified" : "上次修改",
-    "Source" : "來源",
-    "Order" : "順序",
-    "Filter name" : "篩選器名稱",
-    "Search term" : "搜尋字詞",
-    "Clear" : "清除",
-    "Apply" : "套用"
+    "Source" : "來源"
 },"pluralForm" :"nplurals=1; plural=0;"
 }
