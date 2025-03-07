@@ -19,6 +19,58 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 
+## 0.11.3 - 2025-03-07
+
+### Fixed
+
+- Do not access unknown ID of recipe while importing
+  [#2500](https://github.com/nextcloud/cookbook/pull/2500) @christianlupus
+- Usage of firefox user agent to import foreign recipes
+  [#2515](https://github.com/nextcloud/cookbook/pull/2515) @christianlupus
+- Added primary keys to all tables
+  [#2535](https://github.com/nextcloud/cookbook/pull/2535) @timdreier
+- Typescript error during building of app frontend
+  [#2682](https://github.com/nextcloud/cookbook/pull/2682) @christianlupus
+- Default to full image size if no size is explicitly requestes (as specified in API spec)
+  [#2661](https://github.com/nextcloud/cookbook/pull/2661) @saywebsolutions
+
+### Documentation
+
+- Fix link to client in the GitHub pages documentation
+  [#2547](https://github.com/nextcloud/cookbook/pull/2547) @shagn
+
+### Maintenance
+
+- Drop old main-0.10.x branch from Dependabot
+  [#2513](https://github.com/nextcloud/cookbook/pull/2513) @christianlupus
+- Update PHP lint version used
+  [#2512](https://github.com/nextcloud/cookbook/pull/2512) @christianlupus
+- Make app compatible with NC 31
+  [#2511](https://github.com/nextcloud/cookbook/pull/2511) @christianlupus
+- Update the code style for PHP classes
+  [#2510](https://github.com/nextcloud/cookbook/pull/2510) @dependabot
+- Make the automated test compatible with MacOS
+  [#2540](https://github.com/nextcloud/cookbook/pull/2540) @timdreier
+- Update webrick for GitHub page building
+  [#2607](https://github.com/nextcloud/cookbook/pull/2607) @dependabot
+- Update eslint config for prettier
+  [#2673](https://github.com/nextcloud/cookbook/pull/2673) @dependabot
+- Update Stylelint peer configs
+  [#2670](https://github.com/nextcloud/cookbook/pull/2670) @dependabot
+- Update typescript
+  [#2672](https://github.com/nextcloud/cookbook/pull/2672) @dependabot
+- Update webpack build dependencies
+  [#2597](https://github.com/nextcloud/cookbook/pull/2597) @dependabot
+- Clean PHP code by removing code smells and redundant code
+  [#2628](https://github.com/nextcloud/cookbook/pull/2628) @provokateurin
+- Clean up the code base and use current NC and PHP versions
+  [#2681](https://github.com/nextcloud/cookbook/pull/2681) @christianlupus
+- Bump compatible NC server version
+  [#2674](https://github.com/nextcloud/cookbook/pull/2674) @christianlupus
+- Bump @nextcloud/dialogs NPM dependency
+  [#2642](https://github.com/nextcloud/cookbook/pull/2642) @dependabot
+
+
 ## 0.11.2 - 2024-09-13
 
 ### Fixed
