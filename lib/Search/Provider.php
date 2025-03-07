@@ -25,7 +25,7 @@ class Provider implements IProvider {
 	public function __construct(
 		IL10n $il10n,
 		IURLGenerator $urlGenerator,
-		RecipeService $recipeService
+		RecipeService $recipeService,
 	) {
 		$this->l = $il10n;
 		$this->urlGenerator = $urlGenerator;
@@ -46,6 +46,7 @@ class Provider implements IProvider {
 		} elseif (strpos($route, Application::APP_ID . '.') === 0) {
 			return -1;
 		}
+
 		return 4;
 	}
 

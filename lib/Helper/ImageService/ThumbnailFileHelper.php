@@ -2,12 +2,16 @@
 
 namespace OCA\Cookbook\Helper\ImageService;
 
+use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
 use OCA\Cookbook\Exception\NoRecipeImageFoundException;
 use OCP\Files\File;
 use OCP\Files\Folder;
+use OCP\Files\GenericFileException;
+use OCP\Files\InvalidPathException;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
+use OCP\Lock\LockedException;
 
 /**
  * This class allows to handle the files of the thumbnails
@@ -31,7 +35,7 @@ class ThumbnailFileHelper {
 	public function __construct(
 		ImageGenerationHelper $generationHelper,
 		ImageFileHelper $fileHelper,
-		IL10N $l
+		IL10N $l,
 	) {
 		$this->generationHelper = $generationHelper;
 		$this->fileHelper = $fileHelper;
@@ -58,6 +62,7 @@ class ThumbnailFileHelper {
 				$file = $recipeFolder->newFile($filename);
 
 				$this->generationHelper->generateThumbnail($full, $type, $file);
+
 				return $file;
 			} else {
 				throw new NoRecipeImageFoundException(

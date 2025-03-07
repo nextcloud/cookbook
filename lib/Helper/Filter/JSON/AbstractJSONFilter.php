@@ -34,6 +34,7 @@ abstract class AbstractJSONFilter {
 			$json[$key] = $value;
 			return true;
 		}
+
 		return false;
 	}
 }

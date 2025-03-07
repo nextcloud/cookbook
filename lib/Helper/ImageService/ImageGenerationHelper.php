@@ -28,7 +28,7 @@ class ImageGenerationHelper {
 	private $thumbnailService;
 
 	public function __construct(
-		ThumbnailService $thumbnailService
+		ThumbnailService $thumbnailService,
 	) {
 		$this->thumbnailService = $thumbnailService;
 	}

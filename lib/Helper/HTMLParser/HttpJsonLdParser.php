@@ -133,6 +133,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 				if ($parentSetsContext && !isset($tmp['@context'])) {
 					$tmp['@context'] = $json['@context'];
 				}
+
 				$json = $tmp;
 			}
 		}

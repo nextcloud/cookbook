@@ -21,11 +21,12 @@ class TimezoneFixFilter extends AbstractJSONFilter {
 
 	public function apply(array &$json): bool {
 		$changed = false;
-		foreach(['dateCreated', 'dateModified'] as $key) {
-			if(isset($json[$key]) && $json[$key]) {
+		foreach (['dateCreated', 'dateModified'] as $key) {
+			if (isset($json[$key]) && $json[$key]) {
 				$json[$key] = $this->handleTimestamp($json[$key], $changed);
 			}
 		}
+
 		return $changed;
 	}
 
@@ -33,7 +34,7 @@ class TimezoneFixFilter extends AbstractJSONFilter {
 		$pattern = '/^([0-9]{4}-[0-9]{2}-[0-9]{2})T([0-9]{1,2}:[0-9]{2}:[0-9]{2}(?:[.,][0-9]+)?)(\+[0-9]{2}:?[0-9]{2})/';
 		$match = preg_match($pattern, $value, $matches);
 
-		if($match == 1) {
+		if ($match == 1) {
 			return $value;
 		}
 
@@ -43,12 +44,14 @@ class TimezoneFixFilter extends AbstractJSONFilter {
 			$this->logger->error('Cannot get the default timezone of server.');
 			return $value;
 		}
+
 		$serverTimeZone = new DateTimeZone($defaultTimezone);
 		$now = new DateTime('now', $serverTimeZone);
 		$offsetSec = $serverTimeZone->getOffset($now);
 		$offsetHour = $offsetSec / 3600;
 
 		$changed = true;
+
 		return sprintf('%s%+05d', $value, $offsetHour * 100);
 	}
 

@@ -215,6 +215,7 @@ class RecipeImplementationTest extends TestCase {
 			// return $ret[$idx[$p['id']]];
 			$id = $p['id'];
 			$size = $p['size'];
+
 			return "/path/to/image/$id/$size";
 		});
 
@@ -593,8 +594,9 @@ class RecipeImplementationTest extends TestCase {
 	 * @todo Avoid business code in controller
 	 * @param mixed $setSize
 	 * @param mixed $size
+	 * @param mixed $sizeToQuery
 	 */
-	public function testImage($setSize, $size): void {
+	public function testImage($setSize, $size, $sizeToQuery): void {
 		$this->ensureCacheCheckTriggered();
 
 		if ($setSize) {
@@ -604,7 +606,7 @@ class RecipeImplementationTest extends TestCase {
 		/** @var File|Stub */
 		$file = $this->createStub(File::class);
 		$id = 123;
-		$this->recipeService->method('getRecipeImageFileByFolderId')->with($id, $size)->willReturn($file);
+		$this->recipeService->method('getRecipeImageFileByFolderId')->with($id, $sizeToQuery)->willReturn($file);
 
 		// Make the tests stable against PHP deprecation warnings
 		$file->method('getMTime')->willReturn(100);
@@ -634,9 +636,10 @@ class RecipeImplementationTest extends TestCase {
 
 	public function dataProviderImage(): array {
 		return [
-			[false, null],
-			[true, null],
-			[true, 'full'],
+			[false, null, 'full'],
+			[true, null, 'full'],
+			[true, 'full', 'full'],
+			[true, 'small', 'small'],
 		];
 	}
 
@@ -694,6 +697,7 @@ class RecipeImplementationTest extends TestCase {
 
 			$id = $params['id'];
 			$size = $params['size'];
+
 			return "/path/to/controller/$id/$size";
 		}));
 

@@ -82,7 +82,7 @@ class RecipeService {
 		HtmlDownloadService $downloadService,
 		RecipeExtractionService $extractionService,
 		JSONFilter $jsonFilter,
-		DownloadHelper $downloadHelper
+		DownloadHelper $downloadHelper,
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -224,6 +224,9 @@ class RecipeService {
 		if (isset($json['id']) && $json['id']) {
 			// Recipe already has an id, update it
 			$recipe_folder = $user_folder->getById($json['id'])[0];
+			if (!($recipe_folder instanceof Folder)) {
+				throw new \RuntimeException($this->il10n->t('Unexpected node received for recipe folder.'));
+			}
 
 			$old_path = $recipe_folder->getPath();
 			$new_path = dirname($old_path) . '/' . $recipeFolderName;
@@ -277,7 +280,7 @@ class RecipeService {
 		$full_image_data = null;
 
 		if (isset($json['image']) && $json['image']) {
-			if($recipeIsNew || !isset($oldJson['image']) || !$oldJson['image'] || $json['image'] !== $oldJson['image']) {
+			if ($recipeIsNew || !isset($oldJson['image']) || !$oldJson['image'] || $json['image'] !== $oldJson['image']) {
 				if (strpos($json['image'], 'http') === 0) {
 					// The image is a URL
 					$json['image'] = str_replace(' ', '%20', $json['image']);
@@ -323,9 +326,10 @@ class RecipeService {
 	private function downloadImage(string $url) {
 		$this->downloadHelper->downloadFile($url);
 		$status = $this->downloadHelper->getStatus();
-		if($status >= 400) {
+		if ($status >= 400) {
 			throw new Exception($this->il10n->t('Cannot download image using curl'));
 		}
+
 		return $this->downloadHelper->getContent();
 	}
 
@@ -465,6 +469,7 @@ class RecipeService {
 	public function getAllRecipesInSearchIndex(): array {
 		$recipes = $this->db->findAllRecipes($this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -478,6 +483,7 @@ class RecipeService {
 	public function getRecipesByCategory($category): array {
 		$recipes = $this->db->getRecipesByCategory($category, $this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -492,6 +498,7 @@ class RecipeService {
 	public function getRecipesByKeywords($keywords): array {
 		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -516,6 +523,7 @@ class RecipeService {
 
 		$recipes = $this->db->findRecipes($keywords_array, $this->user_id);
 		$this->addDatesToRecipes($recipes);
+
 		return $recipes;
 	}
 
@@ -561,14 +569,8 @@ class RecipeService {
 
 	/**
 	 * Get recipe file contents as an array
-	 *
-	 * @param File $file
 	 */
-	public function parseRecipeFile($file): ?array {
-		if (!$file) {
-			return null;
-		}
-
+	public function parseRecipeFile(File $file): ?array {
 		$json = json_decode($file->getContent(), true);
 
 		if (!$json) {
@@ -578,9 +580,10 @@ class RecipeService {
 		$json['id'] = $file->getParent()->getId();
 
 
-		if (!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')) {
+		if (!array_key_exists('dateCreated', $json)) {
 			$json['dateCreated'] = $file->getCreationTime();
 		}
+
 		if (!array_key_exists('dateModified', $json)) {
 			$json['dateModified'] = $file->getMTime();
 		}
@@ -601,6 +604,7 @@ class RecipeService {
 		if (count($recipe_folders) < 1) {
 			throw new Exception($this->il10n->t('Recipe with ID %d not found.', [$id]));
 		}
+
 		$recipe_folder = $recipe_folders[0];
 
 		// TODO: Check that file is really an image

@@ -33,6 +33,7 @@ class RestParameterParser {
 			switch (trim($parts[0])) {
 				case 'application/json':
 					$enc = $this->getEncoding($_SERVER[self::CONTENT_TYPE]);
+
 					return $this->parseApplicationJSON($enc);
 					break;
 
@@ -42,6 +43,7 @@ class RestParameterParser {
 					} else {
 						throw new \Exception($this->l->t('Cannot parse non-POST multipart encoding. This is a bug.'));
 					}
+
 					break;
 
 				case 'application/x-www-form-urlencoded':
@@ -51,7 +53,10 @@ class RestParameterParser {
 						$enc = $this->getEncoding($_SERVER[self::CONTENT_TYPE]);
 						return $this->parseUrlEncoded($enc);
 					}
+
 					break;
+				default:
+					throw new \Exception($this->l->t('Unsupported type of transmitted data. This is a bug, please report it.'));
 			}
 		} else {
 			throw new \Exception($this->l->t('Cannot detect type of transmitted data. This is a bug, please report it.'));
@@ -69,6 +74,7 @@ class RestParameterParser {
 		if ($encoding !== 'UTF-8') {
 			$rawData = iconv($encoding, 'UTF-8', $rawData);
 		}
+
 		return json_decode($rawData, true);
 	}
 

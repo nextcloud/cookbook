@@ -8,10 +8,12 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
 class SchemaConformityFilter extends AbstractJSONFilter {
 	public function apply(array &$json): bool {
 		$changed = false;
-
-		$changed |= $this->setJSONValue($json, '@context', 'http://schema.org');
-		$changed |= $this->setJSONValue($json, '@type', 'Recipe');
-
-		return (bool)$changed;
+		if ($this->setJSONValue($json, '@context', 'http://schema.org')) {
+			$changed = true;
+		}
+		if ($this->setJSONValue($json, '@type', 'Recipe')) {
+			$changed = true;
+		}
+		return $changed;
 	}
 }

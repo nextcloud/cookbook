@@ -55,7 +55,7 @@ class RecipeImplementation {
 		RecipeStubFilter $stubFilter,
 		AcceptHeaderParsingHelper $acceptHeaderParsingHelper,
 		IL10N $iL10N,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->request = $request;
 		$this->service = $recipeService;
@@ -80,12 +80,14 @@ class RecipeImplementation {
 		} else {
 			$recipes = $this->service->findRecipesInSearchIndex(isset($_GET['keywords']) ? $_GET['keywords'] : '');
 		}
+
 		foreach ($recipes as $i => $recipe) {
 			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
 			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
 
 			$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
 		}
+
 		return new JSONResponse($recipes, Http::STATUS_OK);
 	}
 
@@ -131,6 +133,7 @@ class RecipeImplementation {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
 			$json = [
@@ -138,12 +141,13 @@ class RecipeImplementation {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		try {
 			$this->dbCacheService->addRecipe($file);
-		} catch(InvalidJSONFileException $ex) {
+		} catch (InvalidJSONFileException $ex) {
 
 			try {
 				$this->service->deleteRecipe($file->getParent()->getId());
@@ -156,6 +160,7 @@ class RecipeImplementation {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
@@ -179,6 +184,7 @@ class RecipeImplementation {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
 			$json = [
@@ -186,12 +192,13 @@ class RecipeImplementation {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		try {
 			$this->dbCacheService->addRecipe($file);
-		} catch(InvalidJSONFileException $ex) {
+		} catch (InvalidJSONFileException $ex) {
 
 			try {
 				$this->service->deleteRecipe($file->getParent()->getId());
@@ -204,6 +211,7 @@ class RecipeImplementation {
 				'file' => $ex->getFile(),
 				'line' => $ex->getLine(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
@@ -239,10 +247,8 @@ class RecipeImplementation {
 		$acceptHeader = $this->request->getHeader('Accept');
 		$acceptedExtensions = $this->acceptHeaderParser->parseHeader($acceptHeader);
 
-		$size = isset($_GET['size']) ? $_GET['size'] : null;
-
 		try {
-			$file = $this->service->getRecipeImageFileByFolderId($id, $size);
+			$file = $this->service->getRecipeImageFileByFolderId($id, $_GET['size'] ?? 'full');
 
 			return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {
@@ -251,6 +257,7 @@ class RecipeImplementation {
 				$json = [
 					'msg' => $this->l->t('No image with the matching MIME type was found on the server.'),
 				];
+
 				return new JSONResponse($json, Http::STATUS_NOT_ACCEPTABLE);
 			} else {
 				// The client accepts the SVG file. Send it.
@@ -285,6 +292,7 @@ class RecipeImplementation {
 				'line' => $ex->getLine(),
 				'file' => $ex->getFile(),
 			];
+
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (\Exception $e) {
 			return new JSONResponse($e->getMessage(), 400);
@@ -292,7 +300,7 @@ class RecipeImplementation {
 
 		try {
 			$this->dbCacheService->addRecipe($recipe_file);
-		} catch(InvalidJSONFileException $ex) {
+		} catch (InvalidJSONFileException $ex) {
 
 			try {
 				$this->service->deleteRecipe($recipe_file->getParent()->getId());

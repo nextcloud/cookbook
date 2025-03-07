@@ -59,7 +59,7 @@ export QUICK_MODE
 printCI "::group::Test prepatation in container"
 
 echo "Synchronizing cookbook codebase"
-rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-delay --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
+rsync -a /cookbook/ custom_apps/cookbook/ --delete --delete-excluded --exclude /.git --exclude /.github/actions/run-tests/volumes --exclude /docs --exclude /node_modules/
 
 pushd custom_apps/cookbook
 

@@ -15,7 +15,7 @@ class TextCleanupHelper {
 		?string $str,
 		bool $removeNewlines = true,
 		bool $removeSlashes = false,
-		bool $removeBackslashes = true
+		bool $removeBackslashes = true,
 	): string {
 		if (!$str) {
 			return '';
@@ -28,7 +28,7 @@ class TextCleanupHelper {
 		}
 
 		$str = str_replace("\t", ' ', $str);
-		if($removeBackslashes) {
+		if ($removeBackslashes) {
 			$str = str_replace('\\', '_', $str);
 		}
 

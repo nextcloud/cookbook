@@ -60,7 +60,7 @@ class DbCacheService {
 		UserConfigHelper $userConfigHelper,
 		NormalizeRecipeFileFilter $normalizeRecipeFileFilter,
 		IL10N $l,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->userId = $UserId;
 		$this->db = $db;
@@ -132,6 +132,7 @@ class DbCacheService {
 				$this->logger->error('Cannot parse file {path}. Skipping it. Please fix manually.', ['path' => $jsonFile->getPath()]);
 				continue;
 			}
+
 			$id = $json['id'];
 
 			$ret[$id] = $json;
@@ -151,6 +152,7 @@ class DbCacheService {
 		} catch (Exception $ex) {
 			throw new InvalidJSONFileException($this->l->t('Cannot read content of JSON file %s', [$jsonFile->getPath()]), 0, $ex);
 		}
+
 		// XXX Export of file reading into library/service?
 		$json = json_decode($content, true);
 
@@ -245,6 +247,7 @@ class DbCacheService {
 		if ($dbEntry['name'] !== $fileEntry['name']) {
 			return false;
 		}
+
 		if ($dbEntry['dateCreated'] !== $fileEntry['dateCreated']) {
 			return false;
 		}
@@ -333,6 +336,7 @@ class DbCacheService {
 		if (strlen(trim($category)) === 0) {
 			return null;
 		}
+
 		return $category;
 	}
 
@@ -347,6 +351,7 @@ class DbCacheService {
 			} else {
 				$keywords = explode(',', $textKeywords);
 			}
+
 			$keywords = array_map(function ($v) {
 				return trim($v);
 			}, $keywords);

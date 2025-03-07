@@ -23,7 +23,7 @@ class ConfigImplementation {
 		RecipeService $recipeService,
 		DbCacheService $dbCacheService,
 		RestParameterParser $restParser,
-		UserFolderHelper $userFolder
+		UserFolderHelper $userFolder,
 	) {
 		$this->service = $recipeService;
 		$this->dbCacheService = $dbCacheService;

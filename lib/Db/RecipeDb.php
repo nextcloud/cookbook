@@ -24,7 +24,7 @@ class RecipeDb {
 
 	public function __construct(
 		IDBConnection $db,
-		IL10N $l
+		IL10N $l,
 	) {
 		$this->db = $db;
 		$this->l = $l;
@@ -143,6 +143,7 @@ class RecipeDb {
 			if (!isset($recipe['recipe_id'])) {
 				continue;
 			}
+
 			if (isset($unique_result[$recipe['recipe_id']])) {
 				continue;
 			}
@@ -299,6 +300,7 @@ class RecipeDb {
 			} else {
 				$x['category'] = $category;
 			}
+
 			return $x;
 		}, $result);
 
@@ -347,7 +349,7 @@ class RecipeDb {
 	 * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
 	 */
 	public function findRecipes(array $keywords, string $user_id) {
-		$has_keywords = $keywords && is_array($keywords) && $keywords[0];
+		$has_keywords = $keywords && $keywords[0];
 
 		if (!$has_keywords) {
 			return $this->findAllRecipes($user_id);
@@ -409,10 +411,11 @@ class RecipeDb {
 				$recipesGroupedTags[$recipe['recipe_id']] = $recipe;
 			} else {
 				if (!is_null($recipe['keywords'])) {
-					$recipesGroupedTags[$recipe['recipe_id']]['keywords'] .= ','.$recipe['keywords'];
+					$recipesGroupedTags[$recipe['recipe_id']]['keywords'] .= ',' . $recipe['keywords'];
 				}
 			}
 		}
+
 		return $recipesGroupedTags;
 	}
 
@@ -606,6 +609,7 @@ class RecipeDb {
 		if (empty($categoryName)) {
 			$categoryName = '*';
 		}
+
 		//         else if(is_array($json['recipeCategory']))
 		//         {
 		//             $json['recipeCategory'] = reset($json['recipeCategory']);

@@ -1,18 +1,21 @@
 { "translations": {
     "Recipes" : "Resep",
     "in %s" : "dalam %s",
+    "Category" : "Kategori",
+    "Tags" : "Tag",
     "None" : "Tidak ada",
     "Page not found" : "Halaman tidak ditemukan",
     "Edit" : "Sunting",
     "Save" : "Simpan",
     "Search" : "Cari",
     "Filter" : "Filter",
-    "Category" : "Kategori",
-    "Tags" : "Tag",
     "Categories" : "Kategori",
     "Rename" : "Ubah nama",
     "Add" : "Masukkan",
     "Name" : "Nama",
+    "Order" : "Pesan",
+    "Clear" : "Bersihkan",
+    "Apply" : "Terapkan",
     "Creation date" : "Tanggal pembuatan",
     "Tools" : "Peralatan",
     "Dismiss" : "Batal",
@@ -21,10 +24,7 @@
     "Description" : "Deskrisi",
     "URL" : "URL",
     "Image" : "Gambar",
-    "Last modified" : "Terakhir diubah",
     "Loading…" : "Memuat…",
-    "Order" : "Pesan",
-    "Clear" : "Bersihkan",
-    "Apply" : "Terapkan"
+    "Last modified" : "Terakhir diubah"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

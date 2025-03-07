@@ -2,10 +2,6 @@
 name: CI
 
 on:
-  push:
-    paths-ignore:
-      - 'docs/**'
-      - 'l10n/**'
   pull_request:
   workflow_dispatch:
 
@@ -13,14 +9,14 @@ jobs:
   
   code-lint:
     name: Run PHP Linter and Code Style checker
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
         -   name: Checkout the project
             uses: actions/checkout@v4
         -   name: Setup node and NPM
             uses: actions/setup-node@v4
             with:
-                node-version: '16'
+                node-version: '20'
         -   name: Install npm
             shell: bash
             run: npm install -g npm@^8
@@ -29,7 +25,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@v4.0.2
+            uses: actions/cache@v4.2.2
             with:
                 path: |
                     ~/.npm
@@ -39,7 +35,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v4.0.2
+            uses: actions/cache@v4.2.2
             with:
                 path: |
                     vendor
@@ -105,7 +101,7 @@ jobs:
   
   unit-tests:
     name: Run the unittests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     
     strategy:
         fail-fast: false
@@ -113,19 +109,19 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 30
+                - 31
             phpVersion:
-                - "8.3"
+                - "8.4"
             httpServer:
                 - "apache"
             include:
                 -   database: sqlite
-                    coreVersion: 28
-                    phpVersion: "8.1"
-                    httpServer: "apache"
-                -   database: pgsql
                     coreVersion: 29
                     phpVersion: "8.2"
+                    httpServer: "apache"
+                -   database: pgsql
+                    coreVersion: 30
+                    phpVersion: "8.3"
                     httpServer: "nginx"
                     
     steps:
@@ -211,7 +207,7 @@ jobs:
   
   unit-tests-master:
     name: Run the tests against the master branch of the NC server
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     
     steps:
       - name: Checkout the app
@@ -231,7 +227,7 @@ jobs:
         with:
             db: mysql
             coreVersion: master
-            phpVersion: "8.1"
+            phpVersion: "8.4"
             server: apache
             installUntested: true
     
@@ -266,14 +262,14 @@ jobs:
     name: Upload artifacts to codecov.io
     needs: 
         - unit-tests
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
         - name: Create folder structure
           run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
           if: ${{ github.event_name == 'push' }}
-          uses: actions/download-artifact@v4.1.8
+          uses: actions/download-artifact@v4.1.9
           with:
             path: artifacts
         - name: Checkout of code base
@@ -352,7 +348,7 @@ jobs:
     
   source-package:
     name: Create source code artifacts
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     
     steps:
         -   name: Checkout the app
@@ -360,7 +356,7 @@ jobs:
         -   name: Setup node and NPM
             uses: actions/setup-node@v4
             with:
-                node-version: '16'
+                node-version: '20'
         -   name: Install npm
             shell: bash
             run: npm install -g npm@^8
@@ -369,7 +365,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@v4.0.2
+            uses: actions/cache@v4.2.2
             with:
                 path: |
                     ~/.npm
@@ -379,7 +375,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v4.0.2
+            uses: actions/cache@v4.2.2
             with:
                 path: |
                     vendor
@@ -413,7 +409,7 @@ jobs:
             
   event_file:
     name: "Upload Event File"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
     - name: Upload
       uses: actions/upload-artifact@v4
@@ -424,7 +420,7 @@ jobs:
 
   lint-php:
     name: "Lint PHP files to be compatible"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         shell: bash
@@ -439,7 +435,7 @@ jobs:
 
   run-jest:
     name: "Run JS tests"
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         shell: bash
@@ -451,7 +447,7 @@ jobs:
       id: date
       run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
     - name: Cache NPM cache
-      uses: actions/cache@v4.0.2
+      uses: actions/cache@v4.2.2
       with:
         path: |
           ~/.npm
@@ -468,7 +464,7 @@ jobs:
 
   successful_run:
     name: The tests have successfully run
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs:
       - unit-tests
       - code-lint

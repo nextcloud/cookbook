@@ -20,7 +20,7 @@ class RecipeNameHelper {
 
 	public function __construct(
 		IL10N $l,
-		LoggerInterface $logger
+		LoggerInterface $logger,
 	) {
 		$this->l = $l;
 		$this->logger = $logger;

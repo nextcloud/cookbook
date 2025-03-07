@@ -9,7 +9,7 @@ jobs:
     
     deploy:
         name: Deploy codebase to app store
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         
         defaults:
             run:
@@ -30,7 +30,7 @@ jobs:
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Use cache for NPM
-                uses: actions/cache@v4.0.2
+                uses: actions/cache@v4.2.2
                 with:
                     path: |
                         ~/.npm
@@ -70,7 +70,7 @@ jobs:
                 run: ls -lh /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
                 
             -   name: Create release
-                uses: softprops/action-gh-release@v2.0.8
+                uses: softprops/action-gh-release@v2.2.1
                 id: release
                 with:
                     files: /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
