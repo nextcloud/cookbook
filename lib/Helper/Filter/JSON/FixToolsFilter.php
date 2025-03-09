@@ -55,12 +55,7 @@ class FixToolsFilter extends AbstractJSONFilter {
 				$tools[] = $t;
 			}
 		} else {
-			$tools = array_map(function ($t) {
-				$t = trim($t);
-				$t = $this->textCleaner->cleanUp($t, false);
-
-				return $t;
-			}, $json[self::TOOLS]);
+            $tools = $this->processArrayRecursively($json[self::TOOLS]);
 			$tools = array_filter($tools, fn ($t) => ($t));
 			ksort($tools);
 			$tools = array_values($tools);
@@ -71,4 +66,17 @@ class FixToolsFilter extends AbstractJSONFilter {
 
 		return $changed;
 	}
+
+    private function processArrayRecursively($array) {
+        return array_map(function ($item) {
+            if (is_array($item)) {
+                return $this->processArrayRecursively($item);
+            } else {
+                $item = trim($item);
+                $item = $this->textCleaner->cleanUp($item, false);
+                return $item;
+            }
+        }, $array);
+    }
+
 }
