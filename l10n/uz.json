@@ -1,0 +1,18 @@
+{ "translations": {
+    "in %s" : " %s da",
+    "Tags" : "Tags",
+    "None" : "None",
+    "Edit" : "Tahrirlash",
+    "Save" : "Save",
+    "Search" : "Search",
+    "Categories" : "Kategoriyalar",
+    "Rename" : "Rename",
+    "Add" : "Add",
+    "Name" : "Name",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Tavsif",
+    "Loading…" : "Loading…"
+},"pluralForm" :"nplurals=1; plural=0;"
+}
