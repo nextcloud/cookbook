@@ -17,6 +17,7 @@ OC.L10N.register(
     "Cancel" : "Cancel",
     "OK" : "OK",
     "Description" : "Tavsif",
+    "Instructions" : "Ko'rsatmalar",
     "Loading…" : "Loading…"
 },
 "nplurals=1; plural=0;");
