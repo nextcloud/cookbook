@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "Retseptid",
     "in %s" : "kaustas %s",
     "Category" : "Kategooria",
     "Tags" : "Sildid",
