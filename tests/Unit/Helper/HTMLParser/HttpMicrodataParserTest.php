@@ -40,6 +40,10 @@ class HttpMicrodataParserTest extends TestCase {
 			'caseE' => ['caseE.html',true,'caseE.json'],
 
 			'caseIssue1209' => ['caseFix1209.html',true,'caseFix1209.json'],
+			'caseIssue1617a' => ['caseIssue1617a.html',true,'caseIssue1617a.json'],
+			'caseIssue1617b' => ['caseIssue1617b.html',true,'caseIssue1617b.json'],
+			'caseIssue1617c' => ['caseIssue1617c.html',true,'caseIssue1617c.json'],
+			'casePR2711' => ['case2711.html', true, 'case2711.json'],
 		];
 	}
 
@@ -66,12 +70,14 @@ class HttpMicrodataParserTest extends TestCase {
 			$jsonDest = file_get_contents(__DIR__ . "/res_Microdata/$jsonFile");
 			$expected = json_decode($jsonDest, true);
 
+			// $this->markTestSkipped();
+
 			// print_r(json_encode($res));
 
-			$this->assertTrue($valid);
+			$this->assertTrue($valid, 'Expected HtmlParsingException as the input was invalid. No exception was thrown.');
 			$this->assertEquals($expected, $res);
 		} catch (HtmlParsingException $ex) {
-			$this->assertFalse($valid);
+			$this->assertFalse($valid, 'Not expected HtmlParsingException was triggered.');
 		}
 	}
 
