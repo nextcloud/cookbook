@@ -567,6 +567,14 @@ class RecipeService {
 		return $this->userConfigHelper->getVisibleInfoBlocks();
 	}
 
+	public function getBrowserlessAddress() {
+		return $this->userConfigHelper->getBrowserlessAddress(); // Default to an empty string if not set
+	}
+
+	public function setBrowserlessAddress(string $address) {
+		$this->userConfigHelper->setBrowserlessAddress($address);
+	}
+
 	/**
 	 * Get recipe file contents as an array
 	 */
