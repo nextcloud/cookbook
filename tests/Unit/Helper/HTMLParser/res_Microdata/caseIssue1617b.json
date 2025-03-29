@@ -1,0 +1,32 @@
+{
+  "@type": "Recipe",
+  "@context": "http://schema.org",
+  "name": "Butter chicken",
+  "keywords": "Butter chicken, dania mięsne, obiad, Sylwester",
+  "recipeYield": "około 950 g dania (bez ryżu)",
+  "image": [
+    "https://cdn.aniagotuje.com/pictures/articles/2024/01/55155580-v-1500x1500.jpg"
+  ],
+  "recipeIngredient": [
+    "1 bardzo duża pierś z kurczaka - do 800 g",
+    "170 g kremowego jogurtu naturalnego - pół szklanki",
+    "2 ząbki czosnku - około 10 g",
+    "około 2 cm korzenia imbiru lub 1 łyżeczka suszonego w proszku",
+    "2 łyżki oliwy lub innego oleju do smażenia - około 20 ml",
+    "przyprawy: 1 płaska łyżka garam masala; po 1/4 łyżeczki kuminu i soli; po sporej szczypcie chili i kurkumy",
+    "1 duża cebula - do 250 g",
+    "250 g pomidorów krojonych bez skórki - mogą być z puszki",
+    "150 ml śmietanki kremówki 30 % - około 3/5 szklanki",
+    "5 ząbków czosnku - około 25 g",
+    "2 łyżki masła klarowanego - do 40 g",
+    "przyprawy: 1 płaska łyżka garam masala; po płaskiej łyżeczce imbiru, soli, cukru, kuminu; po pół płaskiej łyżeczki chili i mielonej kolendry"
+  ],
+  "recipeInstructions": [
+    "Krok 1: Zamarynuj kurczaka\n \n \n  Bardzo dużą pierś z kurczaka oczyść z żyłek, czy chrząstek, a następnie pokrój na kawałki nie mniejsze niż 2 cm. Do miski z mięsem dodaj około pół szklanki kremowego jogurtu naturalnego oraz dwa ząbki czosnku (obrane i przepuszczone przez praskę lub drobno posiekane). Tak samo przygotuj i dodaj około 2 cm korzenia imbiru (można zastąpić łyżeczką imbiru suszonego). Dodaj też 1 płaską łyżkę mieszanki przypraw garam masala, po 1/4 łyżeczki kuminu (kminu rzymskiego) i soli oraz po sporej szczypcie chili i kurkumy. \n    Całość dokładnie wymieszaj i odłóż obok na blacie, na godzinę. Jeśli planujesz szykować danie później to miskę trzymaj w lodówce - nawet przez całą noc (pod przykryciem). ",
+    "Krok 2: Usmaż kawałki mięsa\n \n \n  Miskę wyjmij wcześniej z lodówki, by mięso osiągnęło temperaturę pomieszczenia. Nagrzej dużą patelnię z grubym dnem. Wlej dwie łyżki oliwy lub innego oleju do smażenia. Na patelni kładź kawałki kurczaka (razem z marynatą) i smaż przez kilka minut na rumiano. Mięso może się mocniej zarumienić. Usmażone zdejmij na miskę i odstaw na bok. Z patelni usuń resztki po smażeniu i użyj jej do szykowania sosu (bez mycia). ",
+    "Krok 3: Szykuj sos\n \n \n  Na patelnię po mięsie wyłóż dwie solidne łyżki masła klarowanego. Cebulę obierz i pokrój w kostkę lub cienkie piórka i wyłóż na patelnię. Podsmażaj ją na średniej mocy palnika przez około 5 minut. Może się lekko zarumienić. Następnie wyłóż też obrane i przepuszczone przez praskę lub posiekane ząbki czosnku (5 sztuk). Całość wymieszaj i dodaj przyprawy: 1 płaska łyżka garam masala; po płaskiej łyżeczce imbiru, soli, cukru, kminu; po pół płaskiej łyżeczki chili i mielonej kolendry.\n    Od razu dodaj również 250 gramów pomidorów krojonych bez skórki (mogą być z puszki). Wymieszaj sos. Zredukuj moc palnika, by tylko lekko mrugał i gotuj go na patelni bez przykrywki jeszcze minimum 10-15 minut. Sos ma zgęstnieć.Porada: Jeśli masz suszoną kozieradkę, to możesz dodać szczyptę razem z innymi przyprawami. Uważaj przy dodawaniu chili do dania. Moc użytego chili w proszku bywa bardzo różna. Lepiej jest dać go mniej i w razie potrzeby dołożyć pod sam koniec szykowania butter chicken. ",
+    "Krok 4: Zmiksuj sos\n \n \n  Cały gorący sos umieść w malakserze i zmiksuj na gładko. Możesz tez użyć blendera ręcznego typu żyrafa. Patelni nie myj. ",
+    "Krok 5: Połącz składniki i gotuj\n \n \n  Zmiksowany sos ponownie umieść na patelni. Wlej 150 ml śmietanki kremówki 30 % (około 3/5 szklanki). Wyłóż również całe podsmażone mięso z miski (razem z sosem, który zebrał się na dnie miski). Wymieszaj butter chicken i gotuj na niskiej patelni przez około 10 minut. Sos jeszcze zgęstnieje i oblepi mięso. \n    Sprawdź smak gotowego dania i w razie potrzeby dodaj więcej wybranych przypraw. ",
+    "Krok 6: Dopraw i podawaj\n \n \n  Butter chicken posyp posiekaną kolendrą lub natką pietruszki i podawaj z gorącym ryżem lub z domowym chlebem Naan! Tutaj przepis na chlebek Naan. "
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@type": "Recipe",
+  "@context": "http://schema.org",
+  "name": "Eier-Curry",
+  "keywords": "Leben,Rezepte,Eier- & Mehlspeisen,Eier,Ernährungsformen,Vegetarische Rezepte,Rezepte nach Zutaten,Reis,Curry,Kokosmilch,Reisachwald",
+  "recipeYield": "4",
+  "recipeIngredient": [
+    "200 g Langkornreis",
+    "500 ml Wasser",
+    "etwas Salz",
+    "20 g Butter",
+    "6 Eier (Größe M)",
+    "2 Zwiebeln, rot",
+    "1 Knoblauchzehe",
+    "1 Stück Ingwer, ca. 2 cm",
+    "1 Chilischote",
+    "400 g gehackte Tomaten",
+    "400 ml Kokosmilch",
+    "30 g Butter",
+    "2 EL Currypulver",
+    "1 TL Kreuzkümmel, gemahlen",
+    "1 TL Koriander, gemahlen",
+    "1 TL Senfsamen",
+    "etwas Salz",
+    "1 EL Zucker",
+    "1 Bund Koriander oder Petersilie"
+  ],
+  "recipeInstructions": [
+    "1. Reis kalt abbrausen. Reis, Wasser und Salz in einen Topf geben, aufkochen lassen. Temperatur herunterschalten und ca. 20-25 Minuten quellen lassen. ,2. Eier anpieken und in kochendem Wasser ca. 7-8 Minuten wachsweich garen. Danach die Eier abgießen und kalt abbrausen. ,3. Die Schalen von Zwiebeln und Knoblauch abziehen. Zwiebeln fein würfeln, Knoblauch hacken. ,4. Ingwer schälen und ebenfalls fein hacken. Chilischote halbieren, entkernen und hacken. ,5. Butter erhitzen (wahlweise etwas Fett von der Kokosmilch verwenden). Zwiebeln darin andünsten bis goldgelb sind. ,6. Knoblauch, Chili und Ingwer zugeben und ebenfalls kurz andünsten. Danach Currypulver, Kreuzkümmel, Koriander und Senfsamen untermischen und erhitzen. Zucker darüberstreuen. Tomaten unterrühren und alles, abgedeckt, ca. 20 Minuten köcheln lassen. ,7. Deckel abnehmen, Kokosmilch unterrühren und ohne Deckel weitere ca. 10 Minuten köcheln. Mit Salz abschmecken. ,8. Eier schälen, halbieren, in die Soße geben und erwärmen. Koriander abbrausen, trockenschütteln und fein schneiden. ,9. Butter unter den Reis mischen. Koriander über das Curry streuen. Mit dem Reis anrichten und servieren."
+  ]
+}
