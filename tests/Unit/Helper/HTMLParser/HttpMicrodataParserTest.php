@@ -53,12 +53,13 @@ class HttpMicrodataParserTest extends TestCase {
 	 * @param mixed $filename
 	 * @param mixed $valid
 	 * @param mixed $jsonFile
+	 * @param bool $skipped
 	 */
 	public function testHTMLFile($filename, $valid, $jsonFile, $skipped = false): void {
-		if($skipped) {
+		if ($skipped) {
 			$this->markTestIncomplete();
 		}
-		
+
 		$l = $this->createStub(IL10N::class);
 
 		$parser = new HttpMicrodataParser($l);
