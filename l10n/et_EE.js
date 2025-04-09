@@ -24,6 +24,7 @@ OC.L10N.register(
     "Delete entry" : "Kustuta kirje",
     "Add" : "Lisa",
     "Name" : "Nimi",
+    "Filter name" : "Filtri nimi",
     "Clear" : "Tühjenda",
     "Apply" : "Rakenda",
     "Tools" : "Tööriistad",
