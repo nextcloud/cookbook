@@ -15,7 +15,7 @@ OC.L10N.register(
     "Clear" : "Netaat",
     "Apply" : "Lakaat",
     "Dismiss" : "Arrest",
-    "Cancel" : "Arrest",
+    "Cancel" : "Nullañ",
     "OK" : "OK",
     "Description" : "Diskrivadur",
     "URL" : "URL",
