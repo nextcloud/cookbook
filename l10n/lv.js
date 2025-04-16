@@ -16,7 +16,7 @@ OC.L10N.register(
     "Save" : "Saglabāt",
     "Search" : "Meklēt",
     "Print recipe" : "Drukāt recepti",
-    "Delete recipe" : "Dzēst recepti",
+    "Delete recipe" : "Izdzēst recepti",
     "Path to your recipe collection" : "Jūsu recepšu kopas saite",
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Tu esi pieteicies ar viesu kontu. Tādēļ nav ļauts izveidot patvaļīgas datnes un mapes šajā Nextcloud serverī. Lai varētu izmantot Recepšu grāmatas lietotni kā viesis, ir jānorāda mape, kurā visas receptes tiks glabātas. Ir nepieciešamas rakstīšanas tiesības šajā mapē.",
     "Failed to fetch categories" : "Neizdevās nolasīt kategorijas",
