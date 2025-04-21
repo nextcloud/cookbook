@@ -70,7 +70,7 @@ jobs:
                 run: ls -lh /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
                 
             -   name: Create release
-                uses: softprops/action-gh-release@v2.2.1
+                uses: softprops/action-gh-release@v2.2.2
                 id: release
                 with:
                     files: /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
