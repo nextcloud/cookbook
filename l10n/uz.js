@@ -13,6 +13,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Add" : "Add",
     "Name" : "Name",
+    "Order" : "Buyurtma",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
     "OK" : "OK",
