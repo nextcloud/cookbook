@@ -9,7 +9,7 @@ OC.L10N.register(
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Visų jūsų receptų biblioteka. Naudoja JSON failus pagal schema.org receptų formatą. Norėdami pridėti receptą į kolekciją, galite įdėti recepto URL adresą, o tuomet pateiktas internetinis puslapis bus išnagrinėtas ir atsisiųstas į bet kurį programėlės nustatymuose nurodytą aplanką.",
     "Category" : "Kategorija",
     "Recipe name" : "Recepto pavadinimas",
-    "Tags" : "Žymės",
+    "Tags" : "Žymos",
     "Search for recipes" : "Ieškoti receptų",
     "Are you sure you want to delete this recipe?" : "Ar tikrai norite ištrinti šį receptą?",
     "Delete failed" : "Ištrynimas nepavyko",
