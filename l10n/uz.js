@@ -1,7 +1,9 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "Retseptlar",
     "in %s" : " %s da",
+    "Category" : "Kategoriya",
     "Tags" : "Tags",
     "None" : "None",
     "Page not found" : "Sahifa topilmadi",

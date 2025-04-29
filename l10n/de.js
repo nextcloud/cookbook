@@ -92,8 +92,8 @@ OC.L10N.register(
     "Cannot access recipe folder." : "Auf den Rezeptordner konnte nicht zugegriffen werden.",
     "Select recipe folder" : "Rezeptordner auswählen",
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Du bist mit einem Gastkonto eingeloggt. Du bist nicht berechtigt, beliebige Dateien und Ordner auf dieser Nextcloud-Instanz zu erzeugen. Um die Cookbook-App als Gast nutzen zu können, musst du einen Ordner angeben, in dem alle Rezepte gespeichert werden. Du benötigst Schreibrechte für diesen Ordner.",
-    "Failed to load category {category} recipes" : "Fehler beim Laden der Rezepte aus Kategorie {category} ",
-    "Failed to update name of category \"{category}\"" : "Fehler beim Aktualisieren der Kategorie \"{category}\"",
+    "Failed to load category {category} recipes" : "Rezepte aus Kategorie {category} konnten nicht geladen werden",
+    "Failed to update name of category \"{category}\"" : "Name der Kategorie \"{category}\" konnte nicht aktualisiert werden",
     "The server reported an error. Please check." : "Der Server meldete einen Fehler. Bitte prüfen.",
     "Could not query the server. This might be a network problem." : "Server konnte nicht erreicht werden. Dies könnte ein Netzwerkproblem sein.",
     "Loading category recipes …" : "Lade Kategorie-Rezepte …",
@@ -212,7 +212,7 @@ OC.L10N.register(
     "Recipe image" : "Bild für das Rezept",
     "Cooking time is up!" : "Die Kochzeit ist vorbei!",
     "{item} copied to clipboard" : "{item} wurde in die Zwischenablage kopiert.",
-    "Copying {item} to clipboard failed" : "Fehler beim Kopieren von {item} in die Zwischenablage",
+    "Copying {item} to clipboard failed" : "{item} konnte nicht in die Zwischenablage kopiert werden",
     "ingredients" : "Zutaten",
     "Loading…" : "Lade …",
     "Search recipes with this keyword" : "Rezepte mit diesem Schlüsselwort suchen",
@@ -234,7 +234,7 @@ OC.L10N.register(
     "Unsaturated Fat" : "Ungesättigte Fettsäuren",
     "Trans Fat" : "Transfette",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Die Menge der Zutat kann aufgrund einer nicht unterstützen Syntax nicht neu berechnet werden. Bitte stelle sicher, dass die Syntax diesem Format folgt: Menge Einheit Zutat und dass eine bestimmte Anzahl von Portionen eingegegeben ist, damit diese Funktion korrekt funktioniert. Beispiele: 200 g Karotten oder 1 Prise Salz.",
-    "Failed to load recipes with keywords: {tags}" : "Fehler beim Laden der Rezepte mit Schlüsselwörter: {tags}",
-    "Failed to load search results" : "Fehler beim Laden der Suchergebnisse"
+    "Failed to load recipes with keywords: {tags}" : "Rezepte mit Schlüsselwörtern {tags} konnten nicht geladen werden",
+    "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
 },
 "nplurals=2; plural=(n != 1);");
