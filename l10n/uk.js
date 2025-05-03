@@ -44,6 +44,7 @@ OC.L10N.register(
     "Description" : "Опис",
     "URL" : "URL-адреса",
     "Image" : "Зображення",
+    "Instructions" : "Інструкції",
     "Loading…" : "Завантаження…",
     "Date created" : "Створено",
     "Last modified" : "Змінено",
