@@ -34,6 +34,7 @@ OC.L10N.register(
     "Description" : "Kirjeldus",
     "URL" : "URL",
     "Image" : "Pilt",
+    "Instructions" : "Juhend",
     "Loading…" : "Laadimine…",
     "Last modified" : "Viimati muudetud",
     "Copy ingredients" : "Kopeeri koostisosad"
