@@ -99,6 +99,7 @@ OC.L10N.register(
     "Cancel" : "Katkesta",
     "OK" : "Sobib",
     "The page was not found" : "Lehte ei õnnestu leida",
+    "You have unsaved changes! Do you still want to leave?" : "Sul on salvestamata muudatusi! Kas oled kindel et soovid lahkuda?",
     "Calories" : "Kaloreid",
     "E.g.: 450 kcal (amount & unit)" : "Nt.: 450 kcal (kogus + ühik)",
     "Carbohydrate content" : "Süsivesikute sisaldus",
