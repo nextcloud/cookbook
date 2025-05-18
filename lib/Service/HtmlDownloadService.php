@@ -13,10 +13,12 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
-class HtmlDownloadService {
+class HtmlDownloadService
+{
 	/**
 	 * @var array
 	 */
@@ -44,6 +46,9 @@ class HtmlDownloadService {
 	/** @var DownloadEncodingHelper */
 	private $downloadEncodingHelper;
 
+	/** @var UserConfigHelper */
+	private $userConfigHelper;
+
 	/**
 	 * @var DOMDocument
 	 */
@@ -58,6 +63,7 @@ class HtmlDownloadService {
 		DownloadHelper $downloadHelper,
 		EncodingGuessingHelper $encodingGuesser,
 		DownloadEncodingHelper $downloadEncodingHelper,
+		UserConfigHelper $userConfigHelper,
 	) {
 		$this->htmlFilters = [
 			$htmlEntityDecodeFilter,
@@ -69,6 +75,7 @@ class HtmlDownloadService {
 		$this->downloadHelper = $downloadHelper;
 		$this->encodingGuesser = $encodingGuesser;
 		$this->downloadEncodingHelper = $downloadEncodingHelper;
+		$this->userConfigHelper = $userConfigHelper;
 	}
 
 	/**
@@ -81,8 +88,18 @@ class HtmlDownloadService {
 	 * @return int The state indicating the result of the parsing (@see HtmlToDomParser)
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
-	public function downloadRecipe(string $url): int {
-		$html = $this->fetchHtmlPage($url);
+	public function downloadRecipe(string $url): int
+	{
+		$browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();
+
+		// Check if a browserless address is available
+		if ($browserlessAddress) {
+			// Use Browserless API if the address is set
+			$html = $this->fetchHtmlPageUsingBrowserless($url);
+		} else {
+			// Otherwise, use the standard method
+			$html = $this->fetchHtmlPage($url);
+		}
 
 		// Filter the HTML code
 		/** @var AbstractHtmlFilter $filter */
@@ -100,8 +117,74 @@ class HtmlDownloadService {
 	 * Get the HTML docuemnt after it has been downloaded and parsed with downloadRecipe()
 	 * @return ?DOMDocument The loaded HTML document or null if document could not be loaded successfully
 	 */
-	public function getDom(): ?DOMDocument {
+	public function getDom(): ?DOMDocument
+	{
 		return $this->dom;
+	}
+
+	/**
+	 * Fetch an HTML page from Browserless.io or self hosted Browserless (rendered HTML)
+	 *
+	 * @param string $url The URL of the page to fetch
+	 *
+	 * @throws ImportException If the given URL was not fetched or parsed
+	 *
+	 * @return string The rendered HTML content as a plain string
+	 */
+	private function fetchHtmlPageUsingBrowserless(string $url): string
+	{
+		// Get the browserless address from configuration or setting
+		$browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();
+
+		if (empty($browserlessAddress)) {
+			// Handle the case where Browserless address is not configured
+			$this->logger->error('Browserless address is not set.');
+			throw new ImportException($this->l->t('Browserless address is not configured.'));
+		}
+
+		// API endpoint for Browserless.io
+		$apiEndpoint = $browserlessAddress . '/chromium/content?token=AABBCCDD';  // Use the dynamic address
+
+		// Prepare the data to be sent in the POST request
+		$data = json_encode([
+			'url' => $url,
+			'userAgent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0'
+		]);
+
+		$opt = [
+			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+		];
+
+		$langCode = $this->l->getLocaleCode();
+		$langCode = str_replace('_', '-', $langCode);
+		$headers = [
+			"Accept-Language: $langCode,en;q=0.5",
+			'Content-Type: application/json',
+			'Cache-Control: no-cache'
+		];
+
+		try {
+			$this->downloadHelper->downloadFile($apiEndpoint, $opt, $headers);
+		} catch (NoDownloadWasCarriedOutException $ex) {
+			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), 0, $ex);
+		}
+
+		$status = $this->downloadHelper->getStatus();
+
+		if ($status < 200 || $status >= 300) {
+			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
+		}
+
+		$html = $this->downloadHelper->getContent();
+
+		// Check if the response was successful
+		if ($html === false) {
+			$this->logger->error('Failed to fetch rendered HTML from Browserless.io');
+			throw new ImportException($this->l->t('Failed to fetch rendered HTML.'));
+		}
+
+		return $html;
 	}
 
 	/**
@@ -113,7 +196,8 @@ class HtmlDownloadService {
 	 *
 	 * @return string The content of the page as a plain string
 	 */
-	private function fetchHtmlPage(string $url): string {
+	private function fetchHtmlPage(string $url): string
+	{
 		$host = parse_url($url);
 
 		if (!$host) {

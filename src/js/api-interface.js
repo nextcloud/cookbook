@@ -108,6 +108,10 @@ function updateVisibleInfoBlocks(visibleInfoBlocks) {
     return instance.post(`${baseUrl}/config`, { visibleInfoBlocks });
 }
 
+function updateBrowserlessAddress(newAddress) {
+    return instance.post(`${baseUrl}/config`, { browserless_address: newAddress });
+}
+
 function reindex() {
     return instance.post(`${baseUrl}/reindex`);
 }
@@ -145,6 +149,9 @@ export default {
         },
         visibleInfoBlocks: {
             update: updateVisibleInfoBlocks,
+        },
+        browserlessAddress: {
+            update: updateBrowserlessAddress,
         },
     },
 };

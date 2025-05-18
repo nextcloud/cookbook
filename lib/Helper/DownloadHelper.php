@@ -67,6 +67,7 @@ class DownloadHelper {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_WRITEHEADER, $hp);
+		curl_setopt($ch, CURLOPT_VERBOSE, true);
 
 		if (!empty($headers)) {
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -74,6 +75,11 @@ class DownloadHelper {
 		curl_setopt_array($ch, $options);
 
 		$ret = curl_exec($ch);
+		$err = curl_error($ch);
+
+		if ($err) {
+			echo 'cURL Error #:' . $err;
+		}
 
 		if ($ret === false) {
 			$ex = new NoDownloadWasCarriedOutException($this->l->t('Downloading of a file failed returned the following error message: %s', [curl_error($ch)]));

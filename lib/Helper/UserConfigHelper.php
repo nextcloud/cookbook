@@ -10,7 +10,8 @@ use OCP\IL10N;
 /**
  * This class allows access to the per-user configuration of the app
  */
-class UserConfigHelper {
+class UserConfigHelper
+{
 	/**
 	 * @var ?string
 	 */
@@ -41,13 +42,15 @@ class UserConfigHelper {
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
+	protected const KEY_BROWSERLESS_ADDRESS = 'browserless_address';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
 	 *
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	private function ensureUserIsLoggedIn(): void {
+	private function ensureUserIsLoggedIn(): void
+	{
 		if (is_null($this->userId)) {
 			throw new UserNotLoggedInException($this->l->t('The user is not logged in. No user configuration can be obtained.'));
 		}
@@ -60,7 +63,8 @@ class UserConfigHelper {
 	 * @return string The resulting value or '' if the key was not found
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	private function getRawValue(string $key): string {
+	private function getRawValue(string $key): string
+	{
 		$this->ensureUserIsLoggedIn();
 		return $this->config->getUserValue($this->userId, Application::APP_ID, $key);
 	}
@@ -72,7 +76,8 @@ class UserConfigHelper {
 	 * @param string $value The value of the config entry
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	private function setRawValue(string $key, string $value): void {
+	private function setRawValue(string $key, string $value): void
+	{
 		$this->ensureUserIsLoggedIn();
 		$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 	}
@@ -83,7 +88,8 @@ class UserConfigHelper {
 	 * @return int The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getLastIndexUpdate(): int {
+	public function getLastIndexUpdate(): int
+	{
 		$rawValue = $this->getRawValue(self::KEY_LAST_INDEX_UPDATE);
 		if ($rawValue === '') {
 			return 0;
@@ -98,7 +104,8 @@ class UserConfigHelper {
 	 * @param int $value The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setLastIndexUpdate(int $value): void {
+	public function setLastIndexUpdate(int $value): void
+	{
 		$this->setRawValue(self::KEY_LAST_INDEX_UPDATE, strval($value));
 	}
 
@@ -108,7 +115,8 @@ class UserConfigHelper {
 	 * @return int The number of seconds to wait before a new rescan is triggered
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getUpdateInterval(): int {
+	public function getUpdateInterval(): int
+	{
 		$rawValue = $this->getRawValue(self::KEY_UPDATE_INTERVAL);
 		if ($rawValue === '') {
 			return 5;
@@ -123,8 +131,9 @@ class UserConfigHelper {
 	 * @param int $value The number of seconds to wait at least between rescans
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setUpdateInterval(int $value): void {
-		$this->setRawValue(self::KEY_UPDATE_INTERVAL, (string)$value);
+	public function setUpdateInterval(int $value): void
+	{
+		$this->setRawValue(self::KEY_UPDATE_INTERVAL, (string) $value);
 	}
 
 	/**
@@ -133,7 +142,8 @@ class UserConfigHelper {
 	 * @return bool true, if the image should be printed
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getPrintImage(): bool {
+	public function getPrintImage(): bool
+	{
 		$rawValue = $this->getRawValue(self::KEY_PRINT_IMAGE);
 		if ($rawValue === '') {
 			return true;
@@ -148,7 +158,8 @@ class UserConfigHelper {
 	 * @param bool $value true if the image should be printed
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setPrintImage(bool $value): void {
+	public function setPrintImage(bool $value): void
+	{
 		if ($value) {
 			$this->setRawValue(self::KEY_PRINT_IMAGE, '1');
 		} else {
@@ -162,7 +173,8 @@ class UserConfigHelper {
 	 * @return array<string, bool> keys: info block ids, values: display state
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getVisibleInfoBlocks(): array {
+	public function getVisibleInfoBlocks(): array
+	{
 		$rawValue = $this->getRawValue(self::KEY_VISIBLE_INFO_BLOCKS);
 
 		if ($rawValue === '') {
@@ -184,7 +196,8 @@ class UserConfigHelper {
 	 * @param array<string, bool> keys: info block ids, values: display state
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setVisibleInfoBlocks(array $visibleInfoBlocks): void {
+	public function setVisibleInfoBlocks(array $visibleInfoBlocks): void
+	{
 		$this->setRawValue(self::KEY_VISIBLE_INFO_BLOCKS, json_encode($visibleInfoBlocks));
 	}
 
@@ -200,7 +213,8 @@ class UserConfigHelper {
 	 * @return string The name of the folder within the users files
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getFolderName(): string {
+	public function getFolderName(): string
+	{
 		$rawValue = $this->getRawValue(self::KEY_FOLDER);
 
 		if ($rawValue === '') {
@@ -223,7 +237,32 @@ class UserConfigHelper {
 	 * @param string $value The name of the folder within the user's files
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setFolderName(string $value): void {
+	public function setFolderName(string $value): void
+	{
 		$this->setRawValue(self::KEY_FOLDER, $value);
+	}
+
+	/**
+	 * Gets the browserless address from the configuration
+	 *
+	 * @return string The browserless address
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getBrowserlessAddress(): string
+	{
+		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_ADDRESS);
+
+		return $rawValue;
+	}
+
+	/**
+	 * Sets the browserless address in the configuration
+	 *
+	 * @param string $address The browserless address to store
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setBrowserlessAddress(string $address): void
+	{
+		$this->setRawValue(self::KEY_BROWSERLESS_ADDRESS, $address);
 	}
 }

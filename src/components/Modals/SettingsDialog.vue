@@ -158,6 +158,25 @@
             </fieldset>
         </NcAppSettingsSection>
         <NcAppSettingsSection
+            id="settings-browserless-address"
+            :name="t('cookbook', 'Browserless Address')"
+            class="app-settings-section"
+        >
+            <fieldset>
+                <ul>
+                    <li>
+                        <label class="settings-input">{{ t('cookbook', 'Browserless Address') }}</label>
+                        <input
+                            type="text"
+                            v-model="browserlessAddress"
+                            class="input settings-input"
+                            :placeholder="t('cookbook', 'Enter Browserless address (e.g., http://localhost:3000)')"
+                        />
+                    </li>
+                </ul>
+            </fieldset>
+        </NcAppSettingsSection>
+        <NcAppSettingsSection
             id="debug"
             :name="t('cookbook', 'Frontend debug settings')"
             class="app-settings-section"
@@ -250,6 +269,10 @@ const scanningLibrary = ref(false);
  * @type {import('vue').Ref<number>}
  */
 const updateInterval = ref(0);
+/**
+ * @type {import('vue').Ref<string>}
+ */
+const browserlessAddress = ref('');
 /**
  * @type {import('vue').Ref<Array>}
  */
@@ -384,6 +407,24 @@ const pickRecipeFolder = () => {
         });
 };
 
+watch(
+    () => browserlessAddress.value,
+    async (newVal, oldVal) => {
+        if (!writeChanges.value) {
+            return;
+        }
+        try {
+            await api.config.browserlessAddress.update(newVal);
+            await store.dispatch('refreshConfig');
+        } catch {
+            await showSimpleAlertModal(
+                t('cookbook', 'Could not save Browserless address'),
+            );
+            browserlessAddress.value = oldVal; // Revert if save fails
+        }
+    }
+);
+
 /**
  * Reindex all recipes
  */
@@ -435,6 +476,7 @@ const handleShowSettings = () => {
         store.state.localSettings.showFiltersInRecipeList;
     updateInterval.value = config.update_interval;
     recipeFolder.value = config.folder;
+    browserlessAddress.value = config.browserless_address;
 
     nextTick(() => {
         writeChanges.value = true;
@@ -469,5 +511,9 @@ export default {
 #app-settings .button.disable {
     display: block;
     width: 100%;
+}
+
+#settings-section_settings-browserless-address input {
+    width: auto;
 }
 </style>
