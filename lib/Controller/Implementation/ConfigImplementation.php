@@ -9,7 +9,8 @@ use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
-class ConfigImplementation {
+class ConfigImplementation
+{
 	/** @var RecipeService */
 	private $service;
 	/** @var DbCacheService */
@@ -32,13 +33,15 @@ class ConfigImplementation {
 	}
 
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visibleInfoBlocks';
+	protected const KEY_BROWSERLESS_ADDRESS = 'browserless_address';
 
 	/**
 	 * Get the current configuration of the app
 	 *
 	 * @return JSONResponse
 	 */
-	public function list() {
+	public function list()
+	{
 		$this->dbCacheService->triggerCheck();
 
 		return new JSONResponse([
@@ -46,6 +49,7 @@ class ConfigImplementation {
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
 			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
+			self::KEY_BROWSERLESS_ADDRESS => $this->service->getBrowserlessAddress(),
 		], Http::STATUS_OK);
 	}
 
@@ -59,7 +63,8 @@ class ConfigImplementation {
 	 *
 	 * @return JSONResponse
 	 */
-	public function config() {
+	public function config()
+	{
 		$data = $this->restParser->getParameters();
 
 		if (isset($data['folder'])) {
@@ -72,11 +77,15 @@ class ConfigImplementation {
 		}
 
 		if (isset($data['print_image'])) {
-			$this->service->setPrintImage((bool)$data['print_image']);
+			$this->service->setPrintImage((bool) $data['print_image']);
 		}
 
 		if (isset($data[self::KEY_VISIBLE_INFO_BLOCKS])) {
 			$this->service->setVisibleInfoBlocks($data[self::KEY_VISIBLE_INFO_BLOCKS]);
+		}
+
+		if (isset($data[self::KEY_BROWSERLESS_ADDRESS])) {
+			$this->service->setBrowserlessAddress($data[self::KEY_BROWSERLESS_ADDRESS]);
 		}
 
 		$this->dbCacheService->triggerCheck();
@@ -89,7 +98,8 @@ class ConfigImplementation {
 	 *
 	 * @return JSONResponse
 	 */
-	public function reindex() {
+	public function reindex()
+	{
 		$this->dbCacheService->updateCache();
 
 		return new JSONResponse('Search index rebuilt successfully', Http::STATUS_OK);
