@@ -112,6 +112,10 @@ function updateBrowserlessAddress(newAddress) {
     return instance.post(`${baseUrl}/config`, { browserless_address: newAddress });
 }
 
+function updateBrowserlessToken(newToken) {
+    return instance.post(`${baseUrl}/config`, { browserless_token: newToken });
+}
+
 function reindex() {
     return instance.post(`${baseUrl}/reindex`);
 }
@@ -152,6 +156,9 @@ export default {
         },
         browserlessAddress: {
             update: updateBrowserlessAddress,
+        },
+        browserlessToken: {
+            update: updateBrowserlessToken,
         },
     },
 };

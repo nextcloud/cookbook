@@ -43,6 +43,7 @@ class UserConfigHelper
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
 	protected const KEY_BROWSERLESS_ADDRESS = 'browserless_address';
+	protected const KEY_BROWSERLESS_TOKEN = 'browserless_token';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -264,5 +265,29 @@ class UserConfigHelper
 	public function setBrowserlessAddress(string $address): void
 	{
 		$this->setRawValue(self::KEY_BROWSERLESS_ADDRESS, $address);
+	}
+
+	/**
+	 * Gets the browserless token from the configuration
+	 *
+	 * @return string The browserless token
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getBrowserlessToken(): string
+	{
+		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_TOKEN);
+
+		return $rawValue;
+	}
+
+	/**
+	 * Sets the browserless token in the configuration
+	 *
+	 * @param string $token The browserless token to store
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setBrowserlessToken(string $token): void
+	{
+		$this->setRawValue(self::KEY_BROWSERLESS_TOKEN, $token);
 	}
 }

@@ -158,8 +158,8 @@
             </fieldset>
         </NcAppSettingsSection>
         <NcAppSettingsSection
-            id="settings-browserless-address"
-            :name="t('cookbook', 'Browserless Address')"
+            id="settings-browserless-config"
+            :name="t('cookbook', 'Browserless Configuration')"
             class="app-settings-section"
         >
             <fieldset>
@@ -167,10 +167,19 @@
                     <li>
                         <label class="settings-input">{{ t('cookbook', 'Browserless Address') }}</label>
                         <input
-                            type="text"
                             v-model="browserlessAddress"
+                            type="text"
                             class="input settings-input"
                             :placeholder="t('cookbook', 'Enter Browserless address (e.g., http://localhost:3000)')"
+                        />
+                    </li>
+                    <li>
+                        <label class="settings-input">{{ t('cookbook', 'Browserless Token') }}</label>
+                        <input
+                            v-model="browserlessToken"
+                            type="text"
+                            class="input settings-input"
+                            :placeholder="t('cookbook', 'Enter Browserless Token (API Key)')"
                         />
                     </li>
                 </ul>
@@ -273,6 +282,10 @@ const updateInterval = ref(0);
  * @type {import('vue').Ref<string>}
  */
 const browserlessAddress = ref('');
+/**
+ * @type {import('vue').Ref<string>}
+ */
+const browserlessToken = ref('');
 /**
  * @type {import('vue').Ref<Array>}
  */
@@ -425,6 +438,24 @@ watch(
     }
 );
 
+watch(
+    () => browserlessToken.value,
+    async (newVal, oldVal) => {
+        if (!writeChanges.value) {
+            return;
+        }
+        try {
+            await api.config.browserlessToken.update(newVal);
+            await store.dispatch('refreshConfig');
+        } catch {
+            await showSimpleAlertModal(
+                t('cookbook', 'Could not save Browserless address'),
+            );
+            browserlessToken.value = oldVal; // Revert if save fails
+        }
+    }
+);
+
 /**
  * Reindex all recipes
  */
@@ -477,6 +508,7 @@ const handleShowSettings = () => {
     updateInterval.value = config.update_interval;
     recipeFolder.value = config.folder;
     browserlessAddress.value = config.browserless_address;
+    browserlessToken.value = config.browserless_token;
 
     nextTick(() => {
         writeChanges.value = true;
@@ -513,7 +545,7 @@ export default {
     width: 100%;
 }
 
-#settings-section_settings-browserless-address input {
+#settings-section_settings-browserless-config input {
     width: auto;
 }
 </style>
