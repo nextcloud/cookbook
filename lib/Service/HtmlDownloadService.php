@@ -135,6 +135,7 @@ class HtmlDownloadService
 	{
 		// Get the browserless address from configuration or setting
 		$browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();
+		$browserlessToken = $this->userConfigHelper->getBrowserlessToken();
 
 		if (empty($browserlessAddress)) {
 			// Handle the case where Browserless address is not configured
@@ -142,41 +143,38 @@ class HtmlDownloadService
 			throw new ImportException($this->l->t('Browserless address is not configured.'));
 		}
 
+		if (empty($browserlessToken)) {
+			// Handle the case where Browserless token is not configured
+			$this->logger->error('Browserless token is not set.');
+			throw new ImportException($this->l->t('Browserless token is not configured.'));
+		}
+
 		// API endpoint for Browserless.io
-		$apiEndpoint = $browserlessAddress . '/chromium/content?token=AABBCCDD';  // Use the dynamic address
+		$apiEndpoint = $browserlessAddress . '/chromium/content?token=' . $browserlessToken;  // Use the dynamic address
+
+		$langCode = $this->l->getLocaleCode();
+		$langCode = str_replace('_', '-', $langCode);
 
 		// Prepare the data to be sent in the POST request
 		$data = json_encode([
 			'url' => $url,
-			'userAgent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0'
+			'userAgent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0',
+			'setExtraHTTPHeaders' => [
+				'Accept-Language' => "$langCode,en;q=0.5",
+			],
 		]);
 
 		$opt = [
+			CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0',
 			CURLOPT_POSTFIELDS => $data,
 			CURLOPT_CUSTOMREQUEST => 'POST',
 		];
 
-		$langCode = $this->l->getLocaleCode();
-		$langCode = str_replace('_', '-', $langCode);
 		$headers = [
-			"Accept-Language: $langCode,en;q=0.5",
 			'Content-Type: application/json',
-			'Cache-Control: no-cache'
 		];
 
-		try {
-			$this->downloadHelper->downloadFile($apiEndpoint, $opt, $headers);
-		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), 0, $ex);
-		}
-
-		$status = $this->downloadHelper->getStatus();
-
-		if ($status < 200 || $status >= 300) {
-			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
-		}
-
-		$html = $this->downloadHelper->getContent();
+		$html = $this->fetchContent($apiEndpoint, $opt, $headers);
 
 		// Check if the response was successful
 		if ($html === false) {
@@ -227,8 +225,21 @@ class HtmlDownloadService
 			'TE: trailers'
 		];
 
+		$html = $this->fetchContent($url, $opt, $headers);
+
 		try {
-			$this->downloadHelper->downloadFile($url, $opt, $headers);
+			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
+			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
+		} catch (CouldNotGuessEncodingException $ex) {
+			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
+		}
+
+		return $html;
+	}
+
+	private function fetchContent(string $url, array $options, array $headers): string {
+		try {
+			$this->downloadHelper->downloadFile($url, $options, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
 			throw new ImportException($this->l->t('Exception while downloading recipe from %s.', [$url]), 0, $ex);
 		}
@@ -239,15 +250,6 @@ class HtmlDownloadService
 			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
 		}
 
-		$html = $this->downloadHelper->getContent();
-
-		try {
-			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
-			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
-		} catch (CouldNotGuessEncodingException $ex) {
-			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
-		}
-
-		return $html;
+		return $this->downloadHelper->getContent();
 	}
 }

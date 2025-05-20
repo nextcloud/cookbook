@@ -601,6 +601,16 @@ class RecipeService
 		$this->userConfigHelper->setBrowserlessAddress($address);
 	}
 
+	public function getBrowserlessToken()
+	{
+		return $this->userConfigHelper->getBrowserlessToken();
+	}
+
+	public function setBrowserlessToken(string $token)
+	{
+		$this->userConfigHelper->setBrowserlessToken($token);
+	}
+
 	/**
 	 * Get recipe file contents as an array
 	 */
