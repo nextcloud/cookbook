@@ -8,6 +8,7 @@ use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
 use OCA\Cookbook\Helper\DownloadEncodingHelper;
 use OCA\Cookbook\Helper\DownloadHelper;
+use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
@@ -47,6 +48,9 @@ class HtmlDownloadServiceTest extends TestCase {
 	/** @var DownloadEncodingHelper|MockObject */
 	private $downloadEncodingHelper;
 
+	/** @var \OCA\Cookbook\Helper\UserConfigHelper|MockObject */
+	private $userConfigHelper;
+
 	/**
 	 * @var HtmlDownloadService
 	 */
@@ -73,10 +77,11 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->downloadHelper = $this->createMock(DownloadHelper::class);
 		$this->encodingGuesser = $this->createMock(EncodingGuessingHelper::class);
 		$this->downloadEncodingHelper = $this->createMock(DownloadEncodingHelper::class);
+		$this->userConfigHelper = $this->createMock(UserConfigHelper::class);
 
 		$this->sut = new HtmlDownloadService(
 			$this->htmlEntityDecodeFilter, $this->htmlEncodingFilter, $this->il10n, $logger, $this->htmlParser,
-			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper);
+			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper, $this->userConfigHelper);
 	}
 
 	public function testDownloadInvalidUrl() {

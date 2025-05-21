@@ -42,8 +42,7 @@ class UserConfigHelper
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
-	protected const KEY_BROWSERLESS_ADDRESS = 'browserless_address';
-	protected const KEY_BROWSERLESS_TOKEN = 'browserless_token';
+	protected const KEY_BROWSERLESS_CONFIG = 'browserless_config';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -244,50 +243,34 @@ class UserConfigHelper
 	}
 
 	/**
-	 * Gets the browserless address from the configuration
+	 * Gets the browserless config from the configuration
 	 *
-	 * @return string The browserless address
+	 * @return array<string, bool> keys: url and token, values: url and token
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getBrowserlessAddress(): string
+	public function getBrowserlessConfig(): array
 	{
-		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_ADDRESS);
+		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_CONFIG);
 
-		return $rawValue;
+		if ($rawValue === '') {
+			return [
+				'url' => null,
+				'token' => null,
+			];
+		}
+
+		return json_decode($rawValue, true);
 	}
 
 	/**
-	 * Sets the browserless address in the configuration
+	 * Sets the browserless config in the configuration
 	 *
-	 * @param string $address The browserless address to store
+	 * @param array<string, bool> keys: url and token, values: url and token
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setBrowserlessAddress(string $address): void
+	public function setBrowserlessConfig(array $data): void
 	{
-		$this->setRawValue(self::KEY_BROWSERLESS_ADDRESS, $address);
+		$this->setRawValue(self::KEY_BROWSERLESS_CONFIG, json_encode($data));
 	}
 
-	/**
-	 * Gets the browserless token from the configuration
-	 *
-	 * @return string The browserless token
-	 * @throws UserNotLoggedInException if no user is logged in
-	 */
-	public function getBrowserlessToken(): string
-	{
-		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_TOKEN);
-
-		return $rawValue;
-	}
-
-	/**
-	 * Sets the browserless token in the configuration
-	 *
-	 * @param string $token The browserless token to store
-	 * @throws UserNotLoggedInException if no user is logged in
-	 */
-	public function setBrowserlessToken(string $token): void
-	{
-		$this->setRawValue(self::KEY_BROWSERLESS_TOKEN, $token);
-	}
 }

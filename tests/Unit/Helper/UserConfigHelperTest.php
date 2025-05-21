@@ -162,4 +162,28 @@ class UserConfigHelperTest extends TestCase {
 		$this->expectException(UserNotLoggedInException::class);
 		$this->dut->getFolderName();
 	}
+
+	public function testGetBrowserlessConfig() {
+		$this->config->expects($this->once())->method('setUserValue')->with(
+			$this->userId, 'cookbook', 'browserless_config',
+			json_encode([
+				'url' => 'https://example.com',
+				'token' => 'token',
+			])
+		);
+		$this->dut->setBrowserlessConfig([
+			'url' => 'https://example.com',
+			'token' => 'token',
+		]);
+
+		$this->config->expects($this->once())->method('getUserValue')
+			->with($this->userId, 'cookbook', 'browserless_config')
+			->willReturn(json_encode([
+				'url' => 'https://example.com',
+				'token' => 'token',
+			]));
+
+		$this->assertEquals(['url' => 'https://example.com', 'token' => 'token'], $this->dut->getBrowserlessConfig());
+
+	}
 }

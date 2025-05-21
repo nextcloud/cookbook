@@ -591,24 +591,22 @@ class RecipeService
 		return $this->userConfigHelper->getVisibleInfoBlocks();
 	}
 
-	public function getBrowserlessAddress()
+	/**
+	 * Get browserless configuration
+	 * @return array<string, bool> keys: url and token, values: url and token
+	 */
+	public function getBrowserlessConfig(): array
 	{
-		return $this->userConfigHelper->getBrowserlessAddress();
+		return $this->userConfigHelper->getBrowserlessConfig();
 	}
 
-	public function setBrowserlessAddress(string $address)
+	/**
+	 * Sets browserless configuration.
+	 * @param array<string, bool> keys: url and token, values: url and token
+	 */
+	public function setBrowserlessConfig(array $data)
 	{
-		$this->userConfigHelper->setBrowserlessAddress($address);
-	}
-
-	public function getBrowserlessToken()
-	{
-		return $this->userConfigHelper->getBrowserlessToken();
-	}
-
-	public function setBrowserlessToken(string $token)
-	{
-		$this->userConfigHelper->setBrowserlessToken($token);
+		$this->userConfigHelper->setBrowserlessConfig($data);
 	}
 
 	/**
