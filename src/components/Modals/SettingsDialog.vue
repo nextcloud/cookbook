@@ -165,12 +165,12 @@
             <fieldset>
                 <ul>
                     <li>
-                        <label class="settings-input">{{ t('cookbook', 'Browserless Address') }}</label>
+                        <label class="settings-input">{{ t('cookbook', 'Browserless Configuration') }}</label>
                         <input
-                            v-model="browserlessAddress"
+                            v-model="browserlessUrl"
                             type="text"
                             class="input settings-input"
-                            :placeholder="t('cookbook', 'Enter Browserless address (e.g., http://localhost:3000)')"
+                            :placeholder="t('cookbook', 'Enter Browserless url (e.g., http://localhost:3000)')"
                         />
                     </li>
                     <li>
@@ -281,7 +281,7 @@ const updateInterval = ref(0);
 /**
  * @type {import('vue').Ref<string>}
  */
-const browserlessAddress = ref('');
+const browserlessUrl = ref('');
 /**
  * @type {import('vue').Ref<string>}
  */
@@ -421,19 +421,19 @@ const pickRecipeFolder = () => {
 };
 
 watch(
-    () => browserlessAddress.value,
+    () => browserlessUrl.value,
     async (newVal, oldVal) => {
         if (!writeChanges.value) {
             return;
         }
         try {
-            await api.config.browserlessAddress.update(newVal);
+            await api.config.browserlessConfig.update({'url': newVal, 'token': browserlessToken.value});
             await store.dispatch('refreshConfig');
         } catch {
             await showSimpleAlertModal(
-                t('cookbook', 'Could not save Browserless address'),
+                t('cookbook', 'Could not save Browserless url'),
             );
-            browserlessAddress.value = oldVal; // Revert if save fails
+            browserlessUrl.value = oldVal; // Revert if save fails
         }
     }
 );
@@ -445,11 +445,11 @@ watch(
             return;
         }
         try {
-            await api.config.browserlessToken.update(newVal);
+            await api.config.browserlessConfig.update({'token': newVal, 'url': browserlessUrl.value});
             await store.dispatch('refreshConfig');
         } catch {
             await showSimpleAlertModal(
-                t('cookbook', 'Could not save Browserless address'),
+                t('cookbook', 'Could not save Browserless token'),
             );
             browserlessToken.value = oldVal; // Revert if save fails
         }
@@ -507,8 +507,8 @@ const handleShowSettings = () => {
         store.state.localSettings.showFiltersInRecipeList;
     updateInterval.value = config.update_interval;
     recipeFolder.value = config.folder;
-    browserlessAddress.value = config.browserless_address;
-    browserlessToken.value = config.browserless_token;
+    browserlessUrl.value = config.browserless_config.url;
+    browserlessToken.value = config.browserless_config.token;
 
     nextTick(() => {
         writeChanges.value = true;

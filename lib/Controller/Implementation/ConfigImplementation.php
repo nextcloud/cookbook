@@ -33,8 +33,7 @@ class ConfigImplementation
 	}
 
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visibleInfoBlocks';
-	protected const KEY_BROWSERLESS_ADDRESS = 'browserless_address';
-	protected const KEY_BROWSERLESS_TOKEN = 'browserless_token';
+	protected const KEY_BROWSERLESS_CONFIG = 'browserless_config';
 
 	/**
 	 * Get the current configuration of the app
@@ -50,8 +49,7 @@ class ConfigImplementation
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
 			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
-			self::KEY_BROWSERLESS_ADDRESS => $this->service->getBrowserlessAddress(),
-			self::KEY_BROWSERLESS_TOKEN => $this->service->getBrowserlessToken(),
+			self::KEY_BROWSERLESS_CONFIG => $this->service->getBrowserlessConfig(),
 		], Http::STATUS_OK);
 	}
 
@@ -86,12 +84,8 @@ class ConfigImplementation
 			$this->service->setVisibleInfoBlocks($data[self::KEY_VISIBLE_INFO_BLOCKS]);
 		}
 
-		if (isset($data[self::KEY_BROWSERLESS_ADDRESS])) {
-			$this->service->setBrowserlessAddress($data[self::KEY_BROWSERLESS_ADDRESS]);
-		}
-
-		if (isset($data[self::KEY_BROWSERLESS_TOKEN])) {
-			$this->service->setBrowserlessToken($data[self::KEY_BROWSERLESS_TOKEN]);
+		if (isset($data[self::KEY_BROWSERLESS_CONFIG])) {
+			$this->service->setBrowserlessConfig($data[self::KEY_BROWSERLESS_CONFIG]);
 		}
 
 		$this->dbCacheService->triggerCheck();

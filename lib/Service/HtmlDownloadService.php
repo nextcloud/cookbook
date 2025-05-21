@@ -90,11 +90,11 @@ class HtmlDownloadService
 	 */
 	public function downloadRecipe(string $url): int
 	{
-		$browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();
+		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
 
-		// Check if a browserless address is available
-		if ($browserlessAddress) {
-			// Use Browserless API if the address is set
+		// Check if a browserless url is available
+		if (!empty($browserlessConfig['url']) && !empty($browserlessConfig['token'])) {
+			// Use Browserless API if the url is set
 			$html = $this->fetchHtmlPageUsingBrowserless($url);
 		} else {
 			// Otherwise, use the standard method
@@ -133,9 +133,10 @@ class HtmlDownloadService
 	 */
 	private function fetchHtmlPageUsingBrowserless(string $url): string
 	{
-		// Get the browserless address from configuration or setting
-		$browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();
-		$browserlessToken = $this->userConfigHelper->getBrowserlessToken();
+		// Get the browserless config from configuration or setting
+		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
+		$browserlessAddress = $browserlessConfig['url'];
+		$browserlessToken = $browserlessConfig['token'];
 
 		if (empty($browserlessAddress)) {
 			// Handle the case where Browserless address is not configured
