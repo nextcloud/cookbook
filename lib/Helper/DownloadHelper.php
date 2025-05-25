@@ -8,7 +8,8 @@ use OCP\IL10N;
 /**
  * This class is mainly a wrapper for cURL and its PHP extension to download files/content from the internet.
  */
-class DownloadHelper {
+class DownloadHelper
+{
 	/**
 	 * Flag that indicates if a download has successfully carried out
 	 *
@@ -57,7 +58,8 @@ class DownloadHelper {
 	 * @param array $headers Additinal headers to be sent to the server
 	 * @throws NoDownloadWasCarriedOutException if the download fails for some reason
 	 */
-	public function downloadFile(string $url, array $options = [], array $headers = []): void {
+	public function downloadFile(string $url, array $options = [], array $headers = []): void
+	{
 		$this->downloaded = false;
 
 		$ch = curl_init($url);
@@ -67,7 +69,6 @@ class DownloadHelper {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_WRITEHEADER, $hp);
-		curl_setopt($ch, CURLOPT_VERBOSE, true);
 
 		if (!empty($headers)) {
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -111,7 +112,8 @@ class DownloadHelper {
 	 *
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
-	public function getContent(): string {
+	public function getContent(): string
+	{
 		if ($this->downloaded) {
 			return $this->content;
 		} else {
@@ -127,7 +129,8 @@ class DownloadHelper {
 	 * @return ?string The content of the Content-Type header or null if no Content-Type header was found
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
-	public function getContentType(): ?string {
+	public function getContentType(): ?string
+	{
 		if (!$this->downloaded) {
 			throw new NoDownloadWasCarriedOutException();
 		}
@@ -151,7 +154,8 @@ class DownloadHelper {
 	 *
 	 * @throws NoDownloadWasCarriedOutException if there was no successful download carried out before calling this method.
 	 */
-	public function getStatus(): int {
+	public function getStatus(): int
+	{
 		if (!$this->downloaded) {
 			throw new NoDownloadWasCarriedOutException();
 		}
