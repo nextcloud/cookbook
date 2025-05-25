@@ -231,7 +231,7 @@ class UserConfigHelper {
 	/**
 	 * Gets the browserless config from the configuration
 	 *
-	 * @return array<string, bool> keys: url and token, values: url and token
+	 * @return array<string, string | null> keys: url and token, values: url and token
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getBrowserlessConfig(): array {

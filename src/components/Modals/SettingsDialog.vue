@@ -165,21 +165,35 @@
             <fieldset>
                 <ul>
                     <li>
-                        <label class="settings-input">{{ t('cookbook', 'Browserless Configuration') }}</label>
+                        <label class="settings-input">{{
+                            t('cookbook', 'Browserless Configuration')
+                        }}</label>
                         <input
                             v-model="browserlessUrl"
                             type="text"
                             class="input settings-input"
-                            :placeholder="t('cookbook', 'Enter Browserless url (e.g., http://localhost:3000)')"
+                            :placeholder="
+                                t(
+                                    'cookbook',
+                                    'Enter Browserless url (e.g., http://localhost:3000)',
+                                )
+                            "
                         />
                     </li>
                     <li>
-                        <label class="settings-input">{{ t('cookbook', 'Browserless Token') }}</label>
+                        <label class="settings-input">{{
+                            t('cookbook', 'Browserless Token')
+                        }}</label>
                         <input
                             v-model="browserlessToken"
                             type="text"
                             class="input settings-input"
-                            :placeholder="t('cookbook', 'Enter Browserless Token (API Key)')"
+                            :placeholder="
+                                t(
+                                    'cookbook',
+                                    'Enter Browserless Token (API Key)',
+                                )
+                            "
                         />
                     </li>
                 </ul>
@@ -427,7 +441,10 @@ watch(
             return;
         }
         try {
-            await api.config.browserlessConfig.update({'url': newVal, 'token': browserlessToken.value});
+            await api.config.browserlessConfig.update({
+                url: newVal,
+                token: browserlessToken.value,
+            });
             await store.dispatch('refreshConfig');
         } catch {
             await showSimpleAlertModal(
@@ -435,7 +452,7 @@ watch(
             );
             browserlessUrl.value = oldVal; // Revert if save fails
         }
-    }
+    },
 );
 
 watch(
@@ -445,7 +462,10 @@ watch(
             return;
         }
         try {
-            await api.config.browserlessConfig.update({'token': newVal, 'url': browserlessUrl.value});
+            await api.config.browserlessConfig.update({
+                token: newVal,
+                url: browserlessUrl.value,
+            });
             await store.dispatch('refreshConfig');
         } catch {
             await showSimpleAlertModal(
@@ -453,7 +473,7 @@ watch(
             );
             browserlessToken.value = oldVal; // Revert if save fails
         }
-    }
+    },
 );
 
 /**

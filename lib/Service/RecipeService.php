@@ -565,7 +565,7 @@ class RecipeService {
 
 	/**
 	 * Get browserless configuration
-	 * @return array<string, bool> keys: url and token, values: url and token
+	 * @return array<string, string | null> keys: url and token, values: url and token
 	 */
 	public function getBrowserlessConfig(): array {
 		return $this->userConfigHelper->getBrowserlessConfig();
