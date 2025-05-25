@@ -9,8 +9,7 @@ use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
 
-class ConfigImplementation
-{
+class ConfigImplementation {
 	/** @var RecipeService */
 	private $service;
 	/** @var DbCacheService */
@@ -40,8 +39,7 @@ class ConfigImplementation
 	 *
 	 * @return JSONResponse
 	 */
-	public function list()
-	{
+	public function list() {
 		$this->dbCacheService->triggerCheck();
 
 		return new JSONResponse([
@@ -63,8 +61,7 @@ class ConfigImplementation
 	 *
 	 * @return JSONResponse
 	 */
-	public function config()
-	{
+	public function config() {
 		$data = $this->restParser->getParameters();
 
 		if (isset($data['folder'])) {
@@ -98,8 +95,7 @@ class ConfigImplementation
 	 *
 	 * @return JSONResponse
 	 */
-	public function reindex()
-	{
+	public function reindex() {
 		$this->dbCacheService->updateCache();
 
 		return new JSONResponse('Search index rebuilt successfully', Http::STATUS_OK);

@@ -17,8 +17,7 @@ use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
-class HtmlDownloadService
-{
+class HtmlDownloadService {
 	/**
 	 * @var array
 	 */
@@ -88,8 +87,7 @@ class HtmlDownloadService
 	 * @return int The state indicating the result of the parsing (@see HtmlToDomParser)
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
-	public function downloadRecipe(string $url): int
-	{
+	public function downloadRecipe(string $url): int {
 		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
 
 		// Check if a browserless url is available
@@ -117,8 +115,7 @@ class HtmlDownloadService
 	 * Get the HTML docuemnt after it has been downloaded and parsed with downloadRecipe()
 	 * @return ?DOMDocument The loaded HTML document or null if document could not be loaded successfully
 	 */
-	public function getDom(): ?DOMDocument
-	{
+	public function getDom(): ?DOMDocument {
 		return $this->dom;
 	}
 
@@ -131,8 +128,7 @@ class HtmlDownloadService
 	 *
 	 * @return string The rendered HTML content as a plain string
 	 */
-	private function fetchHtmlPageUsingBrowserless(string $url): string
-	{
+	private function fetchHtmlPageUsingBrowserless(string $url): string {
 		// Get the browserless config from configuration or setting
 		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
 		$browserlessAddress = $browserlessConfig['url'];
@@ -195,8 +191,7 @@ class HtmlDownloadService
 	 *
 	 * @return string The content of the page as a plain string
 	 */
-	private function fetchHtmlPage(string $url): string
-	{
+	private function fetchHtmlPage(string $url): string {
 		$host = parse_url($url);
 
 		if (!$host) {

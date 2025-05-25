@@ -10,8 +10,7 @@ use OCP\IL10N;
 /**
  * This class allows access to the per-user configuration of the app
  */
-class UserConfigHelper
-{
+class UserConfigHelper {
 	/**
 	 * @var ?string
 	 */
@@ -49,8 +48,7 @@ class UserConfigHelper
 	 *
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	private function ensureUserIsLoggedIn(): void
-	{
+	private function ensureUserIsLoggedIn(): void {
 		if (is_null($this->userId)) {
 			throw new UserNotLoggedInException($this->l->t('The user is not logged in. No user configuration can be obtained.'));
 		}
@@ -63,8 +61,7 @@ class UserConfigHelper
 	 * @return string The resulting value or '' if the key was not found
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	private function getRawValue(string $key): string
-	{
+	private function getRawValue(string $key): string {
 		$this->ensureUserIsLoggedIn();
 		return $this->config->getUserValue($this->userId, Application::APP_ID, $key);
 	}
@@ -76,8 +73,7 @@ class UserConfigHelper
 	 * @param string $value The value of the config entry
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	private function setRawValue(string $key, string $value): void
-	{
+	private function setRawValue(string $key, string $value): void {
 		$this->ensureUserIsLoggedIn();
 		$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
 	}
@@ -88,8 +84,7 @@ class UserConfigHelper
 	 * @return int The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getLastIndexUpdate(): int
-	{
+	public function getLastIndexUpdate(): int {
 		$rawValue = $this->getRawValue(self::KEY_LAST_INDEX_UPDATE);
 		if ($rawValue === '') {
 			return 0;
@@ -104,8 +99,7 @@ class UserConfigHelper
 	 * @param int $value The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setLastIndexUpdate(int $value): void
-	{
+	public function setLastIndexUpdate(int $value): void {
 		$this->setRawValue(self::KEY_LAST_INDEX_UPDATE, strval($value));
 	}
 
@@ -115,8 +109,7 @@ class UserConfigHelper
 	 * @return int The number of seconds to wait before a new rescan is triggered
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getUpdateInterval(): int
-	{
+	public function getUpdateInterval(): int {
 		$rawValue = $this->getRawValue(self::KEY_UPDATE_INTERVAL);
 		if ($rawValue === '') {
 			return 5;
@@ -131,8 +124,7 @@ class UserConfigHelper
 	 * @param int $value The number of seconds to wait at least between rescans
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setUpdateInterval(int $value): void
-	{
+	public function setUpdateInterval(int $value): void {
 		$this->setRawValue(self::KEY_UPDATE_INTERVAL, (string) $value);
 	}
 
@@ -142,8 +134,7 @@ class UserConfigHelper
 	 * @return bool true, if the image should be printed
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getPrintImage(): bool
-	{
+	public function getPrintImage(): bool {
 		$rawValue = $this->getRawValue(self::KEY_PRINT_IMAGE);
 		if ($rawValue === '') {
 			return true;
@@ -158,8 +149,7 @@ class UserConfigHelper
 	 * @param bool $value true if the image should be printed
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setPrintImage(bool $value): void
-	{
+	public function setPrintImage(bool $value): void {
 		if ($value) {
 			$this->setRawValue(self::KEY_PRINT_IMAGE, '1');
 		} else {
@@ -173,8 +163,7 @@ class UserConfigHelper
 	 * @return array<string, bool> keys: info block ids, values: display state
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getVisibleInfoBlocks(): array
-	{
+	public function getVisibleInfoBlocks(): array {
 		$rawValue = $this->getRawValue(self::KEY_VISIBLE_INFO_BLOCKS);
 
 		if ($rawValue === '') {
@@ -196,8 +185,7 @@ class UserConfigHelper
 	 * @param array<string, bool> keys: info block ids, values: display state
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setVisibleInfoBlocks(array $visibleInfoBlocks): void
-	{
+	public function setVisibleInfoBlocks(array $visibleInfoBlocks): void {
 		$this->setRawValue(self::KEY_VISIBLE_INFO_BLOCKS, json_encode($visibleInfoBlocks));
 	}
 
@@ -213,8 +201,7 @@ class UserConfigHelper
 	 * @return string The name of the folder within the users files
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getFolderName(): string
-	{
+	public function getFolderName(): string {
 		$rawValue = $this->getRawValue(self::KEY_FOLDER);
 
 		if ($rawValue === '') {
@@ -237,8 +224,7 @@ class UserConfigHelper
 	 * @param string $value The name of the folder within the user's files
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setFolderName(string $value): void
-	{
+	public function setFolderName(string $value): void {
 		$this->setRawValue(self::KEY_FOLDER, $value);
 	}
 
@@ -248,8 +234,7 @@ class UserConfigHelper
 	 * @return array<string, bool> keys: url and token, values: url and token
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function getBrowserlessConfig(): array
-	{
+	public function getBrowserlessConfig(): array {
 		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_CONFIG);
 
 		if ($rawValue === '') {
@@ -268,9 +253,7 @@ class UserConfigHelper
 	 * @param array<string, bool> keys: url and token, values: url and token
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
-	public function setBrowserlessConfig(array $data): void
-	{
+	public function setBrowserlessConfig(array $data): void {
 		$this->setRawValue(self::KEY_BROWSERLESS_CONFIG, json_encode($data));
 	}
-
 }

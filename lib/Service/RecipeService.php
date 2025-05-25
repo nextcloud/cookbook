@@ -30,8 +30,7 @@ use Psr\Log\LoggerInterface;
  *
  * @package OCA\Cookbook\Service
  */
-class RecipeService
-{
+class RecipeService {
 	private $root;
 	private $user_id;
 	private $db;
@@ -107,8 +106,7 @@ class RecipeService
 	 *
 	 * @return ?array
 	 */
-	public function getRecipeById(int $id)
-	{
+	public function getRecipeById(int $id) {
 		$file = $this->getRecipeFileByFolderId($id);
 
 		if (!$file) {
@@ -123,8 +121,7 @@ class RecipeService
 	 *
 	 * @param int $id
 	 */
-	public function getRecipeMTime(int $id): ?int
-	{
+	public function getRecipeMTime(int $id): ?int {
 		$file = $this->getRecipeFileByFolderId($id);
 
 		if (!$file) {
@@ -141,8 +138,7 @@ class RecipeService
 	 *
 	 * @return File|null
 	 */
-	public function getRecipeFileByFolderId(int $id)
-	{
+	public function getRecipeFileByFolderId(int $id) {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
@@ -174,8 +170,7 @@ class RecipeService
 	 *
 	 * @throws Exception
 	 */
-	public function checkRecipe(array $json): array
-	{
+	public function checkRecipe(array $json): array {
 		if (!$json) {
 			throw new Exception('Recipe array was null');
 		}
@@ -190,8 +185,7 @@ class RecipeService
 	/**
 	 * @param int $id
 	 */
-	public function deleteRecipe(int $id)
-	{
+	public function deleteRecipe(int $id) {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
@@ -208,8 +202,7 @@ class RecipeService
 	 *
 	 * @return File
 	 */
-	public function addRecipe($json, $importedHtml = null)
-	{
+	public function addRecipe($json, $importedHtml = null) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
 			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}
@@ -246,7 +239,6 @@ class RecipeService
 
 				$recipe_folder->move($new_path);
 			}
-
 		} else {
 			// This is a new recipe, create it
 			$json['dateCreated'] = $now;
@@ -297,7 +289,6 @@ class RecipeService
 						$this->logger->warning('Failed to download an image using curl. Falling back to PHP default behavior.');
 						$full_image_data = file_get_contents($json['image']);
 					}
-
 				} else {
 					// The image is a local path
 					try {
@@ -308,7 +299,6 @@ class RecipeService
 					}
 				}
 			}
-
 		} else {
 			// The image field was empty, remove images in the recipe folder
 			$this->imageService->dropImage($recipe_folder);
@@ -330,8 +320,7 @@ class RecipeService
 		return $recipe_file;
 	}
 
-	private function downloadImage(string $url)
-	{
+	private function downloadImage(string $url) {
 		$this->downloadHelper->downloadFile($url);
 		$status = $this->downloadHelper->getStatus();
 		if ($status >= 400) {
@@ -348,8 +337,7 @@ class RecipeService
 	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe(string $url): File
-	{
+	public function downloadRecipe(string $url): File {
 		$this->htmlDownloadService->downloadRecipe($url);
 
 		try {
@@ -375,8 +363,7 @@ class RecipeService
 	/**
 	 * @return array
 	 */
-	public function getRecipeFiles()
-	{
+	public function getRecipeFiles() {
 		$user_folder = $this->userFolder->getFolder();
 		$recipe_folders = $user_folder->getDirectoryListing();
 		$recipe_files = [];
@@ -398,8 +385,7 @@ class RecipeService
 	 * Updates the search index (no more) and migrate file structure
 	 * @deprecated
 	 */
-	public function updateSearchIndex()
-	{
+	public function updateSearchIndex() {
 		try {
 			$this->migrateFolderStructure();
 		} catch (UserFolderNotWritableException $ex) {
@@ -409,8 +395,7 @@ class RecipeService
 		}
 	}
 
-	private function migrateFolderStructure()
-	{
+	private function migrateFolderStructure() {
 		// Remove old cache folder if needed
 		$legacy_cache_path = '/cookbook/cache';
 
@@ -431,7 +416,6 @@ class RecipeService
 				$recipe_folder = $user_folder->newFolder($recipe_name);
 
 				$node->move($recipe_folder->getPath() . '/recipe.json');
-
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
 				// Rename folders with .json extensions (this was likely caused by a migration bug)
 				$node->move(str_replace('.json', '', $node->getPath()));
@@ -444,8 +428,7 @@ class RecipeService
 	 *
 	 * @return array
 	 */
-	public function getAllKeywordsInSearchIndex()
-	{
+	public function getAllKeywordsInSearchIndex() {
 		return $this->db->findAllKeywords($this->user_id);
 	}
 
@@ -454,8 +437,7 @@ class RecipeService
 	 *
 	 * @return array
 	 */
-	public function getAllCategoriesInSearchIndex()
-	{
+	public function getAllCategoriesInSearchIndex() {
 		return $this->db->findAllCategories($this->user_id);
 	}
 
@@ -465,8 +447,7 @@ class RecipeService
 	 *
 	 * @param array $recipes
 	 */
-	private function addDatesToRecipes(array &$recipes)
-	{
+	private function addDatesToRecipes(array &$recipes) {
 		foreach ($recipes as $i => $recipe) {
 			if (!array_key_exists('dateCreated', $recipe) || !array_key_exists('dateModified', $recipe)) {
 				$r = $this->getRecipeById($recipe['recipe_id']);
@@ -481,8 +462,7 @@ class RecipeService
 	 *
 	 * @return array
 	 */
-	public function getAllRecipesInSearchIndex(): array
-	{
+	public function getAllRecipesInSearchIndex(): array {
 		$recipes = $this->db->findAllRecipes($this->user_id);
 		$this->addDatesToRecipes($recipes);
 
@@ -496,8 +476,7 @@ class RecipeService
 	 *
 	 * @return array
 	 */
-	public function getRecipesByCategory($category): array
-	{
+	public function getRecipesByCategory($category): array {
 		$recipes = $this->db->getRecipesByCategory($category, $this->user_id);
 		$this->addDatesToRecipes($recipes);
 
@@ -512,8 +491,7 @@ class RecipeService
 	 * @return array
 	 * @throws DoesNotExistException
 	 */
-	public function getRecipesByKeywords($keywords): array
-	{
+	public function getRecipesByKeywords($keywords): array {
 		$recipes = $this->db->getRecipesByKeywords($keywords, $this->user_id);
 		$this->addDatesToRecipes($recipes);
 
@@ -530,8 +508,7 @@ class RecipeService
 	 * @throws DoesNotExistException
 	 *
 	 */
-	public function findRecipesInSearchIndex(string $keywords_string): array
-	{
+	public function findRecipesInSearchIndex(string $keywords_string): array {
 		$keywords_string = strtolower($keywords_string);
 		$keywords_array = [];
 		preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -550,8 +527,7 @@ class RecipeService
 	 * @param int $interval
 	 * @throws PreConditionNotMetException
 	 */
-	public function setSearchIndexUpdateInterval(int $interval)
-	{
+	public function setSearchIndexUpdateInterval(int $interval) {
 		$this->userConfigHelper->setUpdateInterval($interval);
 	}
 
@@ -559,8 +535,7 @@ class RecipeService
 	 * @param bool $printImage
 	 * @throws PreConditionNotMetException
 	 */
-	public function setPrintImage(bool $printImage)
-	{
+	public function setPrintImage(bool $printImage) {
 		$this->userConfigHelper->setPrintImage($printImage);
 	}
 
@@ -568,8 +543,7 @@ class RecipeService
 	 * Should image be printed with the recipe
 	 * @return bool
 	 */
-	public function getPrintImage()
-	{
+	public function getPrintImage() {
 		return $this->userConfigHelper->getPrintImage();
 	}
 
@@ -577,8 +551,7 @@ class RecipeService
 	 * Sets which info blocks are displayed next to the recipe
 	 * @param array<string, bool> keys: info block ids, values: display state
 	 */
-	public function setVisibleInfoBlocks(array $visibleInfoBlocks)
-	{
+	public function setVisibleInfoBlocks(array $visibleInfoBlocks) {
 		$this->userConfigHelper->setVisibleInfoBlocks($visibleInfoBlocks);
 	}
 
@@ -586,8 +559,7 @@ class RecipeService
 	 * Determines which info blocks are displayed next to the recipe
 	 * @return array<string, bool> keys: info block ids, values: display state
 	 */
-	public function getVisibleInfoBlocks(): array
-	{
+	public function getVisibleInfoBlocks(): array {
 		return $this->userConfigHelper->getVisibleInfoBlocks();
 	}
 
@@ -595,8 +567,7 @@ class RecipeService
 	 * Get browserless configuration
 	 * @return array<string, bool> keys: url and token, values: url and token
 	 */
-	public function getBrowserlessConfig(): array
-	{
+	public function getBrowserlessConfig(): array {
 		return $this->userConfigHelper->getBrowserlessConfig();
 	}
 
@@ -604,16 +575,14 @@ class RecipeService
 	 * Sets browserless configuration.
 	 * @param array<string, bool> keys: url and token, values: url and token
 	 */
-	public function setBrowserlessConfig(array $data)
-	{
+	public function setBrowserlessConfig(array $data) {
 		$this->userConfigHelper->setBrowserlessConfig($data);
 	}
 
 	/**
 	 * Get recipe file contents as an array
 	 */
-	public function parseRecipeFile(File $file): ?array
-	{
+	public function parseRecipeFile(File $file): ?array {
 		$json = json_decode($file->getContent(), true);
 
 		if (!$json) {
@@ -642,8 +611,7 @@ class RecipeService
 	 *
 	 * @return File
 	 */
-	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File
-	{
+	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File {
 		$recipe_folders = $this->root->getById($id);
 		if (count($recipe_folders) < 1) {
 			throw new Exception($this->il10n->t('Recipe with ID %d not found.', [$id]));
@@ -671,8 +639,7 @@ class RecipeService
 	 *
 	 * @return bool
 	 */
-	private function isRecipeFile($file)
-	{
+	private function isRecipeFile($file) {
 		$allowedExtensions = ['json'];
 
 		if ($file->getType() !== 'file') {
