@@ -202,14 +202,14 @@ class HtmlDownloadServiceTest extends TestCase {
 		$state = 12345;
 		$contentType = 'The content type';
 		$encoding = 'utf-8';
-		$browserlessUrl = "http://browserless.url/chromium/content?token=token";
+		$browserlessUrl = 'http://browserless.url/chromium/content?token=token';
 
 		$this->downloadHelper->expects($this->once())
 			->method('downloadFile')->with($browserlessUrl, $this->anything(), $this->anything());
 
 		$this->il10n->method('getLocaleCode')->willReturn('en-US');
 		$this->userConfigHelper->method('getBrowserlessConfig')->willReturn([
-			'url' => "http://browserless.url",
+			'url' => 'http://browserless.url',
 			'token' => 'token',
 		]);
 

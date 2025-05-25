@@ -112,6 +112,7 @@ class ConfigImplementationTest extends TestCase {
 	 * @param mixed $interval
 	 * @param mixed $printImage
 	 * @param mixed $visibleInfoBlocks
+	 * @param mixed $browserlessConfig
 	 */
 	public function testConfig($data, $folderPath, $interval, $printImage, $visibleInfoBlocks, $browserlessConfig): void {
 		$this->restParser->method('getParameters')->willReturn($data);
@@ -161,24 +162,52 @@ class ConfigImplementationTest extends TestCase {
 	public static function dataProviderConfig() {
 		return [
 			'noChange' => [
-				[], null, null, null, null, null
+				[],
+				null,
+				null,
+				null,
+				null,
+				null
 			],
 			'changeFolder' => [
-				['folder' => '/path/to/whatever'], '/path/to/whatever', null, null, null, null
+				['folder' => '/path/to/whatever'],
+				'/path/to/whatever',
+				null,
+				null,
+				null,
+				null
 			],
 			'changeinterval' => [
-				['update_interval' => 15], null, 15, null, null, null
+				['update_interval' => 15],
+				null,
+				15,
+				null,
+				null,
+				null
 			],
 			'changePrint' => [
-				['print_image' => true], null, null, true, null, null
+				['print_image' => true],
+				null,
+				null,
+				true,
+				null,
+				null
 			],
 			'changeVisibleBlocks' => [
 				['visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true]],
-				null, null, null, ['cooking-time' => true, 'preparation-time' => true], null
+				null,
+				null,
+				null,
+				['cooking-time' => true, 'preparation-time' => true],
+				null
 			],
 			'browserlessConfig' => [
 				['browserless_config' => ['url' => 'https://something.com', 'token' => '123456789']],
-				null, null, null, null, ['url' => 'https://something.com', 'token' => '123456789']
+				null,
+				null,
+				null,
+				null,
+				['url' => 'https://something.com', 'token' => '123456789']
 			],
 			'changeAll' => [
 				[
@@ -187,7 +216,12 @@ class ConfigImplementationTest extends TestCase {
 					'print_image' => false,
 					'visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true],
 					'browserless_config' => ['url' => 'https://something.com', 'token' => '123456789']
-				], '/my/custom/path', 12, false, ['cooking-time' => true, 'preparation-time' => true], ['url' => 'https://something.com', 'token' => '123456789']
+				],
+				'/my/custom/path',
+				12,
+				false,
+				['cooking-time' => true, 'preparation-time' => true],
+				['url' => 'https://something.com', 'token' => '123456789']
 			],
 		];
 	}
