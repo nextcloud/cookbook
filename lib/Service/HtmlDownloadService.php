@@ -90,9 +90,9 @@ class HtmlDownloadService {
 	public function downloadRecipe(string $url): int {
 		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
 
-		// Check if a browserless url is available
+		// Check if a browserless configuration is available
 		if (!empty($browserlessConfig['url']) && !empty($browserlessConfig['token'])) {
-			// Use Browserless API if the url is set
+			// Use Browserless API if the url and token are set
 			$html = $this->fetchHtmlPageUsingBrowserless($url);
 		} else {
 			// Otherwise, use the standard method
@@ -146,8 +146,8 @@ class HtmlDownloadService {
 			throw new ImportException($this->l->t('Browserless token is not configured.'));
 		}
 
-		// API endpoint for Browserless.io
-		$apiEndpoint = $browserlessAddress . '/chromium/content?token=' . $browserlessToken;  // Use the dynamic address
+		// API endpoint for Browserless
+		$apiEndpoint = $browserlessAddress . '/chromium/content?token=' . $browserlessToken;
 
 		$langCode = $this->l->getLocaleCode();
 		$langCode = str_replace('_', '-', $langCode);
