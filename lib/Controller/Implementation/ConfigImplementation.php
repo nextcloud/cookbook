@@ -74,7 +74,7 @@ class ConfigImplementation {
 		}
 
 		if (isset($data['print_image'])) {
-			$this->service->setPrintImage((bool) $data['print_image']);
+			$this->service->setPrintImage((bool)$data['print_image']);
 		}
 
 		if (isset($data[self::KEY_VISIBLE_INFO_BLOCKS])) {
