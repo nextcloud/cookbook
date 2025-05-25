@@ -171,15 +171,7 @@ class HtmlDownloadService {
 			'Content-Type: application/json',
 		];
 
-		$html = $this->fetchContent($apiEndpoint, $opt, $headers);
-
-		// Check if the response was successful
-		if ($html === false) {
-			$this->logger->error('Failed to fetch rendered HTML from Browserless.io');
-			throw new ImportException($this->l->t('Failed to fetch rendered HTML.'));
-		}
-
-		return $html;
+		return $this->fetchContent($apiEndpoint, $opt, $headers);
 	}
 
 	/**
@@ -221,16 +213,7 @@ class HtmlDownloadService {
 			'TE: trailers'
 		];
 
-		$html = $this->fetchContent($url, $opt, $headers);
-
-		try {
-			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
-			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
-		} catch (CouldNotGuessEncodingException $ex) {
-			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
-		}
-
-		return $html;
+		return $this->fetchContent($url, $opt, $headers);
 	}
 
 	private function fetchContent(string $url, array $options, array $headers): string {
@@ -246,6 +229,15 @@ class HtmlDownloadService {
 			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
 		}
 
-		return $this->downloadHelper->getContent();
+		$html = $this->downloadHelper->getContent();
+
+		try {
+			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
+			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
+		} catch (CouldNotGuessEncodingException $ex) {
+			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
+		}
+
+		return $html;
 	}
 }
