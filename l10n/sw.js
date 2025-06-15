@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "Katika %s",
     "Tags" : "Maoni",
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
