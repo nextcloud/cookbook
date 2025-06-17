@@ -7,6 +7,7 @@ OC.L10N.register(
     "Save" : "Hifadhi",
     "Search" : "Tafuta",
     "Categories" : "Vipengele",
+    "Rename" : "Ipe jina jipya",
     "Add" : "Ongeza",
     "Name" : "Jina",
     "Clear" : "Futa",
