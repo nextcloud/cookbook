@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "in %s" : "Katika %s",
     "Tags" : "Maoni",
+    "Page not found" : "Ukurasa haupatikani",
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
     "Search" : "Tafuta",
