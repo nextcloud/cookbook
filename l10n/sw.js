@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "in %s" : "Katika %s",
     "Tags" : "Maoni",
+    "None" : "Hakuna",
     "Page not found" : "Ukurasa haupatikani",
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
@@ -12,10 +13,13 @@ OC.L10N.register(
     "Add" : "Ongeza",
     "Name" : "Jina",
     "Clear" : "Futa",
+    "Dismiss" : "Ondoa",
     "Cancel" : "Cancel",
     "OK" : "OK",
     "You have unsaved changes! Do you still want to leave?" : "Una mabadiliko ambayo hayajahifadhiwa! Bado unataka kuondoka?",
     "Description" : "Maelezo",
-    "Image" : "Picha"
+    "URL" : "Url",
+    "Image" : "Picha",
+    "Loading…" : "Inapakia"
 },
 "nplurals=2; plural=(n != 1);");
