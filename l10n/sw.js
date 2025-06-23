@@ -20,6 +20,7 @@ OC.L10N.register(
     "Description" : "Maelezo",
     "URL" : "Url",
     "Image" : "Picha",
-    "Loading…" : "Inapakia"
+    "Loading…" : "Inapakia",
+    "Last modified" : "Iliyoboreshwa mwisho"
 },
 "nplurals=2; plural=(n != 1);");
