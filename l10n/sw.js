@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "in %s" : "Katika %s",
+    "Category" : "Kipengele",
     "Tags" : "Maoni",
     "None" : "Hakuna",
     "Page not found" : "Ukurasa haupatikani",
