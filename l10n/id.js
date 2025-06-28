@@ -11,22 +11,7 @@ OC.L10N.register(
     "Save" : "Simpan",
     "Search" : "Cari",
     "Filter" : "Filter",
-    "Categories" : "Kategori",
-    "Rename" : "Ubah nama",
-    "Add" : "Masukkan",
     "Name" : "Nama",
-    "Order" : "Pesan",
-    "Clear" : "Bersihkan",
-    "Apply" : "Terapkan",
-    "Creation date" : "Tanggal pembuatan",
-    "Tools" : "Peralatan",
-    "Dismiss" : "Batal",
-    "Cancel" : "Membatalkan",
-    "OK" : "OK",
-    "Description" : "Deskrisi",
-    "URL" : "URL",
-    "Image" : "Gambar",
-    "Loading…" : "Memuat…",
-    "Last modified" : "Terakhir diubah"
+    "Creation date" : "Tanggal pembuatan"
 },
 "nplurals=1; plural=0;");

@@ -1,0 +1,9 @@
+{ "translations": {
+    "Tags" : "Bellikler",
+    "None" : "Hiç",
+    "Edit" : "Redaktirläň",
+    "Save" : "Saklamak",
+    "Search" : "Gözlemek",
+    "Name" : "Ady"
+},"pluralForm" :"nplurals=2; plural=(n != 1);"
+}

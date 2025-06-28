@@ -7,11 +7,6 @@ OC.L10N.register(
     "Edit" : "Deasaich",
     "Save" : "Sàbhail",
     "Search" : "Lorg",
-    "Rename" : "Thoir ainm ùr air",
-    "Name" : "Ainm",
-    "Dismiss" : "Leig seachad",
-    "Cancel" : "Sguir dheth",
-    "OK" : "Ceart ma-thà",
-    "Loading…" : "’Ga luchdadh…"
+    "Name" : "Ainm"
 },
 "nplurals=4; plural=(n==1 || n==11) ? 0 : (n==2 || n==12) ? 1 : (n > 2 && n < 20) ? 2 : 3;");

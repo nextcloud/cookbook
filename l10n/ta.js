@@ -6,12 +6,6 @@ OC.L10N.register(
     "Edit" : "தொகுக்க",
     "Save" : "சேமிக்க ",
     "Search" : "Search",
-    "Rename" : "பெயர்மாற்றம்",
-    "Add" : "சேர்க்க",
-    "Name" : "பெயர்",
-    "Cancel" : "இரத்து செய்க",
-    "OK" : "சரி ",
-    "Description" : "விவரிப்பு",
-    "URL" : "URL"
+    "Name" : "பெயர்"
 },
 "nplurals=2; plural=(n != 1);");

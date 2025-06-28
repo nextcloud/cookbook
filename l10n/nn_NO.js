@@ -10,16 +10,6 @@ OC.L10N.register(
     "Save" : "Lagre",
     "Search" : "Search",
     "Filter" : "Filter",
-    "Rename" : "Gje nytt namn",
-    "Add" : "Legg til",
-    "Name" : "Namn",
-    "Apply" : "Anvend",
-    "Dismiss" : "Forkast",
-    "Cancel" : "Avbryt",
-    "OK" : "OK",
-    "Description" : "Skildring",
-    "URL" : "URL",
-    "Loading…" : "Laster...",
-    "Last modified" : "Siste endra"
+    "Name" : "Namn"
 },
 "nplurals=2; plural=(n != 1);");

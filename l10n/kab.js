@@ -8,12 +8,6 @@ OC.L10N.register(
     "Save" : "Sekles",
     "Search" : "Nadi",
     "Filter" : "Sizdeg",
-    "Rename" : "Beddel isem",
-    "Add" : "Rnu",
-    "Name" : "Nom",
-    "Dismiss" : "Agi",
-    "Cancel" : "Sefsex",
-    "OK" : "IH",
-    "Loading…" : "Asali..."
+    "Name" : "Nom"
 },
 "nplurals=2; plural=(n != 1);");

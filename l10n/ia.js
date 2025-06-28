@@ -8,15 +8,6 @@ OC.L10N.register(
     "Edit" : "Modificar",
     "Save" : "Salveguardar",
     "Search" : "Cercar",
-    "Rename" : "Renominar",
-    "Add" : "Adder",
-    "Name" : "Nomine",
-    "Apply" : "Applicar",
-    "Dismiss" : "Dimitter",
-    "Cancel" : "Cancellar",
-    "OK" : "Ok",
-    "Description" : "Description",
-    "URL" : "URL",
-    "Loading…" : "Cargante..."
+    "Name" : "Nomine"
 },
 "nplurals=2; plural=(n != 1);");

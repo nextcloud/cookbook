@@ -7,15 +7,6 @@ OC.L10N.register(
     "Edit" : "Änneren",
     "Save" : "Späicheren",
     "Search" : "Search",
-    "Rename" : "Ëmbenennen",
-    "Add" : "Derbäimaachen",
-    "Name" : "Numm",
-    "Apply" : "Uwenden",
-    "Dismiss" : "Ofbriechen",
-    "Cancel" : "Ofbriechen",
-    "OK" : "OK",
-    "Description" : "Beschreiwung",
-    "URL" : "URL",
-    "Loading…" : "Et gëtt gelueden"
+    "Name" : "Numm"
 },
 "nplurals=2; plural=(n != 1);");

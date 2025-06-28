@@ -11,16 +11,6 @@ OC.L10N.register(
     "Save" : "Save",
     "Search" : "Search",
     "Filter" : "Filtr",
-    "Categories" : "Kategoriyalar",
-    "Rename" : "Rename",
-    "Add" : "Add",
-    "Name" : "Name",
-    "Order" : "Buyurtma",
-    "Dismiss" : "Dismiss",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "Tavsif",
-    "Instructions" : "Ko'rsatmalar",
-    "Loading…" : "Loading…"
+    "Name" : "Name"
 },
 "nplurals=1; plural=0;");

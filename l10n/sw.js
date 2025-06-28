@@ -9,19 +9,6 @@ OC.L10N.register(
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
     "Search" : "Tafuta",
-    "Categories" : "Vipengele",
-    "Rename" : "Ipe jina jipya",
-    "Add" : "Ongeza",
-    "Name" : "Jina",
-    "Clear" : "Futa",
-    "Dismiss" : "Ondoa",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
-    "You have unsaved changes! Do you still want to leave?" : "Una mabadiliko ambayo hayajahifadhiwa! Bado unataka kuondoka?",
-    "Description" : "Maelezo",
-    "URL" : "Url",
-    "Image" : "Picha",
-    "Loading…" : "Inapakia",
-    "Last modified" : "Iliyoboreshwa mwisho"
+    "Name" : "Jina"
 },
 "nplurals=2; plural=(n != 1);");

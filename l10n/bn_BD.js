@@ -7,12 +7,6 @@ OC.L10N.register(
     "Edit" : "সম্পাদনা",
     "Save" : "সংরক্ষণ",
     "Search" : "Search",
-    "Rename" : "পূনঃনামকরণ",
-    "Add" : "যোগ করুন",
-    "Name" : "নাম",
-    "Cancel" : "বাতির",
-    "OK" : "তথাস্তু",
-    "Description" : "বিবরণ",
-    "URL" : "URL"
+    "Name" : "নাম"
 },
 "nplurals=2; plural=(n != 1);");

@@ -8,15 +8,6 @@ OC.L10N.register(
     "Edit" : "Dəyişiklik et",
     "Save" : "Saxla",
     "Search" : "Axtarış",
-    "Categories" : "Kateqoriyalar",
-    "Rename" : "Adı dəyiş",
-    "Add" : "Əlavə etmək",
-    "Name" : "Ad",
-    "Tools" : "Alətlər",
-    "Dismiss" : "Rədd et",
-    "Cancel" : "Dayandır",
-    "OK" : "Oldu",
-    "Description" : "Açıqlanma",
-    "URL" : "URL"
+    "Name" : "Ad"
 },
 "nplurals=2; plural=(n != 1);");

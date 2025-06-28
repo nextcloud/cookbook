@@ -15,25 +15,7 @@
     "Edit" : "Modifi",
     "Save" : "Konservi",
     "Search" : "Serĉi",
-    "Create recipe" : "Kreii ricepton",
-    "Categories" : "Kategorioj",
-    "Rename" : "Alinomi",
-    "Pick a local image" : "Elektu lokan bildon",
-    "Add" : "Aldoni",
     "Name" : "Nomo",
-    "Keywords" : "Ŝlosilvortoj",
-    "Clear" : "Viŝi",
-    "Apply" : "Validigi",
-    "Creation date" : "Krea dato",
-    "Tools" : "Iloj",
-    "Dismiss" : "Preterpasi",
-    "Cancel" : "Nuligi",
-    "OK" : "Bone",
-    "Calories" : "Kalorioj",
-    "Description" : "Priskribo",
-    "URL" : "Retadreso",
-    "Loading…" : "Ŝargado...",
-    "Last modified" : "Laste modifita",
-    "Sugar" : "Sukero"
+    "Creation date" : "Krea dato"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

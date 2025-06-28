@@ -9,19 +9,6 @@ OC.L10N.register(
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
     "Search" : "Search",
-    "Categories" : "Categorias",
-    "Rename" : "Renomenar",
-    "Add" : "Ajustar",
-    "Name" : "Nom",
-    "Clear" : "Escafar",
-    "Apply" : "Aplicar",
-    "Tools" : "Aisinas",
-    "Dismiss" : "Regetar",
-    "Cancel" : "Anullar",
-    "OK" : "D’acòrdi",
-    "Calories" : "Calorias",
-    "Description" : "Descripcion",
-    "URL" : "URL",
-    "Loading…" : "Cargament…"
+    "Name" : "Nom"
 },
 "nplurals=2; plural=(n > 1);");

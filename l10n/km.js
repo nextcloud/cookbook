@@ -6,13 +6,6 @@ OC.L10N.register(
     "Edit" : "កែប្រែ",
     "Save" : "រក្សាទុក",
     "Search" : "Search",
-    "Rename" : "ប្ដូរ​ឈ្មោះ",
-    "Add" : "បញ្ចូល",
-    "Name" : "ឈ្មោះ",
-    "Apply" : "អនុវត្ត",
-    "Cancel" : "បោះបង់",
-    "OK" : "ព្រម",
-    "Description" : "ការ​អធិប្បាយ",
-    "URL" : "URL"
+    "Name" : "ឈ្មោះ"
 },
 "nplurals=1; plural=0;");
