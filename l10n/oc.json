@@ -7,6 +7,10 @@
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
     "Search" : "Search",
-    "Name" : "Nom"
+    "Categories" : "Categorias",
+    "Rename" : "Tornar nommar",
+    "Name" : "Nom",
+    "Loading…" : "Telecargament…",
+    "Tools" : "Aisinas"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

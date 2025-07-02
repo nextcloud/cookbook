@@ -77,8 +77,10 @@
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Heu iniciat la sessió amb un compte d'invitat. Per tant, no podeu generar fitxers i carpetes arbitràries en aquesta instància de Nextcloud. Per poder utilitzar l'aplicació Cookbook com a convidat, has d'especificar una carpeta on s'emmagatzemen totes les receptes. Necessitareu permís d'escriptura a aquesta carpeta.",
     "Failed to load category {category} recipes" : "No s'han pogut carregar les receptes de la categoria {category}",
     "Failed to update name of category \"{category}\"" : "No s'ha pogut actualitzar el nom de la categoria \"{category}\"",
+    "Path to your recipe image" : "Camí a la imatge de la recepta",
     "Name" : "Nom",
     "Creation date" : "Data de creació",
-    "Modification date" : "Data de modificació"
+    "Modification date" : "Data de modificació",
+    "Cooking time" : "Temps de cocció"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

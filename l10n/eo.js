@@ -17,6 +17,7 @@ OC.L10N.register(
     "Edit" : "Modifi",
     "Save" : "Konservi",
     "Search" : "Serĉi",
+    "Create recipe" : "Kreii ricepton",
     "Name" : "Nomo",
     "Creation date" : "Krea dato"
 },

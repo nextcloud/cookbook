@@ -17,6 +17,22 @@
     "Delete recipe" : "Izdzēst recepti",
     "Path to your recipe collection" : "Jūsu recepšu kopas saite",
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Tu esi pieteicies ar viesu kontu. Tādēļ nav ļauts izveidot patvaļīgas datnes un mapes šajā Nextcloud serverī. Lai varētu izmantot Recepšu grāmatas lietotni kā viesis, ir jānorāda mape, kurā visas receptes tiks glabātas. Ir nepieciešamas rakstīšanas tiesības šajā mapē.",
-    "Name" : "Nosaukums"
+    "Failed to fetch categories" : "Neizdevās nolasīt kategorijas",
+    "Create recipe" : "Izveidot recepti",
+    "Categories" : "Kategorijas",
+    "Rename" : "Pārdēvēt",
+    "Enter new category name" : "Jāievada jaunās kategorijas nosaukums",
+    "Cookbook settings" : "Recepšu grāmatas iestatījumi",
+    "Pick a local image" : "Izvēlēties vietēju attēlu",
+    "Name" : "Nosaukums",
+    "Ingredients" : "Sastāvdaļas",
+    "Loading…" : "Ielādē…",
+    "Source" : "Avots",
+    "Servings" : "Porcijas",
+    "Preparation time" : "Pagatavošanas laiks",
+    "Cooking time" : "Gatavošanas laiks",
+    "Total time" : "Kopējais laiks",
+    "Tools" : "Gatavošanas rīki",
+    "Instructions" : "Norādes gatavošanai"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

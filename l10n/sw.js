@@ -9,6 +9,10 @@ OC.L10N.register(
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
     "Search" : "Tafuta",
-    "Name" : "Jina"
+    "Categories" : "Vipengele",
+    "Rename" : "Badili jina",
+    "Name" : "Jina",
+    "Loading…" : "Inapakia",
+    "Last modified" : "Iliyoboreshwa mwisho"
 },
 "nplurals=2; plural=(n != 1);");

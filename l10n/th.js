@@ -10,6 +10,9 @@ OC.L10N.register(
     "Save" : "บันทึก",
     "Search" : "ค้นหา",
     "Filter" : "ตัวกรอง",
-    "Name" : "ชื่อ"
+    "Categories" : "หมวดหมู่",
+    "Rename" : "เปลี่ยนชื่อ",
+    "Name" : "ชื่อ",
+    "Loading…" : "กำลังโหลด…"
 },
 "nplurals=1; plural=0;");

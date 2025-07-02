@@ -11,7 +11,10 @@ OC.L10N.register(
     "Save" : "Simpan",
     "Search" : "Cari",
     "Filter" : "Filter",
+    "Rename" : "Ubah nama",
     "Name" : "Nama",
-    "Creation date" : "Tanggal pembuatan"
+    "Creation date" : "Tanggal pembuatan",
+    "Loading…" : "Memuat…",
+    "Tools" : "Peralatan"
 },
 "nplurals=1; plural=0;");

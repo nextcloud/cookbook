@@ -10,6 +10,10 @@ OC.L10N.register(
     "Save" : "Ruaj",
     "Search" : "Kërko",
     "Filter" : "Filtro",
-    "Name" : "Emri"
+    "Categories" : "Kategoritë",
+    "Rename" : "Riemërtoje",
+    "Name" : "Emri",
+    "Loading…" : "Duke u ngarkuar…",
+    "Tools" : "Mjete"
 },
 "nplurals=2; plural=(n != 1);");

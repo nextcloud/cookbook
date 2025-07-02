@@ -92,8 +92,12 @@
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder.",
     "Failed to load category {category} recipes" : "Failed to load category {category} recipes",
     "Failed to update name of category \"{category}\"" : "Failed to update name of category \"{category}\"",
+    "The server reported an error. Please check." : "The server reported an error. Please check.",
+    "Path to your recipe image" : "Path to your recipe image",
     "Name" : "Name",
     "Creation date" : "Creation date",
-    "Modification date" : "Modification date"
+    "Modification date" : "Modification date",
+    "Ingredients" : "Ingredients",
+    "Cooking time" : "Cooking time"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

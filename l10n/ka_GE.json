@@ -8,6 +8,9 @@
     "Save" : "შენახვა",
     "Search" : "ძიება",
     "Filter" : "ფილტრი",
-    "Name" : "სახელი"
+    "Categories" : "კატეგორიები",
+    "Rename" : "სახელის შეცვლა",
+    "Name" : "სახელი",
+    "Tools" : "ხელსაწყოები"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

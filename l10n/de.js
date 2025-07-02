@@ -94,8 +94,11 @@ OC.L10N.register(
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Du bist mit einem Gastkonto eingeloggt. Du bist nicht berechtigt, beliebige Dateien und Ordner auf dieser Nextcloud-Instanz zu erzeugen. Um die Cookbook-App als Gast nutzen zu können, musst du einen Ordner angeben, in dem alle Rezepte gespeichert werden. Du benötigst Schreibrechte für diesen Ordner.",
     "Failed to load category {category} recipes" : "Rezepte aus Kategorie {category} konnten nicht geladen werden",
     "Failed to update name of category \"{category}\"" : "Name der Kategorie \"{category}\" konnte nicht aktualisiert werden",
+    "The server reported an error. Please check." : "Der Server meldete einen Fehler. Bitte prüfen.",
+    "Path to your recipe image" : "Pfad zum Bild für das Rezept",
     "Name" : "Name",
     "Creation date" : "Erstellungsdatum",
-    "Modification date" : "Bearbeitungsdatum"
+    "Modification date" : "Bearbeitungsdatum",
+    "Cooking time" : "Kochdauer"
 },
 "nplurals=2; plural=(n != 1);");

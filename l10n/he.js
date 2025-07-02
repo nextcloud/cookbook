@@ -24,7 +24,17 @@ OC.L10N.register(
     "Print recipe" : "הדפסת מתכון",
     "Delete recipe" : "מחיקת מתכון",
     "Path to your recipe collection" : "הנתיב לאוסף המתכונים שלך",
+    "Create recipe" : "יצירת מתכון",
+    "Rename" : "שינוי שם",
+    "Path to your recipe image" : "נתיב לתמונת המתכון שלך",
     "Name" : "שם",
-    "Creation date" : "מועד יצירה"
+    "Creation date" : "מועד יצירה",
+    "Ingredients" : "רכיבים",
+    "Loading…" : "בטעינה…",
+    "Source" : "מקור",
+    "Cooking time" : "זמן בישול",
+    "Tools" : "כלים",
+    "Energy" : "אנרגיה",
+    "Instructions" : "הוראות"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

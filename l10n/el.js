@@ -32,8 +32,11 @@ OC.L10N.register(
     "Cannot access recipe folder." : "Αδυναμία πρόσβασης φακέλου συνταγών.",
     "Select recipe folder" : "Επιλογή φακέλου συνταγών",
     "Failed to load category {category} recipes" : "Αποτυχία φόρτωσης συνταγών κατηγορίας {κατηγορία}",
+    "Path to your recipe image" : "Διαδρομή της εικόνας της συνταγής σας",
     "Name" : "Όνομα",
     "Creation date" : "Ημερομηνία δημιουργίας",
-    "Modification date" : "Ημερομηνία τροποποίησης"
+    "Modification date" : "Ημερομηνία τροποποίησης",
+    "Ingredients" : "Συστατικά",
+    "Cooking time" : "Χρόνος μαγειρέματος"
 },
 "nplurals=2; plural=(n != 1);");

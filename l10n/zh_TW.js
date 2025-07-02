@@ -19,7 +19,21 @@ OC.L10N.register(
     "Filter" : "過濾",
     "Print recipe" : "列印食譜",
     "Delete recipe" : "刪除食譜",
+    "Create recipe" : "新增食譜",
+    "Categories" : "分類",
+    "Rename" : "重新命名",
+    "Pick a local image" : "從本機選取圖片",
     "Name" : "名稱",
-    "Creation date" : "建立時間"
+    "Creation date" : "建立時間",
+    "Ingredients" : "配料",
+    "Loading…" : "正在載入……",
+    "Date created" : "建立日期",
+    "Source" : "來源",
+    "Servings" : "份",
+    "Preparation time" : "準備時間",
+    "Cooking time" : "烹調時間",
+    "Total time" : "總時間",
+    "Tools" : "工具",
+    "Instructions" : "說明"
 },
 "nplurals=1; plural=0;");

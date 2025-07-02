@@ -8,6 +8,8 @@
     "Save" : "Lagre",
     "Search" : "Search",
     "Filter" : "Filter",
-    "Name" : "Namn"
+    "Rename" : "Endra namn",
+    "Name" : "Namn",
+    "Loading…" : "Lastar..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

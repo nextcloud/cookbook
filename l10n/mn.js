@@ -8,6 +8,9 @@ OC.L10N.register(
     "Save" : "Хадгалах",
     "Search" : "Хайх",
     "Filter" : "Шүүлтүүр",
-    "Name" : "Нэр"
+    "Categories" : "төрөл",
+    "Rename" : "Нэрлэнэ үү",
+    "Name" : "Нэр",
+    "Loading…" : "уншиж байна"
 },
 "nplurals=2; plural=(n != 1);");

@@ -10,6 +10,12 @@ OC.L10N.register(
     "Save" : "Зачувај",
     "Search" : "Барај",
     "Filter" : "Филтер",
-    "Name" : "Име"
+    "Categories" : "Категории",
+    "Rename" : "Преименувај",
+    "Name" : "Име",
+    "Loading…" : "Се вчитува…",
+    "Source" : "Извор",
+    "Tools" : "Алатки",
+    "Instructions" : "Инструкции"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");

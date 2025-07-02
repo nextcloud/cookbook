@@ -6,6 +6,8 @@
     "Save" : "Sekles",
     "Search" : "Nadi",
     "Filter" : "Sizdeg",
-    "Name" : "Nom"
+    "Rename" : "Beddel isem",
+    "Name" : "Nom",
+    "Loading…" : "Asali..."
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

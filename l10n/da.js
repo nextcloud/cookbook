@@ -34,8 +34,11 @@ OC.L10N.register(
     "Select recipe folder" : "Vælg opskriftsmappe",
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Du er logget på med en gæstekonto. Derfor har du ikke tilladelse til at generere vilkårlige filer og mapper på denne Nextcloud-instans. For at bruge Kogebogs app'en som en gæst, så skal du angive en mappe hvori alle opskrifter gemmes. Til denne mappe skal du have skriverettigheder.",
     "Failed to load category {category} recipes" : "Kunne ikke indlæse opskrifter fra kategorien {category}.",
+    "The server reported an error. Please check." : "Serveren rapporterede en fejl. Kontroller venligst.",
+    "Path to your recipe image" : "Sti til dit opskriftsbillede",
     "Name" : "Navn",
     "Creation date" : "Oprettelsesdato",
-    "Modification date" : "Ændringsdato"
+    "Modification date" : "Ændringsdato",
+    "Cooking time" : "Opvarmningstid"
 },
 "nplurals=2; plural=(n != 1);");

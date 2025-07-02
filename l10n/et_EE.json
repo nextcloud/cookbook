@@ -46,8 +46,22 @@
     "Select recipe folder" : "Vali retsepti kaust",
     "Failed to load category {category} recipes" : "„{category}“ kategooria retsepte ei õnnestunud laadida",
     "Failed to update name of category \"{category}\"" : "„{category}“ kategooria nime uuendamine ei õnnestunud",
+    "Create recipe" : "Koosta retsept",
+    "Download recipe from URL" : "Laadi retsept alla võrguaadressilt",
+    "Uncategorized recipes" : "Kategooriata retseptid",
+    "Path to your recipe image" : "Sinu retsepti pildi asukoht",
     "Name" : "Nimi",
     "Creation date" : "Koostamise kuupäev",
-    "Modification date" : "Muutmise kuupäev"
+    "Modification date" : "Muutmise kuupäev",
+    "Ingredients" : "Koostisosad",
+    "Loading…" : "Andmed on laadimisel…",
+    "Search recipes with this keyword" : "Otsi retsepte selle märksõna alusel",
+    "Source" : "Allikas",
+    "Cooking time" : "Küpsetamise aeg",
+    "Tools" : "Tööriistad",
+    "Nutrition Information" : "Toitumisalane teave",
+    "Serving Size" : "Portsjoni suurus",
+    "Fat total" : "Rasvu kokku",
+    "Instructions" : "Juhend"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

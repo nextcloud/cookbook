@@ -10,6 +10,9 @@ OC.L10N.register(
     "Save" : "შენახვა",
     "Search" : "ძიება",
     "Filter" : "ფილტრი",
-    "Name" : "სახელი"
+    "Categories" : "კატეგორიები",
+    "Rename" : "სახელის შეცვლა",
+    "Name" : "სახელი",
+    "Tools" : "ხელსაწყოები"
 },
 "nplurals=2; plural=(n!=1);");

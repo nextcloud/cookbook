@@ -9,6 +9,10 @@ OC.L10N.register(
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
     "Search" : "Search",
-    "Name" : "Nom"
+    "Categories" : "Categorias",
+    "Rename" : "Tornar nommar",
+    "Name" : "Nom",
+    "Loading…" : "Telecargament…",
+    "Tools" : "Aisinas"
 },
 "nplurals=2; plural=(n > 1);");

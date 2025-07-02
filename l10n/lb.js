@@ -7,6 +7,8 @@ OC.L10N.register(
     "Edit" : "Änneren",
     "Save" : "Späicheren",
     "Search" : "Search",
-    "Name" : "Numm"
+    "Rename" : "Ëmbenennen",
+    "Name" : "Numm",
+    "Loading…" : "Et gëtt gelueden"
 },
 "nplurals=2; plural=(n != 1);");

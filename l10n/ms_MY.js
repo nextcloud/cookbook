@@ -5,6 +5,7 @@ OC.L10N.register(
     "Edit" : "Sunting",
     "Save" : "Simpan",
     "Search" : "Search",
+    "Rename" : "Namakan",
     "Name" : "Nama"
 },
 "nplurals=1; plural=0;");

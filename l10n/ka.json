@@ -9,6 +9,10 @@
     "Save" : "Save",
     "Search" : "Search",
     "Filter" : "Filter",
-    "Name" : "Name"
+    "Categories" : "Categories",
+    "Rename" : "Rename",
+    "Name" : "Name",
+    "Loading…" : "Loading…",
+    "Tools" : "Tools"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

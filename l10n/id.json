@@ -9,7 +9,10 @@
     "Save" : "Simpan",
     "Search" : "Cari",
     "Filter" : "Filter",
+    "Rename" : "Ubah nama",
     "Name" : "Nama",
-    "Creation date" : "Tanggal pembuatan"
+    "Creation date" : "Tanggal pembuatan",
+    "Loading…" : "Memuat…",
+    "Tools" : "Peralatan"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

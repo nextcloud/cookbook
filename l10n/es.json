@@ -90,8 +90,14 @@
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Se ha registrado con una cuenta de invitado. Por ello no tiene permitido crear archivos o carpetas en este Nextcloud. Para ser capaz de usar la app del Recetario como invitado, deberá especificar la carpeta donde están las recetas. Necesitará permisos de escritura en dicha carpeta.",
     "Failed to load category {category} recipes" : "Error al cargar la categoría {category} de las recetas",
     "Failed to update name of category \"{category}\"" : "Error al actualizar la categoría \"{category}\"",
+    "The server reported an error. Please check." : "El servidor ha informado de un error. Por favor, compruébalo.",
+    "Create recipe" : "Crear nueva receta",
+    "Path to your recipe image" : "Ruta a tu imagen de la receta",
     "Name" : "Nombre",
     "Creation date" : "Fecha de creación",
-    "Modification date" : "Fecha de modificación"
+    "Modification date" : "Fecha de modificación",
+    "Ingredients" : "Ingredientes",
+    "Source" : "Origen",
+    "Cooking time" : "Tiempo de cocción"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

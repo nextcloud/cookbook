@@ -11,6 +11,10 @@ OC.L10N.register(
     "Save" : "Save",
     "Search" : "Search",
     "Filter" : "Filter",
-    "Name" : "Name"
+    "Categories" : "Categories",
+    "Rename" : "Rename",
+    "Name" : "Name",
+    "Loading…" : "Loading…",
+    "Tools" : "Tools"
 },
 "nplurals=2; plural=(n!=1);");

@@ -90,8 +90,24 @@
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Gonbidatu kontu batekin zaude saioa hasita. Horregatik, ezin duzu fitxategi eta karpeta arbitrariorik sortu zure Nextcloud instantzian. Gonbidatu gisa Errezeta-liburua erabiltzeko, errezeta guztiak dauden karpeta bat zehaztu behar duzu. Bertan idazteko baimena eduki behar duzu.",
     "Failed to load category {category} recipes" : "{category} kategoriako errezetak kargatzeak huts egin du",
     "Failed to update name of category \"{category}\"" : "Ezin izan da eguneratu \"{category}\" kategoriaren izena",
+    "The server reported an error. Please check." : "Zerbitzariak errorea eman du. Errebisatu.",
+    "Create recipe" : "Sortu errezeta",
+    "Download recipe from URL" : "Deskargatu errezeta URL bidez",
+    "Uncategorized recipes" : "Sailkatu gabeko errezetak",
+    "Path to your recipe image" : "Errezetaren irudiaren bidea",
     "Name" : "Izena",
     "Creation date" : "Sorrera-data",
-    "Modification date" : "Aldaketa-data"
+    "Modification date" : "Aldaketa-data",
+    "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h"],
+    "Ingredients" : "Osagaiak",
+    "Loading…" : "Kargatzen…",
+    "Search recipes with this keyword" : "Bilatu gako-hitz hau duten errezetak",
+    "Source" : "Iturburua",
+    "Cooking time" : "Janaria prestatzeko denbora",
+    "Tools" : "Tresnak",
+    "Nutrition Information" : "Nutrizio informazioa",
+    "Serving Size" : "Anoaren tamaina",
+    "Fat total" : "Gantzak guztira",
+    "Instructions" : "Jarraibideak"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

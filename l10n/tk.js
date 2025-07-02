@@ -6,6 +6,8 @@ OC.L10N.register(
     "Edit" : "Redaktirläň",
     "Save" : "Saklamak",
     "Search" : "Gözlemek",
-    "Name" : "Ady"
+    "Rename" : "Adyny üýtgetmek",
+    "Name" : "Ady",
+    "Loading…" : "Ýüklenýär…"
 },
 "nplurals=2; plural=(n != 1);");

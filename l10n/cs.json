@@ -92,8 +92,10 @@
     "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." : "Jste přihlášeni přes účet pro hosty. Proto na této instanci Nextcloudu nemůžete svévolně vytvářet složky a soubory. Abyste mohli používat aplikaci Kuchařka jako host, musíte určit složku, do které se mají všechny recepty ukládat. Budete potřebovat práva pro zápis do této složky.",
     "Failed to load category {category} recipes" : "Nepodařilo se načíst recepty z kategorie {category}",
     "Failed to update name of category \"{category}\"" : "Nepodařilo se upravit název kategorie „{category}“",
+    "Path to your recipe image" : "Popis umístění obrázku k receptu",
     "Name" : "Název",
     "Creation date" : "Datum vytvoření",
-    "Modification date" : "Datum změny"
+    "Modification date" : "Datum změny",
+    "Cooking time" : "Doba tepelné úpravy"
 },"pluralForm" :"nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;"
 }

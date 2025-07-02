@@ -11,6 +11,10 @@ OC.L10N.register(
     "Save" : "Save",
     "Search" : "Search",
     "Filter" : "Filtr",
-    "Name" : "Name"
+    "Categories" : "Kategoriyalar",
+    "Rename" : "Nomini o'zgartirish",
+    "Name" : "Name",
+    "Loading…" : "Yuklanmoqda...",
+    "Instructions" : "Ko'rsatmalar"
 },
 "nplurals=1; plural=0;");

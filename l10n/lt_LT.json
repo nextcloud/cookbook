@@ -27,7 +27,27 @@
     "Cannot access recipe folder." : "Nepavyksta gauti prieigos prie receptų aplanko.",
     "Failed to load category {category} recipes" : "Nepavyko įkelti receptų iš kategorijos {category}",
     "Failed to update name of category \"{category}\"" : "Nepavyko atnaujinti kategorijos „{category}“ pavadinimo",
+    "Loading category recipes …" : "Įkeliami kategorijos receptai…",
+    "Failed to fetch categories" : "Nepavyko gauti kategorijų",
+    "Create recipe" : "Sukurti receptą",
+    "Download recipe from URL" : "Atsisiųsti receptą iš URL",
+    "Uncategorized recipes" : "Nekategorizuoti receptai",
+    "Categories" : "Kategorijos",
+    "Rename" : "Pervadinti",
+    "Path to your recipe image" : "Kelias į jūsų recepto paveikslą",
+    "Pick a local image" : "Pasirinkti vietinį paveikslą",
     "Name" : "Pavadinimas",
-    "Creation date" : "Sukūrimo data"
+    "Creation date" : "Sukūrimo data",
+    "Ingredients" : "Ingredientai",
+    "Loading…" : "Įkeliama…",
+    "Source" : "Šaltinis",
+    "Servings" : "Porcijos",
+    "Preparation time" : "Pasiruošimo laikas",
+    "Cooking time" : "Gaminimo laikas",
+    "Total time" : "Bendras laikas",
+    "Tools" : "Įrankiai",
+    "Nutrition Information" : "Mitybos informacija",
+    "Instructions" : "Instrukcija",
+    "Failed to load recipes with keywords: {tags}" : "Nepavyko įkelti receptų, kuriuose būtų raktažodžiai: {tags}"
 },"pluralForm" :"nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);"
 }
