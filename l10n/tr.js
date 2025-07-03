@@ -96,7 +96,7 @@ OC.L10N.register(
     "Failed to update name of category \"{category}\"" : "\"{category}\" kategorisinin adı değiştirilemedi",
     "The server reported an error. Please check." : "Sunucu bir sorun bildirdi. Lütfen denetleyin.",
     "Could not query the server. This might be a network problem." : "Sunucu sorgulanamadı. Bir ağ sorunu olabilir.",
-    "Loading category recipes …" : "Kategorinin yemek tarifleri yükleniyor …",
+    "Loading category recipes …" : "Kategorinin yemek tarifleri yükleniyor…",
     "Failed to fetch categories" : "Kategoriler alınamadı",
     "Create recipe" : "Yemek tarifi ekle",
     "Download recipe from URL" : "Yemek tarifini adresten indir",
@@ -145,7 +145,7 @@ OC.L10N.register(
     "Unsaturated Fat" : "Doymamış yağ",
     "Trans Fat" : "Trans yağ",
     "Instructions" : "Yönerge",
-    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "İçerik, yanlış söz dizimi nedeniyle yeniden hesaplanamadı. Lütfen söz diziminin şu biçimde olduğundan emin olun: miktar birim içerik ve bu işlevin doğru çalışması için ayarlanmış porsiyon sayısı. Örnek: 200 gr havuç veya 1 tutam tuz.",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "İçerik, yanlış söz dizimi nedeniyle yeniden hesaplanamadı. Lütfen söz diziminin şu biçimde olduğundan emin olun: Miktar Birim İçerik ve bu işlevin doğru çalışması için ayarlanmış Porsiyon sayısı. Örnek: 200 gr havuç veya 1 tutam tuz.",
     "Failed to load recipes with keywords: {tags}" : "Şu anahtar sözcüklerin bulunduğu yemek tarifleri yüklenemedi: {tags}",
     "Failed to load search results" : "Arama sonuçları yüklenemedi"
 },

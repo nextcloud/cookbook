@@ -15,6 +15,7 @@ OC.L10N.register(
     "Rename" : "Rename",
     "Name" : "Name",
     "Loading…" : "Loading…",
+    "Last modified" : "Last modified",
     "Tools" : "Tools"
 },
 "nplurals=2; plural=(n!=1);");

@@ -10,7 +10,12 @@ OC.L10N.register(
     "Save" : "Guardar",
     "Search" : "Buscar",
     "Filter" : "Filtrar",
+    "Categories" : "Categorías",
+    "Rename" : "Renombrar",
     "Name" : "Nombre",
-    "Loading…" : "Cargando..."
+    "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"],
+    "Loading…" : "Cargando...",
+    "Tools" : "Herramientas",
+    "Energy" : "Energía"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

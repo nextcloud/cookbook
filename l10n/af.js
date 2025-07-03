@@ -10,6 +10,8 @@ OC.L10N.register(
     "Save" : "Bewaar",
     "Search" : "Soek",
     "Filter" : "Filter",
-    "Name" : "Naam"
+    "Name" : "Naam",
+    "Loading…" : "Laai…",
+    "Tools" : "Nutsmiddels"
 },
 "nplurals=2; plural=(n != 1);");

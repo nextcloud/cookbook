@@ -18,7 +18,14 @@ OC.L10N.register(
     "Save" : "Konservi",
     "Search" : "Serĉi",
     "Create recipe" : "Kreii ricepton",
+    "Categories" : "Kategorioj",
+    "Rename" : "Alinomi",
+    "Pick a local image" : "Elektu lokan bildon",
     "Name" : "Nomo",
-    "Creation date" : "Krea dato"
+    "Creation date" : "Krea dato",
+    "Loading…" : "Ŝargado...",
+    "Last modified" : "Laste modifita",
+    "Tools" : "Iloj",
+    "Sugar" : "Sukero"
 },
 "nplurals=2; plural=(n != 1);");

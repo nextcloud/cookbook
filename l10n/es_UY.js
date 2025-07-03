@@ -10,6 +10,8 @@ OC.L10N.register(
     "Save" : "Guardar",
     "Search" : "Buscar",
     "Filter" : "Filtrar",
+    "Categories" : "Categorías",
+    "Rename" : "Renombrar",
     "Name" : "Nombre",
     "Loading…" : "Cargando...",
     "Tools" : "Herramientas"

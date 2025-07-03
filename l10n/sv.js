@@ -122,6 +122,7 @@ OC.L10N.register(
     "Loading…" : "Laddar...",
     "Search recipes with this keyword" : "Sök recept med detta nyckelord",
     "Date created" : "Skapad datum",
+    "Last modified" : "Senast ändrad",
     "Source" : "Källa",
     "Servings" : "Portioner",
     "Preparation time" : "Förberedningstid",

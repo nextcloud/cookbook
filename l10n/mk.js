@@ -14,6 +14,7 @@ OC.L10N.register(
     "Rename" : "Преименувај",
     "Name" : "Име",
     "Loading…" : "Се вчитува…",
+    "Date created" : "Датум на креирање",
     "Source" : "Извор",
     "Tools" : "Алатки",
     "Instructions" : "Инструкции"

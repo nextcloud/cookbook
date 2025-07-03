@@ -11,6 +11,7 @@ OC.L10N.register(
     "Save" : "Simpan",
     "Search" : "Cari",
     "Filter" : "Filter",
+    "Categories" : "Kategori",
     "Rename" : "Ubah nama",
     "Name" : "Nama",
     "Creation date" : "Tanggal pembuatan",

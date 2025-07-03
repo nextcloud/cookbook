@@ -40,8 +40,11 @@ OC.L10N.register(
     "Pick a local image" : "Pasirinkti vietinį paveikslą",
     "Name" : "Pavadinimas",
     "Creation date" : "Sukūrimo data",
+    "Loading recipe failed" : "Recepto įkėlimas nepavyko",
     "Ingredients" : "Ingredientai",
     "Loading…" : "Įkeliama…",
+    "Date created" : "Sukūrimo data",
+    "Last modified" : "Paskutinis modifikavimas",
     "Source" : "Šaltinis",
     "Servings" : "Porcijos",
     "Preparation time" : "Pasiruošimo laikas",
@@ -50,6 +53,7 @@ OC.L10N.register(
     "Tools" : "Įrankiai",
     "Nutrition Information" : "Mitybos informacija",
     "Instructions" : "Instrukcija",
-    "Failed to load recipes with keywords: {tags}" : "Nepavyko įkelti receptų, kuriuose būtų raktažodžiai: {tags}"
+    "Failed to load recipes with keywords: {tags}" : "Nepavyko įkelti receptų, kuriuose būtų raktažodžiai: {tags}",
+    "Failed to load search results" : "Nepavyko įkelti paieškos rezultatų"
 },
 "nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < 11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 : n % 1 != 0 ? 2: 3);");

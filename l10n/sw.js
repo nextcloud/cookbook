@@ -9,6 +9,7 @@ OC.L10N.register(
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
     "Search" : "Tafuta",
+    "Filter" : "Chujio",
     "Categories" : "Vipengele",
     "Rename" : "Badili jina",
     "Name" : "Jina",

@@ -104,6 +104,7 @@ OC.L10N.register(
     "Enter new category name" : "Skriv inn et nytt kategorinavn",
     "Cookbook settings" : "Kokebok innstillinger",
     "Path to your recipe image" : "Stil til oppskriftsbildet ditt",
+    "Enter URL or select from your Nextcloud instance on the right" : "Skriv inn URL eller velg fra Nextcloud-forekomsten til høyre",
     "Pick a local image" : "Velg et lokalt bilde",
     "Name" : "Navn",
     "Creation date" : "Opprettelses dato",
@@ -111,6 +112,7 @@ OC.L10N.register(
     "_{hours}h_::_{hours}h_" : ["{hours}t","{hours}t"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds}s","{seconds}s"],
+    "Loading recipe failed" : "Innlasting av oppskrift feilet",
     "{item} copied to clipboard" : "{item} kopiert til utklippstavlen",
     "Copying {item} to clipboard failed" : "Kopiering av {item} til utklippstavlen feilet",
     "Ingredients" : "Ingredienser",
@@ -141,6 +143,7 @@ OC.L10N.register(
     "Unsaturated Fat" : "Umettet fett",
     "Trans Fat" : "Transfett",
     "Instructions" : "Instruksjoner",
+    "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Ingrediensen kan ikke beregnes på nytt på grunn av feil syntaks. Kontroller at syntaksen følger dette formatet: mengde enhet ingrediens og at et bestemt antall porsjoner er angitt for at denne funksjonen skal fungere riktig. Eksempler: 200 g gulrøtter eller 1 klype salt.",
     "Failed to load recipes with keywords: {tags}" : "Lasting av oppskrifter med nøkkelord feilet: {tags}",
     "Failed to load search results" : "Kunne ikke laste søkeresultater"
 },

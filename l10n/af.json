@@ -8,6 +8,8 @@
     "Save" : "Bewaar",
     "Search" : "Soek",
     "Filter" : "Filter",
-    "Name" : "Naam"
+    "Name" : "Naam",
+    "Loading…" : "Laai…",
+    "Tools" : "Nutsmiddels"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -7,6 +7,7 @@ OC.L10N.register(
     "Edit" : "সম্পাদনা",
     "Save" : "সংরক্ষণ",
     "Search" : "Search",
+    "Rename" : "পূনঃনামকরণ",
     "Name" : "নাম"
 },
 "nplurals=2; plural=(n != 1);");
