@@ -7,6 +7,7 @@ OC.L10N.register(
     "Edit" : "Deasaich",
     "Save" : "Sàbhail",
     "Search" : "Lorg",
+    "Rename" : "Thoir ainm ùr air",
     "Name" : "Ainm",
     "Loading…" : "’Ga luchdadh…"
 },
