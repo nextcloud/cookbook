@@ -13,6 +13,7 @@ OC.L10N.register(
     "Categories" : "Категории",
     "Rename" : "Преименувај",
     "Name" : "Име",
+    "Creation date" : "Датум на креирање",
     "Loading…" : "Се вчитува…",
     "Date created" : "Датум на креирање",
     "Source" : "Извор",
