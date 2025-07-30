@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "у %s",
     "Tags" : "Тэгі",
     "Page not found" : "Старонка не знойдзена",
+    "Edit" : "Рэдагаваць",
     "Save" : "Захаваць",
     "Search" : "Пошук",
     "Categories" : "Катэгорыі",
