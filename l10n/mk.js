@@ -16,6 +16,7 @@ OC.L10N.register(
     "Creation date" : "Датум на креирање",
     "Loading…" : "Се вчитува…",
     "Date created" : "Датум на креирање",
+    "Last modified" : "Последно изменето",
     "Source" : "Извор",
     "Tools" : "Алатки",
     "Instructions" : "Инструкции"
