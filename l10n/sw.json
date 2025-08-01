@@ -12,6 +12,7 @@
     "Could not parse recipe instructions as they are no array." : "Haikuweza kuchanganua maelekezo ya mapishi kwa kuwa si safu",
     "Cannot parse recipe: Unknown object found during flattening of instructions." : "Haiwezi kuchanganua kichocheo: Kitu kisichojulikana kilichopatikana wakati wa kubapa maagizo.",
     "Did not find any p or li entries in the raw string of the instructions." : "Haikupata maingizo p au li katika mfuatano ghafi wa maagizo.",
+    "Recipes" : "Recipes",
     "in %s" : "Katika %s",
     "Category" : "Kipengele",
     "Tags" : "Maoni",

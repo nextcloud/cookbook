@@ -29,6 +29,7 @@ OC.L10N.register(
     "Name" : "Nosaukums",
     "Ingredients" : "Sastāvdaļas",
     "Loading…" : "Ielādē…",
+    "Last modified" : "Pēdējoreiz izmainīts",
     "Source" : "Avots",
     "Servings" : "Porcijas",
     "Preparation time" : "Pagatavošanas laiks",
