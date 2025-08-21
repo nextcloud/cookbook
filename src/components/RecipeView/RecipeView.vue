@@ -349,7 +349,14 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
+import {
+    computed,
+    getCurrentInstance,
+    onMounted,
+    onUnmounted,
+    ref,
+    watch,
+} from 'vue';
 import {
     onBeforeRouteUpdate,
     useRoute,
@@ -410,6 +417,8 @@ const parsedTools = ref([]);
  * @type {import('vue').Ref<number>}
  */
 const recipeYield = ref(0);
+
+let wakeLockSentinel = null;
 
 // ===================
 // Computed properties
@@ -806,6 +815,18 @@ onMounted(() => {
     emitter.on('reloadRecipeView', () => {
         setup();
     });
+
+    navigator.wakeLock.request().then((sentinel) => {
+        wakeLockSentinel = sentinel;
+    });
+});
+
+onUnmounted(() => {
+    if (wakeLockSentinel !== null) {
+        wakeLockSentinel.release().then(() => {
+            wakeLockSentinel = null;
+        });
+    }
 });
 </script>
 
