@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "Рэцэпты",
     "in %s" : "у %s",
     "Tags" : "Тэгі",
     "None" : "Няма",
