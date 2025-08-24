@@ -1,15 +1,23 @@
 { "translations": {
     "Recipes" : "Рэцэпты",
     "in %s" : "у %s",
+    "Category" : "Катэгорыя",
+    "Recipe name" : "Назва рэцэпта",
     "Tags" : "Тэгі",
+    "All recipes" : "Усе рэцэпты",
     "None" : "Няма",
+    "Loading app" : "Загрузка праграмы",
     "Page not found" : "Старонка не знойдзена",
     "Edit" : "Рэдагаваць",
     "Save" : "Захаваць",
     "Search" : "Пошук",
+    "Delete recipe" : "Выдаліць рэцэпт",
+    "Create recipe" : "Стварыць рэцэпт",
     "Categories" : "Катэгорыі",
     "Rename" : "Перайменаваць",
     "Name" : "Назва",
+    "Creation date" : "Дата стварэння",
+    "Ingredients" : "Інгрэдыенты",
     "Loading…" : "Загрузка…"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }
