@@ -3,6 +3,8 @@ OC.L10N.register(
     {
     "Recipes" : "Рэцэпты",
     "in %s" : "у %s",
+    "Cookbook" : "Кулінарная кніга",
+    "An integrated cookbook using schema.org JSON files as recipes" : "Інтэграваная кулінарная кніга, якая выкарыстоўвае файл schema.org JSON у якасці рэцэптаў",
     "Category" : "Катэгорыя",
     "Recipe name" : "Назва рэцэпта",
     "Tags" : "Тэгі",
@@ -17,10 +19,17 @@ OC.L10N.register(
     "Create recipe" : "Стварыць рэцэпт",
     "Categories" : "Катэгорыі",
     "Rename" : "Перайменаваць",
+    "Cookbook settings" : "Налады кулінарнай кнігі",
     "Name" : "Назва",
     "Creation date" : "Дата стварэння",
+    "_{hours}h_::_{hours}h_" : ["{hours} гадз","{hours} гадз","{hours} гадз","{hours} гадз"],
+    "_{minutes}m_::_{minutes}m_" : ["{minutes} хв","{minutes} хв","{minutes} хв","{minutes} хв"],
+    "_{seconds}s_::_{seconds}s_" : ["{seconds} с","{seconds} с","{seconds} с","{seconds} с"],
     "Ingredients" : "Інгрэдыенты",
+    "ingredients" : "інгрэдыенты",
     "Loading…" : "Загрузка…",
+    "Tools" : "Інструменты",
+    "Sugar" : "Цукар",
     "Instructions" : "Інструкцыі"
 },
 "nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);");
