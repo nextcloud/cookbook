@@ -12,7 +12,7 @@ jobs:
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     filter: "blob:none"
                     fetch-depth: 0
@@ -167,7 +167,7 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     fetch-depth: 1
                 
@@ -211,7 +211,7 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     fetch-depth: 1
             -   name: Get the date
