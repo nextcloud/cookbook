@@ -13,12 +13,12 @@ is_file_dump () {
 restore_mysql_dump () {
 	echo "Dropping old data from the database"
 	echo "Getting tables"
-	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE" <<- EOF | tail -n +2 > /tmp/mysql_tables
+	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql --skip-ssl "$MYSQL_DATABASE" <<- EOF | tail -n +2 > /tmp/mysql_tables
 		SHOW TABLES;
 		EOF
 	echo "Got:"
 	cat /tmp/mysql_tables
-	cat /tmp/mysql_tables | sed 's@.*@DROP TABLE \0;@' | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE"
+	cat /tmp/mysql_tables | sed 's@.*@DROP TABLE \0;@' | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql --skip-ssl "$MYSQL_DATABASE"
 
 	echo "Restoring MySQL from single file dump"
 	local dump_file="$SF_DIR/sql/dump.sql"
@@ -32,7 +32,7 @@ restore_mysql_dump () {
 	echo "Version:"
 	mysql --version
 	echo "Carrying out..."
-	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql "$MYSQL_DATABASE" < "/tmp/tmpdump.sql"
+	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql --skip-ssl "$MYSQL_DATABASE" < "/tmp/tmpdump.sql"
 }
 
 restore_postgres_dump () {
