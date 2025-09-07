@@ -219,7 +219,7 @@ export default {
 
 <style scoped>
 .ml-2 {
-    margin-left: 0.5rem;
+    margin-inline-start: 0.5rem;
 }
 
 fieldset {
@@ -229,7 +229,7 @@ fieldset {
 
 fieldset > * {
     margin: 0;
-    float: left;
+    float: inline-start;
 }
 @media (max-width: 1199px) {
     fieldset > label {
@@ -258,7 +258,7 @@ fieldset > ul > li {
 }
 
 fieldset > ul > li > .key {
-    margin-right: 1em;
+    margin-inline-end: 1em;
 }
 
 fieldset > ul > li > input.val {

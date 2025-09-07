@@ -47,17 +47,17 @@ li {
     padding: 0 0.5em;
     border: 1px solid var(--color-border-dark);
     border-radius: var(--border-radius-pill);
-    margin-right: 0.3em;
     margin-bottom: 0.3em;
+    margin-inline-end: 0.3em;
 
     /* prevent text selection - doesn't look good */
     user-select: none; /* Standard */
 }
 
 li .count {
-    margin-left: 0.35em;
     color: var(--color-text-light);
     font-size: 0.8em;
+    margin-inline-start: 0.35em;
 }
 
 .active li {

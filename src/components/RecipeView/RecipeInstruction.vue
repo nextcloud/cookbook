@@ -35,18 +35,17 @@ export default {
 <style scoped>
 li {
     position: relative;
-    padding-left: calc(36px + 1rem);
     margin-bottom: 2rem;
     clear: both;
     counter-increment: instruction-counter;
     cursor: pointer;
+    padding-inline-start: calc(36px + 1rem);
     white-space: pre-line;
 }
 
 li::before {
     position: absolute;
     top: 0;
-    left: 0;
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
@@ -55,6 +54,7 @@ li::before {
     background-position: center;
     background-repeat: no-repeat;
     content: counter(instruction-counter);
+    inset-inline-start: 0;
     line-height: 36px;
     outline: none;
     text-align: center;
@@ -89,7 +89,7 @@ li input[type='checkbox'] {
 
 .markdown-instruction:deep(ol > li),
 .markdown-instruction:deep(ul > li) {
-    margin-left: 20px;
+    margin-inline-start: 20px;
 }
 
 .markdown-instruction:deep(a) {

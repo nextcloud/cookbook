@@ -31,7 +31,7 @@ export default {
 <style scoped>
 li {
     margin-bottom: 0.5em;
-    margin-left: 1.25em;
+    margin-inline-start: 1.25em;
 }
 
 li .title {

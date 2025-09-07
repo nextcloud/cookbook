@@ -110,7 +110,7 @@ fieldset {
 
 fieldset > * {
     margin: 0;
-    float: left;
+    float: inline-start;
 }
 
 fieldset > label {

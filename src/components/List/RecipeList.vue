@@ -302,7 +302,7 @@ export default {
 
 <style scoped>
 .mr-4 {
-    margin-right: 1rem;
+    margin-inline-end: 1rem;
 }
 
 .pt-2 {
