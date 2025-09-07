@@ -7,6 +7,8 @@ use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\TemplateResponse;
 use OCP\IRequest;
 use OCP\Util;
@@ -35,10 +37,10 @@ class MainController extends Controller {
 	/**
 	 * Load the start page of the app.
 	 *
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 * @throws UserNotLoggedInException never
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function index(): TemplateResponse {
 		try {
 			// Check if the user folder can be accessed
