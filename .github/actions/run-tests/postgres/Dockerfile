@@ -6,4 +6,4 @@ RUN apt-get update && \
 	apt-get install -y --no-install-recommends eatmydata docker-cli && \
 	apt-get clean
 
-COPY docker-entrypoint.sh /usr/local/bin
+# COPY docker-entrypoint.sh /usr/local/bin
