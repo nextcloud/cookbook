@@ -816,9 +816,13 @@ onMounted(() => {
         setup();
     });
 
-    navigator.wakeLock.request().then((sentinel) => {
-        wakeLockSentinel = sentinel;
-    });
+    if('wakeLock' in navigator) {
+        navigator.wakeLock.request().then((sentinel) => {
+            wakeLockSentinel = sentinel;
+        });
+    } else {
+        log.info('WakeLock API is not supported');
+    }
 });
 
 onUnmounted(() => {
