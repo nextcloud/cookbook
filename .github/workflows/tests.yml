@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@v4
+            uses: actions/checkout@v5
         -   name: Setup node and NPM
             uses: actions/setup-node@v5
             with:
@@ -126,7 +126,7 @@ jobs:
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
             fetch-depth: 2
       
@@ -211,7 +211,7 @@ jobs:
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
             fetch-depth: 2
       
@@ -274,7 +274,7 @@ jobs:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@v4
+          uses: actions/checkout@v5
           with:
             path: code
             fetch-depth: 2
@@ -352,7 +352,7 @@ jobs:
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@v4
+            uses: actions/checkout@v5
         -   name: Setup node and NPM
             uses: actions/setup-node@v5
             with:
@@ -426,7 +426,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: build docker container image
       run: docker build -t php-lint-tester .github/actions/php-linter
     - name: Check the code base
@@ -442,7 +442,7 @@ jobs:
 
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Get the date
       id: date
       run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
