@@ -4,6 +4,9 @@ namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
 use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\Attribute\CORS;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -22,34 +25,31 @@ class ConfigApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
-	 *
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	#[CORS]
 	public function list() {
 		return $this->implementation->list();
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
-	 *
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	#[CORS]
 	public function config() {
 		return $this->implementation->config();
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
-	 *
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	#[CORS]
 	public function reindex() {
 		return $this->implementation->reindex();
 	}

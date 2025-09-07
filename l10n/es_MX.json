@@ -10,20 +10,10 @@
     "Filter" : "Filtrar",
     "Categories" : "Categorías",
     "Rename" : "Renombrar",
-    "Add" : "Agregar",
     "Name" : "Nombre",
-    "Order" : "Ordenar",
-    "Clear" : "Limpiar",
-    "Apply" : "Aplicar",
-    "Tools" : "Herramientas",
-    "Dismiss" : "Descartar",
-    "Cancel" : "Cancelar",
-    "OK" : "OK",
-    "Description" : "Descripción",
-    "URL" : "URL",
-    "Image" : "Imagen",
+    "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"],
     "Loading…" : "Cargando...",
-    "Last modified" : "Última modificación",
+    "Tools" : "Herramientas",
     "Energy" : "Energía"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

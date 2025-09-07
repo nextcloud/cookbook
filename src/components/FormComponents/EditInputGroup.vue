@@ -449,15 +449,15 @@ fieldset > ul {
 fieldset > ul + button {
     width: 36px;
     padding: 0;
-    float: right;
+    float: inline-end;
     text-align: center;
 }
 
 fieldset > ul > li {
     display: flex;
     width: 100%;
-    padding-right: 0.25em;
     margin: 0 0 1em;
+    padding-inline-end: 0.25em;
 }
 
 .text > input {
@@ -476,19 +476,19 @@ li .controls > button {
     height: 34px;
     padding: 0;
     border-radius: 0;
-    border-right-color: transparent;
-    border-left-color: transparent;
     margin: 0;
+    border-inline-end-color: transparent;
+    border-inline-start-color: transparent;
 }
 
 li .controls > button:last-child {
-    border-right-width: 1px;
     border-bottom-right-radius: var(--border-radius);
+    border-inline-end-width: 1px;
     border-top-right-radius: var(--border-radius);
 }
 
 li .controls > button:last-child:not(:hover):not(:focus) {
-    border-right-color: var(--color-border-dark);
+    border-inline-end-color: var(--color-border-dark);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -496,7 +496,7 @@ li .controls > button:last-child:not(:hover):not(:focus) {
     position: relative;
     z-index: 1;
     top: 1px;
-    float: right;
+    float: inline-end;
 }
 
 .textarea > textarea {
@@ -517,7 +517,6 @@ li .controls > button:last-child:not(:hover):not(:focus) {
 .step-number {
     position: absolute;
     top: 0;
-    left: 0;
     width: 36px;
     height: 36px;
     border: 1px solid var(--color-border-dark);
@@ -525,6 +524,7 @@ li .controls > button:last-child:not(:hover):not(:focus) {
     background-color: var(--color-background-dark);
     background-position: center;
     background-repeat: no-repeat;
+    inset-inline-start: 0;
     line-height: 36px;
     outline: none;
     text-align: center;

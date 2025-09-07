@@ -4,6 +4,8 @@ namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\AppFramework\Http\Response;
 use OCP\IRequest;
@@ -22,18 +24,16 @@ class RecipeController extends Controller {
 		$this->impl = $recipeImplementation;
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
+	#[NoAdminRequired]
 	public function index() {
 		return $this->impl->index();
 	}
 
 	/**
-	 * @NoAdminRequired
 	 * @param int $id
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function show($id) {
 		return $this->impl->show($id);
 	}
@@ -41,11 +41,11 @@ class RecipeController extends Controller {
 	/**
 	 * Update an existing recipe.
 	 *
-	 * @NoAdminRequired
 	 * @param $id
 	 * @return JSONResponse
 	 * @todo Parameter id is never used. Fix that
 	 */
+	#[NoAdminRequired]
 	public function update($id) {
 		return $this->impl->update($id);
 	}
@@ -53,54 +53,51 @@ class RecipeController extends Controller {
 	/**
 	 * Create a new recipe.
 	 *
-	 * @NoAdminRequired
-	 *
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function create() {
 		return $this->impl->create();
 	}
 
 	/**
-	 * @NoAdminRequired
 	 * @param int $id
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function destroy($id) {
 		return $this->impl->destroy($id);
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
 	 * @param $id
 	 * @return Response
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
 	public function image($id) {
 		return $this->impl->image($id);
 	}
 
-	/**
-	 * @NoAdminRequired
-	 */
+	#[NoAdminRequired]
 	public function import() {
 		return $this->impl->import();
 	}
 
 	/**
-	 * @NoAdminRequired
 	 * @param string $query
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function search($query) {
 		return $this->impl->search($query);
 	}
 
 	/**
-	 * @NoAdminRequired
 	 * @param string $category
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function category($category) {
 		return $this->impl->getAllInCategory($category);
 	}
@@ -108,10 +105,10 @@ class RecipeController extends Controller {
 
 
 	/**
-	 * @NoAdminRequired
 	 * @param string $keywords
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function tags($keywords) {
 		return $this->impl->getAllWithTags($keywords);
 	}

@@ -10,18 +10,9 @@ OC.L10N.register(
     "Save" : "Enregistrar",
     "Search" : "Search",
     "Categories" : "Categorias",
-    "Rename" : "Renomenar",
-    "Add" : "Ajustar",
+    "Rename" : "Tornar nommar",
     "Name" : "Nom",
-    "Clear" : "Escafar",
-    "Apply" : "Aplicar",
-    "Tools" : "Aisinas",
-    "Dismiss" : "Regetar",
-    "Cancel" : "Anullar",
-    "OK" : "D’acòrdi",
-    "Calories" : "Calorias",
-    "Description" : "Descripcion",
-    "URL" : "URL",
-    "Loading…" : "Cargament…"
+    "Loading…" : "Telecargament…",
+    "Tools" : "Aisinas"
 },
 "nplurals=2; plural=(n > 1);");

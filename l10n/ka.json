@@ -11,17 +11,9 @@
     "Filter" : "Filter",
     "Categories" : "Categories",
     "Rename" : "Rename",
-    "Add" : "Add",
     "Name" : "Name",
-    "Clear" : "Clear",
-    "Tools" : "Tools",
-    "Dismiss" : "Dismiss",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "Description",
-    "URL" : "URL",
-    "Image" : "Image",
     "Loading…" : "Loading…",
-    "Last modified" : "Last modified"
+    "Last modified" : "Last modified",
+    "Tools" : "Tools"
 },"pluralForm" :"nplurals=2; plural=(n!=1);"
 }

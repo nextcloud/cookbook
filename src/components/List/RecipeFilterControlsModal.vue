@@ -275,7 +275,7 @@ function submitFilters() {
 }
 
 .mr-2 {
-    margin-right: 0.5rem;
+    margin-inline-end: 0.5rem;
 }
 
 .mt-4 {
@@ -328,8 +328,8 @@ function submitFilters() {
     padding: 16px;
 
     .title {
-        padding-right: 30px;
         margin-bottom: 1rem;
+        padding-inline-end: 30px;
     }
 
     .option {

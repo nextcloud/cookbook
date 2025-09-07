@@ -12,15 +12,7 @@ OC.L10N.register(
     "Filter" : "ตัวกรอง",
     "Categories" : "หมวดหมู่",
     "Rename" : "เปลี่ยนชื่อ",
-    "Add" : "เพิ่ม",
     "Name" : "ชื่อ",
-    "Clear" : "ล้าง",
-    "Apply" : "นำไปใช้",
-    "Dismiss" : "ปิดทิ้ง",
-    "Cancel" : "ยกเลิก",
-    "OK" : "ตกลง",
-    "Description" : "คำอธิบาย",
-    "URL" : "URL",
-    "Loading…" : "กำลังโหลด..."
+    "Loading…" : "กำลังโหลด…"
 },
 "nplurals=1; plural=0;");

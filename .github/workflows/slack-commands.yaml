@@ -60,7 +60,7 @@ jobs:
           reactions: "+1"
       - name: Checkout of the app data
         if: steps.config.outputs.startBackport == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           token: ${{ secrets.COOKBOOK_BOT_TOKEN }}

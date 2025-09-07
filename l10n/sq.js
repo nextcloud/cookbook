@@ -11,18 +11,9 @@ OC.L10N.register(
     "Search" : "Kërko",
     "Filter" : "Filtro",
     "Categories" : "Kategoritë",
-    "Rename" : "Rename",
-    "Add" : "Shto",
+    "Rename" : "Riemërtoje",
     "Name" : "Emri",
-    "Clear" : "Pastro",
-    "Apply" : "Apliko",
-    "Tools" : "Mjete",
-    "Dismiss" : "Hiq",
-    "Cancel" : "Anullo",
-    "OK" : "OK",
-    "Description" : "Përshkrim",
-    "URL" : "Url",
     "Loading…" : "Duke u ngarkuar…",
-    "Last modified" : "Ndryshuar së fundmi"
+    "Tools" : "Mjete"
 },
 "nplurals=2; plural=(n != 1);");

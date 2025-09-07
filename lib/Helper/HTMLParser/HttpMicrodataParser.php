@@ -35,10 +35,10 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	public function parse(DOMDocument $document, ?string $url): array {
 		$this->xpath = new DOMXPath($document);
 
-		$selectorHttp = "//*[@itemtype='http://schema.org/Recipe']";
-		$selectorHttps = "//*[@itemtype='https://schema.org/Recipe']";
-		$selectorHttpWww = "//*[@itemtype='http://www.schema.org/Recipe']";
-		$selectorHttpsWww = "//*[@itemtype='https://www.schema.org/Recipe']";
+		$selectorHttp = "//*[@itemscope and @itemtype='http://schema.org/Recipe']";
+		$selectorHttps = "//*[@itemscope and @itemtype='https://schema.org/Recipe']";
+		$selectorHttpWww = "//*[@itemscope and @itemtype='http://www.schema.org/Recipe']";
+		$selectorHttpsWww = "//*[@itemscope and @itemtype='https://www.schema.org/Recipe']";
 		$xpathSelector = "$selectorHttp | $selectorHttps | $selectorHttpWww | $selectorHttpsWww";
 
 		$recipes = $this->xpath->query($xpathSelector);
@@ -208,7 +208,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * @return DOMNodeList A list of all found child nodes with the given property
 	 */
 	private function searchChildEntries(DOMNode $recipeNode, string $prop): DOMNodeList {
-		return $this->xpath->query(".//*[@itemprop='$prop']", $recipeNode);
+		return $this->xpath->query(".//*[@itemprop='$prop' and count(ancestor::*[@itemscope]) = 1]", $recipeNode);
 	}
 
 	/**

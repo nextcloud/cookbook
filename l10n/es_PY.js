@@ -11,17 +11,8 @@ OC.L10N.register(
     "Search" : "Buscar",
     "Filter" : "Filtrar",
     "Categories" : "Categorías",
-    "Rename" : "Renombrar",
-    "Add" : "Agregar",
     "Name" : "Nombre",
-    "Apply" : "Aplicar",
-    "Tools" : "Herramientas",
-    "Dismiss" : "Descartar",
-    "Cancel" : "Cancelar",
-    "OK" : "OK",
-    "Description" : "Descripción",
-    "URL" : "URL",
     "Loading…" : "Cargando...",
-    "Last modified" : "Última modificación"
+    "Tools" : "Herramientas"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

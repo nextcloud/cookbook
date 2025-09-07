@@ -84,12 +84,12 @@ li {
 
 li > .ingredient {
     display: inline;
-    padding-left: 1em;
+    padding-inline-start: 1em;
     text-indent: -1em;
 }
 
 li > span.icon-error {
-    margin-left: 0.3em;
+    margin-inline-start: 0.3em;
 }
 
 @media print {

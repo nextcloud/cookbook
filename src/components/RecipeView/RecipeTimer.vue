@@ -260,9 +260,9 @@ export default {
 .time button {
     position: absolute;
     top: 0;
-    left: 0;
     width: 36px;
     height: 36px;
+    inset-inline-start: 0;
     transform: translate(-50%, -50%);
 }
 

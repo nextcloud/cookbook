@@ -10,23 +10,13 @@
     "Filter" : "Филтер",
     "Categories" : "Категории",
     "Rename" : "Преименувај",
-    "Add" : "Додади",
     "Name" : "Име",
-    "Search term" : "Пребарувај термин",
-    "Keywords" : "Клучни зборови",
-    "Clear" : "Исчисти",
-    "Apply" : "Примени",
-    "Tools" : "Алатки",
-    "Dismiss" : "Отфрли",
-    "Cancel" : "Откажи",
-    "OK" : "Добро",
-    "Description" : "Опис",
-    "URL" : "Адреса",
-    "Image" : "Слика",
-    "Instructions" : "Инструкции",
+    "Creation date" : "Датум на креирање",
     "Loading…" : "Се вчитува…",
     "Date created" : "Датум на креирање",
-    "Last modified" : "Скоро изменети",
-    "Source" : "Извор"
+    "Last modified" : "Последно изменето",
+    "Source" : "Извор",
+    "Tools" : "Алатки",
+    "Instructions" : "Инструкции"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

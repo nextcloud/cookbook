@@ -93,7 +93,7 @@ export default {
     height: 105px;
     border-radius: 3px 0 0 3px;
     background-color: #bebdbd;
-    float: left;
+    float: inline-start;
 }
 
 .recipe-card span {

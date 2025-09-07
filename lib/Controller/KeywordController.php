@@ -4,6 +4,7 @@ namespace OCA\Cookbook\Controller;
 
 use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
 use OCP\AppFramework\Controller;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -25,6 +26,7 @@ class KeywordController extends Controller {
 	 *
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
 	public function keywords() {
 		return $this->impl->index();
 	}

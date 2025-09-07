@@ -18,6 +18,29 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+### Added
+
+- Keep the display on while viewing a recipe
+  [#2828](https://github.com/nextcloud/cookbook/pull/2828) @provokateurin
+
+### Fixed
+
+- Parse Microdata correctly using itemscope properties
+  [#2711](https://github.com/nextcloud/cookbook/pull/2711) @krzys-h
+
+### Maintenance
+
+- Update eslint import resolver typescript dependency
+  [#2712](https://github.com/nextcloud/cookbook/pull/2712) @dependabot
+- Fix tests of migrations on MariaDB to work on CI pipeline
+  [#2838](https://github.com/nextcloud/cookbook/pull/2838) @christianlupus
+- Update all NPM packages to latest version installable
+  [#2839](https://github.com/nextcloud/cookbook/pull/2839) @christianlupus
+- Update NPM and Node version for building
+  [#2831](https://github.com/nextcloud/cookbook/pull/2831) @nextcloud-command
+- Migrate the annotations to attributes
+  [#2840](https://github.com/nextcloud/cookbook/pull/2840) @christianlupus
+
 
 ## 0.11.3 - 2025-03-07
 

@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@v4
+            uses: actions/checkout@v5
         -   name: Setup node and NPM
-            uses: actions/setup-node@v4
+            uses: actions/setup-node@v5
             with:
                 node-version: '20'
         -   name: Install npm
@@ -25,7 +25,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@v4.2.2
+            uses: actions/cache@v4.2.4
             with:
                 path: |
                     ~/.npm
@@ -35,7 +35,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@v4.2.2
+            uses: actions/cache@v4.2.4
             with:
                 path: |
                     vendor
@@ -126,7 +126,7 @@ jobs:
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
             fetch-depth: 2
       
@@ -211,7 +211,7 @@ jobs:
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
             fetch-depth: 2
       
@@ -269,12 +269,12 @@ jobs:
           run: mkdir artifacts code unit-coverage integration-coverage
         - name: Download artifacts
           if: ${{ github.event_name == 'push' }}
-          uses: actions/download-artifact@v4.1.9
+          uses: actions/download-artifact@v5.0.0
           with:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@v4
+          uses: actions/checkout@v5
           with:
             path: code
             fetch-depth: 2
@@ -352,9 +352,9 @@ jobs:
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@v4
+            uses: actions/checkout@v5
         -   name: Setup node and NPM
-            uses: actions/setup-node@v4
+            uses: actions/setup-node@v5
             with:
                 node-version: '20'
         -   name: Install npm
@@ -365,7 +365,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@v4.2.2
+            uses: actions/cache@v4.2.4
             with:
                 path: |
                     ~/.npm
@@ -375,7 +375,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@v4.2.2
+            uses: actions/cache@v4.2.4
             with:
                 path: |
                     vendor
@@ -426,7 +426,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: build docker container image
       run: docker build -t php-lint-tester .github/actions/php-linter
     - name: Check the code base
@@ -442,12 +442,12 @@ jobs:
 
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
     - name: Get the date
       id: date
       run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
     - name: Cache NPM cache
-      uses: actions/cache@v4.2.2
+      uses: actions/cache@v4.2.4
       with:
         path: |
           ~/.npm
