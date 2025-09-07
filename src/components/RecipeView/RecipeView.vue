@@ -349,7 +349,14 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
+import {
+    computed,
+    getCurrentInstance,
+    onMounted,
+    onUnmounted,
+    ref,
+    watch,
+} from 'vue';
 import {
     onBeforeRouteUpdate,
     useRoute,
@@ -410,6 +417,8 @@ const parsedTools = ref([]);
  * @type {import('vue').Ref<number>}
  */
 const recipeYield = ref(0);
+
+let wakeLockSentinel = null;
 
 // ===================
 // Computed properties
@@ -806,6 +815,22 @@ onMounted(() => {
     emitter.on('reloadRecipeView', () => {
         setup();
     });
+
+    if ('wakeLock' in navigator) {
+        navigator.wakeLock.request().then((sentinel) => {
+            wakeLockSentinel = sentinel;
+        });
+    } else {
+        log.info('WakeLock API is not supported');
+    }
+});
+
+onUnmounted(() => {
+    if (wakeLockSentinel !== null) {
+        wakeLockSentinel.release().then(() => {
+            wakeLockSentinel = null;
+        });
+    }
 });
 </script>
 
@@ -880,14 +905,14 @@ export default {
 }
 
 .date {
-    margin-right: 1.5em;
+    margin-inline-end: 1.5em;
 }
 
 .date-icon {
     display: inline-block;
-    margin-right: 0.2em;
     margin-bottom: 0.2em;
     background-size: 1em;
+    margin-inline-end: 0.2em;
     vertical-align: middle;
 }
 
@@ -896,7 +921,7 @@ export default {
 }
 
 .copy-ingredients {
-    float: right;
+    float: inline-end;
 }
 
 .ingredient-highlighted {
@@ -952,9 +977,9 @@ export default {
 .times .time button {
     position: absolute;
     top: 0;
-    left: 0;
     width: 36px;
     height: 36px;
+    inset-inline-start: 0;
     transform: translate(-50%, -50%);
 }
 
@@ -987,12 +1012,12 @@ section::after {
 
 aside {
     flex-basis: 20rem;
-    padding-right: 2rem;
+    padding-inline-end: 2rem;
 }
 
 .content aside {
     width: 30%;
-    float: left;
+    float: inline-start;
 }
 @media screen and (max-width: 1199px) {
     .content aside {
@@ -1007,8 +1032,8 @@ aside ul {
 
 aside ul li {
     margin-bottom: 0.75ex;
-    margin-left: 1em;
     line-height: 2.5ex;
+    margin-inline-start: 1em;
 }
 
 aside ul li span,
@@ -1032,7 +1057,7 @@ aside ul li input[type='checkbox'] {
 
 .markdown-description :deep(ol > li),
 .markdown-description :deep(ul > li) {
-    margin-left: 20px;
+    margin-inline-start: 20px;
 }
 
 .markdown-description :deep(a) {
@@ -1046,7 +1071,7 @@ aside ul li input[type='checkbox'] {
 main {
     width: 70%;
     flex-basis: calc(100% - 22rem);
-    float: left;
+    float: inline-start;
     text-align: justify;
 }
 
@@ -1087,7 +1112,7 @@ main {
     background-position: center;
     background-repeat: no-repeat;
     content: counter(instruction-counter);
-    float: left;
+    float: inline-start;
     line-height: 36px;
     outline: none;
     text-align: center;
