@@ -13,6 +13,7 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -49,7 +50,11 @@ class HtmlDownloadService {
 	 */
 	private $dom;
 
+    /** @var userConfigHelper */
+    private $userConfigHelper;
+
 	public function __construct(
+        userConfigHelper $userConfigHelper,
 		HtmlEntityDecodeFilter $htmlEntityDecodeFilter,
 		HtmlEncodingFilter $htmlEncodingFilter,
 		IL10N $l10n,
@@ -59,6 +64,7 @@ class HtmlDownloadService {
 		EncodingGuessingHelper $encodingGuesser,
 		DownloadEncodingHelper $downloadEncodingHelper,
 	) {
+        $this->userConfigHelper = $userConfigHelper;
 		$this->htmlFilters = [
 			$htmlEntityDecodeFilter,
 			$htmlEncodingFilter,
@@ -82,7 +88,16 @@ class HtmlDownloadService {
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
-		$html = $this->fetchHtmlPage($url);
+        $browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();
+
+        // Check if a browserless address is available
+        if ($browserlessAddress) {
+            // Use Browserless API if the address is set
+            $html = $this->fetchHtmlPageUsingBrowserless($url);
+        } else {
+            // Otherwise, use the standard method
+            $html = $this->fetchHtmlPage($url);
+        }
 
 		// Filter the HTML code
 		/** @var AbstractHtmlFilter $filter */
@@ -113,7 +128,61 @@ class HtmlDownloadService {
 	 *
 	 * @return string The content of the page as a plain string
 	 */
-	private function fetchHtmlPage(string $url): string {
+    /**
+     * Fetch an HTML page from Browserless.io (rendered HTML)
+     *
+     * @param string $url The URL of the page to fetch
+     *
+     * @throws ImportException If the given URL was not fetched or parsed
+     *
+     * @return string The rendered HTML content as a plain string
+     */
+    private function fetchHtmlPageUsingBrowserless(string $url): string {
+
+        // Get the browserless address from configuration or setting
+        $browserlessAddress = $this->userConfigHelper->getBrowserlessAddress();  // Retrieve from userConfigHelper or wherever it's stored
+
+        if (empty($browserlessAddress)) {
+            // Handle the case where Browserless address is not configured
+            $this->logger->error('Browserless address is not set.');
+            throw new ImportException($this->l->t('Browserless address is not configured.'));
+        }
+
+        // API endpoint for Browserless.io
+        $apiEndpoint = $browserlessAddress . '/content';  // Use the dynamic address
+        // Prepare the data to be sent in the POST request
+        $data = json_encode([
+            'url' => $url,
+        ]);
+
+        // Define the HTTP context options for the request
+        $options = [
+            'http' => [
+                'method' => 'POST',
+                'header' => "Content-Type: application/json\r\n",
+                'content' => $data,
+            ],
+        ];
+
+        // Create the stream context for the request
+        $context = stream_context_create($options);
+
+        // Send the request to Browserless.io
+        $response = file_get_contents($apiEndpoint, false, $context);
+
+        // Check if the response was successful
+        if ($response === false) {
+            $this->logger->error('Failed to fetch rendered HTML from Browserless.io');
+            throw new ImportException($this->l->t('Failed to fetch rendered HTML.'));
+        }
+
+        // Create a new DOMDocument to parse the HTML response
+
+        // You can return the DOMDocument or the raw HTML string based on your needs
+        return $response;
+    }
+
+    private function fetchHtmlPage(string $url): string {
 		$host = parse_url($url);
 
 		if (!$host) {
