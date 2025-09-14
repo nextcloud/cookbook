@@ -28,7 +28,9 @@ OC.L10N.register(
     "Rename" : "Badili jina",
     "Name" : "Jina",
     "Loading…" : "Inapakia",
+    "Date created" : "Date created",
     "Last modified" : "Iliyoboreshwa mwisho",
+    "Source" : "Chanzo",
     "Instructions" : "Maelekezo"
 },
 "nplurals=2; plural=(n != 1);");
