@@ -22,7 +22,7 @@ OC.L10N.register(
     "Loading recipe" : "Opskrift indlæses",
     "Recipe not found" : "Opskrift ikke fundet",
     "Page not found" : "Siden blev ikke fundet",
-    "Edit" : "Rediger",
+    "Edit" : "Redigér",
     "Save" : "Gem",
     "Search" : "Søg",
     "Filter" : "Filter",
