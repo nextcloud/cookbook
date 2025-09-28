@@ -25,6 +25,7 @@ OC.L10N.register(
     "Delete failed" : "Sletning fejlede",
     "All recipes" : "Alle opskrifter",
     "None" : "Ingen",
+    "Loading app" : "Indlæser app",
     "Loading recipe" : "Opskrift indlæses",
     "Recipe not found" : "Opskrift ikke fundet",
     "Page not found" : "Siden blev ikke fundet",
