@@ -99,7 +99,7 @@ class UserFolderHelperTest extends TestCase {
 		$this->assertSame($folderStub, $this->dut->getFolder());
 	}
 
-	public function dpExisting() {
+	public static function dpExisting() {
 		return [[false], [true]];
 	}
 

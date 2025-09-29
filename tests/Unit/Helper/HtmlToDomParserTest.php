@@ -42,8 +42,6 @@ class XMLMocking {
 
 /**
  * @coversDefaultClass OCA\Cookbook\Helper\HtmlToDomParser
- * @covers ::<private>
- * @covers ::<protected>
  */
 class HtmlToDomParserTest extends TestCase {
 	/**
@@ -118,9 +116,10 @@ class HtmlToDomParserTest extends TestCase {
 
 		$this->xmlMock->expects($this->exactly(2))
 			->method('useInternalErrors')
-			->withConsecutive([true], [false])
-			->willReturnOnConsecutiveCalls(false, true);
-
+			->willReturnMap([
+				[true, false],
+				[false, true],
+			]);
 
 		$this->xmlMock->expects($this->once())
 			->method('getErrors')
@@ -156,7 +155,7 @@ class HtmlToDomParserTest extends TestCase {
 		$this->assertEquals($stateAtEnd, $this->sut->getState());
 	}
 
-	public function dataProviderParsing() {
+	public static function dataProviderParsing() {
 		return [
 			'failedParsing' => [
 				false,
@@ -176,7 +175,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_WARNING,
 				[
-					$this->getXMLError(1, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				],
 				[0,0,1],
 				false,
@@ -185,7 +184,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_ERROR,
 				[
-					$this->getXMLError(1, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
 				],
 				[0,1,0],
 				false,
@@ -194,7 +193,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_FATAL_ERROR,
 				[
-					$this->getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
 				],
 				[1,0,0],
 				false,
@@ -203,12 +202,12 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_FATAL_ERROR,
 				[
-					$this->getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
-					$this->getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				],
 				[1,2,3],
 				false,
@@ -217,15 +216,15 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_ERROR,
 				[
-					$this->getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				],
 				[0,2,3],
 				false,
@@ -234,7 +233,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_SUCCESS,
 				[
-					$this->getXMLError(2, LIBXML_ERR_NONE, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_NONE, '/file', 1, 2, 'The message'),
 				],
 				[0,0,0],
 				false,
@@ -242,7 +241,7 @@ class HtmlToDomParserTest extends TestCase {
 		];
 	}
 
-	private function getXMLError($code, $level, $file, $line, $column, $msg): LibXMLError {
+	private static function getXMLError($code, $level, $file, $line, $column, $msg): LibXMLError {
 		$ret = new LibXMLError();
 		$ret->code = $code;
 		$ret->level = $level;
@@ -285,10 +284,7 @@ class HtmlToDomParserTest extends TestCase {
 			->method('info');
 		$this->logger->expects($this->exactly(2))
 			->method('warning')
-			->withConsecutive(
-				['libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message'],
-				['libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message']
-			);
+			->with('libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message');
 		$this->logger->expects($this->exactly(0))
 			->method('error');
 
@@ -299,7 +295,7 @@ class HtmlToDomParserTest extends TestCase {
 		$this->sut->loadHtmlString($dom, $url, $html);
 	}
 
-	public function dpSingleLogging() {
+	public static function dpSingleLogging() {
 		return [
 			[LIBXML_ERR_WARNING, true, false, false],
 			[LIBXML_ERR_ERROR, false, true, false],

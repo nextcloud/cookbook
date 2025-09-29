@@ -73,7 +73,7 @@ class RecipeExtractionServiceTest extends TestCase {
 		}
 	}
 
-	public function dataProvider() {
+	public static function dataProvider() {
 		return [
 			[true, false, false],
 			[false, true, false],

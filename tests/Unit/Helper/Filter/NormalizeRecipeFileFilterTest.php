@@ -25,7 +25,7 @@ class NormalizeRecipeFileFilterTest extends TestCase {
 		$this->dut = new NormalizeRecipeFileFilter($this->datesFilter, $recipeLengthFilter);
 	}
 
-	public function dp() {
+	public static function dp() {
 		yield [false, false, false];
 		yield [false, true, false];
 		yield [false, false, false];

@@ -151,7 +151,7 @@ class ConfigImplementationTest extends TestCase {
 		$this->assertEquals(200, $response->getStatus());
 	}
 
-	public function dataProviderConfig() {
+	public static function dataProviderConfig() {
 		return [
 			'noChange' => [
 				[], null, null, null, null

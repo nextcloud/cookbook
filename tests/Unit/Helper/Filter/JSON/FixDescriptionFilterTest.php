@@ -45,7 +45,7 @@ class FixDescriptionFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpApply() {
+	public static function dpApply() {
 		return [
 			['abc', 'abc', 'abc', false],
 			["abc\n\ndef", "abc\n\ndef", "abc\n\ndef", false],

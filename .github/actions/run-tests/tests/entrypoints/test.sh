@@ -103,19 +103,19 @@ FAILED=0
 
 if [ $RUN_UNIT_TESTS = 'y' ]; then
 	echo 'Starting unit testing.'
-	/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@" || { FAILED=$?; true; }
+	/phpunit -c phpunit.xml $PARAM_COVERAGE_UNIT "$@" || { FAILED=$?; echo "Tests failed!" >&2; true; }
 	echo 'Unit testing done.'
 fi
 
 if [ $RUN_INTEGRATION_TESTS = 'y' ]; then
 	echo 'Starting integration testing.'
-	/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@" || { FAILED=$?; true; }
+	/phpunit -c phpunit.integration.xml $PARAM_COVERAGE_INTEGRATION "$@" || { FAILED=$?; echo "Tests failed!" >&2; true; }
 	echo 'Integration testing done.'
 fi
 
 if [ $RUN_MIGRATION_TESTS = 'y' ]; then
 	echo 'Starting migration testing.'
-	/phpunit -c phpunit.migration.xml $PARAM_COVERAGE_MIGRATION "$@" || { FAILED=$?; true; }
+	/phpunit -c phpunit.migration.xml $PARAM_COVERAGE_MIGRATION "$@" || { FAILED=$?; echo "Tests failed!" >&2; true; }
 	echo 'Migration testing done.'
 fi
 

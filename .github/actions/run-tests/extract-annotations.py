@@ -14,17 +14,22 @@ if not os.path.isfile(logfile):
 	print(f"The file {logfile} could not be found.")
 	exit(1)
 
-detailsMatcher = re.compile("name='([^']*)' message='([^']*)'.*?details='\s*([^:]*):([0-9]+).*'")
+detailsMatcher = re.compile("name='([^']*)' message='([^']*)'.*?(?:details='\\s*([^:]*):([0-9]+).*)?'")
 fileNameMatcher = re.compile("/var/www/html/custom_apps/cookbook/(.*)")
 def parseTestDetails(l):
+	# print(l)
 	match = detailsMatcher.search(l)
+	# print(match.groups())
 	ret = {}
 	ret['name'] = match.group(1)
 	ret['message'] = match.group(2)
 	ret['line'] = match.group(4)
-	
-	match2 = fileNameMatcher.match(match.group(3))
-	ret['file'] = match2.group(1)
+
+	if match.group(3) == None:
+		ret['file'] = None
+	else:
+		match2 = fileNameMatcher.match(match.group(3))
+		ret['file'] = match2.group(1)
 	
 	return ret
 
@@ -38,7 +43,14 @@ def parseIgnoredLine(l):
 	else:
 		message = details['message']
 	
-	print(f"::warning file={details['file']},line={details['line']}::{message}")
+	msg = "::warning"
+	if details['file'] is not None:
+		msg += f" file={details['file']}"
+	if details['line'] is not None:
+		msg += f",line={details['line']}"
+	msg += f"::{message}"
+	
+	print(msg)
 
 def parseFailedLine(l):
 	details = parseTestDetails(l)

@@ -13,7 +13,7 @@ class SchemaConformityFilterTest extends TestCase {
 		$this->dut = new SchemaConformityFilter();
 	}
 
-	public function dp() {
+	public static function dp() {
 		return [
 			[false, null, false, null, true],
 			[true, null, false, null, true],

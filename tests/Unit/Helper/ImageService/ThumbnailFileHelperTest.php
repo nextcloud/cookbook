@@ -53,12 +53,12 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->dut = new ThumbnailFileHelper($this->generationHelper, $this->fileHelper, $l);
 	}
 
-	public function dpExisting() {
+	public static function dpExisting() {
 		yield [true];
 		yield [false];
 	}
 
-	public function dpFilename() {
+	public static function dpFilename() {
 		yield [ImageSize::THUMBNAIL, 'thumb.jpg'];
 		yield [ImageSize::MINI_THUMBNAIL, 'thumb16.jpg'];
 	}
@@ -130,7 +130,7 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->dut->getThumbnail($f, $type);
 	}
 
-	public function dpDrop() {
+	public static function dpDrop() {
 		return [
 			[false, false],
 			[false, true],
@@ -226,12 +226,20 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->fileHelper->method('hasImage')->willReturn(true);
 		$this->fileHelper->method('getImage')->willReturn($full);
 
-		$this->generationHelper->expects($this->exactly(2))->method('generateThumbnail')
-			->withConsecutive(
-				[$full, ImageSize::THUMBNAIL, $thumb],
-				[$full, ImageSize::MINI_THUMBNAIL, $mini],
-			);
+		$spyArray = [];
+		$this->generationHelper->expects($this->exactly(2))->method('generateThumbnail')->willReturnCallback(function ($f, $s, $t) use (&$spyArray) {
+			$spyArray[] = [$f, $s, $t];
+			return null;
+		});
+
+		$expectedSpy = [
+			[$full, ImageSize::THUMBNAIL, $thumb],
+			[$full, ImageSize::MINI_THUMBNAIL, $mini],
+		];
 
 		$this->dut->recreateThumbnails($f);
+
+		$this->assertEqualsCanonicalizing($expectedSpy, $spyArray);
+
 	}
 }

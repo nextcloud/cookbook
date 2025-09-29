@@ -115,7 +115,7 @@ class JsonServiceTest extends TestCase {
 		self::assertFalse($result, 'Property of a non-object must not be returned.');
 	}
 
-	public function dpRecipeCheckArray() {
+	public static function dpRecipeCheckArray() {
 		return [
 			['Recipe', true, true],
 			['Recipe', false, true],

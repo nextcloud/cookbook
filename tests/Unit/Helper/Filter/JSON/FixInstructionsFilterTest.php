@@ -52,7 +52,7 @@ class FixInstructionsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpBadInstructions() {
+	public static function dpBadInstructions() {
 		return [
 			[null],
 			[''],
@@ -77,7 +77,7 @@ class FixInstructionsFilterTest extends TestCase {
 		$this->dut->apply($recipe);
 	}
 
-	public function dpParseInstructions() {
+	public static function dpParseInstructions() {
 		yield 'plain strings' => [['a', 'b', 'c'], ['a','b','c'], false];
 		yield 'Single ItemList with strings' => [[
 			'@type' => 'ItemList',
@@ -215,7 +215,7 @@ class FixInstructionsFilterTest extends TestCase {
 		$this->assertEquals($changeExpected, $changed);
 	}
 
-	public function dpUnknownType() {
+	public static function dpUnknownType() {
 		yield 'List of Things' => [[
 			[
 				'@type' => 'Thing',
@@ -261,7 +261,7 @@ class FixInstructionsFilterTest extends TestCase {
 		$this->dut->apply($recipe);
 	}
 
-	public function dpRealWorldIssues() {
+	public static function dpRealWorldIssues() {
 		return [
 			'case01' => ['case01.json', 'case01.expected.json', true],
 		];

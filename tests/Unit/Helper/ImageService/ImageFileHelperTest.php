@@ -39,7 +39,7 @@ class ImageFileHelperTest extends TestCase {
 		$this->dut = new ImageFileHelper($l);
 	}
 
-	public function dpExisting() {
+	public static function dpExisting() {
 		yield [true];
 		yield [false];
 	}
