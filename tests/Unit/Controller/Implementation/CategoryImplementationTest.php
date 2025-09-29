@@ -128,11 +128,14 @@ class CategoryImplementationTest extends TestCase {
 
 		$n = count($recipes);
 		$indices = array_map(function ($v) {
-			return [$v['recipe_id']];
+			return $v['recipe_id'];
 		}, $recipes);
-		foreach($idices as $index) {
-			$this->recipeService->expects($this->once())->method('getRecipeById')->with($index);
-		}
+
+		$spyArray = [];
+		$this->recipeService->expects($this->exactly($n))->method('getRecipeById')->willReturnCallback(function ($id) use (&$spyArray) {
+			$spyArray[] = $id;
+		});
+
 		$this->recipeService->expects($this->exactly($n))->method('addRecipe')->with($this->callback(function ($p) use ($cat) {
 			return $p['recipeCategory'] === $cat;
 		}));
@@ -144,6 +147,8 @@ class CategoryImplementationTest extends TestCase {
 
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals($cat, $ret->getData());
+
+		$this->assertEqualsCanonicalizing($indices, $spyArray);
 	}
 
 	public function dpCategoryUpdate() {
