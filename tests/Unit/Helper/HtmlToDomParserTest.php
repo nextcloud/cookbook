@@ -177,7 +177,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_WARNING,
 				[
-					$this->getXMLError(1, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				],
 				[0,0,1],
 				false,
@@ -186,7 +186,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_ERROR,
 				[
-					$this->getXMLError(1, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
 				],
 				[0,1,0],
 				false,
@@ -195,7 +195,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_FATAL_ERROR,
 				[
-					$this->getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
 				],
 				[1,0,0],
 				false,
@@ -204,12 +204,12 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_FATAL_ERROR,
 				[
-					$this->getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
-					$this->getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(1, LIBXML_ERR_FATAL, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				],
 				[1,2,3],
 				false,
@@ -218,15 +218,15 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_ERROR,
 				[
-					$this->getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
-					$this->getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
-					$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(3, LIBXML_ERR_ERROR, '/file', 1, 2, 'The message'),
+					self::getXMLError(4, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(5, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+					self::getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 				],
 				[0,2,3],
 				false,
@@ -235,7 +235,7 @@ class HtmlToDomParserTest extends TestCase {
 				true,
 				HtmlToDomParser::PARSING_SUCCESS,
 				[
-					$this->getXMLError(2, LIBXML_ERR_NONE, '/file', 1, 2, 'The message'),
+					self::getXMLError(2, LIBXML_ERR_NONE, '/file', 1, 2, 'The message'),
 				],
 				[0,0,0],
 				false,
@@ -243,7 +243,7 @@ class HtmlToDomParserTest extends TestCase {
 		];
 	}
 
-	private function getXMLError($code, $level, $file, $line, $column, $msg): LibXMLError {
+	private static function getXMLError($code, $level, $file, $line, $column, $msg): LibXMLError {
 		$ret = new LibXMLError();
 		$ret->code = $code;
 		$ret->level = $level;
