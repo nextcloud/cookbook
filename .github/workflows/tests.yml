@@ -223,6 +223,12 @@ jobs:
           if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
           python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log ;
           fi
+      # - name: Upload the code coverage files as artifacts
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #       name: Code coverage files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
+      #       path: ".github/actions/run-tests/volumes/coverage"
 
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
@@ -333,6 +339,13 @@ jobs:
           python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log ;
           fi
       
+      # - name: Upload the coverage files as artifact
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #       name: Coverage files (mysql, master, apache)
+      #       path: .github/actions/run-tests/volumes/coverage
+      #   if: always()
+
       - name: Upload the log file as artifact
         uses: actions/upload-artifact@v4
         if: always()
