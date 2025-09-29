@@ -42,6 +42,15 @@
             }
         },
         {
+            "name": "Xdebug PHPUnit plain cookbook",
+            "type": "php",
+            "request": "launch",
+            "port": 9000,
+            "pathMappings": {
+                "/var/www/html/custom_apps/cookbook": "${workspaceFolder}",
+            }
+        },
+        {
             "name": "Xdebug on 9003",
             "type": "php",
             "request": "launch",
