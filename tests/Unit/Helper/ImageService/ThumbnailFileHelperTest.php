@@ -226,12 +226,20 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->fileHelper->method('hasImage')->willReturn(true);
 		$this->fileHelper->method('getImage')->willReturn($full);
 
-		$this->generationHelper->expects($this->exactly(2))->method('generateThumbnail')
-			->withConsecutive(
-				[$full, ImageSize::THUMBNAIL, $thumb],
-				[$full, ImageSize::MINI_THUMBNAIL, $mini],
-			);
+		$spyArray = [];
+		$this->generationHelper->expects($this->exactly(2))->method('generateThumbnail')->willReturnCallback(function ($f, $s, $t) use (&$spyArray) {
+			$spyArray[] = [$f, $s, $t];
+			return null;
+		});
+
+		$expectedSpy = [
+			[$full, ImageSize::THUMBNAIL, $thumb],
+			[$full, ImageSize::MINI_THUMBNAIL, $mini],
+		];
 
 		$this->dut->recreateThumbnails($f);
+
+		$this->assertEqualsCanonicalizing($expectedSpy, $spyArray);
+
 	}
 }

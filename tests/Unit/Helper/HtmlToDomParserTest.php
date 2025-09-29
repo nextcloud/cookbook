@@ -118,9 +118,10 @@ class HtmlToDomParserTest extends TestCase {
 
 		$this->xmlMock->expects($this->exactly(2))
 			->method('useInternalErrors')
-			->withConsecutive([true], [false])
-			->willReturnOnConsecutiveCalls(false, true);
-
+			->willReturnMap([
+				[true, false],
+				[false, true],
+			]);
 
 		$this->xmlMock->expects($this->once())
 			->method('getErrors')
@@ -285,10 +286,7 @@ class HtmlToDomParserTest extends TestCase {
 			->method('info');
 		$this->logger->expects($this->exactly(2))
 			->method('warning')
-			->withConsecutive(
-				['libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message'],
-				['libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message']
-			);
+			->with('libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message');
 		$this->logger->expects($this->exactly(0))
 			->method('error');
 

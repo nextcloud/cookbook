@@ -124,13 +124,15 @@ class CategoryImplementationTest extends TestCase {
 		$this->recipeService->expects($this->once())->method('getRecipesByCategory')->with($oldCat)->willReturn($recipes);
 		$this->dbCacheService->expects($this->once())->method('updateCache');
 
-		$this->restParser->expects($this->once())->method('getParameters')->willReturn(['name' => $cat]);
+		$this->restParser->method('getParameters')->willReturn(['name' => $cat]);
 
 		$n = count($recipes);
 		$indices = array_map(function ($v) {
 			return [$v['recipe_id']];
 		}, $recipes);
-		$this->recipeService->expects($this->exactly($n))->method('getRecipeById')->withConsecutive(...$indices);
+		foreach($idices as $index) {
+			$this->recipeService->expects($this->once())->method('getRecipeById')->with($index);
+		}
 		$this->recipeService->expects($this->exactly($n))->method('addRecipe')->with($this->callback(function ($p) use ($cat) {
 			return $p['recipeCategory'] === $cat;
 		}));
