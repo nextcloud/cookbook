@@ -53,7 +53,7 @@ class ThumbnailServiceTest extends TestCase {
 		$this->assertEquals('', $img->data());
 	}
 
-	public function dpTypes() {
+	public static function dpTypes() {
 		yield [ImageSize::THUMBNAIL, 256];
 		yield [ImageSize::MINI_THUMBNAIL, 16];
 	}
@@ -91,7 +91,7 @@ class ThumbnailServiceTest extends TestCase {
 		$this->dut->getThumbnail('', ImageSize::PRIMARY_IMAGE);
 	}
 
-	public function dpInvalidTypes() {
+	public static function dpInvalidTypes() {
 		return [
 			[-1],
 			[10],

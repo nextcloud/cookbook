@@ -13,7 +13,7 @@ class TimestampFixFilterTest extends TestCase {
 		$this->dut = new TimestampFixFilter();
 	}
 
-	public function dp() {
+	public static function dp() {
 		yield ['2024-01-02T13:15:10', '2024-01-02T13:15:10', false];
 		yield ['2024-01-02 13:15:10', '2024-01-02T13:15:10', true];
 

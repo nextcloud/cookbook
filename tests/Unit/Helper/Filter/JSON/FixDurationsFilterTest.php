@@ -37,7 +37,7 @@ class FixDurationsFilterTest extends TestCase {
 		];
 	}
 
-	public function dpNonExisting() {
+	public static function dpNonExisting() {
 		return [
 			[false, false, false],
 			[true, false, false],
@@ -72,7 +72,7 @@ class FixDurationsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpSuccess() {
+	public static function dpSuccess() {
 		return [
 			['PT0H10M', 'PT0H20M', 'PT0H30M', 'PT0H10M', 'PT0H20M', 'PT0H30M', false],
 			['0:10', 'PT0H20M', 'PT0H30M', 'PT0H10M', 'PT0H20M', 'PT0H30M', true],
@@ -112,7 +112,7 @@ class FixDurationsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpExceptions() {
+	public static function dpExceptions() {
 		return [
 			['invalid', '0:20', '0:30', null, '0:20', '0:30'],
 			['0:10', 'invalid', '0:30', '0:10', null, '0:30'],

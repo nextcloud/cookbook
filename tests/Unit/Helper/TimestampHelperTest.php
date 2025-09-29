@@ -20,7 +20,7 @@ class TimestampHelperTest extends TestCase {
 		$this->dut = new TimestampHelper($l);
 	}
 
-	public function dpIso() {
+	public static function dpIso() {
 		return [
 			['2000-01-01T01:01:00+00:00', '2000-01-01T01:01:00+00:00'],
 			['2000-01-01T01:01:00Z', '2000-01-01T01:01:00+00:00'],
@@ -52,7 +52,7 @@ class TimestampHelperTest extends TestCase {
 		$this->assertEquals($expectedOutput, $this->dut->parseTimestamp($input));
 	}
 
-	public function dpFail() {
+	public static function dpFail() {
 		return [
 			['Just some text'],
 			[''],

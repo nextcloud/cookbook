@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
  *
  */
 class HttpJsonLdParserTest extends TestCase {
-	public function dataProvider(): array {
+	public static function dataProvider(): array {
 		return [
 			'caseA' => ['caseA.html', true, 'caseA.json'],
 			'caseB' => ['caseB.html', true, 'caseB.json'],

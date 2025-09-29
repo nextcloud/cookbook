@@ -13,7 +13,7 @@ class RecipeIdTypeFilterTest extends TestCase {
 		$this->dut = new RecipeIdTypeFilter();
 	}
 
-	public function dp() {
+	public static function dp() {
 		$stub = [
 			'name' => 'The name of the recipe',
 			'servings' => 5,

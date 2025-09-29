@@ -16,7 +16,7 @@ class DownloadEncodingHelperTest extends TestCase {
 		$this->dut = new DownloadEncodingHelper();
 	}
 
-	public function dpEncodings() {
+	public static function dpEncodings() {
 		return [
 			['iso-8859-1']
 		];

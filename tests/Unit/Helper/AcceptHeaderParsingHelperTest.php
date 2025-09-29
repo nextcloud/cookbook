@@ -23,7 +23,7 @@ class AcceptHeaderParsingHelperTest extends TestCase {
 		$this->assertEquals(['jpg'], $ret);
 	}
 
-	public function dataProvider() {
+	public static function dataProvider() {
 		yield ['image/jpeg', ['jpg']];
 		yield ['image/jpg', ['jpg']];
 		yield ['image/png', ['png']];

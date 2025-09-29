@@ -46,7 +46,7 @@ class FixKeywordsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dp() {
+	public static function dp() {
 		return [
 			[12, '', true],
 			['a,b,c', 'a,b,c', false],

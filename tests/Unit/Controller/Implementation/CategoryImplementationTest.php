@@ -102,7 +102,7 @@ class CategoryImplementationTest extends TestCase {
 		$this->assertEquals(400, $ret->getStatus());
 	}
 
-	public function dataProviderCategoryUpdateNoName() {
+	public static function dataProviderCategoryUpdateNoName() {
 		yield [[]];
 		yield [[
 			'some', 'variable'
@@ -151,7 +151,7 @@ class CategoryImplementationTest extends TestCase {
 		$this->assertEqualsCanonicalizing($indices, $spyArray);
 	}
 
-	public function dpCategoryUpdate() {
+	public static function dpCategoryUpdate() {
 		return [
 			'noRecipes' => [
 				'new Category Name',

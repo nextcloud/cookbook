@@ -53,12 +53,12 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->dut = new ThumbnailFileHelper($this->generationHelper, $this->fileHelper, $l);
 	}
 
-	public function dpExisting() {
+	public static function dpExisting() {
 		yield [true];
 		yield [false];
 	}
 
-	public function dpFilename() {
+	public static function dpFilename() {
 		yield [ImageSize::THUMBNAIL, 'thumb.jpg'];
 		yield [ImageSize::MINI_THUMBNAIL, 'thumb16.jpg'];
 	}
@@ -130,7 +130,7 @@ class ThumbnailFileHelperTest extends TestCase {
 		$this->dut->getThumbnail($f, $type);
 	}
 
-	public function dpDrop() {
+	public static function dpDrop() {
 		return [
 			[false, false],
 			[false, true],

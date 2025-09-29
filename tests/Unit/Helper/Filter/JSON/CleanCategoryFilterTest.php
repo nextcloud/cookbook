@@ -43,7 +43,7 @@ class CleanCategoryFilterTest extends TestCase {
 		$this->assertEquals($this->recipeStub, $recipe);
 	}
 
-	public function dpString() {
+	public static function dpString() {
 		return [
 			['Category1'],
 			['Category with blanks'],
@@ -67,7 +67,7 @@ class CleanCategoryFilterTest extends TestCase {
 		$this->assertEquals($this->recipeStub, $recipe);
 	}
 
-	public function dpArray() {
+	public static function dpArray() {
 		return [
 			[['Cat1','Cat2'], 'Cat1'],
 			[[1, 'Cat'], ''],
@@ -89,7 +89,7 @@ class CleanCategoryFilterTest extends TestCase {
 		$this->assertEquals($this->recipeStub, $recipe);
 	}
 
-	public function dpCleanUp() {
+	public static function dpCleanUp() {
 		return [
 			['Cat1', 'Cat1', 'Cat1', false],
 			['Cat&amp;foo', 'Cat&amp;foo', 'Cat&foo', true],

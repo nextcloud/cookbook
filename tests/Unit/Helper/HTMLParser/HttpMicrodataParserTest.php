@@ -31,7 +31,7 @@ class HttpMicrodataParserTest extends TestCase {
 		$this->assertSame($l, $lSaved);
 	}
 
-	public function dataProvider(): array {
+	public static function dataProvider(): array {
 		return [
 			'caseA' => ['caseA.html',true,'caseA.json'],
 			'caseB' => ['caseB.html',true,'caseB.json'],
@@ -86,7 +86,7 @@ class HttpMicrodataParserTest extends TestCase {
 		}
 	}
 
-	public function imageAttributes() {
+	public static function imageAttributes() {
 		return [['image'], ['images'], ['thumbnail']];
 	}
 
@@ -116,7 +116,7 @@ class HttpMicrodataParserTest extends TestCase {
 		$this->finishTest($parser, $content, 'caseImage.json');
 	}
 
-	public function ingredientVariantAttributes() {
+	public static function ingredientVariantAttributes() {
 		yield ['recipeIngredient'];
 		yield ['ingredients'];
 	}
@@ -135,7 +135,7 @@ class HttpMicrodataParserTest extends TestCase {
 		$this->finishTest($parser, $content, 'caseIngredient.json');
 	}
 
-	public function instructionVariantAttributes() {
+	public static function instructionVariantAttributes() {
 		yield ['recipeInstructions'];
 		yield ['instructions'];
 		yield ['steps'];

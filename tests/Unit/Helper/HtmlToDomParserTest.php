@@ -157,7 +157,7 @@ class HtmlToDomParserTest extends TestCase {
 		$this->assertEquals($stateAtEnd, $this->sut->getState());
 	}
 
-	public function dataProviderParsing() {
+	public static function dataProviderParsing() {
 		return [
 			'failedParsing' => [
 				false,
@@ -297,7 +297,7 @@ class HtmlToDomParserTest extends TestCase {
 		$this->sut->loadHtmlString($dom, $url, $html);
 	}
 
-	public function dpSingleLogging() {
+	public static function dpSingleLogging() {
 		return [
 			[LIBXML_ERR_WARNING, true, false, false],
 			[LIBXML_ERR_ERROR, false, true, false],

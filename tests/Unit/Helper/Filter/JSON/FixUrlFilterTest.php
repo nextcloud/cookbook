@@ -43,7 +43,7 @@ class FixUrlFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpApply() {
+	public static function dpApply() {
 		// ["abc\n\n", "abc", true],
 		yield ['', '', false];
 		yield ['http://example.com', 'http://example.com', false];
