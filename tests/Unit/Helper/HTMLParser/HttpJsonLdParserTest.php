@@ -10,8 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser
- * @covers ::<protected>
- * @covers ::<private>
  * @author christian
  *
  */

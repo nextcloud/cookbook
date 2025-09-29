@@ -10,8 +10,6 @@ use PHPUnit\Framework\TestCase;
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser
  * @covers \OCA\Cookbook\Helper\HTMLParser\AttributeNotFoundException
- * @covers ::<protected>
- * @covers ::<private>
  * @author christian
  *
  */

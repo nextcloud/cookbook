@@ -42,8 +42,6 @@ class XMLMocking {
 
 /**
  * @coversDefaultClass OCA\Cookbook\Helper\HtmlToDomParser
- * @covers ::<private>
- * @covers ::<protected>
  */
 class HtmlToDomParserTest extends TestCase {
 	/**
