@@ -24,6 +24,9 @@ class TimestampFixFilter extends AbstractJSONFilter {
 		$pattern = '/^([0-9]{4}-[0-9]{2}-[0-9]{2}) +(.*)/';
 		$replacement = '${1}T${2}';
 		$nv = preg_replace($pattern, $replacement, $value);
+		if (is_null($nv)) {
+			return $value;
+		}
 
 		if ($nv !== $value) {
 			$changed = true;

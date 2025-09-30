@@ -14,7 +14,7 @@ class DownloadEncodingHelper {
 	 * @return string The string encoded in UTF8 encoding
 	 */
 	public function encodeToUTF8(string $data, string $encoding): string {
-		$data = iconv($encoding, 'UTF-8', $data);
-		return $data;
+		$dataConverted = iconv($encoding, 'UTF-8', $data);
+		return ($dataConverted === false) ? $data : $dataConverted;
 	}
 }

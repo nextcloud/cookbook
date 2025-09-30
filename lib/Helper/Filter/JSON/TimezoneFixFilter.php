@@ -49,7 +49,7 @@ class TimezoneFixFilter extends AbstractJSONFilter {
 		$serverTimeZone = new DateTimeZone($defaultTimezone);
 		$now = new DateTime('now', $serverTimeZone);
 		$offsetSec = $serverTimeZone->getOffset($now);
-		$offsetHour = $offsetSec / 3600;
+		$offsetHour = (int)($offsetSec / 3600);
 
 		$changed = true;
 

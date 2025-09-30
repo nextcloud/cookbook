@@ -103,7 +103,11 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 * @return string The corrected JSON
 	 */
 	private function removeNewlinesInJson(string $rawJson): string {
-		return preg_replace('/\s+/', ' ', $rawJson);
+		$ret = preg_replace('/\s+/', ' ', $rawJson);
+		if (is_null($ret)) {
+			throw new HtmlParsingException($this->l->t('Cannot combine whitespace characters.'));
+		}
+		return $ret;
 	}
 
 	/**
