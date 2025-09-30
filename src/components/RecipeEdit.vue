@@ -214,6 +214,8 @@ const recipe = ref({
     nutrition: {},
 });
 
+const initRecipe = ref({});
+
 // ==========================
 // These are helper variables
 /**
@@ -644,7 +646,7 @@ const setup = async () => {
         initEmptyRecipe();
         store.dispatch('setPage', { page: 'create' });
     }
-    recipe.value.valueInit = JSON.parse(JSON.stringify(recipe.value));
+    initRecipe.value = JSON.parse(JSON.stringify(recipe.value));
     await nextTick();
     formDirty.value = false;
 };
@@ -739,8 +741,8 @@ onMounted(() => {
     window.addEventListener('beforeunload', beforeWindowUnload);
 
     // Store the initial recipe configuration for possible later use
-    if (recipe.value.valueInit === null) {
-        recipe.value.valueInit = recipe.value;
+    if (initRecipe.value === null) {
+        initRecipe.value = recipe.value;
     }
     // Register save method hook for access from the controls components
     // The event hook must first be destroyed to avoid it from firing multiple
