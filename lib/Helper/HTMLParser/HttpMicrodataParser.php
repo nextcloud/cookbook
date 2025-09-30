@@ -80,8 +80,8 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private function fixupInstructions(DOMElement $recipeNode): void {
 		if (
-			!isset($this->recipe['recipeInstructions']) ||
-			!$this->recipe['recipeInstructions'] || sizeof($this->recipe['recipeInstructions']) < 1
+			!isset($this->recipe['recipeInstructions'])
+			|| !$this->recipe['recipeInstructions'] || sizeof($this->recipe['recipeInstructions']) < 1
 		) {
 			$this->recipe['recipeInstructions'] = [];
 

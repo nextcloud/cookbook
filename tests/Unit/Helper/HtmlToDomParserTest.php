@@ -328,8 +328,8 @@ class HtmlToDomParserTest extends TestCase {
 		if ($logWarn) {
 			$this->logger->expects($this->once())->method('info')
 				->with(
-					'libxml: Warning %u occurred while parsing %s. ' .
-					'First time it occurred in line %u and column %u: The message',
+					'libxml: Warning %u occurred while parsing %s. '
+					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('warning');
@@ -340,8 +340,8 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->once())->method('warning')
 				->with(
-					'libxml: Error %u occurred while parsing %s. ' .
-					'First time it occurred in line %u and column %u: The message',
+					'libxml: Error %u occurred while parsing %s. '
+					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('error');
@@ -352,8 +352,8 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->once())->method('error')
 				->with(
-					'libxml: Fatal error %u occurred while parsing %s. ' .
-					'First time it occurred in line %u and column %u: The message',
+					'libxml: Fatal error %u occurred while parsing %s. '
+					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 		}
@@ -390,8 +390,8 @@ class HtmlToDomParserTest extends TestCase {
 		if ($logWarn) {
 			$this->logger->expects($this->once())->method('info')
 				->with(
-					'libxml: Warning %u occurred %n times while parsing %s. ' .
-					'First time it occurred in line %u and column %u: The message',
+					'libxml: Warning %u occurred %n times while parsing %s. '
+					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('warning');
@@ -402,8 +402,8 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->once())->method('warning')
 				->with(
-					'libxml: Error %u occurred %n times while parsing %s. ' .
-					'First time it occurred in line %u and column %u: The message',
+					'libxml: Error %u occurred %n times while parsing %s. '
+					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 			$this->logger->expects($this->never())->method('error');
@@ -414,8 +414,8 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->once())->method('error')
 				->with(
-					'libxml: Fatal error %u occurred %n times while parsing %s. ' .
-					'First time it occurred in line %u and column %u: The message',
+					'libxml: Fatal error %u occurred %n times while parsing %s. '
+					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
 		}
