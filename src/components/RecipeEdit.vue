@@ -504,7 +504,11 @@ const save = async () => {
                 default:
                     await showSimpleAlertModal(
                         // prettier-ignore
-                        t('cookbook','Unknown answer returned from server. See logs.'),
+                        t('cookbook', 'Unknown answer {status} returned from server. See logs in your browser (press F12).',
+                            {
+                                status: e.response.status,
+                            }
+                        ),
                     );
                     log.error(e.response);
             }
