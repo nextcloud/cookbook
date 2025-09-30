@@ -32,6 +32,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 		]);
 	}
 
+	#[\Override]
 	public function apply(array &$json, File $recipe): bool {
 		$ret = false;
 

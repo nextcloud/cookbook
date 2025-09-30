@@ -19,6 +19,7 @@ class TimezoneFixFilter extends AbstractJSONFilter {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		$changed = false;
 		foreach (['dateCreated', 'dateModified'] as $key) {

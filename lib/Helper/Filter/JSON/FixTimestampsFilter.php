@@ -35,6 +35,7 @@ class FixTimestampsFilter extends AbstractJSONFilter {
 		$this->timestampHelper = $tsHelper;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		$changed = false;
 

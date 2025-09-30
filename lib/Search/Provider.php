@@ -32,14 +32,17 @@ class Provider implements IProvider {
 		$this->recipeService = $recipeService;
 	}
 
+	#[\Override]
 	public function getId(): string {
 		return Application::APP_ID;
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return $this->l->t('Recipes');
 	}
 
+	#[\Override]
 	public function getOrder(string $route, array $routeParameters): int {
 		if (strpos($route, 'files' . '.') === 0) {
 			return 25;
@@ -50,6 +53,7 @@ class Provider implements IProvider {
 		return 4;
 	}
 
+	#[\Override]
 	public function search(IUser $user, ISearchQuery $query): SearchResult {
 		$recipes = $this->recipeService->findRecipesInSearchIndex($query->getTerm());
 		$result = array_map(

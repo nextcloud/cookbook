@@ -8,6 +8,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
  * This mainly handles the missing `T` in the date between date and time to be ISO confirm.
  */
 class TimestampFixFilter extends AbstractJSONFilter {
+	#[\Override]
 	public function apply(array &$json): bool {
 		$changed = false;
 		foreach (['dateCreated', 'dateModified'] as $key) {

@@ -32,6 +32,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		parent::__construct($l10n);
 	}
 
+	#[\Override]
 	public function parse(DOMDocument $document, ?string $url): array {
 		$this->xpath = new DOMXPath($document);
 
