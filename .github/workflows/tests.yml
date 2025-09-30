@@ -47,15 +47,16 @@ jobs:
                 restore-keys: |
                     ${{ runner.os }}-composer-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-composer-
+        
+        -   name: Install PHP
+            uses: shivammathur/setup-php@v2
+            with:
+                php-version: '8.4'
+                tools: composer
+
         -   name: Get PHP version
             shell: bash
             run: php -v
-        
-        -   name: Install Composer
-            shell: bash
-            run: >-
-                wget https://github.com/composer/getcomposer.org/raw/main/web/installer -O - -q |
-                php -- --quiet
         
         -   name: Install PHP packages
             shell: bash
