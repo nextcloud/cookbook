@@ -26,6 +26,7 @@ class EnsureNutritionPresentFilter extends AbstractJSONFilter {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		$cache = $json;
 

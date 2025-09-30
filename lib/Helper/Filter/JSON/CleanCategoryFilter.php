@@ -19,6 +19,7 @@ class CleanCategoryFilter extends AbstractJSONFilter {
 		$this->textCleaner = $cleanupHelper;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!isset($json['recipeCategory'])) {
 			$json['recipeCategory'] = '';

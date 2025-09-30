@@ -18,6 +18,7 @@ class FixImageSchemeFilter extends AbstractJSONFilter {
 		$this->l = $l;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (substr($json['image'], 0, 2) === '//') {
 			if (!isset($json['url'])) {

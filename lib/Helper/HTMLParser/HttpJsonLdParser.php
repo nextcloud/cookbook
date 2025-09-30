@@ -22,6 +22,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$this->jsonService = $jsonService;
 	}
 
+	#[\Override]
 	public function parse(\DOMDocument $document, ?string $url): array {
 		$xpath = new \DOMXPath($document);
 
@@ -102,7 +103,11 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 * @return string The corrected JSON
 	 */
 	private function removeNewlinesInJson(string $rawJson): string {
-		return preg_replace('/\s+/', ' ', $rawJson);
+		$ret = preg_replace('/\s+/', ' ', $rawJson);
+		if (is_null($ret)) {
+			throw new HtmlParsingException($this->l->t('Cannot combine whitespace characters.'));
+		}
+		return $ret;
 	}
 
 	/**
@@ -123,8 +128,8 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	private function mapGraphField(array &$json) {
 		if (isset($json['@graph']) && is_array($json['@graph'])) {
 			// Sometimes the context is set once on the top level object for children to inherit
-			$parentSetsContext = isset($json['@context']) &&
-								 $this->jsonService->isSchemaContext($json['@context']);
+			$parentSetsContext = isset($json['@context'])
+								 && $this->jsonService->isSchemaContext($json['@context']);
 
 			$tmp = $this->searchForRecipeInArray($json['@graph'], $parentSetsContext);
 

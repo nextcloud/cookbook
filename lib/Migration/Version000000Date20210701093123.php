@@ -24,6 +24,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 		$this->db = $db;
 	}
 
+	#[\Override]
 	public function preSchemaChange(IOutput $output, \Closure $schemaClosure, array $options) {
 		$this->db->beginTransaction();
 		try {
@@ -87,6 +88,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 	 * @param array $options
 	 * @return null|ISchemaWrapper
 	 */
+	#[\Override]
 	public function changeSchema(IOutput $output, Closure $schemaClosure, array $options): ?ISchemaWrapper {
 		/**
 		 * @var ISchemaWrapper $schema

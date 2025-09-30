@@ -8,6 +8,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
  * The id should be a string and no integer.
  */
 class RecipeIdTypeFilter extends AbstractJSONFilter {
+	#[\Override]
 	public function apply(array &$json): bool {
 		$copy = $json;
 		if (array_key_exists('id', $json)) {
