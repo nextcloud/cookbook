@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "name": "Python: Remote Attach",
             "type": "python",
@@ -58,6 +59,15 @@
             "pathMappings": {
                 "/var/www/html/apps-extra/cookbook": "${workspaceFolder:cookbook}",
                 "/var/www/html": "${workspaceFolder:base}"
+            }
+        },
+        {
+            "name": "Xdebug on 900 plain cookbook",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/var/www/html/apps-extra/cookbook": "${workspaceFolder}"
             }
         }
     ]
