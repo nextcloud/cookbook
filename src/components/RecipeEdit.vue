@@ -344,8 +344,13 @@ const overlayVisible = computed(
         (store.state.categoryUpdating &&
             store.state.categoryUpdating === recipe.value.recipeCategory),
 );
+const recipeWithoutValueInit = computed(() => {
+    const r = { ...recipe.value };
+    delete r.valueInit;
+    return r;
+});
 const recipeWithCorrectedYield = computed(() => {
-    const r = recipe.value;
+    const r = recipeWithoutValueInit.value;
     if (!showRecipeYield.value) {
         r.recipeYield = null;
     }
