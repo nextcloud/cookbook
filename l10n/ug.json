@@ -39,7 +39,6 @@
     "Cannot read content of JSON file %s" : "JSON ھۆججىتىنىڭ مەزمۇنى% s نى ئوقۇيالمايدۇ",
     "The JSON file in the folder with ID %d does not have a valid name." : "ID% d ھۆججەت قىسقۇچتىكى JSON ھۆججىتىنىڭ ئىناۋەتلىك ئىسمى يوق.",
     "Could not parse URL" : "URL نى تەھلىل قىلالمىدى",
-    "Exception while downloading recipe from %s." : "% S دىن رېتسېپ چۈشۈرگەندە بۇنىڭ سىرتىدا.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "% S دىن چۈشۈرۈش مەغلۇب بولدى ، چۈنكى HTTP ھالەت كودى% d مۆلچەردىكى دائىرىدە ئەمەس.",
     "Could not find a valid encoding when parsing %s." : "% S نى تەھلىل قىلغاندا ئۈنۈملۈك كودلاشنى تاپالمىدى.",
     "No parser found for the given import." : "بېرىلگەن ئىمپورت ئۈچۈن ھېچقانداق تەھلىلچى تېپىلمىدى.",

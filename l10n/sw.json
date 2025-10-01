@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "Haiwezi kusoma maudhui ya faili ya JSON %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "Faili ya JSON katika folda yenye ID %d haina jina halali.",
     "Could not parse URL" : "Haikuweza kuchanganua URL",
-    "Exception while downloading recipe from %s." : "Isipokuwa wakati wa kupakua mapishi kutoka %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Upakuaji kutoka %s haukufaulu kwa sababu msimbo wa hali ya HTTP %d hauko katika safu inayotarajiwa.",
     "Could not find a valid encoding when parsing %s." : "Haikuweza kupata usimbaji halali wakati wa kuchanganua %s.",
     "No parser found for the given import." : "Hakuna kichanganuzi kilichopatikana kwa uingizaji uliotolewa.",

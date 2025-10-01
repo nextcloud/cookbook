@@ -46,7 +46,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "Не може да се прочита садржај JSON фајла %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "JSON фајл у фолдеру са ID %d нема исправно име.",
     "Could not parse URL" : "URL не може да се парсира",
-    "Exception while downloading recipe from %s." : "Изузетак током преузимања рецепта са %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Није успело преузимање са %s јер HTTP статусни кôд %d није у очекиваном опсегу.",
     "Could not find a valid encoding when parsing %s." : "Током парсирања %s није пронађено исправно кодирање.",
     "No parser found for the given import." : "За дати увоз не може да се пронађе одговарајући парсер.",

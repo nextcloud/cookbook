@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "Nedá sa prečítať obsah JSON súboru %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "Súbor JSON v priečinku s ID %d nemá platný názov.",
     "Could not parse URL" : "Nemôžem spracovať adresu URL",
-    "Exception while downloading recipe from %s." : "Výnimka pri sťahovaní receptu z %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Sťahovanie z %s zlyhalo, pretože stavový kód %d HTTP nie je v očakávanom rozsahu.",
     "Could not find a valid encoding when parsing %s." : "Pri spracovaní %s sa nepodarilo nájsť platné kódovanie.",
     "No parser found for the given import." : "Pre daný import sa nenašiel žiadny analyzátor.",

@@ -46,7 +46,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "„%s“ JSON-faili sisu lugemine ei õnnestu",
     "The JSON file in the folder with ID %d does not have a valid name." : "%d tunnusega JSON-failil pole korrektset nime.",
     "Could not parse URL" : "Võrguaadressi töötlemine ei õnnestunud",
-    "Exception while downloading recipe from %s." : "Retsepti allalaadimisel „%s“ allikast tekkis viga.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Allalaadimine „%s“ serverist ei õnnestunud - HTTP olekukood %d pole eeldaatud vahemikust.",
     "Could not find a valid encoding when parsing %s." : "%s töötlemisel ei  leidunud korrektset kodeeringut.",
     "No parser found for the given import." : "Antud impordi jaoks ei leidu töötlejat.",

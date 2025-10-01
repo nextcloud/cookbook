@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "Ní féidir inneachar an chomhaid JSON %s a léamh",
     "The JSON file in the folder with ID %d does not have a valid name." : "Níl ainm bailí ar an gcomhad JSON san fhillteán ar a bhfuil ID %d.",
     "Could not parse URL" : "Níorbh fhéidir an URL a pharsáil",
-    "Exception while downloading recipe from %s." : "Eisceacht agus oideas á íosluchtú ó %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Theip ar íosluchtú ó %s toisc nach bhfuil an cód stádais HTTP %d sa raon a rabhthas ag súil leis.",
     "Could not find a valid encoding when parsing %s." : "Níorbh fhéidir ionchódú bailí a aimsiú agus %s á pharsáil.",
     "No parser found for the given import." : "Níor aimsíodh parsálaí don iompórtáil tugtha.",

@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "Не вдається прочитати вміст JSON-файлу %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "Файл JSON у теці з ідентифікатором %d має невірне ім'я.",
     "Could not parse URL" : "Не вдалося розібрати URL-адресу",
-    "Exception while downloading recipe from %s." : "Виняток при завантаженні рецепта з %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Завантаження з %s завершилося невдало, оскільки код статусу HTTP %d не знаходиться в очікуваному діапазоні.",
     "Could not find a valid encoding when parsing %s." : "Не вдалося знайти правильне кодування при розборі %s.",
     "No parser found for the given import." : "Парсер не знайдено для даного імпорту.",

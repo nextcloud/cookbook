@@ -26,7 +26,6 @@
     "User cannot create recipe folder" : "用户不能创建食谱文件夹",
     "in %s" : "位于 %s",
     "Could not parse URL" : "无法解析网址",
-    "Exception while downloading recipe from %s." : "从 %s 下载菜谱时出现异常。",
     "Download from %s failed as HTTP status code %d is not in expected range." : "从 %s 下载失败，因为 HTTP 状态代码 %d 不在预期范围内。",
     "Could not find a valid encoding when parsing %s." : "解析 %s 时找不到有效的编码。",
     "No parser found for the given import." : "找不到给定导入的解析器。",

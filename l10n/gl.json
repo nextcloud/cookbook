@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "Non é posíbel ler o contido do ficheiro JSON %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "O ficheiro JSON do cartafol co ID %d non ten un nome válido.",
     "Could not parse URL" : "Non foi posíbel analizar o URL",
-    "Exception while downloading recipe from %s." : "Produciuse unha excepción ao descargar a receita de %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Produciuse un fallo na descarga desde %s xa que o código de estado HTTP %d non está no intervalo agardado.",
     "Could not find a valid encoding when parsing %s." : "Non foi posíbel atopar unha codificación válida ao analizar %s.",
     "No parser found for the given import." : "Non se atopou ningún analizador para a importación indicada.",
