@@ -1,4 +1,5 @@
 { "translations": {
+    "Category" : "Taggayt",
     "Tags" : "Tibzimin",
     "None" : "Ula d yiwen",
     "Page not found" : "Ulac asebter",
@@ -6,8 +7,11 @@
     "Save" : "Sekles",
     "Search" : "Nadi",
     "Filter" : "Sizdeg",
+    "Categories" : "Taggayin",
     "Rename" : "Beddel isem",
-    "Name" : "Nom",
-    "Loading…" : "Asali..."
+    "Name" : "Isem",
+    "Loading…" : "Asali...",
+    "Source" : "Aɣbalu",
+    "Tools" : "Ifecka"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

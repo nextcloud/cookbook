@@ -25,6 +25,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!isset($json['image']) || !$json['image']) {
 			$json['image'] = '';

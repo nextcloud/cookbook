@@ -42,7 +42,6 @@ OC.L10N.register(
     "in %s" : "w %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "Plik JSON w katalogu o ID %d ma nieprawidłową nazwę.",
     "Could not parse URL" : "Nie udało się przeanalizować adresu URL",
-    "Exception while downloading recipe from %s." : "Wyjątek podczas pobierania przepisu z %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Pobieranie z %s nie powiodło się, ponieważ kod statusu HTTP %d nie mieści się w oczekiwanym zakresie.",
     "Could not find a valid encoding when parsing %s." : "Nie można znaleźć prawidłowego kodowania podczas analizowania %s.",
     "No parser found for the given import." : "Nie znaleziono analizatora składni dla danego importu.",

@@ -36,6 +36,7 @@ class FixDescriptionFilter extends AbstractJSONFilter {
 		$this->textCleaner = $textCleanupHelper;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!isset($json[self::DESCRIPTION])) {
 			$json[self::DESCRIPTION] = '';

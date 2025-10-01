@@ -21,7 +21,7 @@ class RecipeNameHelperTest extends TestCase {
 		$this->dut = new RecipeNameHelper($l, $logger);
 	}
 
-	public function dpGetFolderName() {
+	public static function dpGetFolderName() {
 		$tenChars = 'abcdefghij';
 		$ninetyChars = str_repeat($tenChars, 9);
 

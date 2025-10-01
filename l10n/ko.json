@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "%s JSON 파일의 내용을 읽을 수 없습니다.",
     "The JSON file in the folder with ID %d does not have a valid name." : "ID %d인 폴더에 있는 JSON 파일의 이름이 유효하지 않습니다.",
     "Could not parse URL" : "URL을 구문 분석 할 수 없습니다.",
-    "Exception while downloading recipe from %s." : "%s로부터 레시피를 다운로드하는 도중에 예외가 발생했습니다.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "HTTP 상태 코드 %d가 예상 범위를 벗어났기 때문에 %s에서 다운로드하지 못했습니다.",
     "Could not find a valid encoding when parsing %s." : "%s 구문 분석 중 유효한 인코딩을 찾을 수 없음.",
     "No parser found for the given import." : "해당 가져오기에 대한 파서를 찾을 수 없습니다.",

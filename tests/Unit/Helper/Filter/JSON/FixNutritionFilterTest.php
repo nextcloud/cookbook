@@ -48,7 +48,7 @@ class FixNutritionFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpApply() {
+	public static function dpApply() {
 		return [
 			[[], [], false],
 			[['a'], ['a'], false],

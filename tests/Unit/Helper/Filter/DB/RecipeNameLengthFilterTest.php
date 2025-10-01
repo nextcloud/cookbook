@@ -17,7 +17,7 @@ class RecipeNameLengthFilterTest extends TestCase {
 		$this->dut = new RecipeNameLengthFilter();
 	}
 
-	public function dp() {
+	public static function dp() {
 		yield ['abc', 'abc', false];
 		yield ['äöü', 'äöü', false];
 

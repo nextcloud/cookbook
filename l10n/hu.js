@@ -45,7 +45,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "Nem lehet olvasni a JSON fájl tartalmát %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "A(z) %d azonosítójú mappában lévő JSON-fájl neve érvénytelen.",
     "Could not parse URL" : "Nem sikerült az URL feldolgozása",
-    "Exception while downloading recipe from %s." : "Kivétel a recept letöltésekor innen: %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "A(z) %s helyről történő letöltés sikertelen, mert a HTTP állapotkód (%d) nem a várt tartományba esik.",
     "Could not find a valid encoding when parsing %s." : "Nem található érvényes kódolása a(z) %s feldolgozásakor.",
     "No parser found for the given import." : "Nem található értelmező a megadott importáláshoz.",

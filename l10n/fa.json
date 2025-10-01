@@ -40,7 +40,6 @@
     "in %s" : "در %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "The JSON file in the folder with ID %d does not have a valid name.",
     "Could not parse URL" : "Could not parse URL",
-    "Exception while downloading recipe from %s." : "Exception while downloading recipe from %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Download from %s failed as HTTP status code %d is not in expected range.",
     "Could not find a valid encoding when parsing %s." : "Could not find a valid encoding when parsing %s.",
     "No parser found for the given import." : "No parser found for the given import.",

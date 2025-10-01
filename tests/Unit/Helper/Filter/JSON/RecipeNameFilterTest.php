@@ -21,7 +21,7 @@ class RecipeNameFilterTest extends TestCase {
 		$this->dut = new RecipeNameFilter($this->textCleaner);
 	}
 
-	public function dpClean() {
+	public static function dpClean() {
 		return [
 			['The text', 'The cleaned text', 'The cleaned text', true],
 			['The text', 'The text', 'The text', false],
@@ -58,7 +58,7 @@ class RecipeNameFilterTest extends TestCase {
 		$this->assertEquals($recipeExpected, $recipe);
 	}
 
-	public function dpLongNames() {
+	public static function dpLongNames() {
 		$tenChars = 'abcdefghij';
 		$fiftyChars = str_repeat($tenChars, 5);
 		$twoHundredChars = str_repeat($fiftyChars, 4);

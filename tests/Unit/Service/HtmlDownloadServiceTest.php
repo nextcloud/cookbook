@@ -94,7 +94,7 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->sut->downloadRecipe($url);
 	}
 
-	public function dpBadStatus() {
+	public static function dpBadStatus() {
 		return [
 			[180], [199], [300], [404]
 		];

@@ -24,7 +24,7 @@ class EncodingGuessingHelperTest extends TestCase {
 		$this->dut = new EncodingGuessingHelper($l);
 	}
 
-	public function dpPureContentType() {
+	public static function dpPureContentType() {
 		return [
 			['text/text; charset=utf-8', 'utf-8'],
 			['text/text; boundary=foo ; charset=UTF-16', 'UTF-16'],
@@ -41,7 +41,7 @@ class EncodingGuessingHelperTest extends TestCase {
 		$this->assertEquals($enc, $this->dut->guessEncoding('', $ct));
 	}
 
-	public function dpPureContent() {
+	public static function dpPureContent() {
 		return [
 			['contentA.html', 'iso-8859-1'],
 			['contentB.html', 'UTF-16'],

@@ -13,7 +13,7 @@ class HtmlEncodingFilterTest extends TestCase {
 		$this->dut = new HtmlEncodingFilter();
 	}
 
-	public function dp() {
+	public static function dp() {
 		return [
 			['<html><head></head><body></body></html>', '<?xml encoding="UTF-8"><html><head></head><body></body></html>'],
 			['<?xml boundary="abc" encoding="ISO-8859-1"><html><head></head><body></body></html>', '<?xml boundary="abc" encoding="ISO-8859-1"><html><head></head><body></body></html>'],

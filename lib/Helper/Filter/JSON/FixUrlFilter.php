@@ -30,6 +30,7 @@ class FixUrlFilter extends AbstractJSONFilter {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!isset($json[self::URL])) {
 			$json[self::URL] = '';

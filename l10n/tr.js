@@ -46,7 +46,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "%s JSON dosyasının içeriği okunamadı",
     "The JSON file in the folder with ID %d does not have a valid name." : "%d kimlikli klasördeki JSON dosyasının adı geçersiz.",
     "Could not parse URL" : "Adres işlenemedi",
-    "Exception while downloading recipe from %s." : "Yemek tarifi %s üzerinden indirilirken bir sorun çıktı.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "%s, %d beklenen aralıkta değil HTTP durum koduyla indirilemedi. ",
     "Could not find a valid encoding when parsing %s." : "%s işlenirken geçerli bir kodlama bulunamadı.",
     "No parser found for the given import." : "Belirtilen içe aktarma için bir işleyici bulunamadı.",

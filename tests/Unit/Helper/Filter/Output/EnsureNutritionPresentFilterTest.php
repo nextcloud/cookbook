@@ -39,7 +39,7 @@ class EnsureNutritionPresentFilterTest extends TestCase {
 		$this->assertTrue($ret);
 	}
 
-	public function dpApply() {
+	public static function dpApply() {
 		return [
 			[[], ['@type' => 'NutritionInformation'], false],
 			[['a'], ['a', '@type' => 'NutritionInformation'], false],

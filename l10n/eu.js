@@ -45,7 +45,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "Ezin da irakurri %s JSON fitxategiaren edukia",
     "The JSON file in the folder with ID %d does not have a valid name." : "ID %d duen karpetaren JSON fitxategiak ez du baliozko izenik.",
     "Could not parse URL" : "Ezin izan da URLa analizatu",
-    "Exception while downloading recipe from %s." : "%s-(e)tik errezeta deskargatzeak salbuespena sortu du.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "%s-(r)en deskargak huts egin du %d HTTP egoera-kodea ez dagoelako esperotako barrutian.",
     "Could not find a valid encoding when parsing %s." : "Ezin izan da baliozko kodetzea aurkitu %s analizatzean.",
     "No parser found for the given import." : "Ez da analizatzailerik aurkitu emandako inportaziorako.",

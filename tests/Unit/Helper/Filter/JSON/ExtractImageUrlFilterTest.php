@@ -38,7 +38,7 @@ class ExtractImageUrlFilterTest extends TestCase {
 		$this->assertEquals($this->recipeStub, $recipe);
 	}
 
-	public function dpImage() {
+	public static function dpImage() {
 		yield ['http://example.com/image.jpg', 'http://example.com/image.jpg', false];
 		yield [30, '', true];
 		yield [['url' => 'http://example.com/image.jpg'], 'http://example.com/image.jpg', true];

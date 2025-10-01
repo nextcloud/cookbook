@@ -18,6 +18,9 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+
+## 0.11.4 - 2025-10-01
+
 ### Added
 
 - Keep the display on while viewing a recipe
@@ -27,6 +30,17 @@ Sorry for the inconvience.
 
 - Parse Microdata correctly using itemscope properties
   [#2711](https://github.com/nextcloud/cookbook/pull/2711) @krzys-h
+- Prevent redundant stored data in recipes leading to increasing recipe sizes
+  [#2863](https://github.com/nextcloud/cookbook/pull/2863) @christianlupus
+- Added error reporting in case of import errors
+  [#2865](https://github.com/nextcloud/cookbook/pull/2865) @christianlupus
+- Unclear reference to logging in case of failed save fixed
+  [#2866](https://github.com/nextcloud/cookbook/pull/2866) @christianlupus
+
+### Documentation
+
+- Add short introduction to get `getld` in developer documentation
+  [#2868](https://github.com/nextcloud/cookbook/pull/2868) @christianlupus
 
 ### Maintenance
 
@@ -40,6 +54,20 @@ Sorry for the inconvience.
   [#2831](https://github.com/nextcloud/cookbook/pull/2831) @nextcloud-command
 - Migrate the annotations to attributes
   [#2840](https://github.com/nextcloud/cookbook/pull/2840) @christianlupus
+- Fix CI pipeline (make migration tests run again)
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Remove some deprecations in the CI pipeline
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Update CI logging related to tesing
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Remove deprecated @covers annotations on protected and private methods
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Fix log parser
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Update Typescript
+  [#2846](https://github.com/nextcloud/cookbook/pull/2846) @dependabot
+- Udpate the composer dependencies
+  [#2864](https://github.com/nextcloud/cookbook/pull/2864) @christianlupus
 
 
 ## 0.11.3 - 2025-03-07

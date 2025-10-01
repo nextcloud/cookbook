@@ -21,7 +21,7 @@ class HtmlEntityDecodeFilterTest extends TestCase {
 		$this->assertEquals($testString, $decoded);
 	}
 
-	public function dataProvider() {
+	public static function dataProvider() {
 		yield ['abc'];
 		yield ['Test <b>äößå'];
 	}
@@ -38,7 +38,7 @@ class HtmlEntityDecodeFilterTest extends TestCase {
 		$this->assertEquals($expected, $decoded);
 	}
 
-	public function dataProviderExplicit() {
+	public static function dataProviderExplicit() {
 		yield ['Test &lt;b&gt;&auml;&ouml;&szlig;&aring;', 'Test <b>äößå'];
 	}
 }

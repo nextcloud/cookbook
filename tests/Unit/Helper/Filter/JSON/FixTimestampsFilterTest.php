@@ -37,7 +37,7 @@ class FixTimestampsFilterTest extends TestCase {
 		];
 	}
 
-	public function dpNonExisting() {
+	public static function dpNonExisting() {
 		return [
 			[false, false, false],
 			[true, false, false],
@@ -72,7 +72,7 @@ class FixTimestampsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpSuccess() {
+	public static function dpSuccess() {
 		return [
 			['2000-01-01T01:01:00+00:00', '2001-01-01T01:01:00+01:00', '2002-01-01T01:01:00-01:30',
 				'2000-01-01T01:01:00+00:00', '2001-01-01T01:01:00+01:00', '2002-01-01T01:01:00-01:30', false],
@@ -115,7 +115,7 @@ class FixTimestampsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dpExceptions() {
+	public static function dpExceptions() {
 		return [
 			['invalid', '2000-01-02T01:01:00Z', '2000-01-03T01:01:00Z', null, '2000-01-02T01:01:00Z', '2000-01-03T01:01:00Z'],
 			['2000-01-01T01:01:00Z', 'invalid', '2000-01-03T01:01:00Z', '2000-01-01T01:01:00Z', null, '2000-01-03T01:01:00Z'],

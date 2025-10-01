@@ -32,7 +32,7 @@ class ImageGenerationHelperTest extends TestCase {
 		$this->dut = new ImageGenerationHelper($this->thumbnailService);
 	}
 
-	public function dpThumbnails() {
+	public static function dpThumbnails() {
 		yield [ImageSize::THUMBNAIL];
 		yield [ImageSize::MINI_THUMBNAIL];
 	}
@@ -89,7 +89,7 @@ class ImageGenerationHelperTest extends TestCase {
 		$this->dut->generateThumbnail($fullImage, ImageSize::PRIMARY_IMAGE, $dstFile);
 	}
 
-	public function dpDropExisting() {
+	public static function dpDropExisting() {
 		yield [ImageSize::THUMBNAIL, 'thumb.jpg'];
 		yield [ImageSize::MINI_THUMBNAIL, 'thumb16.jpg'];
 	}

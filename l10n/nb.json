@@ -43,7 +43,6 @@
     "Cannot read content of JSON file %s" : "Kan ikke lese innholdet i JSON-filen %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "JSON-filen i mappen med ID %d har ikke et gyldig navn.",
     "Could not parse URL" : "Kunne ikke analysere URL",
-    "Exception while downloading recipe from %s." : "Unntak under nedlasting av oppskrift fra %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Nedlasting fra %s feilet da HTTP-statuskode %d ikke er i forventet område.",
     "Could not find a valid encoding when parsing %s." : "Kunne ikke finne en gyldig koding under parsing %s.",
     "No parser found for the given import." : "Ingen analyserer funnet for den gitte importen.",

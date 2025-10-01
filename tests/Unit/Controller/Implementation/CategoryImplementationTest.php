@@ -102,7 +102,7 @@ class CategoryImplementationTest extends TestCase {
 		$this->assertEquals(400, $ret->getStatus());
 	}
 
-	public function dataProviderCategoryUpdateNoName() {
+	public static function dataProviderCategoryUpdateNoName() {
 		yield [[]];
 		yield [[
 			'some', 'variable'
@@ -124,13 +124,18 @@ class CategoryImplementationTest extends TestCase {
 		$this->recipeService->expects($this->once())->method('getRecipesByCategory')->with($oldCat)->willReturn($recipes);
 		$this->dbCacheService->expects($this->once())->method('updateCache');
 
-		$this->restParser->expects($this->once())->method('getParameters')->willReturn(['name' => $cat]);
+		$this->restParser->method('getParameters')->willReturn(['name' => $cat]);
 
 		$n = count($recipes);
 		$indices = array_map(function ($v) {
-			return [$v['recipe_id']];
+			return $v['recipe_id'];
 		}, $recipes);
-		$this->recipeService->expects($this->exactly($n))->method('getRecipeById')->withConsecutive(...$indices);
+
+		$spyArray = [];
+		$this->recipeService->expects($this->exactly($n))->method('getRecipeById')->willReturnCallback(function ($id) use (&$spyArray) {
+			$spyArray[] = $id;
+		});
+
 		$this->recipeService->expects($this->exactly($n))->method('addRecipe')->with($this->callback(function ($p) use ($cat) {
 			return $p['recipeCategory'] === $cat;
 		}));
@@ -142,9 +147,11 @@ class CategoryImplementationTest extends TestCase {
 
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals($cat, $ret->getData());
+
+		$this->assertEqualsCanonicalizing($indices, $spyArray);
 	}
 
-	public function dpCategoryUpdate() {
+	public static function dpCategoryUpdate() {
 		return [
 			'noRecipes' => [
 				'new Category Name',

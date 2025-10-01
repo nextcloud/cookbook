@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Category" : "Taggayt",
     "Tags" : "Tibzimin",
     "None" : "Ula d yiwen",
     "Page not found" : "Ulac asebter",
@@ -8,8 +9,11 @@ OC.L10N.register(
     "Save" : "Sekles",
     "Search" : "Nadi",
     "Filter" : "Sizdeg",
+    "Categories" : "Taggayin",
     "Rename" : "Beddel isem",
-    "Name" : "Nom",
-    "Loading…" : "Asali..."
+    "Name" : "Isem",
+    "Loading…" : "Asali...",
+    "Source" : "Aɣbalu",
+    "Tools" : "Ifecka"
 },
 "nplurals=2; plural=(n != 1);");

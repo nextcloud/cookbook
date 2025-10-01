@@ -13,7 +13,7 @@ class TextCleanupHelperTest extends TestCase {
 		$this->dut = new TextCleanupHelper();
 	}
 
-	public function dpCleanUp() {
+	public static function dpCleanUp() {
 		return [
 			['Just some    text', true, true, 'Just some text'],
 			['Just some    text', false, false, 'Just some text'],

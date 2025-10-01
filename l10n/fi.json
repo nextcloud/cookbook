@@ -21,7 +21,6 @@
     "in %s" : "luokassa %s",
     "Cannot read content of JSON file %s" : "JSON-tiedoston %s sisältöä ei voitu lukea",
     "Could not parse URL" : "Osoitetta ei voinut lukea.",
-    "Exception while downloading recipe from %s." : "Ladattaessa reseptiä osoitteesta %s tapahtui poikkeus.",
     "No recipe name was given. A unique name is required to store the recipe." : "Reseptin nimeä ei ole annettu. Yksilöllinen nimi vaaditaan reseptin tallentamiseksi.",
     "Another recipe with that name already exists" : "Samanniminen resepti on jo olemassa",
     "Cannot download image using curl" : "Kuvan lataus curl-työkalulla ei onnistu",

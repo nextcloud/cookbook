@@ -20,7 +20,7 @@ class FixImageSchemeFilterTest extends TestCase {
 		$this->dut = new FixImageSchemeFilter($l);
 	}
 
-	public function dp() {
+	public static function dp() {
 		return [
 			['http://foo', '', 'http://foo', false],
 			['https://foo', '', 'https://foo', false],
@@ -56,7 +56,7 @@ class FixImageSchemeFilterTest extends TestCase {
 		$this->assertEquals($recipeExpected, $recipe);
 	}
 
-	public function dpFailedUrl() {
+	public static function dpFailedUrl() {
 		return [
 			['//recipe.html'],
 			['/recipe.html'],
