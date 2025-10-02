@@ -8,11 +8,11 @@ jobs:
     
     changelog:
         name: Check if the changelog was updated
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     filter: "blob:none"
                     fetch-depth: 0
@@ -135,7 +135,7 @@ jobs:
     
     todo-checker:
         name: Check for added todo messages
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         steps:
             -   name: Git version output
                 run: git version
@@ -163,11 +163,11 @@ jobs:
 
     appinfo:
         name: Check for matching app info file
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     fetch-depth: 1
                 
@@ -207,18 +207,18 @@ jobs:
     
     package-lint:
         name: Make sure the package.json is well-formatted
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v4
+                uses: actions/checkout@v5
                 with:
                     fetch-depth: 1
             -   name: Get the date
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Cache NPM cache
-                uses: actions/cache@v4.0.2
+                uses: actions/cache@v4.2.4
                 with:
                     path: |
                         ~/.npm

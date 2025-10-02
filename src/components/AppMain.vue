@@ -145,7 +145,7 @@ export default {
         display: block !important;
         overflow: visible !important;
         padding: 0 !important;
-        margin-left: 0 !important;
+        margin-inline-start: 0 !important;
     }
 
     #app-navigation-vue {

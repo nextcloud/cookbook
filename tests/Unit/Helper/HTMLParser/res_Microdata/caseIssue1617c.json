@@ -1,0 +1,27 @@
+{
+  "@type": "Recipe",
+  "@context": "http://schema.org",
+  "name": "Ciasteczka czekoladowe",
+  "recipeYield": "20-24",
+  "image": [
+    "https://poprostupycha.com.pl/wp-content/uploads/2022/06/ciasteczka_7.jpg"
+  ],
+  "recipeIngredient": [
+    "200 g masła",
+    "160 g cukru białego lub trzcinowego",
+    "2 jajka",
+    "320 g mąki pszennej",
+    "60 g ciemnego kakao",
+    "1 płaska łyżka masła orzechowego lub nutelli",
+    "1 łyżeczka proszku do pieczenia",
+    "120 g groszków czekoladowych lub (posiekane 80 g czekolady mlecznej, 40 g gorzkiej)"
+  ],
+  "recipeInstructions": [
+    "Krok 1\n\n\n\n\nMiękkie masło (200 g) miksujemy z cukrem (160 g) przez 1-2 minuty aż masa zrobi się puszysta.",
+    "Krok 2\n\n\n\n\nDodajemy stopniowo po jednym jajku, cały czas miksując.",
+    "Krok 3\n\n\n\n\nWsypujemy mąkę pszenną (320 g), proszek do pieczenia (1 łyżeczka) i kakao (60 g). Dodajemy także masło orzechowe lub nutellę (1 płaska łyżka). Całość lekko mieszamy za pomocą łyżki.",
+    "Krok 4\n\n\n\n\nNa sam koniec dodajemy groszki czekoladowe (120 g) lub drobno posiekaną czekoladę (ja wymieszałam mleczną lub gorzką).\nŁyżkę posiekanej czekolady czy groszków zwykle odstawiam na bok i wkładam je w uformowane już ciasteczka.\nZagniatamy dłonią gładkie ciasto.",
+    "Krok 5\n\n\n\n\nZ ciasta formujemy długi rulonik i wycinamy kawałki w równych odstępach. Powinno wyjść około 20-24 ciastek średniej wielkości.",
+    "Krok 6\n\n\n\n\nFormujemy ciasteczka i układamy równomiernie na foremce wyłożonej papierem do pieczenia. Na ich wierzchu wbijamy po 3-4 kosteczki posiekanej czekolady.\nPiec przez 10-12 minut w temp. 190 stopni (góra-dół). Długość pieczenia zależy głównie od wielkości uformowanych ciastek. Nie polecam ich piec zbyt długo, bo najsmaczniejsze są po około 10 minutach pieczenia. Zaraz po wyciągnięciu z piekarnika mogą wydawać się niedopieczone, lecz po chwili zastygają (można je bez problemu odkleić od papieru, nie kruszą się, ani nic w tym stylu). Smacznego!"
+  ]
+}

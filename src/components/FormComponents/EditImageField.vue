@@ -94,8 +94,8 @@ fieldset > label {
 
 .input-container > input {
     flex: 1;
-    border-right: 0;
     border-bottom-right-radius: 0;
+    border-inline-end: 0;
     border-top-right-radius: 0;
 }
 

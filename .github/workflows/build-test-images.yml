@@ -8,15 +8,15 @@ on:
 jobs:
     push:
         name: Build and push the latest test images
-        runs-on: ubuntu-22.04
+        runs-on: ubuntu-24.04
         
         strategy:
             matrix:
                 phpVersion:
-                    - "8.0"
                     - "8.1"
                     - "8.2"
                     - "8.3"
+                    - "8.4"
                     # - "8"
         steps:
             - name: Check if secret is known
@@ -32,7 +32,7 @@ jobs:
                 fi
             
             - name: Checkout the app
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
               if: ${{ steps.check.outputs.skip == 'false' }}
             - name: Make sure the appinfo is built
               shell: bash

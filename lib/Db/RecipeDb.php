@@ -349,7 +349,7 @@ class RecipeDb {
 	 * @throws \OCP\AppFramework\Db\DoesNotExistException if not found
 	 */
 	public function findRecipes(array $keywords, string $user_id) {
-		$has_keywords = $keywords && is_array($keywords) && $keywords[0];
+		$has_keywords = $keywords && $keywords[0];
 
 		if (!$has_keywords) {
 			return $this->findAllRecipes($user_id);

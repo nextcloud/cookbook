@@ -36,7 +36,7 @@ fieldset {
 
 fieldset > * {
     margin: 0;
-    float: left;
+    float: inline-start;
 }
 @media (max-width: 1199px) {
     fieldset > label {

@@ -158,8 +158,8 @@ export default {
 
 @media (max-width: 400px) {
     .suggestions-popup {
-        left: 0 !important;
         width: 100% !important;
+        inset-inline-start: 0 !important;
     }
 }
 </style>

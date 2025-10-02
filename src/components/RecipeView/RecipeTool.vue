@@ -21,7 +21,7 @@ export default {
 
 <style scoped>
 li {
-    margin-left: 1.25em;
+    margin-inline-start: 1.25em;
 }
 
 .markdown-tool:deep(a) {

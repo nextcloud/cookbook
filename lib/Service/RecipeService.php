@@ -224,6 +224,9 @@ class RecipeService {
 		if (isset($json['id']) && $json['id']) {
 			// Recipe already has an id, update it
 			$recipe_folder = $user_folder->getById($json['id'])[0];
+			if (!($recipe_folder instanceof Folder)) {
+				throw new \RuntimeException($this->il10n->t('Unexpected node received for recipe folder.'));
+			}
 
 			$old_path = $recipe_folder->getPath();
 			$new_path = dirname($old_path) . '/' . $recipeFolderName;
@@ -566,14 +569,8 @@ class RecipeService {
 
 	/**
 	 * Get recipe file contents as an array
-	 *
-	 * @param File $file
 	 */
-	public function parseRecipeFile($file): ?array {
-		if (!$file) {
-			return null;
-		}
-
+	public function parseRecipeFile(File $file): ?array {
 		$json = json_decode($file->getContent(), true);
 
 		if (!$json) {
@@ -583,7 +580,7 @@ class RecipeService {
 		$json['id'] = $file->getParent()->getId();
 
 
-		if (!array_key_exists('dateCreated', $json) && method_exists($file, 'getCreationTime')) {
+		if (!array_key_exists('dateCreated', $json)) {
 			$json['dateCreated'] = $file->getCreationTime();
 		}
 

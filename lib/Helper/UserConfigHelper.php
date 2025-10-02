@@ -124,7 +124,7 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setUpdateInterval(int $value): void {
-		$this->setRawValue(self::KEY_UPDATE_INTERVAL, $value);
+		$this->setRawValue(self::KEY_UPDATE_INTERVAL, (string)$value);
 	}
 
 	/**

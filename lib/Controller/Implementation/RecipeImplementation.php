@@ -247,10 +247,8 @@ class RecipeImplementation {
 		$acceptHeader = $this->request->getHeader('Accept');
 		$acceptedExtensions = $this->acceptHeaderParser->parseHeader($acceptHeader);
 
-		$size = isset($_GET['size']) ? $_GET['size'] : null;
-
 		try {
-			$file = $this->service->getRecipeImageFileByFolderId($id, $size);
+			$file = $this->service->getRecipeImageFileByFolderId($id, $_GET['size'] ?? 'full');
 
 			return new FileDisplayResponse($file, Http::STATUS_OK, ['Content-Type' => 'image/jpeg', 'Cache-Control' => 'public, max-age=604800']);
 		} catch (\Exception $e) {

@@ -1,0 +1,6 @@
+{
+	"@type": "Recipe",
+	"@context": "http://schema.org",
+	"name": "Sample recipe name",
+	"recipeInstructions": []
+}

@@ -1,25 +1,16 @@
 { "translations": {
     "in %s" : "dins %s",
+    "Category" : "Categoria",
+    "Tags" : "Etiquetas",
     "None" : "Cap",
     "Page not found" : "Pagina pas trobada",
     "Edit" : "Modificar",
     "Save" : "Enregistrar",
     "Search" : "Search",
-    "Category" : "Categoria",
-    "Tags" : "Etiquetas",
     "Categories" : "Categorias",
-    "Rename" : "Renomenar",
-    "Add" : "Ajustar",
+    "Rename" : "Tornar nommar",
     "Name" : "Nom",
-    "Tools" : "Aisinas",
-    "Dismiss" : "Regetar",
-    "Cancel" : "Anullar",
-    "OK" : "D’acòrdi",
-    "Description" : "Descripcion",
-    "URL" : "URL",
-    "Calories" : "Calorias",
-    "Loading…" : "Cargament…",
-    "Clear" : "Escafar",
-    "Apply" : "Aplicar"
+    "Loading…" : "Telecargament…",
+    "Tools" : "Aisinas"
 },"pluralForm" :"nplurals=2; plural=(n > 1);"
 }

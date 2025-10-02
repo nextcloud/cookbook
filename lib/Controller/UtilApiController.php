@@ -3,6 +3,9 @@
 namespace OCA\Cookbook\Controller;
 
 use OCP\AppFramework\ApiController;
+use OCP\AppFramework\Http\Attribute\CORS;
+use OCP\AppFramework\Http\Attribute\NoAdminRequired;
+use OCP\AppFramework\Http\Attribute\NoCSRFRequired;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IRequest;
 
@@ -12,14 +15,14 @@ class UtilApiController extends ApiController {
 	}
 
 	/**
-	 * @NoAdminRequired
-	 * @NoCSRFRequired
-	 * @CORS
 	 * @return JSONResponse
 	 */
+	#[NoAdminRequired]
+	#[NoCSRFRequired]
+	#[CORS]
 	public function getApiVersion(): JSONResponse {
 		$response = [
-			'cookbook_version' => [0, 11, 2], /* VERSION_TAG do not change this line manually */
+			'cookbook_version' => [0, 11, 4], /* VERSION_TAG do not change this line manually */
 			'api_version' => [
 				'epoch' => 0,
 				'major' => 1,
