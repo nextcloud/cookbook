@@ -99,17 +99,23 @@ class UserConfigHelperTest extends TestCase {
 			->with($this->userId, 'cookbook', 'print_image')
 			->willReturnOnConsecutiveCalls('0', '1', '0');
 
+		$expectedSpyArray = [
+			[$this->userId, 'cookbook', 'print_image', '1', null],
+			[$this->userId, 'cookbook', 'print_image', '0', null]
+		];
+		$spyArray = [];
 		$this->config->expects($this->exactly(2))->method('setUserValue')
-			->withConsecutive(
-				[$this->userId, 'cookbook', 'print_image', '1'],
-				[$this->userId, 'cookbook', 'print_image', '0']
-			);
+			->willReturnCallback(function (...$args) use (&$spyArray) {
+				$spyArray[] = $args;
+			});
 
 		$this->assertFalse($this->dut->getPrintImage());
 		$this->dut->setPrintImage(true);
 		$this->assertTrue($this->dut->getPrintImage());
 		$this->dut->setPrintImage(false);
 		$this->assertFalse($this->dut->getPrintImage());
+
+		$this->assertEquals($expectedSpyArray, $spyArray);
 	}
 
 	public function testPrintImageUnset() {

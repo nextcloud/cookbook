@@ -21,3 +21,4 @@ node_modules
 ### Composer ###
 
 /vendor
+tests/psalm-report.json

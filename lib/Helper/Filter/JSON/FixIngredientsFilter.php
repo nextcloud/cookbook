@@ -34,6 +34,7 @@ class FixIngredientsFilter extends AbstractJSONFilter {
 		$this->textCleaner = $textCleanupHelper;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!isset($json[self::INGREDIENTS])) {
 			$json[self::INGREDIENTS] = [];

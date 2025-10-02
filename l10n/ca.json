@@ -36,7 +36,6 @@
     "in %s" : "a %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "El fitxer JSON de la carpeta amb l'ID %d no té un nom vàlid.",
     "Could not parse URL" : "No s'ha pogut reconèixer l'URL",
-    "Exception while downloading recipe from %s." : "Error en baixar la recepta de %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "S'ha produït un error en la baixada de %s, ja que el codi d'estat HTTP %d no es troba en l'interval esperat.",
     "Could not find a valid encoding when parsing %s." : "No s'ha pogut trobar una codificació vàlida durant l'anàlisi de %s.",
     "No recipe name was given. A unique name is required to store the recipe." : "No s'ha donat cap nom de recepta. Cal un nom únic per poder guardar la recepta.",

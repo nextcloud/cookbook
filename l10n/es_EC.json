@@ -40,7 +40,6 @@
     "in %s" : "en %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "El archivo JSON en la carpeta con ID %d no tiene un nombre válido.",
     "Could not parse URL" : "No se pudo analizar la URL",
-    "Exception while downloading recipe from %s." : "Excepción al descargar la receta desde %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Error al descargar desde %s, ya que el código de estado HTTP %d no está en el rango esperado.",
     "Could not find a valid encoding when parsing %s." : "No se encontró una codificación válida al analizar %s.",
     "No parser found for the given import." : "No se encontró ningún analizador para la importación proporcionada.",

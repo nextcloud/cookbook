@@ -45,7 +45,7 @@ class FixToolsFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dp() {
+	public static function dp() {
 		return [
 			[['a','b','c'], ['a','b','c'], false],
 			[[' a  ',''], ['a'], true],

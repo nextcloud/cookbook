@@ -15,7 +15,7 @@ class ConfigApiController extends ApiController {
 	private $implementation;
 
 	public function __construct(
-		$AppName,
+		string $AppName,
 		IRequest $request,
 		ConfigImplementation $configImplementation,
 	) {

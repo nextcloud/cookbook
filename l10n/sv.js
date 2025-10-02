@@ -46,7 +46,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "Kan inte läsa innehållet i JSON-filen %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "JSON-fil i mappen med ID %d har inte ett giltigt namn.",
     "Could not parse URL" : "Kunde inte tolka URL",
-    "Exception while downloading recipe from %s." : "Undantagsfel under nedladdning av recept från %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Nedladdning från %s misslyckades eftersom HTTP-statuskoden %d inte faller inom förväntat intervall.",
     "Could not find a valid encoding when parsing %s." : "Kunde inte hitta giltig teckenkodning under tolkning av %s.",
     "No parser found for the given import." : "Ingen tolk funnen för den givna importen.",

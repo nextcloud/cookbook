@@ -39,7 +39,7 @@ class FixRecipeYieldFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 	}
 
-	public function dp() {
+	public static function dp() {
 		return [
 			[1,1,false],
 			[5,5,false],

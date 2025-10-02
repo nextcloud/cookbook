@@ -36,7 +36,6 @@
     "Cannot read content of JSON file %s" : "Kan inhoud van JSON bestand %s niet lezen",
     "The JSON file in the folder with ID %d does not have a valid name." : "Het JSON betand in de map met ID %d heeft geen geldige bestandsnaam.",
     "Could not parse URL" : "Kan de URL niet verwerken",
-    "Exception while downloading recipe from %s." : "Uitsluiting tijdens het downloaden recept van %s",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Download van %s mislukt, omdat HTTP status code %d niet voorkomt in de lijst van verwachte codes.",
     "Could not find a valid encoding when parsing %s." : "Kon geen geschikte verwerking vinden voor het verwerken van %s.",
     "No parser found for the given import." : "Geen parser gevonden voor de opgegeven import.",

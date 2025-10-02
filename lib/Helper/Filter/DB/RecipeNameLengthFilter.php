@@ -18,6 +18,7 @@ class RecipeNameLengthFilter implements AbstractRecipeFilter {
 	public function __construct() {
 	}
 
+	#[\Override]
 	public function apply(array &$json, File $recipe): bool {
 		$changed = false;
 		$name = trim($json['name']);

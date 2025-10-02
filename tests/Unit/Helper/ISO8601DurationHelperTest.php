@@ -20,7 +20,7 @@ class ISO8601DurationHelperTest extends TestCase {
 		$this->dut = new ISO8601DurationHelper($l);
 	}
 
-	public function dpHM() {
+	public static function dpHM() {
 		return [
 			['0:01', 'PT0H1M'],
 			['0:21', 'PT0H21M'],
@@ -36,7 +36,7 @@ class ISO8601DurationHelperTest extends TestCase {
 		$this->assertEquals($expectedOutput, $this->dut->parseDuration($input));
 	}
 
-	public function dpIso() {
+	public static function dpIso() {
 		return [
 			['PT0H1M', 'PT0H1M0S'],
 			['PT0H21M', 'PT0H21M0S'],
@@ -58,7 +58,7 @@ class ISO8601DurationHelperTest extends TestCase {
 		$this->assertEquals($expectedOutput, $this->dut->parseDuration($input));
 	}
 
-	public function dpFail() {
+	public static function dpFail() {
 		return [
 			['Just some text'],
 			[''],

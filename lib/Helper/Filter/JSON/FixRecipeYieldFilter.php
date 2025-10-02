@@ -32,6 +32,7 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!array_key_exists(self::YIELD, $json)) {
 			$json[self::YIELD] = null;

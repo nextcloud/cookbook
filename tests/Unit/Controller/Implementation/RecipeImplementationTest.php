@@ -222,7 +222,7 @@ class RecipeImplementationTest extends TestCase {
 		return $ret;
 	}
 
-	public function dataProviderCategory(): array {
+	public static function dataProviderCategory(): array {
 		return [
 			'noRecipes' => [
 				'My category',
@@ -282,7 +282,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals($expected, $ret->getData());
 	}
 
-	public function dataProviderTags(): array {
+	public static function dataProviderTags(): array {
 		return [
 			'noTag' => [
 				'*',
@@ -356,7 +356,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals($expected, $res->getData());
 	}
 
-	public function dpSearch() {
+	public static function dpSearch() {
 		return [
 			'noRecipes' => [
 				'some query',
@@ -634,7 +634,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret->callback($output);
 	}
 
-	public function dataProviderImage(): array {
+	public static function dataProviderImage(): array {
 		return [
 			[false, null, 'full'],
 			[true, null, 'full'],
@@ -643,7 +643,7 @@ class RecipeImplementationTest extends TestCase {
 		];
 	}
 
-	public function dpImageNotFound() {
+	public static function dpImageNotFound() {
 		yield [['jpg', 'png'], 406];
 		yield [['jpg', 'png', 'svg'], 200];
 	}
@@ -725,7 +725,7 @@ class RecipeImplementationTest extends TestCase {
 		return $ret;
 	}
 
-	public function dataProviderIndex(): array {
+	public static function dataProviderIndex(): array {
 		return [
 			'emptyIndex' => [
 				[],

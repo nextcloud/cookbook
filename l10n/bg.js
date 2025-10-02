@@ -42,7 +42,6 @@ OC.L10N.register(
     "in %s" : "в %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "JSON файлът в папка с Идентификатор %dняма валидно име.",
     "Could not parse URL" : "URL адресът не можа да бъде анализиран",
-    "Exception while downloading recipe from %s." : "Изключение при изтегляне на рецепта от %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "Изтеглянето от %s е неуспешно, тъй като HTTP кодът на състоянието %d не е в очаквания диапазон.",
     "Could not find a valid encoding when parsing %s." : "Не можа да се намери валидно кодиране при анализ на %s. ",
     "No parser found for the given import." : "Не е намерен анализатор за даденото импортиране.",

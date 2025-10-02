@@ -10,13 +10,11 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser
- * @covers ::<protected>
- * @covers ::<private>
  * @author christian
  *
  */
 class HttpJsonLdParserTest extends TestCase {
-	public function dataProvider(): array {
+	public static function dataProvider(): array {
 		return [
 			'caseA' => ['caseA.html', true, 'caseA.json'],
 			'caseB' => ['caseB.html', true, 'caseB.json'],

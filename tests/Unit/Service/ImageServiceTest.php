@@ -60,7 +60,7 @@ class ImageServiceTest extends TestCase {
 		$this->assertEquals($content, $this->dut->getImage($recipeFolder));
 	}
 
-	public function dpThumbnailSizes() {
+	public static function dpThumbnailSizes() {
 		return [
 			[ ImageSize::THUMBNAIL ],
 			[ ImageSize::MINI_THUMBNAIL ],
@@ -95,7 +95,7 @@ class ImageServiceTest extends TestCase {
 		$this->assertEquals($content, $this->dut->getThumbnail($recipeFolder, $type));
 	}
 
-	public function dpHasImage() {
+	public static function dpHasImage() {
 		return [[true], [false]];
 	}
 

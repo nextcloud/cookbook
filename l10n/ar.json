@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "تعذّرت قراءة ملف الـ JSON ـ %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "ملف JSON في المجلد الذي مُعرّفُه %d اسمه غير صحيح.",
     "Could not parse URL" : "تعذّر تحليل عنوان URL",
-    "Exception while downloading recipe from %s." : "استثناء أثناء تنزيل الوصفة من %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "التنزيل من %s فشل بسب أن كود حالة HTTP ـ %d ليس ضمن المدى المتوقع.",
     "Could not find a valid encoding when parsing %s." : "تعذّر إيجاد ترميز صحيح عند تحليل %s.",
     "No parser found for the given import." : "تعذّر إيجاد مُحلّل parser في المُستَوْرَد",

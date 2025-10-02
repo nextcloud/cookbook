@@ -44,7 +44,6 @@
     "Cannot read content of JSON file %s" : "Não é possível ler o conteúdo do arquivo JSON %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "O arquivo JSON na pasta com ID %d não tem um nome válido.",
     "Could not parse URL" : "Não foi possível analisar o URL",
-    "Exception while downloading recipe from %s." : "Exceção ao baixar a receita de %s.",
     "Download from %s failed as HTTP status code %d is not in expected range." : "O download de %s falhou porque o código de status HTTP %d não está no intervalo esperado.",
     "Could not find a valid encoding when parsing %s." : "Não foi possível encontrar uma codificação válida ao analisar %s.",
     "No parser found for the given import." : "Nenhum analisador encontrado para a importação fornecida.",
