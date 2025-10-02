@@ -81,7 +81,7 @@
     "stylelint-scss": "^6.11.1",
     "ts-loader": "^9.5.1",
     "typescript": "~5.9.2",
-    "vite": "^7.1.8",
+    "vite": "^6.3.6",
     "vite-bundle-visualizer": "^1.2.1",
     "webpack": "^5.89.0",
     "webpack-bundle-analyzer": "^4.9.1",
