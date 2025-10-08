@@ -72,7 +72,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook', 'Failed to load recipes with keywords: {tags}',
                     {
                         tags,
@@ -96,7 +96,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook', 'Failed to load category {category} recipes',
                     {
                         category: cat,

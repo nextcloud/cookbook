@@ -73,7 +73,7 @@
                         />
                         <label for="filters">
                             {{
-                                // prettier-ignore
+                                /* prettier-ignore */
                                 t('cookbook', 'Show filters and sorting in recipe lists')
                             }}
                         </label>
@@ -89,7 +89,7 @@
             <fieldset>
                 <legend class="settings-info-blocks__legend">
                     {{
-                        // prettier-ignore
+                        /* prettier-ignore */
                         t('cookbook', 'Control which blocks of information are shown in the recipe view. If you do not use some features and find them distracting, you may hide them.')
                     }}
                 </legend>
@@ -164,7 +164,7 @@
         >
             <legend class="settings-info-blocks__legend">
                 {{
-                    // prettier-ignore
+                    /* prettier-ignore */
                     t('cookbook', 'This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default.')
                 }}
             </legend>
@@ -273,7 +273,7 @@ watch(
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch {
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook','Could not set preference for image printing'),
             );
             printImage.value = oldVal;
@@ -308,7 +308,7 @@ watch(
             await store.dispatch('refreshConfig');
         } catch {
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook','Could not set recipe update interval to {interval}',
                 {
                     interval: newVal,
@@ -368,7 +368,7 @@ const pickRecipeFolder = () => {
                 })
                 .catch(() =>
                     showSimpleAlertModal(
-                        // prettier-ignore
+                        /* prettier-ignore */
                         t('cookbook','Could not set recipe folder to {path}',
                         {
                             path
