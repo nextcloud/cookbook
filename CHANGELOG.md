@@ -68,6 +68,8 @@ Sorry for the inconvience.
   [#2846](https://github.com/nextcloud/cookbook/pull/2846) @dependabot
 - Udpate the composer dependencies
   [#2864](https://github.com/nextcloud/cookbook/pull/2864) @christianlupus
+- Port away from deprecated execute method
+  [#2882](https://github.com/nextcloud/cookbook/pull/2882) @CarlSchwan
 
 
 ## 0.11.3 - 2025-03-07
