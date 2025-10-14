@@ -38,7 +38,7 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 				->having('COUNT(*) > 1');
 			//echo $qb->getSQL() . "\n";
 
-			$cursor = $qb->execute();
+			$cursor = $qb->executeQuery();
 			$result = $cursor->fetchAll();
 
 			if (sizeof($result) > 0) {
@@ -66,10 +66,10 @@ class Version000000Date20210701093123 extends SimpleMigrationStep {
 				foreach ($result as $r) {
 					$qb->setParameter('user', $r['user']);
 					$qb->setParameter('recipe', $r['recipe']);
-					$qb->execute();
+					$qb->executeStatement();
 
 					$qb2->setParameter('user', $r['user']);
-					$qb2->execute();
+					$qb2->executeStatement();
 				}
 			}
 
