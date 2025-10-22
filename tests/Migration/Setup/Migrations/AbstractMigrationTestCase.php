@@ -128,7 +128,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete('migrations')->where('app = :app');
 		$qb->setParameter('app', 'cookbook');
-		$qb->execute();
+		$qb->executeStatement();
 
 		$this->schema->performDropTableCalls();
 
