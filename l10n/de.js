@@ -139,7 +139,7 @@ OC.L10N.register(
     "Sugar" : "Zucker",
     "Carbohydrate" : "Kohlenhydrate",
     "Cholesterol" : "Cholesterin",
-    "Fiber" : "Faser",
+    "Fiber" : "Ballaststoffe",
     "Protein" : "Protein",
     "Sodium" : "Natrium",
     "Fat total" : "Fett gesamt",
