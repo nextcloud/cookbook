@@ -55,7 +55,7 @@
                 :title="t('cookbook', 'Creating new recipe')"
             />
         </div>
-        {{/* Primary buttons */}}
+        <!-- Primary buttons -->
         <NcButton
             v-if="isRecipe"
             type="primary"
@@ -112,7 +112,7 @@
                 {{ t('cookbook', 'Search') }}
             </NcActionInput>
         </NcActions>
-        {{/* Overflow buttons (3-dot menu) */}}
+        <!-- Overflow buttons (3-dot menu) -->
         <NcActions
             v-if="isRecipe || isEdit"
             :force-menu="true"
@@ -296,7 +296,7 @@ const deleteRecipe = async () => {
     // Confirm delete
     if (
         !(await showSimpleConfirmModal(
-            // prettier-ignore
+            /* prettier-ignore */
             t('cookbook', 'Are you sure you want to delete this recipe?'),
         ))
     ) {
