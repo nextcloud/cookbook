@@ -27,7 +27,7 @@ class UtilApiController extends ApiController {
 	#[CORS]
 	public function getApiVersion(): JSONResponse {
 		$response = [
-			'cookbook_version' => [0, 11, 4], /* VERSION_TAG do not change this line manually */
+			'cookbook_version' => $this->apiVersion->getAppVersion(),
 			'api_version' => $this->apiVersion->getAPIVersion(),
 		];
 

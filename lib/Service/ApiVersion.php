@@ -10,4 +10,8 @@ class ApiVersion {
 			'minor' => 2
 		];
 	}
+
+	public function getAppVersion(): array {
+		return [0, 11, 4]; /* VERSION_TAG do not change this line manually */
+	}
 }

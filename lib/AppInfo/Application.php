@@ -19,6 +19,7 @@ class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		$context->registerSearchProvider(Provider::class);
 		$context->registerCapability(PublicCapabilities::class);
+		$context->registerCapability(Capabilities::class);
 	}
 
 	#[\Override]
