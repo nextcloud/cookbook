@@ -38,7 +38,7 @@ info:
 #  url: 'http://swagger.io'
 
 servers:
-  - url: 'http://localhost:8000/apps/cookbook'
+  - url: 'http://localhost:8000'
   - url: '{protocol}://{server}'
     variables:
       protocol:
@@ -93,7 +93,7 @@ security:
 
 paths:
   
-  /api/version:
+  /apps/cookbook/api/version:
     get:
       tags: [ Misc ]
       summary: Get the version of the API endpoint
@@ -105,7 +105,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Version"
-  /api/v1/reindex:
+  /apps/cookbook/api/v1/reindex:
     post:
       tags: [ Misc ]
       summary: Trigger a rescan of all recipes into the caching database
@@ -118,7 +118,7 @@ paths:
               schema:
                 type: string
                 example: Search index rebuilt successfully
-  /api/v1/config:
+  /apps/cookbook/api/v1/config:
     get:
       tags: [ Misc ]
       summary: Get the current configuration of the app
@@ -149,7 +149,7 @@ paths:
                 type: string
                 example: OK
   
-  /api/v1/import:
+  /apps/cookbook/api/v1/import:
     post:
       tags: [ Recipes ]
       summary: Import a recipe using schema.org metadata from a website
@@ -181,7 +181,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /api/v1/recipes/{id}/image:
+  /apps/cookbook/api/v1/recipes/{id}/image:
     get:
       tags: [ Recipes ]
       summary: Get the main image of a recipe. If no image is stored a fallback image is delivered.
@@ -221,7 +221,7 @@ paths:
                 format: binary
         406:
           description: The recipe has no image whose MIME type matches the Accept header
-  /api/v1/search/{query}:
+  /apps/cookbook/api/v1/search/{query}:
     parameters:
       - in: path
         name: query
@@ -247,7 +247,7 @@ paths:
               schema:
                 type: string
                 description: The error message
-  /api/v1/recipes:
+  /apps/cookbook/api/v1/recipes:
     get:
       tags: [ Recipes ]
       summary: Get all recipes in the database
@@ -303,7 +303,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /api/v1/recipes/{id}:
+  /apps/cookbook/api/v1/recipes/{id}:
     parameters:
       - in: path
         name: id
@@ -377,7 +377,7 @@ paths:
                 example: Recipe with id 2345 was not found.
                 description: Error message
   
-  /api/v1/keywords:
+  /apps/cookbook/api/v1/keywords:
     get:
       tags: [ Tags ]
       summary: Get all known keywords
@@ -392,7 +392,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/Keyword"
 
-  /api/v1/tags/{keywords}:
+  /apps/cookbook/api/v1/tags/{keywords}:
     get:
       tags: [ Tags ]
       summary: Get all recipes associated with certain keywords
@@ -420,7 +420,7 @@ paths:
                 type: string
                 example: "SQLException: Something went wrong."
   
-  /api/v1/categories:
+  /apps/cookbook/api/v1/categories:
     get:
       tags: [ Categories ]
       summary: Get all known categories
@@ -446,7 +446,7 @@ paths:
                   recipe_count: 10
                 - name: '*'
                   recipe_count: 3
-  /api/v1/category/{category}:
+  /apps/cookbook/api/v1/category/{category}:
     get:
       tags: [ Categories ]
       summary: Get all recipes of a certain category
