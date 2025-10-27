@@ -271,6 +271,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 2.7.2)
   github-pages
   json
   tzinfo (~> 1.2)
@@ -279,4 +280,4 @@ DEPENDENCIES
   webrick (~> 1.9)
 
 BUNDLED WITH
-   2.1.4
+   2.7.2
