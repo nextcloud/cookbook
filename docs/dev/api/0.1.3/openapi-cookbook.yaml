@@ -83,6 +83,8 @@ components:
       $ref: objects.yaml#/Version
     APIVersion:
       $ref: objects.yaml#/APIVersion
+    AppVersion:
+      $ref: objects.yaml#/AppVersion
   
   securitySchemes:
     app_password:
@@ -155,9 +157,17 @@ paths:
                                 additionalProperties: true
                               cookbook:
                                 type: object
+                                required:
+                                  - api_version
+                                description: >
+                                  The cookbook app capabilities
+
+                                  The version is not shown on the public capabilities endpoint
                                 properties:
                                   api_version:
                                     $ref: "#/components/schemas/APIVersion"
+                                  version:
+                                    $ref: "#/components/schemas/AppVersion"
   /apps/cookbook/api/v1/reindex:
     post:
       tags: [ Misc ]
