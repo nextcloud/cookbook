@@ -185,7 +185,7 @@ const openCategory = async (idx) => {
     } catch (e) {
         cat.recipes = [];
         await showSimpleAlertModal(
-            // prettier-ignore
+            /* prettier-ignore */
             t('cookbook', 'Failed to load category {category} recipes',
                 {
                     category: cat.name,
@@ -218,7 +218,7 @@ const categoryUpdateName = async (idx, newName) => {
         emitter.emit('categoryRenamed', [newName, oldName]);
     } catch (e) {
         await showSimpleAlertModal(
-            // prettier-ignore
+            /* prettier-ignore */
             t('cookbook','Failed to update name of category "{category}"',
             {
                 category: oldName,
@@ -266,7 +266,7 @@ const downloadRecipe = async () => {
                 // eslint-disable-next-line no-console
                 console.error(e2);
                 await showSimpleAlertModal(
-                    // prettier-ignore
+                    /* prettier-ignore */
                     t('cookbook','The server reported an error. Please check.'),
                 );
             }
@@ -274,7 +274,7 @@ const downloadRecipe = async () => {
             // eslint-disable-next-line no-console
             console.error(e2);
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook', 'Could not query the server. This might be a network problem.'),
             );
         }
@@ -305,7 +305,7 @@ const getCategories = async () => {
                     recipes: [
                         {
                             id: 0,
-                            // prettier-ignore
+                            /* prettier-ignore */
                             name: t('cookbook','Loading category recipes …'),
                         },
                     ],

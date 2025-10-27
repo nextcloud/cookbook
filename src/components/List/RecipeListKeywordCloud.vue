@@ -31,7 +31,7 @@
                     :name="keywordObj.name"
                     :count="keywordObj.count"
                     :title="
-                        // prettier-ignore
+                        /* prettier-ignore */
                         t('cookbook','Keyword not contained in visible recipes')
                     "
                     class="keyword disabled"

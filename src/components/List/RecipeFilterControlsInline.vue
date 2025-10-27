@@ -3,7 +3,9 @@
         <div class="form-group">
             <RecipeSortSelect
                 v-model="localOrderBy"
-                aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                :aria-label="
+                    t('cookbook', 'Show settings for filtering recipe list')
+                "
                 :label="t('cookbook', 'Order')"
                 class="mr-4"
                 :title="t('cookbook', 'Show filter settings')"
@@ -143,7 +145,7 @@
             <!--        Keep button together in a line with the last input so it does not get lonely -->
             <NcButton type="tertiary" @click="clearFilters">
                 {{
-                    // TRANSLATORS Button text for applying recipe-filter values
+                    /* TRANSLATORS Button text for applying recipe-filter values */
                     t('cookbook', 'Clear')
                 }}
             </NcButton>
