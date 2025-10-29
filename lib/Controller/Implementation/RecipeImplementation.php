@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\Controller\Implementation;
 
 use Exception;
+use OCA\Cookbook\Exception\InvalidDownloadURLException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
@@ -56,6 +57,7 @@ class RecipeImplementation {
 		AcceptHeaderParsingHelper $acceptHeaderParsingHelper,
 		IL10N $iL10N,
 		LoggerInterface $logger,
+		private string $userId,
 	) {
 		$this->request = $request;
 		$this->service = $recipeService;
@@ -269,6 +271,44 @@ class RecipeImplementation {
 	}
 
 	/**
+	 * @todo Move this code into a dedicated class and service
+	 */
+	private function isDownloadUrlValid(string $url): bool {
+		$urlValid = filter_var($url, FILTER_VALIDATE_URL);
+		if ($urlValid === false) {
+			$this->logger->info('Download URL is not a valid URL: {url}', ['url' => $url]);
+			return false;
+		}
+
+		$parsedUrl = parse_url($url);
+
+		$scheme = $parsedUrl['scheme'] ?? '';
+		$allowedSchemes = ['http', 'https'];
+		if (!in_array($scheme, $allowedSchemes, true)) {
+			$this->logger->info('Download URL uses invalid scheme: {scheme}', ['scheme' => $scheme]);
+			return false;
+		}
+
+		$host = $parsedUrl['host'] ?? '';
+		if (empty($host)) {
+			$this->logger->info('Download URL does not have a valid host: {url}', ['url' => $url]);
+			return false;
+		}
+
+		if ($host === 'localhost') {
+			$this->logger->info('Download URL host is localhost, which is not allowed.');
+			return false;
+		}
+
+		if (filter_var($host, FILTER_VALIDATE_IP)) {
+			$this->logger->info('Download URL host is an IP address, which is not allowed: {host}', ['host' => $host]);
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	 * Trigger the import of a recipe.
 	 *
 	 * The URL is extracted from the request directly.
@@ -280,6 +320,15 @@ class RecipeImplementation {
 
 		if (!isset($data['url'])) {
 			return new JSONResponse('Field "url" is required', 400);
+		}
+
+		if (! $this->isDownloadUrlValid($data['url'])) {
+			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $data['url'], 'user' => $this->userId]);
+			// throw new InvalidDownloadURLException($this->l->t('The provided URL is not allowed.'));
+			$json = [
+				'msg' => $this->l->t('The provided URL is not allowed.'),
+			];
+			return new JSONResponse($json['msg'], 400);
 		}
 
 		try {

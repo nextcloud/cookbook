@@ -81,7 +81,8 @@ class RecipeImplementationTest extends TestCase {
 			$this->stubFilter,
 			$this->acceptHeaderParser,
 			$l,
-			$logger
+			$logger,
+			'testuser',
 		);
 	}
 
@@ -752,5 +753,35 @@ class RecipeImplementationTest extends TestCase {
 				'a,b,c',
 			],
 		];
+	}
+
+	public static function dpInvalidImportURLs(): array {
+		return [
+			'emptyUrl' => [''],
+			'nonHttp' => ['ftp://example.com/recipe.html'],
+			'localUrl' => ['http://localhost/recipe.html'],
+			'internalIp' => ['http://192.168.2.3/recipe.html'],
+			'localhost' => ['http://127.0.0.1/recipe.html'],
+			'localhostWithPort' => ['http://127.0.0.1:22/recipe.html'],
+			'remoteIp' => ['http://8.8.8.8/recipe.html'],
+			'localhost_ipv6' => ['http://::1/recipe.html'],
+		];
+	}
+
+	/**
+	 * @dataProvider dpInvalidImportURLs
+	 * @param mixed $url
+	 */
+	public function testInvalidImports($url) {
+		$this->ensureCacheCheckTriggered();
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
 	}
 }
