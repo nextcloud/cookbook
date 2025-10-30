@@ -99,6 +99,9 @@ update_git() {
 	echo "Checkout stable branch $stable_branch"
 	git checkout "$stable_branch"
 
+	echo "Updating stable branch $stable_branch"
+	git merge --ff-only
+
 	echo "Merge release branch $current_branch"
 	git merge --no-ff "$current_branch" -m "Merging release branch $current_branch into stable branch $stable_branch."
 
@@ -115,7 +118,7 @@ update_git() {
 	echo "Storing new release version in $deploy_path/last_release"
 	echo "$version" > "$deploy_path/last_release"
 
-	"$deploy_path/update-data.sh" "$version" "$major" "$minor" "$patch" "$prerelease"
+	"$deploy_path/update-data.sh" "$version" "$major" "$minor" "$patch" "$pre_release"
 
 	git add "$deploy_path/major" "$deploy_path/minor" "$deploy_path/patch" "$deploy_path/last_release"
 	git commit -s -m "Bump to version $version"

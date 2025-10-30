@@ -43,7 +43,7 @@ class RecipeDb {
 			->where('recipe_id = :id');
 		$qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$row = $cursor->fetch();
 		$cursor->closeCursor();
 
@@ -67,7 +67,7 @@ class RecipeDb {
 			->where('recipe_id = :id');
 		$qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
-		$qb->execute();
+		$qb->executeStatement();
 
 		$qb = $this->db->getQueryBuilder();
 
@@ -75,7 +75,7 @@ class RecipeDb {
 			->where('recipe_id = :id');
 		$qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
-		$qb->execute();
+		$qb->executeStatement();
 
 		$qb = $this->db->getQueryBuilder();
 
@@ -83,7 +83,7 @@ class RecipeDb {
 			->where('recipe_id = :id');
 		$qb->setParameter('id', $id, IQueryBuilder::PARAM_INT);
 
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	public function findAllRecipes(string $user_id) {
@@ -108,7 +108,7 @@ class RecipeDb {
 			)
 		);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -173,7 +173,7 @@ class RecipeDb {
 			->orderBy('k.name');
 		$qb->setParameter('user', $user_id, Types::STRING);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -202,7 +202,7 @@ class RecipeDb {
 			->orderBy('c.name');
 		$qb->setParameter('user', $user_id, Types::STRING);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -230,7 +230,7 @@ class RecipeDb {
 				$qb->expr()->isNull('c.name')
 			);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$row = $cursor->fetch();
 		$cursor->closeCursor();
 
@@ -289,7 +289,7 @@ class RecipeDb {
 				);
 		}
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -333,7 +333,7 @@ class RecipeDb {
 		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name', 'r.date_created', 'r.date_modified', 'c.name']);
 		$qb->orderBy('r.name');
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -388,7 +388,7 @@ class RecipeDb {
 		$qb->groupBy(['r.name', 'r.recipe_id', 'kk.name', 'r.date_created', 'r.date_modified', 'c.name']);
 		$qb->orderBy('r.name');
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -430,7 +430,7 @@ class RecipeDb {
 			->orWhere('user_id = :empty');
 		$qb->setParameter('user', $user_id, Types::STRING);
 		$qb->setParameter('empty', 'empty', Types::STRING);
-		$qb->execute();
+		$qb->executeStatement();
 
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_KEYWORDS)
@@ -438,7 +438,7 @@ class RecipeDb {
 			->orWhere('user_id = :empty');
 		$qb->setParameter('user', $user_id, Types::STRING);
 		$qb->setParameter('empty', 'empty', Types::STRING);
-		$qb->execute();
+		$qb->executeStatement();
 
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete(self::DB_TABLE_CATEGORIES)
@@ -446,7 +446,7 @@ class RecipeDb {
 			->orWhere('user_id = :empty');
 		$qb->setParameter('user', $user_id, Types::STRING);
 		$qb->setParameter('empty', 'empty', Types::STRING);
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	private function isRecipeEmpty($json) {
@@ -484,7 +484,7 @@ class RecipeDb {
 				));
 		}
 
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	/**
@@ -518,7 +518,7 @@ class RecipeDb {
 			$dateModified = $this->parseDate($recipe['dateModified']);
 			$qb->setParameter('dateModified', $dateModified, Types::DATETIME);
 
-			$qb->execute();
+			$qb->executeStatement();
 		}
 	}
 
@@ -544,7 +544,7 @@ class RecipeDb {
 			$qb->setParameter('uid', $userId);
 
 			try {
-				$qb->execute();
+				$qb->executeStatement();
 			} catch (\Exception $ex) {
 				throw $ex;
 			}
@@ -561,7 +561,7 @@ class RecipeDb {
 		$qb->setParameter('rid', $recipeId);
 		$qb->setParameter('uid', $userId);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 		$cursor->closeCursor();
 
@@ -583,7 +583,7 @@ class RecipeDb {
 		$qb->setParameter('rid', $recipeId);
 		$qb->setParameter('uid', $userId);
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetch();
 		$cursor->closeCursor();
 
@@ -601,7 +601,7 @@ class RecipeDb {
 		$qb->set('name', $qb->createNamedParameter($categoryName, IQueryBuilder::PARAM_STR));
 		$qb->setParameter('rid', $recipeId, Types::INTEGER);
 		$qb->setParameter('user', $userId, Types::STRING);
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	public function addCategoryOfRecipe(int $recipeId, string $categoryName, string $userId) {
@@ -623,7 +623,7 @@ class RecipeDb {
 		$qb->setParameter('user', $userId, Types::STRING);
 
 		try {
-			$qb->execute();
+			$qb->executeStatement();
 		} catch (\Exception $e) {
 			// Category didn't meet restrictions, skip it
 		}
@@ -635,7 +635,7 @@ class RecipeDb {
 			->where('recipe_id = :rid', 'user_id = :user');
 		$qb->setParameter('rid', $recipeId, Types::INTEGER);
 		$qb->setParameter('user', $userId, Types::STRING);
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	public function addKeywordPairs(array $pairs, string $userId) {
@@ -653,9 +653,9 @@ class RecipeDb {
 			$qb->setParameter('name', $p['name'], Types::STRING);
 
 			try {
-				$qb->execute();
+				$qb->executeStatement();
 			} catch (\Exception $ex) {
-				// The insertion of a keywaord might conflict with the requirements. Skip it.
+				// The insertion of a keyword might conflict with the requirements. Skip it.
 			}
 		}
 	}
@@ -678,7 +678,7 @@ class RecipeDb {
 			);
 		}
 
-		$qb->execute();
+		$qb->executeStatement();
 	}
 
 	private function parseDate(?string $date) {
