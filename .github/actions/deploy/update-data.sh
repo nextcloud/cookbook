@@ -36,5 +36,5 @@ version_arr="$major, $minor, $patch"
 if [ -n "$suffix" ]; then
 	version_arr="$version_arr, '-$suffix'"
 fi
-sed "/VERSION_TAG/s@[[].*[]]@[$version_arr]@" -i lib/Service/APIVersion.php
-git add lib/Service/APIVersion.php
+sed "/VERSION_TAG/s@[[].*[]]@[$version_arr]@" -i lib/Service/ApiVersion.php
+git add lib/Service/ApiVersion.php
