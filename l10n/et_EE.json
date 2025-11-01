@@ -1,5 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Serverist ei leidunud vastava MIME-tüübiga pilti.",
+    "The provided URL is not allowed." : "Sisestatud võrguaadressi kasutamine pole lubatud.",
     "Recipe with ID %d was not found in database." : "Retsepti tunnusega %d ei õnnestunud andmebaasist leida.",
     "Downloading of a file failed returned the following error message: %s" : "Faili allalaadimisel tekkis järgnev viga: %s",
     "No content encoding was detected in the content." : "Sisust ei õnnestunud kodeerimist tuvastada.",
