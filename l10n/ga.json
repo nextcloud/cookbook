@@ -1,5 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Ní bhfuarthas íomhá ar an bhfreastalaí leis an gcineál MIME a mheaitseáil.",
+    "The provided URL is not allowed." : "Ní cheadaítear an URL a cuireadh ar fáil.",
     "Recipe with ID %d was not found in database." : "Níor aimsíodh oideas le haitheantas %d sa bhunachar sonraí.",
     "Downloading of a file failed returned the following error message: %s" : "Theip ar íosluchtú comhaid an teachtaireacht earráide seo a leanas a sheoladh ar ais: %s",
     "No content encoding was detected in the content." : "Níor aimsíodh aon ionchódú inneachair san ábhar.",
