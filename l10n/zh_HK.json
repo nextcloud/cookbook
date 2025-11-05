@@ -1,5 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "在伺服器上找不到符合 MIME 類型的圖像。",
+    "The provided URL is not allowed." : "不支援所選 URL。",
     "Recipe with ID %d was not found in database." : "沒有找到 ID 為「%d」的食譜。",
     "Downloading of a file failed returned the following error message: %s" : "下載檔案失敗，返回以下錯誤訊息：%s",
     "No content encoding was detected in the content." : "在內容中未檢測到內容編碼。",
