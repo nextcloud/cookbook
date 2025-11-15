@@ -1,0 +1,13 @@
+OC.L10N.register(
+    "cookbook",
+    {
+    "in %s" : "ໃນ %s",
+    "Tags" : "ປ້າຍກຳກັບ",
+    "None" : "ບໍ່ມີ",
+    "Edit" : "ແກ້ໄຂ",
+    "Save" : "ບັນທຶກ",
+    "Search" : "ຄົ້ນຫາ",
+    "Name" : "ຊື່",
+    "Loading…" : "ກຳລັງໂຫຼດ"
+},
+"nplurals=1; plural=0;");

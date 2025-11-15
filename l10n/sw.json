@@ -1,5 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Hakuna picha iliyo na aina ya MIME inayolingana iliyopatikana kwenye seva.",
+    "The provided URL is not allowed." : "URL iliyotolewa hairuhusiwi.",
     "Recipe with ID %d was not found in database." : "Kichocheo chenye kitambulisho %d hakikupatikana kwenye hifadhidata.",
     "Downloading of a file failed returned the following error message: %s" : "Upakuaji wa faili umeshindwa kurudisha ujumbe wa hitilafu ufuatao: %s",
     "No content encoding was detected in the content." : "Hakuna usimbaji wa maudhui uliogunduliwa katika maudhui.",
