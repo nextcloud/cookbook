@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "No image with the matching MIME type was found on the server." : "Na serveru nebyl nalezen žádný obrázek s odpovídajícím MIME typem.",
+    "The provided URL is not allowed." : "Zadaná URL není umožněna.",
     "Recipe with ID %d was not found in database." : "Recept s identif. %d nebyl nalezen v databázi. ",
     "Downloading of a file failed returned the following error message: %s" : "Stahování souboru se nezdařilo a vrátilo následující chybovou hlášku: %s",
     "No content encoding was detected in the content." : "V obsahu nebylo zjištěno žádné enkódování obsahu.",
