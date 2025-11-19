@@ -15,6 +15,7 @@ OC.L10N.register(
     "Edit" : "Рэдагаваць",
     "Save" : "Захаваць",
     "Search" : "Пошук",
+    "Filter" : "Фільтр",
     "Delete recipe" : "Выдаліць рэцэпт",
     "Create recipe" : "Стварыць рэцэпт",
     "Categories" : "Катэгорыі",
