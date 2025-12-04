@@ -95,7 +95,7 @@ OC.L10N.register(
     "Failed to update name of category \"{category}\"" : "Échec de la mise à jour du nom de la catégorie « {category} »",
     "The server reported an error. Please check." : "Le serveur a signalé une erreur. Merci de vérifier.",
     "Could not query the server. This might be a network problem." : "Requête au serveur impossible. Cela peut être dû à un problème réseau.",
-    "Loading category recipes …" : "Chargement des recettes de la catégorie ...",
+    "Loading category recipes …" : "Chargement des recettes de la catégorie...",
     "Failed to fetch categories" : "Impossible de récupérer les catégories",
     "Create recipe" : "Créer une recette",
     "Download recipe from URL" : "Téléch. recette via une URL",
