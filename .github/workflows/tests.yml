@@ -226,14 +226,14 @@ jobs:
           fi
       # - name: Upload the code coverage files as artifacts
       #   if: always()
-      #   uses: actions/upload-artifact@v5
+      #   uses: actions/upload-artifact@v6
       #   with:
       #       name: Code coverage files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
       #       path: ".github/actions/run-tests/volumes/coverage"
 
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
             name: Nextcloud-logs (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
@@ -247,19 +247,19 @@ jobs:
         
       - name: Upload the code coverage report for codecov as artifacts
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
             name: Code coverage (XML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage/coverage.*.xml"
 
     #   - name: Upload the code coverage report (unit tests) as artifacts
-    #     uses: actions/upload-artifact@v5
+    #     uses: actions/upload-artifact@v6
     #     with:
     #         name: Code coverage (HTML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
     #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
             name: Junit test log files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -341,14 +341,14 @@ jobs:
           fi
       
       # - name: Upload the coverage files as artifact
-      #   uses: actions/upload-artifact@v5
+      #   uses: actions/upload-artifact@v6
       #   with:
       #       name: Coverage files (mysql, master, apache)
       #       path: .github/actions/run-tests/volumes/coverage
       #   if: always()
 
       - name: Upload the log file as artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: always()
         with:
             name: Nextcloud-logs (mysql, master, apache)
@@ -361,13 +361,13 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
             name: Code coverage (XML) (mysql, master, apache)
             path: "/tmp/coverage/coverage.*.xml"
 
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
             name: Junit test log files (mysql, master, apache)
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -518,7 +518,7 @@ jobs:
             run: >-
                 make appstore_package_name=/tmp/appstore appstore
         -   name: Publish the app store package as artifact
-            uses: actions/upload-artifact@v5
+            uses: actions/upload-artifact@v6
             with:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
@@ -528,7 +528,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Upload
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       with:
         name: Event File
         path: ${{ github.event_path }}
