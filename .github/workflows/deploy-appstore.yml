@@ -20,7 +20,7 @@ jobs:
 
         steps:
             -   name: Checkout the project
-                uses: actions/checkout@v5
+                uses: actions/checkout@v6
                 with:
                     path: cookbook
                     ref: ${{ github.ref }}
