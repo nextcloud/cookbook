@@ -108,6 +108,10 @@ function updateVisibleInfoBlocks(visibleInfoBlocks) {
     return instance.post(`${baseUrl}/config`, { visibleInfoBlocks });
 }
 
+function updateBrowserlessConfig(data) {
+    return instance.post(`${baseUrl}/config`, { browserless_config: data });
+}
+
 function reindex() {
     return instance.post(`${baseUrl}/reindex`);
 }
@@ -145,6 +149,9 @@ export default {
         },
         visibleInfoBlocks: {
             update: updateVisibleInfoBlocks,
+        },
+        browserlessConfig: {
+            update: updateBrowserlessConfig,
         },
     },
 };
