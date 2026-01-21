@@ -13,6 +13,8 @@ OC.L10N.register(
     "Categories" : "კატეგორიები",
     "Rename" : "სახელის შეცვლა",
     "Name" : "სახელი",
-    "Tools" : "ხელსაწყოები"
+    "Tools" : "ხელსაწყოები",
+    "Dismiss" : "დათხოვნა",
+    "URL" : "URL"
 },
 "nplurals=2; plural=(n!=1);");

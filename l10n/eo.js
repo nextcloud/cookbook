@@ -23,9 +23,9 @@ OC.L10N.register(
     "Pick a local image" : "Elektu lokan bildon",
     "Name" : "Nomo",
     "Creation date" : "Krea dato",
+    "Tools" : "Iloj",
     "Loading…" : "Ŝargado...",
     "Last modified" : "Laste modifita",
-    "Tools" : "Iloj",
     "Sugar" : "Sukero"
 },
 "nplurals=2; plural=(n != 1);");

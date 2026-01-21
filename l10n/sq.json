@@ -10,8 +10,13 @@
     "Filter" : "Filtro",
     "Categories" : "Kategoritë",
     "Rename" : "Riemërtoje",
+    "Add" : "Shto ",
     "Name" : "Emri",
-    "Loading…" : "Duke u ngarkuar…",
-    "Tools" : "Mjete"
+    "Clear" : "Pastro",
+    "Tools" : "Mjete",
+    "Dismiss" : "Hiq",
+    "OK" : "OK",
+    "URL" : "URL",
+    "Loading…" : "Duke u ngarkuar…"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

@@ -13,9 +13,13 @@ OC.L10N.register(
     "Filter" : "Filter",
     "Categories" : "Kategori",
     "Rename" : "Ubah nama",
+    "Add" : "Tambah",
     "Name" : "Nama",
+    "All categories" : "Semua kategori",
     "Creation date" : "Tanggal pembuatan",
-    "Loading…" : "Memuat…",
-    "Tools" : "Peralatan"
+    "Tools" : "Peralatan",
+    "Dismiss" : "Batal",
+    "URL" : "URL",
+    "Loading…" : "Memuat…"
 },
 "nplurals=1; plural=0;");

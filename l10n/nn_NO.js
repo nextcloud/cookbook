@@ -12,6 +12,9 @@ OC.L10N.register(
     "Filter" : "Filter",
     "Rename" : "Endra namn",
     "Name" : "Namn",
+    "Dismiss" : "Forkast",
+    "OK" : "OK",
+    "URL" : "URL",
     "Loading…" : "Lastar..."
 },
 "nplurals=2; plural=(n != 1);");

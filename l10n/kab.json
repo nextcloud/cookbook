@@ -10,8 +10,11 @@
     "Categories" : "Taggayin",
     "Rename" : "Beddel isem",
     "Name" : "Isem",
+    "All categories" : "Akk taggayin",
+    "Tools" : "Ifecka",
+    "Dismiss" : "Agi",
+    "URL" : "URL",
     "Loading…" : "Asali...",
-    "Source" : "Aɣbalu",
-    "Tools" : "Ifecka"
+    "Source" : "Aɣbalu"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

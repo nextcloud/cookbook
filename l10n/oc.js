@@ -11,8 +11,13 @@ OC.L10N.register(
     "Search" : "Search",
     "Categories" : "Categorias",
     "Rename" : "Tornar nommar",
+    "Add" : "Apondre",
     "Name" : "Nom",
-    "Loading…" : "Telecargament…",
-    "Tools" : "Aisinas"
+    "Tools" : "Aisinas",
+    "Dismiss" : "Regetar",
+    "OK" : "OK",
+    "Calories" : "Calorias",
+    "URL" : "URL",
+    "Loading…" : "Telecargament…"
 },
 "nplurals=2; plural=(n > 1);");

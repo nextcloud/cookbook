@@ -8,6 +8,8 @@ OC.L10N.register(
     "Search" : "Gözlemek",
     "Rename" : "Adyny üýtgetmek",
     "Name" : "Ady",
+    "Dismiss" : "Ýapmak.",
+    "OK" : "OK",
     "Loading…" : "Ýüklenýär…"
 },
 "nplurals=2; plural=(n != 1);");

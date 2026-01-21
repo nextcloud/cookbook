@@ -12,13 +12,18 @@ OC.L10N.register(
     "Filter" : "Филтер",
     "Categories" : "Категории",
     "Rename" : "Преименувај",
+    "Add" : "Додади",
     "Name" : "Име",
+    "Search term" : "Пребарувај термин",
     "Creation date" : "Датум на креирање",
+    "Tools" : "Алатки",
+    "Dismiss" : "Отфрли",
+    "OK" : "OK",
+    "URL" : "Адреса",
+    "Instructions" : "Инструкции",
     "Loading…" : "Се вчитува…",
     "Date created" : "Датум на креирање",
     "Last modified" : "Последно изменето",
-    "Source" : "Извор",
-    "Tools" : "Алатки",
-    "Instructions" : "Инструкции"
+    "Source" : "Извор"
 },
 "nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;");
