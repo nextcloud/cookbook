@@ -14,8 +14,11 @@ OC.L10N.register(
     "Rename" : "เปลี่ยนชื่อ",
     "Name" : "ชื่อ",
     "Clear" : "ล้าง",
+    "Apply" : "นำไปใช้",
     "Dismiss" : "ยกเลิก",
+    "Cancel" : "Cancel",
     "OK" : "OK",
+    "Description" : "คำอธิบาย",
     "URL" : "URL",
     "Loading…" : "กำลังโหลด…"
 },

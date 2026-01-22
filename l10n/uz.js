@@ -15,8 +15,11 @@ OC.L10N.register(
     "Rename" : "Nomini o'zgartirish",
     "Add" : "Qo'shish",
     "Name" : "Name",
+    "Order" : "Buyurtma",
     "Dismiss" : "Rad etish",
+    "Cancel" : "Bekor qilish",
     "OK" : "OK",
+    "Description" : "Tavsif",
     "URL" : "URL",
     "Instructions" : "Ko'rsatmalar",
     "Loading…" : "Yuklanmoqda..."

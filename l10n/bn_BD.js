@@ -8,6 +8,11 @@ OC.L10N.register(
     "Save" : "সংরক্ষণ",
     "Search" : "Search",
     "Rename" : "পূনঃনামকরণ",
-    "Name" : "নাম"
+    "Add" : "যোগ কর",
+    "Name" : "নাম",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "বিবরণ",
+    "URL" : "URL"
 },
 "nplurals=2; plural=(n != 1);");

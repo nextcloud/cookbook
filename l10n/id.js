@@ -15,11 +15,18 @@ OC.L10N.register(
     "Rename" : "Ubah nama",
     "Add" : "Tambah",
     "Name" : "Nama",
+    "Order" : "Pesan",
     "All categories" : "Semua kategori",
+    "Clear" : "Bersihkan",
+    "Apply" : "Terapkan",
     "Creation date" : "Tanggal pembuatan",
     "Tools" : "Peralatan",
     "Dismiss" : "Batal",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Deskrisi",
     "URL" : "URL",
+    "Image" : "Gambar",
     "Loading…" : "Memuat…"
 },
 "nplurals=1; plural=0;");

@@ -14,7 +14,14 @@ OC.L10N.register(
     "Rename" : "Renombrar",
     "Add" : "Guardar",
     "Name" : "Nombre",
+    "Clear" : "Limpiar",
+    "Apply" : "Aplicar",
     "Tools" : "Herramientas",
+    "Dismiss" : "Descartar",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Descripción",
+    "URL" : "URL",
     "Loading…" : "Cargando..."
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

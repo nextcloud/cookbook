@@ -12,8 +12,11 @@ OC.L10N.register(
     "Rename" : "Нэрлэнэ үү",
     "Add" : "Нэмэх",
     "Name" : "Нэр",
+    "Apply" : "хэрэглэх",
     "Dismiss" : "Арилгах",
+    "Cancel" : "Cancel",
     "OK" : "OK",
+    "Description" : "Тодорхойлолт",
     "URL" : "URL",
     "Loading…" : "уншиж байна"
 },

@@ -15,9 +15,12 @@ OC.L10N.register(
     "Add" : "Shto ",
     "Name" : "Emri",
     "Clear" : "Pastro",
+    "Apply" : "Apliko",
     "Tools" : "Mjete",
     "Dismiss" : "Hiq",
+    "Cancel" : "Cancel",
     "OK" : "OK",
+    "Description" : "Përshkrim",
     "URL" : "URL",
     "Loading…" : "Duke u ngarkuar…"
 },

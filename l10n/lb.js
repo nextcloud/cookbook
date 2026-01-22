@@ -10,7 +10,11 @@ OC.L10N.register(
     "Rename" : "Ëmbenennen",
     "Add" : "Dobäisetzen",
     "Name" : "Numm",
+    "Apply" : "Uwenden",
     "Dismiss" : "Ofbriechen",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Beschreiwung",
     "URL" : "URL",
     "Loading…" : "Et gëtt gelueden"
 },

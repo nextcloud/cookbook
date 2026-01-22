@@ -10,6 +10,11 @@ OC.L10N.register(
     "Search" : "Cercar",
     "Rename" : "Renominar",
     "Name" : "Nomine",
+    "Apply" : "Applicar",
+    "Dismiss" : "Dimitter",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Description",
     "URL" : "URL",
     "Loading…" : "Cargante..."
 },
