@@ -193,6 +193,7 @@ OC.L10N.register(
     "Trans-fat content" : "Trans-fat content",
     "Unsaturated-fat content" : "Unsaturated-fat content",
     "Failed to fetch keywords" : "Failed to fetch keywords",
+    "Unknown answer {status} returned from server. See logs in your browser (press F12)." : "Unknown answer {status} returned from server. See logs in your browser (press F12).",
     "No answer for request was received." : "No answer for request was received.",
     "Could not start request to save recipe." : "Could not start request to save recipe.",
     "Clone of {name}" : "Clone of {name}",

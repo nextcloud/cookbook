@@ -27,6 +27,7 @@ OC.L10N.register(
     "Description" : "Deskrisi",
     "URL" : "URL",
     "Image" : "Gambar",
+    "Instructions" : "Instruksi",
     "Loading…" : "Memuat…"
 },
 "nplurals=1; plural=0;");

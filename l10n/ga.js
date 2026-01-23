@@ -193,6 +193,7 @@ OC.L10N.register(
     "Trans-fat content" : "Ábhar tras-saill",
     "Unsaturated-fat content" : "Ábhar saille neamhsháithithe",
     "Failed to fetch keywords" : "Theip ar eochairfhocail a fháil",
+    "Unknown answer {status} returned from server. See logs in your browser (press F12)." : "Freagra anaithnid {status} ar ais ón bhfreastalaí. Féach ar na logaí i do bhrabhsálaí (brúigh F12).",
     "No answer for request was received." : "Ní bhfuarthas freagra ar iarratas.",
     "Could not start request to save recipe." : "Níorbh fhéidir tús a chur leis an iarratas chun oideas a shábháil.",
     "Clone of {name}" : "Clón {name}",

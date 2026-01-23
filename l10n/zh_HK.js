@@ -193,6 +193,7 @@ OC.L10N.register(
     "Trans-fat content" : "反式脂肪含量",
     "Unsaturated-fat content" : "不飽和脂肪含量",
     "Failed to fetch keywords" : "擷取關鍵詞失敗",
+    "Unknown answer {status} returned from server. See logs in your browser (press F12)." : "伺服器返回的答案不詳 {status}。請參閱您瀏覽器的記錄(按 F12)。",
     "No answer for request was received." : "請求沒有答案。",
     "Could not start request to save recipe." : "無法啟動保存食譜的請求。",
     "Clone of {name}" : "{name} 的複本",
