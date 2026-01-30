@@ -209,7 +209,7 @@
     "Pick option" : "Vybrat možnost",
     "Ingredients" : "Přísady",
     "Instructions" : "Pokyny",
-    "Recipe image" : "Obrázek receptu",
+    "Recipe image" : "Obrázek k receptu",
     "Cooking time is up!" : "Tepelná úprava je u konce!",
     "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h","{hours}h","{hours}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m","{minutes}m"],
