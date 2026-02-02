@@ -12,10 +12,11 @@ jobs:
         
         steps:
             -   name: Checkout the app
-                uses: actions/checkout@v6
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
                 with:
                     filter: "blob:none"
                     fetch-depth: 0
+                    persist-credentials: false
             
             -   name: Get the diff
                 id: diff
@@ -167,9 +168,10 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v6
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
                 with:
                     fetch-depth: 1
+                    persist-credentials: false
                 
             -   name: Install dependencies
                 run: |
@@ -200,7 +202,7 @@ jobs:
                 run: wget https://raw.githubusercontent.com/nextcloud/appstore/master/nextcloudappstore/api/v1/release/info.xsd
 
             -   name: Lint info.xml
-                uses: ChristophWurst/xmllint-action@v1
+                uses: ChristophWurst/xmllint-action@7c54ff113fc0f6d4588a15cb4dfe31b6ecca5212
                 with:
                     xml-file: ./appinfo/info.xml
                     xml-schema-file: ./info.xsd
@@ -211,14 +213,15 @@ jobs:
 
         steps:
             -   name: Checkout of the app
-                uses: actions/checkout@v6
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
                 with:
                     fetch-depth: 1
+                    persist-credentials: false
             -   name: Get the date
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Cache NPM cache
-                uses: actions/cache@v5.0.1
+                uses: actions/cache@cdf6c1fa76f9f475f3d7449005a359c84ca0f306
                 with:
                     path: |
                         ~/.npm
@@ -247,6 +250,6 @@ jobs:
 
         steps:
             -   name: Run check
-                uses: xt0rted/block-autosquash-commits-action@v2
+                uses: xt0rted/block-autosquash-commits-action@79880c36b4811fe549cfffe20233df88876024e7
                 with:
                     repo-token: ${{ secrets.GITHUB_TOKEN }}
