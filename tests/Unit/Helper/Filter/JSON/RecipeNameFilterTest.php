@@ -16,6 +16,8 @@ class RecipeNameFilterTest extends TestCase {
 	private $textCleaner;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->textCleaner = $this->createStub(TextCleanupHelper::class);
 
 		$this->dut = new RecipeNameFilter($this->textCleaner);
