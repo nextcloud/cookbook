@@ -43,6 +43,8 @@ class JSONFilterTest extends TestCase {
 	private $fixNutritionFilter;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->schemaConformityFilter = $this->createStub(SchemaConformityFilter::class);
 		$this->recipeNameFilter = $this->createStub(RecipeNameFilter::class);
 		$this->recipeIdTypeFilter = $this->createStub(RecipeIdTypeFilter::class);
