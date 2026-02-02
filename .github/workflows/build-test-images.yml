@@ -32,8 +32,10 @@ jobs:
                 fi
             
             - name: Checkout the app
-              uses: actions/checkout@v6
+              uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
               if: ${{ steps.check.outputs.skip == 'false' }}
+              with:
+                persist-credentials: false
             - name: Make sure the appinfo is built
               shell: bash
               run: make appinfo/info.xml
