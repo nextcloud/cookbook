@@ -17,6 +17,8 @@ class RecipeExtractionServiceTest extends TestCase {
 	private $l;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->l = $this->createStub(IL10N::class);
 	}
 

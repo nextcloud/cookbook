@@ -13,6 +13,8 @@ class DownloadEncodingHelperTest extends TestCase {
 	private $dut;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->dut = new DownloadEncodingHelper();
 	}
 
