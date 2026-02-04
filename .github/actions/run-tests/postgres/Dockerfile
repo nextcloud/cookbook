@@ -1,4 +1,4 @@
-FROM postgres:17
+FROM postgres:18
 
 LABEL maintainer="Christian Wolf <github@christianwolf.email>"
 
