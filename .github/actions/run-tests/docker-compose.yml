@@ -6,8 +6,10 @@ services:
             context: ./mysql
             cache_from:
               - cookbook_unittesting_mysql
-        volumes:
-            - ./volumes/mysql:/var/lib/mysql
+        tmpfs:
+            - /var/lib/mysql
+#        volumes:
+#            - ./volumes/mysql:/var/lib/mysql
         env_file:
             - mysql.env
             
@@ -18,8 +20,10 @@ services:
               - cookbook_unittesting_postgres
         env_file:
             - postgres.env
-        volumes:
-            - ./volumes/postgres:/var/lib/postgresql/data
+        tmpfs:
+            - /var/lib/postgresql/data
+#        volumes:
+#            - ./volumes/postgres:/var/lib/postgresql/data
     
     dut: &dut
         build:

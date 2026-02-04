@@ -1,5 +1,5 @@
 
-FROM mariadb:10.5
+FROM mariadb:11.8
 
 LABEL maintainer="Christian Wolf <github@christianwolf.email>"
 

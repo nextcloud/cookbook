@@ -13,6 +13,8 @@ class RecipeNameHelperTest extends TestCase {
 	private $dut;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		/** @var IL10N|Stub */
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);

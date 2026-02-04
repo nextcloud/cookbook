@@ -13,6 +13,8 @@ class TimezoneFixFilterTest extends TestCase {
 	private $dut;
 
 	public function setUp(): void {
+		parent::setUp();
+
 		$logger = $this->createStub(LoggerInterface::class);
 		$this->dut = new TimezoneFixFilter($logger);
 	}
