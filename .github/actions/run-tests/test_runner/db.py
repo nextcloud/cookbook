@@ -49,7 +49,7 @@ class MysqlConnector:
 
 	def callSQL(self, input, params = [], text=True, capture_output=True, stdin=None):
 		cmd = self.dockerComposeCmd + [
-			'exec', '-T', 'mysql', 'mysql', '-u', self.user,
+			'exec', '-T', 'mysql', 'mariadb', '-u', self.user,
 			'-p{pwd}'.format(pwd=self.password), self.db
 		]
 		# print('input', input)
@@ -57,7 +57,7 @@ class MysqlConnector:
 
 	def dumpDb(self, name):
 		cmd = self.dockerComposeCmd + [
-			'exec', '-T', 'mysql', 'mysqldump', '-u', self.user,
+			'exec', '-T', 'mysql', 'mariadb-dump', '-u', self.user,
 			'-p{pwd}'.format(pwd=self.password), '--add-drop-database', '--database', self.db
 		]
 		with open(name, 'w') as fp:

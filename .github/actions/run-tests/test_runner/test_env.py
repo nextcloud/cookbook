@@ -31,12 +31,12 @@ class Environment:
 		def startMysql():
 			def checkRunning():
 				cmd = ['docker', 'inspect', '--format', '{{.State.Health.Status}}', 'cookbook_unittesting_mysql_1']
-				for i in range(0,40):
+				for i in range(0,30):
 					sp = p.pr.run(cmd, capture_output=True, text=True)
 					sp.check_returncode()
 					if sp.stdout.strip() == 'healthy':
 						return
-					time.sleep(3)
+					time.sleep(1)
 
 				raise Exception('Starting of MySQL container failed.')
 
@@ -46,11 +46,11 @@ class Environment:
 
 		def startPostgresql():
 			def checkRunning(pgCaller):
-				for i in range(0,40):
+				for i in range(0,30):
 					ret = pgCaller.callSQL('\\q')
 					if ret.returncode == 0:
 						return
-					time.sleep(3)
+					time.sleep(1)
 				raise Exception('Starting of PostgreSQL failed.')
 
 			l.logger.printDebug('Starting PostgreSQL container')
