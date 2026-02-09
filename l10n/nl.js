@@ -156,7 +156,7 @@ OC.L10N.register(
     "Total time" : "Totale tijd",
     "Nutrition information" : "Voedingswaardeinformatie",
     "Tools" : "Hulpmiddelen",
-    "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Dit activeert tijdelijk vastleggen van log-informatie in de console van de browser. Gewoonlijk zal je deze instellingen niet nodig hebben.",
+    "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Hiermee kan het loggen in de browserconsole tijdelijk worden ingeschakeld in geval van problemen. Deze instellingen zijn doorgaans niet nodig.",
     "Enable debugging" : "Inschakelen debugging.",
     "Dismiss" : "Wijs af",
     "Cancel" : "Annuleer",
