@@ -39,7 +39,7 @@
             "port": 9000,
             "pathMappings": {
                 "/var/www/html/custom_apps/cookbook": "${workspaceFolder:cookbook}",
-                "/var/www/html": "${workspaceFolder:base}"
+                "/var/www/html": "${workspaceFolder:cookbook}/.github/actions/run-tests/volumes/nextcloud"
             }
         },
         {

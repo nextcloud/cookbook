@@ -621,9 +621,12 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals(200, $ret->getStatus());
 
 		// Hack: Get output via IOutput mockup
-		/**
+		/*
 		 * @var MockObject|IOutput $output
-		 */
+		 *//*
+		 * This is brittle as it tests the implementation in the server code as well.
+		 * Thus, this should be replaced by an e2e test that actually checks the output of the controller.
+		 *
 		$output = $this->createMock(IOutput::class);
 		$file->method('getSize')->willReturn(100);
 		$content = 'Some content comes here';
@@ -633,6 +636,7 @@ class RecipeImplementationTest extends TestCase {
 		$output->expects($this->atLeastOnce())->method('setOutput')->with($content);
 
 		$ret->callback($output);
+		*/
 	}
 
 	public static function dataProviderImage(): array {

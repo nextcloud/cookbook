@@ -13,6 +13,8 @@ class RecipeJSONOutputFilterTest extends TestCase {
 	private $ensureNutritionPresentFilter;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->ensureNutritionPresentFilter = $this->createStub(EnsureNutritionPresentFilter::class);
 
 		$this->dut = new RecipeJSONOutputFilter(
