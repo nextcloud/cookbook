@@ -8,7 +8,14 @@ OC.L10N.register(
     "Save" : "Späicheren",
     "Search" : "Search",
     "Rename" : "Ëmbenennen",
+    "Add" : "Dobäisetzen",
     "Name" : "Numm",
+    "Apply" : "Uwenden",
+    "Dismiss" : "Ofbriechen",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Beschreiwung",
+    "URL" : "URL",
     "Loading…" : "Et gëtt gelueden"
 },
 "nplurals=2; plural=(n != 1);");

@@ -20,25 +20,16 @@ jobs:
 
         steps:
             -   name: Checkout the project
-                uses: actions/checkout@v5
+                uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
                 with:
                     path: cookbook
                     ref: ${{ github.ref }}
                     fetch-depth: 0
+                    persist-credentials: false
 
             -   name: Get the date
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
-            -   name: Use cache for NPM
-                uses: actions/cache@v4.3.0
-                with:
-                    path: |
-                        ~/.npm
-                        cookbook/node_modules
-                    key: ${{ runner.os }}-node-${{ steps.date.outputs.date }}-${{ hashFiles('cookbook/package-lock.json') }}
-                    restore-keys: |
-                        ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
-                        ${{ runner.os }}-node-
             
             -   name: Install the NPM packages
                 run: npm ci
@@ -51,7 +42,7 @@ jobs:
             -   name: Extract app version
                 id: appversion
                 run: |
-                    version=$(echo ${{ github.ref }} | sed 's@^refs/tags/@@;s@^v@@i')
+                    version=$(echo ${GITHUB_REF} | sed 's@^refs/tags/@@;s@^v@@i')
                     echo -n "version=" >> $GITHUB_OUTPUT
                     echo "$version" >> $GITHUB_OUTPUT
                     if echo $version | grep '^[0-9]*\.[0-9]*\.[0-9]*$' > /dev/null
@@ -70,7 +61,7 @@ jobs:
                 run: ls -lh /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz
                 
             -   name: Create release
-                uses: softprops/action-gh-release@v2.4.1
+                uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b
                 id: release
                 with:
                     files: /tmp/cookbook-${{ steps.appversion.outputs.version }}.tar.gz

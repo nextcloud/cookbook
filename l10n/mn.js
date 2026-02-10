@@ -10,7 +10,14 @@ OC.L10N.register(
     "Filter" : "Шүүлтүүр",
     "Categories" : "төрөл",
     "Rename" : "Нэрлэнэ үү",
+    "Add" : "Нэмэх",
     "Name" : "Нэр",
+    "Apply" : "хэрэглэх",
+    "Dismiss" : "Арилгах",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Тодорхойлолт",
+    "URL" : "URL",
     "Loading…" : "уншиж байна"
 },
 "nplurals=2; plural=(n != 1);");

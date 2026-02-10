@@ -12,6 +12,8 @@ class JsonServiceTest extends TestCase {
 	private $service;
 
 	public function setUp(): void {
+		parent::setUp();
+
 		$this->service = new JsonService();
 	}
 

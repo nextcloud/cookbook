@@ -41,6 +41,8 @@ class ThumbnailFileHelperTest extends TestCase {
 	private $folder;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		/**
 		 * @var Stub|IL10N $l
 		 */

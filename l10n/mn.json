@@ -8,7 +8,14 @@
     "Filter" : "Шүүлтүүр",
     "Categories" : "төрөл",
     "Rename" : "Нэрлэнэ үү",
+    "Add" : "Нэмэх",
     "Name" : "Нэр",
+    "Apply" : "хэрэглэх",
+    "Dismiss" : "Арилгах",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Тодорхойлолт",
+    "URL" : "URL",
     "Loading…" : "уншиж байна"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

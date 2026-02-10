@@ -13,9 +13,17 @@ OC.L10N.register(
     "Filter" : "Filter",
     "Categories" : "Categories",
     "Rename" : "Rename",
+    "Add" : "დამატება",
     "Name" : "Name",
+    "Clear" : "Clear",
+    "Tools" : "Tools",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Description",
+    "URL" : "URL",
+    "Image" : "Image",
     "Loading…" : "Loading…",
-    "Last modified" : "Last modified",
-    "Tools" : "Tools"
+    "Last modified" : "Last modified"
 },
 "nplurals=2; plural=(n!=1);");
