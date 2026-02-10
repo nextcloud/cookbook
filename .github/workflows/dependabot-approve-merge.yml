@@ -37,6 +37,9 @@ jobs:
         run: |
           echo 'Can not approve PRs from forks'
           exit 1
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@21025c705c08248db411dc16f3619e6b5f9ea21a
 
       - uses: mdecoleman/pr-branch-name@55795d86b4566d300d237883103f052125cc7508 # v3.0.0
         id: branchname
@@ -52,6 +55,6 @@ jobs:
       # Enable GitHub auto merge
       - name: Auto merge
         uses: alexwilson/enable-github-automerge-action@56e3117d1ae1540309dc8f7a9f2825bc3c5f06ff # v2.0.0
-        if: startsWith(steps.branchname.outputs.branch, 'dependabot/')
+        if: startsWith(steps.branchname.outputs.branch, 'dependabot/') && (steps.dependabot-metadata.outputs.update-type == 'version-update:semver-patch' || steps.dependabot-metadata.outputs.update-type == 'version-update:semver-minor')
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
