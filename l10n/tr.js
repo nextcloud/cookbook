@@ -193,6 +193,7 @@ OC.L10N.register(
     "Trans-fat content" : "Trans yağ miktarı",
     "Unsaturated-fat content" : "Doymamış yağ miktarı",
     "Failed to fetch keywords" : "Anahtar sözcükler alınamadı",
+    "Unknown answer {status} returned from server. See logs in your browser (press F12)." : "Sunucudan bilinmeyen yanıt {status} alındı. Tarayıcınızın günlük kayıtlarına bakın (F12 tuşuna basın).",
     "No answer for request was received." : "İsteğe bir yanıt verilmedi.",
     "Could not start request to save recipe." : "Yemek tarifini kaydetme isteği başlatılamadı.",
     "Clone of {name}" : "{name} kopyası",
