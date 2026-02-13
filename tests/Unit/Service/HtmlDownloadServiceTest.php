@@ -12,6 +12,7 @@ use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Service\HtmlDownloadService;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -47,6 +48,9 @@ class HtmlDownloadServiceTest extends TestCase {
 	/** @var DownloadEncodingHelper|MockObject */
 	private $downloadEncodingHelper;
 
+	/** @var \OCA\Cookbook\Helper\UserConfigHelper|MockObject */
+	private $userConfigHelper;
+
 	/**
 	 * @var HtmlDownloadService
 	 */
@@ -73,10 +77,19 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->downloadHelper = $this->createMock(DownloadHelper::class);
 		$this->encodingGuesser = $this->createMock(EncodingGuessingHelper::class);
 		$this->downloadEncodingHelper = $this->createMock(DownloadEncodingHelper::class);
+		$this->userConfigHelper = $this->createMock(UserConfigHelper::class);
 
 		$this->sut = new HtmlDownloadService(
-			$this->htmlEntityDecodeFilter, $this->htmlEncodingFilter, $this->il10n, $logger, $this->htmlParser,
-			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper);
+			$this->htmlEntityDecodeFilter,
+			$this->htmlEncodingFilter,
+			$this->il10n,
+			$logger,
+			$this->htmlParser,
+			$this->downloadHelper,
+			$this->encodingGuesser,
+			$this->downloadEncodingHelper,
+			$this->userConfigHelper
+		);
 	}
 
 	public function testDownloadInvalidUrl() {
@@ -96,7 +109,10 @@ class HtmlDownloadServiceTest extends TestCase {
 
 	public static function dpBadStatus() {
 		return [
-			[180], [199], [300], [404]
+			[180],
+			[199],
+			[300],
+			[404]
 		];
 	}
 
@@ -122,7 +138,7 @@ class HtmlDownloadServiceTest extends TestCase {
 		$encoding = 'utf-8';
 
 		$this->downloadHelper->expects($this->once())
-			->method('downloadFile');
+			->method('downloadFile')->with($url, $this->anything(), $this->anything());
 		$this->downloadHelper->method('getStatus')->willReturn(200);
 		$this->downloadHelper->method('getContent')->willReturn($content);
 		$this->downloadHelper->method('getContentType')->willReturn($contentType);
@@ -164,6 +180,48 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->encodingGuesser->method('guessEncoding')
 			->with($content, $contentType)
 			->willThrowException(new CouldNotGuessEncodingException());
+
+		$this->htmlParser->expects($this->once())->method('loadHtmlString')
+			->with(
+				$this->anything(),
+				$this->equalTo($url),
+				$this->equalTo($content)
+			)->willReturn($dom);
+		$this->htmlParser->method('getState')->willReturn($state);
+
+		$ret = $this->sut->downloadRecipe($url);
+		$this->assertEquals($state, $ret);
+
+		$this->assertSame($dom, $this->sut->getDom());
+	}
+
+	public function testDownloadWithBrowserless() {
+		$url = 'http://example.com';
+		$content = 'The content of the html file';
+		$dom = $this->createStub(DOMDocument::class);
+		$state = 12345;
+		$contentType = 'The content type';
+		$encoding = 'utf-8';
+		$browserlessUrl = 'http://browserless.url/chromium/content?token=token';
+
+		$this->downloadHelper->expects($this->once())
+			->method('downloadFile')->with($browserlessUrl, $this->anything(), $this->anything());
+
+		$this->il10n->method('getLocaleCode')->willReturn('en-US');
+		$this->userConfigHelper->method('getBrowserlessConfig')->willReturn([
+			'url' => 'http://browserless.url',
+			'token' => 'token',
+		]);
+
+		$this->downloadHelper->method('getStatus')->willReturn(200);
+		$this->downloadHelper->method('getContent')->willReturn($content);
+		$this->downloadHelper->method('getContentType')->willReturn($contentType);
+
+		$this->encodingGuesser->method('guessEncoding')
+			->with($content, $contentType)
+			->willReturn($encoding);
+		$this->downloadEncodingHelper->method('encodeToUTF8')
+			->with($content, $encoding)->willReturnArgument(0);
 
 		$this->htmlParser->expects($this->once())->method('loadHtmlString')
 			->with(
