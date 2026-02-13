@@ -18,6 +18,9 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+
+## 0.11.6 - 2026-02-13
+
 ### Maintenance
 
 - Update github action cache
@@ -42,6 +45,8 @@ Sorry for the inconvience.
   [#2980](https://github.com/nextcloud/cookbook/pull/2980) @dependabot
 - Mark as compatible with NC33
   [#2997](https://github.com/nextcloud/cookbook/pull/2997) @christianlupus
+- Fix deployment scripts
+  [#2999](https://github.com/nextcloud/cookbook/pull/2999) @christianlupus
 
 
 ## 0.11.5 - 2025-10-30
