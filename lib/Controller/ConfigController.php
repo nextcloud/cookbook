@@ -13,7 +13,7 @@ class ConfigController extends Controller {
 	private $implementation;
 
 	public function __construct(
-		$AppName,
+		string $AppName,
 		IRequest $request,
 		ConfigImplementation $configImplementation,
 	) {

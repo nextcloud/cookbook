@@ -18,6 +18,59 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+
+## 0.11.6 - 2026-02-13
+
+### Maintenance
+
+- Update github action cache
+  [#2949](https://github.com/nextcloud/cookbook/pull/2949) @dependabot
+- Update GitHub actions checkout script
+  [#2924](https://github.com/nextcloud/cookbook/pull/2924) @dependabot
+- Update GitHub action download-artifact
+  [#2948](https://github.com/nextcloud/cookbook/pull/2948) @dependabot
+- Update GitHub action upload-artifact
+  [#2947](https://github.com/nextcloud/cookbook/pull/2947) @dependabot
+- Upadte NPM and node versions for dependencies
+  [#2902](https://github.com/nextcloud/cookbook/pull/2902) @nextcloud-command
+- Update README to reflect current state of 3rd party apps
+  [#2963](https://github.com/nextcloud/cookbook/pull/2963) @christianlupus
+- Pin GitHub actions to enhance security protection against dependency attacks
+  [#2988](https://github.com/nextcloud/cookbook/pull/2988) @christianlupus
+- Fix the unit tests to run in all current NC versions and the master branch.
+  [#2991](https://github.com/nextcloud/cookbook/pull/2991) @christianlupus
+- Update stylelint dependency to have well-formatted sourcodes
+  [#2970](https://github.com/nextcloud/cookbook/pull/2970) @dependabot
+- Update PHP classes of server interfaces to NC32 at least
+  [#2980](https://github.com/nextcloud/cookbook/pull/2980) @dependabot
+- Mark as compatible with NC33
+  [#2997](https://github.com/nextcloud/cookbook/pull/2997) @christianlupus
+- Fix deployment scripts
+  [#2999](https://github.com/nextcloud/cookbook/pull/2999) @christianlupus
+
+
+## 0.11.5 - 2025-10-30
+
+### Fixed
+
+- Add a warning when accessing local servers
+  [#2898](https://github.com/nextcloud/cookbook/pull/2898) @christianlupus
+
+### Deprecated
+
+- API endpoint /api/version in classical controller to query for API version
+  [#2895](https://github.com/nextcloud/cookbook/pull/2895) @christianlupus
+
+### Maintenance
+
+- Port away from deprecated execute method
+  [#2882](https://github.com/nextcloud/cookbook/pull/2882) @CarlSchwan
+- Added API version in public capability of nextcloud
+  [#2895](https://github.com/nextcloud/cookbook/pull/2895) @christianlupus
+
+
+## 0.11.4 - 2025-10-01
+
 ### Added
 
 - Keep the display on while viewing a recipe
@@ -27,6 +80,17 @@ Sorry for the inconvience.
 
 - Parse Microdata correctly using itemscope properties
   [#2711](https://github.com/nextcloud/cookbook/pull/2711) @krzys-h
+- Prevent redundant stored data in recipes leading to increasing recipe sizes
+  [#2863](https://github.com/nextcloud/cookbook/pull/2863) @christianlupus
+- Added error reporting in case of import errors
+  [#2865](https://github.com/nextcloud/cookbook/pull/2865) @christianlupus
+- Unclear reference to logging in case of failed save fixed
+  [#2866](https://github.com/nextcloud/cookbook/pull/2866) @christianlupus
+
+### Documentation
+
+- Add short introduction to get `getld` in developer documentation
+  [#2868](https://github.com/nextcloud/cookbook/pull/2868) @christianlupus
 
 ### Maintenance
 
@@ -40,6 +104,20 @@ Sorry for the inconvience.
   [#2831](https://github.com/nextcloud/cookbook/pull/2831) @nextcloud-command
 - Migrate the annotations to attributes
   [#2840](https://github.com/nextcloud/cookbook/pull/2840) @christianlupus
+- Fix CI pipeline (make migration tests run again)
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Remove some deprecations in the CI pipeline
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Update CI logging related to tesing
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Remove deprecated @covers annotations on protected and private methods
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Fix log parser
+  [#2860](https://github.com/nextcloud/cookbook/pull/2860) @christianlupus
+- Update Typescript
+  [#2846](https://github.com/nextcloud/cookbook/pull/2846) @dependabot
+- Udpate the composer dependencies
+  [#2864](https://github.com/nextcloud/cookbook/pull/2864) @christianlupus
 
 
 ## 0.11.3 - 2025-03-07

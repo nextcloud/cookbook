@@ -12,8 +12,16 @@ OC.L10N.register(
     "Filter" : "Filtrar",
     "Categories" : "Categoría",
     "Rename" : "Renombrar",
+    "Add" : "Agregar",
     "Name" : "Nombre",
-    "Loading…" : "Cargando…",
-    "Tools" : "Herramientas"
+    "Clear" : "Borrar",
+    "Apply" : "Aplicar",
+    "Tools" : "Herramientas",
+    "Dismiss" : "Despedir",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Descripción",
+    "URL" : "URL",
+    "Loading…" : "Cargando…"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

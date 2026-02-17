@@ -36,6 +36,8 @@ class UserConfigHelperTest extends TestCase {
 	private $l;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->userId = 'myuserid';
 
 		$this->config = $this->createMock(IConfig::class);

@@ -12,8 +12,16 @@ OC.L10N.register(
     "Categories" : "Taggayin",
     "Rename" : "Beddel isem",
     "Name" : "Isem",
+    "All categories" : "Akk taggayin",
+    "Clear" : "Ṣfeḍ",
+    "Tools" : "Ifecka",
+    "Dismiss" : "Agi",
+    "Cancel" : "Semmet",
+    "OK" : "Ih",
+    "Description" : "Aglam",
+    "URL" : "URL",
+    "Image" : "Tugna",
     "Loading…" : "Asali...",
-    "Source" : "Aɣbalu",
-    "Tools" : "Ifecka"
+    "Source" : "Aɣbalu"
 },
 "nplurals=2; plural=(n != 1);");

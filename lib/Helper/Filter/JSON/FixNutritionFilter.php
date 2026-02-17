@@ -30,6 +30,7 @@ class FixNutritionFilter extends AbstractJSONFilter {
 		$this->logger = $logger;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		if (!isset($json[self::NUTRITION])) {
 			$json[self::NUTRITION] = [];

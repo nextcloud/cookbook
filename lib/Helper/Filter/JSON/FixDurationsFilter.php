@@ -37,6 +37,7 @@ class FixDurationsFilter extends AbstractJSONFilter {
 		$this->iso8601DurationHelper = $isoHelper;
 	}
 
+	#[\Override]
 	public function apply(array &$json): bool {
 		$changed = false;
 

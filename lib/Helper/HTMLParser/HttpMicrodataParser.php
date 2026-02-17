@@ -32,6 +32,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		parent::__construct($l10n);
 	}
 
+	#[\Override]
 	public function parse(DOMDocument $document, ?string $url): array {
 		$this->xpath = new DOMXPath($document);
 
@@ -80,8 +81,8 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private function fixupInstructions(DOMElement $recipeNode): void {
 		if (
-			!isset($this->recipe['recipeInstructions']) ||
-			!$this->recipe['recipeInstructions'] || sizeof($this->recipe['recipeInstructions']) < 1
+			!isset($this->recipe['recipeInstructions'])
+			|| !$this->recipe['recipeInstructions'] || sizeof($this->recipe['recipeInstructions']) < 1
 		) {
 			$this->recipe['recipeInstructions'] = [];
 

@@ -19,6 +19,8 @@ class CleanCategoryFilterTest extends TestCase {
 	private $recipeStub;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		/** @var Stub|TextCleanupHelper $l */
 		$this->textCleaner = $this->createStub(TextCleanupHelper::class);
 

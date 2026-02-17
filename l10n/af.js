@@ -10,8 +10,13 @@ OC.L10N.register(
     "Save" : "Bewaar",
     "Search" : "Soek",
     "Filter" : "Filter",
+    "Add" : "Voeg toe",
     "Name" : "Naam",
-    "Loading…" : "Laai…",
-    "Tools" : "Nutsmiddels"
+    "Tools" : "Nutsmiddels",
+    "Dismiss" : "Ontslaan",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Beskrywing",
+    "Loading…" : "Laai…"
 },
 "nplurals=2; plural=(n != 1);");

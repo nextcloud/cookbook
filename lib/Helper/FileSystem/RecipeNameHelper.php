@@ -37,6 +37,9 @@ class RecipeNameHelper {
 	public function getFolderName(string $recipeName): string {
 		$pattern = '/[\\/:?!"\\\\\'|&^#]/';
 		$recipeName = preg_replace($pattern, '_', $recipeName);
+		if (is_null($recipeName)) {
+			throw new \InvalidArgumentException($this->l->t('Recipe name cannot be processed.'));
+		}
 
 		if (mb_strlen($recipeName) > self::MAX_LEN) {
 			$recipeName = mb_substr($recipeName, 0, self::MAX_LEN - 3) . '___';

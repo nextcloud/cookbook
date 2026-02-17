@@ -350,8 +350,8 @@ class RecipeService {
 		$json = $this->checkRecipe($json);
 
 		if (!$json) {
-			$this->logger->error('Importing parsers resulted in null recipe.' .
-				'This is most probably a bug. Please report.');
+			$this->logger->error('Importing parsers resulted in null recipe.'
+				. 'This is most probably a bug. Please report.');
 			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'));
 		}
 

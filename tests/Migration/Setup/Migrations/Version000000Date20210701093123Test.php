@@ -28,7 +28,7 @@ class Version000000Date20210701093123Test extends AbstractMigrationTestCase {
 			$qb->setParameter('user', $d[0]);
 			$qb->setParameter('recipe', $d[1]);
 
-			$this->assertEquals(1, $qb->execute());
+			$this->assertEquals(1, $qb->executeStatement());
 		}
 
 		// Initialize configuration values to track reindex timestamps
@@ -52,7 +52,7 @@ class Version000000Date20210701093123Test extends AbstractMigrationTestCase {
 		}, $data));
 		foreach ($users as $u) {
 			$qb->setParameter('user', $u);
-			$this->assertEquals(1, $qb->execute());
+			$this->assertEquals(1, $qb->executeStatement());
 		}
 
 		// Run the migration under test
@@ -69,7 +69,7 @@ class Version000000Date20210701093123Test extends AbstractMigrationTestCase {
 		$qb->setParameter('appid', 'cookbook');
 		$qb->setParameter('property', 'last_index_update');
 
-		$cursor = $qb->execute();
+		$cursor = $qb->executeQuery();
 		$result = $cursor->fetchAll();
 
 		// Filter those entries from the configuration that were marked as to be reindexed

@@ -9,6 +9,11 @@
     "Categories" : "Kateqoriyalar",
     "Rename" : "Adı dəyiş",
     "Name" : "Ad",
-    "Tools" : "Alətlər"
+    "Tools" : "Alətlər",
+    "Dismiss" : "Rədd et",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Açıqlanma",
+    "URL" : "URL"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
