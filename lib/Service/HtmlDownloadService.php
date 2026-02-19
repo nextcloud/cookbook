@@ -152,17 +152,20 @@ class HtmlDownloadService {
 		$langCode = $this->l->getLocaleCode();
 		$langCode = str_replace('_', '-', $langCode);
 
+		$userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:147.0) Gecko/20100101 Firefox/147.0';
 		// Prepare the data to be sent in the POST request
 		$data = json_encode([
 			'url' => $url,
-			'userAgent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0',
+			'userAgent' => [
+				'userAgent' => $userAgent,
+			],
 			'setExtraHTTPHeaders' => [
 				'Accept-Language' => "$langCode,en;q=0.5",
-			],
+			]
 		]);
 
 		$opt = [
-			CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0',
+			CURLOPT_USERAGENT => $userAgent,
 			CURLOPT_POSTFIELDS => $data,
 			CURLOPT_CUSTOMREQUEST => 'POST',
 		];
