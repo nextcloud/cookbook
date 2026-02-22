@@ -1,9 +1,11 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "%s дотор",
     "Category" : "Ангилал",
     "Tags" : "Tag-үүд",
     "None" : "юу ч үгүй",
+    "Page not found" : "Хуудас олдсонгүй",
     "Edit" : "засварлах",
     "Save" : "Хадгалах",
     "Search" : "Хайх",
@@ -11,13 +13,22 @@ OC.L10N.register(
     "Categories" : "төрөл",
     "Rename" : "Нэрлэнэ үү",
     "Add" : "Нэмэх",
+    "Select option" : "Сонголт сонгох",
     "Name" : "Нэр",
+    "Keywords" : "Түлхүүр үгс",
+    "Clear" : "Цэвэрлэх",
     "Apply" : "хэрэглэх",
     "Dismiss" : "Арилгах",
     "Cancel" : "Cancel",
     "OK" : "OK",
+    "You have unsaved changes! Do you still want to leave?" : "Та хадгалаагүй өөрчлөлттэй байна! Та гарахдаа итгэлтэй байна уу?",
     "Description" : "Тодорхойлолт",
     "URL" : "URL",
-    "Loading…" : "уншиж байна"
+    "Image" : "Зураг",
+    "Instructions" : "Заавар",
+    "Loading…" : "уншиж байна",
+    "Date created" : "Үүсгэсэн огноо",
+    "Last modified" : "Сүүлд өөрчлөгдсөн",
+    "Source" : "Эх сурвалж"
 },
 "nplurals=2; plural=(n != 1);");
