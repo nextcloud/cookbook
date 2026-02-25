@@ -13,6 +13,7 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -44,6 +45,9 @@ class HtmlDownloadService {
 	/** @var DownloadEncodingHelper */
 	private $downloadEncodingHelper;
 
+	/** @var UserConfigHelper */
+	private $userConfigHelper;
+
 	/**
 	 * @var DOMDocument
 	 */
@@ -58,6 +62,7 @@ class HtmlDownloadService {
 		DownloadHelper $downloadHelper,
 		EncodingGuessingHelper $encodingGuesser,
 		DownloadEncodingHelper $downloadEncodingHelper,
+		UserConfigHelper $userConfigHelper,
 	) {
 		$this->htmlFilters = [
 			$htmlEntityDecodeFilter,
@@ -69,6 +74,7 @@ class HtmlDownloadService {
 		$this->downloadHelper = $downloadHelper;
 		$this->encodingGuesser = $encodingGuesser;
 		$this->downloadEncodingHelper = $downloadEncodingHelper;
+		$this->userConfigHelper = $userConfigHelper;
 	}
 
 	/**
@@ -82,7 +88,16 @@ class HtmlDownloadService {
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
-		$html = $this->fetchHtmlPage($url);
+		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
+
+		// Check if a browserless configuration is available
+		if (!empty($browserlessConfig['url']) && !empty($browserlessConfig['token'])) {
+			// Use Browserless API if the url and token are set
+			$html = $this->fetchHtmlPageUsingBrowserless($url);
+		} else {
+			// Otherwise, use the standard method
+			$html = $this->fetchHtmlPage($url);
+		}
 
 		// Filter the HTML code
 		/** @var AbstractHtmlFilter $filter */
@@ -102,6 +117,61 @@ class HtmlDownloadService {
 	 */
 	public function getDom(): ?DOMDocument {
 		return $this->dom;
+	}
+
+	/**
+	 * Fetch an HTML page from Browserless.io or self hosted Browserless (rendered HTML)
+	 *
+	 * @param string $url The URL of the page to fetch
+	 *
+	 * @throws ImportException If the given URL was not fetched or parsed
+	 *
+	 * @return string The rendered HTML content as a plain string
+	 */
+	private function fetchHtmlPageUsingBrowserless(string $url): string {
+		// Get the browserless config from configuration or setting
+		$browserlessConfig = $this->userConfigHelper->getBrowserlessConfig();
+		$browserlessAddress = $browserlessConfig['url'];
+		$browserlessToken = $browserlessConfig['token'];
+
+		if (empty($browserlessAddress)) {
+			// Handle the case where Browserless address is not configured
+			$this->logger->error('Browserless address is not set.');
+			throw new ImportException($this->l->t('Browserless address is not configured.'));
+		}
+
+		if (empty($browserlessToken)) {
+			// Handle the case where Browserless token is not configured
+			$this->logger->error('Browserless token is not set.');
+			throw new ImportException($this->l->t('Browserless token is not configured.'));
+		}
+
+		// API endpoint for Browserless
+		$apiEndpoint = $browserlessAddress . '/chromium/content?token=' . $browserlessToken;
+
+		$langCode = $this->l->getLocaleCode();
+		$langCode = str_replace('_', '-', $langCode);
+
+		// Prepare the data to be sent in the POST request
+		$data = json_encode([
+			'url' => $url,
+			'userAgent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0',
+			'setExtraHTTPHeaders' => [
+				'Accept-Language' => "$langCode,en;q=0.5",
+			],
+		]);
+
+		$opt = [
+			CURLOPT_USERAGENT => 'Mozilla/5.0 (X11; Linux x86_64; rv:129.0) Gecko/20100101 Firefox/129.0',
+			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+		];
+
+		$headers = [
+			'Content-Type: application/json',
+		];
+
+		return $this->fetchContent($apiEndpoint, $opt, $headers);
 	}
 
 	/**
@@ -143,8 +213,12 @@ class HtmlDownloadService {
 			'TE: trailers'
 		];
 
+		return $this->fetchContent($url, $opt, $headers);
+	}
+
+	private function fetchContent(string $url, array $options, array $headers): string {
 		try {
-			$this->downloadHelper->downloadFile($url, $opt, $headers);
+			$this->downloadHelper->downloadFile($url, $options, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
 			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$url, $ex->getMessage()]), 0, $ex);
 		}

@@ -158,6 +158,48 @@
             </fieldset>
         </NcAppSettingsSection>
         <NcAppSettingsSection
+            id="settings-browserless-config"
+            :name="t('cookbook', 'Browserless Configuration')"
+            class="app-settings-section"
+        >
+            <fieldset>
+                <ul>
+                    <li>
+                        <label class="settings-input">{{
+                            t('cookbook', 'Browserless Configuration')
+                        }}</label>
+                        <input
+                            v-model="browserlessUrl"
+                            type="text"
+                            class="input settings-input"
+                            :placeholder="
+                                t(
+                                    'cookbook',
+                                    'Enter Browserless url (e.g., http://localhost:3000)',
+                                )
+                            "
+                        />
+                    </li>
+                    <li>
+                        <label class="settings-input">{{
+                            t('cookbook', 'Browserless Token')
+                        }}</label>
+                        <input
+                            v-model="browserlessToken"
+                            type="text"
+                            class="input settings-input"
+                            :placeholder="
+                                t(
+                                    'cookbook',
+                                    'Enter Browserless Token (API Key)',
+                                )
+                            "
+                        />
+                    </li>
+                </ul>
+            </fieldset>
+        </NcAppSettingsSection>
+        <NcAppSettingsSection
             id="debug"
             :name="t('cookbook', 'Frontend debug settings')"
             class="app-settings-section"
@@ -250,6 +292,14 @@ const scanningLibrary = ref(false);
  * @type {import('vue').Ref<number>}
  */
 const updateInterval = ref(0);
+/**
+ * @type {import('vue').Ref<string>}
+ */
+const browserlessUrl = ref('');
+/**
+ * @type {import('vue').Ref<string>}
+ */
+const browserlessToken = ref('');
 /**
  * @type {import('vue').Ref<Array>}
  */
@@ -384,6 +434,48 @@ const pickRecipeFolder = () => {
         });
 };
 
+watch(
+    () => browserlessUrl.value,
+    async (newVal, oldVal) => {
+        if (!writeChanges.value) {
+            return;
+        }
+        try {
+            await api.config.browserlessConfig.update({
+                url: newVal,
+                token: browserlessToken.value,
+            });
+            await store.dispatch('refreshConfig');
+        } catch {
+            await showSimpleAlertModal(
+                t('cookbook', 'Could not save Browserless url'),
+            );
+            browserlessUrl.value = oldVal; // Revert if save fails
+        }
+    },
+);
+
+watch(
+    () => browserlessToken.value,
+    async (newVal, oldVal) => {
+        if (!writeChanges.value) {
+            return;
+        }
+        try {
+            await api.config.browserlessConfig.update({
+                token: newVal,
+                url: browserlessUrl.value,
+            });
+            await store.dispatch('refreshConfig');
+        } catch {
+            await showSimpleAlertModal(
+                t('cookbook', 'Could not save Browserless token'),
+            );
+            browserlessToken.value = oldVal; // Revert if save fails
+        }
+    },
+);
+
 /**
  * Reindex all recipes
  */
@@ -435,6 +527,8 @@ const handleShowSettings = () => {
         store.state.localSettings.showFiltersInRecipeList;
     updateInterval.value = config.update_interval;
     recipeFolder.value = config.folder;
+    browserlessUrl.value = config.browserless_config.url;
+    browserlessToken.value = config.browserless_config.token;
 
     nextTick(() => {
         writeChanges.value = true;
@@ -469,5 +563,9 @@ export default {
 #app-settings .button.disable {
     display: block;
     width: 100%;
+}
+
+#settings-section_settings-browserless-config input {
+    width: auto;
 }
 </style>

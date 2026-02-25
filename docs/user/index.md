@@ -98,3 +98,17 @@ Currently, the only way to share recipes is by sharing the Nextcloud folder that
 ### Public Sharing
 
 At the moment it is not possible to share a public link to a recipe.
+
+## Browserless configuration
+
+By default cookbook fetches recipe pages via code. Some websites detect this (bot detection) and will block this request from accessing the website resulting in being unable to import the recipe.
+To prevent this you can configure browserless. Browserless is a service that allows downloading a webpage more user-like and thus bypasses a lot of bot-detections on websites.
+
+To set this up you should supply an URL and a token.
+
+<img src="assets/settings-browserless.png" alt="Cookbook settings - Browserless" width="200px" />
+
+You can create an account at https://www.browserless.io/ or setup a self-hosted instance.
+
+For the url be sure to supply the REST API url, see https://docs.browserless.io/overview/connection-urls.
+For the Amsterdam region this would be: https://production-ams.browserless.io
