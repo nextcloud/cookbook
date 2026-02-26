@@ -139,7 +139,7 @@ OC.L10N.register(
     "_{hours}h_::_{hours}h_" : ["{hours} год","{hours} год","{hours} год","{hours} год"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes} хв","{minutes} хв","{minutes} хв","{minutes} хв"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds} сек","{seconds} сек","{seconds} сек","{seconds} сек"],
-    "{item} copied to clipboard" : "{item} скопійовано в буфер обміну",
+    "{item} copied to clipboard" : "{item} скопійовано до буфера обміну",
     "Copying {item} to clipboard failed" : "Не вдалося скопіювати {item} до буфера обміну",
     "ingredients" : "інгредієнти",
     "Loading…" : "Завантаження…",
