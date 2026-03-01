@@ -23,6 +23,7 @@ class JSONFilter {
 		FixUrlFilter $fixUrlFilter,
 		FixDurationsFilter $fixDurationsFilter,
 		FixNutritionFilter $fixNutritionFilter,
+		FixSuitableForDietFilter $fixSuitableForDietFilter,
 	) {
 		$this->filters = [
 			$schemaConformityFilter,
@@ -40,7 +41,8 @@ class JSONFilter {
 			$fixDescriptionFilter,
 			$fixUrlFilter,
 			$fixDurationsFilter,
-			$fixNutritionFilter
+			$fixNutritionFilter,
+			$fixSuitableForDietFilter,
 		];
 	}
 
