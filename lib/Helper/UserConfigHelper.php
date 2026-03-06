@@ -41,6 +41,7 @@ class UserConfigHelper {
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
+	protected const KEY_BROWSERLESS_CONFIG = 'browserless_config';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -225,5 +226,34 @@ class UserConfigHelper {
 	 */
 	public function setFolderName(string $value): void {
 		$this->setRawValue(self::KEY_FOLDER, $value);
+	}
+
+	/**
+	 * Gets the browserless config from the configuration
+	 *
+	 * @return array<string, string | null> keys: url and token, values: url and token
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getBrowserlessConfig(): array {
+		$rawValue = $this->getRawValue(self::KEY_BROWSERLESS_CONFIG);
+
+		if ($rawValue === '') {
+			return [
+				'url' => null,
+				'token' => null,
+			];
+		}
+
+		return json_decode($rawValue, true);
+	}
+
+	/**
+	 * Sets the browserless config in the configuration
+	 *
+	 * @param array<string, bool> keys: url and token, values: url and token
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setBrowserlessConfig(array $data): void {
+		$this->setRawValue(self::KEY_BROWSERLESS_CONFIG, json_encode($data));
 	}
 }
