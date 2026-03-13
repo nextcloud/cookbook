@@ -239,7 +239,6 @@ class RecipeService {
 
 				$recipe_folder->move($new_path);
 			}
-
 		} else {
 			// This is a new recipe, create it
 			$json['dateCreated'] = $now;
@@ -290,7 +289,6 @@ class RecipeService {
 						$this->logger->warning('Failed to download an image using curl. Falling back to PHP default behavior.');
 						$full_image_data = file_get_contents($json['image']);
 					}
-
 				} else {
 					// The image is a local path
 					try {
@@ -301,7 +299,6 @@ class RecipeService {
 					}
 				}
 			}
-
 		} else {
 			// The image field was empty, remove images in the recipe folder
 			$this->imageService->dropImage($recipe_folder);
@@ -419,7 +416,6 @@ class RecipeService {
 				$recipe_folder = $user_folder->newFolder($recipe_name);
 
 				$node->move($recipe_folder->getPath() . '/recipe.json');
-
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
 				// Rename folders with .json extensions (this was likely caused by a migration bug)
 				$node->move(str_replace('.json', '', $node->getPath()));
@@ -565,6 +561,22 @@ class RecipeService {
 	 */
 	public function getVisibleInfoBlocks(): array {
 		return $this->userConfigHelper->getVisibleInfoBlocks();
+	}
+
+	/**
+	 * Get browserless configuration
+	 * @return array<string, string | null> keys: url and token, values: url and token
+	 */
+	public function getBrowserlessConfig(): array {
+		return $this->userConfigHelper->getBrowserlessConfig();
+	}
+
+	/**
+	 * Sets browserless configuration.
+	 * @param array<string, bool> keys: url and token, values: url and token
+	 */
+	public function setBrowserlessConfig(array $data) {
+		$this->userConfigHelper->setBrowserlessConfig($data);
 	}
 
 	/**
