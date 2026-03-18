@@ -4,7 +4,7 @@ namespace OCA\Cookbook\tests\Unit\Helper;
 
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserConfigHelper;
-use OCP\IConfig;
+use NCU\Config\IUserConfig;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
@@ -26,7 +26,7 @@ class UserConfigHelperTest extends TestCase {
 	private $userId;
 
 	/**
-	 * @var MockObject|IConfig
+	 * @var MockObject|IUserConfig
 	 */
 	private $config;
 
@@ -40,7 +40,7 @@ class UserConfigHelperTest extends TestCase {
 
 		$this->userId = 'myuserid';
 
-		$this->config = $this->createMock(IConfig::class);
+		$this->config = $this->createMock(IUserConfig::class);
 
 		$this->l = $this->createStub(IL10N::class);
 		$this->l->method('t')->willReturnArgument(0);
@@ -52,12 +52,12 @@ class UserConfigHelperTest extends TestCase {
 		$originalValue = 10;
 		$saveValue = 20;
 
-		$this->config->expects($this->exactly(2))->method('getUserValue')
+		$this->config->expects($this->exactly(2))->method('getValueInt')
 			->with($this->userId, 'cookbook', 'last_index_update')
-			->willReturnOnConsecutiveCalls(strval($originalValue), strval($saveValue));
+			->willReturnOnConsecutiveCalls($originalValue, $saveValue);
 
-		$this->config->expects($this->once())->method('setUserValue')
-			->with($this->userId, 'cookbook', 'last_index_update', strval($saveValue));
+		$this->config->expects($this->once())->method('setValueInt')
+			->with($this->userId, 'cookbook', 'last_index_update', $saveValue);
 
 		$this->assertEquals($originalValue, $this->dut->getLastIndexUpdate());
 		$this->dut->setLastIndexUpdate($saveValue);
@@ -65,9 +65,9 @@ class UserConfigHelperTest extends TestCase {
 	}
 
 	public function testLastIndexUpdateUnset() {
-		$this->config->expects($this->once())->method('getUserValue')
+		$this->config->expects($this->once())->method('getValueInt')
 			->with($this->userId, 'cookbook', 'last_index_update')
-			->willReturn('');
+			->willReturn(0);
 
 		$this->assertEquals(0, $this->dut->getLastIndexUpdate());
 	}
@@ -76,12 +76,12 @@ class UserConfigHelperTest extends TestCase {
 		$originalValue = 10;
 		$saveValue = 20;
 
-		$this->config->expects($this->exactly(2))->method('getUserValue')
+		$this->config->expects($this->exactly(2))->method('getValueInt')
 			->with($this->userId, 'cookbook', 'update_interval')
-			->willReturnOnConsecutiveCalls(strval($originalValue), strval($saveValue));
+			->willReturnOnConsecutiveCalls($originalValue, $saveValue);
 
-		$this->config->expects($this->once())->method('setUserValue')
-			->with($this->userId, 'cookbook', 'update_interval', strval($saveValue));
+		$this->config->expects($this->once())->method('setValueInt')
+			->with($this->userId, 'cookbook', 'update_interval', $saveValue);
 
 		$this->assertEquals($originalValue, $this->dut->getUpdateInterval());
 		$this->dut->setUpdateInterval($saveValue);
@@ -89,26 +89,27 @@ class UserConfigHelperTest extends TestCase {
 	}
 
 	public function testUpdateIntervalUnset() {
-		$this->config->expects($this->once())->method('getUserValue')
+		$this->config->expects($this->once())->method('getValueInt')
 			->with($this->userId, 'cookbook', 'update_interval')
-			->willReturn('');
+			->willReturn(5);
 
 		$this->assertEquals(5, $this->dut->getUpdateInterval());
 	}
 
 	public function testPrintImage() {
-		$this->config->expects($this->exactly(3))->method('getUserValue')
+		$this->config->expects($this->exactly(3))->method('getValueBool')
 			->with($this->userId, 'cookbook', 'print_image')
-			->willReturnOnConsecutiveCalls('0', '1', '0');
+			->willReturnOnConsecutiveCalls(false, true, false);
 
 		$expectedSpyArray = [
-			[$this->userId, 'cookbook', 'print_image', '1', null],
-			[$this->userId, 'cookbook', 'print_image', '0', null]
+			[$this->userId, 'cookbook', 'print_image', true, null],
+			[$this->userId, 'cookbook', 'print_image', false, null]
 		];
 		$spyArray = [];
-		$this->config->expects($this->exactly(2))->method('setUserValue')
+		$this->config->expects($this->exactly(2))->method('setValueBool')
 			->willReturnCallback(function (...$args) use (&$spyArray) {
 				$spyArray[] = $args;
+				return $args[3];
 			});
 
 		$this->assertFalse($this->dut->getPrintImage());
@@ -121,9 +122,9 @@ class UserConfigHelperTest extends TestCase {
 	}
 
 	public function testPrintImageUnset() {
-		$this->config->expects($this->once())->method('getUserValue')
+		$this->config->expects($this->once())->method('getValueBool')
 			->with($this->userId, 'cookbook', 'print_image')
-			->willReturn('');
+			->willReturn(true);
 
 		$this->assertTrue($this->dut->getPrintImage());
 	}
@@ -132,11 +133,11 @@ class UserConfigHelperTest extends TestCase {
 		$originalValue = '/Recipes';
 		$saveValue = '/My Recipes';
 
-		$this->config->expects($this->exactly(2))->method('getUserValue')
+		$this->config->expects($this->exactly(2))->method('getValueString')
 			->with($this->userId, 'cookbook', 'folder')
 			->willReturnOnConsecutiveCalls($originalValue, $saveValue);
 
-		$this->config->expects($this->once())->method('setUserValue')
+		$this->config->expects($this->once())->method('setValueString')
 			->with($this->userId, 'cookbook', 'folder', $saveValue);
 
 		$this->assertEquals($originalValue, $this->dut->getFolderName());
@@ -145,11 +146,11 @@ class UserConfigHelperTest extends TestCase {
 	}
 
 	public function testFolderNameUnset() {
-		$this->config->expects($this->once())->method('getUserValue')
+		$this->config->expects($this->once())->method('getValueString')
 			->with($this->userId, 'cookbook', 'folder')
 			->willReturn('');
 
-		$this->config->expects($this->once())->method('setUserValue')
+		$this->config->expects($this->once())->method('setValueString')
 			->with($this->userId, 'cookbook', 'folder', '/Recipes');
 
 		$this->assertEquals('/Recipes', $this->dut->getFolderName());
@@ -158,32 +159,32 @@ class UserConfigHelperTest extends TestCase {
 	public function testNoUser() {
 		$this->dut = new UserConfigHelper(null, $this->config, $this->l);
 
-		$this->config->expects($this->never())->method('getUserValue');
-		$this->config->expects($this->never())->method('setUserValue');
+		$this->config->expects($this->never())->method('getValueString');
+		$this->config->expects($this->never())->method('setValueString');
 
 		$this->expectException(UserNotLoggedInException::class);
 		$this->dut->getFolderName();
 	}
 
 	public function testGetBrowserlessConfig() {
-		$this->config->expects($this->once())->method('setUserValue')->with(
+		$this->config->expects($this->once())->method('setValueArray')->with(
 			$this->userId, 'cookbook', 'browserless_config',
-			json_encode([
+			[
 				'url' => 'https://example.com',
 				'token' => 'token',
-			])
+			], false, flags: IUserConfig::FLAG_SENSITIVE
 		);
 		$this->dut->setBrowserlessConfig([
 			'url' => 'https://example.com',
 			'token' => 'token',
 		]);
 
-		$this->config->expects($this->once())->method('getUserValue')
+		$this->config->expects($this->once())->method('getValueArray')
 			->with($this->userId, 'cookbook', 'browserless_config')
-			->willReturn(json_encode([
+			->willReturn([
 				'url' => 'https://example.com',
 				'token' => 'token',
-			]));
+			]);
 
 		$this->assertEquals(['url' => 'https://example.com', 'token' => 'token'], $this->dut->getBrowserlessConfig());
 

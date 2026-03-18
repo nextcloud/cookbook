@@ -2,9 +2,9 @@
 
 namespace OCA\Cookbook\Helper;
 
+use NCU\Config\IUserConfig;
 use OCA\Cookbook\AppInfo\Application;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
-use NCU\Config\IUserConfig;
 use OCP\IL10N;
 
 /**
