@@ -2,9 +2,9 @@
 
 namespace OCA\Cookbook\tests\Unit\Helper;
 
+use NCU\Config\IUserConfig;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserConfigHelper;
-use NCU\Config\IUserConfig;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
