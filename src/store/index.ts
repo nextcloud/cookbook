@@ -239,7 +239,7 @@ const store = new Vuex.Store({
 		updateRecipeDirectory(c, { dir }) {
 			c.commit('setUpdatingRecipeDirectory', { b: true });
 			c.dispatch('setRecipe', { recipe: null });
-			const request = api.config.directory.update(dir);
+			const request = api.config.mainDirectory.update(dir);
 
 			return request.then(() => {
 				c.dispatch('setAppNavigationRefreshRequired', {
@@ -251,7 +251,7 @@ const store = new Vuex.Store({
 		updateMyRecipesDirectory(c, { dir }) {
 			c.commit('setUpdatingMyRecipesDirectory', { b: true });
 			c.dispatch('setRecipe', { recipe: null });
-			const request = api.config.directory.update(dir);
+			const request = api.config.myRecipesDirectory.update(dir);
 
 			return request.then(() => {
 				c.dispatch('setAppNavigationRefreshRequired', {
@@ -263,7 +263,7 @@ const store = new Vuex.Store({
 		updateSharedRecipesDirectory(c, { dir }) {
 			c.commit('setUpdatingSharedRecipesDirectory', { b: true });
 			c.dispatch('setRecipe', { recipe: null });
-			const request = api.config.directory.update(dir);
+			const request = api.config.SharedRecipesDirectory.update(dir);
 
 			return request.then(() => {
 				c.dispatch('setAppNavigationRefreshRequired', {

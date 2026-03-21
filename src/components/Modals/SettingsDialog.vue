@@ -411,11 +411,12 @@ const pickRecipeFolder = () => {
  */
 const pickMyRecipesFolder = () => {
     const filePicker = getFilePickerBuilder(
-        t('cookbook', 'Path to your personal recipe collection'),
+        t('cookbook', 'Path to your personal recipes collection'),
     )
         .addMimeTypeFilter('httpd/unix-directory')
         .allowDirectories(true)
         .setType(FilePickerType.Choose)
+        .startAt(recipeFolder)
         .build();
     filePicker
         .pick()
@@ -424,7 +425,7 @@ const pickMyRecipesFolder = () => {
                 .dispatch('updateMyRecipesDirectory', { dir: path })
                 .then(() => store.dispatch('refreshConfig'))
                 .then(() => {
-                    recipeFolder.value = path;
+                    myRecipesFolder.value = path;
                     if (route.path !== '/') {
                         router.push('/');
                     }
@@ -442,7 +443,7 @@ const pickMyRecipesFolder = () => {
         })
         .catch((ev) => {
             log.warn(
-                `Could not select new recipe folder. Error Message: ${ev.message}`,
+                `Could not select new my recipes folder. Error Message: ${ev.message}`,
             );
         });
 };
@@ -452,11 +453,12 @@ const pickMyRecipesFolder = () => {
  */
 const pickSharedRecipesFolder = () => {
     const filePicker = getFilePickerBuilder(
-        t('cookbook', 'Path to your shared recipe collection'),
+        t('cookbook', 'Path to your shared recipes collection'),
     )
         .addMimeTypeFilter('httpd/unix-directory')
         .allowDirectories(true)
         .setType(FilePickerType.Choose)
+        .startAt(recipeFolder)
         .build();
     filePicker
         .pick()
@@ -465,7 +467,7 @@ const pickSharedRecipesFolder = () => {
                 .dispatch('updateSharedRecipesDirectory', { dir: path })
                 .then(() => store.dispatch('refreshConfig'))
                 .then(() => {
-                    recipeFolder.value = path;
+                    SharedRecipesFolder.value = path;
                     if (route.path !== '/') {
                         router.push('/');
                     }
@@ -483,7 +485,7 @@ const pickSharedRecipesFolder = () => {
         })
         .catch((ev) => {
             log.warn(
-                `Could not select new recipe folder. Error Message: ${ev.message}`,
+                `Could not select new shared recipes folder. Error Message: ${ev.message}`,
             );
         });
 };
