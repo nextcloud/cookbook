@@ -248,6 +248,30 @@ const store = new Vuex.Store({
 				c.commit('setUpdatingRecipeDirectory', { b: false });
 			});
 		},
+		updateMyRecipesDirectory(c, { dir }) {
+			c.commit('setUpdatingMyRecipesDirectory', { b: true });
+			c.dispatch('setRecipe', { recipe: null });
+			const request = api.config.directory.update(dir);
+
+			return request.then(() => {
+				c.dispatch('setAppNavigationRefreshRequired', {
+					isRequired: true,
+				});
+				c.commit('setUpdatingMyRecipesDirectory', { b: false });
+			});
+		},
+		updateSharedRecipesDirectory(c, { dir }) {
+			c.commit('setUpdatingSharedRecipesDirectory', { b: true });
+			c.dispatch('setRecipe', { recipe: null });
+			const request = api.config.directory.update(dir);
+
+			return request.then(() => {
+				c.dispatch('setAppNavigationRefreshRequired', {
+					isRequired: true,
+				});
+				c.commit('setUpdatingSharedRecipesDirectory', { b: false });
+			});
+		},
 		/**
 		 * Update existing recipe on the server
 		 */
