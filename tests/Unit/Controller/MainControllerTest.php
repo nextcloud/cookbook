@@ -4,9 +4,9 @@ namespace OCA\Cookbook\tests\Unit\Controller;
 
 use OCA\Cookbook\Controller\MainController;
 use OCA\Cookbook\Exception\FolderNotWritableException;
-use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Helper\MyRecipesFolderHelper;
 use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
+use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCP\Files\Folder;
 use OCP\IRequest;

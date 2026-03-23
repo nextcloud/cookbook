@@ -83,7 +83,7 @@ class FolderHelper {
 	}
 
 	/**
-	 * Get the current folder 
+	 * Get the current folder
 	 *
 	 * @return Folder The folder
 	 * @throws FolderNotValidException If the folder is a file or could not be generated
@@ -106,7 +106,7 @@ class FolderHelper {
 	}
 
 	/**
-	 * Get or Create the folder at path 
+	 * Get or Create the folder at path
 	 *
 	 * @param string The folder's relative path name
 	 * @return Folder The folder at path

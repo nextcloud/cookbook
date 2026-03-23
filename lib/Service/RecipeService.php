@@ -4,20 +4,20 @@ namespace OCA\Cookbook\Service;
 
 use Exception;
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\FolderNotValidException;
+use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
-use OCA\Cookbook\Exception\FolderNotValidException;
-use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
-use OCA\Cookbook\Helper\UserConfigHelper;
-use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Helper\MyRecipesFolderHelper;
 use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
+use OCA\Cookbook\Helper\UserConfigHelper;
+use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -437,8 +437,7 @@ class RecipeService {
 			throw new FolderNotValidException('Cannot migrate cookbook file structure as Cookbook subfolders are not within the main Cookbook folder.');
 		}
 
-		if ($user_folder->getOwner()->getUID() !== $this->user_id)
-		{
+		if ($user_folder->getOwner()->getUID() !== $this->user_id) {
 			// moving user folder to a shared folder since it's not owned by the current user
 			$user_folder->move($shared_recipes_folder->getPath() . '/' . $user_folder->getOwner()->getUID());
 			$user_folder = $this->userFolder->getFolder();
@@ -458,11 +457,10 @@ class RecipeService {
 				$node->move($recipe_folder->getPath() . '/recipe.json');
 
 			} elseif ($node instanceof Folder) {
-				if(strpos($node->getName(), '.json')) {
+				if (strpos($node->getName(), '.json')) {
 					// Rename folders with .json extensions (this was likely caused by a migration bug)
 					$node->move($my_recipes_folder->getPath() . '/' . str_replace('.json', '', $node->getName()));
-				} elseif ($this->getRecipeFileByFolderId($node->getId()))
-				{
+				} elseif ($this->getRecipeFileByFolderId($node->getId())) {
 					if (($node->getOwner()->getUID() == $this->user_id) && ($node->getParent() != $my_recipes_folder)) {
 						$node->move($my_recipes_folder->getPath() . '/' . $node->getName());
 					} elseif (($node->getOwner()->getUID() !== $this->user_id) && ($node->getParent()->getParent() != $shared_recipes_folder)) {

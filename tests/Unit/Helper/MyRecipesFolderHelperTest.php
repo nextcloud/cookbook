@@ -4,8 +4,8 @@ namespace OCA\Cookbook\tests\Unit\Helper;
 
 use OCA\Cookbook\Exception\FolderNotValidException;
 use OCA\Cookbook\Exception\FolderNotWritableException;
-use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\MyRecipesFolderHelper;
+use OCA\Cookbook\Helper\UserConfigHelper;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;

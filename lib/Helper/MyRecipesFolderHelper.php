@@ -2,7 +2,6 @@
 
 namespace OCA\Cookbook\Helper;
 
-use OCA\Cookbook\Helper\FolderHelper;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 
 /**
