@@ -2,7 +2,7 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Helper\MyRecipesFolderHelper;
@@ -57,7 +57,7 @@ class MainController extends Controller {
 			$this->userFolder->getFolder();
 			$this->myRecipesFolder->getFolder();
 			$this->sharedRecipesFolder->getFolder();
-		} catch (UserFolderNotWritableException $ex) {
+		} catch (FolderNotWritableException $ex) {
 			Util::addScript('cookbook', 'cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}

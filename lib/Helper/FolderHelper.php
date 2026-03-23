@@ -2,6 +2,7 @@
 
 namespace OCA\Cookbook\Helper;
 
+use NotImplementedException;
 use OCA\Cookbook\Exception\FolderNotValidException;
 use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
@@ -65,6 +66,7 @@ class FolderHelper {
 	 * @param string The relative path name
 	 * @throws NotImplementedException If the function is not implemented in the child class
 	 */
+	#[\Override]
 	public function setPath(string $path) {
 		throw new NotImplementedException();
 	}
@@ -75,6 +77,7 @@ class FolderHelper {
 	 * @return string The relative path name
 	 * @throws NotImplementedException If the function is not implemented in the child class
 	 */
+	#[\Override]
 	public function getPath(): string {
 		throw new NotImplementedException();
 	}
@@ -110,7 +113,7 @@ class FolderHelper {
 	 * @throws FolderNotValidException If the folder is a file or could not be generated
 	 * @throws FolderNotWritableException If the folder cannot be written
 	 */
-	private function getOrCreateFolder(string $path): Folder {
+	protected function getOrCreateFolder(string $path): Folder {
 		try {
 			$node = $this->root->get($path);
 		} catch (NotFoundException $ex) {

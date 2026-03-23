@@ -245,7 +245,7 @@ class UserConfigHelper {
 		$rawValue = $this->getRawValue(self::KEY_MY_RECIPES_FOLDER);
 
 		if ($rawValue === '') {
-			$path = getFolderName() . '/' . $this->l->t('My Recipes');
+			$path = $this->getFolderName() . '/' . $this->l->t('My Recipes');
 			$this->setFolderName($path);
 
 			return $path;
@@ -284,7 +284,7 @@ class UserConfigHelper {
 		$rawValue = $this->getRawValue(self::KEY_SHARED_RECIPES_FOLDER);
 
 		if ($rawValue === '') {
-			$path = getFolderName() . '/' . $this->l->t('Shared Recipes');
+			$path = $this->getFolderName() . '/' . $this->l->t('Shared Recipes');
 			$this->setFolderName($path);
 
 			return $path;

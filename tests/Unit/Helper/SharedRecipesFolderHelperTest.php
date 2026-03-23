@@ -5,7 +5,7 @@ namespace OCA\Cookbook\tests\Unit\Helper;
 use OCA\Cookbook\Exception\FolderNotValidException;
 use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Helper\UserConfigHelper;
-use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
@@ -19,11 +19,11 @@ use ReflectionClass;
 use ReflectionProperty;
 
 /**
- * @covers \OCA\Cookbook\Helper\UserFolderHelper
+ * @covers \OCA\Cookbook\Helper\SharedRecipesFolderHelper
  * @covers \OCA\Cookbook\Exception\FolderNotValidException
  * @covers \OCA\Cookbook\Exception\FolderNotWritableException
  */
-class UserFolderHelperTest extends TestCase {
+class SharedRecipesFolderHelperTest extends TestCase {
 	/**
 	 * @var UserConfigHelper|MockObject
 	 */
@@ -38,9 +38,9 @@ class UserFolderHelperTest extends TestCase {
 	private $root;
 
 	/**
-	 * @var UserFolderHelper
+	 * @var SharedRecipesFolderHelper
 	 */
-	private $userFolder;
+	private $sharedRecipesFolder;
 
 	/**
 	 * @var ReflectionProperty
@@ -62,11 +62,11 @@ class UserFolderHelperTest extends TestCase {
 
 		$this->config = $this->createMock(UserConfigHelper::class);
 
-		$reflection = new ReflectionClass(UserFolderHelper::class);
+		$reflection = new ReflectionClass(SharedRecipesFolderHelper::class);
 		$this->cacheProp = $reflection->getProperty('cache');
 		$this->cacheProp->setAccessible(true);
 
-		$this->userFolder = new UserFolderHelper(
+		$this->sharedRecipesFolder = new SharedRecipesFolderHelper(
 			$this->userId, $this->root, $l, $this->config
 		);
 	}
@@ -76,27 +76,27 @@ class UserFolderHelperTest extends TestCase {
 
 		$this->config->expects($this->once())->method('setFolderName')->with($newPath);
 
-		$this->userFolder->setPath($newPath);
+		$this->sharedRecipesFolder->setPath($newPath);
 
-		$this->assertNull($this->cacheProp->getValue($this->userFolder));
+		$this->assertNull($this->cacheProp->getValue($this->sharedRecipesFolder));
 	}
 
 	public function testGetPath() {
 		$retPath = '/Recipes';
 		$this->config->method('getFolderName')->willReturn($retPath);
 
-		$this->assertEquals($retPath, $this->userFolder->getPath());
+		$this->assertEquals($retPath, $this->sharedRecipesFolder->getPath());
 	}
 
 	public function testCachedPath() {
 		$folderStub = $this->createStub(Folder::class);
 
-		$this->cacheProp->setValue($this->userFolder, $folderStub);
+		$this->cacheProp->setValue($this->sharedRecipesFolder, $folderStub);
 
 		$this->root->expects($this->never())->method('get');
 		$this->root->expects($this->never())->method('newFolder');
 
-		$this->assertSame($folderStub, $this->userFolder->getFolder());
+		$this->assertSame($folderStub, $this->sharedRecipesFolder->getFolder());
 	}
 
 	public static function dpExisting() {
@@ -129,7 +129,7 @@ class UserFolderHelperTest extends TestCase {
 		$folderStub->method('getType')->willReturn(FileInfo::TYPE_FOLDER);
 		$folderStub->method('isCreatable')->willReturn(true);
 
-		$this->assertSame($folderStub, $this->userFolder->getFolder());
+		$this->assertSame($folderStub, $this->sharedRecipesFolder->getFolder());
 	}
 
 	public function testNoWritingPermissionGetFolder() {
@@ -144,7 +144,7 @@ class UserFolderHelperTest extends TestCase {
 		$this->config->method('getFolderName')->willReturn($path);
 
 		$this->expectException(FolderNotValidException::class);
-		$this->userFolder->getFolder();
+		$this->sharedRecipesFolder->getFolder();
 	}
 
 	public function testWrongTypeGetFolder() {
@@ -163,7 +163,7 @@ class UserFolderHelperTest extends TestCase {
 		$nodeStub->method('getType')->willReturn(FileInfo::TYPE_FILE);
 
 		$this->expectException(FolderNotValidException::class);
-		$this->userFolder->getFolder();
+		$this->sharedRecipesFolder->getFolder();
 	}
 
 	public function testReadOnlyGetFolder() {
@@ -183,6 +183,6 @@ class UserFolderHelperTest extends TestCase {
 		$nodeStub->method('isCreatable')->willReturn(false);
 
 		$this->expectException(FolderNotWritableException::class);
-		$this->userFolder->getFolder();
+		$this->sharedRecipesFolder->getFolder();
 	}
 }

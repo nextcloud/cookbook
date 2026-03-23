@@ -8,13 +8,16 @@ use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\FolderNotValidException;
+use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Helper\MyRecipesFolderHelper;
+use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\Files\File;
 use OCP\Files\Folder;
@@ -39,6 +42,14 @@ class RecipeService {
 	 * @var UserFolderHelper
 	 */
 	private $userFolder;
+	/**
+	 * @var MyRecipesFolderHelper
+	 */
+	private $myRecipesFolder;
+	/**
+	 * @var SharedRecipesFolderHelper
+	 */
+	private $sharedRecipesFolder;
 	private $logger;
 
 	/**
@@ -75,6 +86,8 @@ class RecipeService {
 		RecipeDb $db,
 		UserConfigHelper $userConfigHelper,
 		UserFolderHelper $userFolder,
+		MyRecipesFolderHelper $myRecipesFolder,
+		SharedRecipesFolderHelper $sharedRecipesFolder,
 		ImageService $imageService,
 		RecipeNameHelper $recipeNameHelper,
 		IL10N $il10n,
@@ -399,7 +412,7 @@ class RecipeService {
 	public function updateSearchIndex() {
 		try {
 			$this->migrateFolderStructure();
-		} catch (UserFolderNotWritableException $ex) {
+		} catch (FolderNotWritableException $ex) {
 			// Ignore migration if not permitted.
 			$this->logger->warning('Cannot migrate cookbook file structure as not permitted.');
 			throw $ex;
@@ -421,13 +434,13 @@ class RecipeService {
 
 		if (!$user_folder->isSubNode($my_recipes_folder) || !$user_folder->isSubNode($shared_recipes_folder)) {
 			$this->logger->warning('Cannot migrate cookbook file structure as Cookbook subfolders are not within the main Cookbook folder.');
-			throw $ex;
+			throw new FolderNotValidException('Cannot migrate cookbook file structure as Cookbook subfolders are not within the main Cookbook folder.');
 		}
 
-		if ($user_folder->getOwner() !== getCurrentUser())
+		if ($user_folder->getOwner()->getUID() !== $this->user_id)
 		{
 			// moving user folder to a shared folder since it's not owned by the current user
-			$user_folder->move($shared_recipes_folder->getPath() . '/' . $user_folder->getOwner()->getUserId());
+			$user_folder->move($shared_recipes_folder->getPath() . '/' . $user_folder->getOwner()->getUID());
 			$user_folder = $this->userFolder->getFolder();
 		}
 
@@ -450,13 +463,13 @@ class RecipeService {
 					$node->move($my_recipes_folder->getPath() . '/' . str_replace('.json', '', $node->getName()));
 				} elseif ($this->getRecipeFileByFolderId($node->getId()))
 				{
-					if (($node->getOwner() == getCurrentUser()) && ($node->getParent() != $my_recipes_folder)) {
+					if (($node->getOwner()->getUID() == $this->user_id) && ($node->getParent() != $my_recipes_folder)) {
 						$node->move($my_recipes_folder->getPath() . '/' . $node->getName());
-					} elseif (($node->getOwner() !== getCurrentUser()) && ($node->getParent()->getParent() != $shared_recipes_folder)) {
-						$other_user_folder = $shared_recipes_folder->getOrCreateFolder($node->getOwner()->GetUserId());
-						if ($other_user_folder->GetOwner() == getCurrentUser()) {
+					} elseif (($node->getOwner()->getUID() !== $this->user_id) && ($node->getParent()->getParent() != $shared_recipes_folder)) {
+						$other_user_folder = $shared_recipes_folder->newFolder($node->getOwner()->GetUID());
+						if ($other_user_folder->GetOwner()->getUID() == $this->user_id) {
 							$node->move($other_user_folder->getPath() . '/' . $node->getName());
-						} elseif (($other_user_folder->GetOwner() !== getCurrentUser()) && ($other_user_folder->nodeExists($node->getName()))) {
+						} elseif (($other_user_folder->GetOwner()->getUID() !== $this->user_id) && ($other_user_folder->nodeExists($node->getName()))) {
 							$node->delete();
 						} else {
 							$this->logger->warning('Could not determine what to do about recipe "' . $node->getName() . '". Please fix it manually (currently located at "' . $node->getPath() . '")');
