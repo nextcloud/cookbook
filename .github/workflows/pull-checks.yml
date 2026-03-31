@@ -51,7 +51,7 @@ jobs:
             -   name: Get all changed file names
                 id: file-names
                 env:
-                    IS_DEPENDABOT: github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'renovate[bot]'
+                    IS_DEPENDABOT: "${{github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'renovate[bot]'}}"
                 run: |
                     if [ -n "$RUNNER_DEBUG" ]
                     then
