@@ -50,6 +50,8 @@ jobs:
             
             -   name: Get all changed file names
                 id: file-names
+                env:
+                    IS_DEPENDABOT: github.event.pull_request.user.login == 'dependabot[bot]' || github.event.pull_request.user.login == 'renovate[bot]'
                 run: |
                     if [ -n "$RUNNER_DEBUG" ]
                     then
@@ -70,6 +72,18 @@ jobs:
                       grep -v '^docs/Gemfile.lock' | \
                       grep -v '^\.helpers/changelog/Pipfile.lock' | \
                       tee /tmp/relevant-files-in-pr
+                    #
+                    echo "PR is created by dependabot or renovate: $IS_DEPENDABOT"
+                    if [ "$IS_DEPENDABOT" = "true" ]
+                    then
+                      echo "Filtering out all files as the PR is created by a bot. That means that no changelog entry is needed for certain files."
+                      cat /tmp/relevant-files-in-pr | \
+                        grep -v '^package.json$' | \
+                        grep -v '^composer.json$' | \
+                        grep -v '^docs/Gemfile' | \
+                        grep -v '^\.helpers/changelog/Pipfile' > /tmp/relevant-files-in-pr.new
+                      mv /tmp/relevant-files-in-pr.new /tmp/relevant-files-in-pr
+                    fi
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
                     echo "That are $cnt files relevant."
                     echo "num=$cnt" >> $GITHUB_OUTPUT
