@@ -11,6 +11,11 @@ OC.L10N.register(
     "Categories" : "Kateqoriyalar",
     "Rename" : "Adı dəyiş",
     "Name" : "Ad",
-    "Tools" : "Alətlər"
+    "Tools" : "Alətlər",
+    "Dismiss" : "Rədd et",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Açıqlanma",
+    "URL" : "URL"
 },
 "nplurals=2; plural=(n != 1);");

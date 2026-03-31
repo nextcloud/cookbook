@@ -28,7 +28,7 @@ A library for all your recipes. It uses JSON files following the schema.org reci
 
 ## 📱 Clients
 
-The app works generally in any modern browser. Additionally, there are some more specialized clients available, including mobile apps for Android and iOS. You can find an overview [here](docs/user/clients/Index.md).
+The app works generally in any modern browser. Additionally, there are some more specialized clients available, including mobile apps for Android and iOS. You can find an overview [here](docs/readme/clients/index.md).
 
 ## 📖 Documentation
 Further documentation (also internal ones) are published on the [documentation pages of the project](http://nextcloud.github.io/cookbook/) and in the FAQ at the bottom.

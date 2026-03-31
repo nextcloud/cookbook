@@ -48,7 +48,7 @@ class UserFolderHelperTest extends TestCase {
 	private $cacheProp;
 
 	protected function setUp(): void {
-		parent::setup();
+		parent::setUp();
 
 		$this->userId = 'test_user-id';
 

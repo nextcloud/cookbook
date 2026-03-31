@@ -81,7 +81,8 @@ class RecipeImplementationTest extends TestCase {
 			$this->stubFilter,
 			$this->acceptHeaderParser,
 			$l,
-			$logger
+			$logger,
+			'testuser',
 		);
 	}
 
@@ -620,9 +621,12 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals(200, $ret->getStatus());
 
 		// Hack: Get output via IOutput mockup
-		/**
+		/*
 		 * @var MockObject|IOutput $output
-		 */
+		 *//*
+		 * This is brittle as it tests the implementation in the server code as well.
+		 * Thus, this should be replaced by an e2e test that actually checks the output of the controller.
+		 *
 		$output = $this->createMock(IOutput::class);
 		$file->method('getSize')->willReturn(100);
 		$content = 'Some content comes here';
@@ -632,6 +636,7 @@ class RecipeImplementationTest extends TestCase {
 		$output->expects($this->atLeastOnce())->method('setOutput')->with($content);
 
 		$ret->callback($output);
+		*/
 	}
 
 	public static function dataProviderImage(): array {
@@ -752,5 +757,35 @@ class RecipeImplementationTest extends TestCase {
 				'a,b,c',
 			],
 		];
+	}
+
+	public static function dpInvalidImportURLs(): array {
+		return [
+			'emptyUrl' => [''],
+			'nonHttp' => ['ftp://example.com/recipe.html'],
+			'localUrl' => ['http://localhost/recipe.html'],
+			'internalIp' => ['http://192.168.2.3/recipe.html'],
+			'localhost' => ['http://127.0.0.1/recipe.html'],
+			'localhostWithPort' => ['http://127.0.0.1:22/recipe.html'],
+			'remoteIp' => ['http://8.8.8.8/recipe.html'],
+			'localhost_ipv6' => ['http://::1/recipe.html'],
+		];
+	}
+
+	/**
+	 * @dataProvider dpInvalidImportURLs
+	 * @param mixed $url
+	 */
+	public function testInvalidImports($url) {
+		$this->ensureCacheCheckTriggered();
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
 	}
 }

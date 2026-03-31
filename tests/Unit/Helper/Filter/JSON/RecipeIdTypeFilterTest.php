@@ -3,13 +3,15 @@
 namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
 use OCA\Cookbook\Helper\Filter\JSON\RecipeIdTypeFilter;
-use Test\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class RecipeIdTypeFilterTest extends TestCase {
 	/** @var RecipeIdTypeFilter */
 	private $dut;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->dut = new RecipeIdTypeFilter();
 	}
 

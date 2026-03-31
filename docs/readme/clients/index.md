@@ -5,12 +5,12 @@ The app works generally in any modern browser. Additionally, there are some more
 ## 📱 Mobile Applications
 The currently available clients are in no particular order:
 
-| Name                                                 | Author               | Sources                                                                                                                                                                                                                                                                                                                                |
-|------------------------------------------------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Nextcloud Cookbook][micmun-nextcloud-cookbook]      | [MicMun][micmun]     | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][micmun-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][micmun-nextcloud-cookbook-play-store]                                                                                                                         |
-| [Nextcloud Cookbook][teifun2-nextcloud-cookbook]     | [Teifun2][teifun2]   | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][teifun2-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][teifun2-nextcloud-cookbook-play-store] [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][teifun2-nextcloud-cookbook-ios-app-store] |
-| [Nextcloud Cookbook][lneugebauer-nextcloud-cookbook] | [lneugebauer][]      | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][lneugebauer-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][lneugebauer-nextcloud-cookbook-play-store]                                                                                                               |
-| [Cookbook Client][VincentMeilinger-nextcloud-cookbook] | [VincentMeilinger][] | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][VincentMeilinger-nextcloud-cookbook-ios-app-store] |
+| Name                                                   | Author                    | Sources                                                                                                                                                                                                                  |
+|--------------------------------------------------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Nextcloud Cookbook][micmun-nextcloud-cookbook]        | [MicMun][micmun]          | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][micmun-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][micmun-nextcloud-cookbook-play-store]           |
+| [Nextcloud Cookbook][lneugebauer-nextcloud-cookbook]   | [lneugebauer][]           | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][lneugebauer-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][lneugebauer-nextcloud-cookbook-play-store] |
+| [Cookbook Client][VincentMeilinger-nextcloud-cookbook] | [VincentMeilinger][]      | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][VincentMeilinger-nextcloud-cookbook-ios-app-store]                                                                                           |
+| [Cookbook][joj0r-nextcloud-cookbook]                   | [Jonas Stene][joj0r]      | [<img src="img/open-store.svg" alt="Download from the OpenStore" height="35">][joj0r-nextcloud-cookbook-open-store]                                                                                                      |
 
 
 <!-- References -->
@@ -39,7 +39,10 @@ The currently available clients are in no particular order:
 [VincentMeilinger-nextcloud-cookbook]: <https://github.com/VincentMeilinger/Nextcloud-Cookbook-iOS> (Nextcloud CookbookiOS)
 [VincentMeilinger-nextcloud-cookbook-ios-app-store]: <https://apps.apple.com/de/app/cookbook-client/id6467141985> (Nextcloud Cookbook iOS App Store)
 
-
+<!-- joj0r -->
+[joj0r]: <https://github.com/joj0r>
+[joj0r-nextcloud-cookbook]: <https://github.com/joj0r/UT_Cookbook> (Cookbook)
+[joj0r-nextcloud-cookbook-open-store]: <https://next.open-store.io/app/cookbook.stene/> (Nextcloud Cookbook OpenStore)
 
 
 

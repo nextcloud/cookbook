@@ -16,8 +16,8 @@ class MarkdownParser:
 
 	def __init__(self):
 		self._l = logging.getLogger(__name__)
-		self._reAuthors = re.compile('Authors?:\W+(.*)')
-		self._reHeader = re.compile('#+\W+(.*)')
+		self._reAuthors = re.compile('Authors?:\\W+(.*)')
+		self._reHeader = re.compile('#+\\W+(.*)')
 
 		self._state = None
 

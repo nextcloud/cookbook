@@ -25,7 +25,7 @@ class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 		$qb->setParameter('user', 'username');
 		$qb->setParameter('recipe', 1234);
 
-		$this->assertEquals(1, $qb->execute());
+		$this->assertEquals(1, $qb->executeStatement());
 
 		$table = $this->schema->getTable('cookbook_names');
 		$this->assertFalse($table->hasColumn('date_created'));
@@ -41,7 +41,7 @@ class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 
 		$qb = $this->db->getQueryBuilder();
 		$qb->select('date_created', 'date_modified')->from('cookbook_names');
-		$res = $qb->execute();
+		$res = $qb->executeQuery();
 		$data = $res->fetchAll();
 
 		$this->assertEquals(1, count($data));

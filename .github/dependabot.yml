@@ -7,6 +7,8 @@ updates:
     time: "03:00"
     timezone: Europe/Paris
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
 - package-ecosystem: composer
   directory: "/"
   schedule:
@@ -14,6 +16,8 @@ updates:
     time: "03:00"
     timezone: Europe/Paris
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
 - package-ecosystem: bundler
   directory: "/docs"
   schedule:
@@ -21,6 +25,8 @@ updates:
     interval: daily
     time: "02:50"
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
@@ -28,4 +34,6 @@ updates:
     interval: daily
     time: "02:50"
   open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
 

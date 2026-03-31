@@ -25,6 +25,8 @@ class FixInstructionsFilterTest extends TestCase {
 	private $stub;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		/** @var Stub|IL10N $l */
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);

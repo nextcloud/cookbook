@@ -41,9 +41,10 @@
 			"**/vendor/**/{Tests,tests}/**",
 			"**/.history/**",
 			"**/vendor/**/vendor/**",
-			// "3rdparty/**"
 			".github/actions/**",
-			".hook-checkout/**"
+			".hook-checkout/**",
+			"${workspaceFolder:cookbook}/.github/actions/**",
+			"**/.github/actions/**"
 		],
 		"cSpell.words": [
 			"Nextcloud"

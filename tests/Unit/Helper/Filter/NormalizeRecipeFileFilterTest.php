@@ -17,6 +17,8 @@ class NormalizeRecipeFileFilterTest extends TestCase {
 	private $dut;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->datesFilter = $this->createMock(RecipeDatesFilter::class);
 
 		$recipeLengthFilter = $this->createStub(RecipeNameLengthFilter::class);

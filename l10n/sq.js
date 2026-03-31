@@ -12,8 +12,16 @@ OC.L10N.register(
     "Filter" : "Filtro",
     "Categories" : "Kategoritë",
     "Rename" : "Riemërtoje",
+    "Add" : "Shto ",
     "Name" : "Emri",
-    "Loading…" : "Duke u ngarkuar…",
-    "Tools" : "Mjete"
+    "Clear" : "Pastro",
+    "Apply" : "Apliko",
+    "Tools" : "Mjete",
+    "Dismiss" : "Hiq",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Description" : "Përshkrim",
+    "URL" : "URL",
+    "Loading…" : "Duke u ngarkuar…"
 },
 "nplurals=2; plural=(n != 1);");

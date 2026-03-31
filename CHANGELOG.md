@@ -19,6 +19,56 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 
+## 0.11.6 - 2026-02-13
+
+### Maintenance
+
+- Update github action cache
+  [#2949](https://github.com/nextcloud/cookbook/pull/2949) @dependabot
+- Update GitHub actions checkout script
+  [#2924](https://github.com/nextcloud/cookbook/pull/2924) @dependabot
+- Update GitHub action download-artifact
+  [#2948](https://github.com/nextcloud/cookbook/pull/2948) @dependabot
+- Update GitHub action upload-artifact
+  [#2947](https://github.com/nextcloud/cookbook/pull/2947) @dependabot
+- Upadte NPM and node versions for dependencies
+  [#2902](https://github.com/nextcloud/cookbook/pull/2902) @nextcloud-command
+- Update README to reflect current state of 3rd party apps
+  [#2963](https://github.com/nextcloud/cookbook/pull/2963) @christianlupus
+- Pin GitHub actions to enhance security protection against dependency attacks
+  [#2988](https://github.com/nextcloud/cookbook/pull/2988) @christianlupus
+- Fix the unit tests to run in all current NC versions and the master branch.
+  [#2991](https://github.com/nextcloud/cookbook/pull/2991) @christianlupus
+- Update stylelint dependency to have well-formatted sourcodes
+  [#2970](https://github.com/nextcloud/cookbook/pull/2970) @dependabot
+- Update PHP classes of server interfaces to NC32 at least
+  [#2980](https://github.com/nextcloud/cookbook/pull/2980) @dependabot
+- Mark as compatible with NC33
+  [#2997](https://github.com/nextcloud/cookbook/pull/2997) @christianlupus
+- Fix deployment scripts
+  [#2999](https://github.com/nextcloud/cookbook/pull/2999) @christianlupus
+
+
+## 0.11.5 - 2025-10-30
+
+### Fixed
+
+- Add a warning when accessing local servers
+  [#2898](https://github.com/nextcloud/cookbook/pull/2898) @christianlupus
+
+### Deprecated
+
+- API endpoint /api/version in classical controller to query for API version
+  [#2895](https://github.com/nextcloud/cookbook/pull/2895) @christianlupus
+
+### Maintenance
+
+- Port away from deprecated execute method
+  [#2882](https://github.com/nextcloud/cookbook/pull/2882) @CarlSchwan
+- Added API version in public capability of nextcloud
+  [#2895](https://github.com/nextcloud/cookbook/pull/2895) @christianlupus
+
+
 ## 0.11.4 - 2025-10-01
 
 ### Added

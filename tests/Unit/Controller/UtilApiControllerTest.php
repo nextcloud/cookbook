@@ -3,6 +3,7 @@
 namespace OCA\Cookbook\tests\Unit\Controller;
 
 use OCA\Cookbook\Controller\UtilApiController;
+use OCA\Cookbook\Service\ApiVersion;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
 
@@ -20,10 +21,12 @@ class UtilApiControllerTest extends TestCase {
 		parent::setUp();
 
 		$request = $this->createStub(IRequest::class);
+		$apiVersion = new ApiVersion();
 
 		$this->sut = new UtilApiController(
 			'cookbook',
-			$request
+			$request,
+			$apiVersion
 		);
 	}
 

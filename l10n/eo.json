@@ -20,10 +20,20 @@
     "Rename" : "Alinomi",
     "Pick a local image" : "Elektu lokan bildon",
     "Name" : "Nomo",
+    "Keywords" : "Ŝlosilvortoj",
+    "Clear" : "Viŝi",
+    "Apply" : "Validigi",
     "Creation date" : "Krea dato",
+    "Tools" : "Iloj",
+    "Dismiss" : "Preterpasi",
+    "Cancel" : "Cancel",
+    "OK" : "OK",
+    "Calories" : "Kalorioj",
+    "Clone of {name}" : "Duoblo de {name}",
+    "Description" : "Priskribo",
+    "URL" : "Retadreso",
     "Loading…" : "Ŝargado...",
     "Last modified" : "Laste modifita",
-    "Tools" : "Iloj",
     "Sugar" : "Sukero"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

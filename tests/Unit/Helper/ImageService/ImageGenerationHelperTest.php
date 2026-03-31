@@ -27,6 +27,8 @@ class ImageGenerationHelperTest extends TestCase {
 	private $dut;
 
 	protected function setUp(): void {
+		parent::setUp();
+
 		$this->thumbnailService = $this->createMock(ThumbnailService::class);
 
 		$this->dut = new ImageGenerationHelper($this->thumbnailService);

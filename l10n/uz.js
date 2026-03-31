@@ -13,8 +13,15 @@ OC.L10N.register(
     "Filter" : "Filtr",
     "Categories" : "Kategoriyalar",
     "Rename" : "Nomini o'zgartirish",
+    "Add" : "Qo'shish",
     "Name" : "Name",
-    "Loading…" : "Yuklanmoqda...",
-    "Instructions" : "Ko'rsatmalar"
+    "Order" : "Buyurtma",
+    "Dismiss" : "Rad etish",
+    "Cancel" : "Bekor qilish",
+    "OK" : "OK",
+    "Description" : "Tavsif",
+    "URL" : "URL",
+    "Instructions" : "Ko'rsatmalar",
+    "Loading…" : "Yuklanmoqda..."
 },
 "nplurals=1; plural=0;");
