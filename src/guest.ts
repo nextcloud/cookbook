@@ -15,7 +15,6 @@ import AppInvalidGuest from './components/AppInvalidGuest.vue';
 
 declare global {
 	interface Window {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		OC:
 			| Nextcloud.v16.OC
 			| Nextcloud.v17.OC

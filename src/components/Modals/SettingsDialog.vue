@@ -281,7 +281,7 @@ watch(
     },
 );
 
-// eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+// eslint-disable-next-line no-unused-vars
 watch(
     () => showFiltersInRecipeList.value,
     (newVal) => {

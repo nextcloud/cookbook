@@ -40,7 +40,6 @@ const store = new Vuex.Store({
 		 * Data of the current recipe
 		 * @type {Object|null}
 		 */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		recipe: <any>null,
 		// Filter applied to a list of recipes
 		recipeFilters: '',
