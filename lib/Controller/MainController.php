@@ -47,6 +47,7 @@ class MainController extends Controller {
 			$this->userFolder->getFolder();
 		} catch (UserFolderNotWritableException $ex) {
 			Util::addScript('cookbook', 'cookbook-guest');
+			Util::addStyle('cookbook', 'cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
 		}
 
@@ -59,6 +60,7 @@ class MainController extends Controller {
 		$this->dbCacheService->triggerCheck();
 
 		Util::addScript('cookbook', 'cookbook-main');
+		Util::addStyle('cookbook', 'cookbook-main');
 
 		return new TemplateResponse($this->appName, 'index');  // templates/index.php
 	}

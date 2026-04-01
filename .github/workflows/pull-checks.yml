@@ -232,6 +232,25 @@ jobs:
                 with:
                     fetch-depth: 1
                     persist-credentials: false
+            -   name: Read package.json node and npm engines version
+                uses: skjnldsv/read-package-engines-version-actions@06d6baf7d8f41934ab630e97d9e6c0bc9c9ac5e4 # v3
+                id: versions
+                # Continue if no package.json
+                continue-on-error: true
+                with:
+                    path: .
+                    fallbackNode: '^24'
+                    fallbackNpm: '^11.3'
+            -   name: Set up node ${{ steps.versions.outputs.nodeVersion }}
+                # Skip if no package.json
+                if: ${{ steps.versions.outputs.nodeVersion }}
+                uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+                with:
+                    node-version: ${{ steps.versions.outputs.nodeVersion }}
+            -   name: Set up npm ${{ steps.versions.outputs.npmVersion }}
+                # Skip if no package.json
+                if: ${{ steps.versions.outputs.npmVersion }}
+                run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
             -   name: Get the date
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT

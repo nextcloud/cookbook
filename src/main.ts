@@ -14,7 +14,6 @@ import Vue from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
-import { linkTo } from '@nextcloud/router';
 import helpers from './js/helper';
 import setupLogging from './js/logging';
 
@@ -50,21 +49,6 @@ declare module 'vue/types/vue' {
 		};
 	}
 }
-
-const isDevServer = process.env.WEBPACK_DEV_SERVER;
-
-// eslint-disable-next-line camelcase,no-undef
-if (isDevServer || false) {
-	// eslint-disable-next-line camelcase,no-undef
-	__webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
-}
-
-// eslint-disable-next-line camelcase,no-undef
-__webpack_public_path__ = `${linkTo('cookbook', 'js')}/`;
-
-// Fetch Nextcloud nonce identifier for dynamic script loading
-// eslint-disable-next-line camelcase,no-undef
-__webpack_nonce__ = btoa(window.OC.requestToken);
 
 helpers.useRouter(router);
 
