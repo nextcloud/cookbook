@@ -14,7 +14,6 @@ import Vue from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
-import { linkTo } from '@nextcloud/router';
 import helpers from './js/helper';
 import setupLogging from './js/logging';
 
