@@ -5,6 +5,7 @@ import js from '@eslint/js';
 import { FlatCompat } from '@eslint/eslintrc';
 import { fixupConfigRules } from '@eslint/compat';
 import pluginVue from 'eslint-plugin-vue';
+import globals from 'globals';
 
 import vueParser from 'vue-eslint-parser';
 import tsParser from '@typescript-eslint/parser';
@@ -19,7 +20,41 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['node_modules/**', 'dist/**', 'build/**', 'js/**'],
+    ignores: [
+      'dist/**',
+      'build/**',
+      //'tests/phpunit/vendor/**',
+      
+      'appinfo/**',
+      'assets/**',
+      '.changelog/**',
+      'css/**',
+      'docs/**',
+      '.git/**',
+      '.github/**',
+      '.helpers/**',
+      '.hook-checkout/**',
+      '.hooks/**',
+      '.img/**',
+      'img/**',
+      'js/**',
+      'l10n/**',
+      'lib/**',
+      'node_modules/**',
+      //'src/**',
+      'templates/**',
+      'tests/**',
+      'translationfiles/**',
+      '.tx/**',
+      'vendor/**',
+      '.vscode/**',
+
+      'babel.config.cjs',
+      'eslint.config.js',
+      'stylelint.config.cjs',
+      'jest.config.cjs',
+      'vite.config.js',
+    ],
   },
 
   // Keep legacy compat only for the non-Vue configs
@@ -27,13 +62,7 @@ export default [
     compat.extends(
       'eslint:recommended',
       'airbnb-base',
-      'airbnb-typescript/base',
-      // 'plugin:vue/base',
-      // 'plugin:vue/vue3-essential',
-      // 'plugin:vue/vue3-strongly-recommended',
-      // 'plugin:vue/vue3-recommended',
       'plugin:import/typescript',
-      // '@vue/typescript/recommended',
       'prettier',
     ),
   ),
@@ -48,7 +77,7 @@ export default [
       parser: vueParser,
       parserOptions: {
         parser: tsParser,
-        project: './tsconfig.json',
+        projectService: true,
         tsconfigRootDir: __dirname,
         extraFileExtensions: ['.vue'],
         ecmaVersion: 'latest',
@@ -68,7 +97,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: './tsconfig.json',
+        projectService: true,
         tsconfigRootDir: __dirname,
         ecmaVersion: 'latest',
         sourceType: 'module',
@@ -81,18 +110,26 @@ export default [
     },
   },
 
+  // former src/tests/.eslintrc.yml -> env: { jest: true }
+  {
+    files: ['src/tests/**/*.{js,ts,vue}'],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+  },
+
   // This is just a quick fix for an issue where the TS parser is trying to parse .vue files and causing false positives for unused variables. It happens only for Vue SFC files with multiple script tags. By turning off the rule for .vue files, we can avoid these false positives while still enforcing it for regular TS files.
   {
     files: ['src/**/*.ts'],
     rules: {
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'error',
     },
   },
   {
     files: ['src/**/*.vue'],
     rules: {
-      '@typescript-eslint/no-unused-vars': 'off',
       'no-unused-vars': 'off',
       'vue/valid-v-for': 'off',
     },
@@ -113,8 +150,17 @@ export default [
       'vue/multiline-html-element-content-newline': 'off',
       'vue/html-self-closing': 'off',
       'vue/max-attributes-per-line': 'off',
+      'vue/html-indent': 'off',
+      'vue/html-closing-bracket-newline': 'off',
     },
   },
+
+  {
+  files: ['src/**/*.ts'],
+  rules: {
+    'no-undef': 'off',
+  },
+},
 
   {
     files: ['src/**/*.{js,ts,vue}'],
@@ -125,7 +171,7 @@ export default [
           extensions: ['.js', '.ts', '.d.ts'],
         },
         typescript: {
-          project: './tsconfig.json',
+          project: __dirname + '/tsconfig.json',
         },
         alias: {
           map: [
@@ -139,7 +185,6 @@ export default [
 
     rules: {
       'no-unused-vars': 'off',
-      //'@typescript-eslint/no-unused-vars': 'error',
       'no-param-reassign': ['error', {
         props: true,
         ignorePropertyModificationsFor: ['state'],

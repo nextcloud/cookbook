@@ -24,7 +24,6 @@ import AppMain from './components/AppMain.vue';
 
 declare global {
 	interface Window {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		OC:
 			| Nextcloud.v16.OC
 			| Nextcloud.v17.OC
@@ -38,7 +37,6 @@ declare global {
 }
 
 declare module 'vue/types/vue' {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export interface VueConstructor<V extends Vue = Vue> {
 		$log: {
 			debug(...args: (string | object)[]): void;
