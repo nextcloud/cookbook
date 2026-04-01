@@ -426,8 +426,9 @@ const beforeWindowUnload = (e) => {
     // However, we can avoid `window.confirm` by using `e.returnValue`
     if (isNavigationDangerous.value) {
         // Cancel the window unload event
-        e.preventDefault();
-        e.returnValue = CONFIRM_MSG;
+        const ev = e;
+        ev.preventDefault();
+        ev.returnValue = CONFIRM_MSG;
     }
 };
 /**

@@ -52,7 +52,7 @@
 
             <NcAppNavigationItem
                 v-for="(cat, idx) in categories"
-                :key="cat + idx"
+                :key="'cat-' + idx"
                 :ref="
                     (el) => {
                         categoryItemElements[idx] = el;
