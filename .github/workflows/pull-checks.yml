@@ -81,7 +81,8 @@ jobs:
                         grep -v '^package.json$' | \
                         grep -v '^composer.json$' | \
                         grep -v '^docs/Gemfile' | \
-                        grep -v '^\.helpers/changelog/Pipfile' > /tmp/relevant-files-in-pr.new
+                        grep -v '^\.helpers/changelog/Pipfile' | \
+                        tee /tmp/relevant-files-in-pr.new
                       mv /tmp/relevant-files-in-pr.new /tmp/relevant-files-in-pr
                     fi
                     cnt="$(cat /tmp/relevant-files-in-pr  | wc -l)"
