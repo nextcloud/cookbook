@@ -58,7 +58,7 @@
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^3.0.0",
     "@nextcloud/stylelint-config": "^3.2.1",
-    "@nextcloud/vite-config": "^1.7.1",
+    "@nextcloud/vite-config": "^2.5.2",
     "@typescript-eslint/eslint-plugin": "^8.58.0",
     "@typescript-eslint/parser": "^8.58.0",
     "@vue/cli-plugin-typescript": "~5.0.8",
