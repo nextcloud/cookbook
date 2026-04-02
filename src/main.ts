@@ -22,6 +22,8 @@ import { useStore } from './store';
 
 import AppMain from './components/AppMain.vue';
 
+Vue.config.devtools = import.meta.env.MODE === 'development';
+
 declare global {
 	interface Window {
 		OC:
