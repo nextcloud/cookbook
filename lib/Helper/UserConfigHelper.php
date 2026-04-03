@@ -41,6 +41,8 @@ class UserConfigHelper {
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
+	protected const KEY_MY_RECIPES_FOLDER = 'my_recipes_folder';
+	protected const KEY_SHARED_RECIPES_FOLDER = 'shared_recipes_folder';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -197,7 +199,7 @@ class UserConfigHelper {
 	 * Do not use this method directly.
 	 * Instead use the methods of the UserFolderHelper class
 	 *
-	 * @return string The name of the folder within the users files
+	 * @return string The name of the folder within the user's files
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getFolderName(): string {
@@ -225,5 +227,83 @@ class UserConfigHelper {
 	 */
 	public function setFolderName(string $value): void {
 		$this->setRawValue(self::KEY_FOLDER, $value);
+	}
+
+	/**
+	 * Get the name of the user's recipe folder.
+	 *
+	 * If no folder is stored in the config yet, a default setting will be generated and saved.
+	 *
+	 * **Note:**
+	 * Do not use this method directly.
+	 * Instead use the methods of the MyRecipesFolderHelper class
+	 *
+	 * @return string The name of the folder within the user's files
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getMyRecipesFolderName(): string {
+		$rawValue = $this->getRawValue(self::KEY_MY_RECIPES_FOLDER);
+
+		if ($rawValue === '') {
+			$path = $this->getFolderName() . '/' . $this->l->t('My Recipes');
+			$this->setFolderName($path);
+
+			return $path;
+		}
+
+		return $rawValue;
+	}
+
+	/**
+	 * Set the folder for the user's recipe folder.
+	 *
+	 * **Note:**
+	 * Do not use this method directly.
+	 * Instead use the methods of the MyRecipesFolderHelper class
+	 *
+	 * @param string $value The name of the folder within the user's files
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setMyRecipesFolderName(string $value): void {
+		$this->setRawValue(self::KEY_MY_RECIPES_FOLDER, $value);
+	}
+
+	/**
+	 * Get the name of the shared recipes folder.
+	 *
+	 * If no folder is stored in the config yet, a default setting will be generated and saved.
+	 *
+	 * **Note:**
+	 * Do not use this method directly.
+	 * Instead use the methods of the SharedRecipesFolderHelper class
+	 *
+	 * @return string The name of the folder within the user's files
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getSharedRecipesFolderName(): string {
+		$rawValue = $this->getRawValue(self::KEY_SHARED_RECIPES_FOLDER);
+
+		if ($rawValue === '') {
+			$path = $this->getFolderName() . '/' . $this->l->t('Shared Recipes');
+			$this->setFolderName($path);
+
+			return $path;
+		}
+
+		return $rawValue;
+	}
+
+	/**
+	 * Set the folder for the shared recipes folder.
+	 *
+	 * **Note:**
+	 * Do not use this method directly.
+	 * Instead use the methods of the SharedRecipesFolderHelper class
+	 *
+	 * @param string $value The name of the folder within the user's files
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setSharedRecipesFolderName(string $value): void {
+		$this->setRawValue(self::KEY_SHARED_RECIPES_FOLDER, $value);
 	}
 }
