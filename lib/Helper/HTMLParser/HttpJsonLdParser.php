@@ -26,7 +26,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	public function parse(\DOMDocument $document, ?string $url): array {
 		$xpath = new \DOMXPath($document);
 
-		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
+		$json_ld_elements = $xpath->query("//*[@type='application/ld+json'] | //script");
 
 		foreach ($json_ld_elements as $json_ld_element) {
 			if (!$json_ld_element || !$json_ld_element->nodeValue) {
@@ -58,7 +58,12 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$json = json_decode($string, true);
 
 		if ($json === null) {
-			throw new HtmlParsingException($this->l->t('JSON cannot be decoded.'));
+			$extractedJson = $this->extractNextJsJson($string);
+			if ($extractedJson === null) {
+				throw new HtmlParsingException($this->l->t('JSON cannot be decoded.'));
+			}
+
+			$json = json_decode($extractedJson, true);
 		}
 
 		if ($json === false || $json === true || !is_array($json)) {
@@ -83,6 +88,34 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 
 		//
 		throw new HtmlParsingException($this->l->t('No recipe was found.'));
+	}
+
+	/**
+	 * Try to extract escaped JSON from a Next.js flight payload.
+	 *
+	 * Example:
+	 * self.__next_f.push([1,"{\"@context\":\"https://schema.org\",...}"])
+	 *
+	 * @param string $rawContent
+	 * @return string|null
+	 */
+	private function extractNextJsJson(string $rawContent): ?string {
+		if (strpos($rawContent, 'self.__next_f.push(') === false) {
+			return null;
+		}
+
+		$matches = [];
+		$matched = preg_match('/self\.__next_f\.push\(\[\s*\d+\s*,\s*"((?:\\\\.|[^"\\\\])*)"/s', $rawContent, $matches);
+		if ($matched !== 1 || !isset($matches[1])) {
+			return null;
+		}
+
+		$decoded = stripcslashes($matches[1]);
+		if ($decoded === '') {
+			return null;
+		}
+
+		return $decoded;
 	}
 
 	/**
