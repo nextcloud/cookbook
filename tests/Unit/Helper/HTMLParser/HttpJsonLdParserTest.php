@@ -70,6 +70,7 @@ class HttpJsonLdParserTest extends TestCase {
 		$parser = new HttpJsonLdParser($l, $jsonService);
 
 		$content = file_get_contents(__DIR__ . "/res_JsonLd/$file");
+		$content = $this->normalizeLineEndings($content);
 
 		$document = new \DOMDocument();
 		$document->loadHTML($content);
@@ -78,6 +79,7 @@ class HttpJsonLdParserTest extends TestCase {
 			$res = $parser->parse($document, 'http://example.com');
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
+			$jsonDest = $this->normalizeLineEndings($jsonDest);
 			$expected = json_decode($jsonDest, true);
 
 			$this->assertEquals($expected, $res);
@@ -85,5 +87,9 @@ class HttpJsonLdParserTest extends TestCase {
 		} catch (HtmlParsingException $ex) {
 			$this->assertFalse($valid);
 		}
+	}
+
+	function normalizeLineEndings(string $text): string {
+		return str_replace(["\r\n", "\r"], "\n", $text);
 	}
 }
