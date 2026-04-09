@@ -1,0 +1,67 @@
+{
+	"@context" : "https://schema.org",
+	"@type" : "Recipe",
+	"author" : {
+		"@type" : "Organization",
+		"name" : "Picnic",
+		"url" : "https://picnic.app",
+		"logo" : "https://picnic.app/_next/static/assets/general/img/picnic-logo.png"
+	},
+	"description" : "Mexiko trifft USA und das Resultat ist: Muy tasty!",
+	"image" : "https://storefront-prod.de.picnicinternational.com/static/images/recipes/577dd28eac5e3ce9576f4ad64540a0d0d905c6eef8ca1ec4d69abff70a032274/filled-600x600.webp",
+	"name" : "Tex-Mex-Burger mit Guacamole",
+	"recipeIngredient" : [
+		"50 g Jalapeño-Scheiben",
+		"400 g Rinderhackfleisch",
+		"4 Scheiben Sandwich-Käse",
+		"1 Stk. Gelbe Paprika",
+		"500 g Tomaten",
+		"1 Bund Koriander",
+		"1 Stk. Limette",
+		"2 Stk. Avocados",
+		"4 Stk. Burgerbrötchen",
+		"Nachos",
+		"Kartoffeln, festkochend",
+		"5 g Salz",
+		"5 g Pfeffer",
+		"2 EL Sonnenblumenöl"
+	],
+	"recipeInstructions" : [
+		{
+			"@type" : "HowToStep",
+			"name" : "Schritt 1",
+			"text" : "50 g Jalapenos abtropfen und fein hacken. Jalapenos mit 400 g Rinderhackfleisch, Salz und Pfeffer gleichmäßig vermengen. Die Hackfleischmasse in 4 gleichgroße Patties formen."
+		},
+		{
+			"@type" : "HowToStep",
+			"name" : "Schritt 2",
+			"text" : "In einer Pfanne 2 EL Olivenöl auf mittlerer Stufe erhitzen und Jalapeño-Burger-Patties für 10–12 Min. braten, bis sie braun und durchgegart sind. Regelmäßig wenden. Hitze abschalten, wenn die Burger fertig sind. Auf jeden Burger 1 Scheibe Sandwichkäse legen und kurz bei geschlossener Pfanne schmelzen lassen."
+		},
+		{
+			"@type" : "HowToStep",
+			"name" : "Schritt 3",
+			"text" : "In der Zwischenzeit 1 gelbe Paprika und 500 g Tomaten waschen und in kleine Würfel schneiden. Die Blätter von 1 Bund Koriander ebenfalls waschen und fein hacken. 1/4 der Tomaten und 1/4 des Korianders für die Guacamole beiseitestellen, den Rest mit den Paprikaschoten zu einer Salsa vermischen. 1 Limette auspress, Hälfte des Saftes sowie **Salz und * Pfeffer* zur Salsa geben, gut verrühren."
+		},
+		{
+			"@type" : "HowToStep",
+			"name" : "Schritt 4",
+			"text" : "Das Fruchtfleisch von 2 Avocados mit einer Gabel entfernen und gleichmäßig zerdrücken. Mit den beiseite gelegten Tomaten und dem restlichen Koriander vermischen und mit Salz und Pfeffer und der anderen Hälfte des Limettensafts würzen."
+		},
+		{
+			"@type" : "HowToStep",
+			"name" : "Schritt 5",
+			"text" : "In einer trockenen Pfanne 4 Burgerbrötchen halbieren und auf der Schnittseite toasten, bis die Brötchen leicht gebräunt sind."
+		},
+		{
+			"@type" : "HowToStep",
+			"name" : "Schritt 6",
+			"text" : "Die Brötchen mit einem Burgerpattie, einem Löffel Guacamole und einem Löffel Salsa. Sofort servieren."
+		},
+		{
+			"@type" : "HowToTip",
+			"name" : "Tipp",
+			"text" : "Die Burger zum Beispiel mit Nachos oder würzigen Kartoffeln servieren. Darf es etwas würziger sein? Anschließend noch einige in Scheiben geschnittene Jalapeños zur Salsa hinzufügen."
+		}
+	],
+	"totalTime" : "PT25M"
+}
