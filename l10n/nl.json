@@ -220,7 +220,7 @@
     "Unsaturated Fat" : "Onverzadigd vet",
     "Trans Fat" : "Trans vet",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Het ingrediënt kan niet herberekend worden vanwege onjuiste syntax. Verander het naar de volgende syntax: hoeveelheid unit ingrediënt, en zorg dat een aantal porties is ingevuld. Voorbeelden: 200 g wortelen of 1 mespuntje zout",
-    "Failed to load recipes with keywords: {tags}" : "Kon recepten met sleutelwoorden niet laden: (labels)",
+    "Failed to load recipes with keywords: {tags}" : "Kon recepten met sleutelwoorden niet laden: {tags}",
     "Failed to load search results" : "Kon zoekresultaten niet laden"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }
