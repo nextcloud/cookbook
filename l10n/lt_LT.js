@@ -44,6 +44,7 @@ OC.L10N.register(
     "Delete entry" : "Ištrinti įrašą",
     "Add" : "Pridėti",
     "Name" : "Pavadinimas",
+    "Order" : "Užsakymas",
     "Keywords" : "Raktažodžiai",
     "Clear" : "Išvalyti",
     "Apply" : "Taikyti",
