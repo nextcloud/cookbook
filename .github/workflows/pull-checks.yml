@@ -255,7 +255,7 @@ jobs:
                 id: date
                 run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
             -   name: Cache NPM cache
-                uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+                uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
                 with:
                     path: |
                         ~/.npm
