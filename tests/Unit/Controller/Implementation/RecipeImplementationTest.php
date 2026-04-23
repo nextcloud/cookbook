@@ -26,7 +26,7 @@ use Psr\Log\LoggerInterface;
 
 /**
  * @covers \OCA\Cookbook\Controller\Implementation\RecipeImplementation
- * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
+ * @covers \OCA\Cookbook\Exception\FolderNotWritableException
  * @covers \OCA\Cookbook\Exception\RecipeExistsException
  * @covers \OCA\Cookbook\Exception\NoRecipeNameGivenException
  */

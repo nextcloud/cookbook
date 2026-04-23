@@ -3,7 +3,9 @@
 namespace OCA\Cookbook\tests\Unit\Controller;
 
 use OCA\Cookbook\Controller\MainController;
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\FolderNotWritableException;
+use OCA\Cookbook\Helper\MyRecipesFolderHelper;
+use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCP\Files\Folder;
@@ -13,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Controller\MainController
- * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
+ * @covers \OCA\Cookbook\Exception\FolderNotWritableException
  */
 class MainControllerTest extends TestCase {
 	/**
@@ -24,6 +26,14 @@ class MainControllerTest extends TestCase {
 	 * @var UserFolderHelper|MockObject
 	 */
 	private $userFolder;
+	/**
+	 * @var MyRecipesFolderHelper|MockObject
+	 */
+	private $myRecipesFolder;
+	/**
+	 * @var SharedRecipesFolderHelper|MockObject
+	 */
+	private $sharedRecipesFolder;
 
 	/**
 	 * @var MainController
@@ -36,12 +46,16 @@ class MainControllerTest extends TestCase {
 		$request = $this->createStub(IRequest::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->userFolder = $this->createMock(UserFolderHelper::class);
+		$this->myRecipesFolder = $this->createMock(MyRecipesFolderHelper::class);
+		$this->sharedRecipesFolder = $this->createMock(SharedRecipesFolderHelper::class);
 
 		$this->sut = new MainController(
 			'cookbook',
 			$request,
 			$this->dbCacheService,
-			$this->userFolder
+			$this->userFolder,
+			$this->myRecipesFolder,
+			$this->sharedRecipesFolder
 		);
 	}
 
@@ -52,7 +66,11 @@ class MainControllerTest extends TestCase {
 	public function testIndex(): void {
 		$this->ensureCacheCheckTriggered();
 		$userFolder = $this->createStub(Folder::class);
+		$myRecipesFolder = $this->createStub(Folder::class);
+		$sharedRecipesFolder = $this->createStub(Folder::class);
 		$this->userFolder->method('getFolder')->willReturn($userFolder);
+		$this->myRecipesFolder->method('getFolder')->willReturn($myRecipesFolder);
+		$this->sharedRecipesFolder->method('getFolder')->willReturn($sharedRecipesFolder);
 
 		$ret = $this->sut->index();
 
@@ -61,7 +79,9 @@ class MainControllerTest extends TestCase {
 	}
 
 	public function testIndexInvalidUser(): void {
-		$this->userFolder->method('getFolder')->willThrowException(new UserFolderNotWritableException());
+		$this->userFolder->method('getFolder')->willThrowException(new FolderNotWritableException());
+		$this->myRecipesFolder->method('getFolder')->willThrowException(new FolderNotWritableException());
+		$this->sharedRecipesFolder->method('getFolder')->willThrowException(new FolderNotWritableException());
 		$ret = $this->sut->index();
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals('invalid_guest', $ret->getTemplateName());

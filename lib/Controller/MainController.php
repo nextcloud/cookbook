@@ -2,8 +2,10 @@
 
 namespace OCA\Cookbook\Controller;
 
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
+use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
+use OCA\Cookbook\Helper\MyRecipesFolderHelper;
+use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCP\AppFramework\Controller;
@@ -20,18 +22,26 @@ class MainController extends Controller {
 	private $dbCacheService;
 	/** @var UserFolderHelper */
 	private $userFolder;
+	/** @var MyRecipesFolderHelper */
+	private $myRecipesFolder;
+	/** @var SharedRecipesFolderHelper */
+	private $sharedRecipesFolder;
 
 	public function __construct(
 		string $AppName,
 		IRequest $request,
 		DbCacheService $dbCacheService,
 		UserFolderHelper $userFolder,
+		MyRecipesFolderHelper $myRecipesFolder,
+		SharedRecipesFolderHelper $sharedRecipesFolder,
 	) {
 		parent::__construct($AppName, $request);
 
 		$this->appName = $AppName;
 		$this->dbCacheService = $dbCacheService;
 		$this->userFolder = $userFolder;
+		$this->myRecipesFolder = $myRecipesFolder;
+		$this->sharedRecipesFolder = $sharedRecipesFolder;
 	}
 
 	/**
@@ -43,9 +53,11 @@ class MainController extends Controller {
 	#[NoCSRFRequired]
 	public function index(): TemplateResponse {
 		try {
-			// Check if the user folder can be accessed
+			// Check if the user folders can be accessed
 			$this->userFolder->getFolder();
-		} catch (UserFolderNotWritableException $ex) {
+			$this->myRecipesFolder->getFolder();
+			$this->sharedRecipesFolder->getFolder();
+		} catch (FolderNotWritableException $ex) {
 			Util::addScript('cookbook', 'cookbook-guest');
 			Util::addStyle('cookbook', 'cookbook-guest');
 			return new TemplateResponse($this->appName, 'invalid_guest');
