@@ -70,7 +70,7 @@ import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
 import { NcButton } from '@nextcloud/vue';
 import { useIsMobile } from '../../composables/useIsMobile';
-import { useStore } from '../../store';
+import { useStore, useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
     RecipeCategoriesFilter as CategoriesFilter,
@@ -87,6 +87,7 @@ import { AndOperator } from '../../js/LogicOperators';
 
 const isMobile = useIsMobile();
 const store = useStore();
+const legacyStore = useLegacyStore();
 
 const props = defineProps({
     loading: {
@@ -135,7 +136,7 @@ const orderBy = ref({
 });
 
 onMounted(() => {
-    store.dispatch('clearRecipeFilters');
+    legacyStore.clearRecipeFilters();
 });
 
 // ===================

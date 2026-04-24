@@ -4,12 +4,13 @@
 
 <script setup>
 import { onMounted } from 'vue';
-import { useStore } from '../store';
+import { useStore, useLegacyStore } from '../store';
 
 const store = useStore();
+const legacyStore = useLegacyStore();
 
 onMounted(() => {
-    store.dispatch('setPage', { page: 'notfound' });
+    legacyStore.setPage({ page: 'notfound' });
 });
 </script>
 

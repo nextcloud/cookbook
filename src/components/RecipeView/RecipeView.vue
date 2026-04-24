@@ -371,7 +371,7 @@ import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
 import { NcButton } from '@nextcloud/vue';
 import { showError, showSuccess } from '@nextcloud/dialogs';
-import { useStore } from '../../store';
+import { useStore, useLegacyStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
@@ -387,6 +387,8 @@ import RecipeTool from './RecipeTool.vue';
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
+const legacyStore = useLegacyStore();
+
 const log = getCurrentInstance().proxy.$log;
 
 /**
@@ -604,17 +606,17 @@ const setup = async () => {
 
     // Make the control row show that a recipe is loading
     if (!store.state.recipe) {
-        store.dispatch('setLoadingRecipe', { recipe: -1 });
+        legacyStore.setLoadingRecipe({ recipe: -1 });
 
         // Make the control row show that the recipe is reloading
     } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
-        store.dispatch('setReloadingRecipe', {
+        legacyStore.setReloadingRecipe({
             recipe: route.params.id,
         });
 
         // Make the control row show that a new recipe is loading
     } else {
-        store.dispatch('setLoadingRecipe', {
+        legacyStore.setLoadingRecipe({
             recipe: route.params.id,
         });
     }
@@ -623,22 +625,22 @@ const setup = async () => {
         const response = await api.recipes.get(route.params.id);
         const tmpRecipe = response.data;
         // Store recipe data in vuex
-        store.dispatch('setRecipe', { recipe: tmpRecipe });
+        legacyStore.setRecipe({ recipe: tmpRecipe });
 
         // Always set the active page last!
-        store.dispatch('setPage', { page: 'recipe' });
+        legacyStore.setPage({ page: 'recipe' });
     } catch {
         if (store.state.loadingRecipe) {
             // Reset loading recipe
-            store.dispatch('setLoadingRecipe', { recipe: 0 });
+            legacyStore.setLoadingRecipe({ recipe: 0 });
         }
 
         if (store.state.reloadingRecipe) {
             // Reset reloading recipe
-            store.dispatch('setReloadingRecipe', { recipe: 0 });
+            legacyStore.setReloadingRecipe({ recipe: 0 });
         }
 
-        store.dispatch('setPage', { page: 'recipe' });
+        legacyStore.setPage({ page: 'recipe' });
 
         await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
     } finally {

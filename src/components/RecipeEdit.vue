@@ -167,12 +167,13 @@ import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGrou
 import EditTimeField from './FormComponents/EditTimeField.vue';
 import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 
-import { useStore } from '../store';
+import { useStore, useLegacyStore } from '../store';
 import emitter from '../bus';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
 const store = useStore();
+const legacyStore = useLegacyStore();
 
 /* prettier-ignore */
 const CONFIRM_MSG = t('cookbook', 'You have unsaved changes! Do you still want to leave?');
@@ -477,14 +478,14 @@ const fetchKeywords = async () => {
 };
 const save = async () => {
     savingRecipe.value = true;
-    store.dispatch('setSavingRecipe', { saving: true });
+    localStorage.setSavingRecipe({ saving: true });
     const request = (() => {
         if (route.name !== 'recipe-clone' && (route.params.id ?? false)) {
-            return store.dispatch('updateRecipe', {
+            return localStorage.updateRecipe({
                 recipe: recipeWithCorrectedYield.value,
             });
         }
-        return store.dispatch('createRecipe', {
+        return localStorage.createRecipe({
             recipe: recipeWithCorrectedYield.value,
         });
     })();
@@ -526,7 +527,7 @@ const save = async () => {
             log.error(e);
         }
     } finally {
-        store.dispatch('setSavingRecipe', {
+        localStorage.setSavingRecipe({
             saving: false,
         });
         savingRecipe.value = false;
@@ -648,13 +649,13 @@ const setup = async () => {
 
         // Always set the active page last!
         if (route.name !== 'recipe-clone') {
-            store.dispatch('setPage', { page: 'edit' });
+            localStorage.setPage({ page: 'edit' });
         } else {
-            store.dispatch('setPage', { page: 'create' });
+            localStorage.setPage({ page: 'create' });
         }
     } else {
         initEmptyRecipe();
-        store.dispatch('setPage', { page: 'create' });
+        localStorage.setPage({ page: 'create' });
     }
     initRecipe.value = JSON.parse(JSON.stringify(recipe.value));
     await nextTick();
@@ -665,28 +666,28 @@ const loadRecipeData = async () => {
     isLoading.value = true;
     if (!store.state.recipe) {
         // Make the control row show that a recipe is loading
-        store.dispatch('setLoadingRecipe', {
+        localStorage.setLoadingRecipe({
             recipe: -1,
         });
     } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
         // Make the control row show that the recipe is reloading
-        store.dispatch('setReloadingRecipe', {
+        localStorage.setReloadingRecipe({
             recipe: route.params.id,
         });
     }
     try {
         const response = await api.recipes.get(route.params.id);
 
-        store.dispatch('setRecipe', { recipe: response.data });
+        localStorage.setRecipe({ recipe: response.data });
         recipe.value = response.data;
         await setup();
     } catch {
         await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
         // Disable loading indicator
         if (store.state.loadingRecipe) {
-            store.dispatch('setLoadingRecipe', { recipe: 0 });
+            localStorage.setLoadingRecipe({ recipe: 0 });
         } else if (store.state.reloadingRecipe) {
-            store.dispatch('setReloadingRecipe', {
+            localStorage.setReloadingRecipe({
                 recipe: 0,
             });
         }

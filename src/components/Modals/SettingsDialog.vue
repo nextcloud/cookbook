@@ -201,13 +201,14 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import { enableLogging } from 'cookbook/js/logging';
 import { useRoute, useRouter } from 'vue-router/composables';
-import { useStore } from '../../store';
+import { useStore, useLegacyStore } from '../../store';
 import { SHOW_SETTINGS_EVENT } from '../../composables/useSettingsDialog';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
+const legacyStore = useLegacyStore();
 
 const INFO_BLOCK_KEYS = [
     'preparation-time',
@@ -269,7 +270,7 @@ watch(
         }
         try {
             await api.config.printImage.update(newVal);
-            await store.dispatch('refreshConfig');
+            await legacyStore.refreshConfig();
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch {
             await showSimpleAlertModal(
@@ -289,7 +290,7 @@ watch(
             return;
         }
 
-        store.dispatch('setShowFiltersInRecipeList', {
+        legacyStore.setShowFiltersInRecipeList({
             showFilters: newVal,
         });
     },
@@ -305,7 +306,7 @@ watch(
         try {
             if (newVal === '') return;
             await api.config.updateInterval.update(newVal);
-            await store.dispatch('refreshConfig');
+            await legacyStore.refreshConfig();
         } catch {
             await showSimpleAlertModal(
                 /* prettier-ignore */
@@ -330,7 +331,7 @@ watch(
         try {
             const data = visibleInfoBlocksEncode(newVal);
             await api.config.visibleInfoBlocks.update(data);
-            await store.dispatch('refreshConfig');
+            await legacyStore.refreshConfig();
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch (err) {
             // eslint-disable-next-line no-console
@@ -357,9 +358,9 @@ const pickRecipeFolder = () => {
     filePicker
         .pick()
         .then((path) => {
-            store
-                .dispatch('updateRecipeDirectory', { dir: path })
-                .then(() => store.dispatch('refreshConfig'))
+            legacyStore
+                .updateRecipeDirectory({ dir: path })
+                .then(() => legacyStore.refreshConfig())
                 .then(() => {
                     recipeFolder.value = path;
                     if (route.path !== '/') {

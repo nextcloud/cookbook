@@ -224,12 +224,14 @@ import {
 import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
 import { useIsMobile } from '../../composables/useIsMobile';
-import { useStore } from '../../store';
+import { useStore, useLegacyStore } from '../../store';
 import emitter from '../../bus';
 
 const isMobile = useIsMobile();
 const route = useRoute();
 const store = useStore();
+const legacyStore = useLegacyStore();
+
 const filterValue = ref('');
 
 /** Computed values * */
@@ -304,7 +306,7 @@ const deleteRecipe = async () => {
     }
 
     try {
-        await store.dispatch('deleteRecipe', {
+        await localStorage.deleteRecipe({
             id: store.state.recipe.id,
         });
         helpers.goTo('/');
@@ -338,7 +340,7 @@ const search = (e) => {
 
 const updateFilters = (e) => {
     filterValue.value = e;
-    store.dispatch('setRecipeFilters', e);
+    localStorage.setRecipeFilters(e);
 };
 
 const goToRecipe = (id) => {

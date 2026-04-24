@@ -9,7 +9,7 @@
 
 import Vue from 'vue';
 
-import { useStore } from './store';
+import { useStore, useLegacyStore } from './store';
 
 import AppInvalidGuest from './components/AppInvalidGuest.vue';
 
@@ -36,8 +36,9 @@ Vue.prototype.t = window.t;
 Vue.prototype.n = window.n;
 
 const store = useStore();
+const legacyStore = useLegacyStore();
 
-store.dispatch('refreshConfig');
+legacyStore.refreshConfig();
 
 // Start the app once document is done loading
 const App = Vue.extend(AppInvalidGuest);

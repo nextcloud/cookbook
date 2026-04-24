@@ -115,10 +115,11 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import emitter from '../bus';
 import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
-import { useStore } from '../store';
+import { useStore, useLegacyStore } from '../store';
 
 const log = getCurrentInstance().proxy.$log;
 const store = useStore();
+const legacyStore = useLegacyStore();
 
 /**
  * References to the DOM elements of the categories in the App navigation.
@@ -211,7 +212,7 @@ const categoryUpdateName = async (idx, newName) => {
     const oldName = categories.value[idx].name;
 
     try {
-        await store.dispatch('updateCategoryName', {
+        await legacyStore.updateCategoryName({
             categoryNames: [oldName, newName],
         });
         categories.value[idx].name = newName;
@@ -247,7 +248,7 @@ const downloadRecipe = async () => {
         downloading.value = false;
         helpers.goTo(`/recipe/${recipe.id}`);
         // Refresh left navigation pane to display changes
-        store.dispatch('setAppNavigationRefreshRequired', {
+        legacyStore.setAppNavigationRefreshRequired({
             isRequired: true,
         });
     } catch (e2) {
@@ -334,7 +335,7 @@ const getCategories = async () => {
         await Promise.all(loadingCategoriesAwaitable);
 
         // Refreshing component data has been finished
-        store.dispatch('setAppNavigationRefreshRequired', {
+        legacyStore.setAppNavigationRefreshRequired({
             isRequired: false,
         });
     } catch (e) {
