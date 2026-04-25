@@ -1,20 +1,23 @@
 <template>
     <div class="wrapper">
-        <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
+        <div
+            v-if="isLoading || legacyStore.loadingRecipe"
+            class="loading-indicator"
+        >
             <LoadingIndicator :size="40" :delay="800" />
         </div>
         <div v-else>
             <div
-                v-if="$legacyStore.recipe"
+                v-if="legacyStore.recipe"
                 class="header"
-                :class="{ responsive: $legacyStore.recipe.image }"
+                :class="{ responsive: legacyStore.recipe.image }"
             >
-                <div v-if="$legacyStore.recipe.image" class="image">
+                <div v-if="legacyStore.recipe.image" class="image">
                     <RecipeImages />
                 </div>
 
                 <div class="meta">
-                    <h2 class="heading">{{ $legacyStore.recipe.name }}</h2>
+                    <h2 class="heading">{{ legacyStore.recipe.name }}</h2>
                     <div class="details">
                         <div v-if="recipe.keywords.length">
                             <ul v-if="recipe.keywords.length">
@@ -58,17 +61,17 @@
                             :markdown="parsedDescription"
                             class="markdown-description"
                         />
-                        <p v-if="$legacyStore.recipe.url">
+                        <p v-if="legacyStore.recipe.url">
                             <strong>{{ t('cookbook', 'Source') }}: </strong
                             ><a
                                 target="_blank"
-                                :href="$legacyStore.recipe.url"
+                                :href="legacyStore.recipe.url"
                                 class="source-url"
-                                >{{ $legacyStore.recipe.url }}</a
+                                >{{ legacyStore.recipe.url }}</a
                             >
                         </p>
                         <div>
-                            <p v-if="$legacyStore.recipe.recipeYield != null">
+                            <p v-if="legacyStore.recipe.recipeYield != null">
                                 <strong
                                     >{{ t('cookbook', 'Servings') }}:
                                 </strong>
@@ -94,7 +97,7 @@
                                     <button
                                         v-if="
                                             recipeYield !==
-                                            $legacyStore.recipe.recipeYield
+                                            legacyStore.recipe.recipeYield
                                         "
                                         @click="restoreOriginalRecipeYield"
                                     >
@@ -136,7 +139,7 @@
                 </div>
             </div>
 
-            <div v-if="$legacyStore.recipe" class="content">
+            <div v-if="legacyStore.recipe" class="content">
                 <section class="container">
                     <section class="ingredients">
                         <h3

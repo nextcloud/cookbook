@@ -126,9 +126,9 @@ const setup = async () => {
         } finally {
             isLoadingRecipeList.value = false;
         }
-        localStorage.setPage({ page: 'search' });
+        legacyStore.setPage({ page: 'search' });
     }
-    localStorage.setPage({ page: 'search' });
+    legacyStore.setPage({ page: 'search' });
 };
 
 // Lifecycle hooks

@@ -26,8 +26,8 @@ const isLoadingRecipeList = ref(false);
 /**
  * Is the Cookbook recipe directory currently being changed?
  */
-const updatingRecipeDirectory = computed(() =>
-    legacyStore.updatingRecipeDirectory(),
+const updatingRecipeDirectory = computed(
+    () => legacyStore.updatingRecipeDirectory,
 );
 
 // Methods

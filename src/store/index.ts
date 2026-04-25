@@ -7,11 +7,11 @@
 
 import { defineStore } from 'pinia';
 
-import Vue from 'vue';
-import Vuex from 'vuex';
+// import Vue from 'vue';
+// import Vuex from 'vuex';
 import api from '../js/api-interface';
 
-Vue.use(Vuex);
+// Vue.use(Vuex);
 
 /**
  * Returns setting from stored settings.
@@ -20,6 +20,7 @@ function showFiltersInRecipeList(): string {
 	return localStorage.getItem('showFiltersInRecipeList') || 'true';
 }
 
+/*
 // We are using the vuex store linking changes within the components to updates in the navigation panel.
 const storeVuex = new Vuex.Store({
 	// Vuex store handles value changes through actions and mutations.
@@ -42,7 +43,7 @@ const storeVuex = new Vuex.Store({
 		/**
 		 * Data of the current recipe
 		 * @type {Object|null}
-		 */
+		 */ /*
 		recipe: <any>null,
 		// Filter applied to a list of recipes
 		recipeFilters: '',
@@ -137,7 +138,7 @@ const storeVuex = new Vuex.Store({
 	actions: {
 		/**
 		 * Read/Update the user settings from the backend
-		 */
+		 */ /*
 		async refreshConfig(c) {
 			const config = (await api.config.get()).data;
 			c.commit('setConfig', { config });
@@ -145,14 +146,14 @@ const storeVuex = new Vuex.Store({
 
 		/*
 		 * Clears all filters currently applied for listing recipes.
-		 */
+		 */ /*
 		clearRecipeFilters(c) {
 			c.commit('setRecipeFilters', { f: '' });
 		},
 
 		/**
 		 * Create new recipe on the server
-		 */
+		 */ /*
 		createRecipe(c, { recipe }) {
 			const request = api.recipes.create(recipe);
 			return request.then((v) => {
@@ -166,7 +167,7 @@ const storeVuex = new Vuex.Store({
 		},
 		/**
 		 * Delete recipe on the server
-		 */
+		 */ /*
 		deleteRecipe(c, { id }) {
 			const request = api.recipes.delete(id);
 			request.then(() => {
@@ -252,7 +253,7 @@ const storeVuex = new Vuex.Store({
 		},
 		/**
 		 * Update existing recipe on the server
-		 */
+		 */ /*
 		updateRecipe(c, { recipe }) {
 			const request = api.recipes.update(recipe.id, recipe);
 			request.then(() => {
@@ -265,6 +266,7 @@ const storeVuex = new Vuex.Store({
 		},
 	},
 });
+*/
 
 const useLegacyStore = defineStore('legacyStore', {
 	state: () =>
@@ -462,7 +464,7 @@ const useLegacyStore = defineStore('legacyStore', {
 		updateCategoryName({ categoryNames }) {
 			const oldName = categoryNames[0];
 			const newName = categoryNames[1];
-			c.dispatch('setCategoryUpdating', { category: oldName });
+			this.setCategoryUpdating({ category: oldName });
 
 			const request = api.categories.update(oldName, newName);
 
@@ -499,7 +501,7 @@ const useLegacyStore = defineStore('legacyStore', {
 		/**
 		 * Update existing recipe on the server
 		 */
-		updateRecipe(c, { recipe }) {
+		updateRecipe({ recipe }) {
 			const request = api.recipes.update(recipe.id, recipe);
 			request.then(() => {
 				// Refresh navigation to display changes
@@ -513,6 +515,4 @@ const useLegacyStore = defineStore('legacyStore', {
 });
 
 // eslint-disable-next-line import/prefer-default-export
-export const useStore = () => storeVuex;
-
 export { useLegacyStore };

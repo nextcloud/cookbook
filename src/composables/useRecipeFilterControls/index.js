@@ -4,7 +4,7 @@ import {
     RecipeKeywordsFilter as KeywordsFilter,
     RecipeNamesFilter as NamesFilter,
 } from '../../js/RecipeFilters';
-import { useStore, useLegacyStore } from '../../store';
+import { useLegacyStore } from '../../store';
 import { AndOperator, OrOperator } from '../../js/LogicOperators';
 
 export default function useRecipeFilterControls(props) {

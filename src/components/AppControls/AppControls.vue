@@ -305,7 +305,7 @@ const deleteRecipe = async () => {
     }
 
     try {
-        await localStorage.deleteRecipe({
+        await legacyStore.deleteRecipe({
             id: legacyStore.recipe.id,
         });
         helpers.goTo('/');
@@ -339,7 +339,7 @@ const search = (e) => {
 
 const updateFilters = (e) => {
     filterValue.value = e;
-    localStorage.setRecipeFilters(e);
+    legacyStore.setRecipeFilters(e);
 };
 
 const goToRecipe = (id) => {

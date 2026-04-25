@@ -14,6 +14,8 @@ import Vue from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
+import { createPinia, PiniaVuePlugin } from 'pinia';
+
 import helpers from './js/helper';
 import setupLogging from './js/logging';
 
@@ -50,8 +52,6 @@ declare module 'vue/types/vue' {
 	}
 }
 
-const legacyStore = useLegacyStore();
-
 helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
@@ -74,18 +74,22 @@ Vue.use(ModalDialogs);
 
 setupLogging(Vue);
 
-legacyStore.refreshConfig();
-
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
 Vue.prototype.n = window.n;
+
+Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
 
 // Start the app once document is done loading
 Vue.$log.info('Main is done. Creating App.');
 const App = Vue.extend(AppMain);
 new App({
 	router,
+	pinia,
 	beforeCreate() {
+		const legacyStore = useLegacyStore();
+		legacyStore.refreshConfig();
 		legacyStore.initializeStore();
 	},
 }).$mount('#content');
