@@ -18,7 +18,7 @@ import helpers from './js/helper';
 import setupLogging from './js/logging';
 
 import router from './router';
-import { useStore } from './store';
+import { useLegacyStore } from './store';
 
 import AppMain from './components/AppMain.vue';
 
@@ -50,6 +50,8 @@ declare module 'vue/types/vue' {
 	}
 }
 
+const legacyStore = useLegacyStore();
+
 helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
@@ -72,8 +74,7 @@ Vue.use(ModalDialogs);
 
 setupLogging(Vue);
 
-const store = useStore();
-store.dispatch('refreshConfig');
+legacyStore.refreshConfig();
 
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
@@ -83,9 +84,8 @@ Vue.prototype.n = window.n;
 Vue.$log.info('Main is done. Creating App.');
 const App = Vue.extend(AppMain);
 new App({
-	store,
 	router,
 	beforeCreate() {
-		this.$store.commit('initializeStore');
+		legacyStore.initializeStore();
 	},
 }).$mount('#content');

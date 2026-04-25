@@ -17,11 +17,11 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters';
 
 import RecipeList from './List/RecipeList.vue';
-import { useStore } from '../store';
+import { useLegacyStore } from '../store';
 import emitter from '../bus';
 
 const route = useRoute();
-const store = useStore();
+const legacyStore = useLegacyStore();
 
 // Props
 const props = defineProps({
@@ -126,9 +126,9 @@ const setup = async () => {
         } finally {
             isLoadingRecipeList.value = false;
         }
-        store.dispatch('setPage', { page: 'search' });
+        localStorage.setPage({ page: 'search' });
     }
-    store.dispatch('setPage', { page: 'search' });
+    localStorage.setPage({ page: 'search' });
 };
 
 // Lifecycle hooks

@@ -7,9 +7,9 @@ import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
 import RecipeList from './List/RecipeList.vue';
-import { useStore } from '../store';
+import { useLegacyStore } from '../store';
 
-const store = useStore();
+const legacyStore = useLegacyStore();
 
 /**
  * The known recipes in the cookbook
@@ -26,8 +26,8 @@ const isLoadingRecipeList = ref(false);
 /**
  * Is the Cookbook recipe directory currently being changed?
  */
-const updatingRecipeDirectory = computed(
-    () => store.state.updatingRecipeDirectory,
+const updatingRecipeDirectory = computed(() =>
+    legacyStore.updatingRecipeDirectory(),
 );
 
 // Methods
@@ -42,11 +42,11 @@ const loadAll = () => {
             recipes.value = response.data;
 
             // Always set page name last
-            store.dispatch('setPage', { page: 'index' });
+            legacyStore.setPage({ page: 'index' });
         })
         .catch(() => {
             // Always set page name last
-            store.dispatch('setPage', { page: 'index' });
+            legacyStore.setPage({ page: 'index' });
         })
         .finally(() => {
             isLoadingRecipeList.value = false;

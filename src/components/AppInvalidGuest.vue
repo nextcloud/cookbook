@@ -27,6 +27,10 @@
 import { NcContent, NcAppContent } from '@nextcloud/vue';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
+import { useLegacyStore } from 'cookbook/store';
+
+const legacyStore = useLegacyStore();
+
 const selectFolder = () => {
     const filePicker = getFilePickerBuilder(
         t('cookbook', 'Path to your recipe collection'),
@@ -35,11 +39,9 @@ const selectFolder = () => {
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
-        this.$store
-            .dispatch('updateRecipeDirectory', { dir: path })
-            .then(() => {
-                window.location.reload();
-            });
+        legacyStore.updateRecipeDirectory({ dir: path }).then(() => {
+            window.location.reload();
+        });
     });
 };
 </script>

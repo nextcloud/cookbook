@@ -232,12 +232,12 @@ const {
     localFiltersValue,
     categoriesOperatorToggleValue,
     keywordsOperatorToggleValue,
-    store,
+    legacyStore,
 } = useRecipeFilterControls(props);
 
 function clearSearchTerm() {
     searchTerm.value = '';
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
 }
 
 function clearFilters() {
@@ -252,7 +252,7 @@ function closeModal() {
 
 function submitFilters() {
     emit('input', localFiltersValue.value);
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
     emit('close');
 }
 </script>

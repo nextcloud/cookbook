@@ -4,11 +4,11 @@ import {
     RecipeKeywordsFilter as KeywordsFilter,
     RecipeNamesFilter as NamesFilter,
 } from '../../js/RecipeFilters';
-import { useStore } from '../../store';
+import { useStore, useLegacyStore } from '../../store';
 import { AndOperator, OrOperator } from '../../js/LogicOperators';
 
 export default function useRecipeFilterControls(props) {
-    const store = useStore();
+    const store = useLegacyStore();
 
     // Helper method that sorts strings case insensitively
     const caseInsensitiveSort = (a, b) => {
