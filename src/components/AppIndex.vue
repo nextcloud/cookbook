@@ -7,9 +7,8 @@ import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
 import RecipeList from './List/RecipeList.vue';
-import { useStore, useLegacyStore } from '../store';
+import { useLegacyStore } from '../store';
 
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 /**
@@ -27,8 +26,8 @@ const isLoadingRecipeList = ref(false);
 /**
  * Is the Cookbook recipe directory currently being changed?
  */
-const updatingRecipeDirectory = computed(
-    () => store.state.updatingRecipeDirectory,
+const updatingRecipeDirectory = computed(() =>
+    legacyStore.updatingRecipeDirectory(),
 );
 
 // Methods

@@ -5,16 +5,16 @@
         </div>
         <div v-else>
             <div
-                v-if="$store.state.recipe"
+                v-if="$legacyStore.recipe"
                 class="header"
-                :class="{ responsive: $store.state.recipe.image }"
+                :class="{ responsive: $legacyStore.recipe.image }"
             >
-                <div v-if="$store.state.recipe.image" class="image">
+                <div v-if="$legacyStore.recipe.image" class="image">
                     <RecipeImages />
                 </div>
 
                 <div class="meta">
-                    <h2 class="heading">{{ $store.state.recipe.name }}</h2>
+                    <h2 class="heading">{{ $legacyStore.recipe.name }}</h2>
                     <div class="details">
                         <div v-if="recipe.keywords.length">
                             <ul v-if="recipe.keywords.length">
@@ -58,17 +58,17 @@
                             :markdown="parsedDescription"
                             class="markdown-description"
                         />
-                        <p v-if="$store.state.recipe.url">
+                        <p v-if="$legacyStore.recipe.url">
                             <strong>{{ t('cookbook', 'Source') }}: </strong
                             ><a
                                 target="_blank"
-                                :href="$store.state.recipe.url"
+                                :href="$legacyStore.recipe.url"
                                 class="source-url"
-                                >{{ $store.state.recipe.url }}</a
+                                >{{ $legacyStore.recipe.url }}</a
                             >
                         </p>
                         <div>
-                            <p v-if="$store.state.recipe.recipeYield != null">
+                            <p v-if="$legacyStore.recipe.recipeYield != null">
                                 <strong
                                     >{{ t('cookbook', 'Servings') }}:
                                 </strong>
@@ -94,7 +94,7 @@
                                     <button
                                         v-if="
                                             recipeYield !==
-                                            $store.state.recipe.recipeYield
+                                            $legacyStore.recipe.recipeYield
                                         "
                                         @click="restoreOriginalRecipeYield"
                                     >
@@ -136,7 +136,7 @@
                 </div>
             </div>
 
-            <div v-if="$store.state.recipe" class="content">
+            <div v-if="$legacyStore.recipe" class="content">
                 <section class="container">
                     <section class="ingredients">
                         <h3
@@ -371,7 +371,7 @@ import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
 import { NcButton } from '@nextcloud/vue';
 import { showError, showSuccess } from '@nextcloud/dialogs';
-import { useStore, useLegacyStore } from '../../store';
+import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
@@ -386,7 +386,6 @@ import RecipeTool from './RecipeTool.vue';
 
 const route = useRoute();
 const router = useRouter();
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 const log = getCurrentInstance().proxy.$log;
@@ -440,35 +439,35 @@ const recipe = computed(() => {
         nutrition: null,
     };
 
-    if (store.state.recipe === null) {
+    if (legacyStore.recipe === null) {
         log.debug('Recipe is null');
         return tmpRecipe;
     }
 
-    if (store.state.recipe.description) {
+    if (legacyStore.recipe.description) {
         tmpRecipe.description = helpers.escapeHTML(
-            store.state.recipe.description,
+            legacyStore.recipe.description,
         );
     }
 
-    if (store.state.recipe.recipeIngredient) {
+    if (legacyStore.recipe.recipeIngredient) {
         tmpRecipe.ingredients = Object.values(
-            store.state.recipe.recipeIngredient,
+            legacyStore.recipe.recipeIngredient,
         ).map((i) => helpers.escapeHTML(i));
     }
 
-    if (store.state.recipe.recipeInstructions) {
+    if (legacyStore.recipe.recipeInstructions) {
         tmpRecipe.instructions = Object.values(
-            store.state.recipe.recipeInstructions,
+            legacyStore.recipe.recipeInstructions,
         ).map((i) => helpers.escapeHTML(i));
     }
 
-    if (store.state.recipe.keywords) {
-        tmpRecipe.keywords = String(store.state.recipe.keywords).split(',');
+    if (legacyStore.recipe.keywords) {
+        tmpRecipe.keywords = String(legacyStore.recipe.keywords).split(',');
     }
 
-    if (store.state.recipe.cookTime) {
-        const cookT = store.state.recipe.cookTime.match(
+    if (legacyStore.recipe.cookTime) {
+        const cookT = legacyStore.recipe.cookTime.match(
             /PT(\d+?)H(\d+?)M(\d+?)S/,
         );
         const hh = parseInt(cookT[1], 10);
@@ -479,8 +478,8 @@ const recipe = computed(() => {
         }
     }
 
-    if (store.state.recipe.prepTime) {
-        const prepT = store.state.recipe.prepTime.match(
+    if (legacyStore.recipe.prepTime) {
+        const prepT = legacyStore.recipe.prepTime.match(
             /PT(\d+?)H(\d+?)M(\d+?)S/,
         );
         const hh = parseInt(prepT[1], 10);
@@ -491,8 +490,8 @@ const recipe = computed(() => {
         }
     }
 
-    if (store.state.recipe.totalTime) {
-        const totalT = store.state.recipe.totalTime.match(
+    if (legacyStore.recipe.totalTime) {
+        const totalT = legacyStore.recipe.totalTime.match(
             /PT(\d+?)H(\d+?)M(\d+?)S/,
         );
         const hh = parseInt(totalT[1], 10);
@@ -503,29 +502,29 @@ const recipe = computed(() => {
         }
     }
 
-    if (store.state.recipe.tool) {
-        tmpRecipe.tools = store.state.recipe.tool.map((i) =>
+    if (legacyStore.recipe.tool) {
+        tmpRecipe.tools = legacyStore.recipe.tool.map((i) =>
             helpers.escapeHTML(i),
         );
     }
 
-    if (store.state.recipe.dateCreated) {
-        const date = parseDateTime(store.state.recipe.dateCreated);
+    if (legacyStore.recipe.dateCreated) {
+        const date = parseDateTime(legacyStore.recipe.dateCreated);
         tmpRecipe.dateCreated =
             date != null ? date.format('L, LT').toString() : null;
     }
 
-    if (store.state.recipe.dateModified) {
-        const date = parseDateTime(store.state.recipe.dateModified);
+    if (legacyStore.recipe.dateModified) {
+        const date = parseDateTime(legacyStore.recipe.dateModified);
         tmpRecipe.dateModified =
             date != null ? date.format('L, LT').toString() : null;
     }
 
-    if (store.state.recipe.nutrition) {
-        if (store.state.recipe.nutrition instanceof Array) {
+    if (legacyStore.recipe.nutrition) {
+        if (legacyStore.recipe.nutrition instanceof Array) {
             tmpRecipe.nutrition = {};
         } else {
-            tmpRecipe.nutrition = store.state.recipe.nutrition;
+            tmpRecipe.nutrition = legacyStore.recipe.nutrition;
         }
     } else {
         tmpRecipe.nutrition = {};
@@ -552,14 +551,14 @@ const showModifiedDate = computed(() => {
         return false;
     }
     return !(
-        store.state.recipe.dateCreated &&
-        store.state.recipe.dateModified &&
-        store.state.recipe.dateCreated === store.state.recipe.dateModified
+        legacyStore.recipe.dateCreated &&
+        legacyStore.recipe.dateModified &&
+        legacyStore.recipe.dateCreated === legacyStore.recipe.dateModified
     );
 });
 
 const visibleInfoBlocks = computed(
-    () => store.state.config?.visibleInfoBlocks ?? {},
+    () => legacyStore.config?.visibleInfoBlocks ?? {},
 );
 
 const showNutritionData = computed(
@@ -574,7 +573,7 @@ const scaledIngredients = computed(() =>
     yieldCalculator.recalculateIngredients(
         parsedIngredients.value,
         recipeYield.value,
-        store.state.recipe.recipeYield,
+        legacyStore.recipe.recipeYield,
     ),
 );
 
@@ -605,11 +604,11 @@ const setup = async () => {
     isLoading.value = true;
 
     // Make the control row show that a recipe is loading
-    if (!store.state.recipe) {
+    if (!legacyStore.recipe) {
         legacyStore.setLoadingRecipe({ recipe: -1 });
 
         // Make the control row show that the recipe is reloading
-    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
+    } else if (legacyStore.recipe.id === parseInt(route.params.id, 10)) {
         legacyStore.setReloadingRecipe({
             recipe: route.params.id,
         });
@@ -630,12 +629,12 @@ const setup = async () => {
         // Always set the active page last!
         legacyStore.setPage({ page: 'recipe' });
     } catch {
-        if (store.state.loadingRecipe) {
+        if (legacyStore.loadingRecipe) {
             // Reset loading recipe
             legacyStore.setLoadingRecipe({ recipe: 0 });
         }
 
-        if (store.state.reloadingRecipe) {
+        if (legacyStore.reloadingRecipe) {
             // Reset reloading recipe
             legacyStore.setReloadingRecipe({ recipe: 0 });
         }
@@ -647,7 +646,7 @@ const setup = async () => {
         isLoading.value = false;
     }
 
-    recipeYield.value = store.state.recipe.recipeYield;
+    recipeYield.value = legacyStore.recipe.recipeYield;
 };
 
 const changeRecipeYield = (increase = true) => {
@@ -702,7 +701,7 @@ const copyIngredientsToClipboard = () => {
 };
 
 const restoreOriginalRecipeYield = () => {
-    recipeYield.value = store.state.recipe.recipeYield;
+    recipeYield.value = legacyStore.recipe.recipeYield;
 };
 
 // ===================

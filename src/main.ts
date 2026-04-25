@@ -18,7 +18,7 @@ import helpers from './js/helper';
 import setupLogging from './js/logging';
 
 import router from './router';
-import { useStore, useLegacyStore } from './store';
+import { useLegacyStore } from './store';
 
 import AppMain from './components/AppMain.vue';
 
@@ -74,7 +74,6 @@ Vue.use(ModalDialogs);
 
 setupLogging(Vue);
 
-const store = useStore();
 legacyStore.refreshConfig();
 
 // Pass translation engine to Vue
@@ -85,7 +84,6 @@ Vue.prototype.n = window.n;
 Vue.$log.info('Main is done. Creating App.');
 const App = Vue.extend(AppMain);
 new App({
-	store,
 	router,
 	beforeCreate() {
 		legacyStore.initializeStore();

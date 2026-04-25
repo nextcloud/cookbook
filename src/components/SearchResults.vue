@@ -17,11 +17,10 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters';
 
 import RecipeList from './List/RecipeList.vue';
-import { useStore, useLegacyStore } from '../store';
+import { useLegacyStore } from '../store';
 import emitter from '../bus';
 
 const route = useRoute();
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 // Props

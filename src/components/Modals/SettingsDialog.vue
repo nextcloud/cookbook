@@ -201,13 +201,12 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import { enableLogging } from 'cookbook/js/logging';
 import { useRoute, useRouter } from 'vue-router/composables';
-import { useStore, useLegacyStore } from '../../store';
+import { useLegacyStore } from '../../store';
 import { SHOW_SETTINGS_EVENT } from '../../composables/useSettingsDialog';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
 const router = useRouter();
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 const INFO_BLOCK_KEYS = [
@@ -399,7 +398,7 @@ const reindex = () => {
         .then(() => {
             scanningLibrary.value = false;
             log.info('Library reindexing complete');
-            if (['index', 'search'].indexOf(store.state.page) > -1) {
+            if (['index', 'search'].indexOf(legacyStore.page) > -1) {
                 // This refreshes the current router view in case items in it changed during reindex
                 router.go();
             }
@@ -424,7 +423,7 @@ const handleShowSettings = () => {
     // Temporarily disable the storage of settings to allow for initialization
     writeChanges.value = false;
 
-    const { config } = store.state;
+    const { config } = legacyStore;
 
     if (!config) {
         throw new Error();
@@ -433,7 +432,7 @@ const handleShowSettings = () => {
     printImage.value = config.print_image;
     visibleInfoBlocks.value = visibleInfoBlocksDecode(config.visibleInfoBlocks);
     showFiltersInRecipeList.value =
-        store.state.localSettings.showFiltersInRecipeList;
+        legacyStore.localSettings.showFiltersInRecipeList;
     updateInterval.value = config.update_interval;
     recipeFolder.value = config.folder;
 

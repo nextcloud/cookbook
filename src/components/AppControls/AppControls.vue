@@ -27,7 +27,7 @@
             <!-- Recipe view / edit -->
             <LocationIndicator
                 v-else-if="isEdit || isRecipe"
-                :title="store.state.recipe.name"
+                :title="legacyStore.recipe.name"
             />
             <!-- Is app loading? -->
             <LocationIndicator
@@ -36,7 +36,7 @@
             />
             <!-- Is a recipe loading? -->
             <LocationIndicator
-                v-else-if="!!store.state.loadingRecipe"
+                v-else-if="!!legacyStore.loadingRecipe"
                 :title="t('cookbook', 'Loading recipe')"
             />
             <!-- No recipe found -->
@@ -60,7 +60,7 @@
             v-if="isRecipe"
             type="primary"
             :aria-label="t('cookbook', 'Edit')"
-            @click="goToRecipeEdit(store.state.recipe.id)"
+            @click="goToRecipeEdit(legacyStore.recipe.id)"
         >
             <template #icon>
                 <PencilIcon :size="20" />
@@ -75,7 +75,7 @@
         >
             <template #icon>
                 <LoadingIcon
-                    v-if="store.state.savingRecipe"
+                    v-if="legacyStore.savingRecipe"
                     :size="20"
                     class="animation-rotate"
                 />
@@ -121,7 +121,7 @@
             <NcActionButton
                 v-if="isEdit"
                 :icon="
-                    store.state.reloadingRecipe === parseInt(route.params.id)
+                    legacyStore.reloadingRecipe === parseInt(route.params.id)
                         ? 'icon-loading-small'
                         : 'icon-history'
                 "
@@ -135,13 +135,13 @@
                 v-if="isEdit"
                 class="action-button"
                 :aria-label="t('cookbook', 'Abort editing')"
-                @click="goToRecipe(store.state.recipe.id)"
+                @click="goToRecipe(legacyStore.recipe.id)"
             >
                 {{ t('cookbook', 'Abort editing') }}
                 <template #icon>
                     <NcLoadingIcon
                         v-if="
-                            store.state.reloadingRecipe ===
+                            legacyStore.reloadingRecipe ===
                             parseInt(route.params.id)
                         "
                         :size="20"
@@ -152,7 +152,7 @@
             <NcActionButton
                 v-if="isRecipe"
                 :icon="
-                    store.state.reloadingRecipe === parseInt(route.params.id)
+                    legacyStore.reloadingRecipe === parseInt(route.params.id)
                         ? 'icon-loading-small'
                         : 'icon-history'
                 "
@@ -175,7 +175,7 @@
                 v-if="isRecipe"
                 class="action-button"
                 :aria-label="t('cookbook', 'Clone recipe')"
-                @click="goToRecipeClone(store.state.recipe.id)"
+                @click="goToRecipeClone(legacyStore.recipe.id)"
             >
                 {{ t('cookbook', 'Clone recipe') }}
                 <template #icon>
@@ -224,60 +224,59 @@ import {
 import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
 import { useIsMobile } from '../../composables/useIsMobile';
-import { useStore, useLegacyStore } from '../../store';
+import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 
 const isMobile = useIsMobile();
 const route = useRoute();
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 const filterValue = ref('');
 
 /** Computed values * */
 
-const isCreate = computed(() => store.state.page === 'create');
+const isCreate = computed(() => legacyStore.page === 'create');
 const isEdit = computed(() => {
     //  A recipe is being loaded
-    if (store.state.loadingRecipe) {
+    if (legacyStore.loadingRecipe) {
         return false; // Do not show both at the same time
     }
     // Editing requires that a recipe was found
-    return !!(store.state.page === 'edit' && store.state.recipe);
+    return !!(legacyStore.page === 'edit' && legacyStore.recipe);
 });
 const isIndex = computed(() => {
     //  A recipe is being loaded
-    if (store.state.loadingRecipe) {
+    if (legacyStore.loadingRecipe) {
         return false; // Do not show both at the same time
     }
-    return store.state.page === 'index';
+    return legacyStore.page === 'index';
 });
 const isLoading = computed(
     () =>
         //  The page is being loaded
-        store.state.page === null,
+        legacyStore.page === null,
 );
 const isRecipe = computed(() => {
     //  A recipe is being loaded
-    if (store.state.loadingRecipe) {
+    if (legacyStore.loadingRecipe) {
         return false; // Do not show both at the same time
     }
     // Viewing recipe requires that one was found
-    return !!(store.state.page === 'recipe' && store.state.recipe);
+    return !!(legacyStore.page === 'recipe' && legacyStore.recipe);
 });
 const isSearch = computed(() => {
     //  A recipe is being loaded
-    if (store.state.loadingRecipe) {
+    if (legacyStore.loadingRecipe) {
         return false; // Do not show both at the same time
     }
-    return store.state.page === 'search';
+    return legacyStore.page === 'search';
 });
-const pageNotFound = computed(() => store.state.page === 'notfound');
+const pageNotFound = computed(() => legacyStore.page === 'notfound');
 const recipeNotFound = computed(
     () =>
         // Editing or viewing recipe was attempted, but no recipe was found
-        ['edit', 'recipe'].indexOf(store.state.page) !== -1 &&
-        !store.state.recipe,
+        ['edit', 'recipe'].indexOf(legacyStore.page) !== -1 &&
+        !legacyStore.recipe,
 );
 const searchTitle = computed(() => {
     if (route.name === 'search-category') {
@@ -307,7 +306,7 @@ const deleteRecipe = async () => {
 
     try {
         await localStorage.deleteRecipe({
-            id: store.state.recipe.id,
+            id: legacyStore.recipe.id,
         });
         helpers.goTo('/');
     } catch (e) {

@@ -4,9 +4,8 @@
 
 <script setup>
 import { onMounted } from 'vue';
-import { useStore, useLegacyStore } from '../store';
+import { useLegacyStore } from '../store';
 
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 onMounted(() => {

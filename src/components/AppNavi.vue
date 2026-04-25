@@ -115,10 +115,9 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import emitter from '../bus';
 import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
-import { useStore, useLegacyStore } from '../store';
+import { useLegacyStore } from '../store';
 
 const log = getCurrentInstance().proxy.$log;
-const store = useStore();
 const legacyStore = useLegacyStore();
 
 /**
@@ -161,7 +160,7 @@ const totalRecipeCount = computed(() => {
 // Computed property to watch the Vuex state. If there are more in the
 // future, consider using the Vue mapState helper
 const refreshRequired = computed(
-    () => store.state.appNavigation.refreshRequired,
+    () => legacyStore.appNavigation.refreshRequired,
 );
 
 // Methods
