@@ -63,15 +63,41 @@ class HttpMicrodataParserTest extends TestCase {
 		$parser = new HttpMicrodataParser($l);
 
 		$content = file_get_contents(__DIR__ . "/res_Microdata/$filename");
+		$content = $this->normalizeLineEndings($content);
 
 		$document = new \DOMDocument();
 		$document->loadHTML($content);
 
 		try {
 			$res = $parser->parse($document, 'http://example.com');
+			if (isset($res['recipeIngredient'])) {
+				$res['recipeIngredient'] = array_map(
+					fn($line) => str_replace(["\r\n", "\r"], "\n", $line),
+					$res['recipeIngredient']
+				);
+			}
+			if (isset($res['recipeInstructions'])) {
+				$res['recipeInstructions'] = array_map(
+					fn($line) => str_replace(["\r\n", "\r"], "\n", $line),
+					$res['recipeInstructions']
+				);
+			}
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_Microdata/$jsonFile");
+			$jsonDest = $this->normalizeLineEndings($jsonDest);
 			$expected = json_decode($jsonDest, true);
+			if (isset($expected['recipeIngredient'])) {
+				$expected['recipeIngredient'] = array_map(
+					fn($line) => str_replace(["\r\n", "\r"], "\n", $line),
+					$expected['recipeIngredient']
+				);
+			}
+			if (isset($expected['recipeInstructions'])) {
+				$expected['recipeInstructions'] = array_map(
+					fn($line) => str_replace(["\r\n", "\r"], "\n", $line),
+					$expected['recipeInstructions']
+				);
+			}
 
 			// $this->markTestSkipped();
 
@@ -167,5 +193,9 @@ class HttpMicrodataParserTest extends TestCase {
 		} catch (HtmlParsingException $ex) {
 			$this->assertFalse(true);
 		}
+	}
+
+	function normalizeLineEndings(string $text): string {
+		return str_replace(["\r\n", "\r"], "\n", $text);
 	}
 }
