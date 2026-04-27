@@ -1,6 +1,9 @@
 <template>
     <div class="wrapper">
-        <div v-if="isLoading || store.loadingRecipe" class="loading-indicator">
+        <div
+            v-if="isLoading || legacyStore.loadingRecipe"
+            class="loading-indicator"
+        >
             <LoadingIndicator :size="40" :delay="800" />
         </div>
         <div v-else>
@@ -119,7 +122,7 @@
                 <button class="button" @click="save()">
                     <span
                         :class="
-                            $store.state.savingRecipe
+                            legacyStore.savingRecipe
                                 ? 'icon-loading-small'
                                 : 'icon-checkmark'
                         "
@@ -167,12 +170,12 @@ import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGrou
 import EditTimeField from './FormComponents/EditTimeField.vue';
 import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 
-import { useStore } from '../store';
+import { useLegacyStore } from '../store';
 import emitter from '../bus';
 
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
-const store = useStore();
+const legacyStore = useLegacyStore();
 
 /* prettier-ignore */
 const CONFIRM_MSG = t('cookbook', 'You have unsaved changes! Do you still want to leave?');
@@ -339,10 +342,10 @@ const allRecipeOptions = computed(() =>
 );
 const overlayVisible = computed(
     () =>
-        store.state.loadingRecipe ||
-        store.state.reloadingRecipe ||
-        (store.state.categoryUpdating &&
-            store.state.categoryUpdating === recipe.value.recipeCategory),
+        legacyStore.loadingRecipe ||
+        legacyStore.reloadingRecipe ||
+        (legacyStore.categoryUpdating &&
+            legacyStore.categoryUpdating === recipe.value.recipeCategory),
 );
 const recipeWithoutValueInit = computed(() => {
     const r = { ...recipe.value };
@@ -477,14 +480,14 @@ const fetchKeywords = async () => {
 };
 const save = async () => {
     savingRecipe.value = true;
-    store.dispatch('setSavingRecipe', { saving: true });
+    legacyStore.setSavingRecipe({ saving: true });
     const request = (() => {
         if (route.name !== 'recipe-clone' && (route.params.id ?? false)) {
-            return store.dispatch('updateRecipe', {
+            return legacyStore.updateRecipe({
                 recipe: recipeWithCorrectedYield.value,
             });
         }
-        return store.dispatch('createRecipe', {
+        return legacyStore.createRecipe({
             recipe: recipeWithCorrectedYield.value,
         });
     })();
@@ -526,7 +529,7 @@ const save = async () => {
             log.error(e);
         }
     } finally {
-        store.dispatch('setSavingRecipe', {
+        legacyStore.setSavingRecipe({
             saving: false,
         });
         savingRecipe.value = false;
@@ -648,13 +651,13 @@ const setup = async () => {
 
         // Always set the active page last!
         if (route.name !== 'recipe-clone') {
-            store.dispatch('setPage', { page: 'edit' });
+            legacyStore.setPage({ page: 'edit' });
         } else {
-            store.dispatch('setPage', { page: 'create' });
+            legacyStore.setPage({ page: 'create' });
         }
     } else {
         initEmptyRecipe();
-        store.dispatch('setPage', { page: 'create' });
+        legacyStore.setPage({ page: 'create' });
     }
     initRecipe.value = JSON.parse(JSON.stringify(recipe.value));
     await nextTick();
@@ -663,30 +666,30 @@ const setup = async () => {
 
 const loadRecipeData = async () => {
     isLoading.value = true;
-    if (!store.state.recipe) {
+    if (!legacyStore.recipe) {
         // Make the control row show that a recipe is loading
-        store.dispatch('setLoadingRecipe', {
+        legacyStore.setLoadingRecipe({
             recipe: -1,
         });
-    } else if (store.state.recipe.id === parseInt(route.params.id, 10)) {
+    } else if (legacyStore.recipe.id === parseInt(route.params.id, 10)) {
         // Make the control row show that the recipe is reloading
-        store.dispatch('setReloadingRecipe', {
+        legacyStore.setReloadingRecipe({
             recipe: route.params.id,
         });
     }
     try {
         const response = await api.recipes.get(route.params.id);
 
-        store.dispatch('setRecipe', { recipe: response.data });
+        legacyStore.setRecipe({ recipe: response.data });
         recipe.value = response.data;
         await setup();
     } catch {
         await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
         // Disable loading indicator
-        if (store.state.loadingRecipe) {
-            store.dispatch('setLoadingRecipe', { recipe: 0 });
-        } else if (store.state.reloadingRecipe) {
-            store.dispatch('setReloadingRecipe', {
+        if (legacyStore.loadingRecipe) {
+            legacyStore.setLoadingRecipe({ recipe: 0 });
+        } else if (legacyStore.reloadingRecipe) {
+            legacyStore.setReloadingRecipe({
                 recipe: 0,
             });
         }
@@ -803,9 +806,9 @@ onBeforeUnmount(() => {
 
 // Initially load recipe data if necessary
 if (route.params.id) {
-    if (store.state.recipe?.id === route.params.id) {
+    if (legacyStore.recipe?.id === route.params.id) {
         // Load the recipe from store and make edits to a local copy first
-        recipe.value = { ...store.state.recipe };
+        recipe.value = { ...legacyStore.recipe };
     } else {
         loadRecipeData();
     }

@@ -42,6 +42,7 @@
     "linkifyjs": "^4.1.1",
     "lozad": "^1.16.0",
     "mitt": "^3.0.1",
+    "pinia": "^2.3.1",
     "sass": "^1.69.5",
     "sass-loader": "^16.0.5",
     "vue": "^2.7.15",
@@ -50,8 +51,7 @@
     "vue-modal-dialogs": "3.0.0",
     "vue-router": "^3.6.5",
     "vue-showdown": "^2.4.1",
-    "vuejs-logger": "^1.5.5",
-    "vuex": "^3.6.2"
+    "vuejs-logger": "^1.5.5"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.3",

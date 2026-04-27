@@ -70,7 +70,7 @@ import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
 import { NcButton } from '@nextcloud/vue';
 import { useIsMobile } from '../../composables/useIsMobile';
-import { useStore } from '../../store';
+import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
     RecipeCategoriesFilter as CategoriesFilter,
@@ -86,7 +86,7 @@ import RecipeSortSelect from './RecipeSortSelect.vue';
 import { AndOperator } from '../../js/LogicOperators';
 
 const isMobile = useIsMobile();
-const store = useStore();
+const legacyStore = useLegacyStore();
 
 const props = defineProps({
     loading: {
@@ -135,7 +135,7 @@ const orderBy = ref({
 });
 
 onMounted(() => {
-    store.dispatch('clearRecipeFilters');
+    legacyStore.clearRecipeFilters();
 });
 
 // ===================
@@ -206,7 +206,7 @@ const filteredRecipes = computed(() => {
     const recipeFilters = [
         filterValue.value.categories,
         filterValue.value.keywords,
-        new NamesFilter(store.state.recipeFilters, new AndOperator(), 'fuzzy'),
+        new NamesFilter(legacyStore.recipeFilters, new AndOperator(), 'fuzzy'),
     ];
     return applyRecipeFilters(props.recipes, recipeFilters);
 });
@@ -282,7 +282,7 @@ const recipeObjects = computed(() => {
 });
 
 const showFiltersInRecipeList = computed(
-    () => store.state.localSettings.showFiltersInRecipeList,
+    () => legacyStore.localSettings.showFiltersInRecipeList,
 );
 </script>
 

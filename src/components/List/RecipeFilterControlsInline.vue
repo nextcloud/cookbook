@@ -200,7 +200,7 @@ const {
     localFiltersValue,
     categoriesOperatorToggleValue,
     keywordsOperatorToggleValue,
-    store,
+    legacyStore,
 } = useRecipeFilterControls(props);
 
 const emittedValue = computed(() => ({
@@ -210,7 +210,7 @@ const emittedValue = computed(() => ({
 
 function submitFilters() {
     emit('input', emittedValue.value);
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
     emit('close');
 }
 
@@ -220,7 +220,7 @@ function submitOrderBy() {
 
 function clearSearchTerm() {
     searchTerm.value = '';
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
 }
 
 function clearFilters() {
@@ -231,7 +231,7 @@ function clearFilters() {
 }
 
 function submitNameFilter() {
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
 }
 </script>
 
