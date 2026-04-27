@@ -1,3 +1,3 @@
 # Maintenance
 
-- Use more modern Pinia global state managemen in frontend in favor of old Vuex
+- Use more modern Pinia global state management in frontend in favor of old Vuex
