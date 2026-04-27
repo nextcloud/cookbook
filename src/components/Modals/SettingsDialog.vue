@@ -33,6 +33,28 @@
                         />
                     </li>
                     <li>
+                        <label class="settings-input">{{
+                            t('cookbook', 'My Recipes folder')
+                        }}</label>
+                        <input
+                            type="text"
+                            :value="myRecipesFolder"
+                            :placeholder="t('cookbook', 'Please pick a folder')"
+                            @click="pickMyRecipesFolder"
+                        />
+                    </li>
+                    <li>
+                        <label class="settings-input">{{
+                            t('cookbook', 'Shared Recipes folder')
+                        }}</label>
+                        <input
+                            type="text"
+                            :value="SharedRecipesFolder"
+                            :placeholder="t('cookbook', 'Please pick a folder')"
+                            @click="pickSharedRecipesFolder"
+                        />
+                    </li>
+                    <li>
                         <label class="settings-input">
                             {{ t('cookbook', 'Update interval in minutes') }}
                         </label>
@@ -380,6 +402,90 @@ const pickRecipeFolder = () => {
         .catch((ev) => {
             log.warn(
                 `Could not select new recipe folder. Error Message: ${ev.message}`,
+            );
+        });
+};
+
+/**
+ * Select a recipe folder using the Nextcloud file picker
+ */
+const pickMyRecipesFolder = () => {
+    const filePicker = getFilePickerBuilder(
+        t('cookbook', 'Path to your personal recipes collection'),
+    )
+        .addMimeTypeFilter('httpd/unix-directory')
+        .allowDirectories(true)
+        .setType(FilePickerType.Choose)
+        .startAt(recipeFolder)
+        .build();
+    filePicker
+        .pick()
+        .then((path) => {
+            store
+                .dispatch('updateMyRecipesDirectory', { dir: path })
+                .then(() => store.dispatch('refreshConfig'))
+                .then(() => {
+                    myRecipesFolder.value = path;
+                    if (route.path !== '/') {
+                        router.push('/');
+                    }
+                })
+                .catch(() =>
+                    showSimpleAlertModal(
+                        // prettier-ignore
+                        t('cookbook','Could not set my recipes folder to {path}',
+                        {
+                            path
+                        }
+                    ),
+                    ),
+                );
+        })
+        .catch((ev) => {
+            log.warn(
+                `Could not select new my recipes folder. Error Message: ${ev.message}`,
+            );
+        });
+};
+
+/**
+ * Select a recipe folder using the Nextcloud file picker
+ */
+const pickSharedRecipesFolder = () => {
+    const filePicker = getFilePickerBuilder(
+        t('cookbook', 'Path to your shared recipes collection'),
+    )
+        .addMimeTypeFilter('httpd/unix-directory')
+        .allowDirectories(true)
+        .setType(FilePickerType.Choose)
+        .startAt(recipeFolder)
+        .build();
+    filePicker
+        .pick()
+        .then((path) => {
+            store
+                .dispatch('updateSharedRecipesDirectory', { dir: path })
+                .then(() => store.dispatch('refreshConfig'))
+                .then(() => {
+                    SharedRecipesFolder.value = path;
+                    if (route.path !== '/') {
+                        router.push('/');
+                    }
+                })
+                .catch(() =>
+                    showSimpleAlertModal(
+                        // prettier-ignore
+                        t('cookbook','Could not set shared recipes folder to {path}',
+                        {
+                            path
+                        }
+                    ),
+                    ),
+                );
+        })
+        .catch((ev) => {
+            log.warn(
+                `Could not select new shared recipes folder. Error Message: ${ev.message}`,
             );
         });
 };

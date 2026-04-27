@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OCA\Cookbook\Controller\UtilApiController
- * @covers \OCA\Cookbook\Exception\UserFolderNotWritableException
+ * @covers \OCA\Cookbook\Exception\FolderNotWritableException
  */
 class UtilApiControllerTest extends TestCase {
 	/**

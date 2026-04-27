@@ -5,11 +5,11 @@ namespace OCA\Cookbook\Helper;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
 
 /**
- * This class caches the access to the user folder throughout the app.
+ * This class caches the access to the shared recipes folder throughout the app.
  *
- * The user folder is the path, were all recipes are stored.
+ * The shared recipes folder is the path, were all recipes are stored.
  */
-class UserFolderHelper extends FolderHelper {
+class SharedRecipesFolderHelper extends FolderHelper {
 	/**
 	 * Set the current path in the settings relative to the user's root folder
 	 *
@@ -17,19 +17,19 @@ class UserFolderHelper extends FolderHelper {
 	 */
 	#[\Override]
 	public function setPath(string $path) {
-		$this->config->setFolderName($path);
+		$this->config->setSharedRecipesFolderName($path);
 		$this->cache = null;
 	}
 
 	/**
-	 * Get the path of the user app folder relative to the user's root folder
+	 * Get the path of the shared recipes relative to the user's root folder
 	 *
 	 * @return string The relative path name
 	 * @throws UserNotLoggedInException If there is currently no logged in user
 	 */
 	#[\Override]
 	public function getPath(): string {
-		$path = $this->config->getFolderName();
+		$path = $this->config->getSharedRecipesFolderName();
 
 		// TODO This was in the original code. Is it still needed?
 		// $path = str_replace('//', '/', $path);

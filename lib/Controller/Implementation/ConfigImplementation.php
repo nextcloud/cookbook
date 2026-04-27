@@ -2,7 +2,9 @@
 
 namespace OCA\Cookbook\Controller\Implementation;
 
+use OCA\Cookbook\Helper\MyRecipesFolderHelper;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
@@ -18,17 +20,25 @@ class ConfigImplementation {
 	private $restParser;
 	/** @var UserFolderHelper */
 	private $userFolder;
+	/** @var MyRecipesFolderHelper */
+	private $myRecipesFolder;
+	/** @var SharedRecipesFolderHelper */
+	private $sharedRecipesFolder;
 
 	public function __construct(
 		RecipeService $recipeService,
 		DbCacheService $dbCacheService,
 		RestParameterParser $restParser,
 		UserFolderHelper $userFolder,
+		MyRecipesFolderHelper $myRecipesFolder,
+		SharedRecipesFolderHelper $sharedRecipesFolder,
 	) {
 		$this->service = $recipeService;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
 		$this->userFolder = $userFolder;
+		$this->myRecipesFolder = $myRecipesFolder;
+		$this->sharedRecipesFolder = $sharedRecipesFolder;
 	}
 
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visibleInfoBlocks';
@@ -43,6 +53,8 @@ class ConfigImplementation {
 
 		return new JSONResponse([
 			'folder' => $this->userFolder->getPath(),
+			'my_recipes_folder' => $this->myRecipesFolder->getPath(),
+			'shared_recipes_folder' => $this->sharedRecipesFolder->getPath(),
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
 			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
@@ -64,6 +76,16 @@ class ConfigImplementation {
 
 		if (isset($data['folder'])) {
 			$this->userFolder->setPath($data['folder']);
+			$this->dbCacheService->updateCache();
+		}
+
+		if (isset($data['my_recipes_folder'])) {
+			$this->myRecipesFolder->setPath($data['my_recipes_folder']);
+			$this->dbCacheService->updateCache();
+		}
+
+		if (isset($data['shared_recipes_folder'])) {
+			$this->sharedRecipesFolder->setPath($data['shared_recipes_folder']);
 			$this->dbCacheService->updateCache();
 		}
 

@@ -4,15 +4,18 @@ namespace OCA\Cookbook\Service;
 
 use Exception;
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\FolderNotValidException;
+use OCA\Cookbook\Exception\FolderNotWritableException;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
-use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
+use OCA\Cookbook\Helper\MyRecipesFolderHelper;
+use OCA\Cookbook\Helper\SharedRecipesFolderHelper;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -39,6 +42,14 @@ class RecipeService {
 	 * @var UserFolderHelper
 	 */
 	private $userFolder;
+	/**
+	 * @var MyRecipesFolderHelper
+	 */
+	private $myRecipesFolder;
+	/**
+	 * @var SharedRecipesFolderHelper
+	 */
+	private $sharedRecipesFolder;
 	private $logger;
 
 	/**
@@ -75,6 +86,8 @@ class RecipeService {
 		RecipeDb $db,
 		UserConfigHelper $userConfigHelper,
 		UserFolderHelper $userFolder,
+		MyRecipesFolderHelper $myRecipesFolder,
+		SharedRecipesFolderHelper $sharedRecipesFolder,
 		ImageService $imageService,
 		RecipeNameHelper $recipeNameHelper,
 		IL10N $il10n,
@@ -216,14 +229,14 @@ class RecipeService {
 		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
-		$user_folder = $this->userFolder->getFolder();
+		$my_recipes_folder = $this->myRecipesFolder->getFolder();
 		$recipe_folder = null;
 
 		$recipeFolderName = $this->recipeNameHelper->getFolderName($json['name']);
 
 		if (isset($json['id']) && $json['id']) {
 			// Recipe already has an id, update it
-			$recipe_folder = $user_folder->getById($json['id'])[0];
+			$recipe_folder = $my_recipes_folder->getById($json['id'])[0];
 			if (!($recipe_folder instanceof Folder)) {
 				throw new \RuntimeException($this->il10n->t('Unexpected node received for recipe folder.'));
 			}
@@ -233,7 +246,7 @@ class RecipeService {
 
 			// The recipe is being renamed, move the folder
 			if ($old_path !== $new_path) {
-				if ($user_folder->nodeExists($recipeFolderName)) {
+				if ($my_recipes_folder->nodeExists($recipeFolderName)) {
 					throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 				}
 
@@ -244,11 +257,11 @@ class RecipeService {
 			// This is a new recipe, create it
 			$json['dateCreated'] = $now;
 
-			if ($user_folder->nodeExists($recipeFolderName)) {
+			if ($my_recipes_folder->nodeExists($recipeFolderName)) {
 				throw new RecipeExistsException($this->il10n->t('Another recipe with that name already exists'));
 			}
 
-			$recipe_folder = $user_folder->newFolder($recipeFolderName);
+			$recipe_folder = $my_recipes_folder->newFolder($recipeFolderName);
 		}
 
 		// Write JSON file to disk
@@ -367,8 +380,16 @@ class RecipeService {
 	 * @return array
 	 */
 	public function getRecipeFiles() {
-		$user_folder = $this->userFolder->getFolder();
-		$recipe_folders = $user_folder->getDirectoryListing();
+		$my_recipes_folder = $this->myRecipesFolder->getFolder();
+		$recipe_folders = $my_recipes_folder->getDirectoryListing();
+
+		$shared_recipes_folder = $this->sharedRecipesFolder->getFolder();
+		$shared_recipes_folders = $shared_recipes_folder->getDirectoryListing();
+
+		foreach ($shared_recipes_folders as $shared_recipe_folder) {
+			$recipe_folders = [...$recipe_folders, ...$shared_recipe_folder->getDirectoryListing()];
+		}
+
 		$recipe_files = [];
 
 		foreach ($recipe_folders as $recipe_folder) {
@@ -391,7 +412,7 @@ class RecipeService {
 	public function updateSearchIndex() {
 		try {
 			$this->migrateFolderStructure();
-		} catch (UserFolderNotWritableException $ex) {
+		} catch (FolderNotWritableException $ex) {
 			// Ignore migration if not permitted.
 			$this->logger->warning('Cannot migrate cookbook file structure as not permitted.');
 			throw $ex;
@@ -408,25 +429,54 @@ class RecipeService {
 
 		// Restructure files if needed
 		$user_folder = $this->userFolder->getFolder();
+		$my_recipes_folder = $this->myRecipesFolder->getFolder();
+		$shared_recipes_folder = $this->sharedRecipesFolder->getFolder();
 
-		foreach ($user_folder->getDirectoryListing() as $node) {
+		if (!$user_folder->isSubNode($my_recipes_folder) || !$user_folder->isSubNode($shared_recipes_folder)) {
+			$this->logger->warning('Cannot migrate cookbook file structure as Cookbook subfolders are not within the main Cookbook folder.');
+			throw new FolderNotValidException('Cannot migrate cookbook file structure as Cookbook subfolders are not within the main Cookbook folder.');
+		}
+
+		if ($user_folder->getOwner()->getUID() !== $this->user_id) {
+			// moving user folder to a shared folder since it's not owned by the current user
+			$user_folder->move($shared_recipes_folder->getPath() . '/' . $user_folder->getOwner()->getUID());
+			$user_folder = $this->userFolder->getFolder();
+		}
+
+		$recipe_folders = [...$user_folder->getDirectoryListing(), ...$my_recipes_folder->getDirectoryListing()];
+
+		foreach ($recipe_folders as $node) {
 			// Move JSON files from the user directory into its own folder
 			if ($this->isRecipeFile($node)) {
 				$recipe_name = str_replace('.json', '', $node->getName());
 
 				$node->move($node->getPath() . '_tmp');
 
-				$recipe_folder = $user_folder->newFolder($recipe_name);
+				$recipe_folder = $my_recipes_folder->newFolder($recipe_name);
 
 				$node->move($recipe_folder->getPath() . '/recipe.json');
 
-			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
-				// Rename folders with .json extensions (this was likely caused by a migration bug)
-				$node->move(str_replace('.json', '', $node->getPath()));
+			} elseif ($node instanceof Folder) {
+				if (strpos($node->getName(), '.json')) {
+					// Rename folders with .json extensions (this was likely caused by a migration bug)
+					$node->move($my_recipes_folder->getPath() . '/' . str_replace('.json', '', $node->getName()));
+				} elseif ($this->getRecipeFileByFolderId($node->getId())) {
+					if (($node->getOwner()->getUID() == $this->user_id) && ($node->getParent() != $my_recipes_folder)) {
+						$node->move($my_recipes_folder->getPath() . '/' . $node->getName());
+					} elseif (($node->getOwner()->getUID() !== $this->user_id) && ($node->getParent()->getParent() != $shared_recipes_folder)) {
+						$other_user_folder = $shared_recipes_folder->newFolder($node->getOwner()->GetUID());
+						if ($other_user_folder->GetOwner()->getUID() == $this->user_id) {
+							$node->move($other_user_folder->getPath() . '/' . $node->getName());
+						} elseif (($other_user_folder->GetOwner()->getUID() !== $this->user_id) && ($other_user_folder->nodeExists($node->getName()))) {
+							$node->delete();
+						} else {
+							$this->logger->warning('Could not determine what to do about recipe "' . $node->getName() . '". Please fix it manually (currently located at "' . $node->getPath() . '")');
+						}
+					}
+				}
 			}
 		}
 	}
-
 	/**
 	 * Gets all keywords from the index
 	 *

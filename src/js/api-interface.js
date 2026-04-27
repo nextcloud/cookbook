@@ -104,6 +104,14 @@ function updateRecipeDirectory(newDir) {
     return instance.post(`${baseUrl}/config`, { folder: newDir });
 }
 
+function updateMyRecipesDirectory(newDir) {
+    return instance.post(`${baseUrl}/config`, { my_recipes_folder: newDir });
+}
+
+function updateSharedRecipesDirectory(newDir) {
+    return instance.post(`${baseUrl}/config`, { shared_recipes_folder: newDir });
+}
+
 function updateVisibleInfoBlocks(visibleInfoBlocks) {
     return instance.post(`${baseUrl}/config`, { visibleInfoBlocks });
 }
@@ -134,8 +142,14 @@ export default {
     },
     config: {
         get: getConfig,
-        directory: {
+        mainDirectory: {
             update: updateRecipeDirectory,
+        },
+        myRecipesDirectory: {
+            update: updateMyRecipesDirectory,
+        },
+        sharedRecipesDirectory: {
+            update: updateSharedRecipesDirectory,
         },
         printImage: {
             update: updatePrintImageSetting,
