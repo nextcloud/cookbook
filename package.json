@@ -51,7 +51,7 @@
     "vue-modal-dialogs": "3.0.0",
     "vue-router": "^3.6.5",
     "vue-showdown": "^3.3.0",
-    "vuejs-logger": "^1.5.5"
+    "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.3",
