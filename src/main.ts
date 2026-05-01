@@ -21,6 +21,7 @@ import setupLogging from './js/logging';
 
 import router from './router';
 import { useLegacyStore } from './store';
+import { setApp } from 'cookbook/js/api-interface';
 
 import AppMain from './components/AppMain.vue';
 
@@ -84,6 +85,7 @@ app.use(VueShowdown, {
 // TODO Vue.use(ModalDialogs);
 
 setupLogging(app);
+setApp(app);
 
 // Pass translation engine to Vue
 app.config.globalProperties.t = window.t;
