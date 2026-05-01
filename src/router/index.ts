@@ -4,7 +4,7 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import { createRouter, createWebHistory, Router } from 'vue-router';
+import { createRouter, createWebHashHistory, Router } from 'vue-router';
 
 import Index from '../components/AppIndex.vue';
 import NotFound from '../components/NotFound.vue';
@@ -65,14 +65,14 @@ const routes = [
 	{ path: '/', name: 'index', component: Index },
 
 	// Anything not matched goes to NotFound
-	{ path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound },
+	{ path: '/:pathMatch(.+)*', name: 'not-found', component: NotFound },
 ];
 
 let _router: Router;
 
 export function createMainRouter() {
 	_router = createRouter({
-		history: createWebHistory(),
+		history: createWebHashHistory(),
 		routes,
 	});
 }
