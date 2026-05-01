@@ -10,9 +10,10 @@
 // Markdown
 import VueShowdown from 'vue-showdown';
 
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 
-import * as ModalDialogs from 'vue-modal-dialogs';
+// TODO
+// import * as ModalDialogs from 'vue-modal-dialogs';
 
 import { createPinia } from 'pinia';
 
@@ -51,13 +52,23 @@ declare module 'vue/types/vue' {
 	}
 }
 
-const app = createApp({
+const app = createApp(AppMain);
+
+/*const app = createApp({
 	extends: AppMain,
+	name: 'RootApp',
 	beforeCreate() {
 		const legacyStore = useLegacyStore();
 		legacyStore.refreshConfig();
 		legacyStore.initializeStore();
 	},
+});*/
+
+const app2 = createApp({
+	// template: '<div>hello</div>',
+	render() {
+		return h('div', 'hello');
+	}
 });
 
 // TODO Check dev mode for debugging
@@ -98,6 +109,11 @@ app.config.globalProperties.n = window.n;
 const pinia = createPinia();
 app.use(pinia);
 
+// Only create the store after `use`ing the pinia store
+const legacyStore = useLegacyStore();
+legacyStore.refreshConfig();
+legacyStore.initializeStore();
+
 // Start the app once document is done loading
 app.$log.info('Main is done. Creating App.');
 
@@ -112,4 +128,7 @@ app.$log.info('Main is done. Creating App.');
 // 	},
 // });
 
-app.$mount('#content');
+app2.use(pinia);
+app2.use(router);
+
+app.mount('#content');
