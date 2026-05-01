@@ -197,7 +197,7 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router/composables';
+import { useRoute } from 'vue-router';
 import {
     NcActions,
     NcActionButton,

@@ -150,7 +150,7 @@ import {
     onBeforeRouteLeave,
     onBeforeRouteUpdate,
     useRoute,
-} from 'vue-router/composables';
+} from 'vue-router';
 
 import { NcActions, NcActionButton } from '@nextcloud/vue';
 
