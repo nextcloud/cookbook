@@ -200,7 +200,7 @@ import api from 'cookbook/js/api-interface';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import { enableLogging } from 'cookbook/js/logging';
-import { useRoute, useRouter } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router';
 import { useLegacyStore } from '../../store';
 import { SHOW_SETTINGS_EVENT } from '../../composables/useSettingsDialog';
 

@@ -364,7 +364,7 @@ import {
     onBeforeRouteUpdate,
     useRoute,
     useRouter,
-} from 'vue-router/composables';
+} from 'vue-router';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';

@@ -10,7 +10,7 @@
 
 <script setup>
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
-import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
