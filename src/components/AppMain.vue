@@ -15,7 +15,8 @@
                 @click="closeNavigation"
             />
         </NcAppContent>
-        <dialogs-wrapper></dialogs-wrapper>
+        <!-- <dialogs-wrapper></dialogs-wrapper> -->
+        <!-- TODO: Add settings dialog -->
         <SettingsDialog />
     </NcContent>
 </template>
