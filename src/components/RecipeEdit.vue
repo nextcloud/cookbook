@@ -571,7 +571,7 @@ const initClone = () => {
     recipe.value.id = 0;
 
     // Update
-    // eslint-disable-next-line no-template-curly-in-string
+     
     recipe.value.name = t('cookbook', 'Clone of {name}', {
         name: recipe.value.name,
     });
@@ -774,12 +774,12 @@ onMounted(() => {
         // Update selectable categories
         const idx = allCategories.value.findIndex((c) => c === val[1]);
         if (idx >= 0) {
-            // eslint-disable-next-line prefer-destructuring
+             
             allCategories.value[idx] = val[0];
         }
         // Update selected category if the currently selected was renamed
         if (recipe.value.recipeCategory === val[1]) {
-            // eslint-disable-next-line prefer-destructuring
+             
             recipe.value.recipeCategory = val[0];
         }
     });

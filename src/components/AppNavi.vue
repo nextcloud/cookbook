@@ -263,7 +263,7 @@ const downloadRecipe = async () => {
                     await showSimpleAlertModal(e2.response.data);
                 }
             } else {
-                // eslint-disable-next-line no-console
+                 
                 console.error(e2);
                 await showSimpleAlertModal(
                     /* prettier-ignore */
@@ -271,7 +271,7 @@ const downloadRecipe = async () => {
                 );
             }
         } else {
-            // eslint-disable-next-line no-console
+             
             console.error(e2);
             await showSimpleAlertModal(
                 /* prettier-ignore */
@@ -321,7 +321,7 @@ const getCategories = async () => {
         for (let i = 0; i < categories.value.length; i++) {
             // Reload recipes in open categories
             if (!categoryItemElements[i]) {
-                // eslint-disable-next-line no-continue
+                 
                 continue;
             }
             if (categoryItemElements[i][0].opened) {

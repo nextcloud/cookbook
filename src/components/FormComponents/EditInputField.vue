@@ -69,7 +69,7 @@ const props = defineProps({
         default: () => [],
     },
     // Value (passed in v-model)
-    // eslint-disable-next-line vue/require-prop-types
+     
     value: {
         type: String,
         default: '',

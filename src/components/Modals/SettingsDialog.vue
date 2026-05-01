@@ -281,7 +281,7 @@ watch(
     },
 );
 
-// eslint-disable-next-line no-unused-vars
+ 
 watch(
     () => showFiltersInRecipeList.value,
     (newVal) => {
@@ -333,7 +333,7 @@ watch(
             await legacyStore.refreshConfig();
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch (err) {
-            // eslint-disable-next-line no-console
+             
             console.error('Error while trying to save info blocks', err);
             await showSimpleAlertModal(
                 t('cookbook', 'Could not save visible info blocks'),

@@ -66,7 +66,7 @@ app.config.performance = import.meta.env.MODE === 'development';
 helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
-// eslint-disable-next-line no-param-reassign
+ 
 window.escapeHTML = helpers.escapeHTML;
 
 // Also make the injections available in Vue components
