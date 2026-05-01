@@ -26,6 +26,9 @@ import { setApp as setAppInApiInterface } from 'cookbook/js/api-interface';
 
 import AppMain from './components/AppMain.vue';
 
+console.log('Mode: ', import.meta.env.MODE);
+
+
 declare global {
 	interface Window {
 		OC:
@@ -132,3 +135,4 @@ app2.use(pinia);
 app2.use(router);
 
 app.mount('#content');
+
