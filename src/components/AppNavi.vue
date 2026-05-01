@@ -27,9 +27,7 @@
                 :to="'/'"
             >
                 <template #counter>
-                    <nc-counter-bubble>{{
-                        totalRecipeCount
-                    }}</nc-counter-bubble>
+                    <nc-counter-bubble :count="totalRecipeCount" />
                 </template>
             </NcAppNavigationItem>
 
@@ -39,7 +37,7 @@
                 :to="'/category/_/'"
             >
                 <template #counter>
-                    <nc-counter-bubble>{{ uncatRecipes }}</nc-counter-bubble>
+                    <nc-counter-bubble :count="uncatRecipes" />
                 </template>
             </NcAppNavigationItem>
 
@@ -72,7 +70,7 @@
                 "
             >
                 <template #counter>
-                    <nc-counter-bubble>{{ cat.recipeCount }}</nc-counter-bubble>
+                    <nc-counter-bubble :count="cat.recipeCount" />
                 </template>
             </NcAppNavigationItem>
         </template>
