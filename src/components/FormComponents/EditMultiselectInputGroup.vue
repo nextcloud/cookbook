@@ -63,8 +63,6 @@ import {
     defineEmits,
     computed,
     onBeforeMount,
-    set,
-    del,
 } from 'vue';
 
 import { NcButton, NcSelect } from '@nextcloud/vue';
@@ -167,7 +165,7 @@ function deleteEntry(index) {
     const data = { ...props.value };
     const { key } = rowsFromValue.value[index].selectedOption;
     delete data[key];
-    del(rowKeys.value, key);
+    delete rowKeys.value[key];
     emits('input', data);
 }
 
@@ -175,7 +173,7 @@ function deleteEntry(index) {
 function newRowByOption(ev) {
     const data = { ...props.value };
     data[ev.key] = '';
-    set(rowKeys.value, ev.key, nextKey.value);
+    rowKeys.value[ev.key] = nextKey.value;
     nextKey.value += 1;
     emits('input', data);
 }
@@ -200,7 +198,7 @@ function updateByOption(ev, index) {
 
 onBeforeMount(() => {
     valueFilteredKeys.value.forEach((x, idx) => {
-        set(rowKeys.value, x, idx);
+        rowKeys.value[x] = idx;
     });
     Object.keys(rowKeys.value).forEach((rkKey) => {
         const rk = rowKeys.value[rkKey];
