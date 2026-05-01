@@ -144,7 +144,7 @@ onMounted(() => {
     emitter.off('categoryRenamed');
     emitter.on('categoryRenamed', (val) => {
         if (
-            // eslint-disable-next-line no-underscore-dangle
+             
             isComponentActive.value &&
             props.query === 'cat' &&
             route.params.value === val[1]

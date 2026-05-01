@@ -5,7 +5,7 @@ import BinaryOperator from './BinaryOperator';
  * @extends BinaryOperator
  */
 class OrOperator extends BinaryOperator {
-    // eslint-disable-next-line class-methods-use-this
+     
     get toString() {
         return 'OR';
     }
@@ -16,7 +16,7 @@ class OrOperator extends BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @returns {boolean} The result after applying the OR operation.
      */
-    // eslint-disable-next-line class-methods-use-this
+     
     apply(result, current) {
         return result || current;
     }

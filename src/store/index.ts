@@ -262,5 +262,4 @@ const useLegacyStore = defineStore('legacyStore', {
 	},
 });
 
-// eslint-disable-next-line import/prefer-default-export
 export { useLegacyStore };
