@@ -19,9 +19,9 @@ import { createPinia, PiniaVuePlugin } from 'pinia';
 import helpers from './js/helper';
 import setupLogging from './js/logging';
 
-import router from './router';
+import { createMainRouter, getRouter } from './router';
 import { useLegacyStore } from './store';
-import { setApp } from 'cookbook/js/api-interface';
+import { setApp as setAppInApiInterface } from 'cookbook/js/api-interface';
 
 import AppMain from './components/AppMain.vue';
 
@@ -63,6 +63,10 @@ const app = createApp({
 // TODO Check dev mode for debugging
 app.config.performance = import.meta.env.MODE === 'development';
 
+createMainRouter();
+const router = getRouter();
+app.use(router);
+
 // Register helper functions
 helpers.useRouter(router);
 
@@ -85,7 +89,7 @@ app.use(VueShowdown, {
 // TODO Vue.use(ModalDialogs);
 
 setupLogging(app);
-setApp(app);
+setAppInApiInterface(app);
 
 // Pass translation engine to Vue
 app.config.globalProperties.t = window.t;
