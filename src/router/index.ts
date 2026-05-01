@@ -4,7 +4,6 @@
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from 'vue';
 import { createRouter, createWebHistory, Router } from 'vue-router';
 
 import Index from '../components/AppIndex.vue';
