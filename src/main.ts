@@ -57,16 +57,6 @@ declare module 'vue/types/vue' {
 
 const app = createApp(AppMain);
 
-/*const app = createApp({
-	extends: AppMain,
-	name: 'RootApp',
-	beforeCreate() {
-		const legacyStore = useLegacyStore();
-		legacyStore.refreshConfig();
-		legacyStore.initializeStore();
-	},
-});*/
-
 const app2 = createApp({
 	// template: '<div>hello</div>',
 	render() {
@@ -118,21 +108,11 @@ legacyStore.refreshConfig();
 legacyStore.initializeStore();
 
 // Start the app once document is done loading
-app.$log.info('Main is done. Creating App.');
+// app.$log.info('Main is done. Creating App.');
 
-// const App = Vue.extend(AppMain);
-// new App({
-// 	router,
-// 	pinia,
-// 	beforeCreate() {
-// 		const legacyStore = useLegacyStore();
-// 		legacyStore.refreshConfig();
-// 		legacyStore.initializeStore();
-// 	},
-// });
 
-app2.use(pinia);
-app2.use(router);
+// app2.use(pinia);
+// app2.use(router);
 
 app.mount('#content');
 
