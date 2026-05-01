@@ -14,7 +14,7 @@ import { createApp } from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
-import { createPinia, PiniaVuePlugin } from 'pinia';
+import { createPinia } from 'pinia';
 
 import helpers from './js/helper';
 import setupLogging from './js/logging';
@@ -95,8 +95,8 @@ setAppInApiInterface(app);
 app.config.globalProperties.t = window.t;
 app.config.globalProperties.n = window.n;
 
-app.use(PiniaVuePlugin);
 const pinia = createPinia();
+app.use(pinia);
 
 // Start the app once document is done loading
 app.$log.info('Main is done. Creating App.');
