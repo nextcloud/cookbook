@@ -10,7 +10,7 @@
 // Markdown
 import VueShowdown from 'vue-showdown';
 
-import Vue from 'vue';
+import { createApp } from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
@@ -23,8 +23,6 @@ import router from './router';
 import { useLegacyStore } from './store';
 
 import AppMain from './components/AppMain.vue';
-
-Vue.config.devtools = import.meta.env.MODE === 'development';
 
 declare global {
 	interface Window {
@@ -52,6 +50,19 @@ declare module 'vue/types/vue' {
 	}
 }
 
+const app = createApp({
+	extends: AppMain,
+	beforeCreate() {
+		const legacyStore = useLegacyStore();
+		legacyStore.refreshConfig();
+		legacyStore.initializeStore();
+	},
+});
+
+// TODO Check dev mode for debugging
+app.config.performance = import.meta.env.MODE === 'development';
+
+// Register helper functions
 helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
@@ -59,37 +70,40 @@ helpers.useRouter(router);
 window.escapeHTML = helpers.escapeHTML;
 
 // Also make the injections available in Vue components
-Vue.prototype.$window = window;
-Vue.prototype.OC = window.OC;
+app.config.globalProperties.$window = window;
+app.config.globalProperties.OC = window.OC;
 
 // Markdown for Vue
-Vue.use(VueShowdown, {
+app.use(VueShowdown, {
 	// set default flavor for Markdown
 	flavor: 'vanilla',
 });
 
 // TODO: Equivalent library for Vue3 when we make that transition:
 // https://github.com/rlemaigre/vue3-promise-dialog
-Vue.use(ModalDialogs);
+// TODO Vue.use(ModalDialogs);
 
-setupLogging(Vue);
+setupLogging(app);
 
 // Pass translation engine to Vue
-Vue.prototype.t = window.t;
-Vue.prototype.n = window.n;
+app.config.globalProperties.t = window.t;
+app.config.globalProperties.n = window.n;
 
-Vue.use(PiniaVuePlugin);
+app.use(PiniaVuePlugin);
 const pinia = createPinia();
 
 // Start the app once document is done loading
-Vue.$log.info('Main is done. Creating App.');
-const App = Vue.extend(AppMain);
-new App({
-	router,
-	pinia,
-	beforeCreate() {
-		const legacyStore = useLegacyStore();
-		legacyStore.refreshConfig();
-		legacyStore.initializeStore();
-	},
-}).$mount('#content');
+app.$log.info('Main is done. Creating App.');
+
+// const App = Vue.extend(AppMain);
+// new App({
+// 	router,
+// 	pinia,
+// 	beforeCreate() {
+// 		const legacyStore = useLegacyStore();
+// 		legacyStore.refreshConfig();
+// 		legacyStore.initializeStore();
+// 	},
+// });
+
+app.$mount('#content');
