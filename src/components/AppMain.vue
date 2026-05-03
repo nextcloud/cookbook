@@ -14,6 +14,12 @@
                 :class="{ 'stay-open': isNavigationOpen }"
                 @click="closeNavigation"
             />
+            <NcDialog
+                :open="isDialogOpen"
+                :buttons="buttons"
+                :name="dialogTitle"
+                :message="dialogMessage"
+                @update:open="handleDialogClose" />
         </NcAppContent>
         <!-- <dialogs-wrapper></dialogs-wrapper> -->
         <!-- TODO: Add settings dialog -->
@@ -23,12 +29,13 @@
 
 <script setup>
 import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
-import { NcAppContent, NcContent } from '@nextcloud/vue';
+import { NcAppContent, NcContent, NcDialog } from '@nextcloud/vue';
 import AppControls from 'cookbook/components/AppControls/AppControls.vue';
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus';
 import AppNavi from './AppNavi.vue';
 import SettingsDialog from './Modals/SettingsDialog.vue';
 import { useIsMobile } from '../composables/useIsMobile';
+import { useCookbookDialogs } from 'cookbook/composables/useCookbookDialogs';
 
 const log = getCurrentInstance().proxy.$log;
 const isMobile = useIsMobile();
@@ -69,6 +76,12 @@ onMounted(() => {
 onUnmounted(() => {
     unsubscribe('navigation-toggled', updateAppNavigationOpen);
 });
+
+const { close, isDialogOpen, buttons, dialogTitle, dialogMessage } = useCookbookDialogs();
+
+function handleDialogClose(ev) {
+    close();
+}
 </script>
 
 <script>
