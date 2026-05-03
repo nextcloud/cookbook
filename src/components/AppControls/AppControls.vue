@@ -83,6 +83,17 @@
             </template>
             {{ t('cookbook', 'Save') }}
         </NcButton>
+        <NcButton
+            v-if="isIndex"
+            type="primary"
+            :aria-label="t('cookbook', 'Edit')"
+            @click="showSimpleAlertModal('Test message')"
+        >
+            <template #icon>
+                <PencilIcon :size="20" />
+            </template>
+            {{ t('cookbook', 'Edit') }}
+        </NcButton>
         <!-- This is clumsy design but the component cannot display just one input element on the breadcrumbs bar -->
         <NcActions
             v-if="isIndex"
