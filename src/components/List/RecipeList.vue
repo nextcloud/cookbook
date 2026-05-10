@@ -248,12 +248,18 @@ const recipesDateModifiedDesc = computed(() =>
 
 // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
 const recipeObjects = computed(() => {
+    // Materialise the filter match-set into a Set once per recomputation.
+    // The previous "filteredRecipes.value.map(...).includes(...)" pattern
+    // ran an O(N) scan inside the per-recipe map() — i.e. O(N^2) overall,
+    // which is roughly a billion operations and a multi-second freeze on
+    // a 30k-recipe cookbook. Set.has() is O(1).
+    const filteredIds = new Set(
+        filteredRecipes.value.map((r) => r.recipe_id),
+    );
     function makeObject(rec) {
         return {
             recipe: rec,
-            show: filteredRecipes.value
-                .map((r) => r.recipe_id)
-                .includes(rec.recipe_id),
+            show: filteredIds.has(rec.recipe_id),
         };
     }
 
