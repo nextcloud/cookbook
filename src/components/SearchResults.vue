@@ -16,12 +16,14 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 <script setup lang="ts">
 import {
+    markRaw,
     onActivated,
     onDeactivated,
     onMounted,
     ref,
     computed,
     watch,
+    shallowRef,
 } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
@@ -57,9 +59,13 @@ const isComponentActive = ref(true);
  */
 const isLoadingRecipeList = ref(false);
 /**
- * @type {import('vue').Ref<Array>}
+ * shallowRef + markRaw: avoid wrapping every recipe in a reactive Proxy on
+ * libraries with tens of thousands of entries. See AppIndex.vue for the
+ * full rationale.
+ *
+ * @type {import('vue').ShallowRef<Array>}
  */
-const results = ref([]);
+const results = shallowRef([]);
 /**
  * List of filters that are pre-applied to the list. This can be used to hide filters from the selection since they are
  * already applied.
@@ -79,7 +85,7 @@ const setup = async () => {
         try {
             isLoadingRecipeList.value = true;
             const response = await api.recipes.allWithTag(tags);
-            results.value = response.data;
+            results.value = markRaw(response.data);
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
@@ -104,7 +110,7 @@ const setup = async () => {
         try {
             isLoadingRecipeList.value = true;
             const response = await api.recipes.allInCategory(cat);
-            results.value = response.data;
+            results.value = markRaw(response.data);
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
@@ -127,7 +133,7 @@ const setup = async () => {
         try {
             isLoadingRecipeList.value = true;
             const response = await api.recipes.search(route.params.value);
-            results.value = response.data;
+            results.value = markRaw(response.data);
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
