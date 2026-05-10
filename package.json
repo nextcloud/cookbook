@@ -51,6 +51,7 @@
     "vue-modal-dialogs": "3.0.0",
     "vue-router": "^3.6.5",
     "vue-showdown": "^2.4.1",
+    "vue-virtual-scroller": "^1.1.2",
     "vuejs-logger": "^1.5.5"
   },
   "devDependencies": {
