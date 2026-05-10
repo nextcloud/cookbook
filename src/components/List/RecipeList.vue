@@ -154,7 +154,12 @@ function handleInlineControlsValueUpdated() {
  * descending
  */
 const sortRecipes = (recipes, recipeProperty, order) => {
-    const rec = JSON.parse(JSON.stringify(recipes));
+    // A shallow copy is enough — sort() needs a fresh array because it
+    // mutates in place, but it does not touch the recipe objects
+    // themselves. Deep-cloning via JSON round-trip allocates millions of
+    // strings/objects on libraries with tens of thousands of recipes for
+    // no benefit.
+    const rec = recipes.slice();
     return rec.sort((r1, r2) => {
         if (order !== 'ascending' && order !== 'descending') return 0;
         if (order === 'ascending') {
