@@ -4,7 +4,15 @@
 
 <script setup>
 import api from 'cookbook/js/api-interface';
-import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
+import {
+    computed,
+    getCurrentInstance,
+    markRaw,
+    onMounted,
+    ref,
+    shallowRef,
+    watch,
+} from 'vue';
 
 import RecipeList from './List/RecipeList.vue';
 import { useLegacyStore } from '../store';
@@ -12,10 +20,18 @@ import { useLegacyStore } from '../store';
 const legacyStore = useLegacyStore();
 
 /**
- * The known recipes in the cookbook
- * @type {import('vue').Ref<Array>}
+ * The known recipes in the cookbook.
+ *
+ * shallowRef + markRaw: ref() recursively wraps every nested object in a
+ * reactive Proxy. For libraries with tens of thousands of recipes that is
+ * tens of thousands of Proxy allocations on first paint and freezes the
+ * browser for several seconds. The list view never mutates individual
+ * recipe fields, only replaces the whole array, so shallow reactivity is
+ * sufficient.
+ *
+ * @type {import('vue').ShallowRef<Array>}
  */
-const recipes = ref([]);
+const recipes = shallowRef([]);
 
 /**
  * If the list of recipes is currently being fetched from the server.
@@ -39,7 +55,7 @@ const loadAll = () => {
     api.recipes
         .getAll()
         .then((response) => {
-            recipes.value = response.data;
+            recipes.value = markRaw(response.data);
 
             // Always set page name last
             legacyStore.setPage({ page: 'index' });
