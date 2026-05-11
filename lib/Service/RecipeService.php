@@ -310,6 +310,17 @@ class RecipeService {
 		// If image data was fetched, write it to disk
 		if ($full_image_data) {
 			$this->imageService->setImageData($recipe_folder, $full_image_data);
+
+			// Replace external URL in JSON with the user-relative path to the local copy.
+			// Avoids leaking the source URL on edit and prevents re-downloading on the next
+			// save (the image_changed check on line above compares this field). The frontend
+			// renders `imageUrl` (an API route), not this field, so any stable non-URL value
+			// is safe.
+			if (isset($json['image']) && strpos($json['image'], 'http') === 0) {
+				$userFilesRoot = '/' . $this->user_id . '/files';
+				$json['image'] = substr($recipe_folder->getPath(), strlen($userFilesRoot)) . '/full.jpg';
+				$recipe_file->putContent(json_encode($json));
+			}
 		}
 
 		// Write .nomedia file to avoid gallery indexing
