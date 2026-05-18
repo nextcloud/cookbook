@@ -68,6 +68,7 @@ OC.L10N.register(
     "Cancel" : "Atsisakyti",
     "OK" : "OK",
     "The page was not found" : "Puslapis nerastas",
+    "You have unsaved changes! Do you still want to leave?" : "Turite neišsaugotų pakeitimų! Ar vis dar norite išeiti?",
     "Calories" : "Kalorijos",
     "Failed to fetch keywords" : "Nepavyko gauti raktažodžių",
     "Clone of {name}" : "{name} dublikatas",
