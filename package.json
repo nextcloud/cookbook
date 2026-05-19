@@ -80,7 +80,7 @@
     "stylelint-scss": "^7.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "~6.0.2",
-    "vite": "^7.1.10",
+    "vite": "^8.0.12",
     "vite-bundle-visualizer": "^1.2.1"
   },
   "engines": {
