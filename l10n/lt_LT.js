@@ -2,7 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Recipes" : "Receptai",
-    "User cannot create recipe folder" : "Naudotojas negali sukurti receptų aplanko",
+    "User cannot create recipe folder" : "Vartotojas negali sukurti receptų aplanko",
     "in %s" : "per %s",
     "Cookbook" : "Receptų knyga",
     "An integrated cookbook using schema.org JSON files as recipes" : "Integruota receptų knyga, kaip receptus naudojanti schema.org JSON failus",
@@ -18,7 +18,7 @@ OC.L10N.register(
     "Loading recipe" : "Įkeliamas receptas",
     "Recipe not found" : "Receptas nerastas",
     "Page not found" : "Puslapis nerastas",
-    "Edit" : "Taisyti",
+    "Edit" : "Redaguoti",
     "Save" : "Įrašyti",
     "Search" : "Ieškoti",
     "Filter" : "Filtras",
