@@ -6,26 +6,45 @@ import { useCookbookDialogs } from 'cookbook/composables/useCookbookDialogs';
 import SimpleAlertModal from '../components/Modals/SimpleAlertModal.vue';
 import SimpleConfirmModal from '../components/Modals/SimpleConfirmModal.vue';
 
-const { show } = useCookbookDialogs();
+const { show, setClosingValue } = useCookbookDialogs();
 
 export function showSimpleAlertModal(msg) {
-    //alert('showSimpleAlertModal', msg);
-    show(
+    return show(
         'showSimpleAlertModal title',
         msg,
+        true,
         [
             {
-                label: 'OK',
+                label: t('cookbook', 'Dismiss'),
                 variant: 'primary',
             },
         ]
-    ).then(() => {
-        console.log('Modal closed');
-    });
+    );
 }
 
 export function showSimpleConfirmModal(msg) {
-    return confirm('showSimpleConfirmModal', msg);
+    return show(
+        'showSimpleAlertModal title',
+        msg,
+        false,
+        [
+            {
+                label: t('cookbook', 'Cancel'),
+                variant: 'secondary',
+                callback: () => {
+                    setClosingValue(false);
+                },
+            },
+            {
+                label: t('cookbook', 'OK'),
+                variant: 'primary',
+                callback: () => {
+                    setClosingValue(true);
+                },
+            },
+        ]
+    );
+    // return confirm('showSimpleConfirmModal', msg);
 }
 
 /*
