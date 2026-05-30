@@ -45,6 +45,7 @@ OC.L10N.register(
     "Add" : "Pridėti",
     "Name" : "Pavadinimas",
     "Order" : "Užsakymas",
+    "All categories" : "Visos kategorijos",
     "Keywords" : "Raktažodžiai",
     "Clear" : "Išvalyti",
     "Apply" : "Taikyti",
