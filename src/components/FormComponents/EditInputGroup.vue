@@ -3,7 +3,7 @@
         <label>{{ fieldLabel }}</label>
         <ul>
             <li
-                v-for="(entry, idx) in buffer"
+                v-for="(entry, idx) in value"
                 :key="fieldName + idx"
                 :class="fieldType"
             >
@@ -13,28 +13,28 @@
                 <input
                     v-if="fieldType === 'text'"
                     ref="listField"
-                    v-model="buffer[idx]"
+                    v-model="value[idx]"
                     type="text"
                     @keydown="keyDown"
                     @keyup="keyUp"
-                    @input="handleInput"
                     @paste="handlePaste"
                     @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
                     @mouseup="handleSuggestionsPopupMouseUp"
-                />
+                    />
+                    <!-- @input="handleInput" -->
                 <textarea
                     v-else-if="fieldType === 'textarea'"
                     ref="listField"
-                    v-model="buffer[idx]"
+                    v-model="value[idx]"
                     @keydown="keyDown"
                     @keyup="keyUp"
-                    @input="handleInput"
                     @paste="handlePaste"
                     @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
                     @mouseup="handleSuggestionsPopupMouseUp"
                 ></textarea>
+                    <!-- @input="handleInput" -->
                 <div class="controls">
                     <button
                         class=""
@@ -80,7 +80,7 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, nextTick, ref, watch } from 'vue';
+import { getCurrentInstance, nextTick, ref, defineModel } from 'vue';
 import TriangleUpIcon from 'icons/TriangleSmallUp.vue';
 import TriangleDownIcon from 'icons/TriangleSmallDown.vue';
 
@@ -92,10 +92,6 @@ const log = getCurrentInstance().proxy.$log;
 const emit = defineEmits(['input']);
 
 const props = defineProps({
-    value: {
-        type: Array,
-        default: () => [],
-    },
     fieldType: {
         type: String,
         default: 'text',
@@ -123,6 +119,11 @@ const props = defineProps({
     },
 });
 
+const value = defineModel({
+    type: Array,
+    required: true,
+});
+
 // Template refs
 /**
  * @type {import('vue').Ref<HTMLElement | null>}
@@ -131,10 +132,6 @@ const listField = ref(null);
 const suggestionsData = ref(null);
 // helper variables
 /**
- * @type {import('vue').Ref<Array>}
- */
-const buffer = ref(props.value.slice());
-/**
  * @type {import('vue').Ref<number | null>}
  */
 const lastFocusedFieldIndex = ref(null);
@@ -142,13 +139,6 @@ const lastFocusedFieldIndex = ref(null);
  * @type {import('vue').Ref<boolean>}
  */
 const ignoreNextKeyUp = ref(false);
-
-watch(
-    () => props.value,
-    (newValue) => {
-        buffer.value = newValue.slice();
-    },
-);
 
 // deconstruct composable
 const {
@@ -161,15 +151,7 @@ const {
     handleSuggestionsPopupBlur,
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
-} = useSuggestionPopup(suggestionsData, buffer, emit, log, props);
-
-watch(
-    () => props.value,
-    (val) => {
-        buffer.value = val.slice();
-    },
-    { deep: true },
-);
+} = useSuggestionPopup(suggestionsData, value, emit, log, props);
 
 const linesMatchAtPosition = (lines, i) =>
     lines.every((line) => line[i] === lines[0][i]);
@@ -203,9 +185,9 @@ const addNewEntry = async (
 ) => {
     let entryIdx = index;
     if (entryIdx === -1) {
-        entryIdx = buffer.value.length;
+        entryIdx = value.value.length;
     }
-    buffer.value.splice(entryIdx, 0, content);
+    value.value.splice(entryIdx, 0, content);
 
     if (focusAfterInsert) {
         await nextTick();
@@ -220,25 +202,7 @@ const addNewEntry = async (
  * Delete an entry from the list
  */
 const deleteEntry = (index) => {
-    buffer.value.splice(index, 1);
-    emit('input', buffer.value);
-};
-
-/**
- * Handle typing in input or field or textarea
- */
-const handleInput = (e) => {
-    // Exit early if input was pasted. Let `handlePaste` handle this.
-    // References:
-    // https://developer.mozilla.org/en-US/docs/Web/API/InputEvent/inputType
-    // https://rawgit.com/w3c/input-events/v1/index.html#interface-InputEvent-Attributes
-    if (
-        e.inputType === 'insertFromPaste' ||
-        e.inputType === 'insertFromPasteAsQuotation'
-    ) {
-        return;
-    }
-    emit('input', buffer.value);
+    value.value.splice(index, 1);
 };
 
 /**
@@ -257,7 +221,6 @@ const handlePaste = async (e) => {
     // If only a single line pasted, emit that line and exit
     // Treat it as if that single line was typed
     if (inputLinesArray.length === 1) {
-        emit('input', buffer.value);
         return;
     }
 
@@ -305,12 +268,10 @@ const handlePaste = async (e) => {
     }
     await Promise.all(addNewEntriesAwaitables);
 
-    emit('input', buffer.value);
-
     await nextTick();
     let indexToFocus = $insertedIndex + inputLinesArray.length;
     // Delete field if it's empty
-    if (buffer.value[$insertedIndex].trim() === '') {
+    if (value.value[$insertedIndex].trim() === '') {
         deleteEntry($insertedIndex);
         indexToFocus -= 1;
     }
@@ -392,17 +353,16 @@ const keyUp = (e) => {
 };
 
 const moveEntryDown = (index) => {
-    if (index >= buffer.value.length - 1) {
+    if (index >= value.value.length - 1) {
         // Already at the end of array
         return;
     }
-    const entry = buffer.value.splice(index, 1)[0];
-    if (index + 1 < buffer.value.length) {
-        buffer.value.splice(index + 1, 0, entry);
+    const entry = value.value.splice(index, 1)[0];
+    if (index + 1 < value.value.length) {
+        value.value.splice(index + 1, 0, entry);
     } else {
-        buffer.value.push(entry);
+        value.value.push(entry);
     }
-    emit('input', buffer.value);
 };
 
 const moveEntryUp = (index) => {
@@ -410,9 +370,8 @@ const moveEntryUp = (index) => {
         // Already at the start of array
         return;
     }
-    const entry = buffer.value.splice(index, 1)[0];
-    buffer.value.splice(index - 1, 0, entry);
-    emit('input', buffer.value);
+    const entry = value.value.splice(index, 1)[0];
+    value.value.splice(index - 1, 0, entry);
 };
 </script>
 

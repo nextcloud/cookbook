@@ -183,6 +183,7 @@ const openCategory = async (idx) => {
     } catch (e) {
         cat.recipes = [];
         await showSimpleAlertModal(
+            t('cookbook', 'Error'),
             /* prettier-ignore */
             t('cookbook', 'Failed to load category {category} recipes',
                 {
@@ -216,6 +217,7 @@ const categoryUpdateName = async (idx, newName) => {
         emitter.emit('categoryRenamed', [newName, oldName]);
     } catch (e) {
         await showSimpleAlertModal(
+            t('cookbook', 'Error'),
             /* prettier-ignore */
             t('cookbook','Failed to update name of category "{category}"',
             {
@@ -256,14 +258,15 @@ const downloadRecipe = async () => {
                 if (e2.response.status === 409) {
                     // There was a recipe found with the same name
 
-                    await showSimpleAlertModal(e2.response.data.msg);
+                    await showSimpleAlertModal(t('cookbook', 'Error'), e2.response.data.msg);
                 } else {
-                    await showSimpleAlertModal(e2.response.data);
+                    await showSimpleAlertModal(t('cookbook', 'Error'), e2.response.data);
                 }
             } else {
                  
                 console.error(e2);
                 await showSimpleAlertModal(
+                    t('cookbook', 'Error'),
                     /* prettier-ignore */
                     t('cookbook','The server reported an error. Please check.'),
                 );
@@ -272,6 +275,7 @@ const downloadRecipe = async () => {
              
             console.error(e2);
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook', 'Could not query the server. This might be a network problem.'),
             );
@@ -336,7 +340,7 @@ const getCategories = async () => {
             isRequired: false,
         });
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Failed to fetch categories'));
+        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Failed to fetch categories'));
         if (e && e instanceof Error) {
             throw e;
         }
