@@ -72,6 +72,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook', 'Failed to load recipes with keywords: {tags}',
                     {
@@ -96,6 +97,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook', 'Failed to load category {category} recipes',
                     {
@@ -118,6 +120,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 t('cookbook', 'Failed to load search results'),
             );
             if (e && e instanceof Error) {

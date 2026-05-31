@@ -273,6 +273,7 @@ watch(
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch {
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook','Could not set preference for image printing'),
             );
@@ -308,6 +309,7 @@ watch(
             await legacyStore.refreshConfig();
         } catch {
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook','Could not set recipe update interval to {interval}',
                 {
@@ -336,6 +338,7 @@ watch(
              
             console.error('Error while trying to save info blocks', err);
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 t('cookbook', 'Could not save visible info blocks'),
             );
             visibleInfoBlocks.value = oldVal;
@@ -368,6 +371,7 @@ const pickRecipeFolder = () => {
                 })
                 .catch(() =>
                     showSimpleAlertModal(
+                        t('cookbook', 'Error'),
                         /* prettier-ignore */
                         t('cookbook','Could not set recipe folder to {path}',
                         {
