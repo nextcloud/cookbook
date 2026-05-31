@@ -60,43 +60,18 @@ const props = defineProps({
         type: Object,
         default: () => {},
     },
-    /**
-     * Checked state of the input.
-     */
-    value: {
-        type: Boolean,
-        default: false,
-        required: true,
-    },
 });
 
-const emit = defineEmits(['input', 'check', 'uncheck', 'update']);
-
-/**
- * Local value of the input.
- * @type {import('vue').Ref<boolean>}
- */
-const isChecked = ref(props.value);
-
-// Watch the model value and update local value on external updates.
-watch(
-    () => props.value,
-    (newValue) => {
-        isChecked.value = newValue;
-    },
-);
+const value = defineModel({
+    type: Boolean,
+    required: true,
+});
 
 /**
  * Toggle the value on the input between `true` and `false`.
  */
 function toggle() {
-    emit('input', isChecked.value);
-    emit('update', isChecked.value);
-    if (isChecked.value) {
-        emit('check');
-    } else {
-        emit('uncheck');
-    }
+    value.value = !value.value;
 }
 </script>
 
