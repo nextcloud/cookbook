@@ -7,7 +7,7 @@
                 :key="String(rowKeys[row.selectedOption.key])"
             >
                 <NcSelect
-                    :value="row.selectedOption"
+                    :model-value="row.selectedOption"
                     :options="availableOptions[index]"
                     track-by="key"
                     label="label"
@@ -16,13 +16,13 @@
                     :searchable="false"
                     :label-outside="true"
                     class="key"
-                    @input="updateByOption($event, index)"
+                    @option:selected="updateByOption($event, index)"
                 />
+                <!-- :value="row.customText" -->
                 <input
-                    :value="row.customText"
+                    v-model="value[row.selectedOption.key]"
                     :placeholder="row.selectedOption.placeholder"
                     class="val"
-                    @change="updateByText($event, index)"
                 />
                 <NcButton
                     class="ml-2"
@@ -43,7 +43,7 @@
                     :placeholder="labelSelectPlaceholder"
                     :multiple="false"
                     class="key"
-                    @input="newRowByOption"
+                    @option:selected="newRowByOption"
                 />
                 <input
                     :value="additionalRow.customText"
@@ -59,16 +59,12 @@
 <script setup>
 import {
     ref,
-    defineProps,
-    defineEmits,
     computed,
     onBeforeMount,
 } from 'vue';
 
 import { NcButton, NcSelect } from '@nextcloud/vue';
 import DeleteIcon from 'vue-material-design-icons/TrashCanOutline.vue';
-
-const emits = defineEmits(['input']);
 
 const props = defineProps({
     fieldLabel: {
@@ -90,12 +86,11 @@ const props = defineProps({
         default: () => [],
         required: true,
     },
-    // Value (passed in v-model)
-    value: {
-        type: Object,
-        default: () => {},
-        required: true,
-    },
+});
+
+const value = defineModel({
+    type: Object,
+    required: true,
 });
 
 const additionalRow = ref({
@@ -113,7 +108,7 @@ const nextKey = ref(0);
 const optionKeys = computed(() => props.options.map((x) => x.key));
 
 // The currently available options
-const currentKeys = computed(() => Object.keys(props.value));
+const currentKeys = computed(() => Object.keys(value.value));
 
 // All possible keys that are provided in the prop value
 const valueFilteredKeys = computed(() =>
@@ -124,7 +119,7 @@ const rowsFromValue = computed(() =>
     valueFilteredKeys.value.map((x) => ({
         options: [],
         selectedOption: props.options.find((y) => y.key === x),
-        customText: props.value[x],
+        customText: value.value[x],
     })),
 );
 
@@ -162,38 +157,31 @@ const availableOptions = computed(() =>
  * @param index The index of the item to delete in the `value` property.
  */
 function deleteEntry(index) {
-    const data = { ...props.value };
+    const data = { ...value.value };
     const { key } = rowsFromValue.value[index].selectedOption;
     delete data[key];
     delete rowKeys.value[key];
-    emits('input', data);
+    value.value = data;
 }
 
 // Add a new row to the model
 function newRowByOption(ev) {
-    const data = { ...props.value };
+    const data = { ...value.value };
     data[ev.key] = '';
     rowKeys.value[ev.key] = nextKey.value;
     nextKey.value += 1;
-    emits('input', data);
-}
-
-// Update the text of an existing row
-function updateByText(ev, idx) {
-    const data = { ...props.value };
-    data[rowsFromValue.value[idx].selectedOption.key] = ev.target.value;
-    emits('input', data);
+    value.value = data;
 }
 
 // Change the actual option. This might change the option or plainly delete it.
 function updateByOption(ev, index) {
-    const data = { ...props.value };
+    const data = { ...value.value };
     const { key } = rowsFromValue.value[index].selectedOption;
     data[ev.key] = data[key];
     delete data[key];
     rowKeys.value[ev.key] = rowKeys.value[key];
     delete rowKeys.value[key];
-    emits('input', data);
+    value.value = data;
 }
 
 onBeforeMount(() => {

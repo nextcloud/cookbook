@@ -644,7 +644,7 @@ const setup = async () => {
 
         legacyStore.setPage({ page: 'recipe' });
 
-        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
+        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Loading recipe failed'));
     } finally {
         isLoading.value = false;
     }
