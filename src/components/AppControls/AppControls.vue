@@ -87,7 +87,7 @@
             v-if="isIndex"
             type="primary"
             :aria-label="t('cookbook', 'Edit')"
-            @click="showSimpleAlertModal('Test message').then((v) => {console.log('Output', v);})"
+            @click="showSimpleAlertModal('Test', 'Test message').then((v) => {console.log('Output', v);})"
         >
             <template #icon>
                 <PencilIcon :size="20" />
