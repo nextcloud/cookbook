@@ -129,18 +129,18 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 33
+                - 34
             phpVersion:
                 - "8.5"
             httpServer:
                 - "apache"
             include:
                 -   database: sqlite
-                    coreVersion: 31
+                    coreVersion: 32
                     phpVersion: "8.3"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 32
+                    coreVersion: 33
                     phpVersion: "8.4"
                     httpServer: "nginx"
                     
