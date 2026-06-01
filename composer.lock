@@ -208,16 +208,16 @@
         },
         {
             "name": "nextcloud/ocp",
-            "version": "v33.0.3",
+            "version": "v33.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
-                "reference": "cc85b9dcf0236ff8c3acbe9a62dfd511c6ee5ea6"
+                "reference": "6f53a7ad7eda8c00f335b38e392cb76494d82422"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/cc85b9dcf0236ff8c3acbe9a62dfd511c6ee5ea6",
-                "reference": "cc85b9dcf0236ff8c3acbe9a62dfd511c6ee5ea6",
+                "url": "https://api.github.com/repos/nextcloud-deps/ocp/zipball/6f53a7ad7eda8c00f335b38e392cb76494d82422",
+                "reference": "6f53a7ad7eda8c00f335b38e392cb76494d82422",
                 "shasum": ""
             },
             "require": {
@@ -250,9 +250,9 @@
             "description": "Composer package containing Nextcloud's public OCP API and the unstable NCU API",
             "support": {
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
-                "source": "https://github.com/nextcloud-deps/ocp/tree/v33.0.3"
+                "source": "https://github.com/nextcloud-deps/ocp/tree/v33.0.4"
             },
-            "time": "2026-04-29T01:55:59+00:00"
+            "time": "2026-05-21T02:07:59+00:00"
         },
         {
             "name": "nikic/php-parser",
