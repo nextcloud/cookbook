@@ -8,8 +8,8 @@
                     </div>
                     <div>
                         {{
-                            // prettier-ignore
-                            t("cookbook", "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder."                            )
+                            /* prettier-ignore */
+                            t("cookbook", "You are logged in with a guest account. Therefore, you are not allowed to generate arbitrary files and folders on this Nextcloud instance. To be able to use the Cookbook app as a guest, you need to specify a folder where all recipes are stored. You will need write permission to this folder." )
                         }}
                     </div>
                     <div>
@@ -27,6 +27,10 @@
 import { NcContent, NcAppContent } from '@nextcloud/vue';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
+import { useLegacyStore } from 'cookbook/store';
+
+const legacyStore = useLegacyStore();
+
 const selectFolder = () => {
     const filePicker = getFilePickerBuilder(
         t('cookbook', 'Path to your recipe collection'),
@@ -35,11 +39,9 @@ const selectFolder = () => {
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
-        this.$store
-            .dispatch('updateRecipeDirectory', { dir: path })
-            .then(() => {
-                window.location.reload();
-            });
+        legacyStore.updateRecipeDirectory({ dir: path }).then(() => {
+            window.location.reload();
+        });
     });
 };
 </script>

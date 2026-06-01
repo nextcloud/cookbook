@@ -5,7 +5,7 @@
             class="edit-multiselect"
             v-bind="$attrs"
             :label-outside="true"
-            :multiple="true"
+            :multiple="multiple"
             v-on="$listeners"
         />
     </fieldset>
@@ -18,6 +18,10 @@ defineProps({
     fieldLabel: {
         type: String,
         default: '',
+    },
+    multiple: {
+        type: Boolean,
+        default: true,
     },
 });
 </script>

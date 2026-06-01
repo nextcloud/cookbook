@@ -3,7 +3,9 @@
         <div class="form-group">
             <RecipeSortSelect
                 v-model="localOrderBy"
-                aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                :aria-label="
+                    t('cookbook', 'Show settings for filtering recipe list')
+                "
                 :label="t('cookbook', 'Order')"
                 class="mr-4"
                 :title="t('cookbook', 'Show filter settings')"
@@ -143,7 +145,7 @@
             <!--        Keep button together in a line with the last input so it does not get lonely -->
             <NcButton type="tertiary" @click="clearFilters">
                 {{
-                    // TRANSLATORS Button text for applying recipe-filter values
+                    /* TRANSLATORS Button text for applying recipe-filter values */
                     t('cookbook', 'Clear')
                 }}
             </NcButton>
@@ -198,7 +200,7 @@ const {
     localFiltersValue,
     categoriesOperatorToggleValue,
     keywordsOperatorToggleValue,
-    store,
+    legacyStore,
 } = useRecipeFilterControls(props);
 
 const emittedValue = computed(() => ({
@@ -208,7 +210,7 @@ const emittedValue = computed(() => ({
 
 function submitFilters() {
     emit('input', emittedValue.value);
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
     emit('close');
 }
 
@@ -218,7 +220,7 @@ function submitOrderBy() {
 
 function clearSearchTerm() {
     searchTerm.value = '';
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
 }
 
 function clearFilters() {
@@ -229,7 +231,7 @@ function clearFilters() {
 }
 
 function submitNameFilter() {
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
 }
 </script>
 

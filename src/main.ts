@@ -14,18 +14,20 @@ import Vue from 'vue';
 
 import * as ModalDialogs from 'vue-modal-dialogs';
 
-import { linkTo } from '@nextcloud/router';
+import { createPinia, PiniaVuePlugin } from 'pinia';
+
 import helpers from './js/helper';
 import setupLogging from './js/logging';
 
 import router from './router';
-import { useStore } from './store';
+import { useLegacyStore } from './store';
 
 import AppMain from './components/AppMain.vue';
 
+Vue.config.devtools = import.meta.env.MODE === 'development';
+
 declare global {
 	interface Window {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		OC:
 			| Nextcloud.v16.OC
 			| Nextcloud.v17.OC
@@ -39,7 +41,6 @@ declare global {
 }
 
 declare module 'vue/types/vue' {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	export interface VueConstructor<V extends Vue = Vue> {
 		$log: {
 			debug(...args: (string | object)[]): void;
@@ -50,21 +51,6 @@ declare module 'vue/types/vue' {
 		};
 	}
 }
-
-const isDevServer = process.env.WEBPACK_DEV_SERVER;
-
-// eslint-disable-next-line camelcase,no-undef
-if (isDevServer || false) {
-	// eslint-disable-next-line camelcase,no-undef
-	__webpack_public_path__ = 'http://127.0.0.1:3000/apps/cookbook/js/';
-}
-
-// eslint-disable-next-line camelcase,no-undef
-__webpack_public_path__ = `${linkTo('cookbook', 'js')}/`;
-
-// Fetch Nextcloud nonce identifier for dynamic script loading
-// eslint-disable-next-line camelcase,no-undef
-__webpack_nonce__ = btoa(window.OC.requestToken);
 
 helpers.useRouter(router);
 
@@ -88,20 +74,22 @@ Vue.use(ModalDialogs);
 
 setupLogging(Vue);
 
-const store = useStore();
-store.dispatch('refreshConfig');
-
 // Pass translation engine to Vue
 Vue.prototype.t = window.t;
 Vue.prototype.n = window.n;
+
+Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
 
 // Start the app once document is done loading
 Vue.$log.info('Main is done. Creating App.');
 const App = Vue.extend(AppMain);
 new App({
-	store,
 	router,
+	pinia,
 	beforeCreate() {
-		this.$store.commit('initializeStore');
+		const legacyStore = useLegacyStore();
+		legacyStore.refreshConfig();
+		legacyStore.initializeStore();
 	},
 }).$mount('#content');

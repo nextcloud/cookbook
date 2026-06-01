@@ -175,7 +175,7 @@
             <div class="d-flex flex-row justify-end mt-4">
                 <NcButton type="tertiary" @click="clearFilters">
                     {{
-                        // TRANSLATORS Button text for applying recipe-filter values
+                        /* TRANSLATORS Button text for applying recipe-filter values */
                         t('cookbook', 'Clear')
                     }}
                 </NcButton>
@@ -185,7 +185,7 @@
                     @click="submitFilters"
                 >
                     {{
-                        // TRANSLATORS Button text for applying recipe-filter values
+                        /* TRANSLATORS Button text for applying recipe-filter values */
                         t('cookbook', 'Apply')
                     }}
                 </NcButton>
@@ -232,12 +232,12 @@ const {
     localFiltersValue,
     categoriesOperatorToggleValue,
     keywordsOperatorToggleValue,
-    store,
+    legacyStore,
 } = useRecipeFilterControls(props);
 
 function clearSearchTerm() {
     searchTerm.value = '';
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
 }
 
 function clearFilters() {
@@ -252,7 +252,7 @@ function closeModal() {
 
 function submitFilters() {
     emit('input', localFiltersValue.value);
-    store.dispatch('setRecipeFilters', searchTerm.value);
+    legacyStore.setRecipeFilters(searchTerm.value);
     emit('close');
 }
 </script>

@@ -52,7 +52,7 @@
 
             <NcAppNavigationItem
                 v-for="(cat, idx) in categories"
-                :key="cat + idx"
+                :key="'cat-' + idx"
                 :ref="
                     (el) => {
                         categoryItemElements[idx] = el;
@@ -115,10 +115,10 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import emitter from '../bus';
 import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
-import { useStore } from '../store';
+import { useLegacyStore } from '../store';
 
 const log = getCurrentInstance().proxy.$log;
-const store = useStore();
+const legacyStore = useLegacyStore();
 
 /**
  * References to the DOM elements of the categories in the App navigation.
@@ -160,7 +160,7 @@ const totalRecipeCount = computed(() => {
 // Computed property to watch the Vuex state. If there are more in the
 // future, consider using the Vue mapState helper
 const refreshRequired = computed(
-    () => store.state.appNavigation.refreshRequired,
+    () => legacyStore.appNavigation.refreshRequired,
 );
 
 // Methods
@@ -185,7 +185,7 @@ const openCategory = async (idx) => {
     } catch (e) {
         cat.recipes = [];
         await showSimpleAlertModal(
-            // prettier-ignore
+            /* prettier-ignore */
             t('cookbook', 'Failed to load category {category} recipes',
                 {
                     category: cat.name,
@@ -211,14 +211,14 @@ const categoryUpdateName = async (idx, newName) => {
     const oldName = categories.value[idx].name;
 
     try {
-        await store.dispatch('updateCategoryName', {
+        await legacyStore.updateCategoryName({
             categoryNames: [oldName, newName],
         });
         categories.value[idx].name = newName;
         emitter.emit('categoryRenamed', [newName, oldName]);
     } catch (e) {
         await showSimpleAlertModal(
-            // prettier-ignore
+            /* prettier-ignore */
             t('cookbook','Failed to update name of category "{category}"',
             {
                 category: oldName,
@@ -247,7 +247,7 @@ const downloadRecipe = async () => {
         downloading.value = false;
         helpers.goTo(`/recipe/${recipe.id}`);
         // Refresh left navigation pane to display changes
-        store.dispatch('setAppNavigationRefreshRequired', {
+        legacyStore.setAppNavigationRefreshRequired({
             isRequired: true,
         });
     } catch (e2) {
@@ -266,7 +266,7 @@ const downloadRecipe = async () => {
                 // eslint-disable-next-line no-console
                 console.error(e2);
                 await showSimpleAlertModal(
-                    // prettier-ignore
+                    /* prettier-ignore */
                     t('cookbook','The server reported an error. Please check.'),
                 );
             }
@@ -274,7 +274,7 @@ const downloadRecipe = async () => {
             // eslint-disable-next-line no-console
             console.error(e2);
             await showSimpleAlertModal(
-                // prettier-ignore
+                /* prettier-ignore */
                 t('cookbook', 'Could not query the server. This might be a network problem.'),
             );
         }
@@ -305,7 +305,7 @@ const getCategories = async () => {
                     recipes: [
                         {
                             id: 0,
-                            // prettier-ignore
+                            /* prettier-ignore */
                             name: t('cookbook','Loading category recipes …'),
                         },
                     ],
@@ -334,7 +334,7 @@ const getCategories = async () => {
         await Promise.all(loadingCategoriesAwaitable);
 
         // Refreshing component data has been finished
-        store.dispatch('setAppNavigationRefreshRequired', {
+        legacyStore.setAppNavigationRefreshRequired({
             isRequired: false,
         });
     } catch (e) {

@@ -25,7 +25,7 @@ OC.L10N.register(
     "Name" : "Назва",
     "Keywords" : "Ключавыя словы",
     "Clear" : "Ачысціць",
-    "Apply" : "Ужыць",
+    "Apply" : "Прымяніць",
     "Creation date" : "Дата стварэння",
     "Tools" : "Інструменты",
     "Dismiss" : "Адхіліць",

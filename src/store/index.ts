@@ -1,14 +1,13 @@
 /**
  * Nextcloud Cookbook app
- * Vuex store module
+ * Global store module
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from 'vue';
-import Vuex from 'vuex';
-import api from '../js/api-interface';
 
-Vue.use(Vuex);
+import { defineStore } from 'pinia';
+
+import api from '../js/api-interface';
 
 /**
  * Returns setting from stored settings.
@@ -17,145 +16,147 @@ function showFiltersInRecipeList(): string {
 	return localStorage.getItem('showFiltersInRecipeList') || 'true';
 }
 
-// We are using the vuex store linking changes within the components to updates in the navigation panel.
-const store = new Vuex.Store({
-	// Vuex store handles value changes through actions and mutations.
-	// From the App, you trigger an action, that changes the store
-	//  state through a set mutation. You can process the data within
-	//  the mutation if you want.
-	state: {
-		// The left navigation pane (categories, settings, etc.)
-		appNavigation: {
-			// It can be hidden in small browser windows (e.g., on mobile phones)
-			visible: true,
-			refreshRequired: false,
+const useLegacyStore = defineStore('legacyStore', {
+	state: () =>
+		// Vuex store handles value changes through actions and mutations.
+		// From the App, you trigger an action, that changes the store
+		//  state through a set mutation. You can process the data within
+		//  the mutation if you want.
+		({
+			// The left navigation pane (categories, settings, etc.)
+			appNavigation: {
+				// It can be hidden in small browser windows (e.g., on mobile phones)
+				visible: true,
+				refreshRequired: false,
+			},
+			user: null,
+			// Page is for keeping track of the page the user is on and
+			//  setting the appropriate navigation entry active.
+			page: null,
+			// We'll save the recipe here, since the data is used by
+			//  several independent components
+			/**
+			 * Data of the current recipe
+			 * @type {Object|null}
+			 */
+			recipe: <any>null,
+			// Filter applied to a list of recipes
+			recipeFilters: '',
+			// Loading and saving states to determine which loader icons to show.
+			// State of -1 is reserved for recipe and edit views to be set when the
+			// User loads the app at one of these locations and has to wait for an
+			// asynchronous recipe loading.
+			loadingRecipe: 0,
+			// This is used if when a recipe is reloaded in edit or view
+			reloadingRecipe: 0,
+			// A recipe save is in progress
+			savingRecipe: false,
+			// Updating the recipe directory is in progress
+			updatingRecipeDirectory: false,
+			// Category which is being updated (name)
+			categoryUpdating: null,
+			localSettings: {
+				showFiltersInRecipeList: true,
+			},
+			config: null,
+		}),
+	actions: {
+		// ****************************
+		// Mutations migrated to actions
+		// ****************************
+		setConfig({ config }) {
+			this.config = config;
 		},
-		user: null,
-		// Page is for keeping track of the page the user is on and
-		//  setting the appropriate navigation entry active.
-		page: null,
-		// We'll save the recipe here, since the data is used by
-		//  several independent components
-		/**
-		 * Data of the current recipe
-		 * @type {Object|null}
-		 */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		recipe: <any>null,
-		// Filter applied to a list of recipes
-		recipeFilters: '',
-		// Loading and saving states to determine which loader icons to show.
-		// State of -1 is reserved for recipe and edit views to be set when the
-		// User loads the app at one of these locations and has to wait for an
-		// asynchronous recipe loading.
-		loadingRecipe: 0,
-		// This is used if when a recipe is reloaded in edit or view
-		reloadingRecipe: 0,
-		// A recipe save is in progress
-		savingRecipe: false,
-		// Updating the recipe directory is in progress
-		updatingRecipeDirectory: false,
-		// Category which is being updated (name)
-		categoryUpdating: null,
-		localSettings: {
-			showFiltersInRecipeList: true,
-		},
-		config: null,
-	},
-
-	mutations: {
-		setConfig(state, { config }) {
-			state.config = config;
-		},
-		initializeStore(state) {
+		initializeStore() {
 			if (localStorage.getItem('showFiltersInRecipeList')) {
-				state.localSettings.showFiltersInRecipeList = JSON.parse(
+				this.localSettings.showFiltersInRecipeList = JSON.parse(
 					showFiltersInRecipeList(),
 				);
 			} else {
-				state.localSettings.showFiltersInRecipeList = true;
+				this.localSettings.showFiltersInRecipeList = true;
 			}
 		},
-		setAppNavigationRefreshRequired(state, { b }) {
-			state.appNavigation.refreshRequired = b;
+		setAppNavigationRefreshRequiredMutation({ b }) {
+			this.appNavigation.refreshRequired = b;
 		},
-		setAppNavigationVisible(state, { b }) {
-			state.appNavigation.visible = b;
+		setAppNavigationVisibleMutation({ b }) {
+			this.appNavigation.visible = b;
 		},
-		setCategoryUpdating(state, { c }) {
-			state.categoryUpdating = c;
+		setCategoryUpdatingMutation({ c }) {
+			this.categoryUpdating = c;
 		},
-		setLoadingRecipe(state, { r }) {
-			state.loadingRecipe = r;
+		setLoadingRecipeMutation({ r }) {
+			this.loadingRecipe = r;
 		},
-		setPage(state, { p }) {
-			state.page = p;
+		setPageMutation({ p }) {
+			this.page = p;
 		},
-		setRecipe(state, { r }) {
+		setRecipeMutation({ r }) {
 			const rec = JSON.parse(JSON.stringify(r));
 			if (rec === null) {
-				state.recipe = null;
+				this.recipe = null;
 				return;
 			}
 			if ('nutrition' in rec && rec.nutrition instanceof Array) {
 				rec.nutrition = {};
 			}
-			state.recipe = rec;
+			this.recipe = rec;
 
 			// Setting recipe also means that loading/reloading the recipe has finished
-			state.loadingRecipe = 0;
-			state.reloadingRecipe = 0;
+			this.loadingRecipe = 0;
+			this.reloadingRecipe = 0;
 		},
-		setRecipeCategory(state, { c }) {
-			if (state.recipe !== null) {
-				state.recipe.category = c;
+		setRecipeCategoryMutation({ c }) {
+			if (this.recipe !== null) {
+				this.recipe.category = c;
 			}
 		},
-		setRecipeFilters(state, { f }) {
-			state.recipeFilters = f;
+		setRecipeFiltersMutation({ f }) {
+			this.recipeFilters = f;
 		},
-		setReloadingRecipe(state, { r }) {
-			state.reloadingRecipe = r;
+		setReloadingRecipeMutation({ r }) {
+			this.reloadingRecipe = r;
 		},
-		setSavingRecipe(state, { b }) {
-			state.savingRecipe = b;
+		setSavingRecipeMutation({ b }) {
+			this.savingRecipe = b;
 		},
-		setShowFiltersInRecipeList(state, { b }) {
+		setShowFiltersInRecipeListMutation({ b }) {
 			localStorage.setItem('showFiltersInRecipeList', JSON.stringify(b));
-			state.localSettings.showFiltersInRecipeList = b;
+			this.localSettings.showFiltersInRecipeList = b;
 		},
-		setUser(state, { u }) {
-			state.user = u;
+		setUserMutation({ u }) {
+			this.user = u;
 		},
-		setUpdatingRecipeDirectory(state, { b }) {
-			state.updatingRecipeDirectory = b;
+		setUpdatingRecipeDirectoryMutation({ b }) {
+			this.updatingRecipeDirectory = b;
 		},
-	},
 
-	actions: {
+		// ****************************
+		// Actions migrated
+		// ****************************
 		/**
 		 * Read/Update the user settings from the backend
 		 */
-		async refreshConfig(c) {
+		async refreshConfig() {
 			const config = (await api.config.get()).data;
-			c.commit('setConfig', { config });
+			this.setConfig({ config });
 		},
 
 		/*
 		 * Clears all filters currently applied for listing recipes.
 		 */
-		clearRecipeFilters(c) {
-			c.commit('setRecipeFilters', { f: '' });
+		clearRecipeFilters() {
+			this.setRecipeFiltersMutation({ f: '' });
 		},
 
 		/**
 		 * Create new recipe on the server
 		 */
-		createRecipe(c, { recipe }) {
+		createRecipe({ recipe }) {
 			const request = api.recipes.create(recipe);
 			return request.then((v) => {
 				// Refresh navigation to display changes
-				c.dispatch('setAppNavigationRefreshRequired', {
+				this.setAppNavigationRefreshRequired({
 					isRequired: true,
 				});
 
@@ -165,63 +166,60 @@ const store = new Vuex.Store({
 		/**
 		 * Delete recipe on the server
 		 */
-		deleteRecipe(c, { id }) {
+		deleteRecipe({ id }) {
 			const request = api.recipes.delete(id);
 			request.then(() => {
 				// Refresh navigation to display changes
-				c.dispatch('setAppNavigationRefreshRequired', {
+				this.setAppNavigationRefreshRequired({
 					isRequired: true,
 				});
 			});
 			return request;
 		},
-		setAppNavigationVisible(c, { isVisible }) {
-			c.commit('setAppNavigationVisible', { b: isVisible });
+		setAppNavigationVisible({ isVisible }) {
+			this.setAppNavigationVisibleMutation({ b: isVisible });
 		},
-		setAppNavigationRefreshRequired(c, { isRequired }) {
-			c.commit('setAppNavigationRefreshRequired', { b: isRequired });
+		setAppNavigationRefreshRequired({ isRequired }) {
+			this.setAppNavigationRefreshRequiredMutation({ b: isRequired });
 		},
-		setLoadingRecipe(c, { recipe }) {
-			c.commit('setLoadingRecipe', { r: parseInt(recipe, 10) });
+		setLoadingRecipe({ recipe }) {
+			this.setLoadingRecipeMutation({ r: parseInt(recipe, 10) });
 		},
-		setPage(c, { page }) {
-			c.commit('setPage', { p: page });
+		setPage({ page }) {
+			this.setPageMutation({ p: page });
 		},
-		setRecipe(c, { recipe }) {
-			c.commit('setRecipe', { r: recipe });
+		setRecipe({ recipe }) {
+			this.setRecipeMutation({ r: recipe });
 		},
-		setRecipeFilters(c, filters) {
-			c.commit('setRecipeFilters', { f: filters });
+		setRecipeFilters(filters) {
+			this.setRecipeFiltersMutation({ f: filters });
 		},
-		setReloadingRecipe(c, { recipe }) {
-			c.commit('setReloadingRecipe', { r: parseInt(recipe, 10) });
+		setReloadingRecipe({ recipe }) {
+			this.setReloadingRecipeMutation({ r: parseInt(recipe, 10) });
 		},
-		setSavingRecipe(c, { saving }) {
-			c.commit('setSavingRecipe', { b: saving });
+		setSavingRecipe({ saving }) {
+			this.setSavingRecipeMutation({ b: saving });
 		},
-		setUser(c, { user }) {
-			c.commit('setUser', { u: user });
+		setUser({ user }) {
+			this.setUserMutation({ u: user });
 		},
-		setCategoryUpdating(c, { category }) {
-			c.commit('setCategoryUpdating', { c: category });
+		setCategoryUpdating({ category }) {
+			this.setCategoryUpdatingMutation({ c: category });
 		},
-		setShowFiltersInRecipeList(c, { showFilters }) {
-			c.commit('setShowFiltersInRecipeList', { b: showFilters });
+		setShowFiltersInRecipeList({ showFilters }) {
+			this.setShowFiltersInRecipeListMutation({ b: showFilters });
 		},
-		updateCategoryName(c, { categoryNames }) {
+		updateCategoryName({ categoryNames }) {
 			const oldName = categoryNames[0];
 			const newName = categoryNames[1];
-			c.dispatch('setCategoryUpdating', { category: oldName });
+			this.setCategoryUpdating({ category: oldName });
 
 			const request = api.categories.update(oldName, newName);
 
 			request
 				.then(() => {
-					if (
-						c.state.recipe &&
-						c.state.recipe.recipeCategory === oldName
-					) {
-						c.commit('setRecipeCategory', { c: newName });
+					if (this.recipe && this.recipe.recipeCategory === oldName) {
+						this.setRecipeCategoryMutation({ c: newName });
 					}
 				})
 				.catch((e) => {
@@ -231,31 +229,31 @@ const store = new Vuex.Store({
 				})
 				.then(() => {
 					// finally
-					c.dispatch('setCategoryUpdating', { category: null });
+					this.setCategoryUpdating({ category: null });
 				});
 
 			return request;
 		},
-		updateRecipeDirectory(c, { dir }) {
-			c.commit('setUpdatingRecipeDirectory', { b: true });
-			c.dispatch('setRecipe', { recipe: null });
+		updateRecipeDirectory({ dir }) {
+			this.setUpdatingRecipeDirectoryMigration({ b: true });
+			this.setRecipe({ recipe: null });
 			const request = api.config.directory.update(dir);
 
 			return request.then(() => {
-				c.dispatch('setAppNavigationRefreshRequired', {
+				this.setAppNavigationRefreshRequired({
 					isRequired: true,
 				});
-				c.commit('setUpdatingRecipeDirectory', { b: false });
+				this.setUpdatingRecipeDirectoryMigration({ b: false });
 			});
 		},
 		/**
 		 * Update existing recipe on the server
 		 */
-		updateRecipe(c, { recipe }) {
+		updateRecipe({ recipe }) {
 			const request = api.recipes.update(recipe.id, recipe);
 			request.then(() => {
 				// Refresh navigation to display changes
-				c.dispatch('setAppNavigationRefreshRequired', {
+				this.setAppNavigationRefreshRequired({
 					isRequired: true,
 				});
 			});
@@ -265,4 +263,4 @@ const store = new Vuex.Store({
 });
 
 // eslint-disable-next-line import/prefer-default-export
-export const useStore = () => store;
+export { useLegacyStore };

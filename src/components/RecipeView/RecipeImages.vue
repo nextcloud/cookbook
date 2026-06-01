@@ -1,14 +1,14 @@
 <template>
     <div
-        v-if="$store.state.recipe.image"
+        v-if="legacyStore.recipe.image"
         :class="{
             collapsed: collapsed,
-            printable: $store.state.recipe.printImage,
+            printable: legacyStore.recipe.printImage,
         }"
     >
         <img
             :alt="t('cookbook', 'Recipe image')"
-            :src="$store.state.recipe.imageUrl"
+            :src="legacyStore.recipe.imageUrl"
             @click="toggleCollapsed()"
         />
     </div>
@@ -16,6 +16,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useLegacyStore } from 'cookbook/store';
+
+const legacyStore = useLegacyStore();
 
 /**
  * @type {import('vue').Ref<boolean>}
