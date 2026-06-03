@@ -208,7 +208,7 @@
         },
         {
             "name": "nextcloud/ocp",
-            "version": "v33.0.4",
+            "version": "v33.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nextcloud-deps/ocp.git",
@@ -250,7 +250,7 @@
             "description": "Composer package containing Nextcloud's public OCP API and the unstable NCU API",
             "support": {
                 "issues": "https://github.com/nextcloud-deps/ocp/issues",
-                "source": "https://github.com/nextcloud-deps/ocp/tree/v33.0.4"
+                "source": "https://github.com/nextcloud-deps/ocp/tree/v33.0.5"
             },
             "time": "2026-05-21T02:07:59+00:00"
         },
