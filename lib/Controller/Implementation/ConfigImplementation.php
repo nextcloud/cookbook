@@ -32,6 +32,7 @@ class ConfigImplementation {
 	}
 
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visibleInfoBlocks';
+	protected const KEY_BROWSERLESS_CONFIG = 'browserless_config';
 
 	/**
 	 * Get the current configuration of the app
@@ -46,6 +47,7 @@ class ConfigImplementation {
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
 			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
+			self::KEY_BROWSERLESS_CONFIG => $this->service->getBrowserlessConfig(),
 		], Http::STATUS_OK);
 	}
 
@@ -77,6 +79,10 @@ class ConfigImplementation {
 
 		if (isset($data[self::KEY_VISIBLE_INFO_BLOCKS])) {
 			$this->service->setVisibleInfoBlocks($data[self::KEY_VISIBLE_INFO_BLOCKS]);
+		}
+
+		if (isset($data[self::KEY_BROWSERLESS_CONFIG])) {
+			$this->service->setBrowserlessConfig($data[self::KEY_BROWSERLESS_CONFIG]);
 		}
 
 		$this->dbCacheService->triggerCheck();
