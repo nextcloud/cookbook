@@ -8,8 +8,9 @@
 /// <reference types="@nextcloud/typings" />
 
 import Vue from 'vue';
+import { createPinia, PiniaVuePlugin } from 'pinia';
 
-import { useStore } from './store';
+import { useLegacyStore } from './store';
 
 import AppInvalidGuest from './components/AppInvalidGuest.vue';
 
@@ -35,13 +36,17 @@ Vue.prototype.OC = window.OC;
 Vue.prototype.t = window.t;
 Vue.prototype.n = window.n;
 
-const store = useStore();
-
-store.dispatch('refreshConfig');
+Vue.use(PiniaVuePlugin);
+const pinia = createPinia();
 
 // Start the app once document is done loading
 const App = Vue.extend(AppInvalidGuest);
 new App({
-	store,
 	// router,
+	pinia,
+	beforeCreate() {
+		const legacyStore = useLegacyStore();
+		legacyStore.refreshConfig();
+		legacyStore.initializeStore();
+	},
 }).$mount('#content');

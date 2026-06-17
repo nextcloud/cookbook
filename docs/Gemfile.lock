@@ -14,8 +14,8 @@ GEM
       securerandom (>= 0.3)
       tzinfo (~> 2.0, >= 2.0.5)
       uri (>= 0.13.1)
-    addressable (2.8.7)
-      public_suffix (>= 2.0.2, < 7.0)
+    addressable (2.9.0)
+      public_suffix (>= 2.0.2, < 8.0)
     base64 (0.3.0)
     bigdecimal (4.0.1)
     coffee-script (2.4.1)
@@ -39,7 +39,7 @@ GEM
       ffi (>= 1.15.0)
     eventmachine (1.2.7)
     execjs (2.10.0)
-    faraday (2.14.1)
+    faraday (2.14.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -216,7 +216,7 @@ GEM
       gemoji (>= 3, < 5)
       html-pipeline (~> 2.2)
       jekyll (>= 3.0, < 5.0)
-    json (2.19.3)
+    json (2.19.8)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -237,7 +237,7 @@ GEM
       prism (~> 1.5)
     net-http (0.9.1)
       uri (>= 0.11.1)
-    nokogiri (1.19.1)
+    nokogiri (1.19.3)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
     octokit (4.25.1)

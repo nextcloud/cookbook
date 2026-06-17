@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+            uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
             with:
               persist-credentials: false
 
@@ -32,7 +32,7 @@ jobs:
         -   name: Set up node ${{ steps.versions.outputs.nodeVersion }}
             # Skip if no package.json
             if: ${{ steps.versions.outputs.nodeVersion }}
-            uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+            uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
             with:
               node-version: ${{ steps.versions.outputs.nodeVersion }}
         -   name: Set up npm ${{ steps.versions.outputs.npmVersion }}
@@ -44,7 +44,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
             with:
                 path: |
                     ~/.npm
@@ -54,7 +54,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
             with:
                 path: |
                     vendor
@@ -64,7 +64,7 @@ jobs:
                     ${{ runner.os }}-composer-
         
         -   name: Install PHP
-            uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f
+            uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
             with:
                 php-version: '8.4'
                 tools: composer
@@ -129,24 +129,24 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 33
+                - 34
             phpVersion:
                 - "8.5"
             httpServer:
                 - "apache"
             include:
                 -   database: sqlite
-                    coreVersion: 31
+                    coreVersion: 32
                     phpVersion: "8.3"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 32
+                    coreVersion: 33
                     phpVersion: "8.4"
                     httpServer: "nginx"
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
             fetch-depth: 2
             persist-credentials: false
@@ -242,14 +242,14 @@ jobs:
           fi
       # - name: Upload the code coverage files as artifacts
       #   if: always()
-      #   uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+      #   uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
       #   with:
       #       name: Code coverage files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
       #       path: ".github/actions/run-tests/volumes/coverage"
 
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
             name: Nextcloud-logs (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
@@ -263,19 +263,19 @@ jobs:
         
       - name: Upload the code coverage report for codecov as artifacts
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
             name: Code coverage (XML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: "/tmp/coverage/coverage.*.xml"
 
     #   - name: Upload the code coverage report (unit tests) as artifacts
-    #     uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+    #     uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
     #     with:
     #         name: Code coverage (HTML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
     #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
             name: Junit test log files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -287,7 +287,7 @@ jobs:
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
         with:
             fetch-depth: 2
             persist-credentials: false
@@ -358,14 +358,14 @@ jobs:
           fi
       
       # - name: Upload the coverage files as artifact
-      #   uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+      #   uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
       #   with:
       #       name: Coverage files (mysql, master, apache)
       #       path: .github/actions/run-tests/volumes/coverage
       #   if: always()
 
       - name: Upload the log file as artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
             name: Nextcloud-logs (mysql, master, apache)
@@ -378,13 +378,13 @@ jobs:
             rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
             name: Code coverage (XML) (mysql, master, apache)
             path: "/tmp/coverage/coverage.*.xml"
 
       - name: Upload the junit log file artifact as artifact
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
             name: Junit test log files (mysql, master, apache)
             path: .github/actions/run-tests/volumes/coverage/junit*.xml
@@ -407,7 +407,7 @@ jobs:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+          uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
           with:
             path: code
             fetch-depth: 2
@@ -486,7 +486,7 @@ jobs:
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+            uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
             with:
               persist-credentials: false
 
@@ -502,7 +502,7 @@ jobs:
         -   name: Set up node ${{ steps.versions.outputs.nodeVersion }}
             # Skip if no package.json
             if: ${{ steps.versions.outputs.nodeVersion }}
-            uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+            uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
             with:
               node-version: ${{ steps.versions.outputs.nodeVersion }}
         -   name: Set up npm ${{ steps.versions.outputs.npmVersion }}
@@ -514,7 +514,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
             with:
                 path: |
                     ~/.npm
@@ -524,7 +524,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
             with:
                 path: |
                     vendor
@@ -551,7 +551,7 @@ jobs:
             run: >-
                 make appstore_package_name=/tmp/appstore appstore
         -   name: Publish the app store package as artifact
-            uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+            uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
             with:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
@@ -561,7 +561,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - name: Upload
-      uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
+      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
       with:
         name: Event File
         path: ${{ github.event_path }}
@@ -575,7 +575,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
       with:
         persist-credentials: false
     - name: build docker container image
@@ -593,7 +593,7 @@ jobs:
 
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
       with:
         persist-credentials: false
     - name: Read package.json node and npm engines version
@@ -608,7 +608,7 @@ jobs:
     - name: Set up node ${{ steps.versions.outputs.nodeVersion }}
       # Skip if no package.json
       if: ${{ steps.versions.outputs.nodeVersion }}
-      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
       with:
         node-version: ${{ steps.versions.outputs.nodeVersion }}
     - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
@@ -620,7 +620,7 @@ jobs:
       id: date
       run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
     - name: Cache NPM cache
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7
+      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
       with:
         path: |
           ~/.npm

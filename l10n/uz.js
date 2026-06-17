@@ -16,6 +16,7 @@ OC.L10N.register(
     "Add" : "Qo'shish",
     "Name" : "Name",
     "Order" : "Buyurtma",
+    "Clear" : "Toza",
     "Dismiss" : "Rad etish",
     "Cancel" : "Bekor qilish",
     "OK" : "OK",
