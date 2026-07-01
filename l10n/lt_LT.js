@@ -50,7 +50,7 @@ OC.L10N.register(
     "The JSON file in the folder with ID %d does not have a valid name." : "JSON failas aplanke su ID %d neturi galiojančio pavadinimo.",
     "Could not parse URL" : "Nepavyko išanalizuoti URL",
     "Exception while downloading recipe from %s.: %s" : "Išimtis atsisiunčiant receptą iš %s.: %s",
-    "Download from %s failed as HTTP status code %d is not in expected range." : "Atsisiųsti iš %s nepavyko, nes HTTP būsenos kodas %d neatitinka numatyto diapazono.",
+    "Download from %s failed as HTTP status code %d is not in expected range." : "Atsisiųsti iš %s nepavyko, nes HTTP būsenos kodas %d neatitinka numatyto rėžio.",
     "Could not find a valid encoding when parsing %s." : "Analizuojant %s nepavyko rasti tinkamos koduotės.",
     "No parser found for the given import." : "Nerasta analizatoriaus šiam importavimui.",
     "No recipe name was given. A unique name is required to store the recipe." : "Recepto pavadinimas nenurodytas. Norint išsaugoti receptą, reikalingas unikalus pavadinimas.",
