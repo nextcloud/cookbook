@@ -101,7 +101,6 @@ class UserFolderHelper {
 			$path = '/' . $this->userId . '/files/' . $path;
 			$path = str_replace('//', '/', $path);
 
-
 			$this->cache = $this->getOrCreateFolder($path);
 		}
 

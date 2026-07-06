@@ -121,8 +121,6 @@ class RecipeApiController extends ApiController {
 		return $this->impl->getAllInCategory($category);
 	}
 
-
-
 	/**
 	 * @param string $keywords
 	 * @return JSONResponse

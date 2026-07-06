@@ -42,8 +42,6 @@ class KeywordImplementationTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
 
-
-
 	public function testGetKeywords(): void {
 		$this->ensureCacheCheckTriggered();
 
