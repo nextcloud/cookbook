@@ -65,7 +65,8 @@ class DownloadHelperTest extends TestCase {
 	}
 
 	public function testDownload() {
-		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code'); return;
+		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code');
+		return;
 		$str = "This is the content of the file.\n";
 		file_put_contents('/www/test.txt', $str);
 		$this->dut->downloadFile('http://www/test.txt');
@@ -87,7 +88,8 @@ class DownloadHelperTest extends TestCase {
 	 * @param mixed $contentType
 	 */
 	public function testContentType($contentType) {
-		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code'); return;
+		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code');
+		return;
 		copy(__DIR__ . '/res/content-type.php', '/www/test.php');
 		$this->dut->downloadFile('http://www/test.php?content=' . urlencode($contentType));
 		$this->assertEquals(trim($contentType), $this->dut->getContentType());
@@ -95,7 +97,8 @@ class DownloadHelperTest extends TestCase {
 	}
 
 	public function testDownload404() {
-		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code'); return;
+		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code');
+		return;
 		if (file_exists('/www/test.txt')) {
 			unlink('/www/test.txt');
 		}
@@ -105,7 +108,8 @@ class DownloadHelperTest extends TestCase {
 	}
 
 	public function testFailedDownload() {
-		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code'); return;
+		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code');
+		return;
 		$this->expectException(NoDownloadWasCarriedOutException::class);
 		// Using mock here as the timeout causes the test to be really slow
 		self::$useCurlMock = true;
@@ -122,7 +126,8 @@ class DownloadHelperTest extends TestCase {
 	}
 
 	public function testNoContentType() {
-		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code'); return;
+		$this->markTestSkipped('This test is skipped as the local webserver is not reachable by the NC server code');
+		return;
 		copy(__DIR__ . '/res/htaccess', '/www/.htaccess');
 		// $this->expectException(NoDownloadWasCarriedOutException::class);
 		$this->dut->downloadFile('http://www/test.php');
