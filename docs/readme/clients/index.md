@@ -41,8 +41,8 @@ The currently available clients are in no particular order:
 [VincentMeilinger-nextcloud-cookbook-ios-app-store]: <https://apps.apple.com/de/app/cookbook-client/id6467141985> (Nextcloud Cookbook iOS App Store)
 
 <!-- joj0r -->
-[joj0r]: <https://github.com/joj0r>
-[joj0r-nextcloud-cookbook]: <https://github.com/joj0r/UT_Cookbook> (Cookbook)
+[joj0r]: <https://codeberg.org/jonasstene>
+[joj0r-nextcloud-cookbook]: <https://codeberg.org/jonasstene/UT_Cookbook> (Cookbook)
 [joj0r-nextcloud-cookbook-open-store]: <https://next.open-store.io/app/cookbook.stene/> (Nextcloud Cookbook OpenStore)
 
 <!-- Logarex -->

@@ -62,7 +62,6 @@ class JSONFilterTest extends TestCase {
 		$this->fixDurationsFilter = $this->createStub(FixDurationsFilter::class);
 		$this->fixNutritionFilter = $this->createStub(FixNutritionFilter::class);
 
-
 		$this->dut = new JSONFilter(
 			$this->schemaConformityFilter,
 			$this->recipeNameFilter,

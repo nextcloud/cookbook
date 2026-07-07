@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
         -   name: Checkout the project
-            uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+            uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
             with:
               persist-credentials: false
 
@@ -44,7 +44,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Cache NPM cache
-            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+            uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
             with:
                 path: |
                     ~/.npm
@@ -54,7 +54,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Cache composer files
-            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+            uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
             with:
                 path: |
                     vendor
@@ -64,7 +64,7 @@ jobs:
                     ${{ runner.os }}-composer-
         
         -   name: Install PHP
-            uses: shivammathur/setup-php@7c071dfe9dc99bdf297fa79cb49ea005b9fcadbc
+            uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
             with:
                 php-version: '8.4'
                 tools: composer
@@ -146,7 +146,7 @@ jobs:
                     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
             fetch-depth: 2
             persist-credentials: false
@@ -287,7 +287,7 @@ jobs:
     
     steps:
       - name: Checkout the app
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
         with:
             fetch-depth: 2
             persist-credentials: false
@@ -407,7 +407,7 @@ jobs:
             path: artifacts
         - name: Checkout of code base
           if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+          uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
           with:
             path: code
             fetch-depth: 2
@@ -486,7 +486,7 @@ jobs:
     
     steps:
         -   name: Checkout the app
-            uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+            uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
             with:
               persist-credentials: false
 
@@ -514,7 +514,7 @@ jobs:
             id: date
             run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
         -   name: Use cache for NPM
-            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+            uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
             with:
                 path: |
                     ~/.npm
@@ -524,7 +524,7 @@ jobs:
                     ${{ runner.os }}-node-${{ steps.date.outputs.date }}-
                     ${{ runner.os }}-node-
         -   name: Use cache for Composer
-            uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+            uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
             with:
                 path: |
                     vendor
@@ -575,7 +575,7 @@ jobs:
         shell: bash
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       with:
         persist-credentials: false
     - name: build docker container image
@@ -593,7 +593,7 @@ jobs:
 
     steps:
     - name: Checkout of the app
-      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
       with:
         persist-credentials: false
     - name: Read package.json node and npm engines version
@@ -620,7 +620,7 @@ jobs:
       id: date
       run: echo "date=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
     - name: Cache NPM cache
-      uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae
+      uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
       with:
         path: |
           ~/.npm

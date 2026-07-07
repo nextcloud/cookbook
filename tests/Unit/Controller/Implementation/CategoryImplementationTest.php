@@ -85,9 +85,6 @@ class CategoryImplementationTest extends TestCase {
 		$this->assertEquals($cat, $ret->getData());
 	}
 
-
-
-
 	/**
 	 * @dataProvider dataProviderCategoryUpdateNoName
 	 * @param mixed $requestParams

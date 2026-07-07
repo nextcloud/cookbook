@@ -235,7 +235,7 @@ const useLegacyStore = defineStore('legacyStore', {
 			return request;
 		},
 		updateRecipeDirectory({ dir }) {
-			this.setUpdatingRecipeDirectoryMigration({ b: true });
+			this.setUpdatingRecipeDirectoryMutation({ b: true });
 			this.setRecipe({ recipe: null });
 			const request = api.config.directory.update(dir);
 
@@ -243,7 +243,7 @@ const useLegacyStore = defineStore('legacyStore', {
 				this.setAppNavigationRefreshRequired({
 					isRequired: true,
 				});
-				this.setUpdatingRecipeDirectoryMigration({ b: false });
+				this.setUpdatingRecipeDirectoryMutation({ b: false });
 			});
 		},
 		/**
