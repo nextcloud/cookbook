@@ -19,6 +19,25 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 
+## 0.11.8 - 2026-07-07
+
+### Fixed
+
+- Regression introduced in #3114 (migration to pinia) that prevents changing the recipe location
+  [#3242](https://github.com/nextcloud/cookbook/pull/3242) @christianlupus
+- Restrict network access on server to prevent accidential access on localhost
+  [#3244](https://github.com/nextcloud/cookbook/pull/3244) @christianlupus
+
+### Maintenance
+
+- Update link to 3rd party client from jojo0r
+  [#3232](https://github.com/nextcloud/cookbook/pull/3232) @bkmgit
+- Move to current coding standards in the backend
+  [#3171](https://github.com/nextcloud/cookbook/pull/3171) @dependabot
+- Upgrade frontend code to be compatible with current prettier formatter
+  [#3238](https://github.com/nextcloud/cookbook/pull/3238) @dependabot
+
+
 ## 0.11.7 - 2026-06-01
 
 ### Changed
