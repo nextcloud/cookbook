@@ -1,7 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "لم يتم العثور على أي صورة من النوع MIME على الخادوم.",
     "Recipe with ID %d was not found in database." : "لم يتم العثور على الوصفة رقم %dفي قاعدة البيانات.",
-    "Downloading of a file failed returned the following error message: %s" : "فشل تنزيل ملف و أرجع رسالة الخطأ التالية : %s",
     "No content encoding was detected in the content." : "تعذّر التعرُّف على ماهية ترميز المحتوى في المحتوى",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "لا يمكن تحليل الصورة المقدمة للوصفة%s. تجاهلها و تخطَّها.",
     "No valid recipe was left after heuristics of recipe %s." : "لم تتبقَّ وصفة صالحة بعد الاستدلال heuristics على الوصفة %s.",

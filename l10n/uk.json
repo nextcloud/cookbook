@@ -1,7 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Зображення з відповідним MIME-типом на сервері не знайдено.",
     "Recipe with ID %d was not found in database." : "Рецепт з ідентифікатором %d не знайдено в базі даних.",
-    "Downloading of a file failed returned the following error message: %s" : "При спробі звантаження файлу виникла помилка: %s",
     "No content encoding was detected in the content." : "У контенті не виявлено жодного кодування вмісту.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Наведене зображення для рецепта %s не може бути проаналізоване. Перервати і пропустити його.",
     "No valid recipe was left after heuristics of recipe %s." : "Після евристики рецептів %s не залишилося жодного правильного рецепта.",

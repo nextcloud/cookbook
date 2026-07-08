@@ -2,7 +2,6 @@
     "No image with the matching MIME type was found on the server." : "تصویری با نوع MIME منطبق روی سرور یافت نشد.",
     "The provided URL is not allowed." : "URL ارائه‌شده مجاز نیست.",
     "Recipe with ID %d was not found in database." : "دستور پخت با شناسه %d در پایگاه داده یافت نشد.",
-    "Downloading of a file failed returned the following error message: %s" : "دانلود فایل با خطای زیر ناموفق بود: %s",
     "No content encoding was detected in the content." : "هیچ رمزگذاری محتوایی در محتوا شناسایی نشد.",
     "Recipe name cannot be processed." : "نام دستور پخت قابل پردازش نیست.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "تصویر داده‌شده برای دستور پخت %s قابل تجزیه نیست. لغو و رد می‌شود.",
