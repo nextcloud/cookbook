@@ -4,6 +4,8 @@ OC.L10N.register(
     "No image with the matching MIME type was found on the server." : "Serveryje nerasta jokio paveikslėlio su atitinkančiu MIME tipu.",
     "The provided URL is not allowed." : "Pateiktas URL neleidžiamas.",
     "Recipe with ID %d was not found in database." : "Receptas su ID %d nerastas duomenų bazėje.",
+    "URL resolves to a local/internal address" : "URL nukreipia į vietinį / vidinį adresą",
+    "Error occurred while downloading the file: %s" : "Įvyko klaida atsisiunčiant failą: %s",
     "No content encoding was detected in the content." : "Turinyje neaptikta turinio kodavimo.",
     "Recipe name cannot be processed." : "Recepto pavadinimo apdoroti negalima.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Pateikto recepto %s paveikslėlio negalima išanalizuoti. Procesas nutraukiamas ir praleidžiamas.",
