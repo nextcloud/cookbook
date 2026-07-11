@@ -200,7 +200,6 @@ class HtmlToDomParser {
 		$this->state = max($this->state, self::PARSING_WARNING);
 	}
 
-
 	private function logError(int $code, array $group, string $url): void {
 		$msg = $this->l->n('Error %u occurred while parsing %s.', 'Error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
 		$this->logger->warning($this->formatError($msg, $group['first']));

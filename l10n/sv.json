@@ -2,7 +2,6 @@
     "No image with the matching MIME type was found on the server." : "Ingen bild med matchande MIME-typ hittades på servern.",
     "The provided URL is not allowed." : "Den angivna URL:en är inte tillåten.",
     "Recipe with ID %d was not found in database." : "Recept med ID %d hittades inte i databasen.",
-    "Downloading of a file failed returned the following error message: %s" : "Nedladdning av fil misslyckades och returnerade följande felmeddelande: %s",
     "No content encoding was detected in the content." : "Ingen teckenkodning upptäcktes i innehållet.",
     "Recipe name cannot be processed." : "Receptnamnet kan inte bearbetas.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Den angivna bilden för receptet %s kunde inte tolkas. Avbryter och skippar den.",

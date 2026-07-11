@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "在服务器上找不到具有匹配 MIME 类型的图片。",
     "Recipe with ID %d was not found in database." : "在数据库中未找到 ID 为 %d 的配方。",
-    "Downloading of a file failed returned the following error message: %s" : "下载文件失败返回以下错误消息：%s",
     "No content encoding was detected in the content." : "在内容中未检测到内容编码。",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "无法解析菜谱 %s 的给定图片。 中止并跳过它。",
     "Could not parse recipe ingredients. It is no array." : "无法解析食谱成分。 它不是数组。",

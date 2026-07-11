@@ -445,8 +445,6 @@ class RecipeService {
 		return $this->db->findAllCategories($this->user_id);
 	}
 
-
-
 	/** Adds modification and creation date to each recipe in the list
 	 *
 	 * @param array $recipes
@@ -578,7 +576,6 @@ class RecipeService {
 		}
 
 		$json['id'] = $file->getParent()->getId();
-
 
 		if (!array_key_exists('dateCreated', $json)) {
 			$json['dateCreated'] = $file->getCreationTime();

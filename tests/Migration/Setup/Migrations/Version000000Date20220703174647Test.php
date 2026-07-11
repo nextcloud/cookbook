@@ -50,10 +50,8 @@ class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 		$this->assertNull($row['date_created']);
 		$this->assertNull($row['date_modified']);
 
-
 		//$this->assertEquals([null, null], $data[0]);
 	}
-
 
 	protected function getPreviousMigrationName(): string {
 		return '000000Date20210701093123';

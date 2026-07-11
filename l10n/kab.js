@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "in %s" : "deg %s",
     "Category" : "Taggayt",
     "Tags" : "Tibzimin",
     "None" : "Ula d yiwen",
@@ -11,9 +12,13 @@ OC.L10N.register(
     "Filter" : "Sizdeg",
     "Categories" : "Taggayin",
     "Rename" : "Beddel isem",
+    "Add" : "Rnu",
     "Name" : "Isem",
+    "Order" : "Asmizzwer",
     "All categories" : "Akk taggayin",
     "Clear" : "Ṣfeḍ",
+    "Apply" : "Snes",
+    "Creation date" : "Azemz n usnulfu",
     "Tools" : "Ifecka",
     "Dismiss" : "Agi",
     "Cancel" : "Semmet",

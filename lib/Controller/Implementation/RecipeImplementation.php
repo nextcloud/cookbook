@@ -45,7 +45,6 @@ class RecipeImplementation {
 	/** @var LoggerInterface */
 	private $logger;
 
-
 	public function __construct(
 		IRequest $request,
 		RecipeService $recipeService,
@@ -439,8 +438,6 @@ class RecipeImplementation {
 			return new JSONResponse($e->getMessage(), 500);
 		}
 	}
-
-
 
 	/**
 	 * Get all recipes with a tag associated

@@ -102,8 +102,6 @@ class RecipeController extends Controller {
 		return $this->impl->getAllInCategory($category);
 	}
 
-
-
 	/**
 	 * @param string $keywords
 	 * @return JSONResponse

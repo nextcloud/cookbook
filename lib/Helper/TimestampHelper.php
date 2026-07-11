@@ -14,7 +14,6 @@ class TimestampHelper {
 	/** @var IL10N */
 	private $l;
 
-
 	// Output format: Ignore fractions of a second
 	public const OUTPUT_FORMAT = 'Y-m-d\TH:i:sP';
 
@@ -132,7 +131,6 @@ class TimestampHelper {
 
 		throw new InvalidTimestampException($this->l->t('Could not parse timestamp {timestamp}', ['timestamp' => $timestamp]));
 	}
-
 
 	/**
 	 * Parses the string $timestamp and checks if it has a valid ISO 8601. Uses the date format given by $dateFormat

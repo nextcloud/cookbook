@@ -1,7 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "No s'ha trobat cap imatge amb el tipus MIME coincident al servidor.",
     "Recipe with ID %d was not found in database." : "No s'ha trobat la recepta amb l'ID %d a la base de dades.",
-    "Downloading of a file failed returned the following error message: %s" : "La baixada d'un fitxer ha fallat ha retornat el missatge d'error següent: %s",
     "No content encoding was detected in the content." : "No s'ha detectat cap codificació de contingut al contingut.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "La imatge donada per a la recepta %s no es pot analitzar. S'ha abandonat i saltat.",
     "No valid recipe was left after heuristics of recipe %s." : "No es va deixar cap recepta vàlida després de l'heurística de la recepta %s.",

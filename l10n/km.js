@@ -10,6 +10,7 @@ OC.L10N.register(
     "Add" : "បន្ថែម",
     "Name" : "ឈ្មោះ",
     "Apply" : "អនុវត្ត",
+    "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
     "OK" : "OK",
     "Description" : "ការ​អធិប្បាយ",

@@ -19,6 +19,63 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 
+## 0.11.8 - 2026-07-07
+
+### Fixed
+
+- Regression introduced in #3114 (migration to pinia) that prevents changing the recipe location
+  [#3242](https://github.com/nextcloud/cookbook/pull/3242) @christianlupus
+- Restrict network access on server to prevent accidential access on localhost
+  [#3244](https://github.com/nextcloud/cookbook/pull/3244) @christianlupus
+
+### Maintenance
+
+- Update link to 3rd party client from jojo0r
+  [#3232](https://github.com/nextcloud/cookbook/pull/3232) @bkmgit
+- Move to current coding standards in the backend
+  [#3171](https://github.com/nextcloud/cookbook/pull/3171) @dependabot
+- Upgrade frontend code to be compatible with current prettier formatter
+  [#3238](https://github.com/nextcloud/cookbook/pull/3238) @dependabot
+
+
+## 0.11.7 - 2026-06-01
+
+### Changed
+
+- Migrate to outline icons to align with the new design styles
+  [#2843](https://github.com/nextcloud/cookbook/pull/2843) @AndyScherzinger
+
+### Fixed
+
+- UI does now allow to select only one category ([#2550)[https://github.com/nextcloud/cookbook/issues/2550])
+  [#3080](https://github.com/nextcloud/cookbook/pull/3080) @christianlupus
+
+### Maintenance
+
+- Udpate testing library to make it compatible with current versions of NC
+  [#3062](https://github.com/nextcloud/cookbook/pull/3062) @dependabot
+- Add new client for Ubuntu Touch app
+  [#3039](https://github.com/nextcloud/cookbook/pull/3039) @joj0r
+- Update OCP dependency to satisfy NC 33 compatible API
+  [#3011](https://github.com/nextcloud/cookbook/pull/3011) @dependabot
+- Allow dependabot to push major dependency updates without manual adding of changelog entries are not needed
+  [#3071](https://github.com/nextcloud/cookbook/pull/3071) @christianlupus
+- Migration of frontend build system from webpack to Vite
+  [#2507](https://github.com/nextcloud/cookbook/pull/2507) @christianlupus
+- Clean up old webpack builder
+  [#3075](https://github.com/nextcloud/cookbook/pull/3075) @christianlupus
+- Migrate to flat config file for eslint
+  [#3075](https://github.com/nextcloud/cookbook/pull/3075) @christianlupus
+- Update some dependencies of the frontend
+  [#3088](https://github.com/nextcloud/cookbook/pull/3088) @christianlupus
+- Use more modern Pinia global state management in frontend in favor of old Vuex
+  [#3114](https://github.com/nextcloud/cookbook/pull/3114) @christianlupus
+- Update README and add AvoCook as possible client
+  [#3148](https://github.com/nextcloud/cookbook/pull/3148) @Logarex
+- Mark app as compatible with NC 34
+  [#3182](https://github.com/nextcloud/cookbook/pull/3182) @christianlupus
+
+
 ## 0.11.6 - 2026-02-13
 
 ### Maintenance

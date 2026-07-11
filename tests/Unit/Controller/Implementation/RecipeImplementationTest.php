@@ -90,8 +90,6 @@ class RecipeImplementationTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
 
-
-
 	public function testImportFailed(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -168,7 +166,6 @@ class RecipeImplementationTest extends TestCase {
 		 * @var JSONResponse $ret
 		 */
 		$ret = $this->sut->import();
-
 
 		$this->assertEquals(400, $ret->getStatus());
 		$this->assertEquals($errorMsg, $ret->getData());

@@ -66,6 +66,7 @@ OC.L10N.register(
     "Name" : "Navn",
     "Order" : "Rækkefølge",
     "Search term" : "Søgeterm",
+    "All categories" : "Alle kategorier",
     "Keywords" : "Nøgleord",
     "Clear" : "Ryd",
     "Apply" : "Anvend",

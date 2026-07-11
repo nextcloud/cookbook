@@ -10,6 +10,7 @@ OC.L10N.register(
     "Rename" : "পূনঃনামকরণ",
     "Add" : "যোগ কর",
     "Name" : "নাম",
+    "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
     "OK" : "OK",
     "Description" : "বিবরণ",

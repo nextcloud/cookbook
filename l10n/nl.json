@@ -1,7 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Er is geen plaatje gevonden op de server met een corresponderend MIME type.",
     "Recipe with ID %d was not found in database." : "Recept met %d niet in de database gevonden",
-    "Downloading of a file failed returned the following error message: %s" : "Download van een bestand ging fout met de volgende foutmelding: %s",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Het gekoppelde plaatje voor recept %s kon niet verwerkt worden. Afbreken en overslaan.",
     "No valid recipe was left after heuristics of recipe %s." : "Geen juist recept gevonden na heuristics van recept %s.",
     "Could not guess image URL as no recipe URL was found." : "Kon URL van het plaatje niet bepalen omdat er geen URL van het recept gevonden is.",

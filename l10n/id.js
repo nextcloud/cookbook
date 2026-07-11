@@ -4,7 +4,6 @@ OC.L10N.register(
     "No image with the matching MIME type was found on the server." : "Tidak ditemukan gambar dengan jenis MIME yang sesuai pada server.",
     "The provided URL is not allowed." : "URL yang diberikan tidak diizinkan.",
     "Recipe with ID %d was not found in database." : "Resep dengan ID %d tidak ditemukan di basis data.",
-    "Downloading of a file failed returned the following error message: %s" : "Pengunduhan file gagal dan mengembalikan pesan kesalahan berikut: %s",
     "No content encoding was detected in the content." : "Tidak terdeteksi encoding konten pada konten tersebut.",
     "Recipe name cannot be processed." : "Nama resep tidak dapat diproses.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Gambar yang diberikan untuk resep %s tidak dapat diurai. Membatalkan dan melewatinya.",

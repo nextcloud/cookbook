@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Ingen bilder med den samsvarende MIME-typen ble funnet på serveren.",
     "Recipe with ID %d was not found in database." : "Oppskriften med ID %d ble ikke funnet i databasen.",
-    "Downloading of a file failed returned the following error message: %s" : "Nedlasting av en fil feilet, returnerte følgende feilmelding: %s",
     "No content encoding was detected in the content." : "Ingen innholdskoding ble oppdaget i innholdet.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Oppgitt bilde for oppskriften %s kan ikke analyseres. Avbryter og hopper over det.",
     "No valid recipe was left after heuristics of recipe %s." : "Ingen gyldig oppskrift var igjen etter heuristikk av oppskriften %s.",
