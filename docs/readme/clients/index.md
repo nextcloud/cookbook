@@ -11,7 +11,7 @@ The currently available clients are in no particular order:
 | [Nextcloud Cookbook][lneugebauer-nextcloud-cookbook]   | [lneugebauer][]           | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][lneugebauer-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][lneugebauer-nextcloud-cookbook-play-store] |
 | [Cookbook Client][VincentMeilinger-nextcloud-cookbook] | [VincentMeilinger][]      | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][VincentMeilinger-nextcloud-cookbook-ios-app-store]                                                                                           |
 | [Cookbook][joj0r-nextcloud-cookbook]                   | [Jonas Stene][joj0r]      | [<img src="img/open-store.svg" alt="Download from the OpenStore" height="35">][joj0r-nextcloud-cookbook-open-store]                                                                                                      |
-| [AvoCook][logarex-avocook]                             | [Logarex][logarex]        | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][logarex-avocook-ios-app-store] [GitHub Releases (APK)][logarex-avocook-apk] |
+| [AvoCook][logarex-avocook]                             | [Logarex][logarex]        | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][logarex-avocook-ios-app-store] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][logarex-avocook-play-store] [GitHub Releases (APK)][logarex-avocook-apk] |
 
 
 <!-- References -->
@@ -50,6 +50,7 @@ The currently available clients are in no particular order:
 [logarex-avocook]: <https://github.com/Logarex/AvoCook> (AvoCook)
 [logarex-avocook-ios-app-store]: <https://apps.apple.com/app/avocook/id6769012665> (AvoCook iOS App Store)
 [logarex-avocook-apk]: <https://github.com/Logarex/AvoCook/releases/latest> (AvoCook Android APK)
+[logarex-avocook-play-store]: <https://play.google.com/store/apps/details?id=app.avocook.mobile>
 
 
 
