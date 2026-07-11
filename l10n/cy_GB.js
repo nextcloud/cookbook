@@ -12,6 +12,7 @@ OC.L10N.register(
     "Rename" : "Ailenwi",
     "Name" : "Enw",
     "Tools" : "Offer",
+    "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
     "OK" : "OK",
     "Description" : "Disgrifiad",

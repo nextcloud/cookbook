@@ -162,9 +162,9 @@ export default function useSuggestionsPopup(
 
         // Show the popup only if the # was inserted at the very
         // beginning of the input or after any whitespace character
-        if (
-            !(cursorPos === 1 || /\s/.test(field.value.charAt(cursorPos - 2)))
-        ) {
+        if (!(
+            cursorPos === 1 || /\s/.test(field.value.charAt(cursorPos - 2))
+        )) {
             return;
         }
 

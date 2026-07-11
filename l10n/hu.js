@@ -4,7 +4,6 @@ OC.L10N.register(
     "No image with the matching MIME type was found on the server." : "Nem található egyező MIME-típusú kép a kiszolgálón.",
     "The provided URL is not allowed." : "A megadott webcím nem engedélyezett.",
     "Recipe with ID %d was not found in database." : "A(z) „%d” azonosítójú recept nem található az adatbázisban.",
-    "Downloading of a file failed returned the following error message: %s" : "A fájl letöltése sikertelen, a következő hibaüzenetet adta vissza: %s",
     "No content encoding was detected in the content." : "Nem észlelhető tartalomkódolás a tartalomban.",
     "Recipe name cannot be processed." : "A recept neve nem dolgozható fel.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "A(z) %s recepthez megadott kép nem dolgozható fel. Megszakítás és kihagyás.",

@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Kuvaa ei löytynyt palvelimelta vastaavalla MIME-tyypillä.",
     "Recipe with ID %d was not found in database." : "Reseptiä ei löytynyt tietokannasta ID:llä %d.",
-    "Downloading of a file failed returned the following error message: %s" : "Tiedoston lataaminen epäonnistui. Virheviesti: %s.",
     "No content encoding was detected in the content." : "Sisällön enkoodausta ei tunnistettu.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Kuvaa ei voida käsitellä reseptille %s. ",
     "Could not guess image URL as no recipe URL was found." : "Kuvan osoitetta ei voitu arvata koska reseptin osoitetta ei löytynyt. ",

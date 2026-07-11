@@ -4,7 +4,6 @@ OC.L10N.register(
     "No image with the matching MIME type was found on the server." : "На северу није пронађена слика са одговарајућим MIME типом.",
     "The provided URL is not allowed." : "Наведена URL адреса није дозвољена.",
     "Recipe with ID %d was not found in database." : "Рецепт са ID %d се не налази у бази података.",
-    "Downloading of a file failed returned the following error message: %s" : "Преузимање фајла није успело, враћена је следећа грешка: %s",
     "No content encoding was detected in the content." : "У садржају није детектовано никакво кодирање садржаја.",
     "Recipe name cannot be processed." : "Назив рецепта не може да се обради.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Слика наведена за рецепт %s не може да се парсира. Прекида се и прескаче.",
