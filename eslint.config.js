@@ -67,7 +67,7 @@ export default [
   ),
 
   // Native flat Vue 2 preset
-  ...pluginVue.configs['flat/vue2-recommended'],
+  ...pluginVue.configs['flat/recommended'],
 
   // Force Vue SFC parsing for .vue files LAST so it wins
   {
