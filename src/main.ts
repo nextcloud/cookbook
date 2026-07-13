@@ -28,7 +28,6 @@ import AppMain from './components/AppMain.vue';
 
 console.log('Mode: ', import.meta.env.MODE);
 
-
 declare global {
 	interface Window {
 		OC:
@@ -61,7 +60,7 @@ const app2 = createApp({
 	// template: '<div>hello</div>',
 	render() {
 		return h('div', 'hello');
-	}
+	},
 });
 
 // TODO Check dev mode for debugging
@@ -75,7 +74,7 @@ app.use(router);
 helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
- 
+
 window.escapeHTML = helpers.escapeHTML;
 
 // Also make the injections available in Vue components
@@ -110,9 +109,7 @@ legacyStore.initializeStore();
 // Start the app once document is done loading
 // app.$log.info('Main is done. Creating App.');
 
-
 // app2.use(pinia);
 // app2.use(router);
 
 app.mount('#content');
-

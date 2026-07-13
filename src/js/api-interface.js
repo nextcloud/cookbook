@@ -34,7 +34,10 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(
     (response) => {
-        apiInterfaceConfig.app.$log.debug('[axios] Received response', response);
+        apiInterfaceConfig.app.$log.debug(
+            '[axios] Received response',
+            response,
+        );
         return response;
     },
     (error) => {

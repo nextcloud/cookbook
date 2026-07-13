@@ -360,11 +360,7 @@ import {
     ref,
     watch,
 } from 'vue';
-import {
-    onBeforeRouteUpdate,
-    useRoute,
-    useRouter,
-} from 'vue-router';
+import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -644,7 +640,10 @@ const setup = async () => {
 
         legacyStore.setPage({ page: 'recipe' });
 
-        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Loading recipe failed'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Loading recipe failed'),
+        );
     } finally {
         isLoading.value = false;
     }

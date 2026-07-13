@@ -282,7 +282,6 @@ watch(
     },
 );
 
- 
 watch(
     () => showFiltersInRecipeList.value,
     (newVal) => {
@@ -335,7 +334,6 @@ watch(
             await legacyStore.refreshConfig();
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch (err) {
-             
             console.error('Error while trying to save info blocks', err);
             await showSimpleAlertModal(
                 t('cookbook', 'Error'),

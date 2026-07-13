@@ -1,12 +1,7 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <input
-            v-model="hours"
-            type="number"
-            min="0"
-            placeholder="00"
-        />
+        <input v-model="hours" type="number" min="0" placeholder="00" />
         <span>:</span>
         <input
             v-model="minutes"
@@ -43,7 +38,7 @@ const value = defineModel({
 });
 
 const timeComps = computed(() => {
-    const match = value.value.match(/PT(\d+?)H(\d+?)M(\d+?)S/) ?? [0,0,0,0];
+    const match = value.value.match(/PT(\d+?)H(\d+?)M(\d+?)S/) ?? [0, 0, 0, 0];
     return match.slice(1);
 });
 
@@ -61,7 +56,7 @@ const hours = computed({
     set: (v) => {
         // value.value.time[0] = v ?? 0;
         updatePaddedTime(v, minutes.value, seconds.value);
-    }
+    },
 });
 
 const minutes = computed({
@@ -69,7 +64,7 @@ const minutes = computed({
     set: (v) => {
         // value.value.time[1] = v ?? 0;
         updatePaddedTime(hours.value, v, seconds.value);
-    }
+    },
 });
 
 const seconds = computed({
@@ -77,7 +72,7 @@ const seconds = computed({
     set: (v) => {
         // value.value.time[2] = v ?? 0;
         updatePaddedTime(hours.value, minutes.value, v);
-    }
+    },
 });
 </script>
 

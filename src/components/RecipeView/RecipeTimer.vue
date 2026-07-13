@@ -92,7 +92,7 @@ const onTimerEnd = () => {
 
         await showSimpleAlertModal(
             t('cookbook', 'Reminder'),
-            t('cookbook', 'Cooking time is up!')
+            t('cookbook', 'Cooking time is up!'),
         );
 
         // Stop audio after the alert is confirmed

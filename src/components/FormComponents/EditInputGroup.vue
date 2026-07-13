@@ -21,8 +21,8 @@
                     @focus="handleSuggestionsPopupFocus"
                     @blur="handleSuggestionsPopupBlur"
                     @mouseup="handleSuggestionsPopupMouseUp"
-                    />
-                    <!-- @input="handleInput" -->
+                />
+                <!-- @input="handleInput" -->
                 <textarea
                     v-else-if="fieldType === 'textarea'"
                     ref="listField"
@@ -34,7 +34,7 @@
                     @blur="handleSuggestionsPopupBlur"
                     @mouseup="handleSuggestionsPopupMouseUp"
                 ></textarea>
-                    <!-- @input="handleInput" -->
+                <!-- @input="handleInput" -->
                 <div class="controls">
                     <button
                         class=""

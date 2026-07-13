@@ -258,12 +258,17 @@ const downloadRecipe = async () => {
                 if (e2.response.status === 409) {
                     // There was a recipe found with the same name
 
-                    await showSimpleAlertModal(t('cookbook', 'Error'), e2.response.data.msg);
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e2.response.data.msg,
+                    );
                 } else {
-                    await showSimpleAlertModal(t('cookbook', 'Error'), e2.response.data);
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e2.response.data,
+                    );
                 }
             } else {
-                 
                 console.error(e2);
                 await showSimpleAlertModal(
                     t('cookbook', 'Error'),
@@ -272,7 +277,6 @@ const downloadRecipe = async () => {
                 );
             }
         } else {
-             
             console.error(e2);
             await showSimpleAlertModal(
                 t('cookbook', 'Error'),
@@ -323,7 +327,6 @@ const getCategories = async () => {
         for (let i = 0; i < categories.value.length; i++) {
             // Reload recipes in open categories
             if (!categoryItemElements[i]) {
-                 
                 continue;
             }
             if (categoryItemElements[i][0].opened) {
@@ -340,7 +343,10 @@ const getCategories = async () => {
             isRequired: false,
         });
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Failed to fetch categories'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to fetch categories'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }
