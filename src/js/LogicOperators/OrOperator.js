@@ -5,7 +5,6 @@ import BinaryOperator from './BinaryOperator';
  * @extends BinaryOperator
  */
 class OrOperator extends BinaryOperator {
-     
     get toString() {
         return 'OR';
     }
@@ -16,7 +15,7 @@ class OrOperator extends BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @returns {boolean} The result after applying the OR operation.
      */
-     
+
     apply(result, current) {
         return result || current;
     }

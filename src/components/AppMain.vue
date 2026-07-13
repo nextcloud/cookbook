@@ -20,7 +20,8 @@
                 :name="dialogTitle"
                 :message="dialogMessage"
                 :no-close="!(dialogAllowClose ?? true)"
-                @update:open="handleDialogClose" />
+                @update:open="handleDialogClose"
+            />
         </NcAppContent>
         <!-- <dialogs-wrapper></dialogs-wrapper> -->
         <!-- TODO: Add settings dialog -->
@@ -78,7 +79,14 @@ onUnmounted(() => {
     unsubscribe('navigation-toggled', updateAppNavigationOpen);
 });
 
-const { close, isDialogOpen, buttons, dialogTitle, dialogMessage, dialogAllowClose } = useCookbookDialogs();
+const {
+    close,
+    isDialogOpen,
+    buttons,
+    dialogTitle,
+    dialogMessage,
+    dialogAllowClose,
+} = useCookbookDialogs();
 
 function handleDialogClose() {
     close();

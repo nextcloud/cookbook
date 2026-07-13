@@ -5,7 +5,6 @@ import BinaryOperator from './BinaryOperator';
  * @extends BinaryOperator
  */
 class AndOperator extends BinaryOperator {
-     
     get toString() {
         return 'AND';
     }
@@ -16,7 +15,7 @@ class AndOperator extends BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @returns {boolean} The result after applying the AND operation.
      */
-     
+
     apply(result, current) {
         return result && current;
     }

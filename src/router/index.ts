@@ -80,5 +80,3 @@ export function createMainRouter() {
 export function getRouter() {
 	return _router;
 }
-
-

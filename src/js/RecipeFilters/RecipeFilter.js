@@ -22,7 +22,7 @@ class RecipeFilter {
      * @param {Object} recipe - The recipe object to be filtered.
      * @throws {Error} Method 'filter' must be implemented by subclasses.
      */
-     
+
     filter(recipe) {
         throw new Error("Method 'filter' must be implemented by subclasses");
     }

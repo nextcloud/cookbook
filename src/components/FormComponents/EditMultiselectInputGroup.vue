@@ -57,11 +57,7 @@
 </template>
 
 <script setup>
-import {
-    ref,
-    computed,
-    onBeforeMount,
-} from 'vue';
+import { ref, computed, onBeforeMount } from 'vue';
 
 import { NcButton, NcSelect } from '@nextcloud/vue';
 import DeleteIcon from 'vue-material-design-icons/TrashCanOutline.vue';

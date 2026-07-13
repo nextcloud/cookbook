@@ -51,4 +51,3 @@ app.use(pinia);
 
 // Start the app once document is done loading
 app.mount('#content');
-

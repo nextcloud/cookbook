@@ -311,7 +311,10 @@ const deleteRecipe = async () => {
         });
         helpers.goTo('/');
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Delete failed'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Delete failed'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }

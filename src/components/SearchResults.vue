@@ -147,7 +147,6 @@ onMounted(() => {
     emitter.off('categoryRenamed');
     emitter.on('categoryRenamed', (val) => {
         if (
-             
             isComponentActive.value &&
             props.query === 'cat' &&
             route.params.value === val[1]

@@ -66,9 +66,8 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
-    
-    });
-    
+});
+
 // Value (passed in v-model)
 const value = defineModel({
     type: String,

@@ -24,7 +24,6 @@ class RecipeNamesFilter extends RecipeFilter {
         this.filterMode = filterMode;
     }
 
-     
     get fuseOptions() {
         return {
             isCaseSensitive: false,

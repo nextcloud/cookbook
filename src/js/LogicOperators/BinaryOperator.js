@@ -3,7 +3,6 @@
  * @abstract
  */
 class BinaryOperator {
-     
     get toString() {
         return 'Abstract operation base class';
     }
@@ -24,7 +23,7 @@ class BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @throws {Error} Method 'apply' must be implemented by subclasses.
      */
-     
+
     apply(result, current) {
         throw new Error("Method 'apply' must be implemented by subclasses");
     }

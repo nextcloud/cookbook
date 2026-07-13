@@ -145,11 +145,7 @@ import {
     watch,
 } from 'vue';
 
-import {
-    onBeforeRouteLeave,
-    onBeforeRouteUpdate,
-    useRoute,
-} from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 import { NcActions, NcActionButton } from '@nextcloud/vue';
 
@@ -363,7 +359,9 @@ const isNavigationDangerous = computed(
 
 const recipeYield = computed({
     get: () => String(recipe.value.recipeYield),
-    set: (v) => { recipe.value.recipeYield = Number(v); },
+    set: (v) => {
+        recipe.value.recipeYield = Number(v);
+    },
 });
 
 // ===================
@@ -429,7 +427,10 @@ const fetchCategories = async () => {
         }
         isFetchingCategories.value = false;
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Failed to fetch categories'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to fetch categories'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }
@@ -452,7 +453,10 @@ const fetchKeywords = async () => {
         }
         isFetchingKeywords.value = false;
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Failed to fetch keywords'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to fetch keywords'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }
@@ -482,7 +486,10 @@ const save = async () => {
             switch (e.response.status) {
                 case 409:
                 case 422:
-                    await showSimpleAlertModal(t('cookbook', 'Error'), e.response.data.msg);
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e.response.data.msg,
+                    );
                     break;
 
                 default:
@@ -552,7 +559,7 @@ const initClone = () => {
     recipe.value.id = 0;
 
     // Update
-     
+
     recipe.value.name = t('cookbook', 'Clone of {name}', {
         name: recipe.value.name,
     });
@@ -633,7 +640,10 @@ const loadRecipeData = async () => {
         recipe.value = response.data;
         await setup();
     } catch {
-        await showSimpleAlertModal(t('cookbook', 'Error'), t('cookbook', 'Loading recipe failed'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Loading recipe failed'),
+        );
         // Disable loading indicator
         if (legacyStore.loadingRecipe) {
             legacyStore.setLoadingRecipe({ recipe: 0 });
@@ -684,7 +694,7 @@ onBeforeRouteLeave(async (to, from, next) => {
         isNavigationDangerous.value &&
         !(await showSimpleConfirmModal(
             t('cookbook', 'Discard changes?'),
-            CONFIRM_MSG
+            CONFIRM_MSG,
         ))
     ) {
         next(false);
@@ -726,12 +736,10 @@ onMounted(() => {
         // Update selectable categories
         const idx = allCategories.value.findIndex((c) => c === val[1]);
         if (idx >= 0) {
-             
             allCategories.value[idx] = val[0];
         }
         // Update selected category if the currently selected was renamed
         if (recipe.value.recipeCategory === val[1]) {
-             
             recipe.value.recipeCategory = val[0];
         }
     });
