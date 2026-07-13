@@ -1,21 +1,14 @@
 <template>
     <div class="checkbox">
         <label :for="id" class="checkbox__label">
-            <component
-                :is="isChecked ? checkedIcon : uncheckedIcon"
-                v-bind="
-                    isChecked
-                        ? { ...iconProps, ...checkedIconProps }
-                        : { ...iconProps, ...uncheckedIconProps }
-                "
-            />
+            <component :is="selectedComponent" v-bind="selectedProps" />
         </label>
-        <input :id="id" v-model="isChecked" type="checkbox" @change="toggle" />
+        <input :id="id" v-model="value" type="checkbox" />
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     /**
@@ -67,12 +60,14 @@ const value = defineModel({
     required: true,
 });
 
-/**
- * Toggle the value on the input between `true` and `false`.
- */
-function toggle() {
-    value.value = !value.value;
-}
+const selectedComponent = computed(() =>
+    value.value ? props.checkedIcon : props.uncheckedIcon,
+);
+const selectedProps = computed(() =>
+    value.value
+        ? { ...props.iconProps, ...props.checkedIconProps }
+        : { ...props.iconProps, ...props.uncheckedIconProps },
+);
 </script>
 
 <style lang="scss" scoped>

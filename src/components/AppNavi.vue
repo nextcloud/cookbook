@@ -1,6 +1,6 @@
 <template>
     <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
-    <NcAppNavigation>
+    <NcAppNavigation :aria-label="t('cookbook', 'Cookbook main menu')">
         <router-link :to="'/recipe/create'">
             <NcAppNavigationNew
                 class="create"
