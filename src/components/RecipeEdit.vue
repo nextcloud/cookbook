@@ -29,19 +29,19 @@
                 :field-label="t('cookbook', 'Image')"
             />
             <EditTimeField
-                v-model="prepTime"
+                v-model="recipe.prepTime"
                 :field-label="
                     t('cookbook', 'Preparation time (hours:minutes:seconds)')
                 "
             />
             <EditTimeField
-                v-model="cookTime"
+                v-model="recipe.cookTime"
                 :field-label="
                     t('cookbook', 'Cooking time (hours:minutes:seconds)')
                 "
             />
             <EditTimeField
-                v-model="totalTime"
+                v-model="recipe.totalTime"
                 :field-label="
                     t('cookbook', 'Total time (hours:minutes:seconds)')
                 "
@@ -68,11 +68,10 @@
                 @tag="addKeyword"
             />
             <EditInputField
-                :value="String(recipe['recipeYield'])"
+                v-model="recipeYield"
                 :field-type="'number'"
                 :field-label="t('cookbook', 'Servings')"
                 :hide="!showRecipeYield"
-                @input="recipe['recipeYield'] = Number($event)"
             >
                 <NcActions>
                     <NcActionButton
@@ -146,11 +145,7 @@ import {
     watch,
 } from 'vue';
 
-import {
-    onBeforeRouteLeave,
-    onBeforeRouteUpdate,
-    useRoute,
-} from 'vue-router/composables';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 import { NcActions, NcActionButton } from '@nextcloud/vue';
 
@@ -231,9 +226,6 @@ const formDirty = ref(false);
  * @type {import('vue').Ref<boolean>}
  */
 const savingRecipe = ref(false);
-const prepTime = ref({ time: [0, 0, 0], paddedTime: '' });
-const cookTime = ref({ time: [0, 0, 0], paddedTime: '' });
-const totalTime = ref({ time: [0, 0, 0], paddedTime: '' });
 const allCategories = ref([]);
 /**
  * @type {import('vue').Ref<boolean>}
@@ -365,31 +357,17 @@ const isNavigationDangerous = computed(
     () => !savingRecipe.value && formDirty.value,
 );
 
+const recipeYield = computed({
+    get: () => String(recipe.value.recipeYield),
+    set: (v) => {
+        recipe.value.recipeYield = Number(v);
+    },
+});
+
 // ===================
 // Watchers
 // ===================
 
-watch(
-    () => prepTime.value,
-    () => {
-        recipe.value.prepTime = prepTime.value.paddedTime;
-    },
-    { deep: true },
-);
-watch(
-    () => cookTime.value,
-    () => {
-        recipe.value.cookTime = cookTime.value.paddedTime;
-    },
-    { deep: true },
-);
-watch(
-    () => totalTime.value,
-    () => {
-        recipe.value.totalTime = totalTime.value.paddedTime;
-    },
-    { deep: true },
-);
 watch(
     () => selectedKeywords.value,
     () => {
@@ -449,7 +427,10 @@ const fetchCategories = async () => {
         }
         isFetchingCategories.value = false;
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Failed to fetch categories'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to fetch categories'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }
@@ -472,7 +453,10 @@ const fetchKeywords = async () => {
         }
         isFetchingKeywords.value = false;
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Failed to fetch keywords'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to fetch keywords'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }
@@ -502,11 +486,15 @@ const save = async () => {
             switch (e.response.status) {
                 case 409:
                 case 422:
-                    await showSimpleAlertModal(e.response.data.msg);
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e.response.data.msg,
+                    );
                     break;
 
                 default:
                     await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
                         /* prettier-ignore */
                         t('cookbook', 'Unknown answer {status} returned from server. See logs in your browser (press F12).',
                             {
@@ -518,11 +506,14 @@ const save = async () => {
             }
         } else if (e.request) {
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
+                /* prettier-ignore */
                 t('cookbook', 'No answer for request was received.'),
             );
             log.error(e);
         } else {
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook','Could not start request to save recipe.'),
             );
@@ -537,9 +528,6 @@ const save = async () => {
 };
 
 const initEmptyRecipe = () => {
-    prepTime.value = { time: [0, 0, 0], paddedTime: '' };
-    cookTime.value = { time: [0, 0, 0], paddedTime: '' };
-    totalTime.value = { time: [0, 0, 0], paddedTime: '' };
     // this.nutrition = {}
     recipe.value = {
         id: 0,
@@ -571,7 +559,7 @@ const initClone = () => {
     recipe.value.id = 0;
 
     // Update
-    // eslint-disable-next-line no-template-curly-in-string
+
     recipe.value.name = t('cookbook', 'Clone of {name}', {
         name: recipe.value.name,
     });
@@ -581,38 +569,6 @@ const setup = async () => {
     fetchCategories();
     fetchKeywords();
     if (route.params.id) {
-        // Parse time values
-        let timeComps = recipe.value.prepTime
-            ? recipe.value.prepTime.match(/PT(\d+?)H(\d+?)M(\d+?)S/)
-            : null;
-        prepTime.value = {
-            time: timeComps
-                ? [timeComps[1], timeComps[2], timeComps[3]]
-                : [0, 0, 0],
-            paddedTime: recipe.value.prepTime,
-        };
-
-        timeComps = recipe.value.cookTime
-            ? recipe.value.cookTime.match(/PT(\d+?)H(\d+?)M(\d+?)S/)
-            : null;
-        cookTime.value = {
-            time: timeComps
-                ? [timeComps[1], timeComps[2], timeComps[3]]
-                : [0, 0, 0],
-            paddedTime: recipe.value.cookTime,
-        };
-
-        timeComps = recipe.value.totalTime
-            ? recipe.value.totalTime.match(/PT(\d+?)H(\d+?)M(\d+?)S/)
-            : null;
-
-        totalTime.value = {
-            time: timeComps
-                ? [timeComps[1], timeComps[2], timeComps[3]]
-                : [0, 0, 0],
-            paddedTime: recipe.value.totalTime,
-        };
-
         selectedKeywords.value = recipe.value.keywords
             .split(',')
             .map((kw) => kw.trim())
@@ -684,7 +640,10 @@ const loadRecipeData = async () => {
         recipe.value = response.data;
         await setup();
     } catch {
-        await showSimpleAlertModal(t('cookbook', 'Loading recipe failed'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Loading recipe failed'),
+        );
         // Disable loading indicator
         if (legacyStore.loadingRecipe) {
             legacyStore.setLoadingRecipe({ recipe: 0 });
@@ -733,7 +692,10 @@ onBeforeRouteLeave(async (to, from, next) => {
     // confirm leave. This prevents accidentally losing changes
     if (
         isNavigationDangerous.value &&
-        !(await showSimpleConfirmModal(CONFIRM_MSG))
+        !(await showSimpleConfirmModal(
+            t('cookbook', 'Discard changes?'),
+            CONFIRM_MSG,
+        ))
     ) {
         next(false);
     } else {
@@ -774,12 +736,10 @@ onMounted(() => {
         // Update selectable categories
         const idx = allCategories.value.findIndex((c) => c === val[1]);
         if (idx >= 0) {
-            // eslint-disable-next-line prefer-destructuring
             allCategories.value[idx] = val[0];
         }
         // Update selected category if the currently selected was renamed
         if (recipe.value.recipeCategory === val[1]) {
-            // eslint-disable-next-line prefer-destructuring
             recipe.value.recipeCategory = val[0];
         }
     });

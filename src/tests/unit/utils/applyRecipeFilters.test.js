@@ -1,6 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { jest } from '@jest/globals';
-// eslint-disable-next-line max-classes-per-file
+
 import applyFilters from '../../../js/utils/applyRecipeFilters';
 import RecipeFilter from '../../../js/RecipeFilters/RecipeFilter';
 import { AndOperator } from '../../../js/LogicOperators';

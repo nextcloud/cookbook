@@ -1,21 +1,14 @@
 <template>
     <div class="checkbox">
         <label :for="id" class="checkbox__label">
-            <component
-                :is="isChecked ? checkedIcon : uncheckedIcon"
-                v-bind="
-                    isChecked
-                        ? { ...iconProps, ...checkedIconProps }
-                        : { ...iconProps, ...uncheckedIconProps }
-                "
-            />
+            <component :is="selectedComponent" v-bind="selectedProps" />
         </label>
-        <input :id="id" v-model="isChecked" type="checkbox" @change="toggle" />
+        <input :id="id" v-model="value" type="checkbox" />
     </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     /**
@@ -60,44 +53,21 @@ const props = defineProps({
         type: Object,
         default: () => {},
     },
-    /**
-     * Checked state of the input.
-     */
-    value: {
-        type: Boolean,
-        default: false,
-        required: true,
-    },
 });
 
-const emit = defineEmits(['input', 'check', 'uncheck', 'update']);
+const value = defineModel({
+    type: Boolean,
+    required: true,
+});
 
-/**
- * Local value of the input.
- * @type {import('vue').Ref<boolean>}
- */
-const isChecked = ref(props.value);
-
-// Watch the model value and update local value on external updates.
-watch(
-    () => props.value,
-    (newValue) => {
-        isChecked.value = newValue;
-    },
+const selectedComponent = computed(() =>
+    value.value ? props.checkedIcon : props.uncheckedIcon,
 );
-
-/**
- * Toggle the value on the input between `true` and `false`.
- */
-function toggle() {
-    emit('input', isChecked.value);
-    emit('update', isChecked.value);
-    if (isChecked.value) {
-        emit('check');
-    } else {
-        emit('uncheck');
-    }
-}
+const selectedProps = computed(() =>
+    value.value
+        ? { ...props.iconProps, ...props.checkedIconProps }
+        : { ...props.iconProps, ...props.uncheckedIconProps },
+);
 </script>
 
 <style lang="scss" scoped>

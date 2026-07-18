@@ -10,21 +10,23 @@
 // Markdown
 import VueShowdown from 'vue-showdown';
 
-import Vue from 'vue';
+import { createApp, h } from 'vue';
 
-import * as ModalDialogs from 'vue-modal-dialogs';
+// TODO
+// import * as ModalDialogs from 'vue-modal-dialogs';
 
-import { createPinia, PiniaVuePlugin } from 'pinia';
+import { createPinia } from 'pinia';
 
 import helpers from './js/helper';
 import setupLogging from './js/logging';
 
-import router from './router';
+import { createMainRouter, getRouter } from './router';
 import { useLegacyStore } from './store';
+import { setApp as setAppInApiInterface } from 'cookbook/js/api-interface';
 
 import AppMain from './components/AppMain.vue';
 
-Vue.config.devtools = import.meta.env.MODE === 'development';
+console.log('Mode: ', import.meta.env.MODE);
 
 declare global {
 	interface Window {
@@ -52,44 +54,62 @@ declare module 'vue/types/vue' {
 	}
 }
 
+const app = createApp(AppMain);
+
+const app2 = createApp({
+	// template: '<div>hello</div>',
+	render() {
+		return h('div', 'hello');
+	},
+});
+
+// TODO Check dev mode for debugging
+app.config.performance = import.meta.env.MODE === 'development';
+
+createMainRouter();
+const router = getRouter();
+app.use(router);
+
+// Register helper functions
 helpers.useRouter(router);
 
 // A simple function to sanitize HTML tags
-// eslint-disable-next-line no-param-reassign
+
 window.escapeHTML = helpers.escapeHTML;
 
 // Also make the injections available in Vue components
-Vue.prototype.$window = window;
-Vue.prototype.OC = window.OC;
+app.config.globalProperties.$window = window;
+app.config.globalProperties.OC = window.OC;
 
 // Markdown for Vue
-Vue.use(VueShowdown, {
+app.use(VueShowdown, {
 	// set default flavor for Markdown
 	flavor: 'vanilla',
 });
 
 // TODO: Equivalent library for Vue3 when we make that transition:
 // https://github.com/rlemaigre/vue3-promise-dialog
-Vue.use(ModalDialogs);
+// TODO Vue.use(ModalDialogs);
 
-setupLogging(Vue);
+setupLogging(app);
+setAppInApiInterface(app);
 
 // Pass translation engine to Vue
-Vue.prototype.t = window.t;
-Vue.prototype.n = window.n;
+app.config.globalProperties.t = window.t;
+app.config.globalProperties.n = window.n;
 
-Vue.use(PiniaVuePlugin);
 const pinia = createPinia();
+app.use(pinia);
+
+// Only create the store after `use`ing the pinia store
+const legacyStore = useLegacyStore();
+legacyStore.refreshConfig();
+legacyStore.initializeStore();
 
 // Start the app once document is done loading
-Vue.$log.info('Main is done. Creating App.');
-const App = Vue.extend(AppMain);
-new App({
-	router,
-	pinia,
-	beforeCreate() {
-		const legacyStore = useLegacyStore();
-		legacyStore.refreshConfig();
-		legacyStore.initializeStore();
-	},
-}).$mount('#content');
+// app.$log.info('Main is done. Creating App.');
+
+// app2.use(pinia);
+// app2.use(router);
+
+app.mount('#content');

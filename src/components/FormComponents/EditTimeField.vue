@@ -1,13 +1,7 @@
 <template>
     <fieldset>
         <label>{{ fieldLabel }}</label>
-        <input
-            v-model="hours"
-            type="number"
-            min="0"
-            placeholder="00"
-            @input="handleInput"
-        />
+        <input v-model="hours" type="number" min="0" placeholder="00" />
         <span>:</span>
         <input
             v-model="minutes"
@@ -15,7 +9,6 @@
             min="0"
             max="59"
             placeholder="00"
-            @input="handleInput"
         />
         <span>:</span>
         <input
@@ -24,76 +17,62 @@
             min="0"
             max="59"
             placeholder="00"
-            @input="handleInput"
+            @change="console.log('changed')"
         />
     </fieldset>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
-
-const emit = defineEmits(['input']);
+import { computed } from 'vue';
 
 const props = defineProps({
-    value: {
-        type: Object,
-        required: true,
-        default: () => ({
-            time: [null, null, null],
-            paddedTime: null,
-        }),
-    },
     fieldLabel: {
         type: String,
         default: '',
     },
 });
 
-/**
- * @type {import('vue').Ref<number>}
- */
-const hours = ref(null);
-/**
- * @type {import('vue').Ref<number>}
- */
-const minutes = ref(null);
-/**
- * @type {import('vue').Ref<number>}
- */
-const seconds = ref(null);
+const value = defineModel({
+    type: String,
+    required: true,
+});
 
-// Methods
+const timeComps = computed(() => {
+    const match = value.value.match(/PT(\d+?)H(\d+?)M(\d+?)S/) ?? [0, 0, 0, 0];
+    return match.slice(1);
+});
 
-const handleInput = () => {
-    seconds.value = seconds.value ? seconds.value : 0;
-    minutes.value = minutes.value ? minutes.value : 0;
-    hours.value = hours.value ? hours.value : 0;
-
+function updatePaddedTime(h, m, s) {
     // create padded time string
-    const hoursPadded = hours.value.toString().padStart(2, '0');
-    const minutesPadded = minutes.value.toString().padStart(2, '0');
-    const secondsPadded = seconds.value.toString().padStart(2, '0');
+    const hoursPadded = h.toString().padStart(2, '0');
+    const minutesPadded = m.toString().padStart(2, '0');
+    const secondsPadded = s.toString().padStart(2, '0');
 
-    emit('input', {
-        time: [hours.value, minutes.value, seconds.value],
-        paddedTime: `PT${hoursPadded}H${minutesPadded}M${secondsPadded}S`,
-    });
-};
+    value.value = `PT${hoursPadded}H${minutesPadded}M${secondsPadded}S`;
+}
 
-const setLocalValueFromProps = () => {
-    if (props.value?.time) {
-        [hours.value, minutes.value, seconds.value] = props.value.time;
-    }
-};
+const hours = computed({
+    get: () => timeComps.value[0],
+    set: (v) => {
+        // value.value.time[0] = v ?? 0;
+        updatePaddedTime(v, minutes.value, seconds.value);
+    },
+});
 
-// Watchers
+const minutes = computed({
+    get: () => timeComps.value[1],
+    set: (v) => {
+        // value.value.time[1] = v ?? 0;
+        updatePaddedTime(hours.value, v, seconds.value);
+    },
+});
 
-watch(() => props.value, setLocalValueFromProps);
-
-// Vue lifecycle
-
-onMounted(() => {
-    setLocalValueFromProps();
+const seconds = computed({
+    get: () => timeComps.value[2],
+    set: (v) => {
+        // value.value.time[2] = v ?? 0;
+        updatePaddedTime(hours.value, minutes.value, v);
+    },
 });
 </script>
 

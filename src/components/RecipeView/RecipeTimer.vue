@@ -90,7 +90,10 @@ const onTimerEnd = () => {
         // Start playing audio to alert the user that the timer is up
         audio.value.play();
 
-        await showSimpleAlertModal(t('cookbook', 'Cooking time is up!'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Reminder'),
+            t('cookbook', 'Cooking time is up!'),
+        );
 
         // Stop audio after the alert is confirmed
         audio.value.pause();

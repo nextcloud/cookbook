@@ -24,7 +24,6 @@ class RecipeNamesFilter extends RecipeFilter {
         this.filterMode = filterMode;
     }
 
-    // eslint-disable-next-line class-methods-use-this
     get fuseOptions() {
         return {
             isCaseSensitive: false,

@@ -1,6 +1,6 @@
 <template>
     <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
-    <NcAppNavigation>
+    <NcAppNavigation :aria-label="t('cookbook', 'Cookbook main menu')">
         <router-link :to="'/recipe/create'">
             <NcAppNavigationNew
                 class="create"
@@ -27,9 +27,7 @@
                 :to="'/'"
             >
                 <template #counter>
-                    <nc-counter-bubble>{{
-                        totalRecipeCount
-                    }}</nc-counter-bubble>
+                    <nc-counter-bubble :count="totalRecipeCount" />
                 </template>
             </NcAppNavigationItem>
 
@@ -39,7 +37,7 @@
                 :to="'/category/_/'"
             >
                 <template #counter>
-                    <nc-counter-bubble>{{ uncatRecipes }}</nc-counter-bubble>
+                    <nc-counter-bubble :count="uncatRecipes" />
                 </template>
             </NcAppNavigationItem>
 
@@ -72,7 +70,7 @@
                 "
             >
                 <template #counter>
-                    <nc-counter-bubble>{{ cat.recipeCount }}</nc-counter-bubble>
+                    <nc-counter-bubble :count="cat.recipeCount" />
                 </template>
             </NcAppNavigationItem>
         </template>
@@ -185,6 +183,7 @@ const openCategory = async (idx) => {
     } catch (e) {
         cat.recipes = [];
         await showSimpleAlertModal(
+            t('cookbook', 'Error'),
             /* prettier-ignore */
             t('cookbook', 'Failed to load category {category} recipes',
                 {
@@ -218,6 +217,7 @@ const categoryUpdateName = async (idx, newName) => {
         emitter.emit('categoryRenamed', [newName, oldName]);
     } catch (e) {
         await showSimpleAlertModal(
+            t('cookbook', 'Error'),
             /* prettier-ignore */
             t('cookbook','Failed to update name of category "{category}"',
             {
@@ -258,22 +258,28 @@ const downloadRecipe = async () => {
                 if (e2.response.status === 409) {
                     // There was a recipe found with the same name
 
-                    await showSimpleAlertModal(e2.response.data.msg);
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e2.response.data.msg,
+                    );
                 } else {
-                    await showSimpleAlertModal(e2.response.data);
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e2.response.data,
+                    );
                 }
             } else {
-                // eslint-disable-next-line no-console
                 console.error(e2);
                 await showSimpleAlertModal(
+                    t('cookbook', 'Error'),
                     /* prettier-ignore */
                     t('cookbook','The server reported an error. Please check.'),
                 );
             }
         } else {
-            // eslint-disable-next-line no-console
             console.error(e2);
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook', 'Could not query the server. This might be a network problem.'),
             );
@@ -321,7 +327,6 @@ const getCategories = async () => {
         for (let i = 0; i < categories.value.length; i++) {
             // Reload recipes in open categories
             if (!categoryItemElements[i]) {
-                // eslint-disable-next-line no-continue
                 continue;
             }
             if (categoryItemElements[i][0].opened) {
@@ -338,7 +343,10 @@ const getCategories = async () => {
             isRequired: false,
         });
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Failed to fetch categories'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to fetch categories'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }
