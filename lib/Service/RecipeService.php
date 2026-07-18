@@ -287,8 +287,15 @@ class RecipeService {
 					try {
 						$full_image_data = $this->downloadImage($json['image']);
 					} catch (Exception $ex) {
-						$this->logger->warning('Failed to download an image using curl. Falling back to PHP default behavior.');
-						$full_image_data = file_get_contents($json['image']);
+						// SECURITY: do not fall back to an unguarded fetch here.
+						// downloadImage() deliberately blocks local/internal addresses
+						// (SSRF protection via allow_local_address => false and
+						// LocalServerException). Falling back to file_get_contents()
+						// would re-issue the very request that protection just rejected,
+						// letting a recipe's "image" URL reach localhost / link-local /
+						// cloud-metadata endpoints. Fail closed and skip the image.
+						$this->logger->warning('Failed to download recipe image from URL; skipping image.', ['exception' => $ex]);
+						$full_image_data = null;
 					}
 
 				} else {
