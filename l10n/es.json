@@ -2,7 +2,6 @@
     "No image with the matching MIME type was found on the server." : "No se ha encontrado ninguna imagen con el tipo MIME correspondiente en el servidor.",
     "The provided URL is not allowed." : "La URL suministrada no está permitida.",
     "Recipe with ID %d was not found in database." : "No se ha encontrado en la base de datos la recete con ID %d",
-    "Downloading of a file failed returned the following error message: %s" : "La descarga de un archivo ha fallado devolviendo el siguiente mensaje de error: %s",
     "No content encoding was detected in the content." : "No se ha detectado en el contenido ninguna codificación de contenido.",
     "Recipe name cannot be processed." : "No se ha podido procesar el nombre de la receta.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "La imagen provista para la receta %s no puede ser procesada. Se aborta y se ignora.",

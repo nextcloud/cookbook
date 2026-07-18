@@ -2,7 +2,6 @@
     "No image with the matching MIME type was found on the server." : "ບໍ່ພົບຮູບພາບທີ່ມີປະເພດ MIME ທີ່ກົງກັນຢູ່ໃນເຊີບເວີ.",
     "The provided URL is not allowed." : "URL ທີ່ສະໜອງໃຫ້ບໍ່ໄດ້ຮັບອະນຸຍາດ.",
     "Recipe with ID %d was not found in database." : "ບໍ່ພົບສູດອາຫານທີ່ມີໄອດີ %d ໃນຖານຂໍ້ມູນ.",
-    "Downloading of a file failed returned the following error message: %s" : "ການດາວໂຫຼດໄຟລ໌ລົ້ມເຫລວ ສົ່ງຄືນຂໍ້ຄວາມຜິດພາດດັ່ງນີ້: %s",
     "No content encoding was detected in the content." : "ບໍ່ພົບການເຂົ້າລະຫັດເນື້ອຫາໃດໆໃນເນື້ອຫານັ້ນ.",
     "Recipe name cannot be processed." : "ບໍ່ສາມາດປະມວນຜົນຊື່ສູດອາຫານໄດ້.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "ບໍ່ສາມາດວິເຄາະຮູບພາບທີ່ໃຫ້ໄວ້ສຳລັບສູດອາຫານ %s ໄດ້. ກຳລັງຍົກເລີກ ແລະ ຂ້າມມັນໄປ.",

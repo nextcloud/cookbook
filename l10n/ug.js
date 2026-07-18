@@ -4,7 +4,6 @@ OC.L10N.register(
     "No image with the matching MIME type was found on the server." : "مۇلازىمېتىردا ماس كېلىدىغان MIME تىپى بىلەن رەسىم تېپىلمىدى.",
     "The provided URL is not allowed." : "تەمىنلەنگەن URL گە يول قۇيۇلمايدۇ.",
     "Recipe with ID %d was not found in database." : "ID%d بىلەن رېتسېپ سانداندا تېپىلمىدى.",
-    "Downloading of a file failed returned the following error message: %s" : "ھۆججەتنى چۈشۈرۈش مەغلۇب بولدى تۆۋەندىكى خاتالىق ئۇچۇرى: %s",
     "No content encoding was detected in the content." : "مەزمۇندا ھېچقانداق كودلاش ئۇسۇلى بايقالمىدى.",
     "Recipe name cannot be processed." : "رىتسىپ ئىسمىنى بىر-تەرەپ قىلغىلى بولمايدۇ",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "رېتسېپ %s ئۈچۈن بېرىلگەن رەسىمنى تەھلىل قىلىشقا بولمايدۇ. ئۇنى ئەمەلدىن قالدۇرۇش ۋە ئاتلاش.",

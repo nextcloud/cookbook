@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Ez da bat datorren MIME mota duen irudirik aurkitu zerbitzarian.",
     "Recipe with ID %d was not found in database." : "Ez da aurkitu ID %d duen errezeta datu-basean.",
-    "Downloading of a file failed returned the following error message: %s" : "Fitxategiaren deskargak huts egin du hurrengo errore mezuarekin: %s",
     "No content encoding was detected in the content." : "Ez da edukiaren kodifikazioa detektatu edukian.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "%s errezetarako emandako irudia ezin da analizatu. Abortatzen eta salto egiten.",
     "No valid recipe was left after heuristics of recipe %s." : "Ez da baliozko errezeta utzi %s errezetaren heuristika ostean.",

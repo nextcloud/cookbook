@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "На сервере не было найдено изображения с соответствующим типом MIME.",
     "Recipe with ID %d was not found in database." : "Рецепт с идентификатором %d не был найден в базе данных.",
-    "Downloading of a file failed returned the following error message: %s" : "При неудачной загрузке файла было возвращено следующее сообщение об ошибке: %s",
     "No content encoding was detected in the content." : "Кодировка в содержимого не обнаружена.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Изображение для рецепта %s не может быть проанализировано. Прерываю анализ и пропускаю изображение.",
     "Using heuristics to parse the \"recipeYield\" field representing the number of servings of recipe {name}." : "Использование эвристики для анализа поля «recipeYield», представляющего количество порций рецепта",

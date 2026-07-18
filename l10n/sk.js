@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Na serveri sa nenašiel žiadny obrázok so zodpovedajúcim typom MIME.",
     "Recipe with ID %d was not found in database." : "Recept s ID %d nebol nájdený v databázi.",
-    "Downloading of a file failed returned the following error message: %s" : "Sťahovanie súboru zlyhalo a vrátilo sa nasledujúce chybové hlásenie: %s",
     "No content encoding was detected in the content." : "V obsahu nebolo zistené žiadne kódovanie obsahu.",
     "Recipe name cannot be processed." : "Názov receptu nie je možné spracovať",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Daný obrázok pre recept %s nie je možné analyzovať. Prerušujem a preskakujem.",
