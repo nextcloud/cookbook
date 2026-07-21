@@ -98,6 +98,11 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 					continue;
 				}
 
+				if ($this->jsonService->isSchemaObject($value, 'HowToTip', false)) {
+					$instructions[$key] = [$this->extractHowToStep($value)];
+					continue;
+				}
+
 				if ($this->jsonService->isSchemaObject($value, 'HowToSection', false)) {
 					$newInstructions = $this->flattenHowToSection($value);
 					$instructions[$key] = $newInstructions;
