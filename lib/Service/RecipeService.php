@@ -239,7 +239,6 @@ class RecipeService {
 
 				$recipe_folder->move($new_path);
 			}
-
 		} else {
 			// This is a new recipe, create it
 			$json['dateCreated'] = $now;
@@ -297,7 +296,6 @@ class RecipeService {
 						$this->logger->warning('Failed to download recipe image from URL; skipping image.', ['exception' => $ex]);
 						$full_image_data = null;
 					}
-
 				} else {
 					// The image is a local path
 					try {
@@ -308,7 +306,6 @@ class RecipeService {
 					}
 				}
 			}
-
 		} else {
 			// The image field was empty, remove images in the recipe folder
 			$this->imageService->dropImage($recipe_folder);
@@ -426,7 +423,6 @@ class RecipeService {
 				$recipe_folder = $user_folder->newFolder($recipe_name);
 
 				$node->move($recipe_folder->getPath() . '/recipe.json');
-
 			} elseif ($node instanceof Folder && strpos($node->getName(), '.json')) {
 				// Rename folders with .json extensions (this was likely caused by a migration bug)
 				$node->move(str_replace('.json', '', $node->getPath()));
@@ -570,6 +566,22 @@ class RecipeService {
 	 */
 	public function getVisibleInfoBlocks(): array {
 		return $this->userConfigHelper->getVisibleInfoBlocks();
+	}
+
+	/**
+	 * Get browserless configuration
+	 * @return array<string, string | null> keys: url and token, values: url and token
+	 */
+	public function getBrowserlessConfig(): array {
+		return $this->userConfigHelper->getBrowserlessConfig();
+	}
+
+	/**
+	 * Sets browserless configuration.
+	 * @param array<string, bool> keys: url and token, values: url and token
+	 */
+	public function setBrowserlessConfig(array $data) {
+		$this->userConfigHelper->setBrowserlessConfig($data);
 	}
 
 	/**
