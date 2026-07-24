@@ -44,7 +44,7 @@
     "mitt": "^3.0.1",
     "pinia": "^2.3.1",
     "sass": "^1.69.5",
-    "sass-loader": "^16.0.5",
+    "sass-loader": "^17.0.0",
     "vue": "^2.7.15",
     "vue-i18n": "^8.17.1",
     "vue-material-design-icons": "^5.2.0",
