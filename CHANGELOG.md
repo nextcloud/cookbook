@@ -19,6 +19,14 @@ Sorry for the inconvience.
 ## [Unreleased]
 
 
+## 0.11.9 - 2026-07-18
+
+### Fixed
+
+- Prevent local access on network when downloading images
+  [#3254](https://github.com/nextcloud/cookbook/pull/3254) @MiMoHo
+
+
 ## 0.11.8 - 2026-07-07
 
 ### Fixed

@@ -12,6 +12,6 @@ class ApiVersion {
 	}
 
 	public function getAppVersion(): array {
-		return [0, 11, 8]; /* VERSION_TAG do not change this line manually */
+		return [0, 11, 9]; /* VERSION_TAG do not change this line manually */
 	}
 }

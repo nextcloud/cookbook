@@ -4,6 +4,8 @@ OC.L10N.register(
     "No image with the matching MIME type was found on the server." : "No image with the matching MIME type was found on the server.",
     "The provided URL is not allowed." : "The provided URL is not allowed.",
     "Recipe with ID %d was not found in database." : "Recipe with ID %d was not found in database.",
+    "URL resolves to a local/internal address" : "URL resolves to a local/internal address",
+    "Error occurred while downloading the file: %s" : "Error occurred while downloading the file: %s",
     "No content encoding was detected in the content." : "No content encoding was detected in the content.",
     "Recipe name cannot be processed." : "Recipe name cannot be processed.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "The given image for the recipe %s cannot be parsed. Aborting and skipping it.",
