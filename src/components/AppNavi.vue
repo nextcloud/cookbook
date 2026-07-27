@@ -12,11 +12,11 @@
 
         <template #list>
             <NcActionInput
+                v-model="importUrl"
                 class="download"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'"
                 @submit="downloadRecipe"
-                @update:value="updateUrl"
             >
                 {{ t('cookbook', 'Download recipe from URL') }}
             </NcActionInput>
@@ -250,6 +250,7 @@ const downloadRecipe = async () => {
         legacyStore.setAppNavigationRefreshRequired({
             isRequired: true,
         });
+        importUrl.value = '';
     } catch (e2) {
         downloading.value = false;
 
