@@ -33,16 +33,25 @@ const props = defineProps({
 });
 
 const value = defineModel({
-    type: String,
+    type: [String, null],
     required: true,
 });
 
 const timeComps = computed(() => {
+    if (!value.value) {
+        return [0, 0, 0];
+    }
     const match = value.value.match(/PT(\d+?)H(\d+?)M(\d+?)S/) ?? [0, 0, 0, 0];
     return match.slice(1);
 });
 
 function updatePaddedTime(h, m, s) {
+    // Special case: if all are zero, set value to null
+    if (h == 0 && m == 0 && s == 0) {
+        value.value = null;
+        return;
+    }
+
     // create padded time string
     const hoursPadded = h.toString().padStart(2, '0');
     const minutesPadded = m.toString().padStart(2, '0');
