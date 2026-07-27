@@ -478,6 +478,9 @@ const save = async () => {
 
     try {
         const response = await request;
+        savingRecipe.value = false;
+        legacyStore.setSavingRecipe({ saving: false });
+        formDirty.value = false;
         helpers.goTo(`/recipe/${response.data}`);
     } catch (e) {
         if (e.response) {
