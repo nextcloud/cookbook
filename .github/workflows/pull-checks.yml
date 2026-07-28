@@ -69,6 +69,7 @@ jobs:
                       grep -v '^package-lock.json$' | \
                       grep -v '^composer.lock$' | \
                       grep -v '^\.github/workflows/' | \
+                      grep -v '^\.github/actions-lock.txt' | \
                       grep -v '^docs/Gemfile.lock' | \
                       grep -v '^\.helpers/changelog/Pipfile.lock' | \
                       tee /tmp/relevant-files-in-pr
