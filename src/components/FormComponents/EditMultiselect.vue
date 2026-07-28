@@ -6,7 +6,6 @@
             v-bind="$attrs"
             :label-outside="true"
             :multiple="multiple"
-            v-on="$listeners"
         />
     </fieldset>
 </template>

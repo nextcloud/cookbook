@@ -8,7 +8,6 @@
  * @param substituteLetters Substitute some letters by similar looking letters.
  * @returns {string} Normalized string value.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function normalize(
     str,
     toLowercase = true,

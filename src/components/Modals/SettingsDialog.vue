@@ -200,7 +200,7 @@ import api from 'cookbook/js/api-interface';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import { enableLogging } from 'cookbook/js/logging';
-import { useRoute, useRouter } from 'vue-router/composables';
+import { useRoute, useRouter } from 'vue-router';
 import { useLegacyStore } from '../../store';
 import { SHOW_SETTINGS_EVENT } from '../../composables/useSettingsDialog';
 
@@ -273,6 +273,7 @@ watch(
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch {
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook','Could not set preference for image printing'),
             );
@@ -281,7 +282,6 @@ watch(
     },
 );
 
-// eslint-disable-next-line no-unused-vars
 watch(
     () => showFiltersInRecipeList.value,
     (newVal) => {
@@ -308,6 +308,7 @@ watch(
             await legacyStore.refreshConfig();
         } catch {
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook','Could not set recipe update interval to {interval}',
                 {
@@ -333,9 +334,9 @@ watch(
             await legacyStore.refreshConfig();
             // Should this check the response of the query? To catch some errors that redirect the page
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.error('Error while trying to save info blocks', err);
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 t('cookbook', 'Could not save visible info blocks'),
             );
             visibleInfoBlocks.value = oldVal;
@@ -368,6 +369,7 @@ const pickRecipeFolder = () => {
                 })
                 .catch(() =>
                     showSimpleAlertModal(
+                        t('cookbook', 'Error'),
                         /* prettier-ignore */
                         t('cookbook','Could not set recipe folder to {path}',
                         {

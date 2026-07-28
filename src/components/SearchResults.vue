@@ -10,7 +10,7 @@
 
 <script setup>
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
-import { onBeforeRouteUpdate, useRoute } from 'vue-router/composables';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
@@ -72,6 +72,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook', 'Failed to load recipes with keywords: {tags}',
                     {
@@ -96,6 +97,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 /* prettier-ignore */
                 t('cookbook', 'Failed to load category {category} recipes',
                     {
@@ -118,6 +120,7 @@ const setup = async () => {
         } catch (e) {
             results.value = [];
             await showSimpleAlertModal(
+                t('cookbook', 'Error'),
                 t('cookbook', 'Failed to load search results'),
             );
             if (e && e instanceof Error) {
@@ -144,7 +147,6 @@ onMounted(() => {
     emitter.off('categoryRenamed');
     emitter.on('categoryRenamed', (val) => {
         if (
-            // eslint-disable-next-line no-underscore-dangle
             isComponentActive.value &&
             props.query === 'cat' &&
             route.params.value === val[1]

@@ -39,7 +39,7 @@
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
 import { NcButton, NcEmptyContent } from '@nextcloud/vue';
-import { useRoute } from 'vue-router/composables';
+import { useRoute } from 'vue-router';
 import useDelayedDisplay, {
     DelayedDisplayProps,
 } from '../../composables/useDelayedDisplay';

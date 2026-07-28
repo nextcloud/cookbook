@@ -1,5 +1,4 @@
-// TODO: Switch to vuejs3-logger when we switch to Vue 3
-import VueLogger from 'vuejs-logger';
+import VueLogger from 'vuejs3-logger';
 import moment from '@nextcloud/moment';
 
 const DEFAULT_LOG_LEVEL = 'info';
@@ -51,10 +50,10 @@ const isEnabled = () => {
     return JSON.parse(userValue) ?? DEFAULT;
 };
 
-export default function setupLogging(Vue) {
+export default function setupLogging(app) {
     const logLevel = localStorage.getItem(KEY_LOG_LEVEL) ?? DEFAULT_LOG_LEVEL;
 
-    Vue.use(VueLogger, {
+    app.use(VueLogger, {
         isEnabled: isEnabled(),
         logLevel,
         stringifyArguments: false,
@@ -64,7 +63,7 @@ export default function setupLogging(Vue) {
         showConsoleColors: true,
     });
 
-    Vue.$log.info(`Setting up logging with log level ${logLevel}`);
+    app.$log.info(`Setting up logging with log level ${logLevel}`);
 }
 
 export function enableLogging() {

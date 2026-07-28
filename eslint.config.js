@@ -61,14 +61,13 @@ export default [
   ...fixupConfigRules(
     compat.extends(
       'eslint:recommended',
-      'airbnb-base',
       'plugin:import/typescript',
       'prettier',
     ),
   ),
 
   // Native flat Vue 2 preset
-  ...pluginVue.configs['flat/vue2-recommended'],
+  ...pluginVue.configs['flat/recommended'],
 
   // Force Vue SFC parsing for .vue files LAST so it wins
   {
@@ -189,16 +188,16 @@ export default [
         props: true,
         ignorePropertyModificationsFor: ['state'],
       }],
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'never',
-          jsx: 'never',
-          ts: 'never',
-          tsx: 'never',
-        },
-      ],
+      // 'import/extensions': [
+      //   'error',
+      //   'ignorePackages',
+      //   {
+      //     js: 'never',
+      //     jsx: 'never',
+      //     ts: 'never',
+      //     tsx: 'never',
+      //   },
+      // ],
       'no-plusplus': [
         'error',
         {
