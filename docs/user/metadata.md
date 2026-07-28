@@ -14,15 +14,15 @@ Such additional information (like if the line is a heading or not) are called me
 
 The number of possibilities when trying to express a cooking recipe are quite large. So a recipe (in HTML) is in general a bigger beast where somewhere the relevant information like the ingredients, instructions, but also simple information like the name or the amount of time to cook are buried deep the page. Without the help of metadata, a machine has a had job to extract all relevant information from such a website.
 
-Just putting some invisible data into the webpage will do no good. In fact it will depend in the heuristics and software _reading_ the page if these are detected and correctly associated (like a title is a title and not by chance the name of the author). Therefore a standardized approch needs to be realized. Many very intelligent people have thought about that problem and the result is the so called _Semantic Web_. You can read on this topic on your own, if you like.
+Just putting some invisible data into the webpage will do no good. In fact it will depend in the heuristics and software _reading_ the page if these are detected and correctly associated (like a title is a title and not by chance the name of the author). Therefore a standardized approach needs to be realized. Many very intelligent people have thought about that problem and the result is the so called _Semantic Web_. You can read on this topic on your own, if you like.
 
 To have a uniform language throughout the web, there was a standard formalized. One very common standard is [schema.org](http://schema.org). They try to create a very basic but general description of all types of metadata. As a byproduct, their standard became very popular and many websites are providing information in their _language_. The cookbook app also bases its data files on the standard [schema.org/Recipe](http://schema.org/Recipe).
 
 ## Formats of metadata
 
-The question is: How are these metadata now formated to allow for easy parsing but without affecting the visual representation at all?
+The question is: How are these metadata now formatted to allow for easy parsing but without affecting the visual representation at all?
 
-The answer is not unique. There are different approaches wich have their individual benefits and drawbacks. Here the most common two should be presented.
+The answer is not unique. There are different approaches which have their individual benefits and drawbacks. Here the most common two should be presented.
 
 ### JSON+LD
 
@@ -124,7 +124,7 @@ By far not all websites are publishing metadata to help parsing/interpreting the
 
 - The owner of the website is not able to provide the data (e.g. user provided content)
 - The owner is not aware of the metadata and its benefits
-- The owner wants to avoid parsing from third parties (protection of own knowlegde/web content)
+- The owner wants to avoid parsing from third parties (protection of own knowledge/web content)
 
 In order to check a website for schema.org metadata, one has to view the source code of the website. How to do this depends on your browser in use. For Firefox and Chrome you can for example press `Ctrl`+`U`.
 
@@ -134,7 +134,7 @@ Now, the funny part comes. If a page supports schema.org typically multiple diff
 
 First you have to check if JSON+LD or microdata is in use. It is pretty obvious as you just have to look for the `itemtype` before the address. If it is there, you have microdata. If not, JSON+LD it is. Of course, if a page provides different classes of metadata (e.g. recipe and information about the company), these can be different formats (one in microdata and one in JSON+LD).
 
-If you are in **microdata**, you have to search for an entry `itemprop` of `schema.org/Recipe`. You can jsut search for `schema.org/Recipe` in the HTML source code. If you find it, the page is should be importable, otherwise, you are out of luck.
+If you are in **microdata**, you have to search for an entry `itemprop` of `schema.org/Recipe`. You can just search for `schema.org/Recipe` in the HTML source code. If you find it, the page is should be importable, otherwise, you are out of luck.
 
 Last but not least, there is the **JSON+LD** type of data. This is more complex as this format allows different ways to express the data. First, you should look for `"@context": "https://schema.org"`. Every JSON+LD block needs to define to use the schema.org standard to be recognized. So searching for `schema.org` will you bring to the interesting places. Typically there will be a `"@type": "..."` entry. If that is `Recipe`, you just found a recipe entry. If it is something else, sorry, that entry ist something else.
 

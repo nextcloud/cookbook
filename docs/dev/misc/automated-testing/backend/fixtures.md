@@ -147,7 +147,7 @@ Here is an example of such a config file:
 }
 ```
 
-In teh following sections, the fields should be described further.
+In the following sections, the fields should be described further.
 
 ### `finished`
 This is a boolean flag if the creation of the fixture has been finished.

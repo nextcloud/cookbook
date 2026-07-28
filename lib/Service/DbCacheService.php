@@ -234,7 +234,7 @@ class DbCacheService {
 			}
 		}
 
-		// Any remining recipe in dbFiles is to be removed
+		// Any remaining recipe in dbFiles is to be removed
 		$this->obsoleteRecipes = array_keys($this->dbReceipeFiles);
 	}
 

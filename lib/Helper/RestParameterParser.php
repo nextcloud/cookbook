@@ -85,7 +85,7 @@ class RestParameterParser {
 	 * Either use the POST method (where PHP does the parsing) or use application/json
 	 *
 	 * @param string $encoding The encoding to use
-	 * @throws \Exception If the requested string is not well-formatted accoring to the minimal implementation
+	 * @throws \Exception If the requested string is not well-formatted according to the minimal implementation
 	 * @return array The values transmitted
 	 */
 	private function parseUrlEncoded(string $encoding): array {

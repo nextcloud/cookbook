@@ -116,7 +116,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 			}
 		}
 
-		// We cannot read the format. Removing it from teh recipe
+		// We cannot read the format. Removing it from the recipe
 		$json[$name] = null;
 		$ret = true;
 
