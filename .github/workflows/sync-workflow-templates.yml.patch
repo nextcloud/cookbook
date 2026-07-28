@@ -1,7 +1,7 @@
-diff --git a/.github/workflows/sync-workflow-templates.yml b/.github/workflows/sync-workflow-templates.yml
-index 1670729b..c0636a06 100644
---- a/.github/workflows/sync-workflow-templates.yml
-+++ b/.github/workflows/sync-workflow-templates.yml
+diff --git b/.github/workflows/sync-workflow-templates.yml a/.github/workflows/sync-workflow-templates.yml
+index 0e925bb8..c0636a06 100644
+--- b/.github/workflows/sync-workflow-templates.yml
++++ a/.github/workflows/sync-workflow-templates.yml
 @@ -26,9 +26,6 @@ jobs:
        matrix:
          branches:
@@ -12,9 +12,9 @@ index 1670729b..c0636a06 100644
  
      name: Update workflows in ${{ matrix.branches }}
  
-@@ -138,5 +135,4 @@ jobs:
+@@ -138,4 +135,4 @@ jobs:
              ${{ env.SUMMARY }}
            labels: |
              dependencies
 -            3. to review
- 
++
