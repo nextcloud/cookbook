@@ -14,7 +14,7 @@ const KEY_LOG_LEVEL = 'COOKBOOK_LOGGING_LEVEL';
 // Since the expiry entry is added by us after the first run where
 // the enabled entry is detected, this only checks if it has been EXPIRY_MINUTES
 // since the first run, not EXPIRY_MINUTES since the user added the entry
-// This is a reasonable comprimise to simplify what the user has to do to enable
+// This is a reasonable compromise to simplify what the user has to do to enable
 // logging. We don't want them to have to setup the expiry as well
 const isExpired = (timestamp) => {
     if (timestamp === null) {

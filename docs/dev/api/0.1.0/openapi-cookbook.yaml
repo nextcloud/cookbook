@@ -289,7 +289,7 @@ paths:
       summary: Get a single recipe from the server
       responses:
         200:
-          description: Recipe was sucessfully obtained
+          description: Recipe was successfully obtained
           content:
             application/json:
               schema:
@@ -312,7 +312,7 @@ paths:
               $ref: "#/components/schemas/Recipe"
       responses:
         200:
-          description: The recipe was sucessfully updated
+          description: The recipe was successfully updated
           content:
             application/json:
               schema:
@@ -392,7 +392,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StubList"
         500:
-          description: An error occured
+          description: An error occurred
           content:
             application/json:
               schema:
@@ -406,7 +406,7 @@ paths:
       responses:
         200:
           description: >-
-            Sucessfully obtained all categories
+            Successfully obtained all categories
             
             
             Please note: A category name of `*` indicates the number of

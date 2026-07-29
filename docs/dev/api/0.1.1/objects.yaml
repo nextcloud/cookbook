@@ -262,7 +262,7 @@ Recipe:
           default: ""
         url:
           type: string
-          example: http://exmaple.com/my-recipe.html
+          example: http://example.com/my-recipe.html
           description: The URL the recipe was found at or the empty string
           default: ""
         image:

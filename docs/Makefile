@@ -11,7 +11,7 @@ all: help
 .PHONY: help watch build install build-uml-svg
 
 help:
-	@echo "Make tragets supported:"
+	@echo "Make targets supported:"
 	@echo "  help    - Show this help screen"
 	@echo "  build   - Build the HTML pages locally"
 	@echo "  watch   - Keep building the pages locally and serve on local port for writing"

@@ -661,7 +661,7 @@ class RecipeImplementationTest extends TestCase {
 		$ex = new Exception();
 		$this->recipeService->method('getRecipeImageFileByFolderId')->willThrowException($ex);
 
-		$headerContent = 'The content of the header as supposed by teh framework';
+		$headerContent = 'The content of the header as supposed by the framework';
 		$this->request->method('getHeader')->with('Accept')->willReturn($headerContent);
 		$this->acceptHeaderParser->method('parseHeader')->willReturnMap([
 			[$headerContent, $accept],
