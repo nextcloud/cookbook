@@ -10,6 +10,7 @@ OC.L10N.register(
     "Tags" : "תגיות",
     "Search for recipes" : "חיפוש אחר מתכונים",
     "Are you sure you want to delete this recipe?" : "למחוק את המתכון הזה?",
+    "Error" : "שגיאה",
     "Delete failed" : "המחיקה נכשלה",
     "All recipes" : "כל המתכונים",
     "None" : "ללא",
@@ -47,9 +48,6 @@ OC.L10N.register(
     "Cooking time" : "זמן בישול",
     "Total time" : "זמן כולל",
     "Tools" : "כלים",
-    "Dismiss" : "שחרור",
-    "Cancel" : "ביטול",
-    "OK" : "OK",
     "The page was not found" : "העמוד לא נמצא",
     "Calories" : "קלוריות",
     "Loading recipe failed" : "טעינת המתכון נכשלה",
@@ -62,6 +60,9 @@ OC.L10N.register(
     "Cooking time is up!" : "זמן הבישול תם!",
     "Loading…" : "בטעינה…",
     "Source" : "מקור",
-    "Energy" : "אנרגיה"
+    "Energy" : "אנרגיה",
+    "Dismiss" : "שחרור",
+    "Cancel" : "ביטול",
+    "OK" : "OK"
 },
 "nplurals=3; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % 1 == 0) ? 1: 2;");

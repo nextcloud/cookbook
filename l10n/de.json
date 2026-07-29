@@ -69,6 +69,7 @@
     "Tags" : "Schlagworte",
     "Search for recipes" : "Nach Rezepten suchen",
     "Are you sure you want to delete this recipe?" : "Möchtest du wirklich dieses Rezept löschen?",
+    "Error" : "Fehler",
     "Delete failed" : "Löschen fehlgeschlagen",
     "Editing recipe" : "Rezept bearbeiten",
     "Viewing recipe" : "Rezept anzeigen",
@@ -171,9 +172,6 @@
     "Frontend debug settings" : "Frontend-Debuggen",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Dadurch kann bei Problemen die Protokollierung in der Browserkonsole vorübergehend aktiviert werden. Standardmäßig wird diese Einstellung nicht benötigt.",
     "Enable debugging" : "Fehlersuche aktivieren",
-    "Dismiss" : "Verwerfen",
-    "Cancel" : "Abbrechen",
-    "OK" : "OK",
     "The page was not found" : "Die Seite wurde nicht gefunden",
     "You have unsaved changes! Do you still want to leave?" : "Du hast noch nicht gespeicherte Änderungen! Willst du diese Seite wirklich verlassen?",
     "Calories" : "Kalorien",
@@ -240,6 +238,9 @@
     "Trans Fat" : "Transfette",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Die Menge der Zutat kann aufgrund einer nicht unterstützen Syntax nicht neu berechnet werden. Bitte stelle sicher, dass die Syntax diesem Format folgt: Menge Einheit Zutat und dass eine bestimmte Anzahl von Portionen eingegegeben ist, damit diese Funktion korrekt funktioniert. Beispiele: 200 g Karotten oder 1 Prise Salz.",
     "Failed to load recipes with keywords: {tags}" : "Rezepte mit Schlüsselwörtern {tags} konnten nicht geladen werden",
-    "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden"
+    "Failed to load search results" : "Suchergebnisse konnten nicht geladen werden",
+    "Dismiss" : "Verwerfen",
+    "Cancel" : "Abbrechen",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

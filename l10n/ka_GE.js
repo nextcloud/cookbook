@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "%s-ში",
     "Category" : "კატეგორია",
     "Tags" : "ტეგები",
+    "Error" : "შეცდომა",
     "None" : "არც ერთი",
     "Page not found" : "გვერდი არაა ნაპოვნი",
     "Edit" : "შეცვლა",
@@ -16,10 +17,10 @@ OC.L10N.register(
     "Clear" : "გასუფთავება",
     "Apply" : "გამოყენება",
     "Tools" : "ხელსაწყოები",
+    "Description" : "აღწერილობა",
+    "URL" : "URL",
     "Dismiss" : "დათხოვნა",
     "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "აღწერილობა",
-    "URL" : "URL"
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n!=1);");

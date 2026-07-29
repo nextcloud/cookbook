@@ -7,6 +7,7 @@
     "Category" : "Kategorija",
     "Tags" : "Birkas",
     "Are you sure you want to delete this recipe?" : "Vai izdzēst šo recepti?",
+    "Error" : "Kļūda",
     "All recipes" : "Visas receptes",
     "None" : "Nav",
     "Page not found" : "Lapa nav atrasta",
@@ -42,18 +43,19 @@
     "Cooking time" : "Gatavošanas laiks",
     "Total time" : "Kopējais laiks",
     "Tools" : "Gatavošanas rīki",
-    "Dismiss" : "Atmest",
-    "Cancel" : "Atcelt",
-    "OK" : "Labi",
     "Description" : "Apraksts",
     "URL" : "URL",
     "Image" : "Attēli",
     "Servings" : "Porcijas",
     "Ingredients" : "Sastāvdaļas",
     "Instructions" : "Norādes gatavošanai",
+    "Reminder" : "Atgādinājums",
     "Cooking time is up!" : "Gatavošanas laiks beidzies.",
     "Loading…" : "Ielādē…",
     "Last modified" : "Pēdējoreiz izmainīts",
-    "Source" : "Avots"
+    "Source" : "Avots",
+    "Dismiss" : "Atmest",
+    "Cancel" : "Atcelt",
+    "OK" : "Labi"
 },"pluralForm" :"nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);"
 }

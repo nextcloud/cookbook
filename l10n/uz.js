@@ -5,6 +5,7 @@ OC.L10N.register(
     "in %s" : " %s da",
     "Category" : "Kategoriya",
     "Tags" : "Tags",
+    "Error" : "Xatolik",
     "None" : "Yo'q",
     "Page not found" : "Sahifa topilmadi",
     "Edit" : "Tahrirlash",
@@ -17,12 +18,14 @@ OC.L10N.register(
     "Name" : "Name",
     "Order" : "Buyurtma",
     "Clear" : "Toza",
-    "Dismiss" : "Rad etish",
-    "Cancel" : "Bekor qilish",
-    "OK" : "OK",
+    "Discard changes?" : "O'zgarishlar bekor qilinsinmi?",
     "Description" : "Tavsif",
     "URL" : "URL",
     "Instructions" : "Ko'rsatmalar",
-    "Loading…" : "Yuklanmoqda..."
+    "Reminder" : "Eslatma",
+    "Loading…" : "Yuklanmoqda...",
+    "Dismiss" : "Rad etish",
+    "Cancel" : "Bekor qilish",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

@@ -132,9 +132,6 @@ OC.L10N.register(
     "Total time" : "Общо време",
     "Nutrition information" : "Информация за храната",
     "Tools" : "Инструменти",
-    "Dismiss" : "Затвори",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "Страницата не беше намерена",
     "You have unsaved changes! Do you still want to leave?" : "Имате незапазени промени! Все още ли искате да напуснете?",
     "Calories" : "Калории",
@@ -156,6 +153,7 @@ OC.L10N.register(
     "No answer for request was received." : "Не е получен отговор на искането.",
     "Could not start request to save recipe." : "Не можа да стартира заявката за записване на рецепта.",
     "Loading recipe failed" : "Зареждането на рецептата е неуспешно",
+    "Discard changes?" : "Отхвърляне на промените?",
     "Description" : "Описание",
     "URL" : "URL адрес",
     "Image" : "Изображение",
@@ -168,6 +166,7 @@ OC.L10N.register(
     "Ingredients" : "Съставки",
     "Instructions" : "Инструкции",
     "Recipe image" : "Изображение на рецепта",
+    "Reminder" : "Напомняне",
     "Cooking time is up!" : "Времето за готвене изтече!",
     "Loading…" : "Зареждане…",
     "Search recipes with this keyword" : "Търсене на рецепти с тази ключова дума",
@@ -187,6 +186,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Ненаситени мазнини",
     "Trans Fat" : "Транс мазнини",
     "Failed to load recipes with keywords: {tags}" : "Неуспешно зареждане на рецепти с ключови думи: {tags}",
-    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно "
+    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
+    "Dismiss" : "Затвори",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

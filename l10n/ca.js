@@ -136,9 +136,6 @@ OC.L10N.register(
     "Total time" : "Temps total",
     "Nutrition information" : "Informació nutricional",
     "Tools" : "Estris",
-    "Dismiss" : "Descarta",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "No s'ha trobat la pàgina",
     "You have unsaved changes! Do you still want to leave?" : "Teniu canvis no desats! Encara vols marxar?",
     "Calories" : "Calories",
@@ -174,6 +171,7 @@ OC.L10N.register(
     "Ingredients" : "Ingredients",
     "Instructions" : "Instruccions",
     "Recipe image" : "Imatge de la recepta",
+    "Reminder" : "Recordatori",
     "Cooking time is up!" : "S'ha acabat el temps de cocció!",
     "ingredients" : "ingredients",
     "Loading…" : "S'està carregant…",
@@ -196,6 +194,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Greix insaturat",
     "Trans Fat" : "Greix trans",
     "Failed to load recipes with keywords: {tags}" : "No s'han pogut carregar les receptes amb paraules clau: {tags}",
-    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca"
+    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca",
+    "Dismiss" : "Descarta",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

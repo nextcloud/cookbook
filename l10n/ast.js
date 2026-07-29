@@ -87,9 +87,6 @@ OC.L10N.register(
     "Nutrition information" : "Información nutricional",
     "Tools" : "Ferramientes",
     "Enable debugging" : "Activar la depuración",
-    "Dismiss" : "Escartar",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "You have unsaved changes! Do you still want to leave?" : "¡Tienes cambeos ensin guardar! ¿Quies colar de toes toes?",
     "Calories" : "Caloríes",
     "Sodium content" : "Conteníu en sodiu",
@@ -124,6 +121,9 @@ OC.L10N.register(
     "Cholesterol" : "Colesterol",
     "Fiber" : "Fibra",
     "Sodium" : "Sodiu",
-    "Failed to load search results" : "Nun se puen cargar los resultaos de la busca"
+    "Failed to load search results" : "Nun se puen cargar los resultaos de la busca",
+    "Dismiss" : "Escartar",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

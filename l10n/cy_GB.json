@@ -1,6 +1,7 @@
 { "translations": {
     "Category" : "Categori",
     "Tags" : "Tagiau",
+    "Error" : "Gwall",
     "None" : "Dim",
     "Page not found" : "Heb ganfod y dudalen",
     "Edit" : "Golygu",
@@ -10,11 +11,12 @@
     "Rename" : "Ailenwi",
     "Name" : "Enw",
     "Tools" : "Offer",
-    "Dismiss" : "Dismiss",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Disgrifiad",
     "URL" : "URL",
-    "Loading…" : "Yn llwytho…"
+    "Reminder" : "Atgoffwr",
+    "Loading…" : "Yn llwytho…",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;"
 }

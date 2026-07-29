@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "dins %s",
     "Category" : "Categoria",
     "Tags" : "Etiquetas",
+    "Error" : "Error",
     "None" : "Cap",
     "Page not found" : "Pagina pas trobada",
     "Edit" : "Modificar",
@@ -16,12 +17,13 @@ OC.L10N.register(
     "Clear" : "Escafar",
     "Apply" : "Aplicar",
     "Tools" : "Aisinas",
-    "Dismiss" : "Regetar",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Calories" : "Calorias",
     "Description" : "Descripcion",
     "URL" : "URL",
-    "Loading…" : "Telecargament…"
+    "Reminder" : "Recòrd",
+    "Loading…" : "Telecargament…",
+    "Dismiss" : "Regetar",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n > 1);");

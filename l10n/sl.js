@@ -20,6 +20,7 @@ OC.L10N.register(
     "Tags" : "Oznake",
     "Search for recipes" : "Iskanje med recepti",
     "Are you sure you want to delete this recipe?" : "Ali ste prepričani, da želite izbrisati recept?",
+    "Error" : "Napaka",
     "Delete failed" : "Brisanje je spodletelo",
     "All recipes" : "Vsi recepti",
     "None" : "Brez",
@@ -84,9 +85,6 @@ OC.L10N.register(
     "Total time" : "Skupni čas",
     "Nutrition information" : "Podrobnosti o hranilnosti",
     "Tools" : "Pripomočki",
-    "Dismiss" : "Prekliči",
-    "Cancel" : "Prekliči",
-    "OK" : "V redu",
     "The page was not found" : "Strani ni mogoče najti",
     "You have unsaved changes! Do you still want to leave?" : "Zaznane so neshranjene spremembe! Ali vseeno želite zapustiti stran?",
     "Calories" : "Kalorije",
@@ -120,6 +118,7 @@ OC.L10N.register(
     "Ingredients" : "Sestavine",
     "Instructions" : "Navodila",
     "Recipe image" : "Slika jedi",
+    "Reminder" : "Opomnik",
     "Cooking time is up!" : "Čas kuhanja je končan!",
     "Loading…" : "Poteka nalaganje …",
     "Search recipes with this keyword" : "Poišči recepte s ključno besedo",
@@ -139,6 +138,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Nenasičene maščobe",
     "Trans Fat" : "Trans maščobne",
     "Failed to load recipes with keywords: {tags}" : "Spodletelo je nalaganje receptov za ključne besede: {tags}",
-    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo"
+    "Failed to load search results" : "Nalaganje zadetkov iskanja je spodletelo",
+    "Dismiss" : "Prekliči",
+    "Cancel" : "Prekliči",
+    "OK" : "V redu"
 },
 "nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);");

@@ -62,6 +62,7 @@ OC.L10N.register(
     "Tags" : "Etiquetas",
     "Search for recipes" : "Pesquisar por receitas",
     "Are you sure you want to delete this recipe?" : "Tem que certeza que quer eliminar esta receita?",
+    "Error" : "Erro",
     "Delete failed" : "Falhou ao eliminar",
     "Editing recipe" : "Editando receita",
     "Viewing recipe" : "Visualizando receita",
@@ -162,9 +163,6 @@ OC.L10N.register(
     "Frontend debug settings" : "Configurações de depuração do front-end",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Isso permite ativar temporariamente o registro no console do navegador em caso de problemas. Você não precisará destas configurações por padrão.",
     "Enable debugging" : "Ativar depuração",
-    "Dismiss" : "Dispensar",
-    "Cancel" : "Cancelar",
-    "OK" : "OK",
     "The page was not found" : "Página não encontrada",
     "You have unsaved changes! Do you still want to leave?" : "Existem alterações que não estão guardadas. Tem a certeza que quer sair?",
     "Calories" : "Calorias",
@@ -203,6 +201,7 @@ OC.L10N.register(
     "Ingredients" : "Ingredientes",
     "Instructions" : "Instruções",
     "Recipe image" : "Imagem da receita",
+    "Reminder" : "Lembrete",
     "Cooking time is up!" : "Terminou o tempo de cozedura!",
     "{item} copied to clipboard" : "{item} copiado para a área de transferência",
     "Copying {item} to clipboard failed" : "Cópia de {item} para a área de transferência falhada",
@@ -228,6 +227,9 @@ OC.L10N.register(
     "Trans Fat" : "Gordura Trans",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "O ingrediente não pôde ser recalculado devido a sintaxe incorreta. Por favor certifica-te que a sintaxe segue este formato: \"quantidade unidade ingrediente\" e que um número especídico de porções está definido para esta funcionalidade funcionar corretamente. Exemplos: 200 g de cenouras, ou 1 pitada de sal.",
     "Failed to load recipes with keywords: {tags}" : "Falha ao carregar receitas com palavras-chave: {tags}",
-    "Failed to load search results" : "Falha ao carregar resultados de pesquisa"
+    "Failed to load search results" : "Falha ao carregar resultados de pesquisa",
+    "Dismiss" : "Dispensar",
+    "Cancel" : "Cancelar",
+    "OK" : "OK"
 },
 "nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

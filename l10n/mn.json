@@ -2,6 +2,7 @@
     "in %s" : "%s дотор",
     "Category" : "Ангилал",
     "Tags" : "Tag-үүд",
+    "Error" : "–ê–ª–¥–∞–∞",
     "None" : "юу ч үгүй",
     "Page not found" : "Хуудас олдсонгүй",
     "Edit" : "засварлах",
@@ -16,17 +17,19 @@
     "Keywords" : "Түлхүүр үгс",
     "Clear" : "Цэвэрлэх",
     "Apply" : "хэрэглэх",
-    "Dismiss" : "Арилгах",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "You have unsaved changes! Do you still want to leave?" : "Та хадгалаагүй өөрчлөлттэй байна! Та гарахдаа итгэлтэй байна уу?",
+    "Discard changes?" : "Өөрчлөлтийг цуцлах уу?",
     "Description" : "Тодорхойлолт",
     "URL" : "URL",
     "Image" : "Зураг",
     "Instructions" : "Заавар",
+    "Reminder" : "Сануулга",
     "Loading…" : "уншиж байна",
     "Date created" : "Үүсгэсэн огноо",
     "Last modified" : "Сүүлд өөрчлөгдсөн",
-    "Source" : "Эх сурвалж"
+    "Source" : "Эх сурвалж",
+    "Dismiss" : "Арилгах",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

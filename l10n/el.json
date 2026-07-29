@@ -69,6 +69,7 @@
     "Tags" : "Ετικέτες",
     "Search for recipes" : "Αναζήτηση συνταγών",
     "Are you sure you want to delete this recipe?" : "Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη συνταγή;",
+    "Error" : "Σφάλμα",
     "Delete failed" : "Η διαγραφή απέτυχε",
     "Editing recipe" : "Επεξεργασία συνταγής",
     "Viewing recipe" : "Προβολή συνταγής",
@@ -171,9 +172,6 @@
     "Frontend debug settings" : "Ρυθμίσεις αποσφαλμάτωσης frontend",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Αυτό επιτρέπει την προσωρινή ενεργοποίηση της καταγραφής στην κονσόλα του προγράμματος περιήγησης σε περίπτωση προβλημάτων. Δεν θα χρειαστείτε αυτές τις ρυθμίσεις από προεπιλογή.",
     "Enable debugging" : "Ενεργοποίηση αποσφαλμάτωσης",
-    "Dismiss" : "Απόρριψη",
-    "Cancel" : "Ακύρωση",
-    "OK" : "Εντάξει",
     "The page was not found" : "Δεν βρέθηκε η σελίδα",
     "You have unsaved changes! Do you still want to leave?" : "Έχετε μη αποθηκευμένες αλλαγές! Θέλετε ακόμα να αποχωρήσετε;",
     "Calories" : "Θερμίδες",
@@ -197,6 +195,7 @@
     "Could not start request to save recipe." : "Δεν ήταν δυνατή η έναρξη αιτήματος για αποθήκευση της συνταγής.",
     "Clone of {name}" : "Κλώνος του {name}",
     "Loading recipe failed" : "Η φόρτωση της συνταγής απέτυχε",
+    "Discard changes?" : "Απόρριψη αλλαγών;",
     "Description" : "Περιγραφή",
     "URL" : "URL",
     "Image" : "Εικόνα",
@@ -212,6 +211,7 @@
     "Ingredients" : "Συστατικά",
     "Instructions" : "Οδηγίες",
     "Recipe image" : "Εικόνα συνταγής",
+    "Reminder" : "Υπενθύμιση",
     "Cooking time is up!" : "Ο χρόνος μαγειρέματος έχει φτάσει!",
     "_{hours}h_::_{hours}h_" : ["{hours}ώ","{hours}ώ"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}λ","{minutes}λ"],
@@ -240,6 +240,9 @@
     "Trans Fat" : "Τρανς λιπαρά",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Το συστατικό δεν μπορεί να υπολογιστεί εκ νέου λόγω λανθασμένης σύνταξης. Βεβαιωθείτε ότι η σύνταξη ακολουθεί την ακόλουθη μορφή: ποσότητα μονάδα συστατικό και ότι έχει οριστεί συγκεκριμένος αριθμός μερίδων για να λειτουργήσει σωστά αυτή η λειτουργία. Παραδείγματα: 200 g καρότα ή 1 πρέζα αλάτι.",
     "Failed to load recipes with keywords: {tags}" : "Αποτυχία φόρτωσης συνταγών με λέξεις κλειδιά: {tags}",
-    "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης"
+    "Failed to load search results" : "Αποτυχία φόρτωσης αποτελεσμάτων αναζήτησης",
+    "Dismiss" : "Απόρριψη",
+    "Cancel" : "Ακύρωση",
+    "OK" : "Εντάξει"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

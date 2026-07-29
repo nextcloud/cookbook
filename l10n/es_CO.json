@@ -14,10 +14,10 @@
     "Clear" : "Limpiar",
     "Apply" : "Aplicar",
     "Tools" : "Herramientas",
+    "Description" : "Descripción",
+    "Loading…" : "Cargando",
     "Dismiss" : "Descartar",
     "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "Descripción",
-    "Loading…" : "Cargando"
+    "OK" : "OK"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }
