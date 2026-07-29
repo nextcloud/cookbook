@@ -1,5 +1,17 @@
 import { createAppConfig } from '@nextcloud/vite-config'
 import { join, resolve } from 'path'
+import { visualizer } from "rollup-plugin-visualizer"
+
+const customPlugins = []
+
+if (process.env.ENABLE_BUNDLE_ANALYZER === 'true') {
+	customPlugins.push(visualizer({
+		template: 'raw-data',
+		filename: '.bundle-analysis.json',
+		gzipSize: true,
+		open: false,
+	}))
+}
 
 export default createAppConfig(
 	{
@@ -19,6 +31,7 @@ export default createAppConfig(
 					),
 				},
 			},
+			plugins: customPlugins,
 		},
 	}
 )
