@@ -59,6 +59,7 @@ OC.L10N.register(
     "Tags" : "Етикети",
     "Search for recipes" : "Търсене на рецепти",
     "Are you sure you want to delete this recipe?" : "Сигурни ли сте, че искате да изтриете тази рецепта?",
+    "Error" : "Грешка",
     "Delete failed" : "Неуспешно изтриване",
     "Editing recipe" : "Редактиране на рецепта",
     "Viewing recipe" : "Преглед на рецепта",

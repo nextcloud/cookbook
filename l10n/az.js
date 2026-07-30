@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "içinə %s",
     "Category" : "Kateqoriya",
     "Tags" : "Işarələr",
+    "Error" : "Səhv",
     "None" : "Heç bir",
     "Edit" : "Dəyişiklik et",
     "Save" : "Saxla",

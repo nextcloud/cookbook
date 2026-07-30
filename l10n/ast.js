@@ -25,6 +25,7 @@ OC.L10N.register(
     "Tags" : "Etiquetes",
     "Search for recipes" : "Buscar recetes",
     "Are you sure you want to delete this recipe?" : "¿De xuru que quies desaniciar esta receta?",
+    "Error" : "Error",
     "Delete failed" : "El desaniciu falló",
     "All recipes" : "Toles recetes",
     "None" : "Nada",

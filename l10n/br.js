@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "in %s" : "e %s",
     "Tags" : "Klavioù",
+    "Error" : "Fazi",
     "None" : "Hini ebet",
     "Edit" : "Cheñch",
     "Save" : "Enrollañ",

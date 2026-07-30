@@ -8,6 +8,7 @@ OC.L10N.register(
     "Category" : "Катэгорыя",
     "Recipe name" : "Назва рэцэпта",
     "Tags" : "Тэгі",
+    "Error" : "Памылка",
     "All recipes" : "Усе рэцэпты",
     "None" : "Няма",
     "Loading app" : "Загрузка праграмы",
