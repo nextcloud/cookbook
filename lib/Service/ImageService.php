@@ -20,7 +20,7 @@ use OCP\Lock\LockedException;
  * This simplifies/abstracts the access of the images to avoid low-level file system access.
  *
  * @todo Use Abstract Filesystem
- * @todo Rework the exeption passing
+ * @todo Rework the exception passing
  */
 class ImageService {
 	/**

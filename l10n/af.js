@@ -13,10 +13,10 @@ OC.L10N.register(
     "Add" : "Voeg toe",
     "Name" : "Naam",
     "Tools" : "Nutsmiddels",
+    "Description" : "Beskrywing",
+    "Loading…" : "Laai…",
     "Dismiss" : "Ontslaan",
     "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "Beskrywing",
-    "Loading…" : "Laai…"
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

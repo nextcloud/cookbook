@@ -67,6 +67,7 @@
     "Tags" : "ປ້າຍກຳກັບ",
     "Search for recipes" : "ຄົ້ນຫາສູດອາຫານ",
     "Are you sure you want to delete this recipe?" : "ເຈົ້າແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບສູດອາຫານນີ້?",
+    "Error" : "ຂໍ້ຜິດພາດ",
     "Delete failed" : "ການລຶບລົ້ມເຫລວ",
     "Editing recipe" : "ກຳລັງແກ້ໄຂສູດອາຫານ",
     "Viewing recipe" : "ກຳລັງເບິ່ງສູດອາຫານ",
@@ -120,11 +121,9 @@
     "Cooking time" : "ເວລາໃນການປຸງແຕ່ງ",
     "Total time" : "ເວລາທັງໝົດ",
     "Tools" : "ອຸປະກອນ",
-    "Dismiss" : "ຍົກເລີກ",
-    "Cancel" : "ຍົກເລີກ",
-    "OK" : "ຕົກລົງ",
     "You have unsaved changes! Do you still want to leave?" : "ທ່ານມີການປ່ຽນແປງທີ່ຍັງບໍ່ໄດ້ບັນທຶກ! ທ່ານຍັງຕ້ອງການອອກຢູ່ບໍ່?",
     "Loading recipe failed" : "ການໂຫຼດສູດອາຫານລົ້ມເຫລວ",
+    "Discard changes?" : "Discard changes?",
     "Description" : "ລາຍລະອຽດ",
     "URL" : "URL",
     "Image" : "ຮູບພາບ",
@@ -132,6 +131,7 @@
     "Nutrition Information" : "ຂໍ້ມູນໂພຊະນາການ",
     "Ingredients" : "ສ່ວນປະກອບ",
     "Instructions" : "ຂັ້ນຕອນການເຮັດ",
+    "Reminder" : "Reminder",
     "_{hours}h_::_{hours}h_" : ["{hours} ຊມ"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes} ນທ"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds} ວ"],
@@ -159,6 +159,9 @@
     "Trans Fat" : "ໄຂມັນທຣານສ໌",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "ບໍ່ສາມາດຄຳນວນສ່ວນປະກອບຄືນໃໝ່ໄດ້ ເນື່ອງຈາກຮູບແບບບໍ່ຖືກຕ້ອງ. ກະລຸນາກວດສອບໃຫ້ແນ່ໃຈວ່າຮູບແບບເປັນໄປຕາມນີ້: ຈຳນວນ ໜ່ວຍວັດ ສ່ວນປະກອບ ແລະ ຕ້ອງໄດ້ກຳນົດຈຳນວນສ່ວນທີ່ຮັບປະທານໄວ້ເພື່ອໃຫ້ຟັງຊັນນີ້ເຮັດວຽກຢ່າງຖືກຕ້ອງ. ຕົວຢ່າງ: 200 ກຣາມ ຫົວຜັກກາດ ຫຼື ເກືອ 1 ຢິບມື.",
     "Failed to load recipes with keywords: {tags}" : "ໂຫຼດສູດອາຫານດ້ວຍຄຳສຳຄັນ: {tags} ລົ້ມເຫລວ",
-    "Failed to load search results" : "ໂຫຼດຜົນການຄົ້ນຫາລົ້ມເຫລວ"
+    "Failed to load search results" : "ໂຫຼດຜົນການຄົ້ນຫາລົ້ມເຫລວ",
+    "Dismiss" : "ຍົກເລີກ",
+    "Cancel" : "ຍົກເລີກ",
+    "OK" : "ຕົກລົງ"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

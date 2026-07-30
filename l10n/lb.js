@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "in %s" : "an %s",
     "Tags" : "Tags",
+    "Error" : "Fehler",
     "None" : "Keng",
     "Edit" : "Änneren",
     "Save" : "Späicheren",
@@ -11,11 +12,11 @@ OC.L10N.register(
     "Add" : "Dobäisetzen",
     "Name" : "Numm",
     "Apply" : "Uwenden",
-    "Dismiss" : "Ofbriechen",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Beschreiwung",
     "URL" : "URL",
-    "Loading…" : "Et gëtt gelueden"
+    "Loading…" : "Et gëtt gelueden",
+    "Dismiss" : "Ofbriechen",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

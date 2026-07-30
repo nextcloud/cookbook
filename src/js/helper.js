@@ -148,7 +148,6 @@ function notify(title, options) {
         return;
     }
     if (Notification.permission === 'granted') {
-        // eslint-disable-next-line no-unused-vars
         const notification = new Notification(title, options);
     } else if (Notification.permission !== 'denied') {
         Notification.requestPermission((permission) => {
@@ -156,10 +155,9 @@ function notify(title, options) {
                 Notification.permission = permission;
             }
             if (permission === 'granted') {
-                // eslint-disable-next-line no-unused-vars
                 const notification = new Notification(title, options);
             } else {
-                showSimpleAlertModal(title);
+                showSimpleAlertModal(title, '');
             }
         });
     }

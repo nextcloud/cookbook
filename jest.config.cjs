@@ -10,7 +10,7 @@ module.exports = {
     ],
     transform: {
         '.*\\.js$': '<rootDir>/node_modules/babel-jest',
-        '.*\\.(vue)$': '<rootDir>/node_modules/@vue/vue2-jest',
+        '.*\\.(vue)$': '<rootDir>/node_modules/@vue/vue3-jest',
     },
     transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
 };

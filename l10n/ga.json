@@ -69,6 +69,7 @@
     "Tags" : "Clibeanna",
     "Search for recipes" : "Cuardaigh oidis",
     "Are you sure you want to delete this recipe?" : "An bhfuil tú cinnte gur mhaith leat an t-oideas seo a scriosadh?",
+    "Error" : "Earráid",
     "Delete failed" : "Theip ar an scriosadh",
     "Editing recipe" : "Oideas eagarthóireachta",
     "Viewing recipe" : "Ag féachaint ar oideas",
@@ -171,9 +172,6 @@
     "Frontend debug settings" : "Socruithe dífhabhtaithe tosaigh",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Ligeann sé seo logáil isteach sa chonsól brabhsálaí a chumasú go sealadach i gcás fadhbanna. Ní bheidh na socruithe seo uait de réir réamhshocraithe.",
     "Enable debugging" : "Cumasaigh dífhabhtaithe",
-    "Dismiss" : "Díbhe",
-    "Cancel" : "Cealaigh",
-    "OK" : "Ceart go leor",
     "The page was not found" : "Níor aimsíodh an leathanach",
     "You have unsaved changes! Do you still want to leave?" : "Tá athruithe gan sábháil agat! Ar mhaith leat imeacht fós?",
     "Calories" : "Calraí",
@@ -197,6 +195,7 @@
     "Could not start request to save recipe." : "Níorbh fhéidir tús a chur leis an iarratas chun oideas a shábháil.",
     "Clone of {name}" : "Clón {name}",
     "Loading recipe failed" : "Theip ar lódáil an t-oideas",
+    "Discard changes?" : "Na hathruithe a sheachaint?",
     "Description" : "Cur síos",
     "URL" : "URL",
     "Image" : "Íomhá",
@@ -212,6 +211,7 @@
     "Ingredients" : "Comhábhair",
     "Instructions" : "Comhaid Nextcloud ag teastáil",
     "Recipe image" : "Íomhá oideas",
+    "Reminder" : "Meabhrúchán",
     "Cooking time is up!" : "Tá am cócaireachta suas!",
     "_{hours}h_::_{hours}h_" : ["{uair}u","{uair}u","{uair}u","{uair}u","{uair}u"],
     "_{minutes}m_::_{minutes}m_" : ["{nóiméad}m","{nóiméad}m","{nóiméad}m","{nóiméad}m","{nóiméad}m"],
@@ -240,6 +240,9 @@
     "Trans Fat" : "Tras-saille",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Ní féidir an comhábhar a athríomh mar gheall ar chomhréir mhícheart. Cinntigh le do thoil go leanann an chomhréir an fhormáid seo: méid aonad an chomhábhair agus go socraítear líon sonrach codanna le go n-oibreoidh an fheidhm seo i gceart. Samplaí: 200 g cairéid nó 1 pinch salainn.",
     "Failed to load recipes with keywords: {tags}" : "Theip ar lódáil oidis le heochairfhocail: {tags}",
-    "Failed to load search results" : "Theip ar lódáil na dtorthaí cuardaigh"
+    "Failed to load search results" : "Theip ar lódáil na dtorthaí cuardaigh",
+    "Dismiss" : "Díbhe",
+    "Cancel" : "Cealaigh",
+    "OK" : "Ceart go leor"
 },"pluralForm" :"nplurals=5; plural=(n==1 ? 0 : n==2 ? 1 : n<7 ? 2 : n<11 ? 3 : 4);"
 }

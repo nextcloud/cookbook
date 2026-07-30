@@ -22,7 +22,7 @@ class JsonService {
 	 */
 	public function isSchemaObject($obj, ?string $type = null, bool $checkContext = true, bool $uniqueType = true): bool {
 		if (! is_array($obj)) {
-			// Objects must bve encoded as arrays in JSON
+			// Objects must be encoded as arrays in JSON
 			return false;
 		}
 

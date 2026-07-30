@@ -2,6 +2,7 @@
     "in %s" : "në %s",
     "Category" : "Kategori",
     "Tags" : "Etiketat",
+    "Error" : "Gabim",
     "None" : "Asnjë",
     "Page not found" : "Faqja nuk u gjet ",
     "Edit" : "Përpuno",
@@ -15,11 +16,11 @@
     "Clear" : "Pastro",
     "Apply" : "Apliko",
     "Tools" : "Mjete",
-    "Dismiss" : "Hiq",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Përshkrim",
     "URL" : "URL",
-    "Loading…" : "Duke u ngarkuar…"
+    "Loading…" : "Duke u ngarkuar…",
+    "Dismiss" : "Hiq",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

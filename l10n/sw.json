@@ -67,6 +67,7 @@
     "Tags" : "Maoni",
     "Search for recipes" : "Tafuta mapishi",
     "Are you sure you want to delete this recipe?" : "Je, una uhakika unataka kufuta kichocheo hiki?",
+    "Error" : "Hitilafu",
     "Delete failed" : "Kufuta kumeshindikana",
     "Editing recipe" : "Kuhariri kichocheo",
     "Viewing recipe" : "Kichocheo cha kutazama",
@@ -121,12 +122,10 @@
     "Cooking time" : "Muda wa upishi",
     "Total time" : "Muda kamili",
     "Tools" : "Vifaa",
-    "Dismiss" : "Tawanya",
-    "Cancel" : "Ghairi",
-    "OK" : "SAWA",
     "You have unsaved changes! Do you still want to leave?" : "Una mabadiliko ambayo hayajahifadhiwa! Bado unataka kuondoka?",
     "Calories" : "Kalori",
     "Loading recipe failed" : "Imeshindwa kupakia kichocheo",
+    "Discard changes?" : "Unataka kufuta mabadiliko?",
     "Description" : "Maelezo",
     "URL" : "URL",
     "Image" : "Picha",
@@ -134,6 +133,7 @@
     "Nutrition Information" : "Taarifa za Lishe",
     "Ingredients" : "Viungo",
     "Instructions" : "Maelekezo",
+    "Reminder" : "Kikumbushio",
     "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds}s","{seconds}s"],
@@ -161,6 +161,9 @@
     "Trans Fat" : "Mafuta ya Trans",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Kiambato hakiwezi kuhesabiwa upya kwa sababu ya sintaksia isiyo sahihi. Tafadhali hakikisha kwamba sintaksia inafuata umbizo hili: kiungo cha kiasi na kwamba idadi mahususi ya sehemu imewekwa ili chaguo hili la kukokotoa lifanye kazi ipasavyo. Mifano: 200 g karoti au chumvi 1.",
     "Failed to load recipes with keywords: {tags}" : "Imeshindwa kupakia mapishi yenye maneno muhimu: {tags}",
-    "Failed to load search results" : "Imeshindwa kupakia matokeo ya utafutaji"
+    "Failed to load search results" : "Imeshindwa kupakia matokeo ya utafutaji",
+    "Dismiss" : "Tawanya",
+    "Cancel" : "Ghairi",
+    "OK" : "SAWA"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

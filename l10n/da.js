@@ -92,9 +92,6 @@ OC.L10N.register(
     "Cooking time" : "Opvarmningstid",
     "Total time" : "Total tid",
     "Tools" : "Værktøjer",
-    "Dismiss" : "Afvis",
-    "Cancel" : "Annullér",
-    "OK" : "OK",
     "The page was not found" : "Denne side blev ikke fundet",
     "You have unsaved changes! Do you still want to leave?" : "Du har ikke-gemte ændringer! Vil du stadig lukke?",
     "Calories" : "Kalorier",
@@ -117,6 +114,7 @@ OC.L10N.register(
     "Could not start request to save recipe." : "Kunne ikke starte anmodningen om at gemme opskriften.",
     "Clone of {name}" : "Klon af {name}",
     "Loading recipe failed" : "Indlæsning af opskrift mislykkedes.",
+    "Discard changes?" : "Forkast ændringer?",
     "Description" : "Beskrivelse",
     "URL" : "URL",
     "Image" : "Billede",
@@ -131,6 +129,7 @@ OC.L10N.register(
     "Ingredients" : "Ingredienser",
     "Instructions" : "Instruktioner",
     "Recipe image" : "Opskriftbillede",
+    "Reminder" : "Påmindelse",
     "Cooking time is up!" : "Tilberedningstiden er slut!",
     "Loading…" : "Indlæser…",
     "Search recipes with this keyword" : "Søg efter opskrifter med dette nøgleord",
@@ -151,6 +150,9 @@ OC.L10N.register(
     "Trans Fat" : "Transfedtsyre",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Ingrediensen kan ikke beregnes på grund af forkert syntaks. Sørg venligst for, at syntaksen følger dette format: mængde enhed ingrediens, og at et specifikt antal portioner er angivet, for at denne funktion kan fungere korrekt. Eksempler: 200 g gulerødder eller 1 knivspids salt.",
     "Failed to load recipes with keywords: {tags}" : "Kunne ikke indlæse opskrifter med nøgleord: {tags}",
-    "Failed to load search results" : "Kunne ikke indlæse søgeresultater"
+    "Failed to load search results" : "Kunne ikke indlæse søgeresultater",
+    "Dismiss" : "Afvis",
+    "Cancel" : "Annullér",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

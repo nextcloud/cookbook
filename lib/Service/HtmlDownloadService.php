@@ -97,7 +97,7 @@ class HtmlDownloadService {
 	}
 
 	/**
-	 * Get the HTML docuemnt after it has been downloaded and parsed with downloadRecipe()
+	 * Get the HTML document after it has been downloaded and parsed with downloadRecipe()
 	 * @return ?DOMDocument The loaded HTML document or null if document could not be loaded successfully
 	 */
 	public function getDom(): ?DOMDocument {

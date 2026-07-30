@@ -6,6 +6,7 @@
     "Category" : "Катэгорыя",
     "Recipe name" : "Назва рэцэпта",
     "Tags" : "Тэгі",
+    "Error" : "Памылка",
     "All recipes" : "Усе рэцэпты",
     "None" : "Няма",
     "Loading app" : "Загрузка праграмы",
@@ -26,19 +27,21 @@
     "Apply" : "Прымяніць",
     "Creation date" : "Дата стварэння",
     "Tools" : "Інструменты",
-    "Dismiss" : "Адхіліць",
-    "Cancel" : "Скасаваць",
-    "OK" : "OK",
     "Calories" : "Калорыі",
+    "Discard changes?" : "Адхіліць змены?",
     "Description" : "Апісанне",
     "URL" : "URL-адрас",
     "Ingredients" : "Інгрэдыенты",
     "Instructions" : "Інструкцыі",
+    "Reminder" : "Напамін",
     "_{hours}h_::_{hours}h_" : ["{hours} гадз","{hours} гадз","{hours} гадз","{hours} гадз"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes} хв","{minutes} хв","{minutes} хв","{minutes} хв"],
     "_{seconds}s_::_{seconds}s_" : ["{seconds} с","{seconds} с","{seconds} с","{seconds} с"],
     "ingredients" : "інгрэдыенты",
     "Loading…" : "Загрузка…",
-    "Sugar" : "Цукар"
+    "Sugar" : "Цукар",
+    "Dismiss" : "Адхіліць",
+    "Cancel" : "Скасаваць",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

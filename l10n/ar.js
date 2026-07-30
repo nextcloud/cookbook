@@ -65,6 +65,7 @@ OC.L10N.register(
     "Tags" : "الوسوم",
     "Search for recipes" : "البحث عن وصفاتٍ",
     "Are you sure you want to delete this recipe?" : "هل أنت متأكد أنك تريد حذف هذه الوصفة؟",
+    "Error" : "خطأ",
     "Delete failed" : "فشل الحذف",
     "Editing recipe" : "تحرير الوصفة ",
     "Viewing recipe" : "مشاهدة الوصفة ",
@@ -167,9 +168,6 @@ OC.L10N.register(
     "Frontend debug settings" : "إعدادات تنقيح الواجهة الأمامية",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "يسمح هذا بتمكين تسجيل الدخول مؤقتًا في وحدة تحكم المتصفح browser console في حالة حدوث مشكلات. لن تحتاج إلى هذه الإعدادات افتراضيًا.",
     "Enable debugging" : "تمكين التنقيح",
-    "Dismiss" : "الغاء",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "لم يتم العثور على الصفحة",
     "You have unsaved changes! Do you still want to leave?" : "لديك تغييرات غير محفوظة! هل مازلت تريد الخروج؟",
     "Calories" : "السُّعرات الحرارية",
@@ -207,6 +205,7 @@ OC.L10N.register(
     "Ingredients" : "المُكوِّنات و المَقَادِير",
     "Instructions" : "تعليمات",
     "Recipe image" : "صورة الوصفة",
+    "Reminder" : "تذكير",
     "Cooking time is up!" : "إنتهى وقت الطهو!",
     "_{hours}h_::_{hours}h_" : ["{hours} س","{hours} س","{hours} س","{hours} س","{hours} س","{hours} س"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes} د","{minutes} د","{minutes} د","{minutes} د","{minutes} د","{minutes} د"],
@@ -234,6 +233,9 @@ OC.L10N.register(
     "Trans Fat" : "دهون مُتحوِّلة",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "لا يمكن إعادة احتساب المُكوِّن بسبب أن بناء الجملة غير صحيح. يرجى التأكد من أن بناء الجملة يتبع التنسيق التالي: الكمية المُكوِّن الوحدة؛ مثلاً: 200 جرام جزر أو 1 رشة ملح.",
     "Failed to load recipes with keywords: {tags}" : "فشل تحميل الوصفات بالكلمات الدلالية: {tags}",
-    "Failed to load search results" : "فشل تحميل نتائج البحث"
+    "Failed to load search results" : "فشل تحميل نتائج البحث",
+    "Dismiss" : "الغاء",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;");

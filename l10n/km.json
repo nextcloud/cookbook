@@ -1,5 +1,6 @@
 { "translations": {
     "Tags" : "ស្លាក",
+    "Error" : "កំហុស",
     "None" : "គ្មាន",
     "Edit" : "កែប្រែ",
     "Save" : "រក្សាទុក",
@@ -8,10 +9,10 @@
     "Add" : "បន្ថែម",
     "Name" : "ឈ្មោះ",
     "Apply" : "អនុវត្ត",
+    "Description" : "ការ​អធិប្បាយ",
+    "URL" : "URL",
     "Dismiss" : "Dismiss",
     "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "ការ​អធិប្បាយ",
-    "URL" : "URL"
+    "OK" : "OK"
 },"pluralForm" :"nplurals=1; plural=0;"
 }

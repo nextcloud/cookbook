@@ -34,6 +34,7 @@ OC.L10N.register(
     "Tags" : "Nhãn",
     "Search for recipes" : "Tìm kiếm công thức",
     "Are you sure you want to delete this recipe?" : "Bạn có chắc chắn muốn xóa công thức này không?",
+    "Error" : "Lỗi",
     "Delete failed" : "Xóa không thành công",
     "All recipes" : "Tất cả các công thức",
     "None" : "Không có",
@@ -95,9 +96,6 @@ OC.L10N.register(
     "Cooking time" : "Thời gian nấu",
     "Total time" : "Tổng thời gian",
     "Tools" : "Công cụ",
-    "Dismiss" : "Bỏ qua",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "Trang không được tìm thấy",
     "You have unsaved changes! Do you still want to leave?" : "Bạn có các thay đổi chưa lưu! Bạn vẫn muốn rời đi?",
     "Calories" : "Lượng calo",
@@ -130,6 +128,7 @@ OC.L10N.register(
     "Ingredients" : "Thành phần",
     "Instructions" : "Hướng dẫn",
     "Recipe image" : "Hình ảnh công thức",
+    "Reminder" : "Lịch nhắc hẹn",
     "Cooking time is up!" : "Đã hết giờ nấu ăn!",
     "Loading…" : "Đang tải…",
     "Search recipes with this keyword" : "Tìm kiếm công thức nấu ăn với từ khóa này",
@@ -149,6 +148,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Chất béo không bão hòa",
     "Trans Fat" : "Chất béo trans",
     "Failed to load recipes with keywords: {tags}" : "Không tải được các công thức nấu ăn có từ khóa: {tags}",
-    "Failed to load search results" : "Không tải được kết quả tìm kiếm"
+    "Failed to load search results" : "Không tải được kết quả tìm kiếm",
+    "Dismiss" : "Bỏ qua",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

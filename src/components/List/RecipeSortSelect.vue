@@ -1,6 +1,6 @@
 <template>
     <NcSelect
-        v-model="orderBy"
+        v-model="value"
         class="recipes-sorting-dropdown mr-4"
         :clearable="false"
         label="selectedLabel"
@@ -9,9 +9,15 @@
         :searchable="false"
         :placeholder="t('cookbook', 'Select order')"
         :options="recipeOrderingOptions"
-        @input="handleInput"
     >
         <template #option="option">
+            <div class="ordering-selection-entry">
+                <TriangleSmallUpIcon v-if="option.iconUp" :size="20" />
+                <TriangleSmallDownIcon v-if="!option.iconUp" :size="20" />
+                <span class="option__title">{{ option.label }}</span>
+            </div>
+        </template>
+        <template #selected-option="option">
             <div class="ordering-selection-entry">
                 <TriangleSmallUpIcon v-if="option.iconUp" :size="20" />
                 <TriangleSmallDownIcon v-if="!option.iconUp" :size="20" />
@@ -77,24 +83,10 @@ const recipeOrderingOptions = ref([
     },
 ]);
 
-defineProps({
-    value: {
-        type: Object,
-        default: () => ({
-            label: t('cookbook', 'Name'),
-            iconUp: true,
-            recipeProperty: 'name',
-            order: 'ascending',
-        }),
-        required: true,
-    },
+const value = defineModel({
+    type: Object,
+    required: true,
 });
-
-const orderBy = ref(recipeOrderingOptions.value[0]);
-
-function handleInput() {
-    emit('input', orderBy.value);
-}
 </script>
 
 <style scoped>

@@ -1,0 +1,38 @@
+diff --git a/.github/workflows/dependabot-approve-merge.yml b/.github/workflows/dependabot-approve-merge.yml
+index 76340acb..a7a266cd 100644
+--- a/.github/workflows/dependabot-approve-merge.yml
++++ b/.github/workflows/dependabot-approve-merge.yml
+@@ -11,9 +11,7 @@ name: Auto approve Dependabot PRs
+ on:
+   pull_request_target: # zizmor: ignore[dangerous-triggers]
+     branches:
+-      - main
+       - master
+-      - stable*
+ 
+ permissions:
+   contents: read
+@@ -99,3 +97,4 @@ jobs:
+           }}
+         with:
+           github-token: ${{ secrets.GITHUB_TOKEN }}
++          merge-method: REBASE
+diff --git a/.github/workflows/dependabot-approve-merge.yml.patch b/.github/workflows/dependabot-approve-merge.yml.patch
+index 6ebfa96b..e69de29b 100644
+--- a/.github/workflows/dependabot-approve-merge.yml.patch
++++ b/.github/workflows/dependabot-approve-merge.yml.patch
+@@ -1,14 +0,0 @@
+-diff --git a/.github/workflows/dependabot-approve-merge.yml b/.github/workflows/dependabot-approve-merge.yml
+-index 76340acb..e6cefab0 100644
+---- a/.github/workflows/dependabot-approve-merge.yml
+-+++ b/.github/workflows/dependabot-approve-merge.yml
+-@@ -11,9 +11,7 @@ name: Auto approve Dependabot PRs
+- on:
+-   pull_request_target: # zizmor: ignore[dangerous-triggers]
+-     branches:
+--      - main
+-       - master
+--      - stable*
+- 
+- permissions:
+-   contents: read

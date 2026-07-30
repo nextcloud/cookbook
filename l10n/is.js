@@ -8,6 +8,7 @@ OC.L10N.register(
     "Category" : "Flokkur",
     "Tags" : "Merki",
     "Are you sure you want to delete this recipe?" : "Ertu viss um að þú viljir eyða þessari uppskrift?",
+    "Error" : "Villa",
     "All recipes" : "Allar uppskriftir",
     "None" : "Ekkert",
     "Page not found" : "Síða fannst ekki",
@@ -44,9 +45,6 @@ OC.L10N.register(
     "Cooking time" : "Eldunartími",
     "Total time" : "Heildartími",
     "Tools" : "Áhöld",
-    "Dismiss" : "Hafna",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Serving size" : "Serving size",
     "Trans-fat content" : "Trans-fat content",
     "Unsaturated-fat content" : "Unsaturated-fat content",
@@ -58,6 +56,7 @@ OC.L10N.register(
     "Nutrition Information" : "Nutrition Information",
     "Ingredients" : "Innihaldsefni",
     "Instructions" : "Leiðbeiningar",
+    "Reminder" : "Áminning",
     "Cooking time is up!" : "Eldunartímanum er lokið!",
     "Loading…" : "Hleð inn…",
     "Date created" : "Búið til þann",
@@ -70,6 +69,9 @@ OC.L10N.register(
     "Protein" : "Protein",
     "Sodium" : "Sodium",
     "Fat total" : "Fat total",
-    "Saturated Fat" : "Saturated Fat"
+    "Saturated Fat" : "Saturated Fat",
+    "Dismiss" : "Hafna",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);");

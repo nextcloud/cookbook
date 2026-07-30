@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "i %s",
     "Category" : "Kategori",
     "Tags" : "Emneord",
+    "Error" : "Feil",
     "None" : "Ingen",
     "Page not found" : "Fann ikkje sida",
     "Edit" : "Rediger",
@@ -13,11 +14,11 @@ OC.L10N.register(
     "Rename" : "Endra namn",
     "Name" : "Namn",
     "Apply" : "Anvend",
-    "Dismiss" : "Forkast",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Skildring",
     "URL" : "URL",
-    "Loading…" : "Lastar..."
+    "Loading…" : "Lastar...",
+    "Dismiss" : "Forkast",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

@@ -15,6 +15,7 @@ OC.L10N.register(
     "Tags" : "Etichete",
     "Search for recipes" : "Căutați rețete",
     "Are you sure you want to delete this recipe?" : "Sigur doriți să ștergeți această rețetă?",
+    "Error" : "Eroare",
     "All recipes" : "Toate rețetele",
     "None" : "Niciuna",
     "Loading recipe" : "Se încarcă rețeta",
@@ -36,13 +37,14 @@ OC.L10N.register(
     "Clear" : "Șterge ",
     "Apply" : "Aplică",
     "Tools" : "Unelte",
-    "Dismiss" : "Elimină",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "You have unsaved changes! Do you still want to leave?" : "Aveți modificări nesalvate! Sigur doriți să părăsiți pagina?",
     "Description" : "Descriere",
     "URL" : "URL",
     "Image" : "Imagine",
-    "Loading…" : "Se încarcă..."
+    "Reminder" : "Memento",
+    "Loading…" : "Se încarcă...",
+    "Dismiss" : "Elimină",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));");

@@ -18,6 +18,26 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+### Documentation
+
+- Add AvoCook as client in the docs
+  [#3248](https://github.com/nextcloud/cookbook/pull/3248) @Logarex
+
+### Maintenance
+
+- Migrate to Vue 3 for Frontend development
+  [#3124](https://github.com/nextcloud/cookbook/pull/3124) @christianlupus
+- Fix typos in documentation and comments
+  [#3285](https://github.com/nextcloud/cookbook/pull/3285) @jannikbx
+- Update dependencies and enhance dev experience to show size of generated assets
+  [#3294](https://github.com/nextcloud/cookbook/pull/3294) @christianlupus
+- Extend the workflows on PRs
+  [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+- Fix application deployment automation
+  [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+- Add file needed to work with agentic AI on codebase
+  [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+
 
 ## 0.11.9 - 2026-07-18
 

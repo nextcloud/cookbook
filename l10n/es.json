@@ -67,6 +67,7 @@
     "Tags" : "Etiquetas",
     "Search for recipes" : "Buscar recetas",
     "Are you sure you want to delete this recipe?" : "¿Realmente quieres borrar la receta?",
+    "Error" : "Error",
     "Delete failed" : "Ha fallado el borrado",
     "Editing recipe" : "Editando receta",
     "Viewing recipe" : "Viendo receta",
@@ -169,9 +170,6 @@
     "Frontend debug settings" : "Ajustes de depuración de la interfaz",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Esto le permite habilitar temporalmente el registro en la consola del navegador en caso de problemas. No necesitará estos ajustes por defecto.",
     "Enable debugging" : "Habilitar modo de depuración",
-    "Dismiss" : "Descartar",
-    "Cancel" : "Cancelar",
-    "OK" : "OK",
     "The page was not found" : "Página no encontrada",
     "You have unsaved changes! Do you still want to leave?" : "¡Tiene cambios sin guardar! , ¿Está seguro que desea salir?",
     "Calories" : "Calorías",
@@ -194,6 +192,7 @@
     "Could not start request to save recipe." : "No se pudo iniciar la petición de guardado de receta.",
     "Clone of {name}" : "Clon de {name}",
     "Loading recipe failed" : "Fallo al cargar la receta",
+    "Discard changes?" : "¿Descartar cambios?",
     "Description" : "Descripción",
     "URL" : "URL",
     "Image" : "Imagen",
@@ -209,6 +208,7 @@
     "Ingredients" : "Ingredientes",
     "Instructions" : "Instrucciones",
     "Recipe image" : "Imagen de la receta",
+    "Reminder" : "Recordatorio",
     "Cooking time is up!" : "¡Se acabó el tiempo de cocción!",
     "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h","{hours}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"],
@@ -237,6 +237,9 @@
     "Trans Fat" : "Grasas trans",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "El ingrediente no puede ser re-calculado debido a una sintaxis incorrecta. Por favor, asegúrese de que la sintaxis cumpla con este formato: cantidad unidad ingrediente y que una cantidad específica de porciones está establecida para que esta función opere correctamente. Ejemplos: 200 g zanahorias o 1 pizca de sal.",
     "Failed to load recipes with keywords: {tags}" : "Fallo al cargar recetas con palabras clave: {tags}",
-    "Failed to load search results" : "Fallo al cargar los resultados de la búsqueda"
+    "Failed to load search results" : "Fallo al cargar los resultados de la búsqueda",
+    "Dismiss" : "Descartar",
+    "Cancel" : "Cancelar",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;"
 }

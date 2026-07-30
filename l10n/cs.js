@@ -171,9 +171,6 @@ OC.L10N.register(
     "Frontend debug settings" : "Nastavení pro ladění nadstavby",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "V případě problémů, toto umožňuje dočasně zapnout zaznamenávání událostí v konzoli webového prohlížeče. Ve výchozím stavu tato nastavení nepotřebujete.",
     "Enable debugging" : "Zapnout ladění",
-    "Dismiss" : "Zahodit",
-    "Cancel" : "Zrušit",
-    "OK" : "OK",
     "The page was not found" : "Stránka nebyla nalezena",
     "You have unsaved changes! Do you still want to leave?" : "Jsou zde neuložené změny! Opravdu chcete odejít?",
     "Calories" : "Kalorie",
@@ -197,6 +194,7 @@ OC.L10N.register(
     "Could not start request to save recipe." : "Požadavek na uložení receptu nebyl odeslán.",
     "Clone of {name}" : "Klon {name}",
     "Loading recipe failed" : "Načítání receptu se nezdařilo",
+    "Discard changes?" : "Zahodit změny?",
     "Description" : "Popis",
     "URL" : "URL",
     "Image" : "Obrázek",
@@ -212,6 +210,7 @@ OC.L10N.register(
     "Ingredients" : "Přísady",
     "Instructions" : "Pokyny",
     "Recipe image" : "Obrázek k receptu",
+    "Reminder" : "Připomínka",
     "Cooking time is up!" : "Tepelná úprava je u konce!",
     "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h","{hours}h","{hours}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m","{minutes}m"],
@@ -240,6 +239,9 @@ OC.L10N.register(
     "Trans Fat" : "Trans mastné kyseliny",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Přísadu nebylo možné přepočítat kvůli nesprávné formě zápisu. Aby toto fungovalo správně zajistěte, aby bylo v následujícím formátu: množství jednotka přísada a že je nastavený konkrétní počet porcí. Příklady: 200 g mrkve nebo 1 špetka soli.",
     "Failed to load recipes with keywords: {tags}" : "Nepodařilo se načíst recepty, obsahující klíčová slova: {tags}",
-    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání"
+    "Failed to load search results" : "Nepodařilo se načíst výsledky vyhledávání",
+    "Dismiss" : "Zahodit",
+    "Cancel" : "Zrušit",
+    "OK" : "OK"
 },
 "nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;");
