@@ -70,7 +70,7 @@ OC.L10N.register(
     "Recipe name" : "Nome da receita",
     "Tags" : "Etiquetas",
     "Search for recipes" : "Pesquisar por receitas",
-    "Delete confirmation" : "Excluir confirmação",
+    "Delete confirmation" : "Confirmar exclusão",
     "Are you sure you want to delete this recipe?" : "Quer realmente excluir esta receita?",
     "Error" : "Erro",
     "Delete failed" : "Erro na exclusão",
