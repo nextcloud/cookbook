@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
+
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
 <phpunit 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	bootstrap="tests/bootstrap.php"

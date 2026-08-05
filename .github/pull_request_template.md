@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <!-- Thanks for contributing to the project. To help with merging the changes, please fill in some basic data. -->
 
 ## Topic and Scope

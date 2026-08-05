@@ -11,3 +11,8 @@ SPDX-License-Identifier = "AGPL-3.0-only OR AGPL-3.0-or-later"
 path = [".changelog/versions/*.md", ".changelog/current/*.md"]
 SPDX-FileCopyrightText = "2019-2026 Nextcloud cookbook contributors"
 SPDX-License-Identifier = "AGPL-3.0-only OR AGPL-3.0-or-later"
+
+[[annotations]]
+path = ["docs/dev/api/swagger/*"]
+SPDX-FileCopyrightText = "2020-2021 SmartBear Software Inc."
+SPDX-License-Identifier = "Apache-2.0"

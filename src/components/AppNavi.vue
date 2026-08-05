@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <!-- This component should ideally not have a conflicting name with AppNavigation from the nextcloud/vue package -->
     <NcAppNavigation :aria-label="t('cookbook', 'Cookbook main menu')">
