@@ -229,7 +229,7 @@ import {
 
 import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
-import { useIsMobile } from '../../composables/useIsMobile';
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 

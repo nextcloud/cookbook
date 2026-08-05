@@ -75,7 +75,7 @@ import { computed, onMounted, ref } from 'vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
 import { NcButton } from '@nextcloud/vue';
-import { useIsMobile } from '../../composables/useIsMobile';
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
