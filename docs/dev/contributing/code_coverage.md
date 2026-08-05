@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 ## Unit tests and code coverage
 
 Currently there is a github action in place that does automatic unit testing upon pushing to github.

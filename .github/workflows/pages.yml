@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Build GitHub Pages and deploy
 

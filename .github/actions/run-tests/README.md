@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Test scripts
 
 The scripts in this folder should allow both local (manual) testing of the app as well as automatic continuous integration testing. The main documentation can be found under `/docs`.

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Documentation d'utilisation
 *Attention , cette documentation en français peut ne pas être à jour. Seule la [documentation en anglais](index.md) fait foi !*
 

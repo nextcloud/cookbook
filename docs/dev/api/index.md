@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # OpenAPI documentation
 
 This page provides an overview over the possible API endpoints provided by the app. In the following are the various versions of the API linked:
