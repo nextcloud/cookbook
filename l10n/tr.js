@@ -82,7 +82,7 @@ OC.L10N.register(
     "Creating new recipe" : "Yeni yemek tarifi oluşturma",
     "Edit" : "Düzenle",
     "Save" : "Kaydet",
-    "Search" : "Arama",
+    "Search" : "Ara",
     "Filter current recipes" : "Geçerli yemek tariflerini süz",
     "Filter" : "Süzgeç",
     "Search recipes" : "Yemek tarifi ara",
