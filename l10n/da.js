@@ -22,6 +22,7 @@ OC.L10N.register(
     "Tags" : "Tags",
     "Search for recipes" : "Søg efter opskrifter",
     "Are you sure you want to delete this recipe?" : "Er du sikker på du vil slette denne opskrift?",
+    "Error" : "Fejl",
     "Delete failed" : "Sletning fejlede",
     "Editing recipe" : "Redigerer opskrift",
     "Viewing recipe" : "Viser opskrift",
