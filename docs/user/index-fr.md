@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Documentation d'utilisation
 *Attention , cette documentation en français peut ne pas être à jour. Seule la [documentation en anglais](index.md) fait foi !*
 
@@ -33,7 +39,7 @@ Vous pouvez simplement vérifier, dans les *Paramètres* de Cookbook, en bas à 
 
 ### Ajouter une nouvelle recette
 
-Cliquer sur le bouton *Créer une recette* et ajouter un titre et toute information utile. Si un bloc est vide, il ne sera pas affiché dans Cookbook.
+Cliquer sur le bouton *Créer une recette* et ajouter un titre et toute information utile. Si un block est vide, il ne sera pas affiché dans Cookbook.
 
 ### Ajouter une image
 
@@ -66,7 +72,7 @@ On peut accéder aux catégories de façon plus directe qu'aux mots-clés car el
 
 En cliquant sur une catégorie dans le panneau latéral, vous pouvez filtrer rapidement des recettes comme "Légumes" ou "Pâtisserie". Les mots-clés peuvent ensuite être utilisés pour réduire la sélection avec des étiquettes comme "amandes" ou "facile". De cette façon, les catégories opérent un filtrage large, et les mots-clés vont permettre d'affiner ce filtrage.
 
-![Exemple utilisant les catégories pour un filtrage large, et les mots-clés pour affiner ce filtrage](assets/keywords-and-categories-fr.png)
+![Example utilisant les catégories pour un filtrage large, et les mots-clés pour affiner ce filtrage](assets/keywords-and-categories-fr.png)
 
 ## Importer des Recettes
 

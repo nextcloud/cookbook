@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Automatic deployment using Github Actions
 
 * TOC
@@ -42,7 +48,7 @@ Also, you need a personal access token for your GitHub account to prevent API ra
 Just create a token and put it in `.helpers/changelog/token`.
 Do not commit this file ever!
 
-#### Activate the virtual environemnt
+#### Activate the virtual environment
 
 The venv has a means of enabling it.
 It depends on your shell and OS about the detailed steps.
@@ -51,10 +57,10 @@ Adjust to your setup.
 
 #### Update the changelog for a release
 
-There is a convinence script availabe at `.helper/changelog/create-changelog-release.sh`.
+There is a convenience script available at `.helper/changelog/create-changelog-release.sh`.
 This will call the python script and carry out the actual work for you.
 
-You have to provie at least one option to th script:
+You have to provide at least one option to th script:
 
 1. The version to create. In out example, this would be `1.2.4`.
 
@@ -78,11 +84,11 @@ Also check if any pending API change is present.
 Update the API changelog (in `/docs/dev/api/changelog/*.md`) accordingly.
 
 Commit the changes.
-Pushing them to GitHub is neither needed nor adviced.
+Pushing them to GitHub is neither needed nor advised.
 
 #### Update the changelog for a pre-release
 
-There is a convinence script availabe at `.helper/changelog/create-changelog-prerelease.sh`.
+There is a convenience script available at `.helper/changelog/create-changelog-prerelease.sh`.
 This will call the python script and carry out the actual work for you.
 
 Any parameters are passed to the python script `changelog_bilder` as located in `.helpers/changelog`.
@@ -101,21 +107,21 @@ Also check if any pending API change is present.
 Update the API changelog (in `/docs/dev/api/changelog/*.md`) accordingly.
 
 Commit the changes.
-Pushing them to GitHub is neither needed nor adviced.
+Pushing them to GitHub is neither needed nor advised.
 
 ### Run the script to carry out the release preparations
 
 To create all relevant git structures, there is a script located in `.helpers/release/create-release.sh`.
-It will while executed change the various git branches involed (the stable branch, the master branch and the release branch).
+It will while executed change the various git branches involved (the stable branch, the master branch and the release branch).
 
 **Please note:**
 This script will carry out quite some changes.
 Although all can be reversed so far, multiple branches need to get unwinded to do so.
 So, be sure you know what you are doing and double-check the command line parameters.
-This is especially true, if you enable automatical pushes to the remote.
+This is especially true, if you enable automatically pushes to the remote.
 
-The script provides several CLI parameters that control how the script behaves and what will be caried out.
-These scipt parameters are:
+The script provides several CLI parameters that control how the script behaves and what will be carried out.
+These script parameters are:
 
 | Parameter | Description |
 |-----------|-------------|
@@ -163,7 +169,7 @@ Assume, you are on version `1.2.3`, the following table explains the resulting r
 #### Next steps
 
 The script will update the stable and corresponding main branch and create a tag (e.g. `v1.2.4`) as well.
-Unless automatic pushes are activated via `--push`, the user is reponsible to push the changes to the server.
+Unless automatic pushes are activated via `--push`, the user is responsible to push the changes to the server.
 
 ### Push the version to the appstore
 

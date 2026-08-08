@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2020-2021 SmartBear Software Inc.
+//
+// SPDX-License-Identifier: Apache-2.0
+
 window.onload = function() {
   //<editor-fold desc="Changeable Configuration Block">
 

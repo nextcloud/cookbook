@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use Exception;
@@ -90,8 +94,6 @@ class RecipeImplementationTest extends TestCase {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
 
-
-
 	public function testImportFailed(): void {
 		$this->ensureCacheCheckTriggered();
 
@@ -168,7 +170,6 @@ class RecipeImplementationTest extends TestCase {
 		 * @var JSONResponse $ret
 		 */
 		$ret = $this->sut->import();
-
 
 		$this->assertEquals(400, $ret->getStatus());
 		$this->assertEquals($errorMsg, $ret->getData());
@@ -664,7 +665,7 @@ class RecipeImplementationTest extends TestCase {
 		$ex = new Exception();
 		$this->recipeService->method('getRecipeImageFileByFolderId')->willThrowException($ex);
 
-		$headerContent = 'The content of the header as supposed by teh framework';
+		$headerContent = 'The content of the header as supposed by the framework';
 		$this->request->method('getHeader')->with('Accept')->willReturn($headerContent);
 		$this->acceptHeaderParser->method('parseHeader')->willReturnMap([
 			[$headerContent, $accept],

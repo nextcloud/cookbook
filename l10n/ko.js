@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "서버에서 일치하는 MIME 유형의 이미지를 찾을 수 없습니다.",
     "Recipe with ID %d was not found in database." : "%d ID 레시피를 데이터베이스에서 찾을 수 없습니다.",
-    "Downloading of a file failed returned the following error message: %s" : "파일 다운로드에 실패하여 다음 오류 메시지가 반환되었습니다: %s",
     "No content encoding was detected in the content." : "콘텐츠에서 콘텐츠 인코딩이 감지되지 않았습니다.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "레시피에 제공된 이미지 %s를 파싱할 수 없습니다. 중단하고 건너뜁니다.",
     "No valid recipe was left after heuristics of recipe %s." : "%s레시피 휴리스틱 이후 유효한 레시피가 남아있지 않습니다.",
@@ -66,6 +65,7 @@ OC.L10N.register(
     "Tags" : "태그",
     "Search for recipes" : "레시피 검색",
     "Are you sure you want to delete this recipe?" : "이 레시피를 정말로 삭제하시겠습니까?",
+    "Error" : "오류",
     "Delete failed" : "삭제 실패",
     "Editing recipe" : "레시피 편집",
     "Viewing recipe" : "레시피 보기",
@@ -168,9 +168,6 @@ OC.L10N.register(
     "Frontend debug settings" : "프론트엔드 디버그 설정",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "이를 통해 문제가 발생할 경우 브라우저 콘솔에 일시적으로 로그인을 활성화할 수 있습니다. 기본적으로 이러한 설정은 필요하지 않습니다.",
     "Enable debugging" : "디버깅 활성화",
-    "Dismiss" : "끄기",
-    "Cancel" : "취소",
-    "OK" : "OK",
     "The page was not found" : "페이지를 찾을 수 없습니다",
     "You have unsaved changes! Do you still want to leave?" : "저장되지 않은 변경사항이 있습니다. 정말 돌아가시겠습니까?",
     "Calories" : "칼로리",
@@ -208,6 +205,7 @@ OC.L10N.register(
     "Ingredients" : "재료",
     "Instructions" : "지침",
     "Recipe image" : "레시피 이미지",
+    "Reminder" : "알림",
     "Cooking time is up!" : "요리 시간이 다 됐습니다!",
     "_{hours}h_::_{hours}h_" : ["{hours}시간"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}분"],
@@ -235,6 +233,9 @@ OC.L10N.register(
     "Trans Fat" : "트랜스지방",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "잘못된 구문으로 인해 재료를 다시 계산할 수 없습니다.구문이 다음 형식을 따르는지 확인하십시오: 양 단위 성분 및 특정 부분 수가 설정되어 있는지 확인하십시오. 예: 당근 200g 또는 소금 1꼬집.",
     "Failed to load recipes with keywords: {tags}" : "키워드가 포함된 레시피를 로드하지 못했습니다: {tags}",
-    "Failed to load search results" : "검색결과를 불러오지 못했습니다."
+    "Failed to load search results" : "검색결과를 불러오지 못했습니다.",
+    "Dismiss" : "끄기",
+    "Cancel" : "취소",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

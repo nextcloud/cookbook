@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper;
 
 use DateTime;
@@ -13,7 +17,6 @@ use OCP\IL10N;
 class TimestampHelper {
 	/** @var IL10N */
 	private $l;
-
 
 	// Output format: Ignore fractions of a second
 	public const OUTPUT_FORMAT = 'Y-m-d\TH:i:sP';
@@ -132,7 +135,6 @@ class TimestampHelper {
 
 		throw new InvalidTimestampException($this->l->t('Could not parse timestamp {timestamp}', ['timestamp' => $timestamp]));
 	}
-
 
 	/**
 	 * Parses the string $timestamp and checks if it has a valid ISO 8601. Uses the date format given by $dateFormat

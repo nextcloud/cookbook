@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 name: Slack-like comments
 on:
   issue_comment:
@@ -21,7 +25,7 @@ jobs:
           echo "Admins: $admins"
           echo "User is permitted: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}"
           echo "Comment body matches /approve: ${{github.event.comment.body == '/approve'}}"
-      - uses: hmarr/auto-approve-action@v3
+      - uses: hmarr/auto-approve-action@v4
         if: >-
           github.event.comment.body == '/approve' &&
           contains(fromJSON(env.admins), github.event.comment.user.login)
@@ -60,7 +64,7 @@ jobs:
           reactions: "+1"
       - name: Checkout of the app data
         if: steps.config.outputs.startBackport == 'true'
-        uses: actions/checkout@v6.0.3
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0
           token: ${{ secrets.COOKBOOK_BOT_TOKEN }}

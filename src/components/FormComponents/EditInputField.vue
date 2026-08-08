@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <fieldset>
         <label>
@@ -8,8 +14,7 @@
                 props.fieldType === 'textarea' || props.fieldType === 'markdown'
             "
             ref="inputField"
-            v-model="content"
-            @input="handleInput"
+            v-model="value"
             @keydown="keyDown"
             @keyup="handleSuggestionsPopupKeyUp"
             @focus="handleSuggestionsPopupFocus"
@@ -21,9 +26,8 @@
             <input
                 v-if="!hide"
                 ref="inputField"
-                v-model="content"
+                v-model="value"
                 :type="props.fieldType"
-                @input="handleInput"
                 @keydown="keyDown"
                 @keyup="handleSuggestionsPopupKeyUp"
                 @focus="handleSuggestionsPopupFocus"
@@ -42,7 +46,7 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, ref, watch } from 'vue';
+import { getCurrentInstance, ref, watch, defineModel } from 'vue';
 import SuggestionsPopup from '../Modals/SuggestionsPopup.vue';
 import useSuggestionPopup from '../../composables/useSuggestionsPopup';
 
@@ -68,13 +72,12 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
-    // Value (passed in v-model)
-    // eslint-disable-next-line vue/require-prop-types
-    value: {
-        type: String,
-        default: '',
-        required: true,
-    },
+});
+
+// Value (passed in v-model)
+const value = defineModel({
+    type: String,
+    required: true,
 });
 
 // Template refs
@@ -87,8 +90,6 @@ const suggestionsData = ref(null);
 /**
  * @type {import('vue').Ref<string>}
  */
-const content = ref(props.value);
-
 // deconstruct composable
 const {
     suggestionsPopupVisible,
@@ -101,17 +102,6 @@ const {
     handleSuggestionsPopupMouseUp,
     handleSuggestionsPopupSelectedEvent,
 } = useSuggestionPopup(suggestionsData, null, emit, log, props);
-
-watch(
-    () => props.value,
-    (newValue) => {
-        content.value = newValue;
-    },
-);
-
-const handleInput = () => {
-    emit('input', content.value);
-};
 
 const keyDown = (e) => {
     // Redirect to suggestions handler if in suggestion mode

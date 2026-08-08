@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "deg %s",
     "Category" : "Taggayt",
     "Tags" : "Tibzimin",
+    "Error" : "Tuccḍa",
     "None" : "Ula d yiwen",
     "Page not found" : "Ulac asebter",
     "Edit" : "Ẓreg",
@@ -20,13 +21,15 @@ OC.L10N.register(
     "Apply" : "Snes",
     "Creation date" : "Azemz n usnulfu",
     "Tools" : "Ifecka",
-    "Dismiss" : "Agi",
-    "Cancel" : "Semmet",
-    "OK" : "Ih",
+    "Discard changes?" : "Sefsex ibeddilen?",
     "Description" : "Aglam",
     "URL" : "URL",
     "Image" : "Tugna",
+    "Reminder" : "Asmekti",
     "Loading…" : "Asali...",
-    "Source" : "Aɣbalu"
+    "Source" : "Aɣbalu",
+    "Dismiss" : "Agi",
+    "Cancel" : "Semmet",
+    "OK" : "Ih"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: CC0-1.0
+
 *.swp
 *.swo
 
@@ -22,3 +26,7 @@ node_modules
 
 /vendor
 tests/psalm-report.json
+
+# Javascript bundle analysis
+/.bundle-analysis.json
+/.bundle-analysis.html

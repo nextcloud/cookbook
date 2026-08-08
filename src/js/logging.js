@@ -1,5 +1,8 @@
-// TODO: Switch to vuejs3-logger when we switch to Vue 3
-import VueLogger from 'vuejs-logger';
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+import VueLogger from 'vuejs3-logger';
 import moment from '@nextcloud/moment';
 
 const DEFAULT_LOG_LEVEL = 'info';
@@ -15,7 +18,7 @@ const KEY_LOG_LEVEL = 'COOKBOOK_LOGGING_LEVEL';
 // Since the expiry entry is added by us after the first run where
 // the enabled entry is detected, this only checks if it has been EXPIRY_MINUTES
 // since the first run, not EXPIRY_MINUTES since the user added the entry
-// This is a reasonable comprimise to simplify what the user has to do to enable
+// This is a reasonable compromise to simplify what the user has to do to enable
 // logging. We don't want them to have to setup the expiry as well
 const isExpired = (timestamp) => {
     if (timestamp === null) {
@@ -51,10 +54,10 @@ const isEnabled = () => {
     return JSON.parse(userValue) ?? DEFAULT;
 };
 
-export default function setupLogging(Vue) {
+export default function setupLogging(app) {
     const logLevel = localStorage.getItem(KEY_LOG_LEVEL) ?? DEFAULT_LOG_LEVEL;
 
-    Vue.use(VueLogger, {
+    app.use(VueLogger, {
         isEnabled: isEnabled(),
         logLevel,
         stringifyArguments: false,
@@ -64,7 +67,7 @@ export default function setupLogging(Vue) {
         showConsoleColors: true,
     });
 
-    Vue.$log.info(`Setting up logging with log level ${logLevel}`);
+    app.$log.info(`Setting up logging with log level ${logLevel}`);
 }
 
 export function enableLogging() {

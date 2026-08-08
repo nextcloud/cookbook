@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper\Filter\DB;
 
 use DateTime;
@@ -116,7 +120,7 @@ class RecipeDatesFilter implements AbstractRecipeFilter {
 			}
 		}
 
-		// We cannot read the format. Removing it from teh recipe
+		// We cannot read the format. Removing it from the recipe
 		$json[$name] = null;
 		$ret = true;
 

@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Kuvaa ei löytynyt palvelimelta vastaavalla MIME-tyypillä.",
     "Recipe with ID %d was not found in database." : "Reseptiä ei löytynyt tietokannasta ID:llä %d.",
-    "Downloading of a file failed returned the following error message: %s" : "Tiedoston lataaminen epäonnistui. Virheviesti: %s.",
     "No content encoding was detected in the content." : "Sisällön enkoodausta ei tunnistettu.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Kuvaa ei voida käsitellä reseptille %s. ",
     "Could not guess image URL as no recipe URL was found." : "Kuvan osoitetta ei voitu arvata koska reseptin osoitetta ei löytynyt. ",
@@ -39,6 +38,7 @@ OC.L10N.register(
     "Tags" : "Tunnisteet",
     "Search for recipes" : "Etsi reseptejä",
     "Are you sure you want to delete this recipe?" : "Haluatko varmasti poistaa tämän reseptin?",
+    "Error" : "Virhe",
     "Delete failed" : "Poistaminen epäonnistui",
     "Editing recipe" : "Reseptin muokkaus",
     "Viewing recipe" : "Reseptin katselu",
@@ -123,9 +123,6 @@ OC.L10N.register(
     "Total time" : "Kokonaiskesto",
     "Nutrition information" : "Ravintosisältö",
     "Tools" : "Työvälineet",
-    "Dismiss" : "Hylkää",
-    "Cancel" : "Peruuta",
-    "OK" : "OK",
     "The page was not found" : "Sivua ei löytynyt",
     "You have unsaved changes! Do you still want to leave?" : "Sinulla on tallentamattomia muutoksia! Haluatko silti poistua?",
     "Calories" : "Kalorit",
@@ -148,6 +145,7 @@ OC.L10N.register(
     "Could not start request to save recipe." : "Pyyntöä reseptin tallennukseen ei voitu aloittaa.",
     "Clone of {name}" : "Reseptin {name} kopio",
     "Loading recipe failed" : "Reseptin lataus epäonnistui",
+    "Discard changes?" : "Hylätäänkö muutokset?",
     "Description" : "Kuvaus",
     "URL" : "URL-osoite",
     "Image" : "Kuva",
@@ -159,6 +157,7 @@ OC.L10N.register(
     "Ingredients" : "Ainesosat",
     "Instructions" : "Ohjeet",
     "Recipe image" : "Reseptin kuva",
+    "Reminder" : "Muistutus",
     "Cooking time is up!" : "Valmistusaika päättyi!",
     "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
@@ -186,6 +185,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Tyydyttymätön rasva",
     "Trans Fat" : "Transrasvat",
     "Failed to load recipes with keywords: {tags}" : "Reseptien lataaminen epäonnistui seuraavilla avainsanoilla: {tags} ",
-    "Failed to load search results" : "Hakutulosten lataus epäonnistui"
+    "Failed to load search results" : "Hakutulosten lataus epäonnistui",
+    "Dismiss" : "Hylkää",
+    "Cancel" : "Peruuta",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use OCA\Cookbook\Controller\Implementation\KeywordImplementation;
@@ -41,8 +45,6 @@ class KeywordImplementationTest extends TestCase {
 	private function ensureCacheCheckTriggered(): void {
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
 	}
-
-
 
 	public function testGetKeywords(): void {
 		$this->ensureCacheCheckTriggered();

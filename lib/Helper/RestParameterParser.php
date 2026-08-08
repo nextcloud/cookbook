@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper;
 
 use OCP\IL10N;
@@ -85,7 +89,7 @@ class RestParameterParser {
 	 * Either use the POST method (where PHP does the parsing) or use application/json
 	 *
 	 * @param string $encoding The encoding to use
-	 * @throws \Exception If the requested string is not well-formatted accoring to the minimal implementation
+	 * @throws \Exception If the requested string is not well-formatted according to the minimal implementation
 	 * @return array The values transmitted
 	 */
 	private function parseUrlEncoded(string $encoding): array {

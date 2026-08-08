@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Service;
 
 use DOMDocument;
@@ -97,7 +101,7 @@ class HtmlDownloadService {
 	}
 
 	/**
-	 * Get the HTML docuemnt after it has been downloaded and parsed with downloadRecipe()
+	 * Get the HTML document after it has been downloaded and parsed with downloadRecipe()
 	 * @return ?DOMDocument The loaded HTML document or null if document could not be loaded successfully
 	 */
 	public function getDom(): ?DOMDocument {

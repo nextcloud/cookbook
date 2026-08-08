@@ -1,5 +1,9 @@
 #! /bin/bash -e
 
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 cat << EOF
 The run-locally.sh script was replaced by the run-locally.py python script.
 The latter is simpler to read and to structure.

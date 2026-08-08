@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <div class="wrapper">
         <!-- Use $page for page matching to make sure everything else has been set beforehand! -->
@@ -197,7 +203,7 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router/composables';
+import { useRoute } from 'vue-router';
 import {
     NcActions,
     NcActionButton,
@@ -223,7 +229,7 @@ import {
 
 import LocationIndicator from './LocationIndicator.vue';
 import ModeIndicator from './ModeIndicator.vue';
-import { useIsMobile } from '../../composables/useIsMobile';
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 
@@ -297,6 +303,7 @@ const deleteRecipe = async () => {
     // Confirm delete
     if (
         !(await showSimpleConfirmModal(
+            t('cookbook', 'Delete confirmation'),
             /* prettier-ignore */
             t('cookbook', 'Are you sure you want to delete this recipe?'),
         ))
@@ -310,7 +317,10 @@ const deleteRecipe = async () => {
         });
         helpers.goTo('/');
     } catch (e) {
-        await showSimpleAlertModal(t('cookbook', 'Delete failed'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Delete failed'),
+        );
         if (e && e instanceof Error) {
             throw e;
         }

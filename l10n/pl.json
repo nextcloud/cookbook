@@ -1,7 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "Na serwerze nie znaleziono obrazu o zgodnym typie MIME.",
     "Recipe with ID %d was not found in database." : "Nie znaleziono przepisu o ID %d w bazie danych.",
-    "Downloading of a file failed returned the following error message: %s" : "Pobieranie pliku nie powiodło się, zwrócono następujący komunikat o błędzie: %s",
     "No content encoding was detected in the content." : "W zawartości nie wykryto kodowania treści.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Nie można przeanalizować danego obrazu dla przepisu %s. Przerywanie i pomijanie.",
     "No valid recipe was left after heuristics of recipe %s." : "Po heurystyce przepisu %s nie pozostawiono żadnego prawidłowego przepisu.",
@@ -58,6 +57,7 @@
     "Tags" : "Etykiety",
     "Search for recipes" : "Wyszukaj przepisy",
     "Are you sure you want to delete this recipe?" : "Czy na pewno chcesz usunąć ten przepis?",
+    "Error" : "Błąd",
     "Delete failed" : "Usuwanie nie powiodło się",
     "Editing recipe" : "Edycja przepisu",
     "Viewing recipe" : "Przeglądanie przepisu",
@@ -133,9 +133,6 @@
     "Total time" : "Czas całkowity",
     "Nutrition information" : "Informacje żywnieniowe",
     "Tools" : "Przybory",
-    "Dismiss" : "Odrzuć",
-    "Cancel" : "Anuluj",
-    "OK" : "OK",
     "The page was not found" : "Strona nie została znaleziona",
     "You have unsaved changes! Do you still want to leave?" : "Masz niezapisane zmiany! Czy nadal chcesz wyjść?",
     "Calories" : "Kalorie",
@@ -158,6 +155,7 @@
     "Could not start request to save recipe." : "Nie udało się uruchomić żądania o zapisanie przepisu.",
     "Clone of {name}" : "Klon {name}",
     "Loading recipe failed" : "Wczytywanie przepisu nie powiodło się",
+    "Discard changes?" : "Odrzucić zmiany?",
     "Description" : "Opis",
     "URL" : "Adres URL",
     "Image" : "Obraz",
@@ -170,6 +168,7 @@
     "Ingredients" : "Składniki:",
     "Instructions" : "Instrukcje:",
     "Recipe image" : "Obraz przepisu",
+    "Reminder" : "Przypomnienie",
     "Cooking time is up!" : "Czas gotowania minął!",
     "Loading…" : "Wczytywanie…",
     "Search recipes with this keyword" : "Wyszukaj przepisy za pomocą tego słowa kluczowego",
@@ -189,6 +188,9 @@
     "Unsaturated Fat" : "Tłuszcz nienasycony",
     "Trans Fat" : "Tłuszcz trans",
     "Failed to load recipes with keywords: {tags}" : "Nie udało się załadować przepisów ze słowami kluczowymi: {tags}",
-    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania"
+    "Failed to load search results" : "Nie udało się załadować wyników wyszukiwania",
+    "Dismiss" : "Odrzuć",
+    "Cancel" : "Anuluj",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);"
 }

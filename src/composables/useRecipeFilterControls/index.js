@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import { computed, ref } from 'vue';
 import {
     RecipeCategoriesFilter as CategoriesFilter,
@@ -31,7 +35,7 @@ export default function useRecipeFilterControls(props) {
     const selectedCategories = ref([]);
 
     /**
-     * Value of the toggle for switching between the `AND` and `OR` operator fot the categories filter.
+     * Value of the toggle for switching between the `AND` and `OR` operator for the categories filter.
      *
      * `true` is associated with the `AndOperator`, `false` with the `OrOperator`.
      * @type {import('vue').Ref<boolean>}
@@ -55,7 +59,7 @@ export default function useRecipeFilterControls(props) {
     const selectedKeywords = ref([]);
 
     /**
-     * Value of the toggle for switching between the `AND` and `OR` operator fot the keywords filter.
+     * Value of the toggle for switching between the `AND` and `OR` operator for the keywords filter.
      *
      * `true` is associated with the `AndOperator`, `false` with the `OrOperator`.
      * @type {import('vue').Ref<boolean>}

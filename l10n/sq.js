@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "në %s",
     "Category" : "Kategori",
     "Tags" : "Etiketat",
+    "Error" : "Gabim",
     "None" : "Asnjë",
     "Page not found" : "Faqja nuk u gjet ",
     "Edit" : "Përpuno",
@@ -17,11 +18,11 @@ OC.L10N.register(
     "Clear" : "Pastro",
     "Apply" : "Apliko",
     "Tools" : "Mjete",
-    "Dismiss" : "Hiq",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Përshkrim",
     "URL" : "URL",
-    "Loading…" : "Duke u ngarkuar…"
+    "Loading…" : "Duke u ngarkuar…",
+    "Dismiss" : "Hiq",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

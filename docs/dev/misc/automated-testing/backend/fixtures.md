@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Fixtures for automated tests
 
 - TOC
@@ -147,7 +153,7 @@ Here is an example of such a config file:
 }
 ```
 
-In teh following sections, the fields should be described further.
+In the following sections, the fields should be described further.
 
 ### `finished`
 This is a boolean flag if the creation of the fixture has been finished.

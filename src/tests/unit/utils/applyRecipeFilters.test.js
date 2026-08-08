@@ -1,6 +1,9 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import { jest } from '@jest/globals';
-// eslint-disable-next-line max-classes-per-file
+
 import applyFilters from '../../../js/utils/applyRecipeFilters';
 import RecipeFilter from '../../../js/RecipeFilters/RecipeFilter';
 import { AndOperator } from '../../../js/LogicOperators';

@@ -1,8 +1,13 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper;
 
 use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
+use OCP\Http\Client\IClientService;
 use OCP\IL10N;
 
 /**
@@ -37,14 +42,19 @@ class DownloadHelper {
 	/** @var IL10N */
 	private $l;
 
+	/** @var IClientService */
+	private $clientService;
+
 	public function __construct(
 		IL10N $l,
+		IClientService $clientService,
 	) {
 		$this->downloaded = false;
 		$this->l = $l;
 		$this->headers = [];
 		$this->status = 0;
 		$this->content = '';
+		$this->clientService = $clientService;
 	}
 
 	/**
@@ -54,45 +64,30 @@ class DownloadHelper {
 	 *
 	 * @param string $url The URL of the file to fetch
 	 * @param array $options Options to pass on for curl. This allows to fine-tune the transfer.
-	 * @param array $headers Additinal headers to be sent to the server
+	 * @param array $headers Additional headers to be sent to the server
 	 * @throws NoDownloadWasCarriedOutException if the download fails for some reason
 	 */
 	public function downloadFile(string $url, array $options = [], array $headers = []): void {
 		$this->downloaded = false;
 
-		$ch = curl_init($url);
+		$client = $this->clientService->newClient();
 
-		$hp = tmpfile();
-
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-		curl_setopt($ch, CURLOPT_WRITEHEADER, $hp);
-
-		if (!empty($headers)) {
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-		}
-		curl_setopt_array($ch, $options);
-
-		$ret = curl_exec($ch);
-
-		if ($ret === false) {
-			$ex = new NoDownloadWasCarriedOutException($this->l->t('Downloading of a file failed returned the following error message: %s', [curl_error($ch)]));
-			fclose($hp);
-			curl_close($ch);
-			throw $ex;
+		try {
+			$response = $client->get($url, [
+				'headers' => $headers,
+				'nextcloud' => ['allow_local_address' => false], // default; explicit for clarity
+				// do NOT enable allow_local_address
+			] + $options);
+		} catch (\OCP\Http\Client\LocalServerException $e) {
+			throw new NoDownloadWasCarriedOutException($this->l->t('URL resolves to a local/internal address'));
+		} catch (\Exception $e) {
+			throw new NoDownloadWasCarriedOutException($this->l->t('Error occurred while downloading the file: %s', [$e->getMessage()]));
 		}
 
-		$this->content = $ret;
-		$this->status = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
+		$this->content = $response->getBody();
+		$this->status = $response->getStatusCode();
+		$this->headers = $response->getHeaders();
 
-		fseek($hp, 0);
-		$this->headers = [];
-		for ($buffer = fgets($hp); $buffer !== false; $buffer = fgets($hp)) {
-			$this->headers[] = $buffer;
-		}
-
-		fclose($hp);
-		curl_close($ch);
 		$this->downloaded = true;
 	}
 
@@ -126,14 +121,7 @@ class DownloadHelper {
 			throw new NoDownloadWasCarriedOutException();
 		}
 
-		foreach ($this->headers as $s) {
-			$parts = explode(':', $s, 2);
-			if (strtolower(trim($parts[0])) === 'content-type') {
-				return trim($parts[1]);
-			}
-		}
-
-		return null;
+		return $this->headers['content-type'][0] ?? null;
 	}
 
 	/**

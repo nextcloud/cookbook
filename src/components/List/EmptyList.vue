@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <NcEmptyContent
         v-if="!isCategorySelected"
@@ -39,7 +45,7 @@
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
 import { NcButton, NcEmptyContent } from '@nextcloud/vue';
-import { useRoute } from 'vue-router/composables';
+import { useRoute } from 'vue-router';
 import useDelayedDisplay, {
     DelayedDisplayProps,
 } from '../../composables/useDelayedDisplay';

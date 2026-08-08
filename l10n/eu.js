@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "Ez da bat datorren MIME mota duen irudirik aurkitu zerbitzarian.",
     "Recipe with ID %d was not found in database." : "Ez da aurkitu ID %d duen errezeta datu-basean.",
-    "Downloading of a file failed returned the following error message: %s" : "Fitxategiaren deskargak huts egin du hurrengo errore mezuarekin: %s",
     "No content encoding was detected in the content." : "Ez da edukiaren kodifikazioa detektatu edukian.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "%s errezetarako emandako irudia ezin da analizatu. Abortatzen eta salto egiten.",
     "No valid recipe was left after heuristics of recipe %s." : "Ez da baliozko errezeta utzi %s errezetaren heuristika ostean.",
@@ -64,6 +63,7 @@ OC.L10N.register(
     "Tags" : "Etiketak",
     "Search for recipes" : "Bilatu errezetak",
     "Are you sure you want to delete this recipe?" : "Ziur errezeta hau ezabatu nahi duzula?",
+    "Error" : "Errorea",
     "Delete failed" : "Ezabatzeak huts egin du",
     "Editing recipe" : "Errezeta editatzen",
     "Viewing recipe" : "Errezeta ikusten",
@@ -166,9 +166,6 @@ OC.L10N.register(
     "Frontend debug settings" : "Frontend arazketa-ezarpenak",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "Horri esker, arazoren kasuan arakatzailearen kontsolan saioa hasteko aukera gaitzen da. Ez dituzu ezarpen hauek behar lehenetsian.",
     "Enable debugging" : "Gaitu arazketa",
-    "Dismiss" : "Ezikusi",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "Orria ez da aurkitu",
     "You have unsaved changes! Do you still want to leave?" : "Gorde gabeko aldaketak dauzkazu! Atera nahi duzu hala ere?",
     "Calories" : "Kaloriak",
@@ -206,6 +203,7 @@ OC.L10N.register(
     "Ingredients" : "Osagaiak",
     "Instructions" : "Jarraibideak",
     "Recipe image" : "Errezetaren irudia",
+    "Reminder" : "Gogorarazpena",
     "Cooking time is up!" : "Sukaldatzeko denbora amaitu da!",
     "_{hours}h_::_{hours}h_" : ["{hours}h","{hours}h"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m"],
@@ -234,6 +232,9 @@ OC.L10N.register(
     "Trans Fat" : "Trans gantzak",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "Osagaia ezin da berriro kalkulatu sintaxi okerra duelako. Mesedez, ziurtatu sintaxiak formatu hau jarraitzen duela: osagaiaren kantitatea unitatea eta zati kopuru zehatz bat ezarrita dagoela funtzio honek behar bezala funtziona dezan. Adibideak: 200 g azenario edo gatz pittin bat.",
     "Failed to load recipes with keywords: {tags}" : "Huts egin du gako-hitz hau duten errezetak kargatzeak: {tags}",
-    "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu"
+    "Failed to load search results" : "Ezin izan da bilaketaren emaitza kargatu",
+    "Dismiss" : "Ezikusi",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

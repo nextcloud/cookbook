@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /*
     The ingredientFractionRegExp is used to identify fractions in the string.
     This is used to exclude strings that contain fractions from being valid.

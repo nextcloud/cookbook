@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Controller\Implementation;
 
 use Exception;
@@ -44,7 +48,6 @@ class RecipeImplementation {
 	private $l;
 	/** @var LoggerInterface */
 	private $logger;
-
 
 	public function __construct(
 		IRequest $request,
@@ -439,8 +442,6 @@ class RecipeImplementation {
 			return new JSONResponse($e->getMessage(), 500);
 		}
 	}
-
-
 
 	/**
 	 * Get all recipes with a tag associated

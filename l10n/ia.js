@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "in %s",
     "Category" : "Categoria",
     "Tags" : "Etiquettas",
+    "Error" : "Error",
     "None" : "Nulle",
     "Edit" : "Modificar",
     "Save" : "Salveguardar",
@@ -11,11 +12,11 @@ OC.L10N.register(
     "Rename" : "Renominar",
     "Name" : "Nomine",
     "Apply" : "Applicar",
-    "Dismiss" : "Dimitter",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Description",
     "URL" : "URL",
-    "Loading…" : "Cargante..."
+    "Loading…" : "Cargante...",
+    "Dismiss" : "Dimitter",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

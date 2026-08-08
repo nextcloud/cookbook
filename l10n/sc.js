@@ -17,6 +17,7 @@ OC.L10N.register(
     "Tags" : "Etichetas",
     "Search for recipes" : "Sèbera retzetas",
     "Are you sure you want to delete this recipe?" : "A beru boles cantzellare custa retzeta?",
+    "Error" : "Errore",
     "Delete failed" : "Cantzelladura faddida",
     "All recipes" : "Totu is retzetas",
     "None" : "Perunu",
@@ -78,9 +79,6 @@ OC.L10N.register(
     "Cooking time" : "Tempus de cotura",
     "Total time" : "Tempus totale",
     "Tools" : "Ainas",
-    "Dismiss" : "Iscarta",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "Pàgina no agatada",
     "You have unsaved changes! Do you still want to leave?" : "No as sarvadu is modìficas! A beru boles essire?",
     "Calories" : "Calorias",
@@ -132,6 +130,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Gràssos non sàturos",
     "Trans Fat" : "Grassos trans",
     "Failed to load recipes with keywords: {tags}" : "Impossìbile a carrigare retzetas cun faeddos is crae: {tags}",
-    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca"
+    "Failed to load search results" : "Impossìbile a carrigare is resurtados de sa chirca",
+    "Dismiss" : "Iscarta",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <fieldset>
         <label>
@@ -5,13 +11,12 @@
         </label>
         <div class="input-container">
             <input
+                v-model="value"
                 type="text"
-                :value="value"
                 :placeholder="
                     /* prettier-ignore */
                     t('cookbook', 'Enter URL or select from your Nextcloud instance on the right')
                 "
-                @input="$emit('input', $event.target.value)"
             />
             <button
                 type="button"
@@ -30,8 +35,13 @@ import { defineProps } from 'vue';
 
 const emit = defineEmits(['input']);
 defineProps({
-    value: { type: String, default: '' },
+    // value: { type: String, default: '' },
     fieldLabel: { type: String, default: '' },
+});
+
+const value = defineModel({
+    type: String,
+    required: true,
 });
 
 const pickImage = (e) => {
@@ -44,7 +54,7 @@ const pickImage = (e) => {
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
-        emit('input', path);
+        value.value = path;
     });
 };
 </script>

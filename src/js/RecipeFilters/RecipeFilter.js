@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import { BinaryOperator } from '../LogicOperators';
 
 /**
@@ -22,7 +26,7 @@ class RecipeFilter {
      * @param {Object} recipe - The recipe object to be filtered.
      * @throws {Error} Method 'filter' must be implemented by subclasses.
      */
-    // eslint-disable-next-line class-methods-use-this,no-unused-vars
+
     filter(recipe) {
         throw new Error("Method 'filter' must be implemented by subclasses");
     }

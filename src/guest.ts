@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /**
  * Nextcloud Cookbook app
  * Vue frontend entry file
@@ -7,8 +11,8 @@
 
 /// <reference types="@nextcloud/typings" />
 
-import Vue from 'vue';
-import { createPinia, PiniaVuePlugin } from 'pinia';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
 import { useLegacyStore } from './store';
 
@@ -27,26 +31,27 @@ declare global {
 	}
 }
 
-Vue.config.devtools = import.meta.env.MODE === 'development';
-
-// Also make the injections available in Vue components
-Vue.prototype.OC = window.OC;
-
-// Pass translation engine to Vue
-Vue.prototype.t = window.t;
-Vue.prototype.n = window.n;
-
-Vue.use(PiniaVuePlugin);
-const pinia = createPinia();
-
-// Start the app once document is done loading
-const App = Vue.extend(AppInvalidGuest);
-new App({
-	// router,
-	pinia,
+const app = createApp({
+	extends: AppInvalidGuest,
 	beforeCreate() {
 		const legacyStore = useLegacyStore();
 		legacyStore.refreshConfig();
 		legacyStore.initializeStore();
 	},
-}).$mount('#content');
+});
+
+// TODO Check devmode for debugging
+app.config.performance = import.meta.env.MODE === 'development';
+
+// Also make the injections available in Vue components
+app.config.globalProperties.OC = window.OC;
+
+// Pass translation engine to Vue
+app.config.globalProperties.t = window.t;
+app.config.globalProperties.n = window.n;
+
+const pinia = createPinia();
+app.use(pinia);
+
+// Start the app once document is done loading
+app.mount('#content');

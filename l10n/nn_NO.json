@@ -2,20 +2,24 @@
     "in %s" : "i %s",
     "Category" : "Kategori",
     "Tags" : "Emneord",
+    "Error" : "Feil",
     "None" : "Ingen",
     "Page not found" : "Fann ikkje sida",
     "Edit" : "Rediger",
     "Save" : "Lagre",
     "Search" : "Search",
     "Filter" : "Filter",
+    "Categories" : "Kategoriar",
     "Rename" : "Endra namn",
+    "Add" : "Legg til",
     "Name" : "Namn",
     "Apply" : "Anvend",
-    "Dismiss" : "Forkast",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Skildring",
     "URL" : "URL",
-    "Loading…" : "Lastar..."
+    "Image" : "Bilete",
+    "Loading…" : "Lastar...",
+    "Dismiss" : "Forkast",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

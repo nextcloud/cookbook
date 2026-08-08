@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\Cookbook\tests\Unit\Helper\Filter;
 
 use OCA\Cookbook\Helper\Filter\JSON\CleanCategoryFilter;
@@ -61,7 +65,6 @@ class JSONFilterTest extends TestCase {
 		$this->fixUrlFilter = $this->createStub(FixUrlFilter::class);
 		$this->fixDurationsFilter = $this->createStub(FixDurationsFilter::class);
 		$this->fixNutritionFilter = $this->createStub(FixNutritionFilter::class);
-
 
 		$this->dut = new JSONFilter(
 			$this->schemaConformityFilter,

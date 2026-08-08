@@ -1,15 +1,39 @@
-import { create } from 'vue-modal-dialogs';
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-import SimpleAlertModal from '../components/Modals/SimpleAlertModal.vue';
-import SimpleConfirmModal from '../components/Modals/SimpleConfirmModal.vue';
+// import { create } from 'vue-modal-dialogs';
+// TODO Add real alternative
 
-export const showSimpleAlertModal = create(
-    SimpleAlertModal,
-    'content',
-    'title',
-);
-export const showSimpleConfirmModal = create(
-    SimpleConfirmModal,
-    'content',
-    'title',
-);
+import { useCookbookDialogs } from 'cookbook/composables/useCookbookDialogs';
+
+const { show, setClosingValue } = useCookbookDialogs();
+
+export function showSimpleAlertModal(title, msg) {
+    return show(title, msg, true, [
+        {
+            label: t('cookbook', 'Dismiss'),
+            variant: 'primary',
+        },
+    ]);
+}
+
+export function showSimpleConfirmModal(title, msg) {
+    return show(title, msg, false, [
+        {
+            label: t('cookbook', 'Cancel'),
+            variant: 'secondary',
+            callback: () => {
+                setClosingValue(false);
+            },
+        },
+        {
+            label: t('cookbook', 'OK'),
+            variant: 'primary',
+            callback: () => {
+                setClosingValue(true);
+            },
+        },
+    ]);
+    // return confirm('showSimpleConfirmModal', msg);
+}

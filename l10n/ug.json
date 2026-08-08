@@ -2,7 +2,6 @@
     "No image with the matching MIME type was found on the server." : "مۇلازىمېتىردا ماس كېلىدىغان MIME تىپى بىلەن رەسىم تېپىلمىدى.",
     "The provided URL is not allowed." : "تەمىنلەنگەن URL گە يول قۇيۇلمايدۇ.",
     "Recipe with ID %d was not found in database." : "ID%d بىلەن رېتسېپ سانداندا تېپىلمىدى.",
-    "Downloading of a file failed returned the following error message: %s" : "ھۆججەتنى چۈشۈرۈش مەغلۇب بولدى تۆۋەندىكى خاتالىق ئۇچۇرى: %s",
     "No content encoding was detected in the content." : "مەزمۇندا ھېچقانداق كودلاش ئۇسۇلى بايقالمىدى.",
     "Recipe name cannot be processed." : "رىتسىپ ئىسمىنى بىر-تەرەپ قىلغىلى بولمايدۇ",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "رېتسېپ %s ئۈچۈن بېرىلگەن رەسىمنى تەھلىل قىلىشقا بولمايدۇ. ئۇنى ئەمەلدىن قالدۇرۇش ۋە ئاتلاش.",
@@ -68,6 +67,7 @@
     "Tags" : "بەلگەلەر",
     "Search for recipes" : "رېتسىپلارنى ئىزدەڭ",
     "Are you sure you want to delete this recipe?" : "بۇ رېتسېپنى ئۆچۈرمەكچىمۇ؟",
+    "Error" : "خاتالىق",
     "Delete failed" : "ئۆچۈرۈش مەغلۇب بولدى",
     "Editing recipe" : "تەھرىرلەش رېتسىپى",
     "Viewing recipe" : "رېتسېپنى كۆرۈش",
@@ -170,9 +170,6 @@
     "Frontend debug settings" : "ئالدى تەرەپ تەڭشەش تەڭشىكى",
     "This allows to temporarily enable logging in the browser console in case of problems. You will not need these settings by default." : "بۇنداق بولغاندا تور كۆرگۈچ كونترول سۇپىسىدا مەسىلە كۆرۈلسە ۋاقىتلىق تىزىملىتىدۇ. كۆڭۈلدىكى ئەھۋالدا بۇ تەڭشەكلەرگە ئېھتىياجلىق ئەمەس.",
     "Enable debugging" : "ھەل قىلىشنى قوزغىتىڭ",
-    "Dismiss" : "پەرۋا قىلما",
-    "Cancel" : "ۋاز كەچ",
-    "OK" : "ماقۇل",
     "The page was not found" : "بۇ بەت تېپىلمىدى",
     "You have unsaved changes! Do you still want to leave?" : "ساقلانمىغان ئۆزگەرتىشلىرىڭىز بار! بۇ يەردىن ئايرىلىشنى خالامسىز؟",
     "Calories" : "كالورىيە",
@@ -195,6 +192,7 @@
     "Could not start request to save recipe." : "رېتسېپنى ساقلاشنى تەلەپ قىلالمىدى.",
     "Clone of {name}" : "كلون {name}",
     "Loading recipe failed" : "قاچىلاش رېتسىپى مەغلۇپ بولدى",
+    "Discard changes?" : "ئۆزگەرتىشلەرنى تاشلىۋېتەمسىز؟",
     "Description" : "چۈشەندۈرۈش",
     "URL" : "URL",
     "Image" : "رەسىم",
@@ -210,6 +208,7 @@
     "Ingredients" : "تەركىبلەر",
     "Instructions" : "كۆرسەتمە",
     "Recipe image" : "رېتسېپ",
+    "Reminder" : "ئەسكەرتىش",
     "Cooking time is up!" : "تاماق ئېتىش ۋاقتى توشتى!",
     "_{hours}h_::_{hours}h_" : ["{hours} س","{hours}س"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}م","{minutes} م"],
@@ -238,6 +237,9 @@
     "Trans Fat" : "ئايلاندۇرغان ياغ",
     "The ingredient cannot be recalculated due to incorrect syntax. Please ensure the syntax follows this format: amount unit ingredient and that a specific number of portions is set for this function to work correctly. Examples: 200 g carrots or 1 pinch of salt." : "گرامماتىكىسى توغرا بولمىغانلىقتىن تەركىبنى قايتا ھېسابلىغىلى بولمايدۇ. گرامماتىكىنىڭ بۇ فورماتقا ئەگىشىشىگە كاپالەتلىك قىلىڭ: مىقدار بىرلىكى تەركىبلىرى ۋە بۇ ئىقتىدارنىڭ نورمال ئىشلىشى ئۈچۈن مەلۇم ساندىكى بۆلەكلەر بېكىتىلگەن. مەسىلەن: 200 گرام سەۋزە ياكى 1 چىمدىم تۇز.",
     "Failed to load recipes with keywords: {tags}" : "ئاچقۇچلۇق سۆزلەر بىلەن رېتسېپلارنى يۈكلىيەلمىدى: {tags}",
-    "Failed to load search results" : "ئىزدەش نەتىجىسىنى يۈكلىيەلمىدى"
+    "Failed to load search results" : "ئىزدەش نەتىجىسىنى يۈكلىيەلمىدى",
+    "Dismiss" : "پەرۋا قىلما",
+    "Cancel" : "ۋاز كەچ",
+    "OK" : "ماقۇل"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

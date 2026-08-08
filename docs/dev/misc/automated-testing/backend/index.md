@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Overview over the backend testing implementation
 
 ## Contents
@@ -28,7 +34,7 @@ This allows to select all relevant versions independently from anything installe
 The following docker images are in use by _docker-compose_:
 
 1. A database container for the nextcloud server.
-   This is called either `mysql` or `postgres` depending on teh DB used.
+   This is called either `mysql` or `postgres` depending on the DB used.
 1. The `dut` container that will carry out all the tests.
    It is a self-built image that has an entrypoint in place to start the tests as soon as the container is run.
 1. During installing it is useful to allow to call OCC commands.
@@ -63,7 +69,7 @@ The volumes in `volumes/mysql` and `volumes/postgres` contain the **raw database
 The user will not need to worry about this.
 
 The main Nextcloud **server installation** is located under `volumes/nextcloud`, while the **data** is located under `volumes/data`.
-This separation allows to switch the nextcloud server version without loosing the user files present.
+This separation allows to switch the nextcloud server version without losing the user files present.
 Also, this is a technical requirement by the Nextcloud docker image that is used as a base image to keep the data in a separate volume.
 The developer might find the nextcloud server logs here in case there was something logged.
 Please note that this volume is shared between all related images, thus a change in an E2E test on `fpm` will be visible in the `dut` container as well

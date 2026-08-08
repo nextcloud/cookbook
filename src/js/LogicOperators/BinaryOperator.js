@@ -1,9 +1,12 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /**
  * Abstract class for binary operators.
  * @abstract
  */
 class BinaryOperator {
-    // eslint-disable-next-line class-methods-use-this
     get toString() {
         return 'Abstract operation base class';
     }
@@ -24,7 +27,7 @@ class BinaryOperator {
      * @param {boolean} current - The current value to apply.
      * @throws {Error} Method 'apply' must be implemented by subclasses.
      */
-    // eslint-disable-next-line no-unused-vars,class-methods-use-this
+
     apply(result, current) {
         throw new Error("Method 'apply' must be implemented by subclasses");
     }

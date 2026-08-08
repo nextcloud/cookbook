@@ -1,0 +1,4 @@
+This file contains third-party proprietary data from external websites.
+It is included solely as a test fixture for software functionality
+verification under applicable copyright exceptions (such as fair use/fair dealing)
+or for pure rpomotional purposes.

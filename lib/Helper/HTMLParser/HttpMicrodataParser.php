@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use DOMDocument;
@@ -146,7 +150,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 * If a property can be named differently and found under different property names within
 	 * the DOM tree, this method looks for all these options.
 	 * It is similar to the searchSimpleProperties() method but allows to search for different
-	 * names within the DOM tree. This can be useful when a property is superseeded and the code
+	 * names within the DOM tree. This can be useful when a property is superseded and the code
 	 * should still be backward compatible.
 	 *
 	 * @param DOMNode $recipeNode The node of the recipe to look for properties in

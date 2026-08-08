@@ -3,6 +3,7 @@ OC.L10N.register(
     {
     "in %s" : "ভেতর %s",
     "Tags" : "ট্যাগ",
+    "Error" : "সমস্যা",
     "None" : "কোনটিই নয়",
     "Edit" : "সম্পাদনা",
     "Save" : "সংরক্ষণ",
@@ -10,9 +11,10 @@ OC.L10N.register(
     "Rename" : "পূনঃনামকরণ",
     "Add" : "যোগ কর",
     "Name" : "নাম",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "বিবরণ",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

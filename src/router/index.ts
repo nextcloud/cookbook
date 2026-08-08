@@ -1,19 +1,20 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /**
  * Nextcloud Cookbook app
  * Vue router module
  * ----------------------
  * @license AGPL3 or later
  */
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHashHistory, Router } from 'vue-router';
 
 import Index from '../components/AppIndex.vue';
 import NotFound from '../components/NotFound.vue';
 import RecipeView from '../components/RecipeView/RecipeView.vue';
 import RecipeEdit from '../components/RecipeEdit.vue';
 import Search from '../components/SearchResults.vue';
-
-Vue.use(VueRouter);
 
 // The router will try to match routers in a descending order.
 // Routes that share the same root, must be listed from the
@@ -68,9 +69,18 @@ const routes = [
 	{ path: '/', name: 'index', component: Index },
 
 	// Anything not matched goes to NotFound
-	{ path: '*', name: 'not-found', component: NotFound },
+	{ path: '/:pathMatch(.+)*', name: 'not-found', component: NotFound },
 ];
 
-export default new VueRouter({
-	routes,
-});
+let _router: Router;
+
+export function createMainRouter() {
+	_router = createRouter({
+		history: createWebHashHistory(),
+		routes,
+	});
+}
+
+export function getRouter() {
+	return _router;
+}

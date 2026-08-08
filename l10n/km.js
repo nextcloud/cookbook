@@ -2,6 +2,7 @@ OC.L10N.register(
     "cookbook",
     {
     "Tags" : "ស្លាក",
+    "Error" : "កំហុស",
     "None" : "គ្មាន",
     "Edit" : "កែប្រែ",
     "Save" : "រក្សាទុក",
@@ -10,9 +11,10 @@ OC.L10N.register(
     "Add" : "បន្ថែម",
     "Name" : "ឈ្មោះ",
     "Apply" : "អនុវត្ត",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "ការ​អធិប្បាយ",
-    "URL" : "URL"
+    "URL" : "URL",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=1; plural=0;");

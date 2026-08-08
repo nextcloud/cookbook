@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import { position as caretPosition } from 'caret-pos';
 import { computed, nextTick, ref } from 'vue';
 import helpers from '../../js/helper';
@@ -162,9 +166,9 @@ export default function useSuggestionsPopup(
 
         // Show the popup only if the # was inserted at the very
         // beginning of the input or after any whitespace character
-        if (
-            !(cursorPos === 1 || /\s/.test(field.value.charAt(cursorPos - 2)))
-        ) {
+        if (!(
+            cursorPos === 1 || /\s/.test(field.value.charAt(cursorPos - 2))
+        )) {
             return;
         }
 

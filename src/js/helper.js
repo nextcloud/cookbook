@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 /**
@@ -148,7 +152,6 @@ function notify(title, options) {
         return;
     }
     if (Notification.permission === 'granted') {
-        // eslint-disable-next-line no-unused-vars
         const notification = new Notification(title, options);
     } else if (Notification.permission !== 'denied') {
         Notification.requestPermission((permission) => {
@@ -156,10 +159,9 @@ function notify(title, options) {
                 Notification.permission = permission;
             }
             if (permission === 'granted') {
-                // eslint-disable-next-line no-unused-vars
                 const notification = new Notification(title, options);
             } else {
-                showSimpleAlertModal(title);
+                showSimpleAlertModal(title, '');
             }
         });
     }

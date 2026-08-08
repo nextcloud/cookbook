@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Service;
 
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
@@ -20,7 +24,7 @@ use OCP\Lock\LockedException;
  * This simplifies/abstracts the access of the images to avoid low-level file system access.
  *
  * @todo Use Abstract Filesystem
- * @todo Rework the exeption passing
+ * @todo Rework the exception passing
  */
 class ImageService {
 	/**

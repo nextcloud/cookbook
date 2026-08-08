@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /**
  * Normalizes a string by removing spaces, accents, replacing special characters that look similar to others
  * (e.g., ł and l or ø and o), depending on the selected options.
@@ -8,7 +12,6 @@
  * @param substituteLetters Substitute some letters by similar looking letters.
  * @returns {string} Normalized string value.
  */
-// eslint-disable-next-line import/prefer-default-export
 export function normalize(
     str,
     toLowercase = true,

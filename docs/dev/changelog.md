@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Management of changelogs
 
 * TOC
@@ -7,8 +13,8 @@ The handling and creation of a changelog is part of the usual development work.
 There are different variants to create sucha a changelog (semi-) automatically.
 Instead, we rely on a script that combines a set of snippets and created the changelog files as needed.
 
-This process requres some user interaction in order to work.
-There is also a checker on the repository in place that will bail out unless the expected file structue is met.
+This process requires some user interaction in order to work.
+There is also a checker on the repository in place that will bail out unless the expected file structure is met.
 
 ## Day-to-day usage as a developer
 
@@ -39,7 +45,7 @@ An example could be
 - JSON output for filters adopted to latest API definition
 ```
 
-The parser will then collect all snippets, combine them according to their names and creats a Changelog file.
+The parser will then collect all snippets, combine them according to their names and creates a Changelog file.
 The above example woulbe be extended by one line containing the PR number and link as well as the PR creator as author:
 
 ```md
@@ -60,7 +66,7 @@ Here is an example in Markdown:
 Author: @dependabot @max-muster
 
 # Added
-- New UI eleemnts
+- New UI elements
 
 # Deprecated
 - Doubled elements in Vue tree
@@ -73,7 +79,7 @@ This will render something like this:
 ```md
 ### Added
 ...
-- New UI eleemnts
+- New UI elements
   [#1234](https://github.com/nextcloud/cookbook/pull/1234) @dependabot @max-muster
 ...
 
@@ -136,7 +142,7 @@ Thus, no parsing is needed here to create the final result of a certain version 
 These files should have the corresponding heading already embedded.
 Best is to have two empty lines at the end to get a smooth final markdown changelog file.
 
-### Buidling the complete Changelog file
+### Building the complete Changelog file
 
 The complete changelog can now be constructed by concatenation of various files and program outputs.
 The prefix lies in a file `.changelog/prefix.md` and can be used as a first part directly.
@@ -149,16 +155,16 @@ Finally, the different versions need to be appended in reverded versioning order
 In order for the python script to run, some python packages need tp be present.
 Best is if you create a virtual environment for this program.
 If you do not have the pipenv program available, install it as user by `pip install --user pipenv`.
-You can do this my means of `venv .helpers/changelog/venv` and acticate it by `source .helpers/changelog/venv/bin/activate`.
+You can do this my means of `venv .helpers/changelog/venv` and activate it by `source .helpers/changelog/venv/bin/activate`.
 Then, you need to install the dependencies:
 Go to the folder `.helpers/changelog` and finally installing the actual dependencies by `pipenv sync`.
 
 You need to activate the venv every time, you start a new shell.
-Otherwiese the dependencies might not be found.
+Otherwise the dependencies might not be found.
 
-### Creating of changelogs for relaeses
+### Creating of changelogs for releases
 
-In order to make the usage as convinient for the dev/admin as possible, there are two scripts `.helpers/changelog/create-changelog-prerelease.sh` and `.helpers/changelog/create-changelog-release.sh`.
+In order to make the usage as convenient for the dev/admin as possible, there are two scripts `.helpers/changelog/create-changelog-prerelease.sh` and `.helpers/changelog/create-changelog-release.sh`.
 
 **Please be careful:** The latter script will remove files. Please read this section completely before actually calling it.
 
@@ -175,11 +181,11 @@ The PAT can be provided as file name to the script using the `-t` (or `--token`)
 The verbosity can be increased by means of `-v`.
 This can be given multiple times to get more logs.
 
-The option `--ci` makes the script a bit more restrictive to make sure if actually fails in an GitHub action instead of thowing an unheard/unread warning.
+The option `--ci` makes the script a bit more restrictive to make sure if actually fails in an GitHub action instead of throwing an unheard/unread warning.
 
 Similarly, the `--pr` option is present which takes a (PR) number as argument.
-It instructs the script to ignore any snipet with this PR number during generation of the changelog.
-Instead it is apeended at the very ending.
+It instructs the script to ignore any snippet with this PR number during generation of the changelog.
+Instead it is appended at the very ending.
 This is needed if a PR is not yet merged but the corresponding snippet is already present (in the GitHub action this is the case).
 As the merge commit will not be found, this would otherwise bail out.
 Normally, the dev does not need to give this option.
@@ -201,13 +207,13 @@ The second script for releases will however create a new version snippet in `.ch
 After successful creation, the snippets in the current folder are considered obsolete and removed.
 A new release has just been prepared.
 
-This script expectes one additional parameter:
-It needs the verion to create as first positional argument.
+This script expects one additional parameter:
+It needs the version to create as first positional argument.
 Typically this is something like `./helpers/changelog/create-changelog-release.sh <other options> 0.11.1 .changelog/current/*` in bash.
 The date of the release will be set to the date of today.
 
 After having run the script, the `CHANGELOG.md` is updated as well as the file in `.changelog/versions/v0.11.1.md`.
-You can have a look if it is correclty built.
+You can have a look if it is correctly built.
 If the result has a minor uissue, you might want to edit the version file in `.changelog/versions` directly.
 
 You will have to commit the changes manually as the `.changelog` folder has now some changes in it.

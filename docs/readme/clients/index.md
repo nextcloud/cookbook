@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 ## Clients 
 
 The app works generally in any modern browser. Additionally, there are some more specialized clients available, including mobile apps for Android and iOS.
@@ -11,7 +17,7 @@ The currently available clients are in no particular order:
 | [Nextcloud Cookbook][lneugebauer-nextcloud-cookbook]   | [lneugebauer][]           | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][lneugebauer-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][lneugebauer-nextcloud-cookbook-play-store] |
 | [Cookbook Client][VincentMeilinger-nextcloud-cookbook] | [VincentMeilinger][]      | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][VincentMeilinger-nextcloud-cookbook-ios-app-store]                                                                                           |
 | [Cookbook][joj0r-nextcloud-cookbook]                   | [Jonas Stene][joj0r]      | [<img src="img/open-store.svg" alt="Download from the OpenStore" height="35">][joj0r-nextcloud-cookbook-open-store]                                                                                                      |
-| [AvoCook][logarex-avocook]                             | [Logarex][logarex]        | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][logarex-avocook-ios-app-store] [GitHub Releases (APK)][logarex-avocook-apk] |
+| [AvoCook][logarex-avocook]                             | [Logarex][logarex]        | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][logarex-avocook-ios-app-store] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][logarex-avocook-play-store] [GitHub Releases (APK)][logarex-avocook-apk] |
 
 
 <!-- References -->
@@ -41,8 +47,8 @@ The currently available clients are in no particular order:
 [VincentMeilinger-nextcloud-cookbook-ios-app-store]: <https://apps.apple.com/de/app/cookbook-client/id6467141985> (Nextcloud Cookbook iOS App Store)
 
 <!-- joj0r -->
-[joj0r]: <https://github.com/joj0r>
-[joj0r-nextcloud-cookbook]: <https://github.com/joj0r/UT_Cookbook> (Cookbook)
+[joj0r]: <https://codeberg.org/jonasstene>
+[joj0r-nextcloud-cookbook]: <https://codeberg.org/jonasstene/UT_Cookbook> (Cookbook)
 [joj0r-nextcloud-cookbook-open-store]: <https://next.open-store.io/app/cookbook.stene/> (Nextcloud Cookbook OpenStore)
 
 <!-- Logarex -->
@@ -50,6 +56,7 @@ The currently available clients are in no particular order:
 [logarex-avocook]: <https://github.com/Logarex/AvoCook> (AvoCook)
 [logarex-avocook-ios-app-store]: <https://apps.apple.com/app/avocook/id6769012665> (AvoCook iOS App Store)
 [logarex-avocook-apk]: <https://github.com/Logarex/AvoCook/releases/latest> (AvoCook Android APK)
+[logarex-avocook-play-store]: <https://play.google.com/store/apps/details?id=app.avocook.mobile>
 
 
 

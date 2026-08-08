@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <div class="container">
         <div class="form-group">
@@ -14,8 +20,8 @@
         </div>
         <div class="form-group">
             <NcTextField
+                v-model="searchTerm"
                 class="input"
-                :value.sync="searchTerm"
                 :label="t('cookbook', 'Filter name')"
                 :placeholder="t('cookbook', 'Search term')"
                 :aria-placeholder="t('cookbook', 'Search term')"
@@ -80,7 +86,7 @@
                             'Show recipes containing all selected categories',
                         ),
                     }"
-                    @update="submitFilters"
+                    @update:model-value="submitFilters"
                 />
             </div>
         </div>
@@ -158,7 +164,7 @@ import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import { NcButton, NcSelect, NcTextField } from '@nextcloud/vue';
-import { computed, defineEmits, defineProps, ref } from 'vue';
+import { computed, defineEmits, defineProps, ref, watch } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 import RecipeSortSelect from './RecipeSortSelect.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';
@@ -188,7 +194,7 @@ const props = defineProps({
     recipes: { type: Array, default: () => [] },
 });
 
-const localOrderBy = ref(props.orderBy);
+const localOrderBy = ref(props.value.orderBy);
 
 const {
     uniqueCategories,
@@ -233,6 +239,26 @@ function clearFilters() {
 function submitNameFilter() {
     legacyStore.setRecipeFilters(searchTerm.value);
 }
+
+// TODO: This is just a quick fix to make the filters submit when the operator toggles are changed. A better solution would be to use v-model consequently
+watch(categoriesOperatorToggleValue, () => {
+    submitFilters();
+});
+watch(keywordsOperatorToggleValue, () => {
+    submitFilters();
+});
+watch(selectedCategories, () => {
+    submitFilters();
+});
+watch(selectedKeywords, () => {
+    submitFilters();
+});
+watch(searchTerm, () => {
+    submitFilters();
+});
+watch(localOrderBy, () => {
+    submitFilters();
+});
 </script>
 
 <style lang="scss" scoped>

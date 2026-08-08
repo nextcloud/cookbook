@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Service;
 
 use Exception;
@@ -234,7 +238,7 @@ class DbCacheService {
 			}
 		}
 
-		// Any remining recipe in dbFiles is to be removed
+		// Any remaining recipe in dbFiles is to be removed
 		$this->obsoleteRecipes = array_keys($this->dbReceipeFiles);
 	}
 

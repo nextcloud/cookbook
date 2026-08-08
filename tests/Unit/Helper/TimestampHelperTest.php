@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\Cookbook\tests\Unit\Helper;
 
 use OCA\Cookbook\Exception\InvalidTimestampException;
@@ -34,7 +38,6 @@ class TimestampHelperTest extends TestCase {
 			['2000-01-01T01:01:00.123Z', '2000-01-01T01:01:00+00:00'],
 			['2000-01-01T01:01:00.123+01:00', '2000-01-01T01:01:00+01:00'],
 			['2000-01-01T01:01:00.123-01:00', '2000-01-01T01:01:00-01:00'],
-
 
 			['20000101T01:01:00.123-01:00', '2000-01-01T01:01:00-01:00'],
 			['20000101T01:01:00-01:00', '2000-01-01T01:01:00-01:00'],

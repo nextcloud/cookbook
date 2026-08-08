@@ -18,6 +18,53 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+### Documentation
+
+- Add AvoCook as client in the docs
+  [#3248](https://github.com/nextcloud/cookbook/pull/3248) @Logarex
+
+### Maintenance
+
+- Migrate to Vue 3 for Frontend development
+  [#3124](https://github.com/nextcloud/cookbook/pull/3124) @christianlupus
+- Fix typos in documentation and comments
+  [#3285](https://github.com/nextcloud/cookbook/pull/3285) @jannikbx
+- Update dependencies and enhance dev experience to show size of generated assets
+  [#3294](https://github.com/nextcloud/cookbook/pull/3294) @christianlupus
+- Extend the workflows on PRs
+  [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+- Fix application deployment automation
+  [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+- Add file needed to work with agentic AI on codebase
+  [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+
+
+## 0.11.9 - 2026-07-18
+
+### Fixed
+
+- Prevent local access on network when downloading images
+  [#3254](https://github.com/nextcloud/cookbook/pull/3254) @MiMoHo
+
+
+## 0.11.8 - 2026-07-07
+
+### Fixed
+
+- Regression introduced in #3114 (migration to pinia) that prevents changing the recipe location
+  [#3242](https://github.com/nextcloud/cookbook/pull/3242) @christianlupus
+- Restrict network access on server to prevent accidential access on localhost
+  [#3244](https://github.com/nextcloud/cookbook/pull/3244) @christianlupus
+
+### Maintenance
+
+- Update link to 3rd party client from jojo0r
+  [#3232](https://github.com/nextcloud/cookbook/pull/3232) @bkmgit
+- Move to current coding standards in the backend
+  [#3171](https://github.com/nextcloud/cookbook/pull/3171) @dependabot
+- Upgrade frontend code to be compatible with current prettier formatter
+  [#3238](https://github.com/nextcloud/cookbook/pull/3238) @dependabot
+
 
 ## 0.11.7 - 2026-06-01
 

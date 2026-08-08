@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "en %s",
     "Category" : "Categoría",
     "Tags" : "Etiquetas",
+    "Error" : "Error",
     "None" : "Ninguno",
     "Page not found" : "Página no encontrada",
     "Edit" : "Editar",
@@ -18,14 +19,15 @@ OC.L10N.register(
     "Clear" : "Limpiar",
     "Apply" : "Aplicar",
     "Tools" : "Herramientas",
-    "Dismiss" : "Descartar",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Descripción",
     "URL" : "URL",
     "Image" : "Imagen",
+    "Reminder" : "Recordatorio",
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m","{minutes}m","{minutes}m"],
     "Loading…" : "Cargando...",
-    "Energy" : "Energía"
+    "Energy" : "Energía",
+    "Dismiss" : "Descartar",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

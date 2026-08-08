@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper;
 
 use DOMDocument;
@@ -199,7 +203,6 @@ class HtmlToDomParser {
 		$this->logger->info($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_WARNING);
 	}
-
 
 	private function logError(int $code, array $group, string $url): void {
 		$msg = $this->l->n('Error %u occurred while parsing %s.', 'Error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);

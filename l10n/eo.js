@@ -10,6 +10,7 @@ OC.L10N.register(
     "Tags" : "Etikedoj",
     "Search for recipes" : "Serĉi receptojn",
     "Are you sure you want to delete this recipe?" : "Ĉu vi certas, ke vi volas forigi tiun recepton?",
+    "Error" : "Eraro",
     "Delete failed" : "Forigado malsukcesis",
     "None" : "Nenio",
     "Recipe not found" : "Ricepto ne trovis",
@@ -27,15 +28,15 @@ OC.L10N.register(
     "Apply" : "Validigi",
     "Creation date" : "Krea dato",
     "Tools" : "Iloj",
-    "Dismiss" : "Preterpasi",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Calories" : "Kalorioj",
     "Clone of {name}" : "Duoblo de {name}",
     "Description" : "Priskribo",
     "URL" : "Retadreso",
     "Loading…" : "Ŝargado...",
     "Last modified" : "Laste modifita",
-    "Sugar" : "Sukero"
+    "Sugar" : "Sukero",
+    "Dismiss" : "Preterpasi",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

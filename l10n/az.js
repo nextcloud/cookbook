@@ -4,6 +4,7 @@ OC.L10N.register(
     "in %s" : "içinə %s",
     "Category" : "Kateqoriya",
     "Tags" : "Işarələr",
+    "Error" : "Səhv",
     "None" : "Heç bir",
     "Edit" : "Dəyişiklik et",
     "Save" : "Saxla",
@@ -12,10 +13,10 @@ OC.L10N.register(
     "Rename" : "Adı dəyiş",
     "Name" : "Ad",
     "Tools" : "Alətlər",
+    "Description" : "Açıqlanma",
+    "URL" : "URL",
     "Dismiss" : "Rədd et",
     "Cancel" : "Cancel",
-    "OK" : "OK",
-    "Description" : "Açıqlanma",
-    "URL" : "URL"
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

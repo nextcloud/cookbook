@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "No se encontró ninguna imagen con el tipo MIME coincidente en el servidor.",
     "Recipe with ID %d was not found in database." : "No se encontró ninguna receta con el ID %d en la base de datos.",
-    "Downloading of a file failed returned the following error message: %s" : "La descarga de un archivo falló y devolvió el siguiente mensaje de error: %s",
     "No content encoding was detected in the content." : "No se detectó ninguna codificación de contenido en el contenido.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "No se puede analizar la imagen proporcionada para la receta %s. Se aborta y se omite.",
     "No valid recipe was left after heuristics of recipe %s." : "No quedó ninguna receta válida después de las heurísticas de la receta %s.",
@@ -60,6 +59,7 @@ OC.L10N.register(
     "Tags" : "Etiquetas",
     "Search for recipes" : "Buscar recetas",
     "Are you sure you want to delete this recipe?" : "¿Estás seguro de que deseas eliminar esta receta?",
+    "Error" : "Error",
     "Delete failed" : "Error al eliminar",
     "Editing recipe" : "Editando receta",
     "Viewing recipe" : "Viendo receta",
@@ -133,9 +133,6 @@ OC.L10N.register(
     "Total time" : "Tiempo total",
     "Nutrition information" : "Información nutricional",
     "Tools" : "Herramientas",
-    "Dismiss" : "Descartar",
-    "Cancel" : "Cancelar",
-    "OK" : "OK",
     "The page was not found" : "No se encontró la página",
     "You have unsaved changes! Do you still want to leave?" : "¡Tienes cambios no guardados! ¿Aún quieres salir?",
     "Calories" : "Calorías",
@@ -168,6 +165,7 @@ OC.L10N.register(
     "Ingredients" : "Ingredientes",
     "Instructions" : "Instrucciones",
     "Recipe image" : "Imagen de la receta",
+    "Reminder" : "Recordatorio",
     "Cooking time is up!" : "¡El tiempo de cocción ha terminado!",
     "Loading…" : "Cargando",
     "Search recipes with this keyword" : "Buscar recetas con esta palabra clave",
@@ -187,6 +185,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Grasa insaturada",
     "Trans Fat" : "Grasa trans",
     "Failed to load recipes with keywords: {tags}" : "Error al cargar las recetas con las palabras clave: {tags}",
-    "Failed to load search results" : "Error al cargar los resultados de búsqueda"
+    "Failed to load search results" : "Error al cargar los resultados de búsqueda",
+    "Dismiss" : "Descartar",
+    "Cancel" : "Cancelar",
+    "OK" : "OK"
 },
 "nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;");

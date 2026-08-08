@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Service;
 
 class ApiVersion {
@@ -12,6 +16,6 @@ class ApiVersion {
 	}
 
 	public function getAppVersion(): array {
-		return [0, 11, 7]; /* VERSION_TAG do not change this line manually */
+		return [0, 11, 10, '-alpha1']; /* VERSION_TAG do not change this line manually */
 	}
 }

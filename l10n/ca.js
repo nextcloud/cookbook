@@ -3,7 +3,6 @@ OC.L10N.register(
     {
     "No image with the matching MIME type was found on the server." : "No s'ha trobat cap imatge amb el tipus MIME coincident al servidor.",
     "Recipe with ID %d was not found in database." : "No s'ha trobat la recepta amb l'ID %d a la base de dades.",
-    "Downloading of a file failed returned the following error message: %s" : "La baixada d'un fitxer ha fallat ha retornat el missatge d'error següent: %s",
     "No content encoding was detected in the content." : "No s'ha detectat cap codificació de contingut al contingut.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "La imatge donada per a la recepta %s no es pot analitzar. S'ha abandonat i saltat.",
     "No valid recipe was left after heuristics of recipe %s." : "No es va deixar cap recepta vàlida després de l'heurística de la recepta %s.",
@@ -52,6 +51,7 @@ OC.L10N.register(
     "Tags" : "Etiquetes",
     "Search for recipes" : "Cerca receptes",
     "Are you sure you want to delete this recipe?" : "Segur que voleu suprimir aquesta recepta?",
+    "Error" : "Error",
     "Delete failed" : "Ha fallat la supressió",
     "Editing recipe" : "Editant la recepta",
     "Viewing recipe" : "Veient la recepta",
@@ -137,9 +137,6 @@ OC.L10N.register(
     "Total time" : "Temps total",
     "Nutrition information" : "Informació nutricional",
     "Tools" : "Estris",
-    "Dismiss" : "Descarta",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "No s'ha trobat la pàgina",
     "You have unsaved changes! Do you still want to leave?" : "Teniu canvis no desats! Encara vols marxar?",
     "Calories" : "Calories",
@@ -175,6 +172,7 @@ OC.L10N.register(
     "Ingredients" : "Ingredients",
     "Instructions" : "Instruccions",
     "Recipe image" : "Imatge de la recepta",
+    "Reminder" : "Recordatori",
     "Cooking time is up!" : "S'ha acabat el temps de cocció!",
     "ingredients" : "ingredients",
     "Loading…" : "S'està carregant…",
@@ -197,6 +195,9 @@ OC.L10N.register(
     "Unsaturated Fat" : "Greix insaturat",
     "Trans Fat" : "Greix trans",
     "Failed to load recipes with keywords: {tags}" : "No s'han pogut carregar les receptes amb paraules clau: {tags}",
-    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca"
+    "Failed to load search results" : "No s'han pogut carregar els resultats de la cerca",
+    "Dismiss" : "Descarta",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n != 1);");

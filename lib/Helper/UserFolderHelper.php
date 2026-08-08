@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 namespace OCA\Cookbook\Helper;
 
 use OCA\Cookbook\Exception\UserFolderNotValidException;
@@ -100,7 +104,6 @@ class UserFolderHelper {
 			// Correct path to be relative to nc root
 			$path = '/' . $this->userId . '/files/' . $path;
 			$path = str_replace('//', '/', $path);
-
 
 			$this->cache = $this->getOrCreateFolder($path);
 		}

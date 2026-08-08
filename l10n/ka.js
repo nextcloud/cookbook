@@ -5,6 +5,7 @@ OC.L10N.register(
     "in %s" : "in %s",
     "Category" : "Category",
     "Tags" : "Tags",
+    "Error" : "შეცდომა",
     "None" : "None",
     "Page not found" : "Page not found",
     "Edit" : "Edit",
@@ -17,13 +18,14 @@ OC.L10N.register(
     "Name" : "Name",
     "Clear" : "Clear",
     "Tools" : "Tools",
-    "Dismiss" : "Dismiss",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "Description" : "Description",
     "URL" : "URL",
     "Image" : "Image",
+    "Reminder" : "Reminder",
     "Loading…" : "Loading…",
-    "Last modified" : "Last modified"
+    "Last modified" : "Last modified",
+    "Dismiss" : "Dismiss",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },
 "nplurals=2; plural=(n!=1);");

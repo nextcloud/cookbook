@@ -2,6 +2,7 @@
     "in %s" : "во %s",
     "Category" : "Категорија",
     "Tags" : "Ознаки",
+    "Error" : "Грешка",
     "None" : "Ништо",
     "Page not found" : "Страницата не е пронајдена",
     "Edit" : "Уреди",
@@ -18,16 +19,18 @@
     "Apply" : "Примени",
     "Creation date" : "Датум на креирање",
     "Tools" : "Алатки",
-    "Dismiss" : "Отфрли",
-    "Cancel" : "Откажи",
-    "OK" : "OK",
+    "Discard changes?" : "Да се отфрлат промените?",
     "Description" : "Опис",
     "URL" : "Адреса",
     "Image" : "Слика",
     "Instructions" : "Инструкции",
+    "Reminder" : "Потсетник",
     "Loading…" : "Се вчитува…",
     "Date created" : "Датум на креирање",
     "Last modified" : "Последно изменето",
-    "Source" : "Извор"
+    "Source" : "Извор",
+    "Dismiss" : "Отфрли",
+    "Cancel" : "Откажи",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;"
 }

@@ -1,7 +1,6 @@
 { "translations": {
     "No image with the matching MIME type was found on the server." : "На сървъра не беше намерено изображение със съответстващ MIME тип.",
     "Recipe with ID %d was not found in database." : "Няма намерена рецепта с  ID %d в базата данни.",
-    "Downloading of a file failed returned the following error message: %s" : "Неуспешното изтегляне на файл, върна следното съобщение за грешка: %s",
     "No content encoding was detected in the content." : "В съдържанието не е открито кодиране на съдържание.",
     "The given image for the recipe %s cannot be parsed. Aborting and skipping it." : "Даденото изображение за рецептата %s не може да бъде анализирано. Да се прекъсне и пропусне.",
     "No valid recipe was left after heuristics of recipe %s." : "Не е останала валидна рецепта след евристика на рецепта %s.",
@@ -58,6 +57,7 @@
     "Tags" : "Етикети",
     "Search for recipes" : "Търсене на рецепти",
     "Are you sure you want to delete this recipe?" : "Сигурни ли сте, че искате да изтриете тази рецепта?",
+    "Error" : "Грешка",
     "Delete failed" : "Неуспешно изтриване",
     "Editing recipe" : "Редактиране на рецепта",
     "Viewing recipe" : "Преглед на рецепта",
@@ -131,9 +131,6 @@
     "Total time" : "Общо време",
     "Nutrition information" : "Информация за храната",
     "Tools" : "Инструменти",
-    "Dismiss" : "Затвори",
-    "Cancel" : "Cancel",
-    "OK" : "OK",
     "The page was not found" : "Страницата не беше намерена",
     "You have unsaved changes! Do you still want to leave?" : "Имате незапазени промени! Все още ли искате да напуснете?",
     "Calories" : "Калории",
@@ -155,6 +152,7 @@
     "No answer for request was received." : "Не е получен отговор на искането.",
     "Could not start request to save recipe." : "Не можа да стартира заявката за записване на рецепта.",
     "Loading recipe failed" : "Зареждането на рецептата е неуспешно",
+    "Discard changes?" : "Отхвърляне на промените?",
     "Description" : "Описание",
     "URL" : "URL адрес",
     "Image" : "Изображение",
@@ -167,6 +165,7 @@
     "Ingredients" : "Съставки",
     "Instructions" : "Инструкции",
     "Recipe image" : "Изображение на рецепта",
+    "Reminder" : "Напомняне",
     "Cooking time is up!" : "Времето за готвене изтече!",
     "Loading…" : "Зареждане…",
     "Search recipes with this keyword" : "Търсене на рецепти с тази ключова дума",
@@ -186,6 +185,9 @@
     "Unsaturated Fat" : "Ненаситени мазнини",
     "Trans Fat" : "Транс мазнини",
     "Failed to load recipes with keywords: {tags}" : "Неуспешно зареждане на рецепти с ключови думи: {tags}",
-    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно "
+    "Failed to load search results" : "Зареждането на резултатите от търсенето е неуспешно ",
+    "Dismiss" : "Затвори",
+    "Cancel" : "Cancel",
+    "OK" : "OK"
 },"pluralForm" :"nplurals=2; plural=(n != 1);"
 }

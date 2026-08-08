@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <div class="time">
         <button
@@ -90,7 +96,10 @@ const onTimerEnd = () => {
         // Start playing audio to alert the user that the timer is up
         audio.value.play();
 
-        await showSimpleAlertModal(t('cookbook', 'Cooking time is up!'));
+        await showSimpleAlertModal(
+            t('cookbook', 'Reminder'),
+            t('cookbook', 'Cooking time is up!'),
+        );
 
         // Stop audio after the alert is confirmed
         audio.value.pause();

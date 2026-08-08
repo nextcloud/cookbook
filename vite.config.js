@@ -1,5 +1,21 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { createAppConfig } from '@nextcloud/vite-config'
 import { join, resolve } from 'path'
+import { visualizer } from "rollup-plugin-visualizer"
+
+const customPlugins = []
+
+if (process.env.ENABLE_BUNDLE_ANALYZER === 'true') {
+	customPlugins.push(visualizer({
+		template: 'raw-data',
+		filename: '.bundle-analysis.json',
+		gzipSize: true,
+		open: false,
+	}))
+}
 
 export default createAppConfig(
 	{
@@ -19,6 +35,7 @@ export default createAppConfig(
 					),
 				},
 			},
+			plugins: customPlugins,
 		},
 	}
 )

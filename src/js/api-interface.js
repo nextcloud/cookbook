@@ -1,4 +1,7 @@
-import Vue from 'vue';
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import axios from '@nextcloud/axios';
 
 import { generateUrl } from '@nextcloud/router';
@@ -7,9 +10,17 @@ const instance = axios.create();
 
 const baseUrl = `${generateUrl('apps/cookbook')}/webapp`;
 
+const apiInterfaceConfig = {
+    app: null,
+};
+
+export function setApp(app) {
+    apiInterfaceConfig.app = app;
+}
+
 // Add a debug log for every request
 instance.interceptors.request.use((config) => {
-    Vue.$log.debug(
+    apiInterfaceConfig.app.$log.debug(
         `[axios] Making "${config.method}" request to "${config.url}"`,
         config,
     );
@@ -18,7 +29,7 @@ instance.interceptors.request.use((config) => {
         contentType &&
         !['application/json', 'text/json'].includes(contentType)
     ) {
-        Vue.$log.warn(
+        apiInterfaceConfig.app.$log.warn(
             `[axios] Request to "${config.url}" is using Content-Type "${contentType}", not JSON`,
         );
     }
@@ -27,11 +38,14 @@ instance.interceptors.request.use((config) => {
 
 instance.interceptors.response.use(
     (response) => {
-        Vue.$log.debug('[axios] Received response', response);
+        apiInterfaceConfig.app.$log.debug(
+            '[axios] Received response',
+            response,
+        );
         return response;
     },
     (error) => {
-        Vue.$log.warn('[axios] Received error', error);
+        apiInterfaceConfig.app.$log.warn('[axios] Received error', error);
         return Promise.reject(error);
     },
 );

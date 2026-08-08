@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /**
  * Nextcloud Cookbook app
  * Global store module
@@ -235,7 +239,7 @@ const useLegacyStore = defineStore('legacyStore', {
 			return request;
 		},
 		updateRecipeDirectory({ dir }) {
-			this.setUpdatingRecipeDirectoryMigration({ b: true });
+			this.setUpdatingRecipeDirectoryMutation({ b: true });
 			this.setRecipe({ recipe: null });
 			const request = api.config.directory.update(dir);
 
@@ -243,7 +247,7 @@ const useLegacyStore = defineStore('legacyStore', {
 				this.setAppNavigationRefreshRequired({
 					isRequired: true,
 				});
-				this.setUpdatingRecipeDirectoryMigration({ b: false });
+				this.setUpdatingRecipeDirectoryMutation({ b: false });
 			});
 		},
 		/**
@@ -262,5 +266,4 @@ const useLegacyStore = defineStore('legacyStore', {
 	},
 });
 
-// eslint-disable-next-line import/prefer-default-export
 export { useLegacyStore };

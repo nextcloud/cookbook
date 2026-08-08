@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 Config:
   type: object
   description: An object describing the configuration of the web app
@@ -201,7 +205,7 @@ Recipe:
           description: A description of the recipe or the empty string
         url:
           type: string
-          example: http://exmaple.com/my-recipe.html
+          example: http://example.com/my-recipe.html
           description: The URL the recipe was found at or the empty string
         image:
           type: string

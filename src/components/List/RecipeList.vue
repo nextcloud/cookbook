@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <div class="pt-2">
         <div v-if="loading" class="loading-indicator">
@@ -10,7 +16,7 @@
             <div v-else>
                 <RecipeFilterControlsModal
                     v-if="isMobile && showFiltersInRecipeList"
-                    v-model="filterValue"
+                    v-model:value="filterValue"
                     :preapplied-filters="props.preappliedFilters"
                     :recipes="recipes"
                     :is-loading="loading"
@@ -19,7 +25,7 @@
                 />
                 <RecipeFilterControlsInline
                     v-else-if="showFiltersInRecipeList"
-                    v-model="inlineControlsValue"
+                    :value="inlineControlsValue"
                     :preapplied-filters="props.preappliedFilters"
                     :recipes="recipes"
                     :is-loading="loading"
@@ -34,7 +40,7 @@
                 >
                     <RecipeSortSelect
                         v-if="recipes.length > 0"
-                        v-model="orderBy"
+                        v-model:value="orderBy"
                         class="mr-4"
                         :title="t('cookbook', 'Show filter settings')"
                         aria-label="t('cookbook', 'Show settings for filtering recipe list')"
@@ -69,7 +75,7 @@ import { computed, onMounted, ref } from 'vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
 import { NcButton } from '@nextcloud/vue';
-import { useIsMobile } from '../../composables/useIsMobile';
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
@@ -145,7 +151,8 @@ onMounted(() => {
 /**
  * Handle updated value of the inline filter controls. Should be fixed in vue3 by using two v-model directives.
  */
-function handleInlineControlsValueUpdated() {
+function handleInlineControlsValueUpdated(ev) {
+    inlineControlsValue.value = ev;
     filterValue.value = inlineControlsValue.value.filters;
     orderBy.value = inlineControlsValue.value.orderBy;
 }

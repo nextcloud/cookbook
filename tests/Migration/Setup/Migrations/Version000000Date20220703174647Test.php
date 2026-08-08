@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 namespace OCA\Cookbook\tests\Migration\Setup\Migrations;
 
 include_once __DIR__ . '/AbstractMigrationTestCase.php';
@@ -50,10 +54,8 @@ class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 		$this->assertNull($row['date_created']);
 		$this->assertNull($row['date_modified']);
 
-
 		//$this->assertEquals([null, null], $data[0]);
 	}
-
 
 	protected function getPreviousMigrationName(): string {
 		return '000000Date20210701093123';
