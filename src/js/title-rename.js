@@ -65,10 +65,7 @@ function insertMarkdownLinks(content, recipes) {
             'g',
         );
         // const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
-        ret = ret.replace(
-            rePlain,
-            `$1[${r.name} (\\#r/${id})](${getRecipeUrl(id)})$2`,
-        );
+        ret = ret.replace(rePlain, `$1[${r.name} 🔗](${getRecipeUrl(id)})$2`);
     });
     return ret;
 }
