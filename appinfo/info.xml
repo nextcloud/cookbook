@@ -27,7 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     <screenshot>https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot2.png</screenshot>
     <dependencies>
         <php min-version="8.0"/>
-        <nextcloud min-version="31" max-version="34"/>
+        <nextcloud min-version="31" max-version="35"/>
     </dependencies>
     <navigations>
         <navigation>

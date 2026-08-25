@@ -16,13 +16,11 @@ is_file_dump () {
 
 restore_mysql_dump () {
 	echo "Dropping old data from the database"
-	echo "Getting tables"
-	mariadb -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql --skip-ssl "$MYSQL_DATABASE" <<- EOF | tail -n +2 > /tmp/mysql_tables
-		SHOW TABLES;
-		EOF
-	echo "Got:"
-	cat /tmp/mysql_tables
-	cat /tmp/mysql_tables | sed 's@.*@DROP TABLE \0;@' | mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql --skip-ssl "$MYSQL_DATABASE"
+	mysql -u root -p"$MYSQL_ROOT_PASSWORD" -h mysql --skip-ssl <<- EOF
+	DROP DATABASE ${MYSQL_DATABASE};
+	CREATE DATABASE ${MYSQL_DATABASE};
+	GRANT ALL ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'%';
+	EOF
 
 	echo "Restoring MySQL from single file dump"
 	local dump_file="$SF_DIR/sql/dump.sql"
