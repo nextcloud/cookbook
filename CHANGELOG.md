@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 ## Note on incomplete changelogs and releases
 
 Please note that the changelog in this branch is not complete.
@@ -18,6 +24,19 @@ Sorry for the inconvience.
 
 ## [Unreleased]
 
+
+## 0.11.10 - 2026-08-26
+
+### Changed
+
+- Shorten the link symbol used when recipes reference other recipes
+  [#3312](https://github.com/nextcloud/cookbook/pull/3312) @xhon-pelushi
+
+### Fixed
+
+- Prevent regression from #3305 to not show license information on web frontend
+  [#3323](https://github.com/nextcloud/cookbook/pull/3323) @christianlupus
+
 ### Documentation
 
 - Add AvoCook as client in the docs
@@ -37,6 +56,12 @@ Sorry for the inconvience.
   [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
 - Add file needed to work with agentic AI on codebase
   [#3295](https://github.com/nextcloud/cookbook/pull/3295) @christianlupus
+- Make source code compatible with REUSE rules
+  [#3305](https://github.com/nextcloud/cookbook/pull/3305) @christianlupus
+- Prevent issues in cron-based workflows
+  [#3317](https://github.com/nextcloud/cookbook/pull/3317) @christianlupus
+- Mark app as compatible with NC35
+  [#3324](https://github.com/nextcloud/cookbook/pull/3324) @christianlupus
 
 
 ## 0.11.9 - 2026-07-18

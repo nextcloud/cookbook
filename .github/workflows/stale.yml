@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 name: Stale bot
 on:
@@ -12,7 +15,7 @@ jobs:
         
         steps:
         
-          - uses: actions/stale@1e223db275d687790206a7acac4d1a11bd6fe629
+          - uses: actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93
             name: Close stale issues
             with:
                 days-before-stale: 45

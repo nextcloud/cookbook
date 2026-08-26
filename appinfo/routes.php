@@ -1,5 +1,9 @@
 <?php
 
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 /**
  * Create your routes in here. The name is the lowercase name of the controller
  * without the controller part, the stuff after the hash is the method.

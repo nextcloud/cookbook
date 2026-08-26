@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <template>
     <div class="pt-2">
         <div v-if="loading" class="loading-indicator">
@@ -69,7 +75,7 @@ import { computed, onMounted, ref } from 'vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
 import { NcButton } from '@nextcloud/vue';
-import { useIsMobile } from '../../composables/useIsMobile';
+import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {

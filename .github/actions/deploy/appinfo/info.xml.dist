@@ -1,4 +1,11 @@
 <?xml version="1.0"?>
+
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <!-- Do not alter this file in directly, tweak the template in .github/actions/deploy/info.xml.dist! -->
 <info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
@@ -20,7 +27,7 @@
     <screenshot>https://raw.githubusercontent.com/nextcloud/cookbook/stable/img/screenshot2.png</screenshot>
     <dependencies>
         <php min-version="8.0"/>
-        <nextcloud min-version="31" max-version="34"/>
+        <nextcloud min-version="31" max-version="35"/>
     </dependencies>
     <navigations>
         <navigation>

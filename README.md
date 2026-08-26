@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 <div align="center">
 
 <img src="docs/assets/icon256x256.png#gh-dark-mode-only" alt="Nextcloud Cookbook icon" width="100"/>

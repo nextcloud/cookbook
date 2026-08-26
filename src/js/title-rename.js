@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+//
+// SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
 import api from 'cookbook/js/api-interface';
 
 import { generateUrl } from '@nextcloud/router';
@@ -61,10 +65,7 @@ function insertMarkdownLinks(content, recipes) {
             'g',
         );
         // const re = /(^|\s|[,._+&?!-])#r\/(\d+)(?=$|\s|[.,_+&?!-])/g
-        ret = ret.replace(
-            rePlain,
-            `$1[${r.name} (\\#r/${id})](${getRecipeUrl(id)})$2`,
-        );
+        ret = ret.replace(rePlain, `$1[${r.name} 🔗](${getRecipeUrl(id)})$2`);
     });
     return ret;
 }

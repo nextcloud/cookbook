@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+
+SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+-->
+
 # Using of an automatically built version for testing purposes
 
 Especially for reported issues it might be useful to test if a fix succeeded in fixing an issue if is is not 100% possible to reproduce the problem on the developers' machines.

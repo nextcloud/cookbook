@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 class FixtureConfig:
 	def __init__(self, db='mysql', branch='stable24', phpVersion='8.1', description=None, sql_type='dump'):

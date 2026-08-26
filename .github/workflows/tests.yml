@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 name: CI
 
@@ -129,18 +132,18 @@ jobs:
             database:
                 - mysql
             coreVersion:
-                - 34
+                - 35
             phpVersion:
                 - "8.5"
             httpServer:
                 - "apache"
             include:
                 -   database: sqlite
-                    coreVersion: 32
+                    coreVersion: 33
                     phpVersion: "8.3"
                     httpServer: "apache"
                 -   database: pgsql
-                    coreVersion: 33
+                    coreVersion: 34
                     phpVersion: "8.4"
                     httpServer: "nginx"
                     

@@ -51,6 +51,7 @@ OC.L10N.register(
     "Tags" : "Etiquetes",
     "Search for recipes" : "Cerca receptes",
     "Are you sure you want to delete this recipe?" : "Segur que voleu suprimir aquesta recepta?",
+    "Error" : "Error",
     "Delete failed" : "Ha fallat la supressió",
     "Editing recipe" : "Editant la recepta",
     "Viewing recipe" : "Veient la recepta",
