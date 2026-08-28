@@ -162,7 +162,7 @@ OC.L10N.register(
     "Recipe folder" : "Yemek tarifi klasörü",
     "Rescan library" : "Kitaplığı yeniden tara",
     "Please pick a folder" : "Lütfen bir klasör seçin",
-    "Update interval in minutes" : "Dakika cinsinden güncelleme sıklığı",
+    "Update interval in minutes" : "Dakika olarak güncelleme sıklığı",
     "Recipe display settings" : "Yemek tarifi görüntüleme ayarları",
     "Print image with recipe" : "Yemek tarifi ile görsel de yazdırılsın",
     "Show filters and sorting in recipe lists" : "Yemek tarifleri listesinde süzgeçler ve sıralama görüntülensin",
