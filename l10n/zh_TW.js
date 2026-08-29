@@ -30,6 +30,7 @@ OC.L10N.register(
     "Order" : "順序",
     "Filter name" : "篩選器名稱",
     "Search term" : "搜尋字詞",
+    "All categories" : "所有類別",
     "Keywords" : "關鍵字",
     "Clear" : "清除",
     "Apply" : "套用",
