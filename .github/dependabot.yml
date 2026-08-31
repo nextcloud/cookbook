@@ -13,6 +13,10 @@ updates:
   open-pull-requests-limit: 10
   cooldown:
     default-days: 7
+  ignore:
+    - dependency-name: "eslint"
+      versions:
+      - "10.x"
 - package-ecosystem: composer
   directory: "/"
   schedule:
