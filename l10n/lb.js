@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "Recipes" : "Rezepter",
     "in %s" : "an %s",
     "Tags" : "Tags",
     "Error" : "Fehler",
@@ -8,9 +9,13 @@ OC.L10N.register(
     "Edit" : "Änneren",
     "Save" : "Späicheren",
     "Search" : "Search",
+    "Filter" : "Filter",
+    "Categories" : "Kategorien",
     "Rename" : "Ëmbenennen",
     "Add" : "Dobäisetzen",
     "Name" : "Numm",
+    "Order" : "Reiefolleg",
+    "Clear" : "Eidel maachen",
     "Apply" : "Uwenden",
     "Description" : "Beschreiwung",
     "URL" : "URL",
