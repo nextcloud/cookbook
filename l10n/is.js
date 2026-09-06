@@ -49,6 +49,7 @@ OC.L10N.register(
     "Trans-fat content" : "Trans-fat content",
     "Unsaturated-fat content" : "Unsaturated-fat content",
     "Clone of {name}" : "Klón af {name}",
+    "Discard changes?" : "Henda breytingum?",
     "Description" : "Lýsing",
     "URL" : "Slóð",
     "Image" : "Mynd",
