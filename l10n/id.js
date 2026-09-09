@@ -211,6 +211,7 @@ OC.L10N.register(
     "Ingredients" : "Bahan-bahan",
     "Instructions" : "Instruksi",
     "Recipe image" : "Gambar resep",
+    "Reminder" : "Pengingat",
     "Cooking time is up!" : "Waktu memasak habis!",
     "_{hours}h_::_{hours}h_" : ["{hours}j"],
     "_{minutes}m_::_{minutes}m_" : ["{minutes}m"],
