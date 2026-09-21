@@ -26,7 +26,7 @@ class AppTest extends TestCase {
 
 	public function testAppInstalled() {
 		/** @var IAppManager $appManager */
-		$appManager = $this->container->query(IAppManager::class);
+		$appManager = $this->container->get(IAppManager::class);
 		if (method_exists($appManager, 'upgradeApp')) {
 			$appManager->upgradeApp('cookbook');
 		}

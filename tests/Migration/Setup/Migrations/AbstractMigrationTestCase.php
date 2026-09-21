@@ -11,7 +11,7 @@ use OC\DB\Connection;
 use OC\DB\MigrationService;
 use OC\DB\SchemaWrapper;
 use OCP\AppFramework\App;
-use OCP\AppFramework\IAppContainer;
+use OCP\IAppContainer;
 use OCP\IDBConnection;
 use OCP\Util;
 use PHPUnit\Framework\TestCase;
@@ -59,16 +59,16 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		/**
 		 * @var IDBConnection $db
 		 */
-		$this->db = $this->container->query(IDBConnection::class);
+		$this->db = $this->container->get(IDBConnection::class);
 		$this->assertIsObject($this->db);
 		/**
 		 * @var SchemaWrapper $schema
 		 */
-		$this->schema = $this->container->query(SchemaWrapper::class);
+		$this->schema = $this->container->get(SchemaWrapper::class);
 		$this->assertIsObject($this->schema);
 
 		if (Util::getVersion()[0] >= 21) {
-			$this->connection = \OC::$server->query(Connection::class);
+			$this->connection = \OC::$server->get(Connection::class);
 		} else {
 			$this->connection = $this->db;
 		}
