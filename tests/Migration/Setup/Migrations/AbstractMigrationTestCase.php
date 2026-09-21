@@ -11,8 +11,8 @@ use OC\DB\Connection;
 use OC\DB\MigrationService;
 use OC\DB\SchemaWrapper;
 use OCP\AppFramework\App;
-use OCP\IDBConnection;
 use OCP\IAppContainer;
+use OCP\IDBConnection;
 use OCP\Util;
 use PHPUnit\Framework\TestCase;
 
