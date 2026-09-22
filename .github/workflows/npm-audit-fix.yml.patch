@@ -1,5 +1,5 @@
 diff --git a/.github/workflows/npm-audit-fix.yml b/.github/workflows/npm-audit-fix.yml
-index b9403d59..7de2cb03 100644
+index b9403d59..637749eb 100644
 --- a/.github/workflows/npm-audit-fix.yml
 +++ b/.github/workflows/npm-audit-fix.yml
 @@ -31,9 +31,6 @@ jobs:
@@ -12,7 +12,12 @@ index b9403d59..7de2cb03 100644
  
      name: npm-audit-fix-${{ matrix.branches }}
  
-@@ -88,7 +85,6 @@ jobs:
+@@ -84,11 +81,10 @@ jobs:
+           author: nextcloud-command <nextcloud-command@users.noreply.github.com>
+           signoff: true
+           branch: automated/noid/${{ matrix.branches }}-fix-npm-audit
+-          title: '[${{ matrix.branches }}] Fix npm audit'
++          title: 'build(npm): Fix npm audit [${{ matrix.branches }}]'
            body: ${{ steps.npm-audit.outputs.markdown }}
            labels: |
              dependencies
