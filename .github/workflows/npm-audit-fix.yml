@@ -31,9 +31,6 @@ jobs:
       matrix:
         branches:
           - ${{ github.event.repository.default_branch }}
-          - 'stable35'
-          - 'stable34'
-          - 'stable33'
 
     name: npm-audit-fix-${{ matrix.branches }}
 
@@ -88,7 +85,6 @@ jobs:
           body: ${{ steps.npm-audit.outputs.markdown }}
           labels: |
             dependencies
-            3. to review
 
       # Approve using the default GITHUB_TOKEN, as the PR itself was created
       # using COMMAND_BOT_PAT and GitHub does not allow an account to approve its own PR
@@ -104,4 +100,5 @@ jobs:
         uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
           pull-request-number: ${{ steps.create-pull-request.outputs.pull-request-number }}
