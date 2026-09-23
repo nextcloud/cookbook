@@ -141,7 +141,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-// @ts-nocheck
 import {
     computed,
     getCurrentInstance,
@@ -175,9 +174,10 @@ import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 import { useLegacyStore } from '../store';
 import emitter from '../bus';
 
+const t = window.t;
 const log = getCurrentInstance().proxy.$log;
 const route = useRoute();
-const legacyStore = useLegacyStore();
+const legacyStore = useLegacyStore() as any;
 
 /* prettier-ignore */
 const CONFIRM_MSG = t('cookbook', 'You have unsaved changes! Do you still want to leave?');

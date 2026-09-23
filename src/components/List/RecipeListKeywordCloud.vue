@@ -64,7 +64,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-// @ts-nocheck
 const t = window.t;
 import { computed, ref, watch } from 'vue';
 import RecipeKeyword from '../RecipeKeyword.vue';

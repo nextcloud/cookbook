@@ -15,7 +15,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-// @ts-nocheck
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
@@ -26,6 +25,8 @@ import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters'
 import RecipeList from './List/RecipeList.vue';
 import { useLegacyStore } from '../store';
 import emitter from '../bus';
+
+const t = window.t;
 
 const route = useRoute();
 const legacyStore = useLegacyStore();

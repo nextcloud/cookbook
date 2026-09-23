@@ -358,7 +358,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-// @ts-nocheck
 import {
     computed,
     getCurrentInstance,
@@ -381,6 +380,7 @@ import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
 
+const t = window.t;
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredient from './RecipeIngredient.vue';
@@ -392,7 +392,7 @@ import RecipeTool from './RecipeTool.vue';
 
 const route = useRoute();
 const router = useRouter();
-const legacyStore = useLegacyStore();
+const legacyStore = useLegacyStore() as any;
 
 const log = getCurrentInstance().proxy.$log;
 

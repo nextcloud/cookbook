@@ -9,7 +9,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-// @ts-nocheck
 import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
