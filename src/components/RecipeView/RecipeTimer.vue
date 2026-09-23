@@ -21,11 +21,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
 import { computed, defineProps, onMounted, ref, watch } from 'vue';
 import { linkTo } from '@nextcloud/router';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import helper from 'cookbook/js/helper';
+
+const t = window.t;
+const n = window.n;
 
 // Properties
 const props = defineProps({
@@ -46,7 +48,7 @@ const props = defineProps({
 });
 
 // Reactive
-const countdown = ref(null);
+const countdown = ref<number | null>(null);
 /**
  * @type {import('vue').Ref<number>}
  */
@@ -86,7 +88,9 @@ const resetTimeDisplay = () => {
 };
 
 const onTimerEnd = () => {
-    window.clearInterval(countdown.value);
+    if (countdown.value !== null) {
+        window.clearInterval(countdown.value);
+    }
     window.setTimeout(async () => {
         // The short timeout is needed or Vue doesn't have time to update the countdown
         //  display to display 00:00:00
@@ -150,7 +154,7 @@ const timerToggle = () => {
  * @param isPadded If value should be padded with zeros to ensure it has two digits
  * @returns {string} Complete styled string with value and unit
  */
-const styleUnit = (str, value, isPadded = true) => {
+const styleUnit = (str: string, value: number, isPadded = true) => {
     // Remove value
     const unit = str.replace(`${value.toString()}`, '');
     // Style unit

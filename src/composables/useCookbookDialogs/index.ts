@@ -4,9 +4,18 @@
 
 import { ref } from 'vue';
 
+export interface CookbookDialogButton {
+	label: string;
+	callback?: () => unknown | false;
+	disabled?: boolean;
+	icon?: string;
+	type?: 'button' | 'submit' | 'reset';
+	variant?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'warning';
+}
+
 const isDialogOpen = ref(false);
 const resolvePromise = ref<null | ((value: any) => void)>(null);
-const buttons = ref({});
+const buttons = ref<CookbookDialogButton[]>([]);
 const title = ref('');
 const message = ref('');
 const allowClose = ref(true);
@@ -17,7 +26,7 @@ export function useCookbookDialogs() {
 		_title: string,
 		_message: string,
 		_allowClose: boolean = true,
-		_buttons = {},
+		_buttons: CookbookDialogButton[] = [],
 	) {
 		title.value = _title;
 		message.value = _message;

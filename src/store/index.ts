@@ -183,7 +183,11 @@ const useLegacyStore = defineStore('legacyStore', {
 		setAppNavigationVisible({ isVisible }: { isVisible: boolean }) {
 			this.setAppNavigationVisibleMutation({ b: isVisible });
 		},
-		setAppNavigationRefreshRequired({ isRequired }: { isRequired: boolean }) {
+		setAppNavigationRefreshRequired({
+			isRequired,
+		}: {
+			isRequired: boolean;
+		}) {
 			this.setAppNavigationRefreshRequiredMutation({ b: isRequired });
 		},
 		setLoadingRecipe({ recipe }: { recipe: string }) {
@@ -213,7 +217,11 @@ const useLegacyStore = defineStore('legacyStore', {
 		setShowFiltersInRecipeList({ showFilters }: { showFilters: boolean }) {
 			this.setShowFiltersInRecipeListMutation({ b: showFilters });
 		},
-		updateCategoryName({ categoryNames }: { categoryNames: [string, string] }) {
+		updateCategoryName({
+			categoryNames,
+		}: {
+			categoryNames: [string, string];
+		}) {
 			const oldName = categoryNames[0];
 			const newName = categoryNames[1];
 			this.setCategoryUpdating({ category: oldName });

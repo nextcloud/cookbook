@@ -111,7 +111,7 @@ export default function useRecipeFilterControls(props) {
 
     /**
      * List of sections with their visible state.
-     * @type {import('vue').ComputedRef<boolean>}
+     * @type {import('vue').ComputedRef<{categories: boolean, keywords: boolean, names: boolean}>}
      */
     const hiddenSections = computed(() => ({
         categories: props.preappliedFilters.some(

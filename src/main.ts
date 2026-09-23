@@ -47,7 +47,12 @@ declare global {
 			count: number,
 			vars?: Record<string, unknown>,
 		): string;
-		t(app: string, text: string, vars?: Record<string, unknown>, count?: number): string;
+		t(
+			app: string,
+			text: string,
+			vars?: Record<string, unknown>,
+			count?: number,
+		): string;
 		escapeHTML(text: string): string;
 	}
 }

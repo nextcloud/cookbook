@@ -32,10 +32,10 @@ defineProps({
 /**
  * @type {import('vue').Ref<HTMLElement | null>}
  */
-const link = ref(null);
+const link = ref<HTMLElement | null>(null);
 
 const clicked = () => {
-    if (!link.value.classList.contains('disabled')) {
+    if (link.value && !link.value.classList.contains('disabled')) {
         emit('keyword-clicked');
     }
 };

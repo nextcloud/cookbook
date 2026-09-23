@@ -182,7 +182,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
 import {
     getCurrentInstance,
     onBeforeUnmount,
@@ -210,8 +209,11 @@ import { enableLogging } from 'cookbook/js/logging';
 import { useRoute, useRouter } from 'vue-router';
 import { useLegacyStore } from '../../store';
 import { SHOW_SETTINGS_EVENT } from '../../composables/useSettingsDialog';
+import type { SettingsConfig } from '../../types/SettingsConfig';
 
-const log = getCurrentInstance().proxy.$log;
+const t = window.t;
+
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 const route = useRoute();
 const router = useRouter();
 const legacyStore = useLegacyStore();
@@ -226,9 +228,9 @@ const INFO_BLOCK_KEYS = [
 
 // The Vue representation of multiple checkboxes is an array of all checked values
 // However, the backend representation is an object (map of block ids to booleans)
-const visibleInfoBlocksEncode = (arr) =>
+const visibleInfoBlocksEncode = (arr: string[]) =>
     Object.fromEntries(INFO_BLOCK_KEYS.map((key) => [key, arr.includes(key)]));
-const visibleInfoBlocksDecode = (obj) =>
+const visibleInfoBlocksDecode = (obj: Record<string, boolean>) =>
     Object.entries(obj)
         .filter(([, v]) => v)
         .map(([k]) => k);
@@ -310,7 +312,6 @@ watch(
             return;
         }
         try {
-            if (newVal === '') return;
             await api.config.updateInterval.update(newVal);
             await legacyStore.refreshConfig();
         } catch {
@@ -365,11 +366,13 @@ const pickRecipeFolder = () => {
     filePicker
         .pick()
         .then((path) => {
+            const selectedPath =
+                typeof path === 'string' ? path : (path?.[0] ?? '');
             legacyStore
-                .updateRecipeDirectory({ dir: path })
+                .updateRecipeDirectory({ dir: selectedPath })
                 .then(() => legacyStore.refreshConfig())
                 .then(() => {
-                    recipeFolder.value = path;
+                    recipeFolder.value = selectedPath;
                     if (route.path !== '/') {
                         router.push('/');
                     }
@@ -380,16 +383,14 @@ const pickRecipeFolder = () => {
                         /* prettier-ignore */
                         t('cookbook','Could not set recipe folder to {path}',
                         {
-                            path
+                            path: selectedPath
                         }
                     ),
                     ),
                 );
         })
         .catch((ev) => {
-            log.warn(
-                `Could not select new recipe folder. Error Message: ${ev.message}`,
-            );
+            log.warn(`Could not select new recipe folder: ${String(ev)}`);
         });
 };
 
@@ -407,9 +408,9 @@ const reindex = () => {
         .then(() => {
             scanningLibrary.value = false;
             log.info('Library reindexing complete');
-            if (['index', 'search'].indexOf(legacyStore.page) > -1) {
+            if (['index', 'search'].indexOf(legacyStore.page ?? '') > -1) {
                 // This refreshes the current router view in case items in it changed during reindex
-                router.go();
+                router.go(0);
             }
             // todo this ws here before but no function was defined. what is it supposed to do?
             // else {
@@ -432,11 +433,9 @@ const handleShowSettings = () => {
     // Temporarily disable the storage of settings to allow for initialization
     writeChanges.value = false;
 
-    const { config } = legacyStore;
+    const config = legacyStore.config as SettingsConfig | null;
 
-    if (!config) {
-        throw new Error();
-    }
+    if (!config) return;
 
     printImage.value = config.print_image;
     visibleInfoBlocks.value = visibleInfoBlocksDecode(config.visibleInfoBlocks);

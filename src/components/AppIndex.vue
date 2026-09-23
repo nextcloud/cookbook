@@ -72,7 +72,7 @@ watch(updatingRecipeDirectory, async (newVal, oldVal) => {
 
 // Vue lifecycle
 onMounted(() => {
-    getCurrentInstance().proxy.$log.info('AppIndex mounted');
+    getCurrentInstance()?.proxy?.$log.info('AppIndex mounted');
     loadAll();
 });
 </script>

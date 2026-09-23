@@ -185,14 +185,14 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 </div>
             </div>
             <div class="d-flex flex-row justify-end mt-4">
-                <NcButton type="tertiary" @click="clearFilters">
+                <NcButton variant="tertiary" @click="clearFilters">
                     {{
                         /* TRANSLATORS Button text for applying recipe-filter values */
                         t('cookbook', 'Clear')
                     }}
                 </NcButton>
                 <NcButton
-                    type="primary"
+                    variant="primary"
                     class="self-end"
                     @click="submitAndClose"
                 >
@@ -207,9 +207,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
-const n = window.n;
-import { defineEmits, defineProps, computed, defineModel, nextTick, watch } from 'vue';
+import { computed, nextTick, watch } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import { NcButton, NcModal, NcSelect, NcTextField } from '@nextcloud/vue';
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
@@ -217,6 +215,8 @@ import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 
+const t = window.t;
+const n = window.n;
 const emit = defineEmits(['close', 'input']);
 
 const props = defineProps({

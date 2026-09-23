@@ -58,7 +58,7 @@ const results = ref([]);
  * already applied.
  * @type {import('vue').Ref<Array>}
  */
-const filters = ref([]);
+const filters = ref<InstanceType<typeof CategoriesFilter>[]>([]);
 
 // watch(route, (to, from) => {
 //     keywordFilter.value = [];
@@ -153,7 +153,12 @@ onBeforeRouteUpdate((to, from, next) => {
 onMounted(() => {
     setup();
     emitter.off('categoryRenamed');
-    emitter.on('categoryRenamed', (val) => {
+    emitter.on('categoryRenamed', (rawValue) => {
+        if (!Array.isArray(rawValue) || rawValue.length < 2) return;
+        const val = [String(rawValue[0]), String(rawValue[1])] as [
+            string,
+            string,
+        ];
         if (
             isComponentActive.value &&
             props.query === 'cat' &&

@@ -149,7 +149,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 />
             </div>
             <!--        Keep button together in a line with the last input so it does not get lonely -->
-            <NcButton type="tertiary" @click="clearFilters">
+            <NcButton variant="tertiary" @click="clearFilters">
                 {{
                     /* TRANSLATORS Button text for applying recipe-filter values */
                     t('cookbook', 'Clear')
@@ -160,16 +160,17 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
-const n = window.n;
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import { NcButton, NcSelect, NcTextField } from '@nextcloud/vue';
-import { computed, defineEmits, defineProps, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 import RecipeSortSelect from './RecipeSortSelect.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';
+
+const t = window.t;
+const n = window.n;
 
 const emit = defineEmits(['close', 'input']);
 

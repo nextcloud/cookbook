@@ -45,7 +45,7 @@ import SettingsDialog from './Modals/SettingsDialog.vue';
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useCookbookDialogs } from 'cookbook/composables/useCookbookDialogs';
 
-const log = getCurrentInstance().proxy.$log;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 const isMobile = useIsMobile();
 
 /**
@@ -67,7 +67,11 @@ const isNavigationOpen = ref(false);
 /**
  * Listen for event-bus events about the app navigation opening and closing
  */
-const updateAppNavigationOpen = ({ open }) => {
+const updateAppNavigationOpen = (event: unknown) => {
+    const open =
+        typeof event === 'object' && event !== null && 'open' in event
+            ? event.open === true
+            : false;
     isNavigationOpen.value = open;
 };
 

@@ -3,6 +3,18 @@
   - SPDX-License-Identifier: MIT
 -->
 
+## Additional restictions and concerns
+
+In case you need to create temporary files, use the folder `.tmp` in the main (cookbook) repository. Clean up after your work. Try to avoid writing outside the project for simplification of processes.
+
+When capturing command output for later inspection, write it under `.tmp` as well. For example:
+
+```sh
+npm run type-check >.tmp/cookbook-type-check.log 2>&1
+```
+
+For type-checking, avoid compound shell commands and shell variables. Run npm run type-check separately, write logs only to .tmp/ inside the workspace, and run grep/sed/head as separate commands. Do not use /tmp.
+
 ## Nextcloud Contribution Policy
 
 All contributions generated or assisted by this agent must fully comply with:

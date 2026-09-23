@@ -5,50 +5,50 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 -->
 
 <template>
-	<div>
-		<RecipeFilterControlsInline
-			v-if="showFiltersInRecipeList && !isMobile"
-			:value="inlineControlsValue"
-			:preapplied-filters="props.preappliedFilters"
-			:recipes="recipes"
-			:is-loading="isLoading"
-			:is-visible="isVisible"
-			/>
-			<!-- @input="handleInlineControlsValueUpdated"
+    <div>
+        <RecipeFilterControlsInline
+            v-if="showFiltersInRecipeList && !isMobile"
+            :value="inlineControlsValue"
+            :preapplied-filters="props.preappliedFilters"
+            :recipes="recipes"
+            :is-loading="isLoading"
+            :is-visible="isVisible"
+        />
+        <!-- @input="handleInlineControlsValueUpdated"
 			@close="() => (isFilterControlsVisible = false)" -->
-		<div
-			v-if="isMobile && showFiltersInRecipeList"
-			id="recipes-submenu"
-			class="recipes-submenu-container"
-		>
-			<!-- <RecipeSortSelect
+        <div
+            v-if="isMobile && showFiltersInRecipeList"
+            id="recipes-submenu"
+            class="recipes-submenu-container"
+        >
+            <!-- <RecipeSortSelect
 				v-if="recipes.length > 0"
 				v-model:value="orderBy"
 				class="mr-4"
 				:title="t('cookbook', 'Show filter settings')"
 				aria-label="t('cookbook', 'Show settings for filtering recipe list')"
 			/> -->
-			<NcButton
-				:variant="'secondary'"
-				aria-label="t('cookbook', 'Show settings for filtering recipe list')"
-				:title="t('cookbook', 'Show filter settings')"
-				@click="toggleFilterControlsModalVisible"
-			>
-				<template #icon>
-					<FilterIcon :size="20" />
-				</template>
-			</NcButton>
-		</div>
-		<RecipeFilterControlsModal
-			v-if="isMobile && showFiltersInRecipeList"
-			v-model="filter"
-			:preapplied-filters="props.preappliedFilters"
-			:recipes="recipes"
-			:is-loading="isLoading"
-			:is-visible="isFilterControlsModalVisible"
-			@close="() => (isFilterControlsModalVisible = false)"
-			/>
-	</div>
+            <NcButton
+                :variant="'secondary'"
+                aria-label="t('cookbook', 'Show settings for filtering recipe list')"
+                :title="t('cookbook', 'Show filter settings')"
+                @click="toggleFilterControlsModalVisible"
+            >
+                <template #icon>
+                    <FilterIcon :size="20" />
+                </template>
+            </NcButton>
+        </div>
+        <RecipeFilterControlsModal
+            v-if="isMobile && showFiltersInRecipeList"
+            v-model="filter"
+            :preapplied-filters="props.preappliedFilters"
+            :recipes="recipes"
+            :is-loading="isLoading"
+            :is-visible="isFilterControlsModalVisible"
+            @close="() => (isFilterControlsModalVisible = false)"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -66,36 +66,36 @@ const isMobile = useIsMobile();
 const t = window.t;
 
 const filter = defineModel<Filter>('filter', {
-	type: Object,
-	required: true,
+    type: Object,
+    required: true,
 });
 
 const sorting = defineModel('sorting', {
-	type: Object,
-	default: () => ({}),
+    type: Object,
+    default: () => ({}),
 });
 
 const props = defineProps({
-	preappliedFilters: {
-		type: Array,
-		default: () => [],
-	},
-	recipes: {
-		type: Array,
-		default: () => [],
-	},
-	isLoading: {
-		type: Boolean,
-		default: false,
-	},
-	isVisible: {
-		type: Boolean,
-		default: false,
-	},
-	showFiltersInRecipeList: {
-		type: Boolean,
-		default: true,
-	},
+    preappliedFilters: {
+        type: Array,
+        default: () => [],
+    },
+    recipes: {
+        type: Array,
+        default: () => [],
+    },
+    isLoading: {
+        type: Boolean,
+        default: false,
+    },
+    isVisible: {
+        type: Boolean,
+        default: false,
+    },
+    showFiltersInRecipeList: {
+        type: Boolean,
+        default: true,
+    },
 });
 
 // TODO remve this when the inline controls are fully implemented and integrated with the filter model
@@ -104,17 +104,15 @@ const inlineControlsValue = ref({});
 const isFilterControlsModalVisible = ref(false);
 
 function toggleFilterControlsModalVisible() {
-	isFilterControlsModalVisible.value = !isFilterControlsModalVisible.value;
+    isFilterControlsModalVisible.value = !isFilterControlsModalVisible.value;
 }
-
 </script>
 
 <script lang="ts">
 export default {
-	name: 'RecipeListFilter',
+    name: 'RecipeListFilter',
 };
 </script>
-
 
 <style>
 /* stylelint-disable selector-class-pattern */

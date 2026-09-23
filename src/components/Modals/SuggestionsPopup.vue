@@ -34,8 +34,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
 import { computed, defineProps, onMounted, ref, watch } from 'vue';
+import type {
+    SuggestionOption,
+    SuggestionCaretPosition,
+} from '../../types/Suggestion';
+
+const t = window.t;
 
 const SUGGESTIONS_POPUP_WIDTH = 300;
 
@@ -44,12 +49,21 @@ const emit = defineEmits(['suggestions-selected']);
 /**
  * @type {import('vue').Ref<HTMLElement | null>}
  */
-const scroller = ref(null);
+const scroller = ref<HTMLElement | null>(null);
 /**
  * @type {import('vue').Ref<number>}
  */
 const width = ref(SUGGESTIONS_POPUP_WIDTH);
 
+const props = defineProps<{
+    options: SuggestionOption[];
+    focusIndex?: number;
+    searchText?: string;
+    field: HTMLElement;
+    caretPos: SuggestionCaretPosition;
+}>();
+
+/*
 const props = defineProps({
     options: {
         type: Array,
@@ -71,7 +85,7 @@ const props = defineProps({
         type: Object,
         required: true,
     },
-});
+}); */
 
 const offset = computed(() => {
     const { caretPos } = props;
@@ -96,10 +110,11 @@ watch(
         if (scroller.value === null) return;
 
         const parentHeight = scroller.value.offsetHeight;
-        const childHeight = scroller.value.children[0].offsetHeight;
+        const childHeight = (scroller.value.children[0] as HTMLElement)
+            .offsetHeight;
 
         // Get the scroll position of the top of the focused element
-        const focusedChildTop = childHeight * focusIndex;
+        const focusedChildTop = childHeight * (focusIndex ?? 0);
         // Get the centre
         const focusedChildMiddle = focusedChildTop + childHeight / 2;
         // Offset to centre in the parent scrolling element
@@ -111,14 +126,15 @@ watch(
 );
 
 onMounted(() => {
-    scroller.value.scrollTo(0, 0);
+    scroller.value?.scrollTo(0, 0);
 });
 
-const handleClick = (e) => {
+const handleClick = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    const target = e.target as HTMLElement | null;
     emit('suggestions-selected', {
-        recipe_id: e.target.getAttribute('data-id'),
+        recipe_id: target?.getAttribute('data-id'),
     });
 };
 </script>

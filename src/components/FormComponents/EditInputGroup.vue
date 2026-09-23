@@ -14,7 +14,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 :class="fieldType"
             >
                 <div v-if="showStepNumber" class="step-number">
-                    {{ parseInt(idx) + 1 }}
+                    {{ idx + 1 }}
                 </div>
                 <input
                     v-if="fieldType === 'text'"
@@ -70,11 +70,15 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 <SuggestionsPopup
                     v-if="
                         suggestionsPopupVisible &&
+                        suggestionsData &&
                         suggestionsData.fieldIndex === idx
                     "
                     ref="suggestionsPopupElement"
-                    v-bind="suggestionsData"
                     :options="filteredSuggestionOptions"
+                    :field="suggestionsData.field"
+                    :caret-pos="suggestionsData.caretPos"
+                    :search-text="suggestionsData.searchText"
+                    :focus-index="suggestionsData.focusIndex"
                     @suggestions-selected="handleSuggestionsPopupSelectedEvent"
                 />
             </li>
@@ -86,15 +90,16 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
 import { getCurrentInstance, nextTick, ref, defineModel } from 'vue';
 import TriangleUpIcon from 'icons/TriangleSmallUp.vue';
 import TriangleDownIcon from 'icons/TriangleSmallDown.vue';
 
 import SuggestionsPopup from '../Modals/SuggestionsPopup.vue';
 import useSuggestionPopup from '../../composables/useSuggestionsPopup';
+import type { SuggestionData } from '../../types/Suggestion';
 
-const log = getCurrentInstance().proxy.$log;
+const t = window.t;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 
 const emit = defineEmits(['input']);
 
@@ -126,8 +131,7 @@ const props = defineProps({
     },
 });
 
-const value = defineModel({
-    type: Array,
+const value = defineModel<string[]>({
     required: true,
 });
 
@@ -135,13 +139,15 @@ const value = defineModel({
 /**
  * @type {import('vue').Ref<HTMLElement | null>}
  */
-const listField = ref(null);
-const suggestionsData = ref(null);
+const listField = ref<Array<HTMLInputElement | HTMLTextAreaElement> | null>(
+    null,
+);
+const suggestionsData = ref<SuggestionData | null>(null);
 // helper variables
 /**
  * @type {import('vue').Ref<number | null>}
  */
-const lastFocusedFieldIndex = ref(null);
+const lastFocusedFieldIndex = ref<number | null>(null);
 /**
  * @type {import('vue').Ref<boolean>}
  */
@@ -160,10 +166,10 @@ const {
     handleSuggestionsPopupSelectedEvent,
 } = useSuggestionPopup(suggestionsData, value, emit, log, props);
 
-const linesMatchAtPosition = (lines, i) =>
+const linesMatchAtPosition = (lines: string[], i: number) =>
     lines.every((line) => line[i] === lines[0][i]);
 
-const findCommonPrefix = (lines) => {
+const findCommonPrefix = (lines: string[]) => {
     // Find the substring common to the array of strings
     // Inspired from https://stackoverflow.com/questions/68702774/longest-common-prefix-in-javascript
 
@@ -199,7 +205,7 @@ const addNewEntry = async (
     if (focusAfterInsert) {
         await nextTick();
         const listFields = listField.value;
-        if (listFields.length > entryIdx) {
+        if (listFields && listFields.length > entryIdx) {
             listFields[entryIdx].focus();
         }
     }
@@ -208,17 +214,18 @@ const addNewEntry = async (
 /**
  * Delete an entry from the list
  */
-const deleteEntry = (index) => {
+const deleteEntry = (index: number) => {
     value.value.splice(index, 1);
 };
 
 /**
  * Handle paste in input field or textarea
  */
-const handlePaste = async (e) => {
+const handlePaste = async (e: ClipboardEvent) => {
     // get data from clipboard to keep newline characters, which are stripped
     // from the data pasted in the input field (e.target.value)
-    const clipboardData = e.clipboardData || window.clipboardData;
+    const clipboardData = e.clipboardData;
+    if (!clipboardData) return;
     const pastedData = clipboardData.getData('Text');
     const inputLinesArray = pastedData
         .split(/\r\n|\r|\n/g)
@@ -238,8 +245,9 @@ const handlePaste = async (e) => {
 
     e.preventDefault();
 
-    const $li = e.currentTarget.closest('li');
-    const $ul = $li.closest('ul');
+    const $li = (e.currentTarget as HTMLElement).closest('li');
+    const $ul = $li?.closest('ul');
+    if (!$li || !$ul) return;
     const $insertedIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
 
     // Remove the common prefix from each line of the pasted text
@@ -264,7 +272,7 @@ const handlePaste = async (e) => {
     // to accidentally replace all newlines with spaces before splitting
     // Fixes #713
     for (let i = 0; i < inputLinesArray.length; ++i) {
-        inputLinesArray[i] = inputLinesArray[i].trim().replaceAll(/\s+/g, ' ');
+        inputLinesArray[i] = inputLinesArray[i].trim().replace(/\s+/g, ' ');
     }
 
     const addNewEntriesAwaitables = [];
@@ -283,13 +291,13 @@ const handlePaste = async (e) => {
         indexToFocus -= 1;
     }
     // this.$refs["list-field"][indexToFocus].focus()
-    listField.value[indexToFocus].focus();
+    listField.value?.[indexToFocus]?.focus();
 };
 
 /**
  * Catches enter and key down presses and either adds a new row or focuses the one below
  */
-const keyDown = async (e) => {
+const keyDown = async (e: KeyboardEvent) => {
     // If, e.g., enter has been pressed in the multiselect popup to select an option,
     // ignore the following keyup event
     if (ignoreNextKeyUp.value) {
@@ -324,26 +332,28 @@ const keyDown = async (e) => {
     e.preventDefault();
 
     // Get the index of the pressed list item
-    const $li = e.currentTarget.closest('li');
-    const $ul = $li.closest('ul');
+    const $li = (e.currentTarget as HTMLElement).closest('li');
+    const $ul = $li?.closest('ul');
+    if (!$li || !$ul) return;
     const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
 
-    if ($pressedLiIndex >= this.$refs['list-field'].length - 1) {
+    if ($pressedLiIndex >= (listField.value?.length ?? 0) - 1) {
         await addNewEntry();
     } else {
         // Focus the next input or textarea
         // We have to check for both, as inputs are used for
         // ingredients and textareas are used for instructions
-        $ul.children[$pressedLiIndex + 1]
-            .querySelector('input, textarea')
-            .focus();
+        const nextField = $ul.children[$pressedLiIndex + 1]?.querySelector<
+            HTMLInputElement | HTMLTextAreaElement
+        >('input, textarea');
+        nextField?.focus();
     }
 };
 
 /**
  * Shows the recipe linking popup when # is pressed
  */
-const keyUp = (e) => {
+const keyUp = (e: KeyboardEvent) => {
     // If, e.g., enter has been pressed in the multiselect popup to select an option,
     // ignore the following keyup event
     if (ignoreNextKeyUp.value) {
@@ -351,15 +361,16 @@ const keyUp = (e) => {
         return;
     }
 
-    const $li = e.currentTarget.closest('li');
-    const $ul = $li.closest('ul');
+    const $li = (e.currentTarget as HTMLElement).closest('li');
+    const $ul = $li?.closest('ul');
+    if (!$li || !$ul) return;
     // noinspection UnnecessaryLocalVariableJS
     const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
     lastFocusedFieldIndex.value = $pressedLiIndex;
     handleSuggestionsPopupKeyUp(e);
 };
 
-const moveEntryDown = (index) => {
+const moveEntryDown = (index: number) => {
     if (index >= value.value.length - 1) {
         // Already at the end of array
         return;
@@ -372,7 +383,7 @@ const moveEntryDown = (index) => {
     }
 };
 
-const moveEntryUp = (index) => {
+const moveEntryUp = (index: number) => {
     if (index < 1) {
         // Already at the start of array
         return;

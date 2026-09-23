@@ -20,7 +20,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :recipes="recipes"
                     :is-loading="loading"
                     :is-visible="isFilterControlsVisible"
-                 />
+                />
                 <RecipeFilterControlsModal
                     v-if="isMobile && showFiltersInRecipeList"
                     v-model="filterValue"
@@ -186,7 +186,8 @@ const sortRecipes = (recipes: any[], recipeProperty: string, order: string) => {
                 recipeProperty === 'dateModified'
             ) {
                 return (
-                    new Date(r1[recipeProperty]).getTime() - new Date(r2[recipeProperty]).getTime()
+                    new Date(r1[recipeProperty]).getTime() -
+                    new Date(r2[recipeProperty]).getTime()
                 );
             }
             if (recipeProperty === 'name') {
@@ -202,7 +203,10 @@ const sortRecipes = (recipes: any[], recipeProperty: string, order: string) => {
             recipeProperty === 'dateCreated' ||
             recipeProperty === 'dateModified'
         ) {
-            return new Date(r2[recipeProperty]).getTime() - new Date(r1[recipeProperty]).getTime();
+            return (
+                new Date(r2[recipeProperty]).getTime() -
+                new Date(r1[recipeProperty]).getTime()
+            );
         }
         if (recipeProperty === 'name') {
             return r2[recipeProperty].localeCompare(r1[recipeProperty]);

@@ -33,7 +33,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
         </template>
         <template #action>
             <router-link :to="'/recipe/create'">
-                <NcButton type="primary">{{
+                <NcButton variant="primary">{{
                     t('cookbook', 'Create new recipe!')
                 }}</NcButton>
             </router-link>
@@ -42,7 +42,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-const t = window.t;
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
 import { NcButton, NcEmptyContent } from '@nextcloud/vue';
@@ -50,6 +49,8 @@ import { useRoute } from 'vue-router';
 import useDelayedDisplay, {
     DelayedDisplayProps,
 } from '../../composables/useDelayedDisplay';
+
+const t = window.t;
 
 const route = useRoute();
 
@@ -64,7 +65,9 @@ const delayedDisplay = useDelayedDisplay(props.delay);
  * True, if the recipe list is shown for a selected category or the 'undefined' category and not "All recipes".
  */
 const isCategorySelected = computed(
-    () => route.name.substring(1, 9) === 'category',
+    () =>
+        typeof route.name === 'string' &&
+        route.name.substring(1, 9) === 'category',
 );
 </script>
 <script lang="ts">

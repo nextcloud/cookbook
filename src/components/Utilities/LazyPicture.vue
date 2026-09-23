@@ -62,17 +62,19 @@ const isPreviewLoading = ref(true);
 /** @type {Ref<UnwrapRef<boolean>>} */
 const isLoading = ref(true);
 /** @type {HTMLElement|null} */
-const pictureElement = ref(null);
+const pictureElement = ref<HTMLElement | null>(null);
 /** @type {HTMLElement|null} */
-const fullImage = ref(null);
+const fullImage = ref<HTMLImageElement | null>(null);
 /** @type {HTMLElement|null} */
-const previewImage = ref(null);
+const previewImage = ref<HTMLImageElement | null>(null);
 
 // Methods
 // callback for fully-loaded image event
 const onThumbnailFullyLoaded = () => {
     fullImage.value?.removeEventListener('load', onThumbnailFullyLoaded);
-    pictureElement.value?.removeChild(previewImage.value);
+    if (previewImage.value) {
+        pictureElement.value?.removeChild(previewImage.value);
+    }
     isLoading.value = false;
 };
 
@@ -90,7 +92,7 @@ const onThumbnailPreviewLoaded = () => {
 
 // Computed properties
 const style = computed(() => {
-    const tmpStyle = {};
+    const tmpStyle: Record<string, string | number> = {};
     if (props.width) {
         tmpStyle.width = `${props.width}px`;
     }
@@ -111,20 +113,22 @@ onMounted(() => {
                 'load',
                 onThumbnailPreviewLoaded,
             );
-            previewImage.value.src = props.blurredPreviewSrc;
+            if (previewImage.value) {
+                previewImage.value.src = props.blurredPreviewSrc ?? '';
+            }
         },
     });
     observer.observe();
 });
 
 onUnmounted(() => {
-    if (previewImage.value !== 'undefined' && previewImage.value != null) {
+    if (previewImage.value != null) {
         previewImage.value.removeEventListener(
             'load',
             onThumbnailPreviewLoaded,
         );
     }
-    if (fullImage.value !== 'undefined' && fullImage.value != null) {
+    if (fullImage.value != null) {
         fullImage.value.removeEventListener('load', onThumbnailFullyLoaded);
     }
 });
