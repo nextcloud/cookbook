@@ -29,7 +29,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcContent>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import { NcContent, NcAppContent } from '@nextcloud/vue';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
@@ -52,7 +53,7 @@ const selectFolder = () => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'InvalidGuest',
 };

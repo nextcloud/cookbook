@@ -140,7 +140,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import {
     computed,
     getCurrentInstance,
@@ -785,7 +786,7 @@ if (route.params.id) {
 setup();
 </script>
 
-<script>
+<script lang="ts">
 export default {
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a

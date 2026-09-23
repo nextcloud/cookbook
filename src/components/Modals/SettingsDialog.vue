@@ -181,7 +181,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcAppSettingsDialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
+const t = window.t;
 import {
     getCurrentInstance,
     onBeforeUnmount,
@@ -459,7 +461,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'SettingsDialog',
 };

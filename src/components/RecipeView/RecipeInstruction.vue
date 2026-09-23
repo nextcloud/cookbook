@@ -10,7 +10,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </li>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
 defineProps({
@@ -32,7 +32,7 @@ const toggleDone = () => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeInstruction',
 };

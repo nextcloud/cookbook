@@ -85,7 +85,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import { getCurrentInstance, nextTick, ref, defineModel } from 'vue';
 import TriangleUpIcon from 'icons/TriangleSmallUp.vue';
 import TriangleDownIcon from 'icons/TriangleSmallDown.vue';
@@ -381,7 +382,7 @@ const moveEntryUp = (index) => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditInputGroup',
 };

@@ -30,7 +30,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </picture>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import lozad from 'lozad';
 
@@ -130,7 +131,7 @@ onUnmounted(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'LazyPicture',
 };

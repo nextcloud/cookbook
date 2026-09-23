@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     <div class="container">
         <div class="form-group">
             <RecipeSortSelect
-                v-model="localOrderBy"
+                v-model:value="localOrderBy"
                 :aria-label="
                     t('cookbook', 'Show settings for filtering recipe list')
                 "
@@ -159,7 +159,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
+const t = window.t;
+const n = window.n;
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
@@ -177,7 +180,7 @@ const props = defineProps({
         default: () => ({
             filters: { categories: null, keywords: null },
             orderBy: {
-                label: t('cookbook', 'Name'),
+                label: window.t('cookbook', 'Name'),
                 iconUp: true,
                 recipeProperty: 'name',
                 order: 'ascending',

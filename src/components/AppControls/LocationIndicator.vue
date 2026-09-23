@@ -10,7 +10,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineProps } from 'vue';
 
 defineProps({
@@ -18,7 +18,7 @@ defineProps({
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'LocationIndicator',
 };

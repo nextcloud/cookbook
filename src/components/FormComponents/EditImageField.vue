@@ -29,7 +29,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs';
 import { defineProps } from 'vue';
 
@@ -59,7 +60,7 @@ const pickImage = (e) => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditImageField',
 };

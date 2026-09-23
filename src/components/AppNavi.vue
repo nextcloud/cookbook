@@ -91,7 +91,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcAppNavigation>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import {
     computed,
     getCurrentInstance,
@@ -385,7 +386,7 @@ onMounted(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AppNavi',
 };

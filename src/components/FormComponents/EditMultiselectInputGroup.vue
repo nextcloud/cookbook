@@ -62,7 +62,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
+const t = window.t;
 import { ref, computed, onBeforeMount } from 'vue';
 
 import { NcButton, NcSelect } from '@nextcloud/vue';
@@ -75,7 +77,7 @@ const props = defineProps({
     },
     labelSelectPlaceholder: {
         type: String,
-        default: t('cookbook', 'Select option'),
+        default: window.t('cookbook', 'Select option'),
     },
     /** Selectable options.
      * Array of option objects with keys: key, label, and placeholder
@@ -199,7 +201,7 @@ onBeforeMount(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditMultiselectInputGroup',
 };

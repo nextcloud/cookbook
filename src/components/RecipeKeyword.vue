@@ -13,7 +13,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </a>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import { ref } from 'vue';
 
 const emit = defineEmits(['keyword-clicked']);
@@ -41,7 +42,7 @@ const clicked = () => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeKeyword',
 };

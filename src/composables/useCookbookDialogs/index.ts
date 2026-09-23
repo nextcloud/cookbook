@@ -10,7 +10,7 @@ const buttons = ref({});
 const title = ref('');
 const message = ref('');
 const allowClose = ref(true);
-let nextClosingValue = null;
+let nextClosingValue: any = null;
 
 export function useCookbookDialogs() {
 	function show(

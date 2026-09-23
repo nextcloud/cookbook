@@ -41,7 +41,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcEmptyContent>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
+const t = window.t;
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
 import { NcButton, NcEmptyContent } from '@nextcloud/vue';
@@ -66,7 +68,7 @@ const isCategorySelected = computed(
     () => route.name.substring(1, 9) === 'category',
 );
 </script>
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeList',
 };

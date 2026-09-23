@@ -11,13 +11,14 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
             <div class="form-group">
                 <NcTextField
-                    :value.sync="searchTerm"
+                    v-model="searchTerm"
                     :label="t('cookbook', 'Name')"
                     :placeholder="t('cookbook', 'Search term')"
                     :aria-placeholder="t('cookbook', 'Search term')"
                     trailing-button-icon="close"
                     :show-trailing-button="searchTerm !== ''"
                     @trailing-button-click="clearSearchTerm"
+                    @input="submitNameFilter"
                     ><SearchIcon :size="20"
                 /></NcTextField>
             </div>
@@ -35,7 +36,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :multiple="true"
                     :no-wrap="true"
                     :placeholder="t('cookbook', 'All categories')"
+                    :aria-label="t('cookbook', 'Categories')"
                     :aria-placeholder="t('cookbook', 'All categories')"
+                    @input="submitFilters"
                     ><template #list-header>
                         <li style="padding: 0.25rem; text-align: center">
                             {{
@@ -73,6 +76,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                 'Show recipes containing all selected categories',
                             ),
                         }"
+                        @update:model-value="submitFilters"
                     />
 
                     <span
@@ -113,7 +117,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :multiple="true"
                     :no-wrap="true"
                     :placeholder="t('cookbook', 'All keywords')"
+                    :aria-label="t('cookbook', 'Keywords')"
                     :aria-placeholder="t('cookbook', 'All keywords')"
+                    @input="submitFilters"
                 >
                     <template #list-header>
                         <li style="padding: 0.25rem; text-align: center">
@@ -188,7 +194,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 <NcButton
                     type="primary"
                     class="self-end"
-                    @click="submitFilters"
+                    @click="submitAndClose"
                 >
                     {{
                         /* TRANSLATORS Button text for applying recipe-filter values */
@@ -200,8 +206,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcModal>
 </template>
 
-<script setup>
-import { defineEmits, defineProps } from 'vue';
+<script setup lang="ts">
+// @ts-nocheck
+const t = window.t;
+const n = window.n;
+import { defineEmits, defineProps, computed, defineModel, nextTick, watch } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import { NcButton, NcModal, NcSelect, NcTextField } from '@nextcloud/vue';
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
@@ -212,12 +221,12 @@ import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 const emit = defineEmits(['close', 'input']);
 
 const props = defineProps({
-    value: {
-        type: Object,
-        default() {
-            return { categories: [], keywords: [] };
-        },
-    },
+    // value: {
+    //     type: Object,
+    //     default() {
+    //         return { categories: [], keywords: [] };
+    //     },
+    // },
     fieldLabel: { type: String, default: '' },
     /**
      * List of sections that should be hidden from the filters list, e.g., `['categories', 'keywords']`
@@ -226,6 +235,13 @@ const props = defineProps({
     isLoading: { type: Boolean, default: false },
     isVisible: { type: Boolean, default: false },
     recipes: { type: Array, default: () => [] },
+});
+
+const value = defineModel({
+    type: Object,
+    default() {
+        return { categories: [], keywords: [] };
+    },
 });
 
 const {
@@ -256,11 +272,41 @@ function closeModal() {
     emit('close');
 }
 
+const emittedValue = computed(() => ({
+    filters: localFiltersValue.value,
+}));
+
+async function submitNameFilter() {
+    await nextTick();
+    legacyStore.setRecipeFilters(searchTerm.value);
+}
+
 function submitFilters() {
     emit('input', localFiltersValue.value);
-    legacyStore.setRecipeFilters(searchTerm.value);
+    submitNameFilter();
+}
+
+function submitAndClose() {
+    submitFilters();
     emit('close');
 }
+
+// TODO: This is just a quick fix to make the filters submit when the operator toggles are changed. A better solution would be to use v-model consequently
+watch(categoriesOperatorToggleValue, () => {
+    submitFilters();
+});
+watch(keywordsOperatorToggleValue, () => {
+    submitFilters();
+});
+watch(selectedCategories, () => {
+    submitFilters();
+});
+watch(selectedKeywords, () => {
+    submitFilters();
+});
+watch(searchTerm, () => {
+    submitFilters();
+});
 </script>
 
 <style lang="scss" scoped>

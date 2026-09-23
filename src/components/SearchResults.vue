@@ -14,7 +14,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+// @ts-nocheck
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
@@ -171,7 +172,7 @@ onDeactivated(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'SearchResults',
 };
