@@ -163,7 +163,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
-import { NcButton, NcSelect, NcTextField } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
+import NcSelect from '@nextcloud/vue/components/NcSelect';
+import NcTextField from '@nextcloud/vue/components/NcTextField';
 import { computed, ref, watch } from 'vue';
 import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 import RecipeSortSelect from './RecipeSortSelect.vue';

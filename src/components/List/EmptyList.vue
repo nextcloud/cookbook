@@ -44,7 +44,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 <script setup lang="ts">
 import { computed } from 'vue';
 import RecipeIcon from 'vue-material-design-icons/ChefHat.vue';
-import { NcButton, NcEmptyContent } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
+import NcEmptyContent from '@nextcloud/vue/components/NcEmptyContent';
 import { useRoute } from 'vue-router';
 import useDelayedDisplay, {
     DelayedDisplayProps,

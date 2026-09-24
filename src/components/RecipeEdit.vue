@@ -153,7 +153,8 @@ import {
 
 import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 
-import { NcActions, NcActionButton } from '@nextcloud/vue';
+import NcActions from '@nextcloud/vue/components/NcActions';
+import NcActionButton from '@nextcloud/vue/components/NcActionButton';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';

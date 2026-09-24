@@ -375,7 +375,7 @@ import normalizeMarkdown from 'cookbook/js/title-rename';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 import yieldCalculator from 'cookbook/js/yieldCalculator';
 import ContentCopyIcon from 'icons/ContentCopy.vue';
-import { NcButton } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
 import { showError, showSuccess } from '@nextcloud/dialogs';
 import { useLegacyStore } from '../../store';
 import emitter from '../../bus';

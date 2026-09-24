@@ -65,7 +65,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 <script setup lang="ts">
 import { ref, computed, onBeforeMount } from 'vue';
 
-import { NcButton, NcSelect } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
+import NcSelect from '@nextcloud/vue/components/NcSelect';
 import DeleteIcon from 'vue-material-design-icons/TrashCanOutline.vue';
 import type { MultiselectOption } from '../../types/MultiselectOption';
 
