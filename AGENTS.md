@@ -3,7 +3,9 @@
   - SPDX-License-Identifier: MIT
 -->
 
-## Additional restictions and concerns
+## Additional restrictions and concerns
+
+### Temporary files and redirections
 
 In case you need to create temporary files, use the folder `.tmp` in the main (cookbook) repository. Clean up after your work. Try to avoid writing outside the project for simplification of processes.
 
@@ -14,6 +16,12 @@ npm run type-check >.tmp/cookbook-type-check.log 2>&1
 ```
 
 For type-checking, avoid compound shell commands and shell variables. Run npm run type-check separately, write logs only to .tmp/ inside the workspace, and run grep/sed/head as separate commands. Do not use /tmp.
+
+### Committing to git
+
+Normally, you do not commit to git unless you are explicitly asked to do so by the user.
+
+If you commit, make sure, you use `-s -S` to sign the commits and sign them off. Further, this is the cookbook project. For conventional commits, you do not need to add cookbook as a scope there.
 
 ## Nextcloud Contribution Policy
 
