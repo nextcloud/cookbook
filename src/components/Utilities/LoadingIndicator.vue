@@ -12,7 +12,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import LoadingIcon from 'icons/Loading.vue';
 import useDelayedDisplay from '../../composables/useDelayedDisplay';
 
@@ -26,7 +26,7 @@ const props = defineProps({
 
 const delayedDisplay = useDelayedDisplay(props.delay);
 </script>
-<script>
+<script lang="ts">
 export default {
     name: 'LoadingIndicator',
 };

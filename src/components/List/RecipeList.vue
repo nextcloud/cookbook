@@ -14,9 +14,16 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 <EmptyList />
             </div>
             <div v-else>
+                <RecipeListFilter
+                    v-model:filter="filter"
+                    :preapplied-filters="props.preappliedFilters"
+                    :recipes="recipes"
+                    :is-loading="loading"
+                    :is-visible="isFilterControlsVisible"
+                />
                 <RecipeFilterControlsModal
                     v-if="isMobile && showFiltersInRecipeList"
-                    v-model:value="filterValue"
+                    v-model="filterValue"
                     :preapplied-filters="props.preappliedFilters"
                     :recipes="recipes"
                     :is-loading="loading"
@@ -46,7 +53,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                         aria-label="t('cookbook', 'Show settings for filtering recipe list')"
                     />
                     <NcButton
-                        :type="'secondary'"
+                        :variant="'secondary'"
                         aria-label="t('cookbook', 'Show settings for filtering recipe list')"
                         :title="t('cookbook', 'Show filter settings')"
                         @click="toggleFilterControls"
@@ -70,7 +77,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
@@ -88,11 +95,14 @@ import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
 import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
 import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
+import RecipeListFilter from './RecipeListFilter.vue';
 import RecipeSortSelect from './RecipeSortSelect.vue';
 import { AndOperator } from '../../js/LogicOperators';
+import { Filter } from 'cookbook/types/RecipeListFilter';
 
 const isMobile = useIsMobile();
 const legacyStore = useLegacyStore();
+const t = window.t;
 
 const props = defineProps({
     loading: {
@@ -111,6 +121,12 @@ const props = defineProps({
         default: () => [],
         required: true,
     },
+});
+
+const filter = ref<Filter>({
+    categories: { operator: 'and', entries: [] },
+    keywords: { operator: 'and', entries: [] },
+    searchTerm: '',
 });
 
 /**
@@ -151,7 +167,7 @@ onMounted(() => {
 /**
  * Handle updated value of the inline filter controls. Should be fixed in vue3 by using two v-model directives.
  */
-function handleInlineControlsValueUpdated(ev) {
+function handleInlineControlsValueUpdated(ev: any) {
     inlineControlsValue.value = ev;
     filterValue.value = inlineControlsValue.value.filters;
     orderBy.value = inlineControlsValue.value.orderBy;
@@ -160,9 +176,9 @@ function handleInlineControlsValueUpdated(ev) {
 /* Sort recipes according to the property of the recipe ascending or
  * descending
  */
-const sortRecipes = (recipes, recipeProperty, order) => {
+const sortRecipes = (recipes: any[], recipeProperty: string, order: string) => {
     const rec = JSON.parse(JSON.stringify(recipes));
-    return rec.sort((r1, r2) => {
+    return rec.sort((r1: any, r2: any) => {
         if (order !== 'ascending' && order !== 'descending') return 0;
         if (order === 'ascending') {
             if (
@@ -170,7 +186,8 @@ const sortRecipes = (recipes, recipeProperty, order) => {
                 recipeProperty === 'dateModified'
             ) {
                 return (
-                    new Date(r1[recipeProperty]) - new Date(r2[recipeProperty])
+                    new Date(r1[recipeProperty]).getTime() -
+                    new Date(r2[recipeProperty]).getTime()
                 );
             }
             if (recipeProperty === 'name') {
@@ -186,7 +203,10 @@ const sortRecipes = (recipes, recipeProperty, order) => {
             recipeProperty === 'dateCreated' ||
             recipeProperty === 'dateModified'
         ) {
-            return new Date(r2[recipeProperty]) - new Date(r1[recipeProperty]);
+            return (
+                new Date(r2[recipeProperty]).getTime() -
+                new Date(r1[recipeProperty]).getTime()
+            );
         }
         if (recipeProperty === 'name') {
             return r2[recipeProperty].localeCompare(r1[recipeProperty]);
@@ -250,11 +270,11 @@ const recipesDateModifiedDesc = computed(() =>
 
 // An array of recipe objects of all recipes with links to the recipes and a property if the recipe is to be shown
 const recipeObjects = computed(() => {
-    function makeObject(rec) {
+    function makeObject(rec: any) {
         return {
             recipe: rec,
             show: filteredRecipes.value
-                .map((r) => r.recipe_id)
+                .map((r: any) => r.recipe_id)
                 .includes(rec.recipe_id),
         };
     }
@@ -293,7 +313,7 @@ const showFiltersInRecipeList = computed(
 );
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeList',
 };

@@ -47,9 +47,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import moment from '@nextcloud/moment';
 import LazyPicture from '../Utilities/LazyPicture.vue';
+
+const t = window.t;
 
 defineProps({
     recipe: {
@@ -58,7 +60,7 @@ defineProps({
     },
 });
 
-const formatDateTime = (dt) => {
+const formatDateTime = (dt: string | null) => {
     if (!dt) return null;
     const date = moment(dt, moment.ISO_8601);
     if (!date.isValid()) {
@@ -68,7 +70,7 @@ const formatDateTime = (dt) => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeCard',
 };

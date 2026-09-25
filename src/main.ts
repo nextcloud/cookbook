@@ -40,14 +40,25 @@ declare global {
 			| Nextcloud.v18.OC
 			| Nextcloud.v19.OC
 			| Nextcloud.v20.OC;
-		n: string;
-		t: string;
+		n(
+			app: string,
+			textSingular: string,
+			textPlural: string,
+			count: number,
+			vars?: Record<string, unknown>,
+		): string;
+		t(
+			app: string,
+			text: string,
+			vars?: Record<string, unknown>,
+			count?: number,
+		): string;
 		escapeHTML(text: string): string;
 	}
 }
 
-declare module 'vue/types/vue' {
-	export interface VueConstructor<V extends Vue = Vue> {
+declare module 'vue' {
+	interface ComponentCustomProperties {
 		$log: {
 			debug(...args: (string | object)[]): void;
 			info(...args: (string | object)[]): void;

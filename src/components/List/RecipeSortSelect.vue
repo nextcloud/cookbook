@@ -33,7 +33,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcSelect>
 </template>
 
-<script setup>
+<script setup lang="ts">
+const t = window.t;
 import { NcSelect } from '@nextcloud/vue';
 import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue';
 import TriangleSmallUpIcon from 'vue-material-design-icons/TriangleSmallUp.vue';
@@ -89,7 +90,7 @@ const recipeOrderingOptions = ref([
     },
 ]);
 
-const value = defineModel({
+const value = defineModel('value', {
     type: Object,
     required: true,
 });

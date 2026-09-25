@@ -36,21 +36,25 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             />
         </div>
         <SuggestionsPopup
-            v-if="suggestionsPopupVisible"
+            v-if="suggestionsPopupVisible && suggestionsData"
             ref="suggestionsPopupElement"
-            v-bind="suggestionsData"
             :options="filteredSuggestionOptions"
+            :field="suggestionsData?.field"
+            :caret-pos="suggestionsData?.caretPos"
+            :search-text="suggestionsData?.searchText"
+            :focus-index="suggestionsData?.focusIndex"
             @suggestions-selected="handleSuggestionsPopupSelectedEvent"
         />
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { getCurrentInstance, ref, watch, defineModel } from 'vue';
 import SuggestionsPopup from '../Modals/SuggestionsPopup.vue';
 import useSuggestionPopup from '../../composables/useSuggestionsPopup';
+import type { SuggestionData } from '../../types/Suggestion';
 
-const log = getCurrentInstance().proxy.$log;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 
 const emit = defineEmits(['input']);
 
@@ -86,7 +90,7 @@ const value = defineModel({
  * @type {import('vue').Ref<HTMLElement | null>}
  */
 const inputField = ref(null);
-const suggestionsData = ref(null);
+const suggestionsData = ref<SuggestionData | null>(null);
 /**
  * @type {import('vue').Ref<string>}
  */
@@ -103,7 +107,7 @@ const {
     handleSuggestionsPopupSelectedEvent,
 } = useSuggestionPopup(suggestionsData, null, emit, log, props);
 
-const keyDown = (e) => {
+const keyDown = (e: KeyboardEvent) => {
     // Redirect to suggestions handler if in suggestion mode
     if (suggestionsPopupVisible) {
         handleSuggestionsPopupKeyDown(e);
@@ -111,7 +115,7 @@ const keyDown = (e) => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditInputField',
 };

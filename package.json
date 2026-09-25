@@ -29,6 +29,8 @@
     "stylelint": "stylelint src",
     "stylelint-fix": "stylelint --fix src",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest",
+    "type-check": "vue-tsc --noEmit",
+    "type-check-watch": "vue-tsc --noEmit --watch",
     "view-bundle-analysis": "npx rollup-plugin-visualizer --open .bundle-analysis.json --filename ./.bundle-analysis.html"
   },
   "dependencies": {
@@ -82,7 +84,8 @@
     "stylelint-scss": "^7.0.0",
     "ts-loader": "^9.5.1",
     "typescript": "~6.0.2",
-    "vite": "^7.1.10"
+    "vite": "^7.1.10",
+    "vue-tsc": "^3.3.11"
   },
   "engines": {
     "node": "^24.0.0",

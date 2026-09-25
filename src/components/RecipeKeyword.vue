@@ -13,7 +13,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </a>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 
 const emit = defineEmits(['keyword-clicked']);
@@ -32,16 +32,16 @@ defineProps({
 /**
  * @type {import('vue').Ref<HTMLElement | null>}
  */
-const link = ref(null);
+const link = ref<HTMLElement | null>(null);
 
 const clicked = () => {
-    if (!link.value.classList.contains('disabled')) {
+    if (link.value && !link.value.classList.contains('disabled')) {
         emit('keyword-clicked');
     }
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeKeyword',
 };

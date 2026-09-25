@@ -140,7 +140,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
     computed,
     getCurrentInstance,
@@ -173,10 +173,14 @@ import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 
 import { useLegacyStore } from '../store';
 import emitter from '../bus';
+import type { Recipe } from '../types/Recipe';
+import type { LegacyEditRecipe } from '../types/LegacyEditRecipe';
+import type { RequestError } from '../types/RequestError';
 
-const log = getCurrentInstance().proxy.$log;
+const t = window.t;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 const route = useRoute();
-const legacyStore = useLegacyStore();
+const legacyStore = useLegacyStore() as any;
 
 /* prettier-ignore */
 const CONFIRM_MSG = t('cookbook', 'You have unsaved changes! Do you still want to leave?');
@@ -200,7 +204,7 @@ defineProps({
  */
 const isLoading = ref(false);
 // Initialize the recipe schema, otherwise v-models in child components may not work
-const recipe = ref({
+const recipe = ref<LegacyEditRecipe>({
     id: 0,
     name: '',
     description: '',
@@ -218,7 +222,23 @@ const recipe = ref({
     nutrition: {},
 });
 
-const initRecipe = ref({});
+const initRecipe = ref<LegacyEditRecipe>({
+    id: 0,
+    name: '',
+    description: '',
+    url: '',
+    image: '',
+    prepTime: '',
+    cookTime: '',
+    totalTime: '',
+    recipeCategory: '',
+    keywords: '',
+    recipeYield: '',
+    tool: [],
+    recipeIngredient: [],
+    recipeInstructions: [],
+    nutrition: {},
+});
 
 // ==========================
 // These are helper variables
@@ -232,7 +252,7 @@ const formDirty = ref(false);
  * @type {import('vue').Ref<boolean>}
  */
 const savingRecipe = ref(false);
-const allCategories = ref([]);
+const allCategories = ref<string[]>([]);
 /**
  * @type {import('vue').Ref<boolean>}
  */
@@ -244,15 +264,15 @@ const isFetchingKeywords = ref(true);
 /**
  * @type {import('vue').Ref<Array>}
  */
-const allKeywords = ref([]);
+const allKeywords = ref<string[]>([]);
 /**
  * @type {import('vue').Ref<Array>}
  */
-const selectedKeywords = ref([]);
+const selectedKeywords = ref<string[]>([]);
 /**
  * @type {import('vue').Ref<Array>}
  */
-const allRecipes = ref([]);
+const allRecipes = ref<Recipe[]>([]);
 /**
  * @type {import('vue').Ref<Array>}
  */
@@ -366,7 +386,7 @@ const isNavigationDangerous = computed(
 const recipeYield = computed({
     get: () => String(recipe.value.recipeYield),
     set: (v) => {
-        recipe.value.recipeYield = Number(v);
+        recipe.value.recipeYield = String(v);
     },
 });
 
@@ -397,18 +417,18 @@ watch(
 /**
  * Add newly created category and set as selected.
  */
-const addCategory = (newCategory) => {
+const addCategory = (newCategory: string) => {
     allCategories.value.push(newCategory);
     recipe.value.recipeCategory = newCategory;
 };
 /**
  * Add newly created keyword.
  */
-const addKeyword = (newKeyword) => {
+const addKeyword = (newKeyword: string) => {
     allKeywords.value.push(newKeyword);
     selectedKeywords.value.push(newKeyword);
 };
-const beforeWindowUnload = (e) => {
+const beforeWindowUnload = (e: BeforeUnloadEvent) => {
     // We cannot use our fancy modal here because `beforeunload` does not wait for promises to resolve
     // However, we can avoid `window.confirm` by using `e.returnValue`
     if (isNavigationDangerous.value) {
@@ -432,7 +452,7 @@ const fetchCategories = async () => {
             }
         }
         isFetchingCategories.value = false;
-    } catch (e) {
+    } catch (e: unknown) {
         await showSimpleAlertModal(
             t('cookbook', 'Error'),
             t('cookbook', 'Failed to fetch categories'),
@@ -458,7 +478,7 @@ const fetchKeywords = async () => {
             }
         }
         isFetchingKeywords.value = false;
-    } catch (e) {
+    } catch (e: unknown) {
         await showSimpleAlertModal(
             t('cookbook', 'Error'),
             t('cookbook', 'Failed to fetch keywords'),
@@ -488,7 +508,8 @@ const save = async () => {
         legacyStore.setSavingRecipe({ saving: false });
         formDirty.value = false;
         helpers.goTo(`/recipe/${response.data}`);
-    } catch (e) {
+    } catch (error: unknown) {
+        const e = error as RequestError;
         if (e.response) {
             // Non 2xx state returned
 
@@ -603,7 +624,7 @@ const setup = async () => {
             showRecipeYield.value = false;
         } else if (!recipe.value.recipeYield) {
             showRecipeYield.value = false;
-            recipe.value.recipeYield = null;
+            recipe.value.recipeYield = '';
         } else {
             showRecipeYield.value = true;
         }
@@ -636,14 +657,16 @@ const loadRecipeData = async () => {
         legacyStore.setLoadingRecipe({
             recipe: -1,
         });
-    } else if (legacyStore.recipe.id === parseInt(route.params.id, 10)) {
+    } else if (
+        legacyStore.recipe.id === parseInt(String(route.params.id), 10)
+    ) {
         // Make the control row show that the recipe is reloading
         legacyStore.setReloadingRecipe({
-            recipe: route.params.id,
+            recipe: String(route.params.id),
         });
     }
     try {
-        const response = await api.recipes.get(route.params.id);
+        const response = await api.recipes.get(String(route.params.id));
 
         legacyStore.setRecipe({ recipe: response.data });
         recipe.value = response.data;
@@ -741,7 +764,12 @@ onMounted(() => {
         loadRecipeData();
     });
     emitter.off('categoryRenamed');
-    emitter.on('categoryRenamed', (val) => {
+    emitter.on('categoryRenamed', (rawValue) => {
+        if (!Array.isArray(rawValue) || rawValue.length < 2) return;
+        const val = [String(rawValue[0]), String(rawValue[1])] as [
+            string,
+            string,
+        ];
         // Update selectable categories
         const idx = allCategories.value.findIndex((c) => c === val[1]);
         if (idx >= 0) {
@@ -785,7 +813,7 @@ if (route.params.id) {
 setup();
 </script>
 
-<script>
+<script lang="ts">
 export default {
     // We can check if the user has browsed from the same recipe's view to this
     // edit and save some time by not reloading the recipe data, leading to a

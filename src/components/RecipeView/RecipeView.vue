@@ -25,10 +25,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 <div class="meta">
                     <h2 class="heading">{{ legacyStore.recipe.name }}</h2>
                     <div class="details">
-                        <div v-if="recipe.keywords.length">
-                            <ul v-if="recipe.keywords.length">
+                        <div v-if="recipe.keywords?.length">
+                            <ul v-if="recipe.keywords?.length">
                                 <RecipeKeyword
-                                    v-for="(keyword, idx) in recipe.keywords"
+                                    v-for="(keyword, idx) in recipe.keywords ??
+                                    []"
                                     :key="'keyw' + idx"
                                     :name="keyword"
                                     :title="
@@ -97,7 +98,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                         min="0"
                                         class="recipeYieldInput"
                                     />
-                                    <button @click="changeRecipeYield">
+                                    <button @click="() => changeRecipeYield()">
                                         <span class="icon-view-next" />
                                     </button>
                                     <button
@@ -156,7 +157,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                             <NcButton
                                 v-if="scaledIngredients.length"
                                 class="copy-ingredients print-hidden"
-                                :type="'tertiary'"
+                                variant="tertiary"
                                 aria-label="t('cookbook', 'Copy ingredients to the clipboard')"
                                 :title="t('cookbook', 'Copy ingredients')"
                                 @click="copyIngredientsToClipboard"
@@ -172,13 +173,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                 :key="'ingr' + idx"
                                 :ingredient="ingredient"
                                 :ingredient-has-correct-syntax="
-                                    ingredientsWithValidSyntax[idx]
+                                    ingredientSyntaxIsValid(idx)
                                 "
                                 :recipe-ingredients-have-subgroups="
                                     recipeIngredientsHaveSubgroups
                                 "
                                 :class="
-                                    ingredientsWithValidSyntax[idx]
+                                    ingredientSyntaxIsValid(idx)
                                         ? ''
                                         : 'ingredient-highlighted'
                                 "
@@ -357,7 +358,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
     computed,
     getCurrentInstance,
@@ -379,7 +380,8 @@ import { showError, showSuccess } from '@nextcloud/dialogs';
 import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 import { parseDateTime } from '../../composables/dateTimeHandling';
-
+import type { Recipe } from '../../types/Recipe';
+import type { RecipeTimer as RecipeTimerValue } from '../../types/RecipeTimer';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeImages from './RecipeImages.vue';
 import RecipeIngredient from './RecipeIngredient.vue';
@@ -389,11 +391,13 @@ import RecipeNutritionInfoItem from './RecipeNutritionInfoItem.vue';
 import RecipeTimer from './RecipeTimer.vue';
 import RecipeTool from './RecipeTool.vue';
 
+const t = window.t;
 const route = useRoute();
+const routeId = computed(() => String(route.params.id ?? ''));
 const router = useRouter();
-const legacyStore = useLegacyStore();
+const legacyStore = useLegacyStore() as any;
 
-const log = getCurrentInstance().proxy.$log;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 
 /**
  * @type {import('vue').Ref<boolean>}
@@ -410,38 +414,38 @@ const parsedDescription = ref('');
 /**
  * @type {import('vue').Ref<Array.<string>>}
  */
-const parsedIngredients = ref([]);
+const parsedIngredients = ref<string[]>([]);
 /**
  * @type {import('vue').Ref<Array.<string>>}
  */
-const parsedInstructions = ref([]);
+const parsedInstructions = ref<string[]>([]);
 /**
  * @type {import('vue').Ref<Array.<string>>}
  */
-const parsedTools = ref([]);
+const parsedTools = ref<string[]>([]);
 /**
  * @type {import('vue').Ref<number>}
  */
 const recipeYield = ref(0);
 
-let wakeLockSentinel = null;
+let wakeLockSentinel: WakeLockSentinel | null = null;
 
 // ===================
 // Computed properties
 // ===================
-const recipe = computed(() => {
-    const tmpRecipe = {
+const recipe = computed<Recipe>(() => {
+    const tmpRecipe: Recipe = {
         description: '',
         ingredients: [],
         instructions: [],
         keywords: [],
-        timerCook: null,
-        timerPrep: null,
-        timerTotal: null,
+        timerCook: null as RecipeTimerValue | null,
+        timerPrep: null as RecipeTimerValue | null,
+        timerTotal: null as RecipeTimerValue | null,
         tools: [],
         dateCreated: null,
         dateModified: null,
-        nutrition: null,
+        nutrition: {},
     };
 
     if (legacyStore.recipe === null) {
@@ -458,13 +462,13 @@ const recipe = computed(() => {
     if (legacyStore.recipe.recipeIngredient) {
         tmpRecipe.ingredients = Object.values(
             legacyStore.recipe.recipeIngredient,
-        ).map((i) => helpers.escapeHTML(i));
+        ).map((i) => helpers.escapeHTML(String(i)));
     }
 
     if (legacyStore.recipe.recipeInstructions) {
         tmpRecipe.instructions = Object.values(
             legacyStore.recipe.recipeInstructions,
-        ).map((i) => helpers.escapeHTML(i));
+        ).map((i) => helpers.escapeHTML(String(i)));
     }
 
     if (legacyStore.recipe.keywords) {
@@ -508,7 +512,7 @@ const recipe = computed(() => {
     }
 
     if (legacyStore.recipe.tool) {
-        tmpRecipe.tools = legacyStore.recipe.tool.map((i) =>
+        tmpRecipe.tools = legacyStore.recipe.tool.map((i: string) =>
             helpers.escapeHTML(i),
         );
     }
@@ -582,9 +586,12 @@ const scaledIngredients = computed(() =>
     ),
 );
 
-const ingredientsWithValidSyntax = computed(() =>
+const ingredientsWithValidSyntax = computed<boolean[]>(() =>
     parsedIngredients.value.map(yieldCalculator.isValidIngredientSyntax),
 );
+
+const ingredientSyntaxIsValid = (index: string | number): boolean =>
+    ingredientsWithValidSyntax.value[Number(index)] ?? false;
 
 const ingredientsSyntaxCorrect = computed(() =>
     ingredientsWithValidSyntax.value.every((x) => x),
@@ -593,13 +600,13 @@ const ingredientsSyntaxCorrect = computed(() =>
 // ===================
 // Methods
 // ===================
-const isNullOrEmpty = (str) =>
+const isNullOrEmpty = (str: unknown) =>
     !str || (typeof str === 'string' && str.trim().length === 0);
 
 /**
  * Callback for click on keyword
  */
-const keywordClicked = (keyword) => {
+const keywordClicked = (keyword: string) => {
     if (keyword) {
         router.push(`/tags/${keyword}`);
     }
@@ -613,20 +620,20 @@ const setup = async () => {
         legacyStore.setLoadingRecipe({ recipe: -1 });
 
         // Make the control row show that the recipe is reloading
-    } else if (legacyStore.recipe.id === parseInt(route.params.id, 10)) {
+    } else if (legacyStore.recipe.id === parseInt(routeId.value, 10)) {
         legacyStore.setReloadingRecipe({
-            recipe: route.params.id,
+            recipe: routeId.value,
         });
 
         // Make the control row show that a new recipe is loading
     } else {
         legacyStore.setLoadingRecipe({
-            recipe: route.params.id,
+            recipe: routeId.value,
         });
     }
 
     try {
-        const response = await api.recipes.get(route.params.id);
+        const response = await api.recipes.get(routeId.value);
         const tmpRecipe = response.data;
         // Store recipe data in vuex
         legacyStore.setRecipe({ recipe: tmpRecipe });
@@ -661,10 +668,10 @@ const changeRecipeYield = (increase = true) => {
     recipeYield.value = +recipeYield.value + (increase ? 1 : -1);
 };
 
-function showCopySuccess(item) {
+function showCopySuccess(item: string) {
     showSuccess(t('cookbook', '{item} copied to clipboard', { item }));
 }
-function showCopyError(item) {
+function showCopyError(item: string) {
     showError(t('cookbook', 'Copying {item} to clipboard failed', { item }));
 }
 
@@ -843,7 +850,7 @@ onUnmounted(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeView',
 };

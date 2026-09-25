@@ -27,7 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 :title="
                     route.params.value === '_' // TRANSLATORS Shown, e.g., as the recipe category in the navigation/title bar for uncategorized recipes.
                         ? t('cookbook', 'None')
-                        : decodeURIComponent(route.params.value)
+                        : decodeURIComponent(String(route.params.value))
                 "
             />
             <!-- Recipe view / edit -->
@@ -64,7 +64,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
         <!-- Primary buttons -->
         <NcButton
             v-if="isRecipe"
-            type="primary"
+            variant="primary"
             :aria-label="t('cookbook', 'Edit')"
             @click="goToRecipeEdit(legacyStore.recipe.id)"
         >
@@ -75,7 +75,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
         </NcButton>
         <NcButton
             v-if="isEdit || isCreate"
-            type="primary"
+            variant="primary"
             :aria-label="t('cookbook', 'Save')"
             @click="saveChanges()"
         >
@@ -127,7 +127,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             <NcActionButton
                 v-if="isEdit"
                 :icon="
-                    legacyStore.reloadingRecipe === parseInt(route.params.id)
+                    legacyStore.reloadingRecipe === parseInt(routeId)
                         ? 'icon-loading-small'
                         : 'icon-history'
                 "
@@ -146,10 +146,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 {{ t('cookbook', 'Abort editing') }}
                 <template #icon>
                     <NcLoadingIcon
-                        v-if="
-                            legacyStore.reloadingRecipe ===
-                            parseInt(route.params.id)
-                        "
+                        v-if="legacyStore.reloadingRecipe === parseInt(routeId)"
                         :size="20"
                     />
                     <AbortIcon v-else :size="20" />
@@ -158,7 +155,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             <NcActionButton
                 v-if="isRecipe"
                 :icon="
-                    legacyStore.reloadingRecipe === parseInt(route.params.id)
+                    legacyStore.reloadingRecipe === parseInt(routeId)
                         ? 'icon-loading-small'
                         : 'icon-history'
                 "
@@ -201,7 +198,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import {
@@ -233,8 +230,10 @@ import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import emitter from '../../bus';
 
+const t = window.t;
 const isMobile = useIsMobile();
 const route = useRoute();
+const routeId = computed(() => String(route.params.id ?? ''));
 const legacyStore = useLegacyStore();
 
 const filterValue = ref('');
@@ -281,7 +280,7 @@ const pageNotFound = computed(() => legacyStore.page === 'notfound');
 const recipeNotFound = computed(
     () =>
         // Editing or viewing recipe was attempted, but no recipe was found
-        ['edit', 'recipe'].indexOf(legacyStore.page) !== -1 &&
+        ['edit', 'recipe'].indexOf(legacyStore.page ?? '') !== -1 &&
         !legacyStore.recipe,
 );
 const searchTitle = computed(() => {
@@ -343,29 +342,31 @@ const saveChanges = () => {
     emitter.emit('saveRecipe');
 };
 
-const search = (e) => {
-    helpers.goTo(`/search/${e.target[0].value}`);
+const search = (e: Event) => {
+    const target = e.target as HTMLFormElement;
+    const value = (target.elements[0] as HTMLInputElement).value;
+    helpers.goTo(`/search/${value}`);
 };
 
-const updateFilters = (e) => {
+const updateFilters = (e: string) => {
     filterValue.value = e;
     legacyStore.setRecipeFilters(e);
 };
 
-const goToRecipe = (id) => {
+const goToRecipe = (id: string | number) => {
     helpers.goTo(`/recipe/${id}`);
 };
 
-const goToRecipeClone = (id) => {
+const goToRecipeClone = (id: string | number) => {
     helpers.goTo(`/recipe/${id}/clone`);
 };
 
-const goToRecipeEdit = (id) => {
+const goToRecipeEdit = (id: string | number) => {
     helpers.goTo(`/recipe/${id}/edit`);
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AppControls',
 };

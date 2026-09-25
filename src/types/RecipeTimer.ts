@@ -2,8 +2,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-declare module '*.vue' {
-	import Vue from 'vue';
-
-	export default Vue;
+export interface RecipeTimer {
+	hours: number;
+	minutes: number;
+	seconds: number;
 }

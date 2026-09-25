@@ -8,9 +8,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     <span class="mode-indicator">{{ title }}</span>
 </template>
 
-<script></script>
+<script lang="ts"></script>
 
-<script setup>
+<script setup lang="ts">
 import { defineProps } from 'vue';
 
 // Props
@@ -19,7 +19,7 @@ defineProps({
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'ModeIndicator',
 };

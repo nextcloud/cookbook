@@ -35,7 +35,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcContent>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
 import { NcAppContent, NcContent, NcDialog } from '@nextcloud/vue';
 import AppControls from 'cookbook/components/AppControls/AppControls.vue';
@@ -45,7 +45,7 @@ import SettingsDialog from './Modals/SettingsDialog.vue';
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useCookbookDialogs } from 'cookbook/composables/useCookbookDialogs';
 
-const log = getCurrentInstance().proxy.$log;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 const isMobile = useIsMobile();
 
 /**
@@ -67,7 +67,11 @@ const isNavigationOpen = ref(false);
 /**
  * Listen for event-bus events about the app navigation opening and closing
  */
-const updateAppNavigationOpen = ({ open }) => {
+const updateAppNavigationOpen = (event: unknown) => {
+    const open =
+        typeof event === 'object' && event !== null && 'open' in event
+            ? event.open === true
+            : false;
     isNavigationOpen.value = open;
 };
 
@@ -99,7 +103,7 @@ function handleDialogClose() {
 }
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AppMain',
 };

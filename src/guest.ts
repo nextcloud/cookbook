@@ -26,8 +26,19 @@ declare global {
 			| Nextcloud.v18.OC
 			| Nextcloud.v19.OC
 			| Nextcloud.v20.OC;
-		n: string;
-		t: string;
+		n(
+			app: string,
+			textSingular: string,
+			textPlural: string,
+			count: number,
+			vars?: Record<string, unknown>,
+		): string;
+		t(
+			app: string,
+			text: string,
+			vars?: Record<string, unknown>,
+			count?: number,
+		): string;
 	}
 }
 

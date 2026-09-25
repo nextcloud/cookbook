@@ -62,52 +62,43 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed, onBeforeMount } from 'vue';
 
 import { NcButton, NcSelect } from '@nextcloud/vue';
 import DeleteIcon from 'vue-material-design-icons/TrashCanOutline.vue';
+import type { MultiselectOption } from '../../types/MultiselectOption';
 
-const props = defineProps({
-    fieldLabel: {
-        type: String,
-        default: '',
-    },
-    labelSelectPlaceholder: {
-        type: String,
-        default: t('cookbook', 'Select option'),
-    },
-    /** Selectable options.
-     * Array of option objects with keys: key, label, and placeholder
-     * key: Key of the v-model object
-     * label: label to display for the key in the Multiselect
-     * placeholder: Placeholder shown for the key in the empty input field
-     */
-    options: {
-        type: Array,
-        default: () => [],
-        required: true,
-    },
-});
+const t = window.t;
 
-const value = defineModel({
-    type: Object,
+const props = defineProps<{
+    fieldLabel?: string;
+    labelSelectPlaceholder?: string;
+    options: MultiselectOption[];
+}>();
+
+const value = defineModel<Record<string, string>>({
     required: true,
 });
 
-const additionalRow = ref({
+const additionalRow = ref<{
+    selectedOption: MultiselectOption | null;
+    customText: string;
+}>({
     selectedOption: null,
     customText: '',
 });
 
 // A fixed index for a row to identify it in the process of changes
 // This is a map from the option key to a unique index.
-const rowKeys = ref({});
+const rowKeys = ref<Record<string, number>>({});
 // The next index to provide
 const nextKey = ref(0);
 
 // All registered keys in the options set in props
-const optionKeys = computed(() => props.options.map((x) => x.key));
+const optionKeys = computed(() =>
+    props.options.map((x: MultiselectOption) => x.key),
+);
 
 // The currently available options
 const currentKeys = computed(() => Object.keys(value.value));
@@ -120,7 +111,9 @@ const valueFilteredKeys = computed(() =>
 const rowsFromValue = computed(() =>
     valueFilteredKeys.value.map((x) => ({
         options: [],
-        selectedOption: props.options.find((y) => y.key === x),
+        selectedOption: props.options.find(
+            (y) => y.key === x,
+        ) as MultiselectOption,
         customText: value.value[x],
     })),
 );
@@ -158,7 +151,7 @@ const availableOptions = computed(() =>
  * Delete a nutrition item.
  * @param index The index of the item to delete in the `value` property.
  */
-function deleteEntry(index) {
+function deleteEntry(index: number) {
     const data = { ...value.value };
     const { key } = rowsFromValue.value[index].selectedOption;
     delete data[key];
@@ -167,7 +160,7 @@ function deleteEntry(index) {
 }
 
 // Add a new row to the model
-function newRowByOption(ev) {
+function newRowByOption(ev: MultiselectOption) {
     const data = { ...value.value };
     data[ev.key] = '';
     rowKeys.value[ev.key] = nextKey.value;
@@ -176,7 +169,7 @@ function newRowByOption(ev) {
 }
 
 // Change the actual option. This might change the option or plainly delete it.
-function updateByOption(ev, index) {
+function updateByOption(ev: MultiselectOption, index: number) {
     const data = { ...value.value };
     const { key } = rowsFromValue.value[index].selectedOption;
     data[ev.key] = data[key];
@@ -199,7 +192,7 @@ onBeforeMount(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditMultiselectInputGroup',
 };

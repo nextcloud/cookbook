@@ -20,7 +20,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             <NcActionInput
                 v-model="importUrl"
                 class="download"
-                :disabled="downloading ? 'disabled' : null"
+                :disabled="downloading"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'"
                 @submit="downloadRecipe"
             >
@@ -59,7 +59,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 :key="'cat-' + idx"
                 :ref="
                     (el) => {
-                        categoryItemElements[idx] = el;
+                        categoryItemElements[idx] =
+                            el as unknown as CategoryElement;
                     }
                 "
                 :name="cat.name"
@@ -91,7 +92,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcAppNavigation>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import {
     computed,
     getCurrentInstance,
@@ -120,19 +121,22 @@ import { showSimpleAlertModal } from 'cookbook/js/modals';
 import emitter from '../bus';
 import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
 import { useLegacyStore } from '../store';
+import type { Recipe } from '../types/Recipe';
+import type { Category, CategoryElement } from '../types/Category';
 
-const log = getCurrentInstance().proxy.$log;
+const t = window.t;
+const log = getCurrentInstance()?.proxy?.$log ?? console;
 const legacyStore = useLegacyStore();
 
 /**
  * References to the DOM elements of the categories in the App navigation.
  * @type {import('vue').Ref<Array.<HTMLElement | null>>}
  */
-const categoryItemElements = ref([]);
+const categoryItemElements = ref<Array<CategoryElement | null>>([]);
 /**
  * @type {import('vue').Ref<Array>}
  */
-const categories = ref([]);
+const categories = ref<Category[]>([]);
 /**
  * @type {import('vue').Ref<boolean>}
  */
@@ -140,8 +144,8 @@ const downloading = ref(false);
 /**
  * @type {import('vue').Ref<Array>}
  */
-const isCategoryUpdating = ref([]);
-const loading = ref({ categories: true });
+const isCategoryUpdating = ref<boolean[]>([]);
+const loading = ref<{ categories: boolean }>({ categories: true });
 /**
  * @type {import('vue').Ref<number>}
  */
@@ -150,6 +154,10 @@ const uncatRecipes = ref(0);
  * @type {import('vue').Ref<string>}
  */
 const importUrl = ref('');
+
+const categoryOpen = (idx: number) => {
+    void openCategory(idx);
+};
 
 // Computed properties
 const totalRecipeCount = computed(() => {
@@ -172,7 +180,7 @@ const refreshRequired = computed(
 /**
  * Opens a category
  */
-const openCategory = async (idx) => {
+const openCategory = async (idx: number) => {
     if (
         !categories.value[idx].recipes.length ||
         categories.value[idx].recipes[0].id
@@ -208,7 +216,7 @@ const openCategory = async (idx) => {
 /**
  * Updates the name of a category
  */
-const categoryUpdateName = async (idx, newName) => {
+const categoryUpdateName = async (idx: number, newName: string) => {
     if (!categories.value[idx]) {
         return;
     }
@@ -238,7 +246,7 @@ const categoryUpdateName = async (idx, newName) => {
     }
 };
 
-const updateUrl = (e) => {
+const updateUrl = (e: string) => {
     importUrl.value = e;
 };
 
@@ -257,7 +265,10 @@ const downloadRecipe = async () => {
             isRequired: true,
         });
         importUrl.value = '';
-    } catch (e2) {
+    } catch (error: unknown) {
+        const e2 = error as {
+            response?: { status: number; data: string | { msg: string } };
+        };
         downloading.value = false;
 
         if (e2.response) {
@@ -265,10 +276,11 @@ const downloadRecipe = async () => {
                 if (e2.response.status === 409) {
                     // There was a recipe found with the same name
 
-                    await showSimpleAlertModal(
-                        t('cookbook', 'Error'),
-                        e2.response.data.msg,
-                    );
+                    const message =
+                        typeof e2.response.data === 'string'
+                            ? e2.response.data
+                            : e2.response.data.msg;
+                    await showSimpleAlertModal(t('cookbook', 'Error'), message);
                 } else {
                     await showSimpleAlertModal(
                         t('cookbook', 'Error'),
@@ -333,12 +345,12 @@ const getCategories = async () => {
 
         for (let i = 0; i < categories.value.length; i++) {
             // Reload recipes in open categories
-            if (!categoryItemElements[i]) {
+            if (!categoryItemElements.value[i]) {
                 continue;
             }
-            if (categoryItemElements[i][0].opened) {
+            if (categoryItemElements.value[i]?.opened) {
                 log.info(
-                    `Reloading recipes in ${categoryItemElements[i][0].title}`,
+                    `Reloading recipes in ${categoryItemElements.value[i]?.title}`,
                 );
                 loadingCategoriesAwaitable.push(openCategory(i));
             }
@@ -385,7 +397,7 @@ onMounted(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AppNavi',
 };

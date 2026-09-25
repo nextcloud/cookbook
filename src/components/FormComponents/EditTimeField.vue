@@ -28,8 +28,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
+
+const t = window.t;
 
 const props = defineProps({
     fieldLabel: {
@@ -38,8 +40,7 @@ const props = defineProps({
     },
 });
 
-const value = defineModel({
-    type: [String, null],
+const value = defineModel<string | null>({
     required: true,
 });
 
@@ -51,7 +52,11 @@ const timeComps = computed(() => {
     return match.slice(1);
 });
 
-function updatePaddedTime(h, m, s) {
+function updatePaddedTime(
+    h: number | string,
+    m: number | string,
+    s: number | string,
+) {
     // Special case: if all are zero, set value to null
     if (h == 0 && m == 0 && s == 0) {
         value.value = null;
@@ -68,7 +73,7 @@ function updatePaddedTime(h, m, s) {
 
 const hours = computed({
     get: () => timeComps.value[0],
-    set: (v) => {
+    set: (v: number | string) => {
         // value.value.time[0] = v ?? 0;
         updatePaddedTime(v, minutes.value, seconds.value);
     },
@@ -76,7 +81,7 @@ const hours = computed({
 
 const minutes = computed({
     get: () => timeComps.value[1],
-    set: (v) => {
+    set: (v: number | string) => {
         // value.value.time[1] = v ?? 0;
         updatePaddedTime(hours.value, v, seconds.value);
     },
@@ -84,14 +89,14 @@ const minutes = computed({
 
 const seconds = computed({
     get: () => timeComps.value[2],
-    set: (v) => {
+    set: (v: number | string) => {
         // value.value.time[2] = v ?? 0;
         updatePaddedTime(hours.value, minutes.value, v);
     },
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditTimeField',
 };

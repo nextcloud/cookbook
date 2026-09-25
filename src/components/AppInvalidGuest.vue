@@ -29,12 +29,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </NcContent>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { NcContent, NcAppContent } from '@nextcloud/vue';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
 import { useLegacyStore } from 'cookbook/store';
 
+const t = window.t;
 const legacyStore = useLegacyStore();
 
 const selectFolder = () => {
@@ -45,14 +46,14 @@ const selectFolder = () => {
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
-        legacyStore.updateRecipeDirectory({ dir: path }).then(() => {
+        legacyStore.updateRecipeDirectory({ dir: String(path) }).then(() => {
             window.location.reload();
         });
     });
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'InvalidGuest',
 };

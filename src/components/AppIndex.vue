@@ -8,7 +8,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     <RecipeList :recipes="recipes" :loading="isLoadingRecipeList" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import api from 'cookbook/js/api-interface';
 import { computed, getCurrentInstance, onMounted, ref, watch } from 'vue';
 
@@ -72,12 +72,12 @@ watch(updatingRecipeDirectory, async (newVal, oldVal) => {
 
 // Vue lifecycle
 onMounted(() => {
-    getCurrentInstance().proxy.$log.info('AppIndex mounted');
+    getCurrentInstance()?.proxy?.$log.info('AppIndex mounted');
     loadAll();
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'AppIndex',
 };

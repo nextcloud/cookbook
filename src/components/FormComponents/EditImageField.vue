@@ -29,10 +29,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </fieldset>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { FilePickerType, getFilePickerBuilder } from '@nextcloud/dialogs';
 import { defineProps } from 'vue';
 
+const t = window.t;
 const emit = defineEmits(['input']);
 defineProps({
     // value: { type: String, default: '' },
@@ -44,7 +45,7 @@ const value = defineModel({
     required: true,
 });
 
-const pickImage = (e) => {
+const pickImage = (e: Event) => {
     e.preventDefault();
     const filePicker = getFilePickerBuilder(
         t('cookbook', 'Path to your recipe image'),
@@ -54,12 +55,12 @@ const pickImage = (e) => {
         .setType(FilePickerType.Choose)
         .build();
     filePicker.pick().then((path) => {
-        value.value = path;
+        value.value = String(path);
     });
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'EditImageField',
 };

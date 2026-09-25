@@ -8,9 +8,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     <h2>{{ t('cookbook', 'The page was not found') }}</h2>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue';
 import { useLegacyStore } from '../store';
+
+const t = window.t;
 
 const legacyStore = useLegacyStore();
 
@@ -19,7 +21,7 @@ onMounted(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'NotFound',
 };

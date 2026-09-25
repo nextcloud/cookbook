@@ -112,6 +112,15 @@ jobs:
                 exit 1;
                 }
 
+        -   name: Check types in vue and js files
+            shell: bash
+            run: >-
+                npm run type-check || {
+                echo '::error ::The vue and js type checker failed.
+                Please run `npm run type-check` to identify the type errors.';
+                exit 1;
+                }
+
         -   name: Check for formatting issues with CSS files (stylelint)
             shell: bash
             run: >-

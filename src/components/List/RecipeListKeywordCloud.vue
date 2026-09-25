@@ -63,9 +63,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import RecipeKeyword from '../RecipeKeyword.vue';
+
+const t = window.t;
 
 const emit = defineEmits(['input']);
 const props = defineProps({
@@ -96,7 +98,7 @@ const isOrderedAlphabetically = ref(false);
 /**
  * @type {import('vue').Ref<Array.<string>>}
  */
-const selectedKeywordsBuffer = ref([]);
+const selectedKeywordsBuffer = ref<string[]>([]);
 
 // Computed properties
 /** Text shown on the button for ordering the keywords */
@@ -118,18 +120,18 @@ const toggleSizeIcon = computed(() =>
 /**
  * An array of sorted and unique keywords over all the recipes
  */
-const uniqKeywords = computed(() => {
-    function uniqFilter(value, index, self) {
+const uniqKeywords = computed<string[]>(() => {
+    function uniqFilter(value: string, index: number, self: string[]) {
         return self.indexOf(value) === index;
     }
-    const rawKWs = [...props.keywords];
+    const rawKWs = [...props.keywords] as string[];
     return rawKWs.sort().filter(uniqFilter);
 });
 /**
  * An array of objects that contain the keywords plus a count of recipes associated with these keywords
  */
-const keywordsWithCount = computed(() =>
-    uniqKeywords.value
+const keywordsWithCount = computed<Array<{ name: string; count: number }>>(() =>
+    (uniqKeywords.value as string[])
         .map((kw) => ({
             name: kw,
             count: props.keywords.filter((kw2) => kw === kw2).length,
@@ -166,17 +168,22 @@ const unselectedKeywords = computed(() =>
 /**
  * An array of keywords that are yet unselected but some visible recipes are associated
  */
-const selectableKeywords = computed(() => {
-    if (unselectedKeywords.value.length === 0) {
-        return [];
-    }
+const selectableKeywords = computed<Array<{ name: string; count: number }>>(
+    () => {
+        if (unselectedKeywords.value.length === 0) {
+            return [];
+        }
 
-    return unselectedKeywords.value.filter((kw) =>
-        props.filteredRecipes
-            .map((r) => r.keywords && r.keywords.split(',').includes(kw.name))
-            .reduce((l, r) => l || r, false),
-    );
-});
+        return unselectedKeywords.value.filter((kw) =>
+            (props.filteredRecipes as Array<{ keywords?: string }>)
+                .map(
+                    (r) =>
+                        r.keywords && r.keywords.split(',').includes(kw.name),
+                )
+                .reduce((l, r) => l || r, false),
+        );
+    },
+);
 /**
  * An array of known keywords that are not associated with any visible recipe
  */
@@ -193,7 +200,7 @@ const unavailableKeywords = computed(() =>
 watch(
     () => props.value,
     () => {
-        selectedKeywordsBuffer.value = props.value.slice();
+        selectedKeywordsBuffer.value = (props.value as string[]).slice();
     },
     { deep: true },
 );
@@ -202,7 +209,7 @@ watch(
 /**
  * Callback for click on keyword, add to or remove from list
  */
-const keywordClicked = (keyword) => {
+const keywordClicked = (keyword: { name: string }) => {
     const index = selectedKeywordsBuffer.value.indexOf(keyword.name);
     if (index > -1) {
         selectedKeywordsBuffer.value.splice(index, 1);
@@ -219,7 +226,7 @@ const toggleOrderCriterion = () => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeListKeywordCloud',
 };

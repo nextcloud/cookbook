@@ -20,10 +20,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import { useLegacyStore } from 'cookbook/store';
 
+const t = window.t;
 const legacyStore = useLegacyStore();
 
 /**
@@ -36,7 +37,7 @@ const toggleCollapsed = () => {
 };
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'RecipeImages',
 };

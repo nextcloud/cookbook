@@ -58,7 +58,7 @@ const useLegacyStore = defineStore('legacyStore', {
 			// Updating the recipe directory is in progress
 			updatingRecipeDirectory: false,
 			// Category which is being updated (name)
-			categoryUpdating: null,
+			categoryUpdating: <string | null>null,
 			localSettings: {
 				showFiltersInRecipeList: true,
 			},
@@ -68,7 +68,7 @@ const useLegacyStore = defineStore('legacyStore', {
 		// ****************************
 		// Mutations migrated to actions
 		// ****************************
-		setConfig({ config }) {
+		setConfig({ config }: { config: any }) {
 			this.config = config;
 		},
 		initializeStore() {
@@ -80,22 +80,22 @@ const useLegacyStore = defineStore('legacyStore', {
 				this.localSettings.showFiltersInRecipeList = true;
 			}
 		},
-		setAppNavigationRefreshRequiredMutation({ b }) {
+		setAppNavigationRefreshRequiredMutation({ b }: { b: boolean }) {
 			this.appNavigation.refreshRequired = b;
 		},
-		setAppNavigationVisibleMutation({ b }) {
+		setAppNavigationVisibleMutation({ b }: { b: boolean }) {
 			this.appNavigation.visible = b;
 		},
-		setCategoryUpdatingMutation({ c }) {
+		setCategoryUpdatingMutation({ c }: { c: string | null }) {
 			this.categoryUpdating = c;
 		},
-		setLoadingRecipeMutation({ r }) {
+		setLoadingRecipeMutation({ r }: { r: number }) {
 			this.loadingRecipe = r;
 		},
-		setPageMutation({ p }) {
+		setPageMutation({ p }: { p: any }) {
 			this.page = p;
 		},
-		setRecipeMutation({ r }) {
+		setRecipeMutation({ r }: { r: any }) {
 			const rec = JSON.parse(JSON.stringify(r));
 			if (rec === null) {
 				this.recipe = null;
@@ -110,28 +110,28 @@ const useLegacyStore = defineStore('legacyStore', {
 			this.loadingRecipe = 0;
 			this.reloadingRecipe = 0;
 		},
-		setRecipeCategoryMutation({ c }) {
+		setRecipeCategoryMutation({ c }: { c: string }) {
 			if (this.recipe !== null) {
 				this.recipe.category = c;
 			}
 		},
-		setRecipeFiltersMutation({ f }) {
+		setRecipeFiltersMutation({ f }: { f: string }) {
 			this.recipeFilters = f;
 		},
-		setReloadingRecipeMutation({ r }) {
+		setReloadingRecipeMutation({ r }: { r: number }) {
 			this.reloadingRecipe = r;
 		},
-		setSavingRecipeMutation({ b }) {
+		setSavingRecipeMutation({ b }: { b: boolean }) {
 			this.savingRecipe = b;
 		},
-		setShowFiltersInRecipeListMutation({ b }) {
+		setShowFiltersInRecipeListMutation({ b }: { b: boolean }) {
 			localStorage.setItem('showFiltersInRecipeList', JSON.stringify(b));
 			this.localSettings.showFiltersInRecipeList = b;
 		},
-		setUserMutation({ u }) {
+		setUserMutation({ u }: { u: any }) {
 			this.user = u;
 		},
-		setUpdatingRecipeDirectoryMutation({ b }) {
+		setUpdatingRecipeDirectoryMutation({ b }: { b: boolean }) {
 			this.updatingRecipeDirectory = b;
 		},
 
@@ -156,9 +156,9 @@ const useLegacyStore = defineStore('legacyStore', {
 		/**
 		 * Create new recipe on the server
 		 */
-		createRecipe({ recipe }) {
+		createRecipe({ recipe }: { recipe: any }) {
 			const request = api.recipes.create(recipe);
-			return request.then((v) => {
+			return request.then((v: any) => {
 				// Refresh navigation to display changes
 				this.setAppNavigationRefreshRequired({
 					isRequired: true,
@@ -170,7 +170,7 @@ const useLegacyStore = defineStore('legacyStore', {
 		/**
 		 * Delete recipe on the server
 		 */
-		deleteRecipe({ id }) {
+		deleteRecipe({ id }: { id: string | number }) {
 			const request = api.recipes.delete(id);
 			request.then(() => {
 				// Refresh navigation to display changes
@@ -180,40 +180,48 @@ const useLegacyStore = defineStore('legacyStore', {
 			});
 			return request;
 		},
-		setAppNavigationVisible({ isVisible }) {
+		setAppNavigationVisible({ isVisible }: { isVisible: boolean }) {
 			this.setAppNavigationVisibleMutation({ b: isVisible });
 		},
-		setAppNavigationRefreshRequired({ isRequired }) {
+		setAppNavigationRefreshRequired({
+			isRequired,
+		}: {
+			isRequired: boolean;
+		}) {
 			this.setAppNavigationRefreshRequiredMutation({ b: isRequired });
 		},
-		setLoadingRecipe({ recipe }) {
+		setLoadingRecipe({ recipe }: { recipe: string }) {
 			this.setLoadingRecipeMutation({ r: parseInt(recipe, 10) });
 		},
-		setPage({ page }) {
+		setPage({ page }: { page: any }) {
 			this.setPageMutation({ p: page });
 		},
-		setRecipe({ recipe }) {
+		setRecipe({ recipe }: { recipe: any }) {
 			this.setRecipeMutation({ r: recipe });
 		},
-		setRecipeFilters(filters) {
+		setRecipeFilters(filters: string) {
 			this.setRecipeFiltersMutation({ f: filters });
 		},
-		setReloadingRecipe({ recipe }) {
+		setReloadingRecipe({ recipe }: { recipe: string }) {
 			this.setReloadingRecipeMutation({ r: parseInt(recipe, 10) });
 		},
-		setSavingRecipe({ saving }) {
+		setSavingRecipe({ saving }: { saving: boolean }) {
 			this.setSavingRecipeMutation({ b: saving });
 		},
-		setUser({ user }) {
+		setUser({ user }: { user: any }) {
 			this.setUserMutation({ u: user });
 		},
-		setCategoryUpdating({ category }) {
+		setCategoryUpdating({ category }: { category: string | null }) {
 			this.setCategoryUpdatingMutation({ c: category });
 		},
-		setShowFiltersInRecipeList({ showFilters }) {
+		setShowFiltersInRecipeList({ showFilters }: { showFilters: boolean }) {
 			this.setShowFiltersInRecipeListMutation({ b: showFilters });
 		},
-		updateCategoryName({ categoryNames }) {
+		updateCategoryName({
+			categoryNames,
+		}: {
+			categoryNames: [string, string];
+		}) {
 			const oldName = categoryNames[0];
 			const newName = categoryNames[1];
 			this.setCategoryUpdating({ category: oldName });
@@ -226,7 +234,7 @@ const useLegacyStore = defineStore('legacyStore', {
 						this.setRecipeCategoryMutation({ c: newName });
 					}
 				})
-				.catch((e) => {
+				.catch((e: unknown) => {
 					if (e && e instanceof Error) {
 						throw e;
 					}
@@ -238,7 +246,7 @@ const useLegacyStore = defineStore('legacyStore', {
 
 			return request;
 		},
-		updateRecipeDirectory({ dir }) {
+		updateRecipeDirectory({ dir }: { dir: string }) {
 			this.setUpdatingRecipeDirectoryMutation({ b: true });
 			this.setRecipe({ recipe: null });
 			const request = api.config.directory.update(dir);
@@ -253,7 +261,7 @@ const useLegacyStore = defineStore('legacyStore', {
 		/**
 		 * Update existing recipe on the server
 		 */
-		updateRecipe({ recipe }) {
+		updateRecipe({ recipe }: { recipe: any }) {
 			const request = api.recipes.update(recipe.id, recipe);
 			request.then(() => {
 				// Refresh navigation to display changes

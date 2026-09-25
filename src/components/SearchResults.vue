@@ -14,7 +14,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onActivated, onDeactivated, onMounted, ref } from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
@@ -25,6 +25,8 @@ import { RecipeCategoriesFilter as CategoriesFilter } from '../js/RecipeFilters'
 import RecipeList from './List/RecipeList.vue';
 import { useLegacyStore } from '../store';
 import emitter from '../bus';
+
+const t = window.t;
 
 const route = useRoute();
 const legacyStore = useLegacyStore();
@@ -56,7 +58,7 @@ const results = ref([]);
  * already applied.
  * @type {import('vue').Ref<Array>}
  */
-const filters = ref([]);
+const filters = ref<InstanceType<typeof CategoriesFilter>[]>([]);
 
 // watch(route, (to, from) => {
 //     keywordFilter.value = [];
@@ -151,7 +153,12 @@ onBeforeRouteUpdate((to, from, next) => {
 onMounted(() => {
     setup();
     emitter.off('categoryRenamed');
-    emitter.on('categoryRenamed', (val) => {
+    emitter.on('categoryRenamed', (rawValue) => {
+        if (!Array.isArray(rawValue) || rawValue.length < 2) return;
+        const val = [String(rawValue[0]), String(rawValue[1])] as [
+            string,
+            string,
+        ];
         if (
             isComponentActive.value &&
             props.query === 'cat' &&
@@ -171,7 +178,7 @@ onDeactivated(() => {
 });
 </script>
 
-<script>
+<script lang="ts">
 export default {
     name: 'SearchResults',
 };

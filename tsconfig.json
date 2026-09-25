@@ -7,17 +7,22 @@
 			"es2015.promise",
 			"es6"
 		],
-		"module": "ES6",
-		"moduleResolution": "node",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"target": "ES6",
 		"allowJs": true,
 		"allowSyntheticDefaultImports": true,
 		"strictNullChecks": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
+		"skipLibCheck": true,
 		"paths": {
 			"cookbook/*": ["./src/*"],
 			"icons/*": ["./node_modules/vue-material-design-icons/*"]
-		}
+		},
+		"types": [
+			"@nextcloud/typings",
+			"vite/client"
+		]
 	}
 }
