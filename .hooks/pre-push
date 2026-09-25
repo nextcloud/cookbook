@@ -107,6 +107,12 @@ then
 			echo "WARNING: The Stylelint check could not be carried out!"
 		fi
 
+		if [ -e 'node_modules/.bin/vue-tsc' ]; then
+			npm run type-check || { echo 'There was a problem with the TypeScript type checker.'; (( retVal |= 16 )); }
+		else
+			echo "WARNING: The TypeScript type check could not be carried out!"
+		fi
+
 		cd ../..
 	}
 
