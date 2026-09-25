@@ -113,9 +113,6 @@ const useLegacyStore = defineStore('legacyStore', {
 				this.recipe.category = c;
 			}
 		},
-		setRecipeFiltersMutation({ f }: { f: string }) {
-			this.setRecipeFilters(f);
-		},
 		setReloadingRecipeMutation({ r }: { r: number }) {
 			this.reloadingRecipe = r;
 		},
@@ -142,13 +139,6 @@ const useLegacyStore = defineStore('legacyStore', {
 		async refreshConfig() {
 			const config = (await api.config.get()).data;
 			this.setConfig({ config });
-		},
-
-		/*
-		 * Clears all filters currently applied for listing recipes.
-		 */
-		clearRecipeFilters() {
-			this.setRecipeFiltersMutation({ f: '' });
 		},
 
 		/**
@@ -196,9 +186,6 @@ const useLegacyStore = defineStore('legacyStore', {
 		},
 		setRecipe({ recipe }: { recipe: any }) {
 			this.setRecipeMutation({ r: recipe });
-		},
-		setRecipeFilters(filters: string) {
-			this.setRecipeFiltersMutation({ f: filters });
 		},
 		setReloadingRecipe({ recipe }: { recipe: string }) {
 			this.setReloadingRecipeMutation({ r: parseInt(recipe, 10) });

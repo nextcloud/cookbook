@@ -100,10 +100,6 @@ const orderBy = ref({
     order: 'ascending',
 });
 
-onMounted(() => {
-    legacyStore.clearRecipeFilters();
-});
-
 // ===================
 // Methods
 // ===================
