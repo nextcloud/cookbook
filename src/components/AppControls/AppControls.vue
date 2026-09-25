@@ -97,18 +97,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             :primary="true"
         >
             <NcActionInput
-                v-if="isMobile"
-                icon="icon-quota"
-                :value="filterValue"
-                :aria-label="t('cookbook', 'Filter current recipes')"
-                @update:value="updateFilters"
-            >
-                <template #icon>
-                    <FilterIcon :size="20" />
-                </template>
-                {{ t('cookbook', 'Filter') }}
-            </NcActionInput>
-            <NcActionInput
                 aria-label="t('cookbook', 'Search recipes')"
                 @submit="search"
             >
@@ -344,11 +332,6 @@ const search = (e: Event) => {
     const target = e.target as HTMLFormElement;
     const value = (target.elements[0] as HTMLInputElement).value;
     helpers.goTo(`/search/${value}`);
-};
-
-const updateFilters = (e: string) => {
-    filterValue.value = e;
-    legacyStore.setRecipeFilters(e);
 };
 
 const goToRecipe = (id: string | number) => {
