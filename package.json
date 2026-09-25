@@ -26,6 +26,7 @@
     "package-lint": "npx prettier-package-json --write ./package.json",
     "prettier": "npx prettier --check src",
     "prettier-fix": "npx prettier --write src",
+    "serve": "vite",
     "stylelint": "stylelint src",
     "stylelint-fix": "stylelint --fix src",
     "test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest",
