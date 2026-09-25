@@ -209,7 +209,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 <script setup lang="ts">
 import { computed, nextTick, watch } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
-import { NcButton, NcModal, NcSelect, NcTextField } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
+import NcModal from '@nextcloud/vue/components/NcModal';
+import NcSelect from '@nextcloud/vue/components/NcSelect';
+import NcTextField from '@nextcloud/vue/components/NcTextField';
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';

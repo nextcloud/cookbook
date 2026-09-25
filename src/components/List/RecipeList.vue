@@ -81,7 +81,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 import { computed, onMounted, ref } from 'vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
 
-import { NcButton } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';

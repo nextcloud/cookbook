@@ -30,7 +30,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-import { NcContent, NcAppContent } from '@nextcloud/vue';
+import NcContent from '@nextcloud/vue/components/NcContent';
+import NcAppContent from '@nextcloud/vue/components/NcAppContent';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
 
 import { useLegacyStore } from 'cookbook/store';

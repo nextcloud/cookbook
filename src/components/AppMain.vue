@@ -37,7 +37,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 <script setup lang="ts">
 import { getCurrentInstance, onMounted, onUnmounted, ref } from 'vue';
-import { NcAppContent, NcContent, NcDialog } from '@nextcloud/vue';
+import NcAppContent from '@nextcloud/vue/components/NcAppContent';
+import NcContent from '@nextcloud/vue/components/NcContent';
+import NcDialog from '@nextcloud/vue/components/NcDialog';
 import AppControls from 'cookbook/components/AppControls/AppControls.vue';
 import { emit, subscribe, unsubscribe } from '@nextcloud/event-bus';
 import AppNavi from './AppNavi.vue';

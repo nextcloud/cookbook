@@ -201,13 +201,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import {
-    NcActions,
-    NcActionButton,
-    NcActionInput,
-    NcLoadingIcon,
-    NcButton,
-} from '@nextcloud/vue';
+import NcActions from '@nextcloud/vue/components/NcActions';
+import NcActionButton from '@nextcloud/vue/components/NcActionButton';
+import NcActionInput from '@nextcloud/vue/components/NcActionInput';
+import NcLoadingIcon from '@nextcloud/vue/components/NcLoadingIcon';
+import NcButton from '@nextcloud/vue/components/NcButton';
 
 import PencilIcon from 'icons/Pencil.vue';
 import LoadingIcon from 'icons/Loading.vue';

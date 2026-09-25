@@ -35,7 +35,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 <script setup lang="ts">
 const t = window.t;
-import { NcSelect } from '@nextcloud/vue';
+import NcSelect from '@nextcloud/vue/components/NcSelect';
 import TriangleSmallDownIcon from 'vue-material-design-icons/TriangleSmallDown.vue';
 import TriangleSmallUpIcon from 'vue-material-design-icons/TriangleSmallUp.vue';
 import { ref } from 'vue';

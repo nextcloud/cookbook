@@ -56,7 +56,7 @@ import { defineEmits, defineProps, defineModel, ref } from 'vue';
 import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
 import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
 import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
-import { NcButton } from '@nextcloud/vue';
+import NcButton from '@nextcloud/vue/components/NcButton';
 import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import { useRoute } from 'vue-router';
