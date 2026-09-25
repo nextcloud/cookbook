@@ -15,7 +15,14 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-import { onActivated, onDeactivated, onMounted, ref } from 'vue';
+import {
+    onActivated,
+    onDeactivated,
+    onMounted,
+    ref,
+    computed,
+    watch,
+} from 'vue';
 import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -59,10 +66,6 @@ const results = ref([]);
  * @type {import('vue').Ref<Array>}
  */
 const filters = ref<InstanceType<typeof CategoriesFilter>[]>([]);
-
-// watch(route, (to, from) => {
-//     keywordFilter.value = [];
-// });
 
 // Methods
 const setup = async () => {
@@ -143,12 +146,21 @@ const setup = async () => {
 };
 
 // Lifecycle hooks
-onBeforeRouteUpdate((to, from, next) => {
-    // Move to next route as expected
-    next();
-    // Reload view
-    setup();
-});
+
+const routingDefinition = computed(() => ({
+    value: route.params.value,
+    type: props.query,
+}));
+
+watch(
+    () => routingDefinition,
+    (newValue, oldValue) => {
+        setup();
+    },
+    {
+        deep: true,
+    },
+);
 
 onMounted(() => {
     setup();
