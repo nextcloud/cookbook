@@ -82,6 +82,7 @@ import {
     RecipeKeywordsFilter as KeywordsFilter,
     RecipeNamesFilter as NamesFilter,
 } from 'cookbook/js/RecipeFilters';
+import type { Recipe } from '../../types/Recipe';
 
 const isMobile = useIsMobile();
 const t = window.t;
@@ -146,7 +147,7 @@ function toggleFilterControlsModalVisible() {
     isFilterControlsModalVisible.value = !isFilterControlsModalVisible.value;
 }
 
-const caseInsensitiveSort = (a, b) => {
+const caseInsensitiveSort = (a: string, b: string) => {
     const aUpper = a.toUpperCase();
     const bUpper = b.toUpperCase();
     if (aUpper < bUpper) return -1;
@@ -158,7 +159,7 @@ const caseInsensitiveSort = (a, b) => {
  * An array of all categories in the recipes. These are neither sorted nor unique
  */
 const rawCategories = computed(() => {
-    const categoriesArray = props.recipes.map((r) => {
+    const categoriesArray = (props.recipes as Recipe[]).map((r) => {
         if (!('category' in r)) {
             return [];
         }
@@ -167,7 +168,7 @@ const rawCategories = computed(() => {
         }
         return [];
     });
-    return [].concat(...categoriesArray);
+    return ([] as string[]).concat(...categoriesArray);
 });
 
 /**
@@ -202,16 +203,19 @@ function clearFilters() {
  * An array of all keywords in the recipes. These are neither sorted nor unique
  */
 const rawKeywords = computed(() => {
-    const keywordsArray = props.recipes.map((r) => {
+    const keywordsArray = (props.recipes as Recipe[]).map((r) => {
         if (!('keywords' in r)) {
             return [];
         }
-        if (r.keywords != null) {
+        if (typeof r.keywords === 'string') {
             return r.keywords.split(',');
+        }
+        if (Array.isArray(r.keywords)) {
+            return r.keywords;
         }
         return [];
     });
-    return [].concat(...keywordsArray);
+    return ([] as string[]).concat(...keywordsArray);
 });
 
 /**

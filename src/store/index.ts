@@ -114,7 +114,7 @@ const useLegacyStore = defineStore('legacyStore', {
 			}
 		},
 		setRecipeFiltersMutation({ f }: { f: string }) {
-			this.recipeFilters = f;
+			this.setRecipeFilters(f);
 		},
 		setReloadingRecipeMutation({ r }: { r: number }) {
 			this.reloadingRecipe = r;
