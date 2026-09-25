@@ -15,54 +15,21 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             </div>
             <div v-else>
                 <RecipeListFilter
-                    v-model:filter="filter"
+                    v-model:search-term="searchTerm"
+                    v-model:filter-categories="filterCategories"
+                    v-model:filter-categories-type-use-and="
+                        filterCategoriesTypeUseAnd
+                    "
+                    v-model:filter-keywords="filterKeywords"
+                    v-model:filter-keywords-type-use-and="
+                        filterKeywordsTypeUseAnd
+                    "
+                    v-model:order-by="orderBy"
                     :preapplied-filters="props.preappliedFilters"
                     :recipes="recipes"
                     :is-loading="loading"
                     :is-visible="isFilterControlsVisible"
                 />
-                <RecipeFilterControlsModal
-                    v-if="isMobile && showFiltersInRecipeList"
-                    v-model="filterValue"
-                    :preapplied-filters="props.preappliedFilters"
-                    :recipes="recipes"
-                    :is-loading="loading"
-                    :is-visible="isFilterControlsVisible"
-                    @close="() => (isFilterControlsVisible = false)"
-                />
-                <RecipeFilterControlsInline
-                    v-else-if="showFiltersInRecipeList"
-                    :value="inlineControlsValue"
-                    :preapplied-filters="props.preappliedFilters"
-                    :recipes="recipes"
-                    :is-loading="loading"
-                    :is-visible="isFilterControlsVisible"
-                    @input="handleInlineControlsValueUpdated"
-                    @close="() => (isFilterControlsVisible = false)"
-                />
-                <div
-                    v-if="isMobile && showFiltersInRecipeList"
-                    id="recipes-submenu"
-                    class="recipes-submenu-container"
-                >
-                    <RecipeSortSelect
-                        v-if="recipes.length > 0"
-                        v-model:value="orderBy"
-                        class="mr-4"
-                        :title="t('cookbook', 'Show filter settings')"
-                        aria-label="t('cookbook', 'Show settings for filtering recipe list')"
-                    />
-                    <NcButton
-                        :variant="'secondary'"
-                        aria-label="t('cookbook', 'Show settings for filtering recipe list')"
-                        :title="t('cookbook', 'Show filter settings')"
-                        @click="toggleFilterControls"
-                    >
-                        <template #icon>
-                            <FilterIcon :size="20" />
-                        </template>
-                    </NcButton>
-                </div>
                 <ul class="recipes">
                     <li
                         v-for="recipeObj in recipeObjects"
@@ -79,10 +46,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import FilterIcon from 'vue-material-design-icons/FilterVariant.vue';
-
-import NcButton from '@nextcloud/vue/components/NcButton';
-import { useIsMobile } from '@nextcloud/vue/composables/useIsMobile';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
@@ -93,14 +56,9 @@ import {
 import EmptyList from './EmptyList.vue';
 import LoadingIndicator from '../Utilities/LoadingIndicator.vue';
 import RecipeCard from './RecipeCard.vue';
-import RecipeFilterControlsInline from './RecipeFilterControlsInline.vue';
-import RecipeFilterControlsModal from './RecipeFilterControlsModal.vue';
 import RecipeListFilter from './RecipeListFilter.vue';
-import RecipeSortSelect from './RecipeSortSelect.vue';
-import { AndOperator } from '../../js/LogicOperators';
-import { Filter } from 'cookbook/types/RecipeListFilter';
+import { AndOperator, OrOperator } from '../../js/LogicOperators';
 
-const isMobile = useIsMobile();
 const legacyStore = useLegacyStore();
 const t = window.t;
 
@@ -123,31 +81,17 @@ const props = defineProps({
     },
 });
 
-const filter = ref<Filter>({
-    categories: { operator: 'and', entries: [] },
-    keywords: { operator: 'and', entries: [] },
-    searchTerm: '',
-});
+const searchTerm = ref('');
+const filterCategories = ref([]);
+const filterCategoriesTypeUseAnd = ref(false);
+const filterKeywords = ref([]);
+const filterKeywordsTypeUseAnd = ref(true);
 
 /**
  * If the filter controls are visible
  * @type {import('vue').Ref<boolean>}
  */
 const isFilterControlsVisible = ref(false);
-/**
- *
- * @type {import('vue').Ref<object>}
- */
-const filterValue = ref({
-    categories: new CategoriesFilter([]),
-    keywords: new KeywordsFilter([]),
-});
-
-/**
- * Workaround. Should be replaced by two v-models in vue3
- * @type {import('vue').Ref<object>}
- */
-const inlineControlsValue = ref();
 
 const orderBy = ref({
     label: t('cookbook', 'Name'),
@@ -163,15 +107,6 @@ onMounted(() => {
 // ===================
 // Methods
 // ===================
-
-/**
- * Handle updated value of the inline filter controls. Should be fixed in vue3 by using two v-model directives.
- */
-function handleInlineControlsValueUpdated(ev: any) {
-    inlineControlsValue.value = ev;
-    filterValue.value = inlineControlsValue.value.filters;
-    orderBy.value = inlineControlsValue.value.orderBy;
-}
 
 /* Sort recipes according to the property of the recipe ascending or
  * descending
@@ -222,18 +157,39 @@ function toggleFilterControls() {
     isFilterControlsVisible.value = !isFilterControlsVisible.value;
 }
 
+function mapFilterTypeToOperator(useAndType: boolean) {
+    return useAndType ? new AndOperator() : new OrOperator();
+}
+
 // ===================
 // Computed properties
 // ===================
+
+const filterObjects = computed(() => ({
+    categories: new CategoriesFilter(
+        filterCategories.value,
+        mapFilterTypeToOperator(filterCategoriesTypeUseAnd.value),
+    ),
+    keywords: new KeywordsFilter(
+        filterKeywords.value,
+        mapFilterTypeToOperator(filterKeywordsTypeUseAnd.value),
+        true,
+    ),
+    searchTerm: searchTerm.value,
+}));
 
 /**
  * An array of the filtered recipes, with all filters applied.
  */
 const filteredRecipes = computed(() => {
     const recipeFilters = [
-        filterValue.value.categories,
-        filterValue.value.keywords,
-        new NamesFilter(legacyStore.recipeFilters, new AndOperator(), 'fuzzy'),
+        filterObjects.value.categories,
+        filterObjects.value.keywords,
+        new NamesFilter(
+            filterObjects.value.searchTerm,
+            new AndOperator(),
+            'fuzzy',
+        ),
     ];
     return applyRecipeFilters(props.recipes, recipeFilters);
 });
