@@ -44,8 +44,6 @@ const useLegacyStore = defineStore('legacyStore', {
 			 * @type {Object|null}
 			 */
 			recipe: <any>null,
-			// Filter applied to a list of recipes
-			recipeFilters: '',
 			// Loading and saving states to determine which loader icons to show.
 			// State of -1 is reserved for recipe and edit views to be set when the
 			// User loads the app at one of these locations and has to wait for an

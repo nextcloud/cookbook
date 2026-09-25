@@ -18,7 +18,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     trailing-button-icon="close"
                     :show-trailing-button="searchTerm !== ''"
                     @trailing-button-click="clearSearchTerm"
-                    @input="submitNameFilter"
                     ><SearchIcon :size="20"
                 /></NcTextField>
             </div>
@@ -28,7 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     t('cookbook', 'Categories')
                 }}</label>
                 <NcSelect
-                    v-model="selectedCategories"
+                    v-model="filterCategories"
                     input-id="categoriesFilterInput"
                     :options="uniqueCategories"
                     :loading="isLoading"
@@ -38,7 +37,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :placeholder="t('cookbook', 'All categories')"
                     :aria-label="t('cookbook', 'Categories')"
                     :aria-placeholder="t('cookbook', 'All categories')"
-                    @input="submitFilters"
                     ><template #list-header>
                         <li style="padding: 0.25rem; text-align: center">
                             {{
@@ -46,9 +44,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                     'cookbook',
                                     '1 category selected',
                                     '{n} categories selected',
-                                    selectedCategories.length,
+                                    filterCategories.length,
                                     {
-                                        n: `${selectedCategories.length.toString()}`,
+                                        n: `${filterCategories.length.toString()}`,
                                     },
                                 )
                             }}
@@ -57,7 +55,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 >
                 <div class="d-flex">
                     <ToggleIconButton
-                        v-model="categoriesOperatorToggleValue"
+                        v-model="categoriesOperatorTypeUseAnd"
                         :checked-icon="AndIcon"
                         :icon-props="{
                             size: 25,
@@ -76,15 +74,14 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                 'Show recipes containing all selected categories',
                             ),
                         }"
-                        @update:model-value="submitFilters"
                     />
 
                     <span
-                        v-if="categoriesOperatorToggleValue"
+                        v-if="categoriesOperatorTypeUseAnd"
                         class="operator-toggle-text"
                         @click="
-                            categoriesOperatorToggleValue =
-                                !categoriesOperatorToggleValue
+                            categoriesOperatorTypeUseAnd =
+                                !categoriesOperatorTypeUseAnd
                         "
                         >{{
                             t('cookbook', 'Matching all selected categories')
@@ -94,8 +91,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                         v-else
                         class="operator-toggle-text"
                         @click="
-                            categoriesOperatorToggleValue =
-                                !categoriesOperatorToggleValue
+                            categoriesOperatorTypeUseAnd =
+                                !categoriesOperatorTypeUseAnd
                         "
                         >{{
                             t('cookbook', 'Matching any selected category')
@@ -109,7 +106,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     t('cookbook', 'Keywords')
                 }}</label>
                 <NcSelect
-                    v-model="selectedKeywords"
+                    v-model="filterKeywords"
                     input-id="keywordsFilterInput"
                     :options="uniqueKeywords"
                     :loading="isLoading"
@@ -119,7 +116,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :placeholder="t('cookbook', 'All keywords')"
                     :aria-label="t('cookbook', 'Keywords')"
                     :aria-placeholder="t('cookbook', 'All keywords')"
-                    @input="submitFilters"
                 >
                     <template #list-header>
                         <li style="padding: 0.25rem; text-align: center">
@@ -128,9 +124,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                     'cookbook',
                                     '1 keyword selected',
                                     '{n} keywords selected',
-                                    selectedKeywords.length,
+                                    filterKeywords.length,
                                     {
-                                        n: `${selectedKeywords.length.toString()}`,
+                                        n: `${filterKeywords.length.toString()}`,
                                     },
                                 )
                             }}
@@ -139,7 +135,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 >
                 <div class="d-flex">
                     <ToggleIconButton
-                        v-model="keywordsOperatorToggleValue"
+                        v-model="keywordsOperatorTypeUseAnd"
                         :checked-icon="AndIcon"
                         :icon-props="{
                             size: 25,
@@ -161,11 +157,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     />
 
                     <span
-                        v-if="keywordsOperatorToggleValue"
+                        v-if="keywordsOperatorTypeUseAnd"
                         class="operator-toggle-text"
                         @click="
-                            keywordsOperatorToggleValue =
-                                !keywordsOperatorToggleValue
+                            keywordsOperatorTypeUseAnd =
+                                !keywordsOperatorTypeUseAnd
                         "
                         >{{
                             t('cookbook', 'Matching all selected keywords')
@@ -175,8 +171,8 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                         v-else
                         class="operator-toggle-text"
                         @click="
-                            keywordsOperatorToggleValue =
-                                !keywordsOperatorToggleValue
+                            keywordsOperatorTypeUseAnd =
+                                !keywordsOperatorTypeUseAnd
                         "
                         >{{
                             t('cookbook', 'Matching any selected keyword')
@@ -207,7 +203,6 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, watch } from 'vue';
 import SearchIcon from 'vue-material-design-icons/Magnify.vue';
 import NcButton from '@nextcloud/vue/components/NcButton';
 import NcModal from '@nextcloud/vue/components/NcModal';
@@ -216,19 +211,12 @@ import NcTextField from '@nextcloud/vue/components/NcTextField';
 import AndIcon from 'vue-material-design-icons/SetCenter.vue';
 import OrIcon from 'vue-material-design-icons/SetAll.vue';
 import ToggleIconButton from '../Utilities/ToggleIconButton.vue';
-import useRecipeFilterControls from '../../composables/useRecipeFilterControls';
 
 const t = window.t;
 const n = window.n;
-const emit = defineEmits(['close', 'input']);
+const emit = defineEmits(['close', 'input', 'reset-filters']);
 
 const props = defineProps({
-    // value: {
-    //     type: Object,
-    //     default() {
-    //         return { categories: [], keywords: [] };
-    //     },
-    // },
     fieldLabel: { type: String, default: '' },
     /**
      * List of sections that should be hidden from the filters list, e.g., `['categories', 'keywords']`
@@ -237,78 +225,55 @@ const props = defineProps({
     isLoading: { type: Boolean, default: false },
     isVisible: { type: Boolean, default: false },
     recipes: { type: Array, default: () => [] },
+    uniqueCategories: { type: Array, default: () => [] },
+    uniqueKeywords: { type: Array, default: () => [] },
+    hiddenSections: { type: Object, default: () => ({}) },
 });
 
-const value = defineModel({
-    type: Object,
-    default() {
-        return { categories: [], keywords: [] };
+const searchTerm = defineModel('search-term', {
+    type: String,
+    required: true,
+});
+
+const filterCategories = defineModel('filter-categories', {
+    type: Array,
+    required: true,
+});
+
+const categoriesOperatorTypeUseAnd = defineModel(
+    'categories-operator-use-and',
+    {
+        type: Boolean,
+        required: true,
     },
+);
+
+const filterKeywords = defineModel('filter-keywords', {
+    type: Array,
+    required: true,
 });
 
-const {
-    uniqueCategories,
-    selectedCategories,
-    uniqueKeywords,
-    selectedKeywords,
-    hiddenSections,
-    searchTerm,
-    localFiltersValue,
-    categoriesOperatorToggleValue,
-    keywordsOperatorToggleValue,
-    legacyStore,
-} = useRecipeFilterControls(props);
+const keywordsOperatorTypeUseAnd = defineModel('keywords-operator-use-and', {
+    type: Boolean,
+    required: true,
+});
 
 function clearSearchTerm() {
     searchTerm.value = '';
-    legacyStore.setRecipeFilters(searchTerm.value);
 }
 
 function clearFilters() {
-    selectedCategories.value = [];
-    selectedKeywords.value = [];
-    clearSearchTerm();
+    emit('reset-filters');
 }
 
 function closeModal() {
     emit('close');
 }
 
-const emittedValue = computed(() => ({
-    filters: localFiltersValue.value,
-}));
-
-async function submitNameFilter() {
-    await nextTick();
-    legacyStore.setRecipeFilters(searchTerm.value);
-}
-
-function submitFilters() {
-    emit('input', localFiltersValue.value);
-    submitNameFilter();
-}
-
 function submitAndClose() {
-    submitFilters();
+    //     submitFilters();
     emit('close');
 }
-
-// TODO: This is just a quick fix to make the filters submit when the operator toggles are changed. A better solution would be to use v-model consequently
-watch(categoriesOperatorToggleValue, () => {
-    submitFilters();
-});
-watch(keywordsOperatorToggleValue, () => {
-    submitFilters();
-});
-watch(selectedCategories, () => {
-    submitFilters();
-});
-watch(selectedKeywords, () => {
-    submitFilters();
-});
-watch(searchTerm, () => {
-    submitFilters();
-});
 </script>
 
 <style lang="scss" scoped>
