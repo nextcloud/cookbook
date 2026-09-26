@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "แก้ไข",
     "Save" : "บันทึก",
     "Search" : "ค้นหา",
-    "Filter" : "ตัวกรอง",
     "Categories" : "หมวดหมู่",
     "Rename" : "เปลี่ยนชื่อ",
     "Name" : "ชื่อ",

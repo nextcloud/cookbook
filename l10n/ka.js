@@ -11,7 +11,6 @@ OC.L10N.register(
     "Edit" : "Edit",
     "Save" : "Save",
     "Search" : "Search",
-    "Filter" : "Filter",
     "Categories" : "Categories",
     "Rename" : "Rename",
     "Add" : "დამატება",

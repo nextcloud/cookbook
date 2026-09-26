@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "Rediger",
     "Save" : "Lagre",
     "Search" : "Search",
-    "Filter" : "Filter",
     "Categories" : "Kategoriar",
     "Rename" : "Endra namn",
     "Add" : "Legg til",

@@ -83,8 +83,6 @@ OC.L10N.register(
     "Edit" : "ແກ້ໄຂ",
     "Save" : "ບັນທຶກ",
     "Search" : "ຄົ້ນຫາ",
-    "Filter current recipes" : "ກັ່ນຕອງສູດອາຫານປັດຈຸບັນ",
-    "Filter" : "ໂຕກອງ",
     "Search recipes" : "ຄົ້ນຫາສູດອາຫານ",
     "Reload recipe" : "ໂຫຼດສູດອາຫານຄືນໃໝ່",
     "Abort editing" : "ຍົກເລີກການແກ້ໄຂ",

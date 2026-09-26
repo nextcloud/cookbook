@@ -83,8 +83,6 @@ OC.L10N.register(
     "Edit" : "Hariri",
     "Save" : "Hifadhi",
     "Search" : "Tafuta",
-    "Filter current recipes" : "Chuja mapishi ya sasa",
-    "Filter" : "Chujio",
     "Search recipes" : "Tafuta mapishi",
     "Reload recipe" : "Pakia upya kichocheo",
     "Abort editing" : "Acha kuhariri",

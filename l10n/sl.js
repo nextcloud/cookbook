@@ -30,7 +30,6 @@ OC.L10N.register(
     "Edit" : "Uredi",
     "Save" : "Shrani",
     "Search" : "Poišči",
-    "Filter" : "Filter",
     "Reload recipe" : "Ponovno naloži recept",
     "Print recipe" : "Natisni recept",
     "Delete recipe" : "Izbriši recept",

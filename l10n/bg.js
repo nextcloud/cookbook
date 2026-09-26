@@ -73,7 +73,6 @@ OC.L10N.register(
     "Edit" : "Редактиране",
     "Save" : "Запиши",
     "Search" : "Търсене",
-    "Filter" : "Филтър",
     "Reload recipe" : "Презареждане на рецепта",
     "Abort editing" : "Прекратяване на редактирането",
     "Print recipe" : "Печат на рецепта",

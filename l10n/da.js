@@ -36,7 +36,6 @@ OC.L10N.register(
     "Edit" : "Redigér",
     "Save" : "Gem",
     "Search" : "Søg",
-    "Filter" : "Filter",
     "Reload recipe" : "Genindlæs opskrift",
     "Print recipe" : "Udskriv opskrift",
     "Delete recipe" : "Slet opskrift",

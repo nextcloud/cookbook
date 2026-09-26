@@ -26,7 +26,6 @@ OC.L10N.register(
     "Edit" : "Uredi",
     "Save" : "Spremi",
     "Search" : "Traži",
-    "Filter" : "Filtar",
     "Reload recipe" : "Ponovno učitaj recept",
     "Print recipe" : "Ispiši recept",
     "Delete recipe" : "Izbriši recept",

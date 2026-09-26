@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "შეცვლა",
     "Save" : "შენახვა",
     "Search" : "ძიება",
-    "Filter" : "ფილტრი",
     "Categories" : "კატეგორიები",
     "Rename" : "სახელის შეცვლა",
     "Name" : "სახელი",

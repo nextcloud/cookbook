@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "Ẓreg",
     "Save" : "Sekles",
     "Search" : "Nadi",
-    "Filter" : "Sizdeg",
     "Categories" : "Taggayin",
     "Rename" : "Beddel isem",
     "Add" : "Rnu",

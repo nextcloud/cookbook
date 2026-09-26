@@ -44,7 +44,6 @@ OC.L10N.register(
     "Edit" : "Chỉnh sửa",
     "Save" : "Lưu",
     "Search" : "Tìm",
-    "Filter" : "Lọc",
     "Reload recipe" : "Tải lại công thức",
     "Print recipe" : "In công thức",
     "Delete recipe" : "Xóa công thức",

@@ -24,7 +24,6 @@ OC.L10N.register(
     "Edit" : "Editează",
     "Save" : "Salvează",
     "Search" : "Caută",
-    "Filter" : "Filtru",
     "Reload recipe" : "Reîncărcați rețeta",
     "Print recipe" : "Tipăriți rețeta",
     "Delete recipe" : "Ștergeți rețeta",

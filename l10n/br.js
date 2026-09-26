@@ -8,7 +8,6 @@ OC.L10N.register(
     "Edit" : "Cheñch",
     "Save" : "Enrollañ",
     "Search" : "Klask",
-    "Filter" : "Filtre",
     "Categories" : "Rummadoù",
     "Rename" : "Adenvel",
     "Name" : "Anv",

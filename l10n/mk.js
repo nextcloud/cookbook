@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "Уреди",
     "Save" : "Зачувај",
     "Search" : "Барај",
-    "Filter" : "Филтер",
     "Categories" : "Категории",
     "Rename" : "Преименувај",
     "Add" : "Додади",

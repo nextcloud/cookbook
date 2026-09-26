@@ -79,8 +79,6 @@ OC.L10N.register(
     "Edit" : "Редагувати",
     "Save" : "Зберегти",
     "Search" : "Пошук",
-    "Filter current recipes" : "Фільтрувати поточні рецепти",
-    "Filter" : "Фільтр",
     "Search recipes" : "Пошук рецептів",
     "Reload recipe" : "Перезавантажити рецепт",
     "Abort editing" : "Перервати редагування",

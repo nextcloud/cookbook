@@ -9,7 +9,6 @@ OC.L10N.register(
     "Edit" : "Änneren",
     "Save" : "Späicheren",
     "Search" : "Search",
-    "Filter" : "Filter",
     "Categories" : "Kategorien",
     "Rename" : "Ëmbenennen",
     "Add" : "Dobäisetzen",

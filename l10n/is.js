@@ -15,7 +15,6 @@ OC.L10N.register(
     "Edit" : "Breyta",
     "Save" : "Vista",
     "Search" : "Search",
-    "Filter" : "Sía",
     "Print recipe" : "Prenta uppskrift",
     "Delete recipe" : "Eyða uppskrift",
     "Path to your recipe collection" : "Slóðin á uppskriftasafnið þitt",

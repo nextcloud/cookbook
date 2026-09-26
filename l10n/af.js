@@ -9,7 +9,6 @@ OC.L10N.register(
     "Edit" : "Wysig",
     "Save" : "Bewaar",
     "Search" : "Soek",
-    "Filter" : "Filter",
     "Add" : "Voeg toe",
     "Name" : "Naam",
     "Tools" : "Nutsmiddels",

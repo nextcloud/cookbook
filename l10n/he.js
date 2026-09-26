@@ -20,7 +20,6 @@ OC.L10N.register(
     "Edit" : "עריכה",
     "Save" : "שמירה",
     "Search" : "חיפוש",
-    "Filter" : "מסנן",
     "Reload recipe" : "רענון המתכון",
     "Print recipe" : "הדפסת מתכון",
     "Delete recipe" : "מחיקת מתכון",

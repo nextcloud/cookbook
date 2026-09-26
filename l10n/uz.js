@@ -11,7 +11,6 @@ OC.L10N.register(
     "Edit" : "Tahrirlash",
     "Save" : "Saqlash",
     "Search" : "Qidirish",
-    "Filter" : "Filtr",
     "Categories" : "Kategoriyalar",
     "Rename" : "Nomini o'zgartirish",
     "Add" : "Qo'shish",

@@ -28,7 +28,6 @@ OC.L10N.register(
     "Edit" : "Modìfica",
     "Save" : "Sarva",
     "Search" : "Chirca",
-    "Filter" : "Filtru",
     "Reload recipe" : "Torra a carrigare sa retzeta",
     "Print recipe" : "Imprenta sa retzeta",
     "Delete recipe" : "Cantzella sa retzeta",

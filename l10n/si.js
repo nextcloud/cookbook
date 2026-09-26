@@ -6,7 +6,6 @@ OC.L10N.register(
     "Edit" : "සංස්කරණය",
     "Save" : "සුරකින්න",
     "Search" : "සොයන්න",
-    "Filter" : "පෙරහන",
     "Add" : "එකතු කරන්න",
     "Name" : "නම",
     "Description" : "විස්තරය",

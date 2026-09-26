@@ -10,7 +10,6 @@ OC.L10N.register(
     "Edit" : "Përpuno",
     "Save" : "Ruaj",
     "Search" : "Kërko",
-    "Filter" : "Filtro",
     "Categories" : "Kategoritë",
     "Rename" : "Riemërtoje",
     "Add" : "Shto ",

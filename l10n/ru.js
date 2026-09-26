@@ -45,7 +45,6 @@ OC.L10N.register(
     "Edit" : "Редактировать",
     "Save" : "Сохранить",
     "Search" : "Поиск",
-    "Filter" : "Фильтр",
     "Search recipes" : "Поиск рецептов",
     "Reload recipe" : "Перезагрузить рецепты",
     "Abort editing" : "Прервать редактирование",

@@ -73,7 +73,6 @@ OC.L10N.register(
     "Edit" : "Editar",
     "Save" : "Guardar",
     "Search" : "Buscar",
-    "Filter" : "Filtrar",
     "Reload recipe" : "Recargar receta",
     "Abort editing" : "Cancelar edición",
     "Print recipe" : "Imprimir receta",

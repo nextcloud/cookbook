@@ -17,7 +17,6 @@ OC.L10N.register(
     "Edit" : "編輯",
     "Save" : "儲存",
     "Search" : "搜尋",
-    "Filter" : "過濾",
     "Print recipe" : "列印食譜",
     "Delete recipe" : "刪除食譜",
     "Create recipe" : "新增食譜",
