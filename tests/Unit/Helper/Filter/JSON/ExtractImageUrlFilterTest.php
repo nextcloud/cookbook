@@ -49,6 +49,10 @@ class ExtractImageUrlFilterTest extends TestCase {
 		yield [30, '', true];
 		yield [['url' => 'http://example.com/image.jpg'], 'http://example.com/image.jpg', true];
 		yield [[
+			'url' => 'http://example.com/image.jpg',
+			'@id' => '#someImage',
+		], 'http://example.com/image.jpg', true];
+		yield [[
 			['foo', 'url' => null],
 			'http://example.com/image.jpg',
 			['test' => 'array']
@@ -82,6 +86,10 @@ class ExtractImageUrlFilterTest extends TestCase {
 			'http://example.com/imageB.jpg',
 			['test' => 'array']
 		], 'http://example.com/imageA.jpg', true];
+		yield [[
+			'@id' => '#someImage',
+		], null, true];
+
 	}
 
 	/**
