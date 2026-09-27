@@ -35,11 +35,11 @@ class HttpMicrodataParserTest extends TestCase {
 
 	public static function dataProvider(): array {
 		return [
-			'caseA' => ['caseA.html',true,'caseA.json'],
-			'caseB' => ['caseB.html',true,'caseB.json'],
-			'caseC' => ['caseC.html',false,null],
-			'caseD' => ['caseD.html',true,'caseD.json'],
-			'caseE' => ['caseE.html',true,'caseE.json'],
+			'case01' => ['case01.html',true,'case01.json'],
+			'case02' => ['case02.html',true,'case02.json'],
+			'case03' => ['case03.html',false,null],
+			'case04' => ['case04.html',true,'case04.json'],
+			'case05' => ['case05.html',true,'case05.json'],
 
 			'caseIssue1209' => ['caseFix1209.html',true,'caseFix1209.json', true],
 			'caseIssue1617a' => ['caseIssue1617a.html',true,'caseIssue1617a.json'],
