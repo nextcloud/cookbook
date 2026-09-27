@@ -57,6 +57,12 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 			return true;
 		}
 
+		if (isset($json['image']['@id'])) {
+			// This seems to ben object part of a @graph structure. We cannot handle this for now.
+			$json['image'] = null;
+			return true;
+		}
+
 		// We have an array of images. Extract the URLs
 		$images = array_map(function ($x) {
 			if (is_string($x)) {
