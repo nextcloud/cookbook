@@ -59,7 +59,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 
 		if (isset($json['image']['@id'])) {
 			// This seems to ben object part of a @graph structure. We cannot handle this for now.
-			$json['image'] = null;
+			$json['image'] = '';
 			return true;
 		}
 

@@ -88,7 +88,7 @@ class ExtractImageUrlFilterTest extends TestCase {
 		], 'http://example.com/imageA.jpg', true];
 		yield [[
 			'@id' => '#someImage',
-		], null, true];
+		], '', true];
 
 	}
 
