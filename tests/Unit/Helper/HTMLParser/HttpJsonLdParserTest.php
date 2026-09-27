@@ -20,18 +20,18 @@ use PHPUnit\Framework\TestCase;
 class HttpJsonLdParserTest extends TestCase {
 	public static function dataProvider(): array {
 		return [
-			'caseA' => ['caseA.html', true, 'caseA.json'],
-			'caseB' => ['caseB.html', true, 'caseB.json'],
-			'caseC' => ['caseC.html', false, null],
-			'caseD' => ['caseD.html', false, null],
-			'caseE' => ['caseE.html', false, null],
-			'caseF' => ['caseF.html', true, 'caseF.json'],
-			'caseG' => ['caseG.html', true, 'caseG.json'],
-			'caseH' => ['caseH.html', true, 'caseH.json'],
-			'caseI' => ['caseI.html', true, 'caseI.json'],
-			'caseJ' => ['caseJ.html', true, 'caseJ.json'],
-			//'caseK' => ['caseK.html', true, 'caseK.json'],
-			'caseL' => ['caseL.html', true, 'caseL.json'],
+			'case01' => ['case01.html', true, 'case01.json'],
+			'case02' => ['case02.html', true, 'case02.json'],
+			'case03' => ['case03.html', false, null],
+			'case04' => ['case04.html', false, null],
+			'case05' => ['case05.html', false, null],
+			'case06' => ['case06.html', true, 'case06.json'],
+			'case07' => ['case07.html', true, 'case07.json'],
+			'case08' => ['case08.html', true, 'case08.json'],
+			'case09' => ['case09.html', true, 'case09.json'],
+			'case10' => ['case10.html', true, 'case10.json'],
+			//'case11' => ['case11.html', true, 'case11.json'],
+			'case12' => ['case12.html', true, 'case12.json'],
 		];
 	}
 
