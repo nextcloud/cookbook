@@ -833,13 +833,27 @@ onMounted(() => {
     });
 
     if ('wakeLock' in navigator) {
-        navigator.wakeLock.request().then((sentinel) => {
-            wakeLockSentinel = sentinel;
+        requestWakeLock();
+
+        document.addEventListener('visibilitychange', async () => {
+          if (document.visibilityState === 'visible') {
+              requestWakeLock();
+          }
         });
     } else {
         log.info('WakeLock API is not supported');
     }
 });
+
+function requestWakeLock() {
+    navigator.wakeLock.request().then((sentinel) => {
+        wakeLockSentinel = sentinel;
+
+        wakeLockSentinel.addEventListener('release', () => {
+            wakeLockSentinel = null;
+        });
+    });
+}
 
 onUnmounted(() => {
     if (wakeLockSentinel !== null) {
