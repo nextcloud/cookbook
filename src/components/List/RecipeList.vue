@@ -10,7 +10,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             <LoadingIndicator :delay="800" :size="40" />
         </div>
         <div v-else>
-            <div v-if="recipeObjects.length === 0">
+            <div v-if="recipes.length === 0">
                 <EmptyList />
             </div>
             <div v-else>
@@ -30,22 +30,28 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :is-loading="loading"
                     :is-visible="isFilterControlsVisible"
                 />
-                <ul class="recipes">
-                    <li
-                        v-for="recipeObj in recipeObjects"
-                        v-show="recipeObj.show"
-                        :key="recipeObj.recipe.recipe_id"
-                    >
-                        <RecipeCard :recipe="recipeObj.recipe" />
-                    </li>
-                </ul>
+                <RecycleScroller
+                    page-mode
+                    class="recipes-virtual"
+                    :items="visibleRecipes"
+                    :item-size="130"
+                    :grid-items="gridItems"
+                    :item-secondary-size="332"
+                    key-field="recipe_id"
+                >
+                    <template #default="{ item }">
+                        <RecipeCard :recipe="item" />
+                    </template>
+                </RecycleScroller>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
+import { RecycleScroller } from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
@@ -98,6 +104,29 @@ const orderBy = ref({
     iconUp: true,
     recipeProperty: 'name',
     order: 'ascending',
+});
+
+// The recipe grid adapts to window width. One card cell is 300px wide
+// (.recipe-card) plus a 1rem margin on each side ≈ 332px. The Nextcloud
+// navigation pane occupies roughly 300px when visible; subtract it from
+// window.innerWidth to estimate the available content area.
+const ITEM_SECONDARY_SIZE = 332;
+const NC_SIDEBAR = 300;
+const calcGridItems = () =>
+    Math.max(
+        1,
+        Math.floor((window.innerWidth - NC_SIDEBAR) / ITEM_SECONDARY_SIZE),
+    );
+const gridItems = ref(calcGridItems());
+const onWindowResize = () => {
+    gridItems.value = calcGridItems();
+};
+
+onMounted(() => {
+    window.addEventListener('resize', onWindowResize);
+});
+onBeforeUnmount(() => {
+    window.removeEventListener('resize', onWindowResize);
 });
 
 // ===================
@@ -269,6 +298,15 @@ const recipeObjects = computed(() => {
     return props.recipes.map(makeObject);
 });
 
+// Final list passed to the virtualized scroller. Hidden recipeObjects
+// are filtered out completely so the scroller's primary axis size and
+// scrollbar match the visible content.
+const visibleRecipes = computed(() =>
+    recipeObjects.value
+        .filter((o) => o.show)
+        .map((o) => o.recipe),
+);
+
 const showFiltersInRecipeList = computed(
     () => legacyStore.localSettings.showFiltersInRecipeList,
 );
@@ -314,5 +352,12 @@ export default {
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+/* Virtualized scroller container. page-mode uses the document scrollbar
+ * so no explicit height is required — items render inside the normal
+ * flow and only the visible cells live in the DOM. */
+.recipes-virtual {
+    width: 100%;
 }
 </style>
