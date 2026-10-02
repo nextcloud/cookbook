@@ -59,7 +59,12 @@ class Provider implements IProvider {
 
 	#[\Override]
 	public function search(IUser $user, ISearchQuery $query): SearchResult {
-		$recipes = $this->recipeService->findRecipesInSearchIndex($query->getTerm());
+		$offset = (int)$query->getCursor() ?? 0;
+		$limit = $query->getLimit();
+		$nextCursor = $offset + $limit;
+
+		$recipes = $this->recipeService->findRecipesInSearchIndex($query->getTerm(), $limit, $offset);
+
 		$result = array_map(
 			function (array $recipe) use ($user): SearchResultEntry {
 				$id = $recipe['recipe_id'];
@@ -84,9 +89,10 @@ class Provider implements IProvider {
 			}, $recipes
 		);
 
-		return SearchResult::complete(
+		return SearchResult::paginated(
 			$this->getName(),
-			$result
+			$result,
+			$nextCursor
 		);
 	}
 }

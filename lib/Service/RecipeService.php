@@ -521,7 +521,7 @@ class RecipeService {
 	 * @throws DoesNotExistException
 	 *
 	 */
-	public function findRecipesInSearchIndex(string $keywords_string): array {
+	public function findRecipesInSearchIndex(string $keywords_string, int $limit = -1, int $offset = 0): array {
 		$keywords_string = strtolower($keywords_string);
 		$keywords_array = [];
 		preg_match_all('/[^ ,]+/', $keywords_string, $keywords_array);
@@ -531,6 +531,11 @@ class RecipeService {
 		}
 
 		$recipes = $this->db->findRecipes($keywords_array, $this->user_id);
+
+		if ($limit > 0) {
+			$recipes = array_slice($recipes, $offset, $limit, true);
+		}
+
 		$this->addDatesToRecipes($recipes);
 
 		return $recipes;
