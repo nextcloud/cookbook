@@ -90,7 +90,14 @@
   },
   "engines": {
     "node": "^24.0.0",
-    "npm": "^11.3.0"
+    "npm": "^11.16.0"
+  },
+  "allowScripts": {
+    "core-js@3.49.0": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.1": true,
+    "unrs-resolver@1.12.2": true,
+    "@parcel/watcher@2.6.0": true
   },
   "overrides": {
     "stylelint-order": "^7.0.1"
