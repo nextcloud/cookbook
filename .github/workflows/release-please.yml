@@ -1,0 +1,70 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+name: Release Please
+
+on:
+  push:
+    branches:
+      - master
+
+permissions: {}
+
+jobs:
+  release:
+    name: Create or update release PR
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    outputs:
+      release-created: ${{ steps.release.outputs.release_created }}
+      tag-name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+      sha: ${{ steps.release.outputs.sha }}
+    steps:
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
+        with:
+          target-branch: ${{ github.ref_name }}
+
+  notify:
+    name: Notify release repository
+    needs: release
+    if: ${{ needs.release.outputs.release-created == 'true' }}
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Create GitHub App installation token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        with:
+          app-id: ${{ vars.COOKBOOK_TRIGGER_BOT_APP_ID }}
+          private-key: ${{ secrets.COOKBOOK_TRIGGER_BOT_PRIV_KEY }}
+          owner: christianlupus-nextcloud
+          repositories: cookbook-releases
+
+      - name: Create release request issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          RELEASE_BRANCH: ${{ github.ref_name }}
+          RELEASE_TAG: ${{ needs.release.outputs.tag-name }}
+          RELEASE_VERSION: ${{ needs.release.outputs.version }}
+          RELEASE_SHA: ${{ needs.release.outputs.sha }}
+        run: |
+          set -euo pipefail
+          body=$(jq -n \
+            --arg repository "$SOURCE_REPOSITORY" \
+            --arg branch "$RELEASE_BRANCH" \
+            --arg tag "$RELEASE_TAG" \
+            --arg version "$RELEASE_VERSION" \
+            --arg sha "$RELEASE_SHA" \
+            '{schema: 1, repository: $repository, branch: $branch, tag: $tag, version: $version, sha: $sha}')
+          gh api repos/christianlupus-nextcloud/cookbook-releases/issues \
+            --method POST \
+            --field title=release-request \
+            --field body="$body"
