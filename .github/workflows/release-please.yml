@@ -1,0 +1,184 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+name: Release Please
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag whose notification should be retried
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  release:
+    name: Create or update release PR
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-24.04
+    permissions: {}
+    outputs:
+      release-created: ${{ steps.release.outputs.release_created }}
+      tag-name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+      sha: ${{ steps.release.outputs.sha }}
+    steps:
+      - name: Create GitHub App installation token
+        id: release-please-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        with:
+          app-id: ${{ vars.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_ID }}
+          private-key: ${{ secrets.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_PRIV_KEY }}
+          owner: nextcloud
+          repositories: cookbook
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
+        with:
+          token: ${{ steps.release-please-token.outputs.token }}
+          target-branch: ${{ github.ref_name }}
+
+  notification-metadata:
+    name: Resolve release notification metadata
+    needs: release
+    if: ${{ always() && (github.event_name == 'workflow_dispatch' || (needs.release.result == 'success' && needs.release.outputs.release-created == 'true')) }}
+    runs-on: ubuntu-24.04
+    permissions: {}
+    outputs:
+      tag: ${{ steps.metadata.outputs.tag }}
+      version: ${{ steps.metadata.outputs.version }}
+      sha: ${{ steps.metadata.outputs.sha }}
+      branch: ${{ steps.metadata.outputs.branch }}
+      repository: ${{ steps.metadata.outputs.repository }}
+    steps:
+      - name: Resolve notification metadata
+        id: metadata
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+          RELEASE_TAG: ${{ needs.release.outputs.tag-name }}
+          RELEASE_VERSION: ${{ needs.release.outputs.version }}
+          RELEASE_SHA: ${{ needs.release.outputs.sha }}
+          RELEASE_BRANCH: ${{ github.ref_name }}
+          SOURCE_REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == workflow_dispatch ]]; then
+            tag="$INPUT_TAG"
+            [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            version="${tag#v}"
+            branch=master
+            repository=nextcloud/cookbook
+
+            github_api() {
+              curl --fail-with-body --silent --show-error \
+                --header 'Accept: application/vnd.github+json' \
+                --header 'X-GitHub-Api-Version: 2026-03-10' \
+                "$1"
+            }
+
+            tag_ref=$(github_api "https://api.github.com/repos/nextcloud/cookbook/git/ref/tags/$tag")
+            tag_type=$(jq -r '.object.type' <<< "$tag_ref")
+            tag_object=$(jq -r '.object.sha' <<< "$tag_ref")
+            while [[ "$tag_type" == tag ]]; do
+              tag_object_data=$(github_api "https://api.github.com/repos/nextcloud/cookbook/git/tags/$tag_object")
+              tag_type=$(jq -r '.object.type' <<< "$tag_object_data")
+              tag_object=$(jq -r '.object.sha' <<< "$tag_object_data")
+            done
+            [[ "$tag_type" == commit ]]
+            [[ "$tag_object" =~ ^[0-9a-f]{40}$ ]]
+            sha="$tag_object"
+          else
+            tag="$RELEASE_TAG"
+            version="$RELEASE_VERSION"
+            sha="$RELEASE_SHA"
+            branch="$RELEASE_BRANCH"
+            repository="$SOURCE_REPOSITORY"
+          fi
+
+          printf 'tag=%s\nversion=%s\nsha=%s\nbranch=%s\nrepository=%s\n' \
+            "$tag" "$version" "$sha" "$branch" "$repository" >> "$GITHUB_OUTPUT"
+
+  notify:
+    name: Notify release repository
+    needs: notification-metadata
+    if: ${{ needs.notification-metadata.result == 'success' }}
+    concurrency:
+      group: cookbook-release-notification-${{ needs.notification-metadata.outputs.tag }}
+      cancel-in-progress: false
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Create GitHub App installation token
+        id: app-token
+        uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349 # v2
+        with:
+          app-id: ${{ vars.COOKBOOK_TRIGGER_BOT_APP_ID }}
+          private-key: ${{ secrets.COOKBOOK_TRIGGER_BOT_PRIV_KEY }}
+          owner: christianlupus-nextcloud
+          repositories: cookbook-releases
+          permission-issues: write
+
+      - name: Ensure release request notification exists
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          SOURCE_REPOSITORY: ${{ needs.notification-metadata.outputs.repository }}
+          RELEASE_BRANCH: ${{ needs.notification-metadata.outputs.branch }}
+          RELEASE_TAG: ${{ needs.notification-metadata.outputs.tag }}
+          RELEASE_VERSION: ${{ needs.notification-metadata.outputs.version }}
+          RELEASE_SHA: ${{ needs.notification-metadata.outputs.sha }}
+        run: |
+          set -euo pipefail
+          issues=$(gh api --paginate \
+            'repos/christianlupus-nextcloud/cookbook-releases/issues?state=all&per_page=100' \
+            | jq -s 'add')
+          same_tag_issues=$(jq \
+            --arg repository "$SOURCE_REPOSITORY" \
+            --arg tag "$RELEASE_TAG" \
+            '[.[] | select(.title == "release-request") | . as $issue | (try ($issue.body | fromjson) catch null) as $body | select(($body | type) == "object" and $body.repository == $repository and $body.tag == $tag) | {number: $issue.number, body: $body}]' \
+            <<< "$issues")
+          match_count=$(jq 'length' <<< "$same_tag_issues")
+          if [[ "$match_count" -gt 1 ]]; then
+            echo "Found $match_count release request issues for $SOURCE_REPOSITORY tag $RELEASE_TAG; refusing to create another." >&2
+            exit 1
+          fi
+          if [[ "$match_count" -eq 1 ]]; then
+            existing=$(jq '.[0]' <<< "$same_tag_issues")
+            if ! jq -e \
+              --arg repository "$SOURCE_REPOSITORY" \
+              --arg tag "$RELEASE_TAG" \
+              --arg branch "$RELEASE_BRANCH" \
+              --arg version "$RELEASE_VERSION" \
+              --arg sha "$RELEASE_SHA" \
+              '.body.schema == 1 and .body.repository == $repository and .body.branch == $branch and .body.tag == $tag and .body.version == $version and .body.sha == $sha' \
+              <<< "$existing" >/dev/null; then
+              issue_number=$(jq -r '.number' <<< "$existing")
+              echo "Release request issue #$issue_number for $SOURCE_REPOSITORY tag $RELEASE_TAG has conflicting metadata; refusing to create another." >&2
+              exit 1
+            fi
+            issue_number=$(jq -r '.number' <<< "$existing")
+            echo "Identical release request notification for $RELEASE_TAG already exists as issue #$issue_number; skipping creation."
+            exit 0
+          fi
+
+          body=$(jq -n \
+            --arg repository "$SOURCE_REPOSITORY" \
+            --arg branch "$RELEASE_BRANCH" \
+            --arg tag "$RELEASE_TAG" \
+            --arg version "$RELEASE_VERSION" \
+            --arg sha "$RELEASE_SHA" \
+            '{schema: 1, repository: $repository, branch: $branch, tag: $tag, version: $version, sha: $sha}')
+          gh api repos/christianlupus-nextcloud/cookbook-releases/issues \
+            --method POST \
+            --field title=release-request \
+            --field body="$body"
