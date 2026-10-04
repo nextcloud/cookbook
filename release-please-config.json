@@ -1,0 +1,18 @@
+{
+  "release-type": "node",
+  "draft": true,
+  "force-tag-creation": true,
+  "include-component-in-tag": false,
+  "packages": {
+    ".": {
+      "extra-files": [
+        {
+          "type": "xml",
+          "path": "appinfo/info.xml",
+          "xpath": "/info/version"
+        },
+        "lib/Service/ApiVersion.php"
+      ]
+    }
+  }
+}
