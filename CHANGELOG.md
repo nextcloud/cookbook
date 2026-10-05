@@ -22,9 +22,6 @@ The releases are stored for technical reasins in the repository [christianlupus-
 Sorry for the inconvience.
 
 
-## [Unreleased]
-
-
 ## 0.11.10 - 2026-08-26
 
 ### Changed

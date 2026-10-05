@@ -3,6 +3,9 @@
   "draft": true,
   "force-tag-creation": true,
   "include-component-in-tag": false,
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": true,
+  "signoff": "cookbook-release-please-pr-manager[bot] <337843548+cookbook-release-please-pr-manager[bot]@users.noreply.github.com>",
   "packages": {
     ".": {
       "extra-files": [
