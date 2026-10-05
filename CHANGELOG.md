@@ -22,6 +22,43 @@ The releases are stored for technical reasins in the repository [christianlupus-
 Sorry for the inconvience.
 
 
+## [0.11.11](https://github.com/nextcloud/cookbook/compare/v0.11.10...v0.11.11) (2026-10-05)
+
+
+### Features
+
+* automate releases with release-please ([#3406](https://github.com/nextcloud/cookbook/issues/3406)) ([5b486d1](https://github.com/nextcloud/cookbook/commit/5b486d1acc460227336f63fe9fcbbd645680505c))
+
+
+### Bug Fixes
+
+* category and tag navigation should load the currently selected route ([#3381](https://github.com/nextcloud/cookbook/issues/3381)) ([710eba6](https://github.com/nextcloud/cookbook/commit/710eba66358a9b88fb040050589d43bde3136633))
+* ignore currently unparsable images in graph mode ([#3384](https://github.com/nextcloud/cookbook/issues/3384)) ([919adf6](https://github.com/nextcloud/cookbook/commit/919adf61a3f71b0b52339bef997a8921d036c1a5))
+* **l10n:** Update translations from Transifex ([b7ce336](https://github.com/nextcloud/cookbook/commit/b7ce33665138c10b5b314f400e8463fb1b51a79d))
+* **l10n:** Update translations from Transifex ([b03a433](https://github.com/nextcloud/cookbook/commit/b03a4339727ba2ba077ebbee8ddf9f8fcc195e80))
+* **l10n:** Update translations from Transifex ([37763ab](https://github.com/nextcloud/cookbook/commit/37763ab7c4b6a2874fb529e678d744a72b4e1451))
+* **l10n:** Update translations from Transifex ([e09de7d](https://github.com/nextcloud/cookbook/commit/e09de7d0bf311620d333e8665f70a8dbc2138a2e))
+* **l10n:** Update translations from Transifex ([374227b](https://github.com/nextcloud/cookbook/commit/374227b5ad7184357b8d03382e50784869cc6298))
+* **l10n:** Update translations from Transifex ([9862550](https://github.com/nextcloud/cookbook/commit/9862550e56c197d52560da7cee9d32c326a2ea1a))
+* **l10n:** Update translations from Transifex ([b628bcb](https://github.com/nextcloud/cookbook/commit/b628bcbb8b9ef52205e368209613a4098fa7399c))
+* **l10n:** Update translations from Transifex ([9a1f53d](https://github.com/nextcloud/cookbook/commit/9a1f53d727dfa49a0f98af6a8f5bd39ce82325ba))
+* **l10n:** Update translations from Transifex ([447559d](https://github.com/nextcloud/cookbook/commit/447559dbed32472868ae16dc773bda611835e7a7))
+* **l10n:** Update translations from Transifex ([b32c917](https://github.com/nextcloud/cookbook/commit/b32c91743ea14a79b93a7e76cfa4c051f9175359))
+* **l10n:** Update translations from Transifex ([c5b2158](https://github.com/nextcloud/cookbook/commit/c5b2158ebe2c1191e7763a1e72ba835dc87a81a5))
+* **l10n:** Update translations from Transifex ([bc2dd79](https://github.com/nextcloud/cookbook/commit/bc2dd79bd9087cdb58ec3e3ba795f9c81352e959))
+* **l10n:** Update translations from Transifex ([aed477b](https://github.com/nextcloud/cookbook/commit/aed477bfa83520725e4f622cbb08b68c3c5ee796))
+* make mobile filtering of recipes working again ([#3379](https://github.com/nextcloud/cookbook/issues/3379)) ([0277775](https://github.com/nextcloud/cookbook/commit/027777540544714970860c167b805a7b22e31faf))
+* **RecipeView:** Reacquire the wake lock when the tab becomes visible again ([#3394](https://github.com/nextcloud/cookbook/issues/3394)) ([182d2bd](https://github.com/nextcloud/cookbook/commit/182d2bdad540ce5d03a055a43dbc767ee11e69cb))
+* remove regression introduced in series of commits ([#3380](https://github.com/nextcloud/cookbook/issues/3380)) ([b14cdab](https://github.com/nextcloud/cookbook/commit/b14cdab8ec3a15081bc73524effe194270b90105))
+
+
+### Performance Improvements
+
+* allow for paginated global search to reduce burden on frontend ([#3402](https://github.com/nextcloud/cookbook/issues/3402)) ([4ce370e](https://github.com/nextcloud/cookbook/commit/4ce370e4f9373e3a4f5818f6f7cd4516b66c3bd3))
+* replace O(N^2) recipe filter check with a Set lookup ([cc8a57f](https://github.com/nextcloud/cookbook/commit/cc8a57f181616c524e2d9a4d4a798b20cd8fdf08))
+* stop wrapping every recipe in a reactive Proxy on the list views ([83b329d](https://github.com/nextcloud/cookbook/commit/83b329d255af77882c3a9421512a331e1a520a78))
+* use individual Nextcloud Vue imports ([#3377](https://github.com/nextcloud/cookbook/issues/3377)) ([0bb252f](https://github.com/nextcloud/cookbook/commit/0bb252f00c31963406b3c54c8a25b0d92ffc980f))
+
 ## 0.11.10 - 2026-08-26
 
 ### Changed
