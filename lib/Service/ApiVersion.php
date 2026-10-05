@@ -19,7 +19,7 @@ class ApiVersion {
 		return [
 			0, // x-release-please-major VERSION_TAG
 			11, // x-release-please-minor
-			10, // x-release-please-patch
+			11, // x-release-please-patch
 		];
 	}
 }
