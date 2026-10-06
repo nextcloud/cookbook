@@ -29,7 +29,7 @@ OC.L10N.register(
     "Cannot combine whitespace characters." : "Nemožno kombinovať medzery",
     "Parsing of HTML failed." : "Spracovanie HTML zlyhalo.",
     "Unsupported error level during parsing of XML output." : "Nepodporovaný typ chyby počas analýzy výstupu XML.",
-    "_Warning %u occurred while parsing %s._::_Warning %u occurred %n times while parsing %s._" : ["Počas analýzy %s sa %n krát vyskytlo varovanie.","Počas analýzy %s sa %n krát vyskytlo varovanie.","Počas analýzy %s sa %n krát vyskytlo varovanie.","Počas analýzy %s sa %n krát vyskytlo varovanie."],
+    "_Warning %u occurred while parsing %s._::_Warning %u occurred %n times while parsing %s._" : ["Počas analýzy %s sa vyskytlo varovanie %u.","Počas analýzy %s sa %n-krát vyskytlo varovanie %u.","Počas analýzy %s sa %n-krát vyskytlo varovanie %u.","Počas analýzy %s sa %n-krát vyskytlo varovanie %u."],
     "_Error %u occurred while parsing %s._::_Error %u occurred %n times while parsing %s._" : ["Počas spracovania %s sa vyskytla %n krát chyba %u.","Počas spracovania %s sa vyskytla %n krát chyba %u.","Počas spracovania %s sa vyskytla %n krát chyba %u.","Počas spracovania %s sa vyskytla %n krát chyba %u."],
     "_Fatal error %u occurred while parsing %s._::_Fatal error %u occurred %n times while parsing %s._" : ["Počas spracovania %s sa vyskytla %n krát fatálna chyba %u.","Počas spracovania %s sa vyskytla %n krát fatálna chyba %u.","Počas spracovania %s sa vyskytla %n krát fatálna chyba %u.","Počas spracovania %s sa vyskytla %n krát fatálna chyba %u."],
     "First time it occurred in line %u and column %u" : "Prvýkrát sa to stalo v riadku %u a stĺpci %u",
