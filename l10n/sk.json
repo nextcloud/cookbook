@@ -41,7 +41,7 @@
     "Could not parse timestamp {timestamp}" : "Nepodarilo sa prečítať časovú značku {timestamp}",
     "The user is not logged in. No user configuration can be obtained." : "Užívateľ nie je prihlásený. Nemôže byť získaná žiadna užívateľská konfigurácia.",
     "Recipes" : "Recepty",
-    "The user folder cannot be created due to missing permissions." : "Užívateľský priečinok nemožno vytvoriť z dôvodu chýbajúcich oprávnení.",
+    "The user folder cannot be created due to missing permissions." : "Používateľský priečinok nemožno vytvoriť z dôvodu chýbajúcich oprávnení.",
     "The configured user folder is a file." : "Nakonfigurovaný užívateľský priečinok je súbor.",
     "User cannot create recipe folder" : "Užívateľ nemôže vytvoriť priečinok receptov",
     "in %s" : "v %s",
