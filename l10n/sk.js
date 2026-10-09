@@ -136,7 +136,7 @@ OC.L10N.register(
     "All keywords" : "Všetky kľúčové slová",
     "Keywords" : "Kľúčové slová",
     "Show recipes containing any selected keyword" : "Zobraziť recept obsahujúci ktorékoľvek vybrané kľúčové slovo",
-    "Show recipes containing all selected keywords" : "Zobraziť recept obsahujúci všetky vybrané kľúčové slová",
+    "Show recipes containing all selected keywords" : "Zobraziť recepty obsahujúce všetky vybrané kľúčové slová",
     "Clear" : "Vyčistiť",
     "Recipe filters" : "Filtre receptu",
     "Matching all selected categories" : "Zhoduje sa so všetkými vybranými kategóriami",
