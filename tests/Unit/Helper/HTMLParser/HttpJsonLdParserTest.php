@@ -90,4 +90,59 @@ class HttpJsonLdParserTest extends TestCase {
 			$this->assertFalse($valid);
 		}
 	}
+
+	public static function dataProviderJsonLd(): array {
+		$context = 'https://schema.org';
+		$recipe = ['@context' => $context, '@type' => 'Recipe', 'name' => 'Soup'];
+		$graphRecipe = ['@type' => 'Recipe', 'name' => 'Soup'];
+		$other = ['@type' => 'WebPage', 'name' => 'Page'];
+
+		return [
+			'plain recipe' => [$recipe, $recipe],
+			'array of objects' => [[$other, $recipe], $recipe],
+			'graph' => [['@context' => $context, '@graph' => [$other, $graphRecipe]], $recipe],
+			'array with graph' => [[['@context' => $context, '@graph' => [$other, $graphRecipe]]], $recipe],
+			'type array' => [['@context' => $context, '@type' => ['Recipe', 'Thing'], 'name' => 'Soup'], $recipe],
+			'no recipe' => [['@context' => $context, '@graph' => [$other]], null],
+			'scalar' => ['Soup', null],
+		];
+	}
+
+	/**
+	 * @dataProvider dataProviderJsonLd
+	 * @covers ::parseJsonLd
+	 * @param mixed $input
+	 */
+	public function testParseJsonLd($input, ?array $expected): void {
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+
+		if ($expected === null) {
+			$this->expectException(HtmlParsingException::class);
+		}
+
+		$this->assertEquals($expected, $parser->parseJsonLd(json_encode($input)));
+	}
+
+	/**
+	 * @covers ::parseJsonLd
+	 */
+	public function testParseJsonLdScriptTag(): void {
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$recipe = ['@context' => 'https://schema.org', '@type' => 'Recipe', 'name' => 'Soup'];
+
+		$res = $parser->parseJsonLd(' <script type="application/ld+json">' . json_encode($recipe) . "</script>\n");
+
+		$this->assertEquals($recipe, $res);
+	}
+
+	/**
+	 * @covers ::parseJsonLd
+	 */
+	public function testParseJsonLdInvalid(): void {
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+
+		$this->expectException(HtmlParsingException::class);
+
+		$parser->parseJsonLd('not json');
+	}
 }

@@ -55,8 +55,18 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 * @return array The recipe as an associate array
 	 */
 	private function parseJsonLdElement(\DOMNode $node): array {
-		$string = $node->nodeValue;
+		return $this->parseJsonLd($node->nodeValue);
+	}
 
+	/**
+	 * Parse a JSON+LD string for a recipe
+	 *
+	 * @param string $string The JSON+LD content, optionally wrapped in a script tag
+	 * @throws HtmlParsingException The string does not contain a valid recipe
+	 * @return array The recipe as an associate array
+	 */
+	public function parseJsonLd(string $string): array {
+		$string = preg_replace('/^\s*<script[^>]*>|<\/script>\s*$/i', '', $string) ?? $string;
 		$this->fixRawJson($string);
 
 		$json = json_decode($string, true);
@@ -177,6 +187,10 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	private function searchForRecipeInArray(array $arr, bool $haveSchemaContext = false): ?array {
 		// Iterate through all objects in the array ...
 		foreach ($arr as $item) {
+			if (is_array($item)) {
+				$this->mapGraphField($item);
+			}
+
 			// ... looking for a recipe
 			if ($this->jsonService->isSchemaObject($item, 'Recipe', !$haveSchemaContext, false)) {
 				// We found a recipe in the array, use it

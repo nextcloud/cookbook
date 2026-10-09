@@ -72,11 +72,15 @@ class JsonService {
 	/**
 	 * Check if the value of a schema key matches that of a schema.org object
 	 *
-	 * @param string $context The value of some object's @schema property
+	 * @param mixed $context The value of some object's @context property
 	 * @return bool true, if the schema matches that of a schema.org object
 	 */
-	public function isSchemaContext(string $context): bool {
-		return preg_match('@^https?://schema\.org/?$@', $context) == 1;
+	public function isSchemaContext($context): bool {
+		if (is_array($context)) {
+			return array_filter($context, fn ($c) => $this->isSchemaContext($c)) !== [];
+		}
+
+		return is_string($context) && preg_match('@^https?://schema\.org/?$@', $context) == 1;
 	}
 
 	/**
