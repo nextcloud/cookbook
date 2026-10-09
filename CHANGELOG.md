@@ -22,6 +22,16 @@ The releases are stored for technical reasins in the repository [christianlupus-
 Sorry for the inconvience.
 
 
+## [0.11.12](https://github.com/nextcloud/cookbook/compare/v0.11.11...v0.11.12) (2026-10-09)
+
+
+### Bug Fixes
+
+* **l10n:** Update translations from Transifex ([0682837](https://github.com/nextcloud/cookbook/commit/0682837a085634a0dcdf6bea0ae5574a689cb74d))
+* **l10n:** Update translations from Transifex ([ca1de27](https://github.com/nextcloud/cookbook/commit/ca1de27fc3dc511f6365518cd6ad44d32ef1d9c2))
+* **l10n:** Update translations from Transifex ([911fb8b](https://github.com/nextcloud/cookbook/commit/911fb8b9f66193ad137f06239b4a338c2623fb55))
+* **l10n:** Update translations from Transifex ([7dacb09](https://github.com/nextcloud/cookbook/commit/7dacb0955d9330c6d3193edc882795d9354091f9))
+
 ## [0.11.11](https://github.com/nextcloud/cookbook/compare/v0.11.10...v0.11.11) (2026-10-05)
 
 
