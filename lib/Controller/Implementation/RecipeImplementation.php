@@ -314,18 +314,18 @@ class RecipeImplementation {
 	/**
 	 * Trigger the import of a recipe.
 	 *
-	 * The URL is extracted from the request directly.
+	 * The URL or the JSON+LD is extracted from the request directly.
 	 */
 	public function import() {
 		$this->dbCacheService->triggerCheck();
 
 		$data = $this->restParser->getParameters();
 
-		if (!isset($data['url'])) {
-			return new JSONResponse('Field "url" is required', 400);
+		if (!isset($data['url']) && !is_string($data['json'] ?? null)) {
+			return new JSONResponse('Field "url" or "json" is required', 400);
 		}
 
-		if (! $this->isDownloadUrlValid($data['url'])) {
+		if (isset($data['url']) && ! $this->isDownloadUrlValid($data['url'])) {
 			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $data['url'], 'user' => $this->userId]);
 			// throw new InvalidDownloadURLException($this->l->t('The provided URL is not allowed.'));
 			$json = [
@@ -335,7 +335,9 @@ class RecipeImplementation {
 		}
 
 		try {
-			$recipe_file = $this->service->downloadRecipe($data['url']);
+			$recipe_file = isset($data['url'])
+				? $this->service->downloadRecipe($data['url'])
+				: $this->service->importRecipeJson($data['json']);
 			$recipe_json = $this->service->parseRecipeFile($recipe_file);
 
 		} catch (RecipeExistsException $ex) {

@@ -43,7 +43,6 @@ import NcTextArea from '@nextcloud/vue/components/NcTextArea';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
-import parseRecipeJson from 'cookbook/js/utils/parseRecipeJson';
 import { useLegacyStore } from '../../store';
 import type { RequestError } from '../../types/RequestError';
 
@@ -59,38 +58,18 @@ const json = ref('');
 const errorMessage = ref('');
 const isImporting = ref(false);
 
-const parseRecipe = (): object | null => {
-    try {
-        const recipe = parseRecipeJson(json.value);
-        if (!recipe) {
-            errorMessage.value = t(
-                'cookbook',
-                'The JSON is not a schema.org recipe',
-            );
-        }
-        return recipe;
-    } catch {
-        errorMessage.value = t('cookbook', 'The text is not valid JSON');
-        return null;
-    }
-};
-
 const importRecipe = async () => {
     errorMessage.value = '';
-    const recipe = parseRecipe();
-    if (!recipe) {
-        return;
-    }
-
     isImporting.value = true;
     try {
-        const id = (await api.recipes.create(recipe)).data;
+        const { id } = (await api.recipes.importJson(json.value)).data;
         legacyStore.setAppNavigationRefreshRequired({ isRequired: true });
         emit('close');
         helpers.goTo(`/recipe/${id}`);
     } catch (e) {
+        const data = (e as RequestError).response?.data;
         errorMessage.value =
-            (e as RequestError).response?.data?.msg ||
+            (typeof data === 'string' ? data : data?.msg) ||
             t('cookbook', 'The server reported an error. Please check.');
     } finally {
         isImporting.value = false;
