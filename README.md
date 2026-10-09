@@ -31,10 +31,9 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 </p>
 A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings.
 
+## 📱 Clients & Third-Party Tools
 
-## 📱 Clients
-
-The app works generally in any modern browser. Additionally, there are some more specialized clients available, including mobile apps for Android and iOS. You can find an overview [here](docs/readme/clients/index.md).
+The app works generally in any modern browser. Additionally, there are specialized clients and community-created tools available, including mobile apps for Android and iOS as well as third-party converters and scripts. You can find an full overview [here](docs/readme/clients/index.md).
 
 ## 📖 Documentation
 Further documentation (also internal ones) are published on the [documentation pages of the project](http://nextcloud.github.io/cookbook/) and in the FAQ at the bottom.
