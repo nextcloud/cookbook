@@ -76,7 +76,6 @@ const props = defineProps({
     },
     recipes: {
         type: Array,
-        default: () => [],
         required: true,
     },
 });
