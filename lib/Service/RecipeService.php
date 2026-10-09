@@ -380,8 +380,19 @@ class RecipeService {
 		return $this->addRecipe($json, $importedHtml);
 	}
 
+	/**
+	 * Create a new recipe from a JSON+LD string
+	 *
+	 * @param string $json The JSON+LD content, optionally wrapped in a script tag
+	 * @throws HtmlParsingException If no recipe was found
+	 * @throws RecipeExistsException If a recipe with the same name exists
+	 * @return File The created recipe file
+	 */
 	public function importRecipeJson(string $json): File {
-		return $this->addRecipe($this->jsonLdParser->parseJsonLd($json));
+		$recipe = $this->jsonLdParser->parseJsonLd($json);
+		unset($recipe['id']);
+
+		return $this->addRecipe($recipe);
 	}
 
 	/**
