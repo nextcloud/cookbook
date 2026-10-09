@@ -61,11 +61,12 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	/**
 	 * Parse a JSON+LD string for a recipe
 	 *
-	 * @param string $string The JSON+LD content
+	 * @param string $string The JSON+LD content, optionally wrapped in a script tag
 	 * @throws HtmlParsingException The string does not contain a valid recipe
 	 * @return array The recipe as an associate array
 	 */
 	public function parseJsonLd(string $string): array {
+		$string = preg_replace('/^\s*<script[^>]*>|<\/script>\s*$/i', '', $string) ?? $string;
 		$this->fixRawJson($string);
 
 		$json = json_decode($string, true);
