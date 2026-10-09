@@ -374,6 +374,16 @@ class RecipeService {
 		return $this->addRecipe($json, $importedHtml);
 	}
 
+	public function importRecipeJson(string $json): File {
+		try {
+			$recipe = $this->recipeExtractionService->parseJson($json);
+		} catch (HtmlParsingException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex);
+		}
+
+		return $this->addRecipe($recipe);
+	}
+
 	/**
 	 * @return array
 	 */
