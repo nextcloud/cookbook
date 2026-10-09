@@ -37,6 +37,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { isAxiosError } from '@nextcloud/axios';
 import NcButton from '@nextcloud/vue/components/NcButton';
 import NcDialog from '@nextcloud/vue/components/NcDialog';
 import NcTextArea from '@nextcloud/vue/components/NcTextArea';
@@ -44,7 +45,6 @@ import NcTextArea from '@nextcloud/vue/components/NcTextArea';
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
 import { useLegacyStore } from '../../store';
-import type { RequestError } from '../../types/RequestError';
 
 const emit = defineEmits<{ close: [] }>();
 
@@ -67,7 +67,9 @@ const importRecipe = async () => {
         emit('close');
         helpers.goTo(`/recipe/${id}`);
     } catch (e) {
-        const data = (e as RequestError).response?.data;
+        const data = isAxiosError<string | { msg: string }>(e)
+            ? e.response?.data
+            : undefined;
         errorMessage.value =
             (typeof data === 'string' ? data : data?.msg) ||
             t('cookbook', 'The server reported an error. Please check.');
