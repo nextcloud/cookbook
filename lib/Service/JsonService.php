@@ -51,7 +51,7 @@ class JsonService {
 
 		if (is_array($obj['@type'])) {
 			if ($uniqueType) {
-				if (count($obj['@type']) === 1 && $obj['@type'][0] === $type) {
+				if (count($obj['@type']) === 1 && $this->normalizeType($obj['@type'][0]) === $type) {
 					return true;
 				}
 
@@ -59,14 +59,24 @@ class JsonService {
 			}
 
 			$foundTypes = array_filter($obj['@type'], function ($x) use ($type) {
-				return trim($x) === $type;
+				return $this->normalizeType($x) === $type;
 			});
 
 			return count($foundTypes) > 0;
 		}
 
 		// Check if type matches
-		return (strcmp($obj['@type'], $type) === 0);
+		return $this->normalizeType($obj['@type']) === $type;
+	}
+
+	/**
+	 * Remove a schema.org prefix like `schema:` or `https://schema.org/` from a type
+	 *
+	 * @param mixed $type The type to normalize
+	 * @return mixed The type without prefix
+	 */
+	private function normalizeType($type) {
+		return is_string($type) ? preg_replace('@^(schema:|https?://schema\.org/)@', '', trim($type)) : $type;
 	}
 
 	/**

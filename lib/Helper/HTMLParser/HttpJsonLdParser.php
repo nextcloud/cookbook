@@ -62,10 +62,11 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 * Parse a JSON+LD string for a recipe
 	 *
 	 * @param string $string The JSON+LD content, optionally wrapped in a script tag
+	 * @param bool $assumeSchemaContext Treat objects without @context as schema.org objects
 	 * @throws HtmlParsingException The string does not contain a valid recipe
 	 * @return array The recipe as an associate array
 	 */
-	public function parseJsonLd(string $string): array {
+	public function parseJsonLd(string $string, bool $assumeSchemaContext = false): array {
 		$string = preg_replace('/^\s*<script[^>]*>|<\/script>\s*$/i', '', $string) ?? $string;
 		$this->fixRawJson($string);
 
@@ -79,11 +80,17 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 			throw new HtmlParsingException($this->l->t('No recipe was found.'));
 		}
 
+		if ($assumeSchemaContext) {
+			$json = ['@context' => 'https://schema.org', '@graph' => isset($json[0]) ? $json : [$json]];
+		}
+
 		// Look through @graph field for recipe
 		$this->mapGraphField($json);
 
 		// Look for an array of recipes
 		$this->mapArray($json);
+
+		$this->mapMainEntity($json);
 
 		if ($this->jsonService->isSchemaObject($json, 'Recipe', true, false)) {
 			// Ensure the type of the object is never an array
@@ -142,19 +149,48 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	private function mapGraphField(array &$json) {
 		if (isset($json['@graph']) && is_array($json['@graph'])) {
 			// Sometimes the context is set once on the top level object for children to inherit
-			$parentSetsContext = isset($json['@context'])
-								 && $this->jsonService->isSchemaContext($json['@context']);
-
-			$tmp = $this->searchForRecipeInArray($json['@graph'], $parentSetsContext);
+			$tmp = $this->searchForRecipeInArray($json['@graph'], $json['@context'] ?? null);
 
 			if ($tmp !== null) {
-				// If the child wants to inherit context from parent, copy it on down
-				if ($parentSetsContext && !isset($tmp['@context'])) {
-					$tmp['@context'] = $json['@context'];
-				}
-
-				$json = $tmp;
+				$json = $this->resolveReferences($tmp, $json['@graph']);
 			}
+		}
+	}
+
+	/**
+	 * Replace image references like {"@id": "..."} in the recipe by the referenced objects of the graph
+	 *
+	 * @param array $recipe The recipe found in the graph
+	 * @param array $graph The graph containing the referenced objects
+	 * @return array The recipe with resolved image references
+	 */
+	private function resolveReferences(array $recipe, array $graph): array {
+		if (!isset($recipe['image']) || !is_array($recipe['image'])) {
+			return $recipe;
+		}
+
+		$nodes = array_column(array_filter($graph, fn ($node) => is_array($node) && isset($node['@id'])), null, '@id');
+		$resolve = fn ($value) => is_array($value) && array_keys($value) === ['@id'] ? ($nodes[$value['@id']] ?? $value) : $value;
+
+		$recipe['image'] = isset($recipe['image'][0]) ? array_map($resolve, $recipe['image']) : $resolve($recipe['image']);
+
+		return $recipe;
+	}
+
+	/**
+	 * Use the main entity of a page if it is a recipe
+	 *
+	 * @param array $json The JSON object to check
+	 */
+	private function mapMainEntity(array &$json) {
+		if (isset($json['mainEntity']) && $this->jsonService->isSchemaObject($json['mainEntity'], 'Recipe', false, false)) {
+			$entity = $json['mainEntity'];
+
+			if (isset($json['@context']) && !isset($entity['@context'])) {
+				$entity['@context'] = $json['@context'];
+			}
+
+			$json = $entity;
 		}
 	}
 
@@ -181,18 +217,25 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	/**
 	 * Search for a recipe object in an array
 	 * @param array $arr The array to search
-	 * @param bool $haveSchemaContext Whether Schema context is given, so child needn't set it
+	 * @param mixed $context The context inherited from the parent, if any
 	 * @return array|NULL The found recipe or null if no recipe was found in the array
 	 */
-	private function searchForRecipeInArray(array $arr, bool $haveSchemaContext = false): ?array {
+	private function searchForRecipeInArray(array $arr, $context = null): ?array {
 		// Iterate through all objects in the array ...
 		foreach ($arr as $item) {
-			if (is_array($item)) {
-				$this->mapGraphField($item);
+			if (!is_array($item)) {
+				continue;
 			}
 
+			if ($context !== null && !isset($item['@context'])) {
+				$item['@context'] = $context;
+			}
+
+			$this->mapGraphField($item);
+			$this->mapMainEntity($item);
+
 			// ... looking for a recipe
-			if ($this->jsonService->isSchemaObject($item, 'Recipe', !$haveSchemaContext, false)) {
+			if ($this->jsonService->isSchemaObject($item, 'Recipe', true, false)) {
 				// We found a recipe in the array, use it
 				return $item;
 			}
@@ -205,13 +248,11 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	/**
 	 * Check if the JSON element is a schema.org object but malformed.
 	 *
-	 * This checks if the '@type' entry is an array and corrects that.
+	 * This sets the '@type' entry to 'Recipe', correcting arrays and prefixed types.
 	 *
 	 * @param array $json The JSON object to parse
 	 */
 	private function checkForArrayType(array &$json) {
-		if (is_array($json['@type'])) {
-			$json['@type'] = 'Recipe';
-		}
+		$json['@type'] = 'Recipe';
 	}
 }

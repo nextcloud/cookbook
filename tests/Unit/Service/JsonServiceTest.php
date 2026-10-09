@@ -131,6 +131,12 @@ class JsonServiceTest extends TestCase {
 			[['Recipe', 'Foo'], false, true],
 			[['Recipe1', 'Foo'], true, false],
 			[['Recipe1', 'Foo'], false, false],
+			['schema:Recipe', true, true],
+			['https://schema.org/Recipe', true, true],
+			['http://schema.org/Recipe', true, true],
+			['https://example.com/Recipe', true, false],
+			[['schema:Recipe'], true, true],
+			[['http://schema.org/Recipe', 'Foo'], false, true],
 		];
 	}
 

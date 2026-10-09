@@ -389,7 +389,7 @@ class RecipeService {
 	 * @return File The created recipe file
 	 */
 	public function importRecipeJson(string $json): File {
-		$recipe = $this->jsonLdParser->parseJsonLd($json);
+		$recipe = $this->jsonLdParser->parseJsonLd($json, true);
 		unset($recipe['id']);
 
 		return $this->addRecipe($recipe);
