@@ -11,12 +11,12 @@ The app works generally in any modern browser. Additionally, there are some more
 ## 📱 Mobile Applications
 The currently available clients are in no particular order:
 
-| Name                                                   | Author                    | Sources                                                                                                                                                                                                                  |
-|--------------------------------------------------------|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Nextcloud Cookbook][micmun-nextcloud-cookbook]        | [MicMun][micmun]          | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][micmun-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][micmun-nextcloud-cookbook-play-store]           |
-| [Nextcloud Cookbook][lneugebauer-nextcloud-cookbook]   | [lneugebauer][]           | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][lneugebauer-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][lneugebauer-nextcloud-cookbook-play-store] |
-| [Cookbook Client][VincentMeilinger-nextcloud-cookbook] | [VincentMeilinger][]      | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][VincentMeilinger-nextcloud-cookbook-ios-app-store]                                                                                           |
-| [Cookbook][joj0r-nextcloud-cookbook]                   | [Jonas Stene][joj0r]      | [<img src="img/open-store.svg" alt="Download from the OpenStore" height="35">][joj0r-nextcloud-cookbook-open-store]                                                                                                      |
+| Name                                                   | Author                    | Sources                                                                                                                                                                                                                                                 |
+|--------------------------------------------------------|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Nextcloud Cookbook][micmun-nextcloud-cookbook]        | [MicMun][micmun]          | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][micmun-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][micmun-nextcloud-cookbook-play-store]                                           |
+| [Nextcloud Cookbook][lneugebauer-nextcloud-cookbook]   | [lneugebauer][]           | [<img src="img/f-droid.png" alt="Get it on F-Droid" height="50">][lneugebauer-nextcloud-cookbook-fdroid] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][lneugebauer-nextcloud-cookbook-play-store]                               |
+| [Cookbook Client][VincentMeilinger-nextcloud-cookbook] | [VincentMeilinger][]      | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][VincentMeilinger-nextcloud-cookbook-ios-app-store]                                                                                                                          |
+| [Cookbook][joj0r-nextcloud-cookbook]                   | [Jonas Stene][joj0r]      | [<img src="img/open-store.svg" alt="Download from the OpenStore" height="35">][joj0r-nextcloud-cookbook-open-store]                                                                                                                                    |
 | [AvoCook][logarex-avocook]                             | [Logarex][logarex]        | [<img src="img/ios-store.svg" alt="Download on the App Store" height="35">][logarex-avocook-ios-app-store] [<img src="img/g-play.png" alt="Get it on Google Play" height="50">][logarex-avocook-play-store] [GitHub Releases (APK)][logarex-avocook-apk] |
 
 
@@ -63,3 +63,7 @@ The currently available clients are in no particular order:
 ## 🧑‍💻 Browser plugins/scripts
 
 - [add-nextcloud-cookbook](https://github.com/qutebrowser/qutebrowser/blob/master/misc/userscripts/add-nextcloud-cookbook) - qutebrowser userscript that allows users to easily add new recipes
+
+## 🛠️ Third-Party Tools & Converters
+
+- [Recipe-Converter-Nextcloud](https://github.com/Nicouschulas/Recipe-Converter-Nextcloud) - An automated script using the Gemini API to parse recipe images or documents into Nextcloud Cookbook-compliant JSON files.
