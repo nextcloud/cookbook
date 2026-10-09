@@ -79,33 +79,6 @@ class RecipeExtractionServiceTest extends TestCase {
 		}
 	}
 
-	/**
-	 * @dataProvider dataProviderJson
-	 */
-	public function testParseJson(string $input): void {
-		$json = '{"@type":"Recipe"}';
-		$expectedObject = ['@type' => 'Recipe'];
-
-		/** @var HttpJsonLdParser|MockObject $jsonParser */
-		$jsonParser = $this->createMock(HttpJsonLdParser::class);
-		$jsonParser->expects($this->once())
-			->method('parseJsonLd')
-			->with($json)
-			->willReturn($expectedObject);
-
-		$sut = new RecipeExtractionService($jsonParser, $this->createStub(HttpMicrodataParser::class), $this->l);
-
-		$this->assertEquals($expectedObject, $sut->parseJson($input));
-	}
-
-	public static function dataProviderJson(): array {
-		return [
-			'plain' => ['{"@type":"Recipe"}'],
-			'script tag' => ['<script type="application/ld+json">{"@type":"Recipe"}</script>'],
-			'script tag with whitespace' => [" <script type=\"application/ld+json\">{\"@type\":\"Recipe\"}</script>\n"],
-		];
-	}
-
 	public static function dataProvider() {
 		return [
 			[true, false, false],

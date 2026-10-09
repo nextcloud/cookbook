@@ -126,6 +126,18 @@ class HttpJsonLdParserTest extends TestCase {
 	/**
 	 * @covers ::parseJsonLd
 	 */
+	public function testParseJsonLdScriptTag(): void {
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$recipe = ['@context' => 'https://schema.org', '@type' => 'Recipe', 'name' => 'Soup'];
+
+		$res = $parser->parseJsonLd(' <script type="application/ld+json">' . json_encode($recipe) . "</script>\n");
+
+		$this->assertEquals($recipe, $res);
+	}
+
+	/**
+	 * @covers ::parseJsonLd
+	 */
 	public function testParseJsonLdInvalid(): void {
 		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
 

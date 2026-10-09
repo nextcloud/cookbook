@@ -16,6 +16,7 @@ use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
+use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
@@ -73,6 +74,9 @@ class RecipeService {
 	/** @var DownloadHelper */
 	private $downloadHelper;
 
+	/** @var HttpJsonLdParser */
+	private $jsonLdParser;
+
 	public function __construct(
 		?string $UserId,
 		IRootFolder $root,
@@ -87,6 +91,7 @@ class RecipeService {
 		RecipeExtractionService $extractionService,
 		JSONFilter $jsonFilter,
 		DownloadHelper $downloadHelper,
+		HttpJsonLdParser $jsonLdParser,
 	) {
 		$this->user_id = $UserId;
 		$this->root = $root;
@@ -101,6 +106,7 @@ class RecipeService {
 		$this->recipeExtractionService = $extractionService;
 		$this->jsonFilter = $jsonFilter;
 		$this->downloadHelper = $downloadHelper;
+		$this->jsonLdParser = $jsonLdParser;
 	}
 
 	/**
@@ -375,13 +381,7 @@ class RecipeService {
 	}
 
 	public function importRecipeJson(string $json): File {
-		try {
-			$recipe = $this->recipeExtractionService->parseJson($json);
-		} catch (HtmlParsingException $ex) {
-			throw new ImportException($ex->getMessage(), null, $ex);
-		}
-
-		return $this->addRecipe($recipe);
+		return $this->addRecipe($this->jsonLdParser->parseJsonLd($json));
 	}
 
 	/**
