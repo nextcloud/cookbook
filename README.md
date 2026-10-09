@@ -36,10 +36,6 @@ A library for all your recipes. It uses JSON files following the schema.org reci
 
 The app works generally in any modern browser. Additionally, there are some more specialized clients available, including mobile apps for Android and iOS. You can find an overview [here](docs/readme/clients/index.md).
 
-## 🛠️ Community Tools / Third-Party Converters
-If you have custom recipes, handwritten notes, or images/docunents that cannot be automatically imported by the app, you can check out community-created converters:
-* **[Recipe Converter Nextcloud](https://github.com/Nicouschulas/Recipe-Converter-Nextcloud)** – An automated tool using the Gemini API to extract and convert recipe images and documents into Nextcloud Cookbook-compliant JSON format
-
 ## 📖 Documentation
 Further documentation (also internal ones) are published on the [documentation pages of the project](http://nextcloud.github.io/cookbook/) and in the FAQ at the bottom.
 
