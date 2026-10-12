@@ -410,13 +410,6 @@ class RecipeService {
 	}
 
 	private function migrateFolderStructure() {
-		// Remove old cache folder if needed
-		$legacy_cache_path = '/cookbook/cache';
-
-		if ($this->root->nodeExists($legacy_cache_path)) {
-			$this->root->get($legacy_cache_path)->delete();
-		}
-
 		// Restructure files if needed
 		$user_folder = $this->userFolder->getFolder();
 
