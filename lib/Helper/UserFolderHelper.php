@@ -39,16 +39,14 @@ class UserFolderHelper {
 	private $userId;
 
 	/**
-	 * @var IRootFolder
-	 */
-	private $root;
-
-	/**
 	 * The folder with all recipes or null if this is not yet cached
 	 *
 	 * @var ?Node
 	 */
 	private $cache;
+
+	/** @var Folder */
+	private $userFolder;
 
 	public function __construct(
 		?string $UserId,
@@ -57,11 +55,11 @@ class UserFolderHelper {
 		UserConfigHelper $configHelper,
 	) {
 		$this->userId = $UserId;
-		$this->root = $root;
 		$this->l = $l;
 		$this->config = $configHelper;
 
 		$this->cache = null;
+		$this->userFolder = $root->getUserFolder($UserId);
 	}
 
 	/**
@@ -102,7 +100,6 @@ class UserFolderHelper {
 			$path = $this->getPath();
 
 			// Correct path to be relative to nc root
-			$path = '/' . $this->userId . '/files/' . $path;
 			$path = str_replace('//', '/', $path);
 
 			$this->cache = $this->getOrCreateFolder($path);
@@ -113,10 +110,10 @@ class UserFolderHelper {
 
 	private function getOrCreateFolder(string $path): Folder {
 		try {
-			$node = $this->root->get($path);
+			$node = $this->userFolder->get($path);
 		} catch (NotFoundException $ex) {
 			try {
-				$node = $this->root->newFolder($path);
+				$node = $this->userFolder->newFolder($path);
 			} catch (NotPermittedException $ex1) {
 				throw new UserFolderNotValidException(
 					$this->l->t('The user folder cannot be created due to missing permissions.'),

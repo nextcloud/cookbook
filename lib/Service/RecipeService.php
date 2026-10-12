@@ -35,14 +35,9 @@ use Psr\Log\LoggerInterface;
  * @package OCA\Cookbook\Service
  */
 class RecipeService {
-	private $root;
 	private $user_id;
 	private $db;
 	private $il10n;
-	/**
-	 * @var UserFolderHelper
-	 */
-	private $userFolder;
 	private $logger;
 
 	/**
@@ -73,12 +68,14 @@ class RecipeService {
 	/** @var DownloadHelper */
 	private $downloadHelper;
 
+	private $userFolder;
+
 	public function __construct(
 		?string $UserId,
 		IRootFolder $root,
 		RecipeDb $db,
 		UserConfigHelper $userConfigHelper,
-		UserFolderHelper $userFolder,
+		private UserFolderHelper $userFolderHelper,
 		ImageService $imageService,
 		RecipeNameHelper $recipeNameHelper,
 		IL10N $il10n,
@@ -89,10 +86,8 @@ class RecipeService {
 		DownloadHelper $downloadHelper,
 	) {
 		$this->user_id = $UserId;
-		$this->root = $root;
 		$this->db = $db;
 		$this->il10n = $il10n;
-		$this->userFolder = $userFolder;
 		$this->logger = $logger;
 		$this->userConfigHelper = $userConfigHelper;
 		$this->imageService = $imageService;
@@ -101,6 +96,8 @@ class RecipeService {
 		$this->recipeExtractionService = $extractionService;
 		$this->jsonFilter = $jsonFilter;
 		$this->downloadHelper = $downloadHelper;
+
+		$this->userFolder = $root->getUserFolder($UserId);
 	}
 
 	/**
@@ -143,7 +140,7 @@ class RecipeService {
 	 * @return File|null
 	 */
 	public function getRecipeFileByFolderId(int $id) {
-		$user_folder = $this->userFolder->getFolder();
+		$user_folder = $this->userFolderHelper->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if (count($recipe_folder) <= 0) {
@@ -190,7 +187,7 @@ class RecipeService {
 	 * @param int $id
 	 */
 	public function deleteRecipe(int $id) {
-		$user_folder = $this->userFolder->getFolder();
+		$user_folder = $this->userFolderHelper->getFolder();
 		$recipe_folder = $user_folder->getById($id);
 
 		if ($recipe_folder) {
@@ -220,7 +217,7 @@ class RecipeService {
 		$json['dateModified'] = $now;
 
 		// Create/move recipe folder
-		$user_folder = $this->userFolder->getFolder();
+		$user_folder = $this->userFolderHelper->getFolder();
 		$recipe_folder = null;
 
 		$recipeFolderName = $this->recipeNameHelper->getFolderName($json['name']);
@@ -305,7 +302,8 @@ class RecipeService {
 				} else {
 					// The image is a local path
 					try {
-						$full_image_file = $this->root->get('/' . $this->user_id . '/files' . $json['image']);
+						/** @var File $full_image_file */
+						$full_image_file = $this->userFolder->get('/' . $this->user_id . '/files' . $json['image']);
 						$full_image_data = $full_image_file->getContent();
 					} catch (NotFoundException $e) {
 						$full_image_data = null;
@@ -378,7 +376,7 @@ class RecipeService {
 	 * @return array
 	 */
 	public function getRecipeFiles() {
-		$user_folder = $this->userFolder->getFolder();
+		$user_folder = $this->userFolderHelper->getFolder();
 		$recipe_folders = $user_folder->getDirectoryListing();
 		$recipe_files = [];
 
@@ -411,7 +409,7 @@ class RecipeService {
 
 	private function migrateFolderStructure() {
 		// Restructure files if needed
-		$user_folder = $this->userFolder->getFolder();
+		$user_folder = $this->userFolderHelper->getFolder();
 
 		foreach ($user_folder->getDirectoryListing() as $node) {
 			// Move JSON files from the user directory into its own folder
@@ -606,7 +604,7 @@ class RecipeService {
 	 * @return File
 	 */
 	public function getRecipeImageFileByFolderId($id, $size = 'thumb'): File {
-		$recipe_folders = $this->root->getById($id);
+		$recipe_folders = $this->userFolder->getById($id);
 		if (count($recipe_folders) < 1) {
 			throw new Exception($this->il10n->t('Recipe with ID %d not found.', [$id]));
 		}
