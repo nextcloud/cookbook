@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.16.1@f1f5de594dc76faf8784e02d3dc4716c91c6f6ac">
+<files psalm-version="6.19.1@e2ca44251c1f1aa2e35452d426895746b47de64e">
   <file src="lib/Helper/UserFolderHelper.php">
     <MissingDependency>
-      <code><![CDATA[$this->root]]></code>
-      <code><![CDATA[$this->root]]></code>
-      <code><![CDATA[IRootFolder]]></code>
+      <code><![CDATA[$root]]></code>
       <code><![CDATA[IRootFolder]]></code>
     </MissingDependency>
   </file>
@@ -17,8 +15,7 @@
   </file>
   <file src="lib/Service/RecipeService.php">
     <MissingDependency>
-      <code><![CDATA[$this->root]]></code>
-      <code><![CDATA[$this->root]]></code>
+      <code><![CDATA[$root]]></code>
       <code><![CDATA[IRootFolder]]></code>
     </MissingDependency>
   </file>
