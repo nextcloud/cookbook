@@ -303,7 +303,7 @@ class RecipeService {
 					// The image is a local path
 					try {
 						/** @var File $full_image_file */
-						$full_image_file = $this->userFolder->get('/' . $this->user_id . '/files' . $json['image']);
+						$full_image_file = $this->userFolder->get($json['image']);
 						$full_image_data = $full_image_file->getContent();
 					} catch (NotFoundException $e) {
 						$full_image_data = null;
