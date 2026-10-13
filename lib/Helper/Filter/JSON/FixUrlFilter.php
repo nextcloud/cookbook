@@ -36,6 +36,11 @@ class FixUrlFilter extends AbstractJSONFilter {
 
 	#[\Override]
 	public function apply(array &$json): bool {
+		$original = $json[self::URL] ?? null;
+		if (empty($original) && isset($json['mainEntityOfPage'])) {
+			$json[self::URL] = $json['mainEntityOfPage']['@id'] ?? $json['mainEntityOfPage'];
+		}
+
 		if (!isset($json[self::URL])) {
 			$json[self::URL] = '';
 			return true;
@@ -46,7 +51,7 @@ class FixUrlFilter extends AbstractJSONFilter {
 			$url = '';
 		}
 
-		$changed = $url !== $json[self::URL];
+		$changed = $url !== $original;
 		$json[self::URL] = $url;
 
 		return $changed;
