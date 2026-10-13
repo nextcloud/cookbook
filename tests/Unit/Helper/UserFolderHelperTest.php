@@ -13,6 +13,7 @@ use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\Files\FileInfo;
 use OCP\Files\Folder;
 use OCP\Files\IRootFolder;
+use OCP\Files\IUserFolder;
 use OCP\Files\NotFoundException;
 use OCP\Files\NotPermittedException;
 use OCP\IL10N;
@@ -37,9 +38,9 @@ class UserFolderHelperTest extends TestCase {
 	 */
 	private $userId;
 	/**
-	 * @var IRootFolder|MockObject
+	 * @var Folder|MockObject
 	 */
-	private $root;
+	private $userFolder;
 
 	/**
 	 * @var UserFolderHelper
@@ -56,7 +57,13 @@ class UserFolderHelperTest extends TestCase {
 
 		$this->userId = 'test_user-id';
 
-		$this->root = $this->createMock(IRootFolder::class);
+		if (interface_exists(IUserFolder::class)) {
+			$this->userFolder = $this->createMock(IUserFolder::class);
+		} else {
+			$this->userFolder = $this->createMock(Folder::class);
+		}
+		$root = $this->createStub(IRootFolder::class);
+		$root->method('getUserFolder')->with($this->userId)->willReturn($this->userFolder);
 
 		$l = $this->createMock(IL10N::class);
 		/**
@@ -71,7 +78,7 @@ class UserFolderHelperTest extends TestCase {
 		$this->cacheProp->setAccessible(true);
 
 		$this->dut = new UserFolderHelper(
-			$this->userId, $this->root, $l, $this->config
+			$this->userId, $root, $l, $this->config
 		);
 	}
 
@@ -97,8 +104,8 @@ class UserFolderHelperTest extends TestCase {
 
 		$this->cacheProp->setValue($this->dut, $folderStub);
 
-		$this->root->expects($this->never())->method('get');
-		$this->root->expects($this->never())->method('newFolder');
+		$this->userFolder->expects($this->never())->method('get');
+		$this->userFolder->expects($this->never())->method('newFolder');
 
 		$this->assertSame($folderStub, $this->dut->getFolder());
 	}
@@ -117,15 +124,15 @@ class UserFolderHelperTest extends TestCase {
 		 */
 		$folderStub = $this->createStub(Folder::class);
 		$path = '/Recipes';
-		$fullPath = "/{$this->userId}/files/Recipes";
+		$fullPath = '/Recipes';
 
 		if ($existing) {
-			$this->root->method('get')->with($fullPath)->willReturn($folderStub);
-			$this->root->expects($this->never())->method('newFolder');
+			$this->userFolder->method('get')->with($fullPath)->willReturn($folderStub);
+			$this->userFolder->expects($this->never())->method('newFolder');
 		} else {
 			$ex = new NotFoundException();
-			$this->root->method('get')->with($fullPath)->willThrowException($ex);
-			$this->root->method('newFolder')->with($fullPath)->willReturn($folderStub);
+			$this->userFolder->method('get')->with($fullPath)->willThrowException($ex);
+			$this->userFolder->method('newFolder')->with($fullPath)->willReturn($folderStub);
 		}
 
 		$this->config->method('getFolderName')->willReturn($path);
@@ -138,12 +145,12 @@ class UserFolderHelperTest extends TestCase {
 
 	public function testNoWritingPermissionGetFolder() {
 		$path = '/Recipes';
-		$fullPath = "/{$this->userId}/files/Recipes";
+		$fullPath = '/Recipes';
 
 		$ex = new NotFoundException();
-		$this->root->method('get')->with($fullPath)->willThrowException($ex);
+		$this->userFolder->method('get')->with($fullPath)->willThrowException($ex);
 		$ex1 = new NotPermittedException();
-		$this->root->method('newFolder')->with($fullPath)->willThrowException($ex1);
+		$this->userFolder->method('newFolder')->with($fullPath)->willThrowException($ex1);
 
 		$this->config->method('getFolderName')->willReturn($path);
 
@@ -157,10 +164,10 @@ class UserFolderHelperTest extends TestCase {
 		 */
 		$nodeStub = $this->createStub(Folder::class);
 		$path = '/Recipes';
-		$fullPath = "/{$this->userId}/files/Recipes";
+		$fullPath = '/Recipes';
 
 		$ex = new NotFoundException();
-		$this->root->method('get')->with($fullPath)->willReturn($nodeStub);
+		$this->userFolder->method('get')->with($fullPath)->willReturn($nodeStub);
 
 		$this->config->method('getFolderName')->willReturn($path);
 
@@ -176,10 +183,10 @@ class UserFolderHelperTest extends TestCase {
 		 */
 		$nodeStub = $this->createStub(Folder::class);
 		$path = '/Recipes';
-		$fullPath = "/{$this->userId}/files/Recipes";
+		$fullPath = '/Recipes';
 
 		$ex = new NotFoundException();
-		$this->root->method('get')->with($fullPath)->willReturn($nodeStub);
+		$this->userFolder->method('get')->with($fullPath)->willReturn($nodeStub);
 
 		$this->config->method('getFolderName')->willReturn($path);
 
