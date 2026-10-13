@@ -28,6 +28,11 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
         <php min-version="8.0"/>
         <nextcloud min-version="31" max-version="36"/>
     </dependencies>
+    <repair-steps>
+        <post-migration>
+            <step>OCA\Cookbook\Migration\DropOldCacheRepairStep</step>
+        </post-migration>
+    </repair-steps>
     <navigations>
         <navigation>
             <name>Cookbook</name>
