@@ -143,9 +143,33 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 					$tmp['@context'] = $json['@context'];
 				}
 
-				$json = $tmp;
+				$json = $this->resolveImageReference($tmp, $json['@graph']);
 			}
 		}
+	}
+
+	/**
+	 * Replace an image reference like {"@id": "..."} by the referenced object of the graph
+	 *
+	 * @param array $recipe The recipe found in the graph
+	 * @param array $graph The graph containing the referenced object
+	 * @return array The recipe with the resolved image reference
+	 */
+	private function resolveImageReference(array $recipe, array $graph): array {
+		$id = $recipe['image']['@id'] ?? null;
+
+		if (!is_string($id) || count($recipe['image']) !== 1) {
+			return $recipe;
+		}
+
+		foreach ($graph as $node) {
+			if (is_array($node) && ($node['@id'] ?? null) === $id) {
+				$recipe['image'] = $node;
+				break;
+			}
+		}
+
+		return $recipe;
 	}
 
 	/**
