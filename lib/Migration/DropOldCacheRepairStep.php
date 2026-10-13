@@ -16,10 +16,12 @@ class DropOldCacheRepairStep implements IRepairStep {
 	) {
 	}
 
+	#[\Override]
 	public function getName(): string {
 		return 'Drop old cache from Nextcloud root folder';
 	}
 
+	#[\Override]
 	public function run(IOutput $output): void {
 		if ($this->rootFolder->nodeExists('cookbook')) {
 			$output->info('Dropping old cookbook storage path /cookbook from installation data.');
