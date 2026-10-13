@@ -50,7 +50,7 @@ else
 	composer_bin:=composer
 endif
 
-all: build appinfo/info.xml
+all: build
 
 # Fetches the PHP and JS dependencies and compiles the JS. If no composer.json
 # is present, the composer step is skipped, if no package.json or js/package.json
@@ -106,7 +106,7 @@ dist:
 
 # Builds the source package
 .PHONY: source
-source: appinfo/info.xml
+source:
 	rm -rf $(source_build_directory)
 	mkdir -p $(source_build_directory)
 	tar cvzf $(source_package_name).tar.gz \
@@ -123,7 +123,7 @@ source: appinfo/info.xml
 
 # Builds the source package for the app store, ignores php and js tests
 .PHONY: appstore
-appstore: appinfo/info.xml
+appstore:
 	rm -rf $(appstore_build_directory)
 	mkdir -p $(appstore_build_directory)
 	tar cvzf $(appstore_package_name).tar.gz \
@@ -163,5 +163,3 @@ code_style:
 	npm run stylelint-fix
 	npm run prettier-fix
 
-appinfo/info.xml: .github/actions/deploy/patch .github/actions/deploy/minor .github/actions/deploy/major .github/actions/deploy/appinfo/info.xml.dist
-	.github/actions/deploy/update-data.sh --from-files

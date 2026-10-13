@@ -823,6 +823,12 @@ onBeforeRouteUpdate((to, from, next) => {
     }
 });
 
+const visibilityChangeEventListener = () => {
+    if (document.visibilityState === 'visible') {
+        requestWakeLock();
+    }
+};
+
 onMounted(() => {
     log.info('RecipeView mounted');
     setup();
@@ -833,15 +839,45 @@ onMounted(() => {
     });
 
     if ('wakeLock' in navigator) {
-        navigator.wakeLock.request().then((sentinel) => {
-            wakeLockSentinel = sentinel;
-        });
+        requestWakeLock();
+
+        document.addEventListener(
+            'visibilitychange',
+            visibilityChangeEventListener,
+        );
     } else {
         log.info('WakeLock API is not supported');
     }
 });
 
+function requestWakeLock() {
+    if (!navigator.wakeLock) {
+        log.warn(
+            'WakeLock API is not supported by the browser. Cannot keep the app in the foreground.',
+        );
+        return;
+    }
+
+    navigator.wakeLock
+        .request()
+        .then((sentinel) => {
+            wakeLockSentinel = sentinel;
+
+            wakeLockSentinel.addEventListener('release', () => {
+                wakeLockSentinel = null;
+            });
+        })
+        .catch((err) => {
+            log.warn('The user rejected to keep the app in the foreground.');
+        });
+}
+
 onUnmounted(() => {
+    document.removeEventListener(
+        'visibilitychange',
+        visibilityChangeEventListener,
+    );
+
     if (wakeLockSentinel !== null) {
         wakeLockSentinel.release().then(() => {
             wakeLockSentinel = null;
