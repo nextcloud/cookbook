@@ -16,7 +16,7 @@ jobs:
   
   code-lint:
     name: Run PHP Linter and Code Style checker
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
         -   name: Checkout the project
             uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -133,7 +133,7 @@ jobs:
   
   unit-tests:
     name: Run the unittests
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     
     strategy:
         fail-fast: false
@@ -295,7 +295,7 @@ jobs:
   
   unit-tests-master:
     name: Run the tests against the master branch of the NC server
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     
     steps:
       - name: Checkout the app
@@ -407,7 +407,7 @@ jobs:
     name: Upload artifacts to codecov.io
     needs: 
         - unit-tests
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
 
     steps:
         - name: Create folder structure
@@ -494,7 +494,7 @@ jobs:
     
   source-package:
     name: Create source code artifacts
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     
     steps:
         -   name: Checkout the app
@@ -570,7 +570,7 @@ jobs:
             
   event_file:
     name: "Upload Event File"
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     steps:
     - name: Upload
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -581,7 +581,7 @@ jobs:
 
   lint-php:
     name: "Lint PHP files to be compatible"
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -598,7 +598,7 @@ jobs:
 
   run-jest:
     name: "Run JS tests"
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -649,7 +649,7 @@ jobs:
 
   successful_run:
     name: The tests have successfully run
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     needs:
       - unit-tests
       - code-lint

@@ -31,7 +31,7 @@ on:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest-low
     steps:
       - uses: z0al/dependent-issues@950226e7ca8fc43dc209a7febf67c655af3bdb43
         env:

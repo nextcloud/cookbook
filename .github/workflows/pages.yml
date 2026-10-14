@@ -31,7 +31,7 @@ defaults:
 jobs:
   # Build job
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -70,7 +70,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     if: github.event.ref == 'refs/heads/master' && github.repository == 'nextcloud/cookbook'
     needs: build
     permissions:

@@ -11,7 +11,7 @@ jobs:
     
     todo-checker:
         name: Check for added todo messages
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest-low
         steps:
             -   name: Git version output
                 run: git version
@@ -39,7 +39,7 @@ jobs:
 
     appinfo:
         name: Check for matching app info file
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest-low
 
         steps:
             -   name: Checkout of the app
@@ -84,7 +84,7 @@ jobs:
     
     package-lint:
         name: Make sure the package.json is well-formatted
-        runs-on: ubuntu-24.04
+        runs-on: ubuntu-latest
 
         steps:
             -   name: Checkout of the app
@@ -140,7 +140,7 @@ jobs:
 
     fixup-check:
         name: Block fixup and squash commits
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest-low
 
         steps:
             -   name: Run check

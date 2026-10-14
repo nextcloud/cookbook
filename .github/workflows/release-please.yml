@@ -21,7 +21,7 @@ jobs:
   release:
     name: Create or update release PR
     if: ${{ github.event_name == 'push' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     permissions: {}
     outputs:
       release-created: ${{ steps.release.outputs.release_created }}
@@ -52,7 +52,7 @@ jobs:
     name: Resolve release notification metadata
     needs: release
     if: ${{ always() && (github.event_name == 'workflow_dispatch' || (needs.release.result == 'success' && needs.release.outputs.release-created == 'true')) }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     permissions: {}
     outputs:
       tag: ${{ steps.metadata.outputs.tag }}
@@ -116,7 +116,7 @@ jobs:
     concurrency:
       group: cookbook-release-notification-${{ needs.notification-metadata.outputs.tag }}
       cancel-in-progress: false
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     permissions: {}
     steps:
       - name: Create GitHub App installation token
