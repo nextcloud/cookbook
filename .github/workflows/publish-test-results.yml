@@ -13,7 +13,7 @@ on:
 
 jobs:
   test-results:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     name: Test results
     if: >-
       github.event.workflow_run.conclusion != 'skipped' &&

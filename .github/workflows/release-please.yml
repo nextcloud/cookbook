@@ -21,7 +21,7 @@ jobs:
   release:
     name: Create or update release PR
     if: ${{ github.event_name == 'push' }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     permissions: {}
     outputs:
       release-created: ${{ steps.release.outputs.release_created }}
@@ -33,7 +33,7 @@ jobs:
         id: release-please-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ vars.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_ID }}
+          client-id: ${{ vars.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_CLIENT }}
           private-key: ${{ secrets.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_PRIV_KEY }}
           owner: nextcloud
           repositories: cookbook
@@ -52,7 +52,7 @@ jobs:
     name: Resolve release notification metadata
     needs: release
     if: ${{ always() && (github.event_name == 'workflow_dispatch' || (needs.release.result == 'success' && needs.release.outputs.release-created == 'true')) }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     permissions: {}
     outputs:
       tag: ${{ steps.metadata.outputs.tag }}
@@ -116,14 +116,14 @@ jobs:
     concurrency:
       group: cookbook-release-notification-${{ needs.notification-metadata.outputs.tag }}
       cancel-in-progress: false
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest-low
     permissions: {}
     steps:
       - name: Create GitHub App installation token
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          app-id: ${{ vars.COOKBOOK_TRIGGER_BOT_APP_ID }}
+          client-id: ${{ vars.COOKBOOK_TRIGGER_BOT_CLIENT_ID }}
           private-key: ${{ secrets.COOKBOOK_TRIGGER_BOT_PRIV_KEY }}
           owner: christianlupus-nextcloud
           repositories: cookbook-releases

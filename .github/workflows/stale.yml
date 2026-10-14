@@ -10,7 +10,7 @@ on:
 
 jobs:
     stale:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest-low
         name: Run stale action
         
         steps:
