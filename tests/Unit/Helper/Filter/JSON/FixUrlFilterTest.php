@@ -74,6 +74,7 @@ class FixUrlFilterTest extends TestCase {
 	public static function dpMainEntityOfPage() {
 		yield ['https://example.com/soup', 'https://example.com/soup'];
 		yield [['@type' => 'WebPage', '@id' => 'https://example.com/soup'], 'https://example.com/soup'];
+		yield [['@type' => 'WebPage', 'url' => 'https://example.com/soup'], 'https://example.com/soup'];
 		yield [true, ''];
 	}
 
