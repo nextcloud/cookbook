@@ -16,6 +16,8 @@ This page provides an overview over the possible API endpoints provided by the a
 - [Version 0.1.2](0.1.2/index.html) ([internal interface](0.1.2/internal.html))
 - [Version 0.1.3](0.1.3/index.html) ([internal interface](0.1.3/internal.html))
 
-The following list provides a in depth changelog for the individual epochs:
+The [current state](trunk/index.html) of the API work is present as well as the [internal interface](trunk/internal.html). These might evolve over time.
+
+The following list provides an in depth changelog for the individual epochs:
 
 - [Epoch 0.x.x](changelog/0.html)
