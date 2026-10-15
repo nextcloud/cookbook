@@ -1,5 +1,5 @@
 diff --git a/.github/workflows/npm-audit-fix.yml b/.github/workflows/npm-audit-fix.yml
-index b9403d59..637749eb 100644
+index 338e5f5b..0b42814f 100644
 --- a/.github/workflows/npm-audit-fix.yml
 +++ b/.github/workflows/npm-audit-fix.yml
 @@ -31,9 +31,6 @@ jobs:
@@ -12,7 +12,7 @@ index b9403d59..637749eb 100644
  
      name: npm-audit-fix-${{ matrix.branches }}
  
-@@ -84,11 +81,10 @@ jobs:
+@@ -81,11 +78,10 @@ jobs:
            author: nextcloud-command <nextcloud-command@users.noreply.github.com>
            signoff: true
            branch: automated/noid/${{ matrix.branches }}-fix-npm-audit
@@ -25,7 +25,7 @@ index b9403d59..637749eb 100644
  
        # Approve using the default GITHUB_TOKEN, as the PR itself was created
        # using COMMAND_BOT_PAT and GitHub does not allow an account to approve its own PR
-@@ -104,4 +100,5 @@ jobs:
+@@ -101,4 +97,5 @@ jobs:
          uses: peter-evans/enable-pull-request-automerge@a660677d5469627102a1c1e11409dd063606628d # v3.0.0
          with:
            token: ${{ secrets.GITHUB_TOKEN }}
