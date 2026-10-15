@@ -146,7 +146,10 @@ paths:
   /webapp/import:
     post:
       tags: [ Recipes ]
-      summary: Import a recipe using schema.org metadata from a website
+      summary: Import a recipe using schema.org metadata from a website or from JSON+LD
+      description: |
+        Either `url` or `json` must be given. If both are given, `url` is used.
+        A recipe imported from `json` is always created as a new recipe, an `id` in the JSON is ignored.
       requestBody:
         content:
           application/json:
@@ -156,8 +159,13 @@ paths:
                 url:
                   type: string
                   example: 'http://www.chefkoch.de/2345'
-              required:
-                - url
+                json:
+                  type: string
+                  description: A schema.org recipe as JSON+LD, optionally wrapped in a script tag
+                  example: '{"@context": "https://schema.org", "@type": "Recipe", "name": "Soup"}'
+              anyOf:
+                - required: [ url ]
+                - required: [ json ]
       responses:
         200:
           description: Successfully imported recipe
@@ -171,7 +179,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Field "url" is required
+                example: Field "url" or "json" is required
         409:
           description: There exists a recipe with that name already. Import was aborted.
           content:
