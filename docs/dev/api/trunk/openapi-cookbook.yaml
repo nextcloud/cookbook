@@ -11,9 +11,9 @@ info:
     
     The total API is separated into two parts:
 
-    - There is the public API part that can be used from 3rd party apps and scripts.
+    - There is the public API part that can be used from 3rd party apps and scripts. This is described here.
 
-    - There is the internal API that is used only by the web app of the cookbook app. This is described here.
+    - There is the internal API that is used only by the web app of the cookbook app.
     
 
     The internal part is intended only to be used by the internal web app.

@@ -9,6 +9,9 @@ on:
         paths:
             - 'docs/dev/api/**'
 
+permissions:
+    contents: read
+
 jobs:
     api-spec-immutability:
         name: Check versioned API specifications are unchanged
@@ -25,7 +28,7 @@ jobs:
                     BASE_SHA: ${{ github.event.pull_request.base.sha }}
                     HEAD_SHA: ${{ github.event.pull_request.head.sha }}
                 run: |
-                    changed_files=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- docs/dev/api)
+                    changed_files=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- docs/dev/api)
                     versioned_files=$(printf '%s\n' "$changed_files" | grep -E '^docs/dev/api/[0-9]+\.[0-9]+\.[0-9]+/' || true)
 
                     if [ -n "$versioned_files" ]; then
@@ -49,7 +52,7 @@ jobs:
                     BASE_SHA: ${{ github.event.pull_request.base.sha }}
                     HEAD_SHA: ${{ github.event.pull_request.head.sha }}
                 run: |
-                    changed_files=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" -- docs/dev/api)
+                    changed_files=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- docs/dev/api)
                     trunk_files=$(printf '%s\n' "$changed_files" | grep -E '^docs/dev/api/trunk/' || true)
                     changelog_changed=$(printf '%s\n' "$changed_files" | grep -Fx 'docs/dev/api/changelog/0.md' || true)
 

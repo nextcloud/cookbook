@@ -95,7 +95,7 @@ components:
     #   description: Use username and app password
     requesttoken:
       type: apiKey
-      name: requestkey
+      name: requesttoken
       in: header
     session:
       type: apiKey
