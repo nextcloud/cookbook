@@ -90,4 +90,34 @@ class HttpJsonLdParserTest extends TestCase {
 			$this->assertFalse($valid);
 		}
 	}
+
+	public static function dataProviderImageReference(): array {
+		$context = 'https://schema.org';
+		$recipe = ['@type' => 'Recipe', 'name' => 'Soup'];
+		$image = ['@type' => 'ImageObject', '@id' => '#img', 'url' => 'image.jpg'];
+
+		return [
+			'image reference' => [
+				['@context' => $context, '@graph' => [$recipe + ['image' => ['@id' => '#img']], $image]],
+				['@context' => $context] + $recipe + ['image' => $image],
+			],
+			'unknown image reference' => [
+				['@context' => $context, '@graph' => [$recipe + ['image' => ['@id' => '#missing']], $image]],
+				['@context' => $context] + $recipe + ['image' => ['@id' => '#missing']],
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider dataProviderImageReference
+	 * @covers ::parse
+	 */
+	public function testImageReference(array $input, array $expected): void {
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+
+		$document = new \DOMDocument();
+		$document->loadHTML('<html><head><script type="application/ld+json">' . json_encode($input) . '</script></head></html>');
+
+		$this->assertEquals($expected, $parser->parse($document, 'http://example.com'));
+	}
 }
