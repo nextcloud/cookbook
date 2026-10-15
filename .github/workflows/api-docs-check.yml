@@ -10,8 +10,8 @@ on:
             - 'docs/dev/api/**'
 
 jobs:
-    api-docs-check:
-        name: Check API documentation changes
+    api-spec-immutability:
+        name: Check versioned API specifications are unchanged
         runs-on: ubuntu-latest
         steps:
             -   name: Checkout of the app
@@ -20,7 +20,7 @@ jobs:
                     fetch-depth: 0
                     persist-credentials: false
 
-            -   name: Check versioned API specifications are unchanged
+            -   name: Validate versioned API specifications
                 env:
                     BASE_SHA: ${{ github.event.pull_request.base.sha }}
                     HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -34,6 +34,16 @@ jobs:
                         exit 1
                     fi
 
+    api-changelog:
+        name: Require changelog for trunk changes
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+                with:
+                    fetch-depth: 0
+                    persist-credentials: false
+
             -   name: Require changelog for trunk changes
                 env:
                     BASE_SHA: ${{ github.event.pull_request.base.sha }}
@@ -45,5 +55,10 @@ jobs:
 
                     if [ -n "$trunk_files" ] && [ -z "$changelog_changed" ]; then
                         echo '::error file=docs/dev/api/changelog/0.md::Changes to docs/dev/api/trunk require an update to this changelog.'
+                        exit 1
+                    fi
+
+                    if [ -n "$changelog_changed" ] && [ -z "$trunk_files" ]; then
+                        echo '::error::Changes to docs/dev/api/changelog/0.md require a corresponding change under docs/dev/api/trunk.'
                         exit 1
                     fi
