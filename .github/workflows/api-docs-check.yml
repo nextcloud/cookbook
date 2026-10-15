@@ -1,0 +1,69 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+name: API documentation changes
+
+on:
+    pull_request:
+        paths:
+            - 'docs/dev/api/**'
+
+permissions:
+    contents: read
+
+jobs:
+    api-spec-immutability:
+        name: Check versioned API specifications are unchanged
+        runs-on: ubuntu-latest-low
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+                with:
+                    fetch-depth: 0
+                    filter: blob:none
+                    persist-credentials: false
+
+            -   name: Validate versioned API specifications
+                env:
+                    BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                    HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+                run: |
+                    changed_files=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- docs/dev/api)
+                    versioned_files=$(printf '%s\n' "$changed_files" | grep -E '^docs/dev/api/[0-9]+\.[0-9]+\.[0-9]+/' || true)
+
+                    if [ -n "$versioned_files" ]; then
+                        echo '::error::Versioned API specifications are immutable. Update docs/dev/api/trunk instead.'
+                        printf '%s\n' "$versioned_files"
+                        exit 1
+                    fi
+
+    api-changelog:
+        name: Require changelog for trunk changes
+        runs-on: ubuntu-latest-low
+        steps:
+            -   name: Checkout of the app
+                uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+                with:
+                    fetch-depth: 0
+                    filter: blob:none
+                    persist-credentials: false
+
+            -   name: Require changelog for trunk changes
+                env:
+                    BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                    HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+                run: |
+                    changed_files=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" -- docs/dev/api)
+                    trunk_files=$(printf '%s\n' "$changed_files" | grep -E '^docs/dev/api/trunk/' || true)
+                    changelog_changed=$(printf '%s\n' "$changed_files" | grep -Fx 'docs/dev/api/changelog/0.md' || true)
+
+                    if [ -n "$trunk_files" ] && [ -z "$changelog_changed" ]; then
+                        echo '::error file=docs/dev/api/changelog/0.md::Changes to docs/dev/api/trunk require an update to this changelog.'
+                        exit 1
+                    fi
+
+                    if [ -n "$changelog_changed" ] && [ -z "$trunk_files" ]; then
+                        echo '::error::Changes to docs/dev/api/changelog/0.md require a corresponding change under docs/dev/api/trunk.'
+                        exit 1
+                    fi
