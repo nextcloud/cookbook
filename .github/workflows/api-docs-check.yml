@@ -15,7 +15,7 @@ permissions:
 jobs:
     api-spec-immutability:
         name: Check versioned API specifications are unchanged
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest-low
         steps:
             -   name: Checkout of the app
                 uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -39,7 +39,7 @@ jobs:
 
     api-changelog:
         name: Require changelog for trunk changes
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-latest-low
         steps:
             -   name: Checkout of the app
                 uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
