@@ -132,6 +132,7 @@ class HttpJsonLdParserTest extends TestCase {
 			'array of objects' => [[$other, $recipe], $recipe],
 			'graph' => [['@context' => $context, '@graph' => [$other, $graphRecipe]], $recipe],
 			'array with graph' => [[['@context' => $context, '@graph' => [$other, $graphRecipe]]], $recipe],
+			'graph item with foreign context' => [['@context' => $context, '@graph' => [['@context' => 'https://example.com'] + $graphRecipe + ['name' => 'Other'], $graphRecipe]], $recipe],
 			'nested graph' => [['@context' => $context, '@graph' => [$other, ['@graph' => [$graphRecipe]]]], $recipe],
 			'type array' => [['@context' => $context, '@type' => ['Recipe', 'Thing'], 'name' => 'Soup'], $recipe],
 			'no recipe' => [['@context' => $context, '@graph' => [$other]], null],

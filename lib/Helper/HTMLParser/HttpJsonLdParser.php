@@ -218,7 +218,8 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 			}
 
 			// ... looking for a recipe
-			if ($this->jsonService->isSchemaObject($item, 'Recipe', $context === null, false)) {
+			$checkContext = $context === null || isset($item['@context']);
+			if ($this->jsonService->isSchemaObject($item, 'Recipe', $checkContext, false)) {
 				// We found a recipe in the array, use it
 				return $item;
 			}
