@@ -15,7 +15,7 @@ function isValidIngredientSyntax(ingredient) {
         It may optionally have a unit but must be proceeded by a single whitespace and further text.
     */
     const ingredientSyntaxRegExp =
-        /^(?:(?:\d+\s)?(?:\d+\/\d+|\p{No})|\d+(?:\.\d+)?)[a-zA-z]*\s.*$/;
+        /^(?:(?:\d+\s)?(?:\d+\/\d+|\p{No})|\d+(?:\.\d+)?)[a-zA-z]*\s.*$/u;
 
     /*
         The ingredientMultipleSeperatorsRegExp is used to check whether the string contains
