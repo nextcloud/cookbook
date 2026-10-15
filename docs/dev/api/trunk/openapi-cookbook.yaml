@@ -231,7 +231,7 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
+              anyOf:
                 - $ref: "#/components/schemas/Url"
                 - $ref: "#/components/schemas/RecipeJson"
 
