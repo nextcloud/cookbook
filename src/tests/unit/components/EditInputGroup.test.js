@@ -13,9 +13,8 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
 jest.unstable_mockModule('../../../js/helper', () => ({ default: {} }));
 jest.unstable_mockModule('caret-pos', () => ({ position: () => ({}) }));
 
-const { default: EditInputGroup } = await import(
-    '../../../components/FormComponents/EditInputGroup.vue'
-);
+const { default: EditInputGroup } =
+    await import('../../../components/FormComponents/EditInputGroup.vue');
 
 window.t = (app, text) => text;
 
@@ -92,7 +91,9 @@ describe('EditInputGroup Enter key', () => {
         const entries = ['Step one', 'Step two', 'Step three'];
         const wrapper = mountGroup(entries);
 
-        await wrapper.findAll('textarea')[0].trigger('keydown', { key: 'Enter' });
+        await wrapper
+            .findAll('textarea')[0]
+            .trigger('keydown', { key: 'Enter' });
         await flushPromises();
 
         expect(entries).toEqual(['Step one', 'Step two', 'Step three']);
@@ -100,5 +101,4 @@ describe('EditInputGroup Enter key', () => {
             wrapper.findAll('textarea')[1].element,
         );
     });
-
 });
