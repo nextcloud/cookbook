@@ -27,7 +27,13 @@ const mountGroup = (entries) =>
             createFieldsOnNewlines: true,
             suggestionOptions: [{ recipe_id: 7, title: 'Cake' }],
         },
-        global: { stubs: { SuggestionsPopup: true } },
+        global: {
+            stubs: {
+                SuggestionsPopup: true,
+                TriangleSmallUpIcon: true,
+                TriangleSmallDownIcon: true,
+            },
+        },
     });
 
 const paste = async (field, text) => {

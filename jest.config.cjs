@@ -18,7 +18,9 @@ module.exports = {
         '.*\\.(vue)$': '<rootDir>/src/tests/vueTransformer.js',
     },
     moduleNameMapper: {
-        '^icons/.*$': '<rootDir>/src/tests/stubs/icon.js',
+        '^icons/(.*)$': '<rootDir>/node_modules/vue-material-design-icons/$1',
     },
-    transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
+    transformIgnorePatterns: [
+        'node_modules/(?!(variables|vue-material-design-icons)/.*)',
+    ],
 };
