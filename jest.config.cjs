@@ -6,6 +6,7 @@
 module.exports = {
     testEnvironment: 'node',
     moduleFileExtensions: ['js', 'vue'],
+    extensionsToTreatAsEsm: ['.vue'],
     modulePaths: [
         '<rootDir>/src/'
     ],
@@ -14,7 +15,12 @@ module.exports = {
     ],
     transform: {
         '.*\\.js$': '<rootDir>/node_modules/babel-jest',
-        '.*\\.(vue)$': '<rootDir>/node_modules/@vue/vue3-jest',
+        '.*\\.(vue)$': '<rootDir>/src/tests/vueTransformer.js',
     },
-    transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
+    moduleNameMapper: {
+        '^icons/(.*)$': '<rootDir>/node_modules/vue-material-design-icons/$1',
+    },
+    transformIgnorePatterns: [
+        'node_modules/(?!(variables|vue-material-design-icons)/.*)',
+    ],
 };
