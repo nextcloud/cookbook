@@ -27,6 +27,10 @@
 			<directory name="vendor/psalm" />
 		</ignoreFiles>
 	</extraFiles>
+	<stubs>
+		<file name="tests/stubs/oc_hooks_emitter.php" />
+		<file name="tests/stubs/oc_image.php" />
+	</stubs>
 	<issueHandlers>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">
