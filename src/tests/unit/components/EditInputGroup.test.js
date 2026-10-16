@@ -7,8 +7,8 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-import { jest } from '@jest/globals';
-import { flushPromises, mount } from '@vue/test-utils';
+import { afterEach, jest } from '@jest/globals';
+import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
 
 jest.unstable_mockModule('../../../js/helper', () => ({ default: {} }));
 jest.unstable_mockModule('caret-pos', () => ({ position: () => ({}) }));
@@ -19,8 +19,11 @@ const { default: EditInputGroup } = await import(
 
 window.t = (app, text) => text;
 
+enableAutoUnmount(afterEach);
+
 const mountGroup = (entries) =>
     mount(EditInputGroup, {
+        attachTo: document.body,
         props: {
             modelValue: entries,
             fieldType: 'textarea',
@@ -69,4 +72,33 @@ describe('EditInputGroup recipe link suggestions', () => {
 
         expect(entries).toEqual(['#r/7', 'Step two']);
     });
+});
+
+describe('EditInputGroup Enter key', () => {
+    test('adds a new entry when pressed in the last entry', async () => {
+        const entries = ['Step one'];
+        const wrapper = mountGroup(entries);
+
+        await wrapper.find('textarea').trigger('keydown', { key: 'Enter' });
+        await flushPromises();
+
+        expect(entries).toEqual(['Step one', '']);
+        expect(document.activeElement).toBe(
+            wrapper.findAll('textarea')[1].element,
+        );
+    });
+
+    test('focuses the next entry when pressed in another entry', async () => {
+        const entries = ['Step one', 'Step two', 'Step three'];
+        const wrapper = mountGroup(entries);
+
+        await wrapper.findAll('textarea')[0].trigger('keydown', { key: 'Enter' });
+        await flushPromises();
+
+        expect(entries).toEqual(['Step one', 'Step two', 'Step three']);
+        expect(document.activeElement).toBe(
+            wrapper.findAll('textarea')[1].element,
+        );
+    });
+
 });
