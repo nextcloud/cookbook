@@ -248,7 +248,7 @@ const handlePaste = async (e: ClipboardEvent) => {
     const $li = (e.currentTarget as HTMLElement).closest('li');
     const $ul = $li?.closest('ul');
     if (!$li || !$ul) return;
-    const $insertedIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    const $insertedIndex = Array.prototype.indexOf.call($ul.children, $li);
 
     // Remove the common prefix from each line of the pasted text
     // For example, if the pasted text uses - for a bullet list
