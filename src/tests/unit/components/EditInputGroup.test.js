@@ -25,6 +25,7 @@ const mountGroup = (entries) =>
             modelValue: entries,
             fieldType: 'textarea',
             createFieldsOnNewlines: true,
+            suggestionOptions: [{ recipe_id: 7, title: 'Cake' }],
         },
         global: { stubs: { SuggestionsPopup: true } },
     });
@@ -44,5 +45,22 @@ describe('EditInputGroup multi-line paste', () => {
         await paste(wrapper.findAll('textarea')[1], 'Line A\nLine B');
 
         expect(entries).toEqual(['Step one', 'Line A', 'Line B', 'Step two']);
+    });
+});
+
+describe('EditInputGroup recipe link suggestions', () => {
+    test('inserts the selected recipe link into the entry being edited', async () => {
+        const entries = ['#', 'Step two'];
+        const wrapper = mountGroup(entries);
+        const field = wrapper.findAll('textarea')[0];
+        field.element.setSelectionRange(1, 1);
+
+        await field.trigger('keyup', { key: '#' });
+        wrapper
+            .findComponent({ name: 'SuggestionsPopup' })
+            .vm.$emit('suggestions-selected', { recipe_id: 7 });
+        await flushPromises();
+
+        expect(entries).toEqual(['#r/7', 'Step two']);
     });
 });
