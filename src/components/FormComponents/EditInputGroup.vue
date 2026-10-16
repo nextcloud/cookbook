@@ -335,7 +335,7 @@ const keyDown = async (e: KeyboardEvent) => {
     const $li = (e.currentTarget as HTMLElement).closest('li');
     const $ul = $li?.closest('ul');
     if (!$li || !$ul) return;
-    const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    const $pressedLiIndex = Array.prototype.indexOf.call($ul.children, $li);
 
     if ($pressedLiIndex >= (listField.value?.length ?? 0) - 1) {
         await addNewEntry();
@@ -365,7 +365,7 @@ const keyUp = (e: KeyboardEvent) => {
     const $ul = $li?.closest('ul');
     if (!$li || !$ul) return;
     // noinspection UnnecessaryLocalVariableJS
-    const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    const $pressedLiIndex = Array.prototype.indexOf.call($ul.children, $li);
     lastFocusedFieldIndex.value = $pressedLiIndex;
     handleSuggestionsPopupKeyUp(e);
 };
