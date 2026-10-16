@@ -83,7 +83,9 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             let newAmount = (decimalAmount / originalYield) * currentYield;
             const newWholeNumberPart = parseInt(newAmount, 10);
             let newNumerator = (newAmount - newWholeNumberPart) * 16;
-            if (Number.isInteger(newNumerator)) {
+            if (newNumerator === 0) {
+                newAmount = `${newWholeNumberPart}`;
+            } else if (Number.isInteger(newNumerator)) {
                 const gcd = (a, b) => (b ? gcd(b, a % b) : a);
                 const div = gcd(newNumerator, 16);
                 newNumerator /= div;
