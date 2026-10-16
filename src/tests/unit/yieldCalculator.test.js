@@ -38,6 +38,9 @@ describe('isValidIngredientSyntax', () => {
         '1 ¹⁄₂ cup flour',
         '2 ² cups flour',
         '1⁄2 cup sugar',
+        '¼² cup milk',
+        '¼ ² cup milk',
+        '1/2 ² cup sugar',
     ])('rejects "%s"', (ingredient) => {
         expect(isValidIngredientSyntax(ingredient)).toBe(false);
     });
@@ -73,6 +76,8 @@ describe('recalculateIngredients', () => {
         ['## Dough', 1, 2, '## Dough'],
         ['salt to taste', 1, 2, 'salt to taste'],
         ['1 ¹⁄₂ cup flour', 1, 2, '1 ¹⁄₂ cup flour'],
+        ['¼² cup milk', 1, 2, '¼² cup milk'],
+        ['¼ ² cup milk', 1, 2, '¼ ² cup milk'],
     ])(
         'scales "%s" from %i to %i servings',
         (ingredient, originalYield, currentYield, expected) => {

@@ -16,7 +16,7 @@ function isValidIngredientSyntax(ingredient) {
         It may optionally have a unit but must be proceeded by a single whitespace and further text.
     */
     const ingredientSyntaxRegExp =
-        /^(?:(?:\d+(?:\s|(?=[\u00BC-\u00BE\u2150-\u215E])))?(?:\d+\/\d+|[\u00BC-\u00BE\u2150-\u215E])|\d+(?:\.\d+)?(?!\s*\p{No}))[a-zA-z]*\s.*$/u;
+        /^(?:(?:\d+(?:\s|(?=[\u00BC-\u00BE\u2150-\u215E])))?(?:\d+\/\d+|[\u00BC-\u00BE\u2150-\u215E])|\d+(?:\.\d+)?)(?!\s*\p{No})[a-zA-z]*\s.*$/u;
 
     /*
         The ingredientMultipleSeperatorsRegExp is used to check whether the string contains
@@ -54,7 +54,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
         const matches = ingredient.match(fractionRegExp);
 
         // Fraction
-        if (matches) {
+        if (matches && isValidIngredientSyntax(ingredient)) {
             const [
                 ,
                 fractionMatch,
