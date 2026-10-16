@@ -6,6 +6,7 @@
 module.exports = {
     testEnvironment: 'node',
     moduleFileExtensions: ['js', 'vue'],
+    extensionsToTreatAsEsm: ['.vue'],
     modulePaths: [
         '<rootDir>/src/'
     ],
@@ -14,7 +15,10 @@ module.exports = {
     ],
     transform: {
         '.*\\.js$': '<rootDir>/node_modules/babel-jest',
-        '.*\\.(vue)$': '<rootDir>/node_modules/@vue/vue3-jest',
+        '.*\\.(vue)$': '<rootDir>/src/tests/vueTransformer.js',
+    },
+    moduleNameMapper: {
+        '^icons/.*$': '<rootDir>/src/tests/stubs/icon.js',
     },
     transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
 };
