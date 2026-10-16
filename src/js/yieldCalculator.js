@@ -6,7 +6,8 @@
     The ingredientFractionRegExp is used to identify fractions in the string.
     This is used to exclude strings that contain fractions from being valid.
 */
-const fractionRegExp = /^((\d+\s+)?(?:\p{No}|(\d+)\s*\/\s*(\d+))).*/u;
+const fractionRegExp =
+    /^((\d+(?:\s+|(?=[\u00BC-\u00BE\u2150-\u215E])))?(?:([\u00BC-\u00BE\u2150-\u215E])|(\d+)\s*\/\s*(\d+))).*/u;
 
 function isValidIngredientSyntax(ingredient) {
     /*
@@ -15,7 +16,7 @@ function isValidIngredientSyntax(ingredient) {
         It may optionally have a unit but must be proceeded by a single whitespace and further text.
     */
     const ingredientSyntaxRegExp =
-        /^(?:(?:\d+\s)?(?:\d+\/\d+|\p{No})|\d+(?:\.\d+)?)[a-zA-z]*\s.*$/u;
+        /^(?:(?:\d+(?:\s|(?=[\u00BC-\u00BE\u2150-\u215E])))?(?:\d+\/\d+|[\u00BC-\u00BE\u2150-\u215E])|\d+(?:\.\d+)?(?!\s*\p{No}))[a-zA-z]*\s.*$/u;
 
     /*
         The ingredientMultipleSeperatorsRegExp is used to check whether the string contains
@@ -58,6 +59,7 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
                 ,
                 fractionMatch,
                 wholeNumberPartRaw,
+                unicodeFractionRaw,
                 numeratorRaw,
                 denominatorRaw,
             ] = matches;
@@ -67,8 +69,8 @@ function recalculateIngredients(ingredients, currentYield, originalYield) {
             let numerator = 0;
             let denominator = 0;
             // Unicode fraction
-            if (numeratorRaw == null) {
-                [numerator, denominator] = fractionMatch
+            if (unicodeFractionRaw) {
+                [numerator, denominator] = unicodeFractionRaw
                     .normalize('NFKD')
                     .split('\u2044')
                     .map((x) => parseInt(x, 10));
