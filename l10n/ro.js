@@ -40,6 +40,7 @@ OC.L10N.register(
     "Description" : "Descriere",
     "URL" : "URL",
     "Image" : "Imagine",
+    "Instructions" : "Instrucțiuni",
     "Reminder" : "Memento",
     "Loading…" : "Se încarcă...",
     "Dismiss" : "Elimină",
