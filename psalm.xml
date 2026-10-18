@@ -28,8 +28,7 @@
 		</ignoreFiles>
 	</extraFiles>
 	<stubs>
-		<file name="tests/stubs/oc_hooks_emitter.php" />
-		<file name="tests/stubs/oc_image.php" />
+		<file name="tests/stubs/oc.php" />
 	</stubs>
 	<issueHandlers>
 		<UndefinedDocblockClass>
