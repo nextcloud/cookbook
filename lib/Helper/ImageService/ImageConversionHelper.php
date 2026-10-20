@@ -12,7 +12,7 @@ use OCP\Image;
  * This class ensures that image data can be processed by the thumbnail generation.
  */
 class ImageConversionHelper {
-	private const HEIF_BRANDS = ['avif', 'avis', 'heic', 'heix', 'mif1', 'msf1'];
+	private const HEIF_BRANDS = ['avif', 'avis', 'heic', 'heix', 'heim', 'heis', 'hevc', 'hevm', 'mif1', 'msf1'];
 
 	/**
 	 * Get image data that the Nextcloud image library can read.
