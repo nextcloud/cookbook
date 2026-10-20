@@ -87,7 +87,7 @@ class RecipeImplementation {
 		}
 
 		foreach ($recipes as $i => $recipe) {
-			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb', 't' => $recipe['dateModified'] ?? null]);
 			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
 
 			$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
@@ -112,7 +112,7 @@ class RecipeImplementation {
 		}
 
 		$json['printImage'] = $this->service->getPrintImage();
-		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
+		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full', 't' => $this->service->getRecipeMTime($json['id'])]);
 
 		$json = $this->outputFilter->filter($json);
 
