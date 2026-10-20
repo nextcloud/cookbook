@@ -4,6 +4,11 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
+namespace {
+	class ImagickException extends \Exception {
+	}
+}
+
 namespace OC\Hooks {
 	interface Emitter {
 		public function listen($scope, $method, callable $callback);
@@ -22,6 +27,13 @@ namespace OC {
 		 * @return \GdImage|false
 		 */
 		public function loadFromFile($imagePath = false) {
+		}
+
+		/**
+		 * @param string $str
+		 * @return \GdImage|false
+		 */
+		public function loadFromData(string $str) {
 		}
 
 		public function fixOrientation(): bool {
