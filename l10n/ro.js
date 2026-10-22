@@ -44,6 +44,7 @@ OC.L10N.register(
     "Instructions" : "Instrucțiuni",
     "Reminder" : "Memento",
     "Loading…" : "Se încarcă...",
+    "Last modified" : "Ultima modificare",
     "Source" : "Sursă",
     "Dismiss" : "Elimină",
     "Cancel" : "Cancel",
