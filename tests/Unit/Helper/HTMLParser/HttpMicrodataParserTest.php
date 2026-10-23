@@ -47,6 +47,7 @@ class HttpMicrodataParserTest extends TestCase {
 			'caseIssue1617c' => ['caseIssue1617c.html',true,'caseIssue1617c.json'],
 			'casePR2711' => ['case2711.html', true, 'case2711.json'],
 			'caseTimeDescription' => ['caseTimeDescription.html', true, 'caseTimeDescription.json'],
+			'caseTimeDatetime' => ['caseTimeDatetime.html', true, 'caseTimeDatetime.json'],
 		];
 	}
 
