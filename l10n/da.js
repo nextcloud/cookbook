@@ -65,7 +65,7 @@ OC.L10N.register(
     "The thumbnail type %d is not known." : "Miniaturetypen %d er ukendt.",
     "Cookbook" : "Kogebog",
     "An integrated cookbook using schema.org JSON files as recipes" : "En integreret kogebog, der bruger JSON-filer fra schema.org som opskrifter",
-    "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Et bibliotek til alle dine opskrifter. Det anvender JSON filer der følger schema.org opskriftsformatet. For at tilføje en opskrift til samlingen, så kan du indsætte URL'en til opskriften, og den angivne webside vil blive fortolket og downloadet til mappen der er angivet i app-indstillingerne. ",
+    "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Et bibliotek til alle dine opskrifter. Det bruger JSON-filer, der følger opskriftsformatet fra schema.org. Du tilføjer en opskrift til samlingen ved at indsætte opskriftens URL, så bliver websiden fortolket og hentet til den mappe, du har angivet i appindstillingerne.",
     "Category" : "Kategori",
     "Recipe name" : "Opskriftsnavn",
     "Tags" : "Mærker",
