@@ -71,6 +71,10 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		$this->searchSimpleProperties($recipeNode, 'keywords');
 		$this->searchSimpleProperties($recipeNode, 'category');
 		$this->searchSimpleProperties($recipeNode, 'recipeYield');
+		$this->searchSimpleProperties($recipeNode, 'description');
+		$this->searchSimpleProperties($recipeNode, 'totalTime');
+		$this->searchSimpleProperties($recipeNode, 'prepTime');
+		$this->searchSimpleProperties($recipeNode, 'cookTime');
 
 		$this->parseImage($recipeNode);
 		$this->parseIngredients($recipeNode);
