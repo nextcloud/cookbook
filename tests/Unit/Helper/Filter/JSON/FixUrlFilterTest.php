@@ -70,4 +70,29 @@ class FixUrlFilterTest extends TestCase {
 		$this->assertEquals($this->stub, $recipe);
 		$this->assertEquals($shouldChange, $ret);
 	}
+
+	public static function dpMainEntityOfPage() {
+		yield ['https://example.com/soup', 'https://example.com/soup'];
+		yield [['@type' => 'WebPage', '@id' => 'https://example.com/soup'], 'https://example.com/soup'];
+		yield [['@type' => 'WebPage', 'url' => 'https://example.com/soup'], 'https://example.com/soup'];
+		yield [true, ''];
+	}
+
+	/** @dataProvider dpMainEntityOfPage */
+	public function testMainEntityOfPage($page, $expectedValue) {
+		$recipe = $this->stub;
+		$recipe['mainEntityOfPage'] = $page;
+
+		$this->assertTrue($this->dut->apply($recipe));
+		$this->assertEquals($expectedValue, $recipe['url']);
+	}
+
+	public function testUrlPreferredOverMainEntityOfPage() {
+		$recipe = $this->stub;
+		$recipe['url'] = 'http://example.com';
+		$recipe['mainEntityOfPage'] = 'https://example.com/soup';
+
+		$this->assertFalse($this->dut->apply($recipe));
+		$this->assertEquals('http://example.com', $recipe['url']);
+	}
 }
