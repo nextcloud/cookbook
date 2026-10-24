@@ -22,23 +22,31 @@ jobs:
     env:
       admins: '["seyfeb", "christianlupus"]'
     steps:
+      - name: Check if user is admin and comment is /approve
+        id: checker
+        run: |-
+          echo "is_admin=${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT"
+          echo "is_approve=${{ github.event.comment.body == '/approve' }}" >> "$GITHUB_OUTPUT"
+          echo "run_approve=${{ contains(fromJSON(env.admins), github.event.comment.user.login) && github.event.comment.body == '/approve' }}" >> "$GITHUB_OUTPUT"
+
       - run: |-
-          echo "Admins: $admins"
-          echo "User is permitted: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}"
-          echo "Comment body matches /approve: ${{github.event.comment.body == '/approve'}}"
+            echo "Admins: $admins"
+            echo "User is permitted: ${{ steps.checker.outputs.is_admin }}"
+            echo "Comment body matches /approve: ${{ steps.checker.outputs.is_approve }}"
+            echo "Run approve: ${{ steps.checker.outputs.run_approve }}"
+
       - name: Create GitHub App installation token
         id: app-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        if: ${{ steps.checker.outputs.run_approve }}
         with:
           client-id: ${{ vars.COOKBOOK_PR_APPROVE_CLIENT_ID }}
           private-key: ${{ secrets.COOKBOOK_PR_APPROVE_PRIV_KEY }}
-          owner: christianlupus-nextcloud
-          repositories: cookbook-releases
+          owner: nextcloud
+          repositories: cookbook
           permission-pull-requests: write
       - uses: hmarr/auto-approve-action@v4
-        if: >-
-          github.event.comment.body == '/approve' &&
-          contains(fromJSON(env.admins), github.event.comment.user.login)
+        if: steps.checker.outputs.run_approve == 'true'
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           pull-request-number: ${{ github.event.issue.number }}
