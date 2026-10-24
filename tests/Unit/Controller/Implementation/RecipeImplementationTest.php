@@ -525,12 +525,14 @@ class RecipeImplementationTest extends TestCase {
 		];
 		$this->recipeService->method('getRecipeById')->with($id)->willReturn($recipe);
 		$this->recipeService->method('getPrintImage')->willReturn(true);
+		$mtime = 1705598479;
+		$this->recipeService->method('getRecipeMTime')->with($id)->willReturn($mtime);
 		$imageUrl = '/path/to/image/of/id/123';
 
 		$this->urlGenerator->method('linkToRoute')->with(
 			'cookbook.recipe.image',
-			$this->callback(function ($p) use ($id) {
-				return isset($p['size']) && $p['id'] === $id;
+			$this->callback(function ($p) use ($id, $mtime) {
+				return isset($p['size']) && $p['id'] === $id && $p['t'] === $mtime;
 			})
 		)->willReturn($imageUrl);
 		$expected = $recipe;
@@ -703,8 +705,9 @@ class RecipeImplementationTest extends TestCase {
 
 			$id = $params['id'];
 			$size = $params['size'];
+			$t = isset($params['t']) ? "?t={$params['t']}" : '';
 
-			return "/path/to/controller/$id/$size";
+			return "/path/to/controller/$id/$size$t";
 		}));
 
 		$this->stubFilter->method('apply')->willReturnArgument(0);
@@ -724,7 +727,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $recipes;
 		for ($i = 0; $i < count($ret); $i++) {
 			$id = $ret[$i]['recipe_id'];
-			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb";
+			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb?t={$ret[$i]['dateModified']}";
 			$ret[$i]['imagePlaceholderUrl'] = "/path/to/controller/$id/thumb16";
 		}
 
@@ -743,10 +746,12 @@ class RecipeImplementationTest extends TestCase {
 					[
 						'recipe_id' => 123,
 						'name' => 'First recipe',
+						'dateModified' => '2024-01-18 17:21:19',
 					],
 					[
 						'recipe_id' => 125,
 						'name' => 'Second recipe',
+						'dateModified' => '2024-03-17 13:28:25',
 					],
 				],
 				false,
