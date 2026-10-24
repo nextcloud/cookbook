@@ -12,6 +12,7 @@ jobs:
     push:
         name: Build and push the latest test images
         runs-on: ubuntu-latest
+        environment: docker-pushing
         
         strategy:
             matrix:
