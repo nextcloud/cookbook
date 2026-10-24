@@ -651,23 +651,22 @@ const setup = async () => {
     formDirty.value = false;
 };
 
-const loadRecipeData = async () => {
+const loadRecipeData = async (id?: string) => {
+    const recipeId = id ?? String(route.params.id);
     isLoading.value = true;
     if (!legacyStore.recipe) {
         // Make the control row show that a recipe is loading
         legacyStore.setLoadingRecipe({
             recipe: -1,
         });
-    } else if (
-        legacyStore.recipe.id === parseInt(String(route.params.id), 10)
-    ) {
+    } else if (legacyStore.recipe.id === parseInt(recipeId, 10)) {
         // Make the control row show that the recipe is reloading
         legacyStore.setReloadingRecipe({
-            recipe: String(route.params.id),
+            recipe: recipeId,
         });
     }
     try {
-        const response = await api.recipes.get(String(route.params.id));
+        const response = await api.recipes.get(recipeId);
 
         legacyStore.setRecipe({ recipe: response.data });
         recipe.value = response.data;
@@ -707,7 +706,11 @@ onBeforeRouteUpdate((to, from, next) => {
 
     // Check if we should reload the component content
     if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
+        if (to.params.id) {
+            loadRecipeData(String(to.params.id));
+        } else {
+            setup();
+        }
     }
 });
 

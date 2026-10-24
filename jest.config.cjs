@@ -5,15 +5,18 @@
 // Jest configuration
 module.exports = {
     testEnvironment: 'node',
-    moduleFileExtensions: ['js', 'vue'],
+    moduleFileExtensions: ['js', 'ts', 'vue'],
     modulePaths: [
         '<rootDir>/src/'
     ],
     modulePathIgnorePatterns: [
         '<rootDir>/.github/'
     ],
+    moduleNameMapper: {
+        '^cookbook/(.*)$': '<rootDir>/src/$1',
+    },
     transform: {
-        '.*\\.js$': '<rootDir>/node_modules/babel-jest',
+        '.*\\.[jt]s$': '<rootDir>/node_modules/babel-jest',
         '.*\\.(vue)$': '<rootDir>/node_modules/@vue/vue3-jest',
     },
     transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
