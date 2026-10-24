@@ -30,7 +30,7 @@ jobs:
                 if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
                     echo "skip=true" >> $GITHUB_OUTPUT
                 fi
-                if [ -z "${{ secrets.DOCKER_HUB_USERNAME }}" ]; then
+                if [ -z "${{ vars.DOCKER_HUB_USERNAME }}" ]; then
                     echo "skip=true" >> $GITHUB_OUTPUT
                 fi
             
@@ -49,7 +49,7 @@ jobs:
               run: >-
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
                 | docker login 
-                --username ${{ secrets.DOCKER_HUB_USERNAME }} 
+                --username ${{ vars.DOCKER_HUB_USERNAME }}
                 --password-stdin
 
             - name: Install dependencies for runner
