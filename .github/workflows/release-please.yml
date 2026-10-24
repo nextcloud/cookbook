@@ -23,6 +23,7 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest-low
     permissions: {}
+    environment: release-please-runner
     outputs:
       release-created: ${{ steps.release.outputs.release_created }}
       tag-name: ${{ steps.release.outputs.tag_name }}
@@ -118,6 +119,7 @@ jobs:
       cancel-in-progress: false
     runs-on: ubuntu-latest-low
     permissions: {}
+    environment: release-please-issue-opener
     steps:
       - name: Create GitHub App installation token
         id: app-token
