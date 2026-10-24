@@ -612,7 +612,8 @@ const keywordClicked = (keyword: string) => {
     }
 };
 
-const setup = async () => {
+const setup = async (id?: string) => {
+    const recipeId = id ?? routeId.value;
     isLoading.value = true;
 
     // Make the control row show that a recipe is loading
@@ -620,20 +621,20 @@ const setup = async () => {
         legacyStore.setLoadingRecipe({ recipe: -1 });
 
         // Make the control row show that the recipe is reloading
-    } else if (legacyStore.recipe.id === parseInt(routeId.value, 10)) {
+    } else if (legacyStore.recipe.id === parseInt(recipeId, 10)) {
         legacyStore.setReloadingRecipe({
-            recipe: routeId.value,
+            recipe: recipeId,
         });
 
         // Make the control row show that a new recipe is loading
     } else {
         legacyStore.setLoadingRecipe({
-            recipe: routeId.value,
+            recipe: recipeId,
         });
     }
 
     try {
-        const response = await api.recipes.get(routeId.value);
+        const response = await api.recipes.get(recipeId);
         const tmpRecipe = response.data;
         // Store recipe data in vuex
         legacyStore.setRecipe({ recipe: tmpRecipe });
@@ -819,7 +820,7 @@ onBeforeRouteUpdate((to, from, next) => {
     next();
     // Check if we should reload the component content
     if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
+        setup(String(to.params.id ?? ''));
     }
 });
 
