@@ -21,7 +21,7 @@
     "bundle-analyzer": "npm run analyze-bundle && npm run view-bundle-analysis",
     "ci-test": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" npx jest --ci",
     "dev": "vite --mode development build --watch",
-    "eslint": "npx eslint --cache --cache-strategy content .",
+    "eslint": "npx eslint --cache --cache-strategy content --max-warnings=0 .",
     "eslint-fix": "npx eslint --cache --cache-strategy content --fix .",
     "package-lint": "npx prettier-package-json --write ./package.json",
     "prettier": "npx prettier --check src",
