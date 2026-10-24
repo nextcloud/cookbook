@@ -22,6 +22,20 @@ The releases are stored for technical reasins in the repository [christianlupus-
 Sorry for the inconvience.
 
 
+## [0.11.13](https://github.com/nextcloud/cookbook/compare/v0.11.12...v0.11.13) (2026-10-24)
+
+
+### Bug Fixes
+
+* **l10n:** Update translations from Transifex ([8494aa1](https://github.com/nextcloud/cookbook/commit/8494aa1b883f7f702c0856423257794444f294ff))
+* **l10n:** Update translations from Transifex ([8c81e2e](https://github.com/nextcloud/cookbook/commit/8c81e2e2a7ea891ece43cc220000fc2c5ab4c5f4))
+* **l10n:** Update translations from Transifex ([d53ae0b](https://github.com/nextcloud/cookbook/commit/d53ae0be39e194da63987935ffe75aa8477deb85))
+* **l10n:** Update translations from Transifex ([1d27f5b](https://github.com/nextcloud/cookbook/commit/1d27f5b73b3ebd3a833cf17cb14e5ae681306ffb))
+* **l10n:** Update translations from Transifex ([b7a56b3](https://github.com/nextcloud/cookbook/commit/b7a56b302f6ecbc072a14f289616c20a24d7263f))
+* **l10n:** Update translations from Transifex ([4333083](https://github.com/nextcloud/cookbook/commit/4333083e98460c882c3b0419dfa3b1afeee88ee9))
+* **l10n:** Update translations from Transifex ([9b65a4f](https://github.com/nextcloud/cookbook/commit/9b65a4fc97d273676522ed885de367b021edbec5))
+* resolve image reference in JSON-LD graph ([#3448](https://github.com/nextcloud/cookbook/issues/3448)) ([532ee82](https://github.com/nextcloud/cookbook/commit/532ee82250177797189f461e60d7ca67306dc929))
+
 ## [0.11.12](https://github.com/nextcloud/cookbook/compare/v0.11.11...v0.11.12) (2026-10-13)
 
 
