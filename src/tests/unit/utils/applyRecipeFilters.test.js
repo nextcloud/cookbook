@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-import { jest } from '@jest/globals';
+import { vi } from 'vitest';
 
 import applyFilters from '../../../js/utils/applyRecipeFilters';
 import RecipeFilter from '../../../js/RecipeFilters/RecipeFilter';
@@ -12,7 +12,7 @@ import { AndOperator } from '../../../js/LogicOperators';
 class MockFilter extends RecipeFilter {
     constructor(predicate) {
         super(new AndOperator());
-        this.filter = jest.fn(predicate);
+        this.filter = vi.fn(predicate);
     }
 }
 
