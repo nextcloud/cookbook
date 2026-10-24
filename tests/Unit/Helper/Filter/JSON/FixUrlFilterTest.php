@@ -60,6 +60,7 @@ class FixUrlFilterTest extends TestCase {
 		yield ['https://example.com/Pasta mit Pesto/recipe', 'https://example.com/Pasta%20mit%20Pesto/recipe', true];
 		yield ['  https://example.com/recipe  ', 'https://example.com/recipe', true];
 		yield ['  https://example.com/Pasta mit Pesto  ', 'https://example.com/Pasta%20mit%20Pesto', true];
+		yield [['https://example.com'], '', true];
 	}
 
 	/** @dataProvider dpApply */

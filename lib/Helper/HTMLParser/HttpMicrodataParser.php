@@ -196,6 +196,8 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 *
 	 * @param DOMNode $recipeNode The node of the recipe under which to look for properties
 	 * @param string $property The property name to look for
+	 * @param array $attributes The HTML attributes to extract values from
+	 * @param bool $firstOnly If true, always unwrap to the first scalar value
 	 * @return bool true, if the property was found
 	 */
 	private function searchSimpleProperties(DOMNode $recipeNode, string $property, array $attributes = ['content'], bool $firstOnly = false): bool {

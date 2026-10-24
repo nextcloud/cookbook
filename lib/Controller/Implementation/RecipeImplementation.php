@@ -325,6 +325,10 @@ class RecipeImplementation {
 			return new JSONResponse('Field "url" is required', 400);
 		}
 
+		if (!is_string($data['url'])) {
+			return new JSONResponse('Field "url" must be a string', 400);
+		}
+
 		$data['url'] = str_replace(' ', '%20', trim($data['url']));
 
 		if (! $this->isDownloadUrlValid($data['url'])) {

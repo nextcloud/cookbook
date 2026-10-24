@@ -41,6 +41,11 @@ class FixUrlFilter extends AbstractJSONFilter {
 			return true;
 		}
 
+		if (!is_string($json[self::URL])) {
+			$json[self::URL] = '';
+			return true;
+		}
+
 		$url = str_replace(' ', '%20', trim($json[self::URL]));
 		$url = filter_var($url, FILTER_SANITIZE_URL);
 		if (filter_var($url, FILTER_VALIDATE_URL) === false) {
