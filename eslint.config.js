@@ -56,8 +56,8 @@ export default [
       'babel.config.cjs',
       'eslint.config.js',
       'stylelint.config.cjs',
-      'jest.config.cjs',
       'vite.config.js',
+      'vitest.config.js',
     ],
   },
 
@@ -115,13 +115,15 @@ export default [
     },
   },
 
-  // former src/tests/.eslintrc.yml -> env: { jest: true }
   {
     files: ['src/tests/**/*.{js,ts,vue}'],
     languageOptions: {
       globals: {
-        ...globals.jest,
+        ...globals.vitest,
       },
+    },
+    rules: {
+      'vue/one-component-per-file': 'off',
     },
   },
 
