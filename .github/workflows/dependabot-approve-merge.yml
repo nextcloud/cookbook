@@ -11,7 +11,9 @@ name: Auto approve Dependabot PRs
 on:
   pull_request_target: # zizmor: ignore[dangerous-triggers]
     branches:
+      - main
       - master
+      - stable*
 
 permissions:
   contents: read
