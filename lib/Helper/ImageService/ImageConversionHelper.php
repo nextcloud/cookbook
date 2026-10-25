@@ -15,7 +15,9 @@ use Psr\Log\LoggerInterface;
 class ImageConversionHelper {
 	private const HEIF_BRANDS = ['avif', 'avis', 'heic', 'heix', 'heim', 'heis', 'hevc', 'hevm', 'mif1', 'msf1'];
 
-	public function __construct(private LoggerInterface $logger) {
+	public function __construct(
+		private LoggerInterface $logger,
+	) {
 	}
 
 	/**
