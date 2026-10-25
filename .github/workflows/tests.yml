@@ -452,7 +452,6 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
             flags: unittests
             directory: unit-coverage
-            fail_ci_if_error: false
             verbose: true
         - name: Upload integration test codecov reports
           uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
@@ -460,7 +459,6 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
             flags: integration
             directory: integration-coverage
-            fail_ci_if_error: false
             verbose: true
         - name: Upload migration test codecov reports
           uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
@@ -468,7 +466,6 @@ jobs:
             token: ${{ secrets.CODECOV_TOKEN }}
             flags: migration
             directory: migration-coverage
-            fail_ci_if_error: false
             verbose: true
 
           
