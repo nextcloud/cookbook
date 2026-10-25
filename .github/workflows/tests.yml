@@ -410,6 +410,9 @@ jobs:
     runs-on: ubuntu-latest-low
     permissions:
         contents: read
+    environment:
+        name: codecov
+        url: https://codecov.io/gh/nextcloud/cookbook
 
     steps:
         - name: Checkout of code base
