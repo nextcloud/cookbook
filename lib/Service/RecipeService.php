@@ -321,7 +321,6 @@ class RecipeService {
 		if ($full_image_data) {
 			$full_image_data = $this->imageConversionHelper->getReadableImageData($full_image_data);
 			if ($full_image_data === null) {
-				$this->logger->warning('Recipe image cannot be read; skipping image.', ['image' => $json['image']]);
 				$this->imageService->dropImage($recipe_folder);
 			}
 		}
