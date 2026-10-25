@@ -1,0 +1,1 @@
+{"@type":"Recipe","@context":"http:\/\/schema.org","name":"Test Recipe","recipeYield":"4 servings","description":"A delicious test recipe for unit testing.","totalTime":"PT45M","prepTime":"PT15M","cookTime":"PT30M","image":["\/img\/test.jpg"],"recipeIngredient":["200g flour","100ml water"],"recipeInstructions":["Mix the flour and water.","Bake for 30 minutes."]}
