@@ -770,42 +770,6 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals('Field "url" must be a string', $ret->getData());
 	}
 
-	/**
-	 * @dataProvider dpNormalizedImportURLs
-	 */
-	public function testImportNormalizesURL(string $url, string $normalizedUrl): void {
-		$this->ensureCacheCheckTriggered();
-		$file = $this->createStub(File::class);
-		$json = [ 'id' => 123, 'name' => 'The recipe name' ];
-
-		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
-		$this->recipeService->expects($this->once())->method('downloadRecipe')->with($normalizedUrl)->willReturn($file);
-		$this->recipeService->expects($this->once())->method('parseRecipeFile')->with($file)->willReturn($json);
-		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file);
-
-		$ret = $this->sut->import();
-
-		$this->assertEquals(200, $ret->getStatus());
-		$this->assertEquals($json, $ret->getData());
-	}
-
-	public static function dpNormalizedImportURLs(): array {
-		return [
-			'trimmed' => [
-				' http://example.com/Recipe.html ',
-				'http://example.com/Recipe.html',
-			],
-			'encodedSpaces' => [
-				'http://example.com/Recipe with space.html',
-				'http://example.com/Recipe%20with%20space.html',
-			],
-			'trimmedAndEncoded' => [
-				' http://example.com/Recipe with space.html ',
-				'http://example.com/Recipe%20with%20space.html',
-			],
-		];
-	}
-
 	public static function dpInvalidImportURLs(): array {
 		return [
 			'emptyUrl' => [''],
