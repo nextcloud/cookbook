@@ -71,6 +71,10 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		$this->searchSimpleProperties($recipeNode, 'keywords');
 		$this->searchSimpleProperties($recipeNode, 'category');
 		$this->searchSimpleProperties($recipeNode, 'recipeYield');
+		$this->searchSimpleProperties($recipeNode, 'description', ['content'], true);
+		$this->searchSimpleProperties($recipeNode, 'totalTime', ['content', 'datetime'], true);
+		$this->searchSimpleProperties($recipeNode, 'prepTime', ['content', 'datetime'], true);
+		$this->searchSimpleProperties($recipeNode, 'cookTime', ['content', 'datetime'], true);
 
 		$this->parseImage($recipeNode);
 		$this->parseIngredients($recipeNode);
@@ -192,13 +196,14 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 *
 	 * @param DOMNode $recipeNode The node of the recipe under which to look for properties
 	 * @param string $property The property name to look for
+	 * @param array $attributes The HTML attributes to extract values from
+	 * @param bool $firstOnly If true, always unwrap to the first scalar value
 	 * @return bool true, if the property was found
 	 */
-	private function searchSimpleProperties(DOMNode $recipeNode, string $property): bool {
-		$ret = $this->searchMultipleProperties($recipeNode, [$property], ['content'], $property);
+	private function searchSimpleProperties(DOMNode $recipeNode, string $property, array $attributes = ['content'], bool $firstOnly = false): bool {
+		$ret = $this->searchMultipleProperties($recipeNode, [$property], $attributes, $property);
 
-		// Extract array if only one entry was found.
-		if ($ret && count($this->recipe[$property]) === 1) {
+		if ($ret && ($firstOnly || count($this->recipe[$property]) === 1)) {
 			$this->recipe[$property] = $this->recipe[$property][0];
 		}
 
