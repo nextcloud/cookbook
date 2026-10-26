@@ -91,6 +91,7 @@ OC.L10N.register(
     "Reload recipe" : "Rezept neu laden",
     "Abort editing" : "Bearbeitung abbrechen",
     "Print recipe" : "Rezept drucken",
+    "Export recipe as PDF" : "Rezept als PDF exportieren",
     "Clone recipe" : "Rezept duplizieren",
     "Delete recipe" : "Rezept löschen",
     "Path to your recipe collection" : "Pfad zur Rezept-Sammlung",
