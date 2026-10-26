@@ -691,6 +691,14 @@ class RecipeImplementationTest extends TestCase {
 		$this->recipeService->method('getAllRecipesInSearchIndex')->willReturn($recipes);
 		$this->recipeService->method('findRecipesInSearchIndex')->willReturn($recipes);
 
+		$mtimeMap = [];
+		foreach ($recipes as $recipe) {
+			$mtimeMap[$recipe['recipe_id']] = $recipe['mtime'];
+		}
+		$this->recipeService->method('getRecipeMTime')->willReturnCallback(
+			fn (int $id) => $mtimeMap[$id] ?? null
+		);
+
 		if ($setKeywords) {
 			$_GET['keywords'] = $keywords;
 			$this->recipeService->expects($this->once())->method('findRecipesInSearchIndex')->with($keywords);
@@ -727,7 +735,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $recipes;
 		for ($i = 0; $i < count($ret); $i++) {
 			$id = $ret[$i]['recipe_id'];
-			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb?t={$ret[$i]['dateModified']}";
+			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb?t={$ret[$i]['mtime']}";
 			$ret[$i]['imagePlaceholderUrl'] = "/path/to/controller/$id/thumb16";
 		}
 
@@ -746,12 +754,12 @@ class RecipeImplementationTest extends TestCase {
 					[
 						'recipe_id' => 123,
 						'name' => 'First recipe',
-						'dateModified' => '2024-01-18 17:21:19',
+						'mtime' => 1705598479,
 					],
 					[
 						'recipe_id' => 125,
 						'name' => 'Second recipe',
-						'dateModified' => '2024-03-17 13:28:25',
+						'mtime' => 1710682105,
 					],
 				],
 				false,
