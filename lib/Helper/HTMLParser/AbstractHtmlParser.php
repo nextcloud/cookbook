@@ -8,6 +8,7 @@ namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractHtmlParser {
 	/**
@@ -15,8 +16,11 @@ abstract class AbstractHtmlParser {
 	 */
 	protected $l;
 
-	public function __construct(IL10N $l10n) {
+	protected LoggerInterface $logger;
+
+	public function __construct(IL10N $l10n, LoggerInterface $logger) {
 		$this->l = $l10n;
+		$this->logger = $logger;
 	}
 
 	/**

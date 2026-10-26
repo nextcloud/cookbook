@@ -365,15 +365,19 @@ class RecipeService {
 			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom(), $url);
 			$importedHtml = $this->htmlDownloadService->getDom()->saveHTML();
 		} catch (HtmlParsingException $ex) {
-			throw new ImportException($ex->getMessage(), null, $ex);
+			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
 		}
+
+		$this->logger->info('Recipe extracted from {url}: name="{name}"', [
+			'url' => $url, 'name' => $json['name'] ?? '(unnamed)',
+		]);
 
 		$json = $this->checkRecipe($json);
 
 		if (!$json) {
 			$this->logger->error('Importing parsers resulted in null recipe.'
 				. 'This is most probably a bug. Please report.');
-			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'));
+			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'), step: 'extract_recipe');
 		}
 
 		$json['url'] = $url;
