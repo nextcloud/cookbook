@@ -7,9 +7,8 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils';
 vi.mock('cookbook/js/helper', () => ({ default: {} }));
 vi.mock('caret-pos', () => ({ position: () => ({}) }));
 
-const { default: EditInputGroup } = await import(
-    'cookbook/components/FormComponents/EditInputGroup.vue'
-);
+const { default: EditInputGroup } =
+    await import('cookbook/components/FormComponents/EditInputGroup.vue');
 
 window.t = (app, text) => text;
 
