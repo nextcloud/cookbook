@@ -61,6 +61,7 @@
     "Image size \"%s\" is not recognized." : "Размер изображения «%s» не распознан.",
     "The full-sized image is not a thumbnail." : "Полноразмерное изображение — не миниатюра.",
     "The thumbnail type %d is not known." : "Тип миниатюры %d неизвестен.",
+    "The image could not be read to create a thumbnail." : "Не удалось прочитать изображение для создания миниатюры.",
     "Cookbook" : "Кулинарная книга",
     "An integrated cookbook using schema.org JSON files as recipes" : "Интегрированная кулинарная книга, использующая JSON-файлы schema.org для рецептов",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Библиотека всех ваших рецептов. Рецепты хранятся в файлах JSON формата рецептов schema.org. Чтобы добавить рецепт, вставьте его адрес в Интернете: страница будет разобрана, а рецепт сохранён в папку, заданную в параметрах приложения.",
@@ -242,6 +243,6 @@
     "Failed to load search results" : "Не удалось загрузить результаты поиска",
     "Dismiss" : "Скрыть",
     "Cancel" : "Отмена",
-    "OK" : "OK"
+    "OK" : "ОК"
 },"pluralForm" :"nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);"
 }

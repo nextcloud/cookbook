@@ -325,6 +325,14 @@ class RecipeImplementation {
 			return new JSONResponse('Field "url" or "json" is required', 400);
 		}
 
+		if (isset($data['url'])) {
+			if (!is_string($data['url'])) {
+				return new JSONResponse('Field "url" must be a string', 400);
+			}
+
+			$data['url'] = str_replace(' ', '%20', trim($data['url']));
+		}
+
 		if (isset($data['url']) && ! $this->isDownloadUrlValid($data['url'])) {
 			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $data['url'], 'user' => $this->userId]);
 			// throw new InvalidDownloadURLException($this->l->t('The provided URL is not allowed.'));

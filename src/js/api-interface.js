@@ -6,7 +6,7 @@ import axios from '@nextcloud/axios';
 
 import { generateUrl } from '@nextcloud/router';
 
-const instance = axios.create();
+const instance = axios;
 
 const baseUrl = `${generateUrl('apps/cookbook')}/webapp`;
 

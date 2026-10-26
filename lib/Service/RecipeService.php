@@ -17,6 +17,7 @@ use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
+use OCA\Cookbook\Helper\ImageService\ImageConversionHelper;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
@@ -89,6 +90,7 @@ class RecipeService {
 		JSONFilter $jsonFilter,
 		DownloadHelper $downloadHelper,
 		HttpJsonLdParser $jsonLdParser,
+		private ImageConversionHelper $imageConversionHelper,
 	) {
 		$this->user_id = $UserId;
 		$this->db = $db;
@@ -320,6 +322,13 @@ class RecipeService {
 		} else {
 			// The image field was empty, remove images in the recipe folder
 			$this->imageService->dropImage($recipe_folder);
+		}
+
+		if ($full_image_data) {
+			$full_image_data = $this->imageConversionHelper->getReadableImageData($full_image_data);
+			if ($full_image_data === null) {
+				$this->imageService->dropImage($recipe_folder);
+			}
 		}
 
 		// If image data was fetched, write it to disk

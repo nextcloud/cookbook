@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\Service;
 
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
+use OCA\Cookbook\Exception\ThumbnailCreationException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCP\IL10N;
 use OCP\Image;
@@ -45,6 +46,7 @@ class ThumbnailService {
 	 * @param int $type The requested type, see the ImageSize class
 	 * @return string The image data of the generated thumbnail
 	 * @throws InvalidThumbnailTypeException if the requested type is either unknown or useless.
+	 * @throws ThumbnailCreationException if the image data cannot be read.
 	 */
 	public function getThumbnail(string $data, int $type): string {
 		switch ($type) {
@@ -65,6 +67,7 @@ class ThumbnailService {
 	 * @param string $data The image data
 	 * @param int $size The maximal width or height of the destination image
 	 * @return string The resized and minimized image
+	 * @throws ThumbnailCreationException if the image data cannot be read.
 	 */
 	protected function createThumbnail(string $data, int $size): string {
 		$img = $this->getNewImage();
@@ -83,6 +86,11 @@ class ThumbnailService {
 		$img->resize($size);
 		$img->centerCrop();
 
-		return $img->data();
+		$thumbnail = $img->data();
+		if ($thumbnail === null) {
+			throw new ThumbnailCreationException($this->l->t('The image could not be read to create a thumbnail.'));
+		}
+
+		return $thumbnail;
 	}
 }

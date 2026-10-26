@@ -4,6 +4,9 @@
   "name": "Eier-Curry",
   "keywords": "Leben,Rezepte,Eier- & Mehlspeisen,Eier,Ernährungsformen,Vegetarische Rezepte,Rezepte nach Zutaten,Reis,Curry,Kokosmilch,Reisachwald",
   "recipeYield": "4",
+  "description": "Caroline Autenrieth macht ein Curry mit gekochten Eiern in einer würzigen Soße aus Tomaten, Ingwer und Kokosmilch.",
+  "totalTime": "PT30M",
+  "cookTime": "PT30M",
   "recipeIngredient": [
     "200 g Langkornreis",
     "500 ml Wasser",
