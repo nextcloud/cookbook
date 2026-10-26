@@ -76,6 +76,7 @@ jobs:
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
           flags: unittests
           directory: unit-coverage
           override_commit: ${{ github.event.workflow_run.head_sha }}
@@ -84,6 +85,7 @@ jobs:
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
           flags: integration
           directory: integration-coverage
           override_commit: ${{ github.event.workflow_run.head_sha }}
@@ -92,6 +94,7 @@ jobs:
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
           flags: migration
           directory: migration-coverage
           override_commit: ${{ github.event.workflow_run.head_sha }}
