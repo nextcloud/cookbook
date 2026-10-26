@@ -368,6 +368,7 @@ import {
     watch,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { jsPDF } from 'jspdf';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -719,6 +720,209 @@ const restoreOriginalRecipeYield = () => {
     recipeYield.value = legacyStore.recipe.recipeYield;
 };
 
+const exportRecipeAsPdf = () => {
+    const currentRecipe = legacyStore.recipe;
+    if (!currentRecipe) {
+        return;
+    }
+
+    try {
+        const pdf = new jsPDF({ format: 'a4', unit: 'mm' });
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        const margin = 18;
+        const lineHeight = 5;
+        const contentWidth = pageWidth - margin * 2;
+        let cursor = margin;
+
+        const ensureSpace = (height: number) => {
+            if (cursor + height > pageHeight - margin) {
+                pdf.addPage();
+                cursor = margin;
+            }
+        };
+
+        const addText = (text: string, fontSize = 10) => {
+            pdf.setFontSize(fontSize);
+            const pdfSafeText = Array.from(text, (character) => {
+                const codePoint = character.codePointAt(0) ?? 0;
+                return codePoint <= 0xff
+                    ? character
+                    : character === '\u25ba'
+                      ? '>'
+                      : '?';
+            }).join('');
+            const lines = pdf.splitTextToSize(pdfSafeText, contentWidth);
+            for (const line of lines) {
+                ensureSpace(lineHeight);
+                pdf.text(line, margin, cursor);
+                cursor += lineHeight;
+            }
+        };
+
+        const addSection = (title: string) => {
+            ensureSpace(12);
+            cursor += 3;
+            pdf.setFont('helvetica', 'bold');
+            addText(title, 13);
+            pdf.setFont('helvetica', 'normal');
+            cursor += 2;
+        };
+
+        const renderedText = (selector: string) =>
+            Array.from(document.querySelectorAll<HTMLElement>(selector))
+                .map((element) => element.innerText.trim())
+                .filter(Boolean);
+
+        pdf.setFont('helvetica', 'bold');
+        addText(String(currentRecipe.name ?? t('cookbook', 'Recipe')), 20);
+        pdf.setFont('helvetica', 'normal');
+
+        const description = renderedText('.markdown-description').join('\n');
+        if (description) {
+            cursor += 2;
+            addText(description);
+        }
+
+        const infoItems: { label: string; value: string }[] = [];
+        if (currentRecipe.recipeYield != null) {
+            infoItems.push({
+                label: t('cookbook', 'Servings'),
+                value: String(recipeYield.value),
+            });
+        }
+        Array.from(
+            document.querySelectorAll<HTMLElement>('.times .time'),
+        ).forEach((element) => {
+            const label = element
+                .querySelector<HTMLElement>('h4')
+                ?.innerText.trim();
+            const value = element
+                .querySelector<HTMLElement>('.timeContainer')
+                ?.innerText.trim();
+            if (label && value) {
+                infoItems.push({ label, value });
+            }
+        });
+
+        if (infoItems.length) {
+            const blockHeight = 11;
+            const cellWidth = contentWidth / infoItems.length;
+            cursor += 3;
+            ensureSpace(blockHeight);
+            pdf.setDrawColor(210, 210, 210);
+            pdf.setLineWidth(0.2);
+            pdf.line(margin, cursor, margin + contentWidth, cursor);
+            pdf.line(
+                margin,
+                cursor + blockHeight,
+                margin + contentWidth,
+                cursor + blockHeight,
+            );
+            infoItems.forEach((item, index) => {
+                const cellX = margin + index * cellWidth;
+                pdf.setFont('helvetica', 'normal');
+                pdf.setFontSize(7);
+                pdf.setTextColor(130, 130, 130);
+                pdf.text(
+                    pdf.splitTextToSize(item.label, cellWidth - 2)[0],
+                    cellX + 1,
+                    cursor + 4,
+                );
+                pdf.setFontSize(9);
+                pdf.setTextColor(60, 60, 60);
+                pdf.text(
+                    pdf.splitTextToSize(item.value, cellWidth - 2)[0],
+                    cellX + 1,
+                    cursor + 8.5,
+                );
+            });
+            pdf.setTextColor(0, 0, 0);
+            cursor += blockHeight + 2;
+        }
+
+        const ingredients = renderedText('.ingredients .ingredient');
+        if (ingredients.length) {
+            addSection(t('cookbook', 'Ingredients'));
+            for (const ingredient of ingredients) {
+                addText(`- ${ingredient}`);
+            }
+        }
+
+        const tools = renderedText('.tools .markdown-tool');
+        if (tools.length) {
+            addSection(t('cookbook', 'Tools'));
+            for (const tool of tools) {
+                addText(`- ${tool}`);
+            }
+        }
+
+        const nutrition = Array.from(
+            document.querySelectorAll<HTMLElement>('.nutrition-items > li'),
+        ).map((item) => item.innerText.trim());
+        if (nutrition.length) {
+            addSection(t('cookbook', 'Nutrition Information'));
+            for (const item of nutrition) {
+                addText(item.replace(/\s+/g, ': '));
+            }
+        }
+
+        const instructions = Array.from(
+            document.querySelectorAll<HTMLElement>(
+                '.instructions .markdown-instruction',
+            ),
+        )
+            .filter((element) => {
+                const child = element.firstElementChild;
+                return !(
+                    element.children.length === 1 &&
+                    child &&
+                    /^H[1-6]$/.test(child.tagName)
+                );
+            })
+            .map((element) => element.innerText.trim())
+            .filter(Boolean);
+        if (instructions.length) {
+            addSection(t('cookbook', 'Instructions'));
+            instructions.forEach((instruction, index) => {
+                addText(`${index + 1}. ${instruction}`);
+                cursor += 2;
+            });
+        }
+
+        if (currentRecipe.url) {
+            cursor += 2;
+            addText(`${t('cookbook', 'Source')}: ${currentRecipe.url}`);
+        }
+
+        const pageCount = pdf.getNumberOfPages();
+        for (let page = 1; page <= pageCount; page++) {
+            pdf.setPage(page);
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(8);
+            pdf.text(
+                `${page} / ${pageCount}`,
+                pageWidth - margin,
+                pageHeight - 8,
+                { align: 'right' },
+            );
+        }
+
+        const filename = String(currentRecipe.name ?? 'recipe')
+            .replace(/[<>:"/\\|?*]/g, '')
+            .split('')
+            .filter((character) => character.charCodeAt(0) >= 32)
+            .join('')
+            .trim()
+            .replace(/[. ]+$/g, '');
+        pdf.save(`${filename || 'recipe'}.pdf`);
+        showSuccess(t('cookbook', 'Recipe exported as PDF'));
+    } catch (error) {
+        log.error('Failed to export recipe as PDF', error);
+        showError(t('cookbook', 'Exporting recipe as PDF failed'));
+    }
+};
+
 // ===================
 // Watchers
 // ===================
@@ -819,6 +1023,7 @@ const visibilityChangeEventListener = () => {
 onMounted(() => {
     log.info('RecipeView mounted');
     setup();
+    emitter.on('exportRecipePdf', exportRecipeAsPdf);
     // Register data load method hook for access from the controls components
     emitter.off('reloadRecipeView');
     emitter.on('reloadRecipeView', () => {
@@ -860,6 +1065,7 @@ function requestWakeLock() {
 }
 
 onUnmounted(() => {
+    emitter.off('exportRecipePdf', exportRecipeAsPdf);
     document.removeEventListener(
         'visibilitychange',
         visibilityChangeEventListener,
