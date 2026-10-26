@@ -134,21 +134,9 @@ class RecipeImplementation {
 		try {
 			$file = $this->service->addRecipe($recipeData);
 		} catch (RecipeExistsException $ex) {
-			$json = [
-				'msg' => $ex->getMessage(),
-				'file' => $ex->getFile(),
-				'line' => $ex->getLine(),
-			];
-
-			return new JSONResponse($json, Http::STATUS_CONFLICT);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
-			$json = [
-				'msg' => $ex->getMessage(),
-				'file' => $ex->getFile(),
-				'line' => $ex->getLine(),
-			];
-
-			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		try {
@@ -161,13 +149,7 @@ class RecipeImplementation {
 				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
 			}
 
-			$json = [
-				'msg' => $ex->getMessage(),
-				'file' => $ex->getFile(),
-				'line' => $ex->getLine(),
-			];
-
-			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);
@@ -185,21 +167,9 @@ class RecipeImplementation {
 		try {
 			$file = $this->service->addRecipe($recipeData);
 		} catch (RecipeExistsException $ex) {
-			$json = [
-				'msg' => $ex->getMessage(),
-				'file' => $ex->getFile(),
-				'line' => $ex->getLine(),
-			];
-
-			return new JSONResponse($json, Http::STATUS_CONFLICT);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
-			$json = [
-				'msg' => $ex->getMessage(),
-				'file' => $ex->getFile(),
-				'line' => $ex->getLine(),
-			];
-
-			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		try {
@@ -212,13 +182,7 @@ class RecipeImplementation {
 				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
 			}
 
-			$json = [
-				'msg' => $ex->getMessage(),
-				'file' => $ex->getFile(),
-				'line' => $ex->getLine(),
-			];
-
-			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);

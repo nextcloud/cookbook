@@ -500,12 +500,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->create();
 
 		$this->assertEquals(409, $ret->getStatus());
-		$expected = [
-			'msg' => 'message',
-			'file' => __FILE__,
-			'line' => $ex->getLine(),
-		];
-		$this->assertEquals($expected, $ret->getData());
+		$this->assertEquals(['msg' => 'message'], $ret->getData());
 	}
 
 	public function testShow(): void {

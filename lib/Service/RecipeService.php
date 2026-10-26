@@ -365,6 +365,10 @@ class RecipeService {
 			$json = $this->recipeExtractionService->parse($this->htmlDownloadService->getDom(), $url);
 			$importedHtml = $this->htmlDownloadService->getDom()->saveHTML();
 		} catch (HtmlParsingException $ex) {
+			$rawHtml = $this->htmlDownloadService->getDom()?->saveHTML() ?? '';
+			$this->logger->debug('Debug dump of downloaded HTML for {url} ({size} bytes): {html}', [
+				'url' => $url, 'size' => strlen($rawHtml), 'html' => substr($rawHtml, 0, 8192),
+			]);
 			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
 		}
 
