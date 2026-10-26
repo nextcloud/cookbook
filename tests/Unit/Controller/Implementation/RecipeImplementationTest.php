@@ -146,14 +146,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->import();
 
-		$expected = [
-			'msg' => $ex->getMessage(),
-			'line' => $ex->getLine(),
-			'file' => $ex->getFile(),
-		];
-
 		$this->assertEquals(409, $ret->getStatus());
-		$this->assertEquals($expected, $ret->getData());
+		$this->assertEquals(['msg' => $ex->getMessage()], $ret->getData());
 	}
 
 	public function testImportOther(): void {
@@ -171,8 +165,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->import();
 
-		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals($errorMsg, $ret->getData());
+		$this->assertEquals(500, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
 	}
 
 	/**
