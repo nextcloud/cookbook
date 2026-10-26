@@ -17,6 +17,7 @@ OC.L10N.register(
     "Keywords" : "Түлхүүр үгс",
     "Clear" : "Цэвэрлэх",
     "Apply" : "хэрэглэх",
+    "Tools" : "Хэрэгслүүд",
     "You have unsaved changes! Do you still want to leave?" : "Та хадгалаагүй өөрчлөлттэй байна! Та гарахдаа итгэлтэй байна уу?",
     "Discard changes?" : "Өөрчлөлтийг цуцлах уу?",
     "Description" : "Тодорхойлолт",

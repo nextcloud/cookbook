@@ -760,6 +760,16 @@ class RecipeImplementationTest extends TestCase {
 		];
 	}
 
+	public function testImportRejectsNonStringUrl(): void {
+		$this->ensureCacheCheckTriggered();
+		$this->restParser->method('getParameters')->willReturn([ 'url' => [] ]);
+
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals('Field "url" must be a string', $ret->getData());
+	}
+
 	public static function dpInvalidImportURLs(): array {
 		return [
 			'emptyUrl' => [''],
