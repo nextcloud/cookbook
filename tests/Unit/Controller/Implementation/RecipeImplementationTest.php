@@ -526,7 +526,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->recipeService->method('getRecipeById')->with($id)->willReturn($recipe);
 		$this->recipeService->method('getPrintImage')->willReturn(true);
 		$mtime = 1705598479;
-		$this->recipeService->method('getRecipeMTime')->with($id)->willReturn($mtime);
+		$this->recipeService->method('getRecipeImageMTime')->with($id, 'full')->willReturn($mtime);
 		$imageUrl = '/path/to/image/of/id/123';
 
 		$this->urlGenerator->method('linkToRoute')->with(
@@ -695,8 +695,8 @@ class RecipeImplementationTest extends TestCase {
 		foreach ($recipes as $recipe) {
 			$mtimeMap[$recipe['recipe_id']] = $recipe['mtime'];
 		}
-		$this->recipeService->method('getRecipeMTime')->willReturnCallback(
-			fn (int $id) => $mtimeMap[$id] ?? null
+		$this->recipeService->method('getRecipeImageMTime')->willReturnCallback(
+			fn (int $id, string $size) => $mtimeMap[$id] ?? null
 		);
 
 		if ($setKeywords) {

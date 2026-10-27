@@ -119,20 +119,6 @@ class RecipeService {
 		return $this->parseRecipeFile($file);
 	}
 
-	/**
-	 * Get a recipe's modification time by its folder id.
-	 *
-	 * @param int $id
-	 */
-	public function getRecipeMTime(int $id): ?int {
-		$file = $this->getRecipeFileByFolderId($id);
-
-		if (!$file) {
-			return null;
-		}
-
-		return $file->getMTime();
-	}
 
 	/**
 	 * Returns a recipe file by folder id
@@ -630,6 +616,22 @@ class RecipeService {
 				return $this->imageService->getThumbnailAsFile($recipe_folder, ImageSize::MINI_THUMBNAIL);
 			default:
 				throw new Exception($this->il10n->t('Image size "%s" is not recognized.', [$size]));
+		}
+	}
+
+	/**
+	 * Get the modification time of a recipe's image file
+	 *
+	 * @param int $id
+	 * @param string $size
+	 *
+	 * @return ?int
+	 */
+	public function getRecipeImageMTime(int $id, string $size = 'thumb'): ?int {
+		try {
+			return $this->getRecipeImageFileByFolderId($id, $size)->getMTime();
+		} catch (Exception $e) {
+			return null;
 		}
 	}
 
