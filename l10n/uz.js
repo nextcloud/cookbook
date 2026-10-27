@@ -17,6 +17,7 @@ OC.L10N.register(
     "Name" : "Name",
     "Order" : "Buyurtma",
     "Clear" : "Toza",
+    "Apply" : "Qo'llash",
     "Discard changes?" : "O'zgarishlar bekor qilinsinmi?",
     "Description" : "Tavsif",
     "URL" : "URL",

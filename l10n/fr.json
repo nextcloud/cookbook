@@ -61,6 +61,7 @@
     "Image size \"%s\" is not recognized." : "La taille d’image « %s » n’est pas reconnue.",
     "The full-sized image is not a thumbnail." : "L'image pleine taille n'est pas une vignette.",
     "The thumbnail type %d is not known." : "Le type de vignette %d est inconnu.",
+    "The image could not be read to create a thumbnail." : "L'image n'a pas pu être lue pour créer une vignette.",
     "Cookbook" : "Livre de recettes",
     "An integrated cookbook using schema.org JSON files as recipes" : "Un livre de recettes intégré utilisant les fichiers JSON de schema.org pour stocker les recettes",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Une bibliothèque pour toutes vos recettes. Elle utilise des fichiers JSON conformes au format de recette de schema.org. Pour ajouter une recette à la collection, vous pouvez coller son URL ; la page web correspondante sera analysée et téléchargée dans le dossier que vous indiquez dans les paramètres de l’application.",
