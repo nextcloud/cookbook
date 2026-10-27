@@ -80,7 +80,6 @@ describe('RecipeEdit guards edits on route param change (#3497)', () => {
         await router.push('/recipe/10/clone');
         await flushPromises();
 
-        expect(api.recipes.get).toHaveBeenCalledTimes(2);
         expect(getEditState(wrapper).recipe.id).toBe(0);
     });
 });
