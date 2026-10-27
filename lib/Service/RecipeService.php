@@ -119,7 +119,6 @@ class RecipeService {
 		return $this->parseRecipeFile($file);
 	}
 
-
 	/**
 	 * Returns a recipe file by folder id
 	 *
