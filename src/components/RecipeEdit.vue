@@ -709,29 +709,20 @@ watch([() => route.name, () => route.params.id], ([, newId]) => {
     }
 });
 
-onBeforeRouteLeave(async () => {
-    if (
-        isNavigationDangerous.value &&
-        !(await showSimpleConfirmModal(
+const confirmNavigation = async (): Promise<boolean> =>
+    !isNavigationDangerous.value ||
+    Boolean(
+        await showSimpleConfirmModal(
             t('cookbook', 'Discard changes?'),
             CONFIRM_MSG,
-        ))
-    ) {
-        return false;
-    }
-});
+        ),
+    );
+
+onBeforeRouteLeave(confirmNavigation);
 
 onBeforeRouteUpdate(async (to, from) => {
-    if (to.params.id === from.params.id) return;
-    if (
-        isNavigationDangerous.value &&
-        !(await showSimpleConfirmModal(
-            t('cookbook', 'Discard changes?'),
-            CONFIRM_MSG,
-        ))
-    ) {
-        return false;
-    }
+    if (to.params.id === from.params.id) return true;
+    return confirmNavigation();
 });
 
 onMounted(() => {
