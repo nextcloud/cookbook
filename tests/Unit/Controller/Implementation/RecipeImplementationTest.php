@@ -525,14 +525,14 @@ class RecipeImplementationTest extends TestCase {
 		];
 		$this->recipeService->method('getRecipeById')->with($id)->willReturn($recipe);
 		$this->recipeService->method('getPrintImage')->willReturn(true);
-		$mtime = 1705598479;
-		$this->recipeService->method('getRecipeImageMTime')->with($id, 'full')->willReturn($mtime);
+		$etag = '6543a1b2c3d4e';
+		$this->recipeService->method('getRecipeFolderEtag')->with($id)->willReturn($etag);
 		$imageUrl = '/path/to/image/of/id/123';
 
 		$this->urlGenerator->method('linkToRoute')->with(
 			'cookbook.recipe.image',
-			$this->callback(function ($p) use ($id, $mtime) {
-				return isset($p['size']) && $p['id'] === $id && $p['t'] === $mtime;
+			$this->callback(function ($p) use ($id, $etag) {
+				return isset($p['size']) && $p['id'] === $id && $p['t'] === $etag;
 			})
 		)->willReturn($imageUrl);
 		$expected = $recipe;
@@ -691,12 +691,12 @@ class RecipeImplementationTest extends TestCase {
 		$this->recipeService->method('getAllRecipesInSearchIndex')->willReturn($recipes);
 		$this->recipeService->method('findRecipesInSearchIndex')->willReturn($recipes);
 
-		$mtimeMap = [];
+		$etagMap = [];
 		foreach ($recipes as $recipe) {
-			$mtimeMap[$recipe['recipe_id']] = $recipe['mtime'];
+			$etagMap[$recipe['recipe_id']] = $recipe['etag'];
 		}
-		$this->recipeService->method('getRecipeImageMTime')->willReturnCallback(
-			fn (int $id, string $size) => $mtimeMap[$id] ?? null
+		$this->recipeService->method('getRecipeFolderEtag')->willReturnCallback(
+			fn (int $id) => $etagMap[$id] ?? null
 		);
 
 		if ($setKeywords) {
@@ -735,7 +735,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $recipes;
 		for ($i = 0; $i < count($ret); $i++) {
 			$id = $ret[$i]['recipe_id'];
-			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb?t={$ret[$i]['mtime']}";
+			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb?t={$ret[$i]['etag']}";
 			$ret[$i]['imagePlaceholderUrl'] = "/path/to/controller/$id/thumb16";
 		}
 
@@ -754,12 +754,12 @@ class RecipeImplementationTest extends TestCase {
 					[
 						'recipe_id' => 123,
 						'name' => 'First recipe',
-						'mtime' => 1705598479,
+						'etag' => '6543a1b2c3d4e',
 					],
 					[
 						'recipe_id' => 125,
 						'name' => 'Second recipe',
-						'mtime' => 1710682105,
+						'etag' => '6543a1b2c3d4f',
 					],
 				],
 				false,
