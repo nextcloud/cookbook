@@ -4,8 +4,7 @@
 	"compilerOptions": {
 		"lib": [
 			"dom",
-			"es2015.promise",
-			"es6"
+			"es2020"
 		],
 		"module": "ESNext",
 		"moduleResolution": "Bundler",

@@ -507,7 +507,7 @@ jobs:
       run: docker run --rm -v $(pwd):/work:ro php-lint-tester
 
 
-  run-jest:
+  run-js-tests:
     name: "Run JS tests"
     runs-on: ubuntu-latest
     defaults:
@@ -567,7 +567,7 @@ jobs:
       - source-package
       - lint-php
       - event_file
-      - run-jest
+      - run-js-tests
     steps:
       - name: Run successfully
         shell: bash

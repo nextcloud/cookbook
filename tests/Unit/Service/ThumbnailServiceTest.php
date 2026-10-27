@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\tests\Unit\Service;
 
 use OCA\Cookbook\Exception\InvalidThumbnailTypeException;
+use OCA\Cookbook\Exception\ThumbnailCreationException;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Service\ThumbnailService;
 use OCP\IL10N;
@@ -19,6 +20,7 @@ use ReflectionClass;
 /**
  * @covers OCA\Cookbook\Service\ThumbnailService
  * @covers OCA\Cookbook\Exception\InvalidThumbnailTypeException
+ * @covers OCA\Cookbook\Exception\ThumbnailCreationException
  */
 class ThumbnailServiceTest extends TestCase {
 	/**
@@ -88,6 +90,18 @@ class ThumbnailServiceTest extends TestCase {
 		$image->method('data')->willReturn($newData);
 
 		$this->assertEquals($newData, $this->dut->getThumbnail($data, $type));
+	}
+
+	public function testGetThumbnailUnreadableImage() {
+		/**
+		 * @var MockObject|Image
+		 */
+		$image = $this->createMock(Image::class);
+		$image->method('data')->willReturn(null);
+		$this->dut->method('getNewImage')->willReturn($image);
+
+		$this->expectException(ThumbnailCreationException::class);
+		$this->dut->getThumbnail('not an image', ImageSize::THUMBNAIL);
 	}
 
 	public function testGetThumbnailFullImage() {

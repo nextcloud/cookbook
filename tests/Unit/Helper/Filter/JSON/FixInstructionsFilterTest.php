@@ -166,6 +166,19 @@ class FixInstructionsFilterTest extends TestCase {
 			], ['a', 'b', 'c'], true
 		];
 
+		yield 'HowToStep with text as array' => [
+			[
+				[
+					'@type' => 'HowToStep',
+					'text' => ['a', 'b'],
+				],
+				[
+					'@type' => 'HowToStep',
+					'text' => 'c',
+				],
+			], ['a, b', 'c'], true
+		];
+
 		yield 'HowToSections' => [
 			[
 				[
