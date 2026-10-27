@@ -16,7 +16,14 @@ describe('RecipeEdit guards edits on route param change (#3497)', () => {
     async function mountEdit(initialRoute = '/recipe/10/edit') {
         const result = await mountWithRouter(RecipeEdit, initialRoute, {
             routePath: '/recipe/:id/edit',
-            extraRoutes: [{ path: '/recipe/create', component: RecipeEdit }],
+            extraRoutes: [
+                { path: '/recipe/create', component: RecipeEdit },
+                {
+                    path: '/recipe/:id/clone',
+                    name: 'recipe-clone',
+                    component: RecipeEdit,
+                },
+            ],
         });
         await flushPromises();
         return result;
@@ -61,5 +68,19 @@ describe('RecipeEdit guards edits on route param change (#3497)', () => {
 
         expect(showSimpleConfirmModal).not.toHaveBeenCalled();
         expect(router.currentRoute.value.path).toBe('/recipe/20/edit');
+    });
+
+    it('initializes clone when switching from edit to clone of same recipe', async () => {
+        const data = { id: 10, name: 'Soup', keywords: '', recipeCategory: '' };
+        api.recipes.get
+            .mockResolvedValueOnce({ data: { ...data } })
+            .mockResolvedValueOnce({ data: { ...data } });
+        const { router, wrapper } = await mountEdit();
+
+        await router.push('/recipe/10/clone');
+        await flushPromises();
+
+        expect(api.recipes.get).toHaveBeenCalledTimes(2);
+        expect(getEditState(wrapper).recipe.id).toBe(0);
     });
 });

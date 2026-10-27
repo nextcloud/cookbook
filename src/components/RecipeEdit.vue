@@ -701,16 +701,13 @@ const toggleShowRecipeYield = () => {
 // Vue lifecycle
 // ===================
 
-watch(
-    () => route.params.id,
-    (newId) => {
-        if (newId) {
-            loadRecipeData();
-        } else {
-            setup();
-        }
-    },
-);
+watch([() => route.name, () => route.params.id], ([, newId]) => {
+    if (newId) {
+        loadRecipeData();
+    } else {
+        setup();
+    }
+});
 
 onBeforeRouteLeave(async () => {
     if (
