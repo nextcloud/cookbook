@@ -47,7 +47,6 @@ vi.mock('cookbook/composables/dateTimeHandling', () => ({
 
 vi.mock('cookbook/js/helper', () => ({
     default: {
-        shouldReloadContent: vi.fn(() => true),
         goTo: vi.fn(),
     },
 }));
