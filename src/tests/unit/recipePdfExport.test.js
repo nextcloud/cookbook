@@ -64,7 +64,7 @@ describe('exportRecipeAsPdf', () => {
         });
         document.body.innerHTML = `
             <div class="markdown-description">Tasty</div>
-            <div class="times"><div class="time"><h4>Cook</h4><span class="timeContainer">10 min</span></div></div>
+            <div class="times"><div class="time"><h4>Cook</h4><span class="timeContainer" data-original-time="30 min">4 min</span></div></div>
             <ul class="ingredients"><li class="ingredient">2 eggs</li></ul>
             <div class="instructions"><div class="markdown-instruction">Mix</div></div>`;
         exportRecipeAsPdf(
@@ -77,6 +77,8 @@ describe('exportRecipeAsPdf', () => {
         expect(pdf.save).toHaveBeenCalledWith('Pancakes.pdf');
         const written = pdf.text.mock.calls.map((c) => c[0]).join('|');
         expect(written).toContain('Pancakes');
+        expect(written).toContain('30 min');
+        expect(written).not.toContain('4 min');
         expect(written).toContain('- 2 eggs');
         expect(written).toContain('1. Mix');
         expect(written).toContain('Source: https://example.com');

@@ -13,7 +13,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             @click="timerToggle"
         ></button>
         <h4>{{ label }}</h4>
-        <div class="timeContainer">
+        <div class="timeContainer" :data-original-time="originalTime">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <p v-html="displayTime"></p>
         </div>
@@ -169,35 +169,51 @@ const styleUnit = (str: string, value: number, isPadded = true) => {
     return text;
 };
 
+const translatedUnit = (
+    unit: 'hours' | 'minutes' | 'seconds',
+    value: number,
+) => {
+    switch (unit) {
+        case 'hours':
+            return n('cookbook', '{hours}h', '{hours}h', value, {
+                hours: `${value}`,
+            });
+        case 'minutes':
+            return n('cookbook', '{minutes}m', '{minutes}m', value, {
+                minutes: `${value}`,
+            });
+        case 'seconds':
+            return n('cookbook', '{seconds}s', '{seconds}s', value, {
+                seconds: `${value}`,
+            });
+    }
+};
+
+const originalTime = computed(() =>
+    (['hours', 'minutes', 'seconds'] as const)
+        .map((unit) => {
+            const value = Number(props.value[unit]);
+            if (value <= 0) {
+                return '';
+            }
+            const translated = translatedUnit(unit, value);
+            const unitText = translated.replace(`${value}`, '');
+            return `${String(value).padStart(2, '0')}${unitText}`;
+        })
+        .join(''),
+);
+
 // Computed properties
 const displayHours = computed(() => {
-    let hoursText = '';
-    // TRANSLATORS hours part of timer text
-    hoursText += n('cookbook', '{hours}h', '{hours}h', hours.value, {
-        hours: `${hours.value.toString()}`,
-    });
-
-    return styleUnit(hoursText, hours.value);
+    return styleUnit(translatedUnit('hours', hours.value), hours.value);
 });
 
 const displayMinutes = computed(() => {
-    let minutesText = '';
-    // TRANSLATORS minutes part of timer text
-    minutesText += n('cookbook', '{minutes}m', '{minutes}m', minutes.value, {
-        minutes: `${minutes.value.toString()}`,
-    });
-
-    return styleUnit(minutesText, minutes.value);
+    return styleUnit(translatedUnit('minutes', minutes.value), minutes.value);
 });
 
 const displaySeconds = computed(() => {
-    let secondsText = '';
-    // TRANSLATORS seconds part of timer text
-    secondsText += n('cookbook', '{seconds}s', '{seconds}s', seconds.value, {
-        seconds: `${seconds.value.toString()}`,
-    });
-
-    return styleUnit(secondsText, seconds.value);
+    return styleUnit(translatedUnit('seconds', seconds.value), seconds.value);
 });
 
 const displayTime = computed(() => {

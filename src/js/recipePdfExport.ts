@@ -64,17 +64,19 @@ const collectInfoItems = (
             value: String(servings),
         });
     }
-    document.querySelectorAll<HTMLElement>('.times .time').forEach((element) => {
-        const label = element
-            .querySelector<HTMLElement>('h4')
-            ?.innerText.trim();
-        const value = element
-            .querySelector<HTMLElement>('.timeContainer')
-            ?.innerText.trim();
-        if (label && value) {
-            items.push({ label, value });
-        }
-    });
+    document
+        .querySelectorAll<HTMLElement>('.times .time')
+        .forEach((element) => {
+            const label = element
+                .querySelector<HTMLElement>('h4')
+                ?.innerText.trim();
+            const value = element
+                .querySelector<HTMLElement>('.timeContainer')
+                ?.dataset.originalTime?.trim();
+            if (label && value) {
+                items.push({ label, value });
+            }
+        });
     return items;
 };
 
