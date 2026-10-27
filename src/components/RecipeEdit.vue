@@ -151,7 +151,7 @@ import {
     watch,
 } from 'vue';
 
-import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
+import { onBeforeRouteLeave, useRoute } from 'vue-router';
 
 import NcActions from '@nextcloud/vue/components/NcActions';
 import NcActionButton from '@nextcloud/vue/components/NcActionButton';
@@ -701,15 +701,16 @@ const toggleShowRecipeYield = () => {
 // Vue lifecycle
 // ===================
 
-onBeforeRouteUpdate((to, from, next) => {
-    // beforeRouteUpdate is called when the static route stays the same
-    next();
-
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
-    }
-});
+watch(
+    () => route.params.id,
+    (newId) => {
+        if (newId) {
+            loadRecipeData();
+        } else {
+            setup();
+        }
+    },
+);
 
 /**
  * This is one tricky feature of Vue router. If different paths lead to

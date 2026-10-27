@@ -63,6 +63,7 @@ OC.L10N.register(
     "Image size \"%s\" is not recognized." : "\"%s\" görsel boyutu anlaşılamadı.",
     "The full-sized image is not a thumbnail." : "Tam boyutlu görsel bir küçük görsel değil.",
     "The thumbnail type %d is not known." : "%d küçük görsel türü bilinmiyor.",
+    "The image could not be read to create a thumbnail." : "Görsel, küçük görseli oluşturmak için okunamadı.",
     "Cookbook" : "Yemek kitabı",
     "An integrated cookbook using schema.org JSON files as recipes" : "Yemek tarifleri için schema.org JSON dosyaları kullanan bütünleşik bir yemek kitabı",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Tüm yemek tarifleriniz için bir kitaplık. schema.org yemek tarifi biçimine uygun JSON dosyalarını kullanır. Derlemeye bir yemek tarifi eklemek için yemek tarifinin adresini yapıştırabilirsiniz. Yemek tarifinin bulunduğu site sayfası işlenerek, yemek tarifi uygulama ayarlarında belirttiğiniz klasöre indirilir.",
