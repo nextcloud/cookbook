@@ -23,6 +23,7 @@ jobs:
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest-low
     permissions: {}
+    environment: release-please-runner
     outputs:
       release-created: ${{ steps.release.outputs.release_created }}
       tag-name: ${{ steps.release.outputs.tag_name }}
@@ -31,7 +32,7 @@ jobs:
     steps:
       - name: Create GitHub App installation token
         id: release-please-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
           client-id: ${{ vars.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_CLIENT }}
           private-key: ${{ secrets.COOKBOOK_RELEASE_PLEASE_PR_MANAGER_PRIV_KEY }}
@@ -39,7 +40,6 @@ jobs:
           repositories: cookbook
           permission-contents: write
           permission-pull-requests: write
-          permission-issues: write
 
       - name: Run release-please
         id: release
@@ -118,10 +118,11 @@ jobs:
       cancel-in-progress: false
     runs-on: ubuntu-latest-low
     permissions: {}
+    environment: release-please-issue-opener
     steps:
       - name: Create GitHub App installation token
         id: app-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
         with:
           client-id: ${{ vars.COOKBOOK_TRIGGER_BOT_CLIENT_ID }}
           private-key: ${{ secrets.COOKBOOK_TRIGGER_BOT_PRIV_KEY }}

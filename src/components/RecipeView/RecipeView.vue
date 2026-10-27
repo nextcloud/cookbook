@@ -367,7 +367,7 @@ import {
     ref,
     watch,
 } from 'vue';
-import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -806,21 +806,8 @@ watch(
 // Vue lifecycle
 // ===================
 
-/**
- * This is one tricky feature of Vue router. If different paths lead to
- * the same component (such as '/recipe/xxx' and '/recipe/yyy)',
- * the component will not automatically reload. So we have to manually
- * reload the page contents.
- * This can also be used to confirm that the user wants to leave the page
- * if there are unsaved changes.
- */
-onBeforeRouteUpdate((to, from, next) => {
-    // beforeRouteUpdate is called when the static route stays the same
-    next();
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
-        setup();
-    }
+watch(routeId, () => {
+    setup();
 });
 
 const visibilityChangeEventListener = () => {

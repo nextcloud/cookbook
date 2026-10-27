@@ -45,10 +45,10 @@
 			"**/vendor/**/{Tests,tests}/**",
 			"**/.history/**",
 			"**/vendor/**/vendor/**",
-			".github/actions/**",
-			".hook-checkout/**",
-			"${workspaceFolder:cookbook}/.github/actions/**",
-			"**/.github/actions/**"
+			"**/.github/actions/**",
+			"**/.hook-checkout/**",
+			"**/.github/actions/**",
+			"**/.github/actions/run-locally/volumes/**"
 		],
 		"cSpell.words": [
 			"Nextcloud"
@@ -61,6 +61,7 @@
 			"comments": "on",
 			"strings": "on"
 		},
+		"intelephense.trace.server": "messages",
 		"intelephense.environment.includePaths": [
 			"${workspaceFolder:base}/3rdparty/doctrine/dbal/src"
 		],

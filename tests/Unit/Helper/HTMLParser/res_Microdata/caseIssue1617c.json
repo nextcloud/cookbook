@@ -3,6 +3,8 @@
   "@context": "http://schema.org",
   "name": "Ciasteczka czekoladowe",
   "recipeYield": "20-24",
+  "prepTime": "PT20M",
+  "cookTime": "PT0M",
   "image": [
     "https://poprostupycha.com.pl/wp-content/uploads/2022/06/ciasteczka_7.jpg"
   ],

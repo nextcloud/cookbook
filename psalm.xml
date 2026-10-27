@@ -27,6 +27,9 @@
 			<directory name="vendor/psalm" />
 		</ignoreFiles>
 	</extraFiles>
+	<stubs>
+		<file name="tests/stubs/oc.php" />
+	</stubs>
 	<issueHandlers>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">

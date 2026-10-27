@@ -227,6 +227,10 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 	}
 
 	private function extractHowToStep($item) {
+		if (is_array($item['text'])) {
+			return implode(', ', array_filter($item['text'], 'is_string'));
+		}
+
 		return $item['text'];
 	}
 }
