@@ -468,6 +468,7 @@ Url:
       example: "http://www.chefkoch.de/2345"
   required:
     - url
+  additionalProperties: false
 
 RecipeJson:
   type: object
@@ -478,6 +479,7 @@ RecipeJson:
       example: '{"@context": "https://schema.org", "@type": "Recipe", "name": "Soup"}'
   required:
     - json
+  additionalProperties: false
 
 Version:
   type: object

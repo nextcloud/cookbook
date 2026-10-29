@@ -223,7 +223,7 @@ paths:
       tags: [ Recipes ]
       summary: Import a recipe using schema.org metadata from a website or from JSON+LD
       description: |
-        Either `url` or `json` must be given. If both are given, `url` is used.
+        Exactly one of `url` or `json` must be given.
         A recipe imported from `json` is always created as a new recipe, an `id` in the JSON is ignored.
       operationId: import
       requestBody:
@@ -231,7 +231,7 @@ paths:
         content:
           application/json:
             schema:
-              anyOf:
+              oneOf:
                 - $ref: "#/components/schemas/Url"
                 - $ref: "#/components/schemas/RecipeJson"
 
