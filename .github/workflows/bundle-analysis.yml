@@ -36,10 +36,10 @@ jobs:
           node-version: ${{ steps.versions.outputs.nodeVersion }}
 
       - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
-        run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
+        run: npm i -g --ignore-scripts 'npm@${{ steps.versions.outputs.npmVersion }}'
 
       - name: Install the NPM dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build and upload bundle stats
         run: npm run build
