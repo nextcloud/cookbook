@@ -9,6 +9,7 @@ namespace OCA\Cookbook\Service;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -50,14 +51,14 @@ class RecipeExtractionService {
 				$parserName = (new \ReflectionClass($parser))->getShortName();
 				$failures[] = "$parserName: {$ex->getMessage()}";
 				$this->logger->info('Parser {parser} failed for URL {url}: {reason}', [
-					'parser' => $parserName, 'url' => $url, 'reason' => $ex->getMessage(),
+					'parser' => $parserName, 'url' => UrlRedactionHelper::redact($url), 'reason' => $ex->getMessage(),
 				]);
 			}
 		}
 
 		$detail = implode('; ', $failures);
 		$this->logger->warning('All parsers failed for URL {url}. Details: {detail}', [
-			'url' => $url, 'detail' => $detail,
+			'url' => UrlRedactionHelper::redact($url), 'detail' => $detail,
 		]);
 		throw new HtmlParsingException(
 			$this->l->t('No parser found for the given import.') . ' ' . $detail

@@ -12,6 +12,7 @@ use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -50,12 +51,12 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		$recipes = $this->xpath->query($xpathSelector);
 
 		if (count($recipes) === 0) {
-			$this->logger->info('Microdata parser found no Recipe itemscope elements for {url}', ['url' => $url]);
+			$this->logger->info('Microdata parser found no Recipe itemscope elements for {url}', ['url' => UrlRedactionHelper::redact($url)]);
 			throw new HtmlParsingException($this->l->t('No recipe was found.'));
 		}
 
 		$this->logger->debug('Microdata parser found {count} Recipe itemscope elements for {url}', [
-			'count' => count($recipes), 'url' => $url,
+			'count' => count($recipes), 'url' => UrlRedactionHelper::redact($url),
 		]);
 
 		$this->recipe = [

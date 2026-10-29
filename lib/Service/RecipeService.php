@@ -18,6 +18,7 @@ use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageConversionHelper;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCP\AppFramework\Db\DoesNotExistException;
@@ -354,7 +355,7 @@ class RecipeService {
 		}
 
 		$this->logger->info('Recipe extracted from {url}: name="{name}"', [
-			'url' => $url, 'name' => $json['name'] ?? '(unnamed)',
+			'url' => UrlRedactionHelper::redact($url), 'name' => $json['name'] ?? '(unnamed)',
 		]);
 
 		$json = $this->checkRecipe($json);

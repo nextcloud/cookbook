@@ -17,6 +17,7 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -86,12 +87,12 @@ class HtmlDownloadService {
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
-		$this->logger->info('Starting recipe download from {url}', ['url' => $url]);
+		$this->logger->info('Starting recipe download from {url}', ['url' => UrlRedactionHelper::redact($url)]);
 
 		$html = $this->fetchHtmlPage($url);
 
 		$this->logger->debug('Downloaded {url}: HTTP {status}, content-type {ct}, size {size} bytes', [
-			'url' => $url,
+			'url' => UrlRedactionHelper::redact($url),
 			'status' => $this->downloadHelper->getStatus(),
 			'ct' => $this->downloadHelper->getContentType() ?? 'unknown',
 			'size' => strlen($html),

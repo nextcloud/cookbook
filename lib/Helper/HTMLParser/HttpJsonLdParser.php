@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
@@ -34,7 +35,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
 
 		$this->logger->debug('JSON-LD parser found {count} ld+json elements for {url}', [
-			'count' => $json_ld_elements->length, 'url' => $url,
+			'count' => $json_ld_elements->length, 'url' => UrlRedactionHelper::redact($url),
 		]);
 
 		foreach ($json_ld_elements as $json_ld_element) {

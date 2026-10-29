@@ -16,6 +16,7 @@ use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
@@ -313,12 +314,12 @@ class RecipeImplementation {
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
 			$this->logger->warning('Import failed at step "{step}": {reason}', [
-				'url' => $data['url'], 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => UrlRedactionHelper::redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $e->getMessage(), 'step' => $e->getStep()], Http::STATUS_BAD_REQUEST);
 		} catch (\Exception $e) {
 			$this->logger->error('Unexpected error during import: {reason}', [
-				'url' => $data['url'], 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
@@ -336,7 +337,7 @@ class RecipeImplementation {
 			return new DataResponse($ex->getMessage(), 400);
 		} catch (\Exception $e) {
 			$this->logger->error('Unexpected error while caching imported recipe: {reason}', [
-				'url' => $data['url'], 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
