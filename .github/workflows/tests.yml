@@ -233,8 +233,8 @@ jobs:
         id: fixtures
         run: >-
           if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
-          if [ "${{ steps.fixtureCache.outputs.cache-hit }}" = 'true' ]; then PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
           cd .github/actions/run-tests &&
+          if [ "${{ steps.fixtureCache.outputs.cache-hit }}" = 'true' ]; then mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data && PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
           ./run-locally.py
           $PARAM
           --activate-fixture default
