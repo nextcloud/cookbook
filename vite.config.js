@@ -72,7 +72,10 @@ export default createAppConfig(
 					...customPlugins,
 					devEntryRewritePlugin,
 					codecovVitePlugin({
-						enableBundleAnalysis: Boolean(process.env.CODECOV_TOKEN),
+						enableBundleAnalysis:
+							command === 'build'
+							&& mode === 'production'
+							&& Boolean(process.env.CODECOV_TOKEN),
 						bundleName: 'cookbook',
 						uploadToken: process.env.CODECOV_TOKEN,
 						telemetry: false,
