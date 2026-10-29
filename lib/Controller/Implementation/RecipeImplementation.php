@@ -334,6 +334,11 @@ class RecipeImplementation {
 			}
 
 			return new DataResponse($ex->getMessage(), 400);
+		} catch (\Exception $e) {
+			$this->logger->error('Unexpected error while caching imported recipe: {reason}', [
+				'url' => $data['url'], 'reason' => $e->getMessage(), 'exception' => $e,
+			]);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
 		return new JSONResponse($recipe_json, Http::STATUS_OK);
