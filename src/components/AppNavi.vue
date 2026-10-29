@@ -271,15 +271,20 @@ const downloadRecipe = async () => {
 
         if (e2.response) {
             if (e2.response.status >= 400 && e2.response.status < 500) {
-                const data = e2.response.data;
-                const message =
-                    typeof data === 'string'
-                        ? data
-                        : (data.msg ?? t('cookbook', 'Import failed.'));
-                await showSimpleAlertModal(
-                    t('cookbook', 'Import Error'),
-                    message,
-                );
+                if (e2.response.status === 409) {
+                    // There was a recipe found with the same name
+
+                    const message =
+                        typeof e2.response.data === 'string'
+                            ? e2.response.data
+                            : e2.response.data.msg;
+                    await showSimpleAlertModal(t('cookbook', 'Error'), message);
+                } else {
+                    await showSimpleAlertModal(
+                        t('cookbook', 'Error'),
+                        e2.response.data,
+                    );
+                }
             } else {
                 console.error(e2);
                 await showSimpleAlertModal(

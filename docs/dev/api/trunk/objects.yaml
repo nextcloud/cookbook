@@ -79,11 +79,14 @@ Error:
       type: string
       description: The error message
       example: Recipe could not be found
-    step:
+    file:
       type: string
-      description: The import step that failed. Only present on import errors.
-      enum: [download, parse_html, extract_recipe]
-      example: download
+      description: The file in which the exception was thrown
+      example: /var/www/custom_apps/cookbook/Service/RecipeService.php
+    line:
+      type: integer
+      description: The line where the exception is thrown
+      example: 223
 
 Keyword:
   type: object

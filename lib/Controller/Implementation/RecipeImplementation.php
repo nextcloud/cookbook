@@ -135,9 +135,21 @@ class RecipeImplementation {
 		try {
 			$file = $this->service->addRecipe($recipeData);
 		} catch (RecipeExistsException $ex) {
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		try {
@@ -150,7 +162,13 @@ class RecipeImplementation {
 				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
 			}
 
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);
@@ -168,9 +186,21 @@ class RecipeImplementation {
 		try {
 			$file = $this->service->addRecipe($recipeData);
 		} catch (RecipeExistsException $ex) {
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (NoRecipeNameGivenException $ex) {
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		try {
@@ -183,7 +213,13 @@ class RecipeImplementation {
 				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
 			}
 
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'file' => $ex->getFile(),
+				'line' => $ex->getLine(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_UNPROCESSABLE_ENTITY);
 		}
 
 		return new JSONResponse($file->getParent()->getId(), Http::STATUS_OK);
@@ -311,17 +347,23 @@ class RecipeImplementation {
 			$recipe_json = $this->service->parseRecipeFile($recipe_file);
 
 		} catch (RecipeExistsException $ex) {
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
+			$json = [
+				'msg' => $ex->getMessage(),
+				'line' => $ex->getLine(),
+				'file' => $ex->getFile(),
+			];
+
+			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
 			$this->logger->warning('Import failed at step "{step}": {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
-			return new JSONResponse(['msg' => $e->getMessage(), 'step' => $e->getStep()], Http::STATUS_BAD_REQUEST);
+			return new JSONResponse($e->getMessage(), 400);
 		} catch (\Exception $e) {
 			$this->logger->error('Unexpected error during import: {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
-			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new JSONResponse($e->getMessage(), 400);
 		}
 
 		try {
@@ -335,11 +377,6 @@ class RecipeImplementation {
 			}
 
 			return new DataResponse($ex->getMessage(), 400);
-		} catch (\Exception $e) {
-			$this->logger->error('Unexpected error while caching imported recipe: {reason}', [
-				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
-			]);
-			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 
 		return new JSONResponse($recipe_json, Http::STATUS_OK);
