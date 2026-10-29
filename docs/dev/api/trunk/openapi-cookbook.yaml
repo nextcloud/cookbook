@@ -236,14 +236,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/Recipe"
         400:
-          description: The URL to be imported was not inserted in the request or any other issue was rosen.
+          description: The URL is missing or not allowed, or the recipe JSON is invalid (plain string), or the import failed at a given step (error object).
           content:
             application/json:
               schema:
-                type: string
-                example: Field "url" is required
+                oneOf:
+                  - type: string
+                    example: Field "url" is required
+                  - $ref: "#/components/schemas/Error"
         409:
           description: There exists a recipe with that name already. Import was aborted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: An unexpected error occurred during the import. Details are only logged on the server.
           content:
             application/json:
               schema:
