@@ -214,7 +214,7 @@ jobs:
         id: fixtureKey
         if: matrix.database != 'pgsql'
         env:
-            FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/test_runner/**', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
+            FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/test_runner/*.py', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
         run: >-
           sha="$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" &&
           echo "key=fixture-${{ matrix.database }}-${{ matrix.phpVersion }}-$sha-$FILES_HASH" >> "$GITHUB_OUTPUT"
