@@ -211,6 +211,7 @@ jobs:
           --php-version ${{ matrix.phpVersion }}
 
       - name: Create the fixtures for the tests
+        id: fixtures
         run: >-
           if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
           cd .github/actions/run-tests &&
@@ -222,17 +223,35 @@ jobs:
           --http-server ${{ matrix.httpServer }}
           --php-version ${{ matrix.phpVersion }}
 
-      - name: Run the tests
+      - name: Run the unit tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
           --run-unit-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the integration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-integration-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the migration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-migration-tests
           --extract-code-coverage
           --keep-code-coverage
-          --install-composer-deps;
-          echo "test_result=$?" >> $GITHUB_ENV
+          --install-composer-deps
       
       - name: Export the annotations of unit tests to github
         shell: bash
@@ -271,7 +290,7 @@ jobs:
         shell: bash
         run: >-
             mkdir /tmp/coverage &&
-            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
+            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
@@ -328,6 +347,7 @@ jobs:
           --php-version 8.5
 
       - name: Create the fixtures for the tests
+        id: fixtures
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
@@ -338,17 +358,35 @@ jobs:
           --php-version latest
           --install-untested
 
-      - name: Run the tests
+      - name: Run the unit tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
           --run-unit-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the integration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-integration-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the migration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-migration-tests
           --extract-code-coverage
           --keep-code-coverage
-          --install-composer-deps;
-          echo "test_result=$?" >> $GITHUB_ENV
+          --install-composer-deps
       
       - name: Export the annotations of unit tests to github
         shell: bash
@@ -387,7 +425,7 @@ jobs:
         shell: bash
         run: >-
             mkdir /tmp/coverage &&
-            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
+            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
