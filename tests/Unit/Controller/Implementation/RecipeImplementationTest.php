@@ -8,6 +8,7 @@ namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use Exception;
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
+use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
@@ -146,14 +147,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->import();
 
-		$expected = [
-			'msg' => $ex->getMessage(),
-			'line' => $ex->getLine(),
-			'file' => $ex->getFile(),
-		];
-
 		$this->assertEquals(409, $ret->getStatus());
-		$this->assertEquals($expected, $ret->getData());
+		$this->assertEquals(['msg' => $ex->getMessage()], $ret->getData());
 	}
 
 	public function testImportOther(): void {
@@ -171,8 +166,46 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->import();
 
+		$this->assertEquals(500, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
+	}
+
+	public function testImportFailedAtStep(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$url = 'http://example.com/Recipe.html';
+		$ex = new ImportException('Field "name" is required', 0, null, 'extract_recipe');
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+		$this->recipeService->expects($this->once())->method('downloadRecipe')->with($url)->willThrowException($ex);
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals($errorMsg, $ret->getData());
+		$this->assertEquals(['msg' => 'Field "name" is required', 'step' => 'extract_recipe'], $ret->getData());
+	}
+
+	public function testImportCacheFailure(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$url = 'http://example.com/Recipe.html';
+		$file = $this->createStub(File::class);
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+		$this->recipeService->method('downloadRecipe')->willReturn($file);
+		$this->recipeService->method('parseRecipeFile')->willReturn(['name' => 'The recipe name']);
+		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file)->willThrowException(new Exception('DB down'));
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(500, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
 	}
 
 	/**
@@ -506,12 +539,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->create();
 
 		$this->assertEquals(409, $ret->getStatus());
-		$expected = [
-			'msg' => 'message',
-			'file' => __FILE__,
-			'line' => $ex->getLine(),
-		];
-		$this->assertEquals($expected, $ret->getData());
+		$this->assertEquals(['msg' => 'message'], $ret->getData());
 	}
 
 	public function testShow(): void {
