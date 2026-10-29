@@ -75,9 +75,9 @@ export default createAppConfig(
 						enableBundleAnalysis:
 							command === 'build'
 							&& mode === 'production'
-							&& Boolean(process.env.CODECOV_TOKEN),
+							&& Boolean(process.env.ACTIONS_ID_TOKEN_REQUEST_URL),
 						bundleName: 'cookbook',
-						uploadToken: process.env.CODECOV_TOKEN,
+						oidc: { useGitHubOIDC: true },
 						telemetry: false,
 					}),
 				],
