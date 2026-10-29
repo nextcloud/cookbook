@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\Controller\Implementation;
 
 use Exception;
+use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\InvalidDownloadURLException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
@@ -15,6 +16,7 @@ use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
@@ -352,7 +354,15 @@ class RecipeImplementation {
 			];
 
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
+		} catch (ImportException $e) {
+			$this->logger->warning('Import failed at step "{step}": {reason}', [
+				'url' => UrlRedactionHelper::redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
+			]);
+			return new JSONResponse($e->getMessage(), 400);
 		} catch (\Exception $e) {
+			$this->logger->error('Unexpected error during import: {reason}', [
+				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+			]);
 			return new JSONResponse($e->getMessage(), 400);
 		}
 
