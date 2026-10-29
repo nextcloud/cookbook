@@ -8,6 +8,7 @@ namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use Exception;
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
+use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
@@ -167,6 +168,24 @@ class RecipeImplementationTest extends TestCase {
 
 		$this->assertEquals(500, $ret->getStatus());
 		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
+	}
+
+	public function testImportFailedAtStep(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$url = 'http://example.com/Recipe.html';
+		$ex = new ImportException('Field "name" is required', 0, null, 'extract_recipe');
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+		$this->recipeService->expects($this->once())->method('downloadRecipe')->with($url)->willThrowException($ex);
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'Field "name" is required', 'step' => 'extract_recipe'], $ret->getData());
 	}
 
 	public function testImportCacheFailure(): void {
