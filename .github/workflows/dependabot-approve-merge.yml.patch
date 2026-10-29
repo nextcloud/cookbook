@@ -6,4 +6,4 @@ index 76340acb..eb080c64 100644
            }}
          with:
            github-token: ${{ secrets.GITHUB_TOKEN }}
-+          merge-method: REBASE
++          merge-method: SQUASH

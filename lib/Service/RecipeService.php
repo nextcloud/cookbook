@@ -126,21 +126,6 @@ class RecipeService {
 	}
 
 	/**
-	 * Get a recipe's modification time by its folder id.
-	 *
-	 * @param int $id
-	 */
-	public function getRecipeMTime(int $id): ?int {
-		$file = $this->getRecipeFileByFolderId($id);
-
-		if (!$file) {
-			return null;
-		}
-
-		return $file->getMTime();
-	}
-
-	/**
 	 * Returns a recipe file by folder id
 	 *
 	 * @param int $id
@@ -652,6 +637,22 @@ class RecipeService {
 			default:
 				throw new Exception($this->il10n->t('Image size "%s" is not recognized.', [$size]));
 		}
+	}
+
+	/**
+	 * Get the ETag of a recipe folder, which changes whenever any file in it changes
+	 *
+	 * @param int $id
+	 *
+	 * @return ?string
+	 */
+	public function getRecipeFolderEtag(int $id): ?string {
+		$recipe_folders = $this->userFolder->getById($id);
+		if (count($recipe_folders) < 1) {
+			return null;
+		}
+
+		return $recipe_folders[0]->getEtag();
 	}
 
 	/**
