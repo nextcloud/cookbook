@@ -210,10 +210,14 @@ jobs:
           --http-server ${{ matrix.httpServer }}
           --php-version ${{ matrix.phpVersion }}
 
-      - name: Get the commit of the Nextcloud server branch
-        id: ncCommit
+      - name: Compute the fixture cache key
+        id: fixtureKey
         if: matrix.database != 'pgsql'
-        run: echo "sha=$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" >> "$GITHUB_OUTPUT"
+        env:
+            FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/test_runner/**', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
+        run: >-
+          sha="$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" &&
+          echo "key=fixture-${{ matrix.database }}-${{ matrix.phpVersion }}-$sha-$FILES_HASH" >> "$GITHUB_OUTPUT"
 
       - name: Cache the fixtures
         id: fixtureCache
@@ -223,7 +227,7 @@ jobs:
             path: |
                 .github/actions/run-tests/volumes/dumps/version.json
                 .github/actions/run-tests/volumes/dumps/fixtures/default
-            key: fixture-${{ matrix.database }}-${{ matrix.phpVersion }}-${{ steps.ncCommit.outputs.sha }}-${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/**', '!.github/actions/run-tests/volumes/**') }}
+            key: ${{ steps.fixtureKey.outputs.key }}
 
       - name: Create the fixtures for the tests
         id: fixtures
