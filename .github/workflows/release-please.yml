@@ -21,6 +21,9 @@ jobs:
   release:
     name: Create or update release PR
     if: ${{ github.event_name == 'push' }}
+    concurrency:
+      group: release-please-${{ github.ref }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest-low
     permissions: {}
     environment: release-please-runner

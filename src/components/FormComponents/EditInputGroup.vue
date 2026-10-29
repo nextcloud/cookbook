@@ -248,7 +248,7 @@ const handlePaste = async (e: ClipboardEvent) => {
     const $li = (e.currentTarget as HTMLElement).closest('li');
     const $ul = $li?.closest('ul');
     if (!$li || !$ul) return;
-    const $insertedIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    const $insertedIndex = Array.prototype.indexOf.call($ul.children, $li);
 
     // Remove the common prefix from each line of the pasted text
     // For example, if the pasted text uses - for a bullet list
@@ -306,7 +306,7 @@ const keyDown = async (e: KeyboardEvent) => {
     }
 
     // Redirect to suggestions handler if in suggestion mode
-    if (suggestionsPopupVisible) {
+    if (suggestionsPopupVisible.value) {
         handleSuggestionsPopupKeyDown(e);
         return;
     }
@@ -335,7 +335,7 @@ const keyDown = async (e: KeyboardEvent) => {
     const $li = (e.currentTarget as HTMLElement).closest('li');
     const $ul = $li?.closest('ul');
     if (!$li || !$ul) return;
-    const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    const $pressedLiIndex = Array.prototype.indexOf.call($ul.children, $li);
 
     if ($pressedLiIndex >= (listField.value?.length ?? 0) - 1) {
         await addNewEntry();
@@ -365,7 +365,7 @@ const keyUp = (e: KeyboardEvent) => {
     const $ul = $li?.closest('ul');
     if (!$li || !$ul) return;
     // noinspection UnnecessaryLocalVariableJS
-    const $pressedLiIndex = Array.prototype.indexOf.call($ul.childNodes, $li);
+    const $pressedLiIndex = Array.prototype.indexOf.call($ul.children, $li);
     lastFocusedFieldIndex.value = $pressedLiIndex;
     handleSuggestionsPopupKeyUp(e);
 };

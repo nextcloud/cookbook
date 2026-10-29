@@ -88,7 +88,7 @@ class RecipeImplementation {
 		}
 
 		foreach ($recipes as $i => $recipe) {
-			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb']);
+			$recipes[$i]['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb', 't' => $this->service->getRecipeFolderEtag($recipe['recipe_id'])]);
 			$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $recipe['recipe_id'], 'size' => 'thumb16']);
 
 			$recipes[$i] = $this->stubFilter->apply($recipes[$i]);
@@ -113,7 +113,7 @@ class RecipeImplementation {
 		}
 
 		$json['printImage'] = $this->service->getPrintImage();
-		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full']);
+		$json['imageUrl'] = $this->urlGenerator->linkToRoute('cookbook.recipe.image', ['id' => $json['id'], 'size' => 'full', 't' => $this->service->getRecipeFolderEtag($json['id'])]);
 
 		$json = $this->outputFilter->filter($json);
 
@@ -358,7 +358,7 @@ class RecipeImplementation {
 					[
 						'id' => $recipe['recipe_id'],
 						'size' => 'thumb',
-						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+						't' => $this->service->getRecipeFolderEtag($recipe['recipe_id'])
 					]
 				);
 				$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute(
@@ -396,7 +396,7 @@ class RecipeImplementation {
 					[
 						'id' => $recipe['recipe_id'],
 						'size' => 'thumb',
-						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+						't' => $this->service->getRecipeFolderEtag($recipe['recipe_id'])
 					]
 				);
 				$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute(
@@ -436,7 +436,7 @@ class RecipeImplementation {
 					[
 						'id' => $recipe['recipe_id'],
 						'size' => 'thumb',
-						't' => $this->service->getRecipeMTime($recipe['recipe_id'])
+						't' => $this->service->getRecipeFolderEtag($recipe['recipe_id'])
 					]
 				);
 				$recipes[$i]['imagePlaceholderUrl'] = $this->urlGenerator->linkToRoute(
