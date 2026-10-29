@@ -8,6 +8,8 @@ services:
     mysql:
         build:
             context: ./mysql
+            args:
+              BUILDKIT_INLINE_CACHE: 1
             cache_from:
               - cookbook_unittesting_mysql
         volumes:
@@ -18,6 +20,8 @@ services:
     postgres:
         build:
             context: ./postgres
+            args:
+              BUILDKIT_INLINE_CACHE: 1
             cache_from:
               - cookbook_unittesting_postgres
         env_file:
@@ -30,7 +34,8 @@ services:
             context: ./tests
             cache_from:
                 - cookbook_unittesting_dut
-            #args:
+            args:
+                BUILDKIT_INLINE_CACHE: 1
                 #PHPVERSION: 7
                 #UID: 1000
         environment:
