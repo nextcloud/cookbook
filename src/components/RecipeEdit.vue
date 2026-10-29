@@ -151,7 +151,7 @@ import {
     watch,
 } from 'vue';
 
-import { onBeforeRouteLeave, useRoute } from 'vue-router';
+import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 import NcActions from '@nextcloud/vue/components/NcActions';
 import NcActionButton from '@nextcloud/vue/components/NcActionButton';
@@ -701,48 +701,28 @@ const toggleShowRecipeYield = () => {
 // Vue lifecycle
 // ===================
 
-watch(
-    () => route.params.id,
-    (newId) => {
-        if (newId) {
-            loadRecipeData();
-        } else {
-            setup();
-        }
-    },
-);
-
-/**
- * This is one tricky feature of Vue router. If different paths lead to
- * the same component (such as '/recipe/create' and '/recipe/xxx/edit
- * or /recipe/xxx/edit and /recipe/yyy/edit)', the view will not automatically
- * reload. So we have to check for these conditions and reload manually.
- * This can also be used to confirm that the user wants to leave the page
- * if there are unsaved changes.
- */
-onBeforeRouteLeave(async (to, from, next) => {
-    // beforeRouteLeave is called when the static route changes.
-    // Cancel the navigation, if the form has unsaved edits and the user did not
-    // confirm leave. This prevents accidentally losing changes
-    if (
-        isNavigationDangerous.value &&
-        !(await showSimpleConfirmModal(
-            t('cookbook', 'Discard changes?'),
-            CONFIRM_MSG,
-        ))
-    ) {
-        next(false);
+watch([() => route.name, () => route.params.id], ([, newId]) => {
+    if (newId) {
+        loadRecipeData();
     } else {
-        // We have to check if the target component stays the same and reload.
-        // However, we should not reload if the component changes; otherwise
-        // reloaded data may overwrite the data loaded at the target component
-        // which will at the very least result in incorrect breadcrumb path!
-        next();
-    }
-    // Check if we should reload the component content
-    if (helpers.shouldReloadContent(from.fullPath, to.fullPath)) {
         setup();
     }
+});
+
+const confirmNavigation = async (): Promise<boolean> =>
+    !isNavigationDangerous.value ||
+    Boolean(
+        await showSimpleConfirmModal(
+            t('cookbook', 'Discard changes?'),
+            CONFIRM_MSG,
+        ),
+    );
+
+onBeforeRouteLeave(confirmNavigation);
+
+onBeforeRouteUpdate(async (to, from) => {
+    if (to.params.id === from.params.id) return true;
+    return confirmNavigation();
 });
 
 onMounted(() => {

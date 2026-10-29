@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-name: Annotate test results 
+name: Annotate test results
 
 on:
   workflow_run:
@@ -15,17 +15,14 @@ jobs:
   test-results:
     runs-on: ubuntu-latest-low
     name: Test results
+    environment:
+      name: codecov
+      url: https://codecov.io/gh/nextcloud/cookbook
     if: >-
       github.event.workflow_run.conclusion != 'skipped' &&
       github.event.workflow_run.event == 'pull_request'
 
     steps:
-      # - name: Debug output
-      #   env:
-      #     EVENT: ${{ toJSON(github.event) }}
-      #   run: |
-      #     echo "$EVENT"
-
       - name: Download and Extract Artifacts
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -50,3 +47,55 @@ jobs:
           event_name: ${{ github.event.workflow_run.event }}
           files: "artifacts/Junit test log files*/*.xml"
 
+      - name: Create coverage folder structure
+        run: mkdir -p unit-coverage integration-coverage migration-coverage
+
+      - name: Copy Coverage reports to separate folders
+        run: |
+          cd artifacts
+
+          for i in Code*
+          do
+            if [ -f "$i/coverage.unit.xml" ]; then
+              mkdir -p "../unit-coverage/$i"
+              cp "$i/coverage.unit.xml" "../unit-coverage/$i/coverage.xml"
+            fi
+            if [ -f "$i/coverage.integration.xml" ]; then
+              mkdir -p "../integration-coverage/$i"
+              cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
+            fi
+            if [ -f "$i/coverage.migration.xml" ]; then
+              mkdir -p "../migration-coverage/$i"
+              cp "$i/coverage.migration.xml" "../migration-coverage/$i/coverage.xml"
+            fi
+          done
+      - name: Show file structure
+        run: ls -lR *-coverage
+
+      - name: Upload unit test codecov reports
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          flags: unittests
+          directory: unit-coverage
+          override_commit: ${{ github.event.workflow_run.head_sha }}
+          verbose: true
+      - name: Upload integration test codecov reports
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          flags: integration
+          directory: integration-coverage
+          override_commit: ${{ github.event.workflow_run.head_sha }}
+          verbose: true
+      - name: Upload migration test codecov reports
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          flags: migration
+          directory: migration-coverage
+          override_commit: ${{ github.event.workflow_run.head_sha }}
+          verbose: true

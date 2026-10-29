@@ -106,7 +106,7 @@ jobs:
         -   name: Check for issues with vue and js files (eslint)
             shell: bash
             run: >-
-                npm run eslint || {
+                npm run eslint -- --max-warnings=0 || {
                 echo '::error ::The eslint style checker failed.
                 Please run `npm run eslint-fix` in order to correct this.';
                 exit 1;
@@ -403,95 +403,6 @@ jobs:
         if: always()
       
 
-  upload-codecov:
-    name: Upload artifacts to codecov.io
-    needs: 
-        - unit-tests
-    runs-on: ubuntu-latest-low
-
-    steps:
-        - name: Create folder structure
-          run: mkdir artifacts code unit-coverage integration-coverage
-        - name: Download artifacts
-          if: ${{ github.event_name == 'push' }}
-          uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333
-          with:
-            path: artifacts
-        - name: Checkout of code base
-          if: ${{ github.event_name == 'push' }}
-          uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-          with:
-            path: code
-            fetch-depth: 2
-            persist-credentials: false
-        
-        - name: Download the uploader
-          if: ${{ github.event_name == 'push' }}
-          run: |
-            curl https://keybase.io/codecovsecurity/pgp_keys.asc | gpg --no-default-keyring --keyring trustedkeys.gpg --import
-            curl -Os https://uploader.codecov.io/latest/linux/codecov
-            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM
-            curl -Os https://uploader.codecov.io/latest/linux/codecov.SHA256SUM.sig
-
-            gpgv codecov.SHA256SUM.sig codecov.SHA256SUM
-            shasum -a 256 -c codecov.SHA256SUM
-
-            chmod +x codecov
-        
-        - name: Copy Coverage reports to separate folders
-          if: ${{ github.event_name == 'push' }}
-          run: |
-            cd artifacts
-
-            for i in Code*
-            do
-              if [ -f "$i/coverage.unit.xml" ]; then
-                mkdir -p "../unit-coverage/$i"
-                cp "$i/coverage.unit.xml" "../unit-coverage/$i/coverage.xml"
-              fi
-              if [ -f "$i/coverage.integration.xml" ]; then
-                mkdir -p "../integration-coverage/$i"
-                cp "$i/coverage.integration.xml" "../integration-coverage/$i/coverage.xml"
-              fi
-              if [ -f "$i/coverage.migration.xml" ]; then
-                mkdir -p "../migration-coverage/$i"
-                cp "$i/coverage.migration.xml" "../migration-coverage/$i/coverage.xml"
-              fi
-            done
-        - name: Show file structure
-          if: ${{ github.event_name == 'push' }}
-          run: ls -lR *-coverage
-        
-        - name: Upload unit test codecov reports
-          if: ${{ github.event_name == 'push' }}
-          run: >-
-            ./codecov
-            -F unittests
-            -s unit-coverage
-            -R code
-            -X gcov
-            -v
-        - name: Upload integration test codecov reports
-          if: ${{ github.event_name == 'push' }}
-          run: >-
-            ./codecov
-            -F integration
-            -s integration-coverage
-            -R code
-            -X gcov
-            -v
-        - name: Upload migration test codecov reports
-          if: ${{ github.event_name == 'push' }}
-          run: >-
-            ./codecov
-            -F migration
-            -s migration-coverage
-            -R code
-            -X gcov
-            -v
-
-          
-    
   source-package:
     name: Create source code artifacts
     runs-on: ubuntu-latest

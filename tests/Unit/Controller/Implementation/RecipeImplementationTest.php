@@ -525,12 +525,14 @@ class RecipeImplementationTest extends TestCase {
 		];
 		$this->recipeService->method('getRecipeById')->with($id)->willReturn($recipe);
 		$this->recipeService->method('getPrintImage')->willReturn(true);
+		$etag = '6543a1b2c3d4e';
+		$this->recipeService->method('getRecipeFolderEtag')->with($id)->willReturn($etag);
 		$imageUrl = '/path/to/image/of/id/123';
 
 		$this->urlGenerator->method('linkToRoute')->with(
 			'cookbook.recipe.image',
-			$this->callback(function ($p) use ($id) {
-				return isset($p['size']) && $p['id'] === $id;
+			$this->callback(function ($p) use ($id, $etag) {
+				return isset($p['size']) && $p['id'] === $id && $p['t'] === $etag;
 			})
 		)->willReturn($imageUrl);
 		$expected = $recipe;
@@ -689,6 +691,14 @@ class RecipeImplementationTest extends TestCase {
 		$this->recipeService->method('getAllRecipesInSearchIndex')->willReturn($recipes);
 		$this->recipeService->method('findRecipesInSearchIndex')->willReturn($recipes);
 
+		$etagMap = [];
+		foreach ($recipes as $recipe) {
+			$etagMap[$recipe['recipe_id']] = $recipe['etag'];
+		}
+		$this->recipeService->method('getRecipeFolderEtag')->willReturnCallback(
+			fn (int $id) => $etagMap[$id] ?? null
+		);
+
 		if ($setKeywords) {
 			$_GET['keywords'] = $keywords;
 			$this->recipeService->expects($this->once())->method('findRecipesInSearchIndex')->with($keywords);
@@ -703,8 +713,9 @@ class RecipeImplementationTest extends TestCase {
 
 			$id = $params['id'];
 			$size = $params['size'];
+			$t = isset($params['t']) ? "?t={$params['t']}" : '';
 
-			return "/path/to/controller/$id/$size";
+			return "/path/to/controller/$id/$size$t";
 		}));
 
 		$this->stubFilter->method('apply')->willReturnArgument(0);
@@ -724,7 +735,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $recipes;
 		for ($i = 0; $i < count($ret); $i++) {
 			$id = $ret[$i]['recipe_id'];
-			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb";
+			$ret[$i]['imageUrl'] = "/path/to/controller/$id/thumb?t={$ret[$i]['etag']}";
 			$ret[$i]['imagePlaceholderUrl'] = "/path/to/controller/$id/thumb16";
 		}
 
@@ -743,10 +754,12 @@ class RecipeImplementationTest extends TestCase {
 					[
 						'recipe_id' => 123,
 						'name' => 'First recipe',
+						'etag' => '6543a1b2c3d4e',
 					],
 					[
 						'recipe_id' => 125,
 						'name' => 'Second recipe',
+						'etag' => '6543a1b2c3d4f',
 					],
 				],
 				false,
