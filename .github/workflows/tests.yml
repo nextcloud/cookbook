@@ -210,14 +210,29 @@ jobs:
           --http-server ${{ matrix.httpServer }}
           --php-version ${{ matrix.phpVersion }}
 
+      - name: Get the commit of the Nextcloud server branch
+        id: ncCommit
+        if: matrix.database != 'pgsql'
+        run: echo "sha=$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the fixtures
+        id: fixtureCache
+        if: matrix.database != 'pgsql'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+            path: |
+                .github/actions/run-tests/volumes/dumps/version.json
+                .github/actions/run-tests/volumes/dumps/fixtures/default
+            key: fixture-${{ matrix.database }}-${{ matrix.phpVersion }}-${{ steps.ncCommit.outputs.sha }}-${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/**', '!.github/actions/run-tests/volumes/**') }}
+
       - name: Create the fixtures for the tests
         id: fixtures
         run: >-
           if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
+          if [ "${{ steps.fixtureCache.outputs.cache-hit }}" = 'true' ]; then PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
           cd .github/actions/run-tests &&
           ./run-locally.py
           $PARAM
-          --create-fixture  default stable${{ matrix.coreVersion }}
           --activate-fixture default
           --input-db ${{ matrix.database }}
           --http-server ${{ matrix.httpServer }}
