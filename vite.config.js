@@ -2,6 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import { codecovVitePlugin } from '@codecov/vite-plugin'
 import { createAppConfig } from '@nextcloud/vite-config'
 import { join, resolve } from 'path'
 import { loadEnv } from 'vite'
@@ -70,6 +71,12 @@ export default createAppConfig(
 				plugins: [
 					...customPlugins,
 					devEntryRewritePlugin,
+					codecovVitePlugin({
+						enableBundleAnalysis: Boolean(process.env.CODECOV_TOKEN),
+						bundleName: 'cookbook',
+						uploadToken: process.env.CODECOV_TOKEN,
+						telemetry: false,
+					}),
 				],
 				server: {
 					port: Number(env.VITE_PORT ?? 5173),
