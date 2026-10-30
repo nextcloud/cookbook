@@ -216,7 +216,8 @@ jobs:
             FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/mysql/**', '.github/actions/run-tests/postgres/**', '.github/actions/run-tests/test_runner/*.py', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
         run: >-
           sha="$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" &&
-          echo "key=fixture-tar-${{ matrix.database }}-${{ matrix.phpVersion }}-$sha-$FILES_HASH" >> "$GITHUB_OUTPUT"
+          echo "prefix=fixture-tar-${{ matrix.database }}-${{ matrix.phpVersion }}-$FILES_HASH-" >> "$GITHUB_OUTPUT" &&
+          echo "key=fixture-tar-${{ matrix.database }}-${{ matrix.phpVersion }}-$FILES_HASH-$sha" >> "$GITHUB_OUTPUT"
 
       - name: Restore the cached fixtures
         id: fixtureCache
@@ -224,9 +225,15 @@ jobs:
         with:
             path: ${{ runner.temp }}/fixture.tar
             key: ${{ steps.fixtureKey.outputs.key }}
+            restore-keys: ${{ steps.fixtureKey.outputs.prefix }}
+
+      - name: Check if the cached fixtures can be used
+        id: fixtureHit
+        run: >-
+          echo "hit=${{ steps.fixtureCache.outputs.cache-hit == 'true' || (github.event_name == 'pull_request' && steps.fixtureCache.outputs.cache-matched-key != '') }}" >> "$GITHUB_OUTPUT"
 
       - name: Extract the cached fixtures
-        if: steps.fixtureCache.outputs.cache-hit == 'true'
+        if: steps.fixtureHit.outputs.hit == 'true'
         run: >-
           mkdir -p .github/actions/run-tests/volumes/dumps &&
           sudo tar -xpf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps
@@ -236,7 +243,7 @@ jobs:
         run: >-
           if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
           cd .github/actions/run-tests &&
-          if [ "${{ steps.fixtureCache.outputs.cache-hit }}" = 'true' ]; then mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data && PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
+          if [ "${{ steps.fixtureHit.outputs.hit }}" = 'true' ]; then mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data && PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
           ./run-locally.py
           $PARAM
           --activate-fixture default
@@ -245,13 +252,13 @@ jobs:
           --php-version ${{ matrix.phpVersion }}
 
       - name: Archive the fixtures
-        if: steps.fixtureCache.outputs.cache-hit != 'true'
+        if: steps.fixtureHit.outputs.hit != 'true'
         run: >-
           sudo tar -cf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps version.json fixtures/default &&
           sudo chown "$USER" "$RUNNER_TEMP/fixture.tar"
 
       - name: Cache the fixtures
-        if: steps.fixtureCache.outputs.cache-hit != 'true'
+        if: steps.fixtureHit.outputs.hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
         with:
             path: ${{ runner.temp }}/fixture.tar
