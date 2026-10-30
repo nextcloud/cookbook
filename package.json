@@ -45,6 +45,7 @@
     "@nextcloud/vue": "^9.7.0",
     "caret-pos": "^2.0.0",
     "fuse.js": "^7.0.0",
+    "jspdf": "^4.2.1",
     "linkifyjs": "^4.1.1",
     "lozad": "^1.16.0",
     "mitt": "^3.0.1",
