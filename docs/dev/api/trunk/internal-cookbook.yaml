@@ -87,6 +87,10 @@ components:
       $ref: objects.yaml#/StubList
     Recipe:
       $ref: objects.yaml#/Recipe
+    Url:
+      $ref: objects.yaml#/Url
+    RecipeJson:
+      $ref: objects.yaml#/RecipeJson
   
   securitySchemes:
     # app_password:
@@ -146,18 +150,17 @@ paths:
   /webapp/import:
     post:
       tags: [ Recipes ]
-      summary: Import a recipe using schema.org metadata from a website
+      summary: Import a recipe using schema.org metadata from a website or from JSON+LD
+      description: |
+        Exactly one of `url` or `json` must be given.
+        A recipe imported from `json` is always created as a new recipe, an `id` in the JSON is ignored.
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                url:
-                  type: string
-                  example: 'http://www.chefkoch.de/2345'
-              required:
-                - url
+              oneOf:
+                - $ref: "#/components/schemas/Url"
+                - $ref: "#/components/schemas/RecipeJson"
       responses:
         200:
           description: Successfully imported recipe
@@ -171,7 +174,7 @@ paths:
             application/json:
               schema:
                 type: string
-                example: Field "url" is required
+                example: Field "url" or "json" is required
         409:
           description: There exists a recipe with that name already. Import was aborted.
           content:

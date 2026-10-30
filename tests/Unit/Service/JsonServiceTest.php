@@ -143,4 +143,24 @@ class JsonServiceTest extends TestCase {
 		];
 		$this->assertEquals($expected, $this->service->isSchemaObject($json, 'Recipe', true, $unique));
 	}
+
+	public static function dpSchemaContext() {
+		return [
+			'https' => ['https://schema.org', true],
+			'http with slash' => ['http://schema.org/', true],
+			'other' => ['https://example.com', false],
+			'vocab object' => [['@vocab' => 'https://schema.org/'], true],
+			'other vocab object' => [['@vocab' => 'https://example.com/'], false],
+			'list' => [['https://schema.org', ['foo' => 'bar']], true],
+			'list with vocab object' => [[['@vocab' => 'https://schema.org/']], true],
+			'other list' => [['https://example.com'], false],
+			'number' => [42, false],
+			'null' => [null, false],
+		];
+	}
+
+	/** @dataProvider dpSchemaContext */
+	public function testIsSchemaContext($context, $expected) {
+		$this->assertEquals($expected, $this->service->isSchemaContext($context));
+	}
 }
