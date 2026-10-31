@@ -22,6 +22,36 @@ The releases are stored for technical reasins in the repository [christianlupus-
 Sorry for the inconvience.
 
 
+## [0.11.13](https://github.com/nextcloud/cookbook/compare/v0.11.12...v0.11.13) (2026-10-31)
+
+
+### Bug Fixes
+
+* accept HowToStep text given as array ([#3473](https://github.com/nextcloud/cookbook/issues/3473)) ([1fa2a7b](https://github.com/nextcloud/cookbook/commit/1fa2a7b1aa40ba17bf2f269edfff124a80278881))
+* add Psalm stubs and handle unreadable thumbnail images ([#3462](https://github.com/nextcloud/cookbook/issues/3462)) ([1595d4b](https://github.com/nextcloud/cookbook/commit/1595d4b33852e550eed213bd31564836dc4c1eb0))
+* bust browser cache of recipe image after edit ([#3472](https://github.com/nextcloud/cookbook/issues/3472)) ([edafb11](https://github.com/nextcloud/cookbook/commit/edafb11fd008300c85ac711d8114a392e4f0ef7f))
+* convert or skip recipe images that cannot be read ([#3474](https://github.com/nextcloud/cookbook/issues/3474)) ([fcfff25](https://github.com/nextcloud/cookbook/commit/fcfff25216f268acf49f056588ece8c0aaf9f96f))
+* extract time and description from microdata parser ([#3501](https://github.com/nextcloud/cookbook/issues/3501)) ([c85700c](https://github.com/nextcloud/cookbook/commit/c85700c277c00f8f19a7f3ca56687042766ebf91))
+* guard recipe edits against URL param changes ([#3509](https://github.com/nextcloud/cookbook/issues/3509)) ([e798281](https://github.com/nextcloud/cookbook/commit/e798281a4b362d6a2396619add2214484ae524af))
+* **l10n:** Update translations from Transifex ([c38ebcc](https://github.com/nextcloud/cookbook/commit/c38ebcc86b6d17ea9718b17b1231d120fa6c09a0))
+* **l10n:** Update translations from Transifex ([7a6fd06](https://github.com/nextcloud/cookbook/commit/7a6fd067ce50b9320c823619b530ebf0861972b1))
+* **l10n:** Update translations from Transifex ([eb6e7d7](https://github.com/nextcloud/cookbook/commit/eb6e7d713cc3d18bdac137d426a98d44e41b9fd5))
+* **l10n:** Update translations from Transifex ([22e089f](https://github.com/nextcloud/cookbook/commit/22e089fb7558a588cfd214665551b58a58838c17))
+* **l10n:** Update translations from Transifex ([8494aa1](https://github.com/nextcloud/cookbook/commit/8494aa1b883f7f702c0856423257794444f294ff))
+* **l10n:** Update translations from Transifex ([8c81e2e](https://github.com/nextcloud/cookbook/commit/8c81e2e2a7ea891ece43cc220000fc2c5ab4c5f4))
+* **l10n:** Update translations from Transifex ([d53ae0b](https://github.com/nextcloud/cookbook/commit/d53ae0be39e194da63987935ffe75aa8477deb85))
+* **l10n:** Update translations from Transifex ([1d27f5b](https://github.com/nextcloud/cookbook/commit/1d27f5b73b3ebd3a833cf17cb14e5ae681306ffb))
+* **l10n:** Update translations from Transifex ([b7a56b3](https://github.com/nextcloud/cookbook/commit/b7a56b302f6ecbc072a14f289616c20a24d7263f))
+* **l10n:** Update translations from Transifex ([4333083](https://github.com/nextcloud/cookbook/commit/4333083e98460c882c3b0419dfa3b1afeee88ee9))
+* **l10n:** Update translations from Transifex ([9b65a4f](https://github.com/nextcloud/cookbook/commit/9b65a4fc97d273676522ed885de367b021edbec5))
+* list entry paste, recipe link and Enter key handling ([#3457](https://github.com/nextcloud/cookbook/issues/3457)) ([56213cf](https://github.com/nextcloud/cookbook/commit/56213cfc87c891f57cf255bad06154ef562e4539))
+* normalize URLs with spaces and whitespace before validation ([#3500](https://github.com/nextcloud/cookbook/issues/3500)) ([bce2523](https://github.com/nextcloud/cookbook/commit/bce2523597837bfb47eef4db69f4e733d020bd14))
+* resolve image reference in JSON-LD graph ([#3448](https://github.com/nextcloud/cookbook/issues/3448)) ([532ee82](https://github.com/nextcloud/cookbook/commit/532ee82250177797189f461e60d7ca67306dc929))
+* **test:** use node environment for api-interface test ([#3507](https://github.com/nextcloud/cookbook/issues/3507)) ([5369681](https://github.com/nextcloud/cookbook/commit/5369681d240d0231ae0cc22ed0e6d7307e8c608c))
+* unicode fraction and whole-amount display in ingredient scaling ([#3456](https://github.com/nextcloud/cookbook/issues/3456)) ([cc7dafa](https://github.com/nextcloud/cookbook/commit/cc7dafa82c87ed8ae2a95bac2cd5ef956a98b794))
+* use default nextcloud axios client to follow CSRF token rotation ([#3455](https://github.com/nextcloud/cookbook/issues/3455)) ([d240033](https://github.com/nextcloud/cookbook/commit/d240033c70d427c7d4d5e43eee6b49702802da47))
+* use route watcher for recipe reload ([#3484](https://github.com/nextcloud/cookbook/issues/3484)) ([#3495](https://github.com/nextcloud/cookbook/issues/3495)) ([06f3b56](https://github.com/nextcloud/cookbook/commit/06f3b567f97233153f7e42a488e62d26ac7b0efc))
+
 ## [0.11.12](https://github.com/nextcloud/cookbook/compare/v0.11.11...v0.11.12) (2026-10-13)
 
 
