@@ -164,6 +164,15 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             </NcActionButton>
             <NcActionButton
                 v-if="isRecipe"
+                icon="icon-download"
+                class="action-button"
+                :aria-label="t('cookbook', 'Export recipe as PDF')"
+                @click="exportRecipeAsPdf"
+            >
+                {{ t('cookbook', 'Export recipe as PDF') }}
+            </NcActionButton>
+            <NcActionButton
+                v-if="isRecipe"
                 class="action-button"
                 :aria-label="t('cookbook', 'Clone recipe')"
                 @click="goToRecipeClone(legacyStore.recipe.id)"
@@ -314,6 +323,10 @@ const deleteRecipe = async () => {
 
 const printRecipe = () => {
     window.print();
+};
+
+const exportRecipeAsPdf = () => {
+    emitter.emit('exportRecipePdf');
 };
 
 const reloadRecipeEdit = () => {

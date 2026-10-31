@@ -368,6 +368,7 @@ import {
     watch,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { exportRecipeAsPdf as createRecipePdf } from 'cookbook/js/recipePdfExport';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -719,6 +720,20 @@ const restoreOriginalRecipeYield = () => {
     recipeYield.value = legacyStore.recipe.recipeYield;
 };
 
+const exportRecipeAsPdf = () => {
+    if (!legacyStore.recipe) {
+        return;
+    }
+
+    try {
+        createRecipePdf(legacyStore.recipe, recipeYield.value, t);
+        showSuccess(t('cookbook', 'Recipe exported as PDF'));
+    } catch (error) {
+        log.error('Failed to export recipe as PDF', error);
+        showError(t('cookbook', 'Exporting recipe as PDF failed'));
+    }
+};
+
 // ===================
 // Watchers
 // ===================
@@ -819,6 +834,7 @@ const visibilityChangeEventListener = () => {
 onMounted(() => {
     log.info('RecipeView mounted');
     setup();
+    emitter.on('exportRecipePdf', exportRecipeAsPdf);
     // Register data load method hook for access from the controls components
     emitter.off('reloadRecipeView');
     emitter.on('reloadRecipeView', () => {
@@ -860,6 +876,7 @@ function requestWakeLock() {
 }
 
 onUnmounted(() => {
+    emitter.off('exportRecipePdf', exportRecipeAsPdf);
     document.removeEventListener(
         'visibilitychange',
         visibilityChangeEventListener,
