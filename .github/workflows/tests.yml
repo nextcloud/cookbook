@@ -444,6 +444,9 @@ jobs:
   source-package:
     name: Create source code artifacts
     runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        id-token: write
     
     steps:
         -   name: Checkout the app
@@ -469,7 +472,7 @@ jobs:
         -   name: Set up npm ${{ steps.versions.outputs.npmVersion }}
             # Skip if no package.json
             if: ${{ steps.versions.outputs.npmVersion }}
-            run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
+            run: npm i -g --ignore-scripts 'npm@${{ steps.versions.outputs.npmVersion }}'
             
         -   name: Get the date
             id: date
@@ -497,7 +500,7 @@ jobs:
         -   name: Install the NPM dependencies
             shell: bash
             run: >-
-                npm ci
+                npm ci --ignore-scripts
         -   name: Install the dependencies for composer
             shell: bash
             run: >-

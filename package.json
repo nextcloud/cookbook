@@ -59,6 +59,7 @@
     "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
+    "@codecov/vite-plugin": "^2.0.1",
     "@eslint/compat": "^2.0.3",
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^3.0.0",
@@ -101,6 +102,9 @@
     "@parcel/watcher@2.6.0": true
   },
   "overrides": {
-    "stylelint-order": "^7.0.1"
+    "stylelint-order": "^7.0.1",
+    "@codecov/vite-plugin": {
+      "vite": "$vite"
+    }
   }
 }
