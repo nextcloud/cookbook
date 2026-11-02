@@ -68,6 +68,7 @@ OC.L10N.register(
     "Recipe name" : "Název receptu",
     "Tags" : "Štítky",
     "Search for recipes" : "Hledat recepty",
+    "Delete confirmation" : "Smazat potvrzení",
     "Are you sure you want to delete this recipe?" : "Opravdu chcete tento recept smazat?",
     "Error" : "Error",
     "Delete failed" : "Smazání se nezdařilo",
