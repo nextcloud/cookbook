@@ -59,6 +59,7 @@
     "vuejs3-logger": "^1.0.0"
   },
   "devDependencies": {
+    "@codecov/vite-plugin": "^2.0.1",
     "@eslint/compat": "^2.0.3",
     "@nextcloud/babel-config": "^1.0.0",
     "@nextcloud/browserslist-config": "^3.0.0",
@@ -77,10 +78,12 @@
     "eslint-plugin-vue": "^10.11.1",
     "globals": "^17.4.0",
     "happy-dom": "^21.0.4",
+    "postcss-html": "^1.8.1",
     "prettier": "^3.0.3",
     "prettier-package-json": "^2.8.0",
     "rollup-plugin-visualizer": "^7.0.1",
     "stylelint": "^17.1.1",
+    "stylelint-config-html": "^1.1.0",
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-scss": "^7.0.0",
     "ts-loader": "^9.5.1",
@@ -101,6 +104,9 @@
     "@parcel/watcher@2.6.0": true
   },
   "overrides": {
-    "stylelint-order": "^7.0.1"
+    "stylelint-order": "^7.0.1",
+    "@codecov/vite-plugin": {
+      "vite": "$vite"
+    }
   }
 }

@@ -210,29 +210,92 @@ jobs:
           --http-server ${{ matrix.httpServer }}
           --php-version ${{ matrix.phpVersion }}
 
+      - name: Compute the fixture cache key
+        id: fixtureKey
+        env:
+            FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/*.env', '.github/actions/run-tests/mysql/**', '.github/actions/run-tests/postgres/**', '.github/actions/run-tests/test_runner/*.py', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
+        run: >-
+          sha="$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" &&
+          prefix="fixture-tar-${{ matrix.database }}-${{ matrix.coreVersion }}-${{ matrix.phpVersion }}-$FILES_HASH-$(date -u +%G-%V)-" &&
+          echo "prefix=$prefix" >> "$GITHUB_OUTPUT" &&
+          echo "key=$prefix$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the cached fixtures
+        id: fixtureCache
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+            path: ${{ runner.temp }}/fixture.tar
+            key: ${{ steps.fixtureKey.outputs.key }}
+            restore-keys: ${{ steps.fixtureKey.outputs.prefix }}
+
+      - name: Check if the cached fixtures can be used
+        id: fixtureHit
+        run: >-
+          echo "hit=${{ steps.fixtureCache.outputs.cache-hit == 'true' || (github.event_name == 'pull_request' && steps.fixtureCache.outputs.cache-matched-key != '') }}" >> "$GITHUB_OUTPUT"
+
+      - name: Extract the cached fixtures
+        if: steps.fixtureHit.outputs.hit == 'true'
+        run: >-
+          mkdir -p .github/actions/run-tests/volumes/dumps &&
+          sudo tar -xpf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps
+
       - name: Create the fixtures for the tests
+        id: fixtures
         run: >-
           if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
           cd .github/actions/run-tests &&
+          if [ "${{ steps.fixtureHit.outputs.hit }}" = 'true' ]; then mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data && PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
           ./run-locally.py
           $PARAM
-          --create-fixture  default stable${{ matrix.coreVersion }}
           --activate-fixture default
           --input-db ${{ matrix.database }}
           --http-server ${{ matrix.httpServer }}
           --php-version ${{ matrix.phpVersion }}
 
-      - name: Run the tests
+      - name: Archive the fixtures
+        id: fixtureArchive
+        if: steps.fixtureHit.outputs.hit != 'true'
+        run: >-
+          echo "key=${{ steps.fixtureKey.outputs.prefix }}$(git -c safe.directory="*" -C .github/actions/run-tests/volumes/nextcloud rev-parse HEAD)" >> "$GITHUB_OUTPUT" &&
+          sudo tar -cf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps version.json fixtures/default &&
+          sudo chown "$USER" "$RUNNER_TEMP/fixture.tar"
+
+      - name: Cache the fixtures
+        if: steps.fixtureHit.outputs.hit != 'true'
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+            path: ${{ runner.temp }}/fixture.tar
+            key: ${{ steps.fixtureArchive.outputs.key }}
+
+      - name: Run the unit tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
           --run-unit-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the integration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-integration-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the migration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-migration-tests
           --extract-code-coverage
           --keep-code-coverage
-          --install-composer-deps;
-          echo "test_result=$?" >> $GITHUB_ENV
+          --install-composer-deps
       
       - name: Export the annotations of unit tests to github
         shell: bash
@@ -271,7 +334,7 @@ jobs:
         shell: bash
         run: >-
             mkdir /tmp/coverage &&
-            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
+            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
@@ -328,6 +391,7 @@ jobs:
           --php-version 8.5
 
       - name: Create the fixtures for the tests
+        id: fixtures
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
@@ -338,17 +402,35 @@ jobs:
           --php-version latest
           --install-untested
 
-      - name: Run the tests
+      - name: Run the unit tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
           --run-unit-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the integration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-integration-tests
+          --extract-code-coverage
+          --keep-code-coverage
+          --install-composer-deps
+
+      - name: Run the migration tests
+        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
+        run: >-
+          cd .github/actions/run-tests &&
+          ./run-locally.py
           --run-migration-tests
           --extract-code-coverage
           --keep-code-coverage
-          --install-composer-deps;
-          echo "test_result=$?" >> $GITHUB_ENV
+          --install-composer-deps
       
       - name: Export the annotations of unit tests to github
         shell: bash
@@ -387,7 +469,7 @@ jobs:
         shell: bash
         run: >-
             mkdir /tmp/coverage &&
-            rsync -a .github/actions/run-tests/volumes/coverage/latest/ /tmp/coverage
+            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
         
       - name: Upload the code coverage report for codecov as artifacts
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -406,6 +488,9 @@ jobs:
   source-package:
     name: Create source code artifacts
     runs-on: ubuntu-latest
+    permissions:
+        contents: read
+        id-token: write
     
     steps:
         -   name: Checkout the app
@@ -431,7 +516,7 @@ jobs:
         -   name: Set up npm ${{ steps.versions.outputs.npmVersion }}
             # Skip if no package.json
             if: ${{ steps.versions.outputs.npmVersion }}
-            run: npm i -g 'npm@${{ steps.versions.outputs.npmVersion }}'
+            run: npm i -g --ignore-scripts 'npm@${{ steps.versions.outputs.npmVersion }}'
             
         -   name: Get the date
             id: date
@@ -459,7 +544,7 @@ jobs:
         -   name: Install the NPM dependencies
             shell: bash
             run: >-
-                npm ci
+                npm ci --ignore-scripts
         -   name: Install the dependencies for composer
             shell: bash
             run: >-

@@ -63,6 +63,7 @@ OC.L10N.register(
     "Image size \"%s\" is not recognized." : "Bildstorlek \"%s\" känns inte igen.",
     "The full-sized image is not a thumbnail." : "Bilden i full storlek är inte en miniatyrbild.",
     "The thumbnail type %d is not known." : "Miniatyrbildstypen %d är okänd.",
+    "The image could not be read to create a thumbnail." : "Bilden kunde inte läsas in för att skapa en miniatyrbild.",
     "Cookbook" : "Kokbok",
     "An integrated cookbook using schema.org JSON files as recipes" : "En integrerad kokbok som använder JSON-filer av typen schema.org för recept",
     "A library for all your recipes. It uses JSON files following the schema.org recipe format. To add a recipe to the collection, you can paste in the URL of the recipe, and the provided web page will be parsed and downloaded to whichever folder you specify in the app settings." : "Ett bibliotek för alla dina recept. Det använder JSON-filer som följer schema.org-formatet. För att lägga till ett recept i din samling, kopiera in webblänken till receptet, så kommer webbsidan med receptet att analyseras och hämtas till den mapp du valt under inställningarna.",
