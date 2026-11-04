@@ -83,7 +83,7 @@
     "prettier-package-json": "^2.8.0",
     "rollup-plugin-visualizer": "^7.0.1",
     "stylelint": "^17.1.1",
-    "stylelint-config-html": "^1.1.0",
+    "stylelint-config-html": "^2.0.0",
     "stylelint-config-idiomatic-order": "^10.0.0",
     "stylelint-scss": "^7.0.0",
     "ts-loader": "^9.5.1",
