@@ -78,7 +78,7 @@
     "eslint-plugin-vue": "^10.11.1",
     "globals": "^17.4.0",
     "happy-dom": "^21.0.4",
-    "postcss-html": "^1.8.1",
+    "postcss-html": "^2.0.0",
     "prettier": "^3.0.3",
     "prettier-package-json": "^2.8.0",
     "rollup-plugin-visualizer": "^7.0.1",
