@@ -17,6 +17,12 @@ updates:
     - dependency-name: "eslint"
       versions:
       - "10.x"
+    - dependency-name: "postcss-html"
+      versions:
+      - "2.x"
+    - dependency-name: "stylelint-config-html"
+      versions:
+      - "2.x"
 - package-ecosystem: composer
   directory: "/"
   schedule:
