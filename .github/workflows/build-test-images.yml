@@ -15,6 +15,7 @@ jobs:
         environment: docker-pushing
         
         strategy:
+            fail-fast: false
             matrix:
                 phpVersion:
                     - "8.3"
