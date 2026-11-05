@@ -13,6 +13,9 @@ jobs:
         name: Build and push the latest test images
         runs-on: ubuntu-latest
         environment: docker-pushing
+        permissions:
+          contents: read
+          packages: write
         
         strategy:
             fail-fast: false
@@ -27,35 +30,50 @@ jobs:
               shell: bash
               id: check
               run: |
-                echo "skip=false" >> $GITHUB_OUTPUT
+                echo "docker_hub_skip=false" >> $GITHUB_OUTPUT
+                echo "ghcr_skip=true" >> $GITHUB_OUTPUT
+                echo "skip_all=true" >> $GITHUB_OUTPUT
                 if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
-                    echo "skip=true" >> $GITHUB_OUTPUT
+                    echo "docker_hub_skip=true" >> $GITHUB_OUTPUT
                 fi
                 if [ -z "${{ vars.DOCKER_HUB_USERNAME }}" ]; then
-                    echo "skip=true" >> $GITHUB_OUTPUT
+                    echo "docker_hub_skip=true" >> $GITHUB_OUTPUT
+                fi
+                if [ "$GITHUB_REPOSITORY" = "nextcloud/cookbook" ]; then
+                  echo "ghcr_skip=false" >> $GITHUB_OUTPUT
+                fi
+                if [ -n "${{ secrets.DOCKER_HUB_TOKEN }}" ] && [ -n "${{ vars.DOCKER_HUB_USERNAME }}" ] || [ "$GITHUB_REPOSITORY" = "nextcloud/cookbook" ]; then
+                  echo "skip_all=false" >> $GITHUB_OUTPUT
                 fi
             
             - name: Checkout the app
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-              if: ${{ steps.check.outputs.skip == 'false' }}
+              if: ${{ steps.check.outputs.skip_all == 'false' }}
               with:
                 persist-credentials: false
               
-            - name: Log into docker registry as user
+            - name: Log into Docker Hub
               shell: bash
               run: >-
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
                 | docker login 
                 --username ${{ vars.DOCKER_HUB_USERNAME }}
                 --password-stdin
+              if: ${{ steps.check.outputs.docker_hub_skip == 'false' }}
+
+            - name: Log into GitHub Container Registry
+              shell: bash
+              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username "${{ github.actor }}" --password-stdin
+              if: ${{ steps.check.outputs.ghcr_skip == 'false' }}
 
             - name: Install dependencies for runner
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
                 pip install -r requirements.txt
+              if: ${{ steps.check.outputs.skip_all == 'false' }}
 
-            - name: Build and push the image
+            - name: Build the images
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
@@ -64,6 +82,59 @@ jobs:
                 --pull
                 --create-images
                 --pull-php-base-image
-                --push-images
                 --php-version ${{ matrix.phpVersion }}
-              if: ${{ steps.check.outputs.skip == 'false' }}
+              if: ${{ steps.check.outputs.skip_all == 'false' }}
+
+            - name: Tag images for Docker Hub
+              id: tag_docker_hub
+              shell: bash
+              run: |
+                docker tag cookbook_unittesting_dut nextcloudcookbook/testci:php${{ matrix.phpVersion }}
+                docker tag cookbook_unittesting_mysql nextcloudcookbook/mariadb-test:latest
+                docker tag cookbook_unittesting_postgres nextcloudcookbook/postgres-test:latest
+              continue-on-error: true
+              if: ${{ steps.check.outputs.docker_hub_skip == 'false' }}
+
+            - name: Push images to Docker Hub
+              id: push_docker_hub
+              shell: bash
+              run: |
+                docker push nextcloudcookbook/testci:php${{ matrix.phpVersion }}
+                docker push nextcloudcookbook/mariadb-test:latest
+                docker push nextcloudcookbook/postgres-test:latest
+              continue-on-error: true
+              if: ${{ steps.check.outputs.docker_hub_skip == 'false' }}
+
+            - name: Tag images for GitHub Container Registry
+              id: tag_ghcr
+              shell: bash
+              run: |
+                docker tag cookbook_unittesting_dut ghcr.io/nextcloud/cookbook/testci:php${{ matrix.phpVersion }}
+                docker tag cookbook_unittesting_mysql ghcr.io/nextcloud/cookbook/mariadb-test:latest
+                docker tag cookbook_unittesting_postgres ghcr.io/nextcloud/cookbook/postgres-test:latest
+              continue-on-error: true
+              if: ${{ steps.check.outputs.ghcr_skip == 'false' }}
+
+            - name: Push images to GitHub Container Registry
+              id: push_ghcr
+              shell: bash
+              run: |
+                docker push ghcr.io/nextcloud/cookbook/testci:php${{ matrix.phpVersion }}
+                docker push ghcr.io/nextcloud/cookbook/mariadb-test:latest
+                docker push ghcr.io/nextcloud/cookbook/postgres-test:latest
+              continue-on-error: true
+              if: ${{ steps.check.outputs.ghcr_skip == 'false' }}
+
+            - name: Check image publishing results
+              if: ${{ always() && steps.check.outputs.skip_all == 'false' }}
+              env:
+                DOCKER_HUB_TAG_OUTCOME: ${{ steps.tag_docker_hub.outcome }}
+                DOCKER_HUB_PUSH_OUTCOME: ${{ steps.push_docker_hub.outcome }}
+                GHCR_TAG_OUTCOME: ${{ steps.tag_ghcr.outcome }}
+                GHCR_PUSH_OUTCOME: ${{ steps.push_ghcr.outcome }}
+              shell: bash
+              run: |
+                if [[ "$DOCKER_HUB_TAG_OUTCOME" == "failure" || "$DOCKER_HUB_PUSH_OUTCOME" == "failure" || "$GHCR_TAG_OUTCOME" == "failure" || "$GHCR_PUSH_OUTCOME" == "failure" ]]; then
+                    echo "One or more container image tagging or publishing steps failed."
+                    exit 1
+                fi
