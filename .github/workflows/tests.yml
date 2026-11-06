@@ -197,6 +197,9 @@ jobs:
       - name: Prepare folder for installation of composer dependencies
         run: mkdir -p vendor
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Install Python dependencies for test helper
         run: cd .github/actions/run-tests && pip install -r requirements.txt
       
@@ -204,7 +207,6 @@ jobs:
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
-          --pull
           --create-images
           --input-db ${{ matrix.database }}
           --http-server ${{ matrix.httpServer }}
@@ -367,10 +369,9 @@ jobs:
             fetch-depth: 2
             persist-credentials: false
       
-      - name: Ensure the appinfo is built
-        shell: bash
-        run: make appinfo/info.xml
-      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
         
@@ -384,7 +385,6 @@ jobs:
         run: >-
           cd .github/actions/run-tests &&
           ./run-locally.py
-          --pull
           --create-images
           --input-db mysql
           --http-server nginx

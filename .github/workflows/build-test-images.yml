@@ -13,8 +13,12 @@ jobs:
         name: Build and push the latest test images
         runs-on: ubuntu-latest
         environment: docker-pushing
+        permissions:
+          contents: read
+          packages: write
         
         strategy:
+            fail-fast: false
             matrix:
                 phpVersion:
                     - "8.3"
@@ -26,47 +30,88 @@ jobs:
               shell: bash
               id: check
               run: |
-                echo "skip=false" >> $GITHUB_OUTPUT
+                echo "docker_hub_skip=false" >> $GITHUB_OUTPUT
+                echo "ghcr_skip=true" >> $GITHUB_OUTPUT
+                echo "skip_all=true" >> $GITHUB_OUTPUT
                 if [ -z "${{ secrets.DOCKER_HUB_TOKEN }}" ]; then
-                    echo "skip=true" >> $GITHUB_OUTPUT
+                    echo "docker_hub_skip=true" >> $GITHUB_OUTPUT
                 fi
                 if [ -z "${{ vars.DOCKER_HUB_USERNAME }}" ]; then
-                    echo "skip=true" >> $GITHUB_OUTPUT
+                    echo "docker_hub_skip=true" >> $GITHUB_OUTPUT
+                fi
+                if [ "$GITHUB_REPOSITORY" = "nextcloud/cookbook" ]; then
+                  echo "ghcr_skip=false" >> $GITHUB_OUTPUT
+                fi
+                if [ -n "${{ secrets.DOCKER_HUB_TOKEN }}" ] && [ -n "${{ vars.DOCKER_HUB_USERNAME }}" ] || [ "$GITHUB_REPOSITORY" = "nextcloud/cookbook" ]; then
+                  echo "skip_all=false" >> $GITHUB_OUTPUT
                 fi
             
             - name: Checkout the app
               uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
-              if: ${{ steps.check.outputs.skip == 'false' }}
+              if: ${{ steps.check.outputs.skip_all == 'false' }}
               with:
                 persist-credentials: false
-            - name: Make sure the appinfo is built
-              shell: bash
-              run: make appinfo/info.xml
-              if: ${{ steps.check.outputs.skip == 'false' }}
               
-            - name: Log into docker registry as user
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069
+            - name: Log into Docker Hub
               shell: bash
               run: >-
                 echo "${{ secrets.DOCKER_HUB_TOKEN }}" 
                 | docker login 
                 --username ${{ vars.DOCKER_HUB_USERNAME }}
                 --password-stdin
+              if: ${{ steps.check.outputs.docker_hub_skip == 'false' }}
+            - name: Log into GitHub Container Registry
+              shell: bash
+              run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username "${{ github.actor }}" --password-stdin
+              if: ${{ steps.check.outputs.ghcr_skip == 'false' }}
 
             - name: Install dependencies for runner
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
                 pip install -r requirements.txt
+              if: ${{ steps.check.outputs.skip_all == 'false' }}
 
-            - name: Build and push the image
+            - name: Build and push images to Docker Hub
+              id: push_docker_hub
               shell: bash
               run: >-
                 cd .github/actions/run-tests &&
-                export COMPOSE_DOCKER_CLI_BUILD=1 &&
-                ./run-locally.py
-                --pull
-                --create-images
-                --pull-php-base-image
-                --push-images
-                --php-version ${{ matrix.phpVersion }}
-              if: ${{ steps.check.outputs.skip == 'false' }}
+                docker buildx bake --pull --push 
+                --var PHPVERSION=${{ matrix.phpVersion }} 
+                --var REGISTRY=dockerhub
+                -f docker-compose.yml
+                -f docker-bake.hcl
+                --progress plain
+                dut mysql postgres
+              continue-on-error: true
+              if: ${{ steps.check.outputs.docker_hub_skip == 'false' }}
+
+            - name: Build and push images to GitHub Container Registry
+              id: push_ghcr
+              shell: bash
+              run: >-
+                cd .github/actions/run-tests &&
+                docker buildx bake --pull --push 
+                --var PHPVERSION=${{ matrix.phpVersion }} 
+                --var REGISTRY=ghcr
+                -f docker-compose.yml
+                -f docker-bake.hcl
+                --progress plain
+                dut mysql postgres
+              continue-on-error: true
+              if: ${{ steps.check.outputs.ghcr_skip == 'false' }}
+
+            - name: Check image publishing results
+              if: ${{ always() && steps.check.outputs.skip_all == 'false' }}
+              env:
+                DOCKER_HUB_PUSH_OUTCOME: ${{ steps.push_docker_hub.outcome }}
+                GHCR_PUSH_OUTCOME: ${{ steps.push_ghcr.outcome }}
+              shell: bash
+              run: |
+                if [[ "$DOCKER_HUB_PUSH_OUTCOME" == "failure" || "$GHCR_PUSH_OUTCOME" == "failure" ]]; then
+                    echo "One or more container image tagging or publishing steps failed."
+                    exit 1
+                fi
