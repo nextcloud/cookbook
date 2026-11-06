@@ -8,6 +8,8 @@ import test_runner.ci_printer as l
 import test_runner.proc as p
 import test_runner.docker_helper
 
+buildkitBase =  ['docker', 'buildx', 'bake', '-f', 'docker-compose.yml', '-f', 'docker-bake.hcl']
+
 def pullImages(args, quiet=True):
 	l.logger.printTask('Pulling pre-built images')
 
@@ -26,17 +28,10 @@ def pullImages(args, quiet=True):
 	runPull('cookbook_unittesting_mysql', 'nextcloudcookbook/mariadb-test:latest')
 	runPull('cookbook_unittesting_postgres', 'nextcloudcookbook/postgres-test:latest')
 
-	dockerComposeCmd = test_runner.docker_helper.instance.getDockerCompose()
-
-	cmd = dockerComposeCmd + ['pull']
-	if quiet:
-		cmd.append('--quiet')
-	cmd += ['www']
+	cmd = buildkitBase + ['--load', '--progress', 'plain', 'www']
 	p.pr.run(cmd).check_returncode()
 
 	l.logger.printTask('Pulling images finished')
-
-buildkitBase =  ['docker', 'buildx', 'bake', '-f', 'docker-compose.yml', '-f', 'docker-bake.hcl']
 
 def buildImages(args, pull=True):
 	l.logger.printTask('Building images')
@@ -62,7 +57,7 @@ def pushImages(args):
 
     cmd += [
         '--var', f'PHPVERSION={args.php_version[0]}',
-        '--var', 'PUSH=true',
+        '--var', 'REGISTRY=ghcr',
         'dut', 'mysql', 'postgres',
     ]
 
