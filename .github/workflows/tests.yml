@@ -162,11 +162,7 @@ jobs:
         with:
             fetch-depth: 2
             persist-credentials: false
-      
-      - name: Ensure the appinfo is built
-        shell: bash
-        run: make appinfo/info.xml
-      
+
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
 
@@ -197,83 +193,15 @@ jobs:
       - name: Prepare folder for installation of composer dependencies
         run: mkdir -p vendor
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Install Python dependencies for test helper
-        run: cd .github/actions/run-tests && pip install -r requirements.txt
-      
-      - name: Pull and build the test images
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --create-images
-          --input-db ${{ matrix.database }}
-          --http-server ${{ matrix.httpServer }}
-          --php-version ${{ matrix.phpVersion }}
-
-      - name: Compute the fixture cache key
-        id: fixtureKey
-        env:
-            FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/*.env', '.github/actions/run-tests/mysql/**', '.github/actions/run-tests/postgres/**', '.github/actions/run-tests/test_runner/*.py', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
-        run: >-
-          sha="$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" &&
-          prefix="fixture-tar-${{ matrix.database }}-${{ matrix.coreVersion }}-${{ matrix.phpVersion }}-$FILES_HASH-$(date -u +%G-%V)-" &&
-          echo "prefix=$prefix" >> "$GITHUB_OUTPUT" &&
-          echo "key=$prefix$sha" >> "$GITHUB_OUTPUT"
-
-      - name: Restore the cached fixtures
-        id: fixtureCache
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-            path: ${{ runner.temp }}/fixture.tar
-            key: ${{ steps.fixtureKey.outputs.key }}
-            restore-keys: ${{ steps.fixtureKey.outputs.prefix }}
-
-      - name: Check if the cached fixtures can be used
-        id: fixtureHit
-        run: >-
-          echo "hit=${{ steps.fixtureCache.outputs.cache-hit == 'true' || (github.event_name == 'pull_request' && steps.fixtureCache.outputs.cache-matched-key != '') }}" >> "$GITHUB_OUTPUT"
-
-      - name: Extract the cached fixtures
-        if: steps.fixtureHit.outputs.hit == 'true'
-        run: >-
-          mkdir -p .github/actions/run-tests/volumes/dumps &&
-          sudo tar -xpf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps
-
-      - name: Create the fixtures for the tests
-        id: fixtures
-        run: >-
-          if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
-          cd .github/actions/run-tests &&
-          if [ "${{ steps.fixtureHit.outputs.hit }}" = 'true' ]; then mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data && PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
-          ./run-locally.py
-          $PARAM
-          --activate-fixture default
-          --input-db ${{ matrix.database }}
-          --http-server ${{ matrix.httpServer }}
-          --php-version ${{ matrix.phpVersion }}
-
-      - name: Archive the fixtures
-        id: fixtureArchive
-        if: steps.fixtureHit.outputs.hit != 'true'
-        run: >-
-          echo "key=${{ steps.fixtureKey.outputs.prefix }}$(git -c safe.directory="*" -C .github/actions/run-tests/volumes/nextcloud rev-parse HEAD)" >> "$GITHUB_OUTPUT" &&
-          sudo tar -cf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps version.json fixtures/default &&
-          sudo chown "$USER" "$RUNNER_TEMP/fixture.tar"
-
-      - name: Cache the fixtures
-        if: steps.fixtureHit.outputs.hit != 'true'
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
-        with:
-            path: ${{ runner.temp }}/fixture.tar
-            key: ${{ steps.fixtureArchive.outputs.key }}
-
-      - name: Run test suites
+      - name: Prepare and run test suites
         if: ${{ !cancelled() }}
         uses: ./.github/actions/run-tests
         with:
-          run-tests: ${{ steps.fixtures.outcome == 'success' }}
+          database: ${{ matrix.database }}
+          core-version: stable${{ matrix.coreVersion }}
+          php-version: ${{ matrix.phpVersion }}
+          http-server: ${{ matrix.httpServer }}
+          allow-fixture-fallback: 'true'
       # - name: Upload the code coverage files as artifacts
       #   if: always()
       #   uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -325,45 +253,27 @@ jobs:
         with:
             fetch-depth: 2
             persist-credentials: false
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
-        
-      - name: Prepare folder for installation of composer dependencies
-        run: mkdir -p vendor
 
-      - name: Install Python dependencies for test helper
-        run: cd .github/actions/run-tests && pip install -r requirements.txt
-      
-      - name: Pull and build the test images
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --create-images
-          --input-db mysql
-          --http-server nginx
-          --php-version 8.5
-
-      - name: Create the fixtures for the tests
-        id: fixtures
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --create-fixture  default master
-          --activate-fixture default
-          --input-db mysql
-          --http-server nginx
-          --php-version latest
-          --install-untested
-
-      - name: Run test suites
+      - name: Prepare and run test suites
         if: ${{ !cancelled() }}
         uses: ./.github/actions/run-tests
         with:
-          run-tests: ${{ steps.fixtures.outcome == 'success' }}
+          database: mysql
+          core-version: master
+          php-version: '8.5'
+          http-server: nginx
+          install-untested: 'true'
+
+      - name: Copy coverage reports into non-link folder
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p /tmp/coverage
+          cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage/
+
       - name: Upload the code coverage report for codecov as artifacts
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:

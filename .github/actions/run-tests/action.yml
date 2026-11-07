@@ -2,27 +2,156 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-name: Run test suites
-description: Run Cookbook unit, integration, and migration tests and export their annotations.
+name: Prepare and run tests
+description: Prepare Docker images and cached server fixtures, run Cookbook test suites, and export annotations.
 
 inputs:
-  run-tests:
-    description: Run the tests after fixtures have been prepared.
+  database:
+    description: Database used by the fixture and tests.
     required: true
-  working-directory:
-    description: Repository root containing the test helper.
+  core-version:
+    description: Server branch name, such as stable35 or master.
+    required: true
+  php-version:
+    description: PHP version used by the test image.
+    required: true
+  http-server:
+    description: HTTP server used by the test image.
+    required: true
+  install-untested:
+    description: Install the app even if the server version is not yet supported.
     required: false
-    default: .
+    default: 'false'
+  cache-fixtures:
+    description: Restore and save fixture archives.
+    required: false
+    default: 'true'
+  allow-fixture-fallback:
+    description: Allow a same-period fixture cache fallback (appropriate for stable branches, not master).
+    required: false
+    default: 'false'
 
 runs:
   using: composite
   steps:
-    - name: Run unit tests
-      if: inputs.run-tests == 'true'
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Prepare Composer dependency folder
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      run: mkdir -p vendor
+
+    - name: Install test helper dependencies
+      shell: bash
+      run: pip install -r .github/actions/run-tests/requirements.txt
+
+    - name: Pull and build test images
+      shell: bash
+      working-directory: .github/actions/run-tests
       run: >-
-        cd .github/actions/run-tests &&
+        ./run-locally.py
+        --create-images
+        --input-db ${{ inputs.database }}
+        --http-server ${{ inputs.http-server }}
+        --php-version ${{ inputs.php-version }}
+
+    - name: Compute fixture cache key
+      id: fixture-key
+      if: inputs.cache-fixtures == 'true'
+      shell: bash
+      env:
+        FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/*.env', '.github/actions/run-tests/mysql/**', '.github/actions/run-tests/postgres/**', '.github/actions/run-tests/test_runner/*.py', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
+      run: |
+        server_sha="$(git ls-remote https://github.com/nextcloud/server "refs/heads/${{ inputs.core-version }}" | cut -f1)"
+        if [ -z "$server_sha" ]; then
+          echo "Could not resolve server branch ${{ inputs.core-version }}" >&2
+          exit 1
+        fi
+        prefix="fixture-tar-${{ inputs.database }}-${{ inputs.core-version }}-${{ inputs.php-version }}-${{ inputs.http-server }}-$FILES_HASH-"
+        echo "key-prefix=$prefix" >> "$GITHUB_OUTPUT"
+        if [ "${{ inputs.allow-fixture-fallback }}" = 'true' ]; then
+          period="$(date -u +%G-%V)"
+          echo "period=$period" >> "$GITHUB_OUTPUT"
+          echo "key=${prefix}${period}-${server_sha}" >> "$GITHUB_OUTPUT"
+          echo "restore-prefix=${prefix}${period}-" >> "$GITHUB_OUTPUT"
+        else
+          echo "key=${prefix}${server_sha}" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Restore fixture cache
+      id: fixture-cache
+      if: inputs.cache-fixtures == 'true'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      with:
+        path: ${{ runner.temp }}/fixture.tar
+        key: ${{ steps.fixture-key.outputs.key }}
+        restore-keys: ${{ steps.fixture-key.outputs.restore-prefix }}
+
+    - name: Determine fixture cache hit
+      id: fixture-hit
+      if: inputs.cache-fixtures == 'true'
+      shell: bash
+      run: |
+        hit='${{ steps.fixture-cache.outputs.cache-hit }}'
+        if [ '${{ inputs.allow-fixture-fallback }}' = 'true' ] && [ '${{ github.event_name }}' = 'pull_request' ] && [ -n '${{ steps.fixture-cache.outputs.cache-matched-key }}' ]; then
+          hit=true
+        fi
+        echo "hit=$hit" >> "$GITHUB_OUTPUT"
+
+    - name: Extract cached fixtures
+      if: inputs.cache-fixtures == 'true' && steps.fixture-hit.outputs.hit == 'true'
+      shell: bash
+      run: |
+        mkdir -p .github/actions/run-tests/volumes/dumps
+        sudo tar -xpf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps
+
+    - name: Create or activate fixture
+      id: fixture
+      shell: bash
+      run: |
+        cd .github/actions/run-tests
+        if [ '${{ inputs.database }}' = 'pgsql' ]; then
+          params=()
+        else
+          params=(--use-db-dump)
+        fi
+        if [ '${{ inputs.cache-fixtures }}' = 'true' ] && [ '${{ steps.fixture-hit.outputs.hit }}' = 'true' ]; then
+          mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data
+          params+=(--start-helpers)
+        else
+          params+=(--create-fixture default '${{ inputs.core-version }}')
+        fi
+        if [ '${{ inputs.install-untested }}' = 'true' ]; then
+          params+=(--install-untested)
+        fi
+        ./run-locally.py "${params[@]}" \
+          --activate-fixture default \
+          --input-db '${{ inputs.database }}' \
+          --http-server '${{ inputs.http-server }}' \
+          --php-version '${{ inputs.php-version }}'
+
+    - name: Archive fixtures
+      id: fixture-archive
+      if: inputs.cache-fixtures == 'true' && steps.fixture-hit.outputs.hit != 'true'
+      shell: bash
+      run: |
+        server_sha="$(git -c safe.directory='*' -C .github/actions/run-tests/volumes/nextcloud rev-parse HEAD)"
+        echo "key=${{ steps.fixture-key.outputs.key-prefix }}${{ steps.fixture-key.outputs.period && format('{0}-', steps.fixture-key.outputs.period) }}${server_sha}" >> "$GITHUB_OUTPUT"
+        sudo tar -cf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps version.json fixtures/default
+        sudo chown "$USER" "$RUNNER_TEMP/fixture.tar"
+
+    - name: Save fixture cache
+      if: inputs.cache-fixtures == 'true' && steps.fixture-hit.outputs.hit != 'true'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      with:
+        path: ${{ runner.temp }}/fixture.tar
+        key: ${{ steps.fixture-archive.outputs.key }}
+
+    - name: Run unit tests
+      shell: bash
+      if: always() && steps.fixture.outcome == 'success'
+      working-directory: .github/actions/run-tests
+      run: >-
         ./run-locally.py
         --run-unit-tests
         --extract-code-coverage
@@ -30,11 +159,10 @@ runs:
         --install-composer-deps
 
     - name: Run integration tests
-      if: inputs.run-tests == 'true'
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      if: always() && steps.fixture.outcome == 'success'
+      working-directory: .github/actions/run-tests
       run: >-
-        cd .github/actions/run-tests &&
         ./run-locally.py
         --run-integration-tests
         --extract-code-coverage
@@ -42,11 +170,10 @@ runs:
         --install-composer-deps
 
     - name: Run migration tests
-      if: inputs.run-tests == 'true'
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      if: always() && steps.fixture.outcome == 'success'
+      working-directory: .github/actions/run-tests
       run: >-
-        cd .github/actions/run-tests &&
         ./run-locally.py
         --run-migration-tests
         --extract-code-coverage
@@ -54,28 +181,28 @@ runs:
         --install-composer-deps
 
     - name: Export unit test annotations
-      if: always() && inputs.run-tests == 'true'
+      if: always() && steps.fixture.outcome == 'success'
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: .github/actions/run-tests
       run: |
-        if [ -r .github/actions/run-tests/volumes/coverage/teamcity.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.log
+        if [ -r volumes/coverage/teamcity.log ]; then
+          python extract-annotations.py volumes/coverage/teamcity.log
         fi
 
     - name: Export integration test annotations
-      if: always() && inputs.run-tests == 'true'
+      if: always() && steps.fixture.outcome == 'success'
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: .github/actions/run-tests
       run: |
-        if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log
+        if [ -r volumes/coverage/teamcity.integration.log ]; then
+          python extract-annotations.py volumes/coverage/teamcity.integration.log
         fi
 
     - name: Export migration test annotations
-      if: always() && inputs.run-tests == 'true'
+      if: always() && steps.fixture.outcome == 'success'
       shell: bash
-      working-directory: ${{ inputs.working-directory }}
+      working-directory: .github/actions/run-tests
       run: |
-        if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log
+        if [ -r volumes/coverage/teamcity.migration.log ]; then
+          python extract-annotations.py volumes/coverage/teamcity.migration.log
         fi
