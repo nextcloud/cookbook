@@ -115,3 +115,6 @@ jobs:
                     echo "One or more container image tagging or publishing steps failed."
                     exit 1
                 fi
+
+            - name: Clean up GitHub Container Registry
+              uses: dataaxiom/ghcr-cleanup-action@v1
