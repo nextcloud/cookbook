@@ -118,5 +118,6 @@ jobs:
 
             - name: Clean up GitHub Container Registry
               uses: dataaxiom/ghcr-cleanup-action@v1
+              if: ${{ steps.check.outputs.ghcr_skip == 'false' }}
               with:
                 packages: testci,postgres-test,mariadb-test
