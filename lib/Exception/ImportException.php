@@ -7,7 +7,14 @@
 namespace OCA\Cookbook\Exception;
 
 class ImportException extends \Exception {
-	public function __construct($message = '', $code = 0, $previous = null) {
+	private string $step;
+
+	public function __construct($message = '', $code = 0, $previous = null, string $step = '') {
 		parent::__construct($message, $code, $previous);
+		$this->step = $step;
+	}
+
+	public function getStep(): string {
+		return $this->step;
 	}
 }
