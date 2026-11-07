@@ -8,6 +8,10 @@ on:
     schedule:
         - cron: "30 2 * * *"
 
+concurrency:
+  group: build-test-images
+  cancel-in-progress: false
+
 jobs:
     push:
         name: Build and push the latest test images
