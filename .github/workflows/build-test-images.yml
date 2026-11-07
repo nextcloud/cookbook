@@ -8,6 +8,10 @@ on:
     schedule:
         - cron: "30 2 * * *"
 
+concurrency:
+  group: build-test-images
+  cancel-in-progress: false
+
 jobs:
     push:
         name: Build and push the latest test images
@@ -115,3 +119,21 @@ jobs:
                     echo "One or more container image tagging or publishing steps failed."
                     exit 1
                 fi
+    
+    cleanup:
+      name: Cleanup GitHub Container Registry
+      runs-on: ubuntu-latest
+      needs:
+        - push
+      permissions:
+        contents: read
+        packages: write
+      
+      if: ${{ github.repository == 'nextcloud/cookbook' }}
+        
+      steps:
+
+        - name: Clean up GitHub Container Registry
+          uses: dataaxiom/ghcr-cleanup-action@d52806a0dc70b430571a37da1fde39733ffd640f
+          with:
+            packages: cookbook/testci,cookbook/postgres-test,cookbook/mariadb-test
