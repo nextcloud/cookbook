@@ -132,4 +132,4 @@ jobs:
         - name: Clean up GitHub Container Registry
           uses: dataaxiom/ghcr-cleanup-action@v1
           with:
-            packages: testci,postgres-test,mariadb-test
+            packages: cookbook/testci,cookbook/postgres-test,cookbook/mariadb-test
