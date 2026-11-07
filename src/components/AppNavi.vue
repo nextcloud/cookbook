@@ -28,6 +28,13 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
             </NcActionInput>
 
             <NcAppNavigationItem
+                :name="t('cookbook', 'Import recipe from JSON')"
+                @click="isImportJsonDialogOpen = true"
+            >
+                <template #icon><CodeJsonIcon :size="20" /></template>
+            </NcAppNavigationItem>
+
+            <NcAppNavigationItem
                 :name="t('cookbook', 'All recipes')"
                 icon="icon-category-organization"
                 :to="'/'"
@@ -89,6 +96,10 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                 @click="handleOpenSettings"
             />
         </template>
+        <ImportJsonDialog
+            v-if="isImportJsonDialogOpen"
+            @close="isImportJsonDialogOpen = false"
+        />
     </NcAppNavigation>
 </template>
 
@@ -110,6 +121,7 @@ import NcAppNavigationItem from '@nextcloud/vue/components/NcAppNavigationItem';
 import NcAppNavigationNew from '@nextcloud/vue/components/NcAppNavigationNew';
 import NcCounterBubble from '@nextcloud/vue/components/NcCounterBubble';
 
+import CodeJsonIcon from 'icons/CodeJson.vue';
 import PlusIcon from 'icons/Plus.vue';
 
 import api from 'cookbook/js/api-interface';
@@ -117,6 +129,7 @@ import helpers from 'cookbook/js/helper';
 import { showSimpleAlertModal } from 'cookbook/js/modals';
 
 import emitter from '../bus';
+import ImportJsonDialog from './Modals/ImportJsonDialog.vue';
 import { SHOW_SETTINGS_EVENT } from '../composables/useSettingsDialog';
 import { useLegacyStore } from '../store';
 import type { Recipe } from '../types/Recipe';
@@ -152,6 +165,7 @@ const uncatRecipes = ref(0);
  * @type {import('vue').Ref<string>}
  */
 const importUrl = ref('');
+const isImportJsonDialogOpen = ref(false);
 
 const categoryOpen = (idx: number) => {
     void openCategory(idx);
