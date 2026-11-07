@@ -1,0 +1,81 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+name: Run test suites
+description: Run Cookbook unit, integration, and migration tests and export their annotations.
+
+inputs:
+  run-tests:
+    description: Run the tests after fixtures have been prepared.
+    required: true
+  working-directory:
+    description: Repository root containing the test helper.
+    required: false
+    default: .
+
+runs:
+  using: composite
+  steps:
+    - name: Run unit tests
+      if: inputs.run-tests == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: >-
+        cd .github/actions/run-tests &&
+        ./run-locally.py
+        --run-unit-tests
+        --extract-code-coverage
+        --keep-code-coverage
+        --install-composer-deps
+
+    - name: Run integration tests
+      if: inputs.run-tests == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: >-
+        cd .github/actions/run-tests &&
+        ./run-locally.py
+        --run-integration-tests
+        --extract-code-coverage
+        --keep-code-coverage
+        --install-composer-deps
+
+    - name: Run migration tests
+      if: inputs.run-tests == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: >-
+        cd .github/actions/run-tests &&
+        ./run-locally.py
+        --run-migration-tests
+        --extract-code-coverage
+        --keep-code-coverage
+        --install-composer-deps
+
+    - name: Export unit test annotations
+      if: always() && inputs.run-tests == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -r .github/actions/run-tests/volumes/coverage/teamcity.log ]; then
+          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.log
+        fi
+
+    - name: Export integration test annotations
+      if: always() && inputs.run-tests == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
+          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log
+        fi
+
+    - name: Export migration test annotations
+      if: always() && inputs.run-tests == 'true'
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
+          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log
+        fi
