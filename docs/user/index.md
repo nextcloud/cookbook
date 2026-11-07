@@ -62,6 +62,19 @@ Links may be added to other recipes in the fields of *Description*, *Tools*, *In
 
 Click on the recipe, and then click on the pen on top of the screen.
 
+### Editing a recipe with the Nextcloud Assistant
+
+If the [Nextcloud Assistant](https://github.com/nextcloud/assistant) is installed and a text processing provider is configured by your administrator, the three-dot menu at the top of the recipe editor shows the entry *Edit with Assistant*.
+Click it and describe what should be changed, for example:
+
+- Convert all units to metric
+- Translate this recipe to English
+- Split the first step into two steps
+
+The assistant rewrites the recipe accordingly and the result replaces the content of the editor.
+Review the changes and save the recipe to keep them. Reload the recipe to discard them.
+If the assistant is not set up, the button is hidden.
+
 ### Removing a recipe
 
 Click on the recipe, and then click on the dustbin on top of the screen.

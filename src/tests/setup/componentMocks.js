@@ -52,7 +52,11 @@ vi.mock('cookbook/js/helper', () => ({
 }));
 
 vi.mock('icons/ContentCopy.vue', () => ({ default: stub }));
+vi.mock('icons/Creation.vue', () => ({ default: stub }));
 vi.mock('icons/Numeric.vue', () => ({ default: stub }));
+vi.mock('cookbook/components/Modals/AssistantDialog.vue', () => ({
+    default: stub,
+}));
 vi.mock('cookbook/components/Utilities/LoadingIndicator.vue', () => ({
     default: stub,
 }));
