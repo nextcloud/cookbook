@@ -7,7 +7,7 @@ codecov:
 comment:
   behavior: default
   layout: reach,diff,flags,tree
-  require_changes: yes
+  require_changes: true
 coverage:
   precision: 2
   range: [70, 100]
@@ -21,7 +21,7 @@ coverage:
         informational: true
 fixes:
 - '/workdir/nextcloud/apps/cookbook/::'
-- '/var/www/html/custom_apps/::'
+- '/var/www/html/custom_apps/cookbook/::'
 ignore:
 - (?s:vendor/.*/[^\/]*\.php)\Z
 - (?s:\.github/.*/[^\/]*)\Z
