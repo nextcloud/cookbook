@@ -232,6 +232,15 @@ jobs:
           fail_ci_if_error: true
           flags: migration
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
+
+      - name: Upload HTML coverage reports
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: HTML coverage (${{ matrix.database }}, stable${{ matrix.coreVersion }}, ${{ matrix.httpServer }}, ${{ matrix.phpVersion }})
+          path: .github/actions/run-tests/volumes/coverage/run-*/coverage-*/
+          if-no-files-found: warn
+
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -299,6 +308,14 @@ jobs:
           fail_ci_if_error: true
           flags: migration
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
+
+      - name: Upload HTML coverage reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: HTML coverage (mysql, master, nginx)
+          path: .github/actions/run-tests/volumes/coverage/run-*/coverage-*/
+          if-no-files-found: warn
 
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
