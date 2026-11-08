@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+codecov:
+  require_ci_to_pass: true
+comment:
+  behavior: default
+  layout: reach,diff,flags,tree
+  require_changes: yes
+coverage:
+  precision: 2
+  range: [70, 100]
+  round: down
+  status:
+    patch:
+      default:
+        informational: true
+    project:
+      default:
+        informational: true
+fixes:
+- '/workdir/nextcloud/apps/cookbook/::'
+- '/var/www/html/custom_apps/cookbook/::'
+ignore:
+- (?s:vendor/.*/[^\/]*\.php)\Z
+- (?s:\.github/.*/[^\/]*)\Z
+parsers:
+  gcov:
+    branch_detection:
+      conditional: true
+      loop: true
+      macro: false
+      method: false
