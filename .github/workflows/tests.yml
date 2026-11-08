@@ -427,17 +427,6 @@ jobs:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
             
-  event_file:
-    name: "Upload Event File"
-    runs-on: ubuntu-latest-low
-    steps:
-    - name: Upload
-      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-      with:
-        name: Event File
-        path: ${{ github.event_path }}
-        retention-days: 1
-
   lint-php:
     name: "Lint PHP files to be compatible"
     runs-on: ubuntu-latest
@@ -514,7 +503,6 @@ jobs:
       - code-lint
       - source-package
       - lint-php
-      - event_file
       - run-js-tests
     steps:
       - name: Run successfully
