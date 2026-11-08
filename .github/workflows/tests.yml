@@ -134,6 +134,9 @@ jobs:
   unit-tests:
     name: Run the unittests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     
     strategy:
         fail-fast: false
@@ -202,6 +205,33 @@ jobs:
           php-version: ${{ matrix.phpVersion }}
           http-server: ${{ matrix.httpServer }}
           allow-fixture-fallback: 'true'
+
+      - name: Upload unit coverage to Codecov
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: unittests
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
+
+      - name: Upload integration coverage to Codecov
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: integration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
+
+      - name: Upload migration coverage to Codecov
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: migration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
       # - name: Upload the code coverage files as artifacts
       #   if: always()
       #   uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -246,6 +276,9 @@ jobs:
   unit-tests-master:
     name: Run the tests against the master branch of the NC server
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     
     steps:
       - name: Checkout the app
@@ -273,6 +306,33 @@ jobs:
         run: |
           mkdir -p /tmp/coverage
           cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage/
+
+      - name: Upload unit coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: unittests,master
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
+
+      - name: Upload integration coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: integration,master
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
+
+      - name: Upload migration coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: migration,master
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
 
       - name: Upload the code coverage report for codecov as artifacts
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
