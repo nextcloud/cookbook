@@ -313,7 +313,7 @@ jobs:
         with:
           use_oidc: true
           fail_ci_if_error: true
-          flags: unittests,master
+          flags: unittests
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
 
       - name: Upload integration coverage to Codecov
@@ -322,7 +322,7 @@ jobs:
         with:
           use_oidc: true
           fail_ci_if_error: true
-          flags: integration,master
+          flags: integration
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
 
       - name: Upload migration coverage to Codecov
@@ -331,7 +331,7 @@ jobs:
         with:
           use_oidc: true
           fail_ci_if_error: true
-          flags: migration,master
+          flags: migration
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
 
       - name: Upload the code coverage report for codecov as artifacts
