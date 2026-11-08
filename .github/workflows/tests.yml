@@ -232,39 +232,12 @@ jobs:
           fail_ci_if_error: true
           flags: migration
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
-      # - name: Upload the code coverage files as artifacts
-      #   if: always()
-      #   uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-      #   with:
-      #       name: Code coverage files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-      #       path: ".github/actions/run-tests/volumes/coverage"
-
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
             name: Nextcloud-logs (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
-      
-      - name: Copy coverage-reports into non-link folder
-        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        shell: bash
-        run: >-
-            mkdir /tmp/coverage &&
-            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
-        
-      - name: Upload the code coverage report for codecov as artifacts
-        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-        with:
-            name: Code coverage (XML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-            path: "/tmp/coverage/coverage.*.xml"
-
-    #   - name: Upload the code coverage report (unit tests) as artifacts
-    #     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-    #     with:
-    #         name: Code coverage (HTML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-    #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -300,13 +273,6 @@ jobs:
           http-server: nginx
           install-untested: 'true'
 
-      - name: Copy coverage reports into non-link folder
-        if: always()
-        shell: bash
-        run: |
-          mkdir -p /tmp/coverage
-          cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage/
-
       - name: Upload unit coverage to Codecov
         if: always()
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
@@ -333,12 +299,6 @@ jobs:
           fail_ci_if_error: true
           flags: migration
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
-
-      - name: Upload the code coverage report for codecov as artifacts
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-        with:
-            name: Code coverage (XML) (mysql, master, apache)
-            path: "/tmp/coverage/coverage.*.xml"
 
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
