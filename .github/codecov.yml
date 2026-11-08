@@ -21,7 +21,7 @@ coverage:
         informational: true
 fixes:
 - '/workdir/nextcloud/apps/cookbook/::'
-- '/var/www/html/custom_apps/cookbook/::'
+- '/var/www/html/custom_apps/::'
 ignore:
 - (?s:vendor/.*/[^\/]*\.php)\Z
 - (?s:\.github/.*/[^\/]*)\Z
