@@ -201,7 +201,7 @@ class RecipeImplementation {
 			$this->service->deleteRecipe($id);
 			return new JSONResponse('Recipe ' . $id . ' deleted successfully', Http::STATUS_OK);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], 502);
+			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_BAD_GATEWAY);
 		}
 	}
 
@@ -376,7 +376,7 @@ class RecipeImplementation {
 
 			return new JSONResponse($recipes, 200, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], 500);
+			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -414,7 +414,7 @@ class RecipeImplementation {
 
 			return new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], 500);
+			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -455,7 +455,7 @@ class RecipeImplementation {
 			return new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
 			// error_log($e->getMessage());
-			return new JSONResponse(['msg' => $e->getMessage()], 500);
+			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 }
