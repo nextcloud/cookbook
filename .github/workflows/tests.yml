@@ -134,6 +134,9 @@ jobs:
   unit-tests:
     name: Run the unittests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     
     strategy:
         fail-fast: false
@@ -162,11 +165,7 @@ jobs:
         with:
             fetch-depth: 2
             persist-credentials: false
-      
-      - name: Ensure the appinfo is built
-        shell: bash
-        run: make appinfo/info.xml
-      
+
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
 
@@ -197,132 +196,50 @@ jobs:
       - name: Prepare folder for installation of composer dependencies
         run: mkdir -p vendor
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Install Python dependencies for test helper
-        run: cd .github/actions/run-tests && pip install -r requirements.txt
-      
-      - name: Pull and build the test images
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --create-images
-          --input-db ${{ matrix.database }}
-          --http-server ${{ matrix.httpServer }}
-          --php-version ${{ matrix.phpVersion }}
-
-      - name: Compute the fixture cache key
-        id: fixtureKey
-        env:
-            FILES_HASH: ${{ hashFiles('lib/Migration/**', 'appinfo/info.xml', '.github/actions/run-tests/*.py', '.github/actions/run-tests/docker-compose.yml', '.github/actions/run-tests/*.env', '.github/actions/run-tests/mysql/**', '.github/actions/run-tests/postgres/**', '.github/actions/run-tests/test_runner/*.py', '.github/actions/run-tests/scripts/**', '.github/actions/run-tests/tests/**') }}
-        run: >-
-          sha="$(git ls-remote https://github.com/nextcloud/server refs/heads/stable${{ matrix.coreVersion }} | cut -f1)" &&
-          prefix="fixture-tar-${{ matrix.database }}-${{ matrix.coreVersion }}-${{ matrix.phpVersion }}-$FILES_HASH-$(date -u +%G-%V)-" &&
-          echo "prefix=$prefix" >> "$GITHUB_OUTPUT" &&
-          echo "key=$prefix$sha" >> "$GITHUB_OUTPUT"
-
-      - name: Restore the cached fixtures
-        id: fixtureCache
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      - name: Prepare and run test suites
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/run-tests
         with:
-            path: ${{ runner.temp }}/fixture.tar
-            key: ${{ steps.fixtureKey.outputs.key }}
-            restore-keys: ${{ steps.fixtureKey.outputs.prefix }}
+          database: ${{ matrix.database }}
+          core-version: stable${{ matrix.coreVersion }}
+          php-version: ${{ matrix.phpVersion }}
+          http-server: ${{ matrix.httpServer }}
+          allow-fixture-fallback: 'true'
 
-      - name: Check if the cached fixtures can be used
-        id: fixtureHit
-        run: >-
-          echo "hit=${{ steps.fixtureCache.outputs.cache-hit == 'true' || (github.event_name == 'pull_request' && steps.fixtureCache.outputs.cache-matched-key != '') }}" >> "$GITHUB_OUTPUT"
-
-      - name: Extract the cached fixtures
-        if: steps.fixtureHit.outputs.hit == 'true'
-        run: >-
-          mkdir -p .github/actions/run-tests/volumes/dumps &&
-          sudo tar -xpf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps
-
-      - name: Create the fixtures for the tests
-        id: fixtures
-        run: >-
-          if [ "${{matrix.database}}" = 'pgsql' ]; then PARAM=''; else PARAM='--use-db-dump'; fi &&
-          cd .github/actions/run-tests &&
-          if [ "${{ steps.fixtureHit.outputs.hit }}" = 'true' ]; then mkdir -p volumes/nextcloud/custom_apps/cookbook volumes/nextcloud/data && PARAM='--start-helpers'; else PARAM="$PARAM --create-fixture default stable${{ matrix.coreVersion }}"; fi &&
-          ./run-locally.py
-          $PARAM
-          --activate-fixture default
-          --input-db ${{ matrix.database }}
-          --http-server ${{ matrix.httpServer }}
-          --php-version ${{ matrix.phpVersion }}
-
-      - name: Archive the fixtures
-        id: fixtureArchive
-        if: steps.fixtureHit.outputs.hit != 'true'
-        run: >-
-          echo "key=${{ steps.fixtureKey.outputs.prefix }}$(git -c safe.directory="*" -C .github/actions/run-tests/volumes/nextcloud rev-parse HEAD)" >> "$GITHUB_OUTPUT" &&
-          sudo tar -cf "$RUNNER_TEMP/fixture.tar" -C .github/actions/run-tests/volumes/dumps version.json fixtures/default &&
-          sudo chown "$USER" "$RUNNER_TEMP/fixture.tar"
-
-      - name: Cache the fixtures
-        if: steps.fixtureHit.outputs.hit != 'true'
-        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+      - name: Upload unit coverage to Codecov
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
-            path: ${{ runner.temp }}/fixture.tar
-            key: ${{ steps.fixtureArchive.outputs.key }}
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: unittests
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
 
-      - name: Run the unit tests
-        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --run-unit-tests
-          --extract-code-coverage
-          --keep-code-coverage
-          --install-composer-deps
+      - name: Upload integration coverage to Codecov
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: integration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
 
-      - name: Run the integration tests
-        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --run-integration-tests
-          --extract-code-coverage
-          --keep-code-coverage
-          --install-composer-deps
+      - name: Upload migration coverage to Codecov
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: migration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
 
-      - name: Run the migration tests
-        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --run-migration-tests
-          --extract-code-coverage
-          --keep-code-coverage
-          --install-composer-deps
-      
-      - name: Export the annotations of unit tests to github
-        shell: bash
-        run: >-
-          if [ -r .github/actions/run-tests/volumes/coverage/teamcity.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.log ;
-          fi
-      - name: Export the annotations of integration tests to github
-        shell: bash
-        run: >-
-          if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log ;
-          fi
-      - name: Export the annotations of migration tests to github
-        shell: bash
-        run: >-
-          if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log ;
-          fi
-      # - name: Upload the code coverage files as artifacts
-      #   if: always()
-      #   uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-      #   with:
-      #       name: Code coverage files (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-      #       path: ".github/actions/run-tests/volumes/coverage"
+      - name: Upload HTML coverage reports
+        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: HTML coverage (${{ matrix.database }}, stable${{ matrix.coreVersion }}, ${{ matrix.httpServer }}, ${{ matrix.phpVersion }})
+          path: .github/actions/run-tests/volumes/coverage/run-*/coverage-*/
+          if-no-files-found: warn
 
       - name: Upload the log file as artifact
         if: steps.ncVersionRequirements.outputs.matchingVersion == 'true' && always()
@@ -330,26 +247,6 @@ jobs:
         with:
             name: Nextcloud-logs (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
             path: .github/actions/run-tests/volumes/data/nextcloud.log
-      
-      - name: Copy coverage-reports into non-link folder
-        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        shell: bash
-        run: >-
-            mkdir /tmp/coverage &&
-            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
-        
-      - name: Upload the code coverage report for codecov as artifacts
-        if: steps.ncVersionRequirements.outputs.matchingVersion == 'true'
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-        with:
-            name: Code coverage (XML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-            path: "/tmp/coverage/coverage.*.xml"
-
-    #   - name: Upload the code coverage report (unit tests) as artifacts
-    #     uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-    #     with:
-    #         name: Code coverage (HTML) (${{matrix.database}}, stable${{matrix.coreVersion}}, ${{matrix.httpServer}}, ${{matrix.phpVersion}})
-    #         path: "/tmp/coverage"
       
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -361,6 +258,9 @@ jobs:
   unit-tests-master:
     name: Run the tests against the master branch of the NC server
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     
     steps:
       - name: Checkout the app
@@ -368,114 +268,54 @@ jobs:
         with:
             fetch-depth: 2
             persist-credentials: false
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
 
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
-        
-      - name: Prepare folder for installation of composer dependencies
-        run: mkdir -p vendor
 
-      - name: Install Python dependencies for test helper
-        run: cd .github/actions/run-tests && pip install -r requirements.txt
-      
-      - name: Pull and build the test images
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --create-images
-          --input-db mysql
-          --http-server nginx
-          --php-version 8.5
+      - name: Prepare and run test suites
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/run-tests
+        with:
+          database: mysql
+          core-version: master
+          php-version: '8.5'
+          http-server: nginx
+          install-untested: 'true'
 
-      - name: Create the fixtures for the tests
-        id: fixtures
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --create-fixture  default master
-          --activate-fixture default
-          --input-db mysql
-          --http-server nginx
-          --php-version latest
-          --install-untested
-
-      - name: Run the unit tests
-        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --run-unit-tests
-          --extract-code-coverage
-          --keep-code-coverage
-          --install-composer-deps
-
-      - name: Run the integration tests
-        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --run-integration-tests
-          --extract-code-coverage
-          --keep-code-coverage
-          --install-composer-deps
-
-      - name: Run the migration tests
-        if: ${{ !cancelled() && steps.fixtures.outcome == 'success' }}
-        run: >-
-          cd .github/actions/run-tests &&
-          ./run-locally.py
-          --run-migration-tests
-          --extract-code-coverage
-          --keep-code-coverage
-          --install-composer-deps
-      
-      - name: Export the annotations of unit tests to github
-        shell: bash
-        run: >-
-          if [ -r .github/actions/run-tests/volumes/coverage/teamcity.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.log ;
-          fi
-      - name: Export the annotations of integration tests to github
-        shell: bash
-        run: >-
-          if [ -r .github/actions/run-tests/volumes/coverage/teamcity.integration.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.integration.log ;
-          fi
-      - name: Export the annotations of migration tests to github
-        shell: bash
-        run: >-
-          if [ -r .github/actions/run-tests/volumes/coverage/teamcity.migration.log ]; then
-          python .github/actions/run-tests/extract-annotations.py .github/actions/run-tests/volumes/coverage/teamcity.migration.log ;
-          fi
-      
-      # - name: Upload the coverage files as artifact
-      #   uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-      #   with:
-      #       name: Coverage files (mysql, master, apache)
-      #       path: .github/actions/run-tests/volumes/coverage
-      #   if: always()
-
-      - name: Upload the log file as artifact
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+      - name: Upload unit coverage to Codecov
         if: always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
         with:
-            name: Nextcloud-logs (mysql, master, apache)
-            path: .github/actions/run-tests/volumes/data/nextcloud.log
-      
-      - name: Copy coverage-reports into non-link folder
-        shell: bash
-        run: >-
-            mkdir /tmp/coverage &&
-            cp .github/actions/run-tests/volumes/coverage/run-*/coverage.*.xml /tmp/coverage
-        
-      - name: Upload the code coverage report for codecov as artifacts
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: unittests
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
+
+      - name: Upload integration coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: integration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
+
+      - name: Upload migration coverage to Codecov
+        if: always()
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: migration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml
+
+      - name: Upload HTML coverage reports
+        if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-            name: Code coverage (XML) (mysql, master, apache)
-            path: "/tmp/coverage/coverage.*.xml"
+          name: HTML coverage (mysql, master, nginx)
+          path: .github/actions/run-tests/volumes/coverage/run-*/coverage-*/
+          if-no-files-found: warn
 
       - name: Upload the junit log file artifact as artifact
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
@@ -564,17 +404,6 @@ jobs:
                 name: cookbook-appstore
                 path: /tmp/appstore.tar.gz
             
-  event_file:
-    name: "Upload Event File"
-    runs-on: ubuntu-latest-low
-    steps:
-    - name: Upload
-      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
-      with:
-        name: Event File
-        path: ${{ github.event_path }}
-        retention-days: 1
-
   lint-php:
     name: "Lint PHP files to be compatible"
     runs-on: ubuntu-latest
@@ -651,7 +480,6 @@ jobs:
       - code-lint
       - source-package
       - lint-php
-      - event_file
       - run-js-tests
     steps:
       - name: Run successfully
