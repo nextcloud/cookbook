@@ -265,23 +265,15 @@ const downloadRecipe = async () => {
         importUrl.value = '';
     } catch (error: unknown) {
         const e2 = error as {
-            response?: {
-                status: number;
-                data: string | { msg?: string } | null;
-            };
+            response?: { status: number; data?: { msg?: string } };
         };
         downloading.value = false;
 
         if (e2.response) {
             if (e2.response.status >= 400 && e2.response.status < 500) {
-                const data = e2.response.data;
-                const message =
-                    typeof data === 'string'
-                        ? data
-                        : (data?.msg ?? t('cookbook', 'Import failed.'));
                 await showSimpleAlertModal(
                     t('cookbook', 'Import Error'),
-                    message,
+                    e2.response.data?.msg ?? t('cookbook', 'Import failed.'),
                 );
             } else {
                 console.error(e2);
