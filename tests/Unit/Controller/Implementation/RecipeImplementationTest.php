@@ -204,7 +204,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->recipeService->method('downloadRecipe')->willReturn($file);
 		$this->recipeService->method('parseRecipeFile')->willReturn(['name' => 'The recipe name']);
 		$this->dbCacheService->method('addRecipe')->willThrowException(new InvalidJSONFileException('Invalid JSON'));
-		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(42);
+		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(42)->willThrowException(new Exception('Cannot delete'));
 
 		/**
 		 * @var JSONResponse $ret
@@ -567,6 +567,36 @@ class RecipeImplementationTest extends TestCase {
 
 		$this->assertEquals(409, $ret->getStatus());
 		$this->assertEquals(['msg' => 'message'], $ret->getData());
+	}
+
+	public static function dpSaveMethods(): array {
+		return [
+			'create' => ['create', []],
+			'update' => ['update', [1]],
+		];
+	}
+
+	/**
+	 * @dataProvider dpSaveMethods
+	 */
+	public function testSaveInvalidJson(string $method, array $args): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['name' => 'The recipe name'];
+		$this->restParser->method('getParameters')->willReturn($recipe);
+
+		$file = $this->createStub(File::class);
+		$file->method('getParent')->willReturnSelf();
+		$file->method('getId')->willReturn(23);
+
+		$this->recipeService->method('addRecipe')->willReturn($file);
+		$this->dbCacheService->method('addRecipe')->willThrowException(new InvalidJSONFileException('Invalid JSON'));
+		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(23)->willThrowException(new Exception('Cannot delete'));
+
+		$ret = $this->sut->$method(...$args);
+
+		$this->assertEquals(422, $ret->getStatus());
+		$this->assertEquals(['msg' => 'Invalid JSON'], $ret->getData());
 	}
 
 	public function testShow(): void {
