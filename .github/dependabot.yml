@@ -50,4 +50,13 @@ updates:
   open-pull-requests-limit: 10
   cooldown:
     default-days: 7
+- package-ecosystem: github-actions
+  directory: "/.github/actions/run-tests"
+  schedule:
+    timezone: Europe/Berlin
+    interval: daily
+    time: "02:50"
+  open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
 
