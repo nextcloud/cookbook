@@ -54,7 +54,7 @@ class CategoryImplementation {
 
 		$json = $this->restParser->getParameters();
 		if (!$json || !isset($json['name']) || !$json['name']) {
-			return new JSONResponse(['msg' => 'New category name not found in data'], 400);
+			return new JSONResponse(['msg' => 'New category name not found in data'], Http::STATUS_BAD_REQUEST);
 		}
 
 		$category = urldecode($category);
@@ -71,7 +71,7 @@ class CategoryImplementation {
 
 			return new JSONResponse($json['name'], Http::STATUS_OK);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], 500);
+			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
 		}
 	}
 }
