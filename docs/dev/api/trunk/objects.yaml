@@ -81,7 +81,7 @@ Error:
       example: Recipe could not be found
     step:
       type: string
-      description: The import step that failed. Only present on import errors.
+      description: The import step that failed. Only present on import failures at a given step.
       enum: [download, parse_html, extract_recipe]
       example: download
 

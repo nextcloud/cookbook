@@ -8,7 +8,6 @@ namespace OCA\Cookbook\Controller\Implementation;
 
 use Exception;
 use OCA\Cookbook\Exception\ImportException;
-use OCA\Cookbook\Exception\InvalidDownloadURLException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
@@ -21,7 +20,6 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\DataDisplayResponse;
-use OCP\AppFramework\Http\DataResponse;
 use OCP\AppFramework\Http\FileDisplayResponse;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IL10N;
@@ -288,22 +286,18 @@ class RecipeImplementation {
 		$data = $this->restParser->getParameters();
 
 		if (!isset($data['url'])) {
-			return new JSONResponse('Field "url" is required', 400);
+			return new JSONResponse(['msg' => 'Field "url" is required'], Http::STATUS_BAD_REQUEST);
 		}
 
 		if (!is_string($data['url'])) {
-			return new JSONResponse('Field "url" must be a string', 400);
+			return new JSONResponse(['msg' => 'Field "url" must be a string'], Http::STATUS_BAD_REQUEST);
 		}
 
 		$data['url'] = str_replace(' ', '%20', trim($data['url']));
 
 		if (! $this->isDownloadUrlValid($data['url'])) {
 			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $data['url'], 'user' => $this->userId]);
-			// throw new InvalidDownloadURLException($this->l->t('The provided URL is not allowed.'));
-			$json = [
-				'msg' => $this->l->t('The provided URL is not allowed.'),
-			];
-			return new JSONResponse($json['msg'], 400);
+			return new JSONResponse(['msg' => $this->l->t('The provided URL is not allowed.')], Http::STATUS_BAD_REQUEST);
 		}
 
 		try {
@@ -321,7 +315,7 @@ class RecipeImplementation {
 			$this->logger->error('Unexpected error during import of {url}: {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
-			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_BAD_REQUEST);
 		}
 
 		try {
@@ -334,12 +328,12 @@ class RecipeImplementation {
 				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
 			}
 
-			return new DataResponse($ex->getMessage(), 400);
+			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_BAD_REQUEST);
 		} catch (\Exception $e) {
-			$this->logger->error('Unexpected error while caching imported recipe: {reason}', [
+			$this->logger->error('Unexpected error while caching imported recipe from {url}: {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
-			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_BAD_REQUEST);
 		}
 
 		return new JSONResponse($recipe_json, Http::STATUS_OK);
