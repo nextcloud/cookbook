@@ -101,6 +101,7 @@ class CategoryImplementationTest extends TestCase {
 		$ret = $this->sut->rename('');
 
 		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'New category name not found in data'], $ret->getData());
 	}
 
 	public static function dataProviderCategoryUpdateNoName() {
@@ -194,6 +195,6 @@ class CategoryImplementationTest extends TestCase {
 		$ret = $this->sut->rename(urlencode($oldCat));
 
 		$this->assertEquals(500, $ret->getStatus());
-		$this->assertEquals($errorMsg, $ret->getData());
+		$this->assertEquals(['msg' => $errorMsg], $ret->getData());
 	}
 }
