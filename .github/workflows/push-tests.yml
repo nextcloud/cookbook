@@ -58,7 +58,7 @@ jobs:
           allow-fixture-fallback: 'true'
 
       - name: Upload unit coverage to Codecov
-        if: always()
+        if: ${{ !cancelled() && hashFiles('.github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml') != '' }}
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
         with:
           use_oidc: true
@@ -67,7 +67,7 @@ jobs:
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
 
       - name: Upload integration coverage to Codecov
-        if: always()
+        if: ${{ !cancelled() && hashFiles('.github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml') != '' }}
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
         with:
           use_oidc: true
@@ -76,7 +76,7 @@ jobs:
           files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
 
       - name: Upload migration coverage to Codecov
-        if: always()
+        if: ${{ !cancelled() && hashFiles('.github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml') != '' }}
         uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
         with:
           use_oidc: true
