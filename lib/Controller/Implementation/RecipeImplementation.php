@@ -313,12 +313,12 @@ class RecipeImplementation {
 		} catch (RecipeExistsException $ex) {
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
-			$this->logger->warning('Import failed at step "{step}": {reason}', [
+			$this->logger->warning('Import of {url} failed at step "{step}": {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $e->getMessage(), 'step' => $e->getStep()], Http::STATUS_BAD_REQUEST);
 		} catch (\Exception $e) {
-			$this->logger->error('Unexpected error during import: {reason}', [
+			$this->logger->error('Unexpected error during import of {url}: {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_INTERNAL_SERVER_ERROR);
