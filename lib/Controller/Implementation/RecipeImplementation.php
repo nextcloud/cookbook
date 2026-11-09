@@ -145,8 +145,8 @@ class RecipeImplementation {
 
 			try {
 				$this->service->deleteRecipe($file->getParent()->getId());
-			} catch (Exception $ex) {
-				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
+			} catch (Exception $deleteEx) {
+				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $deleteEx]);
 			}
 
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
@@ -178,8 +178,8 @@ class RecipeImplementation {
 
 			try {
 				$this->service->deleteRecipe($file->getParent()->getId());
-			} catch (Exception $ex) {
-				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
+			} catch (Exception $deleteEx) {
+				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $deleteEx]);
 			}
 
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_UNPROCESSABLE_ENTITY);
@@ -325,8 +325,8 @@ class RecipeImplementation {
 
 			try {
 				$this->service->deleteRecipe($recipe_file->getParent()->getId());
-			} catch (Exception $ex) {
-				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $ex]);
+			} catch (Exception $deleteEx) {
+				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $deleteEx]);
 			}
 
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_BAD_REQUEST);

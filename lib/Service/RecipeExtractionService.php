@@ -61,8 +61,6 @@ class RecipeExtractionService {
 		$this->logger->warning('All parsers failed for URL {url}. Details: {detail}', [
 			'url' => $this->urlRedactionHelper->redact($url), 'detail' => $detail,
 		]);
-		throw new HtmlParsingException(
-			$this->l->t('No parser found for the given import.') . ' ' . $detail
-		);
+		throw new HtmlParsingException($this->l->t('No parser found for the given import.'));
 	}
 }
