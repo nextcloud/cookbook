@@ -198,7 +198,7 @@ jobs:
         run: mkdir -p vendor
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Install Python dependencies for test helper
         run: cd .github/actions/run-tests && pip install -r requirements.txt
@@ -370,7 +370,7 @@ jobs:
             persist-credentials: false
       
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       #- name: Docker Layer Caching
         #uses: satackey/action-docker-layer-caching@v0.0.8
