@@ -355,12 +355,12 @@ class RecipeImplementation {
 
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
-			$this->logger->warning('Import failed at step "{step}": {reason}', [
+			$this->logger->warning('Import of {url} failed at step "{step}": {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse($e->getMessage(), 400);
 		} catch (\Exception $e) {
-			$this->logger->error('Unexpected error during import: {reason}', [
+			$this->logger->error('Unexpected error during import of {url}: {reason}', [
 				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse($e->getMessage(), 400);
