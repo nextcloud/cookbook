@@ -30,22 +30,37 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     :is-loading="loading"
                     :is-visible="isFilterControlsVisible"
                 />
-                <ul class="recipes">
-                    <li
-                        v-for="recipeObj in recipeObjects"
-                        v-show="recipeObj.show"
-                        :key="recipeObj.recipe.recipe_id"
+                <!--
+                    Virtualized: one v-show'd <li> per recipe put every card
+                    in the DOM - 30k nodes froze the browser on large
+                    libraries. Only the visible rows are rendered now.
+                -->
+                <div ref="listEl">
+                    <RecycleScroller
+                        page-mode
+                        class="recipes-virtual"
+                        :items="visibleRecipes"
+                        :item-size="cellHeight"
+                        :grid-items="gridItems"
+                        :item-secondary-size="cellWidth"
+                        key-field="recipe_id"
+                        emit-update
+                        @update="measureCell"
                     >
-                        <RecipeCard :recipe="recipeObj.recipe" />
-                    </li>
-                </ul>
+                        <template #default="{ item }">
+                            <RecipeCard :recipe="item" />
+                        </template>
+                    </RecycleScroller>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { RecycleScroller } from 'vue-virtual-scroller';
+import 'vue-virtual-scroller/index.css';
 import { useLegacyStore } from '../../store';
 import applyRecipeFilters from '../../js/utils/applyRecipeFilters';
 import {
@@ -91,6 +106,50 @@ const filterKeywordsTypeUseAnd = ref(true);
  * @type {import('vue').Ref<boolean>}
  */
 const isFilterControlsVisible = ref(false);
+
+// Grid geometry for the virtual scroller, measured instead of assumed: a cell
+// is a rendered card plus its margins, the column count is the list's own
+// width over the cell width. The initial values (today's RecipeCard: 300px
+// + 2 × 1rem wide, 105px + 1.5rem tall) only last until the first card is
+// laid out.
+const listEl = ref<HTMLElement | null>(null);
+const cellWidth = ref(332);
+const cellHeight = ref(130);
+const listWidth = ref(0);
+const gridItems = computed(() =>
+    Math.max(1, Math.floor(listWidth.value / cellWidth.value)),
+);
+
+function measureCell() {
+    const card = listEl.value?.querySelector<HTMLElement>('.recipe-card');
+    if (!card) return;
+    const css = getComputedStyle(card);
+    const width = Math.round(
+        card.offsetWidth +
+            parseFloat(css.marginLeft) +
+            parseFloat(css.marginRight),
+    );
+    const height = Math.round(
+        card.offsetHeight +
+            parseFloat(css.marginTop) +
+            parseFloat(css.marginBottom),
+    );
+    if (width > 0) cellWidth.value = width;
+    if (height > 0) cellHeight.value = height;
+}
+
+const resizeObserver = new ResizeObserver(([entry]) => {
+    listWidth.value = entry.contentRect.width;
+});
+watch(
+    listEl,
+    (el, old) => {
+        if (old) resizeObserver.unobserve(old);
+        if (el) resizeObserver.observe(el);
+    },
+    { flush: 'post' },
+);
+onBeforeUnmount(() => resizeObserver.disconnect());
 
 const orderBy = ref({
     label: t('cookbook', 'Name'),
@@ -267,6 +326,13 @@ const recipeObjects = computed(() => {
     }
     return props.recipes.map(makeObject);
 });
+
+// What the virtual scroller renders: the sorted recipes the filters let
+// through. EmptyList stays gated on recipeObjects (all recipes), so a filter
+// matching nothing keeps the filter controls on screen.
+const visibleRecipes = computed(() =>
+    recipeObjects.value.filter((o) => o.show).map((o) => o.recipe),
+);
 
 const showFiltersInRecipeList = computed(
     () => legacyStore.localSettings.showFiltersInRecipeList,
