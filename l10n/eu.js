@@ -185,6 +185,7 @@ OC.L10N.register(
     "Could not start request to save recipe." : "Ezin izan da hasi errezeta gordetzeko eskaera.",
     "Clone of {name}" : "{name}-ren klona",
     "Loading recipe failed" : "Errezeta kargatzeak huts egin du",
+    "Discard changes?" : "Aldaketak baztertu?",
     "Description" : "Deskripzioa",
     "URL" : "URLa",
     "Image" : "Irudia",
