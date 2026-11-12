@@ -135,6 +135,12 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                     {{ t('cookbook', 'Save') }}
                 </button>
             </div>
+            <AssistantDialog
+                v-if="assistantDialogOpen"
+                v-model:open="assistantDialogOpen"
+                :recipe="recipeWithCorrectedYield"
+                @applied="applyAssistantUpdate"
+            />
         </div>
         <!-- Recipe editor container -->
     </div>
@@ -155,6 +161,7 @@ import { onBeforeRouteLeave, onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 import NcActions from '@nextcloud/vue/components/NcActions';
 import NcActionButton from '@nextcloud/vue/components/NcActionButton';
+import { showSuccess } from '@nextcloud/dialogs';
 
 import api from 'cookbook/js/api-interface';
 import helpers from 'cookbook/js/helper';
@@ -170,10 +177,12 @@ import EditInputGroup from './FormComponents/EditInputGroup.vue';
 import EditMultiselect from './FormComponents/EditMultiselect.vue';
 import EditMultiselectInputGroup from './FormComponents/EditMultiselectInputGroup.vue';
 import EditTimeField from './FormComponents/EditTimeField.vue';
+import AssistantDialog from './Modals/AssistantDialog.vue';
 import LoadingIndicator from './Utilities/LoadingIndicator.vue';
 
 import { useLegacyStore } from '../store';
 import emitter from '../bus';
+import type { AssistantRecipeUpdate } from '../types/Assistant';
 import type { Recipe } from '../types/Recipe';
 import type { LegacyEditRecipe } from '../types/LegacyEditRecipe';
 import type { RequestError } from '../types/RequestError';
@@ -349,6 +358,7 @@ const loadingRecipeReferences = ref(true);
  * @type {import('vue').Ref<boolean>}
  */
 const showRecipeYield = ref(true);
+const assistantDialogOpen = ref(false);
 
 // ===================
 // Computed properties
@@ -596,39 +606,49 @@ const initClone = () => {
     });
 };
 
+/**
+ * Align the keyword, category and yield controls with the fields of the recipe.
+ */
+const syncEditorState = () => {
+    selectedKeywords.value = recipe.value.keywords
+        .split(',')
+        .map((kw) => kw.trim())
+        // Remove any empty keywords
+        // If the response from the server is just an empty
+        // string, split will create an array of a single empty
+        // string
+        .filter((kw) => kw !== '');
+
+    // fallback if fetching all keywords fails
+    selectedKeywords.value.forEach((kw) => {
+        if (!allKeywords.value.includes(kw)) {
+            allKeywords.value.push(kw);
+        }
+    });
+
+    // fallback if fetching all categories fails
+    if (
+        recipe.value.recipeCategory &&
+        !allCategories.value.includes(recipe.value.recipeCategory)
+    ) {
+        allCategories.value.push(recipe.value.recipeCategory);
+    }
+
+    if (recipe.value.recipeYield === null) {
+        showRecipeYield.value = false;
+    } else if (!recipe.value.recipeYield) {
+        showRecipeYield.value = false;
+        recipe.value.recipeYield = '';
+    } else {
+        showRecipeYield.value = true;
+    }
+};
+
 const setup = async () => {
     fetchCategories();
     fetchKeywords();
     if (route.params.id) {
-        selectedKeywords.value = recipe.value.keywords
-            .split(',')
-            .map((kw) => kw.trim())
-            // Remove any empty keywords
-            // If the response from the server is just an empty
-            // string, split will create an array of a single empty
-            // string
-            .filter((kw) => kw !== '');
-
-        // fallback if fetching all keywords fails
-        selectedKeywords.value.forEach((kw) => {
-            if (!allKeywords.value.includes(kw)) {
-                allKeywords.value.push(kw);
-            }
-        });
-
-        // fallback if fetching all categories fails
-        if (!allCategories.value.includes(recipe.value.recipeCategory)) {
-            allCategories.value.push(recipe.value.recipeCategory);
-        }
-
-        if (recipe.value.recipeYield === null) {
-            showRecipeYield.value = false;
-        } else if (!recipe.value.recipeYield) {
-            showRecipeYield.value = false;
-            recipe.value.recipeYield = '';
-        } else {
-            showRecipeYield.value = true;
-        }
+        syncEditorState();
 
         // Modify title and update id for clone to indicate difference from original recipe and prevent overwriting
         // original recipe
@@ -697,6 +717,26 @@ const toggleShowRecipeYield = () => {
     formDirty.value = true;
 };
 
+/**
+ * Apply the changes the Nextcloud Assistant made to the recipe in the editor.
+ * The changes are not saved automatically.
+ */
+const applyAssistantUpdate = (update: AssistantRecipeUpdate) => {
+    const { recipeYield, ...fields } = update;
+    Object.assign(recipe.value, fields);
+    if (recipeYield !== undefined) {
+        recipe.value.recipeYield =
+            recipeYield === null ? null : String(recipeYield);
+    }
+    syncEditorState();
+
+    formDirty.value = true;
+    showSuccess(
+        /* prettier-ignore */
+        t('cookbook', 'The Nextcloud Assistant updated the recipe. Review the changes and save the recipe.'),
+    );
+};
+
 // ===================
 // Vue lifecycle
 // ===================
@@ -744,6 +784,10 @@ onMounted(() => {
     emitter.off('reloadRecipeEdit');
     emitter.on('reloadRecipeEdit', () => {
         loadRecipeData();
+    });
+    emitter.off('openAssistantDialog');
+    emitter.on('openAssistantDialog', () => {
+        assistantDialogOpen.value = true;
     });
     emitter.off('categoryRenamed');
     emitter.on('categoryRenamed', (rawValue) => {

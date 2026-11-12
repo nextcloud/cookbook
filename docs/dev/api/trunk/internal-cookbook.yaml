@@ -71,6 +71,8 @@ tags:
     description: Access to tags/keywords of recipes
   - name: Misc
     description: Other API endpoints
+  - name: Assistant
+    description: Improving recipes using the Nextcloud Assistant
 
 
 
@@ -87,6 +89,10 @@ components:
       $ref: objects.yaml#/StubList
     Recipe:
       $ref: objects.yaml#/Recipe
+    AssistantTaskState:
+      $ref: objects.yaml#/AssistantTaskState
+    AssistantRecipeUpdate:
+      $ref: objects.yaml#/AssistantRecipeUpdate
   
   securitySchemes:
     # app_password:
@@ -516,3 +522,97 @@ paths:
                 type: string
                 description: The error message
                 example: There exists already a category of that name.
+  /webapp/assistant/tasks:
+    post:
+      tags: [ Assistant ]
+      summary: Ask the Nextcloud Assistant to change a recipe according to an instruction
+      description: >-
+        This schedules a text processing task on the Nextcloud server and returns immediately.
+        The result of the task has to be polled using the returned task id.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipe:
+                  $ref: "#/components/schemas/Recipe"
+                prompt:
+                  type: string
+                  description: The instruction for the assistant
+                  example: Convert all units to metric
+              required:
+                - recipe
+                - prompt
+      responses:
+        200:
+          description: The task was scheduled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The id of the scheduled task
+                    example: 42
+        400:
+          description: The recipe or the instruction is missing
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        503:
+          description: The assistant is not available
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /webapp/assistant/tasks/{id}:
+    get:
+      tags: [ Assistant ]
+      summary: Get the state and the result of a scheduled assistant task
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the task as returned when scheduling it
+          schema:
+            type: integer
+      responses:
+        200:
+          description: The current state of the task
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AssistantTaskState"
+        404:
+          description: There is no such task for the current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags: [ Assistant ]
+      summary: Cancel a scheduled assistant task
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The id of the task as returned when scheduling it
+          schema:
+            type: integer
+      responses:
+        200:
+          description: The task was cancelled
+          content:
+            application/json:
+              schema:
+                type: string
+                example: OK
+        404:
+          description: There is no such task for the current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
