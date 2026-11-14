@@ -17,6 +17,7 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -86,9 +87,17 @@ class HtmlDownloadService {
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
+		$this->logger->info('Starting recipe download from {url}', ['url' => UrlRedactionHelper::redact($url)]);
+
 		$html = $this->fetchHtmlPage($url);
 
-		// Filter the HTML code
+		$this->logger->debug('Downloaded {url}: HTTP {status}, content-type {ct}, size {size} bytes', [
+			'url' => UrlRedactionHelper::redact($url),
+			'status' => $this->downloadHelper->getStatus(),
+			'ct' => $this->downloadHelper->getContentType() ?? 'unknown',
+			'size' => strlen($html),
+		]);
+
 		/** @var AbstractHtmlFilter $filter */
 		foreach ($this->htmlFilters as $filter) {
 			$filter->apply($html);
@@ -121,7 +130,7 @@ class HtmlDownloadService {
 		$host = parse_url($url);
 
 		if (!$host) {
-			throw new ImportException($this->l->t('Could not parse URL'));
+			throw new ImportException($this->l->t('Could not parse URL'), step: 'download');
 		}
 
 		$opt = [
@@ -150,13 +159,13 @@ class HtmlDownloadService {
 		try {
 			$this->downloadHelper->downloadFile($url, $opt, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$url, $ex->getMessage()]), 0, $ex);
+			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$url, $ex->getMessage()]), 0, $ex, step: 'download');
 		}
 
 		$status = $this->downloadHelper->getStatus();
 
 		if ($status < 200 || $status >= 300) {
-			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
+			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]), step: 'download');
 		}
 
 		$html = $this->downloadHelper->getContent();
