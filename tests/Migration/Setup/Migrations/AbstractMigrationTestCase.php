@@ -44,6 +44,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	abstract protected function getPreviousMigrationName(): ?string;
 
 	private const TMP_MIGRATIONS = '/tmp/old-migrations';
+	private const DB_TABLE_PREFIX = 'oc_';
 
 	public function setUp(): void {
 		parent::setUp();
@@ -114,20 +115,33 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	}
 
 	private function resetCookbookTables(): void {
-		foreach ($this->schema->getTables() as $t) {
-			// mysql/pgsql names are schema-qualified, e.g. public.oc_cookbook_names
-			if (preg_match('/^(?:.*\.)?oc_(cookbook.*)$/', $t->getName(), $m)) {
-				$this->schema->dropTable($m[1]);
+		$this->dropCookbookTables();
+		$this->deleteCookbookMigrationEntries();
+		$this->renewSchema();
+	}
+
+	private function dropCookbookTables(): void {
+		foreach ($this->schema->getTables() as $table) {
+			$name = $this->withoutSchemaQualifier($table->getName());
+			if (str_starts_with($name, self::DB_TABLE_PREFIX . 'cookbook')) {
+				$this->schema->dropTable(substr($name, strlen(self::DB_TABLE_PREFIX)));
 			}
 		}
+		$this->schema->performDropTableCalls();
+	}
 
+	private function deleteCookbookMigrationEntries(): void {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete('migrations')->where('app = :app');
 		$qb->setParameter('app', 'cookbook');
 		$qb->executeStatement();
+	}
 
-		$this->schema->performDropTableCalls();
-
-		$this->renewSchema();
+	/**
+	 * mysql/pgsql return schema-qualified names, e.g. public.oc_cookbook_names
+	 */
+	private function withoutSchemaQualifier(string $tableName): string {
+		$parts = explode('.', $tableName);
+		return end($parts);
 	}
 }

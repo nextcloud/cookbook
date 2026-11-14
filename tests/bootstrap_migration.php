@@ -6,10 +6,12 @@
 
 require_once __DIR__ . '/bootstrap_helper.php';
 
-// Runs once per isolated test process: restore fully only in the parent, tests reset cookbook tables themselves.
-if (getenv('COOKBOOK_MIGRATION_ENV_RESET') === false) {
+// PHPUnit reruns this bootstrap in each isolated test process; tests reset cookbook tables themselves.
+const ENV_RESET_DONE = 'COOKBOOK_MIGRATION_ENV_RESET_DONE';
+$isFirstRun = getenv(ENV_RESET_DONE) === false;
+if ($isFirstRun) {
 	resetEnvironmentToBackup('plain', false);
-	putenv('COOKBOOK_MIGRATION_ENV_RESET=1');
+	putenv(ENV_RESET_DONE . '=1');
 }
 
 require_once __DIR__ . '/../../../tests/bootstrap.php';
