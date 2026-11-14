@@ -33,10 +33,8 @@ RUN pecl update-channels && \
 	pecl install xdebug >/dev/null && \
 	docker-php-ext-enable xdebug > /dev/null
 
-# pcov is much faster than xdebug for coverage; auto-detected directory would be the JS src/ folder
 RUN pecl install pcov > /dev/null && \
-	docker-php-ext-enable pcov > /dev/null && \
-	echo 'pcov.directory=/var/www/html/custom_apps/cookbook/lib' >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini
+	docker-php-ext-enable pcov > /dev/null
 
 RUN npm install -g --quiet --loglevel warn npm@^9
 
@@ -48,6 +46,9 @@ RUN wget -O /phpunit -q https://phar.phpunit.de/phpunit-10.phar && \
 
 COPY xdebug.config /tmp/xdebug.config
 RUN cat /tmp/xdebug.config >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+COPY pcov.config /tmp/pcov.config
+RUN cat /tmp/pcov.config >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini
 
 COPY zz-php-fpm-user.conf /usr/local/etc/php-fpm.d/
 
