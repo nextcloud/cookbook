@@ -6,7 +6,6 @@
 
 namespace OCA\Cookbook\tests\Migration\Setup\Migrations;
 
-use Doctrine\DBAL\Schema\Table;
 use OC\DB\Connection;
 use OC\DB\MigrationService;
 use OC\DB\SchemaWrapper;
@@ -115,16 +114,11 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	}
 
 	private function resetCookbookTables(): void {
-		$allTables = $this->schema->getTables();
-		$tables = array_filter($allTables, function (Table $t) {
-			return str_starts_with($t->getName(), 'oc_cookbook');
-		});
-
-		/**
-		 * @var Table $t
-		 */
-		foreach ($tables as $t) {
-			$this->schema->dropTable(preg_replace('/^oc_/', '', $t->getName()));
+		foreach ($this->schema->getTables() as $t) {
+			// mysql/pgsql names are schema-qualified, e.g. public.oc_cookbook_names
+			if (preg_match('/^(?:.*\.)?oc_(cookbook.*)$/', $t->getName(), $m)) {
+				$this->schema->dropTable($m[1]);
+			}
 		}
 
 		$qb = $this->db->getQueryBuilder();
