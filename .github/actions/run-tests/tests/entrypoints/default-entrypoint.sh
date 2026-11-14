@@ -42,7 +42,10 @@ if [ `whoami` = root ]; then
 			XDEBUG_LOG_LEVEL=3
 		fi
 		
-		mode="develop,$DEBUG_MODE"
+		mode="develop,coverage,$DEBUG_MODE"
+		
+		# pcov breaks xdebug debugging, so let xdebug collect coverage instead
+		echo 'pcov.enabled=0' >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini
 		
 		cat >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini <<- EOF
 			
