@@ -6,7 +6,11 @@
 
 require_once __DIR__ . '/bootstrap_helper.php';
 
-resetEnvironmentToBackup('plain', false);
+// Runs once per isolated test process: restore fully only in the parent, tests reset cookbook tables themselves.
+if (getenv('COOKBOOK_MIGRATION_ENV_RESET') === false) {
+	resetEnvironmentToBackup('plain', false);
+	putenv('COOKBOOK_MIGRATION_ENV_RESET=1');
+}
 
 require_once __DIR__ . '/../../../tests/bootstrap.php';
 

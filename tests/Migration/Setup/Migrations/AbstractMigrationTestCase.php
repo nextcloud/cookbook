@@ -73,9 +73,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 			$this->connection = $this->db;
 		}
 
-		if ($_ENV['INPUT_DB'] === 'sqlite') {
-			$this->resetSQLite();
-		}
+		$this->resetCookbookTables();
 
 		$this->migrationService = new MigrationService('cookbook', $this->connection);
 		$this->assertIsObject($this->migrationService);
@@ -116,7 +114,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		exec('mv ' . self::TMP_MIGRATIONS . '/* lib/Migration');
 	}
 
-	private function resetSQLite(): void {
+	private function resetCookbookTables(): void {
 		$allTables = $this->schema->getTables();
 		$tables = array_filter($allTables, function (Table $t) {
 			return str_starts_with($t->getName(), 'oc_cookbook');
