@@ -15,9 +15,6 @@ use OCP\IDBConnection;
 use OCP\Util;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- */
 abstract class AbstractMigrationTestCase extends TestCase {
 	/**
 	 * @var IAppContainer
@@ -46,12 +43,17 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	private const TMP_MIGRATIONS = '/tmp/old-migrations';
 	private const DB_TABLE_PREFIX = 'oc_';
 
+	private static bool $appEnabled = false;
+
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->hideMigrations();
-		$this->enableApp();
-		$this->restoreMigrations();
+		if (!self::$appEnabled) {
+			$this->hideMigrations();
+			$this->enableApp();
+			$this->restoreMigrations();
+			self::$appEnabled = true;
+		}
 
 		$app = new App('cookbook');
 		$this->container = $app->getContainer();
