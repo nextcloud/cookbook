@@ -175,7 +175,7 @@ class HtmlDownloadService {
 			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
 			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
 		} catch (CouldNotGuessEncodingException $ex) {
-			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
+			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$this->urlRedactionHelper->redact($url)]));
 		}
 
 		return $html;

@@ -160,7 +160,7 @@ class RecipeService {
 	 *
 	 * @throws Exception
 	 */
-	public function checkRecipe(array $json): array {
+	public function checkRecipe(#[\SensitiveParameter] array $json): array {
 		if (!$json) {
 			throw new Exception($this->il10n->t('Recipe array was null'));
 		}
@@ -192,7 +192,7 @@ class RecipeService {
 	 *
 	 * @return File
 	 */
-	public function addRecipe($json, $importedHtml = null) {
+	public function addRecipe(#[\SensitiveParameter] $json, $importedHtml = null) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
 			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}

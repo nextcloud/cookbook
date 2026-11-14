@@ -48,7 +48,7 @@ class JSONFilter {
 		];
 	}
 
-	public function apply(array $json): array {
+	public function apply(#[\SensitiveParameter] array $json): array {
 		foreach ($this->filters as $filter) {
 			$filter->apply($json);
 		}
