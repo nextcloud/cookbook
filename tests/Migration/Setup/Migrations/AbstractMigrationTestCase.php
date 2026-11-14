@@ -115,6 +115,8 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	}
 
 	private function resetCookbookTables(): void {
+		// The container-built SchemaWrapper wraps an empty Schema, so it sees no tables
+		$this->renewSchema();
 		$this->dropCookbookTables();
 		$this->deleteCookbookRows('migrations', 'app');
 		$this->deleteCookbookRows('preferences', 'appid');
@@ -123,7 +125,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 
 	private function dropCookbookTables(): void {
 		foreach ($this->schema->getTables() as $table) {
-			$name = $this->withoutSchemaQualifier($table->getName());
+			$name = $table->getName();
 			if (str_starts_with($name, self::DB_TABLE_PREFIX . 'cookbook')) {
 				$this->schema->dropTable(substr($name, strlen(self::DB_TABLE_PREFIX)));
 			}
@@ -135,13 +137,5 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		$qb = $this->db->getQueryBuilder();
 		$qb->delete($table)->where($qb->expr()->eq($appColumn, $qb->createNamedParameter('cookbook')));
 		$qb->executeStatement();
-	}
-
-	/**
-	 * mysql/pgsql return schema-qualified names, e.g. public.oc_cookbook_names
-	 */
-	private function withoutSchemaQualifier(string $tableName): string {
-		$parts = explode('.', $tableName);
-		return end($parts);
 	}
 }
