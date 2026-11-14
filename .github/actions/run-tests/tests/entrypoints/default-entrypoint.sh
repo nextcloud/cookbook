@@ -42,7 +42,7 @@ if [ `whoami` = root ]; then
 			XDEBUG_LOG_LEVEL=3
 		fi
 		
-		mode="develop,coverage,$DEBUG_MODE"
+		mode="develop,$DEBUG_MODE"
 		
 		cat >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini <<- EOF
 			

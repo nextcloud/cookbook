@@ -33,6 +33,11 @@ RUN pecl update-channels && \
 	pecl install xdebug >/dev/null && \
 	docker-php-ext-enable xdebug > /dev/null
 
+# pcov is much faster than xdebug for coverage; auto-detected directory would be the JS src/ folder
+RUN pecl install pcov > /dev/null && \
+	docker-php-ext-enable pcov > /dev/null && \
+	echo 'pcov.directory=/var/www/html/custom_apps/cookbook/lib' >> /usr/local/etc/php/conf.d/docker-php-ext-pcov.ini
+
 RUN npm install -g --quiet --loglevel warn npm@^9
 
 COPY install-composer.sh /tmp/install-composer.sh
