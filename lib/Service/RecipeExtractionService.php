@@ -46,7 +46,7 @@ class RecipeExtractionService {
 	 * @throws HtmlParsingException If no parser was able to successfully parse the document
 	 * @return array The data as returned from the parser
 	 */
-	public function parse(\DOMDocument $document, ?string $url): array {
+	public function parse(\DOMDocument $document, #[\SensitiveParameter] ?string $url): array {
 		$failures = [];
 
 		foreach ($this->parsers as $parser) {

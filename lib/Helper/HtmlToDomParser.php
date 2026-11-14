@@ -61,7 +61,11 @@ class HtmlToDomParser {
 	 */
 	private $l;
 
-	public function __construct(LoggerInterface $logger, IL10N $il10n) {
+	public function __construct(
+		LoggerInterface $logger,
+		IL10N $il10n,
+		private UrlRedactionHelper $urlRedactionHelper,
+	) {
 		$this->logger = $logger;
 		$this->l = $il10n;
 		$this->state = self::PARSING_NOT_DONE;
@@ -76,7 +80,7 @@ class HtmlToDomParser {
 	 * @throws ImportException If the parsing of the HTML page failed completely
 	 * @return DOMDocument The parsed document
 	 */
-	public function loadHtmlString(DOMDocument $dom, string $url, string $html): DOMDocument {
+	public function loadHtmlString(DOMDocument $dom, #[\SensitiveParameter] string $url, string $html): DOMDocument {
 		$libxml_previous_state = libxml_use_internal_errors(true);
 
 		try {
@@ -85,7 +89,7 @@ class HtmlToDomParser {
 			// Error handling
 			$errors = libxml_get_errors();
 			try {
-				$this->checkXMLErrors($errors, $url);
+				$this->checkXMLErrors($errors, $this->urlRedactionHelper->redact($url));
 			} catch (Exception $ex) {
 				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex, step: 'parse_html');
 			}

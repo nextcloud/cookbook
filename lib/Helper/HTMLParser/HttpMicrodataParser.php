@@ -44,7 +44,7 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	}
 
 	#[\Override]
-	public function parse(DOMDocument $document, ?string $url): array {
+	public function parse(DOMDocument $document, #[\SensitiveParameter] ?string $url): array {
 		$this->xpath = new DOMXPath($document);
 
 		$selectorHttp = "//*[@itemscope and @itemtype='http://schema.org/Recipe']";

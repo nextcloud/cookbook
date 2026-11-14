@@ -68,7 +68,7 @@ class DownloadHelper {
 	 * @param array $headers Additional headers to be sent to the server
 	 * @throws NoDownloadWasCarriedOutException if the download fails for some reason
 	 */
-	public function downloadFile(string $url, array $options = [], array $headers = []): void {
+	public function downloadFile(#[\SensitiveParameter] string $url, array $options = [], array $headers = []): void {
 		$this->downloaded = false;
 
 		$client = $this->clientService->newClient();

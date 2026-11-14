@@ -27,6 +27,7 @@ use Exception;
 use LibXMLError;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -83,7 +84,7 @@ class HtmlToDomParserTest extends TestCase {
 		$this->l = $this->createStub(IL10N::class);
 		$this->l->method('t')->will($this->returnArgument(0));
 
-		$this->sut = new HtmlToDomParser($this->logger, $this->l);
+		$this->sut = new HtmlToDomParser($this->logger, $this->l, new UrlRedactionHelper());
 	}
 
 	/**

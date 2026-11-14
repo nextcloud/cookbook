@@ -345,7 +345,7 @@ class RecipeService {
 	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe(string $url): File {
+	public function downloadRecipe(#[\SensitiveParameter] string $url): File {
 		$this->htmlDownloadService->downloadRecipe($url);
 
 		try {

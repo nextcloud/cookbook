@@ -34,7 +34,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	}
 
 	#[\Override]
-	public function parse(\DOMDocument $document, ?string $url): array {
+	public function parse(\DOMDocument $document, #[\SensitiveParameter] ?string $url): array {
 		$xpath = new \DOMXPath($document);
 
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");

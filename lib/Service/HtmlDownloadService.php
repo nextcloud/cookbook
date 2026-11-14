@@ -87,7 +87,7 @@ class HtmlDownloadService {
 	 * @return int The state indicating the result of the parsing (@see HtmlToDomParser)
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
-	public function downloadRecipe(string $url): int {
+	public function downloadRecipe(#[\SensitiveParameter] string $url): int {
 		$this->logger->info('Starting recipe download from {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 
 		$html = $this->fetchHtmlPage($url);
@@ -127,7 +127,7 @@ class HtmlDownloadService {
 	 *
 	 * @return string The content of the page as a plain string
 	 */
-	private function fetchHtmlPage(string $url): string {
+	private function fetchHtmlPage(#[\SensitiveParameter] string $url): string {
 		$host = parse_url($url);
 
 		if (!$host) {
