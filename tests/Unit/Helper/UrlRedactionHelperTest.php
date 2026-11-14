@@ -28,4 +28,25 @@ class UrlRedactionHelperTest extends TestCase {
 	public function testRedact(?string $url, string $expected): void {
 		$this->assertEquals($expected, UrlRedactionHelper::redact($url));
 	}
+
+	public static function textDataProvider(): array {
+		return [
+			'no url' => ['Connection refused', 'Connection refused'],
+			'guzzle' => [
+				'Client error: `GET https://bob:***@example.com/r?token=abc` resulted in a `404 Not Found` response',
+				'Client error: `GET https://example.com/r` resulted in a `404 Not Found` response',
+			],
+			'curl' => [
+				'cURL error 6: Could not resolve host (see https://curl.se/libcurl/c/libcurl-errors.html) for https://example.com/r?token=abc',
+				'cURL error 6: Could not resolve host (see https://curl.se/libcurl/c/libcurl-errors.html) for https://example.com/r',
+			],
+		];
+	}
+
+	/**
+	 * @dataProvider textDataProvider
+	 */
+	public function testRedactInText(string $text, string $expected): void {
+		$this->assertEquals($expected, UrlRedactionHelper::redactInText($text));
+	}
 }

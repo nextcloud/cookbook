@@ -22,4 +22,8 @@ class UrlRedactionHelper {
 
 		return $scheme . $parts['host'] . $port . ($parts['path'] ?? '');
 	}
+
+	public static function redactInText(string $text): string {
+		return preg_replace_callback('~https?://[^\s`\'"<>()]+~', fn (array $m) => self::redact($m[0]), $text) ?? $text;
+	}
 }

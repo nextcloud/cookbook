@@ -159,13 +159,13 @@ class HtmlDownloadService {
 		try {
 			$this->downloadHelper->downloadFile($url, $opt, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$url, $ex->getMessage()]), 0, $ex, step: 'download');
+			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [UrlRedactionHelper::redact($url), $ex->getMessage()]), 0, $ex, step: 'download');
 		}
 
 		$status = $this->downloadHelper->getStatus();
 
 		if ($status < 200 || $status >= 300) {
-			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]), step: 'download');
+			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [UrlRedactionHelper::redact($url), $status]), step: 'download');
 		}
 
 		$html = $this->downloadHelper->getContent();

@@ -117,6 +117,20 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->sut->downloadRecipe($url);
 	}
 
+	public function testDownloadErrorRedactsUrl() {
+		$this->il10n->method('t')->willReturnCallback(fn ($text, $params = []) => vsprintf($text, $params));
+		$this->downloadHelper->method('getStatus')->willReturn(404);
+
+		try {
+			$this->sut->downloadRecipe('https://bob:s3cret@example.com/recipe?token=abc#top');
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertStringContainsString('https://example.com/recipe failed', $e->getMessage());
+			$this->assertStringNotContainsString('s3cret', $e->getMessage());
+			$this->assertStringNotContainsString('token', $e->getMessage());
+		}
+	}
+
 	public function testDownload() {
 		$url = 'http://example.com';
 		$content = 'The content of the html file';
