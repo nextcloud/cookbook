@@ -116,7 +116,8 @@ abstract class AbstractMigrationTestCase extends TestCase {
 
 	private function resetCookbookTables(): void {
 		$this->dropCookbookTables();
-		$this->deleteCookbookMigrationEntries();
+		$this->deleteCookbookRows('migrations', 'app');
+		$this->deleteCookbookRows('preferences', 'appid');
 		$this->renewSchema();
 	}
 
@@ -130,10 +131,9 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		$this->schema->performDropTableCalls();
 	}
 
-	private function deleteCookbookMigrationEntries(): void {
+	private function deleteCookbookRows(string $table, string $appColumn): void {
 		$qb = $this->db->getQueryBuilder();
-		$qb->delete('migrations')->where('app = :app');
-		$qb->setParameter('app', 'cookbook');
+		$qb->delete($table)->where($qb->expr()->eq($appColumn, $qb->createNamedParameter('cookbook')));
 		$qb->executeStatement();
 	}
 
