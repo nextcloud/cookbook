@@ -358,7 +358,11 @@ class RecipeService {
 			'url' => UrlRedactionHelper::redact($url), 'name' => $json['name'] ?? '(unnamed)',
 		]);
 
-		$json = $this->checkRecipe($json);
+		try {
+			$json = $this->checkRecipe($json);
+		} catch (Exception $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
+		}
 
 		if (!$json) {
 			$this->logger->error('Importing parsers resulted in null recipe.'
@@ -368,7 +372,11 @@ class RecipeService {
 
 		$json['url'] = $url;
 
-		return $this->addRecipe($json, $importedHtml);
+		try {
+			return $this->addRecipe($json, $importedHtml);
+		} catch (NoRecipeNameGivenException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
+		}
 	}
 
 	/**

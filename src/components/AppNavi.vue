@@ -265,26 +265,16 @@ const downloadRecipe = async () => {
         importUrl.value = '';
     } catch (error: unknown) {
         const e2 = error as {
-            response?: { status: number; data: string | { msg: string } };
+            response?: { status: number; data?: { msg?: string } };
         };
         downloading.value = false;
 
         if (e2.response) {
             if (e2.response.status >= 400 && e2.response.status < 500) {
-                if (e2.response.status === 409) {
-                    // There was a recipe found with the same name
-
-                    const message =
-                        typeof e2.response.data === 'string'
-                            ? e2.response.data
-                            : e2.response.data.msg;
-                    await showSimpleAlertModal(t('cookbook', 'Error'), message);
-                } else {
-                    await showSimpleAlertModal(
-                        t('cookbook', 'Error'),
-                        e2.response.data,
-                    );
-                }
+                await showSimpleAlertModal(
+                    t('cookbook', 'Import Error'),
+                    e2.response.data?.msg ?? t('cookbook', 'Import failed.'),
+                );
             } else {
                 console.error(e2);
                 await showSimpleAlertModal(
