@@ -127,6 +127,18 @@ class BringClientTest extends TestCase {
 		$this->assertSame('new-refresh', $result['refreshToken']);
 	}
 
+	public function testRefreshTokenBadRequest400ThrowsAuthException(): void {
+		$this->client
+			->expects($this->once())
+			->method('post')
+			->willReturn($this->mockResponse(400, json_encode(['message' => 'invalid_grant'])));
+
+		$this->expectException(BringAuthException::class);
+		$this->expectExceptionCode(400);
+
+		$this->clientUnderTest->refresh('expired-refresh');
+	}
+
 	public function testGetLists(): void {
 		$auth = new BringAuth('access-123', 'user-uuid', 'public-uuid', 'DE');
 

@@ -273,7 +273,6 @@ class BringController extends Controller {
 	 */
 	private function prepareLines(string $listUuid, array $items, string $recipeName, string $mode): array|DataResponse {
 		$valid = preg_match('~^[0-9a-fA-F-]{8,64}$~', $listUuid) === 1
-			&& trim($recipeName) !== ''
 			&& in_array($mode, [BringMergeService::MODE_MERGE, BringMergeService::MODE_SEPARATE], true)
 			&& $items !== []
 			&& count($items) <= self::MAX_ITEMS;

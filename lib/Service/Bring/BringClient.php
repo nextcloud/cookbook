@@ -91,12 +91,19 @@ class BringClient {
 	 * @throws BringApiException on any other failure
 	 */
 	public function refresh(string $refreshToken): array {
-		$data = $this->send('POST', 'v2/bringauth/token', [
-			'form_params' => [
-				'grant_type' => 'refresh_token',
-				'refresh_token' => $refreshToken,
-			],
-		]);
+		try {
+			$data = $this->send('POST', 'v2/bringauth/token', [
+				'form_params' => [
+					'grant_type' => 'refresh_token',
+					'refresh_token' => $refreshToken,
+				],
+			]);
+		} catch (BringApiException $e) {
+			if ($e->getCode() !== 400) {
+				throw $e;
+			}
+			throw new BringAuthException('Bring! rejected the refresh token.', 400, $e);
+		}
 
 		if (!isset($data['access_token']) || !is_string($data['access_token']) || $data['access_token'] === '') {
 			throw new BringApiException('The Bring! refresh response lacks an access token.');
