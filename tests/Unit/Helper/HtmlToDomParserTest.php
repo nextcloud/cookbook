@@ -300,6 +300,26 @@ class HtmlToDomParserTest extends TestCase {
 		$this->sut->loadHtmlString($dom, $url, $html);
 	}
 
+	public function testLoggedUrlIsRedacted(): void {
+		$dom = $this->createMock(DOMDocument::class);
+		$dom->method('loadHtml')->willReturn(true);
+		$this->xmlMock->method('getErrors')->willReturn([
+			self::getXMLError(2, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
+		]);
+		$this->l->method('n')->willReturnCallback(fn ($singular, $plural, $count, $params) => vsprintf($singular, $params));
+
+		$logged = '';
+		$this->logger->method('info')->willReturnCallback(function (string $msg) use (&$logged) {
+			$logged .= $msg;
+		});
+
+		$this->sut->loadHtmlString($dom, 'https://bob:s3cret@example.com/recipe?token=abc', 'Foo');
+
+		$this->assertStringContainsString('https://example.com/recipe', $logged);
+		$this->assertStringNotContainsString('s3cret', $logged);
+		$this->assertStringNotContainsString('abc', $logged);
+	}
+
 	public static function dpSingleLogging() {
 		return [
 			[LIBXML_ERR_WARNING, true, false, false],
