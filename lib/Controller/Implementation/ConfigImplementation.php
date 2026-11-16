@@ -49,6 +49,7 @@ class ConfigImplementation {
 			'folder' => $this->userFolder->getPath(),
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
+			'bring_enabled' => $this->service->getBringEnabled(),
 			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
 		], Http::STATUS_OK);
 	}
@@ -77,6 +78,10 @@ class ConfigImplementation {
 
 		if (isset($data['print_image'])) {
 			$this->service->setPrintImage((bool)$data['print_image']);
+		}
+
+		if (isset($data['bring_enabled'])) {
+			$this->service->setBringEnabled((bool)$data['bring_enabled']);
 		}
 
 		if (isset($data[self::KEY_VISIBLE_INFO_BLOCKS])) {

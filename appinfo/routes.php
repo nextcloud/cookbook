@@ -39,6 +39,13 @@ return [
 		['name' => 'config#config', 'url' => '/webapp/config', 'verb' => 'POST'],
 		['name' => 'config#reindex', 'url' => '/webapp/reindex', 'verb' => 'POST'],
 
+		['name' => 'bring#status', 'url' => '/webapp/bring/status', 'verb' => 'GET'],
+		['name' => 'bring#login', 'url' => '/webapp/bring/login', 'verb' => 'POST'],
+		['name' => 'bring#disconnect', 'url' => '/webapp/bring/connection', 'verb' => 'DELETE'],
+		['name' => 'bring#lists', 'url' => '/webapp/bring/lists', 'verb' => 'GET'],
+		['name' => 'bring#preview', 'url' => '/webapp/bring/preview', 'verb' => 'POST'],
+		['name' => 'bring#export', 'url' => '/webapp/bring/export', 'verb' => 'POST'],
+
 		/* API routes */
 
 		// Generic routes on /api
