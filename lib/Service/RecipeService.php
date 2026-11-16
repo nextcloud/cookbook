@@ -162,11 +162,11 @@ class RecipeService {
 	 */
 	public function checkRecipe(array $json): array {
 		if (!$json) {
-			throw new Exception('Recipe array was null');
+			throw new Exception($this->il10n->t('Recipe array was null'));
 		}
 
 		if (empty($json['name'])) {
-			throw new Exception('Field "name" is required');
+			throw new Exception($this->il10n->t('Field "name" is required'));
 		}
 
 		return $this->jsonFilter->apply($json);
@@ -355,6 +355,8 @@ class RecipeService {
 			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
 		}
 
+		$json['url'] = $url;
+
 		try {
 			$json = $this->checkRecipe($json);
 		} catch (Exception $ex) {
@@ -370,8 +372,6 @@ class RecipeService {
 		$this->logger->info('Recipe extracted from {url}: name="{name}"', [
 			'url' => $this->urlRedactionHelper->redact($url), 'name' => $json['name'],
 		]);
-
-		$json['url'] = $url;
 
 		try {
 			return $this->addRecipe($json, $importedHtml);

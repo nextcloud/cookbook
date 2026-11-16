@@ -8,6 +8,7 @@ namespace OCA\Cookbook\tests\Unit\Service;
 
 use OCA\Cookbook\Db\RecipeDb;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Exception\InvalidRecipeException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
@@ -40,6 +41,8 @@ class RecipeServiceTest extends TestCase {
 		$downloadService->method('getDom')->willReturn(new \DOMDocument());
 		$this->extractionService = $this->createStub(RecipeExtractionService::class);
 		$this->jsonFilter = $this->createStub(JSONFilter::class);
+		$l = $this->createStub(IL10N::class);
+		$l->method('t')->willReturnArgument(0);
 
 		$this->sut = new RecipeService(
 			'user',
@@ -49,7 +52,7 @@ class RecipeServiceTest extends TestCase {
 			$this->createStub(UserFolderHelper::class),
 			$this->createStub(ImageService::class),
 			$this->createStub(RecipeNameHelper::class),
-			$this->createStub(IL10N::class),
+			$l,
 			$this->createStub(LoggerInterface::class),
 			$downloadService,
 			$this->extractionService,
@@ -82,6 +85,23 @@ class RecipeServiceTest extends TestCase {
 		} catch (ImportException $e) {
 			$this->assertEquals('extract_recipe', $e->getStep());
 			$this->assertInstanceOf(NoRecipeNameGivenException::class, $e->getPrevious());
+		}
+	}
+
+	public function testDownloadRecipeSetsUrlBeforeFilters(): void {
+		$url = 'https://example.com/recipe';
+		$this->extractionService->method('parse')->willReturn(['name' => 'Name', 'image' => '//cdn.example.com/img.jpg']);
+		$filtered = null;
+		$this->jsonFilter->method('apply')->willReturnCallback(function (array $json) use (&$filtered) {
+			$filtered = $json;
+			throw new InvalidRecipeException('stop');
+		});
+
+		try {
+			$this->sut->downloadRecipe($url);
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertEquals($url, $filtered['url']);
 		}
 	}
 }

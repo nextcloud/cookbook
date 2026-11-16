@@ -201,7 +201,17 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
 	}
 
-	public function testImportInvalidJson(): void {
+	public static function dpImportCacheFailures(): array {
+		return [
+			'invalid JSON' => [new InvalidJSONFileException('Invalid JSON'), 'Invalid JSON'],
+			'unexpected' => [new Exception('DB down'), 'An unexpected error occurred during import.'],
+		];
+	}
+
+	/**
+	 * @dataProvider dpImportCacheFailures
+	 */
+	public function testImportCacheFailure(Exception $ex, string $expectedMsg): void {
 		$this->ensureCacheCheckTriggered();
 
 		$url = 'http://example.com/Recipe.html';
@@ -213,7 +223,7 @@ class RecipeImplementationTest extends TestCase {
 		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
 		$this->recipeService->method('downloadRecipe')->willReturn($file);
 		$this->recipeService->method('parseRecipeFile')->willReturn(['name' => 'The recipe name']);
-		$this->dbCacheService->method('addRecipe')->willThrowException(new InvalidJSONFileException('Invalid JSON'));
+		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file)->willThrowException($ex);
 		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(42)->willThrowException(new Exception('Cannot delete'));
 
 		/**
@@ -222,31 +232,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals(['msg' => 'Invalid JSON'], $ret->getData());
-	}
-
-	public function testImportCacheFailure(): void {
-		$this->ensureCacheCheckTriggered();
-
-		$url = 'http://example.com/Recipe.html';
-		$folder = $this->createStub(Folder::class);
-		$folder->method('getId')->willReturn(42);
-		$file = $this->createStub(File::class);
-		$file->method('getParent')->willReturn($folder);
-
-		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
-		$this->recipeService->method('downloadRecipe')->willReturn($file);
-		$this->recipeService->method('parseRecipeFile')->willReturn(['name' => 'The recipe name']);
-		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file)->willThrowException(new Exception('DB down'));
-		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(42);
-
-		/**
-		 * @var JSONResponse $ret
-		 */
-		$ret = $this->sut->import();
-
-		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
+		$this->assertEquals(['msg' => $expectedMsg], $ret->getData());
 	}
 
 	/**
