@@ -321,16 +321,17 @@ class RecipeImplementation {
 
 		try {
 			$this->dbCacheService->addRecipe($recipe_file);
-		} catch (InvalidJSONFileException $ex) {
-
+		} catch (\Exception $e) {
 			try {
 				$this->service->deleteRecipe($recipe_file->getParent()->getId());
 			} catch (Exception $deleteEx) {
 				$this->logger->warning('Cannot remove file after failed parsing: {ex}', ['ex' => $deleteEx]);
 			}
 
-			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_BAD_REQUEST);
-		} catch (\Exception $e) {
+			if ($e instanceof InvalidJSONFileException) {
+				return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_BAD_REQUEST);
+			}
+
 			$this->logger->error('Unexpected error while caching imported recipe from {url}: {reason}', [
 				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);

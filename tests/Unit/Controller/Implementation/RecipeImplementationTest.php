@@ -229,12 +229,16 @@ class RecipeImplementationTest extends TestCase {
 		$this->ensureCacheCheckTriggered();
 
 		$url = 'http://example.com/Recipe.html';
+		$folder = $this->createStub(Folder::class);
+		$folder->method('getId')->willReturn(42);
 		$file = $this->createStub(File::class);
+		$file->method('getParent')->willReturn($folder);
 
 		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
 		$this->recipeService->method('downloadRecipe')->willReturn($file);
 		$this->recipeService->method('parseRecipeFile')->willReturn(['name' => 'The recipe name']);
 		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file)->willThrowException(new Exception('DB down'));
+		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(42);
 
 		/**
 		 * @var JSONResponse $ret
