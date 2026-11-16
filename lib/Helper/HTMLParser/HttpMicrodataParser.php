@@ -56,7 +56,6 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		$recipes = $this->xpath->query($xpathSelector);
 
 		if (count($recipes) === 0) {
-			$this->logger->info('Microdata parser found no Recipe itemscope elements for {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 			throw new HtmlParsingException($this->l->t('No recipe was found.'));
 		}
 

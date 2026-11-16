@@ -282,7 +282,7 @@ class RecipeImplementation {
 	private function isDownloadUrlValid(string $url): bool {
 		$urlValid = filter_var($url, FILTER_VALIDATE_URL);
 		if ($urlValid === false) {
-			$this->logger->info('Download URL is not a valid URL: {url}', ['url' => $url]);
+			$this->logger->info('Download URL is not a valid URL: {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 			return false;
 		}
 
@@ -297,7 +297,7 @@ class RecipeImplementation {
 
 		$host = $parsedUrl['host'] ?? '';
 		if (empty($host)) {
-			$this->logger->info('Download URL does not have a valid host: {url}', ['url' => $url]);
+			$this->logger->info('Download URL does not have a valid host: {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 			return false;
 		}
 

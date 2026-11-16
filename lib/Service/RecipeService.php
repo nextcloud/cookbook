@@ -355,10 +355,6 @@ class RecipeService {
 			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
 		}
 
-		$this->logger->info('Recipe extracted from {url}: name="{name}"', [
-			'url' => $this->urlRedactionHelper->redact($url), 'name' => $json['name'] ?? '(unnamed)',
-		]);
-
 		$json = $this->checkRecipe($json);
 
 		if (!$json) {
@@ -366,6 +362,10 @@ class RecipeService {
 				. 'This is most probably a bug. Please report.');
 			throw new ImportException($this->il10n->t('No recipe data found. This is a bug'), step: 'extract_recipe');
 		}
+
+		$this->logger->info('Recipe extracted from {url}: name="{name}"', [
+			'url' => $this->urlRedactionHelper->redact($url), 'name' => $json['name'],
+		]);
 
 		$json['url'] = $url;
 

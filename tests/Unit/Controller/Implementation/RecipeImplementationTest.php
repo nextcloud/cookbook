@@ -841,4 +841,21 @@ class RecipeImplementationTest extends TestCase {
 
 		$this->assertEquals(400, $ret->getStatus());
 	}
+
+	public function testInvalidImportLogsRedactedUrl(): void {
+		$this->ensureCacheCheckTriggered();
+		$this->restParser->method('getParameters')->willReturn([ 'url' => 'https://bob:s3cret@my_host.com/r?token=abc' ]);
+
+		$logged = '';
+		$collect = function (string $msg, array $ctx) use (&$logged) {
+			$logged .= json_encode($ctx);
+		};
+		$this->logger->method('info')->willReturnCallback($collect);
+		$this->logger->method('warning')->willReturnCallback($collect);
+
+		$this->assertEquals(400, $this->sut->import()->getStatus());
+		$this->assertStringContainsString('my_host.com', $logged);
+		$this->assertStringNotContainsString('s3cret', $logged);
+		$this->assertStringNotContainsString('abc', $logged);
+	}
 }

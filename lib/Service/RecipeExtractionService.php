@@ -53,11 +53,7 @@ class RecipeExtractionService {
 			try {
 				return $parser->parse($document, $url);
 			} catch (HtmlParsingException $ex) {
-				$parserName = $parser->getName();
-				$failures[] = "$parserName: {$ex->getMessage()}";
-				$this->logger->info('Parser {parser} failed for URL {url}: {reason}', [
-					'parser' => $parserName, 'url' => $this->urlRedactionHelper->redact($url), 'reason' => $ex->getMessage(),
-				]);
+				$failures[] = "{$parser->getName()}: {$ex->getMessage()}";
 			}
 		}
 
