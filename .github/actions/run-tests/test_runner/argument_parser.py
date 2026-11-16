@@ -15,10 +15,11 @@ def parseArguments():
 
 	group = parser.add_argument_group('Docker image management', 'Manage the docker images involved in the test routines.')
 
-	group.add_argument('--pull', action='store_true', help='Force pulling of the latest images from docker hub.')
-	group.add_argument('--create-images', '-c', action='store_true', help='Force creation of custom docker images locally used for testing')
 	group.add_argument('--pull-php-base-image', action='store_true', help='Pull the PHP base image additionally. This makes rebuilding the test images more likely.')
 	group.add_argument('--push-images', action='store_true', help='Push images to docker. Not yet working')
+	exclusive_group = group.add_mutually_exclusive_group()
+	exclusive_group.add_argument('--pull', action='store_true', help='Force pulling of the latest images from docker hub.')
+	exclusive_group.add_argument('--create-images', '-c', action='store_true', help='Force creation of custom docker images locally used for testing')
 
 	group = parser.add_argument_group('Management of helper containers', 'These parameters help with managing auxiliary containers needed for the tests.')
 

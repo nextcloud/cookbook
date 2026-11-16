@@ -2,38 +2,33 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
-version: "3.2"
-
 services:
     mysql:
+        image: cookbook_unittesting_mysql:latest
         build:
             context: ./mysql
             args:
               BUILDKIT_INLINE_CACHE: 1
-            cache_from:
-              - cookbook_unittesting_mysql
         volumes:
             - ./volumes/mysql:/var/lib/mysql
         env_file:
             - mysql.env
             
     postgres:
+        image: cookbook_unittesting_postgres:latest
         build:
             context: ./postgres
             args:
               BUILDKIT_INLINE_CACHE: 1
-            cache_from:
-              - cookbook_unittesting_postgres
         env_file:
             - postgres.env
         volumes:
             - ./volumes/postgres:/var/lib/postgresql/data
     
     dut: &dut
+        image: cookbook_unittesting_dut:latest
         build:
             context: ./tests
-            cache_from:
-                - cookbook_unittesting_dut
             args:
                 BUILDKIT_INLINE_CACHE: 1
                 #PHPVERSION: 7
@@ -118,6 +113,7 @@ services:
             - ./volumes/cookbook:/var/www/html/custom_apps/cookbook:ro
         
     www:
+        image: cookbook_unittesting_www:latest
         build: www
         # ports:
         #     - 8888:80

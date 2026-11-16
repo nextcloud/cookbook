@@ -6,7 +6,6 @@
 
 namespace OCA\Cookbook\tests\Migration\Setup\Migrations;
 
-use Doctrine\DBAL\Schema\Table;
 use OC\DB\Connection;
 use OC\DB\MigrationService;
 use OC\DB\SchemaWrapper;
@@ -16,9 +15,6 @@ use OCP\IDBConnection;
 use OCP\Util;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- */
 abstract class AbstractMigrationTestCase extends TestCase {
 	/**
 	 * @var IAppContainer
@@ -45,13 +41,19 @@ abstract class AbstractMigrationTestCase extends TestCase {
 	abstract protected function getPreviousMigrationName(): ?string;
 
 	private const TMP_MIGRATIONS = '/tmp/old-migrations';
+	private const DB_TABLE_PREFIX = 'oc_';
+
+	private static bool $appEnabled = false;
 
 	public function setUp(): void {
 		parent::setUp();
 
-		$this->hideMigrations();
-		$this->enableApp();
-		$this->restoreMigrations();
+		if (!self::$appEnabled) {
+			$this->hideMigrations();
+			$this->enableApp();
+			$this->restoreMigrations();
+			self::$appEnabled = true;
+		}
 
 		$app = new App('cookbook');
 		$this->container = $app->getContainer();
@@ -73,9 +75,7 @@ abstract class AbstractMigrationTestCase extends TestCase {
 			$this->connection = $this->db;
 		}
 
-		if ($_ENV['INPUT_DB'] === 'sqlite') {
-			$this->resetSQLite();
-		}
+		$this->resetCookbookTables();
 
 		$this->migrationService = new MigrationService('cookbook', $this->connection);
 		$this->assertIsObject($this->migrationService);
@@ -116,26 +116,28 @@ abstract class AbstractMigrationTestCase extends TestCase {
 		exec('mv ' . self::TMP_MIGRATIONS . '/* lib/Migration');
 	}
 
-	private function resetSQLite(): void {
-		$allTables = $this->schema->getTables();
-		$tables = array_filter($allTables, function (Table $t) {
-			return str_starts_with($t->getName(), 'oc_cookbook');
-		});
-
-		/**
-		 * @var Table $t
-		 */
-		foreach ($tables as $t) {
-			$this->schema->dropTable(preg_replace('/^oc_/', '', $t->getName()));
-		}
-
-		$qb = $this->db->getQueryBuilder();
-		$qb->delete('migrations')->where('app = :app');
-		$qb->setParameter('app', 'cookbook');
-		$qb->executeStatement();
-
-		$this->schema->performDropTableCalls();
-
+	private function resetCookbookTables(): void {
+		// The container-built SchemaWrapper wraps an empty Schema, so it sees no tables
 		$this->renewSchema();
+		$this->dropCookbookTables();
+		$this->deleteCookbookRows('migrations', 'app');
+		$this->deleteCookbookRows('preferences', 'appid');
+		$this->renewSchema();
+	}
+
+	private function dropCookbookTables(): void {
+		foreach ($this->schema->getTables() as $table) {
+			$name = $table->getName();
+			if (str_starts_with($name, self::DB_TABLE_PREFIX . 'cookbook')) {
+				$this->schema->dropTable(substr($name, strlen(self::DB_TABLE_PREFIX)));
+			}
+		}
+		$this->schema->performDropTableCalls();
+	}
+
+	private function deleteCookbookRows(string $table, string $appColumn): void {
+		$qb = $this->db->getQueryBuilder();
+		$qb->delete($table)->where($qb->expr()->eq($appColumn, $qb->createNamedParameter('cookbook')));
+		$qb->executeStatement();
 	}
 }

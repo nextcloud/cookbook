@@ -10,7 +10,6 @@ include_once __DIR__ . '/AbstractMigrationTestCase.php';
 
 class Version000000Date20200315121603Test extends AbstractMigrationTestCase {
 	/**
-	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20200315121603
 	 */
 	public function testAddCategoriesTable() {
