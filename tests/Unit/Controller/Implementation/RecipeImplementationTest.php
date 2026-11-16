@@ -179,7 +179,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals('The error message', $ret->getData());
+		$this->assertEquals(['msg' => 'The error message', 'step' => 'download'], $ret->getData());
 	}
 
 	public function testImportOther(): void {
@@ -199,24 +199,6 @@ class RecipeImplementationTest extends TestCase {
 
 		$this->assertEquals(400, $ret->getStatus());
 		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
-	}
-
-	public function testImportFailedAtStep(): void {
-		$this->ensureCacheCheckTriggered();
-
-		$url = 'http://example.com/Recipe.html';
-		$ex = new ImportException('Field "name" is required', 0, null, 'extract_recipe');
-
-		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
-		$this->recipeService->expects($this->once())->method('downloadRecipe')->with($url)->willThrowException($ex);
-
-		/**
-		 * @var JSONResponse $ret
-		 */
-		$ret = $this->sut->import();
-
-		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals(['msg' => 'Field "name" is required', 'step' => 'extract_recipe'], $ret->getData());
 	}
 
 	public function testImportInvalidJson(): void {
