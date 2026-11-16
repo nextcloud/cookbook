@@ -12,6 +12,7 @@
 import { defineStore } from 'pinia';
 
 import api from '../js/api-interface';
+import type { SettingsConfig } from '../types/SettingsConfig';
 
 /**
  * Returns setting from stored settings.
@@ -60,7 +61,7 @@ const useLegacyStore = defineStore('legacyStore', {
 			localSettings: {
 				showFiltersInRecipeList: true,
 			},
-			config: null,
+			config: null as SettingsConfig | null,
 		}),
 	actions: {
 		// ****************************

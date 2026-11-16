@@ -9,6 +9,7 @@ namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 use OCA\Cookbook\Controller\Implementation\ConfigImplementation;
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Service\AssistantService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\DataResponse;
@@ -41,6 +42,10 @@ class ConfigImplementationTest extends TestCase {
 	 * @var UserFolderHelper|MockObject
 	 */
 	private $userFolder;
+	/**
+	 * @var AssistantService|MockObject
+	 */
+	private $assistantService;
 
 	public function setUp(): void {
 		parent::setUp();
@@ -49,12 +54,14 @@ class ConfigImplementationTest extends TestCase {
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
 		$this->userFolder = $this->createMock(UserFolderHelper::class);
+		$this->assistantService = $this->createMock(AssistantService::class);
 
 		$this->sut = new ConfigImplementation(
 			$this->recipeService,
 			$this->dbCacheService,
 			$this->restParser,
-			$this->userFolder
+			$this->userFolder,
+			$this->assistantService
 		);
 	}
 
@@ -62,6 +69,7 @@ class ConfigImplementationTest extends TestCase {
 		$this->ensurePropertyIsCorrect('service', $this->recipeService);
 		$this->ensurePropertyIsCorrect('dbCacheService', $this->dbCacheService);
 		$this->ensurePropertyIsCorrect('restParser', $this->restParser);
+		$this->ensurePropertyIsCorrect('assistantService', $this->assistantService);
 	}
 
 	private function ensurePropertyIsCorrect(string $name, &$val) {
@@ -93,11 +101,13 @@ class ConfigImplementationTest extends TestCase {
 			'update_interval' => $interval,
 			'print_image' => $printImage,
 			'visibleInfoBlocks' => [],
+			'assistant_available' => true,
 		];
 
 		$this->userFolder->method('getPath')->willReturn($folder);
 		$this->dbCacheService->method('getSearchIndexUpdateInterval')->willReturn($interval);
 		$this->recipeService->method('getPrintImage')->willReturn($printImage);
+		$this->assistantService->method('isAvailable')->willReturn(true);
 
 		/**
 		 * @var DataResponse $response

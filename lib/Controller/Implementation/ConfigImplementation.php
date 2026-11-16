@@ -8,6 +8,7 @@ namespace OCA\Cookbook\Controller\Implementation;
 
 use OCA\Cookbook\Helper\RestParameterParser;
 use OCA\Cookbook\Helper\UserFolderHelper;
+use OCA\Cookbook\Service\AssistantService;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
@@ -22,17 +23,21 @@ class ConfigImplementation {
 	private $restParser;
 	/** @var UserFolderHelper */
 	private $userFolder;
+	/** @var AssistantService */
+	private $assistantService;
 
 	public function __construct(
 		RecipeService $recipeService,
 		DbCacheService $dbCacheService,
 		RestParameterParser $restParser,
 		UserFolderHelper $userFolder,
+		AssistantService $assistantService,
 	) {
 		$this->service = $recipeService;
 		$this->dbCacheService = $dbCacheService;
 		$this->restParser = $restParser;
 		$this->userFolder = $userFolder;
+		$this->assistantService = $assistantService;
 	}
 
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visibleInfoBlocks';
@@ -50,6 +55,7 @@ class ConfigImplementation {
 			'update_interval' => $this->dbCacheService->getSearchIndexUpdateInterval(),
 			'print_image' => $this->service->getPrintImage(),
 			self::KEY_VISIBLE_INFO_BLOCKS => $this->service->getVisibleInfoBlocks(),
+			'assistant_available' => $this->assistantService->isAvailable(),
 		], Http::STATUS_OK);
 	}
 
