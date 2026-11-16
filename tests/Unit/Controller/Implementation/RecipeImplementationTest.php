@@ -318,8 +318,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->getAllInCategory(urlencode($cat));
 
-		$this->assertEquals(500, $ret->getStatus());
-		$this->assertEquals(['msg' => $errorMsg], $ret->getData());
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred.'], $ret->getData());
 	}
 
 	/**
@@ -391,8 +391,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->getAllWithTags(urlencode($keywords));
 
-		$this->assertEquals(500, $ret->getStatus());
-		$this->assertEquals(['msg' => $errorMsg], $ret->getData());
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred.'], $ret->getData());
 	}
 
 	/**
@@ -448,8 +448,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$res = $this->sut->search(urlencode($query));
 
-		$this->assertEquals(500, $res->getStatus());
-		$this->assertEquals(['msg' => $errorMsg], $res->getData());
+		$this->assertEquals(400, $res->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred.'], $res->getData());
 	}
 
 	public function testUpdate(): void {
@@ -674,8 +674,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->destroy($id);
 
-		$this->assertEquals(502, $ret->getStatus());
-		$this->assertEquals(['msg' => $errorMsg], $ret->getData());
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred.'], $ret->getData());
 	}
 
 	/**

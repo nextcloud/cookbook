@@ -201,7 +201,8 @@ class RecipeImplementation {
 			$this->service->deleteRecipe($id);
 			return new JSONResponse('Recipe ' . $id . ' deleted successfully', Http::STATUS_OK);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_BAD_GATEWAY);
+			$this->logger->error('Failed to delete recipe {id}: {reason}', ['id' => $id, 'reason' => $e->getMessage(), 'exception' => $e]);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred.')], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -376,7 +377,8 @@ class RecipeImplementation {
 
 			return new JSONResponse($recipes, 200, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+			$this->logger->error('Recipe search failed: {reason}', ['reason' => $e->getMessage(), 'exception' => $e]);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred.')], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -414,7 +416,8 @@ class RecipeImplementation {
 
 			return new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+			$this->logger->error('Listing recipes of a category failed: {reason}', ['reason' => $e->getMessage(), 'exception' => $e]);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred.')], Http::STATUS_BAD_REQUEST);
 		}
 	}
 
@@ -454,8 +457,8 @@ class RecipeImplementation {
 
 			return new JSONResponse($recipes, Http::STATUS_OK, ['Content-Type' => 'application/json']);
 		} catch (\Exception $e) {
-			// error_log($e->getMessage());
-			return new JSONResponse(['msg' => $e->getMessage()], Http::STATUS_INTERNAL_SERVER_ERROR);
+			$this->logger->error('Listing recipes with keywords failed: {reason}', ['reason' => $e->getMessage(), 'exception' => $e]);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred.')], Http::STATUS_BAD_REQUEST);
 		}
 	}
 }

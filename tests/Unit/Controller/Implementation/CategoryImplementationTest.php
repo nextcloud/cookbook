@@ -13,9 +13,11 @@ use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\IL10N;
 use OCP\IURLGenerator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use ReflectionProperty;
 
 /**
@@ -54,11 +56,15 @@ class CategoryImplementationTest extends TestCase {
 		$this->recipeService = $this->createMock(RecipeService::class);
 		$this->dbCacheService = $this->createMock(DbCacheService::class);
 		$this->restParser = $this->createMock(RestParameterParser::class);
+		$l = $this->createStub(IL10N::class);
+		$l->method('t')->willReturnArgument(0);
 
 		$this->sut = new CategoryImplementation(
 			$this->recipeService,
 			$this->dbCacheService,
-			$this->restParser
+			$this->restParser,
+			$l,
+			$this->createStub(LoggerInterface::class),
 		);
 	}
 
@@ -194,7 +200,7 @@ class CategoryImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->rename(urlencode($oldCat));
 
-		$this->assertEquals(500, $ret->getStatus());
-		$this->assertEquals(['msg' => $errorMsg], $ret->getData());
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'An unexpected error occurred.'], $ret->getData());
 	}
 }
