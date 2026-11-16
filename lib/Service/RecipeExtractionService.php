@@ -9,7 +9,9 @@ namespace OCA\Cookbook\Service;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 class RecipeExtractionService {
 	/**
@@ -22,10 +24,18 @@ class RecipeExtractionService {
 	 */
 	private $l;
 
-	public function __construct(HttpJsonLdParser $jsonParser, HttpMicrodataParser $microdataParser,
-		IL10N $l10n) {
+	private LoggerInterface $logger;
+
+	public function __construct(
+		HttpJsonLdParser $jsonParser,
+		HttpMicrodataParser $microdataParser,
+		IL10N $l10n,
+		LoggerInterface $logger,
+		private UrlRedactionHelper $urlRedactionHelper,
+	) {
 		$this->parsers = [$jsonParser, $microdataParser];
 		$this->l = $l10n;
+		$this->logger = $logger;
 	}
 
 	/**
@@ -37,14 +47,20 @@ class RecipeExtractionService {
 	 * @return array The data as returned from the parser
 	 */
 	public function parse(\DOMDocument $document, ?string $url): array {
+		$failures = [];
+
 		foreach ($this->parsers as $parser) {
 			try {
 				return $parser->parse($document, $url);
 			} catch (HtmlParsingException $ex) {
-				// Silently ignore failure as there might be other parsers better suited
+				$failures[] = "{$parser->getName()}: {$ex->getMessage()}";
 			}
 		}
 
+		$detail = implode('; ', $failures);
+		$this->logger->warning('All parsers failed for URL {url}. Details: {detail}', [
+			'url' => $this->urlRedactionHelper->redact($url), 'detail' => $detail,
+		]);
 		throw new HtmlParsingException($this->l->t('No parser found for the given import.'));
 	}
 }

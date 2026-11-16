@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\Controller\Implementation;
 
 use Exception;
+use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\InvalidDownloadURLException;
 use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
@@ -15,6 +16,7 @@ use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
@@ -61,6 +63,7 @@ class RecipeImplementation {
 		IL10N $iL10N,
 		LoggerInterface $logger,
 		private string $userId,
+		private UrlRedactionHelper $urlRedactionHelper,
 	) {
 		$this->request = $request;
 		$this->service = $recipeService;
@@ -279,7 +282,7 @@ class RecipeImplementation {
 	private function isDownloadUrlValid(string $url): bool {
 		$urlValid = filter_var($url, FILTER_VALIDATE_URL);
 		if ($urlValid === false) {
-			$this->logger->info('Download URL is not a valid URL: {url}', ['url' => $url]);
+			$this->logger->info('Download URL is not a valid URL: {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 			return false;
 		}
 
@@ -294,7 +297,7 @@ class RecipeImplementation {
 
 		$host = $parsedUrl['host'] ?? '';
 		if (empty($host)) {
-			$this->logger->info('Download URL does not have a valid host: {url}', ['url' => $url]);
+			$this->logger->info('Download URL does not have a valid host: {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 			return false;
 		}
 
@@ -332,7 +335,7 @@ class RecipeImplementation {
 		$data['url'] = str_replace(' ', '%20', trim($data['url']));
 
 		if (! $this->isDownloadUrlValid($data['url'])) {
-			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $data['url'], 'user' => $this->userId]);
+			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $this->urlRedactionHelper->redact($data['url']), 'user' => $this->userId]);
 			// throw new InvalidDownloadURLException($this->l->t('The provided URL is not allowed.'));
 			$json = [
 				'msg' => $this->l->t('The provided URL is not allowed.'),
@@ -352,7 +355,15 @@ class RecipeImplementation {
 			];
 
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
+		} catch (ImportException $e) {
+			$this->logger->warning('Import of {url} failed at step "{step}": {reason}', [
+				'url' => $this->urlRedactionHelper->redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
+			]);
+			return new JSONResponse($e->getMessage(), 400);
 		} catch (\Exception $e) {
+			$this->logger->error('Unexpected error during import of {url}: {reason}', [
+				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+			]);
 			return new JSONResponse($e->getMessage(), 400);
 		}
 

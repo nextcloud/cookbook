@@ -8,12 +8,14 @@ namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 
 use Exception;
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
+use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
@@ -57,6 +59,9 @@ class RecipeImplementationTest extends TestCase {
 	 */
 	private $sut;
 
+	/** @var LoggerInterface|MockObject */
+	private $logger;
+
 	public function setUp(): void {
 		parent::setUp();
 
@@ -73,7 +78,7 @@ class RecipeImplementationTest extends TestCase {
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
-		$logger = $this->createStub(LoggerInterface::class);
+		$this->logger = $this->createMock(LoggerInterface::class);
 
 		$this->sut = new RecipeImplementation(
 			$this->request,
@@ -85,8 +90,9 @@ class RecipeImplementationTest extends TestCase {
 			$this->stubFilter,
 			$this->acceptHeaderParser,
 			$l,
-			$logger,
+			$this->logger,
 			'testuser',
+			new UrlRedactionHelper(),
 		);
 	}
 
@@ -154,6 +160,29 @@ class RecipeImplementationTest extends TestCase {
 
 		$this->assertEquals(409, $ret->getStatus());
 		$this->assertEquals($expected, $ret->getData());
+	}
+
+	public function testImportFailedAtStep(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$url = 'https://user:pass@example.com/Recipe.html?token=secret';
+		$ex = new ImportException('The error message', 0, null, 'download');
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+		$this->recipeService->expects($this->once())->method('downloadRecipe')->with($url)->willThrowException($ex);
+		$this->logger->expects($this->once())->method('warning')->with(
+			'Import of {url} failed at step "{step}": {reason}',
+			$this->callback(fn (array $ctx) => $ctx['url'] === 'https://example.com/Recipe.html'
+				&& $ctx['step'] === 'download' && $ctx['reason'] === 'The error message' && $ctx['exception'] === $ex),
+		);
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals('The error message', $ret->getData());
 	}
 
 	public function testImportOther(): void {
@@ -811,5 +840,22 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
+	}
+
+	public function testInvalidImportLogsRedactedUrl(): void {
+		$this->ensureCacheCheckTriggered();
+		$this->restParser->method('getParameters')->willReturn([ 'url' => 'https://bob:s3cret@my_host.com/r?token=abc' ]);
+
+		$logged = '';
+		$collect = function (string $msg, array $ctx) use (&$logged) {
+			$logged .= json_encode($ctx);
+		};
+		$this->logger->method('info')->willReturnCallback($collect);
+		$this->logger->method('warning')->willReturnCallback($collect);
+
+		$this->assertEquals(400, $this->sut->import()->getStatus());
+		$this->assertStringContainsString('my_host.com', $logged);
+		$this->assertStringNotContainsString('s3cret', $logged);
+		$this->assertStringNotContainsString('abc', $logged);
 	}
 }

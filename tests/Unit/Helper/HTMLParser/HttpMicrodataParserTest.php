@@ -8,8 +8,10 @@ namespace OCA\Cookbook\tests\Unit\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser
@@ -25,7 +27,9 @@ class HttpMicrodataParserTest extends TestCase {
 	public function testConstructor(): void {
 		$l = $this->createStub(IL10N::class);
 
-		$parser = new HttpMicrodataParser($l);
+		$logger = $this->createStub(LoggerInterface::class);
+
+		$parser = new HttpMicrodataParser($l, $logger, new UrlRedactionHelper());
 
 		$lProperty = new \ReflectionProperty(HttpMicrodataParser::class, 'l');
 		$lProperty->setAccessible(true);
@@ -64,8 +68,9 @@ class HttpMicrodataParserTest extends TestCase {
 		}
 
 		$l = $this->createStub(IL10N::class);
+		$logger = $this->createStub(LoggerInterface::class);
 
-		$parser = new HttpMicrodataParser($l);
+		$parser = new HttpMicrodataParser($l, $logger, new UrlRedactionHelper());
 
 		$content = file_get_contents(__DIR__ . "/res_Microdata/$filename");
 
@@ -99,7 +104,8 @@ class HttpMicrodataParserTest extends TestCase {
 	 */
 	public function testImageVariantsAsAttribute($attribute): void {
 		$l = $this->createStub(IL10N::class);
-		$parser = new HttpMicrodataParser($l);
+		$logger = $this->createStub(LoggerInterface::class);
+		$parser = new HttpMicrodataParser($l, $logger, new UrlRedactionHelper());
 		$content = file_get_contents(__DIR__ . '/res_Microdata/caseImageAttribute.html');
 		$content = str_replace('%IMAGE_NAME%', $attribute, $content);
 
@@ -112,7 +118,8 @@ class HttpMicrodataParserTest extends TestCase {
 	 */
 	public function testImageVariantsAsContent($attribute): void {
 		$l = $this->createStub(IL10N::class);
-		$parser = new HttpMicrodataParser($l);
+		$logger = $this->createStub(LoggerInterface::class);
+		$parser = new HttpMicrodataParser($l, $logger, new UrlRedactionHelper());
 		$content = file_get_contents(__DIR__ . '/res_Microdata/caseImageContent.html');
 		$content = str_replace('%IMAGE_NAME%', $attribute, $content);
 
@@ -131,7 +138,8 @@ class HttpMicrodataParserTest extends TestCase {
 	 */
 	public function testIngredientVariants($attribute): void {
 		$l = $this->createStub(IL10N::class);
-		$parser = new HttpMicrodataParser($l);
+		$logger = $this->createStub(LoggerInterface::class);
+		$parser = new HttpMicrodataParser($l, $logger, new UrlRedactionHelper());
 		$content = file_get_contents(__DIR__ . '/res_Microdata/caseIngredient.html');
 		$content = str_replace('%INGREDIENT_NAME%', $attribute, $content);
 
@@ -151,7 +159,8 @@ class HttpMicrodataParserTest extends TestCase {
 	 */
 	public function testInstructionVariants($attribute): void {
 		$l = $this->createStub(IL10N::class);
-		$parser = new HttpMicrodataParser($l);
+		$logger = $this->createStub(LoggerInterface::class);
+		$parser = new HttpMicrodataParser($l, $logger, new UrlRedactionHelper());
 		$content = file_get_contents(__DIR__ . '/res_Microdata/caseInstruction.html');
 		$content = str_replace('%INSTRUCTION_NAME%', $attribute, $content);
 
@@ -172,5 +181,9 @@ class HttpMicrodataParserTest extends TestCase {
 		} catch (HtmlParsingException $ex) {
 			$this->assertFalse(true);
 		}
+	}
+
+	public function testGetName(): void {
+		$this->assertEquals('Microdata', (new HttpMicrodataParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new UrlRedactionHelper()))->getName());
 	}
 }

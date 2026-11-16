@@ -7,8 +7,10 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 /**
  * This class is an AbstractHtmlParser which tries to extract a JSON+LD script from the HTML page.
@@ -20,10 +22,15 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 */
 	private $jsonService;
 
-	public function __construct(IL10N $l10n, JsonService $jsonService) {
-		parent::__construct($l10n);
+	public function __construct(IL10N $l10n, LoggerInterface $logger, JsonService $jsonService, UrlRedactionHelper $urlRedactionHelper) {
+		parent::__construct($l10n, $logger, $urlRedactionHelper);
 
 		$this->jsonService = $jsonService;
+	}
+
+	#[\Override]
+	public function getName(): string {
+		return 'JSON-LD';
 	}
 
 	#[\Override]
@@ -31,6 +38,10 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$xpath = new \DOMXPath($document);
 
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
+
+		$this->logger->debug('JSON-LD parser found {count} ld+json elements for {url}', [
+			'count' => $json_ld_elements->length, 'url' => $this->urlRedactionHelper->redact($url),
+		]);
 
 		foreach ($json_ld_elements as $json_ld_element) {
 			if (!$json_ld_element || !$json_ld_element->nodeValue) {
@@ -40,7 +51,9 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 			try {
 				return $this->parseJsonLdElement($json_ld_element);
 			} catch (HtmlParsingException $ex) {
-				// Parsing failed for this element. Let's see if there are more...
+				$this->logger->debug('JSON-LD element did not contain a valid recipe: {reason}', [
+					'reason' => $ex->getMessage(),
+				]);
 			}
 		}
 
@@ -62,6 +75,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$json = json_decode($string, true);
 
 		if ($json === null) {
+			$this->logger->debug('JSON-LD decode failed: {error}', ['error' => json_last_error_msg()]);
 			throw new HtmlParsingException($this->l->t('JSON cannot be decoded.'));
 		}
 

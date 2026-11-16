@@ -87,13 +87,13 @@ class HtmlToDomParser {
 			try {
 				$this->checkXMLErrors($errors, $url);
 			} catch (Exception $ex) {
-				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex);
+				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex, step: 'parse_html');
 			}
 
 			libxml_clear_errors();
 
 			if (!$parsedSuccessfully) {
-				throw new ImportException($this->l->t('Parsing of HTML failed.'));
+				throw new ImportException($this->l->t('Parsing of HTML failed.'), step: 'parse_html');
 			}
 		} finally {
 			libxml_use_internal_errors($libxml_previous_state);

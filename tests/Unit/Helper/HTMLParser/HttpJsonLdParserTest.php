@@ -8,9 +8,11 @@ namespace OCA\Cookbook\tests\Unit\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser
@@ -49,7 +51,9 @@ class HttpJsonLdParserTest extends TestCase {
 		 */
 		$l = $this->createStub(IL10N::class);
 
-		$parser = new HttpJsonLdParser($l, $jsonService);
+		$logger = $this->createStub(LoggerInterface::class);
+
+		$parser = new HttpJsonLdParser($l, $logger, $jsonService, new UrlRedactionHelper());
 
 		$lProperty = new \ReflectionProperty(HttpJsonLdParser::class, 'l');
 		$lProperty->setAccessible(true);
@@ -71,7 +75,9 @@ class HttpJsonLdParserTest extends TestCase {
 		 */
 		$l = $this->createStub(IL10N::class);
 
-		$parser = new HttpJsonLdParser($l, $jsonService);
+		$logger = $this->createStub(LoggerInterface::class);
+
+		$parser = new HttpJsonLdParser($l, $logger, $jsonService, new UrlRedactionHelper());
 
 		$content = file_get_contents(__DIR__ . "/res_JsonLd/$file");
 
@@ -113,11 +119,15 @@ class HttpJsonLdParserTest extends TestCase {
 	 * @covers ::parse
 	 */
 	public function testImageReference(array $input, array $expected): void {
-		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService(), new UrlRedactionHelper());
 
 		$document = new \DOMDocument();
 		$document->loadHTML('<html><head><script type="application/ld+json">' . json_encode($input) . '</script></head></html>');
 
 		$this->assertEquals($expected, $parser->parse($document, 'http://example.com'));
+	}
+
+	public function testGetName(): void {
+		$this->assertEquals('JSON-LD', (new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService(), new UrlRedactionHelper()))->getName());
 	}
 }

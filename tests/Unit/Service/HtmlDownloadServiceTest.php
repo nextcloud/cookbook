@@ -16,6 +16,7 @@ use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\HtmlDownloadService;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -80,7 +81,7 @@ class HtmlDownloadServiceTest extends TestCase {
 
 		$this->sut = new HtmlDownloadService(
 			$this->htmlEntityDecodeFilter, $this->htmlEncodingFilter, $this->il10n, $logger, $this->htmlParser,
-			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper);
+			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper, new UrlRedactionHelper());
 	}
 
 	public function testDownloadInvalidUrl() {
@@ -115,6 +116,20 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->downloadHelper->method('getStatus')->willReturn($status);
 		$this->expectException(ImportException::class);
 		$this->sut->downloadRecipe($url);
+	}
+
+	public function testDownloadErrorRedactsUrl() {
+		$this->il10n->method('t')->willReturnCallback(fn ($text, $params = []) => vsprintf($text, $params));
+		$this->downloadHelper->method('getStatus')->willReturn(404);
+
+		try {
+			$this->sut->downloadRecipe('https://bob:s3cret@example.com/recipe?token=abc#top');
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertStringContainsString('https://example.com/recipe failed', $e->getMessage());
+			$this->assertStringNotContainsString('s3cret', $e->getMessage());
+			$this->assertStringNotContainsString('abc', $e->getMessage());
+		}
 	}
 
 	public function testDownload() {
