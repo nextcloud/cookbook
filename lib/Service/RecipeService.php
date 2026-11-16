@@ -16,6 +16,7 @@ use OCA\Cookbook\Exception\UserFolderNotWritableException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
+use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\ImageService\ImageConversionHelper;
 use OCA\Cookbook\Helper\ImageService\ImageSize;
 use OCA\Cookbook\Helper\UserConfigHelper;
@@ -71,6 +72,9 @@ class RecipeService {
 
 	private $userFolder;
 
+	/** @var HttpJsonLdParser */
+	private $jsonLdParser;
+
 	public function __construct(
 		?string $UserId,
 		IRootFolder $root,
@@ -85,6 +89,7 @@ class RecipeService {
 		RecipeExtractionService $extractionService,
 		JSONFilter $jsonFilter,
 		DownloadHelper $downloadHelper,
+		HttpJsonLdParser $jsonLdParser,
 		private ImageConversionHelper $imageConversionHelper,
 	) {
 		$this->user_id = $UserId;
@@ -98,6 +103,7 @@ class RecipeService {
 		$this->recipeExtractionService = $extractionService;
 		$this->jsonFilter = $jsonFilter;
 		$this->downloadHelper = $downloadHelper;
+		$this->jsonLdParser = $jsonLdParser;
 
 		$this->userFolder = $root->getUserFolder($UserId);
 	}
@@ -364,6 +370,21 @@ class RecipeService {
 		$json['url'] = $url;
 
 		return $this->addRecipe($json, $importedHtml);
+	}
+
+	/**
+	 * Create a new recipe from a JSON+LD string
+	 *
+	 * @param string $json The JSON+LD content, optionally wrapped in a script tag
+	 * @throws HtmlParsingException If no recipe was found
+	 * @throws RecipeExistsException If a recipe with the same name exists
+	 * @return File The created recipe file
+	 */
+	public function importRecipeJson(string $json): File {
+		$recipe = $this->jsonLdParser->parseJsonLd($json);
+		unset($recipe['id']);
+
+		return $this->addRecipe($recipe);
 	}
 
 	/**

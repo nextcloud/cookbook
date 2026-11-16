@@ -469,6 +469,16 @@ Url:
   required:
     - url
 
+RecipeJson:
+  type: object
+  properties:
+    json:
+      type: string
+      description: A schema.org recipe as JSON+LD, optionally wrapped in a script tag
+      example: '{"@context": "https://schema.org", "@type": "Recipe", "name": "Soup"}'
+  required:
+    - json
+
 Version:
   type: object
   properties:

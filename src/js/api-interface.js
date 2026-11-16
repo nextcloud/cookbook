@@ -88,6 +88,10 @@ function importRecipe(url) {
     return instance.post(`${baseUrl}/import`, `url=${url}`);
 }
 
+function importRecipeJson(json) {
+    return instance.post(`${baseUrl}/import`, { json });
+}
+
 function getAllCategories() {
     return instance.get(`${baseUrl}/categories`);
 }
@@ -137,6 +141,7 @@ export default {
         update: updateRecipe,
         delete: deleteRecipe,
         import: importRecipe,
+        importJson: importRecipeJson,
         reindex,
     },
     categories: {
