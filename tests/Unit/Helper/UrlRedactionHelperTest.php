@@ -26,7 +26,7 @@ class UrlRedactionHelperTest extends TestCase {
 	 * @dataProvider dataProvider
 	 */
 	public function testRedact(?string $url, string $expected): void {
-		$this->assertEquals($expected, UrlRedactionHelper::redact($url));
+		$this->assertEquals($expected, (new UrlRedactionHelper())->redact($url));
 	}
 
 	public static function textDataProvider(): array {
@@ -47,6 +47,6 @@ class UrlRedactionHelperTest extends TestCase {
 	 * @dataProvider textDataProvider
 	 */
 	public function testRedactInText(string $text, string $expected): void {
-		$this->assertEquals($expected, UrlRedactionHelper::redactInText($text));
+		$this->assertEquals($expected, (new UrlRedactionHelper())->redactInText($text));
 	}
 }

@@ -34,8 +34,13 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private $recipe;
 
-	public function __construct(IL10N $l10n, LoggerInterface $logger) {
-		parent::__construct($l10n, $logger);
+	public function __construct(IL10N $l10n, LoggerInterface $logger, UrlRedactionHelper $urlRedactionHelper) {
+		parent::__construct($l10n, $logger, $urlRedactionHelper);
+	}
+
+	#[\Override]
+	public function getName(): string {
+		return 'Microdata';
 	}
 
 	#[\Override]
@@ -51,12 +56,12 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		$recipes = $this->xpath->query($xpathSelector);
 
 		if (count($recipes) === 0) {
-			$this->logger->info('Microdata parser found no Recipe itemscope elements for {url}', ['url' => UrlRedactionHelper::redact($url)]);
+			$this->logger->info('Microdata parser found no Recipe itemscope elements for {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 			throw new HtmlParsingException($this->l->t('No recipe was found.'));
 		}
 
 		$this->logger->debug('Microdata parser found {count} Recipe itemscope elements for {url}', [
-			'count' => count($recipes), 'url' => UrlRedactionHelper::redact($url),
+			'count' => count($recipes), 'url' => $this->urlRedactionHelper->redact($url),
 		]);
 
 		$this->recipe = [

@@ -10,7 +10,7 @@ namespace OCA\Cookbook\Helper;
  * Strips credentials, query and fragment from URLs before they are logged.
  */
 class UrlRedactionHelper {
-	public static function redact(?string $url): string {
+	public function redact(?string $url): string {
 		$parts = parse_url($url ?? '');
 
 		if ($parts === false || !isset($parts['host'])) {
@@ -23,7 +23,7 @@ class UrlRedactionHelper {
 		return $scheme . $parts['host'] . $port . ($parts['path'] ?? '');
 	}
 
-	public static function redactInText(string $text): string {
-		return preg_replace_callback('~https?://[^\s`\'"<>()]+~', fn (array $m) => self::redact($m[0]), $text) ?? $text;
+	public function redactInText(string $text): string {
+		return preg_replace_callback('~https?://[^\s`\'"<>()]+~', fn (array $m) => $this->redact($m[0]), $text) ?? $text;
 	}
 }

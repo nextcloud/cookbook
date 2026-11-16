@@ -63,6 +63,7 @@ class HtmlDownloadService {
 		DownloadHelper $downloadHelper,
 		EncodingGuessingHelper $encodingGuesser,
 		DownloadEncodingHelper $downloadEncodingHelper,
+		private UrlRedactionHelper $urlRedactionHelper,
 	) {
 		$this->htmlFilters = [
 			$htmlEntityDecodeFilter,
@@ -87,12 +88,12 @@ class HtmlDownloadService {
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
-		$this->logger->info('Starting recipe download from {url}', ['url' => UrlRedactionHelper::redact($url)]);
+		$this->logger->info('Starting recipe download from {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
 
 		$html = $this->fetchHtmlPage($url);
 
 		$this->logger->debug('Downloaded {url}: HTTP {status}, content-type {ct}, size {size} bytes', [
-			'url' => UrlRedactionHelper::redact($url),
+			'url' => $this->urlRedactionHelper->redact($url),
 			'status' => $this->downloadHelper->getStatus(),
 			'ct' => $this->downloadHelper->getContentType() ?? 'unknown',
 			'size' => strlen($html),
@@ -159,13 +160,13 @@ class HtmlDownloadService {
 		try {
 			$this->downloadHelper->downloadFile($url, $opt, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [UrlRedactionHelper::redact($url), $ex->getMessage()]), 0, $ex, step: 'download');
+			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$this->urlRedactionHelper->redact($url), $ex->getMessage()]), 0, $ex, step: 'download');
 		}
 
 		$status = $this->downloadHelper->getStatus();
 
 		if ($status < 200 || $status >= 300) {
-			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [UrlRedactionHelper::redact($url), $status]), step: 'download');
+			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$this->urlRedactionHelper->redact($url), $status]), step: 'download');
 		}
 
 		$html = $this->downloadHelper->getContent();

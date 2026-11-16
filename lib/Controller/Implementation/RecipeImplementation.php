@@ -63,6 +63,7 @@ class RecipeImplementation {
 		IL10N $iL10N,
 		LoggerInterface $logger,
 		private string $userId,
+		private UrlRedactionHelper $urlRedactionHelper,
 	) {
 		$this->request = $request;
 		$this->service = $recipeService;
@@ -334,7 +335,7 @@ class RecipeImplementation {
 		$data['url'] = str_replace(' ', '%20', trim($data['url']));
 
 		if (! $this->isDownloadUrlValid($data['url'])) {
-			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => UrlRedactionHelper::redact($data['url']), 'user' => $this->userId]);
+			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $this->urlRedactionHelper->redact($data['url']), 'user' => $this->userId]);
 			// throw new InvalidDownloadURLException($this->l->t('The provided URL is not allowed.'));
 			$json = [
 				'msg' => $this->l->t('The provided URL is not allowed.'),
@@ -356,12 +357,12 @@ class RecipeImplementation {
 			return new JSONResponse($json, Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
 			$this->logger->warning('Import of {url} failed at step "{step}": {reason}', [
-				'url' => UrlRedactionHelper::redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $this->urlRedactionHelper->redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse($e->getMessage(), 400);
 		} catch (\Exception $e) {
 			$this->logger->error('Unexpected error during import of {url}: {reason}', [
-				'url' => UrlRedactionHelper::redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse($e->getMessage(), 400);
 		}

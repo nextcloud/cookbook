@@ -9,6 +9,7 @@ namespace OCA\Cookbook\tests\Unit\Service;
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\HTMLParser\HttpMicrodataParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\RecipeExtractionService;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -70,7 +71,7 @@ class RecipeExtractionServiceTest extends TestCase {
 		}
 
 		$logger = $this->createStub(LoggerInterface::class);
-		$sut = new RecipeExtractionService($jsonParser, $microdataParser, $this->l, $logger);
+		$sut = new RecipeExtractionService($jsonParser, $microdataParser, $this->l, $logger, new UrlRedactionHelper());
 
 		try {
 			$ret = $sut->parse($document, $url);

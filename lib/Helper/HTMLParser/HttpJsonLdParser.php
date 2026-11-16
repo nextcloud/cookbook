@@ -22,10 +22,15 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 */
 	private $jsonService;
 
-	public function __construct(IL10N $l10n, LoggerInterface $logger, JsonService $jsonService) {
-		parent::__construct($l10n, $logger);
+	public function __construct(IL10N $l10n, LoggerInterface $logger, JsonService $jsonService, UrlRedactionHelper $urlRedactionHelper) {
+		parent::__construct($l10n, $logger, $urlRedactionHelper);
 
 		$this->jsonService = $jsonService;
+	}
+
+	#[\Override]
+	public function getName(): string {
+		return 'JSON-LD';
 	}
 
 	#[\Override]
@@ -35,7 +40,7 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
 
 		$this->logger->debug('JSON-LD parser found {count} ld+json elements for {url}', [
-			'count' => $json_ld_elements->length, 'url' => UrlRedactionHelper::redact($url),
+			'count' => $json_ld_elements->length, 'url' => $this->urlRedactionHelper->redact($url),
 		]);
 
 		foreach ($json_ld_elements as $json_ld_element) {

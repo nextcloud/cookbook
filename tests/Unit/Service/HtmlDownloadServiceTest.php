@@ -16,6 +16,7 @@ use OCA\Cookbook\Helper\EncodingGuessingHelper;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\HtmlDownloadService;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -80,7 +81,7 @@ class HtmlDownloadServiceTest extends TestCase {
 
 		$this->sut = new HtmlDownloadService(
 			$this->htmlEntityDecodeFilter, $this->htmlEncodingFilter, $this->il10n, $logger, $this->htmlParser,
-			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper);
+			$this->downloadHelper, $this->encodingGuesser, $this->downloadEncodingHelper, new UrlRedactionHelper());
 	}
 
 	public function testDownloadInvalidUrl() {
@@ -127,7 +128,7 @@ class HtmlDownloadServiceTest extends TestCase {
 		} catch (ImportException $e) {
 			$this->assertStringContainsString('https://example.com/recipe failed', $e->getMessage());
 			$this->assertStringNotContainsString('s3cret', $e->getMessage());
-			$this->assertStringNotContainsString('token', $e->getMessage());
+			$this->assertStringNotContainsString('abc', $e->getMessage());
 		}
 	}
 

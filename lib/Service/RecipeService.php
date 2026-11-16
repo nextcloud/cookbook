@@ -87,6 +87,7 @@ class RecipeService {
 		JSONFilter $jsonFilter,
 		DownloadHelper $downloadHelper,
 		private ImageConversionHelper $imageConversionHelper,
+		private UrlRedactionHelper $urlRedactionHelper,
 	) {
 		$this->user_id = $UserId;
 		$this->db = $db;
@@ -355,7 +356,7 @@ class RecipeService {
 		}
 
 		$this->logger->info('Recipe extracted from {url}: name="{name}"', [
-			'url' => UrlRedactionHelper::redact($url), 'name' => $json['name'] ?? '(unnamed)',
+			'url' => $this->urlRedactionHelper->redact($url), 'name' => $json['name'] ?? '(unnamed)',
 		]);
 
 		$json = $this->checkRecipe($json);

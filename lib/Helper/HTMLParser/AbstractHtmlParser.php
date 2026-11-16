@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -18,10 +19,16 @@ abstract class AbstractHtmlParser {
 
 	protected LoggerInterface $logger;
 
-	public function __construct(IL10N $l10n, LoggerInterface $logger) {
+	public function __construct(
+		IL10N $l10n,
+		LoggerInterface $logger,
+		protected UrlRedactionHelper $urlRedactionHelper,
+	) {
 		$this->l = $l10n;
 		$this->logger = $logger;
 	}
+
+	abstract public function getName(): string;
 
 	/**
 	 * Extract the recipe from the given document.

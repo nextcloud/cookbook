@@ -15,6 +15,7 @@ use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
 use OCA\Cookbook\Helper\Filter\Output\RecipeJSONOutputFilter;
 use OCA\Cookbook\Helper\Filter\Output\RecipeStubFilter;
 use OCA\Cookbook\Helper\RestParameterParser;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
@@ -91,6 +92,7 @@ class RecipeImplementationTest extends TestCase {
 			$l,
 			$this->logger,
 			'testuser',
+			new UrlRedactionHelper(),
 		);
 	}
 

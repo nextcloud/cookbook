@@ -14,6 +14,7 @@ namespace OCA\Cookbook\tests\Integration\Helper\DownloadHelper;
 
 use OCA\Cookbook\Exception\NoDownloadWasCarriedOutException;
 use OCA\Cookbook\Helper\DownloadHelper;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +39,7 @@ class DownloadHelperTest extends TestCase {
 
 		$clientService = $container->get(\OCP\Http\Client\IClientService::class);
 
-		$this->dut = new DownloadHelper($l, $clientService);
+		$this->dut = new DownloadHelper($l, $clientService, new UrlRedactionHelper());
 
 		if (file_exists('/www/.htaccess')) {
 			unlink('/www/.htaccess');

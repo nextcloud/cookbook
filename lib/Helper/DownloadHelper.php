@@ -48,6 +48,7 @@ class DownloadHelper {
 	public function __construct(
 		IL10N $l,
 		IClientService $clientService,
+		private UrlRedactionHelper $urlRedactionHelper,
 	) {
 		$this->downloaded = false;
 		$this->l = $l;
@@ -81,7 +82,7 @@ class DownloadHelper {
 		} catch (\OCP\Http\Client\LocalServerException $e) {
 			throw new NoDownloadWasCarriedOutException($this->l->t('URL resolves to a local/internal address'));
 		} catch (\Exception $e) {
-			throw new NoDownloadWasCarriedOutException($this->l->t('Error occurred while downloading the file: %s', [UrlRedactionHelper::redactInText($e->getMessage())]));
+			throw new NoDownloadWasCarriedOutException($this->l->t('Error occurred while downloading the file: %s', [$this->urlRedactionHelper->redactInText($e->getMessage())]));
 		}
 
 		$this->content = $response->getBody();
