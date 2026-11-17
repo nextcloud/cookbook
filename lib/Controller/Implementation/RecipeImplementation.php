@@ -305,8 +305,20 @@ class RecipeImplementation {
 
 		$this->logger->info('Starting recipe import from {url}', ['url' => $redactedUrl]);
 
+		// Trace args of import errors can hold the URL (credentials, tokens) or content derived from it
+		$previousIgnoreArgs = ini_set('zend.exception_ignore_args', '1');
 		try {
-			$recipe_file = $this->service->downloadRecipe($data['url']);
+			return $this->importFromUrl($data['url'], $redactedUrl);
+		} finally {
+			if ($previousIgnoreArgs !== false) {
+				ini_set('zend.exception_ignore_args', $previousIgnoreArgs);
+			}
+		}
+	}
+
+	private function importFromUrl(string $url, string $redactedUrl): JSONResponse {
+		try {
+			$recipe_file = $this->service->downloadRecipe($url);
 			$recipe_json = $this->service->parseRecipeFile($recipe_file);
 
 		} catch (RecipeExistsException $ex) {
