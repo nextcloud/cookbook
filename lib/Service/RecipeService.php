@@ -341,11 +341,13 @@ class RecipeService {
 	/**
 	 * Download a recipe from a url and store it in the files
 	 *
+	 * Not #[\SensitiveParameter]: registered as sensitive in Application, the log serializer needs the raw value to scrub it from other frames.
+	 *
 	 * @param string $url The recipe URL
 	 * @throws Exception
 	 * @return File
 	 */
-	public function downloadRecipe(#[\SensitiveParameter] string $url): File {
+	public function downloadRecipe(string $url): File {
 		$this->htmlDownloadService->downloadRecipe($url);
 
 		try {

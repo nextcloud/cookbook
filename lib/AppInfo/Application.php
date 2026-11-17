@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\AppInfo;
 
 use OCA\Cookbook\Search\Provider;
+use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -24,6 +25,8 @@ class Application extends App implements IBootstrap {
 		$context->registerSearchProvider(Provider::class);
 		$context->registerCapability(PublicCapabilities::class);
 		$context->registerCapability(Capabilities::class);
+		// Log serializer hides these args and scrubs the same values (e.g. recipe['url']) from all other trace frames
+		$context->registerSensitiveMethods(RecipeService::class, ['downloadRecipe']);
 	}
 
 	#[\Override]
