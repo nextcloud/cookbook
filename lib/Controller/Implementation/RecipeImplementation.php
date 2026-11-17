@@ -296,10 +296,14 @@ class RecipeImplementation {
 
 		$data['url'] = str_replace(' ', '%20', trim($data['url']));
 
+		$redactedUrl = $this->urlRedactionHelper->redact($data['url']);
+
 		if (! $this->isDownloadUrlValid($data['url'])) {
-			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $this->urlRedactionHelper->redact($data['url']), 'user' => $this->userId]);
+			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $redactedUrl, 'user' => $this->userId]);
 			return new JSONResponse(['msg' => $this->l->t('The provided URL is not allowed.')], Http::STATUS_BAD_REQUEST);
 		}
+
+		$this->logger->info('Starting recipe import from {url}', ['url' => $redactedUrl]);
 
 		try {
 			$recipe_file = $this->service->downloadRecipe($data['url']);
@@ -309,12 +313,12 @@ class RecipeImplementation {
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
 			$this->logger->warning('Import of {url} failed at step "{step}": {reason}', [
-				'url' => $this->urlRedactionHelper->redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $redactedUrl, 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $e->getMessage(), 'step' => $e->getStep()], Http::STATUS_BAD_REQUEST);
 		} catch (\Exception $e) {
 			$this->logger->error('Unexpected error during import of {url}: {reason}', [
-				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $redactedUrl, 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_BAD_REQUEST);
 		}
@@ -333,7 +337,7 @@ class RecipeImplementation {
 			}
 
 			$this->logger->error('Unexpected error while caching imported recipe from {url}: {reason}', [
-				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $redactedUrl, 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_BAD_REQUEST);
 		}

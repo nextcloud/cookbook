@@ -143,13 +143,12 @@ class HtmlToDomParserTest extends TestCase {
 				->method('error');
 		}
 
-		$url = 'http://example.com/recipe';
 		$html = 'Foo Bar Baz';
 
 		$this->assertEquals(4, $this->sut->getState());
 
 		try {
-			$this->sut->loadHtmlString($dom, $url, $html);
+			$this->sut->loadHtmlString($dom, $html);
 
 			$this->assertTrue($successDomParsing);
 		} catch (ImportException $ex) {
@@ -280,15 +279,13 @@ class HtmlToDomParserTest extends TestCase {
 				$this->getXMLError(6, LIBXML_ERR_WARNING, '/file', 1, 2, 'The message'),
 			]);
 
-		$url = 'http://example.com/recipe';
-
 		$this->l->method('n')->willReturnArgument(1);
 
 		$this->logger->expects($this->exactly(3))
 			->method('info');
 		$this->logger->expects($this->exactly(2))
 			->method('warning')
-			->with('libxml: Error %u occurred %n times while parsing %s. First time it occurred in line %u and column %u: The message');
+			->with('libxml: Error %u occurred %n times while parsing the HTML. First time it occurred in line %u and column %u: The message');
 		$this->logger->expects($this->exactly(0))
 			->method('error');
 
@@ -296,7 +293,7 @@ class HtmlToDomParserTest extends TestCase {
 
 		$this->assertEquals(4, $this->sut->getState());
 
-		$this->sut->loadHtmlString($dom, $url, $html);
+		$this->sut->loadHtmlString($dom, $html);
 	}
 
 	public static function dpSingleLogging() {
@@ -325,14 +322,12 @@ class HtmlToDomParserTest extends TestCase {
 			$this->getXMLError(2, $errorLevel, '/file', 1, 2, 'The message'),
 		]);
 
-		$url = 'http://example.com/recipe';
-
 		$this->l->method('n')->willReturnArgument(0);
 
 		if ($logWarn) {
 			$this->logger->expects($this->once())->method('info')
 				->with(
-					'libxml: Warning %u occurred while parsing %s. '
+					'libxml: Warning %u occurred while parsing the HTML. '
 					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -344,7 +339,7 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->once())->method('warning')
 				->with(
-					'libxml: Error %u occurred while parsing %s. '
+					'libxml: Error %u occurred while parsing the HTML. '
 					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -356,7 +351,7 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->once())->method('error')
 				->with(
-					'libxml: Fatal error %u occurred while parsing %s. '
+					'libxml: Fatal error %u occurred while parsing the HTML. '
 					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -364,7 +359,7 @@ class HtmlToDomParserTest extends TestCase {
 
 		$html = 'Foo Bar Baz';
 
-		$this->sut->loadHtmlString($dom, $url, $html);
+		$this->sut->loadHtmlString($dom, $html);
 		$this->assertEquals($errorLevel, $this->sut->getState());
 	}
 
@@ -387,14 +382,12 @@ class HtmlToDomParserTest extends TestCase {
 			$this->getXMLError(2, $errorLevel, '/file', 10, 20, 'The new message'),
 		]);
 
-		$url = 'http://example.com/recipe';
-
 		$this->l->method('n')->willReturnArgument(1);
 
 		if ($logWarn) {
 			$this->logger->expects($this->once())->method('info')
 				->with(
-					'libxml: Warning %u occurred %n times while parsing %s. '
+					'libxml: Warning %u occurred %n times while parsing the HTML. '
 					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -406,7 +399,7 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('info');
 			$this->logger->expects($this->once())->method('warning')
 				->with(
-					'libxml: Error %u occurred %n times while parsing %s. '
+					'libxml: Error %u occurred %n times while parsing the HTML. '
 					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -418,7 +411,7 @@ class HtmlToDomParserTest extends TestCase {
 			$this->logger->expects($this->never())->method('warning');
 			$this->logger->expects($this->once())->method('error')
 				->with(
-					'libxml: Fatal error %u occurred %n times while parsing %s. '
+					'libxml: Fatal error %u occurred %n times while parsing the HTML. '
 					. 'First time it occurred in line %u and column %u: The message',
 					[]
 				);
@@ -426,7 +419,7 @@ class HtmlToDomParserTest extends TestCase {
 
 		$html = 'Foo Bar Baz';
 
-		$this->sut->loadHtmlString($dom, $url, $html);
+		$this->sut->loadHtmlString($dom, $html);
 		$this->assertEquals($errorLevel, $this->sut->getState());
 	}
 

@@ -7,7 +7,6 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
-use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -19,11 +18,7 @@ abstract class AbstractHtmlParser {
 
 	protected LoggerInterface $logger;
 
-	public function __construct(
-		IL10N $l10n,
-		LoggerInterface $logger,
-		protected UrlRedactionHelper $urlRedactionHelper,
-	) {
+	public function __construct(IL10N $l10n, LoggerInterface $logger) {
 		$this->l = $l10n;
 		$this->logger = $logger;
 	}
@@ -34,9 +29,8 @@ abstract class AbstractHtmlParser {
 	 * Extract the recipe from the given document.
 	 *
 	 * @param \DOMDocument $document The document to parse
-	 * @param ?string $url The URL of the recipe to import
 	 * @return array The JSON content in the document as a PHP array
 	 * @throws HtmlParsingException If the parsing was not successful
 	 */
-	abstract public function parse(\DOMDocument $document, ?string $url): array;
+	abstract public function parse(\DOMDocument $document): array;
 }
