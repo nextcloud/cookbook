@@ -24,7 +24,7 @@ class CleanCategoryFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		if (!isset($json['recipeCategory'])) {
 			$json['recipeCategory'] = '';
 			return true;

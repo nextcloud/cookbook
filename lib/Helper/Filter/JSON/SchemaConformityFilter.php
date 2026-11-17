@@ -11,7 +11,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
  */
 class SchemaConformityFilter extends AbstractJSONFilter {
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		$changed = false;
 		if ($this->setJSONValue($json, '@context', 'http://schema.org')) {
 			$changed = true;

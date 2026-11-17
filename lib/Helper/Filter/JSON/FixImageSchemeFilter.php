@@ -7,6 +7,7 @@
 namespace OCA\Cookbook\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidRecipeException;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 
 /**
@@ -18,19 +19,22 @@ class FixImageSchemeFilter extends AbstractJSONFilter {
 	/** @var IL10N */
 	private $l;
 
-	public function __construct(IL10N $l) {
+	public function __construct(
+		IL10N $l,
+		private UrlRedactionHelper $urlRedactionHelper,
+	) {
 		$this->l = $l;
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		if (substr($json['image'], 0, 2) === '//') {
 			if (!isset($json['url'])) {
 				throw new InvalidRecipeException($this->l->t('Could not guess image URL as no recipe URL was found.'));
 			}
 
 			if (preg_match('/^([a-zA-Z]+:)\/\//', $json['url'], $matches) !== 1) {
-				throw new InvalidRecipeException($this->l->t('Could not guess image URL scheme from recipe URL %s', [$json['url']]));
+				throw new InvalidRecipeException($this->l->t('Could not guess image URL scheme from recipe URL %s', [$this->urlRedactionHelper->redact($json['url'])]));
 			}
 
 			$json['image'] = $matches[1] . $json['image'];

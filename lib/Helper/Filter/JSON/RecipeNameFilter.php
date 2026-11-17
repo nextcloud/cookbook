@@ -25,7 +25,7 @@ class RecipeNameFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		// Clean up name to prevent issues
 		$cleanedName = $this->textCleanupHelper->cleanUp($json['name'], true, false, false);
 		$changed = ($json['name'] !== $cleanedName);

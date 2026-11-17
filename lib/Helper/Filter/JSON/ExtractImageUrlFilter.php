@@ -30,7 +30,7 @@ class ExtractImageUrlFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		if (!isset($json['image']) || !$json['image']) {
 			$json['image'] = '';
 			return true;

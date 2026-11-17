@@ -8,6 +8,7 @@ namespace OCA\Cookbook\tests\Unit\Helper\Filter\JSON;
 
 use OCA\Cookbook\Exception\InvalidRecipeException;
 use OCA\Cookbook\Helper\Filter\JSON\FixImageSchemeFilter;
+use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
@@ -21,9 +22,9 @@ class FixImageSchemeFilterTest extends TestCase {
 
 		/** @var Stub|IL10N $l */
 		$l = $this->createStub(IL10N::class);
-		$l->method('t')->willReturnArgument(0);
+		$l->method('t')->willReturnCallback(fn (string $text, array $params = []) => vsprintf($text, $params));
 
-		$this->dut = new FixImageSchemeFilter($l);
+		$this->dut = new FixImageSchemeFilter($l, new UrlRedactionHelper());
 	}
 
 	public static function dp() {
@@ -86,5 +87,20 @@ class FixImageSchemeFilterTest extends TestCase {
 
 		$this->expectException(InvalidRecipeException::class);
 		$this->dut->apply($recipe);
+	}
+
+	public function testInvalidUrlMessageIsRedacted() {
+		$recipe = [
+			'url' => 'bob:s3cret@example.com/recipe?token=abc',
+			'image' => '//image.jpg',
+		];
+
+		try {
+			$this->dut->apply($recipe);
+			$this->fail('Expected InvalidRecipeException');
+		} catch (InvalidRecipeException $ex) {
+			$this->assertStringNotContainsString('s3cret', $ex->getMessage());
+			$this->assertStringNotContainsString('token', $ex->getMessage());
+		}
 	}
 }

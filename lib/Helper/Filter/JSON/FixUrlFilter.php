@@ -35,7 +35,7 @@ class FixUrlFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		if (!isset($json[self::URL])) {
 			$json[self::URL] = '';
 			return true;

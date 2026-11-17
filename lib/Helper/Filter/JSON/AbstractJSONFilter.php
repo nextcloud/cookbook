@@ -25,7 +25,7 @@ abstract class AbstractJSONFilter {
 	 * @return bool true, if and only if the recipe was changed
 	 * @throws InvalidRecipeException if the recipe was not correctly filtered
 	 */
-	abstract public function apply(array &$json): bool;
+	abstract public function apply(#[\SensitiveParameter] array &$json): bool;
 
 	/**
 	 * @param string|int|float|array $value

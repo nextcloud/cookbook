@@ -13,7 +13,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
  */
 class TimestampFixFilter extends AbstractJSONFilter {
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		$changed = false;
 		foreach (['dateCreated', 'dateModified'] as $key) {
 			if (isset($json[$key]) && $json[$key]) {

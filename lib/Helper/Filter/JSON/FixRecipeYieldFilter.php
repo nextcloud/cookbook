@@ -37,7 +37,7 @@ class FixRecipeYieldFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		if (!array_key_exists(self::YIELD, $json)) {
 			$json[self::YIELD] = null;
 			return true;

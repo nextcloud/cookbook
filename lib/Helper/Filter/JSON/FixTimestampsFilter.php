@@ -40,7 +40,7 @@ class FixTimestampsFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		$changed = false;
 
 		$this->fixTimestamp($json, 'dateCreated', $changed);

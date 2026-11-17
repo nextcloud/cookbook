@@ -35,7 +35,7 @@ class FixNutritionFilter extends AbstractJSONFilter {
 	}
 
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		if (!isset($json[self::NUTRITION])) {
 			$json[self::NUTRITION] = [];
 			return true;

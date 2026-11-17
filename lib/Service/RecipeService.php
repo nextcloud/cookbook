@@ -192,7 +192,7 @@ class RecipeService {
 	 *
 	 * @return File
 	 */
-	public function addRecipe(#[\SensitiveParameter] $json, $importedHtml = null) {
+	public function addRecipe(#[\SensitiveParameter] $json, #[\SensitiveParameter] $importedHtml = null) {
 		if (!$json || !isset($json['name']) || !$json['name']) {
 			throw new NoRecipeNameGivenException($this->il10n->t('No recipe name was given. A unique name is required to store the recipe.'));
 		}

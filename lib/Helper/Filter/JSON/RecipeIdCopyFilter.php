@@ -11,7 +11,7 @@ namespace OCA\Cookbook\Helper\Filter\JSON;
  */
 class RecipeIdCopyFilter extends AbstractJSONFilter {
 	#[\Override]
-	public function apply(array &$json): bool {
+	public function apply(#[\SensitiveParameter] array &$json): bool {
 		$copy = $json;
 		if (!isset($json['id'])) {
 			$json['id'] = $json['recipe_id'];
