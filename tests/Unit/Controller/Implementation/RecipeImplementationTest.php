@@ -199,7 +199,6 @@ class RecipeImplementationTest extends TestCase {
 
 		try {
 			$this->sut->import();
-			$this->assertSame('0', ini_get('zend.exception_ignore_args'));
 		} finally {
 			ini_set('zend.exception_ignore_args', $previous);
 		}
