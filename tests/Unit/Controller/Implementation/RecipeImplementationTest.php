@@ -9,6 +9,7 @@ namespace OCA\Cookbook\tests\Unit\Controller\Implementation;
 use Exception;
 use OCA\Cookbook\Controller\Implementation\RecipeImplementation;
 use OCA\Cookbook\Exception\ImportException;
+use OCA\Cookbook\Exception\InvalidJSONFileException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Exception\RecipeExistsException;
 use OCA\Cookbook\Helper\AcceptHeaderParsingHelper;
@@ -22,6 +23,7 @@ use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\IOutput;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\Files\File;
+use OCP\Files\Folder;
 use OCP\IL10N;
 use OCP\IRequest;
 use OCP\IURLGenerator;
@@ -111,6 +113,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => 'Field "url" is required'], $ret->getData());
 	}
 
 	public function testImport(): void {
@@ -152,14 +155,8 @@ class RecipeImplementationTest extends TestCase {
 		 */
 		$ret = $this->sut->import();
 
-		$expected = [
-			'msg' => $ex->getMessage(),
-			'line' => $ex->getLine(),
-			'file' => $ex->getFile(),
-		];
-
 		$this->assertEquals(409, $ret->getStatus());
-		$this->assertEquals($expected, $ret->getData());
+		$this->assertEquals(['msg' => $ex->getMessage()], $ret->getData());
 	}
 
 	public function testImportFailedAtStep(): void {
@@ -182,7 +179,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals('The error message', $ret->getData());
+		$this->assertEquals(['msg' => 'The error message', 'step' => 'download'], $ret->getData());
 	}
 
 	public function testImportOther(): void {
@@ -201,7 +198,41 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals($errorMsg, $ret->getData());
+		$this->assertEquals(['msg' => 'An unexpected error occurred during import.'], $ret->getData());
+	}
+
+	public static function dpImportCacheFailures(): array {
+		return [
+			'invalid JSON' => [new InvalidJSONFileException('Invalid JSON'), 'Invalid JSON'],
+			'unexpected' => [new Exception('DB down'), 'An unexpected error occurred during import.'],
+		];
+	}
+
+	/**
+	 * @dataProvider dpImportCacheFailures
+	 */
+	public function testImportCacheFailure(Exception $ex, string $expectedMsg): void {
+		$this->ensureCacheCheckTriggered();
+
+		$url = 'http://example.com/Recipe.html';
+		$folder = $this->createStub(Folder::class);
+		$folder->method('getId')->willReturn(42);
+		$file = $this->createStub(File::class);
+		$file->method('getParent')->willReturn($folder);
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => $url ]);
+		$this->recipeService->method('downloadRecipe')->willReturn($file);
+		$this->recipeService->method('parseRecipeFile')->willReturn(['name' => 'The recipe name']);
+		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file)->willThrowException($ex);
+		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(42)->willThrowException(new Exception('Cannot delete'));
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
+		$this->assertEquals(['msg' => $expectedMsg], $ret->getData());
 	}
 
 	/**
@@ -535,12 +566,37 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->create();
 
 		$this->assertEquals(409, $ret->getStatus());
-		$expected = [
-			'msg' => 'message',
-			'file' => __FILE__,
-			'line' => $ex->getLine(),
+		$this->assertEquals(['msg' => 'message'], $ret->getData());
+	}
+
+	public static function dpSaveMethods(): array {
+		return [
+			'create' => ['create', []],
+			'update' => ['update', [1]],
 		];
-		$this->assertEquals($expected, $ret->getData());
+	}
+
+	/**
+	 * @dataProvider dpSaveMethods
+	 */
+	public function testSaveInvalidJson(string $method, array $args): void {
+		$this->ensureCacheCheckTriggered();
+
+		$recipe = ['name' => 'The recipe name'];
+		$this->restParser->method('getParameters')->willReturn($recipe);
+
+		$file = $this->createStub(File::class);
+		$file->method('getParent')->willReturnSelf();
+		$file->method('getId')->willReturn(23);
+
+		$this->recipeService->method('addRecipe')->willReturn($file);
+		$this->dbCacheService->method('addRecipe')->willThrowException(new InvalidJSONFileException('Invalid JSON'));
+		$this->recipeService->expects($this->once())->method('deleteRecipe')->with(23)->willThrowException(new Exception('Cannot delete'));
+
+		$ret = $this->sut->$method(...$args);
+
+		$this->assertEquals(422, $ret->getStatus());
+		$this->assertEquals(['msg' => 'Invalid JSON'], $ret->getData());
 	}
 
 	public function testShow(): void {
@@ -809,7 +865,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals('Field "url" must be a string', $ret->getData());
+		$this->assertEquals(['msg' => 'Field "url" must be a string'], $ret->getData());
 	}
 
 	public static function dpInvalidImportURLs(): array {

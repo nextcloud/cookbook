@@ -162,11 +162,11 @@ class RecipeService {
 	 */
 	public function checkRecipe(array $json): array {
 		if (!$json) {
-			throw new Exception('Recipe array was null');
+			throw new Exception($this->il10n->t('Recipe array was null'));
 		}
 
 		if (empty($json['name'])) {
-			throw new Exception('Field "name" is required');
+			throw new Exception($this->il10n->t('Field "name" is required'));
 		}
 
 		return $this->jsonFilter->apply($json);
@@ -355,7 +355,13 @@ class RecipeService {
 			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
 		}
 
-		$json = $this->checkRecipe($json);
+		$json['url'] = $url;
+
+		try {
+			$json = $this->checkRecipe($json);
+		} catch (Exception $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
+		}
 
 		if (!$json) {
 			$this->logger->error('Importing parsers resulted in null recipe.'
@@ -367,9 +373,11 @@ class RecipeService {
 			'url' => $this->urlRedactionHelper->redact($url), 'name' => $json['name'],
 		]);
 
-		$json['url'] = $url;
-
-		return $this->addRecipe($json, $importedHtml);
+		try {
+			return $this->addRecipe($json, $importedHtml);
+		} catch (NoRecipeNameGivenException $ex) {
+			throw new ImportException($ex->getMessage(), null, $ex, step: 'extract_recipe');
+		}
 	}
 
 	/**
