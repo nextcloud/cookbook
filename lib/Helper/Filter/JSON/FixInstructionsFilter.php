@@ -140,7 +140,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 	 * @param array $list
 	 * @return array<string> The list of instructions
 	 */
-	private function flattenItemList(array $list): array {
+	private function flattenItemList(#[\SensitiveParameter] array $list): array {
 		$elements = $list['itemListElement'];
 
 		$newElements = [];
