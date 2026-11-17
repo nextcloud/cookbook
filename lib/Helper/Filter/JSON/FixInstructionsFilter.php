@@ -188,7 +188,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 		throw new InvalidRecipeException($this->l->t('Cannot parse recipe: Unknown object found during flattening of instructions.'));
 	}
 
-	private function parseStringUsingHtmlEntities(array $json): ?array {
+	private function parseStringUsingHtmlEntities(#[\SensitiveParameter] array $json): ?array {
 		$count = preg_match_all('/<(p|li)>(.*?)<\/\1>/', $json[self::INSTRUCTIONS], $matches);
 
 		if ($count === 0) {
@@ -206,7 +206,7 @@ class FixInstructionsFilter extends AbstractJSONFilter {
 		}
 	}
 
-	private function parseString(array $json): array {
+	private function parseString(#[\SensitiveParameter] array $json): array {
 		$pieces = preg_split('/[\n\r]+/', $json[self::INSTRUCTIONS]);
 		$pieces = array_map(fn ($x) => (strip_tags($x)), $pieces);
 		$pieces = array_filter($pieces);

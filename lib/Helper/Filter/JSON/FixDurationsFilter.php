@@ -52,7 +52,7 @@ class FixDurationsFilter extends AbstractJSONFilter {
 		return $changed;
 	}
 
-	private function fixDate(array &$json, string $type, bool &$changed): void {
+	private function fixDate(#[\SensitiveParameter] array &$json, string $type, bool &$changed): void {
 		if (!isset($json[$type])) {
 			$json[$type] = null;
 			$changed = true;

@@ -30,7 +30,7 @@ abstract class AbstractJSONFilter {
 	/**
 	 * @param string|int|float|array $value
 	 */
-	protected function setJSONValue(array &$json, string $key, $value): bool {
+	protected function setJSONValue(#[\SensitiveParameter] array &$json, string $key, $value): bool {
 		if (!array_key_exists($key, $json)) {
 			$json[$key] = $value;
 			return true;

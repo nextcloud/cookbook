@@ -50,7 +50,7 @@ class FixTimestampsFilter extends AbstractJSONFilter {
 		return $changed;
 	}
 
-	private function fixTimestamp(array &$json, string $type, bool &$changed): void {
+	private function fixTimestamp(#[\SensitiveParameter] array &$json, string $type, bool &$changed): void {
 		if (!isset($json[$type])) {
 			$json[$type] = null;
 			$changed = true;

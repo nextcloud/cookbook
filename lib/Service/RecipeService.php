@@ -328,7 +328,7 @@ class RecipeService {
 		return $recipe_file;
 	}
 
-	private function downloadImage(string $url) {
+	private function downloadImage(#[\SensitiveParameter] string $url) {
 		$this->downloadHelper->downloadFile($url);
 		$status = $this->downloadHelper->getStatus();
 		if ($status >= 400) {
