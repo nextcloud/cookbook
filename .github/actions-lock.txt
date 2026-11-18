@@ -2,6 +2,6 @@
 # SPDX-License-Identifier: MIT
 e6351c608939c31ae1e32923aa82aa10 dependabot-approve-merge.yml
 af7ef59cad90fa52cfed30e97921b7a9 sync-workflow-templates.yml
-92678f1f5453d90fc2fd01698ade497c ai-policy.yml
+f75df1a028b90a751d6e284b8cb0e621 ai-policy.yml
 db73bd92859c4fb9d0489c0378a73d9e npm-audit-fix.yml
 2dbec18233063b42f4d8e03bbb43671c reuse.yml
