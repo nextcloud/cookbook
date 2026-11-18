@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest-low
     if: github.event.issue.pull_request
     environment: change-approval
+    # The approval is made with the App token, never with the job token
+    permissions: {}
     env:
       admins: '["seyfeb", "christianlupus"]'
     steps:
