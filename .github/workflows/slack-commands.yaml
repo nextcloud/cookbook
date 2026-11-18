@@ -27,9 +27,9 @@ jobs:
       - name: Check if user is admin and comment is /approve
         id: checker
         env:
-          IS_ADMIN: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}
+          IS_ADMIN: ${{ contains(fromJSON(env.admins), github.event.sender.login) }}
           IS_APPROVE: ${{ github.event.comment.body == '/approve' }}
-          RUN_APPROVE: ${{ contains(fromJSON(env.admins), github.event.comment.user.login) && github.event.comment.body == '/approve' }}
+          RUN_APPROVE: ${{ contains(fromJSON(env.admins), github.event.sender.login) && github.event.comment.body == '/approve' }}
         run: |-
           echo "is_admin=$IS_ADMIN" >> "$GITHUB_OUTPUT"
           echo "is_approve=$IS_APPROVE" >> "$GITHUB_OUTPUT"
