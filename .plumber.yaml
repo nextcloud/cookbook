@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+# Plumber configuration: every control is inherited from the built-in
+# default, only the differences for this repository are written here.
+# `plumber config resolve` prints the full effective configuration.
+extends: plumber:default
+version: "2.0"
+
+github:
+  controls:
+    githubActionMustComeFromAuthorizedSources:
+      # Keep the default trust list and add the third-party actions the
+      # workflows of this repository use
+      includePlumberDefaults: true
+      trustedGithubActions:
+        - ChristophWurst/xmllint-action
+        - alexwilson/enable-github-automerge-action
+        - amannn/action-semantic-pull-request
+        - dataaxiom/ghcr-cleanup-action
+        - hmarr/auto-approve-action
+        - mdecoleman/pr-branch-name
+        - nextcloud-libraries/npm-audit-action
+        - nextcloud-libraries/parse-package-engines-action
+        - shivammathur/setup-php
+        - skjnldsv/check-actor-permission
+        - skjnldsv/read-package-engines-version-actions
+        - xt0rted/block-autosquash-commits-action
+        - z0al/dependent-issues
