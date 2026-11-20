@@ -220,13 +220,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StubList"
-        500:
+        400:
           description: An error has been thrown
           content:
             application/json:
               schema:
-                type: string
-                description: The error message
+                $ref: "#/components/schemas/Error"
   /webapp/recipes:
     get:
       tags: [ Recipes ]
@@ -308,9 +307,7 @@ paths:
           content:
             application/json:
               schema:
-                type: integer
-                example: 2345
-                description: The id of the recipe that was not found
+                $ref: "#/components/schemas/Error"
     put:
       tags: [ Recipes ]
       summary: Update a recipe
@@ -346,14 +343,12 @@ paths:
               schema:
                 type: string
                 example: Recipe 2345 was deletes successfully
-        502:
+        400:
           description: An Exception was thrown
           content:
             application/json:
               schema:
-                type: string
-                example: Recipe with id 2345 was not found.
-                description: Error message
+                $ref: "#/components/schemas/Error"
   
   /webapp/keywords:
     get:
@@ -400,13 +395,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StubList"
-        500:
+        400:
           description: An error occurred
           content:
             application/json:
               schema:
-                type: string
-                example: "SQLException: Something went wrong."
+                $ref: "#/components/schemas/Error"
   
   /webapp/categories:
     get:
@@ -463,14 +457,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StubList"
-        500:
+        400:
           description: An exception was issued.
           content:
             application/json:
               schema:
-                type: string
-                description: The error message
-                example: Could not find category foo.
+                $ref: "#/components/schemas/Error"
     put:
       tags: [ Categories ]
       summary: Rename a category
@@ -506,12 +498,8 @@ paths:
                 type: string
                 example: Lunch
         400:
-          description: The new category name was not included during the request.
-        500:
-          description: The renaming did not succeed.
+          description: The new category name was not included during the request or the renaming did not succeed.
           content:
             application/json:
               schema:
-                type: string
-                description: The error message
-                example: There exists already a category of that name.
+                $ref: "#/components/schemas/Error"
