@@ -581,6 +581,24 @@ class RecipeService {
 	}
 
 	/**
+	 * Sets if the Bring! export is enabled
+	 *
+	 * @param bool $value true if the Bring! export should be enabled
+	 */
+	public function setBringEnabled(bool $value) {
+		$this->userConfigHelper->setBringEnabled($value);
+	}
+
+	/**
+	 * Should the Bring! export be available to the user
+	 *
+	 * @return bool
+	 */
+	public function getBringEnabled(): bool {
+		return $this->userConfigHelper->getBringEnabled();
+	}
+
+	/**
 	 * Get recipe file contents as an array
 	 */
 	public function parseRecipeFile(File $file): ?array {

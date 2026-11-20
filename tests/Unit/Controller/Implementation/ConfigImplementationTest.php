@@ -87,17 +87,20 @@ class ConfigImplementationTest extends TestCase {
 		$folder = '/the/folder/to/check';
 		$interval = 5 * 60;
 		$printImage = true;
+		$bringEnabled = true;
 
 		$expectedData = [
 			'folder' => $folder,
 			'update_interval' => $interval,
 			'print_image' => $printImage,
+			'bring_enabled' => $bringEnabled,
 			'visibleInfoBlocks' => [],
 		];
 
 		$this->userFolder->method('getPath')->willReturn($folder);
 		$this->dbCacheService->method('getSearchIndexUpdateInterval')->willReturn($interval);
 		$this->recipeService->method('getPrintImage')->willReturn($printImage);
+		$this->recipeService->method('getBringEnabled')->willReturn($bringEnabled);
 
 		/**
 		 * @var DataResponse $response
@@ -114,9 +117,10 @@ class ConfigImplementationTest extends TestCase {
 	 * @param mixed $folderPath
 	 * @param mixed $interval
 	 * @param mixed $printImage
+	 * @param mixed $bringEnabled
 	 * @param mixed $visibleInfoBlocks
 	 */
-	public function testConfig($data, $folderPath, $interval, $printImage, $visibleInfoBlocks): void {
+	public function testConfig($data, $folderPath, $interval, $printImage, $bringEnabled, $visibleInfoBlocks): void {
 		$this->restParser->method('getParameters')->willReturn($data);
 
 		$this->dbCacheService->expects($this->once())->method('triggerCheck');
@@ -141,6 +145,12 @@ class ConfigImplementationTest extends TestCase {
 			$this->recipeService->expects($this->once())->method('setPrintImage')->with($printImage);
 		}
 
+		if (is_null($bringEnabled)) {
+			$this->recipeService->expects($this->never())->method('setBringEnabled');
+		} else {
+			$this->recipeService->expects($this->once())->method('setBringEnabled')->with($bringEnabled);
+		}
+
 		if (is_null($visibleInfoBlocks)) {
 			$this->recipeService->expects($this->never())->method('setVisibleInfoBlocks');
 		} else {
@@ -158,28 +168,32 @@ class ConfigImplementationTest extends TestCase {
 	public static function dataProviderConfig() {
 		return [
 			'noChange' => [
-				[], null, null, null, null
+				[], null, null, null, null, null
 			],
 			'changeFolder' => [
-				['folder' => '/path/to/whatever'], '/path/to/whatever', null, null, null
+				['folder' => '/path/to/whatever'], '/path/to/whatever', null, null, null, null
 			],
 			'changeinterval' => [
-				['update_interval' => 15], null, 15, null, null
+				['update_interval' => 15], null, 15, null, null, null
 			],
 			'changePrint' => [
-				['print_image' => true], null, null, true, null
+				['print_image' => true], null, null, true, null, null
+			],
+			'changeBringEnabled' => [
+				['bring_enabled' => true], null, null, null, true, null
 			],
 			'changeVisibleBlocks' => [
 				['visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true]],
-				null, null, null, ['cooking-time' => true, 'preparation-time' => true]
+				null, null, null, null, ['cooking-time' => true, 'preparation-time' => true]
 			],
 			'changeAll' => [
 				[
 					'folder' => '/my/custom/path',
 					'update_interval' => 12,
 					'print_image' => false,
+					'bring_enabled' => true,
 					'visibleInfoBlocks' => ['cooking-time' => true, 'preparation-time' => true],
-				], '/my/custom/path', 12, false, ['cooking-time' => true, 'preparation-time' => true]
+				], '/my/custom/path', 12, false, true, ['cooking-time' => true, 'preparation-time' => true]
 			],
 		];
 	}
