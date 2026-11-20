@@ -7,7 +7,6 @@
 namespace OCA\Cookbook\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
-use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
@@ -22,8 +21,8 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	 */
 	private $jsonService;
 
-	public function __construct(IL10N $l10n, LoggerInterface $logger, JsonService $jsonService, UrlRedactionHelper $urlRedactionHelper) {
-		parent::__construct($l10n, $logger, $urlRedactionHelper);
+	public function __construct(IL10N $l10n, LoggerInterface $logger, JsonService $jsonService) {
+		parent::__construct($l10n, $logger);
 
 		$this->jsonService = $jsonService;
 	}
@@ -34,14 +33,12 @@ class HttpJsonLdParser extends AbstractHtmlParser {
 	}
 
 	#[\Override]
-	public function parse(\DOMDocument $document, ?string $url): array {
+	public function parse(\DOMDocument $document): array {
 		$xpath = new \DOMXPath($document);
 
 		$json_ld_elements = $xpath->query("//*[@type='application/ld+json']");
 
-		$this->logger->debug('JSON-LD parser found {count} ld+json elements for {url}', [
-			'count' => $json_ld_elements->length, 'url' => $this->urlRedactionHelper->redact($url),
-		]);
+		$this->logger->debug('JSON-LD parser found {count} ld+json elements', ['count' => $json_ld_elements->length]);
 
 		foreach ($json_ld_elements as $json_ld_element) {
 			if (!$json_ld_element || !$json_ld_element->nodeValue) {

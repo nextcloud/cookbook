@@ -8,7 +8,6 @@ namespace OCA\Cookbook\tests\Unit\Helper\HTMLParser;
 
 use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
-use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
 use PHPUnit\Framework\TestCase;
@@ -53,7 +52,7 @@ class HttpJsonLdParserTest extends TestCase {
 
 		$logger = $this->createStub(LoggerInterface::class);
 
-		$parser = new HttpJsonLdParser($l, $logger, $jsonService, new UrlRedactionHelper());
+		$parser = new HttpJsonLdParser($l, $logger, $jsonService);
 
 		$lProperty = new \ReflectionProperty(HttpJsonLdParser::class, 'l');
 		$lProperty->setAccessible(true);
@@ -77,7 +76,7 @@ class HttpJsonLdParserTest extends TestCase {
 
 		$logger = $this->createStub(LoggerInterface::class);
 
-		$parser = new HttpJsonLdParser($l, $logger, $jsonService, new UrlRedactionHelper());
+		$parser = new HttpJsonLdParser($l, $logger, $jsonService);
 
 		$content = file_get_contents(__DIR__ . "/res_JsonLd/$file");
 
@@ -85,7 +84,7 @@ class HttpJsonLdParserTest extends TestCase {
 		$document->loadHTML($content);
 
 		try {
-			$res = $parser->parse($document, 'http://example.com');
+			$res = $parser->parse($document);
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
 			$expected = json_decode($jsonDest, true);
@@ -119,15 +118,15 @@ class HttpJsonLdParserTest extends TestCase {
 	 * @covers ::parse
 	 */
 	public function testImageReference(array $input, array $expected): void {
-		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService(), new UrlRedactionHelper());
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService());
 
 		$document = new \DOMDocument();
 		$document->loadHTML('<html><head><script type="application/ld+json">' . json_encode($input) . '</script></head></html>');
 
-		$this->assertEquals($expected, $parser->parse($document, 'http://example.com'));
+		$this->assertEquals($expected, $parser->parse($document));
 	}
 
 	public function testGetName(): void {
-		$this->assertEquals('JSON-LD', (new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService(), new UrlRedactionHelper()))->getName());
+		$this->assertEquals('JSON-LD', (new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService()))->getName());
 	}
 }

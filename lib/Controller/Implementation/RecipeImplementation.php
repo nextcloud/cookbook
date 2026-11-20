@@ -245,7 +245,7 @@ class RecipeImplementation {
 	private function isDownloadUrlValid(string $url): bool {
 		$urlValid = filter_var($url, FILTER_VALIDATE_URL);
 		if ($urlValid === false) {
-			$this->logger->info('Download URL is not a valid URL: {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
+			$this->logger->info('Download URL is not a valid URL.');
 			return false;
 		}
 
@@ -260,7 +260,7 @@ class RecipeImplementation {
 
 		$host = $parsedUrl['host'] ?? '';
 		if (empty($host)) {
-			$this->logger->info('Download URL does not have a valid host: {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
+			$this->logger->info('Download URL does not have a valid host.');
 			return false;
 		}
 
@@ -297,10 +297,17 @@ class RecipeImplementation {
 
 		$data['url'] = str_replace(' ', '%20', trim($data['url']));
 
+		$redactedUrl = $this->urlRedactionHelper->redact($data['url']);
+
 		if (! $this->isDownloadUrlValid($data['url'])) {
-			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $this->urlRedactionHelper->redact($data['url']), 'user' => $this->userId]);
+			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $redactedUrl, 'user' => $this->userId]);
 			return new JSONResponse(['msg' => $this->l->t('The provided URL is not allowed.')], Http::STATUS_BAD_REQUEST);
 		}
+
+		$this->logger->info('Starting recipe import from {url}', ['url' => $redactedUrl]);
+
+		// Import error traces must not carry the URL (credentials, tokens) or content derived from it
+		ini_set('zend.exception_ignore_args', '1');
 
 		try {
 			$recipe_file = $this->service->downloadRecipe($data['url']);
@@ -310,12 +317,12 @@ class RecipeImplementation {
 			return new JSONResponse(['msg' => $ex->getMessage()], Http::STATUS_CONFLICT);
 		} catch (ImportException $e) {
 			$this->logger->warning('Import of {url} failed at step "{step}": {reason}', [
-				'url' => $this->urlRedactionHelper->redact($data['url']), 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $redactedUrl, 'step' => $e->getStep(), 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $e->getMessage(), 'step' => $e->getStep()], Http::STATUS_BAD_REQUEST);
 		} catch (\Exception $e) {
 			$this->logger->error('Unexpected error during import of {url}: {reason}', [
-				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $redactedUrl, 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_BAD_REQUEST);
 		}
@@ -334,7 +341,7 @@ class RecipeImplementation {
 			}
 
 			$this->logger->error('Unexpected error while caching imported recipe from {url}: {reason}', [
-				'url' => $this->urlRedactionHelper->redact($data['url']), 'reason' => $e->getMessage(), 'exception' => $e,
+				'url' => $redactedUrl, 'reason' => $e->getMessage(), 'exception' => $e,
 			]);
 			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred during import.')], Http::STATUS_BAD_REQUEST);
 		}

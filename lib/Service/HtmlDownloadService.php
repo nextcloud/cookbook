@@ -17,7 +17,6 @@ use OCA\Cookbook\Helper\HTMLFilter\AbstractHtmlFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEncodingFilter;
 use OCA\Cookbook\Helper\HTMLFilter\HtmlEntityDecodeFilter;
 use OCA\Cookbook\Helper\HtmlToDomParser;
-use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCP\IL10N;
 use Psr\Log\LoggerInterface;
 
@@ -63,7 +62,6 @@ class HtmlDownloadService {
 		DownloadHelper $downloadHelper,
 		EncodingGuessingHelper $encodingGuesser,
 		DownloadEncodingHelper $downloadEncodingHelper,
-		private UrlRedactionHelper $urlRedactionHelper,
 	) {
 		$this->htmlFilters = [
 			$htmlEntityDecodeFilter,
@@ -88,12 +86,9 @@ class HtmlDownloadService {
 	 * @throws ImportException If obtaining of the URL was not possible
 	 */
 	public function downloadRecipe(string $url): int {
-		$this->logger->info('Starting recipe download from {url}', ['url' => $this->urlRedactionHelper->redact($url)]);
-
 		$html = $this->fetchHtmlPage($url);
 
-		$this->logger->debug('Downloaded {url}: HTTP {status}, content-type {ct}, size {size} bytes', [
-			'url' => $this->urlRedactionHelper->redact($url),
+		$this->logger->debug('Downloaded HTTP {status}, content-type {ct}, size {size} bytes', [
 			'status' => $this->downloadHelper->getStatus(),
 			'ct' => $this->downloadHelper->getContentType() ?? 'unknown',
 			'size' => strlen($html),
@@ -105,7 +100,7 @@ class HtmlDownloadService {
 		}
 
 		$dom = new DOMDocument();
-		$this->dom = $this->htmlParser->loadHtmlString($dom, $url, $html);
+		$this->dom = $this->htmlParser->loadHtmlString($dom, $html);
 
 		return $this->htmlParser->getState();
 	}
@@ -160,13 +155,13 @@ class HtmlDownloadService {
 		try {
 			$this->downloadHelper->downloadFile($url, $opt, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$this->urlRedactionHelper->redact($url), $ex->getMessage()]), 0, $ex, step: 'download');
+			throw new ImportException($this->l->t('Exception while downloading recipe: %s', [$ex->getMessage()]), 0, $ex, step: 'download');
 		}
 
 		$status = $this->downloadHelper->getStatus();
 
 		if ($status < 200 || $status >= 300) {
-			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$this->urlRedactionHelper->redact($url), $status]), step: 'download');
+			throw new ImportException($this->l->t('Download failed as HTTP status code %d is not in expected range.', [$status]), step: 'download');
 		}
 
 		$html = $this->downloadHelper->getContent();
@@ -175,7 +170,7 @@ class HtmlDownloadService {
 			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
 			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
 		} catch (CouldNotGuessEncodingException $ex) {
-			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
+			$this->logger->notice($this->l->t('Could not find a valid encoding for the downloaded page.'));
 		}
 
 		return $html;

@@ -182,6 +182,31 @@ class RecipeImplementationTest extends TestCase {
 		$this->assertEquals(['msg' => 'The error message', 'step' => 'download'], $ret->getData());
 	}
 
+	public function testImportErrorTraceHasNoArgs(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$this->restParser->method('getParameters')->willReturn([ 'url' => 'https://user:pass@example.com/Recipe.html?token=secret' ]);
+		// Created inside import(), as trace args are captured when the exception is instantiated
+		$this->recipeService->method('downloadRecipe')->willReturnCallback(
+			fn () => throw new ImportException('The error message', 0, null, 'download')
+		);
+		$logged = null;
+		$this->logger->method('warning')->willReturnCallback(function (string $msg, array $ctx) use (&$logged) {
+			$logged = $ctx['exception'];
+		});
+
+		// Force args on so the test is meaningful, restore so other tests in this process are unaffected
+		$previous = ini_set('zend.exception_ignore_args', '0');
+		try {
+			$this->sut->import();
+		} finally {
+			ini_set('zend.exception_ignore_args', $previous);
+		}
+
+		$this->assertInstanceOf(ImportException::class, $logged);
+		$this->assertStringNotContainsString('secret', json_encode($logged->getTrace()));
+	}
+
 	public function testImportOther(): void {
 		$this->ensureCacheCheckTriggered();
 

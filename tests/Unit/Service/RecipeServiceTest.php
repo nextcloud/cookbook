@@ -14,7 +14,6 @@ use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
 use OCA\Cookbook\Helper\ImageService\ImageConversionHelper;
-use OCA\Cookbook\Helper\UrlRedactionHelper;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
 use OCA\Cookbook\Service\HtmlDownloadService;
@@ -59,7 +58,6 @@ class RecipeServiceTest extends TestCase {
 			$this->jsonFilter,
 			$this->createStub(DownloadHelper::class),
 			$this->createStub(ImageConversionHelper::class),
-			new UrlRedactionHelper(),
 		);
 	}
 
