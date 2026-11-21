@@ -1,6 +1,7 @@
 OC.L10N.register(
     "cookbook",
     {
+    "An unexpected error occurred." : "Ocorreu um erro inesperado.",
     "The provided URL is not allowed." : "O URL fornecido não é permitido.",
     "Recipe with ID %d was not found in database." : "A receita com ID %d não foi encontrada no banco de dados.",
     "No content encoding was detected in the content." : "Nenhuma codificação de conteúdo foi detectada no conteúdo.",
@@ -9,7 +10,6 @@ OC.L10N.register(
     "No valid recipe was left after heuristics of recipe %s." : "Nenhuma receita válida foi deixada após a heurística da receita %s.",
     "Heuristics failed for image extraction of recipe %s." : "A heurística falhou na extração de imagem da receita %s.",
     "Could not guess image URL as no recipe URL was found." : "Não foi possível adivinhar o URL da imagem porque nenhum URL de receita foi encontrado.",
-    "Could not guess image URL scheme from recipe URL %s" : "Não foi possível adivinhar o esquema de URL da imagem a partir do URL da receita %s",
     "Could not parse recipe ingredients. It is no array." : "Não foi possível analisar os ingredientes da receita. Não é um arranjo.",
     "Could not parse recipe instructions as they are no array." : "Não foi possível analisar as instruções da receita, pois elas não são um arranjo.",
     "Cannot parse recipe: Unknown object found during flattening of instructions." : "Não é possível analisar a receita: Objeto desconhecido encontrado durante a análise das instruções.",
@@ -42,9 +42,6 @@ OC.L10N.register(
     "Cannot read content of JSON file %s" : "Não é possível ler o conteúdo do arquivo JSON %s",
     "The JSON file in the folder with ID %d does not have a valid name." : "O arquivo JSON na pasta com ID %d não tem um nome válido.",
     "Could not parse URL" : "Não foi possível analisar o URL",
-    "Exception while downloading recipe from %s.: %s" : "Exceção ao baixar receita de %s.: %s",
-    "Download from %s failed as HTTP status code %d is not in expected range." : "O download de %s falhou porque o código de status HTTP %d não está no intervalo esperado.",
-    "Could not find a valid encoding when parsing %s." : "Não foi possível encontrar uma codificação válida ao analisar %s.",
     "No parser found for the given import." : "Nenhum analisador encontrado para a importação fornecida.",
     "No recipe name was given. A unique name is required to store the recipe." : "Nenhum nome de receita foi fornecido. É necessário um nome exclusivo para armazenar a receita.",
     "Unexpected node received for recipe folder." : "Nó inesperado recebido para a pasta de receitas.",
