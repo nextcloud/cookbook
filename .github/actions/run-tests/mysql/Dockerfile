@@ -11,7 +11,7 @@ RUN apt-get update >/dev/null && \
 	apt-get clean
 
 HEALTHCHECK --interval=1s --timeout=1s --retries=24 \
-	CMD mysqladmin ping --silent --socket /run/mysqld/mysqld.sock -ppass_root
+	CMD mysqladmin ping --silent -h 127.0.0.1 -ppass_root
 
 COPY docker-entrypoint.sh /usr/local/bin
 # CMD ["eatmydata", "mysqld"]

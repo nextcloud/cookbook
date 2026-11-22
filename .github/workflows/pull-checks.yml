@@ -7,6 +7,9 @@ name: Additional tests for pull requests
 on:
     pull_request:
 
+permissions:
+    contents: read
+
 jobs:
     
     todo-checker:
@@ -141,6 +144,9 @@ jobs:
     fixup-check:
         name: Block fixup and squash commits
         runs-on: ubuntu-latest-low
+        permissions:
+            # The action lists the commits of the pull request
+            pull-requests: read
 
         steps:
             -   name: Run check

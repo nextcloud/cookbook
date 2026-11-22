@@ -12,7 +12,6 @@ use DOMNode;
 use DOMNodeList;
 use DOMXPath;
 use OCA\Cookbook\Exception\HtmlParsingException;
-use OCP\IL10N;
 
 /**
  * This class is an AbstractHtmlParser which tries to extract micro data from the HTML page.
@@ -32,12 +31,13 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 	 */
 	private $recipe;
 
-	public function __construct(IL10N $l10n) {
-		parent::__construct($l10n);
+	#[\Override]
+	public function getName(): string {
+		return 'Microdata';
 	}
 
 	#[\Override]
-	public function parse(DOMDocument $document, ?string $url): array {
+	public function parse(DOMDocument $document): array {
 		$this->xpath = new DOMXPath($document);
 
 		$selectorHttp = "//*[@itemscope and @itemtype='http://schema.org/Recipe']";
@@ -51,6 +51,8 @@ class HttpMicrodataParser extends AbstractHtmlParser {
 		if (count($recipes) === 0) {
 			throw new HtmlParsingException($this->l->t('No recipe was found.'));
 		}
+
+		$this->logger->debug('Microdata parser found {count} Recipe itemscope elements', ['count' => count($recipes)]);
 
 		$this->recipe = [
 			'@type' => 'Recipe',

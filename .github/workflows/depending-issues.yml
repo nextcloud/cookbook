@@ -32,6 +32,13 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest-low
+    permissions:
+      # Labels and comments on issues
+      issues: write
+      # Labels and comments on pull requests
+      pull-requests: write
+      # The commit status set on pull requests
+      statuses: write
     steps:
       - uses: z0al/dependent-issues@950226e7ca8fc43dc209a7febf67c655af3bdb43
         env:

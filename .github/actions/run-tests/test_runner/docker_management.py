@@ -8,15 +8,10 @@ import test_runner.ci_printer as l
 import test_runner.proc as p
 import test_runner.docker_helper
 
+buildkitBase =  ['docker', 'buildx', 'bake', '-f', 'docker-compose.yml', '-f', 'docker-bake.hcl']
+
 def pullImages(args, quiet=True):
 	l.logger.printTask('Pulling pre-built images')
-
-	dockerComposeCmd = test_runner.docker_helper.instance.getDockerCompose()
-
-	cmd = dockerComposeCmd + ['pull']
-	if quiet:
-		cmd.append('--quiet')
-	p.pr.run(cmd).check_returncode()
 
 	imageName = 'nextcloudcookbook/testci:php{version}'.format(version=args.php_version[0])
 
@@ -33,56 +28,43 @@ def pullImages(args, quiet=True):
 	runPull('cookbook_unittesting_mysql', 'nextcloudcookbook/mariadb-test:latest')
 	runPull('cookbook_unittesting_postgres', 'nextcloudcookbook/postgres-test:latest')
 
+	cmd = buildkitBase + ['--load', '--progress', 'plain', 'www']
+	p.pr.run(cmd).check_returncode()
+
 	l.logger.printTask('Pulling images finished')
 
 def buildImages(args, pull=True):
 	l.logger.printTask('Building images')
 
-	dockerComposeCmd = test_runner.docker_helper.instance.getDockerCompose()
-
-	cmd = dockerComposeCmd + ['build', '--force-rm']
+	cmd = buildkitBase + ['--load']
 	if pull:
 		cmd.append('--pull')
 	if args.ci:
 		cmd = cmd + ['--progress', 'plain']
-	cmd = cmd + [
-		'--build-arg', 'PHPVERSION={ver}'.format(ver=args.php_version[0]), 'dut', 'occ', 'php', 'fpm'
-	]
+	cmd = cmd + ['--var', 'PHPVERSION={ver}'.format(ver=args.php_version[0]), 'dut', 'mysql', 'postgres', 'www']
 
 	p.pr.run(cmd).check_returncode()
-
-	p.pr.run(dockerComposeCmd + ['build', '--pull', '--force-rm', 'mysql', 'postgres', 'www']).check_returncode()
 
 	l.logger.printTask('Building images finished.')
 
 def pushImages(args):
-	l.logger.printTask('Retagging docker images')
-	pushedName = 'nextcloudcookbook/testci:php{version}'.format(version=args.php_version[0])
+    l.logger.printTask('Pushing docker images')
 
-	p.pr.run([
-		'docker', 'tag', 'cookbook_unittesting_dut', pushedName
-	]).check_returncode()
+    cmd = buildkitBase + ['--push']
 
-	p.pr.run([
-		'docker', 'tag', 'cookbook_unittesting_mysql', 'nextcloudcookbook/mariadb-test:latest'
-	]).check_returncode()
+    if args.ci:
+        cmd += ['--progress', 'plain']
 
-	p.pr.run([
-		'docker', 'tag', 'cookbook_unittesting_postgres', 'nextcloudcookbook/postgres-test:latest'
-	]).check_returncode()
+    cmd += [
+        '--var', f'PHPVERSION={args.php_version[0]}',
+        '--var', 'REGISTRY=ghcr',
+        'dut', 'mysql', 'postgres',
+    ]
 
-	l.logger.printTask('Pushing docker images to repository')
-	p.pr.run([
-		'docker', 'push', pushedName
-	]).check_returncode()
+    p.pr.run(cmd).check_returncode()
 
-	p.pr.run([
-		'docker', 'push', 'nextcloudcookbook/mariadb-test:latest'
-	]).check_returncode()
+    l.logger.printTask('Pushing docker images finished.')
 
-	p.pr.run([
-		'docker', 'push', 'nextcloudcookbook/postgres-test:latest'
-	]).check_returncode()
 
 def handleDockerImages(args):
 	t = test_runner.timer.Timer()
@@ -90,12 +72,12 @@ def handleDockerImages(args):
 	l.logger.startGroup('Prepare docker')
 	t.tic()
 
-	if args.pull or args.create_images:
+	if args.pull:
 		pullImages(args, not args.verbose)
 		t.toc('Pulling done')
 
 	if args.create_images:
-		pull = not args.pull_php_base_image
+		pull = args.pull_php_base_image
 		buildImages(args, pull)
 		t.toc('Building done')
 

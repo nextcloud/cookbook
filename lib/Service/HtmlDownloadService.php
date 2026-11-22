@@ -88,14 +88,19 @@ class HtmlDownloadService {
 	public function downloadRecipe(string $url): int {
 		$html = $this->fetchHtmlPage($url);
 
-		// Filter the HTML code
+		$this->logger->debug('Downloaded HTTP {status}, content-type {ct}, size {size} bytes', [
+			'status' => $this->downloadHelper->getStatus(),
+			'ct' => $this->downloadHelper->getContentType() ?? 'unknown',
+			'size' => strlen($html),
+		]);
+
 		/** @var AbstractHtmlFilter $filter */
 		foreach ($this->htmlFilters as $filter) {
 			$filter->apply($html);
 		}
 
 		$dom = new DOMDocument();
-		$this->dom = $this->htmlParser->loadHtmlString($dom, $url, $html);
+		$this->dom = $this->htmlParser->loadHtmlString($dom, $html);
 
 		return $this->htmlParser->getState();
 	}
@@ -121,7 +126,7 @@ class HtmlDownloadService {
 		$host = parse_url($url);
 
 		if (!$host) {
-			throw new ImportException($this->l->t('Could not parse URL'));
+			throw new ImportException($this->l->t('Could not parse URL'), step: 'download');
 		}
 
 		$opt = [
@@ -150,13 +155,13 @@ class HtmlDownloadService {
 		try {
 			$this->downloadHelper->downloadFile($url, $opt, $headers);
 		} catch (NoDownloadWasCarriedOutException $ex) {
-			throw new ImportException($this->l->t('Exception while downloading recipe from %s.: %s', [$url, $ex->getMessage()]), 0, $ex);
+			throw new ImportException($this->l->t('Exception while downloading recipe: %s', [$ex->getMessage()]), 0, $ex, step: 'download');
 		}
 
 		$status = $this->downloadHelper->getStatus();
 
 		if ($status < 200 || $status >= 300) {
-			throw new ImportException($this->l->t('Download from %s failed as HTTP status code %d is not in expected range.', [$url, $status]));
+			throw new ImportException($this->l->t('Download failed as HTTP status code %d is not in expected range.', [$status]), step: 'download');
 		}
 
 		$html = $this->downloadHelper->getContent();
@@ -165,7 +170,7 @@ class HtmlDownloadService {
 			$enc = $this->encodingGuesser->guessEncoding($html, $this->downloadHelper->getContentType());
 			$html = $this->downloadEncodingHelper->encodeToUTF8($html, $enc);
 		} catch (CouldNotGuessEncodingException $ex) {
-			$this->logger->notice($this->l->t('Could not find a valid encoding when parsing %s.', [$url]));
+			$this->logger->notice($this->l->t('Could not find a valid encoding for the downloaded page.'));
 		}
 
 		return $html;

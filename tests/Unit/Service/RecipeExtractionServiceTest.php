@@ -13,6 +13,7 @@ use OCA\Cookbook\Service\RecipeExtractionService;
 use OCP\IL10N;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 class RecipeExtractionServiceTest extends TestCase {
 	/**
@@ -39,39 +40,39 @@ class RecipeExtractionServiceTest extends TestCase {
 		$microdataParser = $this->createMock(HttpMicrodataParser::class);
 
 		$document = $this->createStub(\DOMDocument::class);
-		$url = 'http://example.com';
 		$expectedObject = [new \stdClass()];
 
 		if ($jsonSuccess) {
 			$jsonParser->expects($this->once())
 				->method('parse')
-				->with($document, $url)
+				->with($document)
 				->willReturn($expectedObject);
 
 			$microdataParser->expects($this->never())->method('parse');
 		} else {
 			$jsonParser->expects($this->once())
 				->method('parse')
-				->with($document, $url)
+				->with($document)
 				->willThrowException(new HtmlParsingException());
 
 			if ($microdataSuccess) {
 				$microdataParser->expects($this->once())
 					->method('parse')
-					->with($document, $url)
+					->with($document)
 					->willReturn($expectedObject);
 			} else {
 				$microdataParser->expects($this->once())
 					->method('parse')
-					->with($document, $url)
+					->with($document)
 					->willThrowException(new HtmlParsingException());
 			}
 		}
 
-		$sut = new RecipeExtractionService($jsonParser, $microdataParser, $this->l);
+		$logger = $this->createStub(LoggerInterface::class);
+		$sut = new RecipeExtractionService($jsonParser, $microdataParser, $this->l, $logger);
 
 		try {
-			$ret = $sut->parse($document, $url);
+			$ret = $sut->parse($document);
 
 			$this->assertEquals($expectedObject, $ret);
 		} catch (HtmlParsingException $ex) {

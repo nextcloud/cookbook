@@ -117,6 +117,18 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->sut->downloadRecipe($url);
 	}
 
+	public function testDownloadErrorOmitsUrl() {
+		$this->il10n->method('t')->willReturnCallback(fn ($text, $params = []) => vsprintf($text, $params));
+		$this->downloadHelper->method('getStatus')->willReturn(404);
+
+		try {
+			$this->sut->downloadRecipe('https://bob:s3cret@example.com/recipe?token=abc#top');
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertStringNotContainsString('example.com', $e->getMessage());
+		}
+	}
+
 	public function testDownload() {
 		$url = 'http://example.com';
 		$content = 'The content of the html file';
@@ -140,7 +152,6 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->htmlParser->expects($this->once())->method('loadHtmlString')
 			->with(
 				$this->anything(),
-				$this->equalTo($url),
 				$this->equalTo($content)
 			)->willReturn($dom);
 		$this->htmlParser->method('getState')->willReturn($state);
@@ -172,7 +183,6 @@ class HtmlDownloadServiceTest extends TestCase {
 		$this->htmlParser->expects($this->once())->method('loadHtmlString')
 			->with(
 				$this->anything(),
-				$this->equalTo($url),
 				$this->equalTo($content)
 			)->willReturn($dom);
 		$this->htmlParser->method('getState')->willReturn($state);

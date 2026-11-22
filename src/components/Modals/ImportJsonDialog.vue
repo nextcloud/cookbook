@@ -67,12 +67,9 @@ const importRecipe = async () => {
         emit('close');
         helpers.goTo(`/recipe/${id}`);
     } catch (e) {
-        const data = isAxiosError<string | { msg: string }>(e)
-            ? e.response?.data
-            : undefined;
         errorMessage.value =
-            (typeof data === 'string' ? data : data?.msg) ||
-            t('cookbook', 'The server reported an error. Please check.');
+            (isAxiosError<{ msg?: string }>(e) && e.response?.data?.msg) ||
+            t('cookbook', 'Import failed.');
     } finally {
         isImporting.value = false;
     }

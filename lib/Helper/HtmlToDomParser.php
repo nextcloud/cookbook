@@ -71,12 +71,11 @@ class HtmlToDomParser {
 	 * Parse an HTML file logging any error in the syntax
 	 *
 	 * @param DOMDocument $dom The dom document to use. Just give a new document in doubt.
-	 * @param string $url The URL of the parsed recipe
 	 * @param string $html The string representation of the HTML file to parse
 	 * @throws ImportException If the parsing of the HTML page failed completely
 	 * @return DOMDocument The parsed document
 	 */
-	public function loadHtmlString(DOMDocument $dom, string $url, string $html): DOMDocument {
+	public function loadHtmlString(DOMDocument $dom, string $html): DOMDocument {
 		$libxml_previous_state = libxml_use_internal_errors(true);
 
 		try {
@@ -85,15 +84,15 @@ class HtmlToDomParser {
 			// Error handling
 			$errors = libxml_get_errors();
 			try {
-				$this->checkXMLErrors($errors, $url);
+				$this->checkXMLErrors($errors);
 			} catch (Exception $ex) {
-				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex);
+				throw new ImportException($this->l->t('Parsing of HTML failed.'), null, $ex, step: 'parse_html');
 			}
 
 			libxml_clear_errors();
 
 			if (!$parsedSuccessfully) {
-				throw new ImportException($this->l->t('Parsing of HTML failed.'));
+				throw new ImportException($this->l->t('Parsing of HTML failed.'), step: 'parse_html');
 			}
 		} finally {
 			libxml_use_internal_errors($libxml_previous_state);
@@ -120,15 +119,14 @@ class HtmlToDomParser {
 	 * The value can be PARSING_SUCCESS, PARSING_WARNING, PARSING_ERROR, or PARSING_FATAL_ERROR.
 	 *
 	 * @param array $errors The array of all parsed errors
-	 * @param string $url The parsed URL
 	 * @throws \Exception
 	 */
-	private function checkXMLErrors(array $errors, string $url): void {
+	private function checkXMLErrors(array $errors): void {
 		$grouped = $this->groupErrors($errors);
 
 		$this->state = self::PARSING_SUCCESS;
 
-		$this->logAllErrors($grouped, $url);
+		$this->logAllErrors($grouped);
 	}
 
 	/**
@@ -175,20 +173,19 @@ class HtmlToDomParser {
 	 * As a side effect, the property $state will be updated to the most severe error found.
 	 *
 	 * @param array $groupedErrors The grouped errors as defined in groupErrors
-	 * @param string $url The URL to import
 	 * @throws \Exception
 	 */
-	private function logAllErrors(array $groupedErrors, string $url): void {
+	private function logAllErrors(array $groupedErrors): void {
 		foreach ($groupedErrors as $code => $group) {
 			switch ($group['level']) {
 				case LIBXML_ERR_WARNING:
-					$this->logWarning($code, $group, $url);
+					$this->logWarning($code, $group);
 					break;
 				case LIBXML_ERR_ERROR:
-					$this->logError($code, $group, $url);
+					$this->logError($code, $group);
 					break;
 				case LIBXML_ERR_FATAL:
-					$this->logFatalError($code, $group, $url);
+					$this->logFatalError($code, $group);
 					break;
 				case LIBXML_ERR_NONE:
 					break;
@@ -198,20 +195,20 @@ class HtmlToDomParser {
 		}
 	}
 
-	private function logWarning(int $code, array $group, string $url): void {
-		$msg = $this->l->n('Warning %u occurred while parsing %s.', 'Warning %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
+	private function logWarning(int $code, array $group): void {
+		$msg = $this->l->n('Warning %u occurred while parsing the HTML.', 'Warning %u occurred %n times while parsing the HTML.', $group['count'], [$code]);
 		$this->logger->info($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_WARNING);
 	}
 
-	private function logError(int $code, array $group, string $url): void {
-		$msg = $this->l->n('Error %u occurred while parsing %s.', 'Error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
+	private function logError(int $code, array $group): void {
+		$msg = $this->l->n('Error %u occurred while parsing the HTML.', 'Error %u occurred %n times while parsing the HTML.', $group['count'], [$code]);
 		$this->logger->warning($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_ERROR);
 	}
 
-	private function logFatalError(int $code, array $group, string $url): void {
-		$msg = $this->l->n('Fatal error %u occurred while parsing %s.', 'Fatal error %u occurred %n times while parsing %s.', $group['count'], [$code, $url]);
+	private function logFatalError(int $code, array $group): void {
+		$msg = $this->l->n('Fatal error %u occurred while parsing the HTML.', 'Fatal error %u occurred %n times while parsing the HTML.', $group['count'], [$code]);
 		$this->logger->error($this->formatError($msg, $group['first']));
 		$this->state = max($this->state, self::PARSING_FATAL_ERROR);
 	}

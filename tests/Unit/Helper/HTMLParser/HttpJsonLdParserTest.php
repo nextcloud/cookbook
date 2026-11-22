@@ -11,6 +11,7 @@ use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Service\JsonService;
 use OCP\IL10N;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 
 /**
  * @coversDefaultClass \OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser
@@ -49,7 +50,9 @@ class HttpJsonLdParserTest extends TestCase {
 		 */
 		$l = $this->createStub(IL10N::class);
 
-		$parser = new HttpJsonLdParser($l, $jsonService);
+		$logger = $this->createStub(LoggerInterface::class);
+
+		$parser = new HttpJsonLdParser($l, $logger, $jsonService);
 
 		$lProperty = new \ReflectionProperty(HttpJsonLdParser::class, 'l');
 		$lProperty->setAccessible(true);
@@ -71,7 +74,9 @@ class HttpJsonLdParserTest extends TestCase {
 		 */
 		$l = $this->createStub(IL10N::class);
 
-		$parser = new HttpJsonLdParser($l, $jsonService);
+		$logger = $this->createStub(LoggerInterface::class);
+
+		$parser = new HttpJsonLdParser($l, $logger, $jsonService);
 
 		$content = file_get_contents(__DIR__ . "/res_JsonLd/$file");
 
@@ -79,7 +84,7 @@ class HttpJsonLdParserTest extends TestCase {
 		$document->loadHTML($content);
 
 		try {
-			$res = $parser->parse($document, 'http://example.com');
+			$res = $parser->parse($document);
 
 			$jsonDest = file_get_contents(__DIR__ . "/res_JsonLd/$jsonFile");
 			$expected = json_decode($jsonDest, true);
@@ -113,12 +118,16 @@ class HttpJsonLdParserTest extends TestCase {
 	 * @covers ::parse
 	 */
 	public function testImageReference(array $input, array $expected): void {
-		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService());
 
 		$document = new \DOMDocument();
 		$document->loadHTML('<html><head><script type="application/ld+json">' . json_encode($input) . '</script></head></html>');
 
-		$this->assertEquals($expected, $parser->parse($document, 'http://example.com'));
+		$this->assertEquals($expected, $parser->parse($document));
+	}
+
+	public function testGetName(): void {
+		$this->assertEquals('JSON-LD', (new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService()))->getName());
 	}
 
 	public static function dataProviderJsonLd(): array {
@@ -146,7 +155,7 @@ class HttpJsonLdParserTest extends TestCase {
 	 * @param mixed $input
 	 */
 	public function testParseJsonLd($input, ?array $expected): void {
-		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService());
 
 		if ($expected === null) {
 			$this->expectException(HtmlParsingException::class);
@@ -159,7 +168,7 @@ class HttpJsonLdParserTest extends TestCase {
 	 * @covers ::parseJsonLd
 	 */
 	public function testParseJsonLdScriptTag(): void {
-		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService());
 		$recipe = ['@context' => 'https://schema.org', '@type' => 'Recipe', 'name' => 'Soup'];
 
 		$res = $parser->parseJsonLd(' <script type="application/ld+json">' . json_encode($recipe) . "</script>\n");
@@ -171,7 +180,7 @@ class HttpJsonLdParserTest extends TestCase {
 	 * @covers ::parseJsonLd
 	 */
 	public function testParseJsonLdInvalid(): void {
-		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), new JsonService());
+		$parser = new HttpJsonLdParser($this->createStub(IL10N::class), $this->createStub(LoggerInterface::class), new JsonService());
 
 		$this->expectException(HtmlParsingException::class);
 

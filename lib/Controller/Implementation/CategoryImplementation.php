@@ -11,6 +11,8 @@ use OCA\Cookbook\Service\DbCacheService;
 use OCA\Cookbook\Service\RecipeService;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Http\JSONResponse;
+use OCP\IL10N;
+use Psr\Log\LoggerInterface;
 
 class CategoryImplementation {
 	/** @var RecipeService */
@@ -24,6 +26,8 @@ class CategoryImplementation {
 		RecipeService $service,
 		DbCacheService $dbCacheService,
 		RestParameterParser $restParameterParser,
+		private IL10N $l,
+		private LoggerInterface $logger,
 	) {
 		$this->service = $service;
 		$this->dbCacheService = $dbCacheService;
@@ -54,7 +58,7 @@ class CategoryImplementation {
 
 		$json = $this->restParser->getParameters();
 		if (!$json || !isset($json['name']) || !$json['name']) {
-			return new JSONResponse('New category name not found in data', 400);
+			return new JSONResponse(['msg' => $this->l->t('New category name not found in data')], Http::STATUS_BAD_REQUEST);
 		}
 
 		$category = urldecode($category);
@@ -71,7 +75,8 @@ class CategoryImplementation {
 
 			return new JSONResponse($json['name'], Http::STATUS_OK);
 		} catch (\Exception $e) {
-			return new JSONResponse($e->getMessage(), 500);
+			$this->logger->error('Renaming a category failed: {reason}', ['reason' => $e->getMessage(), 'exception' => $e]);
+			return new JSONResponse(['msg' => $this->l->t('An unexpected error occurred.')], Http::STATUS_BAD_REQUEST);
 		}
 	}
 }

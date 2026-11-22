@@ -11,7 +11,6 @@ include_once __DIR__ . '/AbstractMigrationTestCase.php';
 class Version000000Date20220703174647Test extends AbstractMigrationTestCase {
 	/**
 	 * dataProvider dataProvider
-	 * @runInSeparateProcess
 	 * @covers \OCA\Cookbook\Migration\Version000000Date20220703174647
 	 * @param mixed $data
 	 * @param mixed $updatedUsers

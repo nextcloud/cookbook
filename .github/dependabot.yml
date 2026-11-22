@@ -17,6 +17,12 @@ updates:
     - dependency-name: "eslint"
       versions:
       - "10.x"
+    - dependency-name: "postcss-html"
+      versions:
+      - "2.x"
+    - dependency-name: "stylelint-config-html"
+      versions:
+      - "2.x"
 - package-ecosystem: composer
   directory: "/"
   schedule:
@@ -37,6 +43,15 @@ updates:
     default-days: 7
 - package-ecosystem: github-actions
   directory: "/"
+  schedule:
+    timezone: Europe/Berlin
+    interval: daily
+    time: "02:50"
+  open-pull-requests-limit: 10
+  cooldown:
+    default-days: 7
+- package-ecosystem: github-actions
+  directory: "/.github/actions/run-tests"
   schedule:
     timezone: Europe/Berlin
     interval: daily

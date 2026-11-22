@@ -19,15 +19,21 @@ jobs:
     runs-on: ubuntu-latest-low
     if: github.event.issue.pull_request
     environment: change-approval
+    # The approval is made with the App token, never with the job token
+    permissions: {}
     env:
       admins: '["seyfeb", "christianlupus"]'
     steps:
       - name: Check if user is admin and comment is /approve
         id: checker
+        env:
+          IS_ADMIN: ${{ contains(fromJSON(env.admins), github.event.sender.login) }}
+          IS_APPROVE: ${{ github.event.comment.body == '/approve' }}
+          RUN_APPROVE: ${{ contains(fromJSON(env.admins), github.event.sender.login) && github.event.comment.body == '/approve' }}
         run: |-
-          echo "is_admin=${{ contains(fromJSON(env.admins), github.event.comment.user.login) }}" >> "$GITHUB_OUTPUT"
-          echo "is_approve=${{ github.event.comment.body == '/approve' }}" >> "$GITHUB_OUTPUT"
-          echo "run_approve=${{ contains(fromJSON(env.admins), github.event.comment.user.login) && github.event.comment.body == '/approve' }}" >> "$GITHUB_OUTPUT"
+          echo "is_admin=$IS_ADMIN" >> "$GITHUB_OUTPUT"
+          echo "is_approve=$IS_APPROVE" >> "$GITHUB_OUTPUT"
+          echo "run_approve=$RUN_APPROVE" >> "$GITHUB_OUTPUT"
 
       - run: |-
             echo "Admins: $admins"
@@ -38,14 +44,14 @@ jobs:
       - name: Create GitHub App installation token
         id: app-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
-        if: ${{ steps.checker.outputs.run_approve }}
+        if: steps.checker.outputs.run_approve == 'true'
         with:
           client-id: ${{ vars.COOKBOOK_PR_APPROVE_CLIENT_ID }}
           private-key: ${{ secrets.COOKBOOK_PR_APPROVE_PRIV_KEY }}
           owner: nextcloud
           repositories: cookbook
           permission-pull-requests: write
-      - uses: hmarr/auto-approve-action@v4
+      - uses: hmarr/auto-approve-action@f0939ea97e9205ef24d872e76833fa908a770363 # v4.0.0
         if: steps.checker.outputs.run_approve == 'true'
         with:
           github-token: ${{ steps.app-token.outputs.token }}

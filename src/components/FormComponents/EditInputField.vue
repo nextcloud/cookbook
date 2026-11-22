@@ -109,7 +109,7 @@ const {
 
 const keyDown = (e: KeyboardEvent) => {
     // Redirect to suggestions handler if in suggestion mode
-    if (suggestionsPopupVisible) {
+    if (suggestionsPopupVisible.value) {
         handleSuggestionsPopupKeyDown(e);
     }
 };

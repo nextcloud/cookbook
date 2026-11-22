@@ -143,7 +143,7 @@ export default function useSuggestionsPopup(
         const $ul = $li?.closest('ul');
         if (!$ul) return null;
 
-        return Array.prototype.indexOf.call($ul.childNodes, $li);
+        return Array.prototype.indexOf.call($ul.children, $li);
     };
 
     /**

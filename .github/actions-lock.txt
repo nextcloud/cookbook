@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: 2025 Nextcloud GmbH and Nextcloud contributors
 # SPDX-License-Identifier: MIT
 e6351c608939c31ae1e32923aa82aa10 dependabot-approve-merge.yml
-3688c8c5aa6a98dcd3b5019dcecccddd sync-workflow-templates.yml
-92678f1f5453d90fc2fd01698ade497c ai-policy.yml
-f1909c78987565cb19a471c60dc53950 npm-audit-fix.yml
+f7e2850c7d7e0bb2e395f8f9d13c9b80 sync-workflow-templates.yml
+f75df1a028b90a751d6e284b8cb0e621 ai-policy.yml
+3ec604929ad467da1bb0b8f1345b5841 npm-audit-fix.yml
 2dbec18233063b42f4d8e03bbb43671c reuse.yml

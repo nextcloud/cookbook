@@ -192,7 +192,6 @@ import {
 } from 'vue';
 import { subscribe, unsubscribe } from '@nextcloud/event-bus';
 import { getFilePickerBuilder, FilePickerType } from '@nextcloud/dialogs';
-import '@nextcloud/dialogs/style.css';
 
 import NcAppSettingsDialog from '@nextcloud/vue/components/NcAppSettingsDialog';
 import NcAppSettingsSection from '@nextcloud/vue/components/NcAppSettingsSection';

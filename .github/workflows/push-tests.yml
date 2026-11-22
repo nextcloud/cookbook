@@ -1,0 +1,85 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud cookbook contributors
+#
+# SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
+
+name: Push tests
+
+on:
+  push:
+    branches:
+      - master
+      - main-*
+      - stable[0-9]*
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  unit-tests:
+    name: Run the test suites
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - database: mysql
+            coreVersion: 35
+            phpVersion: '8.5'
+            httpServer: apache
+          - database: sqlite
+            coreVersion: 33
+            phpVersion: '8.3'
+            httpServer: apache
+          - database: pgsql
+            coreVersion: 34
+            phpVersion: '8.4'
+            httpServer: nginx
+
+    steps:
+      - name: Checkout the app
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Prepare and run test suites
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/run-tests
+        with:
+          database: ${{ matrix.database }}
+          core-version: stable${{ matrix.coreVersion }}
+          php-version: ${{ matrix.phpVersion }}
+          http-server: ${{ matrix.httpServer }}
+          allow-fixture-fallback: 'true'
+
+      - name: Upload unit coverage to Codecov
+        if: ${{ !cancelled() && hashFiles('.github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml') != '' }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: unittests
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.unit.xml
+
+      - name: Upload integration coverage to Codecov
+        if: ${{ !cancelled() && hashFiles('.github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml') != '' }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: integration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.integration.xml
+
+      - name: Upload migration coverage to Codecov
+        if: ${{ !cancelled() && hashFiles('.github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml') != '' }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5
+        with:
+          use_oidc: true
+          fail_ci_if_error: true
+          flags: migration
+          files: .github/actions/run-tests/volumes/coverage/run-*/coverage.migration.xml

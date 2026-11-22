@@ -27,8 +27,6 @@ OC.L10N.register(
     "User cannot create recipe folder" : "用户不能创建食谱文件夹",
     "in %s" : "位于 %s",
     "Could not parse URL" : "无法解析网址",
-    "Download from %s failed as HTTP status code %d is not in expected range." : "从 %s 下载失败，因为 HTTP 状态代码 %d 不在预期范围内。",
-    "Could not find a valid encoding when parsing %s." : "解析 %s 时找不到有效的编码。",
     "No parser found for the given import." : "找不到给定导入的解析器。",
     "No recipe name was given. A unique name is required to store the recipe." : "没有给出食谱名称。 需要一个唯一的名称来存储配方。",
     "Another recipe with that name already exists" : "已经存在另一个使用该名称的食谱",

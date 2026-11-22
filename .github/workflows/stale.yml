@@ -12,6 +12,11 @@ jobs:
     stale:
         runs-on: ubuntu-latest-low
         name: Run stale action
+        permissions:
+            # The action keeps its state between runs in the Actions cache
+            actions: write
+            issues: write
+            pull-requests: write
         
         steps:
         
