@@ -152,6 +152,8 @@ class HttpJsonLdParserTest extends TestCase {
 	/**
 	 * @dataProvider dataProviderJsonLd
 	 * @covers ::parseJsonLd
+	 * @covers ::mapGraphField
+	 * @covers ::searchForRecipeInArray
 	 * @param mixed $input
 	 */
 	public function testParseJsonLd($input, ?array $expected): void {

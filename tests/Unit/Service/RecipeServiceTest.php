@@ -120,4 +120,32 @@ class RecipeServiceTest extends TestCase {
 			$this->assertEquals('No recipe was found.', $e->getMessage());
 		}
 	}
+
+	public function testImportRecipeJsonDropsId(): void {
+		$this->jsonLdParser->method('parseJsonLd')->willReturn(['id' => '5', 'name' => 'Name']);
+		$filtered = null;
+		$this->jsonFilter->method('apply')->willReturnCallback(function (array $json) use (&$filtered) {
+			$filtered = $json;
+			throw new InvalidRecipeException('stop');
+		});
+
+		try {
+			$this->sut->importRecipeJson('{}');
+			$this->fail('InvalidRecipeException expected');
+		} catch (InvalidRecipeException $e) {
+			$this->assertArrayNotHasKey('id', $filtered);
+		}
+	}
+
+	public function testImportRecipeJsonWithoutNameFailsAtExtractStep(): void {
+		$this->jsonLdParser->method('parseJsonLd')->willReturn(['description' => 'No name']);
+
+		try {
+			$this->sut->importRecipeJson('{}');
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertEquals('extract_recipe', $e->getStep());
+			$this->assertInstanceOf(NoRecipeNameGivenException::class, $e->getPrevious());
+		}
+	}
 }
