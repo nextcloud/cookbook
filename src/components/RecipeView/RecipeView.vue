@@ -104,11 +104,37 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
                                     <button
                                         v-if="
                                             recipeYield !==
-                                            legacyStore.recipe.recipeYield
+                                            Number(
+                                                legacyStore.recipe.recipeYield,
+                                            )
                                         "
                                         @click="restoreOriginalRecipeYield"
                                     >
                                         <span class="icon-history" />
+                                    </button>
+                                    <button
+                                        v-if="
+                                            recipeYield !==
+                                            Number(
+                                                legacyStore.recipe.recipeYield,
+                                            )
+                                        "
+                                        type="button"
+                                        class="button save-default-yield print-hidden"
+                                        :disabled="
+                                            savingDefaultYield ||
+                                            !Number.isInteger(recipeYield) ||
+                                            recipeYield < 1
+                                        "
+                                        :title="
+                                            t(
+                                                'cookbook',
+                                                'Save current servings and ingredient amounts as the recipe defaults',
+                                            )
+                                        "
+                                        @click="saveCurrentYieldAsDefault"
+                                    >
+                                        {{ t('cookbook', 'Save as default') }}
                                     </button>
                                 </span>
                             </p>
@@ -427,6 +453,7 @@ const parsedTools = ref<string[]>([]);
  * @type {import('vue').Ref<number>}
  */
 const recipeYield = ref(0);
+const savingDefaultYield = ref(false);
 
 let wakeLockSentinel: WakeLockSentinel | null = null;
 
@@ -715,6 +742,51 @@ const copyIngredientsToClipboard = () => {
     }
 };
 
+const saveCurrentYieldAsDefault = async () => {
+    const currentRecipe = legacyStore.recipe;
+    const currentYield = recipeYield.value;
+    const originalYield = Number(currentRecipe?.recipeYield);
+
+    if (
+        !currentRecipe ||
+        !Number.isInteger(currentYield) ||
+        currentYield < 1 ||
+        !Number.isInteger(originalYield) ||
+        originalYield < 1
+    ) {
+        log.warn('Cannot save an invalid recipe serving size as the default');
+        return;
+    }
+
+    const ingredients = Object.values(currentRecipe.recipeIngredient ?? []).map(
+        String,
+    );
+    const updatedRecipe = {
+        ...currentRecipe,
+        recipeYield: currentYield,
+        recipeIngredient: yieldCalculator.recalculateIngredients(
+            ingredients,
+            currentYield,
+            originalYield,
+        ),
+    };
+
+    savingDefaultYield.value = true;
+    try {
+        await legacyStore.updateRecipe({ recipe: updatedRecipe });
+        legacyStore.setRecipe({ recipe: updatedRecipe });
+        showSuccess(t('cookbook', 'Default serving size updated'));
+    } catch (error) {
+        log.error('Failed to save the default serving size', error);
+        await showSimpleAlertModal(
+            t('cookbook', 'Error'),
+            t('cookbook', 'Failed to save the default serving size'),
+        );
+    } finally {
+        savingDefaultYield.value = false;
+    }
+};
+
 const restoreOriginalRecipeYield = () => {
     recipeYield.value = legacyStore.recipe.recipeYield;
 };
@@ -961,6 +1033,10 @@ export default {
 
 .copy-ingredients {
     float: inline-end;
+}
+
+.save-default-yield {
+    margin-inline-start: 0.5em;
 }
 
 .ingredient-highlighted {
