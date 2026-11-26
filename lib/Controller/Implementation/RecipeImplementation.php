@@ -280,28 +280,31 @@ class RecipeImplementation {
 	/**
 	 * Trigger the import of a recipe.
 	 *
-	 * The URL is extracted from the request directly.
+	 * The URL or the JSON+LD is extracted from the request directly.
 	 */
 	public function import() {
 		$this->dbCacheService->triggerCheck();
 
 		$data = $this->restParser->getParameters();
 
-		if (!isset($data['url'])) {
-			return new JSONResponse(['msg' => 'Field "url" is required'], Http::STATUS_BAD_REQUEST);
+		if (!isset($data['url']) && !is_string($data['json'] ?? null)) {
+			return new JSONResponse(['msg' => 'Field "url" or "json" is required'], Http::STATUS_BAD_REQUEST);
 		}
 
-		if (!is_string($data['url'])) {
-			return new JSONResponse(['msg' => 'Field "url" must be a string'], Http::STATUS_BAD_REQUEST);
-		}
+		$redactedUrl = '[JSON import]';
 
-		$data['url'] = str_replace(' ', '%20', trim($data['url']));
+		if (isset($data['url'])) {
+			if (!is_string($data['url'])) {
+				return new JSONResponse(['msg' => 'Field "url" must be a string'], Http::STATUS_BAD_REQUEST);
+			}
 
-		$redactedUrl = $this->urlRedactionHelper->redact($data['url']);
+			$data['url'] = str_replace(' ', '%20', trim($data['url']));
+			$redactedUrl = $this->urlRedactionHelper->redact($data['url']);
 
-		if (! $this->isDownloadUrlValid($data['url'])) {
-			$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $redactedUrl, 'user' => $this->userId]);
-			return new JSONResponse(['msg' => $this->l->t('The provided URL is not allowed.')], Http::STATUS_BAD_REQUEST);
+			if (! $this->isDownloadUrlValid($data['url'])) {
+				$this->logger->warning('Attempt to download recipe by user {user} from invalid URL: {url}', ['url' => $redactedUrl, 'user' => $this->userId]);
+				return new JSONResponse(['msg' => $this->l->t('The provided URL is not allowed.')], Http::STATUS_BAD_REQUEST);
+			}
 		}
 
 		$this->logger->info('Starting recipe import from {url}', ['url' => $redactedUrl]);
@@ -310,7 +313,9 @@ class RecipeImplementation {
 		ini_set('zend.exception_ignore_args', '1');
 
 		try {
-			$recipe_file = $this->service->downloadRecipe($data['url']);
+			$recipe_file = isset($data['url'])
+				? $this->service->downloadRecipe($data['url'])
+				: $this->service->importRecipeJson($data['json']);
 			$recipe_json = $this->service->parseRecipeFile($recipe_file);
 
 		} catch (RecipeExistsException $ex) {

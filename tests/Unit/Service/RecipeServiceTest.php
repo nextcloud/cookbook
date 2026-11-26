@@ -7,12 +7,14 @@
 namespace OCA\Cookbook\tests\Unit\Service;
 
 use OCA\Cookbook\Db\RecipeDb;
+use OCA\Cookbook\Exception\HtmlParsingException;
 use OCA\Cookbook\Exception\ImportException;
 use OCA\Cookbook\Exception\InvalidRecipeException;
 use OCA\Cookbook\Exception\NoRecipeNameGivenException;
 use OCA\Cookbook\Helper\DownloadHelper;
 use OCA\Cookbook\Helper\FileSystem\RecipeNameHelper;
 use OCA\Cookbook\Helper\Filter\JSON\JSONFilter;
+use OCA\Cookbook\Helper\HTMLParser\HttpJsonLdParser;
 use OCA\Cookbook\Helper\ImageService\ImageConversionHelper;
 use OCA\Cookbook\Helper\UserConfigHelper;
 use OCA\Cookbook\Helper\UserFolderHelper;
@@ -31,6 +33,8 @@ class RecipeServiceTest extends TestCase {
 	private $extractionService;
 	/** @var JSONFilter|Stub */
 	private $jsonFilter;
+	/** @var HttpJsonLdParser|Stub */
+	private $jsonLdParser;
 	private RecipeService $sut;
 
 	protected function setUp(): void {
@@ -40,6 +44,7 @@ class RecipeServiceTest extends TestCase {
 		$downloadService->method('getDom')->willReturn(new \DOMDocument());
 		$this->extractionService = $this->createStub(RecipeExtractionService::class);
 		$this->jsonFilter = $this->createStub(JSONFilter::class);
+		$this->jsonLdParser = $this->createStub(HttpJsonLdParser::class);
 		$l = $this->createStub(IL10N::class);
 		$l->method('t')->willReturnArgument(0);
 
@@ -57,6 +62,7 @@ class RecipeServiceTest extends TestCase {
 			$this->extractionService,
 			$this->jsonFilter,
 			$this->createStub(DownloadHelper::class),
+			$this->jsonLdParser,
 			$this->createStub(ImageConversionHelper::class),
 		);
 	}
@@ -100,6 +106,46 @@ class RecipeServiceTest extends TestCase {
 			$this->fail('ImportException expected');
 		} catch (ImportException $e) {
 			$this->assertEquals($url, $filtered['url']);
+		}
+	}
+
+	public function testImportRecipeJsonWithoutRecipeFailsAtExtractStep(): void {
+		$this->jsonLdParser->method('parseJsonLd')->willThrowException(new HtmlParsingException('No recipe was found.'));
+
+		try {
+			$this->sut->importRecipeJson('{}');
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertEquals('extract_recipe', $e->getStep());
+			$this->assertEquals('No recipe was found.', $e->getMessage());
+		}
+	}
+
+	public function testImportRecipeJsonDropsId(): void {
+		$this->jsonLdParser->method('parseJsonLd')->willReturn(['id' => '5', 'name' => 'Name']);
+		$filtered = null;
+		$this->jsonFilter->method('apply')->willReturnCallback(function (array $json) use (&$filtered) {
+			$filtered = $json;
+			throw new InvalidRecipeException('stop');
+		});
+
+		try {
+			$this->sut->importRecipeJson('{}');
+			$this->fail('InvalidRecipeException expected');
+		} catch (InvalidRecipeException $e) {
+			$this->assertArrayNotHasKey('id', $filtered);
+		}
+	}
+
+	public function testImportRecipeJsonWithoutNameFailsAtExtractStep(): void {
+		$this->jsonLdParser->method('parseJsonLd')->willReturn(['description' => 'No name']);
+
+		try {
+			$this->sut->importRecipeJson('{}');
+			$this->fail('ImportException expected');
+		} catch (ImportException $e) {
+			$this->assertEquals('extract_recipe', $e->getStep());
+			$this->assertInstanceOf(NoRecipeNameGivenException::class, $e->getPrevious());
 		}
 	}
 }

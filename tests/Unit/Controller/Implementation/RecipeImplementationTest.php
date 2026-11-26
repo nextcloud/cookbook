@@ -113,7 +113,7 @@ class RecipeImplementationTest extends TestCase {
 		$ret = $this->sut->import();
 
 		$this->assertEquals(400, $ret->getStatus());
-		$this->assertEquals(['msg' => 'Field "url" is required'], $ret->getData());
+		$this->assertEquals(['msg' => 'Field "url" or "json" is required'], $ret->getData());
 	}
 
 	public function testImport(): void {
@@ -138,6 +138,45 @@ class RecipeImplementationTest extends TestCase {
 
 		$this->assertEquals(200, $ret->getStatus());
 		$this->assertEquals($json, $ret->getData());
+	}
+
+	public function testImportJson(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$jsonLd = '{"@context":"https://schema.org","@type":"Recipe","name":"The recipe name"}';
+		$file = $this->createStub(File::class);
+		$json = [
+			'id' => 123,
+			'name' => 'The recipe name',
+		];
+
+		$this->restParser->method('getParameters')->willReturn([ 'json' => $jsonLd ]);
+		$this->recipeService->expects($this->never())->method('downloadRecipe');
+		$this->recipeService->expects($this->once())->method('importRecipeJson')->with($jsonLd)->willReturn($file);
+		$this->recipeService->expects($this->once())->method('parseRecipeFile')->with($file)->willReturn($json);
+		$this->dbCacheService->expects($this->once())->method('addRecipe')->with($file);
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(200, $ret->getStatus());
+		$this->assertEquals($json, $ret->getData());
+	}
+
+	public function testImportJsonNotString(): void {
+		$this->ensureCacheCheckTriggered();
+
+		$this->restParser->method('getParameters')->willReturn([ 'json' => ['name' => 'The recipe name'] ]);
+		$this->recipeService->expects($this->never())->method('importRecipeJson');
+
+		/**
+		 * @var JSONResponse $ret
+		 */
+		$ret = $this->sut->import();
+
+		$this->assertEquals(400, $ret->getStatus());
 	}
 
 	public function testImportExisting(): void {
