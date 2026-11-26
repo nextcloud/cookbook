@@ -6,9 +6,9 @@
 
 namespace OCA\Cookbook\Helper;
 
+use NCU\Config\IUserConfig;
 use OCA\Cookbook\AppInfo\Application;
 use OCA\Cookbook\Exception\UserNotLoggedInException;
-use OCP\IConfig;
 use OCP\IL10N;
 
 /**
@@ -21,7 +21,7 @@ class UserConfigHelper {
 	private $userId;
 
 	/**
-	 * @var IConfig
+	 * @var IUserConfig
 	 */
 	private $config;
 
@@ -32,7 +32,7 @@ class UserConfigHelper {
 
 	public function __construct(
 		?string $UserId,
-		IConfig $config,
+		IUserConfig $config,
 		IL10N $l,
 	) {
 		$this->userId = $UserId;
@@ -45,6 +45,7 @@ class UserConfigHelper {
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
+	protected const KEY_BROWSERLESS_CONFIG = 'browserless_config';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -58,42 +59,14 @@ class UserConfigHelper {
 	}
 
 	/**
-	 * Get a config value from the database
-	 *
-	 * @param string $key The key to get
-	 * @return string The resulting value or '' if the key was not found
-	 * @throws UserNotLoggedInException if no user is logged in
-	 */
-	private function getRawValue(string $key): string {
-		$this->ensureUserIsLoggedIn();
-		return $this->config->getUserValue($this->userId, Application::APP_ID, $key);
-	}
-
-	/**
-	 * Set a config value in the database
-	 *
-	 * @param string $key The key of the configuration
-	 * @param string $value The value of the config entry
-	 * @throws UserNotLoggedInException if no user is logged in
-	 */
-	private function setRawValue(string $key, string $value): void {
-		$this->ensureUserIsLoggedIn();
-		$this->config->setUserValue($this->userId, Application::APP_ID, $key, $value);
-	}
-
-	/**
 	 * Get the timestamp of the last rescan of the library
 	 *
 	 * @return int The timestamp of the last index rebuild
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getLastIndexUpdate(): int {
-		$rawValue = $this->getRawValue(self::KEY_LAST_INDEX_UPDATE);
-		if ($rawValue === '') {
-			return 0;
-		}
-
-		return intval($rawValue);
+		$this->ensureUserIsLoggedIn();
+		return $this->config->getValueInt($this->userId, Application::APP_ID, self::KEY_LAST_INDEX_UPDATE, 0);
 	}
 
 	/**
@@ -103,7 +76,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setLastIndexUpdate(int $value): void {
-		$this->setRawValue(self::KEY_LAST_INDEX_UPDATE, strval($value));
+		$this->ensureUserIsLoggedIn();
+		$this->config->setValueInt($this->userId, Application::APP_ID, self::KEY_LAST_INDEX_UPDATE, $value);
 	}
 
 	/**
@@ -113,12 +87,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getUpdateInterval(): int {
-		$rawValue = $this->getRawValue(self::KEY_UPDATE_INTERVAL);
-		if ($rawValue === '') {
-			return 5;
-		}
-
-		return intval($rawValue);
+		$this->ensureUserIsLoggedIn();
+		return $this->config->getValueInt($this->userId, Application::APP_ID, self::KEY_UPDATE_INTERVAL, 5);
 	}
 
 	/**
@@ -128,7 +98,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setUpdateInterval(int $value): void {
-		$this->setRawValue(self::KEY_UPDATE_INTERVAL, (string)$value);
+		$this->ensureUserIsLoggedIn();
+		$this->config->setValueInt($this->userId, Application::APP_ID, self::KEY_UPDATE_INTERVAL, $value);
 	}
 
 	/**
@@ -138,12 +109,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getPrintImage(): bool {
-		$rawValue = $this->getRawValue(self::KEY_PRINT_IMAGE);
-		if ($rawValue === '') {
-			return true;
-		}
-
-		return $rawValue === '1';
+		$this->ensureUserIsLoggedIn();
+		return $this->config->getValueBool($this->userId, Application::APP_ID, self::KEY_PRINT_IMAGE, true);
 	}
 
 	/**
@@ -153,11 +120,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setPrintImage(bool $value): void {
-		if ($value) {
-			$this->setRawValue(self::KEY_PRINT_IMAGE, '1');
-		} else {
-			$this->setRawValue(self::KEY_PRINT_IMAGE, '0');
-		}
+		$this->ensureUserIsLoggedIn();
+		$this->config->setValueBool($this->userId, Application::APP_ID, self::KEY_PRINT_IMAGE, $value);
 	}
 
 	/**
@@ -167,19 +131,15 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getVisibleInfoBlocks(): array {
-		$rawValue = $this->getRawValue(self::KEY_VISIBLE_INFO_BLOCKS);
-
-		if ($rawValue === '') {
-			return [
-				'preparation-time' => true,
-				'cooking-time' => true,
-				'total-time' => true,
-				'nutrition-information' => true,
-				'tools' => true,
-			];
-		}
-
-		return json_decode($rawValue, true);
+		$this->ensureUserIsLoggedIn();
+		$default = [
+			'preparation-time' => true,
+			'cooking-time' => true,
+			'total-time' => true,
+			'nutrition-information' => true,
+			'tools' => true,
+		];
+		return $this->config->getValueArray($this->userId, Application::APP_ID, self::KEY_VISIBLE_INFO_BLOCKS, $default);
 	}
 
 	/**
@@ -189,7 +149,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setVisibleInfoBlocks(array $visibleInfoBlocks): void {
-		$this->setRawValue(self::KEY_VISIBLE_INFO_BLOCKS, json_encode($visibleInfoBlocks));
+		$this->ensureUserIsLoggedIn();
+		$this->config->setValueArray($this->userId, Application::APP_ID, self::KEY_VISIBLE_INFO_BLOCKS, $visibleInfoBlocks);
 	}
 
 	/**
@@ -205,7 +166,8 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function getFolderName(): string {
-		$rawValue = $this->getRawValue(self::KEY_FOLDER);
+		$this->ensureUserIsLoggedIn();
+		$rawValue = $this->config->getValueString($this->userId, Application::APP_ID, self::KEY_FOLDER, '');
 
 		if ($rawValue === '') {
 			$path = '/' . $this->l->t('Recipes');
@@ -228,6 +190,33 @@ class UserConfigHelper {
 	 * @throws UserNotLoggedInException if no user is logged in
 	 */
 	public function setFolderName(string $value): void {
-		$this->setRawValue(self::KEY_FOLDER, $value);
+		$this->ensureUserIsLoggedIn();
+		$this->config->setValueString($this->userId, Application::APP_ID, self::KEY_FOLDER, $value);
+	}
+
+	/**
+	 * Gets the browserless config from the configuration
+	 *
+	 * @return array<string, string | null> keys: url and token, values: url and token
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getBrowserlessConfig(): array {
+		$this->ensureUserIsLoggedIn();
+		$default = [
+			'url' => null,
+			'token' => null,
+		];
+		return $this->config->getValueArray($this->userId, Application::APP_ID, self::KEY_BROWSERLESS_CONFIG, $default);
+	}
+
+	/**
+	 * Sets the browserless config in the configuration
+	 *
+	 * @param array<string, bool> keys: url and token, values: url and token
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setBrowserlessConfig(array $data): void {
+		$this->ensureUserIsLoggedIn();
+		$this->config->setValueArray($this->userId, Application::APP_ID, self::KEY_BROWSERLESS_CONFIG, $data, flags: IUserConfig::FLAG_SENSITIVE);
 	}
 }
