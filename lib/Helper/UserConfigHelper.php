@@ -45,6 +45,7 @@ class UserConfigHelper {
 	protected const KEY_PRINT_IMAGE = 'print_image';
 	protected const KEY_VISIBLE_INFO_BLOCKS = 'visible_info_blocks';
 	protected const KEY_FOLDER = 'folder';
+	protected const KEY_BRING_ENABLED = 'bring_enabled';
 
 	/**
 	 * Checks if the user is logged in and the configuration can be obtained at all
@@ -157,6 +158,30 @@ class UserConfigHelper {
 			$this->setRawValue(self::KEY_PRINT_IMAGE, '1');
 		} else {
 			$this->setRawValue(self::KEY_PRINT_IMAGE, '0');
+		}
+	}
+
+	/**
+	 * Check if the Bring! export is enabled for the user
+	 *
+	 * @return bool true, if the Bring! export is enabled
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function getBringEnabled(): bool {
+		return (bool)$this->getRawValue(self::KEY_BRING_ENABLED);
+	}
+
+	/**
+	 * Set if the Bring! export is enabled for the user
+	 *
+	 * @param bool $value true if the Bring! export should be enabled
+	 * @throws UserNotLoggedInException if no user is logged in
+	 */
+	public function setBringEnabled(bool $value): void {
+		if ($value) {
+			$this->setRawValue(self::KEY_BRING_ENABLED, '1');
+		} else {
+			$this->setRawValue(self::KEY_BRING_ENABLED, '0');
 		}
 	}
 
