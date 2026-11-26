@@ -6,7 +6,7 @@ SPDX-License-Identifier: AGPL-3.0-only OR AGPL-3.0-or-later
 
 <template>
     <NcAppSettingsDialog
-        :open.sync="isOpen"
+        v-model:open="isOpen"
         :name="t('cookbook', 'Cookbook settings')"
         :show-navigation="true"
         first-selected-section="keyboard shortcuts"
